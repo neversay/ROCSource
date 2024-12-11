@@ -1,0 +1,1220 @@
+#AREADATA
+Name        煉獄~
+Identity    purgator~
+Builders    Envy~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      400 599
+Security    1
+Recall      401
+Death       401
+F_toggle    8|16|1024|8192|65536|262144|524288|1048576
+End
+
+
+
+#MOBILES
+#401
+dead reaper~
+死神(Reaper of the Dead)~
+死神(Reaper of the Dead)在此等著決定你的命運。
+~
+他看起來似乎並不介意在這裡陪你過一輩子。
+~
+1|2|64|1024|2048|4096|8192|16384|262144|8388608|1073741824 16384|8|32|128|512|8192|524288|1048576|137438953472 -1000 S
+70 20000 0 50d30+1000 0d0+0
+0 0
+0 8 0
+R God~
+C 11
+S 40 50
+S 41 100
+S 42 100
+S 43 100
+S 44 100
+P 1|1024|2048|4194304|16777216
+>tick_prog 100~
+if isfight($i)
+	break
+else
+	if hitprcnt($i) < 70
+		say 命運的巨輪開始轉動....。
+		say 因業的漁網籠罩一切....。
+		mpecho 一陣奇怪的閃光，籠罩在 $I 的身上....。
+		mpat 5 c 'full heal'
+	endif
+endif
+~
+>talk_prog return~
+if ispc($n)
+	if is_qmark($n) == purgator_dead
+		tell $n 踏上輪迴的時間未到，你必須再等一會兒。
+	else
+		tell $n 輪迴的號角已經響起，你可以回到人間了。
+		mpechoat $n $I 已經將你傳送回光明之鎮的聖殿了....。
+		mpecho $I 將 $n 傳送走了....。
+		mptransfer $n 4580
+		wave $n
+	endif
+endif
+~
+>talk_prog grave~
+if ispc($n)
+	c grave $n
+        mpnowait
+        c 'detect invis' $n 
+	if is_qmark($n) != purgator_dead
+		mpadd_qmark $n purgator_dead 5 0 0 0 0 1
+	else
+		mpmod_qmark $n purgator_dead timer + 1
+	endif
+	tell $n 想回(return)到人間嗎？
+	mpnowait
+endif
+~
+>all_greet_prog 100~
+if ispc($n)
+	tell $n 通過了煉獄之道，進入了審判之間，你應該獲得你應得的獎賞。
+	tell $n 有需要的話，儘管告訴我吧(talk reaper grave)。
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+if class($n) == 10
+	c 'star fire' $n
+	mpnowait
+	c para
+	mpnowait
+	mpat 5 c 3 double
+	mpnowait
+endif
+c 'energy drain' $n
+mpnowait
+c curse $n
+mpnowait
+c poison $n
+mpnowait
+mpat 5 c 2 double
+mpnowait
+~
+>rand_prog 40~
+if hitprcnt($i) <= 10
+	if is_qmark($i) != purgator_dead_fullheal
+		mpadd_qmark $i purgator_dead_fullheal 100 0 0 0 1 0
+	else
+		if is_qmark($i) <= purgator_dead_fullheal 100002
+			c 'full heal'
+			mpmod_qmark $i purgator_dead_fullheal v0 + 1
+		endif
+	endif
+	break
+endif
+if hitprcnt($i) <= 30
+	mpat 5 c 'double heal'
+endif
+~
+>fight_prog 100~
+if class($n) == 10
+	c 'star fire' $n
+	mpnowait
+	c para
+	mpnowait
+	mpat 5 c 3 double
+	mpnowait
+	break
+endif
+if class($n) == 14
+        c 3 fireball $n
+        mpnowait
+endif
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+if hitprcnt($i) <= 10
+	if is_qmark($i) != purgator_dead_fullheal
+		mpadd_qmark $i purgator_dead_fullheal 100 0 0 0 1 0
+	else
+		if is_qmark($i) <= purgator_dead_fullheal 100002
+			c 'full heal'
+			mpmod_qmark $i purgator_dead_fullheal v0 + 1
+		endif
+	endif
+endif
+~
+>fight_prog 60~
+if hitprcnt($i) < 20
+	c 'double heal'
+	mpnowait
+	c heal
+	mpnowait
+	mpat 5 invoke
+endif
+if hitprcnt($i) < 50
+	if rand(30)
+		c 'double heal'
+		mpnowait
+		c flamestrike
+	else
+		c 'double heal'
+		mpnowait
+		c fireball
+	endif
+	mpnowait
+endif
+if hitprcnt($i) < 80
+	if rand(30)
+		c 'double heal'
+	else
+		c heal
+	endif
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mplog killed by $n
+if rand(99)
+        mpjunk all
+endif
+~
+>hurt_prog 60~
+if is_qmark($i) != reaper_magic_missile
+    mpadd_qmark $i reaper_magic_missile -1 1 0 0 0 1
+    mpat 5 c full
+    mpnowait
+    else
+        if is_qmark($i) < reaper_magic_missile 100003
+            mpmod_qmark $i reaper_magic_missile v0 + 1
+            mpat 5 c 2 double
+            mpnowait
+        else
+            mpdel_qmark $i reaper_magic_missile
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c 2 'double heal'
+                mpnowait
+                c 3 whirl 
+                mpnowait
+                c 3 'magic missile' $n
+                mpnowait
+        endif
+endif
+~
+>hurt_prog 58~
+if is_qmark($i) != reaper_lightning
+    mpadd_qmark $i reaper_lightning -1 1 0 0 0 1
+    mpat 5 c full
+    mpnowait
+    else
+        if is_qmark($i) < reaper_lightning 100003
+            mpmod_qmark $i reaper_lightning v0 + 1
+            mpat 5 c 3 double
+            mpnowait
+        else
+            mpdel_qmark $i reaper_lightning
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c full
+                mpnowait
+                c 3 whirl 
+                mpnowait
+                c 3 lightning $n
+                mpnowait
+        endif
+endif
+~
+>hurt_prog 137~
+if is_qmark($i) != reaper_frenzy
+    mpadd_qmark $i reaper_frenzy -1 1 0 0 0 1
+    mpat 5 c full
+    mpnowait
+    else
+        if is_qmark($i) < reaper_frenzy 100003
+            mpmod_qmark $i reaper_frenzy v0 + 1
+            mpat 5 c 3 double
+            mpnowait
+        else
+            mpdel_qmark $i reaper_frenzy
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c full
+                mpnowait
+                frenzy $n
+                mpnowait
+        endif
+endif
+~
+>hurt_prog 101~
+if is_qmark($i) != reaper_circle
+     mpadd_qmark $i reaper_circle -1 1 0 0 0 1
+     mpnowait
+     mpat 5 c heal
+     mpnowait
+     else
+        if is_qmark($i) < reaper_circle 100003
+            mpmod_qmark $i reaper_circle v0 + 1
+            mpat 5 c 2 double
+            mpnowait
+        else
+                mpdel_qmark $i reaper_circle
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c 2 'double heal'
+                mpnowait
+                c 3 whirl 
+                mpnowait
+                c 'magic missile' $n
+                mpnowait
+        endif     
+endif
+~
+|
+#402
+lost soul~
+迷失的靈魂(lost soul)~
+一個迷失的靈魂(lost soul)四處飄遊。
+~
+又是一個無法找到出口的靈魂迷失在這裡。你也最好不要再浪費時間，如果不想跟他一樣
+就趕緊找到出口。
+~
+65 0 0 S
+10 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Mist~
+#0
+
+
+
+#OBJECTS
+#401
+tear potion drop~
+精靈之淚(elves' tear)~
+這一顆精靈之淚(elves' tear)看起來晶瑩剔透。~
+~
+10 64 1
+1~ detect invis~  ~  ~
+5 0 0
+L 1
+X gem~
+
+#402
+cloak reaper dead~
+死神斗蓬(Cloak of Dead Reaper)~
+一襲黑色又破爛的斗蓬(cloak)，實在不知道有什麼用處。~
+~
+9 16|64|512|2048 1|1024
+0~ 0~ 50~ 0~
+10 0 0
+A
+18 3
+A
+13 -100
+A
+23 -5
+R 1|2|64|2097152
+C 500000
+X fiber~
+
+#403
+daemon ring~
+魔戒(Daemon Ring)~
+一只能夠發出無限魔力的戒指(ring)被丟棄在這邊。~
+~
+9 1|2|4|16|64|128|512|2048|4096|16777216 1|2
+0~ 0~ 999~ 0~
+2 0 0
+E
+daemon ring~
+這一只戒指，聽說能夠提供所有者無限的魔力。但是使用者卻要付出
+自己寶貴的生命成為戒指魔力的來源。
+~
+A
+3 1
+A
+4 1
+A
+5 -5
+A
+12 100
+A
+13 -100
+A
+14 50
+C 500000
+X perfect matter~
+
+#404
+diaphragm judgement~
+審判光圈(Diaphragm Judgement)~
+一圈發出能夠看透你心坎的奇異光圈(Diaphragm)被放在此處。~
+~
+1 1|2|4|16|512|2048 1
+0~ 0~ -1~ 0~
+10 0 0
+E
+diaphragm judgement~
+在這道光圈前面，沒有人可以逃過死亡的審判。因業決定了生命的走向，沒有人能
+夠阻擋輪迴巨輪的轉動。
+~
+A
+3 2
+A
+12 50
+A
+19 6
+C 200000
+X aura~
+
+#0
+
+
+
+#ROOMDATA
+#401
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你最好趕緊找到你的屍體吧！
+~
+0 0 0
+D4
+~
+~
+0 -1 410
+D5
+~
+~
+0 -1 410
+S
+#402
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 406
+D1
+~
+~
+0 -1 403
+D2
+~
+~
+0 -1 410
+D3
+~
+~
+0 -1 405
+D4
+~
+~
+0 -1 414
+D5
+~
+~
+0 -1 414
+S
+#403
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 407
+D1
+~
+~
+0 -1 404
+D2
+~
+~
+0 -1 411
+D3
+~
+~
+0 -1 402
+D4
+~
+~
+0 -1 415
+D5
+~
+~
+0 -1 415
+S
+#404
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 408
+D1
+~
+~
+0 -1 405
+D2
+~
+~
+0 -1 412
+D3
+~
+~
+0 -1 403
+D4
+~
+~
+0 -1 416
+D5
+~
+~
+0 -1 416
+S
+#405
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 409
+D1
+~
+~
+0 -1 402
+D2
+~
+~
+0 -1 413
+D3
+~
+~
+0 -1 404
+D4
+~
+~
+0 -1 417
+D5
+~
+~
+0 -1 417
+S
+#406
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 410
+D1
+~
+~
+0 -1 407
+D2
+~
+~
+0 -1 402
+D3
+~
+~
+0 -1 409
+D4
+~
+~
+0 -1 418
+D5
+~
+~
+0 -1 418
+S
+#407
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 411
+D1
+~
+~
+0 -1 408
+D2
+~
+~
+0 -1 403
+D3
+~
+~
+0 -1 406
+D4
+~
+~
+0 -1 419
+D5
+~
+~
+0 -1 419
+S
+#408
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 412
+D1
+~
+~
+0 -1 409
+D2
+~
+~
+0 -1 404
+D3
+~
+~
+0 -1 407
+D4
+~
+~
+0 -1 420
+D5
+~
+~
+0 -1 420
+S
+#409
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 413
+D1
+~
+~
+0 -1 406
+D2
+~
+~
+0 -1 405
+D3
+~
+~
+0 -1 408
+D4
+~
+~
+0 -1 421
+D5
+~
+~
+0 -1 421
+S
+#410
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 402
+D1
+~
+~
+0 -1 411
+D2
+~
+~
+0 -1 406
+D3
+~
+~
+0 -1 413
+D4
+~
+~
+0 0 401
+D5
+~
+~
+0 0 401
+S
+#411
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 403
+D1
+~
+~
+0 -1 412
+D2
+~
+~
+0 -1 407
+D3
+~
+~
+0 -1 410
+D4
+~
+~
+0 -1 423
+D5
+~
+~
+0 -1 423
+S
+#412
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 404
+D1
+~
+~
+0 -1 413
+D2
+~
+~
+0 -1 408
+D3
+~
+~
+0 -1 411
+D4
+~
+~
+0 -1 424
+D5
+~
+~
+0 -1 424
+S
+#413
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 405
+D1
+~
+~
+0 -1 410
+D2
+~
+~
+0 -1 409
+D3
+~
+~
+0 -1 412
+D4
+~
+~
+0 -1 425
+D5
+~
+~
+0 -1 425
+S
+#414
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+
+你看到一座告示牌(sign)放在這邊
+~
+0 0 0
+E
+sign~
+這座告示牌的內容如下：
+
+經歷了千辛萬苦，你終於到達了這裡。給你一點提示，想要找到你的屍體，再往
+北走兩步。
+
+                                		闇之冥王星普魯多(Pluto)
+~
+D0
+~
+~
+0 -1 418
+D1
+~
+~
+0 -1 415
+D3
+~
+~
+0 -1 417
+D4
+~
+~
+0 -1 402
+D5
+~
+~
+0 -1 402
+S
+#415
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 419
+D1
+~
+~
+0 -1 416
+D2
+~
+~
+0 -1 423
+D3
+~
+~
+0 -1 414
+D4
+~
+~
+0 -1 403
+D5
+~
+~
+0 -1 403
+S
+#416
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 420
+D1
+~
+~
+0 -1 417
+D2
+~
+~
+0 -1 424
+D3
+~
+~
+0 -1 415
+D4
+~
+~
+0 -1 404
+D5
+~
+~
+0 -1 404
+S
+#417
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 421
+D1
+~
+~
+0 -1 414
+D2
+~
+~
+0 -1 425
+D3
+~
+~
+0 -1 416
+D4
+~
+~
+0 -1 405
+D5
+~
+~
+0 -1 405
+S
+#418
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 422
+D1
+~
+~
+0 -1 419
+D2
+~
+~
+0 -1 414
+D3
+~
+~
+0 -1 421
+D4
+~
+~
+0 -1 406
+D5
+~
+~
+0 -1 406
+S
+#419
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 423
+D1
+~
+~
+0 -1 420
+D2
+~
+~
+0 -1 415
+D3
+~
+~
+0 -1 418
+D4
+~
+~
+0 -1 407
+D5
+~
+~
+0 -1 407
+S
+#420
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 424
+D1
+~
+~
+0 -1 421
+D2
+~
+~
+0 -1 416
+D3
+~
+~
+0 -1 419
+D4
+~
+~
+0 -1 408
+D5
+~
+~
+0 -1 408
+S
+#421
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+
+你看到一座告示牌(sign)放在這邊。
+~
+0 0 0
+E
+sign~
+這做告示牌的內容如下：
+
+經歷了千辛萬苦，你終於到達了這裡。給你一點提示，想要找到你的屍體，再往
+北走一步。
+
+                                		闇之冥王星普魯多(Pluto)
+~
+D0
+~
+~
+0 -1 425
+D1
+~
+~
+0 -1 418
+D2
+~
+~
+0 -1 417
+D3
+~
+~
+0 -1 420
+D4
+~
+~
+0 -1 409
+D5
+~
+~
+0 -1 409
+S
+#422
+煉獄~
+這個地方看起來與其他空間不太一樣。不知什麼原因，你覺得你已經接近煉獄的盡頭。
+不要再浪費任何時間了，因為你赤裸的身體已經開始感到疲累與寒冷。更重要的，你那尚未
+取回的屍體似乎已經開始腐爛。
+
+這邊有一座告示牌(sign)。
+~
+0 0 0
+E
+sign~
+往北走去吧！
+
+	闇之冥王星普魯多(Pluto)
+~
+D0
+~
+~
+0 -1 426
+D1
+~
+~
+0 -1 423
+D2
+~
+~
+0 -1 418
+S
+#423
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 415
+D1
+~
+~
+0 -1 424
+D2
+~
+~
+0 -1 419
+D3
+~
+~
+0 -1 422
+D4
+~
+~
+0 -1 411
+D5
+~
+~
+0 -1 411
+S
+#424
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+~
+0 0 0
+D0
+~
+~
+0 -1 416
+D1
+~
+~
+0 -1 425
+D2
+~
+~
+0 -1 420
+D3
+~
+~
+0 -1 423
+D4
+~
+~
+0 -1 412
+D5
+~
+~
+0 -1 412
+S
+#425
+煉獄~
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+你看到一座告示牌(sign)放在這邊。
+~
+0 0 0
+E
+sign~
+這做告示牌的內容如下：
+
+經歷了千辛萬苦，你終於到達了這裡。給你一點提示，想要找到你的屍體，再往
+西走三步。
+
+                                		闇之冥王星普魯多(Pluto)
+~
+D0
+~
+~
+0 -1 417
+D2
+~
+~
+0 -1 421
+D3
+~
+~
+0 -1 424
+D4
+~
+~
+0 -1 413
+D5
+~
+~
+0 -1 413
+S
+#426
+煉獄~
+太好了！你終於找到可以通往審判之間。往東走去，你可以看到許多堆積如山的屍首。
+~
+0 4 0
+D1
+~
+~
+0 -1 427
+S
+#427
+審判之間~
+在這裡你必須面對你最後的審判。你的命運將取決於你在人世間的因業。祈求上蒼吧！
+或許你可求得一些上天的恩賜，讓你的屍體能夠保存完整的回來。
+
+一座告示牌(sign)放置在這邊。
+~
+0 1024 11
+E
+sign~
+告示牌上面寫著：
+
+請記得拿走你屍體裡頭的隱形裝備。如果你忘記拿走了隱形的裝備，造成屍體消失的時候
+連帶隱形裝備一同消失，你只能自嘆倒楣。千萬別說我沒有警告你。
+
+							闇之冥王星普魯多(Pluto)
+~
+S
+#0
+
+
+
+#SPECIALS
+S
+
+
+
+#RESETS
+R 0 401 6
+M 0 402 3 407
+R 0 410 6
+M 0 402 3 425
+M 0 401 1 427
+E 0 403 0 1
+E 0 402 0 12
+E 0 404 0 0
+G 0 401 0
+S
+
+
+
+#SHOPS
+0
+
+#$

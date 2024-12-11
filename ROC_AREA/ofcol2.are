@@ -1,0 +1,5106 @@
+#AREADATA
+Name        ·s¶ø¤Ò¥d~
+Identity    ofcol2~
+Builders    Hatchet~
+Translator  Zcecil~
+Modifier    YH~
+VNUMs	      600 699
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#600
+ofcol cityguard-ofcol~
+¶ø¤Ò¥d¦u½Ã(Ofcol cityguard)~
+¶ø¤Ò¥d¦u½Ã(Ofcol cityguard)¥|³B¨µµøµÛ¡A½T«O³o¸Ìªº¦w¥þ¡C
+~
+¨C­Ó¶ø¤Ò¥dªº«°¥«¦u½Ã³£¬O¸g¹LÄY®æ°V½mªº¡C°t¤W¨}¦nªº¸Ë³Æ¡A¥H¤Î¤@¬yªº¾Ô§Þ¡A
+¥L­Ì±N·|¬O§A¥i©Èªº¹ï¤â¡C¤£¹L¡A§O¾á¤ß¡A¥L­Ì¥u·|¬°¤F«OÅ@¶ø¤Ò¥dªº¤H¥Á¦Ó¹ï§A
+¥X¤â¡C
+~
+8261 8192 1000 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+>repop_prog 100~
+mpoload 620
+mpoload 621
+mpoload 630
+mpoload 624
+mpat 5 wear all
+~
+|
+#601
+marshal diana-ofcol~
+ÂL¦w®R(Diana)~
+¶ø¤Ò¥d«Ò°ê¤¸«Ó - ¦B¤sÂL¦w®R(Marshal Diana)¥¿¯¸¦b§Aªº­±«e¡C
+~
+¤d¸U§O¦]¬°¦oªº¬ü»ª¦Ó»´µø¤F¦oªº¤O¶q¡A¦o¨­¤Wªº¥Õª÷ñZ¥Ò´N¬O³Ì¦nªºÃÒ©ú¡C¥Õª÷
+¸Ë³ÆÁöµM¨¾Å@®ÄªG¨Î¡A¦ý¥u¦³³Ì±j¤jªº¾Ô¤h¤~¯à¦b¬ïµÛ¥Õª÷ñZ¥Òªº±¡ªp¤UÁÙ¯à»´ÃP
+ªº§@¾Ô¡A§N»ÅªºÂL¦w®R¦]¦¹Àò±o¡uÆv­Y´Â¶§¡Aµw¹L¦B¤s¡vªº«Ê¸¹¡C
+~
+270339 8|32|64|128|8192 1000 S
+37 4000 0 0d5+150 -5d0+0
+5000 0
+0 8 2
+C 3
+P 8|32768|65536
+S 18 20
+S 19 20
+S 44 100
+>repop_prog 100~
+mpoload 669
+mpoload 639
+mpoload 640
+mpoload 641
+mpoload 642
+mpoload 643
+mpoload 644
+mpoload 645
+mpoload 646
+mpoload 647
+mpoload 675
+mpat 5 wear all
+~
+>fight_prog 50~
+wear Avenger
+~
+>fight_prog 15~
+wear Avenger
+flaming
+mpnowait
+~
+>fight_prog 10~
+wear Avenger
+perform empslash
+mpnowait
+~
+>tick_prog 100~
+if hour($) == 22
+	yell ¶ø¤Ò¥d«°ªù§Y±NÃö³¬¡I
+	mpcallout 6 lock west
+	mpcallout 6 close west
+endif
+if hour($) == 5
+	yell ¶ø¤Ò¥d«°ªù§Y±N¶}±Ò¡I
+	mpcallout 6 unlock west
+	mpcallout 7 open west
+endif
+~
+>talk_prog p envoy from greenwoods~
+if is_qmark($n) == greenwoods_vice_quest 100000
+	mpecho $I »À¦i¦a¬Ý§A¤@²´....
+	mpcallout 1 mpecho $I¹ï§A§N¯º°_¨Ó¡I
+	mpcallout 1 say ­ó¡A´N¾Ì§A­Ìºñ¾ð¤ý°ê¡H¯u¬OÄî½¼Á°·Q¦Y¤ÑÃZ¦×...
+	mpcallout 1 say ¦^¥h§i¶D§Aªº¥D¤l¡A¥s¥L....
+	mpcallout 2 think
+	mpcallout 3 mpecho $I ¤£®h¦a§â¤@±i¯È¥á¨ì§Aªº¸}Ãä¡C
+ 	mpcallout 3 say ®³¦^¥h¥æµ¹§Aªº¥D¤l§a¡A¨S¥Îªº¤H´í....
+	mpcallout 3 say ºâ¤F¡A§i¶D§A³oºØ¶]»Lªº¤@ÂI¥Î¤]¨S¦³¡AØo¡A§â³o«Ê«H
+	mpcallout 3 mpoload 672 floor
+	mpcallout 3 mpmod_qmark $n greenwoods_vice_quest v0 = 1
+endif
+~
+>death_prog 100~
+if is_qmark($n) >= greenwoods_vice_meeting 100003
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpmod_qmark $n greenwoods_vice_meeting v0 | 4
+	yell «z°Ú¡I§Ú³ºµM·|³QÀ»±Ñ¡I
+	mpecho $I ­t¶Ë°kÂ÷¾Ô³õ¡AªZ¾¹±¼¸¨¦b¦a¡C
+	mpat 5 remove all
+	mpoload 647 36 floor
+	mppurge self
+else
+	mpecho $I¥ÎºÉ³Ì«áªº¤O¶q§â¤â¤¤ªº¼C·´±¼¡C
+	mpjunk avenger
+endif
+~
+|
+#602
+derrick-ofcol captain~
+¼w·ç§J(Derrick)~
+¦u½Ã¶¤ªº¶¤ªø - ¼w·ç§J(Captain Derrick)¥¿¦b§¤¦b³o¸Ì¬ÝµÛ¤å¥ó¡C
+~
+¼w·ç§J¯à¦¨¬°¦u½Ã¶¤ªø¡A¾aªº¨S¦³¨ä¥L¡A´N¥u¦³µ´¹ïªº¤O¶q¡C¥L¦b¤T¦¸©MÃ~¤Hªº¾Ô
+ª§¤¤¥ß¤U¥\ÁZ¡A¦Ó¥B¥Lªº¤÷¿ËÁÙ´¿¸g¬O¥j®õ¬¥´µªº«°¥«¦u½Ã¡C¥L¬Û«Hµ´¹ïªº¤O¶q±a
+¨Óµ´¹ïªº³Ó§Q¡A¥¢±Ñ¬O¯dµ¹®zªÌªº¡C
+~
+1|2|64 8|32|64|128 1000 S
+60 40000 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+S 1 25
+S 18 100
+S 19 200
+S 24 -150
+S 35 -150
+P 1|2|4|8
+>repop_prog 100~
+mpoload 669
+mpoload 674
+mpoload 676
+mpoload 677
+mpoload 678
+mpoload 679
+mpoload 680
+mpoload 681
+mpoload 682
+mpat 5 wear all
+~
+>fight_prog 30~
+wear thalos
+say ¸Ó¦ºªº¼oª«¡A¤Æ¦¨¦Ç§a¡I
+perform empslash
+mpnowait
+perform empslash
+mpnowait
+~
+>fight_prog 30~
+wear thalos
+circular
+mpnowait
+circular
+mpnowait
+~
+>talk_prog centaur~
+if is_qmark($n) != cen_clear_timer
+	tell $n ¥Ø«e«nÃä®l¨¦ªº¤H°¨¶Õ¤O¡AÁÙ¤£ºc¦¨§Ú°êªº«Â¯Ù¡C
+	tell $n °£«D¥L­Ì¦³¶i¤@¨Bµo®i¡A§Ú­Ì¤~·|±Ä¨ú¦æ°Ê¡C
+	break
+endif
+if is_qmark($n) == ofcol_cen_clear 100000
+	if is_qmark($n) == ofcol_cen_clear 100001
+		look $n
+		tell $n §A¬O¨Ó±µ¨ü©Û¶Òªº«_ÀIªÌ¶Ü¡H
+		mpcallout 1 tell $n ¹ï©ó¥ô°Èªº¤º®e¤]³£¦³¤@©wµ{«×ªº¤F¸Ñ¡A¨º§Ú´N¤£¦h§@»¡©ú¤F¡C
+		mpcallout 1 tell $n ¯à°÷¨ú±o§Ú­Ì¨p¤U©Û¤Hªº±¡³ø¡A¬Û«H§A¤]ºâ¬O­Ó¦³¯à¤Oªº«_ÀIªÌ¡C
+		mpcallout 2 tell $n §Ú­Ìªº­n¨D¬Û·íÂ²³æ¡A¥u­nÅý«nÃäªº®l¨¦©Ò¦³ªº¤H°¨®ø¥¢´N¦æ¤F¡C
+		mpcallout 3 tell $n ¦]¦¹§Ú­Ì¤£·|µo©ñ³ø¹S(reward)µ¹Á{°}²æ°kªº¤H¡C
+		mpcallout 3 tell $n ¦ý¬O¡A½Ð°O±o¶ø¤Ò¥d¤£¯à®e§Ô®zªÌªº¦s¦b¡I
+		mpcallout 4 tell $n ¥h§a¡I¤£ºÞ§A¨Ï¤°»ò¤â¬q¡A¥u­n¨D¹F¦¨¥ô°È´N¦æ¡I
+		mpcallout 4 mpmod_qmark $n ofcol_cen_clear v0 = 1
+	else
+		tell $n §â¤H°¨»°¨««á¡A¦Û¤v¦^¨Ó¸ò§Ú»â¨ú¼ú½à(reward)¡C
+		tell $n §Ú¥i¨S¨º­Ó¶¢¥\¤ÒÀ°§A§â¿ú°e¨ì­±«e¡C
+	endif
+endif
+~
+>talk_prog reward~
+if is_qmark($n) == ofcol_cen_clear 100001
+	if mobcount(317) == 0
+		mpdel_qmark $n ofcol_cen_clear
+		good $n
+		tell $n ³o¬O§Aªº¼úÀy¡C
+		mpgold $n 200000
+		if level($n) < 40
+			mpexp $n 20000
+		else
+			mpexp $n 8000
+		endif
+		mpskillexp $n 500
+		mpadd_qmark $n cen_clear_timer 72 0 0 0 0 1
+		mpcallout 1 bye $n
+		mpcallout 1 tell $n ¦X§@´r§Ö¡A¦³¾÷·|¦A§ä§AÀ°¦£¡C
+	else
+		ponder $n
+		tell $n ¬£¥Xªº±´¤l¦^³ø»¡¡A¨¦¤ºÁÙ¬Ý±o¨ì¤H°¨ªºÂÜ¸ñ¡C
+		tell $n »{¯u¤@ÂI¦n¶Ü¡H
+	endif
+endif
+~
+|
+#603
+jacklyn-ofcol captain~
+¸ë®ÛµY(Jacklyn)~
+¸t°ó¦u½Ã¶¤ªº¶¤ªø - ¸ë®ÛµY(Captain Jacklyn)¥¿¦b¹ª»R¦o¤â¤Uªº¤h®ð¡C
+~
+¸ë®ÛµYªº¥~ªí¬Ý¨Ó¤Q¤À»a¥Õ¡A¥¿¦p¨ä¥Lªº§Å¤k¤@¯ë¡C¦o¤£¦ý¬O­Ó¤@¬yªºªk®v¡A¦P®É
+¤]¬O¤@­Ó¾Ô¤h¡C³o¨â¤è­±ªº¤~¯àÅý¦o¦¨¬°¸t°ó¦u½Ã¶¤¶¤ªøªº¤£¤G¤H¿ï¡C¸ë®ÛµYµ¹¤H
+¤@ºØ¯«¯µªº¬ü·P¡A¤£¾å±o¬O¦]¬°¦o¨ººØ»a¥Õ©Ò±a¨Óªº¯fºA¬ü¡AÁÙ¬O¦oªºÅ]¤O©Ò³y¦¨
+ªº¡C¦o¨Ã¤£±j§§¡A¤£¹L¡A±j§§¹ï¦o¦Ó¨¥¤]¤£­«­n¡C
+~
+8195 8|32|64|128|8192 1000 S
+37 3000 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 3
+S 18 15
+S 19 15
+S 40 30
+P 8|32768|65536
+>repop_prog 100~
+mpoload 651
+mpoload 669
+mpoload 631
+mpoload 653
+mpoload 632
+mpoload 633
+mpoload 634
+mpoload 635
+mpoload 636
+mpoload 637
+mpoload 638
+mpat 5 wear all
+mpmload 623
+mpgroup jacklyn-ofcol temple-ofcol 1
+mpmload 623
+mpgroup jacklyn-ofcol temple-ofcol 1
+mpmload 623
+mpgroup jacklyn-ofcol temple-ofcol 1
+~
+>tick_prog 100~
+if hour($) == 21
+	mpcallout 2 mpecho $I·Ç³Æ±N¸t°óªºªùÃö³¬¡C
+	mpcallout 7 lock west
+	mpcallout 7 close west
+endif
+if hour($) == 7
+	mpcallout 2 mpecho $I·Ç³Æ±N¸t°óªºªù¶}±Ò¡C
+	mpcallout 6 unlock west
+	mpcallout 7 open west
+endif
+~
+>fight_prog 15~
+c fireball
+mpnowait
+~
+>fight_prog 15~
+c colour
+mpnowait
+~
+>fight_prog 15~
+c burning
+mpnowait
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) >= greenwoods_vice_meeting 100003
+	mpmod_qmark $n greenwoods_vice_meeting v0 | 8
+	yell «z°Ú¡I§Ú³QÀ»±Ñ¤F¡I³o­Ó¤H¨ì©³¬O½Ö...
+	mpecho $I ­t¶Ë°kÂ÷¾Ô³õ¡C
+	mppurge self
+endif
+~
+|
+#604
+jim-ofcol blacksmith~
+¦N©i(Jim)~
+ÅK¦K¦N©i(blacksmith Jim)¥¿¦b³c½æ¥L³Ìªñªº¦¨«~¡C
+~
+¦N©iªº¥~ªí©M¨ä¥LªºÅK¦K¨S¦³¤°»ò¤£¦P¡A±j§§¦ÓÂK¶Â¡C¥LÁy¤W±aµÛ·L¯º¡Aª`µøµÛ§A
+¤â¤Wªºª÷¹ô¡A¤£¾å±o¥L¤ß¸Ì¦b·Q¤°»ò¡C
+~
+3 8192 1000 S
+32 500 0 0d0+0 -7d0+0
+-1 0
+0 8 1
+P 8
+#605
+sam-ofcol~
+¤s©i(Sam)~
+¤s©i(Sam)¥¿¦b±À¾PµÛ¥L¤â»sªº¥Ö¥ó¡C
+~
+¤s©i¬O­Ó´¶³qªº¤u¦K¡C¥L¬Ý°_¨Ó¦³ÂI²Ö¤F¡A¤£¹L¨Ã¨S¦³²Ö¨ì½æ¤£°ÊªF¦è¡C
+~
+3 8192 1000 S
+40 500 0 0d0+0 -7d0+0
+-1 0
+0 8 1
+P 8
+#606
+madam tracy-ofcol~
+±ZÓ}¶ý¶ý(Madam Tracy)~
+±ZÓ}¶ý¶ý(Madam Tracy)¥¿¦b¶R½æµÛ¦U¦¡Âø³f¡C
+~
+±ZÓ}¶ý¶ý¤w¸g¤»¤Q´X·³¤F¡A¦o¦b³o¤@±a¶}Âø³f©±¤w¸g«Ü¤[¤F¡C¦Ó¦o¤]´N¾a³o¤@ÂI·L
+Á¡ªº§Q¼í¹L¬¡¡C
+~
+3 8192 1000 S
+29 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 8
+#607
+marty-ofcol~
+°¨³ö(Marty)~
+¦×©±¦ÑÁó °¨´£(Marty)¹ï§A¥s½æµÛ¤W¦nªº¦×«~¡C
+~
+°¨³ö¦×©±¸Ì¶Rªº¦×¥H©¹³£¬O©±¥D¿Ë¦ÛÂy¨Óªº¡CÀHµÛ¦~¬ö·U¨Ó·U¤j¡A°¨³ö¶}©l¹}¾i
+°Êª«¡AµM«á¦A±þ¨Ó½æ¡C
+~
+3 8192 1000 S
+32 500 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+#608
+elizabeth-ofcol farmer~
+¨Ì²ú²ï¥Õ(Elizabeth)~
+¹A°ü ¨Ì²ú²ï¥Õ(Farmer Elizabeth)³c½æµÛ­è¦¬¦¨ªº§@ª«¡C
+~
+¨Ì²ú²ï¥Õ¬O­Ó§Ö¼Öªº¹A°ü¡C¤µ¦~¥Ð¸Ìªº¦n¦¬¦¨Åý¦o«D±`ªº°ª¿³¡C¦oµo²{§A¦b¬Ý
+¦o¡A¹ïµÛ§AÅS¥X·Å©Mªº·L¯º¡C
+~
+3 8192 1000 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 8
+#609
+granny jenkins-ofcol~
+¬Ãµ^´µ±C±C(Granny Jenkins)~
+¬Ãµ^´µ±C±C(Granny Jenkins)¥¿¦bÆC°s¡C
+~
+¬Ãµ^´µ±C±C¤w¸g¤@¤j§â¦~¬ö¤F¡A¤£¹LÆC°sªº¤u§@ÁÙ¬O¥Ñ¦o¨Ó­t³d¡C
+~
+3 8192 500 S
+28 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+#610
+jack-ofcol~
+³Ç§J(Jack)~
+³Ç§J(Jack)¥¿¦b®_±þ°Êª«¡C
+~
+³Ç§J¬O°¨´£ªº¨à¤l¡A±q¥L®_±þ°Êª«ªº§Þ¥©¸Ì§AµoÄ±¤F¥L©M¥L¤÷¿Ëªº¬Û¦ü¤§³B¡C
+~
+163 0 200 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#611
+sara-ofcol sara farmer~
+²ïÛi(Sara)~
+¹A°ü ²ïÛi(Farmer Sara)¥¿¦b¬°¤ûÀ½¥¤¡C
+~
+¦oµo²{§A¶i¨Ó¡A¹ï§A·L·L¤@¯º¡AµM«á¤SÄ~Äò¦o­ì¨Óªº¤u§@¤F¡C
+~
+131 8|32 800 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 8
+>give_prog 10795~
+mpjunk all.letter
+if is_qmark($n) == murky_bouncer_quest 100000
+	mpmod_qmark $n murky_bouncer_quest v0 = 1
+	mpjunk all.letter
+	mpecho $I §tµÛ²´²\¡A»°ºò¥´¶}³o«Ê«H¾\Åª....
+	mpcallout 2 say ­ì¨Ó¥L³ºµM¨­³B¨º»ò¦MÀIªº¦a¤è....¡A
+	mpcallout 3 sob
+	mpcallout 4 say ³o¦ì­^¶¯¡A¦³­Ó¨p¤Hªº½Ð¨D....¡A
+	mpcallout 5 say ¤£ª¾¹D±z¬O§_¯à°÷À°¦£(yes/no)¡H
+endif
+~
+>talk_prog yes~
+if is_qmark($n) == murky_bouncer_quest 100001
+	mpmod_qmark $n murky_bouncer_quest v0 = 3
+	mpecho $I ¹ï§A·P¿Eªº¦A«×¬y¤U²\¨Ó....
+	mpcallout 1 say ¨ä¹ê¬O³o¼Ëªº....¡A
+	mpcallout 2 say §Ú§Æ±æ¯à°÷»s§@¤@¥ó«O·xªº¦çªAµ¹§Ú¨à¤l....¡A
+	mpcallout 3 say ¥H§K¥L¦b´H§Nªº «Õ­ß²`²W Ãä½tµ¹­áµÛ¤F....¡A
+	mpcallout 4 say ¦ý¬O³o¥ó¤ò¦çªº­ì®Æ¨Ã¤£®e©ö¨ú±o....¡A
+	mpcallout 5 say ¦]¦¹»Ý­n­^¶¯±zªºÀ°¦£(assist)¡C
+endif
+~
+>defun_prog murky_bouncer_quest~
+say µ¥§Ú¤@¤U¡A§Ú»Ý­n¤@ÂI®É¶¡»s§@³o¥ó¤ò¦ç....¡A
+mpcallout 1 say ¤j¬ù»Ý­n±Nªñ¥b¤Ñªº®É¶¡....¡A
+mpcallout 2 say ­Y¦n¤F§Ú·|½Ð¤H®´«H³qª¾§Aªº¡C
+mpcallout 3 mpecho $I Âà¨­Â÷¶}¤F....
+mpcallout 3 mpadd_qmark self murky_bouncer_quest 18 0 0 0 1 0
+mpcallout 3 mpdef_rembch $n
+mpcallout 4 mpgoto 5
+~
+>tick_prog 100~
+if being($b)
+	if is_qmark($i) != murky_bouncer_quest
+		if is_qmark($b) == murky_bouncer_quest 100003
+			mpat $b mpecho [1;37m©¿µM¦³­Ó¤H«æ«æ¦£¦£ªº¶]¤F¹L¨Ó....¡A[m
+			mpat $b mpecho ¨º­Ó¤H»¡µÛ¡u©êºp¡A $b ¡A²ï©Ô(Sara)¥s§Ú¹L¨Ó¸ò§A»¡¤ò¦ç¤w¸g§¹¦¨¤F¡I¡v
+			mpat $b mpecho [1;37m¨º­Ó¤H¸Ü»¡§¹«á¤S«æ«æ¦£¦£ªºÂ÷¶}¤F³oÃä¡C[m
+			mpat $b mpmod_qmark $b murky_bouncer_quest v0 = 4
+			mpdef_rembch null-tar
+			mpgoto 620
+		endif
+	endif
+else
+	if is_qmark($i) == murky_bouncer_quest
+		mpdel_qmark self murky_bouncer_quest
+		mpgoto 620
+	else
+		if inroom($i) == 620
+		else
+			mpgoto 620
+		endif
+	endif
+endif
+~
+>give_prog 2802~
+mpjunk all.skin
+if is_qmark($n) == murky_bouncer_quest 100003
+	if is_qmark($n) & murky_bouncer_quest 200001
+		break
+	endif
+	mpmod_qmark $n murky_bouncer_quest v1 | 1
+	say ÁÂÁÂ¡A§Ú¦¬¨ì ¥¨¤Hµw¥Ö(troll skin) ¤F....¡C
+	if is_qmark($n) == murky_bouncer_quest 200007
+		mpcall murky_bouncer_quest $n
+	endif
+endif
+~
+>give_prog 4202~
+mpjunk all.skin
+if is_qmark($n) == murky_bouncer_quest 100003
+	if is_qmark($n) & murky_bouncer_quest 200002
+		break
+	endif
+	mpmod_qmark $n murky_bouncer_quest v1 | 2
+	say ÁÂÁÂ¡A§Ú¦¬¨ì µVµVªº¥Ö(orang skin) ¤F....¡C
+	if is_qmark($n) == murky_bouncer_quest 200007
+		mpcall murky_bouncer_quest $n
+	endif
+endif
+~
+>give_prog 4209~
+mpjunk all.skin
+if is_qmark($n) == murky_bouncer_quest 100003
+	if is_qmark($n) & murky_bouncer_quest 200004
+		break
+	endif
+	mpmod_qmark $n murky_bouncer_quest v1 | 4
+	say ÁÂÁÂ¡A§Ú¦¬¨ì °\¥Ö(leopard skin) ¤F....¡C
+	if is_qmark($n) == murky_bouncer_quest 200007
+		mpcall murky_bouncer_quest $n
+	endif
+endif
+~
+>talk_prog assist~
+if is_qmark($n) == murky_bouncer_quest 100003
+	say ³o¤@¥ó¤ò¦ç©Ò»Ý­nªº­ì®Æ¦³¡G
+	if is_qmark($n) !& murky_bouncer_quest 200001
+		say ¥¨¤H±_¥Þªº¥¨¤Hµw¥Ö(troll skin)
+	endif
+	if is_qmark($n) !& murky_bouncer_quest 200002
+		say ÆZ¯î´ËªLµVµVªº¥Ö(orang skin)
+	endif
+	if is_qmark($n) !& murky_bouncer_quest 200004
+		say ÆZ¯î´ËªLªº°\¥Ö(leopard skin)
+	endif
+endif
+~
+>talk_prog no~
+if is_qmark($n) == murky_bouncer_quest 100001
+	sigh
+	mpmod_qmark $n murky_bouncer_quest v0 = 2
+	mpcallout 1 say ¨º»ò½Ð§Aµy­Ó¤f°Tµ¹§Ú¨à¤l....¡A
+	mpcallout 2 say ¸ò¥L»¡§Ú¤@¤Á¥­¦w....¡A
+	mpcallout 3 say ¦b ¶ø¤Ò¥d ¤é©]¬ß±æµÛ¥LªºÂk¨Ó¡C
+	mpcallout 4 thank $n
+	mpcallout 5 wave $n
+endif
+~
+>talk_prog topic~
+if is_qmark($n) == murky_bouncer_quest 100000
+	gasp $n
+	mpcallout 1 say §A....§A»¡§A¨ì....Ã¹­J«°³ù¨£¹L§Ú·R¨à....¡A
+	mpcallout 2 say ¥L....¥L¦³¨S¦³¥æ¥I§A¤°»ò¸Ü....¡H
+	mpcallout 3 say ¥L¤@¤Á³£¦w¦n¶Ü¡H
+	break
+endif
+if is_qmark($n) == murky_bouncer_quest 100004
+	if is_qmark($n) == murky_bouncer_quest 200007
+		mpmod_qmark $n murky_bouncer_quest v0 = 5
+		sm $n
+		mpcallout 1 say ¥Ñ©ó±zªºÀ°¦£....¡A
+		mpcallout 2 say §Ú²×©ó±o¥H¶¶§Q§¹¦¨³o¥ó¤ò¦ç....¡C
+		mpcallout 3 say ½Ð±z±N³o¥ó¤ò¦ç¥æµ¹§Úªº¨à¤l¦n¶Ü¡H
+		mpcallout 4 mpecho $I ±N ¤ò¦ç(sweater) ¥æµ¹¤F§A....
+		mpcallout 4 mpoload 673 $n viclv target
+		break
+	endif
+endif
+sm $n
+mpcallout 1 say ±z¦n¡A¦³¤°»ò»Ý­nÀ°¦£ªº¶Ü¡H
+~
+>rand_prog 20~
+mpecho $I À¿¤FÀ¿ÀY¤Wªº¦½....¡C
+mpcallout 1 sigh
+mpcallout 2 say §Ú¨º¦bÃ¹­J«°³ùªA°Èªº¨à¤l....¡A
+mpcallout 3 say ²{¦bª¬ªp¤£ª¾¹D«ç»ò¼Ë¤F¡C
+~
+|
+#612
+chicken hen~
+¥ÀÂû(hen)~
+¤@°¦¥ÀÂû(hen)¹ïµÛ§A©B©Bª½¥s¡C
+~
+¤@°¦¦A´¶³q¤£¹Lªº¥ÀÂû¡C
+~
+129 0 0 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+#613
+cow~
+¤û(cow)~
+¤@ÀY¤û(cow)¥¿¦b³o¸Ì¦Y¯ó¡C
+~
+¥¦¹ïµÛ§AÎN¤F¤@Án¡AµM«á¦ÛÅU¦Û¦aÄ~Äò¦Y¯ó¡C
+~
+1|2|64 0 0 S
+10 50 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+#614
+cow~
+¤û(cow)~
+¤@ÀY¤û(cow)¥¿µ¥µÛ³QÀ½¥¤¡C
+~
+¥¦¹ïµÛ§AÎN¤F¤@Án¡AÂà¹LÀY¥h¤£²z§A¤F¡C
+~
+3 0 0 S
+11 40 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+#615
+horse young~
+¥®°¨(young horse)~
+¤@¤Ç¥®°¨(young horse)¥¿¦b¦Y¯ó¡C
+~
+¥¦µo²{§A¶i¨Ó¡A°ª¿³¦a¦b§A¨­ÃäÂà¤F´X°é¡C
+~
+193 0 0 S
+4 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+#616
+pig~
+½Þ(pig)~
+¤@°¦½Þ(pig)¥¿¦b°ª¿³ªº¥´ºu¡A§Ë±o§A¨­¤W³£¬Oªd¤Ú¡C
+~
+¥¦¦bªd°ï¸Ìºu¨Óºu¥h¡A°ª¿³ªºµo¥X¥sÁn¡C
+~
+3 0 0 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+#617
+ofcol citizen man~
+¶ø¤Ò¥d¥«¥Á(ofcol citizen)~
+¤@­Ó¶ø¤Ò¥d¥«¥Á(ofcol citizen)¹ï§A·L¯º¡C
+~
+¥L·L¯º¦a¬ÝµÛ§A¡A§Æ±æ§A¯à¤À¨É¥L¤ß¤¤ªº´r§Ö¡C§Aª`·N¨ì¥L¬ÝµÛ§Aªº²´¥ú¤¤¦³¤@µ·
+ÃhºÃ¡A¤j·§¬O¦b²q§A¬°¤°»ò¥þ°ÆªZ¸Ë§a¡C
+~
+1|2|64 0 500 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>greet_prog 15~
+smile $n
+~
+|
+#618
+ofcol citizen woman~
+¶ø¤Ò¥d¥«¥Á(ofcol citizen)~
+¤@­Ó¶ø¤Ò¥d¥«¥Á(ofcol citizen)¹ï§A·L¯º¡C
+~
+¦o·L¯º¦a¬ÝµÛ§A¡A§Æ±æ§A¯à¤À¨É¦o¤ß¤¤ªº´r§Ö¡C§Aª`·N¨ì¦o¬ÝµÛ§Aªº²´¥ú¤¤¦³¤@µ·
+ÃhºÃ¡A¤j·§¬O¦b²q§A¬°¤°»ò¥þ°ÆªZ¸Ë§a¡C
+~
+1|2|64 0 500 S
+5 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>greet_prog 15~
+smile $n
+~
+|
+#619
+child boy~
+¤p¨k«Ä(boy)~
+¤@­Ó¤p¨k«Ä(boy)¥¿¦b³o¸Ìª±¹CÀ¸¡C
+~
+¥L±M¤ßªºª±µÛ¡A¬Æ¦Ü¨Sª`·N¨ì§A¦b¬Ý¥L¡C
+~
+1|2|64 0 500 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>rand_prog 9~
+mpecho $I¸ò¦P¦ñ°l³vª±­AµÛ¡C
+if rand(50)
+	if inroom($i) == 666
+		e
+	endif
+	if inroom($i) == 667
+		w
+	endif
+endif
+~
+|
+
+#620
+child girl~
+¤p¤k«Ä(girl)~
+¤@­Ó¤p¤k«Ä(girl)¥¿¦b³o¸Ìª±¹CÀ¸¡C
+~
+¦o±M¤ßªºª±µÛ¡A¬Æ¦Ü¨Sª`·N§A¦b¬Ý¦o¡C
+~
+1|2|64 0 500 S
+8 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>rand_prog 9~
+mpecho $I±Å°_¸ôÃäªºªá¦·¨à¡A§@°_¤Fªá«a¡C
+~
+|
+
+#621
+maid woman~
+¤k¦þ(maid)~
+¤k¦þ(maid)¥¿¦b¥´±½©Ð«Î¡C
+~
+´¶³qªº¤k¦þ¡A¥¿¦b±½¦a¡C
+~
+193 0 500 S
+13 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>repop_prog 100~
+mpoload 665
+mpoload 666
+mpat 5 wear broom
+~
+>greet_prog 30~
+if ispc($n)
+	stare $n
+	say §A¬Ý°Õ¡A§A§â¦aªO¤S§ËÅ¼¤F°Õ¡I
+	say §Ö¨«§Ö¨«¡A­n¬O¦Ñ·Ý¦^¨Óµo²{§Ú¨S¥´±½¦n´N§¹¤F¡C
+endif
+~
+|
+#622
+Nyles~
+¥§º¸(Nyles)~
+°s«O ¥§º¸(Nyles the Bartender)¥¿¦b¬°«È¤HªA°È¡C
+~
+¥§º¸¬O­Ó±j§§ªº°s«O¡A¬Ý¨Ó¨¬¥H¦w¼¾°s§a¸Ìªº¥´¬[¨Æ¥ó¡C
+~
+3 8192 1000 S
+31 500 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+#623
+temple-ofcol guard~
+¸t°ó¦u½Ã(temple guard)~
+¸t°ó¦u½Ã(temple guard)¥¿¦b³o¸Ì¦uÅ@µÛ¤jªù¡C
+~
+¨C­Ó¶ø¤Ò¥dªº¦u½Ã³£¬O¸g¹LÄY®æ°V½mªº¡C°t¤W¨}¦nªº¸Ë³Æ¡A¥H¤Î¤@¬yªº¾Ô§Þ¡A¨ä¤¤
+«O½Ã¸t°óªº¦u½Ã§ó¬O¤§¤¤ªºË³Ë³ªÌ¡C¤£¹L¡A§O¾á¤ß¡A¥L­Ì¥u·|¹ï«Â¯Ù¨ì¸t°ó¦w¥þªº
+¤H¥X¤â¡C
+~
+3 8192 1000 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+>repop_prog 100~
+mpoload 620
+mpoload 621
+mpoload 630
+mpoload 627
+mpat 5 wear all
+~
+|
+#624
+bard~
+§u¹C¸Ö¤H(bard)~
+§u¹C¸Ö¤H(bard)¥¿¦b§u°ÛµÛ¶ø¤Ò¥dªº¥ú½÷¾ú¥v¡C
+~
+¦b¦h¦~ªº®È¦æ¤§«á¡A¥L¨M©w¯d¦b¶ø¤Ò¥d³o­Ó¾ú¥v±y¤[ªº¥j«°¡A§u»w³o¸Ìªº°¶¤j¾ú¥v
+¬G¨Æ¡A¨Ã¥B¨É¨ü³o¸Ì¥­©Mªº¥Í¬¡¡C
+~
+3 8192 800 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#625
+servant~
+¨ÍªÌ(servant)~
+¨ÍªÌ(servant)¥¿¦b¾ã²z³o¸ÌªºÀô¹Ò¡C
+~
+¥L¦ÛÅU¦Û¦a¤u§@¡A¨S¦³ªÅ²z§A¡C
+~
+65 8192 1000 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#626
+squire~
+¨Í±q(squire)~
+¨Í±q(squire)«D±`¦£¸L¦a¤u§@µÛ¡C
+~
+¥LÁöµM¦³ª`·N¨ì§A¡A¤£¹L¨SªÅ¸ò§A»¡¸Ü¡C
+~
+65 8192 1000 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#627
+page~
+¹²§Ð(page)~
+¹²§Ð(page)¥¿¦b¬°¥LªºÃM¤h¥D¤HªA°È¡C
+~
+¥L¹ï§AÅS¥X·L¯º¡A¬Ý¬Ý¦³¨S¦³¯àÀ°±o¤F§Aªº¦a¤è¡C
+~
+65 8192 1000 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#628
+priestess~
+¤k²½¥q(Priestess)~
+¶ø¤Ò¥dªº¤k²½¥q(Priestess)¥¿¦b¬°§A¯¬ºÖ¡C
+~
+¤k²½¥qÁy¤W¥­ÀRªºªí±¡Åý§AÄ±±o¦o¦ü¥G¤w¸g©M³o­Ó¥@¬É¦X¦Ó¬°¤@¤F¡C¦o²¦¥Íªº®É¶¡
+³£ªá¦b±a»â§O¤H¬Û«H¦oªº¯«¡G¤Ú«¢©i¯S(Bahamut)¡C
+~
+3 8328 1000 S
+22 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 2
+#629
+chaplain Jerrold~
+³Ç©Ôº¸¼w(Jerrold)~
+ªª®v³Ç©Ôº¸¼w(Chaplain Jerrold)¥¿¦b«ü´§µÛ¨ä¥L¤Hªº¦æ°Ê¡C
+~
+¥L¹ï§A·L¯ºµÛ¡AµM«á¤j¥sµÛ¡G¡u§AÁÙ¯¸¦b³o¸Ì·F¹À¡I§Ö¥h¤u§@¡I¡I¡v
+~
+65 8328 1000 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+#630
+dragonlord lord knight~
+Às»â¥D(Dragonlord)~
+¤@­Ó¬ïµÛÀsÅìªºÃM¤h(Dragonlord knight)¥¿¯¸¦b³o¸Ì¡C
+~
+³o³Ã¥ë¬Ý°_¨Ó±j§§ªº´N¹³¤@±øÀs¡C¥L¹ïµÛ§AÅS¥X¸Þ²§ªº·L¯º¡A³oÅý§AÃP¤F¤@¤f®ð¡A
+¦Ü¤Ö¥L¨S¦³¬Ý§A¤£¶¶²´¡C
+~
+3 8328 1000 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dragon~
+C 1
+#631
+dragon gold ancient~
+¶Àª÷¸tÀs(Ancient Gold Dragon)~
+¤@°¦¥þ¨­ª÷¦âªº¦ÑÀs(gold dragon)¥¿¦b³o¸Ì¥´«¢¤í¡C
+~
+¥L³Q§AªºÂô¤J§Ëªº¦³ÂI¤£°ª¿³¡A¥´ºâ¥s¤H§â§A»°¨«¡A¦nÅý¥LÄ~ÄòºÎÄ±¡C
+~
+3 8840 1000 S
+33 1000 0 0d0+-50 -5d0+0
+-1 0
+0 8 1
+R Dragon~
+C 3
+P 8
+#632
+attendant~
+Às¹²(attendant)~
+¤@­Ó¬ïµÛª÷¦âªø³Tªº¨Í±q(attendant)¥¿¦bªA¨ÍµÛ¸t°ó¦uÅ@ªÌ¡C
+~
+¥L¬°¤F¦uÅ@¶Àª÷¸tÀs¡A¤£±¤¥I¥X¦Û¤vªº¥Í©R¡C
+~
+3 8200 1000 S
+13 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 2
+#633
+dragonknight knight~
+ÀsÃM¤h(Dragonknight)~
+¤@¦ìÀsÃM¤h(Dragonknight)¥¿¦b¦uÅ@µÛ¶Àª÷¸t°ó¡C
+~
+³o³Ã¥ë±j§§ªº´N¹³±øÀs¡A§A³Ì¦n§O¶Ã·S¥L¡C
+~
+65 8200 1000 S
+21 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dragon~
+C 1
+#634
+temple-ofcol guard~
+¸t°ó¦u½Ã(temple guard)~
+¸t°ó¦u½Ã(temple guard)¥¿¦b³o¸Ì¦uÅ@µÛ¤jªù¡C
+~
+¨C­Ó¶ø¤Ò¥dªº¦u½Ã³£¬O¸g¹LÄY®æ°V½mªº¡C°t¤W¨}¦nªº¸Ë³Æ¡A¥H¤Î¤@¬yªº¾Ô§Þ¡A¨ä¤¤
+«O½Ã¸t°óªº¦u½Ã§ó¬O¤§¤¤ªºË³Ë³ªÌ¡C¤£¹L¡A§O¾á¤ß¡A¥L­Ì¥u·|¹ï«Â¯Ù¨ì¸t°ó¦w¥þªº
+¤H¥X¤â¡C
+~
+3 8192 1000 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+>repop_prog 100~
+mpoload 620
+mpoload 621
+mpoload 630
+mpoload 627
+mpat 5 wear all
+~
+|
+#635
+lady cathy~
+³Í¦è(Cathy)~
+³Í¦è¤j¤p©j(lady Cathy)µL²á¦a±æµÛµ¡¥~¡C
+~
+¦o¬O¤@¦ìº}«Gªº¤p©j¡A¬õ¦âªºÀY¾v®¾°_¨Ó®Þ¦¨¤@­Ó¾vÀg¡A¤W¥b¨­¬ïµÛ¤@¥óµ·½è¥Õ
+­m¡A¤U¥b¨­¬ïµÛ¤@¥ó¯»¬õ¦âªº½´½´¸È¡C±q¦o°·±dªº½§¦â¬Ý¨Ó¡A¦oÀ³¸Ó¤£¬O¨ººØ¾ã
+¤Ñ¸ú¦b©Ð¶¡¸Ìªº¯f¬ü¤H¡C
+~
+195 8192 1000 S
+26 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 8
+>talk_prog topic~
+say ¤÷¿Ë©È§Ú©MÁÉªù(simon)¦b¤@°_¡A©Ò¥H§â§ÚÃö¦b³o¸Ì¡C
+	sigh
+~
+>talk_prog simon~
+say ¥L¬O§Úªº¨kªB¤Í¡A¦í¦b¥v¥d©Ô¨©¡A¦ý¤÷¿Ë¶û¥L¥X¨­§C·L...
+~
+>give_prog 8922~
+if is_qmark($n) == thief_quest_list 200202
+		mpecho $IÅå©I¡GÁÉªùªº«H¡I
+		mpecho $I«æ¦£§â«H¥´¶}¨Ó¬Ý¡C
+		mpadd_qmark self ofcol_cathy_story 50 0 0 0 1 0
+		mpdef_rembch $n
+		mpjunk letter
+	else
+		pon
+		drop letter
+	endif
+~
+>rand_prog 50~
+if insameroom($b)
+	if is_qmark($i) == ofcol_cathy_story
+		mpecho $I¬Ý§¹«H«á·P¿Eªº±æµÛ§A¡G
+		if sex($b) == 1
+			say ³o¦ì¥ý¥Í¯u¬OÁÂÁÂ§A¡A³o«Ê«H¤Sµ¹¤F§ÚµL½aªº§Æ±æ...
+		else
+			say ³o¦ì¤p©j¯u¬OÁÂÁÂ§A¡A³o«Ê«H¤Sµ¹¤F§ÚµL½aªº§Æ±æ...
+		endif
+		bow $b
+		ponder
+		say §Úª¾¹DÁÉªù¨S¤°»ò¿ú¡A¤H¤S¤Ó¸`»ü¡A¤@©w¨Sµ¹§A¤°»ò³ø¹S¡C
+		say ¤£¹L©p³o¼ËÀ°§U§Ú­Ì¹ê¦b¥O§Ú¹L·N¤£¥h....³o¼Ë§a¡A
+		mpecho $I±q¨­«áªº¯]Ä_½c¸ÌÂ½¥X¤@ÁûÃÄ¤Y
+		say ³o­ÓÃÄ¤Y¬O§Ú¥h¥@ªº¥À¿Ëµ¹§Úªº¡A¾Ú»¡¹ï«_ÀI®a­Ì
+		say ¤Q¤À¬Ã¶Q¡A´N°eµ¹§A§a¡C
+		mpecho $I§â¤@Áû¬õ¦âªºÃÄ¤Y¥æµ¹¤F§A.
+		mpoload 670 $b 30 target
+		say ¹ï¤F¡A¯à°÷³Â·Ð§A¦^¥h§i¶DÁÉªù¡A§Ú·|¥Ã»··R¥L(love forever)¶Ü¡H
+		thank $b
+		wave $b
+		mpdel_qmark self ofcol_cathy_story
+		mpmod_qmark $b thief_quest_list v1 = 203
+		mpmod_qmark $b thief_quest_list v0 r 4
+		mpdef_rembch null-tar
+	endif
+endif
+~
+|
+#636
+bodyguard~
+¨p®a«OÃð(bodyguard)~
+¤@¦ì¨p®a«OÃð(bodyguard)¥¿¦b°õ¦æ¥Lªº¤u§@¡C
+~
+³o³Ã¥ëªøªº¹³ÀY¦Ñªê¯ë±j§§¡A§A³Ì¦n§O¶Ã·S¥L¡C
+~
+10307 552 0 S
+37 0 0 10d0+0 -10d0+0
+-1 0
+0 8 1
+C 1
+P 8
+>greet_prog 100~
+if is_qmark($n) == thief_quest_list 200202
+	say §A·Q°µ¤°»ò¡H°½°½ºNºNªº³Ã¥ë¡A¬Ý©Û¡I
+	mpkill $n
+endif
+~
+|
+#637
+ofcol noble~
+¶ø¤Ò¥d¶Q±Ú(ofcol noble)~
+¤@­Ó¶ø¤Ò¥dªº¶Q±Ú(ofcol noble)¦b¸ô¤W¶¢®Ì¡C
+~
+¥L¬ïµÛ°ª¶Q¡A¥ú«Gªº¦çªA¦Ó¥B¦³­Ó¥­¤ZªºÁy¡C¨Ã¤£®É¥Î½èºÃªº²´¥ú¡A¥´¶qµÛ§A³o­Ó
+¥~°ê¤H¡C
+~
+1|2|64 0 0 S
+11 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>greet_prog 20~
+mpecho $I ¥ÎºÃ´bªº²´¥ú°½°½¥´¶q§A¡C
+~
+>talk_prog topic~
+welcome $n
+say ¶ø¤Ò¥d«Ò°êÅwªï©Ò¦³«È¤H...¦ý§Æ±æ§A­Ì§O·S¨Æ¥Í«D¡C
+~
+>rand_prog 9~
+if inroom($i) == 625
+	n
+endif
+if inroom($i) == 648
+	w
+endif
+if inroom($i) == 647
+	e
+endif
+if inroom($i) == 632
+or inroom($i) == 637
+	if rand(50)
+		n
+	else
+		s
+	endif
+endif
+if inroom($i) == 642
+	if rand(33)
+		e
+	else
+		if rand(50)
+			w
+		else
+			s
+		endif
+	endif
+endif
+if inroom($i) == 646
+or inroom($i) == 647
+or inroom($i) == 649
+or inroom($i) == 650
+	if rand(50)
+		e
+	else
+		w
+	endif
+endif
+~
+|
+#638
+ofcol noble~
+¶ø¤Ò¥d¶Q±Ú(ofcol noble)~
+¤@­Ó¶ø¤Ò¥dªº¶Q±Ú(ofcol noble)³k°ª®ð©ùªº¨«¦b¸ô¤W¡C
+~
+¦o¬ïµÛ©Ê·P¡A¥ú«Gªº¦çªA¦Ó¥B¦³Âù¤j²´·ú¡C¦o¬Ý¨£§A´N¹³¬Ý¨£ÆZ±Ú¤@¼Ë¡A»ÀµøµÛ§A
+³o­Ó¥~°ê¤H¡C
+~
+1|2|64 0 0 S
+10 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>greet_prog 20~
+mpecho $I ¬Ý¨£§A´NÅS¥X¹½´cªº¯«±¡¡C
+~
+>talk_prog topic~
+mpecho $I ÅS¥XÅº¶Æªº¯«ºA¡G
+say §Ú¬O¶ø¤Ò¥dªº¶Q±Ú¡I¸ò§A­Ì³oºØ¦¸µ¥¤½¥Á¥i¤£¦P¡I
+~
+>rand_prog 9~
+if inroom($i) == 625
+	n
+endif
+if inroom($i) == 648
+	w
+endif
+if inroom($i) == 647
+	e
+endif
+if inroom($i) == 632
+or inroom($i) == 637
+	if rand(50)
+		n
+	else
+		s
+	endif
+endif
+if inroom($i) == 642
+	if rand(33)
+		e
+	else
+		if rand(50)
+			w
+		else
+			s
+		endif
+	endif
+endif
+if inroom($i) == 646
+or inroom($i) == 647
+or inroom($i) == 649
+or inroom($i) == 650
+	if rand(50)
+		e
+	else
+		w
+	endif
+endif
+~
+|
+#639
+ofcol gate guard-ofcol~
+¶ø¤Ò¥dªù½Ã(Ofcol gate guard)~
+¶ø¤Ò¥dªù½Ã(Ofcol gate guard)¯¸¦bªù®Ç¡A½T«O³o¸Ìªº¦w¥þ¡C
+~
+¨C­Ó¶ø¤Ò¥dªº½Ã§L³£¬O¸g¹LÄY®æ°V½mªº¡C°t¤W¨}¦nªº¸Ë³Æ¡A¥H¤Î¤@¬yªº¾Ô§Þ¡A¥L­Ì
+±N·|¬O§A¥i©Èªº¹ï¤â¡C¤£¹L¡A§O¾á¤ß¡A¥L­Ì¥u·|¬°¤F«OÅ@¶ø¤Ò¥d¤H¥Á¦Ó¹ï§A¥X¤â¡C
+~
+1|2|64 8|32|64 1000 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+>repop_prog 100~
+mpoload 620
+mpoload 621
+mpoload 630
+mpoload 624
+mpat 5 wear all
+~
+|
+#0
+
+
+
+#OBJECTS
+#600
+handaxe axe~
+¤â©ò(handaxe)~
+¤@§â¤â©ò(handaxe)±¼¦b¦a¤W¡C~
+~
+5 0 8193
+1751175~ 0~ 0~ 3~
+10 0 0
+E
+handaxe axe~
+¤@§â¤â¤uºë¨}ªº¤â©ò¡A¬Ý¨Ó«Ü­@¥Î¡C
+~
+X iron~
+
+#601
+meat cleaver~
+±O¤M(meat cleaver)~
+¤@§â±O¤M(meat cleaver)±¼¦b¦a¤W¡C~
+~
+5 0 8193
+1751175~ 0~ 0~ 3~
+5 0 0
+E
+meat cleaver~
+¤@§âºë¿û¥´³yªº±O¤M¡C
+~
+X steel~
+
+#602
+side meat beef~
+¤û¦×(beef)~
+¤@¶ô¤û¦×(beef)±¼¦b¦a¤W¡C~
+~
+19 0 1
+26~ 0~ 0~ 0~
+10 40 0
+C 40
+X food~
+
+#603
+side meat pork~
+½Þ¦×(pork)~
+¤@¶ô½Þ¦×(pork)±¼¦b¦a¤W¡C~
+~
+19 0 1
+24~ 0~ 0~ 0~
+10 20 0
+C 20
+X food~
+
+#604
+side meat horse~
+°¨¦×(horse)~
+¤@¶ô°¨¦×(horse)±¼¦b¦a¤W¡C~
+~
+19 0 1
+30~ 0~ 0~ 0~
+12 50 0
+C 50
+X food~
+
+#605
+meat chicken~
+¥þÂû(chicken)~
+¤@°¦¥þÂû(chicken)±¼¦b¦a¤W¡C~
+~
+19 0 1
+20~ 0~ 0~ 0~
+5 25 0
+C 25
+X food~
+
+#606
+emerald ring~
+ºñÄ_¥Û§Ù«ü(emerald ring)~
+¤@¥uºë¥©ªººñÄ_¥Û§Ù«ü(emerald ring)±¼¦b¦a¤W¡A¤W­±ªgº¡¤F¦Ç¹Ð¡C~
+~
+8 64 3
+0~ 0~ 1751175~ 0~
+1 0 0
+A
+12 10
+L 10
+X emerald~
+
+#607
+glass trinket~
+¬Á¼þ¹¢«~(glass trinket)~
+¤@¥uºë¥©ªº¬Á¼þ¹¢«~(glass trinket)±¼¦b¦a¤W¡A¤W­±ªgº¡¤F¦Ç¹Ð¡C~
+~
+8 0 16385
+1000~ 0~ 0~ 0~
+1 0 0
+A
+24 -1
+X glass~
+
+#608
+golden necklace~
+ª÷¶µÁå(golden necklace)~
+¤@¦êª÷¶µÁå(golden necklace)±¼¦b¦a¤W¡A¤W­±ªgº¡¤F¦Ç¹Ð¡C~
+~
+8 0 5
+3000~ 0~ 0~ 0~
+2 0 0
+A
+4 -1
+A
+17 -3
+X gold~
+
+#609
+cabbage~
+¥ÌÂÅµæ(cabbage)~
+¤@¨Ç·sÂAªº¥ÌÂÅµæ(cabbage)³Q©ñ¦b³o¸Ì¡C~
+~
+19 0 1
+12~ 0~ 0~ 0~
+2 0 0
+L 1
+X food~
+
+#610
+lettuce~
+¸±­U(lettuce)~
+¤@¨Ç·sÂAªº¸±­U(lettuce)³Q©ñ¦b³o¸Ì¡C~
+~
+19 0 1
+12~ 0~ 0~ 0~
+2 0 0
+X food~
+
+#611
+milk bottle~
+¤@²~¤û¥¤(bottle milk)~
+¤@²~·sÂAªº¤û¥¤(bottle milk)©ñ¦b¬[¤l¤W¡C~
+~
+17 0 1
+9~ 9~ 10~ 0~
+5 50 0
+C 50
+X liquid~
+
+#612
+apple~
+Ä«ªG(apple)~
+¤@²ÉÄ«ªG(apple)±¼¦b¦a¤W¡C~
+~
+19 0 1
+8~ 0~ 0~ 0~
+1 0 0
+X food~
+
+#613
+corn~
+¥É¦Ì(corn)~
+¤@¦ê¥É¦Ì(corn)³Q©ñ¦b¦a¤W¡C~
+~
+19 0 1
+8~ 0~ 0~ 0~
+1 0 0
+X food~
+
+#614
+hay pile~
+¤@°ï°®¯ó(pile hay)~
+¤@¤j°ï°®¯ó(pile hay)çE¦b¦a¤W¡C~
+~
+13 0 1
+0~ 0~ 0~ 0~
+20 0 0
+X wooden~
+
+#615
+pitchfork fork~
+¯ó¤e(pitchfork)~
+¤@§â¯ó¤e(pitchfork)½ö¦b¦a¤W¡C~
+~
+5 0 8193
+1751175~ 0~ 0~ 11~
+10 0 0
+X metal~
+
+#616
+vest~
+¥Ö­I¤ß(leather vest)~
+¥Ö­I¤ß(leather vest)~
+~
+9 0 9
+0~ 0~ 1751175~ 0~
+10 0 0
+X leather~
+
+#617
+sleeves~
+¥Ö»sÅ@Áu(leather sleeves)~
+¥Ö»sÅ@Áu(leather sleeves)~
+~
+9 0 257
+0~ 0~ 1751175~ 0~
+5 0 0
+X leather~
+
+#618
+leggings~
+¥Ö»sÅ@×H(leather leggings)~
+¥Ö»sÅ@×H(leather leggings)~
+~
+9 0 33
+0~ 0~ 1751175~ 0~
+5 0 0
+X leather~
+
+#619
+boots~
+¥Ö¹u(leather boots)~
+¥Ö¹u(leather boots)~
+~
+9 0 65
+0~ 0~ 1751175~ 0~
+5 0 0
+X leather~
+
+#620
+signet ring ofcol~
+¶ø¤Ò¥d¤§§Ù(Ofcol ring)~
+¤@­Ó°{«GµÛª÷¥úªº§Ù«ü(ring)¡A¤W­±¨è¦³¬YºØ¦L°O(signet)¡C~
+~
+9 64 3
+0~ 0~ 1751175~ 0~
+1 0 0
+A
+24 -1
+A
+13 5
+X gold~
+
+#621
+plate brass~
+¶À»É²¯¥Ò(brass plate)~
+¶À»É²¯¥Ò(brass plate)~
+~
+9 64 9
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -2
+A
+13 10
+X brass~
+
+#622
+helm brass~
+¶À»ÉÀY²¯(brass helm)~
+¶À»ÉÀY²¯(brass helm)~
+~
+9 64 17
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#623
+leggings brass~
+¶À»É×H¥Ò(brass leggings)~
+¶À»É×H¥Ò(brass leggings)~
+~
+9 64 33
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#624
+boots brass~
+¶À»É¹u(brass boots)~
+¶À»É¹u(brass boots)~
+~
+9 64 65
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#625
+gauntlets brass~
+¶À»É¤â®M(brass gauntlets)~
+¶À»É¤â®M(brass gauntlets)~
+~
+9 64 129
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#626
+sleeves brass~
+¶À»ÉÅ@Áu(brass sleeves)~
+¶À»ÉÅ@Áu(brass sleeves)~
+~
+9 64 257
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#627
+shield brass~
+¶À»É¬Þ(brass shield)~
+¶À»É¬Þ(brass shield)~
+~
+9 64 513
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#628
+girth brass~
+¶À»É¸y±a(brass girth)~
+¶À»É¸y±a(brass girth)~
+~
+9 64 2049
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#629
+bracer brass~
+¶À»ÉÅ@µÃ(brass bracer)~
+¶À»ÉÅ@µÃ(brass bracer)~
+~
+9 64 4097
+0~ 0~ 1751175~ 0~
+10 0 0
+A
+24 -1
+A
+13 5
+X brass~
+ 
+#630
+claymore sword~
+Âù¤b¬å¤M(claymore sword)~
+¤@§â¬Ý°_¨Ó¤Q¤À¥¨¤jªº¨â¤b¤M(claymore sword)¡C~
+~
+5 64 8193
+1751175~ 0~ 0~ 1~
+16 0 0
+A
+18 -2
+A
+19 5
+X iron~
+
+#631
+plate silver~
+»È¾Ô¥Ò(silver plate)~
+¤@¥ó»È»sªº¾Ô¥Ò(silver plate)¡C~
+~
+9 1088 9
+0~ 0~ 1751175~ 0~
+20 0 0
+A
+12 30
+A
+1 1
+A
+3 1
+A
+5 1
+X silver~
+
+#632
+helm silver~
+»È¾Ô²¯(silver helm)~
+¤@­Ó°{°{µo¥úªº»È¾Ô²¯(silver helm)¡C~
+~
+9 1088 17
+0~ 0~ 1751175~ 0~
+20 0 0
+A
+12 5
+A
+2 1
+A
+5 1
+X silver~
+ 
+#633
+leggings silver~
+»È×H¥Ò(silver leggings)~
+¤@Âù°{«Gªº»È×H¥Ò(silver leggings)¡C~
+~
+9 1088 33
+0~ 0~ 1751175~ 0~
+20 0 0
+A
+12 20
+A
+3 1
+A
+19 1
+X silver~
+ 
+#634
+boots silver~
+»È¾Ô¹u(silver boots)~
+¤@Âù°{«Gªº»È¾Ô¹u(silver boots)¡C~
+~
+9 1088 65
+0~ 0~ 1751175~ 0~
+20 0 0
+A
+12 20
+A
+4 1
+A
+40 1
+X silver~
+ 
+#635
+gauntlets silver~
+»ÈÅ@¤â(silver gauntlets)~
+¤@Âù°{«Gªº»ÈÅ@¤â(silver gauntlets)¡C~
+~
+9 1088 129
+0~ 0~ 1751175~ 0~
+20 0 0
+A
+12 20
+A
+5 1
+A
+3 1
+X silver~
+ 
+#636
+sleeves silver~
+»ÈÅ@Áu(silver sleeves)~
+¤@Âù°{«Gªº»ÈÅ@Áu(silver sleeves)¡C~
+~
+9 1088 257
+0~ 0~ 1751175~ 0~
+20 0 0
+A
+3 1
+A
+12 20
+A
+18 2
+X silver~
+ 
+#637
+shield silver~
+»ÈÅ@¬Þ(silver shield)~
+¤@­±°{°{µo¥úªº»È¬Þ(silver shield)¡C~
+~
+9 1088 513
+0~ 0~ 1751175~ 0~
+20 0 0
+A
+3 1
+A
+12 20
+A
+17 -3
+A
+40 1
+X silver~
+ 
+#638
+girth silver~
+»È¸y±a(silver girth)~
+¤@±ø»È»sªº¸y±a(silver girth)¡C~
+~
+9 1088 2049
+0~ 0~ 1751175~ 0~
+15 0 0
+A
+12 20
+A
+19 1
+A
+40 1
+X silver~
+ 
+#639
+plate platinum~
+¥Õª÷¾Ô¥Ò(platinum plate)~
+¤@¥ó»È¥Õ¦âªº¾Ô¥Ò(plate)¡C~
+~
+9 1088 9
+0~ 0~ 2751275~ 0~
+50 0 0
+A
+13 15
+A
+5 2
+X platinum~
+
+#640
+helmet platinum~
+¥Õª÷ÀY²¯(platinum helmet)~
+¤@³»»È¥Õ¦âªºÀY²¯(helmet)¡C~
+~
+9 1088 17
+0~ 0~ 2751275~ 0~
+30 0 0
+A
+12 10
+A
+4 2
+X platinum~
+ 
+#641
+leggings platinum~
+¥Õª÷×H¥Ò(platinum leggings)~
+¤@Âù»È¥Õ¦âªº×H¥Ò(leggings)¡C~
+~
+9 1088 33
+0~ 0~ 2751275~ 0~
+40 0 0
+A
+13 25
+A
+2 2
+A
+1 1
+X platinum~
+ 
+#642
+boots platinum~
+¥Õª÷ªø¹u(platinum boots)~
+¤@Âù»È¥Õ¦âªºªø¹u(boots)¡C~
+~
+9 1088 65
+0~ 0~ 2751275~ 0~
+40 3000 0
+A
+13 25
+A
+14 100
+A
+5 2
+X platinum~
+
+#643
+gauntlets platinum~
+¥Õª÷Å@¤â(platinum gauntlets)~
+¤@Âù»È¥Õ¦âªº¤â®M(gauntlets)¡C~
+~
+9 1088 129
+0~ 0~ 2751275~ 0~
+40 0 0
+A
+13 25
+A
+18 2
+A
+5 1
+X platinum~
+ 
+#644
+sleeves platinum~
+¥Õª÷Å@Áu(platinum sleeves)~
+¤@Âù»È¥Õ¦âªºÅ@Áu(sleeves)¡C~
+~
+9 1088 257
+0~ 0~ 2751275~ 0~
+40 0 0
+A
+13 25
+A
+1 1
+A
+5 2
+X platinum~
+ 
+#645
+shield spiked platinum~
+¥Õª÷¨ë¬Þ(platinum spiked shield)~
+¤@­Ó±a¦³¦y¨ë(spiked)ªº»È¥Õ¦â¬ÞµP(shield)¡C~
+~
+9 1088 513
+0~ 0~ 2751275~ 0~
+40 0 0
+A
+13 25
+A
+19 3
+A
+40 1
+X platinum~
+ 
+#646
+girth platinum~
+¥Õª÷¸y±a(platinum girth)~
+¤@±ø»È¥Õ¦âªº¸y±a(girth)¡C~
+~
+9 1088 2049
+0~ 0~ 2751275~ 0~
+40 0 0
+A
+13 25
+A
+24 -3
+A
+1 1
+A
+5 1
+X platinum~
+ 
+#647
+avenger holy sword~
+¯«¸t´_¤³ªÌ(Holy Avenger)~
+¤@§â´²µo¥X¯«¸t¤O¶qªº»È¥Õ¦âªø¼C(sword)¡C~
+~
+5 1344 8193
+2751275~ 35~ 45~ 1~
+25 25000 0
+A
+18 10
+A
+19 10
+A
+37 -5
+A
+40 2
+A
+44 15
+H dispel evil~ 25 40 4
+H flamestrike~ 25 40 4
+C 25000
+X platinum~
+
+#648
+whiskey shot~
+«Â¤h§Ò(shot of whiskey)~
+¤@ªM¥H¯P°sªM²±¸Ëªº«Â¤h§Ò(shot of whiskey)³Q©ñ¦b³o¸Ì¡C~
+~
+17 0 1
+5~ 5~ 5~ 0~
+1 0 0
+X liquid~
+
+#649
+ale quart~
+³Á°s(quart of ale)~
+¤@¦j¯S³Á°s(quart of ale)³Q©ñ¦b³o¸Ì¡C~
+~
+17 0 1
+40~ 40~ 3~ 0~
+8 0 0
+X liquid~
+ 
+#650
+port quart~
+ªi¯S°s(quart of port)~
+¤@¦j¯Sªi¯S°s(quart of port)³Q©ñ¦b³o¸Ì¡C~
+~
+17 0 1
+40~ 40~ 4~ 0~
+8 0 0
+X liquid~
+ 
+#651
+key citadel~
+¸t°óÂê°Í(citadel key)~
+¤@§âÆ_°Í(key)ÀRÀR¦a½ö¦b¦a¤W¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X iron~
+
+#652
+symbol holy bahamut~
+¤Ú«¢©i¯S¸t¼Ð(Bahamut Holy Symbol)~
+¤@­Ó°{°{µo«Gªº¸t¼Ð(symbol)ÀRÀR¦a½ö¦b¦a¤W¡C~
+~
+9 3392 5
+0~ 0~ 2751275~ 0~
+5 0 0
+A
+12 10
+A
+4 2
+X silver~
+
+#653
+spear~
+¾Ô¥Ù(spear)~
+¤@§â¤j«¬ªº¾Ô¥Ù(spear)ÀRÀR¦a½ö¦b¦a¤W¡C~
+~
+5 1088 8193
+2751275~ 0~ 0~ 2~
+20 0 0
+A
+18 2
+A
+19 4
+X metal~
+
+#654
+torso dragonscale golden~
+¶Àª÷ÀsÅì¥Ò(golden dragonscale torso)~
+¤@¥ó¥Ñ¶Àª÷ÀsÅì»s¦¨ªºÅ@¥Ò(golden dragonscale torso)¡C~
+~
+9 1088 9
+0~ 0~ 2751275~ 0~
+25 0 0
+A
+17 -5
+A
+18 2
+X dragon scale~
+
+#655
+dragonhelm golden~
+¶Àª÷ÀsÅìÀY²¯(golden dragonhelm)~
+¤@³»¥Ñ¶Àª÷ÀsÅì»s¦¨ªºÀY²¯(golden dragonhelm)¡C~
+~
+9 1088 17
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+17 -3
+A
+18 1
+X dragon scale~
+ 
+#656
+leggings golden dragonscale~
+¶Àª÷ÀsÅì×H¥Ò(golden dragonscale leggings)~
+¤@Âù¥Ñ¶Àª÷ÀsÅì»s¦¨ªº×H¥Ò(golden dragonscale leggings)¡C~
+~
+9 1088 33
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+17 -3
+A
+18 1
+X dragon scale~
+ 
+#657
+boots golden dragonscale~
+¶Àª÷ÀsÅì¹u(golden dragonscale boots)~
+¤@Âù¥Ñ¶Àª÷ÀsÅì»s¦¨ªº¾Ô¹u(golden dragonscale boots)¡C~
+~
+9 1088 65
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+17 -3
+A
+18 1
+X dragon scale~
+ 
+#658
+gauntlets golden dragonscale~
+¶Àª÷ÀsÅì¤â®M(golden dragonscale gauntlets)~
+¤@°Æ¥Ñ¶Àª÷ÀsÅì»s¦¨ªº¤â®M(golden dragonscale gauntlets)¡C~
+~
+9 1088 129
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+17 -3
+A
+18 1
+X dragon scale~
+ 
+#659
+sleeves golden dragonscale~
+¶Àª÷ÀsÅìÅ@Áu(golden dragonscale sleeves)~
+¤@Âù¥Ñ¶Àª÷ÀsÅì»s¦¨ªºÅ@Áu(golden dragonscale sleeves)¡C~
+~
+9 1088 257
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+17 -3
+A
+18 1
+X dragon scale~
+ 
+#660
+shield golden dragonscale~
+¶Àª÷ÀsÅì¬Þ(golden dragonscale shield)~
+¤@­±¥Ñ¶Àª÷ÀsÅì»s¦¨ªº¬ÞµP(golden dragonscale shield)¡C~
+~
+9 1088 513
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+17 -3
+A
+18 1
+X dragon scale~
+ 
+#661
+girth golden dragonscale~
+¶Àª÷ÀsÅì¸y±a(golden dragonscale girth)~
+¤@±ø¥Ñ¶Àª÷ÀsÅì»s¦¨ªº¸y±a(golden dragonscale girth)¡C~
+~
+9 1088 2049
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+17 -3
+A
+18 1
+X dragon scale~
+ 
+#662
+claw golden~
+¶Àª÷¤ö(Golden Claw)~
+¤@­Ó¥¨¤jªºª÷¦â¤ö¤l(golden claw)¡C~
+~
+5 1088 8193
+2751275~ 0~ 0~ 5~
+20 0 0
+A
+19 6
+X dragon bone~
+ 
+#663
+orb dragonorb gold~
+ª÷Às¯](Gold Dragon Orb)~
+¤@Áû´²µo¥X¬Ã¯]¥ú¿AªºÀs¯](dragon orb)¡A³Q¥]³ò¦b¤@°éª÷¹¢(gold)¤¤¡C~
+~
+4 3136 16385
+13~ 11~ 11~ heal~
+30 40000 0
+A
+3 2
+A
+4 2
+
+C 40000
+X dragon crystal~
+ 
+#664
+robe golden~
+¶Àª÷ªk¦ç(golden robe)~
+¤@¥óª÷¶À¦âªºªk¦ç(golden robe)¡C~
+~
+9 1088 1025
+0~ 0~ 2751275~ 0~
+10 3000 0
+A
+3 3
+
+C 3000
+X gold~
+
+#665
+house key~
+©Ð«ÎÆ_°Í(house key)~
+¤@§âÆ_°Í(key)ÀRÀR¦a½ö¦b¦a¤W¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X metal~
+
+#666
+broom~
+±½§â(broom)~
+¤@§â±½§â(broom)ÀRÀR¦a½ö¦b¦a¤W¡C~
+~
+5 0 8193
+2751275~ 0~ 0~ 7~
+8 0 0
+A
+18 3
+A
+19 -3
+X wooden~
+
+#667
+chest~
+½c¤l(chest)~
+¤@¤f½c¤l(chest)³Q©ñ¦b³o¸Ì¡C~
+~
+15 0 1
+100~ 0~ 0~ 0~
+25 200 0
+
+C 200
+X wooden~
+
+#668
+robe golden~
+¶Àª÷ªk¦ç(golden robe)~
+¤@¥óª÷¶À¦âªºªk¦ç(golden robe)¡C~
+~
+9 1088 1025
+0~ 0~ 2751275~ 0~
+10 3000 0
+A
+3 2
+C 3000
+X gold~
+
+#669
+signet ring ofcol~
+¶ø¤Ò¥d¤§§Ù(Ofcol ring)~
+¤@­Ó°{«GµÛª÷¥úªº§Ù«ü(ring)¡A¤W­±¨è¦³¬YºØ¦L°O(signet)¡C~
+~
+9 64 3
+0~ 0~ 1751175~ 0~
+1 2000 0
+A
+1 1
+A
+5 1
+A
+24 -1
+A
+18 2
+A
+13 5
+C 2000
+X gold~
+
+#670
+dew pill~
+¤EÂà¥ÉÅS¤Y(dew pill)~
+¤@Áû¬õ¦âªºÃÄ¤Y(pill)¡C~
+~
+26 64 1
+5~ full heal~  ~  ~
+1 0 0
+X herb~
+
+#671
+key~
+ª×©ÐÆ_°Í(key)~
+¤@§âÆ_°Í(key)ÀRÀR¦a½ö¦b¦a¤W¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X iron~
+
+#672
+draft letter~
+¼ã¯óªº«H(draft letter)~
+¤@±i¼ã¯óªº«H(draft letter)ÄÆ¸¨¦b³o¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+draft letter~
+­P ºñ¾ð¤ý°ê¬Ó®a½Ã¶¤°Æ¶¤ªø¡A
+
+    ­º¥ý§Ú¥²¶·Äµ§i§A¡A¤£­n§C¦ô§Ú­Ìªº´¼¼z¡A§A³oºØ¤Ï¶¡­p¦­¤w¸g¹L®É¡A¥u¬O
+®{¼W§Ú­Ì¹ïºñ¾ð¤ý°êªº»´µø¡C
+    §Ú°ê¥Ø«e»P¥v¥d©Ô¨©ªº¨¹¥æÃ­©w¡A¦b¥i¨£ªº¥¼¨Ó§Ú¤]¤£»{¬°¦³¥ô¦ó¤£·üªº¥i
+¯à¡AÃö©ó§A©Ò¿×¦@¦P¹ï§Ü±jÅvªº´£Ä³¯u¬O¤@¶µ¥i¯ºªº¯º¸Ü¡A½Ð§A­Ì¥ý§â¦Û¤vªº¥ß
+³õ·Q²M·¡§a¡C
+    ¦AªÌ¡A±Í°êªº¦Û¤j¯u¬OÅý¤H¦YÅå¡A§Ú¤£ª¾¹Dºñ¾ð¤ý°ê¦ó®É¤w¸gÅÜ¦¨¤j³°¤Wªº
+¤@µ¥±j°ê¡A³ºµM¥i»P¥úºaªº¶ø¤Ò¥d¤@»ô¨ÃºÙ¡H¥S§Ì¤§¨¹¤@»y¡A½Ð±Í°ê¦Û¤v¨É¥Î¡I
+
+ 					¶ø¤Ò¥d«Ò°ê¤¸«Ó ÂL¦w®R
+~
+T 100
+X paper~
+
+#673
+fine sweater~
+ºë½o¤ò¦ç(fine sweater)~
+¤@¥óÂ´¤uºë²Óªº¤ò¦ç(sweater)³Q©ñ¸m¦b³oÃä¡C~
+~
+9 0 1025
+0~ 0~ 75~ 0~
+3 0 0
+A
+3 1
+X wool~
+
+#674
+Thalos great sword~
+®õ¬¥´µ¤j¼C(Thalos great sword)~
+¤@§â®õ¬¥´µ¨î¦¡ªº³æ¾W¤j¼C(great sword)³Q¥á±ó¦b³o¸Ì¡C~
+~
+5 2|256 8193
+50~ 40~ 60~ 1~
+50 25000 0
+A
+18 5
+A
+19 5
+X steel~
+
+#675
+ofcol gate key~
+¶ø¤Ò¥d«°ªùÆ_°Í(Ofcol gate key)~
+¶ø¤Ò¥d«°ªùªºÆ_°Í(Ofcol gate key)ÀRÀR¦a½ö¦b¦a¤W¡C~
+~
+18 0 1|16384
+0~ 0~ 0~ 0~
+1 0 0
+X metal~
+
+#676
+plate gold~
+¶Àª÷¾Ô¥Ò(gold plate)~
+¤@¥óª÷¶À¦âªº¾Ô¥Ò(plate)¡C~
+~
+9 1088 9
+0~ 0~ 2751275~ 0~
+20 0 0
+A 13 50
+A 35 -5
+A 24 -5
+X gold~
+
+#677
+helmet gold~
+¶Àª÷ÀY²¯(gold helmet)~
+¤@³»ª÷¶À¦âªºÀY²¯(helmet)¡C~
+~
+9 1088 17
+0~ 0~ 2751275~ 0~
+15 0 0
+A 13 20
+A 24 -3
+X gold~
+
+#678
+leggings gold~
+¶Àª÷×H¥Ò(gold leggings)~
+¤@Âùª÷¶À¦âªº×H¥Ò(leggings)¡C~
+~
+9 1088 33
+0~ 0~ 2751275~ 0~
+20 0 0
+A 13 20
+A 35 -2
+X gold~
+
+#679
+boots gold~
+¶Àª÷ªø¹u(gold boots)~
+¤@Âùª÷¶À¦âªºªø¹u(boots)¡C~
+~
+9 1088 65
+0~ 0~ 2751275~ 0~
+20 3000 0
+A 14 50
+A 35 -2
+X gold~
+
+#680
+gauntlets gold~
+¶Àª÷Å@¤â(gold gauntlets)~
+¤@Âùª÷¶À¦âªº¤â®M(gauntlets)¡C~
+~
+9 1088 129
+0~ 0~ 2751275~ 0~
+20 0 0
+A 13 20
+A 24 -3
+X gold~
+
+#681
+sleeves gold~
+¶Àª÷Å@Áu(gold sleeves)~
+¤@Âùª÷¶À¦âªºÅ@Áu(sleeves)¡C~
+~
+9 1088 257
+0~ 0~ 2751275~ 0~
+20 0 0
+A 13 20
+A 35 -2
+X platinum~
+
+#682
+girth gold~
+¶Àª÷¸y±a(gold girth)~
+¤@±øª÷¶À¦âªº¸y±a(girth)¡C~
+~
+9 1088 2049
+0~ 0~ 2751275~ 0~
+20 0 0
+A 13 20
+A 24 -6
+X gold~
+
+#0
+
+
+#ROOMDATA
+#600
+¶ø¤Ò¥d«°ªù~
+¦L¤J²´Ã®ªº¥¨¤j«°ªù«á¡A¥¿¬O­·¤§¤j³°¤W¤HÃþªº²Ä¤G¤j«° - ¶ø¤Ò¥d(Ofcol)¡C
+³o®yÁcµØªº«°¥«¾aµÛ¥X²£¶Qª÷ÄÝ¡A¦Ó¦³µÛ¤£¿é¥v¥d©Ô¨©ªº±j¤j¸gÀÙ¯à¤O¡C¦ý¦b­I«á
+´x±±«°¥«¹B§@ªº¹êÅvªÌ¬°­x¤è¡A¦Ó¤£¹³¥v¥d©Ô¨©ªº¥«¥ÁÄ³·|±Ä¥Î¥Áªv¡C¦b§A±´¯Á³o
+°ê®a®É¡A¤d¸U¤£­nÄ²¥Ç¶ø¤Ò¥d«°ªºªk±ø¡A¤£µM±N¾D¨üÄY¦D¨îµô¡C
+~
+0 4 1
+D1
+~
+¥¨¤jªº«°ªù~
+1 675 601
+D3
+~
+~
+0 0 5553
+>room_time 100~
+if rmobcount(639) < 2
+	if rnplayer($) == 0
+		if roomtimer($0) == 0
+			mload 639
+			modrvt t0 = 2
+		else
+			modrvt t0 = 2
+		endif
+	endif
+endif
+~
+|
+S
+#601
+¤Q¦r¸ô¤f~
+³o¸Ì¬O©Ô¤Ò¸ô©M­^¥Ö¸ôªº¥æ¤e¤f¡C¸ô¤W¦³³\¦h¦æ¤H¥¿¦bº©¹CµÛ¡C¦VªFªº¤@±ø¸ô
+¬O©Ô¤Ò¸ô¡A¦èÃä«h¬O¶ø¤Ò¥d«°ªù¡A¦Ó«n¥_¦V¦ÛµM´N¬O­^¥Ö¸ô¤F¡C
+~
+0 0 1
+D0
+~
+~
+0 0 625
+D1
+~
+~
+0 0 666
+D2
+~
+~
+0 0 602
+D3
+~
+¥¨¤jªº«°ªù~
+1 675 600
+S
+#602
+­^¥Ö¸ô~
+§A¥¿º©¨B¦b­^¥Ö¸ô¤W¡CªFÃä¥i¥H¬Ý¨ì¤@¶¡¥Ö¥ó©±¡A¦èÃä«h¦³¤@®aÅK¦KçE¡C¥_Ãä
+¬O¤Q¦r¸ô¤f¡A¦Ó­^¥Ö¸ô«h¦V«nÃä©µ¦ù¦Ó¥h¡C
+~
+0 0 1
+D0
+¤Q¦r¸ô¤f´N¦b¥_Ãä¡C
+~
+~
+0 0 601
+D1
+~
+~
+0 0 604
+D2
+~
+~
+0 0 605
+D3
+~
+~
+0 0 603
+S
+#603
+¥´ÅKçE~
+©Ð¶¡¤¤¥¡ªº¤jº²Älµo¥X¤@ªiªi±j¯Pªº¼ö®ð¡AÅý§A¥u·Q§ÖÂIÂ÷¶}³o¸Ì¡CÀðÃä©ñµÛ
+¤@­Ó¤u§@¥x¡A®ÇÃäÁÙ¦³¤@¨Ç¸HÅK¶ô´²¸m¤@¦a¡C«Î¤lªº¥X¤f¦bªFÃä¡C 
+~
+0 8 0
+D1
+~
+~
+0 0 602
+S
+#604
+¥Ö¥ó©±~
+¦UºØ¥HÃ~¥Ö»s¦¨ªº¥Ö¥ó±¾¦b¥|©PªºÀð¤W¡C¤@ªÑ±j¯Pªº¨ý¹D¥Rº¡¾ã­Ó©Ð¶¡¡A»D°_
+¨Ó¹³¬OÃ~¥Ö¿NµJªº¨ý¹D¡A¤j·§¬O±q¤u§@«Ç¶Ç¥X¨Óªº§a¡C¦èÃä¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D3
+~
+~
+0 0 602
+S
+#605
+­^¥Ö¸ô~
+§A¥¿º©¨B¦b­^¥Ö¸ô¤W¡AªFÃä¬O¤@®a¦×©±¡A¦Ó¦èÃä«h¬O¤@¶¡·íçE¡C¹D¸ô¦V«n¥_¨â
+Ãä©µ¦ù¡A¤T¤£¤­®É´N¦³¤H»P§A¥æ¿ù¦Ó¹L¡C
+~
+0 0 1
+D0
+¹D¸ô¦V¥_Ãä©µ¦ù¡C
+~
+~
+0 0 602
+D1
+¤@®a¦×©±¡C
+~
+~
+0 0 607
+D2
+~
+~
+0 0 608
+D3
+~
+~
+0 0 606
+S
+#606
+·íçE~
+©Ð¸ÌÂ\µÛ´X­Ó®i¥ÜÂd¡A¸ÌÀY©ñµÛ¦UºØ¤G¤âªº³fª«¡A¤WÀYÁÙ¦³¡u½Ð¤ÅÄ²ºN¡vªº
+¼Ð»x¡C¦pªG§A¦³¿³½ì¡A©Î³\¥i¥H¦V¦ÑÁó°Ý°Ý»ù¿ú¡C
+~
+0 8 0
+D1
+¥~­±¬O­^¥Ö¸ô¡C
+~
+~
+0 0 605
+S
+#607
+¦×©±~
+¨â®Çªº¬[¤l¤W±¾µÛ¦UºØ°Êª«ªº¦×¡A¥ôÅU«ÈÀH·N¿ïÁÊ¡C§AÁô¬ù¥i¥HÅ¥¨ì¿i¤Mªº
+Án­µ¡A¤j·§¬O¦ÑÁó¤S·Ç³Æ­n®_±þ°Êª«¤F¡C
+~
+0 8 0
+D3
+~
+~
+0 0 605
+S
+#608
+­^¥Ö¸ô~
+§A¥¿º©¨B¦b­^¥Ö¸ô¤W¡AªFÃä³q©¹¤@­Óµæ¥«³õ¡A¦èÃä«h¬O¥§¤ó°s§a¡C¦A©¹«n´N¨ì
+¤F­^¥Ö¸ôªººÉÀY¡Cµæ¥«³õ¸Ì¤HÁn§nÂø¡A§A¯¸¦b³o¸Ì´N¥i¥HÅ¥±o¤@²M¤G·¡¡C
+~
+0 0 1
+D0
+~
+~
+0 0 605
+D1
+~
+~
+0 0 610
+D2
+~
+~
+0 0 611
+D3
+~
+~
+0 0 609
+S
+#609
+¥§¤ó°s§a~
+³\¦h¤H¥¿¦b©±¸Ì´r§Öªº³Ü°s²á¤Ñ¡C¥§¤ó°s§a¨ÑÀ³©±¥D³Ì¦Û¶Æªº¦ÛÆC³Á°s¡A¨C¤@
+­Ó³Ü¹Lªº¤H³£Æg¤£µ´¤f¡A©Î³\§A¤]¸Ó¶R¤@²~¨Ó¸Õ¸Õ¡C
+~
+0 8|131072|262144 0
+D1
+~
+~
+0 0 608
+S
+#610
+µæ¥«³õ~
+©Ò¦³ªº¹A¤H³£·|±N¥L­Ìªº§@ª«®³¨ì³o¸Ì¨Ó½æ¡A©Ò¥H¡A¤£½×§A·Q¶R¤°»ò½­ªG´X¥G
+³£¤£¦¨°ÝÃD¡C°ß¤@ªº¯ÊÂI´N¬O³o¸Ìªº¥s½æÁn§nªºÅý§A¨ü¤£¤F¡C
+~
+0 8 0
+D3
+~
+~
+0 0 608
+S
+#611
+­^¥Ö¸ôªººÉÀY~
+­^¥Ö¸ô¨ì³o¸Ìµ²§ô¡A¦A©¹¨ä¥L¤è¦V´NÂ÷¶}¤F¶ø¤Ò¥dªº«°¥«°Ï¡C¦èÃä¬O¤@¤j¤ù¹A
+¥Ð¡A¦ÓªFÃäªºªd¤Ú¸ô«h³q©¹¤@­Óªª³õ¡C
+~
+0 0 1
+D0
+~
+~
+0 0 608
+D1
+~
+~
+0 0 668
+D3
+~
+~
+0 0 612
+S
+#612
+¥É¦Ì¥Ð~
+§A¥¿¸m¨­¦b¤@¤j¤ùªº¥É¦Ì¥Ð¸Ì¡A¥Ñ©ó¥É¦ÌºØ´Óªº¤Q¤À¿@±K¡A§Aªºµø½u¤]³Q¾×¦í
+¤F¡C¦b¥É¦ÌªºÁ_»Ø¤§¶¡¡A§A§Ï©»¬Ý¨ì¥_Ãä¦³¤@´É©Ð¤l¡C
+~
+0 0 2
+D0
+~
+~
+0 0 616
+D1
+~
+~
+0 0 611
+D2
+~
+~
+0 0 613
+D3
+~
+~
+0 0 615
+S
+#613
+ªG¶é~
+³o¸ÌºØ´Óªº¥þ³£¬OªG¾ð¡A§A¥i¥H¬Ý¨ì¾ð¤Wµ²º¡¤FÄ«ªG©M¾ï¤l¡C¦V¥_¥i¥H³q©¹¥É
+¦Ì¥Ð¡A¦Ó¦èÃä«h¬Oµæ¶é¡C
+~
+0 0 2
+D0
+~
+~
+0 0 612
+D3
+~
+~
+0 0 614
+S
+#614
+µæ¶é~
+³o¸ÌºØ´ÓµÛ¦UºØ½­µæ¡A©ñ²´±æ¥h¡A§A¥i¥H¬Ý¨ì¤@¨Ç¥ÌÂÅ©M¸±­U¡AÁÙ¦³¤@¨Ç¿»­X
+©M°¨¹aÁ¦¡CªFÃä³q©¹ªG¶é¡A¦Ó¥_Ãä«h³q©¹¤@¤j¤ùªº³Á¥Ð¡C
+~
+0 0 2
+D0
+~
+~
+0 0 615
+D1
+~
+~
+0 0 613
+S
+#615
+³Á¥Ð~
+¤@¤j¤ùªº¤p³ÁÀôÂ¶¦b§A¨­®Ç¡A³oµÎªAªº·PÄ±Åý§A´X¥G·Q½ö¤U¨Ó¦n¦n¥ð®§¤@µf¡C
+ªFÃä³q©¹¥É¦Ì¥Ð¡A¦Ó«nÃä«h³q©¹µæ¶é¡C
+~
+0 0 2
+D1
+~
+~
+0 0 612
+D2
+~
+~
+0 0 614
+S
+#616
+½\­Ü~
+½\­Ü¸Ì©ñµÛ³\¦h¦¬¦¨ªº§@ª«¡CÀðÃä°ïµÛ´X°ï¤p³Á©M¥É¦Ì¡AÁÙ¦³¤@¨Ç½­µæ©ñ¦bÄx
+¤l¸Ì¡C¦èÃä¦³¤@®°¤pªù¡A©¹«n«h¥i¥HÂ÷¶}½\­Ü¡C
+~
+0 8 0
+D2
+~
+~
+0 0 612
+D3
+~
+door~
+3 -1 622
+S
+#617
+±O®_³õ~
+¦b³o¸Ì®_±þªº°Êª«³q±`·|³Q®³¨ì¦×©±½æ¡A¦Ó¥Ö«h·|³Q­é¤U¨Ó»s¦¨¥Ö¥ó¡C¯¸¦b³o
+¸Ì¡A¦Õ¦·¸ÌÅ¥¨£ªº³£¬O°Êª«ªººG¥sÁn¡AÅý§A¥u·Q»°§ÖÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D3
+~
+~
+0 0 668
+S
+#618
+ªd¤Ú¤p¸ô~
+ªFÃä¬O¤ûÄæ¡A¦Ó«nÃä«h¬O¤@¶¡ÂûªÙ¡Cªd¤Ú¸ô¦V¥_Ãä©M¦èÃä©µ¦ù¦Ó¥h¡C
+~
+0 0 2
+D0
+~
+~
+0 0 668
+D1
+~
+~
+0 0 620
+D2
+~
+ªù~
+3 -1 619
+D3
+~
+~
+0 0 621
+S
+#619
+ÂûªÙ~
+§Æ±æ§A¨S¦³¹ï¦Ð¤ò¹L±Ó¡A§_«h³o¸Ì¥i¯uªº¬O§Aªº¹ÚÆL¡CªÅ®ð¤¤¥R¥¸µÛÂûªº¨ý¹D¡A
+Åý§AÄ±±o«Ü¤£µÎªA¡C
+~
+0 8 0
+D0
+~
+~
+3 -1 618
+S
+#620
+¤ûÄæ~
+³\¦h¤û¥¿¦w¶¢¦a©CÄZµÛ°®¯ó¡C³o¸ÌÁÙ¥Î¨ÓÀ½¥¤¡A®ÇÃäªº¦a¤W©ñµÛ¤@¨ÇªÅ²~¤l¡C
+~
+0 8 0
+D3
+~
+~
+0 0 618
+S
+#621
+ªd¤Ú¤p¸ô~
+«nÃä³£¬O¤@¤j¶ô¯ó¦a¡A¦èÃä«h¬O¤@¶¡½ÞªÙ¡Cªd¤Ú¸ô¦VªFÃä©µ¦ù¦Ó¥h¡C
+~
+0 0 2
+D1
+~
+~
+0 0 618
+D2
+~
+~
+0 0 623
+D3
+~
+~
+0 0 624
+S
+#622
+ÆC°sµ¢~
+³o¸Ì¬O¬Ãµ^´µ±C±CªºÆC°sµ¢¡A©Ð¸Ì¥Rº¡¤F«Â¤h§Òªº¨ý¹D¡C¤@®Ç©ñµÛªºªÅ²~©MÆC
+¦nªº«Â¤h§ÒÅý§A¤£¸T§]¤F§]¤f¤ô¡C¦VªF¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D1
+ªFÃä¬O­Ü®w¡C
+~
+ªù~
+3 -1 616
+S
+#623
+¯ó¦a~
+¤@¤j¤ùªº¯ó¦a¡A¤@ÂI³£¨S¦³¥X©_¤§³B¡CÆX¯¹¾×©¹¤F©¹«n¡BªF¡B¦è¤T­Ó¤è¦Vªº¸ô¡A
+§A¥u¯à©¹¥_§é¦^¥h¤F¡C
+~
+0 0 2
+D0
+~
+~
+0 0 621
+S
+#624
+½ÞªÙ~
+§A¯¸¦b³o¸Ì¡A·QµÛ§A¨Ó³o¸Ìªº¥Øªº¡C¦pªG¨S¦³¤°»ò¨Æªº¸Ü¡AÁÙ¬O¦­ÂIÂ÷¶}³o­Ó
+¦a¤è¦n¤F¡C
+~
+0 0 2
+D1
+~
+~
+0 0 621
+S
+#625
+­^¥Ö¸ô~
+§A¥¿º©¨B¦b­^¥Ö¸ô¤W¡A­^¥Ö¸ô¦V¥_Ãä©µ¦ù¦Ó¥h¡A«nÃä¬O¤@­Ó¤Q¦r¸ô¤f¡CªF¦è¨â
+Ãä¦U¦³¤@¶¡©Ð¤l¡CªFÃä¬O¶ø¤Ò¥d®ÈÀ]¡A¦èÃä«h¬O¤@¶¡¹D¨ã©±¡C
+~
+0 0 1
+D0
+~
+~
+0 0 632
+D1
+~
+ªù~
+1 0 626
+D2
+~
+~
+0 0 601
+D3
+~
+ªù~
+1 0 630
+S
+
+#626
+¶Àª÷¶ø¤Ò¥d¶º©±~
+³o¬O¤@¶¡»¨µØªº¶º©±¡A¤j‚áªº©³ºÝ¦³­ÓÂdÂi´£¨Ñ¦í±Jµn°O¡A¦Ó®ÇÃä«h¹º¤À¥X¤@
+­Ó°Ï¶ô§@¬°À\ÆU´£¨Ñ°ª¯ÅÀ\ÂI¡C¤£¤Ö¨«¶i©±¤ºªº¤H¡A¥u¬O¨Ó«~¹Á³o¸Ìªº°øµØ®Æ²z¦Ó
+«D¦í±J¡CÁöµM©Ð¶¡ªº«~½è¤ñ°_¨ä¥¦®È©±°ª¤W´X¤Q­ÓÀÉ¦¸¡A¤£¹L»ù®æ¤]°ª¥X´X¦Ê­¿¡C
+~
+0 4|1024 0
+D3
+~
+ªù~
+1 0 625
+S
+
+#627
+ª×«Ç~
+¤@¶¡´¶³qªºª×©Ð¡A©Ð¸Ì¦³¤@±i¤j§É©M¤@­Ó¦çÂd¡A¨S¦³¤°»ò¥X©_¤§³B¡C
+~
+0 8 0
+D5
+~
+~
+0 0 626
+S
+
+#628
+ª×«Ç~
+¤@¶¡´¶³qªº¼p©Ð¡A¬[¤l¤W±¾µÛ¦U¦¡ªº¼p¨ã¡C³o¸Ì¤@ÂI¤]¨S¦³§l¤Þ§Aªº¦a¤è¡C
+~
+0 8 0
+D5
+~
+~
+0 0 626
+S
+
+#629
+ª×«Ç~
+±q«Î¸ÌªºÂ\³]¬Ý¨Ó¡A³o¶¡©Ð¤lªº¥D¤HÀ³¸ÓÁÙÆZ´I¦³ªº¡C¦èÃä³q©¹¼p©Ð¡A¼Ó¤W«h
+³q©¹ª×«Ç¡A¦VªF¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D5
+~
+~
+0 0 626
+S
+
+#630
+¹D¨ã©±~
+³o¬O¤@¶¡»¨µØªº¶º©±¡A¤j‚áªº©³ºÝ¦³­ÓÂdÂi´£¨Ñ¦í±Jµn°O¡A¦Ó®ÇÃä«h¹º¤À¥X¤@
+~
+0 8 0
+D0
+~
+~
+1|2|64 0 631
+D1
+~
+~
+1 0 625
+S
+#631
+Å]ªk©±~
+³o¬O¤@¶¡»¨µØªº¶º©±¡A¤j‚áªº©³ºÝ¦³­ÓÂdÂi´£¨Ñ¦í±Jµn°O¡A¦Ó®ÇÃä«h¹º¤À¥X¤@
+~
+0 8 0
+D2
+~
+~
+1|2|64 0 630
+S
+#632
+­^¥Ö¸ô~
+§A¥¿º©¨B¦b­^¥Ö¸ô¤W¡AªF¦è¨âÃä¦U¦³¤@¶¡©Ð¤l¡C¹D¸ô¦V«n¥_¨âÃä©µ¦ù¡A°¸º¸·|
+¦³´X­Ó¦æ¤H¨«¹L¡C
+~
+0 0 1
+D0
+~
+~
+0 0 637
+D1
+~
+ªù~
+3 -1 633
+D2
+~
+~
+0 0 625
+D3
+~
+ªù~
+3 -1 635
+S
+#633
+©Ð«Î~
+¤@¶¡´¶³qªº©Ð¤l¡A«nÃä³q©¹ª×«Ç¡A¦èÃä¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D2
+~
+~
+0 0 634
+D3
+~
+ªù~
+3 -1 632
+S
+#634
+ª×«Ç~
+¤@¶¡´¶³qªºª×«Ç¡A§AÁÙ´Á«Ý¤°»ò§Oªº¶Ü¡H
+~
+0 8 0
+D0
+~
+~
+0 0 633
+S
+#635
+©Ð«Î~
+¤@¶¡´¶³qªº©Ð¤l¡A«nÃä³q©¹ª×«Ç¡AªFÃä¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D1
+~
+ªù~
+3 -1 632
+D2
+~
+~
+0 0 636
+S
+#636
+ª×«Ç~
+¤@¶¡´¶³qªºª×«Ç¡A§AÁÙ´Á«Ý¤°»ò§Oªº¶Ü¡H
+~
+0 8 0
+D0
+~
+~
+0 0 635
+S
+#637
+­^¥Ö¸ô~
+§A¥¿º©¨B¦b­^¥Ö¸ô¤W¡AªF¦è¨âÃä¦U¦³¤@¶¡©Ð¤l¡C¥_Ãä¬O¤@­Ó¤Q¦r¸ô¤f¡C
+~
+0 0 1
+D0
+~
+~
+0 0 642
+D1
+~
+ªù~
+3 -1 638
+D2
+~
+~
+0 0 632
+D3
+~
+ªù~
+3 -1 640
+S
+#638
+©Ð«Î~
+¤@¶¡´¶³qªº©Ð¤l¡A«nÃä³q©¹ª×«Ç¡A¦èÃä¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D2
+~
+~
+0 0 639
+D3
+~
+ªù~
+3 -1 637
+S
+#639
+ª×«Ç~
+¤@¶¡´¶³qªºª×«Ç¡A§AÁÙ´Á«Ý¤°»ò§Oªº¶Ü¡H
+~
+0 8 0
+D0
+~
+~
+0 0 638
+S
+#640
+©Ð«Î~
+¤@¶¡´¶³qªº©Ð¤l¡A«nÃä³q©¹ª×«Ç¡AªFÃä¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D1
+~
+ªù~
+3 -1 637
+D2
+~
+~
+0 0 641
+S
+#641
+ª×«Ç~
+¤@¶¡´¶³qªºª×«Ç¡A§AÁÙ´Á«Ý¤°»ò§Oªº¶Ü¡H
+~
+0 8 0
+D0
+~
+~
+0 0 640
+S
+#642
+¶Q±Ú¼s³õ~
+§A¯¸¦b¤@­Ó¶ê§Îªº¼s³õ¤º¡A©P³ò¦³³\¦h¥Á¦v¡A¥_Ãä¦³¤@¶¡«ÜÅã²´ªº¤j©Ð¤l¡C³o
+¼s³õ¬O¦í¦v°Ï©~¥Á¥­¤é¥æ¬yªº¦a¤è¡A¦P®É¤]¬O­^¥Ö¸ô©M§Ö±¶¸ôªº¥æ¤e¤f¡C­^¥Ö¸ô±q
+³o¸Ì¦V«nÃä©µ¦ù¡A¦Ó§Ö±¶¸ô«h¬O¦VªF¦è¨âÃä©µ¦ù¡C
+~
+0 0 1
+D0
+~
+ªù~
+7 665 643
+D1
+~
+~
+0 0 646
+D2
+~
+~
+0 0 637
+D3
+~
+~
+0 0 649
+S
+#643
+¤j©Ð¤l~
+±q«Î¸ÌªºÂ\³]¬Ý¨Ó¡A³o¶¡©Ð¤lªº¥D¤HÀ³¸ÓÁÙÆZ´I¦³ªº¡C¥_Ãä³q©¹¼p©Ð¡A§Aµo²{
+¼Ó¤W³q©¹ª×«Çªºªù³QÂê°_¨Ó¤F¡A¦V«n¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 8 0
+D0
+~
+~
+0 0 645
+D2
+~
+ªù~
+7 665 642
+D4
+~
+~
+39 671 644
+S
+#644
+ª×«Ç~
+©Ð¸Ì§A¬Ý¨ì¤@±i§É©M¤@­Ó¦çÂd»P¤@±i®Ñ®à¡A¦¹¥~§AÁÙª`·N¨ì¤F¤@¦ì¤k¤h¡A¥¿±æ
+µÛµ¡¥~¡A§Ï©»¦b·Q¨Ç¤°»ò¡C
+~
+0 8 0
+D5
+~
+~
+39 671 643
+S
+#645
+¼p©Ð~
+¤@ÂI³£¨S¦³¯S§O¤§³Bªº¼p©Ð¡A´N¦p§A·Q¹³¤¤ªº¨º¼Ë¡C
+~
+0 8 0
+D2
+~
+~
+0 0 643
+S
+#646
+§Ö±¶¸ô~
+§Ö±¶¸ô³s±µ«°¤º¥Á²³ªº©~¦í°Ï¡A«n¥_¨âÃä¦³³\¦hªº¤p©Ð¤l¡C§Ö±¶¸ô¦VªFÃä©µ¦ù
+¦Ó¥h¡A¦Ó¦èÃä«h³q©¹¤@­Ó¤Q¦r¸ô¤f¡C
+~
+0 0 1
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 652
+D1
+~
+~
+0 0 647
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 653
+D3
+~
+~
+0 0 642
+S
+#647
+§Ö±¶¸ô~
+§Ö±¶¸ô³s±µ«°¤º¥Á²³ªº©~¦í°Ï¡A«n¥_¨âÃä¦³³\¦hªº¤p©Ð¤l¡C§Ö±¶¸ô¦VªF¦è¨âÃä
+©µ¦ù¦Ó¥h¡C
+~
+0 0 1
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 654
+D1
+~
+~
+0 0 648
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 655
+D3
+~
+~
+0 0 646
+S
+#648
+§Ö±¶¸ô~
+§Ö±¶¸ô³s±µ«°¤º¥Á²³ªº©~¦í°Ï¡A«n¥_¨âÃä¦³³\¦hªº¤p©Ð¤l¡C§Ö±¶¸ô¦VªF¦è¨âÃä
+©µ¦ù¦Ó¥h¡C
+~
+0 0 1
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 656
+D1
+~
+~
+0 0 657
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 658
+D3
+~
+~
+0 0 647
+S
+#649
+§Ö±¶¸ô~
+§Ö±¶¸ô³s±µ«°¤º¥Á²³ªº©~¦í°Ï¡A«n¥_¨âÃä¦³³\¦hªº¤p©Ð¤l¡C§Ö±¶¸ô¦V¦èÃä©µ¦ù
+¦Ó¥h¡A¦ÓªFÃä«h³q©¹¤@­Ó¤Q¦r¸ô¤f¡C
+~
+0 0 1
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 659
+D1
+~
+~
+0 0 642
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 660
+D3
+~
+~
+0 0 650
+S
+#650
+§Ö±¶¸ô~
+§Ö±¶¸ô³s±µ«°¤º¥Á²³ªº©~¦í°Ï¡A«n¥_¨âÃä¦³³\¦hªº¤p©Ð¤l¡C§Ö±¶¸ô¦VªF¦è¨âÃä
+©µ¦ù¦Ó¥h¡C
+~
+0 0 1
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 661
+D1
+~
+~
+0 0 649
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 662
+D3
+~
+~
+0 0 651
+S
+#651
+§Ö±¶¸ôªººÉÀY~
+¥_¡B¦è¡B«n¤TÃä³£»\º¡¤F©Ð¤l¡A§A¥u¯à¦VªF§é¦^¥h¤F¡C
+~
+0 0 1
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 663
+D1
+~
+~
+0 0 650
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 664
+D3
+~
+¥Á©Ðªºªù~
+1|2|4 -1 665
+S
+#652
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 646
+S
+#653
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 646
+S
+#654
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 647
+S
+#655
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 647
+S
+#656
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 648
+S
+#657
+§Ö±¶¸ôªººÉÀY~
+³o¬O§Ö±¶¸ôªººÉÀY¤H·Ïµ}¤Ö¡A°£¤F¥_¤èªº«°Àð¥~¡A©P³ò¨S¦³¥ô¦óªº«Ø¿vª«¡C©¹
+¦è¯àªð¦^§Ö±¶¸ô¡AªFÃä«h¦³¤@±ø T ¦r¸ô¤f¡C
+~
+0 4|8 0
+D1
+~
+~
+0 0 700
+D3
+~
+~
+0 0 648
+S
+#658
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 648
+S
+#659
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 649
+S
+#660
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 649
+S
+#661
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 650
+S
+#662
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 650
+S
+#663
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D2
+~
+¥Á©Ðªºªù~
+1|2|4 -1 651
+S
+#664
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D0
+~
+¥Á©Ðªºªù~
+1|2|4 -1 651
+S
+#665
+¤p©Ð¤l~
+¤@¶¡´¶³qªº¥Á©Ð¡A¸ÌÀYªºÂ\³]¨S¤°»ò¯S®í¤§³B¡C
+~
+0 8 0
+D1
+~
+¥Á©Ðªºªù~
+1|2|4 -1 651
+S
+#666
+©Ô¤Ò¸ô~
+¹D¸ôªº¦èÃä³s¨ì¤@­Ó¤Q¦r¸ô¤f¡A¥_°¼¦í¦v°Ï«Øº¡µØÄRªº«Ø¿v¡A«n°¼¬°°Ó·~°Ï«h
+¥R¥¸µÛ¼ö¾xªº¤H®ð¡A¥Ñ¦¹¤£Ãøµo²{¡A¶ø¤Ò¥d¦³µÛ¤£¿é¥v¥d©Ô¨©ªºÁcºa¡C©Ô¤Ò¸ô¦VªF
+©µ¦ù¦Ó¥h¡AÄ~Äò«e¦æ«h³q©¹¶Àª÷¸t°ó¡C
+~
+0 0 1
+D1
+~
+~
+0 0 667
+D3
+~
+~
+0 0 601
+S
+#667
+©Ô¤Ò¸ô~
+©Ô¤Ò¸ô¦VªF¦è¨âÃä©µ¦ù¦Ó¥h¡AªFÃä³q©¹¦³¦Wªº¶Àª÷¸t°ó¡C¹D¸ô¨â®Ç¸Ë¹¢µÛ¦U¦¡
+¦U¼Ëªº¤pªá¦·¡A¨Ï³o¸Ì¬Ý¨Ó¤Q¤À¦a½à¤ß®®¥Ø¡C
+~
+0 0 1
+D1
+~
+~
+0 0 699
+D3
+~
+~
+0 0 666
+S
+#668
+ªd¤Ú¤p¸ô~
+ªFÃäªº¤j©Ð¤l¸Ì¶Ç¨Ó¥O¤H§@äúªº®ð¨ý¡A¦èÃä³q©¹­^¥Ö¸ô¡A¦Óªd¤Ú¸ô¥»¨­¦V«nÃä
+©µ¦ù¡C
+~
+0 0 2
+D1
+~
+~
+0 0 617
+D2
+~
+~
+0 0 618
+D3
+~
+~
+0 0 611
+S
+#669
+¶ø¤Ò¥d¸t·µ~
+³o¸Ì´N¬O¦³¦Wªº¶ø¤Ò¥d¸t·µ¡A¤£½×¬OÀð¤W¡B¦a¤W¡B¤D¦Ü©ó¸ÌÀY¨C­Ó¤HªºªA¸Ë³£
+¬Oª÷¦âªº¡A¬Ý±o§A²´·ú³£ªá¤F¡C¥|­±³£³q©¹±µ«Ý«Ç¡C
+~
+0 8 0
+D0
+~
+~
+0 0 670
+D1
+~
+~
+0 0 672
+D2
+~
+~
+0 0 673
+D3
+~
+~
+0 0 671
+S
+#670
+±µ«Ý«Ç~
+³o¸Ì¬O±µ«Ý«Ç¡A¤£½×¬OÀð¤W¡B¦a¤W¡B¤D¦Ü©ó¸ÌÀY¨C­Ó¤HªºªA¸Ë³£¬Oª÷¦âªº¡A¬Ý
+±o§A²´·ú³£ªá¤F¡C«nÃä³q©¹¸t·µ¡A¥_Ãä³q©¹¤@±ø¨«¹D¡A¥t¥~¦³±ø¦V¤Wªº¼Ó±è¡C
+~
+0 8 0
+D0
+~
+~
+0 0 675
+D2
+~
+~
+0 0 669
+D4
+~
+~
+0 0 686
+S
+#671
+±µ«Ý«Ç~
+³o¸Ì¬O±µ«Ý«Ç¡A¤£½×¬OÀð¤W¡B¦a¤W¡B¤D¦Ü©ó¸ÌÀY¨C­Ó¤HªºªA¸Ë³£¬Oª÷¦âªº¡A¬Ý
+±o§A²´·ú³£ªá¤F¡CªFÃä³q©¹¸t·µ¡A¦èÃä³q©¹¤@±ø¨«¹D¡A¥t¥~¦³±ø¦V¤Wªº¼Ó±è¡C
+~
+0 8 0
+D1
+~
+~
+0 0 669
+D3
+~
+~
+0 0 679
+D4
+~
+~
+0 0 687
+S
+#672
+±µ«Ý«Ç~
+³o¸Ì¬O±µ«Ý«Ç¡A¤£½×¬OÀð¤W¡B¦a¤W¡B¤D¦Ü©ó¸ÌÀY¨C­Ó¤HªºªA¸Ë³£¬Oª÷¦âªº¡A¬Ý
+±o§A²´·ú³£ªá¤F¡C¦èÃä³q©¹¸t·µ¡AªFÃä³q©¹¤@±ø¨«¹D¡A¥t¥~¦³±ø¦V¤Wªº¼Ó±è¡C
+~
+0 8 0
+D1
+~
+~
+0 0 680
+D3
+~
+~
+0 0 669
+D4
+~
+~
+0 0 689
+S
+#673
+±µ«Ý«Ç~
+³o¸Ì¬O±µ«Ý«Ç¡A¤£½×¬OÀð¤W¡B¦a¤W¡B¤D¦Ü©ó¸ÌÀY¨C­Ó¤HªºªA¸Ë³£¬Oª÷¦âªº¡A¬Ý
+±o§A²´·ú³£ªá¤F¡C¥_Ãä³q©¹¸t·µ¡A«nÃä³q©¹¤@±ø¨«¹D¡A¥t¥~¦³±ø¦V¤Wªº¼Ó±è¡C
+~
+0 8 0
+D0
+~
+~
+0 0 669
+D2
+~
+~
+0 0 684
+D4
+~
+~
+0 0 690
+S
+#674
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D1
+~
+~
+0 0 675
+D2
+~
+~
+0 0 677
+S
+#675
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D1
+~
+~
+0 0 676
+D2
+~
+~
+0 0 670
+D3
+~
+~
+0 0 674
+S
+#676
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D2
+~
+~
+0 0 678
+D3
+~
+~
+0 0 675
+S
+#677
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 674
+D2
+~
+~
+0 0 679
+S
+#678
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 676
+D2
+~
+~
+0 0 680
+S
+#679
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡CªFÃä³q©¹¶ø¤Ò¥d¸t·µ¡A¦èÃä«h³q©¹¶ø¤Ò¥d¥«°Ï¡C
+~
+0 8 0
+D0
+~
+~
+0 0 677
+D1
+~
+~
+0 0 671
+D2
+~
+~
+0 0 681
+D3
+~
+~
+0 0 698
+S
+#680
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 678
+D2
+~
+~
+0 0 682
+D3
+~
+~
+0 0 672
+S
+#681
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 679
+D2
+~
+~
+0 0 683
+S
+#682
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 680
+D2
+~
+~
+0 0 685
+S
+#683
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 681
+D1
+~
+~
+0 0 684
+S
+#684
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 673
+D1
+~
+~
+0 0 685
+D3
+~
+~
+0 0 683
+S
+#685
+¸t°ó¨«¹D~
+¨«¹D¨â®ÇªºÀð¤W¦³ª÷¦âªº¾Àµe¡A¦a¤WçEµÛª÷¦âªººÏ¿j¡C¬ïµÛª÷¦âªA¸Ëªº¹²§ÐµL
+Ánªº¨«µÛ¡C
+~
+0 8 0
+D0
+~
+~
+0 0 682
+D3
+~
+~
+0 0 684
+S
+#686
+¸t°ó¤G¼Ó~
+³o¸Ìªº¸Ë¹¢¤ñ°_²Ä¤@¼h¥i»¡¬O¦³¹L¤§¦ÓµL¤£¤Î¡C¯Âª÷©M¥Õª÷»s¦¨ªººÏ¿jçEº¡¤F
+¦a­±¡BÀð¾À¡A©M¤ÑªáªO¡C©Ð¸Ìªº¿O¥ú¦bª÷ÄÝªº¤Ï®g¤§¤UÅÜ±o«D±`Ä£²´¡AÅý§A¦³¤@ºØ
+¸m¨­¦b¤@ÁûÄ_¥Û¸Ìªº¿ùÄ±¡C¼Ó±è³q©¹¤W¤U¨â¼h¡A¨«¹D¦V«nÃä©µ¦ù¡C
+~
+0 8 0
+D2
+~
+~
+0 0 688
+D4
+~
+~
+0 0 691
+D5
+~
+~
+0 0 670
+S
+#687
+¸t°ó¤G¼Ó~
+³o¸Ìªº¸Ë¹¢¤ñ°_²Ä¤@¼h¥i»¡¬O¦³¹L¤§¦ÓµL¤£¤Î¡C¯Âª÷©M¥Õª÷»s¦¨ªººÏ¿jçEº¡¤F
+¦a­±¡BÀð¾À¡A©M¤ÑªáªO¡C©Ð¸Ìªº¿O¥ú¦bª÷ÄÝªº¤Ï®g¤§¤UÅÜ±o«D±`Ä£²´¡AÅý§A¦³¤@ºØ
+¸m¨­¦b¤@ÁûÄ_¥Û¸Ìªº¿ùÄ±¡C¼Ó±è³q©¹¤W¤U¨â¼h¡A¨«¹D¦VªFÃä©µ¦ù¡C
+~
+0 8 0
+D1
+~
+~
+0 0 688
+D4
+~
+~
+0 0 692
+D5
+~
+~
+0 0 671
+S
+#688
+Às»â¥D¤§¶¡~
+¬ðµM¤§¶¡¡A§Aµo²{¦Û¤v¶i¤J¤F¤@¶¡¥¨¤jªº©Ð¶¡¸Ì¡C³o¸Ì¬OÀs»â¥D­Ìªº©Ð¶¡¡AÀð
+¤W±¾µÛ¦UºØ§A¨£¹L©Î¨S¨£¹LªºªZ¾¹¡C©Ð¶¡¤¤¥¡¦³¤@±i¤jªø®à¡A¬O¥Î¨Óµ¹Às»â¥D­Ì°Q
+½×¨Æ±¡¤§¥Î¡C
+~
+0 8 0
+D0
+~
+~
+0 0 686
+D1
+~
+~
+0 0 689
+D2
+~
+~
+0 0 690
+D3
+~
+~
+0 0 687
+S
+#689
+¸t°ó¤G¼Ó~
+³o¸Ìªº¸Ë¹¢¤ñ°_²Ä¤@¼h¥i»¡¬O¦³¹L¤§¦ÓµL¤£¤Î¡C¯Âª÷©M¥Õª÷»s¦¨ªººÏ¿jçEº¡¤F
+¦a­±¡BÀð¾À¡A©M¤ÑªáªO¡C©Ð¸Ìªº¿O¥ú¦bª÷ÄÝªº¤Ï®g¤§¤UÅÜ±o«D±`Ä£²´¡AÅý§A¦³¤@ºØ
+¸m¨­¦b¤@ÁûÄ_¥Û¸Ìªº¿ùÄ±¡C¼Ó±è³q©¹¤W¤U¨â¼h¡C
+~
+0 8 0
+D3
+~
+~
+0 0 688
+D4
+~
+~
+0 0 694
+D5
+~
+~
+0 0 672
+S
+#690
+¸t°ó¤G¼Ó~
+³o¸Ìªº¸Ë¹¢¤ñ°_²Ä¤@¼h¥i»¡¬O¦³¹L¤§¦ÓµL¤£¤Î¡C¯Âª÷©M¥Õª÷»s¦¨ªººÏ¿jçEº¡¤F
+¦a­±¡BÀð¾À¡A©M¤ÑªáªO¡C©Ð¸Ìªº¿O¥ú¦bª÷ÄÝªº¤Ï®g¤§¤UÅÜ±o«D±`Ä£²´¡AÅý§A¦³¤@ºØ
+¸m¨­¦b¤@ÁûÄ_¥Û¸Ìªº¿ùÄ±¡C¼Ó±è³q©¹¤W¤U¨â¼h¡C
+~
+0 8 0
+D0
+~
+~
+0 0 688
+D4
+~
+~
+0 0 695
+D5
+~
+~
+0 0 673
+S
+#691
+¸t°ó³»¼Ó~
+³o¸Ì¬O¶Àª÷¸t°óªº¤T¼Ó¡A©Ð¸Ìªº¸Ë¹¢¤ñ°_²Ä¤G¼h¨Ó»¡§ó¬OµØÄR¡C§A©ñ²´©Ò¤Îªº
+¨C¤@¥óªF¦è¥þ³£¬O¯Âª÷©Ò»s¦¨¡AÀð¤WÁÙÆ^µÛ³\¦h¤j¤j¤p¤p¡A¤£¦PÃC¦âªºÄ_¥Û¡C¦³±ø
+¼Ó±è©¹¤U¡C
+~
+0 8 0
+D2
+~
+~
+0 0 693
+D5
+~
+~
+0 0 686
+S
+#692
+¸t°ó³»¼Ó~
+³o¸Ì¬O¶Àª÷¸t°óªº¤T¼Ó¡A©Ð¸Ìªº¸Ë¹¢¤ñ°_²Ä¤G¼h¨Ó»¡§ó¬OµØÄR¡C§A©ñ²´©Ò¤Îªº
+¨C¤@¥óªF¦è¥þ³£¬O¯Âª÷©Ò»s¦¨¡AÀð¤WÁÙÆ^µÛ³\¦h¤j¤j¤p¤p¡A¤£¦PÃC¦âªºÄ_¥Û¡C¦³±ø
+¼Ó±è©¹¤U¡C
+~
+0 8 0
+D1
+~
+~
+0 0 693
+D5
+~
+~
+0 0 687
+S
+#693
+¸tÀs¤§¶¡~
+¤@¶i¤J³o¸Ì¡A§A¤£¸T¤j¦Y¤@Åå¡C§Aªº²´«e©~µM¥X²{¤F¤@°¦ª÷¦âªº¥¨Às¡I©Ð¸Ì¨ì
+³BÆ^µÛ¥¨¤jªºÄ_¥Û¡AÅý§A¨«°_¸ô¨Ó¤Q¤À¤£µÎªA¡C¤WÀYªº¤j¤Ñ¤«Åý¶§¥ú¯à°÷®g¶i³o¸Ì
+¡AÅý¨C¼ËªF¦è³£µo¥X¨ë²´ªº¥ú¨~¡C¥¨Àsªº¨­«á¦³¤@¤j°ïªºª÷¹ô¡A¬Ý¨Ó¬O¥¦ªº¦¬ÂÃ«~
+§a¡C
+~
+0 8 0
+D0
+~
+~
+0 0 691
+D1
+~
+~
+0 0 694
+D2
+~
+~
+0 0 695
+D3
+~
+~
+0 0 692
+D4
+~
+~
+0 0 696
+S
+#694
+¸t°ó³»¼Ó~
+³o¸Ì¬O¶Àª÷¸t°óªº¤T¼Ó¡A©Ð¸Ìªº¸Ë¹¢¤ñ°_²Ä¤G¼h¨Ó»¡§ó¬OµØÄR¡C§A©ñ²´©Ò¤Îªº
+¨C¤@¥óªF¦è¥þ³£¬O¯Âª÷©Ò»s¦¨¡AÀð¤WÁÙÆ^µÛ³\¦h¤j¤j¤p¤p¡A¤£¦PÃC¦âªºÄ_¥Û¡C¦³±ø
+¼Ó±è©¹¤U¡C
+~
+0 8 0
+D3
+~
+~
+0 0 693
+D5
+~
+~
+0 0 689
+S
+#695
+¸t°ó³»¼Ó~
+³o¸Ì¬O¶Àª÷¸t°óªº¤T¼Ó¡A©Ð¸Ìªº¸Ë¹¢¤ñ°_²Ä¤G¼h¨Ó»¡§ó¬OµØÄR¡C§A©ñ²´©Ò¤Îªº
+¨C¤@¥óªF¦è¥þ³£¬O¯Âª÷©Ò»s¦¨¡AÀð¤WÁÙÆ^µÛ³\¦h¤j¤j¤p¤p¡A¤£¦PÃC¦âªºÄ_¥Û¡C¦³±ø
+¼Ó±è©¹¤U¡C
+~
+0 8 0
+D0
+~
+~
+0 0 693
+D5
+~
+~
+0 0 690
+S
+#696
+Às¤§¶¡¤W¤è~
+©µµÛ¼Ó±è¦V¤Wª¦¡A§A¨Ó¨ì¤FÀs¤§¶¡ªº¤W¤è¡C³z¤Ñªº¤Ñ¤««D±`ªº¤j¡A¥i¥H®e¯Ç¤@
+±øÀs¶i¥X¤£¦¨°ÝÃD¡C
+~
+0 8 0
+D4
+~
+~
+0 0 697
+D5
+~
+~
+0 0 693
+S
+#697
+¤Ñ¤«³»ºÝ~
+§A²×©óª¦¨ì¤F¤Ñ¤«ªº³»ºÝ¡A±q³o¸Ì¦V¤U¬Ý¡A³s¥¨Às³£Åã±o«Ü´ù¤p¡C¥i±¤ªº¬O¡A
+¦V¤Wªº¥X¤f¥Ø«e³Q¤@¤jÁûªºÆp¥Ûµ¹«Ê¤F°_¨Ó¡A¬Ý°_¨Ó¬O¥X¤£¥hªº¡C
+~
+0 8 0
+D5
+~
+~
+0 0 696
+S
+#698
+¶Àª÷¸t°ó¤J¤f~
+³o¸Ì¬O¶Àª÷¸t°óªº¤J¤f¡AÀð¤W±¾µÛ³\¦hª÷µ·±¾´à¡A­z»¡µÛ¥j¦Ñªº¬G¨Æ¡C¦V¦è¥i
+¥HÂ÷¶}¸t°ó¡C
+~
+0 4|8 0
+D1
+~
+~
+0 0 679
+D3
+~
+gate~
+1 651 699
+S
+#699
+¸t°ó¤jªù¥~~
+¥ú¬O¯¸¦b³o¸Ì¡A§A´N³Q¶Àª÷¸t°ó¨ººØµL¤ñªºµØÄRµ¹¾_Äà¦í¤F¡C©¹¦èÃä¥i¥H¦^¨ì
+©Ô¤Ò¸ô¤W¡A¦b¥_Ãä«h¦³¤@®y¥~Æ[»P¸t°ó¬ÛÀ³ªº¶Àª÷­xÀç¡A¦ÓªFÃäªº¤jªù(gate)«h³q
+©¹¶Àª÷¸t°ó¤º¡C
+~
+0 4 1
+E
+¶Àª÷¤jªù~
+³o¬O¤@®y10´X¤½¤Ø°ªªº¶Àª÷¤jªù¡A¤W­±¨èº¡Æg¬üÀs±Úªº¹Ï¤å¬G¨Æ¡C
+~
+D0
+~
+~
+1 0 701
+D1
+~
+¶Àª÷¤jªù~
+1 651 698
+D3
+~
+~
+0 0 667
+S
+
+#700
+¶ø¤Ò¥d¥_«°ªù«e~
+³o¸Ì¬O¶ø¤Ò¥d¥_Ãäªº«°ªù«e¡A©P³ò°£¤F¶ø¤Ò¥dªº¤h§L¥~¡A¨S¦³¥ô¦ó¶¢Âø¤Hµ¥¦b
+ªþªñ¬¡°Ê¡C«nÃä¦³­Ó¤jªù¡A¥i¥H±q³o¸Ì¶i¤J¶ø¤Ò¥d­xÀç¡C
+~
+0 4|8 0
+D2
+~
+~
+0 0 710
+D3
+~
+~
+0 0 657
+>room_time 100~
+if rmobcount(639) < 2
+	if rnplayer($) == 0
+		if roomtimer($0) == 0
+			mload 639
+			modrvt t0 = 2
+		else
+			modrvt t0 = 2
+		endif
+	endif
+endif
+~
+|
+S
+
+#701
+­xÀç¥¿ªù~
+³o¸Ì¬O¶ø¤Ò¥d¥_Ãäªº«°ªù«e¡A©P³ò°£¤F¶ø¤Ò¥dªº¤h§L¥~¡A¨S¦³¥ô¦ó¶¢Âø¤Hµ¥¦b
+ªþªñ¬¡°Ê¡C«nÃä¦³­Ó¤jªù¡A¥i¥H±q³o¸Ì¶i¤J¶ø¤Ò¥d­xÀç¡C
+~
+0 8 0
+D0
+~
+~
+1 0 702
+D2
+~
+~
+0 0 699
+>room_time 100~
+if rmobcount(639) < 2
+	if rnplayer($) == 0
+		if roomtimer($0) == 0
+			mload 639
+			modrvt t0 = 2
+		else
+			modrvt t0 = 2
+		endif
+	endif
+endif
+~
+|
+S
+
+#702
+¤jÆU~
+³o¬O¶¡ª÷ºÑ½÷·×ªº¤jÆU¡A¥¿¹ï¤jªù³]¦³¤@³B¹ï¥~µ¡¤f¡C¶ø¤Ò¥d¬O­Ó­x¨Æ°ê®a¡A
+­x¶¤ªº¤O¶q­â¾r©ó¥«¥ÁÄ³·|¤§¤W¡C«°¥«ªv¦wªº°ÝÃD¤]ÄÝ©ó­x¶¤­t³dªº·~°È¡A¦]¦¹·|
+¦³¤j¶q¥Á²³¨Ó³o¸Ì³B²zÂø¨Æ¡C¤W¼h¬°¤FÅU¤Î­x¶¤ªºÅv«Â¡A¨M©w§â¹ï¥~ªºªù­±¸ËæC¦¨
+¤£¿é¸t°óªºµØÄR¤jÆU¡AªF¦è¨âÃä¤À§O¦³¤@±ø³q©¹¤º³¡ªº¨«´Y¡C
+~
+0 4|8 0
+D1
+~
+~
+0 0 715
+D2
+~
+~
+1 0 701
+D3
+~
+~
+0 0 706
+S
+
+#703
+«Ç¤ºÆU°ó~
+³o¸Ì¬O¤h§L­Ì±q¨Æ«Ç¤º¬¡°Êªº¥D­n¦aÂI¡A¦a­±¤WÂ\©ñ´X±i¤ì®à´È¡A¼eÁïªºªÅ¶¡
+¸Ì¥u¦³¥¼¸g­×¹¢ªº¿j¥Û¦a­±¡A§e²{¥X»P¤jÆUªºµØÄR­·®æ¬Û¤Ïªº¤º¸Ë¡C¥_°¼¸û»·³B©ñ
+¦³¤@±i¤ì»sÁ¿¥x¡A©¹ªF¦è¨â¤è¥i¥H¦^¨ì¨«´Y¡C
+~
+0 8 0
+D0
+~
+~
+0 0 704
+D1
+~
+~
+0 0 716
+D3
+~
+~
+0 0 707
+S
+
+#704
+«Ç¤ºÆU°ó~
+³o¸Ì¬O¤h§L­Ì±q¨Æ«Ç¤º¬¡°Êªº¥D­n¦aÂI¡A¦a­±¤WÂ\©ñ´X±i¤ì®à´È¡A¼eÁïªºªÅ¶¡
+¸Ì¥u¦³¥¼¸g­×¹¢ªº¿j¥Û¦a­±¡A§e²{¥X»P¤jÆUªºµØÄR­·®æ¬Û¤Ïªº¤º¸Ë¡C¥_°¼©ñ¦³¤@±i
+¤ì»sÁ¿¥x¡AªF¦è¨â¤è«h¥i¥H¦^¨ì¨«´Y¡C
+~
+0 8 0
+D0
+~
+~
+0 0 705
+D1
+~
+~
+0 0 717
+D2
+~
+~
+0 0 703
+D3
+~
+~
+0 0 708
+S
+
+#705
+«Ç¤ºÆU°ó~
+³o¸Ì¬O¤h§L­Ì±q¨Æ«Ç¤º¬¡°Êªº¥D­n¦aÂI¡A¦a­±¤WÂ\©ñ´X±i¤ì®à´È¤Î¤@±i¤ì»sªº
+¥­¥x¨Ñ¤HºtÁ¿¡A¼eÁïªºªÅ¶¡¸Ì¥u¦³¥¼¸g­×¹¢ªº¿j¥Û¦a­±¡A§e²{¥X»P¤jÆUªºµØÄR­·®æ
+¬Û¤Ïªº¤º¸Ë¡C©¹ªF¦è¨â¤è«h¥i¥H¦^¨ì¨«´Y¡C
+~
+0 8 0
+D1
+~
+~
+0 0 718
+D2
+~
+~
+0 0 704
+D3
+~
+~
+0 0 709
+S
+
+#706
+¨«´Y~
+¤@±ø¯à³q©¹­xÀç¤º³¡ªº¨«¹D¡A©³ºÝ¦³¤@®°ªù¡A¤W­±±¾µÛ¤@±i¼g¦³À\ÆUªºµP¤l¡A
+¨«¹D«h©¹¥_Ä~Äò¦V¤º©µ¦ù¡C
+~
+0 8 0
+D0
+~
+~
+0 0 707
+D1
+~
+~
+0 0 702
+D3
+~
+~
+1|2 0 711
+S
+
+#707
+ÆU°óÃä´Y~
+³o¸Ì¬O¤@­Ó¯à°÷®e¯Ç´X¦Ê¤Hªº¼eÁïÆU°ó¡A¦b¦èÃä¦³¤@®°ªù¡A¤W­±±¾µÛ¤@±i¼g¦³
+À\ÆUªºµP¤l¡A©¹ªF¥i¥H¶i¤JÆU°óªº«n°¼¡A¨«¹D«hÄ~Äò¦V«n¥_©µ¦ù¤U¥h¡C
+~
+0 8 0
+D0
+~
+~
+0 0 708
+D1
+~
+~
+0 0 703
+D2
+~
+~
+0 0 706
+D3
+~
+~
+1|2 0 712
+S
+
+#708
+ÆU°óÃä´Y~
+³o¸Ì¬O¤@­Ó¯à°÷®e¯Ç´X¦Ê¤Hªº¼eÁïÆU°ó¡A¦b¦èÃä¦³¤@®y¼Ó±è¯à¦V¤W«e©¹¤G¼Ó¡A
+©¹ªF¥i¥H¶i¤JÆU°óªº¤¤¥¡¡A¨«¹D«hÄ~Äò¦V«n¥_©µ¦ù¤U¥h¡C
+~
+0 8 0
+D0
+~
+~
+0 0 709
+D1
+~
+~
+0 0 704
+D2
+~
+~
+0 0 707
+D4
+~
+~
+0 0 732
+S
+
+#709
+ÆU°óÃä´Y~
+³o¸Ì¬O¤@­Ó¯à°÷®e¯Ç´X¦Ê¤Hªº¼eÁïÆU°ó¡A¥_Ãä¤Î¦èÃä¤À§O¦³¤@®°ªù¡A¦èÃäªùªO
+¤W±¾µÛ¤@±i¼g¦³°õ¶Ô«ÇªºµP¤l¡A¥_Ãäªºªù«h¥i¥H³q©¹­xÀç«áªù¡C©¹ªF¥i¥H¶i¤JÆU°ó
+ªº¥_°¼¡A©¹«n«hªð¦^Ãä´Y¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 710
+D1
+~
+~
+0 0 705
+D2
+~
+~
+0 0 708
+D3
+~
+~
+1|2 0 714
+S
+
+#710
+­xÀç«áªù~
+¶ø¤Ò¥d­xÀçªº«áªù¡A³s±µµÛ¥_«°ªù¡A·í¥_ªù¥~¦³¼Ä¤H¨ÓÅ§®É¯à§Ö³t¤ä´©¡A¨Ã¥B
+¬Û·í±µªñ§Ö±¶¸ôªº§ÀºÝ¡A¦pªG¦í¦v°Ïµo¥Í¨Æ¬G¡A¤]¥i¥H§Ö³t¬£¤H«e©¹³B²z¡C¥_Ãä¬°
+¶ø¤Ò¥dªº«°ªù¡A©¹«n¥i¥H¦^¨ì­xÀç¤º¡C
+~
+0 4|8 0
+D0
+~
+~
+0 0 700
+D2
+~
+~
+1|2 0 709
+>room_time 100~
+if rmobcount(639) < 2
+	if rnplayer($) == 0
+		if roomtimer($0) == 0
+			mload 639
+			modrvt t0 = 2
+		else
+			modrvt t0 = 2
+		endif
+	endif
+endif
+~
+|
+S
+
+#711
+À\ÆU~
+³o¸Ì¬O´£¨Ñ¤h§L­Ì¥ë­¹ªºÀ\ÆU¡A¸Ì­±©ñ¤F³\¦h±Æªºªø®à»PªO¹¹¡C¥_Ãä¥i¥H§ó¬Ý
+¨ì¬Û¦P¼Æ¶qªº®à´È¾ã»ô±Æ¦C¡A©¹ªF¯àÂ÷¶}À\ÆU¡C
+~
+0 8 0
+D0
+~
+~
+0 0 712
+D1
+~
+~
+1|2 0 706
+S
+
+#712
+À\ÆU~
+³o¸Ì¬O´£¨Ñ¤h§L­Ì¶¼­¹ªºÀ\ÆU¡A¸Ì­±©ñ¤F³\¦h±Æªºªø®à»PªO¹¹¡C«nÃä¥i¥H§ó¬Ý
+¨ì¬Û¦P¼Æ¶qªº®à´È¾ã»ô±Æ¦C¡A¥_Ãäªºªù«á«h¶Ç¨Ó°}°}­»®ð¡AÅý¤H¤f¤ôª½¬y¡C©¹ªF«h
+¥i¥HÂ÷¶}À\ÆU¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 713
+D1
+~
+~
+1|2 0 707
+D2
+~
+~
+0 0 711
+S
+
+#713
+¥ë©Ð~
+­xÀç´£¨ÑªºÂ³­¹¥þ¥Ñ³o¸Ì»s³y¡C³o¸Ì°ï©ñªº­¹§÷¡A¼Æ¶q¦h¨ìÅý¤HÅå³Y¡C¤£·\¬O
+¨C¤Ñ¤TÀ\³£»Ý­n¨ÑÀ³´X¦Ê¤H¥÷¥ë­¹ªº¤j¼p©Ð©O¡C
+~
+0 4|8 0
+D2
+~
+~
+1|2 0 712
+S
+
+#714
+°õ¶Ô«Ç~
+³o¬O¤@¶¡³]³ÆÂ²­®ªº©Ð¶¡¡A¸Ì­±Â\©ñµÛ¤@±i§É¤Î¤@°Æ®à´È¡C¥D­n§@¬°½Ã­ï¶Ô°È
+¤h§L­Ìªº¥ð¾Í«Ç¡C
+~
+0 4|8 0
+D1
+~
+~
+1|2 0 709
+S
+
+#715
+¨«´Y~
+¤@±ø¯à³q©¹­xÀç¤º³¡ªº¨«¹D¡A©³ºÝ¦³¤@®°ªù¡A¤W­±±¾µÛ¤@±i¼g¦³¢Ï«ÇªºµP¤l¡A
+¨«¹D«h©¹¥_Ä~Äò¦V¤º©µ¦ù¡C
+~
+0 8 0
+D0
+~
+~
+0 0 716
+D1
+~
+~
+1|2 0 719
+D3
+~
+~
+0 0 702
+S
+
+#716
+ÆU°óÃä´Y~
+³o¸Ì¬O¤@­Ó¯à°÷®e¯Ç´X¦Ê¤Hªº¼eÁïÆU°ó¡A¦bªFÃä¦³¤@®°ªù¡A¤W­±±¾µÛ¤@±i¼g¦³
+¢Ð«ÇªºµP¤l¡A©¹¦è¥i¥H¶i¤JÆU°óªº«n°¼¡A¨«¹D«hÄ~Äò¦V«n¥_©µ¦ù¤U¥h¡C
+~
+0 8 0
+D0
+~
+~
+0 0 717
+D1
+~
+~
+1|2 0 720
+D2
+~
+~
+0 0 715
+D3
+~
+~
+0 0 703
+S
+
+#717
+ÆU°óÃä´Y~
+³o¸Ì¬O¤@­Ó¯à°÷®e¯Ç´X¦Ê¤Hªº¼eÁïÆU°ó¡A¦bªFÃä¦³¤@®°ªù¡A¤W­±±¾µÛ¤@±i¼g¦³
+¢Ñ«ÇªºµP¤l¡A©¹¦è¥i¥H¶i¤JÆU°óªº¤¤¥¡¡A¨«¹D«hÄ~Äò¦V«n¥_©µ¦ù¤U¥h¡C
+~
+0 8 0
+D0
+~
+~
+0 0 718
+D1
+~
+~
+1|2 0 721
+D2
+~
+~
+0 0 716
+D3
+~
+~
+0 0 704
+S
+
+#718
+ÆU°óÃä´Y~
+³o¸Ì¬O¤@­Ó¯à°÷®e¯Ç´X¦Ê¤Hªº¼eÁïÆU°ó¡A¥_Ãä¤ÎªFÃä¤À§O¦³¤@®°ªù¡AªFÃäªº¿û
+ªù¥Î³\¦h±øÅKÁåÂêµÛ¡A¬Ý¨Ó¬O¤£·QÅý¤H¯à»´©ö¶i¥h¸Ì­±¡C¥_Ãäªºªù¥~«h¶Ç¨ÓÀWÁcªº
+ª÷ÄÝ¼²À»Án¡C©¹¦è¥i¥H¶i¤JÆU°óªº¥_°¼¡A©¹«n«hªð¦^Ãä´Y¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 723
+D1
+~
+~
+1|2|4|16|32|64 0 722
+D2
+~
+~
+0 0 717
+D3
+~
+~
+0 0 705
+S
+
+#719
+¤h§L¹ì - ¢Ï«Ç~
+³o¬O¤@¶¡©ñ¦³¦Ê±iÂù¼h§É¬[¸òÂùªù¥ßÂdªº©Ð¶¡¡C³o¸Ì¥D­n§@¬°Àç¤º¤h§L¥ð®§¥Î
+ªº¹ì«Ç¡C¥_Ãä¦³¤@®°ªù¡A¯à³q©¹¥t¤@¶¡¹ì«Ç¡A©¹¦è¯àÂ÷¶}¹ì«Ç¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 720
+D3
+~
+~
+1|2 0 715
+S
+
+#720
+¤h§L¹ì - ¢Ð«Ç~
+³o¬O¤@¶¡©ñ¦³¦Ê±iÂù¼h§É¬[¸òÂùªù¥ßÂdªº©Ð¶¡¡C³o¸Ì¥D­n§@¬°Àç¤º¤h§L¥ð®§¥Î
+ªº¹ì«Ç¡C«n¥_¦U¤@®°ªù¡A¯à³q©¹¨ä¥Lªº¹ì«Ç¡A©¹¦è¯àÂ÷¶}¹ì«Ç¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 721
+D2
+~
+~
+1|2 0 719
+D3
+~
+~
+1|2 0 716
+S
+
+#721
+¤h§L¹ì - ¢Ñ«Ç~
+³o¬O¤@¶¡©ñ¦³¦Ê±iÂù¼h§É¬[¸òÂùªù¥ßÂdªº©Ð¶¡¡C³o¸Ì¥D­n§@¬°Àç¤º¤h§L¥ð®§¥Î
+ªº¹ì«Ç¡C«nÃä¦³¤@®°ªù¡A¯à³q©¹¥t¤@¶¡¹ì«Ç¡A©¹¦è¯àÂ÷¶}¹ì«Ç¡C
+~
+0 8 0
+D2
+~
+~
+1|2 0 720
+D3
+~
+~
+1|2 0 717
+S
+
+#722
+§L¾¹«Ç~
+³o¸Ì¬O¶ø¤Ò¥d­xÀçªº§L¾¹«Ç¡A¸Ì­±³¯¦CµÛ³\¦h§L¾¹¡C¦³ªø¼C¡Bªøºj¡B¾Ô©ò¡B¤}
+½b¬Æ¦Ü¬O¤õÃÄ¡C
+~
+0 8|1048576 0
+D3
+~
+~
+1|2|4|16|32|64 0 718
+S
+
+#723
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C©¹
+«n¥i¥H¦^¨ì­xÀç«Ç¤º¡C
+~
+0 65536|1048576|2097152 1
+D0
+~
+~
+0 0 726
+D1
+~
+~
+0 0 724
+D2
+~
+~
+1|2 0 718
+S
+
+#724
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D0
+~
+~
+0 0 727
+D1
+~
+~
+0 0 725
+D3
+~
+~
+0 0 723
+S
+
+#725
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D0
+~
+~
+0 0 728
+D3
+~
+~
+0 0 724
+S
+
+#726
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D0
+~
+~
+0 0 729
+D1
+~
+~
+0 0 727
+D2
+~
+~
+0 0 723
+S
+
+#727
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D0
+~
+~
+0 0 730
+D1
+~
+~
+0 0 728
+D2
+~
+~
+0 0 724
+D3
+~
+~
+0 0 726
+S
+
+#728
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D0
+~
+~
+0 0 731
+D2
+~
+~
+0 0 725
+D3
+~
+~
+0 0 727
+S
+
+#729
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D1
+~
+~
+0 0 730
+D2
+~
+~
+0 0 726
+S
+
+#730
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D1
+~
+~
+0 0 731
+D2
+~
+~
+0 0 727
+D3
+~
+~
+0 0 729
+S
+
+#731
+¤á¥~°V½m³õ~
+³o¸Ì¬O­xÀçªº°V½m³õ¡A¥u¬O¶ô¥Î¤ì¼ÎÂ²³æ³ò¥XªºªÅ¦a¡C¬O³\¦h¤h§L°V½m¤Á½R©¼
+¦¹¾Ô§Þªº¦a¤è¡C¦pªG§ä¤£¨ì¤@°_½m²ßªº¹ï¶H¡A¤@®ÇÁÙ³]¦³½_¯ó°²¤H¡A¨Ñ¤H¨Ï¥Î¡C
+~
+0 65536|1048576|2097152 1
+D2
+~
+~
+0 0 728
+D3
+~
+~
+0 0 730
+S
+
+#732
+¤G¼Ó¶¥¬q~
+³o¬O³s±µ¤@¤G¼Óªº¼Ó±è¡A©¹ªFÃä¥i¥H«e©¹­xÀç¤G¼Ó¡A®ÇÃäÁÙ¦³¤@±ø¦V¤W©µ¦ùªº
+Á³±Û¶¥¬q¡A¥i¥H³q©¹§ó°ª³B¡C
+~
+0 8 0
+D1
+~
+~
+0 0 733
+D4
+~
+~
+0 0 745
+D5
+~
+~
+0 0 708
+S
+
+#733
+¤G¼Ó¨«´Y~
+§A¦ì©ó­xÀç¤G¼Óªº¨«´Y¤W¡A«n¥_¤è¨â¤è¤À§O¦³¤@®°ªù¡C«nÃäªºªù±¾µÛ¤@­±ª÷ÄÝ
+µP¡A¤W­±¼gµÛ¾Ô³Æ«Ç¡A¥_Ãäªºªù¤W«h¼gµÛ·|Ä³«Ç¡C¦èÃä¬°¨«´YªººÉÀY¡A³s±µµÛ³q©¹
+¤W¤Uªº¼Ó±è¡A¨«´Y«h¦VªFÄ~Äò©µ¦ù¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 738
+D1
+~
+~
+0 0 734
+D2
+~
+~
+1|2 0 737
+D3
+~
+~
+0 0 732
+S
+
+#734
+¤G¼Ó¨«´Y~
+§A¦ì©ó­xÀç¤G¼Óªº¨«´Y¤W¡A«n¥_¤è¦U¦³¤@®°ªù¡Cªù¤W³£±¾µÛ¤@­±ª÷ÄÝµP¡A¤W­±¼gµÛ
+­x©x¹ì¡C³q¹D«h¦VªF¦è¨â¤è©µ¦ù¤U¥h¡C
+~
+0 4|8 0
+D0
+~
+~
+1|2 0 740
+D1
+~
+~
+0 0 735
+D2
+~
+~
+1|2 0 739
+D3
+~
+~
+0 0 733
+S
+
+#735
+¤G¼Ó°j´Y~
+§A¦ì©ó¤@±ø¥Û³yªº°j´Y¤W¡A«n¥_¨â­±«õ¥X¤F³\¦h¤è«¬ªºªÅ¬}¡A¥i§@¬°µ¡¤á¨Ï¥Î¡C³o
+±ø³q¹D¦VªF¦è¨â¤è©µ¦ù¤U¥h¡C
+~
+0 8 0
+D1
+~
+~
+0 0 736
+D3
+~
+~
+0 0 734
+S
+
+#736
+°j´YºÉÀY~
+³o¸Ì¬O¤G¼Ó°j´YªººÉÀY¡A§A­±«e¦³¤T®°Æ^´Oª÷ÄÝµPªº¤ìªù¡A¤À§O¦b¤T­Ó¤£¦Pªº¤è¦ì
+¤W¡C¥_¤èªºªù¤W¼gµÛ¦u½Ã¶¤ªø«Ç¡A«n¤èªº¼gµÛ¸t°ó¶¤ªø«Ç¡AªF¤è¼gµÛ¤¸«Ó«Ç¡C©¹¦^¨«¥i
+¥Hªð¦^¤G¼Ó¨«´Y¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 742
+D1
+~
+~
+1|2 0 743
+D2
+~
+~
+1|2 0 741
+D3
+~
+~
+0 0 735
+S
+
+#737
+¾Ô³Æ«Ç~
+©Ð¶¡¤¤¥¡Â\µÛ¤@±i¤j¶ê®à¡A¤W­±°ïº¡¤å¥ó¡C³\¦h¤H¦b©Ð¶¡¤¤¦£¶i¦£¥Xªº¤ÀªR¾ã²zµÛ
+®à­±¤W°ï¨ì¹³¤s¤@¼Ë°ªªº¤å¥ó¡A§Ï©»¨S¦³µ²§ôªº¤@¤Ñ¡C±qªù¥X¥h¥i¥H¦^¨ì¨«´Y¤W¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 733
+S
+
+#738
+·|Ä³«Ç~
+©Ð¶¡¤¤¥¡Â\µÛ¤@±i¤j¶ê®à¡A§¤¦b´È¤l¤Wªº¤H¡A¹ï©ó§Aªº¬ðµM³y³X¦ü¥G¤£¤Ó°ª¿³¡A±q
+ªù¥X¥h¥i¥H¦^¨ì¨«´Y¤W¡C
+~
+0 8 0
+D2
+~
+~
+1|2 0 733
+S
+
+#739
+­x©x¹ì~
+³o¸Ì¬O¦³¥|±iÂù¼h§É¤Î¤K°Æ®à´Èªº©Ð¶¡¡C¥x­±¤Wª««~ªºÂ\³]¾ã»ô¹º¤@¡A¬Ý±o¥X¨Ó¥­
+±`¦³ªá¤ß«ä¾ã²z¡A¤~¯à«O«ù¾ã¼äªºÀô¹Ò¡C±qªù¥X¥h¥i¥Hªð¦^¨«´Y¤W¡C
+~
+0 8 0
+D0
+~
+~
+1|2 0 734
+S
+
+#740
+­x©x¹ì~
+³o¸Ì¬O¦³¥|±iÂù¼h§É¤Î¤K°Æ®à´Èªº©Ð¶¡¡C¥x­±¤Wª««~ªºÂ\³]¾ã»ô¹º¤@¡A¬Ý±o¥X¨Ó¥­
+±`¦³ªá¤ß«ä¾ã²z¡A¤~¯à«O«ù¾ã¼äªºÀô¹Ò¡C±qªù¥X¥h¥i¥Hªð¦^¨«´Y¤W¡C
+~
+0 8 0
+D2
+~
+~
+1|2 0 734
+S
+
+#741
+¸t°ó¶¤ªø«Ç~
+¤@¶¡°t¸m¾ã¼äªº©Ð¶¡¡A¨â°Æ®à´È¤@±i§É¤Î´X­ÓÂd¤l¡A¨S¤°»ò¯S§Oªº¡C¤£¹L¡A¤@®Çªº
+Âd¤l¤W¡A©ñ¸mµÛ³\¦h¦UºØ»ö¦¡¤¤·|¨Ï¥Î¨ìªºÅ]¾É¾¹¨ã¡C¯uÅý¤H¤£¸Ñ¡A©Ð¶¡¥D¤H¦¬¶°³o¨Ç
+ªF¦èªº¥Øªº¬O¤°»ò¡A¤j·§¥u¬O­Ó¤Hªº¿³½ì§a....
+~
+0 8 0
+D0
+~
+~
+1|2 0 736
+S
+
+#742
+¦u½Ã¶¤ªø«Ç~
+³o¸ÌÂ²ª½¬O­Ó©U§£³õ¡C´²¸¨¤@¦aªº¯È±i¡AÅý§Aªº¸}¤£ª¾¹D¸Ó½ñ¦b­þ¸Ì¡A¬Æ¦Ü¦³¨Ç¯È
+±i¤UÁÙÂÃ¦³ªÅ°s²~¡AÀI¨ÇÅý§AºL­Ë¡C®à¤l¤W¤]©ñº¡¹s¶Ãªº¤å¥ó¡A¦³¨ÇÁÙªg¤W¤F¬õ°sº{¡A
+§¹¥þµLªk¿ë»{¤W­±¼gªº¤º®e¡A©Ò¦³ªºÂd¤l¤W¹M§G¤j¤j¤p¤p³Q§Q¾¹¼A¬å¹Lªº²ª¸ñ¡C¦Ó©Ð¶¡
+¤¤°ß¤@ªº¤ì§ÉÁÙ¯Ê¤Ö¤@¤ä¸}¡A³QÀH¿³¦a¥Î´X¥»«p®Ñ¹Ô°_¨Ó¡A´NºâÀH®É§~¶ò¤]¤£·N¥~¡C¯u
+¤£ª¾¹D¦í¦b³o©Ð¶¡ªº¤H¥­±`¬O¹LµÛ«ç¼Ëªº¥Í¬¡¡C
+~
+0 8 0
+D2
+~
+~
+1|2 0 736
+S
+
+#743
+¤¸«Ó·|«È«Ç~
+³o¬O¤@¶¡¬Û·í¤jªº©Ð¶¡¡A¦ý¬O¤º¸Ë¬Û·íÂ²©ö¡C¦a­±¾Q¦³¬õ¦âªº¦a´à¡A¤¤¥¡Â\µÛ¤@±i
+¤è®à¤Î¼Æ±i´È¤l¡C«n¥_Àð­±¤W¤À§O¶}¦³¨â®°µ¡¡A®ÇÃä«h©ñ¸m´X®y®Ñ¬[¸ò¼pÂd¡C©Ð¤º°£¤F
+¶i¤Jªºªù¥~¡A¦b¹ï¥ßºÝÁÙ¦³¥t¤@®°ªù¯à³q©¹§Oªº©Ð¶¡¡C
+~
+0 8 0
+D1
+~
+~
+1|2 0 744
+D3
+~
+~
+1|2 0 736
+S
+
+#744
+¤¸«Ó¨p¤H©Ð~
+³o¬O¶¡«D±`¤jªº©Ð¶¡¡A°£¶iªùªºÀð­±¥~¡A³Ñ¤U¤T­±³£³]¦³µ¡¤á¡C©Ð¶¡¤¤Â\©ñªº®a¨ã
+¶È¦³®à´È¡B§É¸ò¦çÂd¡A¾ãÅéªÅ¶¡ªº¨Ï¥Î²v·¥§C¡C³o³æ½Õªº¤º¸Ë¡A¨Ï±o³o¨Ç®a¨ã¦b©Ð¤ºÅÜ
+±o®æ¥~Åã²´¡C°ß¤@ªº¥X¤f¥u¦³¶i¨Óªºªù¡A°£«D§A·Q±qÂ÷¦a¤Q´X¤½¤Øªºµ¡¥~¤@ÅD¦Ó¤U¡C
+~
+0 8 0
+D3
+~
+~
+1|2 0 743
+S
+
+#745
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C³o¸Ì¦³¤@±ø
+³q©¹¤U¼hªºÁ³±Û¼Ó±è¡C
+~
+0 4 1
+D0
+~
+~
+0 0 750
+D1
+~
+~
+0 0 747
+D2
+~
+~
+0 0 754
+D3
+~
+~
+0 0 746
+D5
+~
+~
+0 0 732
+S
+
+#746
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D0
+~
+~
+0 0 749
+D1
+~
+~
+0 0 745
+D2
+~
+~
+0 0 753
+S
+
+#747
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D0
+~
+~
+0 0 751
+D1
+~
+~
+0 0 748
+D2
+~
+~
+0 0 755
+D3
+~
+~
+0 0 745
+S
+
+#748
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D0
+~
+~
+0 0 752
+D2
+~
+~
+0 0 756
+D3
+~
+~
+0 0 747
+S
+
+#749
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D1
+~
+~
+0 0 750
+D2
+~
+~
+0 0 746
+S
+
+#750
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D1
+~
+~
+0 0 751
+D2
+~
+~
+0 0 745
+D3
+~
+~
+0 0 749
+S
+
+#751
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D1
+~
+~
+0 0 752
+D2
+~
+~
+0 0 747
+D3
+~
+~
+0 0 750
+S
+
+#752
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D2
+~
+~
+0 0 748
+D3
+~
+~
+0 0 751
+S
+
+#753
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D0
+~
+~
+0 0 746
+D1
+~
+~
+0 0 754
+S
+
+#754
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D0
+~
+~
+0 0 745
+D1
+~
+~
+0 0 755
+D3
+~
+~
+0 0 753
+S
+
+#755
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D0
+~
+~
+0 0 747
+D1
+~
+~
+0 0 756
+D3
+~
+~
+0 0 754
+S
+
+#756
+­xÀç«Î³»~
+³o¸Ì¬O­xÀçªº«Î³»¡A¥|©PªºÃä½t¿v°_¤@¤H°ªªº¥ÛÀð¡AÁ×§K¦³¤H¤£·V¼Y¼Ó¡CÀð­±¤WÁÙ
+³]¦³¥W¥YªºÀðÎWµ²ºc¡A¦b§ð«°¾Ô®É§Q©ó±q¥W¬}¶¡¿sµø¼Ä¤H©Î¨Ï¥Î¤}½b¤ÏÀ»¡C
+~
+0 0 1
+D0
+~
+~
+0 0 748
+D3
+~
+~
+0 0 755
+S
+
+#0
+
+
+
+#SPECIALS
+M 600 spec_guard
+M 601 spec_cast_cleric
+M 602 spec_cast_cleric
+M 603 spec_cast_mage
+M 621 spec_janitor
+M 623 spec_guard
+M 628 spec_cast_adept
+M 629 spec_guard
+M 630 spec_breath_any
+M 631 spec_breath_any
+M 632 spec_cast_mage
+M 633 spec_breath_any
+M 634 spec_guard
+S
+
+
+
+#RESETS
+O 0 649 0 622
+O 0 614 0 620
+O 0 611 0 620
+M 0 600 3 601 *cityguard
+M 0 600 3 604
+M 0 600 3 608
+M 0 601 1 601 *Diana
+M 0 602 1 742 *Derrick
+M 0 603 1 698 *Jacklyn
+M 0 617 2 601 *male citizen
+M 0 617 2 608
+M 0 618 2 602 *female citizen
+M 0 618 2 605
+M 0 637 2 648 *male ofcol noble
+M 0 637 2 651
+M 0 638 2 625 *female ofcol noble
+M 0 638 2 637
+M 0 624 1 609 *bard
+M 0 609 1 622 *Granny
+M 0 610 1 617 *Jack
+E 0 601 0 16
+M 0 611 1 620 *quest mob Sara
+E 0 615 0 16
+M 0 612 4 619 *hen
+M 0 612 4 619
+M 0 612 4 619
+M 0 612 4 619
+M 0 613 3 623 *cow
+M 0 613 3 623
+M 0 613 3 623
+M 0 614 2 620 *cow
+M 0 614 2 620
+M 0 616 4 624 *pig
+M 0 616 4 624
+M 0 616 4 624
+M 0 616 4 624
+M 0 615 4 622 *young horse
+M 0 615 4 622
+M 0 615 4 622
+M 0 615 4 622
+M 0 621 3 627 *maid
+M 0 621 3 629
+M 0 621 3 643
+M 0 619 2 666 *boy
+M 0 620 1 667 *girl
+M 0 636 2 643 *quest mob bodyguard
+M 0 636 2 643
+G 0 671 0
+M 0 635 1 644 *quest mob Cathy
+M 0 604 1 603 *shop Jim
+G 0 600 0
+G 0 601 0
+G 0 615 0
+G 0 667 0
+M 0 605 1 604 *shop Sam
+G 0 616 0
+G 0 617 0
+G 0 618 0
+G 0 619 0
+M 0 606 1 606 *shop Tracy
+G 0 606 0
+G 0 607 0
+G 0 608 0
+M 0 607 1 607 *shop Marty
+G 0 602 0
+G 0 603 0
+G 0 604 0
+G 0 605 0
+M 0 622 1 609 *shop Nyles
+G 0 648 0
+G 0 649 0
+G 0 650 0
+M 0 608 1 610 *shop Elizabeth
+G 0 609 0
+G 0 610 0
+G 0 611 0
+G 0 612 0
+G 0 613 0
+M 0 628 1 669 *priestess
+E 0 669 0 1
+E 0 664 0 12
+E 0 652 0 3
+M 0 625 2 673 *servant
+M 0 625 2 674
+M 0 627 1 678 *page
+M 0 633 3 676 *dragonknight
+E 0 620 0 1
+E 0 654 0 5
+E 0 660 0 11
+E 0 662 0 16
+M 0 633 3 681 *dragonknight
+E 0 620 0 1
+E 0 654 0 5
+E 0 660 0 11
+E 0 662 0 16
+M 0 626 2 682 *squire
+M 0 626 2 683
+M 0 629 1 688 *Jerrold
+E 0 669 0 1
+E 0 664 0 12
+M 0 630 3 688 *dragonlord
+E 0 620 0 1
+E 0 654 0 5
+E 0 660 0 11
+E 0 662 0 16
+E 0 656 0 6
+E 0 657 0 7
+M 0 630 3 688 *dragonlord
+E 0 620 0 1
+E 0 654 0 5
+E 0 660 0 11
+E 0 662 0 16
+E 0 657 0 8
+E 0 658 0 9
+M 0 630 3 688 *dragonlord
+E 0 620 0 1
+E 0 654 0 5
+E 0 660 0 11
+E 0 662 0 16
+E 0 659 0 10
+E 0 661 0 13
+M 0 633 3 690 *Dragonknight
+E 0 620 0 1
+E 0 654 0 5
+E 0 660 0 11
+E 0 662 0 16
+M 0 631 1 693 *Gold Dragon
+E 0 669 0 1
+E 0 662 0 16
+E 0 663 0 17
+M 0 632 2 693 *attendant
+E 0 668 0 12
+M 0 632 2 693
+E 0 668 0 12
+M 0 634 3 699 *temple guard outside
+M 0 634 3 699
+S
+
+
+
+#SHOPS
+604 5 9 15 0 0 120 75 0 23
+605 9 0 0 0 0 120 75 0 23
+606 8 12 13 0 0 120 80 0 23
+607 0 19 0 0 0 120 40 0 23
+608 0 17 19 0 0 120 40 0 23
+622 0 17 0 0 0 120 40 0 23
+0
+
+
+
+#$

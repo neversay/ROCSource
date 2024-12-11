@@ -1,0 +1,1820 @@
+#AREADATA
+Name        火蠑螈聚落~
+Identity    firenewt~
+Builders    Nirrad~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      2900 2931
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#2901
+black mountain goat~
+公黑山羊(mountain goat)~
+一隻雄性黑山羊(mountain goat)站在這邊。
+~
+這隻山羊看起來很餓而且正在找尋食物。
+~
+1|2|64|4096 0 -100 S
+42 0 0 10d-2+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+C 1
+P 256|4194304
+>greet_prog 50~
+if ispc($n)
+	mpechoat $n 性情暴躁的 $I 忽然往你衝了過來....
+	mpechoaround $n 性情暴躁的 $I 忽然往 $n 衝了過去....
+	hunt $n
+	mpnowait
+	bashhead
+	mpnowait
+endif
+~
+>fight_prog 30~
+kick
+mpnowait
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpgreward exp $n -38 200
+mpgreward exp $n basic 200
+~
+|
+#2902
+black mountain ewe~
+母黑山羊(mountain ewe)~
+一隻雌性黑山羊(mountain ewe)站在這邊。
+~
+這隻母山羊正在四處吃草。
+~
+1|2|64 0 -100 S
+40 0 0 10d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+P 256|4194304
+>fight_prog 20~
+kick
+mpnowait
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpgreward exp $n -38 100
+mpgreward exp $n basic 100
+~
+|
+#2903
+black mountain kid~
+小山羊(mountain kid)~
+一隻小山羊(mountain kid)站在這邊。
+~
+這隻小山羊跟它的同類正玩得很愉快。
+~
+1|2|64 0 -100 S
+39 0 0 10d-5+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+P 256|4194304
+>fight_prog 15~
+kick
+mpnowait
+bashhead
+mpnowait
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpgreward exp $n -38 50
+mpgreward exp $n basic 50
+~
+|
+#2904
+fire newt worker~
+火蠑螈工人(fire newt worker)~
+一隻火蠑螈工人(fire newt worker)站在這邊。
+~
+這隻火蠑螈工人看起來工作的相當熱與吃力。
+~
+1|4|64|4096 0 -400 S
+38 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Lizardman~
+C 1
+P 256|4194304
+S 13 1000
+S 41 -300
+S 42 -200
+>greet_prog 100~
+if ispc($n)
+	gasp $n
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) == Lizardman
+		if is_qmark($i) != firenewt_quest
+			mpadd_qmark self firenewt_quest 1 0 0 0 1 0
+			say 原來是同類啊！你好。
+		endif
+	else
+		say 你是誰？來做什麼？
+		mpkill $n
+	endif
+endif
+~
+>fight_prog 20~
+skilldrv multihit $n
+skilldrv multihit $r
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpgreward exp $n -38 100
+mpgreward exp $n basic 100
+~
+|
+#2905
+fire newt guard~
+火蠑螈守衛(fire newt guard)~
+一隻火蠑螈守衛(fire newt guard)站在這邊。
+~
+這隻火蠑螈守衛看到你的侵入覺得你不能活著回去。
+~
+1|64|4096|8192|262144 0 -450 S
+40 0 0 0d0+-10 0d0+0
+-1 0
+0 8 1
+R Lizardman~
+S 13 5000
+C 1|8
+P 8|128|256|4194304
+>greet_prog 100~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) == Lizardman
+		sm $n
+	else
+		say 你是誰？
+		hunt $n
+		mpnowait
+	endif
+endif
+~
+>fight_prog 50~
+if is_equ_obj($i) != 2905
+	wear axe
+	disarm
+	mpnowait
+endif
+if rand(60)
+	kick
+	mpnoait
+else
+	bashhead
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpgreward exp $n -38 200
+mpgreward exp $n basic 200
+~
+|
+#2906
+fire newt worker leader~
+火蠑螈工頭(fire newt leader)~
+一隻火蠑螈工頭(fire newt worker leader)站在這邊。
+~
+這隻火蠑螈工頭看起來工作的相當熱與吃力。
+~
+1|2|64|4096|8192|262144 8 -400 S
+41 0 0 0d0+-10 0d0+0
+-1 0
+0 8 2
+R Lizardman~
+C 1|8
+P 8|128|256
+S 13 5000
+>greet_prog 50~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入啊！
+		if rmobcount(2904) > 0
+			mpgroup self worker 1 0
+			mpforce worker mpkill $n
+		endif
+	endif
+endif
+~
+>rand_prog 30~
+if rmobcount(2904) > 0
+	say 快！加快進度！
+	mpforce worker say 是！
+endif
+~
+>fight_prog 40~
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $r
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpgreward exp $n -36 300
+mpgreward exp $n basic 300
+~
+|
+#2907
+fire newt guard captain~
+火蠑螈守衛隊長(fire newt guard captain)~
+一隻火蠑螈守衛隊長(fire newt guard captain)站在這邊。
+~
+這隻火蠑螈就是統領整個火蠑螈守衛的隊長。
+~
+1|2|64|4096|8192|262144|8388608 8|32 -450 S
+42 0 0 0d-5+-20 0d0+0
+0 0
+0 8 2
+R Lizardman~
+C 1|8
+S 13 8000
+P 8|128|256|4194304
+>greet_prog 100~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入，全體戒備！
+		hunt $n
+		mpnowait
+	endif
+else
+	if vnum($n) == 2912
+		bow leader-firenewt
+		say 首領好！
+		mpforce leader-firenewt nod
+	endif
+endif
+~
+>fight_prog 50~
+if rand(15)
+	if is_equ_obj($i) != 2904
+		wear sword
+		disarm
+		mpnowait
+	endif
+endif
+if rand(50)
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+else
+	if is_equ_obj($i) != 2904
+		wear sword
+		if rand(30)
+			circular
+			mpnowait
+		else
+			earth
+			mpnowait
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 600
+mpgreward exp $n basic 600
+~
+|
+#2908
+fire newt mother~
+火蠑螈媽媽(fire newt mother)~
+一隻火蠑螈媽媽(fire newt mother)站在這邊。
+~
+這隻火蠑螈媽媽正在照顧它的小孩。
+~
+1|2|64 8|32 -400 S
+38 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Lizardman~
+C 2
+P 256|4194304
+S 13 5000
+>greet_prog 100~
+if ispc($n)
+	if rmobcount(2909) > 0
+		say 你是來傷害我們的嗎？我不會讓你得逞的。
+	else
+		if race($n) != Lizardman
+			say 就是你殺了我的家人！
+			mpkill $n
+		endif
+	endif
+endif
+~
+|
+#2909
+fire newt baby~
+火蠑螈寶寶(fire newt baby)~
+一隻火蠑螈寶寶(fire newt baby)在這邊慢慢的爬行。
+~
+這隻火蠑螈寶寶正在學習怎麼在爬行。
+~
+1|2|4 0 -350 S
+24 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+S 13 5000
+R Lizardman~
+P 256|4194304
+>death_prog 100~
+mpdis_magic blindness
+mpat 5 c inf
+yell 啊....！
+if rmobcount(2908) > 0
+	mpechoat $n 火蠑螈媽媽(fire newt mother) 悲憤莫名的向你攻了過來....
+	mpechoaround $n 火蠑螈媽媽(fire newt mother) 悲憤莫名的向 $n 攻了過去....
+	mpforce mother mpkill $n
+endif
+~
+|
+#2910
+fire newt sergeant~
+火蠑螈士官(fire newt sergeant)~
+一隻火蠑螈士官(fire newt sergeant)正在巡視這個區域。
+~
+這隻火蠑螈發現了你並不屬於這個區域該出現的生物。
+~
+1|4|64|4096|8192 8|32 -500 S
+44 0 0 0d-10+-30 0d0+0
+-1 0
+0 8 1
+R Lizardman~
+C 1|8
+S 13 7000
+P 8|128|256|4194304
+>greet_prog 100~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入，全體戒備！
+		hunt $n
+		mpnowait
+	endif
+else
+	if vnum($n) == 2912
+		bow leader-firenewt
+		say 首領好！
+		mpforce leader-firenewt nod
+	endif
+endif
+~
+>fight_prog 50~
+if rand(20)
+	if is_equ_obj($i) != 2907
+		wear pick
+		disarm
+		mpnowait
+	endif
+endif
+if rand(60)
+	bashhead
+	mpnowait
+else
+	if is_equ_obj($i) != 2907
+		wear pick
+		if rand(10)
+			circular
+			mpnowait
+		else
+			earth
+			mpnowait
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 400
+mpgreward exp $n basic 400
+~
+|
+#2911
+fire newt general~
+火蠑螈將軍(fire newt general)~
+一隻火蠑螈將軍(fire newt general)站在這邊。
+~
+這隻火蠑螈將軍對你冽出邪惡的笑容。
+~
+1|2|4|64|4096|8192|262144|8388608 8|32 -700 S
+45 -1000 0 0d8+-30 0d0+0
+-1 0
+0 8 1
+R Lizardman~
+C 1|8|32
+S 13 8000
+P 8|128|256|4194304
+>repop_prog 100~
+mpmload 2910
+mpgroup self sergeant 1 0
+mpmload 2907
+mpgroup self captain 1 0
+~
+>greet_prog 100~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入，全體戒備！
+		hunt $n
+		mpnowait
+	endif
+else
+	if vnum($n) == 2912
+		bow leader-firenewt
+		say 首領好！
+		mpforce leader-firenewt nod
+	endif
+endif
+~
+>fight_prog 100~
+if is_equ_obj($i) != 2907
+	wear pick
+	mpnowait
+endif
+if rand(20)
+	if rmobcount(2907) > 0
+		say 隊長，攻擊 $r ！
+		mpforce captain mpgoto self
+		mpforce captain hunt $r
+		mpforce captain skilldrv multihit $r
+	endif
+	if rmobcount(2910) > 0
+		say 士官，攻擊 $r ！
+		mpforce sergeant mpgoto self
+		mpforce sergeant hunt $r
+		mpforce sergeant skilldrv multihit $r
+	endif
+endif
+if rand(20)
+	if class($n) < 5
+		mpecho $I 忽然吐出了火焰....
+		c fireball
+		mpnowait
+	endif
+else
+	yell $n ！去死！
+	skilldrv multihit $n
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 1000
+mpgreward exp $n basic 1000
+~
+|
+#2912
+leader-firenewt fire newt leader~
+火蠑螈首領(fire newt leader)~
+一隻火蠑螈首領(fire newt leader)站在這邊。
+~
+他就是火蠑螈聚落的首領，比起其他火蠑螈，他有著更加強壯的肌肉與精銳的眼神。
+~
+1|2|4|64|4096|8192|262144|67108864 8|32|128|512|8192 -1000 S
+50 -1000 0 0d-10+0 0d0+0
+-1 0
+0 8 1
+R Lizardman~
+C 1|8|32
+S 13 10000
+P 8|128|256|4194304
+A6
+mpcall firenewt_leader_schedule_1
+~
+A8
+mpcall firenewt_leader_schedule_2
+~
+|
+>defun_prog firenewt_leader_schedule_1~
+if mobcount(2916) == 0
+	mpadd_qmark self firenewt_quest 24 0 0 0 1 0
+	mpgoto 2926
+	say 祭典應該要開始了！
+	mpcallout 1 e
+	mpcallout 2 e
+	mpcallout 3 e
+	mpcallout 4 e
+	mpcallout 5 e
+	mpcallout 6 mpgoto 2929
+	mpcallout 6 close w
+	mpcallout 6 e
+	mpcallout 6 open e
+	mpcallout 7 yell 祭典開始！
+endif
+~
+>defun_prog firenewt_leader_schedule_2~
+if is_qmark($i) == firenewt_quest
+	say 將祭品拿出來！
+	if mobcount(2916) == 0
+		mpcallout 1 mpmload 2916
+		mpcallout 1 mpecho 隨從將 迷途的小山羊(lost mountain kid) 抓了出來....
+		mpcallout 2 mpecho $I 口中開始喃喃祝禱著你完全聽不懂的咒語....
+		mpcallout 3 say 挖啦！補....八機！哪....七。
+		mpcallout 5 say 摳屋....！以內！碼....拉內立！
+		mpcallout 7 yell 魔神，讓我殺了祭品獻給你！
+		mpcallout 8 hunt kid-firenewt
+	else
+		mpcallout 1 say 什麼？沒有祭品？！
+		mpcallout 2 say 你們到底怎麼辦事的？
+		mpcallout 3 curse
+		mpcallout 4 yell 祭典取消！
+		mpcallout 5 mpgoto 2928
+		mpcallout 5 close e
+		mpcallout 5 w
+		mpcallout 5 open w
+		mpcallout 6 w
+		mpcallout 7 w
+		mpcallout 8 w
+		mpcallout 9 w
+		mpcallout 10 w
+		mpcallout 10 mpdel_qmark self firenewt_quest
+	endif
+endif
+~
+>repop_prog 100~
+mpmload 2913
+mpgroup self priest-firenewt 1 1
+protect priest-firenewt
+mpmload 2914
+mpgroup self lizard-firenewt 1 0
+~
+>greet_prog 100~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) == Lizardman
+		if is_qmark($i) != firenewt_quest
+			say 你好啊！老弟，來這邊找我有什麼事？
+			mpadd_qmark self firenewt_quest 1 0 0 0 1 0
+		endif
+	else
+		yell 擅入此地，我要殺掉你！
+		hunt $n
+		mpnowait
+	endif
+endif
+~
+>kill_prog 100~
+if isnpc($n)
+	if vnum($n) == 2916
+		if is_qmark($n) == firenewt_quest
+			if mobcount(2916) > 0
+				mpat kid-firenewt mppurge kid-firenewt
+			endif
+			yell 祭典完成！魔神庇佑我火蠑螈聚落萬壽無疆！
+			mpcallout 2 mpgoto 2928
+			mpcallout 2 close e
+			mpcallout 2 w
+			mpcallout 2 open w
+			mpcallout 3 w
+			mpcallout 4 w
+			mpcallout 5 w
+			mpcallout 6 w
+			mpcallout 7 w
+			mpcallout 7 mpdel_qmark self firenewt_quest
+		endif
+	endif
+endif
+~
+>fight_prog 100~
+berserk
+if is_equ_obj($i) != 2911
+	wear axe
+endif
+skilldrv multihit $n
+if rand(20)
+	fre
+	mpnowait
+else
+	if rand(10)
+		bashhead
+		mpnowait
+	else
+		circular
+		mpnowait
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 1500
+mpgreward exp $n basic 1500
+~
+|
+#2913
+priest-firenewt fire newt priest~
+火蠑螈牧師(fire newt priest)~
+一隻火蠑螈牧師(fire newt priest)站在這邊。
+~
+這隻火蠑螈牧師正在這裡做禮拜的活動。
+~
+1|2|64|8192|262144|8388608|67108864 8|32|512 -1000 S
+38 -1000 0 -50d-40+300 -30d0+0
+0 0
+0 8 1
+R Lizardman~
+S 13 5000
+P 8|128|256|4194304
+>greet_prog 100~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) == lizardman
+		sm $n
+		say 你需要什麼幫忙嗎(talk priest heal/bless/combat mind)？
+	else
+		yell 敵人入侵！
+		if insameroom(leader-firenewt)
+			if isaffected(leader-firenewt) & 1
+				c 'cure blindness' leader-firenewt
+				mpnowait
+			endif
+		endif
+	endif
+endif
+~
+>talk_prog heal~
+if race($n) == Lizardman
+	if hitprcnt($n) < 50
+		nod $n
+		c heal $n
+	else
+		angry
+		say 你受傷並不嚴重。
+	endif
+endif
+~
+>talk_prog bless~
+if race($n) == Lizardman
+	nod $n
+	c bless $n
+endif
+~
+>talk_prog p combat mind~
+if race($n) == Lizardman
+	nod $n
+	c 'combat mind' $n
+endif
+~
+>fight_prog 50~
+if insameroom(leader-firenewt)
+	if isaffected(leader-firenewt) & 1
+		c 'cure blindness' leader-firenewt
+		mpnowait
+	endif
+	if hitprcnt(leader-firenewt) < 30
+		say 首領你快不行了，讓我幫幫你。
+		c 'double heal' leader-firenewt
+		mpnowait
+		break
+	endif
+	if hitprcnt(leader-firenewt) < 50
+		say 首領你的傷勢嚴重，讓我來幫你治療。
+		c 'double heal' leader-firenewt
+		mpnowait
+		break
+	endif
+	if hitprcnt(leader-firenewt) < 70
+		say 首領，讓我來幫你治療。
+		c heal leader-firenewt
+		mpnowait
+	endif
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+if rand(25)
+	c poison $n
+	mpnowait
+else
+	if rand(33)
+		c blindness $n
+		mpnowait
+	else
+		if rand(50)
+			c curse $n
+			mpnowait
+		else
+			c harm $n
+			mpnowait
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 300
+mpgreward exp $n basic 300
+~
+|
+#2914
+lizard-firenewt fire newt lizard~
+火蜥蜴(fire lizard)~
+一隻火蜥蜴(fire lizard)在這裡爬行。
+~
+這隻火蜥蜴是首領所養的寵物，不時的對你吐出他那火紅的舌頭。
+~
+1|2|4|64|8192|262144|8388608|67108864 8|32|512|8192 -100 S
+35 -1000 0 -20d-30+200 0d150+0
+0 0
+0 8 0
+R Lizard~
+C 1
+S 13 5000
+P 8|128|256|4194304
+>greet_prog 100~
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) == Lizardman
+		if rand(50)
+			lick $n
+		endif
+	else
+		hunt $n
+		mpnowait
+	endif
+endif
+~
+|
+#2915
+ewe-firenewt black mountain ewe leader~
+母黑山羊首領(mountain ewe leader)~
+一隻巨大的雌性黑山羊(mountain ewe)站在這邊。
+~
+這隻母山羊身軀特別巨大，但是似乎正在四處尋找些什麼東西。
+~
+1|2|64 8|32|512 -100 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+C 1
+P 8|128|4194304
+>repop_prog 100~
+mpadd_qmark self firenewt_quest -1 0 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($i) != firenewt_talking
+	mpechoat $n $I 不斷地對你發出「咩！咩！」的叫聲....
+	mpechoaround $n $I 不斷地對 $n 發出「咩！咩！」的叫聲....
+	mpadd_qmark self firenewt_talking 1 0 0 0 1 0
+endif
+~
+>talk_prog topic~
+mpechoat $n $I 不斷地對你發出「咩！咩！」的叫聲，並把頭指向火山口....
+mpechoaround $n $I 不斷地對 $n 發出「咩！咩！」的叫聲....
+~
+>tick_prog 100~
+if is_qmark($i) != firenewt_quest
+	mppurge self
+endif
+~
+|
+#2916
+kid-firenewt lost black mountain kid~
+迷途的小山羊(lost mountain kid)~
+一隻走失的小山羊(lost mountain kid)站在這邊。
+~
+這隻小山羊似乎已經迷路了，正在這邊找路回家。
+~
+1|2|64|67108864 8|32|512|1024|4096 -100 S
+28 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+P 1|4|8|128|256
+S 41 100
+>repop_prog 100~
+mpadd_qmark self firenewt_quest 24 0 0 0 1 0
+~
+>entry_prog 100~
+if insameroom($b)
+	if is_qmark($i) > firenewt_quest 100000
+		if insameroom(firenewt)
+			mpforce firenewt say 竟然私下帶走祭品！
+			mpforce firenewt hunt $b
+		endif
+	endif
+	if insameroom(ewe-firenewt)
+		mpecho $I 看到了媽媽，立刻直奔過去，互相依偎在一起....
+		mpecho 你看到這個情形，不禁也要眼眶泛紅....
+		if level($b) > 39
+			mpechoat $b 遠方傳來一陣聲響「你的等級超過 38 ，無法獲得團體經驗值。」
+			mpexp $b 3000
+		else
+			if is_qmark($i) == firenewt_quest 100001
+				mpgreward exp $b -38 30000
+			endif
+			if is_qmark($i) == firenewt_quest 100002
+				mpgreward exp $b -38 20000
+			endif
+		endif
+		mpecho 你看著牠們一起離開了你的視線....
+		follow self
+		group leave
+		mpdef_rembch null-tar
+		mpmod_qmark ewe-firenewt firenewt_quest timer = 24
+		mpmod_qmark kid-firenewt firenewt_quest timer = 24
+		mptransfer ewe-firenewt 5
+		mpgoto 5
+	endif
+endif
+~
+>tick_prog 100~
+if is_qmark($i) != firenewt_quest
+	mppurge self
+endif
+~
+|
+#2917
+shepherd-firenewt shepherd~
+牧羊人(shepherd)~
+一個似乎看守羊群看守的很煩的牧羊人(shepherd)站在這邊。
+~
+他似乎不太看的住他正在看守的羊群，因此臉色一直不怎麼好看。
+~
+1|2|64 8|32|512 0 S
+30 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+S 16 -1000
+P 8|128|256
+>repop_prog 100~
+mpoload 1372
+mpat 5 wear flute
+~
+>talk_prog topic~
+curse
+say 那些討厭的火蠑螈都快把我的羊群(sheep)給吃光了。
+if race($n) == Lizardman
+	say 你是蜥蜴人啊？
+	say 跟那些討厭的火蠑螈長的有點像。
+else
+	say 小心啊！再往裡頭走就是火蠑螈的巢穴了，
+	say 進去可不要把那些兇暴的火蠑螈給五馬分屍了。
+endif
+~
+>talk_prog sheep~
+say 我是在這邊管理羊群的牧羊人，
+say 這麼多的羊沒有好的管理方式(management)是不行的。
+~
+>talk_prog management~
+mpechoat $n $I 看了看你....
+mpechoaround $n $I 看了看 $n ....
+hmm
+say 給我 60000 金幣，我倒是可以教教你如何讓羊群乖乖聽你的話。
+~
+>talk_prog flute~
+ponder
+say 你要問笛子的事情？
+say 再給我 40000 金幣我可以考慮跟你說。
+~
+>talk_prog ceremony~
+curse
+say 那些討厭的火蠑螈大約每天清晨都會舉行一次祭典，
+say 然後殺一隻我們這邊的羊來當祭品，
+say 但是天殺的誰知道那些火蠑螈什麼時候來偷羊的，
+say 昨天竟然偷了羊群首領的小羊去了。
+~
+>bribe_prog 60000~
+mpjunk all.coins
+sm $n
+say 其實只要對著羊吹奏(play)笛子(flute)牠們自然就會乖乖跟著你，
+say 到時候你只要到那邊牠自然就會跟到那邊。
+~
+>bribe_prog 40000~
+mpjunk all.coins
+gig $n
+say 現在史卡拉貝大陸上有魔力的笛子只要兩把，
+say 一把是魔力較弱的 銀笛(silver flute) ，據說在 泰洛斯(Thalos) 可以撿到，
+say 另外一把是魔力較強的 金色魔笛(golden flute) ，可能得到 魔法高塔(high tower) 才能找到了。
+say 當然魔力強的笛子，羊就比較會聽話。
+~
+>rand_prog 30~
+sigh
+say 那些火蠑螈真是越來越囂張了，
+say 竟然每天都抓我的一隻羊去進行祭典(ceremony)。
+shrug
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpecho $I 死前將 金色魔笛(golden flute) 折斷了....
+yell $n 你搶不到我身上的 金色魔笛(golden flute) 的！
+mpjunk all.flute
+~
+|
+#0
+
+
+#OBJECTS
+#2901
+horns~
+犄角(horns)~
+一對犄角(horns)放在這邊。~
+~
+5 0 1|8192
+100~ 0~ 0~ 11~
+2 0 0
+X bone~
+
+#2902
+bucket milk~
+牛奶桶子(milk bucket)~
+一個裝牛奶的桶子(milk bucket)放在這邊。~
+~
+17 0 1
+20~ 10~ 10~ 0~
+1 0 0
+X wooden~
+
+#2903
+shovel~
+剷子(shovel)~
+一支鏟子(shovel)放在這邊。~
+~
+5 0 1|8192
+100~ 0~ 0~ 7~
+2 0 0
+X iron~
+
+#2904
+short sword~
+短劍(short sword)~
+一把短劍(short sword)放在這邊。~
+~
+5 0 1|8192
+100~ 0~ 0~ 11~
+3 0 0
+X iron~
+
+#2905
+hand axe~
+掌中斧(hand axe)~
+一把掌中斧(hand axe)放在這邊。~
+~
+5 0 1|8192
+100~ 0~ 0~ 3~
+3 0 0
+X iron~
+
+#2906
+chainmail~
+鎖鍊甲(chainmail)~
+一副鎖鍊甲(chainmail)放在這邊。~
+~
+9 0 1|8
+0~ 0~ 100~ 0~
+10 0 0
+X iron~
+
+#2907
+pick~
+鋤頭(pick)~
+一支鋤頭(pick)放在這邊。~
+~
+5 0 1|8192
+100~ 0~ 0~ 3~
+2 0 0
+X iron~
+
+#2911
+broad axe~
+闊斧(broad axe)~
+一把闊斧(broad axe)放在這邊。~
+~
+5 512 1|8192
+100~ 0~ 0~ 3~
+15 0 0
+A
+1 2
+A
+18 1
+A
+19 2
+A
+43 10
+X iron~
+
+#2912
+leather suit~
+皮製襯衫(leather suit)~
+一套皮製襯衫(leather suit)放在這邊。~
+~
+9 1|64 1|8
+4~ 0~ 100~ 0~
+3 0 0
+A
+2 1
+X leather~
+
+#2913
+mace~
+釘頭鎚(mace)~
+一支釘頭鎚(mace)放在這邊。~
+~
+5 2|64 1|8192
+100~ 0~ 0~ 6~
+10 0 0
+A
+18 2
+A
+19 2
+X iron~
+
+#2914
+potion~
+橘色藥水(orange potion)~
+一罐橘色藥水(orange potion)放在這邊。~
+~
+10 64 1
+10~  ~ curse~ heal~
+1 0 0
+X liquid~
+
+#2915
+egg newt~
+蠑螈蛋(newt egg)~
+一顆蠑螈蛋(newt egg)放在這邊。~
+~
+19 0 1
+10~ 0~ 0~ 0~
+1 0 0
+X flesh~
+
+#0
+
+
+
+#ROOMDATA
+#2900
+黑曜石山丘~
+你看到在你面前是一個好像會發光的山丘。這裡的植物非常的稀少。這個山
+丘往南邊與東邊繼續的延伸下去，你在這邊的地上看到一張紙條(note)。
+~
+0 4 3
+E
+note~
+本區域的改編乃基於 ROC 中級區域與任務過少的原因而予以改編，
+希望能夠適當補充玩家於等級 31 - 35 過程幾乎無法自力升級的斷
+層。
+
+				  闇之冥王星  普魯多(Pluto)
+				  		 2002/12/03
+~
+D0
+~
+~
+0 0 4785
+D2
+~
+~
+0 0 2901
+S
+#2901
+黑曜石山丘~
+你看到在你面前是一個好像會發光的山丘(hill)。這裡的植物非常的稀少。
+這個山丘往南邊與東邊繼續的延伸下去。
+~
+0 4 3
+E
+hills~
+這個山丘閃爍著會發光的亮黑色。
+~
+D0
+You see some hills to the north.
+~
+~
+0 0 2900
+D2
+You see some more hills to the south.
+~
+~
+0 0 2902
+S
+#2902
+黑曜石山丘~
+你看到在你面前是一個好像會發光的山丘(hill)。這裡的植物非常的稀少。
+這個山丘往南邊與東邊繼續的延伸下去。
+~
+0 4 3
+E
+hills~
+這個山丘閃爍著會發光的黑色。
+~
+D0
+You see some hills to the north.
+~
+~
+0 0 2901
+D1
+You see the side of the mountain to the east.
+~
+~
+0 0 2903
+S
+#2903
+在山丘上~
+這座山(mountain)相當的高而且似乎已經存在很久很久的時間了。由許多天
+然災害造成的裂縫、山崩可以看出來。
+~
+0 0 4
+E
+mountain~
+這座山看起來應該是火山爆發之後岩漿流下來冷卻結晶而成。
+~
+D2
+The mountain continues.
+~
+~
+0 0 2904
+D3
+You see some hills to the west.
+~
+~
+0 0 2902
+S
+#2904
+在山丘上~
+這座山相當的高而且似乎存在很久很久的時間了。你看到不遠的山頂有一些
+黑煙(smoke)由山頂冉冉升起。
+~
+0 0 4
+E
+smoke~
+這陣黑煙很像是火山冒出來的氣體。
+~
+D0
+You see mountains to the north.
+~
+~
+0 0 2903
+D2
+The mountain continues.
+~
+~
+0 0 2905
+S
+#2905
+在山頂上~
+你終於到達山頂了。你可以看到更多的黑煙由此處冒出來。所有的黑煙好像
+都是由南方的那個洞中冒出來的。
+~
+0 4 4
+E
+top of mountain~
+The top of the mountain is a large area with a hole in the middle.
+~
+D0
+You see the side of the mountain to the north.
+~
+~
+0 0 2904
+D2
+You see a hole to the south. It looks like an entrance.
+~
+~
+0 0 2906
+S
+#2906
+進入山中的入口~
+所有的黑煙都是由這個洞裡頭冒出來的。而且似乎有一條路可以通往這裡頭。
+~
+0 4 4
+D0
+You see the top of the mountain to the north.
+~
+~
+0 0 2905
+D1
+You see the top of the mountain to the east.
+~
+~
+0 0 2907
+D2
+You see the top of the mountain to the south.
+~
+~
+0 0 2909
+D3
+You see the top of the mountain to the west.
+~
+~
+0 0 2908
+D5
+You can see down inside the mountain.
+~
+~
+0 0 2910
+S
+#2907
+在山頂上~
+你正站在這座山的山頂上。這座山看起來似乎被某種生物給破壞過了。
+~
+0 4 4
+D3
+You see the entrance to the mountain to the west.
+~
+~
+0 0 2906
+S
+#2908
+在山頂上~
+你正站在這座山的山頂上。在地上有一些不自然的人為破壞痕跡，你開始為
+此感到有些不尋常。
+~
+0 4 4
+D1
+You see the entrance to the mountain to the north.
+~
+~
+0 0 2906
+S
+#2909
+在山頂上~
+你正站在這座山的山頂上，而且你可以往北繼續走下去。
+~
+0 4 4
+D0
+You see the entrance to the mountain to the north.
+~
+~
+0 0 2906
+S
+#2910
+在山裡頭~
+你站在這座山的裡面。
+~
+0 9 2
+D1
+You see guard barracks.
+~
+~
+0 0 2911
+D3
+You see guard barracks.
+~
+~
+0 0 2912
+D4
+Entrance to the mountain.
+~
+~
+0 0 2906
+D5
+The shaft continues down.
+~
+~
+0 0 2913
+S
+#2911
+守衛室~
+你站在一個裡頭有床鋪、桌子與火蠑螈的房間。他們正在他們房間的牆壁上
+作畫，畫的內容是描述他們戰鬥的場景。
+~
+0 9 2
+D3
+You see the dark tunnel shaft.
+~
+~
+0 0 2910
+S
+#2912
+守衛室~
+你站在一個裡頭有床鋪、桌子與火蠑螈的房間。他們正在他們房間的牆壁上
+作畫，畫的內容是敘述他們火蠑螈族偉大的首領。
+~
+0 9 2
+D1
+You see the shaft in the mountain.
+~
+~
+0 0 2910
+S
+#2913
+在山裡面~
+你站在這座山的裡頭。
+~
+0 9 2
+D0
+You see a large storage room.
+~
+~
+0 0 2914
+D2
+You see workers' quarters.
+~
+~
+0 0 2915
+D4
+You see the dark mountain shaft.
+~
+~
+0 0 2910
+D5
+The shaft continues down.
+~
+~
+0 0 2916
+S
+#2914
+儲藏室~
+這個房間中沒有什麼特別的物品。只有一些箱子與火蠑螈工人在裡面。也有
+一些亂丟的垃圾都堆在這個房間中。
+~
+0 9 2
+D2
+You see the dark mountain shaft.
+~
+~
+0 0 2913
+S
+#2915
+工人的住處~
+你現在正站在火蠑螈工人的住處。有一些工人還在裡面休息。房間裡頭十分
+的雜亂而且沒有一件東西你感興趣的。或許是昨晚他們在這邊開慶祝會把所有的
+東西都給搞亂了吧！
+~
+0 9 2
+D0
+You see the dark mountain shaft.
+~
+~
+0 0 2913
+S
+#2916
+在山的底部~
+你正站在這座山的底部。
+~
+0 9 2
+D0
+You see the dark tunnel.
+~
+~
+0 0 2917
+D4
+You see the mountain shaft.
+~
+~
+0 0 2913
+S
+#2917
+通道~
+你站在一個空氣十分乾燥、黑暗的通道中。
+~
+0 9 2
+D0
+You see a bend in the tunnel.
+~
+~
+0 0 2918
+D2
+You see the bottom of the shaft.
+~
+~
+0 0 2916
+S
+#2918
+通道的轉彎處~
+你站在一個黑暗的通道中。
+~
+0 9 2
+D1
+The tunnel continues into the dark.
+~
+~
+0 0 2919
+D2
+You see that the tunnel leads back.
+~
+~
+0 0 2917
+S
+#2919
+通道~
+你站在一個通道中。
+~
+0 9 2
+D0
+The tunnel continues into the dark.
+~
+~
+0 0 2921
+D1
+You see a small fire newt house.
+~
+~
+0 0 2920
+D3
+You see a bend in the tunnel.
+~
+~
+0 0 2918
+S
+#2920
+火蠑螈的住所~
+你站在火蠑螈的住所裡面。有一隻火蠑螈媽媽正在裡頭照顧它的小孩。這個
+房間擠滿了許多火蠑螈寶寶，而且他們看起來好像都很無聊。
+~
+0 9 2
+D3
+You see the dark tunnel.
+~
+~
+0 0 2919
+S
+#2921
+通道~
+你站在一個通道中。
+~
+0 9 2
+D0
+The tunnel continues on.
+~
+~
+0 0 2923
+D2
+The dark tunnel.
+~
+~
+0 0 2919
+D3
+You see a fire newt house.
+~
+~
+0 0 2922
+S
+#2922
+火蠑螈之住所~
+你站在火蠑螈的住所裡面。有一隻火蠑螈媽媽正在跟它的小孩玩。這個房間
+中一些火蠑螈寶寶竟然尿尿在房間裡面，真是噁心...！
+~
+0 9 2
+D1
+You see the dark tunnel.
+~
+~
+0 0 2921
+S
+#2923
+通道~
+你站在一個通道中。
+~
+0 1|4|8 2
+D1
+You see a fire newt temple.
+~
+~
+0 0 2927
+D2
+You see the dark tunnel.
+~
+~
+0 0 2921
+D3
+You see the entrance to the town hall.
+~
+~
+0 0 2924
+S
+#2924
+通往市政廳的入口~
+你站在火蠑螈族群「市政廳」的入口。這個房間相當大而且華麗。
+~
+0 9 2
+D1
+You see the dark tunnel.
+~
+~
+0 0 2923
+D3
+You see a waiting room. 
+~
+~
+0 0 2925
+S
+#2925
+候傳室~
+你站在市政廳的候傳室裡面。有一扇巨大的門在你的西邊。這間房間的牆壁
+上畫著一些有關這個火蠑螈村落的歷史。
+~
+0 9 2
+D1
+You see the entrance to the town hall.
+~
+~
+0 0 2924
+D3
+You see a large office.
+~
+~
+0 0 2926
+S
+#2926
+首領的辦公室~
+你站在火蠑螈首領的辦公室中。
+~
+0 1|4|8 2
+D1
+You see the waiting room.
+~
+~
+0 0 2925
+S
+#2927
+在神殿外~
+你站在火蠑螈神殿的外面。這個神殿有著雄偉的拱型結構與尖塔。
+~
+0 9 2
+D1
+You see the entrance to the fire newt temple.
+~
+~
+0 0 2928
+D3
+You see the dark tunnel.
+~
+~
+0 0 2923
+S
+#2928
+神殿的入口~
+你站在進入神殿的入口前。這座神殿十分的乾淨。整個座位排列的十分的整
+齊，禮拜室的空間也相當的大。
+~
+0 9 2
+D1
+You see the door, that leads to the inside of the temple.
+~
+door~
+3 -1 2929
+D3
+You see the outside of the temple.
+~
+~
+0 0 2927
+S
+#2929
+神殿的內部~
+你站在火蠑螈神殿的內部。
+~
+0 9 2
+D3
+~
+door~
+3 -1 2928
+D5
+~
+~
+3 0 2930
+>room_command play flute~
+if is_equ_obj($n) == 1372
+or is_equ_obj($n) == 5217
+or is_equ_obj($n) == 5311
+	if rmobcount(2916) > 0
+		if is_qmark(kid-firenewt) == firenewt_quest 100000
+			if is_equ_obj($n) == 1372
+				echoat $n 你開始吹奏 金色魔笛(golden flute) ....
+				mod_qmark kid-firenewt firenewt_quest v0 = 1
+			endif
+			if is_equ_obj($n) == 5217
+			or is_equ_obj($n) == 5311
+				echoat $n 你開始吹奏 銀笛(silver flute) ....
+				mod_qmark kid-firenewt firenewt_quest v0 = 2
+			endif
+			purge $n flute
+			echoat $n 身上的笛子忽然消失了....
+			force kid-firenewt mpgroup $n self 1 1
+			force $n protect kid-firenewt
+			force kid-firenewt mpdef_rembch $n
+		else
+			echoat $n 這隻羊已經不受你的控制了。
+		endif
+	else
+		echoat $n 這裡沒有任何的羊隻。
+	endif
+else
+	if is_inv_obj($n) == 1372
+	or is_inv_obj($n) == 5217
+	or is_inv_obj($n) == 5311
+		echoat $n 你必須將笛子裝備起來。
+	else
+		echoat $n 你身上並沒有任何笛子。
+	endif
+endif
+~
+|
+S
+#2930
+門前的房間~
+你站在一扇大門之前。
+~
+0 9 2
+D1
+You see two large doors.
+~
+doors~
+3 -1 2931
+D4
+You see the inside of the temple.
+~
+~
+3 0 2929
+S
+#2931
+育嬰室~
+你站在一個放著許多蛋的房間。
+~
+0 13 2
+D3
+You see two large doors.
+~
+doors~
+3 -1 2930
+S
+#0
+
+#MOBPROGS
+M 2907 firenewt_groupexp.prg
+M 2910 firenewt_groupexp.prg
+M 2911 firenewt_groupexp.prg
+M 2912 firenewt_groupexp.prg
+M 2913 firenewt_groupexp.prg
+S
+
+#SPECIALS
+M 2913 spec_cast_cleric
+M 2914 spec_breath_fire
+S
+
+
+#RESETS
+M 0 2917 1 2901
+M 0 2915 1 2905
+M 0 2901 2 2903
+E 0 2901 0 16
+M 0 2901 2 2904
+E 0 2901 0 16
+M 0 2902 2 2904
+G 0 2902 0
+M 0 2902 2 2904
+G 0 2902 0
+M 0 2903 6 2904
+M 0 2903 6 2904
+M 0 2903 6 2904
+M 0 2903 6 2904
+M 0 2903 6 2904
+M 0 2903 6 2904
+M 0 2904 10 2910
+E 0 2903 0 16
+M 0 2905 6 2911
+E 0 2904 0 16
+M 0 2905 6 2911
+E 0 2904 0 16
+M 0 2905 6 2911
+E 0 2904 0 16
+M 0 2905 6 2912
+E 0 2905 0 16
+M 0 2905 6 2912
+E 0 2904 0 16
+M 0 2905 6 2912
+E 0 2905 0 16
+M 0 2904 10 2914
+M 0 2904 10 2914
+E 0 2903 0 16
+M 0 2906 4 2915
+E 0 2903 0 16
+M 0 2906 4 2915
+E 0 2903 0 16
+M 0 2906 4 2915
+M 0 2906 4 2915
+O 0 2906 0 2915
+M 0 2904 10 2916
+E 0 2903 0 16
+M 0 2904 10 2917
+M 0 2905 6 2917
+E 0 2904 0 16
+M 0 2904 10 2918
+E 0 2903 0 16
+M 0 2905 6 2918
+E 0 2904 0 16
+M 0 2904 10 2919
+E 0 2903 0 16
+M 0 2905 6 2919
+E 0 2905 0 16
+M 0 2908 2 2920
+M 0 2909 12 2920
+M 0 2909 12 2920
+M 0 2909 12 2920
+M 0 2909 12 2920
+M 0 2909 12 2920
+M 0 2909 12 2920
+M 0 2904 10 2921
+M 0 2904 10 2921
+M 0 2905 6 2921
+E 0 2905 0 16
+M 0 2908 2 2922
+M 0 2909 12 2922
+M 0 2909 12 2922
+M 0 2909 12 2922
+M 0 2909 12 2922
+M 0 2909 12 2922
+M 0 2909 12 2922
+M 0 2904 10 2923
+E 0 2903 0 16
+M 0 2905 6 2923
+E 0 2904 0 16
+M 0 2905 6 2923
+M 0 2910 2 2924
+E 0 2906 0 5
+E 0 2907 0 16
+M 0 2907 2 2923
+E 0 2905 0 16
+M 0 2907 2 2923
+E 0 2905 0 16
+M 0 2911 4 2925
+E 0 2906 0 5
+E 0 2907 0 16
+M 0 2911 4 2925
+E 0 2906 0 5
+E 0 2907 0 16
+M 0 2912 1 2926
+E 0 2911 0 16
+E 0 2912 0 5
+M 0 2910 2 2927
+E 0 2906 0 5
+E 0 2907 0 16
+M 0 2911 4 2928
+E 0 2906 0 5
+E 0 2907 0 16
+M 0 2911 4 2928
+E 0 2906 0 5
+E 0 2907 0 16
+M 0 2913 1 2929
+E 0 2913 0 16
+M 0 2914 2 2930
+G 0 2914 0
+M 0 2914 2 2930
+G 0 2914 0
+O 0 2915 0 2931
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

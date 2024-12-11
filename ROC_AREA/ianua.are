@@ -1,0 +1,1460 @@
+#AREADATA
+Name        ¥ì¦w¿Õ¿ò¸ñ~
+Identity    ianua~
+Builders    YH~
+Translator  ----~
+Modifier    ----~
+VNUMs	      13200 13299
+Security    1
+Recall      3001
+F_toggle    65536|1048576
+End
+
+
+
+#MOBILES
+#13200
+Veterfordien-ian leader-ian antior-ian~
+ºû¯S¦ò­}®¦(Veterfordien)~
+¥jÂÝ½Õ¬d¹Îªº»â³S(leader)¥¿¦b³o¸Ì¸ò¤H°Q½×µÛ§@·~¨Æ¶µ¡C
+~
+³o¦ì¨­¬ï¥v¥d©Ô¨©¾ÇªÌªA¹¢ªº°ª§§¥Õ¾v¦Ñ¤H´N¬O±a»â¥jÂÝ½Õ¬d¹Îªº»â¶¤¡C
+~
+1|64 8|32|64|128 800 S
+20 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+>talk_prog topic~
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if rand(100)
+	tell $n ¦³¤°»ò¨Æ¶Ü¡H
+	break
+endif
+if is_qmark($n) & adv_guild_level 300002
+	if is_qmark($n) != ianua_teleport
+		look $n
+		mpcallout 1 tell $n ¶â¡H§A¬O«_ÀIªÌ¤½·|¬£¨Óªº¤H¶Ü¡H(yes/no)
+		mpadd_qmark $n ianua_teleport -1 0 0 0 0 1
+	endif
+else
+	tell $n ¦³¤°»ò¨Æ¶Ü¡H
+endif
+~
+>death_prog 100~
+mpecho $I[1;32m³Û¹D¡G°Ú....[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+~
+|
+
+#13201
+guild mage~
+¤½·|ªk®v(guild mage)~
+¤@¦ìªk®v(mage)¦b¤@®ÇÀRÀR¦a¸ÑÅª¿ò¸ñªº¤å¦r¡C
+~
+¥L·t¦âªºªk³T¤W§OµÛ¤@ªT¥v¥d©Ô¨©Å]ªk®v¤½·|ªº¾±³¹¡A³o¥Nªí¥L¥¿¦b°õ¦æµÛ
+¤½·|©Ò¥I¤©ªº¥ô°È¡C
+~
+1|64 8|32|64|128 800 S
+20 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) & adv_guild_level 300002
+	if is_qmark($n) == ianua_mage_info
+	or is_qmark($n) & ianua_info 200001
+		mpechoat $n $I ¨Sª`·N¨ì§A¡C
+		break
+	else
+		if is_qmark($n) & ianua_info 100001
+			tell $n ©]¾]°l¬P¹Î(the group)...¥úÅ¥¦W¦r´NÄ±±o¦¨­û³£©Ç©Çªº¡C
+			tell $n ¦pªG¥i¥H¡A§Ú¯u¤£·Q±µªñ¥L­Ì¡C
+		else
+			tell $n §A¬O¤½·|ªº«_ÀIªÌ¶Ü¡H(yes/no)
+			mpadd_qmark $n ianua_mage_info -1 0 0 0 0 1
+		endif
+	endif
+else
+	mpechoat $n $I ¨Sª`·N¨ì§A¡C
+endif
+~
+>talk_prog p yes~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100000
+	tell $n ªGµM©O...§A¬O³o¬P´Á¤¤¤£ª¾¹D²Ä´X­Ó¶]¨ÓÆ[¥úªº«_ÀIªÌ¤F¡C
+	tell $n ³oÃþ®ø®§(news)¦b«_ÀIªÌ¶¡¶Ç±o³Ì§Ö¤F¡A¤£¥i¯à«ÊÂêªº¦í¡C
+	tell $n §ó¦óªpµo²{ªÌ¤S¬O¼L¤Ú¤j¨ì¤£¦æªº¨ººØ¤H....
+	mpmod_qmark $n ianua_mage_info v0 = 1
+endif
+~
+>talk_prog p no~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100000
+	tell $n Æ[¥ú«È¬O¶Ü...
+	tell $n ³o¼Ë§A¦Û¤vÀH·N¥|³B³}³}§a¡C
+	mpdel_qmark $n ianua_mage_info
+	mpmod_qmark $n ianua_info v1 | 1
+endif
+~
+>talk_prog p news~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100001
+	mpadd_qmark self talking 2 0 0 0 0 1
+	mpcallout 1 mpdel_qmark self talking
+	tell $n ºÃ¡H§A¸Ó¤£·|¤°»ò³£¤£ª¾¹D´N¦Û¤v§ä¨ì³o¸Ì¨Ó¤F¡H
+	tsk $n
+	mpcallout 1 tell $n »¡´²¨B¤£¤p¤ß³}¨ì...¨º§A³o´²¨B¤]¯u°÷¶æ¤F!
+	mpcallout 1 tell $n ª½¨ì«e´X¬P´Á«e¤~³Q¤H°¸µMµo²{(found)¡C
+	mpcallout 1 tell $n §Ú§i¶D§A¡A³o¿òÂÝªº¦s¦b¥i¬Oªñ¤d¦~¨Ó³£¨S¥b­Ó¤Hª¾¹D­C¡C
+	mpcallout 1 mpmod_qmark $n ianua_mage_info v0 = 2
+endif
+~
+>talk_prog p found~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100002
+	tell $n µo²{³o¸Ìªº¬O¤@¸s¾ã±ß°lµÛ¬y¬Pªº¦P¦n¡C
+	tell $n ¥L­Ì¤§¤¤¦³­Ó¤H°lµÛ°lµÛ¦b´ËªL¤¤°g¸ô¡A¤£¤p¤ß´Nµo²{³o¤ù¿ò¸ñ¡C
+	tell $n ¨º¸s©Ç©@¦b¤½·|¸ÌÁÙº¡¬õªº¡A§AÀ³¸Ó¤]Å¥¹L¤@¨Ç¥L­Ì(they)ªº¨Æ¸ñ¡C
+	tell $n ÁöµM¤j­P¤W³£¤£¬O¨Ç¦n¨Æ°Õ....
+	shrug
+	mpmod_qmark $n ianua_mage_info v0 = 3
+endif
+~
+>talk_prog p they~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100003
+	tell $n §ÚÅ¥¹Lªº¤j·§¬O¸ò¥L­Ì²Õ¶¤¥X¥ô°È¨ì¤@¥b®É¡A¬Ý¨ì¦³¬y¬P¹º¹L¤Ñ»Ú¡C
+	tell $n ³o¨Ç¤H·|¬ðµMµÛÅ]¯ëªº¿³¾Ä¦a´Â¬y¬P¶]¥h¡A§â¥ô°È¸ò¨ä¥L¶¤­û³£©ß¨ì¸£«á¡C
+	tell $n ©Ò¥H·S¸£¤£¤Ö¸ò¥L­Ì²Õ¹L¶¤ªº¤H¡A·d¨ì³Ì«á¨S¤H·Q¸ò¥L­Ì²Õ¶¤¡C
+	mpcallout 2 tell $n ¦pªG¤£¬O¦³¥ô°È¦b¨­¡A§ÚÁÙ¯u¤£·Q¸ò¥L­Ì±µÄ²©O....
+	mpcallout 2 tell $n Á`¤§¡A³o­Ó¹ÎÅé(the group)ªº¦¨­û³£©Ç©Çªº¡C
+	mpcallout 2 tell $n Å¥»¡³o¸s¤H¬°¦¹³Ð³y¥X¤F¤@­Ó¦P¦n·|¡A¦n¹³¥s§@©]¾]°l¬P¹ÎÁÙÔ£ªº...
+	mpdel_qmark $n ianua_mage_info
+	mpmod_qmark $n ianua_info v0 | 1
+endif
+~
+>talk_prog p the group~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) & ianua_info 100001
+	tell $n ©]¾]°l¬P¹Î(the group)...¥úÅ¥¦W¦r´NÄ±±o¦¨­û³£©Ç©Çªº¡C
+	tell $n ¦pªG¥i¥H¡A§Ú¯u±o¤£·Q¾aªñ¥L­Ì¡C
+endif
+~
+>talk_prog p reward~
+if is_qmark($n) == ianua_supplies 100003
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+	mpmod_qmark $n ianua_quest v0 | 1
+	mpmod_qmark $n ianua_supplies v0 = 4
+	tell $n ÁV¿|¡A§Ú°ª¿³¹LÀY¤F¡A®tÂI§Ñ°O§A³ø¹S¡C
+	tell $n ³o¬O§Aªº³ø¹S¡A¦hÁÂ°Õ¡I
+	mpgold $n 500000
+	mpexp $n 5000
+	mpskillexp $n 10000
+	mpcallout 1 tell $n §Ú¤§«á¦Û¤v¦^¥v¥d©Ô¨©¦A³B²z¤]¦æ¡C
+	mpcallout 1 tell $n ³o¥ó¨Æ¤£¬O«Ü«æ¡A­n¬O§A¨SªÅ¶Ç¸Ü¤]¨SÃö«Y¡C
+	mpcallout 1 tell $n §i¶D¤@­Ó¬Ý°_¨Ó«Ü»{¯uªºÄG´í¨k»¡¡G¨Æ±¡¸ò¥L·Qªº¤@¼Ë¡A¶i¦æ±o«Ü¶¶§Q(success)¡C
+	mpcallout 1 tell $n ¹ï¤F¡A¦]¬°§ÚÁÙ­n¦b³o¬ã¨s¤@¬q®É¶¡¡A¤è«K¨ì¤½·|À°§Ú¶Ç­Ó¸Ü¶Ü¡H
+	mpcallout 2 bow $n
+endif
+~
+>talk_prog p living-testing~
+if is_qmark($i) == talking
+	tell $n §Ú¦b¦£¡C
+	break
+endif
+if is_qmark($n) == ianua_supplies 100006
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 7
+	understand $n
+	mpcallout 1 grin $n
+	mpcallout 1 tell $n ­ü§r¡A©~µM³Q§Aµo²{¤F¨º¤]¨S¿ìªkÅo¡ã
+	mpcallout 4 tell $n ³o¼Ë§Ú´N¤@¦¸»¡µ¹§AÅ¥§a¡C
+	mpcallout 4 sigh
+	mpcallout 5 tell $n ¤£¹L±µ¤U¨Ó¤S¸I¨ì¥t¤@­Ó°ÝÃD(problem)¤F....
+	mpcallout 5 tell $n ©Ò¥H©O¡A§Ú¤]¦¨¥\ªº§ä¥XÅý³o¨Ç¥ÛªO¹B§@ªº¤èªk¡C
+	mpcallout 5 tell $n ¨Ã¥B¦b²{¦sªº°O¿ý¤¤¤]§ä¨ì¡A¦³Ãö¸Ó¨t²ÎÅ]ªkªº°O¿ý¡C
+	mpcallout 5 tell $n ¤½·|»{¬°³o¨Ç¥ÛªO¤Wªº²Å¸¹¬O¬YºØ¨t²Îªº¤W¥jÅ]ªk¡C
+	mpcallout 5 tell $n ¦b³o¸Ì§Úªº¤u§@´N¬O¬ã¨s¨º¨Ç¨èµÛ©_©Ç²Å¸¹ªº¥ÛªO¡C
+	mpcallout 5 tell $n §A¦³¦b¿ò§}¤º³}¹L¡AÀ³¸Ó¤£Ãøµo²{³o¸Ì¦s¦bµÛ¤@¨Ç©_©Çªº¥ÛªO§a¡H
+	mpcallout 5 mpdel_qmark self talking
+endif
+~
+>talk_prog p problem~
+if is_qmark($i) == talking
+	tell $n §Ú¦b¦£¡C
+	break
+endif
+if is_qmark($n) == ianua_supplies 100007
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 8
+	tell $n ¹B§@®É§Ú±Ä¥ÎµL¾÷ª«·í³Q¨ü´úÅé¡A¨Ã¥B±o¨ì«Ü§¹¬üªºµ²ªG¡C
+	tell $n ¦ý³o¨Ç¥ÛªOªº¥D­n¥\¯àÀ³¸Ó¬O³Q¹B¥Î¦b¬¡Åé¥Íª«¤W¤~¹ï¡C
+	mpcallout 1 tell $n ¨S¿ìªk»¡ªA¤½·|¨º¸s¤H¡A¨ú±o¬¡Åé¹êÅç³\¥i¡C
+	mpcallout 1 tell $n ¤£¹L²{¶¥¬qÁÙ¤£¤F¸Ñ³o¨ÇÅ]ªk¹B§@ªº­ì²z¡C
+	mpcallout 2 tell $n ³o®M¨t²Î¦bµu®É¶¡¤º¤]µLªk§ó¶i¤@¨B¶i¦æ¤U¥hÅo¡C
+	mpcallout 2 tell $n ¦Ü¤Ö­nªá­Ó¤Q´X¦~¤~¦³¿ìªk§@¨ì§a¡I
+	mpcallout 2 tell $n µM¦Ó­n§¹¾ãªº­«²{³o®MÅ]ªk¨Ã¤£¬O¨º»ò®e©öªº¨Æ¡C
+	mpcallout 3 tell $n ©Ò¥H§Ú­Ì´N·Q.....
+	mpcallout 3 tell $n ³o®MÅ]ªk¦pªG¯àºÉ¦­¹B¥Î¡AªÖ©w¯à¹ï¥@¬É·|²£¥Í­«¤jªºÅÜ­²¡C
+	mpcallout 5 tell $n ¨Æ¥ó³Q·í¦¨¹êÅç¼Æ¾Ú¤]ºâ¬O¹ïªÀ·|ªº¤@ºØ°^Äm¡A§A»¡¹ï§a¡H
+	mpcallout 5 tell $n ¦pªGµo¥Í¡u¤£©È¦ºªº«_ÀIªÌ¡A¾ÕÂô¿òÂÝ¤S¤£¤p¤ßµo°Ê³N¦¡¡v³oºØ·N¥~ªº¸Ü¡C
+	mpcallout 6 look $n
+	mpcallout 7 mpoload 13202 1 floor
+	mpcallout 7 mpoload 13203 1 floor
+	mpcallout 7 mpecho $I ¥á¤U ¨è¯¾¥Û¶ô(ectching stone).
+	mpcallout 7 mpecho $I ¥á¤U¤@¨Ç¿ú.
+	mpcallout 8 say ¿ú¥]¸ò­«­nªº¹êÅç¾¹§÷³£¤£ª¾¹D©ñ­þ¤F¡C
+	mpcallout 8 say ­ü§r¡A¤H¯u¬O¦Ñ¤F¡C
+	mpcallout 9 say §Æ±æ¦³µ½¤ß¤H¤h¾ß¨ì«á¡A¶i¨ìªF¥_¤èªº©Ð¶¡§i¶D§Ú¤@Án¡C
+	mpcallout 9 mpdel_qmark self talking
+endif
+~
+>talk_prog p report~
+if is_qmark($i) == talking
+	tell $n §Ú¦b¦£¡C
+	break
+endif
+if is_qmark($n) == ianua_supplies 100009
+	mpadd_qmark self talking
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+	mpmod_qmark $n ianua_quest v0 | 2
+	mpmod_qmark $n ianua_supplies v0 = 10
+	tsk $n
+	tell $n §A³o¬ð¦p¨ä¨ÓªºÁ|°ÊÅý©P³òªº¤H³£¬Ý¶Ì¤F²´¡C
+	tell $n ¤Þµo¤@°}¤£¤pªºÄÌ°Ê©O¡C
+	tell $n ¨Æ±¡¤]¶¶§Q¶Ç¤J°ª¼hªº¦Õ¦·¤F¡A¤]¦]¦¹®Á¤F¤@¹y¤WÀYªº¯ä½|¡C
+	mpcallout 2 tell $n ¤]³\¦A¹L¤@°}¤l´N¯à¶i¤J¹ê¥Î´ú¸Õ(test)¤F©O¡C
+	mpcallout 2 tell $n ¤½·|¤]¶}©lª`·N¨ì³oªF¦èªº¥i¦æ©Ê¤F¡C
+	mpcallout 2 tell $n ¤@¤Á³£¦p­p¹º¤@¼Ë¡AÂÇ¥Ñ§Aªº¨Æ¥ó¡C
+	mpcallout 3 mpskillexp $n 15000
+	mpcallout 3 bow $n 
+	mpcallout 3 mpdel_qmark self talking
+endif
+~
+>talk_prog p test~
+if is_qmark($n) == ianua_supplies 100010
+	tell $n ¹ê¥Î´ú¸Õ´N¬O¶}©ñ¤@¨Ç¸Õ¥ÎªÌ¨Ó¹ê»Ú¾Þ§@¡C
+	tell $n ¸Õ¥Î¤ß±o¯à°÷À°¦£§ïµ½¾Þ§@¤Wªº°ÝÃD¡C
+	tell $n ¬°¤F­n¨ú±o¤j¶qªº¨Ï¥Î¤ß±o¡AÀ³¸Ó·|§ä«_ÀIªÌ¤½·|¦X§@§a¡C
+	tell $n ¨ì®É§A¤]¯à¥h±Æ¶¤¸Õ¥Î¡C
+endif
+~
+>give_prog 13200~
+if is_qmark($i) == talking
+	tell $n §Ú¦b¦£¡C
+	give $o $n
+	drop $o
+	break
+endif
+if is_qmark($n) == ianua_supplies 100002
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 3
+	mpjunk $o
+	tell $n ³á³á¡A¸Éµ¹«~²×©ó¨Ó¤F¡C
+	tell $n ÁÙ¦b·Q¦pªGªF¦è¦A¤£¨Ó¡A³»¦h¼µ­Ó¤@¨â¤Ñ´N·¥­­¤F¡C
+	tell $n «¢¡A³o¤U¤l¦A¦h«Ý­Ó¥b¦~³£¨S°ÝÃD°Õ¡I
+	mpcallout 1 mpechoat $n ³o­Ó½c¤l©~µM¸Ë¤F¥b¦~ªºª«¸êÃø©Ç¨º»ò­«...¬Ý¨Ó­n¦n¦nªº¸ò¥Lºâ¤@ºâ¹B¶O(reward)¤F
+	mpcallout 1 mpdel_qmark self talking
+else
+	tell $n ·PÁÂÃÙ§U¡I
+	bow $n
+	mpjunk $o
+endif
+~
+>give_prog 13201~
+if is_qmark($i) == talking
+	tell $n §Ú¦b¦£¡C
+	give $o $n
+	drop $o
+	break
+endif
+if is_qmark($n) == ianua_supplies 100005
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 6
+	mpjunk $o
+	tell $n µ¹§Úªº«H¡H
+	mpechoat $n $I§â«H¥´¶}¨Ó¬Ý¡C
+	mpcallout 1 tell $n «¢¡A´Nºâ§A³o»ò¶Ô³Ò§Ú¤]¤£·|µ¹§A§ó¦h¹S....
+	mpcallout 1 tell $n ¨S·Q¨ì§A¨º»ò¼ö¤ß§r¡I¶}©l¥u¬O½Ð§A¶Ç­Ó¸Ü¦Ó¤w¡C
+	mpcallout 2 mpechoat $n $I«H¬Ý¨ì¤@¥b¬ðµM­±¦³Ãø¦â¡C
+	mpcallout 3 mpskillexp $n 10000
+	mpcallout 3 mpexp $n 5000
+	mpcallout 3 mpgold $n 300000
+	mpcallout 3 tell $n ³o¨Ç¬Oµ¹§Aªº¹S³Ò¡AÁÂÁÂ¡C
+	mpcallout 3 mpdel_qmark self talking
+else
+	? $n
+	mpjunk $o
+endif
+~
+>death_prog 100~
+mpecho $I[1;32m³Û¹D¡G§Ú¦b¥v¥d©Ô¨©ªº¦P¦ñ¬O¤£·|©ñ¹L§Aªº....[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+~
+|
+
+#13202
+archaeologist-ianua~
+¦Ò¥j¾Ç®a(archaeologist)~
+¤@¦ì¦Ò¥j¾Ç®a(archaeologist)¦b³o¸Ì¤ÀªRµÛ¥j¥Nªºª«¥ó¡C
+~
+¥L¬ïµÛ¤@®M¥v¥d©Ô¨©ªº¨î¦¡¾ÇªÌªA¡A¥B¬Û·í§ë¤J¤âÃäªº¤u§@¡C¬Ý°_¨Ó¯à®{¤â
+§âª±µÛ¥j¸³¡AÅý¥L¤ß±¡¬Û·í³¶ÅD¡C
+~
+1|64 8|32|64 800 S
+20 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+>talk_prog topic~
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) & adv_guild_level 300002
+
+else
+	tell $n ¥X¤gªºªF¦è¥i¥H¦Û¥Ñ°ÑÆ[¡A¦ý¤£­n¶Ã¸I­C¡I
+endif
+~
+>death_prog 100~
+mpecho $I[1;32m³Û¹D¡G°Ú....[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+~
+|
+
+#13203
+historian-ianua~
+¾ú¥v¾Ç®a(historian)~
+¤@¦ì¾ú¥v¾Ç®a(historian)¦b³o¸Ì¬ã¨sµÛ­è¥X¤gªºª«¥ó¡C
+~
+¥L¬ïµÛ¤@®M¥v¥d©Ô¨©ªº¨î¦¡¾ÇªÌªA¡A¥B¬Û·íº¡·N¤âÃäªº¤u§@¡C¬Ý°_¨Ó¯à°÷±q
+¥v®Ñ¤¤Â½§äÃÒ¾Ú¡AÅý¥LÅã±o¬Û·í¿³¾Ä¡C
+~
+1|64 8|32|64 800 S
+20 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+>talk_prog topic~
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+tell $n ®Ñ¤W§¹¥þ¨S¦³°O¸ü¬Û¦Pªº¤º®e¡A³o¬O·sªºµo²{§r¡I
+~
+>death_prog 100~
+mpecho $I[1;32m³Û¹D¡G°Ú....[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+~
+|
+
+#13204
+archaeology-ianua student-ianua~
+¦Ò¥j¾Ç°|¥Í(archaeology student)~
+¤@¦ì¾Ç¥Í(student)¦b³o¸Ì¬ã¨sµÛ­è¥X¤gªºª«¥ó¡C
+~
+¥L¬ïµÛ¤@®M¥v¥d©Ô¨©ªº¨î¦¡¾Ç¥ÍªA¡A¥Lªº¨­Åé¬Ý°_¬Û·íªº¯h¾Î¡C¤]³\¬O«ùÄò
+¶i¦æ­««×³Ò¤O¤u§@¦Ó³y¦¨ªº¡C
+~
+1|64 0 800 S
+20 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) & adv_guild_level 300002
+	if is_qmark($n) == ianua_arstudent_info
+		tell $n ­ü...¾ã¤Ñ·F³oºØ²Ê¬¡¯u¬O²Ö¦º¤H¤F...
+	else
+		if is_qmark($n) & ianua_info 100002
+			tell $n «_ÀIªÌ¤½·|¨ºÃä¤£ª¾¹D¬Oµo¥Í¤°»ò¨Æ¤F(problem)¡A¤@ÂI­µ°T³£¨S¦³¡C
+			tell $n ¦pªG¦A¨S¤H¨ÓÀ°¦£¡AÄ~Äò§@¤U¥h¯u±o·|¥X¤H©R§r....
+			sigh
+		else
+			tell $n ­ü...¾ã¤Ñ·F³oºØ²Ê¬¡¯u¬O²Ö¦º¤H¤F...
+			tell $n §Ú¶i¾Ç°|¥i¤£¬O¬°¤F·F³oºØ²Ê¬¡(donkey work)ªº§r¡I
+			mpadd_qmark $n ianua_arstudent_info -1 0 0 0 0 1
+		endif
+	endif
+else
+	tell $n ­ü...¾ã¤Ñ·F³oºØ²Ê¬¡¯u¬O²Ö¦º¤H¤F...
+endif
+~
+>talk_prog p donkey work~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_arstudent_info 100000
+	mpadd_qmark self talking 2 0 0 0 0 1
+	mpcallout 1 mpdel_qmark self talking
+	tell $n ´X¬P´Á«eªº±ß¤W¡A¦Ñ®v¬ðµM¿³¾Äªº¶]¨Ó§Ú®a¡C
+	tell $n »¡¦³¤ù·sªº¿òÂÝ³Q¤Hµo²{¡A­n§Ú§ÖÂI¦¬¬B¦æ§õ¸ò¥L¥Xµo¡C
+	tell $n ¤§«á±q¦­¨ì±ß¡A§Ú³£³Q«ü¬£µÛ·h¥ÛÀY·h¤åª«ªºÅé¤O¬¡...
+	mpcallout 1 tell $n °£«D¤u¤H(worker)¯à§ÖÂI¨ì¡A¤£µM¦A³o¼Ë·F¤U¥h·|­Ë¤Uªº...
+	mpcallout 1 tell $n ¦ý¬O¿ò¸ñ«D±`¤j¡A¥u¦³´X­Ó¤H¤£ª¾¹D­n·h¨ì¤°»ò®É­Ô§r¡I
+	mpcallout 1 mpmod_qmark $n ianua_arstudent_info v0 = 1
+endif
+~
+>talk_prog p worker~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_arstudent_info 100001
+	mpadd_qmark self talking 2 0 0 0 0 1
+	mpcallout 1 mpdel_qmark self talking
+	tell $n ¦Ñ®v»¡¥L©e°U¹L¤½·|ªº¤H¬£¨Ç±j§§ªº¾Ô¤h¨Ó§@¨Ç²Ê¬¡¡C
+	tell $n ¦ý¬O³£¹L¤@¬P´Á¤F¡A§¹¥þ¨S¬£¥b­Ó¤H¹L¨Ó¦Ó¥B¤@ÂI¦^­µ³£¨S¦³....
+	mpcallout 1 sigh
+	mpcallout 1 tell $n ¦pªG¦AÄ~Äò³o¼Ë§@¤U¥h¯u±o·|¥X¤H©R§r....
+	mpcallout 1 tell $n Á`¤§¤£ª¾¹D¤½·|µo¥Í¤°»ò¨Æ¤F(problem)¡A¥u¯à´Á«Ý¥L­Ì§ÖÂI¬£¤H¨ÓÀ°¦£¡C
+	mpcallout 1 mpmod_qmark $n ianua_info v0 | 2
+	mpcallout 1 mpdel_qmark $n ianua_arstudent_info
+endif
+~
+>talk_prog problem~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) & ianua_info 100002
+	tell $n «_ÀIªÌ¤½·|¨ºÃä¤£ª¾¹D¬Oµo¥Í¤°»ò¨Æ¤F(problem)¡A¤@ÂI­µ°T³£¨S¦³¡C
+	tell $n ¦pªG¦A¨S¤H¨ÓÀ°¦£¡AÄ~Äò§@¤U¥h¯u±o·|¥X¤H©R§r....
+	sigh
+endif
+~
+>death_prog 100~
+mpecho $I[1;32m³Û¹D¡G°Ú....[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+~
+|
+
+#13205
+history-ianua student-ianua~
+¾ú¥v¾Ç°|¥Í(history student)~
+¤@¦ì¾Ç¥Í(student)¦b³o¸Ì¬ã¨sµÛ­è¥X¤gªºª«¥ó¡C
+~
+¥L¬ïµÛ¤@®M¥v¥d©Ô¨©ªº¨î¦¡¾Ç¥ÍªA¡A¥LªºÁy¤W±a¦³«Ü¿@«pªº­Â·N¡C¬Ý°_¨Ó¦³
+«Üªø¤@¬q®É¶¡¨S¦n¦n¥ð®§¤F¡C
+~
+1|64 0 800 S
+20 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+>talk_prog topic~
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+yawn
+tell $n ¤w¸g¤T¤Ñ¨SºÎÄ±¤F¡A¨ì©³ÁÙ­n«ùÄò´X¤Ñ§r¡I
+~
+>rand_prog 5~
+if rand(50)
+	say °Ú¡A¤£¤p¤ßºÎµÛ¤F¡I§Ö¿ð¨ì°Õ¡I¡I
+else
+	mpecho $Iºò±i¦a¬ÝµÛ¤â¤¤ªºÃh¿ö...
+endif
+~
+>death_prog 100~
+mpecho $I[1;32m³Û¹D¡G°Ú....[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+~
+|
+#0
+
+#OBJECTS
+#13200
+box guild supplies~
+¤½·|¸Éµ¹«~(guild supplies)~
+¤@­Ó«Ê¦³ªk®v¤½·|Äú¦Lªº½c¤l(box)³Q©ñ¦b¦a¤W~
+~
+15 64|256 1
+999~ 15~ -1~ 1~
+100 200000 0
+Z 4
+E
+box guild supplies~
+¤@­Ó·h°_¨Ó¬Û·í¨I­«ªº¤ì½c¡A¤£ª¾¹D¸Ì­±¸Ë¤F¤°»ò¡C
+~
+X wooden~
+#13201
+white letter~
+¥Õ¦â«H¥ó(white letter)~
+¤@±i¥Î¥Õ¯È®Ñ¼gªº«H¥ó(letter)³Q©ñ¦b¦a¤W¡C~
+~
+13 64|256 1
+0~ 0~ 0~ 0~
+1 10 0
+Z 4
+E
+white letter~
+«H¤W¼gµÛ¡G
+
+    ¬Ý¨Ó¥ÛªO¤Wªº¯¾¸ô¸ò®Ñ¤¤´y¼gªº¬O¦PºØ³N¦¡¡A³o¤]¥i¥H¸ÑÄÀ¬°¤°»ò
+¨º®y¥j¦Ñ«Ò°êªº¤@³¡¤À·|¤£¦X²zªº¥X²{¦b¤£¥¿½Tªº¦a¤è¤F¡A¦ý³o¥u¬O¤@
+­Ó¨S¦³­ì¦]ªº¨Æ¹ê¡C
+
+    §Úª¾¹D§Aªº¬ã¨s¤w¸g¥i¥HÅý²{¦sªº¯À§÷¥¿±`¹B§@¤F¡A¦ý¥ú¥u¬O³o¼Ë
+ÁÙ¤£°÷¡A§Ú­Ì»Ý­nªº¬OºÉ§Ö§¹¦¨³N¦¡ªº¸ÑªR¡A¥u¦³³o¼Ë¤~¯à°÷¬¡¥Î³o­Ó
+¥j¦ÑªºÅ]ªk§Þ³N¡A¤]°ß¦³³o¼Ë¤~¯à¨Ï³o¶µ¬ã¨s¯u¥¿ªº³Q¥@¤H»{¦P¡C
+
+    ½Ð°O¦í¡A¨S¦³­ì¦]ªºµ²ªG¡A¥u·|²_¬°°²»¡¤§¬y¡C
+    
+                                                    ¯¬¬ã¨s¶¶§Q
+
+³z¹L¥ú½u¡A§Aµo²{«H¥ó­I­±(backside)¦ü¥G¦³¨Ç¤°»ò....
+~
+E
+backside~
+§A¥¿¬ÝµÛ¤@±i¥Õ¯È«H¥ó(letter)ªº­I­±(backside)¡A¨S¤°»ò¯S§Oªº¡C
+
+[30m¦pªG§A»Ý­n¹êÅçÅé(living-testing)¸ò§Ú»¡¤@Án¡C[0m
+~
+X paper~
+#13202
+gold coins~
+¤@°ïª÷¹ô(gold coins)~
+¤@°ïª÷¹ô(gold coins)~
+~
+20 0 1
+0~ 0~ 0~ 0~
+0 0 0
+>obj_repop 100~
+oset self v0 = 0
+oset self v0 + 1500000
+~
+|
+X gold~
+#13203
+ectching-ianua stone~
+¨è¯¾¥Û¶ô(ectching stone)~
+¤@Áû§Gº¡©_¯S¨è¯¾ªº¥ÛÀY(stone)±¼¦b³o¸Ì~
+~
+8 64|256 1
+0~ 0~ 0~ 0~
+0 0 0
+Z 4
+X salt~
+#13204
+teleport stone~
+¶Ç°eªÌ¤§¥Û(teleport stone)~
+¤@Áû¨è¦³²Å¤åªº¥ÛÀY(stone)±¼¦b³o¸Ì~
+~
+26 64|256 1
+1~ recall~ mana recharge~ 0~
+0 0 0
+Z 4
+X salt~
+>obj_rand 100~
+if objtype($o) != 26
+	oforcer here oload 13204 1 $n target
+	purge self
+endif
+~
+|
+#0
+
+#ROOMDATA
+#13200
+¥ì¦w¿Õ¿òÂÝ~
+buffer room of ianua
+~
+0 16 0
+E
+§ó·s¼i¾ú~
+¥»°Ï°ì¹ê±¾¤W new room prog transfergroup¡A¸Óroom prog ¥u·|¹ï¯S©w¤Hª«¤Î¨ä¦Pgroupªº¨ä¥L¤Hª«¶i¦æ¶Ç°e¡C
+2019/03/06
+±¾¤W mob¤Îquest qmark¡C
+~
+S
+#13201
+´ËªL¾ð®|~
+§A¬ï±ô¦b´ËªLªº¾ð¤ì¶¡¡A¨­®Ç¿@±Kªº¾ðªLªý¾×¤F¥h¸ô¡A¥u¯àÀHµÛ¦a­±ªº²ª¸ñ«e¶i
+©Î«á°h¡C
+~
+0 16 3
+D0
+´ËªL¾ð®|
+~
+~
+0 0 13202
+D2
+ªL¤¤¤p®|
+~
+~
+0 0 6026
+S
+#13202
+´ËªL¾ð®|~
+§A¬ï±ô¦b´ËªLªº¾ð¤ì¶¡¡A¨­®Ç¿@±Kªº¾ðªLªý¾×¤F¥h¸ô¡A¥u¯àÀHµÛ¦a­±ªº²ª¸ñ«e¶i
+©Î«á°h¡C
+~
+0 16 3
+D1
+´ËªL¾ð®|
+~
+~
+0 0 13203
+D2
+ªL¤¤¤p®|
+~
+~
+0 0 13201
+S
+#13203
+´ËªL¾ð®|~
+§A¬ï±ô¦b´ËªLªº¾ð¤ì¶¡¡A¨­®Ç¿@±Kªº¾ðªLªý¾×¤F¥h¸ô¡A¥u¯àÀHµÛ¦a­±ªº²ª¸ñ«e¶i
+©Î«á°h¡C
+~
+0 16 3
+D0
+´ËªL¾ð®|
+~
+~
+0 0 13204
+D3
+ªL¤¤¤p®|
+~
+~
+0 0 13202
+S
+#13204
+´ËªL¾ð®|~
+¨«¥X´ËªL¨Ó¨ì¤@³Bµ}²¨ªºªL¦a¡C¶¡·²ªº³¾»y¦ñÀHªL¶¡·L­·¡AÅý¤H®æ¥~·Q«Ý¦b¶§¥ú
+ÂIÂIÅx¸¨ªº¾ð½®¤U¤p¾Í¡C¥|©P°£¤F³¾»ï¥~¡A¥u³Ñ¤U´ËªL¤¤ªº¤p°Êª«¦b°ª¤j¾ð¤ì¤U¬ï±ô
+ªºê³ßBÁn¯à¤Þ°_§Aª`·N¡A¸gÅç§i¶D§A¡A¥ô·N¨«¤J²´«eªº¾ðªL¡A±N·|«Ü®e©ö°g¥¢¤è¦V¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13205
+D2
+´ËªL¾ð®|
+~
+~
+0 0 13203
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13206
+S
+#13205
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡Cµy·L¼y©¯
+ªº¬O¥ú½uÁÙ¯à¬ï¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡C¥u»Ý­n¶XµÛ¤Ñ¦âÁÙ
+«G®É¬ï¶V¾ð®ü¡A´N¤£¥²¦b±ß¤Wªº³¥ªL¦a¹L©]¤F¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13208
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13206
+D2
+ªL¶¡ªÅ¦a
+~
+~
+0 0 13204
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13207
+S
+#13206
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡Cµy·L¼y©¯
+ªº¬O¥ú½uÁÙ¯à¬ï¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡C¥u»Ý­n¶XµÛ¤Ñ¦âÁÙ
+«G®É¬ï¶V¾ð®ü¡A´N¤£¥²¦b±ß¤Wªº³¥ªL¦a¹L©]¤F¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13207
+D1
+ªL¶¡ªÅ¦a
+~
+~
+0 0 13204
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13209
+S
+#13207
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦ý¤£ºÞ§A¨«¦h¤[³£Ä±±o¦Û¤v¦b
+­ì¦a¥´Âà¡C¬Ý¨Ó¸Ó±µ¨ü°g¸ôªº¨Æ¹ê¡A§@¦n¦b´ËªL¤¤«×¹L©]±ßªº¤ß²z·Ç³Æ¤F¡C
+~
+0 16 3
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13205
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13206
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13208
+S
+#13208
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦ý¤£ºÞ§A¨«¦h¤[³£Ä±±o¦Û¤v¦b
+­ì¦a¥´Âà¡C¬Ý¨Ó¸Ó±µ¨ü°g¸ôªº¨Æ¹ê¡A§@¦n¦b´ËªL¤¤«×¹L©]±ßªº¤ß²z·Ç³Æ¤F¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13210
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13207
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13209
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13214
+S
+#13209
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦ý¤£ºÞ§A¨«¦h¤[³£Ä±±o¦Û¤v¦b
+­ì¦a¥´Âà¡C¬Ý¨Ó¸Ó±µ¨ü°g¸ôªº¨Æ¹ê¡A§@¦n¦b´ËªL¤¤«×¹L©]±ßªº¤ß²z·Ç³Æ¤F¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13208
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13206
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13207
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13213
+S
+#13210
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦ý¤£ºÞ§A¨«¦h¤[³£Ä±±o¦Û¤v¦b
+­ì¦a¥´Âà¡C¬Ý¨Ó¸Ó±µ¨ü°g¸ôªº¨Æ¹ê¡A§@¦n¦b´ËªL¤¤«×¹L©]±ßªº¤ß²z·Ç³Æ¤F¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13211
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13206
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13208
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13215
+S
+#13211
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦ý¤£ºÞ§A¨«¦h¤[³£Ä±±o¦Û¤v¦b
+­ì¦a¥´Âà¡C¬Ý¨Ó¸Ó±µ¨ü°g¸ôªº¨Æ¹ê¡A§@¦n¦b´ËªL¤¤«×¹L©]±ßªº¤ß²z·Ç³Æ¤F¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13212
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13209
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13210
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13205
+S
+#13212
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦ý¤£ºÞ§A¨«¦h¤[³£Ä±±o¦Û¤v¦b
+­ì¦a¥´Âà¡C¬Ý¨Ó¸Ó±µ¨ü°g¸ôªº¨Æ¹ê¡A§@¦n¦b´ËªL¤¤«×¹L©]±ßªº¤ß²z·Ç³Æ¤F¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¯ó­ì
+~
+~
+0 0 13218
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13211
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13217
+S
+#13213
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦V´ËªLªº¤@°¼±æ¥h¡AÁô¬ù¯à¬Ý
+¨£¤@®y¤H³y³òÀð¦î¥ß¦b¾ð®ü¤§¥~¡A¦ý²´«eªº¾ðªL²Õ¾×¤F¥h¸ô¡A§AµLªk¬ï¶V¹L¥h¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13214
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13209
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13210
+S
+#13214
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦V´ËªLªº¤@°¼±æ¥h¡AÁô¬ù¯à¬Ý
+¨£¤@®y¤H³y³òÀð¦î¥ß¦b¾ð®ü¤§¥~¡A¦ý²´«eªº¾ðªL²Õ¾×¤F¥h¸ô¡A§AµLªk¬ï¶V¹L¥h¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13215
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13208
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13213
+S
+#13215
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦V´ËªLªº¤@°¼±æ¥h¡AÁô¬ù¯à¬Ý
+¨£¤@®y¤H³y³òÀð¦î¥ß¦b¾ð®ü¤§¥~¡A¦ý²´«eªº¾ðªL²Õ¾×¤F¥h¸ô¡A§AµLªk¬ï¶V¹L¥h¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13216
+D1
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13210
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13214
+S
+#13216
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦V´ËªLªº¤@°¼±æ¥h¡AÁô¬ù¯à¬Ý
+¨£¤@®y¤H³y³òÀð¦î¥ß¦b¾ð®ü¤§¥~¡A¦ý²´«eªº¾ðªL²Õ¾×¤F¥h¸ô¡A§AµLªk¬ï¶V¹L¥h¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13217
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13215
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13213
+S
+#13217
+´ËªL¤¤~
+§A¬ï±ô¦b¤@¤ù¾ð®ü¤§¤¤¡A¥|©P¥u¬Ý±o¨£°ª¤jªº¾ð¤ì¡A¨Ï§A°g¥¢¤F¤è¦V¡CÁöµM¥ú½u
+¯à³z¹L¾ðªK·Ó®g¨ì¦a­±¡AÅý¥Õ¤Ñªº´ËªL¤£·|¤Ó¹L©ü·t¡A¦V´ËªLªº¤@°¼±æ¥h¡AÁô¬ù¯à¬Ý
+¨£¤@®y¤H³y³òÀð¦î¥ß¦b¾ð®ü¤§¥~¡A¦ý²´«eªº¾ðªL²Õ¾×¤F¥h¸ô¡A§AµLªk¬ï¶V¹L¥h¡C
+~
+0 16 3
+D0
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13212
+D2
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13216
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13215
+S
+#13218
+´ËªLÃä½t~
+©P³ò¾ð¤ìÅÜ±oµ}²¨¡A§A²×©ó±q´ËªL¤¤¨«¥X¡A¨Ó¨ì¤@¤ù¯óªø¤Î¸yªº­ì³¥¡C¥J²Ó°É¬d
+¥|©P¡A§Aµo²{ªø¯ó¤U¦³±ø¦~¥N¤[»·ªº¥ÛªO¸ô©¹ªFÃäªº¤p¥C³®©µ¦ù¦Ó¥h¡C
+~
+0 4 2
+D1
+¥j¦Ñªº¥ÛªO¸ô
+~
+~
+0 0 13219
+D3
+¤@¤j¤ù¾ðªL
+~
+~
+0 0 13212
+S
+#13219
+ªø¯óªº¥ÛªO¸ô~
+§AªuµÛ¥j¦Ñªº¥ÛªO¸ô´Â¦V¥C³®¨«¥h¡A©P³ò³¥¯ó¤Î¸y¬O±°­¹ªÌÁô°Î¨­«¬ªº¦n³õ©Ò¡C
+¦b¦æ¶i¤¤§A¯à¬Ý¨£©P³ò¯ó¦a¤W½öµÛ¨Ç·´Ãaªº¥Û³y«Ø§÷¡C±q«Ø¿vªº³W¼Ò¬Ý¨Ó¡A³o¦a¤è´¿
+¸g¦í¦³¤£¤Öªº©~¥Á¡A¦ý®É¹L¹Ò¾E¡A¦p¤µ¥u³Ñ¤U¯î¼oªº«°Âí¿ò§}¡C
+~
+0 4 3
+D0
+¥j¦Ñªº¥ÛªO¸ô
+~
+~
+0 0 13220
+D3
+´ËªLÃä½t
+~
+~
+0 0 13218
+S
+#13220
+¥C³®¤Wªº¥ÛªO¸ô~
+§AªuµÛ¥ÛªO¨B¹D¨«¤W¥C³®¡A¤s©Y¤W§j¨Ó¤@°}°}±j­·À£§Cªþªñªº³¥¯ó¡A¨Ï©P³ò´ºª«
+¤@ÄýµLºÃ¡C¥|©P¨ÌÂÂ¦³³\¦h¥b·´ªº«Ø¿vª«¡A¦b¤s©Yªº³»ºÝ¡A¯à¬Ý¨ì¨Çµ²ºc¬Û¹ï§¹¾ãªº
+¥Û³y«Ø¿v¡A¥u­n¶¶µÛ¹D¸ôÄ~Äò©¹¤Wª¦´N¯à¨ì¹F¡C
+~
+0 4 4
+D0
+¥j¦Ñªº¥ÛªO¸ô
+~
+~
+0 0 13221
+D2
+¥j¦Ñªº¥ÛªO¸ô
+~
+~
+0 0 13219
+S
+#13221
+¥ÛªO¸ô²×ÂI~
+§A¶¶µÛ¥ÛªO¸ô¨Ó¨ì¥C³®³Ì°ª³B¡A¤]¬O¹D¸ôªº²×ÂI¡C³o¸Ìªº«Ø¿v»P¤@¸ô¤W©Ò¨£¨ìªº
+´ÝÀe©úÅã¤£¦P¡A¦h¼Æµ²ºc³£ÁÙ«O«ùªº¬Û·í§¹¾ã¡C¦b§A²´«e¦³®y¥Û«ýªù¡A©¹¤º¬Ý¥h¦³®y
+·fµÛ¼Æ­Ó¤p±b½´ªº¶ê§Î¼s³õ¡A¬Ý¨Ó¦³¤H¦b¦¹¬¡°Êªº¸ñ¶H¡C
+~
+0 4 4
+D0
+¥j¦Ñªº¥ÛªO¸ô
+~
+~
+0 0 13222
+D2
+¥j¦Ñªº¥ÛªO¸ô
+~
+~
+0 0 13220
+S
+#13222
+¿ò¸ñ¼s³õ~
+¨«¹L«ýªù¶i¤J¼s³õ¡A²´«e¬Ý¨ì¦³¥|¡B¤­­Ó±bÁO¸ò´X­Ó¬ïµÛ¹³¾ÇªÌªº¤H¦b³¾¤£©Ô«Ë
+ªº¦a¤è³o¦£¶i¦£¥X¡A¹ï©ó§A¬ðµM¥X²{¥´Â_¥L­Ìªº¤u§@¦ü¥G¦³¨Ç¤£°ª¿³¡C¦ý³o¤Ï¦ÓÅý¤H
+ÃP¤F¤@¤f®ð¡A¦b¯î­¥³¥¥~¤¤¡A¹J¨ì´X¤Q­ÓÃø¦ø­Ôªº¾ÇªÌ¤]¤ñ¸I¨ì´X¤Q­Ó«ù¤M¼É®{´Â§A
+¶Ã¬å¤@µf¨Ó±o¦n¡C
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13223
+D1
+¶ê§Î¼s³õ
+~
+~
+0 0 13225
+D2
+¥j¦Ñªº¥ÛªO¸ô
+~
+~
+0 0 13221
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13228
+S
+#13223
+¿ò¸ñ¼s³õ~
+³o¸Ì¬O¼s³õªº¤¤¤ß¡A¬[µÛ´X­Ó´×¤l¡A¸Ì­±³¯¦CµÛ«õ±¸¥X¨Óªº¥j¥N¤åª«¡A§A¬Ý¨ì´X
+¦ì¾ÇªÌ¥¿±Mª`¦a¤ÀªR³o¨Ç°©¸³¡C±q³o¸Ì¯à°÷Àôµø¾ã®y¼s³õ¡A©PÃä¦³µÛ¼Æ¶¡¥­©Ð¡AÁöµM
+³¡¤Àªº¥­©Ð¤w¸g­Ë¶ò¡A¦ý¤£Ãø¬Ý¥X¾ã®y¼s³õ¬O¥Ñ³o¨Ç¥­©Ð©Ò³ò¥X¨Óªº¡C
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13224
+D1
+¶ê§Î¼s³õ
+~
+~
+0 0 13226
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13222
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13229
+S
+#13224
+¿ò¸ñ¼s³õ~
+³o¸Ì¦³¤@¨Ç¾ÇªÌ®³µÛ¦UºØ¦U¼Ëªº¤u¨ã¹ï¿ò§}¶i¦æ¥J²Ó½Õ¬d¡A¥L­ÌÂÔ·V¨ì¬Æ¦Ü³s¦a
+¤Wªº¤p¸H¥Û³£­n¤@ÁûÁû®³°_¨ÓÀËµø¤~ªÖ½}¥ð¡C¬Ý¨Ó§A¥ú¬O§b¯¸µÛ³£¦³¥i¯à¼vÅT¨ì¥L­Ì
+ªº§@·~¡AÁÙ¬OºÉ§ÖÂ÷¶}§a¡I
+~
+0 0 1
+D1
+¶ê§Î¼s³õ
+~
+~
+0 0 13227
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13223
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13230
+S
+#13225
+¿ò¸ñ¼s³õ~
+³o¸Ì¦³¤@¨Ç¾ÇªÌ®³µÛ¦UºØ¦U¼Ëªº¤u¨ã¹ï¿ò§}¶i¦æ¥J²Ó½Õ¬d¡A¥L­Ì¥¿¦bªþªñ½Õ¬d­è
+µo²{ªº¨â¶¡¥­©Ð¿ò¸ñ¡C¦pªG¹ï¦Ò¥j¦³¨Ç¿³½ì¡A¥u­n¤£§«Ãª¨ì¥L­Ì§@·~¡Aµy·L¶i¥h°ÑÆ[
+¤@¤U¤]¨S¤H·|¤¶·N§a¡C
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13226
+D1
+¿ò¸ñ¥­©Ð
+~
+~
+0 0 13232
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13231
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13222
+S
+#13226
+¿ò¸ñ¼s³õ~
+³o¸Ì¦³¤@¨Ç¾ÇªÌ®³µÛ¦UºØ¦U¼Ëªº¤u¨ã¹ï¿ò§}¶i¦æ¥J²Ó½Õ¬d¡A¥L­ÌÂÔ·V¨ì¬Æ¦Ü³s¦a
+¤Wªº¤p¸H¥Û³£­n¤@ÁûÁû®³°_¨ÓÀËµø¤~ªÖ½}¥ð¡C¬Ý¨Ó§A¥ú¬O§b¯¸µÛ³£¦³¥i¯à¼vÅT¨ì¥L­Ì
+ªº§@·~¡AÁÙ¬OºÉ§ÖÂ÷¶}§a¡I
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13227
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13225
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13223
+S
+#13227
+¿ò¸ñ¼s³õ~
+³o¸Ì¦³¤@¨Ç¾ÇªÌ®³µÛ¦UºØ¦U¼Ëªº¤u¨ã¹ï¿ò§}¶i¦æ¥J²Ó½Õ¬d¡C¦³´X­Ó¤H¥¿¦b½Õ¬d­è
+µo²{ªº¤p«Î¡A³Ñ¤Uªº¤H¥¿¸Õ¹Ï­×´_§~¶òªº«Ø¿v¡C
+~
+0 0 1
+D1
+¿ò¸ñ¥­©Ð
+~
+~
+0 0 13233
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13226
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13224
+S
+#13228
+¿ò¸ñ¼s³õ~
+³o¸Ì¦³¤@¨Ç¾ÇªÌ®³µÛ¦UºØ¦U¼Ëªº¤u¨ã¹ï¿ò§}¶i¦æ¥J²Ó½Õ¬d¡A¥L­Ì¥¿¦bªþªñ½Õ¬d­è
+µo²{ªº¨â¶¡¥­©Ð¿ò¸ñ¡C¦pªG¹ï¦Ò¥j¦³¨Ç¿³½ì¡A¥u­n¤£§«Ãª¨ì¥L­Ì§@·~¡Aµy·L¶i¥h°ÑÆ[
+¤@¤U¤]¨S¤H·|¤¶·N§a¡C
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13229
+D1
+¶ê§Î¼s³õ
+~
+~
+0 0 13222
+D2
+¿ò¸ñ¥­©Ð
+~
+~
+0 0 13234
+D3
+¿ò¸ñ¥­©Ð
+~
+~
+0 0 13235
+S
+#13229
+¿ò¸ñ¼s³õ~
+³o¸Ì¦³´X­Ó¤H®³µÛ¤u¨ã¹ï¿ò§}¶i¦æ­×´_ªº§@·~¡C§Aµo²{¦a­±¤W¦³­Óªñ´Á¤~§Î¦¨ªº
+¤j§|¬}¡A¦ü¥G³y¦¨©PÃä«Ø¿vÄY­«·´·l¡CÁÙ»Ý­nªá¶O¤@¬q®É¶¡¶i¦æÁÙ­ì¤uµ{¡A¤~¦³¿ìªk
+¹ï³o¶ô°Ï°ì¦Ò¹î¡C
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13230
+D1
+¶ê§Î¼s³õ
+~
+~
+0 0 13223
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13228
+S
+#13230
+¿ò¸ñ¼s³õ~
+³o¸Ì¦³¤Ö¼Æ¾ÇªÌ®³µÛ¤u¨ã¹ï¿ò§}¶i¦æ¥J²Óªº½Õ¬d¡C¦è­±ªº«Ø¿v´X¥G¥þ·´¡A¦³´X­Ó
+¤H¥¿¦b·Q¿ìªk¶i¦æ­×´_¡C¥_Ãä«h¦³¤@¶¡­è³Q­×´_§¹¦¨ªº¥­©Ð¡A¤£ª¾¹D¬°¤°»ò¡A³o´É¸G
+¥­©Ð¤º»E¶°ªº¤H¼Æ¦ü¥G¯S§O¦h¡C
+~
+0 0 1
+D0
+¿ò¸ñ¥­©Ð
+~
+~
+0 0 13236
+D1
+¶ê§Î¼s³õ
+~
+~
+0 0 13224
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13229
+S
+#13231
+¥j¦Ñªº¥Û«Î~
+³o¬O¤@¶¡¥Û³yªº¥j¦Ñ¥­©Ð¡Aªù«á³sµÛ´X¶¥¦V¤Uªº¼Ó±è¡A«Ø¿v¤ºªº¦a­±°ª«×¸û¥~­±
+¨Ó±o§C¤@¨Ç¡C¨«¤U¶¥±è«á¨Ó¨ì¤@­Ó¦³µÛ¶ê§ÎÀð­±ªºªÅ¶¡¡AÀð¾À¨C¹j¤@©w¶ZÂ÷´N¤À¹º¥X
+¤@­Ó¤p©Ð¶¡¡A¨C­Ó©Ð¶¡¤º³£©ñ¸mµÛ¤@¤ù§C¸Gªº¤p¥Û»O¡A¤W­±¨èµÛ§A¬Ý¤£À´ªº²Å¸¹¡C
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13225
+S
+#13232
+¥j¦Ñªº¥Û«Î~
+³o¬O¤@¶¡¥Û³yªº¥j¦Ñ¥­©Ð¡Aªù«á³sµÛ´X¶¥¦V¤Uªº¼Ó±è¡A«Ø¿v¤ºªº¦a­±°ª«×¸û¥~­±
+¨Ó±o§C¤@¨Ç¡C¶¥±è¤U¤è¥u¦³¤@­Ó¼e´¯ªºªÅ¶¡¡A¨S¦³¥ô¦óªº¹j¶¡¡C©Ð¶¡¦³µÛ³\¦h¤ì½èªº
+¤H³yª«¤Î¤gÅø¸H¤ù¡A¦ý¦~¥N¤[»·¡A¤j¦h³£¤w¸g·´ÃaµLªk¿ë»{¥Î³~¡C
+~
+0 0 1
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13225
+S
+#13233
+¥j¦Ñªº¥Û«Î~
+³o¬O¤@¶¡¥Û³yªº¥j¦Ñ¥­©Ð¡Aªù«á³sµÛ´X¶¥¦V¤Uªº¼Ó±è¡A«Ø¿v¤ºªº¦a­±°ª«×¸û¥~­±
+¨Ó±o§C¤@¨Ç¡C¶¥±è¤U¤è¥u¦³¤@­Ó¼e´¯ªºªÅ¶¡¡A°ï©ñµÛ¦~¥N¤[»·ªºÂøª«¡C¤j³¡¤À¯à·h°Ê
+ªºª««~³£³Q¦Ò¹î¤H­û·h¥X¥­©Ð¥~¤F¡A³Ñ¤Uªº¤j¦h¬O¨ÇÄY­«·´·l©ÎµLªk·h°ÊªºªF¦è¡C§A
+ª`·N¨ì©Ð¶¡ªº¤@¨¤°ï©ñµÛ¤j¶q³Q¤Á³Î¹Lªº¥ÛªO¡A¤W­±¨èµÛ§A¬Ý¤£À´ªº²Å¸¹¡C
+~
+0 0 1
+D3
+¶ê§Î¼s³õ
+~
+~
+0 0 13227
+>room_enter 127 100~
+if is_qmark($n) == ianua_supplies 100008
+	if is_inv_obj($n) == 13203
+		purge $n ectching-ianua
+		mod_qmark $n ianua_supplies v0 = 9
+		stun $n 20
+		echoat $n ¶i¨ì©Ð¶¡«á§Aªº¨­Ãäµo¥X±j¯Pªº¥ú¨~¡A±µµÛ¤@°}·w¯t¡C
+		echoaround $n $Nªº¨­Ãäµo¥XÄ£²´ªº¥ú¨~¡A¤U­ÓÀþ¶¡³s¤H±a¥úªº¾ÌªÅ®ø¥¢¤F¡C
+		callout 1 at $n echoat $n ­±¹ïÅý¤H¤@ÀYÃú¤ôªºª¬ªp¡A¥u¯à¦^¥h¦n¦nªº°Ý²M·¡¬O¤°»ò±¡ªp(report)¤F¡C
+		callout 1 at $n echoat $n §Aµo²{©P¾Dªº´º¦â¸ò­ì¥»¤£¦P¤F¡A¤â¤Wªº¥ÛÀY¤]ÀH¤§¯}¸H¡C
+		if rand(40)
+			transfer $n 15660
+		else
+			if rand(30)
+				transfer $n 10627
+			else
+				if rand(60)
+					transfer $n 21450
+				else
+					transfer $n 4283
+				endif
+			endif
+		endif
+	endif
+endif
+~
+|
+S
+#13234
+¥j¦Ñªº¥Û«Î~
+³o¬O¤@¶¡¥Û³yªº¥j¦Ñ¥­©Ð¡Aªù«á³sµÛ´X¶¥¦V¤Uªº¼Ó±è¡A«Ø¿v¤ºªº¦a­±°ª«×¸û¥~­±
+¨Ó±o§C¤@¨Ç¡C¶¥±è¤U¤è¥u¦³¤@­Ó¼e´¯ªºªÅ¶¡¡A¨S¦³¥ô¦óªº¹j¶¡¡C¦b©Ð¶¡ªº¤¤¥¡¦³¤@¶ô
+§C¸Gªº¤j¥Û»O¡A¤W­±¨èµÛ§A¬Ý¤£À´ªº²Å¸¹¡C
+~
+0 0 1
+D0
+¶ê§Î¼s³õ
+~
+~
+0 0 13228
+S
+#13235
+¥j¦Ñªº¥Û«Î~
+³o¬O¤@¶¡¥Û³yªº¥j¦Ñ¥­©Ð¡Aªù«á³sµÛ´X¶¥¦V¤Uªº¼Ó±è¡A«Ø¿v¤ºªº¦a­±°ª«×¸û¥~­±
+¨Ó±o§C¤@¨Ç¡C¶¥±è¤U¤è¥u¦³¤@­Ó¼e´¯ªºªÅ¶¡¡A¨S¦³¥ô¦óªº¹j¶¡¡C¦b©Ð¶¡ªº¤¤¥¡¦³¤@¶ô
+§C¸Gªº¤j¥Û»O¡A¤W­±¨èµÛ§A¬Ý¤£À´ªº²Å¸¹¡C
+~
+0 0 1
+D1
+¶ê§Î¼s³õ
+~
+~
+0 0 13228
+S
+#13236
+¥j¦Ñªº¥Û«Î~
+³o¬O¤@¶¡¥Û³yªº¥j¦Ñ¥­©Ð¡Aªù«á³sµÛ´X¶¥¦V¤Uªº¼Ó±è¡A«Ø¿v¤ºªº¦a­±°ª«×¸û¥~­±
+¨Ó±o§C¤@¨Ç¡C¶¥±è¤U¤è¥u¦³¤@­Ó¼e´¯ªºªÅ¶¡¡A¨S¦³¥ô¦óªº¹j¶¡¡C¦b©Ð¶¡ªº¤¤¥¡¦³¤@¶ô
+§C¸Gªº¤j¥Û»O¡A¤W­±¨èµÛ§A¬Ý¤£À´ªº²Å¸¹¡C
+~
+0 0 1
+D2
+¶ê§Î¼s³õ
+~
+~
+0 0 13230
+S
+#0
+
+
+#SPECIALS
+S
+
+#RESETS
+R 0 13205 4
+R 0 13206 4
+R 0 13207 4
+R 0 13208 4
+R 0 13209 4
+R 0 13210 4
+R 0 13211 4
+R 0 13212 4
+R 0 13213 4
+R 0 13214 4
+R 0 13215 4
+R 0 13216 4
+R 0 13217 4
+M 0 13200 1 13223
+M 0 13201 1 13235
+M 0 13202 1 13236
+M 0 13203 1 13233
+M 0 13204 3 13224
+M 0 13205 3 13226
+S
+
+#SHOPS
+0
+
+
+
+#$

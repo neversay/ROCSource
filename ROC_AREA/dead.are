@@ -1,0 +1,3217 @@
+#AREADATA
+Name        ¦º¤`¨¦~
+Identity    dead~
+Builders    Rex~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      8930 9099
+Security    1
+Recall      4580
+Death	    401
+End
+
+
+
+#MOBILES
+#9000
+ephraim lord dead~
+¦º¤`¤§¤ý - ¦ã¦ò·ç(Ephraim - Lord of Death)~
+¦ã¦ò·ç(Ephraim) - ¦º¤`¨¦ªº¥D®_¡A¬O¤H­Ì¤ß¤¤ªº¹ÚÆL¡C
+~
+¥L¬O¤H¤HÄß©Èªº¦º¤`¤§¤ý¡A±±¨îµÛ¤H­ÌªºÄß©È»PÅå®£¡C
+~
+11267 33563176 -1000 S
+60 0 0 30d-50+700 -50d-1000+0
+-1 0
+0 8 1
+R Undead~
+C 1|2|4|32
+P 4|256|4194304|8388608|16777216|268435456|536870912
+S 23 -100
+S 30 -50
+S 31 -50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if is_qmark($n) == dead_enemy
+	say ´¿¸gÀ»±Ñ¹L§Úªº $n ¡A³ºµM¤S¨Ó°e¦º¤F¡I
+	grin $n
+	c sleep $n
+	mpnowait
+	c 3 whirlwind
+	mpnowait
+	break
+endif
+if ispc($n)
+	tell $n Åwªï¨Ó¨ì§Aªº¤H¥Í³Ì²×¸ô³~¡A¥u¬O§Ú«ÜÅå³Y§A¯à°÷¨ì¹F³oÃä¡C
+	tell $n ©Î³\§ÚÀ³¸Ó­n°ª¿³¡A©Î³\§A¥i¥H¥[¤J§Ú­Ì¦º¤`¨¦ªº¦æ¦C¡C
+	tell $n ©Î¬O....¨É¨ü¦º¤`ªºÅw´r¡I
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != dead_enemy
+	mpadd_all_qmark $n dead_enemy 500 0 0 0 1 1
+endif
+if hitprcnt($i) < 70
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+if hitprcnt($i) < 50
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+if hitprcnt($i) < 30
+	mpat 5 c 3 'double heal'
+	mpnowait
+endif
+say ¦º§a¡I§A¥²¶·ªï±µ¦º¤`¤§¸ô....¡I
+if rand(40)
+	c 'demon tremor'
+	mpnowait
+endif
+if ispc($r)
+	if rand(20)
+		c curse $r
+		mpnowait
+		c curse $r
+		mpnowait
+	endif
+	if rand(20)
+		c poison $r
+		mpnowait
+		c blindness $r
+		mpnowait
+	endif
+	if rand(40)
+		if rand(50)
+			c lifesteal $r
+			mpnowait
+			c lifesteal $r
+			mpnowait
+		else
+			c soulsteal $r
+			mpnowait
+			c soulsteal $r
+			mpnowait
+		endif
+	endif
+	if rand(50)
+		c 'energy drain' $r
+		mpnowait
+		c 'energy drain' $r
+		mpnowait
+	else
+		c powerball $r
+		mpnowait
+	endif
+endif
+if rand(30)
+	if mobcount(9021) > 0
+		if insameroom(guardian-dead)
+			if is_qmark($i) != dead_ephraim_groupfight
+				mpadd_qmark self dead_ephraim_groupfight -1 0 0 0 1 0
+				yell §Úªº¦º¤`¦u½Ã¡A½Ð¹L¨ÓÀ°§U§Ú°Ú¡I
+				mpgroup self guardian-dead 1 0
+				mpforce guardian-dead rescue ephraim
+			endif
+		else
+			yell §Úªº¦º¤`¦u½Ã¡A½Ð¹L¨ÓÀ°§U§Ú°Ú¡I
+			mptransfer guardian-dead
+			mpgroup self guardian-dead 1 0
+			mpforce guardian-dead rescue ephraim
+		endif
+	endif
+endif
+if isaffected($i) & 16777216
+	mpdis_magic self 'seal magic'
+	yell «ÊÂêÅ]ªk¹ï§Ú¨Ó»¡¬O¨S¦³¥Îªº¡I«¢....«¢....¡I
+	c 'seal magic' $r
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	if hitprcnt($i) < 30
+		c sanctuary
+		mpnowait
+	endif
+endif
+if isaffected($i) & 268435456
+	mpdis_magic self paralyze
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+shout ¦º¤`¬O¥Ã«íªº¡A´N¾Ì§A $n ¬O¨S¦³¿ìªk±þ¦º§Úªº....¡I
+tell $n §Ú·|¦A¥h§ä§A¡A§A¥Ã»·¤£¯àÂ\²æ¦º¤`ªº....¡I
+if is_qmark($n) != dead_enemy
+	mpadd_all_qmark $n dead_enemy 500 0 0 0 1 1
+endif
+if is_qmark($n) == dead_echo
+	mpecho $I ªº¨­Åé½w½wªº®ø¥¢¤F....¡C
+	mpecho ¤@§â¥ú¨~¸U¤Vªº¼Cº¥º¥ªº¯B²{¥X¨Ó....¡I
+	mpdel_qmark $n dead_echo
+	mpoload 9011 38 floor
+	mppurge self
+endif
+if pcnum($) > 20
+	mpgreward exp $n 30 5000
+else
+	if pcnum($) > 15
+		mpgreward exp $n 30 5500
+	else
+		if pcnum($) > 10
+			mpgreward exp $n 30 6000
+		else
+			if pcnum($) > 5
+				mpgreward exp $n 30 6500
+			else
+				mpgreward exp $n 30 7000
+			endif
+		endif
+	endif
+endif
+~
+|
+
+#9001
+ghost~
+¯B´åÆF(wandering ghost)~
+¯B´åÆF(wandering ghost)ÄÆ¯B¦b³oÃä¨ì³B§ä´À¨­¡C
+~
+¥L¤w¸g¬O§Ö­n¦º¤`ªººëÆF¤F¡C
+~
+33 0 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Ghost~
+P 8|4194308
+S
+16 100
+>fight_prog 30~
+c 'magic missile'
+mpnowait
+~
+|
+
+#9002
+vampire~
+§l¦å°­(vampire)~
+¸U¤H¬ÒÄßªº§l¦å°­(vampire)¥¿´Â¦V§A­¸¹L¨Ó¡C
+~
+¥L¬Ý°_¨Ó¦n¹³«Ü¾j¡A·|¤£·|¬O§â§A·í§@±ßÀ\¤F¡H
+~
+4129 0 -700 S
+42 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Vampire~
+C 1
+P 8|4194308
+S
+16 110
+>fight_prog 20~
+c 'lightning bolt'
+mpnowait
+~
+|
+
+#9003
+skeleton~
+¾uÅ\(skeleton)~
+³o¨ã¥i¼¦ªº¾uÅ\(skeleton)¥¿¦b§ä´M´À¨­¦A¥Í¡C
+~
+¥Lªº¥~«¬¬Ý°_¨Ó¥Í«eÀ³¸Ó¬O¤HÃþ¡A¦ý¬O¥L¤w¸g¦º¤F¡C
+~
+33 0 -700 S
+41 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 1
+P 8|4194308
+S
+16 50
+
+#9004
+necri-dead~
+­@§J·ç(Necri)~
+­@§J·ç(Necri)¡A¦º¤`¤§¤ýªº¨­Ãä©¾¹²¡C
+~
+¥L¬O¤@°¦¥þ¨­³·¥Õ¡A§A±q¥¼¨£¹Lªº¥j©Ç¥Íª«¡C
+~
+274467 552 -900 S
+51 1500 0 20d-10+250 -3d-256+0
+0 0
+0 8 0
+R Demon~
+C 3
+P 8|4194304
+S 16 -500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if inroom($i) == 9059
+	if insameroom(shore-dead)
+		mpadd_qmark self dead_shore_relife 30 0 0 0 1 1
+		mpgroup shore-dead self 0 1
+	endif
+endif
+~
+>fight_prog 10~
+if isaffected($i) & 16777216
+	mpdis_magic self all
+	c 'seal magic' $r
+	mpnowait
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	if hitprcnt($i) < 30
+		c sanctuary
+		mpnowait
+	endif
+endif
+if isaffected($i) & 268435456
+	mpdis_magic self paralyze
+endif
+~
+>fight_prog 30~
+if rand(50)
+	c powerball
+	mpnowait
+else
+	c 'demon tremor'
+	mpnowait
+endif
+~
+>hitprcnt_prog 30~
+if rand(50)
+	c 3 powerball $r
+	mpnowait
+else
+	c 3 fireball
+	mpnowait
+endif
+~
+>death_prog 100~
+if is_qmark($i) != dead_shore_relife
+	if pcnum($) > 15
+		mpgreward exp $n 30 1000
+	else
+		if pcnum($) > 10
+			mpgreward exp $n 30 1200
+		else
+			if pcnum($) > 5
+				mpgreward exp $n 30 1400
+			else
+				mpgreward exp $n 30 1600
+			endif
+		endif
+	endif
+endif
+~
+|
+
+#9005
+undead warrior~
+¤£¦º¾Ô¤h(undead warrior)~
+¤@°¦¨­Âß´Ý¯Ê¤£¥þªº¤£¦º¾Ô¤h(undead warrior)¦b³oÃä¡C
+~
+¥L¬O¦º¤`¨¦ªº©~¥Á¡C
+~
+33 0 -200 S
+46 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 1
+P 8|4194308
+S
+16 60
+
+#9006
+undead magi~
+¤£¦ºªk®v(undead magi)~
+¤£¦ºªk®v(undead magi)¥|©PÀôÂ¶µÛîî¶ÂªºÅ]¤O¡C
+~
+¥L¬O¤£¦º±Úªº¨ä¤¤¤@¥÷¤l¡C
+~
+33 0 -410 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 2
+P 8|4194308
+S
+16 80
+>fight_prog 30~
+c colour
+mpnowait
+~
+|
+
+#9007
+undead priest~
+¤£¦ºªª®v(undead priest)~
+¤£¦ºªª®v(undead priest)¥¿¦b´M§ä¥i¥H¶W´çªº¹ï¶H¡C
+~
+¤£¦ºªª®vªº¤O¶q¨Ó·½¨Ó¦Û©ó¦º¤`¤§¤ý¡C
+~
+33 0 -420 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 2
+P 8|4194308
+S
+16 85
+>fight_prog 30~
+c harm
+mpnowait
+~
+|
+
+#9008
+shore-dead guardian~
+¯Áº¸(Shore)~
+¯Áº¸(Shore) - ¦º¤`¨¦ªº¦u½Ã¡C
+~
+¥L¨­Åéªº¤@³¡¥÷¬O¤HÃþ¡A¦ý¬O¥L¬Ý°_¨Ó§ó¹³¬O°­»î¡C¯Áº¸¬°¦º¤`¤§¤ý¬Ý¦u¦º¤`¨¦ªº¤J¤f¡C
+~
+35 552 -800 S
+50 1500 0 10d-10+300 0d-50+0
+0 0
+0 8 0
+R Ghost~
+C 1|2|4|32
+P 4194304
+S 16 -500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if isnpc($n)
+or isimmort($n)
+	break
+endif
+hunt $n
+mpnowait
+c fireball $n
+mpnowait
+~
+>fight_prog 50~
+c 'demon tremor'
+mpnowait
+c heal
+mpnowait
+if rand(50)
+	if insameroom(necri)
+		mpgroup necri self 0 1
+		mpforce necry protect shore
+	else
+		if is_qmark($i) == dead_Summon_Necri
+			if is_qmark($i) < dead_Summon_Necri 100005
+  				say ­@§J·ç(Necri)¡A«e¨ÓÀ°§U§Ú§a¡I
+  				mptransfer necri
+  				mpgroup necry self 0 1
+  				mpforce necri protect shore
+   				mpforce necri mpkill $n
+   				mpmod_qmark self dead_Summon_Necri v0 + 1
+   			else
+   				say ­@§J·ç(Necri)¡A«e¨ÓÀ°§U§Ú§a¡I
+   				mpecho ÁöµM$I³o»ò³Û¥sµÛ¡A«o¤£¨£­@§J·ç(Necri)«e¨ÓÀ°¦£...
+   			endif
+   		else
+   			mpadd_qmark self dead_Summon_Necri -1 0 0 0 1 1
+   		  	say ­@§J·ç(Necri)¡A«e¨ÓÀ°§U§Ú§a¡I
+  			mptransfer necri
+  			mpgroup necry self 0 1
+  			mpforce necri protect shore
+   			mpforce necri mpkill $n
+   		endif
+   	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+yell §A¯à°÷À»±Ñ§Ú¡A¦ý¬O¥Ã»·µLªkÀ»±Ñ¡u¦º¤`¡v¡I
+yell ¦]¬°¨º¬O©Ò¦³¥Íª«ªº©R¹B¡A«¢«¢«¢«¢¡I
+mpforcer 9059 modrvt t0 = 30
+if is_qmark($i) != dead_shore_relife
+	if pcnum($) > 15
+        	mpgreward exp $n 30 1200
+	else
+        	if pcnum($) > 10
+                	mpgreward exp $n 30 1500
+        	else
+                	if pcnum($) > 5
+                        	mpgreward exp $n 30 1800
+                	else
+                        	mpgreward exp $n 30 2000
+			endif
+                endif
+        endif
+endif
+~
+|
+
+#9009
+skeleton drake~
+¾uÅ\Às(Skeleton Drake)~
+¦º¤`¨¦¤¤³Ì¥i©Èªº¥Íª« - ¾uÅ\Às(Skeleton Drake)¯¸¦b³oÃä¡C
+~
+ÁöµM³o¥u¬O¤@¨ã¾uÅ\¡A¦ý¬O³o°¦Às¥Í«e¦ü¥G¦³µÛ³\¦h¥i©ÈªºÅ]ªk§Þ¥©¡C
+~
+4129 40 -1000 S
+54 1500 0 10d20+100 -3d-105+15
+-1 0
+0 8 0
+R Undead~
+C 1|2|32
+P 4194304
+>fight_prog 100~
+skilldrv multihit $n
+~
+>death_prog 100~
+if pcnum($) > 15
+	mpgreward exp $n 30 300
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 400
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 500
+		else
+			mpgreward exp $n 30 600
+		endif
+	endif
+endif
+~
+|
+
+#9010
+spirit~
+ÆF»î(spirit)~
+¤@¨ã¥i¼¦ªºÆF»î(spirit)¦b³oÃäÄÆ´å¡C
+~
+§A´X¥G¤£¯à¬Ý¥X³o¨ãÆF»îªº¥~«¬¡C
+~
+33 0 0 S
+40 5 0 0d0+0 1d3+7
+0 0
+0 8 0
+R Ghost~
+P 8|4194308
+S
+16 80
+>fight_prog 30~
+c 'lightning bolt'
+mpnowait
+~
+|
+
+#9011
+servant undead~
+¤£¦º¥£¹²(undead servant)~
+¤£¦º¥£¹²(undead servant)©¿µM¦V§A¦ù¥X¥Lªº¦ÞÀY¡C
+~
+¤£¦º¥£¹²·í¦º¤`¤§¤ý¦³»Ý­nªº®É­Ô¡A´N¥²¶·¥ß¨è¬°¨äªA°È¡C
+~
+35 0 -700 S
+47 1000 0 0d-20+150 -3d-204+15
+0 0
+0 8 0
+R Undead~
+C 3
+P 8|4194304
+S
+16 100
+>fight_prog 30~
+c flamestrike
+mpnowait
+c 'lightning bolt'
+mpnowait
+~
+|
+#9012
+dark dweller~
+¶Â·t©~¥Á(dark dweller)~
+¶Â·t©~¥Á(dark dweller)¤f¤¤³ä³ä°áµÛ§AÅ¥¤£À´ªº»y¨¥¡C
+~
+·í§A¬Ý¨ì¥L­Ì¡A©¿µM¥L­Ì´NÅÜ¦¨¤F¤@¹Î·ÏÃú¡AµM«á¥]³òµÛ§A¡C
+~
+129 0 0 S
+47 0 0 10d0+0 -10d-205+0
+0 0
+0 8 0
+R Ghost~
+P 8|4194308
+
+#9013
+~
+¦ã¦ò·çÅ]­µ(Echo of Ephraim)~
+§AÅ¥¨ì¦º¤`¤§¤ý¦ã¦ò·ç¦b¶Â·t¤¤ªºÅ]­µ(Echo of Ephraim)¡C
+~
+§A§¹¥þ¤£ª¾¨ì¦ã¦ò·ç¦b­þ¸Ì¡A§A¥u¯à°÷³Q³o¨ÇÅ]­µµ¹§l¤Þ¡A©¹¦º¤`¤j¦a§ó¶Â·t¡B§ó¥i©Èªº
+¤º¦a¦Ó¥h¡C¦b¶Â·t¤¤§A¦ü¥G¥i¥H¬Ý¨ì¥¨¤jªº¨­Âß´N¦b§A²´«e¡A¨º¬O¦º¤`¤§¤ý¶Ü¡H
+~
+3 8454698 -1000 S
+55 1000 -1000 0d0+0 0d0+0
+0 0
+0 8 0
+R Element~
+C 1|2|32
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>rand_prog 20~
+if pcnum($) > 0
+	if rand(50)
+		mpkill $r
+	else
+		c powerball $r
+		mpnowait
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == dead_echo
+else
+	mpadd_qmark $n dead_echo -1 0 0 0 0 1
+endif
+if pcnum($) > 15
+	mpgreward exp $n 30 500
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 600
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 700
+		else
+			mpgreward exp $n 30 800
+		endif
+	endif
+endif
+mpechoat $n ³òÂ¶¦b§A¨­Ãä°Q¹½ªºÅ]­µ²×©ó®ø¥¢¤F¡C
+mppurge self
+~
+|
+#9014
+undead mercenary~
+¤£¦º¶Ä§L(undead mercenary)~
+¤£¦º¶Ä§L(undead mercenary)¥i¥H»¡¬O¤£¦º®a±Ú¤¤³Ì¨ã¾Ô°«©Êªº¡C
+~
+¥L¬Ý°_¨Ó¤Q¤Àªº¦n¾Ô¡C
+~
+33 544 -200 S
+48 0 0 0d10+0 -10d-200+0
+0 0
+0 8 0
+R Undead~
+C 1|8|32
+P 8|4194308
+S
+16 60
+#9015
+black flame~
+¶Â¤õ(black flame)~
+¦³¤@§â¦³¥Í©R¥Bµo¥X¶Â¦â¥ú¨~ªº¤õµK(flame)¦b³oÃäÄÆ¯BµÛ¡C
+~
+¥Lµo¥X¤F¶Â¦âªº¥ú¨~¡C
+~
+33 0 0 S
+51 500 0 0d10+100 -3d-250+0
+0 0
+0 8 0
+R Element~
+C 2
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+if rand(30)
+	c 3 fireball
+	mpnowait
+endif
+if rand(30)
+	c 3 flamestrike
+	mpnowait
+else
+	c 3 'burning hands'
+	mpnowait
+endif
+~
+>death_prog 100~
+if pcnum($) > 15
+        mpgreward exp $n 30 300
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 350
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9016
+undead necromancer~
+¤£¦º©G³N®v(undead necromancer)~
+¤£¦º©G³N®v(undead necromancer)¹ï§A¨Ï¥Î¤F¥Lªº¶Â·tªk³N¡C
+~
+¥L¾Ö¦³©Ò¦³»P¦º¤`¬ÛÃöªk³Nªº¤O¶q¡C
+~
+33 520 -520 S
+48 0 0 0d0+0 -10d-200+23
+0 0
+0 8 0
+R Undead~
+C 2
+P 8|4194308
+S
+16 50
+#9017
+tyr~
+®õº¸(Tyr)~
+®õº¸(Tyr) - ´¿¸g¬OÀs±Ú¤j¤ý¤§¤@¡A¤w¸g¦b¹L¥hªº¾Ôª§¤¤¦º¥h¡C
+~
+§A³Ì¦n¤£­n§ðÀ»¥L....¡I
+~
+129 552 1000 S
+55 3000 0 10d10+100 5d400+0
+-1 0
+0 8 1
+C 2
+P 8|256|4194304
+R Dragon~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+if rand(50)
+	c paralyze
+	mpnowait
+else
+	c 'lighning bolt'
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9018) != 0
+or mobcount(9019) != 0
+	mpecho $I ¨­¤WªºÀs°©¾Ô¥Ò(dragon armor)©¿µM®ø¥¢¤F....¡I
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9018
+yalak~
+¶®©Ô§J(Yalak)~
+¶®©Ô§J(Yalak) - ´¿¸g¬OÀs±Ú¤j¤ý¤§¤@¡A¥¿¦b³oÃä¹å³J¡C
+~
+¶®©Ô§J´¿¸g¤]¬OÀs±Ú¤j¤ý¤§¤@¡C
+~
+129 552 1000 S
+56 2500 0 20d10+-100 3d180+0
+-1 0
+0 8 1
+R Dragon~
+C 1|2|32
+P 8|256|4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+if rand(20)
+	c parylyze
+	mpnowait
+endif
+if rand(30)
+	c heal
+	mpnowait
+endif
+if rand(40)
+	c fireball
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9017) != 0
+or mobcount(9019) != 0
+	mpecho $I ¨­¤WªºÀs°©¾Ô¥Ò(dragon armor)©¿µM®ø¥¢¤F....¡I
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9019
+illian~
+¥ì¥ß¦w(Illian)~
+¥ì¥ß¦w(Illian) - ´¿¸g¬OÀs±Ú¤j¤ý¤§¤@¡A¦³µÛ¯S®íªº¦ÛµMÅ]ªk¡C
+~
+¥L¾Ö¦³³Ì¯Â¥¿ªº¦ÛµMÅ]ªk¡A§AÀ³¸Ó¥i¥H·P¨ü±o¨ì¡C
+~
+129 552 1000 S
+56 2000 0 10d10+-100 3d100+0
+-1 0
+0 8 1
+R Dragon~
+C 1|2|8|23
+P 8|256|4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+if rand(20)
+	c paralyze
+	mpnowait
+endif
+if rand(30)
+	c fireball
+	mpnowait
+endif
+if rand(40)
+	c 'double heal'
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9018) != 0
+or mobcount(9017) != 0
+	mpecho $I ¨­¤WªºÀs°©¾Ô¥Ò(dragon armor)©¿µM®ø¥¢¤F....¡I
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9020
+dracos king lich~
+§Å§¯¤§¤ý - ¨ô§J(Dracos the Lich King)~
+§Å§¯¤§¤ý - ¨ô§J(Dracos the Lich King)¥¿ÀRÀRªº¬ÝµÛ§Aªº¨ì¨Ó¡C
+~
+¥L¯uªº«D±`¥i©È¡I·Q­n¸Õ¸Õ¬Ý¶Ü¡H
+~
+1027 552 -1000 S
+60 0 2000 10d0+300 -10d0+0
+0 0
+0 8 1
+R Undead~
+C 3
+P 8|256|4194304|8388608
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 50~
+if rand(50)
+	grin
+	c powerball
+	mpnowait
+	c 'demon tremor'
+	mpnowait
+else
+	c 'double heal'
+	mpnowait
+	c heal
+	mpnowait
+endif
+if rand(50)
+	grin
+	if ispc($r)
+		c 3 'energy drain' $r
+		mpnowait
+	endif
+		if rand(50)
+			c soulsteal $r
+			mpnowait
+		else
+			c lifesteal $r
+			mpnowait
+		endif
+	endif
+endif
+~
+>fight_prog 40~
+if hitprcnt($i) < 30
+	mpecho $I ªº¨­Åé©¿µM¶}©l§á¦±¡A¦ü¥G¶}©lÅÜ§Î¤F¡C
+	mpecho $I §A·P¨ì¥L¹ï§Aªº§ð¶Õ¶V¨Ó¶V²r¯P¡C
+	skilldrv multihit $n
+	skilldrv multihit $n
+	skilldrv heavyhit $n
+	if rand(30)
+		say ¦º¤`¨¦ªº¦º®ð¡AÀ°§U§Ú«ì´_¾Ô°«¤O§a¡I
+		mpat 5 c 2 'double heal'
+		mpnowait
+	endif
+	if hitprcnt($i) < 50
+		c 'double heal'
+		mpnowait
+		c powerball
+		mpnowait
+		c fireball
+		mpnowait
+	endif
+endif
+~
+>fight_prog 30~
+if rand(50)
+	c fireball
+	mpnowait
+endif
+if rand(50)
+	c flamestrike
+	mpnowait
+endif
+if rand(50)
+	c 3 'burning hands'
+	mpnowait
+endif
+~
+>death_prog 100~
+if pcnum($) > 15
+        mpgreward exp $n 30 1000
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 1500
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 2000
+                else
+                        mpgreward exp $n 30 3000
+                endif
+        endif
+endif
+~
+|
+#9021
+guardian-dead guardian death~
+¦º¤`¦u½Ã(Guardian of Death)~
+¦º¤`¤§¤ý³Ì¾¹­«ªº«ÕÆF - ¦º¤`¦u½Ã(Guardian of Death)¡C
+~
+¥L´X¥G¾Ö¦³¨C¤@ºØÂ¾·~ªº§Þ¯à¡C
+~
+18626691 8872 -1000 S
+50 5000 0 30d10+200 -3d-150+0
+0 0
+0 8 1
+R Undead~
+C 63
+P 4|256|4194304|8388608|16777216|268435456|536870912
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+if rand(20)
+	mpoload 2436
+	wear sword
+	flaming
+	mpnowait
+	flaming
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(25)
+	mpoload 2436
+	wear sword
+	earth
+	mpnowait
+	earth
+	mpnowait
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(33)
+	mpoload 2436
+	wear sword
+	circular
+	mpnowait
+	circular
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(40)
+	mpoload 3020
+	wear dagger
+	mpdef_rembch $n
+	mpgoto $n
+	bs $n
+	mpnowait
+	remove dagger
+	mpjunk dagger
+	mpdef_rembch null-tar
+	wear slasher
+else
+	mpoload 1705
+	mpoload 1702
+	rem slasher
+	wear bow
+	wear arrow
+	met
+	mpnowait
+	met
+	mpnowait
+	remove bow
+	mpjunk bow
+	remove arrow
+	mpjunk arrow
+	wear slasher
+endif
+~
+>fight_prog 100~
+skilldrv multihit $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) <= dead_guardian 100005
+	mpecho §A¬Ý¨ì $I ¤â¤Wªº¨º§â¼C­¸¨ìªÅ¤¤¡AµM«á©¿µM®ø¥¢¤F....¡C
+	mpjunk all.slasher
+	if is_qmark($n) == dead_guardian
+		mpmod_qmark $n dead_guardian v0 + 1
+	else
+		mpadd_qmark $n dead_guardian -1 1 0 0 0 1
+	endif
+else
+	mpecho §A¬Ý¨ì $I ¤â¤Wªº¨º§â¼C­¸¨ìªÅ¤¤¡A«o¤S±¼¤F¤U¨Ó....¡C
+	mpdel_qmark $n dead_guardian v0 - 5
+endif
+if pcnum($) > 15
+	mpgreward exp $n 30 1000
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 1500
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 2000
+		else
+			mpgreward exp $n 30 3000
+		endif
+	endif
+endif
+~
+|
+#9022
+unfortunate soul poorsoul~
+¤£©¯¤§ÆF(unfortunate soul)~
+~
+~
+3 0 0 S
+46 -10 0 0d0+0 1d1+1
+0 0
+0 8 1
+R Ghost~
+P 8|4194308
+S
+16 50
+#9023
+skeleton fighter~
+¾uÅ\¾Ô¤h(skeleton fighter)~
+¤@­Ó¾uÅ\¾Ô¤h(skeleton fighter)¯¸¦b³oÃä¡C
+~
+¥L¥Í«e¬O²Ä¤@¬yªº¾Ô¤h¡A¦º¤F¤§«á¾Ô§Þ«oÄ~Äò«O«ù¤F¤U¨Ó¡C
+~
+262145 0 -500 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+C 1
+P 8|4194308
+S
+16 50
+#9024
+zombie~
+»ø«Í(zombie)~
+¤@¨ã»ø«Í(zombie)¯¸¦b³oÃä¡C
+~
+§A¬Ý¨ì¤@°¦¤£¦º¥Íª«¡C
+~
+262145 0 -600 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194308
+S
+16 50
+#9025
+ghoul~
+¾j°­(ghoul)~
+¤@°¦¾j°­(ghoul)¯¸¦b³oÃä¡C
+~
+§A¬Ý¨ì¤@°¦¤£¦º¥Íª«¡C
+~
+262145 0 -600 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194308
+S
+16 50
+#9026
+wight~
+¤H§Î°­(wight)~
+¤@°¦¤H§Î°­(wight)¯¸¦b³oÃä¡C
+~
+§A¬Ý¨ì¤@°¦¤£¦º¥Íª«¡C
+~
+262145 0 -600 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194308
+S
+16 50
+#9027
+wraith~
+«ÕÆF(wraith)~
+¤@¨ã«ÕÆF(wraith)¦b³oÃäÄÆ¯B¡C
+~
+§A¬Ý¨ì¤@°¦¤£¦º¥Íª«¡C
+~
+262145 0 -700 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Ghost~
+P 8|4194308
+S
+16 50
+#9028
+mummy~
+¤ì¤D¥ì(mummy)~
+¤@¨ã¤ì¤D¥ì(mummy)¦b³oÃä¯¸¦b¡C
+~
+§A¬Ý¨ì¤@°¦¤£¦º¥Íª«¡C
+~
+262145 0 -700 S
+47 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Mummy~
+P 8|4194308
+S
+16 50
+#9029
+spectre~
+´åÆF(spectre)~
+¤@¨ã´åÆF(spectre)¦b³oÃäÄÆ¯B¡C
+~
+§A¬Ý¨ì¤@°¦¤£¦º¥Íª«¡C
+~
+262145 0 -700 S
+49 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+C 2
+P 8|4194308
+S
+16 80
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+c flamestrike
+mpnowait
+~
+|
+#9030
+vampire~
+§l¦å°­(vampire)~
+¤@°¦¤H¤HÄß©Èªº§l¦å°­(vampire)¯¸¦b³oÃä¡C
+~
+§A¬Ý¨ì¤@°¦¥¨¤jªº¤£¦º¥Íª«¡C
+~
+262145 0 -800 S
+51 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8|256|4194308
+R Vampire~
+S
+16 130
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+feed
+feed
+feed
+if rand(40)
+	c 'energy drain'
+	mpnowait
+endif
+~
+|
+#9031
+phantom-dead~
+¤Û¼v(phantom)~
+¤@°}¤Û¼v(phantom)¦b³oÃäÄÆ´å¡C
+~
+§A¬Ý¨ì¤@°¦¥¨¤jªº¤£¦º¥Íª«¡C
+~
+262145 0 -800 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Phantom~
+P 8|4194308
+S
+16 60
+#9032
+haunt~
+¥Í®§(haunt)~
+¥i©Èªº¥Íª«¥Í®§(haunt)¦b³oÃäÄÆ´å¡C
+~
+§A¬Ý¨ì¤@°¦¥¨¤jªº¤£¦º¥Íª«¡C
+~
+262145 0 -800 S
+47 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+C 1
+P 8|4194308
+S
+16 100
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+c 'lightning bolt'
+mpnowait
+~
+|
+#9033
+spirit~
+ÆF»î(Spirit)~
+¥i©ÈªºÆF»î(spirit)¦b³oÃäÄÆ´å¡C
+~
+§A¬Ý¨ì¤@°¦¥¨¤jªº¤£¦º¥Íª«¡C
+~
+262145 0 -900 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Ghost~
+C 2
+P 8|4194308
+S
+16 70
+>fight_prog 20~
+c ice
+~
+|
+#9034
+nightshade~
+¹ÚÆL(Nightshade)~
+¹ÚÆL(Nightshade)¦b³oÃä¼vÅT§Aªº¯«´¼¡C
+~
+§A¬Ý¨ì¤@°¦¥i©Èªº¤£¦º¥Íª«¡C
+~
+262145 0 -900 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Phantom~
+C 3
+P 8|4194308
+S
+16 80
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+c fireball
+mpnowait
+~
+|
+#9035
+lich~
+§Å§¯(Lich)~
+¤@°¦§Å§¯(lich)¦b³oÃä¡C
+~
+§A¬Ý¨ì¤@°¦¥i©Èªº¤£¦º¥Íª«¡C
+~
+262145 0 -900 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194304
+S
+16 120
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if ispc($r)
+	grin
+	c 'energy drain' $r
+	mpnowait
+endif
+~
+|
+#9036
+sharissa~
+¼»ÄR²ï(Sharissa)~
+¼»ÄR²ï(Sharissa)¦b³oÃä¯¸µÛ¡C
+~
+¼»ÄR²ï¡A¦º¤`¨¦¤HÃþ¤§¥À¦b³oÃäµ¥«ÝµÛ¦o¥i¥HÀ°§Uªº¹ï¶H¡C©Î³\§A¥i¥H¦V¦o½Ð¨D¤@¨Ç¨ó§U¡C
+~
+1310723 134783656 1000 S
+60 0 0 20d-20+900 -10d0+0
+0 0
+0 8 2
+C 1|2|8|32
+P 1|8|256|4194304|8388608
+W magic missile~ 1000 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+if rand(30)
+	say ¤Ó¶§°Ú¡Iµo¥Í©ú«Gªº¥ú¨~¨ÓÀ°§U§Ú§@¾Ô§a¡I
+	c 'sun flash'
+	mpnowait
+endif
+if rand(50)
+	say ¤õ°Ú¡I¿U¿N°_¸U¤Vªº¤õµK¡A±N¼Ä¤Hªº«Í°©µIÀì§a¡I
+	c 'angry fire storm'
+	mpnowait
+endif
+if rand(30)
+	say ¤ô°Ú¡I½ÐÂíÀR¼Ä¤Hªº¤ß´¼¡AÅý¥L­ÌµLªk§@¾Ô§a¡I
+	c calm
+	mpnowait
+	c calm
+	mpnowait
+endif
+~
+>hitprcnt_prog 50~
+if rand(70)
+	c 'double heal'
+	mpnowait
+else
+	c 3 'double heal'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	c sanctuary
+	mpnowait
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+~
+>talk_prog help~
+if being($b)
+	if insameroom($b)
+		break
+	endif
+endif
+ponder
+say ¦nªº¡A§ÚÁÙ¦³¤@¨Ç¤O¶q¥i¥HÀ°§U§A....¡C
+say ½Ð§Aµyµ¥¤@¤U....¡C
+mpdef_rembch $n
+mpadd_qmark self dead_quest -1 0 0 0 0 1
+~
+>rand_prog 35~
+if insameroom($b)
+	if is_qmark($b) == dead_quest 100000
+		say ¸ÕµÛ¥h¦s¦b§a....¡I¸ÕµÛ¥h¬@±Ï§Úªº¤l¥Á§a....¡I
+		say ¸ÕµÛ¥hÀ»±ÑµLºÉªº¨¸´c....¡I
+		mpmod_qmark self dead_quest v0 = 1
+		break
+	endif
+	if is_qmark($b) == dead_quest 100001
+		mpecho $I ½w½wªº¤É°_¦oªº¥k¤â....¡C
+		mpecho ·í $I Á|°_¦oªº¥k¤â®É¡A¦ü¥G³o­ÓªÅ¶¡¤w¸g§¹¥þ¨S¦³¤FÁn­µ....¡C
+		mpmod_qmark self dead_quest v0 = 2
+		break
+	endif
+	if is_qmark($b) == dead_quest 100002
+		mpechoat $b ©¿µM¦³¤@¹D¥Õ¥ú±N§A±aÂ÷¤F¦º¤`¨¦....¡C
+		mpechoaround $b ©¿µM¦³¤@¹D¥Õ¥ú±N $b ±aÂ÷¤F³o¸Ì¡C
+		mptransfer $b 4580
+		mpdel_qmark self dead_quest
+		mpdef_rembch null-tar
+	endif
+endif
+~
+>death_prog 100~
+if pcnum($) > 15
+        mpgreward exp $n 30 500
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 900
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 1200
+                else
+                        mpgreward exp $n 30 1500
+                endif
+        endif
+endif
+~
+|
+#0
+
+
+
+#OBJECTS
+#9000
+fountain oath~
+¶A©G¤§¬u(Fountain of Oath)~
+¶A©G¤§¬u(Fountain of Oath)¦b³oÃä¡C~
+~
+25 64 0
+0~ 0~ 0~ 1~
+10000 0 0
+X stone~
+
+#9001
+dark sphere~
+îî¶Â¤Ñ²y(dark sphere)~
+îî¶Â¤Ñ²y(dark sphere)ÄÆ¯B¦b³oÃä¡C~
+~
+15 0 0
+10000~ 0~ 0~ 0~
+0 0 0
+E
+dark sphere~
+îî¶Â¤Ñ²y¾Ö¦³µLºÉªºÅ]¤O¥i¥HÀxÂÃ§A¨­¤Wªº©Ò¦³ª÷¿ú»P¸Ë³Æ¡C
+~
+X black matter~
+
+#9002
+ankh life~
+¥Í©R¤§²Å(Ankh of Life)~
+¤@­Ó¤p«¬Å@²Å(ankh)¿E®g¥X±j«lªº¥Í©R¤O(life)¡C~
+~
+1 50594113 1
+0~ 0~ 168~ 0~
+1 0 0
+A
+13 50
+H sanctuary~ 30 10 1
+X paper~
+
+#9003
+fountain water~
+¸t¬u(holy fountain)~
+¸t¬u(holy fountain)ùØªº¤ô¡A´²µo¥X¤ô´¹¯ëªº¥ú¨~¡C~
+~
+25 0 0
+0~ 0~ 0~ 0~
+500 3000 0
+C 3000
+X stone~
+
+#9004
+death scythe~
+¦º¯«ÅI¤M(Scythe of Death)~
+¤@§â¥¨¤j¶Â¦âªºÅI¤M(scythe)¦b¦a¤Wµo¥X¶ä¶äªºÁnÅT¡C~
+~
+5 86 8193
+300~ 0~ 0~ 1~
+30 500000 0
+Z 1
+A
+19 9
+A
+18 9
+A
+5 -5
+A
+43 20
+H curse~ 5 40 1
+V Human~ 20 100 20 100
+V Gnome~ 30 100 30 100
+V Dwarf~ 10 100 10 100
+V Elf~ 10 100 10 100
+V Orc~ 10 100 10 100
+V Lizardman~ 10 100 10 100
+V Demon~ 0 50 0 30
+V Undead~ 0 50 0 30
+V Ghost~ 0 50 0 30
+C 500000
+X steel~
+
+#9005
+judgement book~
+¼f§P¤§®Ñ(Book of Judgement)~
+¤@¥»µo¥X¥¨¤j¯à¶qªº®Ñ¥»(book)³Q©ñ¦b³oÃä¡C~
+~
+13 321 16385
+0~ 0~ 0~ 0~
+20 300000 0
+A
+39 -10
+A
+12 50
+C 300000
+X paper~
+
+#9006
+death ring~
+¦º¤`¤§§Ù(Ring of Death)~
+¤@¥u´²µoµÛ¥i©È¯à¶qªº§Ù«ü(ring)³Q¥á±ó¦b³oÃä¡C~
+~
+9 2581 3
+0~ 0~ 100~ 0~
+5 300000 0
+A
+19 4
+A
+43 4
+C 300000
+X bone~
+
+#9007
+evil bracelet~
+¨¸¥úÅ@¨y(evil bracelet)~
+¤@°Æµo¥X¥Õ¦â¥ú¨~ªºÅ@¨y(bracelet)³Q¥á±ó¦b¦a¤W.~
+~
+9 597 4097
+0~ 0~ 100~ 0~
+5 50000 0
+A
+1 1
+A
+19 2
+A
+39 5
+C 50000
+X bone~
+
+#9008
+dragon armor~
+Às°©¾Ô¥Ò(dragon armor)~
+¤@®M¥ÑÀs(dragon)ªº°©ÀY©Ò»s¦¨ªºÅ@¥Ò(armor)©ñ¦b³o¸Ì.~
+~
+9 2119 9
+0~ 0~ 100~ 0~
+20 70000 0
+A
+5 1
+A
+17 -20
+A
+39 10
+A
+19 3
+C 70000
+X dragon bone~
+
+#9009
+cult sash~
+¨¸Às§ô¸y(cult sash)~
+¤@±ø¤WÀYµeº¡¦U¦¡Às¨v¹³ªº§ô¸y(sash)³Q¥á¦b¦a¤W.~
+~
+9 592 2049
+0~ 0~ 100~ 0~
+20 50000 0
+A
+17 5
+A
+19 4
+A
+39 20
+C 50000
+X fiber~
+
+#9010
+black sword dark slasher~
+¶Â¼C - îî¯[¤Ñ¯}(black sword - Dark Slasher)~
+¤@§âµo´²µÛîî¶Â¦â¥ú¨~ªº¶Â¼C(black sword)¯B¦b¥bªÅ¤§¤¤.~
+~
+5 2647 8193
+400~ 0~ 0~ 3~
+20 200000 0
+A
+43 10
+A
+42 10
+A
+41 10
+A
+18 5
+A
+19 7
+A
+57 200
+H curse~ 20 50 4
+C 200000
+X steel~
+
+#9011
+light sword sunshine breaker~
+¥ú¼C - ¯}´P¸U¤V(light sword - Sunshine Breaker)~
+¤@§âµo´²µÛ¸U¤V¥ú¨~(light)ªº¼C(sword)¯B¦b¥bªÅ¤§¤¤.~
+~
+5 3395 8193
+500~ 0~ 0~ 1~
+20 300000 0
+A
+18 2
+A
+19 2
+A
+43 20
+A
+56 200
+H sun flash~ 30 30 4
+V Undead~ 40 100 30 100
+V Ghost~ 30 100 40 100
+V Demon~ 30 100 15 100
+V Human~ 0 20 0 20
+V Orc~ 0 30 0 30
+V Lizardman~ 0 30 0 30
+C 300000
+X mithril~
+
+#9012
+staff holy dragon~
+¥úÀs¤§§ú(staff of holy dragon)~
+¤@®Ú¤WÀYÀJ¦³ºû§®ºû¨vÀs(dragon)ÀJ¹³ªº¤ì§ú(staff)©ñ¦b³o¸Ì.~
+~
+5 257 8193
+400~ 0~ 0~ 7~
+15 100000 0
+A
+3 1
+A
+4 1
+A
+18 2
+A
+19 2
+H lightning bolt~ 40 40 4
+V Undead~ 30 100 30 100
+V Ghost~ 20 100 20 100
+V Demon~ 40 100 15 100
+V Human~ 0 20 0 20
+V Orc~ 0 30 0 30
+V Lizardman~ 0 30 0 30
+C 100000
+X ebony~
+
+#9013
+dodging cape~
+°{¸ú©Ü­·(dodging cape)~
+¤@Å§«G¬õ¦âªº©Ü­·(cape)³Q©ñ¸m¦b³oÃä.~
+~
+9 321 1025
+0~ 0~ 300~ 0~
+5 10000 0
+A
+39 -20
+C 10000
+X fiber~
+
+#9014
+rusty sword~
+ÄÃ»kªº¼C(rusty sword)~
+¤@§â¤w¸g¥Í¤FÄÃªºªø¼C(sword).~
+~
+5 4224 8193
+200~ 0~ 0~ 1~
+9 0 0
+A
+18 -2
+A
+9 3
+X iron~
+
+#9015
+rusty shield~
+ÄÃ»kªº¬Þ(rusty shield)~
+¤@­Ó¥ÍÄÃªºÅK¬Þ(shield), ¤W­±ÁÙ¦³µÛ¦y¨ë.~
+~
+9 4224 513
+0~ 0~ 200~ 0~
+15 0 0
+A
+19 1
+A
+18 -2
+X iron~
+
+#9016
+magical belt~
+Å]¤O¸y±a(magical belt)~
+¤@±ø¨ã¦³Å]¤Oªº¸y±a(belt)³Q©ñ¸m¦b³oÃä.~
+~
+9 580 2049
+0~ 0~ 170~ 0~
+5 0 0
+A
+12 5
+A
+3 2
+X cloth~
+
+#9017
+magical coif~
+Å]¤OÀY¤y(magical coif)~
+¤@±ø¨ã¦³Å]¤OªºÀY¤y(coif)³Q©ñ¸m¦b³oÃä.~
+~
+9 580 17
+0~ 0~ 150~ 0~
+5 0 0
+A
+12 5
+A
+4 2
+X cloth~
+
+#9018
+magical robe~
+Å]¤Oªø³T(magical robe)~
+¤@Å§¨ã¦³Å]¤Oªºªø³T(robe)³Q©ñ¸m¦b³oÃä.~
+~
+9 580 9
+0~ 0~ 170~ 0~
+5 0 0
+A
+4 2
+A
+3 1
+X fiber~
+
+#9019
+death scythe~
+¦º¯«ÅI¤M(Scythe of Death)~
+¤@§â¥¨¤j¶Â¦âªºÅI¤M(scythe)¦b¦a¤Wµo¥X¶ä¶äªºÁnÅT¡C~
+~
+5 86 8193
+300~ 35~ 40~ 1~
+30 500000 0
+A
+17 100
+A
+18 15
+A
+19 15
+A
+43 25
+H curse~ 10 45 1
+V Human~ 20 120 20 120
+V Gnome~ 30 120 30 120
+V Dwarf~ 20 120 20 120
+V Elf~ 20 120 20 120
+V Orc~ 20 120 20 120
+V Lizardman~ 10 120 10 120
+V Demon~ 0 50 0 30
+V Undead~ 0 50 0 30
+V Ghost~ 0 50 0 30
+C 500000
+X steel~
+
+#0
+
+
+
+#ROOMDATA
+#9000
+¦º¤`¨¦ªº¤J¤f~
+.
+                              ¦º  ¤`  ¨¦
+    §A²{¦b¥¿¦b¦º¤`ªº¤j¦a¤W, ³o¬O¦º¤`¤§¤ý(Lords of Death)ªº»â°ì¡C§Y¨Ï§A»{¬°§A¥i¥H¿W
+¦Û§ä¨ìÂ÷¶}ªº¸ô¡A­@§J·ç(Necri) ÁÙ¬O·|±N§AªºÆF»î¼¹µõ¡C¦pªG§A·Q¦b³o¸Ì¥Í¦s¡A¨º»ò¥[¤J¦º
+¤`¤§¤ýªº¦æ¦C¡A§@¬°¦º¤`¤§¤ý©¾¸Ûªº¹²¤H¡A©Î³\¥i¥H­Æ§K©óÃø¡C·íµM¡A§A¤]¥²»Ý­nµý©ú§Aªº½T
+¦³¨¬°÷ªº¸ê®æ¡A¥i¥H±µ¨ü¦º¤`¤§¤ýªºÀ°§U....¡C
+¦³¨Ç¤å¦r(word)µêµLÄÆ´ùªº¯B¦b³o¸Ì....¡C
+~
+0 860165 5
+E
+word~
+¦pªG§Aªºµ¥¯Å§C©ó 36¡A©^ÄU§A¤£­n±µªñ³oÃä¡C
+¤@¥¹¶i¤J¦º¤`¨¦¡A±N¨S¦³¥i¥H¦^ÀYªº¦a¤è¡C
+©Î³\§A¥i¥H§ä¨ì¯à°÷¦^¨ì¤H¶¡ªº¥X¤f¡C
+~
+D0
+~
+~
+0 -1 9006
+D2
+~
+~
+0 -1 4659
+>room_enter 4 100~
+if ispc($n)
+	if level($n) < 36
+		echoat $n «eÀY¤@¹Î¥]§t±j¤j¤O¶qªº¦º®ð¡A±N§A±À¤F¦^¨Ó....¡C
+		transfer $n 4659
+	else
+		echoat $n «eÀYªº¦º®ð¡AÅý§A·P¨ì¤£¬ÆµÎªA....¡C
+		if rand(10)
+			echoat $n §AÄ±±o§A¦ü¥G³Q¶A©G¤F....¡C
+			add_affect $n curse 0 30 18 -10 1024
+			break
+		endif
+		if rand(10)
+			if race($n) == vampire
+				break
+			else
+				echoat $n §AÄ±±o§A¦ü¥G¤¤¬r¤F....¡C
+				add_affect $n poison 0 30 1 -3 4096
+			endif
+			break
+		endif
+		if rand(10)
+			echoat $n §AÄ±±o§A¦ü¥G¤£¬Æ¦wÃ­¤F....¡C
+			if rand(50)
+				add_affect $n 'faerie fire' 0 30 17 50 256
+			endif
+			break
+		endif
+		if rand(5)
+			echoat $n §AÄ±±o§A¦ü¥G¥þ¨­³Â·ô¤F....¡C
+			add_affect $n  paralyze 0 3 17 -100 268435456
+		endif
+	endif
+endif
+~
+|
+S
+#9001
+¶A©G¤§¬u~
+³o¸Ì¡A´N¬O³QÅA¬°¥@¬É¥|¤jÅ]¬u¤§¤@ªº¡u¶A©G¤§¬u¡v¡C¦b»·¥jªº®É­Ô¡A¦º¤`¤§¤ý¹ï¨ä©Òª`
+¤JªºÅ]¤OÅý³o¸Ì¦¨¬°¦U¦¡¦U¼Ë«_ÀIªÌ³Ì³ßÅw«e¨Ó«_ÀIªº¦a¤è¤§¤@¡C
+~
+0 860161 0
+D0
+~
+~
+0 0 9002
+D1
+~
+~
+0 0 9003
+D2
+~
+~
+0 0 9004
+D3
+~
+~
+0 0 9005
+S
+#9002
+§l¦å°­ªº·t©]¤§·µ~
+³o¸Ì´N¬O§l¦å°­ªº·t©]¤§·µ¡C³o¸Ì¦Û»·¥j¥H¨Ó´N³Q§l¦å°­·í§@²½ªÁªº¦a¤è¡C§A¬Ý¨ì¦¹³B¨ì
+³BÄÆ¯BµÛ¥i©Èªº¤£¦º¥Íª«¡C
+~
+0 74753 0
+D2
+~
+~
+0 0 9001
+S
+#9003
+§Å§¯ªºîî¶Â¤§·µ~
+³o¸Ì´N¬O§Å§¯ªºîî¶Â¤§·µ¡C³o¸Ì¦Û»·¥j¥H¨Ó´N³Q§Å§¯·í§@¬ã¨s¥i©ÈÅ]ªkªº¦a¤è¡C§A¬Ý¨ì¦¹
+³B¨ì³BÄÆ¯BµÛ¥i©Èªº¤£¦º¥Íª«¡C
+~
+0 13444097 0
+D3
+~
+~
+0 0 9001
+S
+#9004
+°­»îªºîî¶Â¤§·µ~
+³o¸Ì´N¬O°­»îªºîî¶Â¤§·µ¡C³o¸Ì¦Û»·¥j¥H¨Ó´N³Q°­»î·í§@¬ã¨s¥i©ÈÅ]ªkªº¦a¤è¡C§A¬Ý¨ì¦¹
+³B¨ì³BÄÆ¯BµÛ¥i©Èªº¤£¦º¥Íª«¡C
+~
+0 51192833 0
+D0
+~
+~
+0 0 9001
+S
+#9005
+¯Á©RªÌªº«Õ·t¤§·µ~
+³o¸Ì´N¬O¯Á©RªÌªº«Õ·t¤§·µ¡C³o¸Ì¦Û»·¥j¥H¨Ó´N³Q¯Á©RªÌ·í§@¬ã¨s¥i©ÈÅ]ªkªº¦a¤è¡C§A¬Ý¨ì¦¹
+³B¨ì³BÄÆ¯BµÛ¥i©Èªº¤£¦º¥Íª«¡C
+~
+0 4006913 0
+D1
+~
+~
+0 0 9001
+S
+#9006
+¦º¤`¤§¸ô~
+§A¬Ý¨ì¦¹³B¨ì³BÄÆ¯BµÛ¥i©Èªº¤£¦º¥Íª«¡C
+~
+0 860169 5
+D0
+~
+~
+0 -1 9007
+>room_enter 4 100~
+if ispc($n)
+	echoat $n ·í§A¶i¤J³o¸Ìªº®É­Ô¡A§Aµo²{«nÃäªº¥X¤f¤w¸g®ø¥¢¡C
+	echoat $n §A¥u¯à°÷¦Û¨D¦hºÖ¡A¦]¬°§A±NµLªk¦^¨ì§Aªº¥@¬É¤¤¡C
+endif
+~
+|
+S
+#9007
+¦º¤`¤j¦a~
+¦¹¦a¤£¦º¥Íª«©Òµo¥Xªº¦º¤`±ë­µ¦b§Aªº¦Õ»Ú³òÂ¶µÛ¡C¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9009
+D2
+~
+~
+0 -1 9006
+S
+#9008
+¦º¤`¤j¦a~
+§A¬Ý¨ì¦¹³B¨ì³BÄÆ¯BµÛ¥i©Èªº¤£¦º¥Íª«¡C¦³¤@¨Ç¥¿¦b¦£µÛ¦Û¤vªº¤u§@¡A¦ý¬O¤j³¡¤À³£¬Oº©
+µL¥Øªº¨ì³BÄÆ´å¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9011
+D1
+~
+~
+0 -1 9009
+S
+#9009
+¤`ªÌ¤§ªù¤J¤f~
+§A¬O¤£¬O¦º¤F¡H¤£µM§A«ç»ò·|¦b³oÃä¡H
+~
+0 860161 3
+D0
+~
+~
+0 -1 9012
+D1
+~
+~
+0 -1 9010
+D2
+~
+~
+0 -1 9007
+D3
+~
+~
+0 -1 9008
+S
+#9010
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9013
+D1
+~
+~
+0 -1 9020
+D3
+~
+~
+0 -1 9009
+S
+#9011
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9014
+D1
+~
+~
+0 -1 9012
+D2
+~
+~
+0 -1 9008
+S
+#9012
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9015
+D1
+~
+~
+0 -1 9013
+D2
+~
+~
+0 -1 9009
+D3
+~
+~
+0 -1 9011
+S
+#9013
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9016
+D1
+~
+~
+0 -1 9028
+D2
+~
+~
+0 -1 9010
+D3
+~
+~
+0 -1 9012
+S
+#9014
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9017
+D1
+~
+~
+0 -1 9015
+D2
+~
+~
+0 -1 9011
+D3
+~
+~
+0 -1 9037
+S
+#9015
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9018
+D1
+~
+~
+0 -1 9016
+D2
+~
+~
+0 -1 9012
+D3
+~
+~
+0 -1 9014
+S
+#9016
+¦º¤`¤j¦a~
+§A¬Ý¨ì¦¹³B¨ì³BÄÆ¯BµÛ¥i©Èªº¤£¦º¥Íª«¡C¦³¤@¨Ç¥¿¦b¦£µÛ¦Û¤vªº¤u§@¡A¦ý¬O¤j³¡¤À³£¬Oº©
+µL¥Øªº¨ì³BÄÆ´å¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9019
+D2
+~
+~
+0 -1 9013
+D3
+~
+~
+0 -1 9015
+S
+#9017
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9053
+D1
+~
+~
+0 -1 9018
+D2
+~
+~
+0 -1 9014
+S
+#9018
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D1
+~
+~
+0 -1 9019
+D2
+~
+~
+0 -1 9015
+D3
+~
+~
+0 -1 9017
+S
+#9019
+¦º¤`¤j¦a~
+³o¸Ì´N¬O¤HÃþ¦º¤`«áÆFÅé©~¦íªº¦a¤è¡C¦ý¬O¥L­Ì¬Ý°_¨Ó¨Ã«D¤Q¤À¤Íµ½¡A§A³Ì¦n¤p¤ß¤@ÂI¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9054
+D2
+~
+~
+0 -1 9016
+D3
+~
+~
+0 -1 9018
+S
+#9020
+¤p®|~
+§Aª`·N¨ì¦³¤@±ø¤p®|¨S¤JªFÃä³Q¶Â¶³©ÒÅ¢¸nªº¶Â·t·í¤¤¡C§A¥i¥H·P¨ü¨ì¥ÑªFÃä©Ò¶Ç¨Óªº¥¨
+¤j¯à¶q¨Ó·½¡C
+~
+0 860168 3
+D1
+~
+~
+0 -1 9021
+D3
+~
+~
+0 -1 9010
+S
+#9021
+îî¶Â¤§¸ô~
+§Y¨Ï¨Ï¥Î¤F¥ú·½¡A§AÁÙ¬O¤£¯à²M·¡ªº¬Ý¨ì¥ô¦óªºªF¦è¡C³o±ø³Q¶Â¶³©ÒÅ¢¸nªº¤p®|¤ñ¶Â·tÁÙ
+­n¶Â¡C¦b¸ÌÀY§A¥i¥HÅ¥¨ì±j¤j¤O¶q©Òµo¥Xªº§C»ïÁn¡C
+~
+0 860168 3
+D1
+~
+~
+0 -1 9022
+D2
+~
+~
+0 -1 9023
+D3
+~
+~
+0 -1 9020
+S
+#9022
+îî¶Â¤§¸ô~
+§Y¨Ï¨Ï¥Î¤F¥ú·½¡A§AÁÙ¬O¤£¯à²M·¡ªº¬Ý¨ì¥ô¦óªºªF¦è¡C³o±ø³Q¶Â¶³©ÒÅ¢¸nªº¤p®|³Q¶Â·tÁÙ
+­n¶Â¡C¦b¸ÌÀY§A¥i¥HÅ¥¨ì±j¤j¤O¶q©Òµo¥Xªº§C»ïÁn¡C
+~
+0 860168 3
+D2
+~
+~
+0 -1 9024
+D3
+~
+~
+0 -1 9021
+S
+#9023
+îî¶Â¤§¸ô~
+§Y¨Ï¨Ï¥Î¤F¥ú·½¡A§AÁÙ¬O¤£¯à²M·¡ªº¬Ý¨ì¥ô¦óªºªF¦è¡C³o±ø³Q¶Â¶³©ÒÅ¢¸nªº¤p®|³Q¶Â·tÁÙ
+­n¶Â¡C¦b¸ÌÀY§A¥i¥HÅ¥¨ì±j¤j¤O¶q©Òµo¥Xªº§C»ïÁn¡C
+~
+0 860168 3
+D0
+~
+~
+0 -1 9021
+D1
+~
+~
+0 -1 9024
+D2
+~
+~
+0 -1 9025
+S
+#9024
+îî¶Â¤§¸ô~
+§Y¨Ï¨Ï¥Î¤F¥ú·½¡A§AÁÙ¬O¤£¯à²M·¡ªº¬Ý¨ì¥ô¦óªºªF¦è¡C³o±ø³Q¶Â¶³©ÒÅ¢¸nªº¤p®|³Q¶Â·tÁÙ
+­n¶Â¡C¦b¸ÌÀY§A¥i¥HÅ¥¨ì±j¤j¤O¶q©Òµo¥Xªº§C»ïÁn¡C
+~
+0 860168 3
+D0
+~
+~
+0 -1 9022
+D2
+~
+~
+0 -1 9026
+D3
+~
+~
+0 -1 9023
+S
+#9025
+³Ìîî¤§¸ô~
+§Aªº¥ú·½¦b³o¸Ì§¹¥þ¨S¦³¥Î¤F¡C¥u¦³¸g¹LÅ]ªk¥[«ùªº¥ú·½¤~¯à°÷·Ó«G§A¨­Ãäªº¤@¤p³¡¤À¡C
+§A·PÄ±¨ì³o¸Ì¤w¸g¯î¼o«Ü¤[¤F¡A¦ý¬O¥Ñ©ó¤§«eªº¶Â·t¡A¦]¦¹§Aª½¨ì²{¦b¤~µo²{¡C§A·PÄ±¨ìªFÃä
+¦³µÛ¥¨¤jªº¯à¶q¡C
+~
+0 860168 3
+D0
+~
+~
+0 -1 9023
+D1
+~
+~
+0 -1 9026
+S
+#9026
+³Ìîî¤§¸ô~
+§Aªº¥ú·½¦b³o¸Ì§¹¥þ¨S¦³¥Î¤F¡C¥u¦³¸g¹LÅ]ªk¥[«ùªº¥ú·½¤~¯à°÷·Ó«G§A¨­Ãäªº¤@¤p³¡¤À¡C
+§A·PÄ±¨ì³o¸Ì¤w¸g¯î¼o«Ü¤[¤F¡A¦ý¬O¥Ñ©ó¤§«eªº¶Â·t¡A¦]¦¹§Aª½¨ì²{¦b¤~µo²{¡C§A·PÄ±¨ìªFÃä
+¦³µÛ¥¨¤jªº¯à¶q¡C
+~
+0 860168 3
+D0
+~
+~
+0 -1 9024
+D1
+~
+~
+0 -1 9027
+D3
+~
+~
+0 -1 9025
+S
+#9027
+¿ò§Ñ¤§·µ~
+³o¸Ì´N¬O¿ò§Ñ¤§·µ¡CÀs±Ú¤§¤ý¡B©R¹BÃM¤hµ¥°¶¤jªºÆF»î³£ÄÆ¯B¦b³oÃä¡C
+~
+0 860168 3
+D3
+~
+~
+0 -1 9026
+S
+#9028
+¤p®|~
+³o±ø¤p®|¤Q¤Àªº¶Â·t¡A§AµLªk¿ëÃÑ¥ô¦óªF¦è¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9029
+D3
+~
+~
+0 -1 9013
+S
+#9029
+¤p®|~
+³o¸ÌÁÙ¬O¤@¼Ëªº¶Â·t¡C
+~
+0 860161 6
+D0
+~
+~
+0 -1 9030
+D2
+~
+~
+0 -1 9028
+S
+#9030
+¤p®|~
+¦b¶Â·t¤¤§AµLªk¬Ý¨ì¥ô¦óªºªF¦è¡C
+~
+0 860161 6
+D0
+~
+~
+0 -1 9033
+D1
+~
+~
+0 -1 9031
+D2
+~
+~
+0 -1 9029
+S
+#9031
+¤p®|~
+¦b¶Â·t¤¤§AµLªk¬Ý¨ì¥ô¦óªºªF¦è¡C
+~
+0 860161 6
+D0
+~
+~
+0 -1 9034
+D1
+~
+~
+0 -1 9032
+D3
+~
+~
+0 -1 9030
+S
+#9032
+¤p®|~
+¦b¶Â·t¤¤§AµLªk¬Ý¨ì¥ô¦óªºªF¦è¡C
+~
+0 860161 6
+D0
+~
+~
+0 -1 9035
+D3
+~
+~
+0 -1 9031
+S
+#9033
+¤p®|~
+¦b¶Â·t¤¤§AµLªk¬Ý¨ì¥ô¦óªºªF¦è¡C
+~
+0 860161 6
+D1
+~
+~
+0 -1 9034
+D2
+~
+~
+0 -1 9030
+S
+#9034
+¤p®|~
+°£¤F¶Â·tÁÙ¬O¶Â·t¡A¨S¦³¨ä¥LªF¦è¡C
+~
+0 860161 6
+D1
+~
+~
+0 -1 9035
+D2
+~
+~
+0 -1 9031
+D3
+~
+~
+0 -1 9033
+S
+#9035
+¤p®|~
+§A¦ü¥G¥i¥H·PÄ±¨ì¤@¨Ç¶W¦ÛµMªºªF¦è¡C
+~
+0 860161 6
+D2
+~
+~
+0 -1 9032
+D3
+~
+~
+0 -1 9034
+D5
+~
+~
+0 -1 9036
+S
+#9036
+¦º¤`¤§¤«~
+³o¤f¤«´²µo¥X¤Q¤À©_©Çªº¨ý¹D¡C
+~
+0 860169 6
+D4
+~
+~
+0 -1 9035
+>room_enter 16 50~
+if rand(50)
+	echoat $n ¶i¤J¤F³o¤f¤«¤¤¡A§A·P¨ì¤£¬O«ÜµÎªA....¡C
+	modhmv pc 03.7 18 0
+else
+	echoat $n ¶i¤J¤F³o¤f¤«¤¤¡A§A¦ü¥G·P¨ì¦º®ð«IÅ§¤F§Aªº¨­Åé....¡C
+	if rand(50)
+		add_affect $n poison 0 30 1 -2 4096
+	else
+		add_affect $n curse 0 45 18 -5 1024
+	endif
+endif
+~
+|
+S
+#9037
+ª¦¦æ¤p®|~
+§A·P¨ü¨ì±j¤jªºÅ]¤O¤w¸gº¥º¥±µªñ¡C§A¶}©l·P¨ì®`©È¡C
+~
+0 860161 5
+D1
+~
+~
+0 -1 9014
+D2
+~
+~
+0 -1 9038
+S
+#9038
+ª¦¦æ¤p®|~
+§A·P¨ü¨ì±j¤jªºÅ]¤O¤w¸gº¥º¥±µªñ¡C§A¶}©l·P¨ì®`©È¡C
+~
+0 860161 5
+D0
+~
+~
+0 -1 9037
+D3
+~
+~
+0 -1 9042
+S
+#9039
+°k¥X¥Í¤Ñ~
+¦³¥i¯à¶Ü¡H§A³ºµM¥i¥H¬Ý¨ì¶§¥ú¡H
+~
+0 860173 6
+E
+living path1~
+~
+D1
+~
+~
+0 -1 9040
+D3
+~
+~
+0 -1 9059
+S
+#9040
+°k¥X¥Í¤Ñ~
+¦³¥i¯à¶Ü¡H§A³ºµM¥i¥H¬Ý¨ì¶§¥ú¡H
+~
+0 860169 6
+E
+living path2~
+~
+D1
+~
+~
+0 -1 9041
+D3
+~
+~
+0 -1 9059
+S
+#9041
+°k¥X¥Í¤Ñ~
+¦³¥i¯à¶Ü¡H§A³ºµM¥i¥H¬Ý¨ì¶§¥ú¡H
+~
+0 860169 6
+E
+living path3~
+~
+D1
+~
+~
+0 -1 9043
+D3
+~
+~
+0 -1 9059
+S
+#9042
+¿U¿N¦aº»~
+¨ì³B³£¬O¿U¿Nªº¯P¤õ¡I§A´X¥GµLªk§Ô¨ü³o¸Ìªº¼ö«×¡C
+~
+0 860161 5
+D1
+~
+~
+0 -1 9038
+D3
+~
+~
+0 -1 9045
+>room_enter 15 100~
+if ispc($n)
+	if level($n) < 36
+		break
+	else
+		echoat $n «eÀYªº¦º®ð¡AÅý§A·P¨ì¤£¬ÆµÎªA....¡C
+		if rand(10)
+			echoat $n §AÄ±±o§A¦ü¥G³Q¶A©G¤F....¡C
+			add_affect $n curse 0 30 18 -10 1024
+			break
+		endif
+		if rand(10)
+			echoat $n §AÄ±±o§A¦ü¥G¤¤¬r¤F....¡C
+			add_affect $n poison 0 30 1 -3 4096
+			break
+		endif
+		if rand(10)
+			echoat $n §AÄ±±o§A¦ü¥G¤£¬Æ¦wÃ­¤F....¡C
+			if rand(50)
+				add_affect $n 'faerie fire' 0 30 17 50 256
+			endif
+			break
+		endif
+		if rand(5)
+			echoat $n §AÄ±±o§A¦ü¥G¥þ¨­³Â·ô¤F....¡C
+			add_affect $n paralyze 0 3 17 -100 268435456
+		endif
+	endif
+endif
+~
+|
+S
+#9043
+°k¥X¥Í¤Ñ~
+¦³¥i¯à¶Ü¡H§A³ºµM¥i¥H¬Ý¨ì¶§¥ú¡H
+~
+0 860169 6
+E
+living path4~
+~
+D1
+~
+~
+0 -1 9044
+D3
+~
+~
+0 -1 9059
+S
+#9044
+°k¥X¥Í¤Ñ~
+¦³¥i¯à¶Ü¡H§A³ºµM¥i¥H¬Ý¨ì¶§¥ú¡H
+~
+0 860169 6
+E
+living path5~
+~
+D1
+~
+~
+0 -1 9060
+D3
+~
+~
+0 -1 9059
+S
+#9045
+§Å§¯¤§¤ý~
+¥L¥Í«e´¿¸g¬O³Ì°¶¤jªº©G³N®v¡A¦ý¬O²{¦b«h¬O¦º¤`¤§¤ýªº¥ë¦ñ¡A§Å§¯¤§¤ý - ¨ô§J¡C
+~
+0 860161 3
+D1
+~
+~
+0 -1 9042
+S
+#9046
+®Ú¾Ú¦aªº¤J¤f~
+§A²{¦b¯¸¦b¦º¤`¤§¤ý®Ú¾Ú¦aªº¤J¤f¤§«e¡C¤p¤ß¡A¥L­Ì¹ï§A¬Oµ´¹ï¤£·|«È®ðªº¡C
+~
+0 860161 3
+D0
+~
+~
+0 -1 9048
+D1
+~
+~
+0 -1 9053
+S
+#9047
+¦b®Ú¾Ú¦a¤§¤¤~
+ÁöµM¦b§A¨­ÃäÁ`¬O³òÂ¶µÛ¤@ªÑ®£Äß¡B¥i©Èªº®ðª^¡A¦ý¬O§A¥i¥H·P¨ü¨ì¤@ªÑ§ó­«­nªºªF¦è¦b
+®Ú¾Ú¦aªº²`³B¡C
+~
+0 860161 4
+D0
+~
+~
+0 -1 9049
+D1
+~
+~
+0 -1 9048
+S
+#9048
+¦b®Ú¾Ú¦a¤§¤¤~
+ÁöµM¦b§A¨­ÃäÁ`¬O³òÂ¶µÛ¤@ªÑ®£Äß¡B¥i©Èªº®ðª^¡A¦ý¬O§A¥i¥H·P¨ü¨ì¤@ªÑ§ó­«­nªºªF¦è¦b
+®Ú¾Ú¦aªº²`³B¡C
+~
+0 860161 4
+D0
+~
+~
+0 -1 9050
+D2
+~
+~
+0 -1 9046
+D3
+~
+~
+0 -1 9047
+S
+#9049
+¦b®Ú¾Ú¦a¤§¤¤~
+ÁöµM¦b§A¨­ÃäÁ`¬O³òÂ¶µÛ¤@ªÑ®£Äß¡B¥i©Èªº®ðª^¡A¦ý¬O§A¥i¥H·P¨ü¨ì¤@ªÑ§ó­«­nªºªF¦è¦b
+®Ú¾Ú¦aªº²`³B¡C
+~
+0 860161 4
+D1
+~
+~
+0 -1 9050
+D2
+~
+~
+0 -1 9047
+S
+#9050
+¦b®Ú¾Ú¦a¤§¤¤~
+ÁöµM¦b§A¨­ÃäÁ`¬O³òÂ¶µÛ¤@ªÑ®£Äß¡B¥i©Èªº®ðª^¡A¦ý¬O§A¥i¥H·P¨ü¨ì¤@ªÑ§ó­«­nªºªF¦è¦b
+®Ú¾Ú¦aªº²`³B¡C
+~
+0 860161 4
+D1
+~
+~
+0 -1 9051
+D2
+~
+~
+0 -1 9048
+D3
+~
+~
+0 -1 9049
+S
+#9051
+³Ì²×¤§¸ô~
+¨«¤W¼Ó±è¤§«á¡A¤p®|¶}©lÂàÅs¦Ó¶i¤J¶Â·t¤§ª§¡A§A¥i¥H·P¨ü¨ì¦b¶Â·t¤§«áÁôÂÃªº¥i©Èªº¨¸
+´cÅ]ªk¡C
+~
+0 860161 4
+D3
+~
+~
+0 -1 9050
+D4
+~
+~
+0 -1 9052
+S
+#9052
+¦º¤`¤§¤ý~
+§e²{¦b§A­±«eªº¡A´N¬O¦º¤`¤j·µ¡C
+~
+0 860173 6
+D5
+~
+~
+0 -1 9051
+S
+#9053
+¶Â·t¤p®|ªº²`³B~
+¦b§Aªº¦èÃä¬O¤@­Ó¥¨¤jªº®Ú¾Ú¦a¡A©Î³\§A¥i¥H¶i¤JÆ[¹î¤@µf¡C
+~
+0 860161 4
+D1
+~
+~
+0 -1 9054
+D2
+~
+~
+0 -1 9017
+D3
+~
+~
+0 -1 9046
+S
+#9054
+¶Â·t¤p®|~
+§AµLªk¤À¿ë¥ô¦óªF¦è¡A
+~
+0 860161 4
+D0
+~
+~
+0 -1 9055
+D2
+~
+~
+0 -1 9019
+D3
+~
+~
+0 -1 9053
+S
+#9055
+¦b¦º¤`¤¤¦æ¨«~
+§A¥¿¦æ¨«¦b¦º¤`­x¹Îªº¹D¸ô¤W¡C
+~
+0 860161 4
+D0
+~
+~
+0 -1 9057
+D1
+~
+~
+0 -1 9056
+D2
+~
+~
+0 -1 9054
+S
+#9056
+¦b¦º¤`¤¤¦æ¨«~
+§A¥¿¦æ¨«¦b¦º¤`­x¹Îªº¹D¸ô¤W¡C
+~
+0 860161 4
+D0
+~
+~
+0 -1 9058
+D3
+~
+~
+0 -1 9055
+S
+#9057
+¦b¦º¤`¤¤¦æ¨«~
+§A¥¿¦æ¨«¦b¦º¤`­x¹Îªº¹D¸ô¤W¡C
+~
+0 860161 4
+D1
+~
+~
+0 -1 9058
+D2
+~
+~
+0 -1 9055
+S
+#9058
+¦b¦º¤`¤¤¦æ¨«~
+§A¥¿¦æ¨«¦b¦º¤`­x¹Îªº¹D¸ô¤W¡C
+~
+0 860161 4
+D1
+~
+~
+0 -1 9059
+D2
+~
+~
+0 -1 9056
+D3
+~
+~
+0 -1 9057
+S
+#9059
+¶Â·t¨i¹D~
+³o±ø¨i¹D³q©¹ªFÃä¡A¦Ó¥B¶V¨Ó¶V«G¡I§A¥i¥H·PÄ±¨ì©¹ªF¥i¥H³q©¹¥Í¤Ñ¡C
+~
+0 860161 4
+D3
+~
+~
+0 -1 9058
+>room_enter 8 100~
+if is_qmark($n) != mage_envoy_quest 100016
+	break
+endif
+if insameroom(shore-dead)
+	force shore-dead yell ¨S¥Îªº¡I¦å¶Å¦åÁÙ¡AµL½×½Ö¨Ó¡A§Ú³£­n¥LÀ|À|§Ú­Ì©Ò¨üªº­Þ©}¡I
+	mod_qmark $n mage_envoy_quest v0 = 17
+endif
+~
+>room_time 100~
+if pcnum($) > 0
+	if mobcount(9008) == 0
+		if roomvalue($0) == 0
+			echo ·í ¦º¤`¨¦¦u½Ã - ¯Áº¸(Shore) ®ø¥¢¤§«á¡A
+			echo ©¿µMªFÃä¥X²{¤F¤@­Ó¥X¤f¡A¦Ó¥B»·»·ªº¥i¥H¬Ý¨ì¤H¶¡ªº«G¥ú¡C
+			echo »·¤è¶Ç¨Ó¤@°}ÁnÅT¡u§Ö°Ú¡I¤£µM¥X¤f´N­n®ø¥¢¤F....¡I¡v
+			makedoor 1 ªFÃä¤@¤ùº£¶Â door 1 0 9039
+			modrvt v0 = 1
+			break
+		endif
+		if roomvalue($0) == 1
+			echo ¥Ñ©ó¦º¤`¨¦»P¤H¶¡¥´¶}¤F¤@­Ó¥X¤f¡A
+			echo ªÅ¶¡©¿µM¶}©l¼@¯P¾_°Ê¡A§A´X¥G³£§Ö¯¸¤£Ã­¤F¡C
+			force 9039 echo ¥Ñ©ó¦º¤`¨¦»P¤H¶¡¥´¶}¤F¤@­Ó¥X¤f¡A
+			force 9039 echo ªÅ¶¡©¿µM¶}©l¼@¯P¾_°Ê¡A§A´X¥G³£§Ö¯¸¤£Ã­¤F¡C
+			force 9040 echo ¥Ñ©ó¦º¤`¨¦»P¤H¶¡¥´¶}¤F¤@­Ó¥X¤f¡A
+			force 9040 echo ªÅ¶¡©¿µM¶}©l¼@¯P¾_°Ê¡A§A´X¥G³£§Ö¯¸¤£Ã­¤F¡C
+			force 9041 echo ¥Ñ©ó¦º¤`¨¦»P¤H¶¡¥´¶}¤F¤@­Ó¥X¤f¡A
+			force 9041 echo ªÅ¶¡©¿µM¶}©l¼@¯P¾_°Ê¡A§A´X¥G³£§Ö¯¸¤£Ã­¤F¡C
+			force 9043 echo ¥Ñ©ó¦º¤`¨¦»P¤H¶¡¥´¶}¤F¤@­Ó¥X¤f¡A
+			force 9043 echo ªÅ¶¡©¿µM¶}©l¼@¯P¾_°Ê¡A§A´X¥G³£§Ö¯¸¤£Ã­¤F¡C
+			force 9044 echo ¥Ñ©ó¦º¤`¨¦»P¤H¶¡¥´¶}¤F¤@­Ó¥X¤f¡A
+			force 9044 echo ªÅ¶¡©¿µM¶}©l¼@¯P¾_°Ê¡A§A´X¥G³£§Ö¯¸¤£Ã­¤F¡C
+			modrvt v0 = 2
+			break
+		endif
+		if roomvalue($0) == 2
+			echo ¯Áº¸(Shore) ±µ¨ü¦º¤`¨¦ªº¦º®ð«á¡A¦A«×´_¬¡¤F¡C
+			echo ¯Áº¸(Shore) Ãö³¬¤F¦º¤`¨¦«e©¹¤H¶¡ªº³q¹D¡C
+			if roomtimer($0) > 0
+				mload 9008
+				add_qmark shore-dead dead_shore_relife 30 0 0 0 1 1
+			else
+				mload 9008
+			endif
+			mload 9004
+			mload 9004
+			deldoor 1
+			modrvt v0 = 0
+		endif
+	else
+		if roomvalue($0) == 0
+			break
+		else
+			modrvt v0 = 0
+		endif
+	endif
+endif
+if roomtimer($0) == 0
+if mobcount(9008) == 0
+	mload 9008
+endif
+endif
+~
+|
+S
+#9060
+°k¥X¥Í¤Ñ~
+¦³¥i¯à¶Ü¡H§A³ºµM¥i¥H¬Ý¨ì¶§¥ú¡H³o¸Ì¦³¤@¤f¤«¡A°¸º¸·|µo¥X©_©Çªº¥ú½u¡C
+~
+0 860169 0
+D3
+~
+~
+0 -1 9059
+>room_rand 30~
+if hasdoor(5)
+	if roomvalue($0) == 0
+		echo ³q©¹³±¶¡ªº³q¹D®ø¥¢¤F....
+		deldoor 5
+		force 9001 echo ³q©¹¤H¥@ªº³q¹D®ø¥¢¤F....
+		force 9001 deldoor 4
+	endif
+endif
+if pcnum($) > 0
+	if rand(50)
+		echo ³o¤f¤«©¿µMµo¥X¤@°}±j¯Pªº¥ú½u....¡C
+		echo Àþ¶¡§A¤£ª¾¹D§A¤w¸g¨ì¤F¦ó³B¡H
+		transfer all 9070
+	else
+		echo ©¿µM¤@°}¼@¯Pªº¾_°Ê....
+		echo ¤U¤è©¿µM¥X²{¤F¤@­Ó³q¹D....
+		makedoor 5 ³q©¹³±¶¡ªº³q¹D passage 0 0 9001
+		force 9001 makedoor 4 ³q©¹¤H¥@ªº³q¹D passage 0 0 9006
+		modrvt v0 = 1
+		modrvt timer = 24
+	endif
+endif
+~
+|
+S
+#9070
+¦º¤`¤§¤«~
+³o¤f¤«¬O³q©¹¦º¤`¤j¦aªº¤«¡A§Aª¾¹D¶Ü¡H
+~
+0 860173 6
+D4
+~
+~
+0 -1 9071
+S
+#9071
+³Q¥l³ê¤F~
+§A¦ü¥G³Q¦º¤`¤§®ðµ¹¥l³ê¤F¡I§Aº¥º¥ªº¥¢¥h§A¦Û¤vªº·NÃÑ¡C§AªºÆF»î¦bªÅ¶¡»P®É¶¡ªº¯UÁ_
+¤¤³Q©ßÂY¡C¦b§Aªº¸£¤¤¥u¦³¦º¤`¤§®ðµ¹§Aªº°ß¤@°T®§¡C¨º´N¬O¡u±þ¡I±þ¡I±þ¡I¡v¡C
+~
+0 860173 6
+D4
+~
+~
+0 -1 9072
+S
+#9072
+¸t¬u¤§·µ~
+³o¸Ì¬O¶Ç»¡¤¤ªº¡u¸t¬u¤§·µ¡v¡C¬Û¶Ç¥Í©R²×¤Fªº¥D±Ð·|³Q¤Ñ¯«¨þÅ@¦Ü
+¦¹¡AÂÇµÛ¸t¬uªº¯«¯µ¤O¶q¡A®û¬~¤ßÆF¦ÓÀò±o­«¥Í¡C§A¬Ý¨ì¥Û¬W¤W¨èµÛ¤@¨Ç
+¥j¦Ñ¦r¥y(carvings)¡C
+~
+0 861197 1
+E
+carvings~
+§A¬Ý¤£À´³o¥j¦Ñªº»y¨¥¡A¦ý¤£ª¾¬°¦ó¡A«o¯à²z¸Ñ¦r¥yªº·N¸q¡G
+¡@
+¡u¥D°Ú¡I§Ú­n[1;37m¬~¤âªí©úµL¶d[0m¡A¤~¨ÓÂ¶µÛ§Aªº²½¾Â¦æ¨«¡F
+  ¦n¨Ï§Úµo¥XºÙÁÂªºÁn­µ¡A­z»¡§A¤@¤Á©_§®ªº§@¬°¡C ¡v
+                                  -- ¸Ö½g 26:6-
+¡@
+ "I[1;37m wash 'my hands'[0m in innocence, and go about your alter, O LORD,
+  proclaiming aloud your praise and telling of all your wonderful deeds."
+                                                    --Psalm 26:6-7
+~
+>room_enter 32 100~
+if rand(90)
+	echoat $n ©¿µM¤@ªÑ¤Q¤À±j¤jªº¤O¶q±N§A±À¤F¦^¨Ó....¡C
+	transfer $n 9071
+endif
+~
+>room_command wash p my hands~
+if ispc($n)
+	echoat $n »·¤è¶Ç¨Ó¤@°}©_©ÇªºÁnÅT¡u§Ú¤w¸gÅ¥¨£§A¹ï§Úªº©I³ê¡I¡v
+	echoat $n »·¤è¶Ç¨Ó¤@°}©_©ÇªºÁnÅT¡u§Ú¨Ó»â§AÂ÷¶}³o¦º¤`¥@¬É§a¡I¡v
+	echoaround $n ¤@°}°{¥ú¤§«á¡A $n ©¿µM¤£¨£¤F....¡C
+	echoat $n §A³Q¶Ç°e¦^¨ì¥ú©ú¤§Âíªº¸t·µ¤F....¡C
+	transfer $n 4580
+endif
+~
+|
+S
+#0
+
+
+#ROOMPROGS
+R 9001 dead_curse.prg
+R 9007 dead_curse.prg
+R 9008 dead_curse.prg
+R 9009 dead_curse.prg
+R 9010 dead_curse.prg
+R 9011 dead_curse.prg
+R 9012 dead_curse.prg
+R 9013 dead_curse.prg
+R 9014 dead_curse.prg
+R 9015 dead_curse.prg
+R 9016 dead_curse.prg
+R 9017 dead_curse.prg
+R 9018 dead_curse.prg
+R 9019 dead_curse.prg
+S
+
+
+#SPECIALS
+M 9006 spec_cast_mage
+M 9007 spec_cast_cleric
+M 9009 spec_breath_frost
+M 9011 spec_cast_mage
+M 9012 spec_cast_mage
+M 9013 spec_cast_adept
+M 9014 spec_cast_mage
+M 9015 spec_breath_fire
+M 9016 spec_cast_mage
+S
+
+
+
+#RESETS
+M 0 9036 1 9000
+E 0 9012 0 16
+E 0 9002 0 0
+O 0 3135 0 9000
+M 0 9013 1 9001
+O 0 9000 0 9001
+O 0 9001 0 9001
+M 0 9001 16 9006
+M 0 9003 20 9006
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9003 20 9006
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9007
+M 0 9003 20 9007
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9003 20 9007
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9008
+M 0 9003 20 9008
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9003 20 9008
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9009
+M 0 9003 20 9009
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9010
+M 0 9003 20 9010
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9011
+M 0 9003 20 9011
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9012
+M 0 9003 20 9012
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9013
+M 0 9003 20 9013
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9014
+M 0 9012 15 9014
+M 0 9001 16 9015
+M 0 9012 15 9015
+M 0 9012 15 9015
+M 0 9001 16 9016
+M 0 9001 16 9017
+M 0 9001 16 9018
+M 0 9001 16 9019
+M 0 9001 16 9020
+M 0 9001 16 9022
+M 0 9005 10 9024
+M 0 9006 10 9024
+M 0 9007 10 9024
+M 0 9010 15 9024
+M 0 9005 10 9025
+M 0 9006 10 9025
+M 0 9007 10 9025
+M 0 9010 15 9025
+M 0 9010 15 9025
+M 0 9005 10 9027
+M 0 9006 10 9027
+M 0 9007 10 9027
+M 0 9012 15 9027
+M 0 9017 1 9027
+E 0 9008 0 5
+M 0 9018 1 9027
+E 0 9008 0 5
+M 0 9019 1 9027
+E 0 9008 0 5
+M 0 9005 10 9029
+M 0 9006 10 9029
+M 0 9007 10 9029
+M 0 9014 10 9029
+M 0 9014 10 9029
+M 0 9014 10 9029
+M 0 9014 10 9029
+M 0 9016 10 9029
+M 0 9016 10 9029
+M 0 9016 10 9029
+M 0 9016 10 9029
+M 0 9010 15 9034
+M 0 9010 15 9034
+M 0 9010 15 9035
+M 0 9010 15 9035
+M 0 9009 4 9036
+M 0 9010 15 9036
+M 0 9012 15 9037
+M 0 9002 10 9042
+M 0 9002 10 9045
+M 0 9002 10 9045
+M 0 9002 10 9045
+M 0 9002 10 9045
+M 0 9020 1 9045
+E 0 9007 0 14
+E 0 9009 0 13
+M 0 9011 8 9046
+M 0 9011 8 9046
+M 0 9011 8 9046
+M 0 9004 8 9048
+E 0 9016 0 12
+M 0 9004 8 9048
+E 0 9017 0 6
+M 0 9011 8 9048
+M 0 9011 8 9048
+M 0 9004 8 9049
+E 0 9018 0 5
+M 0 9004 8 9049
+E 0 9017 0 6
+M 0 9004 8 9050
+E 0 9016 0 12
+M 0 9004 8 9050
+E 0 9018 0 5
+M 0 9015 10 9050
+M 0 9015 10 9050
+M 0 9015 10 9051
+M 0 9015 10 9051
+M 0 9021 1 9051
+E 0 9013 0 12
+E 0 9010 0 18
+M 0 9000 1 9052
+E 0 9019 0 16
+E 0 9005 0 17
+E 0 9006 0 2
+M 0 9004 8 9052
+E 0 9018 0 5
+E 0 9016 0 12
+E 0 9017 0 6
+M 0 9004 8 9052
+E 0 9018 0 5
+E 0 9016 0 12
+E 0 9017 0 6
+M 0 9010 15 9055
+M 0 9010 15 9055
+M 0 9005 10 9056
+M 0 9006 10 9056
+M 0 9007 10 9056
+M 0 9011 8 9057
+M 0 9011 8 9057
+M 0 9005 10 9058
+M 0 9006 10 9058
+M 0 9007 10 9058
+M 0 9012 15 9058
+*M 0 9008 1 9059
+O 0 9003 0 9072
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

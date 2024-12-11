@@ -1,0 +1,7015 @@
+#AREADATA
+Name        µs¸é­n¶ë~
+Identity    bandit~
+Builders    Pax~
+Translator  Pluto~
+Modifier    Coconet~
+VNUMs	      4000 4199
+Security    1
+Recall      4580
+F_toggle    65536|524288|1048576
+End
+
+
+
+#MOBILES
+#4000
+chief-bandit bandit chief~
+µs¸éÀYÀY(Bandit Chief)~
+µs¸éÀYÀY(bandit chief)¥¿°ª¶Qªº§¤¦b³o¸Ì¡C
+~
+¥L¬Ý°_¨Ó¨S¤°»ò¯S§Oªº¡C
+~
+1|2|64|1024|2048|4096|8192|262144|524288|8388608|16777216 8|32|128|512|8192|32768|65536|4294967296 -1000 S
+60 3000 0 30d-80+1000 0d-500+50
+-1 0
+0 8 0
+K circle darkraid track nightstalk assassination reflexion *untangle 'deadly strike' escape morphing backstab sneak
+ 'enhanced damage' 'tricky pacing' scan dodge hide critical 'dart mastery'~
+J assassin ninja ranger~
+C 1|4|8
+P 1|4|8|256|8192|16384|4194304|8388608|16777216
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self bandit_chief_heal -1 20 20 20 1 0
+~
+>all_greet_prog 100~
+if is_equ_obj($i) != 4004
+	wear bronze-dagger
+endif
+if is_equ_obj($i) != 4056
+	wear assassination-dagger
+endif
+if is_qmark($n) == bandit_enemy
+	if hitprcnt($i) > 50
+		if rand(20)
+			bs $n
+			mpnowait
+		else
+			assa $n
+			mpnowait
+			flee
+			flee
+			flee
+		endif
+	else
+		if rand(50)
+			assa $n
+			mpnowait
+			flee
+			flee
+			flee
+		else
+			bs $n
+			mpnowait
+		endif
+	endif
+	break
+endif
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_thief_exam
+		say ¤p¤l¡A¨S¦³¸g¹L§Úªº»{©w§A¥u¯à°÷ºÙ¬°´¶³qªºµs¸é¡C
+		mpcallout 1 say ¦pªG·Q­n¦¨¬°¯u¥¿ªºµs¸é¡A³Ì¦n¦V§Ú¦n¦n½Ð±Ð¤@¤U¡C
+		mpcallout 1 mpadd_qmark $n bandit_thief_exam -1 1 0 0 0 1
+		break
+	endif
+else
+	say Â¾·~¤£¬Oµs¸éªº§A¡A¯à°÷¨«¨ì§Ú­±«e¨Ó¤w¸gºâ¬O¤£¿ù¤F¡C
+	mpcallout 1 say »¡§a¡I¦³¤°»ò°ÝÃD©Î­n¨D¡A¦pªG§Ú¯à°÷¿ì¨ì¤@©w¾¨¶qÀ°§U§A¡C
+endif
+if is_qmark($n) == bandit_thief_exam 100005
+	if class($n) == 10
+		say §A¨Ó¤F°Ú¡I§Úªº±o¤O§U¤â....
+		mpcallout 1 mpechoat $n $I ¥J²Ó¥´¶qµÛ§A....
+		mpcallout 1 mpechoaround $n $I ¥J²Ó¥´¶qµÛ $n ....
+		mpcallout 2 say ¬Ý¨Ó¦Û±q§A¤W¦¸Â÷¶}¦Ü¤µ¡A¤Sªø¶i¤F¤£¤Ö¡C
+		mpcallout 3 gig
+		mpcallout 4 say §Ú·Q§AÀ³¸Ó¦³¯à¤O¬D¾Ô¶i¤@¨Bªº¸Õ½m¡C
+		mpcallout 5 say ³q¹Lªº¸Ü¡AÁÙ¥i¥H¾Ç¨ì·sªº§Þ¯à¡I¦pªG§A°÷¤p¤ßªº¸Ü¡C
+		mpcallout 6 chuckle
+		mpcallout 7 say «ç¼Ë¡I·Q¤£·Q¸Õ¸Õ°Ú(sure/not sure)¡H
+		break
+	endif
+endif
+if is_qmark($n) >= bandit_thief_exam 100006
+	if class($n) == 10
+		say ¦pªG§A·Q¦A¦¸¦^¥h­×½m(discipline)¡A´N§i¶D§Ú¤@Án¡C
+	endif
+endif
+~
+>talk_prog topic~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) == bandit_thief_exam 100001
+		say §Úµ¹§A´X­Ó¥ô°È¡A¬Ý¬Ý§A¬O§_¦³¸ê®æ¯à°÷±µ¨ü§Ú­Ìªºµs¸é¸Õ·Ò¡C
+		say §A¦³¨¬°÷ªº«i®ð»P§Þ¥©±µ¨ü¶Ü(yes/no)¡H
+		break
+	endif
+endif
+if class($n) == 10
+	if is_qmark($n) == bandit_thief_exam 100005
+		say ¬Ý¨Ó§A¤w¸g³vº¥ªº¦¨ªø­_§§¤F¡A¨º»ò¸Ó¬O±µ¨ü³Ì«á¸Õ½mªº®É­Ô¤F¡A
+		say ³Ì«áªº¸Õ½m¡A§A¥²¶·§Q¥Î§A©Ò¦³´¿¸g¾Ç·|©Î¬O§Y±N¾Ç·|ªº§Þ¯à¡A
+		say ¥h¹F¨ì³Ì«áªº³o¶µ­×½m¡C¦pªG§A·Ç³Æ¦n¡A´N½Ð§i¶D§Ú(sure)¡C
+	endif
+endif
+if is_qmark($n) == bandit_thief_exam 100006
+	say ¬Ý¨Ó§A¬O¥¢±Ñ¤F¡A§O¦Ç¤ß¡C¦pªG·Ç³Æ¦n¤F¡A·Q­n¦A¸Õ¤@¦¸¡A
+	say ¨º´N¦A¸ò§Ú»¡¤@¤U§a(discipline)¡C
+endif
+if is_qmark($n) == bandit_thief_exam 100007
+	say §A¤S¨Ó¤F§r¡A·Q­n¶i¥h¸Õ·Ò¦A´£¤É§Aªº¹ê¤O¶Ü(discipline)¡H
+endif
+~
+>talk_prog yes~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) == bandit_thief_exam 100001
+		if is_qmark($n) == thief_quest_list 100000
+			mpmod_qmark $n bandit_thief_exam v0 = 2
+			say «Ü¦n¡A³oÃäªº¥ô°È¥i¤£¬O¹³¦b¥v¥d©Ô¨©¨ººØ¤p¨à¬ìªº¥ô°È¡C
+			mpcallout 1 say ·Q­n¥[¤J§Ú­Ì¡A¨S¦³¤@©wªº¹ê¤O¬O¤£¦æªº¡C
+			mpcallout 2 say ·íµM¡A¦pªG¦³©¯¦¨¬°§Ú­Ìªº¤@­û¡I
+			mpcallout 3 say ¯à°÷¨É¨üªº§Q¯q¬O»·¤ñ¤@¯ëµs¸é¤½·|¦nªº¦h¡C
+			mpcallout 4 hmm $n
+			mpcallout 5 say ¬JµM§A¦³¤ß·Q­n¥[¤J¡A§Ú´N¥ýµ¹§A¤@­Ó¥ô°È¡A
+			mpcallout 6 say ¬Ý¬Ý§Aªº¹ê¤O¯à¤£¯à²Å¦X§Úªº­n¨D§a¡C
+			mpcallout 7 hmm $n
+			mpcallout 8 say ³Ìªñ§Ú¬ÃÂÃªº¤@§å¯]Ä_³ºµM²ö¦Wªº®ø¥¢¤F¡A
+			mpcallout 9 say ¬Ý¨ÓÀ³¸Ó¬O­n¶ë¸Ì­±ªº¤º¸é©Ò¬°¡A³o¥ó¨Æ±¡§Ú©|¥¼³B²z¡C
+			mpcallout 10 say ¤£¹L§A¬JµM¦³¤ß·Q¥[¤J¡A§Ú¬Ý´N·í°µ§Aªº¦ÒÅç§a¡I
+			mpcallout 11 say §A¥h§â§Ú¾DÅÑªº¯]Ä_§ä¦^¨Ó¡C
+			 mpcallout 12 mpat 4120 mpmload 4049
+			mpcallout 13 say ®³¦^¨Ó«áª½±µ§âªF¦èµ¹§Ú§a¡C
+			mpcallout 14 say ¦Ü©ó¨º­Ó¥i´cªº«q®{¡A¥L¦pªGÄ@·N¥D°Ê®³¥X¨Ó´Nºâ¤F¡C
+			mpcallout 15 say ¤£Ä@·Nªº¸Ü¡A§A´N´À§Ú±Ð°V±Ð°V¥L§a¡I
+			mpcallout 16 wave
+		else
+			mpcallout 1 mpechoat $n $I ¤£®hªº¬Ý¤F§A¤@²´....
+			mpcallout 1 mpechoaround $n $I ¤£®hªº¬Ý¤F $n ¤@²´....
+			mpcallout 2 say ³s¥v¥d©Ô¨©¨ººØ¤p¨à¬ì¥ô°È³£ÁÙ¨S§¹¥þ¸Ñ¨Mªº¤H¡A
+			mpcallout 3 say §Ú¬O¤£·|­nªº¡C§A¥h¦h¿i½m¦Û¤v§a¡I
+		endif
+	endif
+endif
+~
+>talk_prog no~
+if is_qmark($n) ==bandit_thief_exam 100000
+	say ¬Ý¨Ó§A¬OÁx©Ä¤F¡C
+	mpcallout 1 say µ¥§A¦³¤F¨¬°÷ªº«i®ð»P§Þ¥©ªº®É­Ô¡A¦A¨Ó§ä§Ú§a¡I
+endif
+~
+>talk_prog p not sure~
+if is_qmark($n) == bandit_thief_exam 100005
+	ponder $n
+	mpcallout 1 say ¬JµM§A©|¤ß¦sÅU§Ò¡I´N¥ý¥hÁëÁåÁëÁå¦Û¤v§a¡I
+	mpcallout 2 say §Ú´N¤£¹G§A¤F¡I
+	mpcallout 3 wave $n
+endif
+~
+>talk_prog p sure~
+if class($n) == 10
+	if is_qmark($n) == bandit_thief_exam 100005
+      		gig
+      		mpmod_qmark $n bandit_thief_exam v0 = 6
+                mpcallout 1 say «Ü¦n«Ü¦n¡I§ÚªGµM¨S¬Ý¿ù¤H¡A
+                mpcallout 2 say §Ú³o´N°e§A¹L¥h¡I
+                mpcallout 3 mpcall set_guardian
+                mpcallout 4 mpecho §AÅ¥¨ì¤@°}©_©Çªº³Ø³ØÁn¡A¦ü¥G¬O¾÷Ãö¹B§@ªºÁnÅT¡C
+                mpcallout 5 mptransfer $n 4152
+                mpcallout 6 mpat 4152 mpechoat $n ¾÷Ãö¹B§@ªº³Ø³ØÁn°±¤î«á¡A§A³Q°e¨ì¤F¤@¶¡±K«Ç¡C
+	endif
+endif
+~
+>defun_prog set_guardian~
+mpat 4155 mppurge guardian-bandit
+mpat 4155 mpmload 4054
+mpat 4159 mppurge guardian-bandit
+mpat 4159 mpmload 4055
+mpat 4160 mppurge guardian-bandit
+mpat 4160 mpmload 4056
+mapt 4161 mppurge guardian-bandit
+mpat 4161 mpmload 4057
+mpat 4162 mppurge guardian-bandit
+mpat 4162 mpmload 4058
+mpat 4163 mppurge guardian-bandit
+mpat 4163 mpmload 4059
+mpat 4164 mppurge guardian-bandit
+mpat 4164 mpmload 4060
+~
+>talk_prog discipline~
+if class($n) == 10
+      if is_qmark($n) == bandit_thief_exam 100007
+                say ¨S°ÝÃD¡A§Ú³o´N°e§A¹L¥h¡I
+                mptransfer $n 4152
+               	mpcall dis_guardian
+                mpcall set_guardian
+      endif
+      if is_qmark($n) == bandit_thief_exam 100006
+      		sm $n
+                mpcallout 1 say «Ü¦n¡I§Aªº½T«Ü§V¤O¡A
+                mpcallout 2 say §Ú³o´N°e§A¹L¥h¡I
+                mpcallout 3 mpcall dis_guardian
+                mpcallout 4 mpcall set_guardian
+                mpcallout 4 mpechoat $n §AÅ¥¨ì¤@°}©_©Çªº³Ø³ØÁn¡A¦ü¥G¬O¾÷Ãö¹B§@ªºÁnÅT¡C
+                mpcallout 5 mptransfer $n 4152
+                mpcallout 6 mpat 4152 mpechoat $n ¾÷Ãö¹B§@ªº³Ø³ØÁn°±¤î«á¡A§A³Q°e¨ì¤F¤@¶¡±K«Ç¡C
+      endif
+endif
+~
+>defun_prog dis_guardian~
+mpat 4155 mppurge guardian-bandit
+mpat 4159 mppurge guardian-bandit
+mpat 4160 mppurge guardian-bandit
+mpat 4161 mppurge guardian-bandit
+mpat 4162 mppurge guardian-bandit
+mpat 4163 mppurge guardian-bandit
+mpat 4164 mppurge guardian-bandit
+~
+>give_prog 4067~
+if is_qmark($n) == bandit_thief_exam 100003
+        if is_qmark($n) != bandit_thief_jewel
+                mpadd_qmark $n bandit_thief_jewel -1 1 0 0 0 1
+                mpjunk all.jewel
+                say §Ú¦¬¨ì¯]Ä_¤F¡C
+        else
+                if is_qmark($n) == bandit_thief_jewel 100002
+                        mpjunk all.jewel
+                        say ¨S¿ù³£»ô¤F¡C
+                        say §A¦X®æ¤F¡A®¥³ß§A¦¨¬°§Ú­Ìªº¤@­û(member)¡C
+	        mpechoat $n §A¤ß·Q ¡G¡u¸Ó°Ý°Ý¦¨­û¸Ó¦³ªºÀu«Ý§a¡H¡v
+                        mpmod_qmark $n bandit_thief_exam v0 = 4
+                        mpdel_qmark $n bandit_thief_jewel
+                else
+                        say §Ú¤£»Ý­n³o­Ó¡A§A¤w¸gµ¹¹L¤F¡C
+                        drop jewel
+                endif
+        endif
+else
+        say §Aµ¹§Ú³o°µ¤°»ò¡H
+        drop jewel
+endif
+~
+>give_prog 4068~
+if is_qmark($n) == bandit_thief_exam 100003
+        if is_qmark($n) != bandit_thief_jewel
+                mpadd_qmark $n bandit_thief_jewel -1 2 0 0 0 1
+                mpjunk all.jewel
+                say §Ú¦¬¨ì¯]Ä_¤F¡C
+        else
+                if is_qmark($n) == bandit_thief_jewel 100001
+                        mpjunk all.jewel
+                        say ¨S¿ù³£»ô¤F¡C
+                        say §A¦X®æ¤F¡A®¥³ß§A¦¨¬°§Ú­Ìªº¤@­û(member)¡C
+	        mpechoat $n §A¤ß·Q ¡G¡u¸Ó°Ý°Ý¦¨­û¸Ó¦³ªºÀu«Ý§a¡H¡v
+                        mpmod_qmark $n bandit_thief_exam v0 = 4
+                        mpdel_qmark $n bandit_thief_jewel
+                else
+                        say §Ú¤£»Ý­n³o­Ó¡A§A¤w¸gµ¹¹L¤F¡C
+                        drop jewel
+                endif
+        endif
+else
+        say §Aµ¹§Ú³o°µ¤°»ò¡H
+        drop jewel
+endif
+~
+>defun_prog resp_check~
+say §A¥i¥H¦V§Ú¾Ç²ßµs¸é·s§Þ¯à¡G¡u¸Ñ°£³´¨À¡v¤F
+mpadd_qmark $n untangle -1 1 0 0 0 1
+if resp($n) >= 8
+	mpoload 4065 $n viclv target
+	break
+endif
+if resp($n) >= 5
+	mpoload 4064 $n viclv target
+	break
+endif
+if resp($n) >= 3
+	mpoload 4063 $n viclv target
+	break
+endif
+if resp($n) >= 0
+	mpoload 4062 $n viclv target
+endif
+~
+>talk_prog member~
+if is_qmark($n) == bandit_thief_exam 100004
+	mpcallout 1 mpechoat $n $I¥J²Ó¦a¥´¶q§A¡C
+	mpcallout 2 say ¨Ì·Ó§Aªº¯à¤O¡A§Úµ¹§A§Ú­ÌªºÃÒ©ú¡C
+	mpcallout 3 mpcall resp_check $n
+	mpcallout 4 mpechoat $n $I §âµs¸éªº¦u«hµ¹¤F§A¡C
+	mpmod_qmark $n bandit_thief_exam v0 = 5
+else
+	say §AÁÙ¤£°÷®æ°Ú¡I
+endif
+~
+>talk_prog restart~
+if is_qmark($n) == bandit_thief_exam
+	if is_qmark($n) == bandit_thief_exam 100005
+		mpechoat $n ¡u»·³B¶Ç¨Ó¤@°}Án­µ¡G§A¤w¸g§¹¦¨¥»¥ô°È¤F¡I¡v
+		break
+	else
+		mpmod_qmark $n bandit_thief_exam v0 = 1
+		mpechoat $n ¡u»·³B¶Ç¨Ó¤@°}Án­µ¡G§Aªº¥ô°È­«·s¶}©l¤F¡I¡v
+	endif
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if hitprcnt($i) < 30
+	if is_qmark($i) > bandit_chief_heal 300001
+		mpecho [1;33m$I ¦Y¤U¤F¤@Áû[0m[1;36m«C¦âÃÄ¤Y[0m[1;33m....[0m
+		mpat 5 c 3 'doubl heal'
+		mpmod_qmark self bandit_chief_heal v2 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 300001
+			yell ÁV¿|¡I§Ú¨­¤W¤w¸g¨S¦³[1;36m«C¦âÃÄ¤Y[0m¤F¡I
+			mpmod_qmark self bandit_chief_heal v2 = 0
+		endif
+	endif
+endif
+if hitprcnt($i) < 50
+	if is_qmark($i) > bandit_chief_heal 200001
+		mpecho [1;33m$I ¦Y¤U¤F¤@Áû[0m[1;31m¬õ¦âÃÄ¤Y[0m[1;33m....[0m
+		mpat 5 c 2 'double heal'
+		mpmod_qmark self bandit_chief_heal v1 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 200001
+			yell ÁV¿|¡I§Ú¨­¤W¤w¸g¨S¦³[1;31m¬õ¦âÃÄ¤Y[0m¤F¡I
+			mpmod_qmark self bandit_chief_heal v1 = 0
+		endif
+	endif
+endif
+if hitprcnt($i) < 70
+	if is_qmark($i) > bandit_chief_heal 100001
+		mpecho [1;33m$I ¦Y¤U¤F¤@Áû[0m¥Õ¦âÃÄ¤Y[1;34m....[0m
+		mpat 5 c 'double heal'
+		mpmod_qmark self bandit_chief_heal v0 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 100001
+			yell ÁV¿|¡I§Ú¨­¤W¤w¸g¨S¦³[1;37m¥Õ¦âÃÄ¤Y[0m¤F¡I
+			mpmod_qmark self bandit_chief_heal v0 = 0
+		endif
+	endif
+endif
+if is_equ_obj($i) != 4004
+	wear bronze-dagger
+endif
+if is_equ_obj($i) != 4056
+	wear assassination-dagger
+endif
+if rand(80)
+	disarm
+	mpnowait
+	yell $n ¦º§a¡I¬Ý§Úªº­I¨ë....¡I
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	mpdef_rembch null-tar
+endif
+if rand(50)
+	disarm
+	mpnowait
+	yell $n ¦º§a¡I¬Ý§Úªº³sÄò­I¨ë....¡I
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	if insameroom($b)
+		mpgoto $b
+		bs $b
+		mpnowait
+	endif
+	mpdef_rembch null-tar
+endif
+~
+>kill_prog 100~
+if ispc($n)
+	mpget $n 3 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	shout §Ú³ºµM·|³Q¨­¬°µs¸éªº¤H©ÒÀ»±Ñ¡A§Ú¤£¥Ì¤ß....¡I
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	shout $n §Ú·|°O¦í§Aªº¡A¤µ«á§A±N·|³Q§ÚªºÄÝ¤U©Ò°l±þ....¡I
+endif
+~
+|
+#4001
+prince-bandit bandit prince~
+µs¸é¤ý¤l(Bandit Prince)~
+­^«Tªºµs¸é¤ý¤l(bandit prince)¦³¨Ç¨Æ±¡­n«ô°U§A¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+1|2|4|64|1024|2048|4096|8192|262144|524288|8388608|16777216 8|32|128|512|8192|32768|65536 -1000 S
+50 3000 0 20d-30+500 0d-700+30
+-1 0
+0 8 0
+C 1|4|8
+P 8|256|8192|16384|4194304|8388608|16777216
+S 41 150
+S 42 150
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if being(princess-bandit)
+else
+	mpmload 4002
+endif
+if insameroom(princess-bandit)
+else
+	mptransfer princess-bandit
+	mpforce princess-bandit mpat 5 c 'full heal'
+endif
+mpgroup princess-bandit self 1 0
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+mpcall bandit_prince_heal $n
+if is_equ_obj($i) != 4060
+	wear poisonous-dagger
+endif
+if rand(50)
+	disarm
+	mpnowait
+	yell $n ¦º§a¡I¬Ý§Úªº­I¨ë....¡I
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	mpdef_rembch null-tar
+endif
+if rand(30)
+	disarm
+	mpnowait
+	yell $n ¬Ý§Úªº³sÄò­I¨ë....¡I
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	if insameroom($b)
+		mpgoto $b
+		bs $b
+		mpnowait
+	endif
+	mpdef_rembch null-tar
+endif
+~
+>rand_prog 50~
+mpcall bandit_prince_heal
+~
+>defun_prog bandit_prince_heal~
+if insameroom(princess-bandit)
+	if isaffected($i) & 1
+		mpforce princess-bandit c 'cure blindness' prince-bandit
+	endif
+	if isaffected($i) !& 128
+		mpforce princess-bandit c sanc prince-bandit
+	endif
+	if isaffected($i) & 1024
+		mpforce princess-bandit c 'remove curse' prince-bandit
+	endif
+	if isaffected($i) & 4096
+		mpforce princess-bandit c 'cure poison' prince-bandit
+	endif
+	if isaffected($i) & 268435456
+		mpforce princess-bandit c vivi prince-bandit
+	endif
+	if hitprcnt($i) < 30
+		mpforce princess-bandit c 3 'double heal' prince-bandit
+		break
+	endif
+	if hitprcnt($i) < 50
+		mpforce princess-bandit c 2 'double heal' prince-bandit
+		break
+	endif
+	if hitprcnt($i) < 70
+		mpforce princess-bandit c 'double heal' prince-bandit
+	endif
+endif
+~
+>kill_prog 100~
+if ispc($n)
+	mpget $n 3 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell §Ú³ºµM·|³Q¨­¬°µs¸éªº¤H©ÒÀ»±Ñ¡A§Ú¤£¥Ì¤ß....¡I
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell $n §Ú·|°O¦í§Aªº¡A§Úªº¤÷¤ý±N¬°§Ú³ø¤³....¡I
+endif
+~
+|
+#4002
+princess-bandit bandit princess~
+µs¸é¤½¥D(Bandit Princess)~
+¬üÄRªºµs¸é¤½¥D(bandit princess)ÀRÀRªº¬ÝµÛ§A¡C
+~
+¦o¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+1|2|4|64|1024|2048|4096|8192|262144|524288|8388608|16777216 8|32|128|512|8192|32768|65536 -1000 S
+50 3000 0 20d-30+500 0d-400+30
+-1 0
+0 8 0
+C 1|4|8
+P 8|256|8192|16384|1048576|2097152|4194304|8388608|16777216|67108864
+S 41 150
+S 42 150
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 4114
+mpoload 4115
+mpoload 4116
+mpat 5 wear all
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if ispc($r)
+	if rand(25)
+		c blindness $r
+	else
+		if rand(33)
+			c 3 poison $r
+		else
+			if rand(50)
+				c 3 curse $r
+			else
+				c crush $r
+			endif
+		endif
+	endif
+endif
+mpcall bandit_princess_heal $n
+~
+>rand_prog 50~
+mpcall bandit_princess_heal
+~
+>defun_prog bandit_princess_heal~
+if mobcount(4001) > 0
+	if insameroom(prince-bandit)
+	else
+		yell ½Ð¤ý¤l¦^¨ì§Ú¨­ÃäÀ°§U§ÚÀ»°h¥~¼Ä¡I
+		mpecho [1;33mµs¸é¤ý¤l(Bandit Prince) ©¿µM¥X²{¤F¡I[0m
+		mptransfer prince-bandit
+	endif
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if isaffected($i) !& 128
+	c sanc
+endif
+if isaffected($i) & 1024
+	c 'remove curse'
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+endif
+if hitprcnt($i) < 30
+	c 3 'gdouble heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 50
+	c 2 'gdouble heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 30
+	c 'gdouble heal'
+	mpnowait
+endif
+~
+>kill_prog 100~
+if ispc($n)
+	mpget $n 3 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell §Ú³ºµM·|³Q¨­¬°µs¸éªº¤H©ÒÀ»±Ñ¡A§Ú¤£¥Ì¤ß....¡I
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell $n §Ú·|°O¦í§Aªº¡A§Úªº¤÷¤ý±N¬°§Ú³ø¤³....¡I
+endif
+~
+|
+#4003
+smugglar~
+°½´çªÌ(smugglar)~
+³o­Ó°½´çªÌ(smugglar)¥¿¦b§ä´M¥i¥HÄë¬¹ªº¹ï¶H¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+1|4|32|64 0 -300 S
+37 0 0 1d1+1 1d1+1
+0 0
+0 8 0
+C 1
+P 4194304
+#4004
+scout~
+¥¸­Ô(scout)~
+¥¸­Ô(scout)¦b³o¸Ì¦uÅ@µÛ¥X¤J¤f¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+1|4|32|64 32 -350 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+C 1
+P 4194304
+#4005
+veteran bandit~
+¦Ñ½mªºµs¸é(veteran bandit)~
+¦Ñ½mªºµs¸é(veteran bandit)¥¿­n¦V§A§ðÀ»¹L¨Ó¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+1|3|4|32|128 8|32|512 -700 S
+40 0 0 1d1+1 1d1+1
+0 0
+0 8 0
+P 4194304
+#4006
+scarry thug~
+¥i©Èªº¨ë«È(scarry thug)~
+¤@­ÓÁy¤W­±ÅS¥û¬½ªí±¡ªº¥i©È¨ë«È(scarry thug)¯¸¦b³o¸Ì¡C
+~
+~
+1|2|32|64 256 -600 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4007
+thief~
+¤p¸é(thief)~
+¤@­Ó¤p¸é(thief)¦b³o¸Ì¨ì³B¶¢®Ì¡C
+~
+~
+1|4|32 0 -300 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4008
+bandit guard~
+µs¸é¦u½Ã(bandit guard)~
+µs¸é¦u½Ã(bandit guard)¯¸¦b³o¸Ì¡C
+~
+~
+1|32 0 -500 S
+43 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4009
+brigand~
+¤g­ê(brigand)~
+§A¬Ý¨ì¤@­Ó¤g­ê(brigand)¯¸¦b³oÃä¡C
+~
+~
+1|4|32|64 32 -250 S
+46 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4010
+gangster~
+¤ï®{(gangster)~
+¤@­Ó¤ï®{(gangster)¯¸¦b³oÃä¡C
+~
+~
+1|32 0 -500 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4011
+scoundrel~
+´c´Ò(scoundrel)~
+¤@­Ó´c´Ò(scoundrel)¥¿¦b§âª±¦Û¤v¨­¤W¨º§â¦å¸{ªº¤P­º¡C
+~
+~
+1|2|4|32|64 0 -500 S
+41 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4012
+scamp~
+¬yª](scamp)~
+¤@­Ó¬yª](scamp)¦b³oÃä¸ÕµÛ­n·F±¼§A¡C
+~
+~
+1|32|64 0 -400 S
+41 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4013
+burglar~
+ÅÑ¸é(burglar)~
+¤@­ÓÅÑ¸é(burglar)¯¸¦b³oÃä¡C
+~
+~
+1|32|64 0 -300 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4014
+scavenger~
+²M¹D¤Ò(scavenger)~
+¤@­Ó²M¹D¤Ò(scavenger)¥¿¦b²M²z¦a¤Wªº©U§£¡C
+~
+~
+1|4|64 0 -100 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4015
+wicked bandog~
+´c¤ü(bandog)~
+¤@ÀY³QÃ·¤l¬C¦íªº´c¤ü(bandog)¥¿¦b§ä´M±ßÀ\¡C
+~
+~
+1|2|32|64|128 0 -50 S
+36 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Animal~
+#4016
+bandit leader~
+µs¸é¶¤ªø(Bandit Leader)~
+µs¸é¶¤ªø(bandit leader)¬Ý¨ì§A¥ß¨è©I³Û¨ä¥L¤h§L«e¨Ó¡C
+~
+~
+1|4|32|64 0 -750 S
+40 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+P 8|256|4194304|8388608|16777216
+#4017
+rogue~
+±jµs(rogue)~
+¤@­Ó­±»ªÁà´cªº±jµs(rogue)¦k·QµÛ§A¨­¤Wªº¿ú°]¡C
+~
+~
+1|32 0 -300 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4018
+beggar~
+¤^¤¢(beggar)~
+¥i¼¦ªº¤^¤¢(beggar)§Æ±æ§A¯àµ¹¥L¤@ÂI¿ú¡C
+~
+~
+1|4|128 0 -50 S
+34 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4019
+keith-bandit foreman keith~
+³Í¥q(Keith)~
+»â¯Z - ³Í¥q(Keith)ÀRÀRªº§¤¦b³o¸Ì¡C
+~
+¥L§¤¦b°s©±¸ÌÀY»P¨ä¥L«_ÀIªÌ²á¤Ñ¡A¤£¹L§A¦ü¥Gµo²{¥Lªº²´¯«¦³¨Ç¼zÃ\¡C¦¹¥~¥Lªº¤â¤W®³
+µÛ¤@§â¯S§OªºÆ_°Í(key)¡C
+~
+1|2 8|32|128|512|8192 0 S
+47 3000 0 30d-50+0 0d200+0
+0 0
+0 8 0
+C 1|4|8
+P 8|256|4194304|8388608|16777216
+S 41 200
+S 42 200
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpmload 4065
+~
+>talk_prog topic~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if resp($n) > 10
+		say ³o¤£´N¬O¦b¥v¥d©Ô¨©¤j¦W¹©¹©ªº $n ¶Ü¡H
+	else
+		if resp($n) > 5
+			say ³o¤£´N¬O»·ªñ¹£¦Wªº $n ¶Ü¡H
+		else
+			say ³á¡I­ì¨Ó¬Oµs¸é¦P§Ó $n °Ú¡H
+		endif
+	enidif
+	say «ç»ò¡H¦³¤°»ò¨Æ±¡¶Ü¡H
+else
+	say ¶Ù¡I§A¦n¡A¦³¤°»ò¨Æ±¡»Ý­n§ÚªºÀ°¦£¶Ü¡H
+endif
+~
+>talk_prog key~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	say §Ú¤â¤WªºÆ_°Í°Ú¡H¨º¬O....¦³¨Ç¯S®í¥Î³~(for some purpose)ªº¡C
+	gigi
+else
+	say Æ_°Í¡H¤£¹L¬O¥ó¸Ë¹¢«~¦Ó¤w¡H
+	say §Ú»¡«ç»ò¡A§A¬O¦b½è°Ý§ÚÁÙ¬O«þ°Ý§Ú¶Ü¡H
+	angry
+endif
+~
+>talk_prog p for some purpose~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	say ­ì¨ÓÁöµM¬O¦P§Ó¡A«o¤£ª¾¹D³o¥ó¨Æ±¡°Ú¡H
+	mpechoat $n $I °½°½¦a¦b§A¦Õ¦·®Ç»¡¤F¨Ç¸Ü....
+	mpechoaround $n $I °½°½¦a¦b $n ¦Õ¦·®Ç»¡¤F¨Ç¸Ü....
+	tell $n ¨ä¹ê³oÃä´N¬Oµs¸é­n¶ë(bandit keep)ªº¤J¤f°Ú¡I
+else
+	say $n §A¦b»¡¨Ç¤°»ò§r¡H§Ú§¹¥þÅ¥¤£À´¡C
+endif
+~
+>talk_prog p bandit keep~
+if is_qmark($i) == bandit_talking
+	break
+endif
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	mpadd_qmark self bandit_talking
+	gasp $n
+	mpechoat $n $I ±N§A°½°½©Ô¨ì©Ð¶¡¤@®Ç....
+	mpechoaround $n $I ±N $n °½°½©Ô¨ì©Ð¶¡¤@®Ç....
+	mpcallout 1 tell $n §A«ç»òª¾¹Dµs¸é­n¶ë³o¥ó¨Æªº....¡H
+	mpcallout 2 tell $n ºâ¤F¡A§Ú¤£¹G°Ý§A¤F....¡A
+	mpcallout 3 tell $n ¦ý¬Oµs¸é­n¶ëªº¤J¤f¦ì©ó¦¹³B....¡A
+	mpcallout 4 tell $n ¬O§Ú­Ìµs¸é¦@¦Pªº¯µ±K....¡A
+	mpcallout 5 tell $n ¦pªG§AµªÀ³«H¦u©Ó¿Õ(promise)....¡A
+	mpcallout 6 tell $n ¤£±N³o¶µ¯µ±K»¡¥X¥h....¡A
+	mpcallout 7 tell $n §Ú¥i¥HµªÀ³¬°§A¶}ªù¡C
+	mpcallout 7 mpdel_qmark self bandit_talking
+else
+	say $n §A¦b»¡¨Ç¤°»ò§r¡H§Ú§¹¥þÅ¥¤£À´¡C
+endif
+~
+>talk_prog promise~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	good $n
+	mpechoat $n $I °½°½¦a±N¤@§âÆ_°Í¥æµ¹¤F§A....
+	mpechoaround $n $I ¤£ª¾¹D¶ë¤F¤°»òªF¦èµ¹ $n ....
+	mpoload 4000 $n viclv target
+	tell $n ³o§âÆ_°Í¥i¥H¥´¶}¦¹³B©¹¤U³q©¹µs¸é­n¶ëªºªù¡A
+	tell $n «e©¹¸Ó³B±µ¨ü§ó¦hµs¸éªº°V½m§a¡I
+endif
+~
+>fight_prog 100~
+if insameroom(wizard-bandit)
+	mpforce wizard-bandit rescue keith-bandit
+else
+	if insameroom(ninja-bandit)
+		mpforce ninja-bandit rescue keith-bandit
+	endif
+endif
+~
+|
+#4020
+waiter-bandit waiter~
+¨ÍªÌ(waiter)~
+¨ÍªÌ(waiter)¥¿¦£µÛ©Û«Ý°ÑÆ[ªº¤H¼é¡C
+~
+~
+1 0 0 S
+34 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4021
+spider~
+¼@¬r»jµï(venomous spider)~
+¤@°¦§t¦³¼@¬rªº»jµï(venomous spider)¦b³o¸Ì¡C
+~
+~
+1|32|64 0 -50 S
+37 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Arachnid~
+#4022
+small viper~
+¤p¬r³D(small viper)~
+¤@±ø¤p¬r³D(small viper)¦b³o¸Ì¡C
+~
+~
+1 0 -50 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Snake~
+#4023
+serpent~
+§Ë³D¤H(serpent)~
+¤@­Ó§Ë³D¤H(serpent)§¤¦b³oÃä¦V§A¼Q¥X¼@¬rªº¬r·Ï¡C
+~
+~
+1|32 0 -50 S
+37 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4024
+snake~
+³D(snake)~
+¤@±ø³D(snake)¦b¯ó¦a¤W·Æ¦æ¡C
+~
+~
+1 0 0 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Snake~
+#4025
+maggots~
+³I(maggots)~
+§A¬Ý¨ì¤@¨Ç³I(maggots)¦b³oÃä¡C
+~
+~
+1 0 -10 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Worm~
+#4026
+wasp~
+¶À¸Á(wasps)~
+¤@°¦¶À¸Á(wasps)¦b§A¦ÕÃä¶ä¶äªº¥s¡C
+~
+~
+33 0 -50 S
+14 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Insect~
+#4027
+toad~
+ÃÊßï(toad)~
+¤@°¦¥¨¤jªºÃÊßï(toad)¦V§Aµo¥X©_©Çªº¥sÁn¡C
+~
+~
+33 0 -50 S
+14 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Insect~
+#4028
+lizard~
+»h»i(lizard)~
+¤@ÀY¤p»h»i(lizard)±q§Aªº¸}Ãä·Æ¦æ¹L¥h¡C
+~
+~
+1 0 -10 S
+25 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Lizardman~
+#4029
+toxic worm~
+¬rÂÎ(toxic worm)~
+¤@ÀY¬rÂÎ(toxic worm)ÀRÀRªº½ö¦b¯ó¦a¤W¡AÀ³¸Ó¨S¦³¦MÀI¤~¹ï¡C
+~
+~
+1 0 -10 S
+22 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Worm~
+#4030
+reaper~
+¦¬³ÎªÌ(horrible reaper)~
+¤@­Ó¨¯¶Ô¤u§@ªº¦¬³ÎªÌ(reaper)¦b³oÃä¡C
+~
+~
+3 0 -300 S
+25 1 0 1d1+1 3d5+5
+-1 0
+0 8 0
+#4031
+Razorman Jailor~
+º»¨ò - «c¤M(Razorman the Jailor)~
+º»¨ò - «c¤M(razorman the jailor)§¤¦b³oÃä¡A¸ò¥L¥´¥æ¹Dªºµ²ªG¥u¦³¦º¡I
+~
+~
+99 131072 -700 S
+31 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4032
+old man oldman~
+¦Ñ¤H(oldman)~
+¤@­ÓÃx¦ºªº¦Ñ¤H(oldman)ÀRÀRªº½ö¦b³oÃä¡C
+~
+~
+3 131072 -10 S
+11 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4033
+giant troll~
+¥¨¤jªº¬}¥Þ¥¨¤H(giant troll)~
+¤@ÀY¥¨¤jªº¬}¥Þ¥¨¤H(giant troll)³Q¥}¸T¦b³oÃä¡C
+~
+~
+3 1024 100 S
+38 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Troll~
+#4034
+thug~
+¨ë«È(thug)~
+¤@­Ó¨ë«È(thug)¯¸¦b³oÃä¡C
+~
+~
+37 0 -300 S
+17 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4035
+bandit soldier~
+µs¸é¤h§L(bandit soldier)~
+¤@­Ó±j§§ªºµs¸é¤h§L(bandit soldier)¦b³oÃäµ¥«Ý¤W¯Åªº©R¥O¡C
+~
+~
+35 0 -300 S
+21 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4036
+scavenger~
+²M¹D¤Ò(scavenger)~
+²M¹D¤Ò(scavenger)¥¿¦b²M²z³o¶¡¥ð®§«Ç¡C
+~
+~
+35 0 -500 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4037
+prince~
+­^«T¤ý¤l(handsome prince)~
+­^«Tªº¤ý¤l(handsome prince)¹ï§A¥j©Çªº¤@¯º¡C
+~
+~
+33 0 -750 S
+39 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+P 4194304
+#4038
+bandit~
+µs¸é(bandit)~
+¤@­Óµs¸é(bandit)¦b³oÃä¥Î©_©Çªº²´¥ú¬ÝµÛ§A¡C
+~
+~
+37 0 -300 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4039
+bandit guard~
+µs¸é¦u½Ã(bandit guard)~
+¤@­Óµs¸é¦u½Ã(bandit guard)¦b³oÃä¡C
+~
+~
+35 0 -500 S
+17 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4040
+bandit guard~
+µs¸é¦u½Ã(bandit guard)~
+¤@­Óµs¸é¦u½Ã(bandit guard)¦b³oÃä¡C
+~
+~
+35 0 -500 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4041
+bandit guard~
+µs¸é¦u½Ã(bandit guard)~
+¤@­Óµs¸é¦u½Ã(bandit guard)¦b³oÃä¬Ý¦uµÛ¡C
+~
+~
+35 0 -500 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4042
+bandit guard~
+µs¸é¦u½Ã(bandit guard)~
+¤@­Óµs¸é¦u½Ã(bandit guard)¦b³oÃä¡C
+~
+~
+35 0 -500 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4043
+bandit guard~
+µs¸é¦u½Ã(bandit guard)~
+¤@­Óµs¸é¦u½Ã(bandit guard)¦b³oÃä¡C
+~
+~
+35 0 -500 S
+18 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4044
+scout~
+¥¸­Ô(scout)~
+¥¸­Ô(scout)¦b³o¸Ì¦uÅ@µÛ¥X¤J¤f¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+101 32 -350 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4045
+scout~
+¥¸­Ô(scout)~
+¥¸­Ô(scout)¦b³o¸Ì¦uÅ@µÛ¥X¤J¤f¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+101 32 -350 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4046
+scout~
+¥¸­Ô(scout)~
+¥¸­Ô(scout)¦b³o¸Ì¦uÅ@µÛ¥X¤J¤f¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+101 32 -350 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4047
+scout~
+¥¸­Ô(scout)~
+¥¸­Ô(scout)¦b³o¸Ì¦uÅ@µÛ¥X¤J¤f¡C
+~
+¥L¨­¤W¨Ã¨S¦³¤°»ò¯S§Oªº¡C
+~
+101 32 -350 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4048
+free swordman~
+¶¢®Ìªº¼C«È(free swordman)~
+¤@­Ó¼C³Nºë´ïªº¼C«È(swordman)«Ý¦bµó¤W¶¢®Ì¡C
+~
+¥L¬O¤@­Ó¼C³N¤Q¤Àºë´ïªº¼C«È¡A¦ý¬O«o¦¨¤ÑµL©Ò¨Æ¨Æªº¦bµó¤W¶¢®Ì¡C
+~
+1|64|128|2048|4096|8192|16384|524288|8388608 8|32|8192|16384 300 S
+70 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+S 13 50000
+S 18 120
+S 19 150
+S 39 -200
+S 40 60
+S 41 300
+S 42 300
+S 43 150
+S 44 150
+C 1|8
+P 1|4|8|256|4194304|1073741824|2147483648
+>repop_prog 100~
+mpat 5 mpoload 4061
+mpat 5 wear all
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self free_swordman_mist -1 0 0 0 1 0
+~
+>tick_prog 100~
+if is_qmark($i) > free_swordman_mist 100150
+	break
+endif
+if is_qmark($i) == free_swordman_mist
+	mpmod_qmark self free_swordman_mist v0 + 1
+endif
+if is_qmark($i) > free_swordman_skara 100080
+	break
+endif
+if is_qmark($i) == free_swordman_skara
+	mpmod_qmark self free_swordman_skara v0 + 1
+endif
+~
+>tick_prog 30~
+if is_qmark($i) >= free_swordman_mist 100150
+	mpdel_qmark self free_swordman_mist
+	say ¦b¥ú©ú¤§Âí¤W¨«¯uµL²á¡A
+	mpcallout 1 say ¨ì¥v¥d©Ô¨©«°¥h¬Ý¬Ý¦n¤F¡C
+	mpcallout 2 mpadd_qmark self free_swordman_skara -1 0 0 0 1 0
+	mpcallout 2 mpecho $I¨Ó¤F¡C
+	mpcallout 2 mpgoto 3049
+	mpcallout 2 mpecho $IÂ÷¶}¤F³o¸Ì¡C
+endif
+~
+>tick_prog 30~
+if is_qmark($i) >= free_swordman_skara 100080
+	mpdel_qmark self free_swordman_skara
+	hmm
+	mpcallout 1 say ÁÙ¬O¦A¦^¥ú©ú¤§Âí¤@½ë¦n¤F¡C
+	mpcallout 2 mpadd_qmark self free_swordman_mist -1 0 0 0 1 0
+	mpcallout 2 mpecho $I¨Ó¤F¡C
+	mpcallout 2 mpgoto 4522
+	mpcallout 2 mpecho $IÂ÷¶}¤F³o¸Ì¡C
+endif
+~
+>fight_prog 30~
+if rand(30)
+	circular
+	mpnowait
+else
+	perform empslash
+	mpnowait
+endif
+if rand(30)
+	flaming
+	mpnowait
+else
+	icecore
+	mpnowait
+endif
+~
+>fight_prog 50~
+say ¾Ì§A³oºØ¤T¸}¿ßªº§Þ¥©¡A¤]·Q¨Ó¸ò§Ú¬D¾Ô¡H
+skilldrv multihit $n
+skilldrv heavyhit $n
+skilldrv speedhit $n
+if rand(50)
+	if hitprcnt($i) < 70
+		c heal
+	endif
+	if hitprcnt($i) < 30
+		c 'double heal'
+	endif
+endif
+~
+>fight_prog 30~
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+endif
+if isaffected($i) & 8388608
+	grin
+	mpdis_magic self mute
+	say ¸T¨¥³N¹ï§Ú¨Ó»¡¬O¨S¦³¥Îªº¡C
+	mpecho $I ¨­¤Wªº¸T¨¥³N®ø¥¢¤F....¡C
+endif
+if isaffected($i) & 16777216
+	shake
+	say §AµLªk«ÊÂê§Ú¨­¤WªºÅ]ªk¡C
+	mpdis_magic self 'seal magic'
+	mpecho $I ¨­¤Wªº«ÊÂêÅ]ªk¥¢®Ä¤F....¡C
+endif
+if isaffected($i) & 268435456
+	say ³Â·ô³N«ç»ò¥i¯à¹ï§Ú¦³®Ä©O¡H
+	mpdis_magic self paralyze
+	mpecho $I ªº¨­Åé¦A«×¤S¯à°÷¬¡°Ê¦Û¦p....¡C
+endif
+~
+|
+#4049
+sneaky man~
+°­°­¯©¯©ªº¤H(sneaky man)~
+¤@­Ó°­°­¯©¯©ªº¤H(sneaky man)¦b³o¸Ì±i±æµÛ¡C
+~
+¥L¨­¤W¦n¹³±a¤F¨Ç¤°»ò¡C
+~
+1|64|2048|262144 8|32|64|512|65536 -350 S
+30 1000 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R human~
+C 4
+>talk_prog topic~
+ if is_qmark($n) == bandit_thief_exam 100002
+      mpcallout 1 say §Ú¬O¨º»ò¨S°©®ðªº¤H¹À¡I
+      mpcallout 2 say ´N¾Ì§A¤T¨â¥y¸Ü´N­n§Ú§âªF¦è¥æµ¹§A¡I
+      mpcallout 3 say ¥¼§K¤Ó¤p¬Ý¤H¤F§a¡I
+      mpcallout 4 say ­n´N©ñ°¨¹L¨Ó¡C
+      mpmod_qmark $n bandit_thief_exam v0 = 3
+ endif
+~
+>repop_prog 100~
+ 	mpat 5 mpoload 4036
+ 	mpat 5 mpoload 4037
+ 	mpat 5 mpoload 4038
+ 	mpat 5 mpoload 4039
+ 	mpat 5 wear all
+~
+>defun_prog fleeaway~
+        mpecho ¥¿·í§A·Q¦A«ó¥L¤@®±®É¡A$I§âªF¦è©¹¦a¤W¤@¥á´N¶]¤F¡C
+        mpoload 4067 floor
+~
+>fight_prog 75~
+ if is_qmark($n) == bandit_thief_exam 100003
+        if hitprcnt($i) <= 65
+                 if is_qmark($n) != bandit_thief_jeweldrop
+                        mpadd_qmark self bandit_thief_jeweldrop -1 0 0 0 0 1
+                        mpcallout 1 goto $i
+                        mpcallout 2 say §O..§O..§O¦A¥´¤F¡C
+                        mpcallout 3 say §Ú§ë­°¤F¡I§A­Ì¦n¤ßÂI°±¤â§a¡A¦A¥´·|¥X¤H©Rªº¡I
+                        mpcallout 4 say ªF¦è§ÚÁÙ§A­Ì´N¬O¤F¡I
+                        mpcallout 5 say ¤£¹L¤@³¡¤À§Ú¤w¸g½æ¤F¡C
+                        mpcallout 6 say ½æ¨ì¤F¶Â¥«¡A¨º­Ó°Ó¤H¦í¦b©U§£³õªþªñ¡C
+                        mpcallout 7 mpcall fleeaway
+                        mpcallout 8 mpat 5 mppurge self
+                endif
+        endif
+endif
+~
+|
+#4050
+merchant~
+¶Â¥«¥æ©ö°Ó(merchant)~
+¤@­Ó°½°½ºNºNªº°Ó¤H(merchant)¸Õ¹Ï¸úÁ×§Aªºµø½u¡C
+~
+¥L¨­¤W¦n¹³±a¤F¨Ç¤°»ò¡C
+~
+1|64|2048|262144 32|64|512 -350 S
+28 10000 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R human~
+C 4
+P 8
+S 41 500
+S 17 -500
+>greet_prog 100~
+if is_equ_obj($n) == 4066
+        say §A¦n¡I¤µ¤Ñ·Q½æÂI¤°»ò¡H
+        if is_qmark($n) == bandit_thief_exam 100003
+                mpjunk all
+                mpoload 4068 35
+        endif
+else
+        say ¤jÁx¡I´±Âô¶i¨Ó¡I
+        mpkill $n
+endif
+~
+|
+#4051
+dog-bandit dog~
+¬Ýªùª¯(dog)~
+¤@±ø¬Ýªùª¯(dog)¥¿¹ïµÛ§A¨g§p¡C
+~
+¥¦ªº§Q¤ú¤W¥dµÛ¤£ª¾¬O½Öªº¦å¦×¡C
+~
+1|2|32|64|2048 8|32|512|8192 -350 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+C 1
+P 8|256|4194304
+#4052
+bodyguard-bandit bodyguard~
+«OÅß(bodyguard)~
+¤@­Ó±j§§ªº«OÅß(bodyguard)¦b³o¦uÅ@µÛ¥Lªº¥D¤H¡C
+~
+¥L½T½T¹ê¹ê¬O­Ó¤j¶ôÀY¡C
+~
+1|32|64|262144 8|32|512|8192 -350 S
+40 3000 0 0d0+0 0d0+0
+0 0
+0 8 0
+C 1|8|32
+P 8|256|4194304
+A8
+wake+w+w
+mpgoto 4104
+~
+A16
+wake+e+e
+mpgoto 4150
+rest
+~
+|
+>repop_prog 100~
+mpmload 4051
+mpgroup self dog-bandit 1 0
+~
+>fight_prog 100~
+if rand(50)
+	if is_equ_obj($i) != 4018
+		wear club
+		disarm
+		mpnowait
+	endif
+endif
+if rand(50)
+	if insameroom(dog-bandit)
+		say ª¯¨à¡A§ðÀ»¡I
+		mpforce dog-bandit berserk
+		mpforce dog-bandit hunt $n
+		mpforce dog-bandit frenzy
+	endif
+endif
+if rand(50)
+	if rand(33)
+		kick
+		mpnowait
+	else
+		if rand(50)
+			bashhead
+			mpnowait
+		else
+			skilldrv multihit $n
+		endif
+	endif
+endif
+~
+|
+#4053
+ninja tutor~
+§Ô³N¾É®v(ninja tutor)~
+¤@­Ó¤£°_²´ªº¦Ñ¤H(elder)¸ú¦b³±¼v¸Ì¡C
+~
+¤£°_²´ªº¥~ªí¤U¡AÁôÁô³zÅS¥X¥L¸g¹L¦h¦~ÁëÁåªº¨Æ¹ê¡C
+~
+1|2|64|1024|2048|16384|16777216 8|32|512|65536 0 S
+52 3000 0 10d10-400 0d0+0
+-1 0
+0 8 1
+R human~
+C 1
+K mark recall~
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4056
+ mpat 5 mpoload 4056
+ mpat 5 mpoload 4064
+ mpat 5 wear all
+~
+>talk_prog topic~
+       emote »´»´¦a«y¤F¤@¤U
+       mpcallout 1 mpcall talk_1 $n
+       mpcallout 3 mpcall talk_2 $n
+       mpcallout 5 mpcall talk_3 $n
+       mpcallout 7 mpcall talk_4 $n
+~
+>defun_prog talk_1~
+      say ¦~»´ªº«_ÀIªÌ°Ú¡I
+      say §Ú¥i¥H±Ð§Aªð¦^³N©M¼Ð°O³N¡I
+      say ¦ý¬O­n¾Ç·|§ó°ªªº§Þ¥©¡A«o»Ý­n§ä§Úªº¾É®v¡C
+~
+>defun_prog talk_2~
+      say ¥L±N¦Û¤vÃö¦b¥Û¸O©³¤U¡A°µ¤ßÆF¤Wªº­×½m¡C
+      say ¬°¤F¤£Åý¥L¤H¥´ÂZ¡A¥L±N¥i¥H¸Ñ¶}«Ê¦Lªº¥ÛªO¤À¦¨¤C¶ô¡C
+      say ¥æµ¹¤C­Ó¦u½Ã«OºÞ¡C¤p¤ß¡A¦u½ÃªÌ¥i¬OÃ~¤Æ¤§³Nªº°ª¤â¡C
+~
+>defun_prog talk_3~
+      say ¦¹¥~¡A¦u½ÃªÌ¥u·|©ñ¦æ¥L­Ì¡©¦Û¤v¤H ¡ª¡C
+      say ¥J²ÓÆ[¹î¥L­Ìªº¯S¼x¡A¹B¥Î¥H«e¾Ç¹Lªº§Þ¥©¡AÀ³¸Ó¯à°÷³q¹L¥L­Ìªº¦uÅ@¡C
+      say ¥t¥~¡A¦³¨Ç¦a¤è¦³¯S»sªº¾÷Ãö¡A³Ì¦n¬¡¥Î§Ú¯à±Ð§Aªº§Þ¥©¡C
+~
+>defun_prog talk_4~
+      say ¦pªG§A¸Ñ¶}¤F«Ê¦L¡C
+      say §Ú·Q¥L¦Ñ¤H®a¤]·|¦]¬°§Aªº§V¤O¡A¦Ó§â§Þ¥©±Ð§Aªº¡C
+      say ¥t¥~¥Ñ©ó¥Û¸O¤D¬O¥Ñ¯S®íªºÄq¥Û©Ò»s¡A©Ò¥H¦b¨º¥ð®§·|¦³·N·Q¤£¨ìªº®ÄªG¡C
+      say ¥h§a¡A«_ÀIªÌ¡C
+~
+>hitprcnt_prog 40~
+mpat 5 c 'double heal'
+mpnowait
+if rand(30)
+	mpat 5 c 'double heal'
+	mpnowait
+	mpat 5 c heal
+	mpnowait
+else
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+~
+>fight_prog 100~
+if rand(60)
+   if rand(40)
+        yell §Ô³N   [1;16mÀs  ·Ï  ³N[m
+        c poison $n
+        mpnowait
+        c blindness $n
+        mpnowait
+        c 'faerie fire' $n
+        mpnowait
+        c curse $n
+        mpnowait
+      else
+        if rand(50)
+            yell $n ¬Ý©Û....¡I
+            yell [1;16m¡I¡I¼É   «B   ¨g   ªá¡I¡I[m
+	    skilldrv multihit $n
+            mpnowait
+            skilldrv multihit $n
+            mpnowait
+          else
+	    mpcallout 1 mpcall fight_1 $n
+	    mpcallout 2 mpcall fight_2 $n
+            mpcallout 3 mpdef_rembch null-tar
+        endif
+   endif
+endif
+~
+>defun_prog fight_1~
+ wear assassin
+ wear assassin
+ disarm
+ mpnowait
+~
+>defun_prog fight_2~
+ mpechoat $n $Iªº¨­¼v¬ðµM®ø¥¢¦b§A­±«e...
+ mpdef_rembch $n
+ mpgoto 5 c invis
+ mpgoto $b
+ mpechoat $b $Iªº¨­¼v¬ðµM¥X²{¦b§A¨­«á...
+ vis
+ bs $b
+ mpnowait
+~
+>death_prog 100~
+ yell ¨S¥i¯à¡I§Ú³º·|±Ñ°Ú....¡I
+ mpjunk all
+~
+|
+#4054
+seal guardian-bandit~
+«Ê¦L¦uÅ@ªÌ(seal guardian)~
+«Ê¦L¦uÅ@ªÌ(seal guardian)¦b³±¼v³B¬ÝµÛ§A¡C
+~
+¨S¦³¯S§O°_²´ªº¯S¼x¡A¨­§÷¤]»P±`¤HµL²§¡A¥L¥H«e¤j·§¬O¤HÃþ§a¡C
+~
+1|2|32|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4106
+ mpat 5 c 'detect invis'
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n §A¤ß¤¤ÅT°_¤@ªÑÁn­µ¡G¡u³o¤£¬O§A¸Ó¨Óªº¦a¤è¡C¡v
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+        if race($n) != human
+           mpkill $n
+           break
+        else
+           break
+        endif
+~
+>fight_prog 70~
+ if rand(40)
+      yell §Ô³N   [1;15m¬K  ªá  ³N[m
+      c 'faerie fire' $n
+      mpnowait
+      c poison $n
+      mpnowait
+ else
+     mpecho ¡u$I¾®»E¥þ¨­ªººë¤O¡v
+     if rand(40)
+        skilldrv speedhit $n
+        skilldrv speedhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        break
+      else
+        skilldrv heavyhit $n
+        skilldrv speedhit $n
+        break
+     endif
+ endif
+~
+|
+#4055
+seal guardian-bandit~
+«Ê¦L¦uÅ@ªÌ(seal guardian)~
+«Ê¦L¦uÅ@ªÌ(seal guardian)¦b³±¼v³B¬ÝµÛ§A¡C
+~
+­Ó¤l¤ñ¸û¸G¤p¡A«o¤@Áy´¼¼zªº¼Ò¼Ë¡A²´¯«¤]´²µo¤@ªÑ¥ú¨~¡C
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4107
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n §A¤ß¤¤ÅT°_¤@ªÑÁn­µ¡G¡u³o¤£¬O§A¸Ó¨Óªº¦a¤è¡C¡v
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != gnome
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4056
+seal guardian-bandit~
+«Ê¦L¦uÅ@ªÌ(seal guardian)~
+«Ê¦L¦uÅ@ªÌ(seal guardian)¦b³±¼v³B¬ÝµÛ§A¡C
+~
+­Ó¤lÁöµM¤£°ª¡A«oµ²¹êªº¹³¤@ÀYºµ¡C
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4108
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n §A¤ß¤¤ÅT°_¤@ªÑÁn­µ¡G¡u³o¤£¬O§A¸Ó¨Óªº¦a¤è¡C¡v
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != dwarf
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4057
+seal guardian-bandit~
+«Ê¦L¦uÅ@ªÌ(seal guardian)~
+«Ê¦L¦uÅ@ªÌ(seal guardian)¦b³±¼v³B¬ÝµÛ§A¡C
+~
+¼ä²bªº­±¤Õ¡A´²µoµÛ¤@ªÑ°g¤Hªº¾y¤O¡C
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4111
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n §A¤ß¤¤ÅT°_¤@ªÑÁn­µ¡G¡u³o¤£¬O§A¸Ó¨Óªº¦a¤è¡C¡v
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != elf
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4058
+seal guardian-bandit~
+«Ê¦L¦uÅ@ªÌ(seal guardian)~
+«Ê¦L¦uÅ@ªÌ(seal guardian)¦b³±¼v³B¬ÝµÛ§A¡C
+~
+µy·LÂK¶Âªº¥Ö½§¡A«o±»¹¢¤£¤F¥¦«T¬üªº­±¤Õ¡C
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4112
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n §A¤ß¤¤ÅT°_¤@ªÑÁn­µ¡G¡u³o¤£¬O§A¸Ó¨Óªº¦a¤è¡C¡v
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != drow
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4059
+seal guardian-bandit~
+«Ê¦L¦uÅ@ªÌ(seal guardian)~
+«Ê¦L¦uÅ@ªÌ(seal guardian)¦b³±¼v³B¬ÝµÛ§A¡C
+~
+¨­§÷¤ñ¤HÃþ¸G¤F¤@¨Ç¡A¤â¸}¬Ý°_¨Ó«o¤ñ¤ñ¨Òªø¤F¨Ç¡C
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4113
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n §A¤ß¤¤ÅT°_¤@ªÑÁn­µ¡G¡u³o¤£¬O§A¸Ó¨Óªº¦a¤è¡C¡v
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != hobbit
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4060
+seal guardian-bandit~
+«Ê¦L¦uÅ@ªÌ(seal guardian)~
+«Ê¦L¦uÅ@ªÌ(seal guardian)¦b³±¼v³B¬ÝµÛ§A¡C
+~
+ÅéºA»´¬Õ¡A¥¿¦bªÅ¤¤­¸»RµÛ¡C
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4110
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n §A¤ß¤¤ÅT°_¤@ªÑÁn­µ¡G¡u³o¤£¬O§A¸Ó¨Óªº¦a¤è¡C¡v
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != imp
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4061
+flameshadowt~
+¤õ¼v(flameshadow)~
+­n¶ë§ÔªÌªº»â³S-¤õ¼v(flameshadow)¦b³o¸ÌÀRÀR¦a¬ÝµÛ§Aªº¨ì¨Ó¡C
+~
+¤@­Ó¥~»ª¬Ý¦ü¤»¤Q·³ªº¦ÑªÌ¡A¤£¹L¥¦ªº²´¯««o¥Rº¡¥Í®ð¡A¤@ÂI³£¤£¦ü¤@­Ó
+¦ÑªÌ¸Ó¦³ªº²´¯«¡A¬Ý¨Ó¥L¤w¸g±N¦Û¤vÁëÁå¨ì¤F·¥­P¡C
+~
+1|2|64|1024|2048|4096|8192|16384|16777216 8|32|128|512 0 S
+58 4000 0 10d20+500 0d0+0
+-1 0
+0 8 1
+R human~
+C 1
+K mark recall throwing evade 'dart mastery' scout~
+P 8
+S
+46 200
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpoload 4056
+ mpoload 4056
+ mpoload 4106
+ mpoload 4064
+ mpoload 4074
+ mpoload 4107
+ mpoload 4108
+ mpoload 4111
+ mpoload 4112
+ mpoload 4113
+ mpoload 4110
+ mpat 5 wear all
+~
+>talk_prog topic~
+        mpcallout 1 say ²×¨sÁÙ¬O¦³¤H¯à¨Ó¨ì³o¸Ì¡C
+        mpcallout 2 say ¬Ý¨Ó¦Ñ¤Ñ·Ý¦ü¥G¤£·QÅý§Ú³o¤@¨­µ´§Þ¥¢¶Ç¡C
+        mpcallout 3 say «Ä¤l¡A§Ú´N§â§A·Q¾Çªº§Þ¥©¶Ç±Âµ¹§A§a¡I
+~
+>fight_prog 100~
+if rand(60)
+   if rand(40)
+        yell §Ô³N   [1;18mÀs  °«  µo  «l[m
+        mpecho ¡u$IÂù¤âµ²¦L¡A´ý¨­´²µo¥XÁôÁô¶Â®ð¡C¡v
+        mpforcer here add_affect $i bless 0 30 1 18 20 0
+        skilldrv multihit $n
+        mpnowait
+        skilldrv multihit $n
+        mpnowait
+      else
+        if rand(50)
+            yell $n ¬Ý©Û....¡I
+            yell [1;17m¡I¡I´Ë   Ã¹   ¸U   ¶H¡I¡I[m
+	    mpecho ¡uÂù¤âµ²¦L¡I¤f¤¤³ä³ä¦³Ãã¡I¬ðµM¤Û¤Æ¦¨¤T¤H¡I¡v
+            mpdef_rembch $n
+            mptransfer $b 2
+            mpmload 4062 36
+            mpmload 4062 36
+            mptransfer $b
+            mpgoto self
+            mpforce flameshadowf mpgoto self
+            mpforce 2.flameshadowf mpgoto self
+            mpforce flameshadowf mpkill $b
+            mpforce 2.flameshadowf mpkill $b
+            mpdef_rembch null-tar
+          else
+	    mpcallout 1 mpcall fight_1 $n
+	    mpcallout 2 mpcall fight_2 $n
+            mpcallout 3 mpdef_rembch null-tar
+        endif
+   endif
+endif
+~
+>defun_prog fight_1~
+ wear assassin
+ wear assassin
+ disarm
+ mpnowait
+~
+>defun_prog fight_2~
+ mpechoat $n $Iªº¨­¼v¬ðµM®ø¥¢¦b§A­±«e...
+ mpdef_rembch $n
+ mpgoto 5 c invis
+ mpgoto $b
+ mpechoat $b $Iªº¨­¼v¬ðµM¥X²{¦b§A¨­«á...
+ vis
+ bs $b
+ mpdef_rembch null-tar
+ mpnowait
+~
+>rand_prog 100~
+  if insameroom($r)
+     break
+    else
+     mppurge
+  endif
+~
+>death_prog 100~
+ yell ¨S¥i¯à¡I§Ú³º·|±Ñ°Ú....¡I
+ mpjunk all
+ mpnowait
+ mpoload 4074 38
+~
+|
+#4062
+flameshadowf~
+¤õ¼v(flameshadow)~
+­n¶ë§ÔªÌªº»â³S-¤õ¼v(flameshadow)¦b³o¸ÌÀRÀR¦a¬ÝµÛ§Aªº¨ì¨Ó¡C
+~
+¤@­Ó¥~»ª¬Ý¦ü¤»¤Q·³ªº¦ÑªÌ¡A¤£¹L¥¦ªº²´¯««o¥Rº¡¥Í®ð¡A¤@ÂI³£¤£¦ü¤@­Ó
+¦ÑªÌ¸Ó¦³ªº²´¯«¡A¬Ý¨Ó¥L¤w¸g±N¦Û¤vÁëÁå¨ì¤F·¥¦Ü¡C
+~
+1|2|64|1024|2048|4096|8192|16384|16777216 8|32|128|512 0 S
+36 -1500 0 0d0+500 20d300+0
+-1 0
+0 8 1
+R human~
+P 8
+>repop_prog 100~
+ if insameroom(flameshadowt)
+        mpgroup self flameshadowt 1
+ endif
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpoload 4056
+ mpoload 4056
+ mpoload 4064
+ mpat 5 wear all
+~
+>death_prog 100~
+ mpecho ¡u$I¤Æ¦¨¤F¤@¹D·Ï®ø¥¢¦bªÅ¤¤¡v
+ mpjunk all
+~
+|
+#4063
+wizard-bandit wizard adventurer~
+«_ÀIªÌ§Å®v(adventurer wizard)~
+¤@¦ì¸gÅç¦Ñ¹Dªº«_ÀIªÌ§Å®v(adventurer wizard)§¤¦b³oÃä³Ü°s¡C
+~
+¥L¾Ö¦³§Å®v©Ò¦³ªº§Þ¯à¡A¤£¬O¤@­Ó¦n¹ï¥Iªº«_ÀIªÌ¡A¦]¦¹§A³Ì¦n¤£­nÀH«K·S¥L¡C
+~
+1|2|64|8192|262144|8388608 8|32|128|512|8192|134217728|68719476736|549755813888 0 S
+45 3000 0 0d-50+-700 0d300+50
+0 0
+0 8 1
+C 2
+P 8|256|1024|4194304|8388608|16777216|268435456
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 4409
+mpat 5 wield translucent twohand
+mpoload 4542
+mpat 5 wear damage
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if mobcount(4065) > 0
+	if insameroom(bishop)
+	else
+		yell ¥D±Ð§Ö¨Ó¡I
+		mptransfer bishop-bandit
+	endif
+endif
+if rand(30)
+	if is_equ_obj($i) != 4409
+		wield translucent twohand
+	endif
+	if is_equ_obj($i) == 4542
+		brandish
+		mpnowait
+	endif
+	if ispc($r)
+		if class($r) == 5
+		or class($r) == 6
+		or class($r) == 7
+		or class($r) == 8
+			yell «¢«¢¡IÅý§ÚÀ°§A¬I­Ó¤pªk³N§a¡I
+			mpforcer here c 'mystic armor' $r 50
+		endif
+	endif
+endif
+if ispc($r)
+	if rand(25)
+		c 'chill touch' $r
+		mpnowait
+	else
+		if rand(33)
+			c weaken $r
+			mpnowait
+		else
+			if rand(50)
+				c 'seal magic' $r
+				mpnowait
+			else
+				c 'dispel magic' $r
+				mpnowait
+			endif
+		endif
+	endif
+	if rand(25)
+		c 'gas breath' $r
+		mpnowait
+	else
+		if rand(33)
+			c 'star fire' $r
+			mpnowait
+		else
+			if rand(50)
+				c whirlwind $r
+				mpnowait
+			else
+				c fireball $r
+				mpnowait
+			endif
+		endif
+	endif
+endif
+mpcall bandit_group_heal
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if insameroom(bishop-bandit)
+	if hitprcnt($i) < 30
+		mpforce bishop-bandit c 3 'double heal' wizard-bandit
+		break
+	endif
+	if hitprcnt($i) < 50
+		mpforce bishop-bandit c 2 'doubl heal' wizard-bandit
+		break
+	endif
+	if hitprcnt($i) < 70
+		mpforce bishop-bandit c 'double heal' wizard-bandit
+	endif
+endif
+~
+|
+#4064
+monk-bandit monk adventurer~
+«_ÀIªÌªZ¹¬(adventurer monk)~
+¤@¦ì¸gÅç¦Ñ¹Dªº«_ÀIªÌªZ¹¬(adventurer monk)§¤¦b³oÃä³Ü°s¡C
+~
+¥L¾Ö¦³¹¬«Q©Ò¦³ªº§Þ¯à¡A¤£¬O¤@­Ó¦n¹ï¥Iªº«_ÀIªÌ¡A¦]¦¹§A³Ì¦n¤£­nÀH«K·S¥L¡C
+~
+1|2|64|8192|262144|8388608 8|32|128|512|8192|549755813888 0 S
+45 3000 0 100d50+300 0d-200+30
+0 0
+0 8 1
+C 1|4|32
+P 8|256|4194304|8388608|16777216
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+berserk
+mpnowait
+if mobcount(4065) > 0
+	if insameroom(bishop)
+	else
+		yell ¥D±Ð§Ö¨Ó¡I
+		mptransfer bishop-bandit
+	endif
+endif
+if insameroom(wizard-bandit)
+	mpforce wizard-bandit rescue monk-bandit
+else
+	if insameroom(ninja-bandit)
+		mpforce ninja-bandit rescue monk-bandit
+	endif
+endif
+if rand(33)
+	skilldrv multihit $n
+else
+	if rand(50)
+		skilldrv speedhit $n
+		skilldrv speedhit $n
+		skilldrv speedhit $n
+	else
+		skilldrv heavyhit $n
+		skilldrv heavyhit $n
+		skilldrv heavyhit $n
+	endif
+endif
+barehand
+mpnowait
+kick
+mpnowait
+bashhead
+mpnowait
+if insameroom(bishop-bandit)
+	if isaffected($i) & 1
+		mpforce bishop-bandit c 'cure blindness' monk-bandit
+	endif
+	if isaffected($i) !& 128
+		mpforce bishop-bandit c sanc monk-bandit
+	endif
+	if isaffected($i) & 4096
+		mpforce bishop-bandit c 'cure poison' monk-bandit
+	endif
+	if isaffected($i) & 268435456
+		mpforce bishop-bandit c vivi monk-bandit
+	endif
+	mpcall bandit_group_heal
+endif
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if hitprcnt($i) < 30
+	mpforce bishop-bandit c 3 'double heal' monk-bandit
+	break
+endif
+if hitprcnt($i) < 50
+	mpforce bishop-bandit c 2 'doubl heal' monk-bandit
+	break
+endif
+if hitprcnt($i) < 70
+	mpforce bishop-bandit c 'double heal' monk-bandit
+endif
+~
+|
+#4065
+bishop-bandit bishop adventurer~
+«_ÀIªÌ¥D±Ð(adventurer bishop)~
+¤@¦ì¸gÅç¦Ñ¹Dªº«_ÀIªÌ¥D±Ð(adventurer bishop)§¤¦b³oÃä³Ü°s¡C
+~
+¥L¾Ö¦³¥D±Ð©Ò¦³ªº§Þ¯à¡A¤£¬O¤@­Ó¦n¹ï¥Iªº«_ÀIªÌ¡A¦]¦¹§A³Ì¦n¤£­nÀH«K·S¥L¡C
+~
+1|2|64|8192|262144|8388608 8|32|128|512|549755813888 0 S
+45 3000 0 0d-50+0 -30d-200+30
+0 0
+0 8 1
+C 2
+P 8|256|1048576|2097152|4194304|8388608|16777216|268435456
+S 23 -99
+S 27 -99
+S 28 -99
+S 29 -99
+S 30 -99
+S 31 -99
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpmload 4063
+mpgroup self wizard-bandit 1 0
+mpmload 4064
+mpgroup self monk-bandit 1 0
+mpmload 4066
+mpgroup self ninja-bandit 1 0
+if insameroom(keith-bandit)
+	mpgroup self keith-bandit 1 1
+endif
+mpoload 3379
+mpat 5 wear saint
+mpoload 1900
+mpat 5 wield sledge twohand
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if rand(30)
+	if is_equ_obj($i) != 1900
+		wield sledge twohand
+	endif
+	if is_equ_obj($i) == 9217
+		brandish
+		mpnowait
+	endif
+endif
+if mobcount(4063) > 0
+	if insameroom(wizard-bandit)
+	else
+		yell §Å®v§Ö¨ÓÀ°¦£¡I
+		mptransfer wizard-bandit
+	endif
+	mpforce wizard-bandit rescue bishop-bandit
+endif
+if mobcount(4066) > 0
+	if insameroom(ninja-bandit)
+	else
+		yell §ÔªÌ§Ö¨ÓÀ°¦£¡I
+		mptransfer ninja-bandit
+	endif
+	if insameroom(wizard-bandit)
+	else
+		mpforce ninja-bandit rescue bishop-bandit
+	endif
+endif
+if mobcount(4064) > 0
+	if insameroom(monk-bandit)
+	else
+		yell ªZ¹¬§Ö¨ÓÀ°¦£¡I
+		mptransfer monk-bandit
+	endif
+	if insameroom(wizard-bandit)
+	else
+		if insameroom(ninja-bandit)
+		else
+			mpforce monk-bandit rescue bishop-bandit
+		endif
+	endif
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	c sanc
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+mpcall bandit_group_heal
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if hitprcnt($i) < 30
+	if rand(10)
+		c 'full heal'
+		mpnowait
+	else
+		c 3 'double heal'
+		mpnowait
+	endif
+	break
+endif
+if hitprcnt($i) < 50
+	c 2 'doubl heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 70
+	c 'double heal'
+	mpnowait
+endif
+~
+|
+#4066
+ninja-bandit ninja adventurer~
+«_ÀIªÌ§ÔªÌ(adventurer ninja)~
+¤@¦ì¸gÅç¦Ñ¹Dªº«_ÀIªÌ§ÔªÌ(adventurer ninja)§¤¦b³oÃä³Ü°s¡C
+~
+¥L¾Ö¦³§ÔªÌ©Ò¦³ªº§Þ¯à¡A¤£¬O¤@­Ó¦n¹ï¥Iªº«_ÀIªÌ¡A¦]¦¹§A³Ì¦n¤£­nÀH«K·S¥L¡C
+~
+1|2|64|2048|4096|8192|262144|8388608|16777216 8|32|128|512|549755813888 0 S
+45 3000 0 30d-40+200 0d-1000+30
+0 0
+0 8 1
+C 1|4|8
+P 8|256|4194304|8388608|16777216
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 11149
+mpat 5 wear dawnbringer
+mpoload 11150
+mpat 5 wear nightbringer
+~
+>entry_greet_prog 100~
+if ispc($r)
+	if is_qmark($r) == bandit_enemy
+		yell ´N¬O§A¡A $r ¡Aµs¸é¦@¦Pªº¼Ä¤H¡A¥h¦º¡I
+		bs $r
+		mpnowait
+		mpkill $r
+		if insameroom(wizard-bandit)
+			mpforce wizard-bandit rescue ninja-bandit
+		endif
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == bandit_enemy
+	yell ´N¬O§A¡A $n ¡Aµs¸é¦@¦Pªº¼Ä¤H¡A¥h¦º¡I
+	bs $n
+	mpnowait
+	if insameroom(wizard-bandit)
+		mpforce wizard-bandit rescue ninja-bandit
+	endif
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if insameroom(wizard-bandit)
+	mpforce wizard-bandit rescue ninja-bandit
+endif
+if is_equ_obj($i) != 11149
+	wield dawnbringer right
+	disarm
+	mpnowait
+endif
+if is_equ_obj($i) != 11150
+	wield nightbringer left
+	disarm
+	mpnowait
+endif
+if rand(50)
+	yell ¬Ý§Úªº­I¨ë¡I
+	mpdef_rembch $n
+	mpgoto self
+	bs $b
+	if insameroom($b)
+		if rand(50)
+			yell ¬Ý§ÚªºÂù­«­I¨ë¡I
+			mpgoto self
+			bs $b
+			if insameroom($b)
+				mpgoto self
+				bs $b
+			endif
+		endif
+	endif
+	mpdef_rembch null-tar
+	if insameroom(wizard-bandit)
+		mpforce wizard-bandit rescue ninja-bandit
+	endif
+endif
+if insameroom(bishop-bandit)
+	if isaffected($i) & 1
+		mpforce bishop-bandit c 'cure blindness' ninja-bandit
+	endif
+	if isaffected($i) !& 128
+		mpforce bishop-bandit c sanc ninja-bandit
+	endif
+	if isaffected($i) & 4096
+		mpforce bishop-bandit c 'cure poison' ninja-bandit
+	endif
+	if isaffected($i) & 268435456
+		mpforce bishop-bandit c vivi ninja-bandit
+	endif
+	mpcall bandit_group_heal
+endif
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if hitprcnt($i) < 30
+	mpforce bishop-bandit c 3 'double heal' ninja-bandit
+	break
+endif
+if hitprcnt($i) < 50
+	mpforce bishop-bandit c 2 'doubl heal' ninja-bandit
+	break
+endif
+if hitprcnt($i) < 70
+	mpforce bishop-bandit c 'double heal' ninja-bandit
+endif
+~
+|
+#4067
+seasoned adventurer~
+¦Ñ½mªº«_ÀIªÌ(seasoned adventurer)~
+¤@¦ìº¡Áy­·Á÷ªº¦Ñ½mªº«_ÀIªÌ(seasoned adventurer)¡A¥¿°ª¿³¦a§¤¦b³oÃä³Ü°s¡C
+~
+¥L¬Ý°_¨Ó¹C¾ú¹L³\¦h¦a¤è¡A¤]³\§A¯à±q¥L¨º¥´Å¥¨ì¤°»ò¡C
+~
+1|2|4|64|4096|8192|262144|8388608 8|32|512|8192 0 S
+45 2000 0 10d-20+0 0d0+0
+0 0
+0 8 1
+C 1|8|32
+P 8|256|4194304|8388608|16777216
+R Orc~
+S 41 200
+S 42 200
+>repop_prog 100~
+mpoload 3022
+mpat 5 wear sword
+mpoload 3022
+mpat 5 wear sword
+mpmload 4068
+mpgroup self orc 1 0
+mpmload 4069
+mpgroup self drunken 1 1
+~
+>rand_prog 30~
+if rand(20)
+	say ¤W¦¸§Ú¦b»·¥j´ËªL§ä¨ìªº¨º§â¶z¤â(wranch)¯u¦n¥Î¡A
+	say §Ú§â¥¦®³¨Ó§æ¶}Âê¦íªº½c¤l¡A¤@¤U¤l´N¦¨¥\¤F¡C
+else
+	if rand(25)
+		say Å¥»¡¥ú©ú¤§ÂíªZ¾¹©±¦ÑÁó¿Ä¦XªZ¾¹ªº¤u§@­«·s¶}±i¤F¡A
+		say ¤£¹L±o¥ý§ä¨ì¥i¥H¼W±jªZ¾¹ªºÄ_¯]¡A
+		say ¥H¤Î¦³®e¯Ç¨º¨ÇÄ_¯]¦ì¸mªºªZ¾¹¤~¦æ¡C
+	else
+		if rand(33)
+			say ¼s³õ¨ºÃäªº¾ð¬Ý°_¨Ó¯uªº¤£¿ù©O¡A
+			say ¤Sµw¤S²Ê¡A·í§@©Ð¤lªº«Ø§÷¯u¬O¤Ó´Î¤F¡C
+		else
+			if rand(50)
+				say »·¥j´ËªL¨º°¦¤jÄP³¾ªº³J¯u¬Oµ´¥@¬Ã«~¡A
+				say Å¥»¡¦³¤H±Mªù°ª»ù¦¬°â¨ºÁû³J¡A
+				say ¤£¹L´N¬O¬°¤F­n¦Y¨ì¨ºÁû³J¸ÌÀYªº³J¶À¦Ó¤w¡C
+			else
+				say ¥¨¹³¯u¬O«ÜÃø¥´©O¡A¤×¨ä¬O°ªµ¥¯Åªº¥¨¹³¡A
+				say «D¦ýÅ]ªk´X¥G¨S¥Î¡A§ðÀ»¤]¥u¯à«d¤U¤@ÂI®h®h¦Ó¤w¡A
+				say °£«D¥Î¹p¨tªk³N©Î­«ÁèÃþªZ¾¹¤~¯à¦³®Ä³y¦¨¶Ë®`¡C
+			endif
+		endif
+	endif
+endif
+~
+>fight_prog 100~
+mpat 5 c 'double heal'
+mpnowait
+berserk
+mpnowait
+if rand(50)
+	wear sword
+	disarm
+	mpnowait
+	wear sword
+	disarm
+	mpnowait
+endif
+if rand(50)
+	if rand(50)
+		flaming
+		mpnowait
+	else
+		storm
+		mpnowait
+	endif
+endif
+if rand(50)
+	if rand(50)
+		perform empslash
+		mpnowait
+	else
+		circular
+		mpnowait
+	endif
+endif
+~
+|
+#4068
+furry orc~
+¤ò¯ñ¯ñªº¥bÃ~¤H(furry orc)~
+¤@¦ì¤ò¯ñ¯ñªº¥bÃ~¤H(furry orc)¤j¤f³Ü°s¡A¤j¶ô¦Y¦×¡C
+~
+¬õ²´·úªº¥bÃ~¤H¡A°s±q¼L¨¤¬y¤F¥X¨Ó¡C
+~
+1|2|4|64|4096|8192|262144|8388608 8|32|512|8192 0 S
+40 3000 0 20d-10+-200 0d-100+0
+0 0
+0 8 1
+C 1|8|32
+P 8|256|4194304|8388608|16777216
+R Orc~
+S 41 200
+S 42 200
+>repop_prog 100~
+mpoload 3022
+mpat 5 wear sword
+mpoload 645
+mpat 5 wear shield
+~
+>rand_prog 25~
+if insameroom(waiter-bandit)
+	say ³Þ¡I¨ÍªÌ¡A§Öµ¹§Ú°e¶ô¤û¦×¨Ó¡I
+	mpforce waiter-bandit say ¬O¬O¡I°¨¤W°e¨Ó¡I
+	mpforce waiter-bandit mpoload 602
+	mpforce waiter-bandit give beef furry
+	eat beef
+else
+	say ³Þ¡I¨ÍªÌ¡I....³Þ¡I¡I
+	mpcallout 1 ?
+	mpcallout 2 say ¯u¬O¡I¶]¥h­þ°Õ¡H
+endif
+~
+>fight_prog 100~
+mpat 5 c 'double heal'
+mpnowait
+berserk
+mpnowait
+if rand(50)
+	if is_equ_obj($i) != 3022
+		wear sword
+		disarm
+		mpnowait
+	endif
+else
+	if is_equ_obj($i) != 645
+		wear shield
+	endif
+endif
+kick
+mpnowait
+if rand(70)
+	kick
+	mpnowait
+endif
+if rand(50)
+	kick
+	mpnowait
+endif
+if rand(30)
+	kick
+	mpnowait
+endif
+bashhead
+mpnowait
+if rand(70)
+	bashhead
+	mpnowait
+endif
+if rand(50)
+	bashhead
+	mpnowait
+endif
+if rand(30)
+	bashhead
+	mpnowait
+endif
+~
+|
+#4069
+drunken adventurer~
+°s¾Kªº«_ÀIªÌ(drunken adventurer)~
+¤@¦ì°s¾Kªº«_ÀIªÌ(drunken adventurer)¥ñ¦b®à¤W¡A¤£®ÉÁÙ»¡¤@¨Ç¹ÚÅm¡C
+~
+¥L¬Ý¨Ó¬O³Ü¤Ó¦h³o¸Ì³Ì¥X¦Wªº³Á°s¤F¡C
+~
+1|2|4|64|4096|8192|262144|8388608 8|32|512|8192 0 S
+40 2000 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8|16|32
+P 8|256|4194304|8388608|16777216
+R Orc~
+S 41 200
+S 42 200
+>repop_prog 100~
+mpoload 4557
+mpat 5 wear bow
+mpoload 4561
+mpat 5 wear arrow
+~
+>rand_prog 30~
+if rand(25)
+	say §c...§Ú¨S¾K¡A¦A¨Ó¤@ªM....
+	break
+endif
+if rand(33)
+	emote ...zzzZZZ Z Z  Z
+	break
+endif
+if rand(50)
+	emote ¬ðµM©ï°_ÀY
+	mpcallout 1 emote ¤S­Ë¤U©I©I¤jºÎ
+else
+	emote ¬ðµM©ï°_ÀY
+	if ispc($r)
+		mpcallout 1 puke $r
+	else
+		mpcallout 1 puke
+	endif
+	mpcallout 2 emote ¤S­Ë¤U©I©I¤jºÎ
+endif
+~
+>fight_prog 100~
+mpat 5 c 'double heal'
+berserk
+mpnowait
+if rand(50)
+	if is_equ_obj($i) != 4557
+		wear bow
+		disarm
+		mpnowait
+	endif
+endif
+if insameroom(seasoned)
+	mpforce seasoned rescue drunken
+else
+	if insameroom(furry)
+		mpforce furry rescue drunken
+	endif
+endif
+if rand(50)
+	mete
+	mpnowait
+endif
+if rand(30)
+	mete
+	mpnowait
+endif
+~
+|
+#0
+
+
+
+
+#OBJECTS
+#4000
+key-bandit cellar key~
+¨c©ÐÆ_°Í(cellar key)~
+¤@§â¨c©ÐÆ_°Í(cellar key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+X iron~
+
+#4001
+brambles crown~
+¯ð´Æ¤§«a(brambles crown)~
+¯ð´Æ¤§«a(brambles crown)³Q©ñ¦b¦a­±¤W¡C~
+~
+9 512 17
+0~ 0~ 100~ 0~
+20 800 0
+C 80000
+Z 1
+L 36
+A
+2 2
+A
+18 3
+A
+39 -10
+X ebony~
+
+#4002
+bronze staff~
+«C»É¤â§ú(bronze staff)~
+¤@§â«C»É¤â§ú(bronze staff)³Q¥á±ó¦b¨¤¸¨¡C~
+~
+4 512 16385
+15~ 10~ 10~ armor~
+1 1 0
+A
+1 2
+A
+19 1
+C 1
+X bronze~
+
+#4003
+plate mail~
+ñZ¥Ò(plate mail)~
+¤@°ÆñZ¥Ò(plate mail)³Q©ñ¦b¦aªO¤W¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 10000 0
+C 10000
+X iron~
+
+#4004
+bronze-dagger bronze dagger~
+«C»É¤P­º(bronze dagger)~
+¤@§â«C»É¤P­º(bronze dagger)³Q¤p¤ßÁlÁlªº©ñ¸m¦b³o¸Ì¡C~
+~
+5 512 8193
+1001100~ 0~ 0~ 11~
+1 3000 0
+C 3000
+X bronze~
+
+#4005
+sharp dagger~
+¦y¾U¤P­º(sharp dagger)~
+¤@§â¦y¾U¤P­º(sharp dagger)³Q¥á±ó¦b¦a­±¤W¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 2500 0
+C 2500
+X steel~
+
+#4006
+hard leather~
+°íµw¥Ö¥Ò(hard leather)~
+¤@®M°íµwªº¥Ö¥Ò(hard leather)©ñ¸m¦b¦a¤W¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4007
+mace~
+°vÀYÁè(mace)~
+¤@§â°vÀYÁè(mace)³Q¥á¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 7~
+3 500 0
+C 500
+X iron~
+
+#4008
+morning star~
+¬y¬PÁè(morning star)~
+¤@§â¬y¬PÁè(morning star)©ñ¸m¦b¦aªO¤W¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 8~
+7 700 0
+C 700
+X iron~
+
+#4009
+spear~
+ªø¥Ù(spear)~
+¤@§âªø¥Ù(spear)©ñ¦b³o¸Ì¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+5 1000 0
+C 1000
+X iron~
+
+#4010
+boomerang~
+°j¤O¼Ð(boomerang)~
+¤@§â°j¤O¼Ð(boomerang)³Q©ñ¸m¦b¦aªO¤W¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 9~
+2 700 0
+C 700
+X bone~
+
+#4011
+small axe~
+¤p©òÀY(small axe)~
+¤@§â¤p©òÀY³Q©ñ¸m¦b¦a¤W¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 1~
+4 1 0
+C 1
+X iron~
+
+#4012
+leather jacket~
+¥Ö§¨§J(leather jacket)~
+¤@®M¥Ö§¨§J(leather jacket)³Q©ñ¦b¦a¤W¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 1 0
+C 1
+X leather~
+
+#4013
+chain mail~
+Áå¥Ò(chain mail)~
+¤@®MÁå¥Ò(chain mail)³Q©ñ¸m¦b³oÃä¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+8 2500 0
+C 2500
+X iron~
+
+#4014
+helm~
+ÀY²¯(helm)~
+¤@­±ÀY²¯(helm)³Q©ñ¦b³oÃä¡C~
+~
+9 0 17
+0~ 0~ 1001100~ 0~
+3 700 0
+C 700
+X iron~
+
+#4015
+gauntlets~
+¤â®M(gauntlets)~
+¤@°Æ¤â®M(gauntlets)³Q©ñ¸m¦b³oÃä¡C~
+~
+9 0 129
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4016
+leather boots~
+¥Ö¹u(leather boots)~
+¤@Âù¥Ö¹u(leather boots)©ñ¸m¦b³oÃä¡C~
+~
+9 0 65
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4017
+buckler~
+¤p¶ê¬Þ(buckler)~
+¤@­±¤p¶ê¬Þ(buckler)³Q©ñ¸m¦b³oÃä¡C~
+~
+9 0 513
+0~ 0~ 1001100~ 0~
+3 1000 0
+C 1000
+X wooden~
+
+#4018
+heavy club~
+¨H­«¤ì´Î(heavy club)~
+¤@®Ú¨H­«ªº¤ì´Î(heavy club)³Q¥á±ó¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 7~
+1 2000 0
+C 2000
+X wooden~
+
+#4019
+broom~
+±½©ª(broom)~
+¤@§â±½©ª(broom)¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 13~
+1 100 0
+C 100
+X wooden~
+
+#4020
+thief's dagger~
+µs¸é¤P­º(thief's dagger)~
+¤@§âµs¸é¤P­º(thief's dagger)³Q©ñ¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 500 0
+A
+18 2
+A
+2 1
+C 500
+X iron~
+
+#4021
+nice fur clothe~
+°ª¯Å¤ò¦ç(nice fur clothes)~
+¤@®M°ª¯Å¤ò¦ç(nice fur clothes)³Q¤p¤ßªº©ñ¸m¦b³oÃä¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4022
+sweater~
+¤ò½u¦ç(sweater)~
+¤@¥ó¤ò½u¦ç(sweater)³Q¥á±ó¦b³oÃä¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 300 0
+C 300
+X wool~
+
+#4023
+a small dark sword~
+îî¶Â¼C(dark sword)~
+¤@§â¤p«¬ªºîî¶Â¼C(dark sword)©ñ¸m¦b³oÃä¡C~
+~
+13 0 9
+1001100~ 0~ 0~ 3~
+1 1 0
+X iron~
+
+#4024
+scale mail~
+Åì¥Ò(scale mail)~
+¤@®MÅì¥Ò(scale mail)³Q¥á±ó¦b³oÃä¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 5000 0
+C 5000
+X scale~
+
+#4025
+long spear~
+ªø¥Ù(long spear)~
+¤@§âªø¥Ù(long spear)¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+1 2500 0
+C 2500
+X iron~
+
+#4026
+snake dagger~
+¶À»É³D«¬¤P­º(snake dagger)~
+¤@§â³D«¬ªº¶À»É¤P­º(snake dagger)³Q©ñ¸m¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 3000 0
+C 3000
+X brass~
+
+#4027
+brass hammer~
+¶À»ÉÁè(brass hammer)~
+¤@§â¥¨¤jªº¶À»ÉÁè(brass hammer)³Q©ñ¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 7~
+1 3500 0
+C 3500
+X brass~
+
+#4029
+short sword~
+¶À»Éµu¼C(short sword)~
+¤@§â¶À»Éµu¼C(short sword)³Q¥á±ó¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 800 0
+C 800
+X brass~
+
+#4030
+bowl~
+¸J(bowl)~
+¤@­Ó¸J(bowl)³Q©ñ¦b¦aªO¤W¡C~
+~
+5 0 8193
+0~ 0~ 0~ 0~
+1 50 0
+C 50
+X stone~
+
+#4031
+long sword~
+¶À»Éªø¼C(long sword)~
+¤@§â¶À»Éªø¼C(long sword)³Q¥á¦b¦aªO¤W¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+2 1000 0
+C 1000
+X brass~
+
+#4032
+bandit sword~
+µs¸é¤§¼C(bandit sword)~
+¤@§âµs¸é¤§¼C(bandit sword)³Q©ñ¸m¦b³oÃä¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+1 1000 0
+C 1000
+X iron~
+
+#4034
+chair~
+´È¤l(chair)~
+¤@§â´È¤l(chair)³Q©ñ¦b³oÃä¡C~
+~
+12 0 1
+0~ 0~ 0~ 0~
+1 250 0
+C 250
+X wooden~
+
+#4035
+working skirt~
+¤u§@¸È(working skirt)~
+¤@®M»êÅ¼ªº¤u§@¸È(working skirt)©ñ¸m¦b¦a¤W¡C~
+~
+9 0 2049
+0~ 0~ 1001100~ 0~
+1 300 0
+C 300
+X cloth~
+
+#4036
+nice fur cloak~
+°ª¯Å¤ò¤æ½´(nice fur cloak)~
+¤@Å§°ª¯Å¤ò¤æ½´(nice fur cloak)³Q¤p¤ßªº©ñ¸m³oÃä¡C~
+~
+9 0 5
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4037
+nice fur boots~
+°ª¯Å¤ò¹u¤l(nice fur boots)~
+¤@Âù°ª¯Å¤ò¹u¤l(nice fur boots)³Q¤p¤ßªº©ñ¸m¦b³oÃä¡C~
+~
+9 0 65
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4038
+nice fur sleeves~
+°ª¯Å¤òÅ@Áu(nice fur sleeves)~
+¤@°Æ°ª¯Å¤òÅ@Áu(nice fur sleeves)³Q¤p¤ßªº©ñ¸m¦b³oÃä¡C~
+~
+9 0 257
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4039
+nice fur gloves~
+°ª¯Å¤ò¤â®M(nice fur gloves)~
+¤@°Æ°ª¯Å¤ò¤â®M(nice fur gloves)³Q¤p¤ßªº©ñ¸m¦b³oÃä¡C~
+~
+9 0 129
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4040
+metal helm~
+ª÷ÄÝÀY²¯(metal helm)~
+¤@­±ª÷ÄÝÀY²¯(metal helm)³Q©ñ¸m¦b³oÃä¡C~
+~
+9 0 17
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X tin~
+
+#4041
+ring mail~
+Âê¤l¥Ò(ring mail)~
+¤@®MÂê¤l¥Ò(ring mail)³Q©ñ¦b¦aªO¤W¡C~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 1000 0
+C 1000
+X iron~
+
+#4042
+leather boots~
+¥Ö¹u¤l(pair of leather boots)~
+¤@Âù¥Ö¹u¤l(leather boots)©ñ¸m¦b³oÃä¡C~
+~
+9 0 65
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4043
+shiny dagger~
+µo¥ú¤P­º(shiny dagger)~
+¤@§âº}«Gªº¤P­º(dagger)¦b³o¸Ì°{°{µo«G¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 3000 0
+C 3000
+X brass~
+
+#4044
+black coat~
+¶Â¦â¤æ½´(black coat)~
+¤@Å§¶Â¦âªº¤æ½´(black coat)©ñ¦b¦aªO¤W¡C~
+~
+9 0 5
+0~ 0~ 1001100~ 0~
+1 5000 0
+C 5000
+X cloth~
+
+#4045
+copper dagger~
+»É¤P­º(copper dagger)~
+¤@§â»É»s¤P­º(copper dagger)³Q¥á±ó¦b³oÃä¡C~
+~
+13 0 1
+1001100~ 0~ 0~ 11~
+1 1 0
+C 1
+X bronze~
+
+#4046
+copper helm~
+»ÉÀY²¯(copper helm)~
+¤@­±»É»sÀY²¯(copper helm)³Q¥á±ó¦b¦aªO¤W¡C~
+~
+9 0 17
+0~ 0~ 1001100~ 0~
+1 4500 0
+C 4500
+X bronze~
+
+#4047
+broom big heavy~
+¤j±½©ª(big broom)~
+¤@°¦¤j±½©ª(big broom)³Q©ñ¦b¨¤¸¨¡C~
+~
+5 0 8193
+1001100~ 0~ 0~ 13~
+4 1000 0
+C 1000
+X wooden~
+
+#4048
+dish~
+½L¤l(dish)~
+¤@­±½L¤l(dish)³Q¥á±ó¦b³oÃä¡C~
+~
+5 0 8193
+0~ 0~ 0~ 0~
+1 250 0
+C 250
+X glass~
+
+#4049
+iron key~
+ÅKÆ_°Í(iron key)~
+¤@§âÅKÆ_°Í(iron key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4050
+bronze key~
+«C»ÉÆ_°Í(bronze key)~
+¤@§â«C»ÉÆ_°Í(bronze key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X bronze~
+
+#4051
+A big key~
+¤jÆ_°Í(big key)~
+¤@§â¤jÆ_°Í(big key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4052
+a small key~
+¤pÆ_°Í(small key)~
+¤@§â¤pÆ_°Í(small key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4053
+Jail key~
+ºÊº»Æ_°Í(Jail key)~
+¤@§âºÊº»Æ_°Í(jail key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4054
+room key~
+©Ð¶¡Æ_°Í(room key)~
+¤@§â©Ð¶¡Æ_°Í(room key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4055
+ruby key~
+¬õÄ_¥ÛÆ_°Í(ruby key)~
+¤@§â¬õÄ_¥ÛÆ_°Í(ruby key)³Q¥á±ó¦b³oÃä¡C~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X ruby~
+
+#4056
+assassination-dagger assassination dagger~
+·t±þ¤P­º(assassination dagger)~
+¤@§âªxµÛ¶Â¦â¥ú¨~ªº¤P­º(dagger)³Q¥á±ó¦b³oÃä¡C~
+~
+5 324 8193
+500~ 0~ 0~ 11~
+5 500000 0
+A
+2 1
+A
+5 1
+A
+39 -25
+A
+19 5
+A
+18 5
+A
+43 10
+C 500000
+P 1181188
+X steel~
+
+#4057
+oryx vest~
+­¸²Ü¥Ö¥Ò(oryx vest)~
+¤@¥ó»´ªº´X¥G¥i¥H¯B¦bªÅ¤¤ªº¥Ö¥Ò(vest)³Q¥á±ó¦b³oÃä¡C~
+~
+9 323 9
+0~ 0~ 4001400~ 0~
+1 500000 0
+Z 1
+A
+40 3
+A
+39 -30
+A
+24 5
+A
+19 -2
+A
+18 -2
+C 500000
+P 1181188
+X feather~
+
+#4058
+solar cloak~
+¥ú¤§Å@³T(solar cloak)~
+¤@¥óµo¥X¸U¤V¥ú¨~ªº³T¤l(cloak)³QÂ\©ñ¦b³oÃä¡C~
+~
+9 65795 1025
+0~ 0~ 3001300~ 0~
+5 100000 0
+A
+39 -10
+A
+35 -3
+A
+24 -4
+A
+17 -10
+A
+13 100
+A
+12 -50
+C 100000
+P 2130400
+X fiber~
+
+#4059
+flying shoes~
+­¸µ¾¤§¹u(shoes of flying)~
+¤@Âù»´ªº´X¥G¥i¥H¯B°_¨Óªº¹u¤l(shoes)³QÂ\©ñ¦b³oÃä¡C~
+~
+9 65795 65
+0~ 0~ 5001500~ 0~
+5 100000 0
+A
+39 -10
+A
+18 1
+A
+2 2
+C 100000
+P 2130400
+X feather~
+
+#4060
+poisonous-dagger poisonous dagger~
+²r¬r¤P­º(poisonous dagger)~
+¤@§âªxµÛºñ¦â¥ú¨~ªº¤P­º(dagger)³Q¥á±ó¦b³oÃä¡C~
+~
+5 131396 8193
+8001800~ 0~ 0~ 11~
+5 500000 0
+A
+42 3
+A
+41 3
+A
+19 1
+A
+18 2
+A
+43 10
+H poison~ 20 50 1
+C 500000
+P 1181188
+X iron~
+
+#4061
+heavy iron sword~
+­««¬ÅK¼C(heavy iron sword)~
+¤@§â­«¹F¼Æ¤Q¤½¤çªº¶Â¦âÅK¼C(iron sword)³Q¥á±ó¦b³oÃä¡C~
+~
+5 1|64|256 8193
+400~ 30~ 50~ 3~
+25 0 0
+C 30000
+A
+17 -20
+A
+18 5
+A
+19 5
+A
+43 25
+X dark iron~
+
+#4062
+Rules Thief~
+µs¸éªº¦u«h(Rules of Thief)~
+µs¸é©Ò»Ý­nª`·Nªº¨Æ¶µ(rules)³Q©ñ¦b³oÃä¡C~
+~
+1 64|256 1
+0~ 0~ -1~ 0~
+4 0 0
+E
+rules~
+¤@¤ùÁ¡Á¡ªº¥Ûª©¡A¤W­±¨è¤F¤@¨Ç¦r¡C
+~
+C 30000
+A
+40 1
+A
+39 -10
+P 1048576|131072|1024|512|4
+X stone~
+#4063
+Rules Thief~
+µs¸éªº¦u«h(Rules of Thief)~
+µs¸é©Ò»Ý­nª`·Nªº¨Æ¶µ(rules)³Q©ñ¦b³oÃä¡C~
+~
+1 1|64|256 1
+0~ 0~ -1~ 0~
+2 0 0
+E
+rules~
+¤@¥ó«C»É¶ê¬WÀJ¨è¡A¤W­±¨è¤F¤@¨Ç¦r¡C
+~
+C 30000
+A
+40 1
+A
+39 -17
+P 1048576|131072|1024|512|4
+X bronze~
+#4064
+Rules Thief~
+µs¸éªº¦u«h(Rules of Thief)~
+µs¸é©Ò»Ý­nª`·Nªº¨Æ¶µ(rules)³Q©ñ¦b³oÃä¡C~
+~
+1 1|64|256 1
+0~ 0~ -1~ 0~
+1 0 0
+E
+rules~
+¤@¥ó¶ÂÀÈ¤ì¶ê¬WÀJ¨è¡A¤W­±¨è¤F¤@¨Ç¦r¡C
+~
+C 30000
+A
+40 2
+A
+39 -20
+A
+3 1
+P 1048576|131072|1024|512|4
+X ebony~
+#4065
+Rules Thief~
+µs¸éªº¦u«h(Rules of Thief)~
+µs¸é©Ò»Ý­nª`·Nªº¨Æ¶µ(rules)³Q©ñ¦b³oÃä¡C~
+~
+1 1|2|64|256|4194304 1
+0~ 0~ -1~ 0~
+0 0 0
+E
+rules~
+¤@¥ó¶ÂÀÈ¤ì¶ê¬WÀJ¨è¡A¤W­±¨è¤F¤@¨Ç¦r¡C
+~
+C 30000
+A
+40 2
+A
+39 -25
+A
+3 1
+P 1048576|131072|1024|512|4
+F AFF_SNEAK
+X ebony~
+#4066
+cloak~
+ªø³T(cloak)~
+¤@¥ó°ïº¡¦Ç¹Ðªº³T¤l(cloak)³Q¥á¦b³oÃä¡C~
+~
+9 16384 1025
+0~ 0~ 1001100~ 0~
+5 10 0
+E
+cloak~
+³T¤lªº¤WÀYÂ¸¤F¤@¨Çªá¯¾¡A¬Ý°_¨Ó¹³¬O¬YºØ²ÕÂ´ªº¼Ð»x¡C
+~
+C 10
+X fiber~
+#4067
+jewel~
+¯]Ä_(jewel)~
+¤@¨Ç°{Ã{µÛ¥ú¨~ªº¯]Ä_¤l(jewel)³Q¿ò§Ñ¦b³o¸Ì¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 100000 0
+E
+jewel~
+´²µoµÛ°g¤Hªº¥ú½÷¡A§Aªºµø½u´X¥GÂ÷¤£¶}¥¦¤F¡C
+~
+C 10
+X diamond~
+#4068
+jewel~
+¯]Ä_(jewel)~
+¤@¨Ç°{Ã{µÛ¥ú¨~ªº¯]Ä_¤l(jewel)³Q¿ò§Ñ¦b³o¸Ì¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 100000 0
+E
+jewel~
+´²µoµÛ°g¤Hªº¥ú½÷¡A§Aªºµø½u´X¥GÂ÷¤£¶}¥¦¤F¡C
+~
+C 10
+X amethyst~
+#4069
+chest~
+¯}ÂÂªº½c¤l(chest)~
+¤@¤f¯}ÂÂªº½c¤l(chest)¦b«Î¤lªº¨¤¸¨¡C~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+¯}ÂÂªº¥~ªí¤U¡A¦ü¥G±aµÛ¾ú¥vªº¯µ±K¡C
+~
+X ebony~
+#4070
+slate-a~
+¯}¸Hªº¥ÛªO(slate)~
+¤@¶ô¯}¸Hªº¥ÛªO(slate)³Q¥á¦b¤@®Ç¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+³o¶ô¥ÛªO¦ü¥G¬O¤@¾ã¶ô¥ÛªOªº¤@³¡¤À¡A§Îª¬Ãþ¦ü¤@­Ó¤T¨¤§Î¡Aª½¨¤®Çªº
+¨º¨âÃä³£¬Oªº«W¸¨ªºª½½u¡A¦Ó¹ïÀ³ª½¨¤ªº¨ºÃä«o¬OÂø¶ÃµL³W«hªº¡C
+¥Ûª©ªº©³³¡¦³­Ó³o¼Ëªº°O¸¹¡G[1;17m¢| [m¡C
+~
+X stone~
+#4071
+dusty statueb~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡AÁöµM¦³³¡¤À´Ý¯Ê¡A¤£¹L©|¯à¤À¿ë­ì¥»
+¬O­Ó¤H¹³¡C¥u¨£¥¦Á|µÛ°ß¤@¶È³Ñªº¥k¤â«ü¦V«n¤è¡A¤]´N¬O§A¨Óªº¤è¦V¡C
+°ò®y¤£ª¾¬O§_¦]¬°¦~¥N¤[»·¦Ó¦³¨ÇÃP°Ê¡A§Ï©»¥i¥H±ÛÂà¤@¯ë¡H
+~
+X stone~
+#4072
+dusty statuea~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡AÁöµM¦³³¡¤À´Ý¯Ê¡A¤£¹L©|¯à¤À¿ë­ì¥»
+¬O­Ó¤H¹³¡C±ÛÂà°±¤î«á¡A¥¦ªº¤â«ü¦V¤F¥_¤è¡C
+~
+X stone~
+#4073
+immaterial legging~
+µL§Î¾Ô¥Ò(immaterial legging)~
+¤@¥ó¸}×H(legging)³Q¥á±ó¦b³o¸Ì¡C~
+~
+9 32|256|1024|65536 1|32
+0~ 0~ 1001100~ 0~
+5 10000 0
+E
+immaterial legging~
+¥¦´X¥G³z©ú¨ì§A·|©¿²¤¥¦ªº¦s¦b¡A¦]¥ú½u¨¤«×ªº¤£¦P¦Ó¦³µÛ¤£¦PÃC¦â¡C
+~
+C 15000
+Z 1
+A
+3 2
+A
+5 -1
+A
+17 10
+A
+39 -20
+A
+27 -5
+P 1048576|131072|32768|4096|1024|512|128|4|65536
+X glass~
+#4074
+wings bluesky~
+«CªÅ¤§Ál(wings of bluesky)~
+«CªÅ¤§Ál(wings of bluesky)Â\¦b¦a¤W¡C~
+~
+9 2|256|65536|4194304 1|1024
+0~ 0~ 1201120~ 0~
+1 10000 0
+E
+wings bluesky~
+¤@¥ó»s§@ºë¬üªºªø³T¡Aªø³Tªº¥~°¼Â¸µÛ¤@¹ï¯Í»H¡C
+~
+C 15000
+A
+35 -1
+A
+39 -30
+A
+42 5
+P 1024|1048576
+H fly~ 25 36 1
+X feather~
+#4075
+boots whitecloud~
+¥Õ¶³¤§¹u(boots of whitecloud)~
+¥Õ¶³¤§¹u(boots of whitecloud)Â\¦b¦a¤W¡C~
+~
+9 1|64 1|64
+0~ 0~ 1001100~ 0~
+3 10000 0
+E
+boots whitecloud~
+¤@Âù»s§@ºë¬üªºªø¹u¡Aªø¹uªº¥~°¼Â¸µÛ¤@¨Ç¶³§Î¹Ï?¡C
+~
+C 25000
+Z 1
+A
+5 1
+A
+19 2
+A
+39 -30
+P 1048576|131072|2048|1024|512|4
+X dragon scale~
+#4076
+deepblue hands~
+²`ÂÅ¤§¤â(deepblue hands)~
+²`ÂÅ¤§¤â(deepblue hands)Â\¦b¦a¤W¡C~
+~
+9 1|2|64|256 1|128
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+deepblue hands~
+¤@Âù²`ÂÅ¦âªº¤â®M¡A¦³µÛ·¥¬°¬üÄRªºÂÅ¦â¡C
+~
+C 45000
+Z 1
+A
+2 1
+A
+13 -10
+A
+18 2
+A
+39 -30
+P 1048576|131072|2048|1024|512|4
+X ice~
+#4077
+deepgreen woods~
+ºÑºñ¤§¤ì(deepgreen woods)~
+ºÑºñ¤§¤ì(deepgreen woods)Â\¦b¦a¤W¡C~
+~
+8 64|256 1|256
+0~ 0~ 1501150~ 0~
+2 10000 0
+E
+deepgreen woods~
+¤@¶ôÃC¦âÂAÆvªº¤ìÀJ«~¡C
+~
+C 45000
+Z 1
+A
+3 2
+A
+9 10
+A
+17 +5
+A
+39 -25
+P 1048576|131072|2048|1024|512|256|128|4
+X ebony~
+#4078
+ring wind~
+­·¤§§Ù(ring of wind)~
+­·¤§§Ù(ring of wind)Â\¦b¦a¤W¡C~
+~
+9 1|256 1|2
+0~ 0~ 1001100~ 0~
+1 10000 0
+E
+ring wind~
+¤@¥uºñ¦âªº§Ù«ü¡A¤WÀY¨èµÛ»R°Êªº½u±ø¡C
+~
+C 50000
+Z 1
+A
+2 2
+A
+39 -25
+P 1048576|131072|32768|1024|512|128|4|65536
+X jade~
+#4079
+bracer water~
+¤ô¤§ÅN(bracer of water)~
+¤ô¤§ÅN(bracer of water)Â\¦b¦a¤W¡C~
+~
+9 64|256|65536 1|4096
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+bracer water~
+¤@¥u°{Ã{µÛÂÅ¥úªº¤âÅN¡A¦³µÛªi®ö¯¾ªº¯BÀJ¡C
+~
+C 50000
+Z 1
+A
+4 1
+A
+27 -2
+A
+3 1
+A
+39 -20
+P 1048576|131072|1024|512|128|4|65536
+X ice~
+#4080
+amulet fire~
+¤õ¤§²Å(amulet of fire)~
+¤õ¤§²Å(amulet of fire)Â\¦b¦a¤W¡C~
+~
+9 2|16 1|4
+0~ 0~ 1001100~ 0~
+2 10000 0
+E
+amulet fire~
+¤@±ø¤õ¬õ¦âªºÅ@²Å¡AÀJ¨è¦¨¤õµKªº§Îª¬¡C
+~
+C 80000
+Z 1
+A
+12 -26
+A
+18 4
+A
+19 -2
+A
+39 -18
+P 1048576|131072|1024|512|4|65536
+X fire~
+#4081
+chest~
+¯}ÂÂªº½c¤l(chest)~
+¤@¤f¯}ÂÂªº½c¤l(chest)¦b«Î¤lªº¨¤¸¨¡C~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+¯}ÂÂªº¥~ªí¤U¡A¦ü¥G±aµÛ¾ú¥vªº¯µ±K¡C
+~
+X ebony~
+#4082
+chest~
+¯}ÂÂªº½c¤l(chest)~
+¤@¤f¯}ÂÂªº½c¤l(chest)¦b«Î¤lªº¨¤¸¨¡C~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+¯}ÂÂªº¥~ªí¤U¡A¦ü¥G±aµÛ¾ú¥vªº¯µ±K¡C
+~
+X ebony~
+#4083
+chest~
+¯}ÂÂªº½c¤l(chest)~
+¤@¤f¯}ÂÂªº½c¤l(chest)¦b«Î¤lªº¨¤¸¨¡C~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+¯}ÂÂªº¥~ªí¤U¡A¦ü¥G±aµÛ¾ú¥vªº¯µ±K¡C
+~
+X ebony~
+#4084
+chest~
+¯}ÂÂªº½c¤l(chest)~
+¤@¤f¯}ÂÂªº½c¤l(chest)¦b«Î¤lªº¨¤¸¨¡C~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+¯}ÂÂªº¥~ªí¤U¡A¦ü¥G±aµÛ¾ú¥vªº¯µ±K¡C
+~
+X ebony~
+#4085
+chest~
+¯}ÂÂªº½c¤l(chest)~
+¤@¤f¯}ÂÂªº½c¤l(chest)¦b«Î¤lªº¨¤¸¨¡C~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+¯}ÂÂªº¥~ªí¤U¡A¦ü¥G±aµÛ¾ú¥vªº¯µ±K¡C
+~
+X ebony~
+#4086
+chest~
+¯}ÂÂªº½c¤l(chest)~
+¤@¤f¯}ÂÂªº½c¤l(chest)¦b«Î¤lªº¨¤¸¨¡C~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+¯}ÂÂªº¥~ªí¤U¡A¦ü¥G±aµÛ¾ú¥vªº¯µ±K¡C
+~
+X ebony~
+#4087
+slate-b~
+¯}¸Hªº¥ÛªO(slate)~
+¤@¶ô¯}¸Hªº¥ÛªO(slate)³Q¥á¦b¤@®Ç¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+³o¶ô¥ÛªO¦ü¥G¬O¤@¾ã¶ô¥ÛªOªº¤@³¡¤À¡A§Îª¬Ãþ¦ü¤@­Ó¤T¨¤§Î¡Aª½¨¤®Çªº
+¨º¨âÃä³£¬Oªº«W¸¨ªºª½½u¡A¦Ó¹ïÀ³ª½¨¤ªº¨ºÃä«o¬OÂø¶ÃµL³W«hªº¡C
+¥Ûª©ªº©³³¡¦³­Ó³o¼Ëªº°O¸¹¡G[1;17m¢| [m¡C
+~
+X stone~
+#4088
+dusty statueb~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡A°ß¤@©Ç²§
+ªº¦a¤è´N¬O¦b°ò®yªº¤W­±¦ü¥G¦³¨â­Ó¤â¦L(hands)ªº¯BÀJ¡A¦Ó¤â¦L¤¤
+«ü«h«ü¦V¤W¤è¡C°ò®y¤W­±§Gº¡¤F¦Ç¹Ð¡A°ß¤@°®²bªº¦a¤è´N¥u¦³³o¤â¦L
+¦Ó¥H¡AÃø¹D³o¤â¦L±`±`³Q¤H®a«ö¹L¶Ü¡H
+~
+X stone~
+#4089
+dusty statuea~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡A°ß¤@©Ç²§
+ªº¦a¤è´N¬O°ò®yªº¤W­±¦ü¥G¦³¤@­Ó¤â¦Lªº¯BÀJ¡AÀ£¤U¤F¤â¦L¤§«á¡A³o
+¤â¦Lªº¤¤«ü¦ü¥G«ü¦V¤F¤U¤è¡C
+~
+X stone~
+#4090
+slate-c~
+¯}¸Hªº¥ÛªO(slate)~
+¤@¶ô¯}¸Hªº¥ÛªO(slate)³Q¥á¦b¤@®Ç¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+³o¶ô¥ÛªO¦ü¥G¬O¤@¾ã¶ô¥ÛªOªº¤@³¡¤À¡A§Îª¬Ãþ¦ü¤@­Ó¤T¨¤§Î¡Aª½¨¤®Çªº
+¨º¨âÃä³£¬Oªº«W¸¨ªºª½½u¡A¦Ó¹ïÀ³ª½¨¤ªº¨ºÃä«o¬OÂø¶ÃµL³W«hªº¡C
+¥Ûª©ªº©³³¡¦³­Ó³o¼Ëªº°O¸¹¡G[1;17m¢| [m¡C
+~
+X stone~
+#4091
+slate-d~
+¯}¸Hªº¥ÛªO(slate)~
+¤@¶ô¯}¸Hªº¥ÛªO(slate)³Q¥á¦b¤@®Ç¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+³o¶ô¥ÛªO¦ü¥G¬O¤@¾ã¶ô¥ÛªOªº¤@³¡¤À¡A§Îª¬Ãþ¦ü¤@­Ó¤T¨¤§Î¡Aª½¨¤®Çªº
+¨º¨âÃä³£¬Oªº«W¸¨ªºª½½u¡A¦Ó¹ïÀ³ª½¨¤ªº¨ºÃä«o¬OÂø¶ÃµL³W«hªº¡C
+¥Ûª©ªº©³³¡¦³­Ó³o¼Ëªº°O¸¹¡G[1;17m¢| [m¡C
+~
+X stone~
+#4092
+slate-e~
+¯}¸Hªº¥ÛªO(slate)~
+¤@¶ô¯}¸Hªº¥ÛªO(slate)³Q¥á¦b¤@®Ç¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+³o¶ô¥ÛªO¦ü¥G¬O¤@¾ã¶ô¥ÛªOªº¤@³¡¤À¡A§Îª¬Ãþ¦ü¤@­Ó¤T¨¤§Î¡Aª½¨¤®Çªº
+¨º¨âÃä³£¬Oªº«W¸¨ªºª½½u¡A¦Ó¹ïÀ³ª½¨¤ªº¨ºÃä«o¬OÂø¶ÃµL³W«hªº¡C
+¥Ûª©ªº©³³¡¦³­Ó³o¼Ëªº°O¸¹¡G[1;17m¢| [m¡C
+~
+X stone~
+#4093
+slate-f~
+¯}¸Hªº¥ÛªO(slate)~
+¤@¶ô¯}¸Hªº¥ÛªO(slate)³Q¥á¦b¤@®Ç¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+³o¶ô¥ÛªO¦ü¥G¬O¤@¾ã¶ô¥ÛªOªº¤@³¡¤À¡A§Îª¬Ãþ¦ü¤@­Ó¤T¨¤§Î¡Aª½¨¤®Çªº
+¨º¨âÃä³£¬Oªº«W¸¨ªºª½½u¡A¦Ó¹ïÀ³ª½¨¤ªº¨ºÃä«o¬OÂø¶ÃµL³W«hªº¡C
+¥Ûª©ªº©³³¡¦³­Ó³o¼Ëªº°O¸¹¡G[1;17m¢| [m¡C
+~
+X stone~
+#4094
+slate-g~
+¯}¸Hªº¥ÛªO(slate)~
+¤@¶ô¯}¸Hªº¥ÛªO(slate)³Q¥á¦b¤@®Ç¡C~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+³o¶ô¥ÛªO¦ü¥G¬O¤@¾ã¶ô¥ÛªOªº¤@³¡¤À¡A§Îª¬Ãþ¦ü¤@­Ó¤T¨¤§Î¡Aª½¨¤®Çªº
+¨º¨âÃä³£¬Oªº«W¸¨ªºª½½u¡A¦Ó¹ïÀ³ª½¨¤ªº¨ºÃä«o¬OÂø¶ÃµL³W«hªº¡C
+¥Ûª©ªº©³³¡¦³­Ó³o¼Ëªº°O¸¹¡G[1;17m¢| [m¡C
+~
+X stone~
+#4095
+dusty statueb~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡A°ß¤@¤£¦P
+©ó¨ä¥LÀJ¹³ªº¦a¤è¬O¦b°ò®y¤W­±¦ü¥G¦³­Ó«ö¶s¡A°ò®y¤W­±°£¤F«ö¶s
+(button)¤§¥~¦ü¥G³£¤Q¤Àªº°®²b¡C³o¬O«ç»ò¤@¦^¨Æ©O¡H
+~
+X stone~
+#4096
+dusty statuea~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡A°ß¤@¤£¦P
+ªº¦a¤è¬O¦b°ò®yªº¤W­±¦ü¥G¦³­Ó«ö¶s¡A·PÄ±¤W³o«ö¶s¦ü¥G¤~­è³Q¤H«ö
+¹L¡C
+~
+X stone~
+#4097
+dusty statueb~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡A©_©Çªº¬O
+¦b³o°ò®y¤W­±«ç»ò¦³­Ó¬ð¤aªº¤T¨¤§Î(triangle)¡A³o¤T¨¤§Î¤W­±¤@ÂI
+¦Ç¹Ð³£¨S¦³¹³¬O­è³Q²¾°Ê¹L¡AÃø¤£¦¨³o¤T¨¤§Î¦³¤°»ò¾÷Ãö¶Ü¡H
+~
+X stone~
+#4098
+dusty statuea~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡A©_©Çªº¬O
+³o°ò®y¤W­±¦ü¥G¦³­Ó³Q²¾°Ê¹Lªº¤T¨¤§Î¡AÃø¹D³o°ò®y¦³¤°»ò¯µ±K¶Ü¡H
+~
+X stone~
+#4099
+dusty statueb~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡C¤ñ°_¨ä¥L
+ÀJ¹³¨Ó»¡¡A³oÀJ¹³ªº°ò®y¤W­±¹ê¦b¬O¤Ó´¶³q¤F¡A¨S¦³¥ô¦ó©Ç²§ªº¦a¤è
+¡C¤£¹LÀJ¹³ªº¤â¤W¡A«ç»ò¦³µÛ¤@­Ó©ú«Gªº¤ô´¹²y¡A¬Ý°_¨Ó´NÅý¤H¦n·Q
+Ä²ºN¤@¤U¡I
+~
+X stone~
+#4100
+dusty statuea~
+§Gº¡¦Ç¹ÐªºÀJ¹³(dusty statue)~
+§Gº¡¦Ç¹ÐªºÀJ¹³(statue)Â\¦b©Ð¶¡ªº¥¿¤¤¥¡¡C~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+¥ÛÀJ¹³³QÆ^¦b¤@¶ô¶ê§Îªº°ò®y¤W¡A°ò®y¬Ý°_¨Ó¤Q¤Àªº§¹¾ã¡C¤ñ°_¨ä¥L
+ÀJ¹³¨Ó»¡¡A³oÀJ¹³ªº°ò®y¹ê¦b¬O¤Ó´¶³q¤F¡C¤£¹L³oÀJ¹³¤â¤Wªº¤ô´¹²y
+¦ü¥G¤S³QÄ²ºN¹Lªº²ª¸ñ¡I
+~
+X stone~
+
+#4101
+dark skirt~
+îî¶Âºh¸È(dark skirt)~
+¤@Å§ÂK¶Âªº¸È¤l(skirt)³Q±ó¸m¦b¦a¤W¡C~
+~
+9 1|4|16|64 1|32
+0~ 0~ 400~ 0~
+5 0 0
+C 200000
+Z 1
+A
+3 1
+A
+13 25
+P 32|64|128|256|32768|65536|1048576
+
+#4102
+wonder light gloves~
+©_¥úÅ@¤â(gloves of wonder light)~
+¤@®Mµo¥X©_¯S¥ú¨~ªº¤â®M(gloves)³QÂ\©ñ¦b³oÃä¡C~
+~
+9 1|32|64|256 1|128
+0~ 0~ 200~ 0~
+5 0 0
+C 200000
+Z 1
+A
+4 1
+A
+13 20
+P 32|64|128|256|32768|65536|1048576
+
+#4103
+colour girth~
+¤C±mÅ@¸y(colour girth)~
+¤@±øµo¥X¤C±m¥ú¨~ªºÅ@¸y(girth)³Q©ñ¦b³oÃä¡C~
+~
+9 1|32|64|256 1|2048
+0~ 0~ 150~ 0~
+5 0 0
+C 200000
+Z 1
+A
+39 1
+A
+13 30
+P 32|64|128|256|32768|65536|1048576
+
+#4104
+hard wood~
+°íµw¤ì§÷(hard wood)~
+¤@¤ù°íµwªº¤ì®Æ(hard wood)³Q©ñ¦b¦a¤W¡C~
+~
+12 0 1
+0~ 0~ 0~ 0~
+50 0 0
+
+#4105
+brambles crown~
+¯ð´Æ¤§«a(brambles crown)~
+¯ð´Æ¤§«a(brambles crown)³Q©ñ¦b¦a­±¤W¡C~
+~
+9 512 17
+0~ 0~ 100~ 0~
+20 800 0
+C 80000
+L 36
+A
+2 2
+A
+18 2
+A
+39 -15
+P 4|512|1024|131072|1048576
+X ebony~
+#4106
+immaterial legging~
+µL§Î¾Ô¥Ò(immaterial legging)~
+¤@¥ó¸}×H(legging)³Q¥á±ó¦b³o¸Ì¡C~
+~
+9 32|256|1024|65536 1|32
+0~ 0~ 1001100~ 0~
+5 10000 0
+E
+immaterial legging~
+¥¦´X¥G³z©ú¨ì§A·|©¿²¤¥¦ªº¦s¦b¡A¦]¥ú½u¨¤«×ªº¤£¦P¦Ó¦³µÛ¤£¦PÃC¦â¡C
+~
+C 15000
+A
+3 2
+A
+5 -1
+A
+17 15
+A
+39 -20
+A
+27 -5
+P 1048576|1024
+X glass~
+#4107
+boots whitecloud~
+¥Õ¶³¤§¹u(boots of whitecloud)~
+¥Õ¶³¤§¹u(boots of whitecloud)Â\¦b¦a¤W¡C~
+~
+9 1|64 1|64
+0~ 0~ 1001100~ 0~
+3 10000 0
+E
+boots whitecloud~
+¤@Âù»s§@ºë¬üªºªø¹u¡Aªø¹uªº¥~°¼Â¸µÛ¤@¨Ç¶³§Î¹Ï?¡C
+~
+C 25000
+A
+19 2
+A
+39 -30
+P 1048576|1024
+X dragon scale~
+#4108
+deepblue hands~
+²`ÂÅ¤§¤â(deepblue hands)~
+²`ÂÅ¤§¤â(deepblue hands)Â\¦b¦a¤W¡C~
+~
+9 1|2|64|256 1|128
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+deepblue hands~
+¤@Âù²`ÂÅ¦âªº¤â®M¡A¦³µÛ·¥¬°¬üÄRªºÂÅ¦â¡C
+~
+C 45000
+A
+2 1
+A
+13 -10
+A
+18 2
+A
+39 -20
+P 1048576|1024
+X ice~
+#4109
+oryx vest~
+­¸²Ü¥Ö¥Ò(oryx vest)~
+¤@¥ó»´ªº´X¥G¥i¥H¯B¦bªÅ¤¤ªº¥Ö¥Ò(vest)³Q¥á±ó¦b³oÃä¡C~
+~
+9 323|2048 9
+0~ 0~ 4001400~ 0~
+1 500000 0
+A
+40 3
+A
+39 -30
+A
+24 5
+A
+19 -2
+A
+18 -2
+C 500000
+P 1181188
+X feather~
+#4110
+amulet fire~
+¤õ¤§²Å(amulet of fire)~
+¤õ¤§²Å(amulet of fire)Â\¦b¦a¤W¡C~
+~
+9 2|16|16777216 1|4
+0~ 0~ 1001100~ 0~
+2 10000 0
+E
+amulet fire~
+¤@±ø¤õ¬õ¦âªºÅ@²Å¡AÀJ¨è¦¨¤õµKªº§Îª¬¡C
+~
+C 80000
+A
+12 -26
+A
+18 4
+A
+19 -2
+A
+39 -16
+P 1048576|1024
+X fire~
+#4111
+deepgreen woods~
+ºÑºñ¤§¤ì(deepgreen woods)~
+ºÑºñ¤§¤ì(deepgreen woods)Â\¦b¦a¤W¡C~
+~
+8 64|256 1|256
+0~ 0~ 1501150~ 0~
+2 10000 0
+E
+deepgreen woods~
+¤@¶ôÃC¦âÂAÆvªº¤ìÀJ«~¡C
+~
+C 45000
+A
+3 1
+A
+9 10
+A
+17 +5
+A
+39 -25
+P 1048576|1024
+X ebony~
+#4112
+ring wind~
+­·¤§§Ù(ring of wind)~
+­·¤§§Ù(ring of wind)Â\¦b¦a¤W¡C~
+~
+9 1|256|16777216 1|2
+0~ 0~ 1001100~ 0~
+1 10000 0
+E
+ring wind~
+¤@¥uºñ¦âªº§Ù«ü¡A¤WÀY¨èµÛ»R°Êªº½u±ø¡C
+~
+C 50000
+A
+2 2
+A
+39 -25
+P 1048576|1024
+X jade~
+#4113
+bracer water~
+¤ô¤§ÅN(bracer of water)~
+¤ô¤§ÅN(bracer of water)Â\¦b¦a¤W¡C~
+~
+9 64|256|65536|16777216 1|4096
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+bracer water~
+¤@¥u°{Ã{µÛÂÅ¥úªº¤âÅN¡A¦³µÛªi®ö¯¾ªº¯BÀJ¡C
+~
+C 50000
+A
+4 1
+A
+27 -2
+A
+3 1
+A
+39 -16
+P 1048576|1024
+X ice~
+#4114
+dark skirt~
+îî¶Âºh¸È(dark skirt)~
+¤@Å§ÂK¶Âªº¸È¤l(skirt)³Q±ó¸m¦b¦a¤W¡C~
+~
+9 1|4|16|64 1|32
+0~ 0~ 400~ 0~
+5 0 0
+C 200000
+A
+3 1
+A
+13 25
+A
+18 2
+A
+44 4
+P 32|64|128|256|32768|65536|1048576
+
+#4115
+wonder light gloves~
+©_¥úÅ@¤â(gloves of wonder light)~
+¤@®Mµo¥X©_¯S¥ú¨~ªº¤â®M(gloves)³QÂ\©ñ¦b³oÃä¡C~
+~
+9 1|32|64|256 1|128
+0~ 0~ 200~ 0~
+5 0 0
+C 200000
+A
+4 1
+A
+13 20
+A
+18 3
+A
+44 5
+P 32|64|128|256|32768|65536|1048576
+
+#4116
+colour girth~
+¤C±mÅ@¸y(colour girth)~
+¤@±øµo¥X¤C±m¥ú¨~ªºÅ@¸y(girth)³Q©ñ¦b³oÃä¡C~
+~
+9 1|32|64|256 1|2048
+0~ 0~ 150~ 0~
+5 0 0
+C 200000
+A
+18 7
+A
+44 5
+P 1081827
+
+#0
+
+
+
+#ROOMDATA
+#4000
+¦b°s©±¤§¤U~
+³o¸Ì©ñ¸mµÛ¤@°ï°s±í»P­¹ª«¡C«Ü©úÅãªº³o¸Ì¬O°s©±ÀxÂÃ­¹ª«ªº¦a¤è¡A¦ý¬O«Ü©_©Çªº³o
+¸Ì¦³¤@±ø¦ÑÂÂªº¨i¹D³q©¹ªFÃä¡C
+~
+0 1 6
+D1
+~
+~
+0 0 4001
+D4
+~
+~
+119 4000 4069
+S
+#4001
+¼o±óªº¨i¹D~
+·í§A¶i¤J³o¤@±ø¦ÑÂÂ¯U¤pªº¨i¹D®É¡A§Aµo²{¸ÌÀY¨ä¹ê«D±`°®²b¡AÅã¥Ü³o±ø¨i¹D¸g±`¦³
+¤H¦b¨Ï¥Î¡C
+~
+0 1 6
+D1
+~
+~
+0 0 4002
+D3
+~
+~
+0 0 4000
+S
+#4002
+¼o±óªº¨i¹D~
+·í§A¶i¤J³o¤@±ø¦ÑÂÂ¯U¤pªº¨i¹D®É¡A§Aµo²{¸ÌÀY¨ä¹ê«D±`°®²b¡AÅã¥Ü³o±ø¨i¹D¸g±`¦³
+¤H¦b¨Ï¥Î¡C
+~
+0 1 6
+D3
+~
+~
+0 0 4001
+D4
+~
+~
+0 0 4070
+S
+#4005
+¯¸¦b°ª¤s¤W~
+¯¸¦b³oÃä§AÄ±±o¤ßÃm¯«©É¡A§A¦P®É¥i¥H»·»·ªº¬Ý¨ì¥ú©ú¤§Âí¤ºÂí¥Á¬¡°Êªºª¬ªp¡C
+~
+0 4 1
+D0
+~
+~
+0 0 4041
+D1
+~
+~
+0 0 4665
+S
+#4041
+¥Ð¶é¤p¹D~
+¸ô¤W±IÀR¡A´º¦âÀu¬ü¡A¦b³o¸Ì§A¬Ý¨ì³\¦h°Êª«¡C
+~
+0 4 2
+D0
+~
+~
+0 0 4042
+D2
+~
+~
+0 0 4005
+S
+#4042
+¥Ð¶é¤p¹D~
+¸ô¤W±IÀR¡A´º¦âÀu¬ü¡A¦b³o¸Ì§A¬Ý¨ì³\¦h°Êª«¡C
+~
+0 4 2
+D0
+~
+~
+0 0 4043
+D2
+~
+~
+0 0 4041
+S
+#4043
+¥æ¤e¸ô¤f~
+§A²{¦b¯¸¦b¤@­Ó¸ô¤f¤W¡C§A¬Ý¨ì¥_¤è¦³¤@¤ù´ËªL¡A¨º¸Ì¦³¤@±ø³q©¹¶Â´ËªLªº¤p®|¡C
+~
+0 1028 2
+D1
+~
+~
+0 0 4044
+D2
+~
+~
+0 0 4042
+S
+#4044
+³±·tªº¤p¸ô~
+³o¸Ì¾ð¤ì«D±`­Z²±¡A¨B¦æ¤p¹D¬ï¹L³o¤ù¬üÄRªº´ËªL¡C
+~
+0 0 3
+D1
+~
+~
+0 0 4045
+D3
+~
+~
+0 0 4043
+S
+#4045
+³±·tªº¤p¸ô~
+§A¯¸¦b¤@±ø³±·tªº¤p¹D¤W¡C³o¸ÌªºªÅ®ðÁÙºâ¤£¿ù¡C
+~
+0 0 3
+D0
+~
+~
+0 0 4046
+D3
+~
+~
+0 0 4044
+S
+#4046
+³±·tªº¤p¸ô~
+¤p¹D©µ¦ù¨ì³o¸ÌÂà¦VªFÃä¦Ó¥h¡C
+~
+0 0 3
+D1
+~
+~
+0 0 4047
+D2
+~
+~
+0 0 4045
+S
+#4047
+îî¶Â´ËªL~
+©Ò¦³´ºª«¬Ý¨Ó§ó¥i©È¤F¡A¦Ó¥B¤@¨Ç©_©ÇªºÂø­µ±q¶Â´ËªLªº²`³B¶Ç¨Ó¡C
+~
+0 0 3
+D1
+~
+~
+0 0 4048
+D3
+~
+~
+0 0 4046
+S
+#4048
+îî¶Â´ËªL~
+§A¦b³o¸Ì¥u¯à°÷«j±j¬Ý¨ì³q©¹ªFÃä»P¦èÃäªº¸ô¡C
+~
+0 0 3
+D1
+~
+~
+0 0 4054
+D3
+~
+~
+0 0 4047
+S
+#4054
+´ËªL¤p¸ôªººÉÀY~
+²×©ó§A¬Ý¨ìªF¤è¦³¤@¨Ç«G¥ú¡A³o¸Ì¤@©w¬O³o±øªø¸ôªº²×ÂI¡C
+~
+0 4 3
+D1
+~
+~
+0 0 4055
+D3
+~
+~
+0 0 4048
+S
+#4055
+¼o±ó¼s³õªº¤J¤f~
+¨«¤F³o¬q¬ï¹L´ËªLªº·t¸ô¤§«á¡A¬ðµM¨ì¤F¤@­Ó¼s³õ¡A§A³Q±j¯Pªº¥ú¨~·Óªº´X¥G
+±i¤£¶}²´·ú¡C
+~
+0 0 1
+D0
+~
+~
+0 0 4058
+D1
+~
+~
+0 0 4056
+D3
+~
+~
+0 0 4054
+S
+#4056
+¼o±óªº¼s³õ~
+§A¯¸¦b¯î¼o¼s³õªº«n°¼¡A¤@­Ó©_©Çªº·Qªk¬ï¹L§Aªº¤ß¤¤¡A§A«Ü¯Ç´e³o¸Ì±q«e¬O¤°»ò¼Ë¤l¡C
+Ãø¹D¬O¤@­Ó¹³²{¦bªº¥v¥d©Ô¨©«°¤@¼ËÁcºaªº«°¥«¶Ü¡H
+~
+0 0 1
+D0
+~
+~
+0 0 4059
+D1
+~
+~
+0 0 4057
+D3
+~
+~
+0 0 4055
+S
+#4057
+¼o±óªº¼s³õ~
+§A¯¸¦b¤@­Ó·´±¼ªº¼Q¬u®Ç¡A§A¬Ý¨ì¥_¤è¤£»·³B¦³¤@®yÁà­®°ª¤jªº«Ø¿vª«¡C§AÁô¬ù¦aÅ¥¨ì»·
+³B¶Ç¨Ó°}°}§nÂøÁn¡C
+~
+0 0 1
+D0
+~
+~
+0 0 4060
+D3
+~
+~
+0 0 4056
+S
+#4058
+¼o±óªº¼s³õ~
+²M­·¥Ñ¦è¤è§j¨Ó¡C§A¯à¬Ý¨ì¦èÃä»·³B¦³¤@­Ó¬üÄRªº¤p¤s©Y¡C
+~
+0 0 1
+D0
+~
+~
+0 0 4061
+D1
+~
+~
+0 0 4059
+D2
+~
+~
+0 0 4055
+S
+#4059
+¼o±óªº¼s³õ~
+§A²{¦b¾aªñ¼s³õªº¤¤¥¡¡C¨ì³B³£¬O©U§£¡BÃI±¼ªº­¹ª«©M¦º«Í¡C
+~
+0 0 1
+D0
+~
+~
+0 0 4062
+D1
+~
+~
+0 0 4060
+D2
+~
+~
+0 0 4056
+D3
+~
+~
+0 0 4058
+S
+#4060
+¼o±óªº¼s³õ~
+³o¸Ì¦³¤@´Ê¤j¾ð¡C¦b¾ð¼v¤§¤U¡A§A©¹¤W¬Ý·Qª¾¹D³o´Ê¾ð¨ì©³¦h°ª¡C¦ý¬O§A¬Ý¤£¨ì¾ð³»¡A
+¥u¬Ý¨ì³z¹L¸­¼vªº¶§¥ú¡Cµ¥·|...¡A§A¯à«j±j±q¾ð¸Ì¬Ý¨ì¬Y¨ÇªF¦è¡C
+~
+0 0 1
+D2
+~
+~
+0 0 4057
+D3
+~
+~
+0 0 4059
+S
+#4061
+¼o±óªº¼s³õ~
+§A²{¦b¯¸¦b¼s³õªº¦è°¼¡C³o¸Ì°£¤F¤@¨ÇÁà­®ªº°Êª«¥H¥~¡A¤°»ò³£¨S¦³¡C
+~
+0 0 1
+D0
+~
+~
+0 0 4064
+D1
+~
+~
+0 0 4062
+D2
+~
+~
+0 0 4058
+S
+#4062
+¼o±óªº¼s³õ~
+§A¯¸¦b¤@­Ó·´±¼ªº¼Q¬u®Ç¡A¦Ó¥B§A¬Ý¨ìªF¤è¦³¤@®yÁà­®ªº«Ø¿vª«¡C§AÅ¥¨ì«Î¤¤¶Ç¨Ó°}°}
+ÂøÁn¡C¦Ó·í§A±q¤@­Ó¤p¬}¿sµø¸Ì­±ªº®É­Ô¡A§A¬Ý¨ì³\¦h¤H¦b¨º½ä³Õ¡B³Ü°s¡B¬Æ¦Ü¥´¬[¾x¨Æ¡C
+~
+0 0 1
+D0
+~
+~
+0 0 4065
+D1
+~
+~
+3 0 4063
+D2
+~
+~
+0 0 4059
+D3
+~
+~
+0 0 4061
+S
+#4063
+°s©±~
+³o­Ó°s§a²@µL¯´§Çªº§nµÛ¡C¦Ó¥B§A¯à¬Ý¨ì¨ÍªÌ¦b¸s®à¤¤¬ï±ô¡AªA°È«È¤H¡C
+~
+0 4 0
+D1
+~
+~
+0 0 4068
+D3
+~
+~
+3 0 4062
+S
+#4064
+¼o±óªº¼s³õ~
+³o¸Ì¬O¼s³õªºªF¥_Ãä¡C³o¸ÌªºªF¦è¬Ý°_¨Ó³£Åý¤H¤£¤ÓµÎªA¡C¦b¶Â·tªº¨¤¸¨ùØ¡A§A¥i¥H¬Ý¨ì
+¤@¨Ç¥¿¦b½w½wª¦¦æªºäú¤ßª¦ÂÎÃþ¡C
+~
+0 0 1
+D1
+~
+~
+0 0 4065
+D2
+~
+~
+0 0 4061
+S
+#4065
+¼o±óªº¼s³õ~
+§A¬Ý¨ì¥_¤è¦³¤@®y¶¯°¶ªº¤s¡C©¹«nªº¸ô³q©¹¼s³õ¤¤¥¡¡A±q³o¸Ì§A¬Ý¨ìªFÃä¦³¤@®è«ÜÁàªº¾ð
+(tree)¡A¦Ó³o¸Ì¦³¤@¨Ç¬Ý°_¨Ó¯à·í§@«Ø§÷ªº¨}¤ì¡C
+~
+0 0 4
+D1
+~
+~
+0 0 4066
+D2
+~
+~
+0 0 4062
+D3
+~
+~
+0 0 4064
+E
+tree~
+³o¨Ç¾ð¤ìªº¥~«¬ÁöµM«ÜÁà¡A¦ý¬O½è¦a«o¬O¬Û·íªº°íµw¡A¬O®³¨Ó·í«Ø§÷ªº¦n§÷®Æ¡C
+~
+>room_command hack tree~
+if roomvalue($0) >= 3
+	echoat $n §A¤w¸g±N³oÃäªº¤ì§÷µ¹¬å¥ú¤F¡A
+	echoat $n »Ý­n¹L¤@¬q®É¶¡¤~¯àªø¥X¨Ó¡C
+	break
+endif
+echoat $n §A¹Á¸Õ­n¬å¤U³o´Ê¾ð¾ðªK....
+echoaround $n $n ¹Á¸Õ­n¬å¤U³o´Ê¾ðªº¾ðªK....
+if str($n) < 22
+	callout 1 echoat $n §Aªº¤O¶q¤£°÷¡AµLªk¬åÂ_³o´Ê½è¦a°íµwªº¾ð¡C
+	callout 1 echoaround $n $n ¥ÎºÉ¤F¤O®ð¤´µLªk¬åÂ_³o´Ê¾ð¡C
+else
+	callout 1 modrvt v0 + 1
+	callout 1 modrvt t0 = 36
+	callout 1 echoat $n §A¥Î¤O±N³o´Ê¾ðªº¾ðªKµ¹¬åÂ_¤F....
+	callout 1 echoaround $n $n ¥Î¤O±N³o´Ê¾ðªº¾ðªKµ¹¬åÂ_¤F....
+	callout 1 oload 4104 5 floor
+endif
+~
+|
+S
+#4066
+¼o±óªº¼s³õ~
+§A¬Ý¨ì¤@´Ê¤j¾ð¦bÄé¤ìÂOªº¤¤¥¡¡C³o´Ê¾ð¯uªº«D±`«D±`ªº¤j¡A§A¥i¥H¬Ý¨ì¾ð¤W¦³³\¦h
+»jµï¦b¤WÀYª¦¦æ¡C©¿µM§A·PÄ±¨ì¦³¤@°}¶Â¼v¦b§A²´«e°{¹L¡A¦ý¬O·í§Aª`·N¨ìªº®É­Ô¡A¶Â¼v
+¤w¸g¤£¨£¡C
+~
+0 0 1
+D3
+~
+~
+0 0 4065
+S
+#4067
+¨¤¸¨~
+°s©±ªº¥_°¼¡A¨S¦³¤@¶¡©Ð¶¡¦³¦ì¸m¯àÅý§A§¤¤U¡A¦]¬°³oÃäªº¤H¤Ó¦h¤F¡A§A³Ì¦n¤p¤ß³Ü¾K°s
+ªº°s«È©Î©¿µM¹ï§Aµo°Ê§ðÀ»¡C
+~
+0 0 0
+D2
+~
+~
+0 0 4068
+S
+#4068
+¨«¶i°s©±~
+§A¨«¦bÁ`¬O¦³¤@°ï¹C¤â¦n¶¢ªº¤H»E¶°ªº°s©±¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4067
+D2
+~
+~
+0 0 4069
+D3
+~
+~
+0 0 4063
+S
+#4069
+¨¤¸¨~
+§A¬Ý¨ì¤@¨Ç¤H¦b³o¸Ìª±¾x¡B³Ü°s¡B½ä³Õ¡C¦b¨¤¸¨§A¬Ý¨ì¤@­Ó±j§§ªº¤H¯¸¦b°sµ¢ªºªù¤W¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4068
+D5
+~
+~
+119 4000 4000
+>room_trap 32 100~
+if is_inv_obj($n) == 4000
+	echoat $n ·í§A¥´¶}¤F³o®°ªù¡A¨­¤WªºÆ_°Í¤]¸òµÛ®ø¥¢....
+	echoaround $n ·í $n ¥´¶}¤F³o®°ªù¡A¤â¤WªºÆ_°Í©¿µM®ø¥¢¤F....
+	purge $n key-bandit
+endif
+~
+|
+S
+#4070
+¦b¨i¹D¤§¤W~
+·í§A¨«¤W¨i¹D¤§«á¡A·sÂAªºªÅ®ðÅý§A·P¨ì¤Q¤ÀªºµÎºZ¡C§A¤Q¤ÀÅå³Y¨«¥X¨i¹D«á©Ò¬Ý¨ìªº
+¤@¤Á¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4071
+D5
+~
+~
+0 0 4002
+S
+#4071
+µs¸é­n¶ë~
+¤@±ø¤p¸ô³q¦Ü¤J¤f¡A¦b¤J¤fªº¤W­±¦³¤@¶ô©ÛµP¼gµÛ¡G
+
+
+                  [ µs  ¸é  ­n  ¶ë ]
+
+
+§Aª`·N¨ì®ÇÃäÂ\µÛ¤@¶ô©ÛµP(sign)¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4072
+D3
+~
+~
+0 0 4070
+E
+sign~
+.
+³o¸Ì¥uÅwªïµs¸é¦P§Ó­Ì¡I
+­Y¦³¨ä¥L±Ú¸sªº¤H¾Õ¤J¦¹³B¡A¥u¦³¦º¡I
+~
+S
+#4072
+¨«¶iµs¸é­n¶ë¸ÌÀY~
+¦b³o§A¬Ý¨ì¼s¤jªºµs¸é­n¶ë¡C¥_¤è¬O±jµs©~¦íªº°Ï°ì¡AªFÃä§A¬Ý¨ì¤@±ø¼e¼sªº¤jµó¡C¦Ó·í
+§A©¹¦è¤è¬Ýªº®É­Ô¡A¨º¸Ì¦³¤@­Ó¤pµP¼Ó¡C
+~
+0 4 0
+D0
+~
+~
+0 0 4073
+D1
+~
+~
+0 0 4113
+D2
+~
+~
+0 0 4082
+D3
+~
+~
+0 0 4071
+S
+#4073
+¤j¹D~
+¯¸¦b¤j¹D¤W¡A§AÅ¥¨ì¨­Ãäªº¤Hµo¥Xªº©I³ÛÁn©M¾¸­µ¡C¦b³o¼Ë¥i©Èªº®ðª^¤U¡A§AÄ±±o¬Û·í¤£
+¦Û¦b¡C³o¸Ìªº©Ð¤l¤SÂÂ¤SÅ¼¡A¦Ó¦í¦b¸Ì­±ªº¤H¤]¬O¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4074
+D2
+~
+~
+0 0 4072
+S
+#4074
+¤j¹D~
+³o±ø¤j¹D«ùÄò¦V¥_Ãä©µ¦ù¡A¦pªG§AªºÂ¾·~¤£¬Oµs¸éªº¸Ü¡A¦b³oÃä«_ÀI¬O¬Û·í¦³½ìªº¨Æ±¡¡A
+¤£¬O¶Ü¡H
+~
+0 0 0
+D0
+~
+~
+0 0 4075
+D2
+~
+~
+0 0 4073
+S
+#4075
+¦í¦v°Ï~
+³o­Ó¦a¤è¬Oµ¹µs¸é©~¦íªº¡C«Ü©úÅãªº³o¸Ì­±¿n¬Û·í¿ñÁï¡C
+~
+0 0 0
+D2
+~
+~
+0 0 4074
+D3
+~
+~
+0 0 4076
+S
+#4076
+¦í¦v°Ï~
+³o­Ó¦a¤è¬Oµ¹µs¸é©~¦íªº¡C«Ü©úÅãªº³o¸Ì­±¿n¬Û·í¿ñÁï¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4077
+D1
+~
+~
+0 0 4075
+D3
+~
+~
+0 0 4079
+S
+#4077
+µs¸éªº®a~
+§A¯¸¦bµs¸éªº®a¸ÌÀY¡A¸Ì­±¦³´X­Óµs¸é¦í¦b¸Ì­±¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4078
+D2
+~
+~
+0 0 4076
+S
+#4078
+ª×«Ç~
+³o¶¡ª×«Ç¸Ì¡A¦b¨¤¸¨¦³¤@­Ó»êÅ¼ªº§É¾Q¡A¤WÀY¦³¤@¨Çªá¦·¸Ë¹¢¡C
+~
+0 0 0
+D2
+~
+~
+0 0 4077
+S
+#4079
+¥Ð¶é¤p¹D~
+³o±ø¥Ð¶é¤p¹D¦VªF©µ¦ù¦Ó¥h¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4076
+D3
+~
+~
+0 0 4080
+S
+#4080
+¤½¶é~
+«z¡I³o¬O§A¬Ý¹L­·´º³Ì®tªº¤½¶é¤F¡C±q¨Ó¨S¦³¬Ý¹L³o»ò»êÅ¼ªº¤½¶é¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4081
+D1
+~
+~
+0 0 4079
+S
+#4081
+©U§£³õ~
+«z¡I³o¸Ì¯u¬O¦³°÷....¯äªº¡I§A¯u¤£´±¬Û«Hµs¸é­Ì«ç»ò¦³¿ìªk¦í¦b³oÃä¡C
+~
+0 0 0
+D2
+~
+~
+0 0 4080
+D4
+~
+~
+1 0 4101
+S
+#4082
+¤j¹D~
+¦b¶i¤J³o­Ó¤j±jµsºÛ¤§«á¡A¤@±ø¼e¼sªºµó¹D¶i¤J§Aªºµø½u¤§¤¤¡C§A¯à½T©w§A¨Ã¤£¨ü³o¸Ì
+Åwªï¦Ó¥B³o¸ÌªºªF¦è³£±a¦³¤@µ·¨¸®ð¡C¹D¸ô³q©¹¥_Ãä»P«nÃä¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4072
+D2
+~
+~
+0 0 4083
+S
+#4083
+¦wÀRªº¤jÆU~
+³o­Ó¤jÆU¤Q¤Àªº¦wÀR¡A¦b³o¸Ì¨S¦³¬Ý¨ì¥ô¦ó¤@­Ó¤H¡C·í§AÄ~Äò©¹«e«e¶i¡A§AÅ¥¨ì¤jÆUªº¬Y
+³B¶Ç¨Ó¤@¨Ç»¡¸ÜªºÁn­µ¡C
+~
+0 4 0
+D0
+~
+~
+0 0 4082
+D2
+~
+~
+0 0 4084
+S
+#4084
+¤p«¬«ý´Y~
+³o¸Ì¬O¤@­Ó¤p«¬ªº«ý´Y¡A¬Ý°_¨ÓÆZ¦³½ìªº¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4083
+D3
+~
+~
+0 0 4085
+S
+#4085
+ªø´Y~
+³o¸Ì¬O¤@±ø¾ã»ô¡B²M¼ä¥BµÎ¾Aªºªø´Y¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4084
+D3
+~
+~
+0 0 4086
+S
+#4086
+ªø´Y~
+³o¸Ì¬O¤@±ø¾ã»ô¡B²M¼ä¥BµÎ¾Aªºªø´Y¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4085
+D3
+~
+~
+0 0 4089
+S
+#4089
+ªø´Y~
+³o¸Ì¬O¤@±ø¾ã»ô¡B²M¼ä¥BµÎ¾Aªºªø´Y¡C
+~
+0 4 0
+D1
+~
+~
+0 0 4086
+D2
+~
+~
+0 0 4090
+S
+#4090
+¥¨¤jªº«ý´Y~
+¤@®y¥¨¤jªº«ý´Y¦b§A­±«e©µ¦ù¶}¨Ó¡A¹³¬O³q©¹¤@­Ó­«­nªº¦a¤è¡C«nÃä¦³¤@¹D¥¨¤jªºªù¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4089
+D2
+~
+~
+39 4049 4092
+S
+#4091
+¥¸­Ô«Ç~
+¥¸­Ô«Ý¦b³oÃäµ¥­Ô¦³ºò«æ¨Æ¬G®É¥i¥H¥ß§Y¥X¨Ó³B²z¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4092
+S
+#4092
+¨«¶iµs¸é­n¶ëÁ`³¡~
+¦bÁ`³¡¤§¤ºº¡º¡³£¬O¥¸­Ô¡B¦u½Ã»P¸ê²`ªº±þ¤â¡C³o­Ó¦a¤èÄÝ©ó¤@­Ó¨¸´cªºµs¸é¡AÂ¾·~¤£¬O
+µs¸éªº¤H¦b³oÃä¤d¸U­n¤p¤ß¡C¥_Ãä¬O¤@¹D¥¨¤jªºªù¡C
+~
+0 0 0
+D0
+~
+~
+39 4049 4090
+D1
+~
+~
+0 0 4093
+D2
+~
+~
+0 0 4094
+D3
+~
+~
+0 0 4091
+S
+#4093
+¥¸­Ô«Ç~
+¥¸­Ô«Ý¦b³oÃäµ¥­Ô¦³ºò«æ¨Æ¬G®É¥i¥H¥ß§Y¥X¨Ó³B²z¡C
+~
+0 0 0
+D3
+~
+~
+0 0 4092
+S
+#4094
+³q¹D~
+³o­Ó¦a¤è¨S¤°»ò¯S§Oªº¡A¥u¬O¯Âºé¥Î¨Ó³q¦æ¡C«nÃä¦³¤@¹DÂê¦íªº¤jªù¡C
+~
+0 4 0
+D0
+~
+~
+0 0 4092
+D2
+~
+~
+39 4050 4096
+S
+#4095
+¿ì¤½«Ç~
+³o¸Ì¬O¤@¶¡¿ì¤½«Ç¡A¸ÌÀY¦³³\¦h¨Æ°È»P¤å¥ó»Ý­n³B²z¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4096
+S
+#4096
+¦u½Ã«Ç~
+±j¦Ó¦³¤Oªº¦u½Ã¦b³oÃä¹w¨¾¥ô¦ó¦MÀI¶Õ¤Oªº«I¤J¡C¥_Ãä¦³¤@¹DÂê¦íªº¤jªù¡C
+~
+0 0 0
+D0
+~
+~
+39 4050 4094
+D1
+~
+~
+0 0 4097
+D2
+~
+~
+33 4050 4098
+D3
+~
+~
+0 0 4095
+S
+#4097
+µs¸éÀYÀYªº©Ð¶¡~
+·í§A¶i¤J³o¶¡©Ð¶¡ªº®É­Ô¡A§Aª`·N¨ì³o¶¡©Ð¶¡»P¨ä¥L©Ð¶¡¦³µÛ«Ü¤jªº¤£¦P¡C
+~
+0 0 0
+D3
+~
+~
+0 0 4096
+S
+#4098
+¦u½Ã«Ç~
+±j¦Ó¦³¤Oªº¦u½Ã¦b³oÃä¹w¨¾¥ô¦ó¦MÀI¶Õ¤Oªº«I¤J¡C
+~
+0 0 0
+D0
+~
+~
+33 4050 4096
+D2
+~
+~
+49 4502 4100
+S
+#4099
+·|Ä³«Ç~
+·í§A¨«¶i³o¶¡©Ð¶¡ªº®É­Ô¡A§A¬Ý¨ì©Ð¶¡ªº¥¿¤¤¥¡¦³¤@­±¥¨¤jªº®à¤l¡A®à¤lªº©P³ò§¤º¡¤F¤H
+¡C¬Ý¨£¨º¨Çº¡ÁyÅå³Yªí±¡ªº¤H­Ì¡A§Aª¾¹D§A¬D¿ù®É¶¡¤F¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4100
+S
+#4100
+·|Ä³«Ç~
+·í§A¨«¶i³o¶¡©Ð¶¡ªº®É­Ô¡A§A¬Ý¨ì©Ð¶¡ªº¥¿¤¤¥¡¦³¤@­±¥¨¤jªº®à¤l¡A®à¤lªº©P³ò§¤º¡¤F¤H
+¡C¬Ý¨£¨º¨Çº¡ÁyÅå³Yªí±¡ªº¤H­Ì¡A§Aª¾¹D§A¬D¿ù®É¶¡¤F¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4098
+D1
+~
+~
+0 0 4111
+D2
+~
+~
+0 0 4112
+D3
+~
+~
+0 0 4099
+S
+#4101
+ªÅ¿º¿ºªº©Ð¶¡~
+³o¶¡©Ð¶¡¸Ì­±¤°»ò³£¨S¦³¡A¬Ý°_¨Ó¤Q¤Àªº´¶³q....¡C
+~
+0 5 0
+D0
+~
+~
+0 0 4102
+D3
+~
+~
+0 0 4103
+D5
+~
+~
+1 0 4081
+S
+#4102
+ªÅ¿º¿ºªº©Ð¶¡~
+³o¶¡©Ð¶¡¸Ì­±¤°»ò³£¨S¦³¡A¬Ý°_¨Ó¤Q¤Àªº´¶³q....¡C¤£¹LÀð¤W«o
+¶K¤F¤@±i¯È(paper)¡C
+~
+0 1 0
+E
+paper~
+¶}¶º®É¶¡¡G¨C¤Ñ¦­¤W¥|ÂI¨ì¤KÂI¡A¤Q¤»ÂI¨ì¤G¤QÂI¡C
+~
+D1
+ªFÃä¬Ý°_¨Ó¬O¤@¶¡¥ð®§«Ç¡C
+~
+~
+0 0 4150
+D2
+~
+~
+0 0 4101
+D3
+~
+~
+0 0 4104
+S
+#4103
+ªÅ¿º¿ºªº©Ð¶¡~
+³o¶¡©Ð¶¡¸Ì­±¤°»ò³£¨S¦³¡A¬Ý°_¨Ó¤Q¤Àªº´¶³q....¡C
+~
+0 1 0
+D0
+¨º¸Ì¦n¹³¦³µÛ¯µ±K¡A³ºµM¦³¦u½Ã¯S¦a¬Ý¦u¡C
+~
+~
+0 0 4104
+D1
+~
+~
+0 0 4101
+D3
+¦èÃä¬O¤@¶¡¯}ÂÂªº§ó¦ç«Ç¡C
+~
+~
+0 0 4151
+S
+#4104
+¦³¦u½Ãªº©Ð¶¡~
+¦³µÛÄµ½Ã§Ù³Æªº©Ð¶¡¡A¬Ý°_¨Ó­I­±ªºªù«áÀ³¸Ó¦³¨Ç¯µ±K¡C¤@¾aªñªù¤f¦u½Ã«KÄµ§Ù°_¨Ó¡A
+¬Ý¨Ó¤£¬O¨ü¨ì³o¸Ìªº¥D¤H©ÒÁÜ½Ðªº«È¤H¡A©Î¬O¦o­Ìªº¹Ù¦ñ¡A¬O«ÜÃø¶i¥hªº¡C
+~
+0 0 0
+D0
+ÁöµMªùÃöµÛ¡A¦ý¬O¨Ìµ}¥i¥HÅ¥¨ì¸Ì­±¦n¹³¦b¶i¦æ¤@¨Ç¥æ©ö¡C
+~
+~
+7 0 4105
+D1
+~
+~
+0 0 4102
+D2
+~
+~
+0 0 4103
+S
+#4105
+¶Â¥«¥æ©ö©Ò~
+³o¸Ì¬O­n§âÅBª«²æ¤âªº¦n¦a¤è¡A»ù®æ©Î³\§C¤FÂI¡A¦ý¬O«o¤£·|·S¤W³Â·Ð¡C
+·íµM¡A°£«D§A·í³õ³Q¶e­Ó¥¿µÛ¡CÀð¤W¶K¤F¤@±i§G§i(note)¡C
+~
+0 0 0
+E
+note~
+°£«D·|­û§_«h¤@·§¤£¥X°â¥ô¦óª««~¡C
+~
+D2
+~
+~
+7 0 4104
+S
+#4111
+·|Ä³«Ç~
+·í§A¨«¶i³o¶¡©Ð¶¡ªº®É­Ô¡A§A¬Ý¨ì©Ð¶¡ªº¥¿¤¤¥¡¦³¤@­±¥¨¤jªº®à¤l¡A®à¤lªº©P³ò§¤º¡¤F¤H
+¡C¬Ý¨£¨º¨Çº¡ÁyÅå³Yªí±¡ªº¤H­Ì¡A§Aª¾¹D§A¬D¿ù®É¶¡¤F¡C
+~
+0 0 0
+D3
+~
+~
+0 0 4100
+S
+#4112
+µs¸éÀYÀYªº©Ð¶¡~
+§A¬Ý¨ì³oÃä©Ð¶¡¸Ë¹¢µÛ³\¦h°ø¨×ªº¸Ë¹¢«~¡C«Ü©úÅãªº¡A³o¶¡©Ð¶¡ÄÝ©óµs¸éÀYÀY©Ò¦³¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4100
+S
+#4113
+¤j¹D~
+¯¸¦b¤j¹D¤W¡A§AÅ¥¨ì¨­Ãäªº¤Hµo¥Xªº©I³ÛÁn©M¾¸­µ¡C¦b³o¼Ë¥i©Èªº®ðª^¤U¡A§AÄ±±o¬Û·í¤£
+§Ö¡C³o¸Ìªº©Ð¤l¤SÂÂ¤SÅ¼¡A¦Ó¦í¦b¸Ì­±ªº¤H¤]¬O¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4114
+D3
+~
+~
+0 0 4072
+S
+#4114
+¤j¹D~
+¦b¶i¤J³o­Óµs¸é­n¶ë¤§«á¡A¤@±ø¼e¼sªºµó¹D¶i¤J§Aªºµø½u¤§¤¤¡C§A¯à½T©w§A¨Ã¤£¨ü³o¸Ì
+Åwªï¦Ó¥B³o¸ÌªºªF¦è³£±a¦³¤@µ·¨¸®ð¡C¹D¸ô³q©¹ªFÃä»P¦èÃä¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4115
+D3
+~
+~
+0 0 4113
+S
+#4115
+¤j¹D~
+¦b¶i¤J³o­Óµs¸é­n¶ë¤§«á¡A¤@±ø¼e¼sªºµó¹D¶i¤J§Aªºµø½u¤§¤¤¡C§A¯à½T©w§A¨Ã¤£¨ü³o¸Ì
+Åwªï¦Ó¥B³o¸ÌªºªF¦è³£±a¦³¤@µ·¨¸®ð¡C¹D¸ô³q©¹ªFÃä»P¦èÃä¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4116
+D3
+~
+~
+0 0 4114
+S
+#4116
+¤j¹D~
+¹D¸ô¤´µM«ùÄò¦VªFÃä©µ¦ù¡A§A¬Ý¨ì¦³¨â´É«Ø¿v¦b§Aªº¥_Ãä»P«nÃä¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4117
+D1
+~
+~
+0 0 4119
+D2
+~
+~
+0 0 4118
+D3
+~
+~
+0 0 4115
+S
+#4117
+¤p©Ð¤l~
+¦b³o´É¤p©Ð¤lùØ§A¥u¯à°÷¬Ý¨ì¯}ÂÂªº®a¨ã¡C
+~
+0 0 0
+D2
+~
+~
+0 0 4116
+S
+#4118
+­Ë¶òªº«Ø¿v~
+³o´É«Ø¿v¤w¸g·´Ãa«Ü¤[¤F¡A¦ý¬O§A«o¤´¥i¥H¬Ý¨ì¦³¤H¦í¦b¸ÌÀY¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4116
+S
+#4119
+¤j¹D~
+³o±ø¸ô¦b³oÃä¨ì¹FºÉÀY¤F¡C§A¬Ý¨ìªFÃä¦³¼e¼sªº¥X¤f¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4120
+D3
+~
+~
+0 0 4116
+S
+#4120
+¾ÖÀ½ªº¼s³õ~
+³\¦hµs¸é³£¶°¦X¨ì³oÃä¨Ó¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4121
+D1
+~
+~
+0 0 4124
+D2
+~
+~
+0 0 4125
+D3
+~
+~
+0 0 4119
+S
+#4121
+¤p«Ñ¤l~
+³o±ø¤p«Ñ¤l©¹¥_Ãä©µ¦ù¦Ó¥h¡C
+~
+0 4 0
+D0
+~
+~
+0 0 4122
+D2
+~
+~
+0 0 4120
+S
+#4122
+³±·t¤p«Ñ~
+·í§A¦b³o±ø¤p«Ñ¤l¤¤Ä~Äò«e¶i®É¡A§AµoÄ±³o¸Ì¶V¨Ó¶V·t¤F¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4123
+D2
+~
+~
+0 0 4121
+S
+#4123
+³±·tªº¨¤¸¨~
+¦b³o±ø¤p«Ñ¤¤ªº³±·t¨¤¸¨§A·P¨ì¤Q¤Àªº¤£¦w¡C
+~
+0 0 0
+D3
+~
+~
+0 0 4122
+S
+#4124
+¾ÖÀ½ªº¼s³õ~
+³\¦hµs¸é³£¶°¦X¨ì³o¸Ì¨Ó¡C
+~
+0 0 0
+D2
+~
+~
+0 0 4126
+D3
+~
+~
+0 0 4120
+S
+#4125
+¾ÖÀ½ªº¼s³õ~
+³\¦hµs¸é³£¶°¦X¨ì³o¸Ì¨Ó¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4120
+D1
+~
+~
+0 0 4126
+S
+#4126
+¾ÖÀ½ªº¼s³õ~
+³\¦hµs¸é³£¶°¦X¨ì³o¸Ì¨Ó¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4124
+D1
+~
+~
+0 0 4127
+D3
+~
+~
+0 0 4125
+S
+#4127
+«áµó~
+±q³oÃä¥i¥H±q§nÂøªº¼s³õ³q©¹¦wÀRªº¤p¸ô¡C
+~
+0 4 0
+D2
+~
+~
+0 0 4128
+D3
+~
+~
+0 0 4126
+S
+#4128
+¯U¯¶ªº¤p¸ô~
+¥Ñ¼s³õ¶Ç¹L¨Óªº§nÂøÁn¤w¸g¶V¨Ó¶V¤p¤F¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4127
+D2
+~
+~
+0 0 4129
+S
+#4129
+¯U¯¶ªº¤p¸ô~
+¥Ñ¼s³õ¶Ç¹L¨Óªº§nÂøÁn¤w¸g¶V¨Ó¶V¤p¤F¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4128
+D3
+~
+~
+0 0 4130
+S
+#4130
+¤p©Ð¤l~
+¦³¤@´É¤p©Ð¤l¦b³oÃä¡A¬Ý°_¨Ó¯u¬O¤pªº¥i·R¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4129
+D5
+~
+~
+39 4051 4131
+S
+#4131
+°òÂ¦~
+¾ã­Ó©Ð¶¡¸Ì¥Rº¡¤F¼éÀãªºªÅ®ð»P´e¼öªº·PÄ±¡A­aÄö¡B¤ò¥ÖÂÐ»\¤F¥|©PªºÀð¾À¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4132
+D4
+~
+~
+39 4051 4130
+S
+#4132
+°òÂ¦~
+¾ã­Ó©Ð¶¡¸Ì¥Rº¡¤F¼éÀãªºªÅ®ð»P´e¼öªº·PÄ±¡A­aÄö¡B¤ò¥ÖÂÐ»\¤F¥|©PªºÀð¾À¡C
+~
+0 4 0
+D1
+~
+~
+0 0 4133
+D3
+~
+~
+0 0 4131
+S
+#4133
+¥¨¤jªºªù~
+·í§AÀRÀRªº¨«¶i³oÃä©Ð¶¡¡A§A¬Ý¨ìªFÃä¦³¤@®°¥¨¤jªºªù¡C³o®°ªù¯uªº¤S°ª¤S¤j¡C
+~
+0 0 0
+D1
+~
+~
+39 4052 4134
+D3
+~
+~
+0 0 4132
+S
+#4134
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4135
+D3
+~
+~
+39 4052 4133
+S
+#4135
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C«nÃä¦³¤@¹D¥¨¤jªºªù¡C
+~
+0 0 0
+D1
+~
+~
+3 0 4136
+D2
+~
+~
+39 4053 4137
+D3
+~
+~
+0 0 4134
+S
+#4136
+¿ì¤½«Ç~
+¦b§A­±«e¬O¤@±i¤S¤j¤S°í©Tªº®à¤l¡C©U§£¡BÂøª«©Î¬O¤@¨Ç¨S¦Y§¹ªº­¹ª«³£³Q¥á¦b©Ð¶¡ªº¨¤
+¸¨¡C¨Ì·Ó§Aªº§PÂ_¡A³o¸ÌÀ³¸Ó¬Oº»¨òªº¿ì¤½«Ç¡C
+~
+0 0 0
+D3
+~
+~
+3 0 4135
+S
+#4137
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C
+~
+0 0 0
+D0
+~
+~
+39 4053 4135
+D2
+~
+~
+0 0 4138
+S
+#4138
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4137
+D1
+~
+~
+0 0 4139
+S
+#4139
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4143
+D3
+~
+~
+0 0 4138
+S
+#4141
+±K«Ç~
+§A¶i¤J¤F¤@¶¡³±·tªº¤p©Ð¶¡¡A©Ð¶¡¤p¨ì¥u¯à°÷«j±jÀ½¶i¨â­Ó¤H¡C
+~
+0 0 0
+D2
+~
+~
+0 0 4142
+S
+#4142
+¨c©Ð~
+³o¬Oµ¹¥Ç¤H¦íªº¨c©Ð¡C¦b³o¶¡¨c©Ð¤¤§A¥u¯à°÷¬Ý¨ì¤@±i§É¾Q»P¤@¨ÇÂ²³æªº®a¨ã¡C
+~
+0 0 0
+D0
+~
+~
+0 0 4141
+D2
+~
+~
+39 4107 4143
+S
+#4143
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C
+~
+0 0 0
+D0
+~
+~
+39 4054 4142
+D1
+~
+~
+0 0 4145
+D2
+~
+~
+39 4054 4144
+D3
+~
+~
+0 0 4139
+S
+#4144
+¨c©Ð~
+³o¬Oµ¹¥Ç¤H¦íªº¨c©Ð¡C¦b³o¶¡¨c©Ð¤¤§A¥u¯à°÷¬Ý¨ì¤@±i§É¾Q»P¤@¨ÇÂ²³æªº®a¨ã¡C
+~
+0 0 0
+D0
+~
+~
+39 4107 4143
+S
+#4145
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C
+~
+0 0 0
+D1
+~
+~
+0 0 4147
+D3
+~
+~
+0 0 4143
+S
+#4146
+¨c©Ð~
+³o¬Oµ¹¥Ç¤H¦íªº¨c©Ð¡C¦b³o¶¡¨c©Ð¤¤§A¥u¯à°÷¬Ý¨ì¤@±i§É¾Q»P¤@¨ÇÂ²³æªº®a¨ã¡C
+~
+0 0 0
+D2
+~
+~
+39 4107 4147
+S
+#4147
+ºÊº»~
+§A¦b¤@¶¡©ü·tªº©Ð¶¡¤¤¡C°ß¤@ªº·Ó©ú´N¬OÀð¾À¤Wªº¤õ§â¡C¦b¸ÌÀY°¸º¸¥i¥HÅ¥¨ì¥Ñ¶Â·t¤@ºÝ
+¶Ç¨Óªº¥i©È¦y¥sÁn¡C
+~
+0 0 0
+D0
+~
+~
+39 4054 4146
+D2
+~
+~
+39 4054 4148
+D3
+~
+~
+0 0 4145
+S
+#4148
+ªÅ©Ð¶¡~
+³o¤@¶¡©Ð¶¡¸ÌÀY¬Û·í°®²b¡A¤£¹³¨ä¥LºÊº»ªº©Ð¶¡¡C
+~
+0 0 0
+D0
+~
+~
+39 4107 4147
+D2
+~
+~
+3 0 4149
+S
+#4149
+ÀxÂÃ«Ç~
+«p«pªº¤@¼h¦Ç¹ÐÂÐ»\¦b©Ð¶¡ªº¦a­±¤W¡C³o¤@¶¡©Ð¶¡¬O¥Î¨ÓÀx¦s¤@¨Ç¸Ë³Æ¡C
+~
+0 5 0
+D0
+~
+~
+0 0 4148
+S
+#4150
+¥ð®§«Ç~
+³o¸Ì¦³¤@±i¤p®à¤l¡A´X±i´È¤l¡C¨S¤Ó¦hªº¸Ë¹¢¡A¤£¹L±q¦a¤Wªº­¹ª«´Ý´í¬Ý¨Ó¡A
+¦u½Ã­Ì¤j·§³£¦b³o¸Ì¥ÎÀ\¡C
+~
+0 1 0
+D3
+~
+~
+0 0 4102
+S
+#4151
+§ó¦ç«Ç~
+³o¸Ì¦³¤@­Ó¦çÂd¡A¤£¹Lªù«oÃa¤F¤@¥b¡C¦a¤W´²§G¤F¤@¨ÇÃè¤lªº¸H¤ù¡A©Ð¶¡¨¤¸¨
+°ïµÛ¤@¨Ç½c¤l(box)¡A¦³¥ó¦çªA³Q½c¤l©ã¨ì¥uÅS¥X¤@¨¤¡C
+~
+0 1 0
+D1
+~
+~
+0 0 4103
+E
+box~
+³o­Ó½c¤l¦ü¥G¥i¥H²¾¶}(move)¡C
+~
+>room_command move box~
+ if robjcount(4066) == 0
+   echo §A§ä¨ì¤@¥ó°ïº¡¦Ç¹Ðªºªø³T¡C
+   oload 4066 5 $n floor
+ endif
+~
+|
+S
+#4152
+¸Õ½mªº¤J¤f~
+³o¬O¸Õ½mªº°_ÂI¡A¥ô¦ó·Q¾Ç¨ì§ó°ª¯Å§Þ¥©ªº§ÔªÌ³£­n¸g¹L³o¤@Ãö¡C°ß¤@ªº¥X¤f«ü¦V
+¥_¤è¡AÅf²Hªº¤õ¥ú¨Ï§A¬Ý¤£²M«e¤èªºª¬ªp¡C¦b§Aµø½u©Ò¤Îªº¦a¤è³£¬O¤@¼h³æ½Õªº¦Ç¦â¡A
+¦ÇÀÛÀÛªº¤@¤ù¨Ï§Aªºµø½u°g¥¢¦b¼Ò½kªºªÅ¤¤¡C
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4153
+S
+#4153
+ºë¶i¤§¸ô~
+¤õ¥ú¦b¦Ç¦âªº°ò½Õ¤¤°{Ã{µÛ¡A©t¿W¦Ó·K´a¡C·L®zªº¤õ­]°«¤£¹Lº¡·¸ªº¶Â·t¡A³±¼v©ó
+¬O¦b¥|¶gÅx¸¨¡C§Aª½Ä±¦³ªÑµø½u¥¿¨nµÛ§AÁ@....
+~
+0 8|8192|262144 0
+E
+elder~
+¤£°_²´ªº¦Ñ¤H(elder) - ¤HÃþ(Human):
+¤£°_²´ªº¥~ªí¤U¡AÁôÁô³zÅS¥X¥L¸g¹L¦h¦~ÁëÁåªº¨Æ¹ê¡C
+
+¤£°_²´ªº¦Ñ¤H(elder)[1;20m°·±dª¬ªp¨}¦n¡C[m
+
+¥L¨­¤W¬ïµÛ¡G
+< ¥ú  ·½ > ([1;16mµo¥ú[m)µs¸éªº¦u«h(Rules of Thief)
+<¥D­nªZ¾¹> ·t±þ¤P­º(assassination dagger)
+<¦¸­nªZ¾¹> ·t±þ¤P­º(assassination dagger)
+
+        ¤°»ò³£¨S¦³¡C
+
+§A¤£¸T¤ß·Q¡G¡u¥L¯uªº¬O¤@¦ì¦Ñ¤H¡HÁÙ¬O¤@¦ì§ÔªÌ¡H¡v
+~
+D0
+~
+~
+0 0 4154
+D2
+~
+~
+0 0 4152
+S
+#4154
+«Ê¦Lªº¥Û¸O~
+¤@®y¥Û¸Oª½¥ß¦bªÅ¦a¤¤¥¡¡A¥|©P´²§GµÛ´XÁL¤õ¬Ö¡Aºµºµªº¤õµK¥O¤H©|¥i¤À¿ë¶g¾Dªº
+Àô¹Ò¡CªF¦è¨âÃä¥Ñ©ó¥ú½u¤£°÷©ú«G¬Ý°_¨Ó¹³¬O®ø¥¢¦b¶Â·t¤§¤¤¡A¦Ó¥_¤è¤£»·³B¦ü¥G¦³­Ó
+¤H¼v¦b®Ì°Ê¡A¦Ó«n¤è....¡H
+
+    §A¤ß·Q¡G¡u«n¤è¤£´N¬O§Ú­è­è¨Óªº¦a¤è¹À¡AÂí©wÂí©w¡I¤£­n³Q¤@ÂI¤p¨ÆÀ~¶Ì¤F¡I¡v
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4155
+D1
+~
+~
+0 0 4158
+D2
+~
+~
+0 0 4153
+D3
+~
+~
+0 0 4157
+>room_time 100~
+    echo §AÄ±±o¨­Åé«ì´_ªº³t«×µy·L¥[§Ö¤F¡I
+    modhmv pc 04.3 6 00000000
+    modhmv pc 14.2 4 00000000
+    modhmv pc 24.4 8 00000000
+~
+>room_enter 31 100~
+if is_qmark($n) == bandit_thief_exam 100007
+	echoat $n ¤@°}°{¥ú¤§«á¡A§A³Q¶Ç°e¨ì¤F¤õ¼v¤§¶¡¡C
+	transfer $n 4165
+	at 4165 force $n look
+	at 4165 echoat $n ª±®a½Ðª`·N¡A¥´¤õ¼v®É«ÍÅé¥i¯à·|³Q²M±¼¡A
+	at 4165 echoat $n ³o¬O¥¿±`±¡§Î®@¡A©Ò¥H¥´«e½Ð¦h¤T«ä¤~¦n¡C
+	break
+endif
+if is_qmark($n) == bandit_thief_exam 100006
+if is_inv_obj($n) == 4070
+if is_inv_obj($n) == 4087
+if is_inv_obj($n) == 4090
+if is_inv_obj($n) == 4091
+if is_inv_obj($n) == 4092
+if is_inv_obj($n) == 4093
+if is_inv_obj($n) == 4094
+			purge $n slate-a
+			purge $n slate-b
+			purge $n slate-c
+			purge $n slate-d
+			purge $n slate-e
+			purge $n slate-f
+			purge $n slate-g
+			echoat $n ·í§A¤@½ñ¶i³o¸Ì¡A§A¨­¤Wªº¤C­Ó¥Ûª©©¿µMµo¥X¤@°}Ä£²´ªº¥ú¯í¡C
+			echoat $n µ¥¨ì§A¦A²M¿ô¹L¨Óªº®É­Ô¡A§A¤w¸g³Q¶Ç°e¨ì³o­Ó©Ð¶¡¤F¡C
+			mod_qmark $n bandit_thief_exam v0 = 7
+			transfer $n 4165
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+~
+|
+S
+#4155
+¦uÅ@ªÌ¤§¶¡~
+´X¤ä¤õ§âÂ²³æ´¡¦b¥|¶gÀð¾Àªº¬[¤l¤W¡A¬O³o¸Ì°ß¤@ªº¸Ë¹¢¡C©¹¥|©P¤@¬Ý¡A¬Ý¤£¨ì¤°
+»ò¯S§OªºªF¦è¡A¤£¹L¤õ¥ú«o·L·L¦a®Ì°Ê¡H
+~
+0 8|8192|262144 0
+D2
+~
+~
+0 0 4154
+>room_rand 100~
+      	if robjcount(4071) > 0
+             if robjcount(4072) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+~
+>room_command turn statue~
+        if robjcount(4071) > 0
+           callout 1 echo ¡uÀHµÛ¥Û¹³ªºÂà°Ê¡A¥_­±¤@¹D±Kªù¤]º¥º¥¥´¶}¡C¡v
+           callout 2 makedoor 0 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4156
+           callout 3 purge statueb
+           callout 4 oload 4072 1 floor
+        else
+           if robjcount(4072) > 0
+              callout 1 deldoor 0
+              callout 2 echo ¡uÀHµÛ¥Û¹³ªºÂà°Ê¡A¥_­±ªº¥Ûªùº¥º¥Ãö³¬¡C¡v
+              callout 3 purge statuea
+              callout 4 oload 4071 1 floor
+           endif
+        endif
+~
+|
+S
+#4156
+ÁôÂÃªº±K«Ç~
+¦Ç¹Ð§Gº¡¤F¾ã­ÓªÅ¶¡¡AÀð¤W±¾µÛ»jµïºô¡A¬Ý¨Ó¤w¸g¦³¬q®É¤é¨S¦³¤H¶i¨Ó¹L¤F¡C°ß¤@
+§l¤Þ§Aª`·Nªº¬O¤@¤f¯}ÂÂªº½c¤l¡C
+~
+0 8 0
+D2
+~
+~
+0 0 4155
+>room_enter 127 100~
+  if rand(30)
+     echo ¡u¬ðµM¶Ç¥X¤@°}³Ø³ØÁn¡v
+     callout 3 deldoor 2
+     callout 4 echo ¡u³á³á¡I¬Ý¨Ó§A¬OÄ²°Ê¤F¾÷Ãö¤F¡I¡v
+     callout 5 echo §Aµo²{§A¥i¯à­n¦Û¤O±ÏÀÙ¦Û¦æ¸Ñ°£«nÃäªº³´¨À¤F¡C
+  endif
+~
+>room_mask untangle south~
+if learned($n) >= 133 10
+	if rand(60)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A«nÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 2 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4155
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A«nÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 2 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4155
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4157
+¥Û¸Oªº¦èÃä~
+¯¸¦b³o¸Ì©¹ªF¤è¬Ý¥h¡A¤´¥i¥H¬Ý¨ì¥Û¸Oªº¼v¤l¡CÀôÅU¥|¶g¡A³£Ä±±o¦³ªÑ²´¯«¦b¨nµÛ
+§A¬Ý¡C¬Ý¨Ó­n¤p¤ßÂI¤~¬O.....
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4159
+D1
+~
+~
+0 0 4154
+D2
+~
+~
+0 0 4161
+D3
+~
+~
+0 0 4160
+S
+#4158
+¥Û¸OªºªFÃä~
+¯¸¦b³o¸Ì©¹¦è¤è¬Ý¥h¡A¤´¥i¥H¬Ý¨ì¥Û¸Oªº¼v¤l¡CÀôÅU¥|¶g¡A³£Ä±±o¦³ªÑ²´¯«¦b¨nµÛ
+§A¬Ý¡C¬Ý¨Ó­n¤p¤ßÂI¤~¬O.....
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4162
+D1
+~
+~
+0 0 4163
+D2
+~
+~
+0 0 4164
+D3
+~
+~
+0 0 4154
+S
+#4159
+¦uÅ@ªÌ¤§¶¡~
+´X¤ä¤õ§âÂ²³æ´¡¦b¥|¶gÀð¾Àªº¬[¤l¤W¡A¬O³o¸Ì°ß¤@ªº¸Ë¹¢¡C©¹¥|©P¤@¬Ý¡A¬Ý¤£¨ì¤°
+»ò¯S§OªºªF¦è¡A¤£¹L¤õ¥ú«o·L·L¦a®Ì°Ê¡H
+~
+0 8|8192|262144 0
+D2
+~
+~
+0 0 4157
+>room_rand 100~
+      	if robjcount(4088) > 0
+             if robjcount(4089) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+~
+>room_command pull hands~
+        if robjcount(4088) > 0
+           callout 1 echo ¡uÀHµÛ§AÀ£¤U¤â¦L¡A¤U­±¤@¹D±Kªù¤]º¥º¥¥´¶}¡C¡v
+           callout 2 makedoor 5 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4171
+           callout 3 purge statueb
+           callout 4 oload 4089 1 floor
+           break
+        else
+           if robjcount(4089) > 0
+              callout 1 deldoor 5
+              callout 2 echo ¡uÀHµÛ¤â¦Lªº¯B°_¡A¤U­±ªº¥Ûªùº¥º¥Ãö³¬¡C¡v
+              callout 3 purge statuea
+              callout 4 oload 4088 1 floor
+              break
+           endif
+        endif
+~
+|
+S
+#4160
+¦uÅ@ªÌ¤§¶¡~
+´X¤ä¤õ§âÂ²³æ´¡¦b¥|¶gÀð¾Àªº¬[¤l¤W¡A¬O³o¸Ì°ß¤@ªº¸Ë¹¢¡C©¹¥|©P¤@¬Ý¡A¬Ý¤£¨ì¤°
+»ò¯S§OªºªF¦è¡A¤£¹L¤õ¥ú«o·L·L¦a®Ì°Ê¡H
+~
+0 8|8192|262144 0
+D1
+~
+~
+0 0 4157
+>room_rand 100~
+      	if robjcount(4095) > 0
+             if robjcount(4096) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+~
+>room_command push button~
+        if robjcount(4095) > 0
+           callout 1 echo ¡uÀHµÛ§AÀ£¤U«ö¶s¡A¥_¤è¤@¹D±Kªù¤]º¥º¥¥´¶}¡C¡v
+           callout 2 makedoor 0 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4170
+           callout 3 purge statueb
+           callout 4 oload 4096 1 floor
+           break
+        else
+           if robjcount(4096) > 0
+              callout 1 deldoor 0
+              callout 2 echo ¡uÀHµÛ§AÀ£¤U«ö¶s¡A¥_¤èªº¥Ûªùº¥º¥Ãö³¬¡C¡v
+              callout 3 purge statuea
+              callout 4 oload 4095 1 floor
+              break
+           endif
+        endif
+~
+|
+S
+#4161
+¦uÅ@ªÌ¤§¶¡~
+´X¤ä¤õ§âÂ²³æ´¡¦b¥|¶gÀð¾Àªº¬[¤l¤W¡A¬O³o¸Ì°ß¤@ªº¸Ë¹¢¡C©¹¥|©P¤@¬Ý¡A¬Ý¤£¨ì¤°
+»ò¯S§OªºªF¦è¡A¤£¹L¤õ¥ú«o·L·L¦a®Ì°Ê¡H
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4157
+>room_rand 100~
+      	if robjcount(4098) > 0
+             if robjcount(4097) > 0
+                  deldoor 3
+                  purge statuea
+             endif
+        endif
+~
+>room_command move triangle~
+        if robjcount(4097) > 0
+           callout 1 echo ¡uÀHµÛ§A²¾°Ê¤T¨¤§Î¡A¥ª¤è¤@¹D±Kªù¤]º¥º¥¥´¶}¡C¡v
+           callout 2 makedoor 3 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4169
+           callout 3 purge statueb
+           callout 4 oload 4098 1 floor
+           break
+        else
+           if robjcount(4098) > 0
+              callout 1 deldoor 3
+              callout 2 echo ¡uÀHµÛ§A²¾°Ê¤T¨¤§Î¡A¥ª¤èªº¥Ûªùº¥º¥Ãö³¬¡C¡v
+              callout 3 purge statuea
+              callout 4 oload 4097 1 floor
+              break
+           endif
+        endif
+~
+|
+S
+#4162
+¦uÅ@ªÌ¤§¶¡~
+´X¤ä¤õ§âÂ²³æ´¡¦b¥|¶gÀð¾Àªº¬[¤l¤W¡A¬O³o¸Ì°ß¤@ªº¸Ë¹¢¡C©¹¥|©P¤@¬Ý¡AªFÃä¦³¤@
+¹Dªù¤j«f«f¦a¶}µÛ¡I
+~
+0 8|8192|262144 0
+D1
+~
+~
+0 0 4166
+D2
+~
+~
+0 0 4158
+S
+#4163
+¦uÅ@ªÌ¤§¶¡~
+´X¤ä¤õ§âÂ²³æ´¡¦b¥|¶gÀð¾Àªº¬[¤l¤W¡A¬O³o¸Ì°ß¤@ªº¸Ë¹¢¡C©¹¥|©P¤@¬Ý¡A¬Ý¤£¨ì¤°
+»ò¯S§OªºªF¦è¡A¤£¹L¤õ¥ú«o·L·L¦a®Ì°Ê¡H
+~
+0 8|8192|262144 0
+D2
+~
+~
+7 0 4167
+D3
+~
+~
+0 0 4158
+S
+#4164
+¦uÅ@ªÌ¤§¶¡~
+´X¤ä¤õ§âÂ²³æ´¡¦b¥|¶gÀð¾Àªº¬[¤l¤W¡A¬O³o¸Ì°ß¤@ªº¸Ë¹¢¡C©¹¥|©P¤@¬Ý¡A¬Ý¤£¨ì¤°
+»ò¯S§OªºªF¦è¡A¤£¹L¤õ¥ú«o·L·L¦a®Ì°Ê¡H
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4158
+>room_rand 100~
+      	if robjcount(4099) > 0
+             if robjcount(4100) > 0
+                  deldoor 3
+                  purge statuea
+             endif
+        endif
+~
+>room_command touch crystal ball~
+        if robjcount(4099) > 0
+           callout 1 echo ¡uÀHµÛ§A¸IÄ²¤ô´¹²y¡A¤W¤è¤@¹D±Kªù¤]º¥º¥¥´¶}¡C¡v
+           callout 2 makedoor 4 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4168
+           callout 3 purge statueb
+           callout 4 oload 4100 1 floor
+        else
+           if robjcount(4100) > 0
+              callout 1 deldoor 4
+              callout 2 echo ¡uÀHµÛ§A¸IÄ²¤ô´¹²y¡A¥ª¤èªº¥Ûªùº¥º¥Ãö³¬¡C¡v
+              callout 3 purge statuea
+              callout 4 oload 4099 1 floor
+           endif
+        endif
+~
+|
+S
+#4165
+¤õ¼v¤§¶¡~
+¤@­±¼â¾¥¤s¤ôµe±¾¦b«n­±ªºÀð¾À¤W¡A¥t¥~¦³¤@®°¤­§`ªº«Ì­·®i¶}¦bªF­±¸G®à®Ç¡C°£
+¦¹¤§¥~¨S¦³¤°»òªF¦è§l¤Þ§Aªºª`·N¡A©Ð¶¡¸Ì°ß¤@¦b°ÊªºªF¦è¡A´N¥u¦³¨º·øÂ\¦b¸G®à¤Wªº
+ªo¿O¤F¡C
+~
+0 8|8192|262144 0
+D4
+~
+~
+0 0 4154
+S
+#4166
+ÁôÂÃªº±K«Ç~
+¦Ç¹Ð§Gº¡¤F¾ã­ÓªÅ¶¡¡AÀð¤W±¾µÛ»jµïºô¡A¬Ý¨Ó¤w¸g¦³¬q®É¤é¨S¦³¤H¶i¨Ó¹L¤F¡C°ß¤@
+§l¤Þ§Aª`·Nªº¬O¤@¤f¯}ÂÂªº½c¤l¡C
+~
+0 8 0
+D3
+~
+~
+0 0 4162
+>room_defun aftershoot_deldoor~
+  if rand(60)
+     echo ¡u¦aªO©¿µM¤U¨I¤F¤@¨Ç¡v
+     callout 3 deldoor 3
+     callout 4 echo ¡u³á³á¡I¬Ý¨Ó§A¤SÄ²°Ê¤F¾÷Ãö¡I¡v
+     callout 5 echo §Aµo²{§A¥i¯à­n¦Û¤O±ÏÀÙ¦Û¦æ¸Ñ°£¦èÃäªº³´¨À¤F¡C
+  endif
+~
+>room_enter 127 100~
+     echo ¡u¤@°}­·Án¹º¯}­ì¥»ªº¨IÀq¡v
+     echo ¡u«¦....¡v
+     callout 1 echoat $n ¡u§Aµo²{§A³Q¤@¤ä·t½b®g¤¤¡v
+     callout 1 modhmv $n 03.20 30 00000001
+     callout 2 rcall aftershoot_deldoor
+~
+>room_mask untangle west~
+if learned($n) >= 133 10
+	if rand(60)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¦èÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 3 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4162
+		callout 1 at 4162 makedoor 1 ¥´¶}ªºªù stone 0 0 4166
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¦èÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 3 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4162
+		callout 1 at 4162 makedoor 1 ¥´¶}ªºªù stone 0 0 4166
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4167
+ÁôÂÃªº±K«Ç~
+¦Ç¹Ð§Gº¡¤F¾ã­ÓªÅ¶¡¡AÀð¤W±¾µÛ»jµïºô¡A¬Ý¨Ó¤w¸g¦³¬q®É¤é¨S¦³¤H¶i¨Ó¹L¤F¡C°ß¤@
+§l¤Þ§Aª`·Nªº¬O¤@¤f¯}ÂÂªº½c¤l¡C
+~
+0 8 0
+D0
+~
+~
+0 0 4163
+>room_enter 127 100~
+  if rand(40)
+     echo ¡u¬ðµM¶Ç¥X¤@°}³Ø³ØÁn¡v
+     callout 3 deldoor 0
+     callout 4 echo ¡u³á³á¡I¬Ý¨Ó§A¬OÄ²°Ê¤F¾÷Ãö¤F¡I¡v
+     callout 5 echo §Aµo²{§A¥i¯à­n¦Û¤O±ÏÀÙ¦Û¦æ¸Ñ°£¥_Ãäªº³´¨À¤F¡C
+  endif
+~
+>room_mask untangle north~
+if learned($n) >= 133 10
+	if rand(60)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¥_Ãäªºªù¥´¶}¤F......
+		callout 1 makedoor 0 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4163
+		callout 1 at 4163 makedoor 2 ªù stone 7 0 4167
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¥_Ãäªºªù¥´¶}¤F......
+		callout 1 makedoor 0 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4163
+		callout 1 at 4163 makedoor 2 ªù stone 7 0 4167
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4168
+ÁôÂÃªº±K«Ç~
+¦Ç¹Ð§Gº¡¤F¾ã­ÓªÅ¶¡¡AÀð¤W±¾µÛ»jµïºô¡A¬Ý¨Ó¤w¸g¦³¬q®É¤é¨S¦³¤H¶i¨Ó¹L¤F¡C°ß¤@
+§l¤Þ§Aª`·Nªº¬O¤@¤f¯}ÂÂªº½c¤l¡C
+~
+0 8 0
+D5
+~
+~
+0 0 4164
+>room_enter 127 100~
+  if rand(50)
+     echo ¡u¬ðµM¶Ç¥X¤@°}³Ø³ØÁn¡v
+     callout 1 deldoor 5
+     callout 2 at 4164 deldoor 4
+     callout 2 at 4164 purge statue
+     callout 3 at 4164 oload 4099 1 floor
+     callout 4 echo ¡u³á³á¡I¬Ý¨Ó§A¬OÄ²°Ê¤F¾÷Ãö¤F¡I¡v
+     callout 5 echo §Aµo²{§A¥i¯à­n¦Û¤O±ÏÀÙ¦Û¦æ¸Ñ°£¤U¤èªº³´¨À¤F¡C
+  endif
+~
+>room_mask untangle down~
+if learned($n) >= 133 10
+	if rand(60)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¤U¤èªºªù¥´¶}¤F......
+		callout 1 makedoor 5 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4164
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¤U¤èªºªù¥´¶}¤F......
+		callout 1 makedoor 5 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4164
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4169
+ÁôÂÃªº±K«Ç~
+¦Ç¹Ð§Gº¡¤F¾ã­ÓªÅ¶¡¡AÀð¤W±¾µÛ»jµïºô¡A¬Ý¨Ó¤w¸g¦³¬q®É¤é¨S¦³¤H¶i¨Ó¹L¤F¡C°ß¤@
+§l¤Þ§Aª`·Nªº¬O¤@¤f¯}ÂÂªº½c¤l¡C
+~
+0 8 0
+D1
+~
+~
+0 0 4161
+>room_enter 127 100~
+  if rand(30)
+     echo ¡u¬ðµM¶Ç¥X¤@°}³Ø³ØÁn¡v
+     callout 1 deldoor 1
+     callout 2 at 4161 deldoor 3
+     callout 2 at 4161 purge statue
+     callout 3 at 4161 oload 4097 1 floor
+     callout 4 echo ¡u³á³á¡I¬Ý¨Ó§A¬OÄ²°Ê¤F¾÷Ãö¤F¡I¡v
+     callout 5 echo §Aµo²{§A¥i¯à­n¦Û¤O±ÏÀÙ¦Û¦æ¸Ñ°£ªFÃäªº³´¨À¤F¡C
+  endif
+~
+>room_mask untangle east~
+if learned($n) >= 133 10
+	if rand(60)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡AªFÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 1 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4161
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡AªFÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 1 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4161
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4170
+ÁôÂÃªº±K«Ç~
+¦Ç¹Ð§Gº¡¤F¾ã­ÓªÅ¶¡¡AÀð¤W±¾µÛ»jµïºô¡A¬Ý¨Ó¤w¸g¦³¬q®É¤é¨S¦³¤H¶i¨Ó¹L¤F¡C°ß¤@
+§l¤Þ§Aª`·Nªº¬O¤@¤f¯}ÂÂªº½c¤l¡C
+~
+0 8 0
+D2
+~
+~
+0 0 4160
+>room_enter 127 100~
+  if rand(30)
+     echo ¡u¬ðµM¶Ç¥X¤@°}³Ø³ØÁn¡v
+     callout 1 deldoor 2
+     callout 2 at 4160 deldoor 0
+     callout 2 at 4160 purge statue
+     callout 3 at 4160 oload 4095 1 floor
+     callout 4 echo ¡u³á³á¡I¬Ý¨Ó§A¬OÄ²°Ê¤F¾÷Ãö¤F¡I¡v
+     callout 5 echo §Aµo²{§A¥i¯à­n¦Û¤O±ÏÀÙ¦Û¦æ¸Ñ°£«nÃäªº³´¨À¤F¡C
+  endif
+~
+>room_mask untangle south~
+if learned($n) >= 133 10
+	if rand(60)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A«nÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 2 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4160
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A«nÃäªºªù¥´¶}¤F......
+		callout 1 makedoor 2 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4160
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4171
+ÁôÂÃªº±K«Ç~
+¦Ç¹Ð§Gº¡¤F¾ã­ÓªÅ¶¡¡AÀð¤W±¾µÛ»jµïºô¡A¬Ý¨Ó¤w¸g¦³¬q®É¤é¨S¦³¤H¶i¨Ó¹L¤F¡C°ß¤@
+§l¤Þ§Aª`·Nªº¬O¤@¤f¯}ÂÂªº½c¤l¡C
+~
+0 8 0
+D4
+~
+~
+0 0 4159
+>room_enter 127 100~
+if rand(30)
+	echo ¡u¬ðµM¶Ç¥X¤@°}³Ø³ØÁn¡v
+	callout 3 deldoor 4
+	callout 4 echo ¡u³á³á¡I¬Ý¨Ó§A¬OÄ²°Ê¤F¾÷Ãö¤F¡I¡v
+	callout 5 echo §Aµo²{§A¥i¯à­n¦Û¤O±ÏÀÙ¦Û¦æ¸Ñ°£¤W¤èªº³´¨À¤F¡C
+endif
+~
+>room_mask untangle up~
+if learned($n) >= 133 10
+	if rand(60)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¦V¤Wªºªù¥´¶}¤F......
+		callout 1 makedoor 4 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4155
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡Aµo²{¤F¤@­Ó¸Ë¸m¡A¨Ã¥B±N¥¦©î°£¡I
+		callout 1 echo ¤@°}ÁnÅT«á¡A¦V¤Wªºªù¥´¶}¤F......
+		callout 1 makedoor 4 ¤@®y¥Ûªù½w½w¤W¤É stone 0 0 4155
+	else
+		echo §A¤p¤ßÁlÁl¦a§ä´M«Ç¤ºªº¾÷Ãö¡A¦ý¬O¤°»ò¤]¨S¦³§ä¨ì¡A¦Ó¥BÁÙÄ²µo¤F³´¨À¡I
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#0
+
+
+
+#SPECIALS
+M 4000 spec_assassin
+M 4048 spec_guard
+S
+
+
+
+#RESETS
+M 0 4067 1 4067
+M 0 4022 2 4056
+M 0 4022 2 4056
+M 0 4025 1 4057
+M 0 4026 2 4057
+M 0 4026 2 4057
+M 0 4027 2 4062
+M 0 4027 2 4062
+M 0 4024 1 4062
+M 0 4028 1 4062
+M 0 4025 1 4064
+M 0 4023 1 4065
+M 0 4021 3 4066
+M 0 4030 1 4066
+M 0 4020 3 4068
+E 0 4047 0 16
+E 0 4035 0 13
+M 0 4020 3 4068
+E 0 4047 0 16
+E 0 4035 0 13
+M 0 4019 1 4069
+E 0 4035 0 13
+E 0 4000 0 17
+O 0 4034 0 4069
+M 0 4015 2 4071
+M 0 4015 2 4071
+M 0 4038 5 4076
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4076
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4077
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4077
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4078
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4013 3 4084
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4013 3 4084
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4013 3 4084
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4004 2 4090
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4044 2 4090
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4044 2 4090
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+G 0 4049 0
+M 0 4045 3 4091
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4045 3 4091
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+G 0 4050 0
+M 0 4006 1 4095
+E 0 4043 0 16
+E 0 4044 0 5
+M 0 4039 1 4096
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4036 1 4097
+E 0 4047 0 16
+G 0 4051 0
+M 0 4040 1 4098
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4005 2 4099
+E 0 4026 0 16
+E 0 4024 0 5
+E 0 4016 0 8
+M 0 4005 2 4100
+E 0 4026 0 16
+E 0 4024 0 5
+E 0 4016 0 8
+M 0 4041 2 4111
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4041 2 4111
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4037 1 4111
+E 0 4005 0 16
+E 0 4021 0 5
+E 0 4036 0 12
+E 0 4037 0 8
+E 0 4038 0 10
+E 0 4039 0 9
+M 0 4000 1 4112
+E 0 4105 0 6
+E 0 4004 0 16
+E 0 4056 0 18
+E 0 4109 0 5
+M 0 4003 4 4114
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4014 2 4114
+E 0 4019 0 16
+E 0 4022 0 5
+M 0 4014 2 4114
+E 0 4019 0 16
+E 0 4022 0 5
+M 0 4003 4 4115
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4003 4 4115
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4003 4 4115
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4010 3 4117
+E 0 4031 0 16
+E 0 4041 0 5
+E 0 4040 0 6
+M 0 4010 3 4117
+E 0 4031 0 16
+E 0 4041 0 5
+E 0 4040 0 6
+M 0 4010 3 4117
+E 0 4031 0 16
+E 0 4041 0 5
+E 0 4040 0 6
+M 0 4007 2 4118
+E 0 4020 0 16
+E 0 4012 0 5
+M 0 4007 2 4118
+E 0 4020 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4017 3 4124
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4017 3 4124
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4017 3 4124
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4014 2 4125
+E 0 4019 0 16
+E 0 4022 0 5
+M 0 4035 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4014 0 6
+E 0 4009 0 16
+M 0 4035 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4014 0 6
+E 0 4009 0 16
+M 0 4035 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4014 0 6
+E 0 4009 0 16
+M 0 4016 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4040 0 6
+E 0 4025 0 16
+M 0 4018 2 4128
+E 0 4030 0 16
+M 0 4018 2 4128
+E 0 4030 0 16
+M 0 4011 2 4130
+E 0 4045 0 16
+E 0 4046 0 6
+E 0 4013 0 5
+M 0 4011 2 4130
+E 0 4045 0 16
+E 0 4046 0 6
+E 0 4013 0 5
+M 0 4046 2 4133
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+G 0 4052 0
+M 0 4046 2 4133
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4031 1 4136
+G 0 4053 0
+E 0 4027 0 16
+E 0 4013 0 5
+E 0 4014 0 6
+M 0 4008 3 4137
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4042 2 4139
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+G 0 4054 0
+M 0 4001 1 4141
+E 0 4058 0 12
+E 0 4059 0 8
+E 0 4060 0 16
+M 0 4032 1 4142
+M 0 4006 1 4144
+E 0 4043 0 16
+E 0 4044 0 5
+M 0 4008 3 4145
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4033 1 4146
+M 0 4043 2 4148
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4043 2 4148
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4050 1 4105
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4052 2 4150
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4052 2 4150
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+O 0 4069 0 4156
+P 0 4070 0 4069
+M 0 4053 1 4153
+O 0 4071 0 4155
+O 0 4088 0 4159
+M 0 4061 1 4165
+O 0 4081 0 4166
+P 0 4087 0 4081
+O 0 4082 0 4167
+P 0 4090 0 4082
+O 0 4083 0 4168
+P 0 4091 0 4083
+O 0 4084 0 4169
+P 0 4092 0 4084
+O 0 4085 0 4170
+P 0 4093 0 4085
+O 0 4086 0 4171
+P 0 4094 0 4086
+O 0 4095 0 4160
+O 0 4097 0 4161
+O 0 4099 0 4164
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

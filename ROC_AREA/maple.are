@@ -1,0 +1,3410 @@
+#AREADATA
+Name        楓紅林~
+Identity    maple~
+Builders    Zeel~
+Translator  ----~
+Modifier    ----~
+VNUMs         16001 16082
+Security    1
+Recall      4580
+Death       401
+F_toggle    794652
+End
+
+#MOBILES
+#16001
+anka-maple lord~
+安卡(Anka)~
+導師 - 安卡(Lord Anka)正坐在這裡。
+~
+端坐在你眼前的人正是楓紅村中最為人景仰的導師，雖然他只
+有四十多歲，但是眼中卻散發著睿智的光輝。掛在牆上的長劍
+劍鞘上隱約泛著暗紅色的光澤，感覺上似乎經歷過不少戰役。
+~
+8477379|1024 8|32|128|512 800 S
+50 3000 0 30d5+350 -10d-50+30
+-1 0
+0 8 1
+C 15
+W flaming slash~ 400 200
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+wear all
+disarm
+get all
+if rand(30)
+        flaming
+        break
+endif
+if rand(30)
+        earth
+else
+        circular
+endif
+~
+>fight_prog 40~
+if rand(30)
+        c 2 'chill touch' $n
+endif
+if rand(30)
+        c 2 weaken $n
+endif
+if rand(30)
+        c 2 harm $n
+endif
+if rand(30)
+        c 2 blindness
+        c 'cure blind'
+endif
+if rand(10)
+        c 'full heal'
+endif
+~
+>fight_prog 40~
+wear all
+disarm
+get all
+if hitprcnt($i) < 30
+        c 'double heal'
+        c heal
+        c curse $n
+        break
+endif
+if hitprcnt($i) < 50
+        c 'double heal'
+        c weaken $n
+        break
+endif
+if hitprcnt($i) < 70
+        c heal
+        c 'chill touch'
+endif
+~
+>hitprcnt_prog 40~
+if rand(50)
+        c 'double heal'
+else
+        c heal
+endif
+~
+>greet_prog 100~
+        if isnpc($n)
+                break
+        endif
+        if is_qmark($n) == maple_enemy
+                yell 打擾了楓紅林和平的人只有死路一條！
+                mpat 5 c gi
+                c 'dispel magic' $n
+                c fae $n
+                c curse $n
+                c bli $n
+                mpkill $n
+                flami $n
+                break
+        endif
+        if is_qmark($n) == maple_swd_trail 100005
+                clap $n
+                say 恭喜你通過了這三場困難的試煉。
+                mpechoaround $n $i 將自己脖子上的項鍊解了下來，遞給 $n 。
+                mpechoat $n $i 將自己脖子上的項鍊解了下來，遞給了你。
+                say 這條項鍊是我的護身符，現在送給你作為通過試煉的證明。
+                mpoload 16004 $n viclv target
+                say 願真理和秩序與你同在。
+                mpmod_qmark $n maple_swd_trail v0 = 6
+                say ......對了，如果你需要學習更精要的劍術，你可以到樓下
+                say 與我設置的幻影學習。
+        endif
+        if rand(50)
+                smile $n
+                break
+        endif
+~
+>talk_prog seed~
+if is_qmark($n) == ocean_annie_seed 100002
+mpmod_qmark $n ocean_annie_seed v0 = 3
+think $n
+mpcallout 1 say 我是曾經有過一顆白楓種子
+mpcallout 2 say 不過很久以前就已經送給黛妮雅了
+mpcallout 3 say 你最好還是回去問問看吧。
+endif
+~
+>talk_prog topic~
+        say 歡迎來到祥和的楓紅林區(forest)。
+~
+>talk_prog forest~
+        nod $n
+        say 住在楓紅林的我們，是從史卡拉貝(skara brae)移民過來的第二代。
+        say 我們原本也是光明之鎮的住民
+        say 後來跟鎮裡的人們在一些事情(something)上意見不合
+        say 所以才會遷徙至此。
+~
+>talk_prog something~
+        say 詳細的情形我也不太清楚了，
+        say 好像是跟當年的戰事有關吧。
+        sorry $n
+~
+>talk_prog trial~
+if class($n) == 12
+        if is_qmark($n) != maple_swd_trail
+                break
+        endif
+        if is_qmark($n) == maple_swd_trail 100001
+                if level($n) < 38
+                        shake $n
+                        say 你的等級不夠高，還不能夠接受我的試煉。
+                else
+                        mpmod_qmark $n maple_swd_trail v0 = 2
+                        say 好！果然英雄出少年！
+                        clap $n
+                        say 如果你已經做好了準備，只要跟我說可以(talk anka ok)，就開始進行
+                        tell $n 如果不幸戰敗，跟我說一聲(talk anka grave)就可以取回屍首。
+                        tell $n 同時再跟我說(talk anka ok)任務即可重新開始。
+                endif
+        endif
+endif
+~
+>talk_prog grave~
+if class($n) == 12
+        if is_qmark($n) <= maple_swd_trail 100001
+                break
+        else
+                cast grave $n
+                say 請多加油
+        endif
+endif
+~
+>talk_prog ok~
+if is_qmark($n) <= maple_swd_trail 100004
+        if class($n) == 12
+                if level($n) >= 38
+                mpechoat $n 一陣奇怪的感覺後，你忽然被傳送到一個奇怪的地方....。
+                mptransfer $n 16050
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+|
+#16002
+cloud-maple cleric~
+克勞德牧師(Cleric Cloud)~
+秩序之神方提修的牧師(Cleric)正在這裡傳道。
+~
+克勞德牧師是迷霧之島的第一代移民。當年安定了跟著安卡的父
+親一起逃難到這片楓林的民眾恐慌心靈的，正是這位信奉秩序之
+神的牧師。
+~
+129 684|8192 1000 S
+50 0 1000 0d0+30 20d10+0
+-1 0
+0 8 1
+C 2
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+wear all
+barehand
+mpnowait
+c angry
+mpnowait
+disarm
+mpnowait
+get all
+if rand(30)
+        c 2 'chill touch' $n
+        mpnowait
+endif
+if rand(30)
+        c 2 weaken $n
+        mpnowait
+endif
+if rand(30)
+        c 2 harm $n
+        mpnowait
+endif
+if rand(30)
+        c 2 blindness
+        mpnowait
+endif
+if rand(10)
+        c 'full heal'
+        mpnowait
+endif
+~
+>fight_prog 30~
+if hitprcnt($i) < 30
+        c 'double heal'
+        mpnowait
+        c heal
+        mpnowait
+        c curse $n
+        mpnowait
+        break
+endif
+if hitprcnt($i) < 50
+        c 'double heal'
+        mpnowait
+        c weaken $n
+        mpnowait
+        break
+endif
+if hitprcnt($i) < 70
+        c heal
+        mpnowait
+        c 'chill touch'
+        mpnowait
+endif
+~
+>hitprcnt_prog 40~
+if rand(50)
+        c 'double heal'
+else
+        c heal
+endif
+mpnowait
+~
+>greet_prog 100~
+if isnpc($n)
+        break
+endif
+if is_qmark($n) == maple_enemy
+        say 受死！
+        c angry $n
+        break
+endif
+if is_inv_obj($n) == 10018
+or is_equ_obj($n) == 10018
+        if is_qmark($n) == crystal_reward
+                if is_qmark($n) == maple_camus_attack
+                or mobcount(16023) >= 1
+                        break
+                endif
+                gasp $n
+                mpechoat $n $I 驚訝的說「這....這是聖王的信物」
+                mpechoat $n $I 驚訝的說「難道你就是拯救了水晶湖的勇士！」
+                mpechoaround $n 正當 $I 等待 $n 的回答時，忽然天空響起了雷聲！
+                mpechoat $n 正當 $I 等待你的回答時，突然天空響起了雷聲！
+                mpechoat $n $I 說著「魔族的妖怪又要作亂！他就是控制住水晶湖的魔族 卡瑪斯(camus)！」
+                mpechoat $n $I 說著「能否請你幫忙除去他呢(destroy)？」
+                mpadd_qmark $n maple_camus_attack -1 0 0 0 0 1
+        endif
+endif
+if is_qmark($n) == wyvern_tower 300002
+        if is_equ_obj($n) == 15112
+        or is_inv_obj($n) == 15112
+                gasp $n
+                say 你身上的那面盾牌，可以借給我看一下嗎？
+                say 我在那上面感覺到一股不太好的力量存在。
+                mpmod_qmark $n wyvern_tower v2 = 3
+        endif
+endif
+~
+>talk_prog destroy~
+if is_qmark($n) == maple_camus_attack 100000
+        mpechoat $n 你義不容辭的接下了這個任務....。
+        mpat 16023 mpmload 16023
+        mpat 16023 mpforce camus mpoload 16041
+        mpat 16023 mpforce camus mpoload 16042
+        mpat 16023 mpforce camus mpoload 16010
+        mpat 16023 mpforce camus-maple wear all
+        mpat 16023 mpforce camus-maple mpat $n mpdef_rembch $n
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16023 mpmload 16027
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16023 mpforce camus-maple mpgroup self daemon 1 0
+        mpat 16016 mpmload 16027
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16041 mpmload 16027
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16041 mpforce daemon mpkill lord
+        mpat 16023 mpforce camus-maple yell 破壞闇黑主宰計畫的人類，來到我的跟前試試黑暗的力量吧！
+        mpat 16041 mpforce lord yell 不正的力量！遠離潔淨之地！
+        mpmod_qmark $n maple_camus_attack v0 = 1
+        say 願神保佑你....。
+endif
+~
+>talk_prog topic~
+bow $n
+say 你好，歡迎來到秩序之神的殿堂。
+say 我是秩序之神的牧師克勞德
+say 你想知道秩序的真諦嗎？(talk cleric yes/no)
+~
+>talk_prog no~
+sigh
+say 我也無法勉強你…
+say 畢竟順應一個人的喜好也是秩序的一種。
+bow
+~
+>talk_prog yes~
+if being($b)
+        break
+else
+        mpecho $I 對你的同意感到十分高興
+        say 在這個混沌幻世中，不同的神有著不同的工作。
+        say 秩序之神主要的任務就是讓這個世界平和的運轉，
+        say 使其不會發生混亂....。
+        mpecho $I 拿起旁邊的杯子喝了口水....。
+        mpadd_qmark self maple_cloud -1 0 0 0 0 1
+        mpdef_rembch $n
+endif
+~
+>talk_prog restart~
+if is_qmark($n) <= maple_camus_attack 100001
+        if mobcount(16023) == 0
+                mpechoat $n 遠方傳來一陣聲響「你的任務已經可以重解了！」
+                mpdel_qmark $n maple_camus_attack
+        else
+                mpechoat $n 遠方傳來一陣聲響「目前已經有人接受這項任務！」
+                mpechoat $n 遠方傳來一陣聲響「這項任務暫時無法重解，請稍待。」
+        endif
+endif
+~
+>rand_prog 40~
+if is_qmark($i) == maple_cloud 100000
+        say 因此秩序的真諦，就是順應各種事物的本性，讓他們能各司其職，各取所需。
+        say 如果能做到這樣，那你就能夠獲得秩序之神的認同(acknowledge)了。
+        mpadd_qmark $b maple_ack -1 1 0 0 0 1
+        smile $b
+        mpdef_rembch null-tar
+        mpdel_qmark self maple_cloud
+endif
+~
+>talk_prog acknowledge~
+if is_qmark($n) != maple_ack 100001
+        say 孩子，在神的跟前撒謊是不好的。
+        smile
+else
+        mpechoat $n $I 上上下下注視著你
+        ponder
+        say 你有這份心當然是很好....。
+        mpecho $I 對著秩序之神的神像喃喃自語，似乎是在禱告....。
+        say 神希望你到楓林中取得一樣足以證明的物件(thing)。
+        say 將物件帶回給我，讓我知道你已然領悟了秩序的真諦。
+        smile $n
+        mpmod_qmark $n maple_ack v0 = 2
+endif
+~
+>talk_prog thing~
+if is_qmark($n) != maple_ack 100002
+        say 孩子，在神的跟前撒謊是不好的
+        sigh $n
+else
+        say 只要遵循自然的規律
+        say 你就能理解神的意思。
+        mpat 16045 mpmload 16018
+        mpat 16045 mpmload 16019
+        mpat 16045 mpforce wolf-maple mpkill rabbit-maple
+        smile $n
+endif
+~
+>talk_prog abyss~
+if is_qmark($n) != maple_camus_attack 100002
+        break
+else
+        soga
+        say 我一直想不通那些邪惡勢力是那裡來的
+        say 真是多虧了你，現在終於知道了
+        say 深淵魔域(abyss)是存在於另一次元的世界
+        say 看來黑暗主宰也是來自那裡了。
+        say 詳細的情形，就得請你去詢問 黛妮雅(dynia) 祭司了。
+        mpmod_qmark $n maple_camus_attack v0 = 3
+        mpexp $n 2000
+        mpgold $n 10000
+        mpresp $n 3
+endif
+~
+>talk_prog assist~
+if is_qmark($n) == wyvern_tower 300004
+        bow $n
+        say 其實我的想法很簡單，就是給予它大量的『靈魂』
+        say 之力。如果這盾牌真是黑暗主宰用來收集靈魂的道
+        say 具，那麼它每段時間只能吸取少量的靈魂必定有原
+        say 因，我猜想是一次傳送過大的靈魂力量的話，這個
+        say 傳送的途徑會因此產生錯亂，畢竟只靠一面盾做這
+        say 種靈魂的傳送是很困難的。
+        mpcallout 1 mpcall cloud_talking2 $n
+        mpcallout 1 mpmod_qmark $n wyvern_tower v2 = 5
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+>talk_prog bless~
+if is_qmark($n) != maple_cle_stone
+        if is_qmark($n) == ocean_alc_stone 100003
+                mpadd_qmark $n maple_cle_stone -1 1 0 0 0 1
+                say 這也不是很困難的事情
+                say 將阿瑞托沙拿來給我，之後再耐心等待三天即可
+        endif
+else
+        if is_qmark($n) == maple_cle_stone 100001
+                say 我不能瞭解你的意思。
+        endif
+endif
+~
+>give_prog 40038~
+if is_qmark($n) == maple_cle_stone 100001
+        mpjunk all.arethusa
+        mpadd_qmark $n maple_cle_wait 72 0 0 0 0 0
+        say 請你等待三天，三天後就可以完成祝福儀式。
+        mpmod_qmark $n maple_cle_stone v0 = 2
+        say 到時候跟我說一聲謝謝就好。
+else
+        say 你給我阿瑞托沙幹嘛？
+        drop are
+endif
+~
+>act_prog thank~
+if is_qmark($n) == maple_cle_wait
+        - $n
+        say 我還在祝福中，請不要煩我
+        break
+endif
+                if is_qmark($n) == maple_cle_stone 100002
+                        if is_qmark($n) != maple_cle_wait
+                        mpmod_qmark $n maple_cle_stone v0 = 3
+                        mpoload 40039 $n target
+                        say 這就是經過祝福的阿瑞托沙了。
+                        say 願秩序之神保佑你完成你的心願。
+                        endif
+                endif
+~
+>give_prog 16002~
+if is_qmark($n) != maple_ack 100003
+        break
+else
+        sigh
+        say 其實這並不是秩序的真諦
+        say 一般人總以為助弱鋤強便是真理，卻不知自然界有她自己的法則
+        say 雖然你並沒有達成我的要求，但知道以後可要加倍努力。
+        mpmod_qmark $n maple_ack v0 = 4
+        mpexp $n 800
+        endif
+endif
+~
+>give_prog 16003~
+if is_qmark($n) != maple_ack 100003
+        break
+else
+        good $n
+        say 沒錯！自然的法則便是順應事物的本性
+        say 也許你反對坐視惡狼吞吃野兔
+        say 但是自然的運作也是有他的道理的
+        say 請謹記這個道理。
+        mpmod_qmark $n maple_ack v0 = 4
+        mpexp $n 1000
+endif
+~
+>give_prog 15112~
+if is_qmark($n) == wyvern_tower 300003
+        mpat 5 mpjunk $o
+        mmm
+        say 果然跟我想的一樣，上面有黑暗主宰的力量......
+        say 你可以告訴我有關這面盾的情報嗎？
+        mpechoat $n 你一五一十的將之前羅帕斯跟你講的全都告訴了$I....
+        mpcallout 1 mpcall cloud_talking1 $n
+        mpcallout 1 mpmod_qmark $n wyvern_tower v2 = 4
+endif
+~
+>give_prog all~
+if name($o) / soul
+        if is_qmark($n) == wyvern_tower 300014
+                mpmod_qmark $n wyvern_tower v2 = 15
+                say 這物品擁有著極致強大的靈魂之力啊！
+                say 累積到這樣的靈魂之力應該是足夠了，我現在就開
+                say 始進行淨化儀式，請你稍等片刻。
+                mpcallout 1 mpcall cloud_talking3 $n
+                mpcallout 2 mpechoat $n 完全沒注意到你驚愕不已的神情，$I不急不徐的走到祭壇旁，並將手中的水緩緩倒在那些物品上......
+                mpcallout 3 mpechoat $n 你辛苦收集來的那些裝備慢慢的溶解在金黃色的流水之中......嗯.....怎麼鹹鹹的，這就是眼淚的味道嗎......〒ˍ〒
+                mpcallout 4 mpechoat $n 金黃的聖水又逐漸的被吸入了吞噬之盾中....你感覺吞噬之盾似乎也放出了金色光輝。
+                mpcallout 5 mpcall cloud_talking4 $n
+                mpcallout 6 mpcall cloud_talking5 $n
+        else
+                if is_qmark($n) > wyvern_tower 300014
+                or is_qmark($n) < wyvern_tower 300005
+                else
+                        say 這物品擁有著極致強大的靈魂之力啊！
+                        mpmod_qmark $n wyvern_tower v2 + 1
+                endif
+        endif
+endif
+~
+>defun_prog cloud_talking1~
+say 原來是這樣啊，這個推斷的確滿合理的......
+say 我是有個想法，或許可以壓制這面盾的力量，不過
+say 需要你的協助(assist)。
+~
+>defun_prog cloud_talking2~
+mpechoat $n 看你一臉茫然的樣子，$I有些尷尬的咳了兩聲。
+say 啊，真不好意思，說明好像太長了點，簡單說吧，
+say 請你去收集擁有『靈魂』之力的物品給我，只要量
+say 到達一定的程度，我馬上就可以進行壓制這邪惡力
+say 量的儀式。
+smile
+mpechoat $n 你心想：混蛋，吃了五面盾還不夠，現在還要收名字有魂的裝備，這是資源回收任務嗎？
+~
+>defun_prog cloud_talking3~
+mpechoat $n $I將你收集來的物品放在祭壇上，並將吞噬之盾也放了上去。
+mpechoat $n $I從一旁的水池中裝了一杯水，闔上眼默唸了幾個古代文字。
+mpechoat $n $I手中的清水居然發出了金色光芒！你甚至看到了龍的幻影！
+mpechoat $n 我的天啊！這不是傳說中的特級廚師做料理時才會發生的現象嗎！
+~
+>defun_prog cloud_talking4~
+mpechoat $n 等到水全部被吞噬之盾吸盡後，$I拿起了吞噬之盾觀察。
+sigh
+say 結果不盡人意啊，雖然一口氣灌注了這麼大量的靈
+say 魂之力，卻只能稍微壓制住它的力量，這樣的話實
+say 在不能說是成功......
+ponder
+~
+>defun_prog cloud_talking5~
+say 這樣吧，據說在史卡拉貝大陸的一座塔上，有一名
+say 很厲害的牧師，或許他能夠幫你的忙(help)也說不
+say 定。
+say 雖然沒辦法幫你解決問題，但我還是會祈求秩序之
+say 神方提修(Zeel)保佑你。
+mpoload 15112 $n 36 target
+mpechoat $n $I給了你吞噬之盾(devour shield).
+wave $n
+~
+|
+#16003
+alodesia-m apprentice~
+練習生雅爾蒂希亞(Apprentice Alodesia)~
+一位立志成為劍士的妖精少女(Alodesia)正努力的練習著。
+~
+雅爾蒂希亞是附近妖精村落的少女，為了擁有足以在旅行
+時保護自身的力量，這幾個月來都在楓紅村中修習劍術的
+精要。
+~
+4096 33448 420 S
+27 0 0 0d0+40 0d5+0
+-1 0
+0 8 2
+R Elf~
+C 1
+P 8
+>greet_prog 100~
+if is_qmark($n) == maple_enemy
+        mpecho $I 露出了一臉厭惡的表情
+        say 像 $n 這種人我最討厭了！
+        if insameroom(martin-m)
+                mpgroup matin-m self 1 0
+                c fireball $n
+                mpforce martin-m rescue alodesia
+                mpforce martin-m protect alodesia
+        endif
+endif
+~
+>talk_prog cloth~
+if is_qmark($n) == xmas_maple_alo 100001
+        say 原來你不知道啊。
+        say 我建議你去找防具店的老闆娘問問
+        gig $n
+        mpmod_qmark $n xmas_maple_alo v0 = 2
+else
+        ? $n
+endif
+~
+>talk_prog topic~
+        smile $n
+        say 想必您是第一次來到我們這個村莊
+        mpecho $I 向四周指了一指
+        say 這裡的人都是安卡導師(Anka)的弟子。
+        say 所有人都以成為混沌幻世第一劍手為目標努力著。
+~
+>talk_prog anka~
+        gasp $n
+        say 您居然還沒去看過導師！？
+        tsk $n
+        say 良心建議，您還是去拜會一下導師比較好。
+        smile
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+|
+#16004
+martin-m apprentice~
+練習生馬汀(Apprentice Martin)~
+一位立志成為劍士的少年(Martin)正努力的練習著。
+~
+馬汀‧麥凱因是星光武具專賣店老闆的么子，自小就希望
+能到海的另一邊遊歷。為了能在旅途中保護自己，他十分
+認真的鍛鍊自己。
+~
+4096 33448 420 S
+20 0 0 0d0+40 0d5+0
+-1 0
+0 8 2
+>greet_prog 100~
+if is_qmark($n) == maple_enemy
+        mpecho $I 露出了一臉厭惡的表情
+        say 像$n 這種人我最討厭了！
+        if insameroom(alodesia-m)
+                mpgroup self alodesia 1 0
+                protect alodesia
+                mpkill $n
+        endif
+endif
+~
+>talk_prog topic~
+        smile $n
+        mpecho $I 向四周指了一指
+        say 這裡的人都是安卡導師(Anka)的弟子。
+        say 所有人都以成為混沌幻世第一劍手為目標努力著。
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+|
+#16005
+grocer-m~
+雜貨店老闆(grocer)~
+河漢雜貨店的老闆(grocer)和藹的對你笑著。
+~
+和藹可親的老闆正忙著詢問其他顧客需要些什麼物品。
+~
+7 0 680 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+>greet_prog 100~
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        say 歡迎光臨，請問需要點什麼？
+        if rand(60)
+                say 我們這的水袋可是一流的商品
+                say 不管你怎樣蹂躪都不會破損的
+                if rand(50)
+                        mpecho 你聽到「嘶」的一聲
+                        mpecho 看起來是某位客人剛買的牛皮水袋在打開袋口時破了。
+                        blush
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+|
+#16006
+boss-m tavern~
+杜康酒館老板(tavern boss)~
+杜康酒館的老板(tavern boss)正在檢查酒的年份。
+~
+你看到一位滿頭紅髮的妙齡女子(tavern boss)正在檢查酒的年份。
+~
+67 0 400 S
+45 500 0 10d20+0 0d0+0
+-1 0
+0 8 2
+R Half-elf~
+C 1
+P 8
+>greet_prog 100~
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        smile $n
+        mpecho $I 說：歡迎光臨，今年的麥酒很不錯唷。
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+|
+#16007
+cook-m multi~
+馬蹄餐館的大廚(multi's cook)~
+戴著一頂高帽的大廚(cook)正在分配工作。
+~
+大廚看到你走進來之後，立刻放下手邊的工作跑了過來。
+~
+67 0 800 S
+41 500 0 9d2+0 0d0+0
+-1 0
+0 8 1
+P 8
+>greet_prog 100~
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        mpechoat $n $I 殷勤的說「您好，請先看看菜單，等下就為您服務。」
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+|
+#16008
+anna-m boss~
+星光武具店的老闆(Boss Anna)~
+一位有著亮金色長髮的婦女(boss)在這裡檢視武具。
+~
+很少有人相信她就是星光武具專賣店的老闆，但是事實就
+是事實。安娜‧麥凱茵，正是這家店的主人。
+~
+8663043 40 500 S
+60 1500 0 20d40+20 0d0+0
+-1 0
+0 8 2
+C 1
+P 8
+>greet_prog 100~
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        say 所有的武器都放在左邊的櫃子中，右邊掛著的都是防具，請自行選購。
+endif
+~
+>rand_prog 40~
+if pcnum($) > 0
+        say 真希望我的老公(husband)能夠在這邊陪我。
+        sigh
+endif
+~
+>talk_prog husband~
+        say 他原本是楓紅林的第一劍手。
+        say 連導師的試煉(trial)他也通過了。
+        say 後來，在一次的魔物侵擾中，為了我和馬汀而犧牲了。
+        cry $n
+~
+>talk_prog trial~
+? $n
+if is_qmark($n) != maple_swd_trail
+        mpadd_qmark $n maple_swd_trail -1 1 0 0 0 1
+endif
+say 這，您可能得去詢問導師了
+~
+>talk_prog cloth~
+if is_qmark($n) == xmas_maple_alo 100002
+        say 原來$n是來找聖誕傳統服飾的啊…
+        sorry $n
+        mpcallout 1 say 真是不巧…最近材料有點缺貨…所以今年還沒做出來說
+        mpcallout 2 say 如果可能的話，希望你能去替我買些原料
+        mpcallout 3 say 只要能買到棉花(cotton)，我就可以做出來了。
+        mpmod_qmark $n xmas_maple_alo v0 = 3
+else
+        ? $n
+endif
+~
+>talk_prog cotton~
+if is_qmark($n) == xmas_maple_alo 100003
+        nod $n
+        mpcallout 1 say 我聽說海域的安妮嬸嬸最近有種出棉花，勞駕替我跑一趟吧
+        mpmod_qmark $n xmas_maple_alo v0 = 4
+else
+        ? $n
+endif
+~
+>give_prog 16046~
+if is_qmark($n) == xmas_maple_alo 100005
+        bow $n
+        mpcallout 1 say 真是太好了，請你明天這個時候來找我領取(finish)吧
+        mpadd_qmark $n xmas_wait 24 0 0 0 0 1
+        mpmod_qmark $n xmas_maple_alo v0 = 6
+else
+        ? $n
+endif
+~
+>talk_prog finish~
+if is_qmark($n) != xmas_wait
+        if is_qmark($n) == xmas_maple_alo 100006
+        mpmod_qmark $n xmas_maple_alo v0 = 7
+        nod $n
+        mpoload 16044 $n viclv target
+        mpoload 16045 $n viclv target
+        say 這裡就是聖誕禮物了
+        smile
+        wave $n
+        rum $n已經領到聖誕禮物了！
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+~
+|
+#16009
+villager-m young~
+青年村民(young villager)~
+你看到一位年輕人(young villager)正在樹林中散步。
+~
+小心！你差點就把這位仁兄給撞倒了。
+~
+65 0 800 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+        bow $n
+        say 楓紅林非常歡迎外來的旅客
+        say 只要不做出破壞安寧的事來，請隨意。
+~
+|
+#16010
+thief-m~
+隱匿在暗處的盜賊(thief)~
+一名鬼祟不安好心的盜賊(thief)窺視著你。
+~
+糟糕！你的錢呢？
+~
+3 8|32|512|32768|65536 -150 S
+22 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 4
+>talk_prog topic~
+say 居然被你發現了！
+mpecho 盜賊慌慌張張的逃走了....。
+s
+n
+w
+e
+~
+|
+#16011
+guard-m village~
+民團守衛(village guard)~
+一名巡邏中的民團守衛(village guard)
+~
+看他一副雄赳赳氣昂昂的樣子，要是作壞事被他逮住，可
+就一點都不好玩了。
+~
+1|16384 0 800 S
+22 0 0 3d5+0 0d0+0
+-1 0
+0 8 1
+C 1
+>greet_prog 50~
+if isnpc($n)
+        break
+else
+        if isevil($n)
+                mpechoat $n $I 警告你快點離開這裡。
+                mpechoaround $n $I 警告 $n 快點離開。
+                say 這裡不歡迎邪惡的人！
+        else
+                say 很高興認識你
+                smile $n
+        endif
+endif
+~
+|
+#16012
+apprentice-m~
+劍士練習生(swordsman apprentice)~
+一名男性的練習生(apprentice)正在練習劍術
+~
+一名十來歲的少年在這勤奮的練習劍術。
+~
+129 0 0 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+#16013
+girl-m apprentice~
+劍士練習生(swordman apprentice)~
+一位綁著馬尾的少女(apprentice)在這練習劍術。
+~
+這位綁著馬尾的少女正在練習老師所教授的劍術要訣。
+~
+129 0 25 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 1
+#16014
+man-m~
+中年男子(man)~
+一位中年男子(man)站在這裡。
+~
+他正和其他人討論著公告欄上的公告。
+~
+129 0 100 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#16015
+man-m old~
+白髮老人(old man)~
+這位滿頭白髮的老人家(old man)正在這裡和朋友泡茶。
+~
+他手中的茶看起來還蠻不錯的。
+~
+129 0 340 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>rand_prog 20~
+if inroom($i) != 16023
+        break
+else
+        if rand(40)
+                say 茶可以喝了，好友請吧。
+                mpoload 16001
+                drink tea
+                mpjunk all.tea
+        endif
+endif
+~
+|
+#16016
+fire-m swordsman~
+紅袍劍士的幻影(Illusion Swordsman)~
+一個持著火紅色長劍的劍客(swordsman)立在此處。
+~
+你定睛一看，才注意到這只是幻影而已。
+但是那股從劍上傳出的炎勁卻是這麼的真實。
+~
+4295 8|32|512 0 S
+40 1000 400 0d0+50 20d10+0
+-1 0
+0 8 1
+C 9
+R Phantom~
+W flaming slash~ 500 300
+W earth slash~ 500 300
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if is_qmark($n) == maple_swd_trail 100002
+        say 你來了嗎？我等你很久了。
+endif
+~
+>talk_prog topic~
+if is_qmark($n) != maple_swd_trail 100002
+        break
+else
+        say 我是導師用魔力所塑造的形象
+        say 負責第一關的考驗
+        say 如果確定能夠接受試驗了，請跟我說開始(talk swordsman start)
+endif
+~
+>talk_prog start~
+if is_qmark($n) == maple_swd_trail 100002
+        nod $n
+        mpecho 劍士開口說道：那就開始吧。
+        mpecho 劍士猛然對你發動攻勢！
+        mpkill $n
+endif
+~
+>fight_prog 50~
+flameing
+if rand(50)
+        mpecho $I 的身上突然冒出一股火紅的光芒
+        yell 必殺一擊！
+        skilldrv multihit $n
+        flaming
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpexp $n 1000
+if is_qmark($n) == maple_swd_trail 100002
+        say 你已經通過我這一關了。
+        mpmod_qmark $n maple_swd_trail v0 = 3
+break
+endif
+        if is_qmark($n) == maple_trail_quit 100001
+        mpjunk sword
+        mpjunk bracer
+        endif
+~
+|
+#16017
+Illusion-n swordsman~
+黃袍劍士的幻影(Illusion Swordsman)~
+一位身著黃袍的劍士(swordsman)站在這裡。
+~
+你定睛一看，才注意到這只是幻影而已。
+但是那股從人影身上傳出的威嚴感卻是這麼的真實。
+~
+4295 8|32|512 0 S
+40 1050 200 0d0+60 20d-10+0
+-1 0
+0 8 1
+C 9
+R Phantom~
+W flaming slash~ 500 300
+W earth slash~ 500 300
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if is_qmark($n) == maple_swd_trail 100002
+        say 你通過了第一關，不一定能夠通過第二關。
+endif
+~
+>talk_prog topic~
+if is_qmark($n) != maple_swd_trail 100003
+        break
+else
+        say 我是導師用魔力所塑造的形象
+        say 負責你第二關的考驗
+        say 如果確定能夠接受試驗了，請跟我說開始(talk swordsman start)
+endif
+~
+>talk_prog start~
+if is_qmark($n) == maple_swd_trail 100003
+        nod $n
+        mpecho 劍士開口說道：那現在就動手吧。
+        mpecho 劍士猛然對你發動攻勢！
+        mpkill $n
+endif
+~
+>fight_prog 50~
+flameing
+if rand(30)
+        mpecho $I 的身上突然冒出一股橙黃的光芒
+        yell 石甲護體！
+        c 'stone skin'
+        c shield
+        c protection
+endif
+~
+>fight_prog 10~
+yell    ---天    崩    地    裂---
+if hitprcnt($i) > 50
+        circular
+        flaming
+        earth
+else
+        mpat 5 c 'double heal'
+        skilldrv multihit $n
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpexp $n 2000
+if is_qmark($n) == maple_swd_trail 100003
+        say 你已經通過我這一關了。
+        mpmod_qmark $n maple_swd_trail v0 = 4
+break
+endif
+        if is_qmark($n) == maple_trail_quit 100001
+        mpjunk sword
+        mpjunk bracer
+        endif
+~
+|
+#16018
+wolf-maple wolf~
+狼(wolf)~
+一隻惡狼(wolf)正在獵殺兔子。
+~
+~
+3 512 0 S
+20 250 0 -50d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>repop_prog 100~
+mpadd_qmark self maple_wolf_ack 50 0 0 0 1 0
+~
+>rand_prog 40~
+if is_qmark($i) != maple_wolf_ack
+        mppurge self
+endif
+~
+>fight_prog 50~
+if is_qmark($i) != maple_wolf_ack
+        mppurge self
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_ack 100002
+        break
+else
+        mpmod_qmark $n maple_ack v0 = 3
+        mpoload 16002 floor
+endif
+if insameroom(rabbit-maple)
+        mppurge rabbit-maple
+endif
+~
+|
+#16019
+rabbit-maple~
+白兔(rabbit)~
+一隻白兔(rabbit)正在被惡狼攻擊。
+~
+~
+1 512 0 S
+20 250 0 -50d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>repop_prog 100~
+mpadd_qmark self maple_rabbit_ack 50 0 0 0 1 0
+~
+>rand_prog 40~
+if is_qmark($i) != maple_rabbit_ack
+        mppurge self
+endif
+~
+>fight_prog 50~
+if is_qmark($i) != maple_rabbit_ack
+        mppurge self
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_ack 100002
+        break
+else
+        mpmod_qmark $n maple_ack v0 = 3
+        mpoload 16003 floor
+endif
+if insameroom(wolf-maple)
+        mppurge wolf-maple
+endif
+~
+|
+#16020
+insect-m~
+小飛蟲(flying insect)~
+一隻一直嗡嗡作響的討厭飛蟲(insect)
+~
+~
+1 0 0 S
+4 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R insect~
+>rand_prog 10~
+if mobcount(16020) > 5
+        mppurge self
+endif
+~
+>death_prog 50~
+mpechoaround $I發出了嗡嗡的聲音
+~
+|
+#16021
+sparrow~
+麻雀(sparrow)~
+一隻麻雀(sparrow)正在地上吱吱喳喳的跳來跳去。
+~
+它看起來很快樂。
+~
+5 0 1000 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>rand_prog 50~
+if mobcount(16020) > 5
+        mppurge self
+endif
+~
+>rand_prog 10~
+mpecho $I拍拍翅膀飛走了
+~
+|
+#16022
+wolf~
+惡狼(wolf)~
+一隻惡狼(wolf)叮著你看。
+~
+危險性高，請勿餵食
+~
+65 0 1000 S
+11 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+#16023
+camus-maple~
+卡瑪斯(camus)~
+卡瑪斯(camus)站在這裡。
+~
+看到卡瑪斯的人，都得死！
+~
+9271523 8|32|512|8192 0 S
+55 1050 200 0d50+790 -5d+30+0
+-1 0
+0 8 1
+C 9
+W flaming slash~ 800 400
+W twin swords~ 1000 500
+W empslash~    700 800
+P 4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>rand_prog 50~
+if is_qmark($i) != maple_camus_tick
+        shout 沒有用的冒險者！讓我在此枯等。
+        shout 我現在已經知道這裡的冒險者是多麼的沒用了！
+        shout 哈！哈！哈！
+        mppurge self
+endif
+mpat 5 c double
+~
+>fight_prog 40~
+if isaffected($i) & 16777216
+        mpdis_magic self 'seal magic'
+endif
+wear all
+disarm
+get all
+if rand(30)
+        flaming
+endif
+if rand(30)
+        earth
+endif
+if rand(30)
+        circular
+endif
+if isaffected($i) & 1
+        c 'cure blindness'
+endif
+if isaffected($i) !& 128
+        if hitprcnt($i) < 35
+                c sanctuary
+        endif
+endif
+if isaffected($i) !& 8192
+        if hitprcnt($i) < 40
+                c protection
+        endif
+endif
+if isaffected($i) & 268435456
+        mpat 5 c vivi
+endif
+if hitprcnt($i) < 30
+        if rand(40)
+                c 'double heal'
+        endif
+        break
+endif
+if hitprcnt($i) < 60
+        if rand(40)
+                c heal
+        endif
+endif
+~
+>greet_prog 100~
+if isnpc($n)
+        break
+endif
+if is_qmark($n) == maple_camus_attack 100001
+        say 就是你！就是你破壞了我的計畫！
+        yell 我一定要打倒 $n ，挽回主宰對我的信賴！
+        mpkill $n
+endif
+~
+>fight_prog 20~
+yell    ---魔    道    狂    焰---
+if rand(30)
+        c 'angry fire storm'
+        break
+endif
+if hitprcnt($i) > 50
+        frenzy
+        mpat 5 c 'double heal'
+        break
+else
+        mpat 5 c 'double heal'
+        c powerball
+endif
+~
+>fight_prog 30~
+wear all
+disarm
+get all
+yell    ---萬    魔    笑    止---
+mpat 5 c 'full heal'
+mpat 5 c 'full refresh'
+mpecho $I 所受的創傷似乎全部恢復了！
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpat 5 c inf
+yell 我居然居然被 $n 打回深淵魔域(abyss)了
+yell 該死的 $n ，我們是不會這樣放棄的！主宰萬歲！
+mpmod_all_qmark $n adv_book_2_1 v0 | 32
+if insameroom($b)
+        mpechoat $b 你覺得深淵魔域(abyss)這個名詞似乎有點耳熟，但是又
+        mpechoat $b 想不起來在哪聽過，你想也許可以去問問克勞德牧師。
+        mpmod_qmark $b maple_camus_attack v0 = 2
+else
+        mpjunk all.sword
+        mpjunk all.bracer
+        mpexp $n -1000
+endif
+~
+|
+#16024
+squarrel-m~
+松鼠(squarrel)~
+一隻松鼠(squarrel)好奇地看著你。
+~
+一隻松鼠坐在樹根上好奇地看著你。
+~
+65 0 500 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+#16025
+fox~
+狐狸(fox)~
+一隻狐狸(fox)輕快地跑過你的腳邊。
+~
+一隻狐狸(fox)輕快地跑過你的腳邊。
+~
+65 0 500 S
+4 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+#16026
+bee~
+蜜蜂(bee)~
+一隻蜜蜂(bee)嗡嗡地飛過你的耳際。
+~
+一隻蜜蜂(bee)嗡嗡地飛過你的耳際。
+~
+65 0 500 S
+3 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Insect~
+#16027
+daemon demon~
+惡魔(daemon)~
+惡魔(daemon)展開翅膀，向你飛來。
+~
+最強大的不死怪物之一，而且也是最難纏的怪物之一。
+牠能使用所有的魔法，而且又非常的強壯，你最好自求多福了。
+~
+38 8|32|512|8192 -1000 S
+41 200 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 3
+P 8
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>rand_prog 50~
+if is_qmark($i) != maple_camus_tick
+        mppurge self
+endif
+~
+|
+#16028
+Illusion-w swordsman~
+白袍劍士的幻影(Illusion Swordsman)~
+一位身著白袍的劍士(swordsman)站在這裡。
+~
+你定睛一看，才注意到這只是幻影而已。
+但是那股從人影身上傳出的壓迫感幾乎使你無法呼吸了。
+~
+4295 8|32|512 0 S
+41 1100 300 0d0+80 20d5+0
+-1 0
+0 8 1
+C 9
+W flaming slash~ 500 300
+W earth slash~ 500 200
+R Phantom~
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if is_qmark($n) == maple_swd_trail 100002
+        say 最後一關，不會讓你像前面一樣那麼容易通過的。
+endif
+~
+>talk_prog topic~
+if is_qmark($n) != maple_swd_trail 100004
+        break
+else
+        say 我是導師用魔力所塑造的形象
+        say 負責你最後一關的考驗
+        say 如果確定能夠接受試驗了，請跟我說開始(talk swordsman start)
+endif
+~
+>talk_prog start~
+if is_qmark($n) == maple_swd_trail 100004
+        nod $n
+        mpecho 劍士開口說道：那現在就動手吧。
+        mpecho 劍士猛然對你發動攻勢！
+        mpkill $n
+endif
+~
+>fight_prog 40~
+flaming
+if rand(30)
+        mpecho $I 的身上突然冒出一股銀白的光芒
+        yell 晨星點點！
+        mpecho $I 的劍暴出點點白芒，讓你睜眼如盲
+        c 2 blindness
+else
+        earth
+endif
+~
+>fight_prog 20~
+yell    ---天    道    晴    明---
+if hitprcnt($i) > 50
+        flaming
+        circular
+        earth
+        if rand(50)
+                mpat 5 c 'double heal'
+        endif
+else
+        mpat 5 c 'double heal'
+        flaming
+        c fireball
+endif
+~
+>fight_prog 30~
+yell    ---地    道    安    寧---
+flaming
+if rand(20)
+        mpat 5 c 'full heal'
+        mpat 5 c 'full refresh'
+        mpecho $I 所受的創傷似乎全部恢復了！
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpexp $n 4000
+if is_qmark($n) == maple_swd_trail 100004
+        say 你已經通過我這一關了。
+        mpmod_qmark $n maple_swd_trail v0 = 5
+        break
+endif
+        if is_qmark($n) == maple_trail_quit 100001
+        mpjunk sword
+        mpjunk bracer
+        endif
+~
+|
+#16029
+phantom-maple dancing~
+舞劍幻影(dancing phantom)~
+一位不停舞劍的幻影劍士(dancing phantom)在這裡舞著劍。
+~
+一位清秀的少年，你定睛一看，才知道這是一個幻影。
+~
+1|2|64|1024 8|32|128|512 0 S
+30 1100 300 0d0+0 0d0+0
+-1 0
+0 8 1
+C 9
+P 8
+R Phantom~
+K empslash 'storm slash' 'earth slash' 'sprinkle slash' 'flaming slash'~
+#0
+
+#OBJECTS
+#16001
+tea~
+烏龍茶(tea)~
+一杯微燙的烏龍茶(tea)放在這裡。~
+~
+17 0 1
+2~ 2~ 11~ 0~
+1 0 0
+E
+tea~
+一杯普通的烏龍茶。
+~
+#16002
+wolf's skin~
+狼皮(wolf's skin)~
+一小片血淋淋的狼皮(skin)掉在這裡。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+skin~
+一張沾滿了鮮血的狼皮。
+~
+#16003
+rabbit's skin~
+兔皮(rabbit's skin)~
+一塊血淋淋的兔皮(skin)掉在這裡。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+skin~
+一塊沾著鮮血的兔皮。
+~
+#16004
+maple necklace~
+楓醉石項鍊(maple necklace)~
+一條以楓紅林獨有的寶石製成的項鍊(necklace)放在這裡。~
+~
+9 321 5
+0~ 0~ 2501250~ 0~
+5 30000 0
+C 30000
+A
+1 2
+A
+3 1
+A
+17 -3
+A
+24 -3
+X maplestone matter~
+#16005
+flame sword~
+火焰劍(flame sword)~
+一把泛著火紅色光芒的長劍(sword)放在這裡。~
+~
+5 321 8193
+2751275~ 0~ 0~ 3~
+4 0 0
+A
+18 9
+A
+19 4
+L 38
+H fireball~ 30 30 4
+E
+flame sword~
+這是用魔法鍛冶出來的長劍，有著火紅的紋路且隱隱冒出火光。
+似乎是安卡以前的佩劍之一。
+~
+X unreal~
+#16006
+earth sword~
+大地之劍(earth sword)~
+一把泛著淡黃色光芒的長劍(sword)放在這裡。~
+~
+5 321 8193
+3251325~ 0~ 0~ 3~
+4 0 0
+A
+18 3
+A
+19 10
+L 38
+H earthquake~ 30 30 4
+E
+earth sword~
+這是一把灌輸了大地能量的長劍，似乎是安卡以前的佩劍之一。
+~
+X unreal~
+#16007
+longsword star~
+長劍 - 星辰(Longsword Star)~
+一把閃耀著星光的長劍(sword)放在這裡。~
+~
+5 321 8193
+2561256~ 0~ 0~ 3~
+4 0 0
+A
+18 4
+A
+19 4
+H star fire~ 15 35 4
+L 38
+E
+star longsword~
+這是一把通體閃著銀白色光輝的長劍，裡面寄宿著星辰的神力。
+似乎是安卡以前的佩劍之一。
+~
+X unreal~
+#16008
+flame bracer~
+火焰護腕(flame bracer)~
+一副閃著火紅光芒的護腕(bracer)放在地上。~
+~
+9 64 4097
+0~ 0~ 1751175~ 0~
+5 15000 0
+A
+18 2
+A
+19 1
+E
+flame bracer~
+一副閃著火紅光芒的護腕。
+~
+#16009
+earth bracer~
+大地護腕(earth bracer)~
+一副土黃色色澤的護腕(bracer)放在地上。~
+~
+9 64 4097
+0~ 0~ 991099~ 0~
+10 15000 0
+A
+17 10
+A
+5 2
+E
+earth bracer~
+這個護腕看起來有點重。
+~
+#16010
+star bracer~
+星辰護腕(star bracer)~
+一副閃耀著銀白色光芒的護腕(bracer)放在地上。~
+~
+9 64 4097
+0~ 0~ 501050~ 0~
+4 23152 0
+A
+13 5
+A
+18 3
+L 38
+E
+star bracer~
+蘊含著星辰之力的護腕
+~
+#16011
+maple bracer~
+楓紅護腕(maple bracer)~
+一副刻著楓葉紋路的護腕(bracer)放在這裡。~
+~
+9 64 4097
+0~ 0~ 1901190~ 0~
+3 5000 0
+A
+17 -5
+L 38
+E
+maple bracer~
+這副護腕紅的十分漂亮，看起來跟最高級的紅寶石一般美麗
+~
+X maplestone matter~
+#16012
+longsword maple~
+楓紅長劍(longsword maple)~
+安卡慣用的長劍(longsword)掉在這裡。~
+~
+5 321 8193
+2351235~ 0~ 0~ 3~
+4 0 0
+A
+18 4
+A
+19 4
+H dispel evil~ 20 35 4
+L 37
+E
+maple longsword~
+這是一把通體雪白的長劍，也是安卡的佩劍。
+~
+#16013
+sword~
+制式長劍(sword)~
+一把制式長劍(sword)靜靜的躺在地上。~
+~
+5 64 8193
+2151215~ 0~ 0~ 3~
+5 0 0
+E
+sword~
+一把鍛造良好的長劍，上面刻著「楓紅林」三個小字。
+~
+#16014
+vest~
+制式護甲(vest)~
+一件制式護甲(vest)靜靜的躺在地上。~
+~
+9 0 9
+0~ 0~ 1151115~ 0~
+5 0 0
+E
+vest~
+一件精心打造的護甲，內部刻著「楓紅林」三字。
+~
+#16015
+shield~
+制式盾牌(shield)~
+一面制式盾牌(shield)靜靜的躺在地上。~
+~
+9 0 513
+0~ 0~ 1151115~ 0~
+5 0 0
+E
+shield~
+一面以精鐵打造的盾牌，內部刻著「楓紅林」三字。
+~
+#16016
+leggings~
+制式護腿(leggings)~
+制式護腿(leggings)靜靜的躺在地上。~
+~
+9 0 33
+0~ 0~ 1151115~ 0~
+5 0 0
+E
+leggings~
+一雙用心製作的護腿，內部刻著幾個小字：「楓紅林」
+~
+#16017
+cape~
+制式披風(cape)~
+一件制式披風(cape)靜靜的躺在地上。~
+~
+9 0 1025
+0~ 0~ 1151115~ 0~
+5 0 0
+E
+cape~
+一件精心製作的披風。
+~
+#16018
+boots~
+制式長靴(boots)~
+一雙制式長靴(boots)靜靜的躺在地上。~
+~
+9 0 65
+0~ 0~ 1151115~ 0~
+5 0 0
+E
+boots~
+一雙以獸皮製作的靴子。
+~
+#16019
+sword~
+練習用木劍(wooden sword)~
+一柄練習用的木劍(wooden sword)放在這裡。~
+~
+5 0 8193
+1001100~ 0~ 0~ 3~
+3 0 0
+E
+sword~
+用來練習劍術的木劍。
+~
+#16020
+longsword~
+長劍(longsword)~
+一柄精細打造出的長劍(longsword)放在這裡。~
+~
+5 0 8193
+1001100~ 0~ 0~ 3~
+6 0 0
+E
+longsword~
+販售給冒險者使用的一般長劍。
+~
+L 25
+#16021
+dagger~
+匕首(dagger)~
+一把削鐵如泥的匕首(dagger)放在這裡。~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+3 0 0
+A
+18 2
+L 5
+E
+dagger~
+這是販賣給新手使用的匕首。
+~
+#16022
+shield~
+皮製盾牌(shield)~
+一面皮製的盾牌放在這裡。~
+~
+9 0 513
+0~ 0~ 1001100~ 0~
+5 0 0
+L 7
+E
+shield~
+一面精細製作的皮製盾牌
+~
+#16023
+iron shield~
+鐵製盾牌(iron shield)~
+一面鐵製的盾牌放在這裡。~
+~
+9 0 513
+0~ 0~ 1001100~ 0~
+6 0 0
+L 20
+E
+iron shield~
+一面精細鍛造的盾牌放在這裡。
+~
+#16024
+axe battle~
+戰斧(battle axe)~
+一把戰斧(small battle axe)靜靜的擺在地上。~
+~
+5 64 8193
+1351135~ 0~ 0~ 1~
+15 0 0
+E
+small battle axe~
+單手使用的小型戰斧。
+~
+A
+19 3
+L 18
+#16025
+backpack~
+大型背包(backpack)~
+一個大型背包(backpack)靜靜的躺在地上。~
+~
+15 0 1
+150~ 0~ 0~ 0~
+4 0 0
+L 10
+E
+backpack~
+一個大型背包，可以用來裝很多東西。
+~
+#16026
+skin water buffalo~
+牛皮水袋(buffalo water skin)~
+一個牛皮水袋(buffalo water skin)被放置在這裡。~
+~
+17 0 1
+100~ 100~ 0~ 0~
+5 0 0
+E
+skin water buffalo~
+一個牛皮製成的水袋，可以裝水。
+~
+#16027
+lantern~
+銅罩燈籠(lantern)~
+銅罩燈籠(lantern)放置在地上。~
+~
+1 0 16385
+0~ 0~ 100~ 0~
+4 0 0
+E
+words~
+你仔細一看，原來寫的是：「請輸入'hold lantern'來點亮燈籠。」
+~
+E
+lantern~
+一個手提的燈籠，外面加上了銅罩讓燈籠比較不會被吹熄。你無意間注意
+到燈籠的底部刻了一些字(words)。
+~
+#16028
+bottle ale~
+瓶裝麥酒(bottle ale)~
+一瓶麥酒(bottle ale)~
+~
+17 0 1
+8~ 8~ 3~ 0~
+10 0 0
+#16029
+bottle firebreather~
+瓶裝烈酒(bottle firebreather)~
+一瓶烈酒(bottle firebreather)~
+~
+17 0 1
+8~ 8~ 7~ 0~
+10 0 0
+#16030
+bottle local~
+本地特產名酒(local bottle)~
+一瓶本地特產名酒(bottle)~
+~
+17 0 1
+8~ 8~ 8~ 0~
+10 0 0
+#16031
+flour cake~
+燕麥麵餅(flour cake)~
+一塊燕麥麵餅(flour cake)~
+~
+19 0 1
+15~ 0~ 0~ 0~
+3 5000 0
+C 5000
+#16032
+stick bread~
+法國麵包(stick bread)~
+一條法國麵包(stick bread)~
+~
+19 0 1
+25~ 0~ 0~ 0~
+3 5000 0
+C 5000
+#16033
+sausage~
+香腸(sausage)~
+一條好吃的香腸(sausage)~
+~
+19 0 1
+25~ 18~ 4~ 0~
+3 5000 0
+C 5000
+T 3
+
+#16034
+roast beef~
+烤牛肉(roast beef)~
+一塊烤得噴香的牛肉(roast beef)擺在這裡~
+~
+19 0 1
+25~ 19~ 5~ 0~
+3 5000 0
+C 5000
+T 3
+
+#16035
+sleeves scale mail~
+鱗片護臂(scale mail sleeves)~
+一雙鱗片護臂(scale mail sleeves)靜靜的躺在地上。~
+~
+9 0 257
+0~ 0~ 1001100~ 0~
+8 0 0
+E
+sleeves~
+一雙以鱗片做成的護臂。
+~
+#16036
+leggings chain~
+鍊甲護脛(chain leggings)~
+一件鍊甲護脛(chain leggings)靜靜的躺在地上。~
+~
+9 64 33
+0~ 0~ 1001100~ 0~
+12 2000 0
+E
+leggings chain~
+鍊甲作成的護脛，有適當防護力。
+~
+#16037
+maple fountain~
+楓紅噴泉(fountain)~
+一座用大理石做成的噴泉(fountain)在這裡噴著水(water).~
+~
+25 0 0
+0~ 0~ 0~ 0~
+500 0 0
+E
+fountain~
+一個大理石製的噴泉。
+~
+#16038
+redkey~
+紅色鑰匙(redkey)~
+一把刻著奇怪文字的紅色鑰匙(redkey)~
+~
+18 0 1
+16052~ 0~ 0~ 0~
+1 0 0
+T 10
+#16039
+yellowkey~
+黃色鑰匙(yellowkey)~
+一把刻著奇怪文字的黃色鑰匙(yellowkey)~
+~
+18 0 1
+16054~ 0~ 0~ 0~
+1 0 0
+T 10
+#16040
+starkey~
+星光鑰匙(starkey)~
+一把刻著奇怪文字的星光鑰匙(starkey)~
+~
+18 0 1
+16057~ 0~ 0~ 0~
+1 0 0
+T 10
+#16041
+sword chunchou~
+名劍 - 春秋(ChunChou)~
+名劍 - 春秋(ChunChou)~
+~
+5 321 8193
+3501350~ 0~ 0~ 3~
+4 0 0
+A
+18 3
+A
+19 4
+L 38
+X black~
+P 8|1024|2048|4096|262144|524288|1048576
+H fireball~ 10 30 4
+H star fire~ 20 34 4
+H flamestrike~ 10 30 4
+#16042
+sword chango~
+名劍 - 戰國(Chango)~
+名劍 - 戰國(Chango)~
+~
+5 321 8193
+3451345~ 0~ 0~ 3~
+4 0 0
+A
+18 4
+A
+19 3
+L 38
+X black~
+P 8|1024|2048|4096|262144|524288|1048576
+H lifesteal~ 15 33 4
+H soulsteal~ 10 30 4
+#16043
+Armor maple~
+楓紅林護甲(Armor Maple)~
+一件如同秋天楓葉般豔紅的半身鎧甲放在這裡~
+~
+9 256|65536 9
+0~ 0~ 1001100~ 0~
+12 250000 0
+A
+18 2
+A
+19 2
+A
+23 -5
+P 1048576|4096
+C 250000
+
+#16044
+santa claus bag~
+聖誕老人的袋子(santa claus bag)~
+一個聖誕袋子(bag)靜靜的躺在地上。~
+~
+15 1|64|256 1025
+300~ 0~ -5~ 0~
+4 0 0
+E
+stanta claus bag~
+慶祝2002年的聖誕節，由Zeel所寫，販售到
+2002年十二月三十一日為止。
+~
+X unreal matter~
+
+#16045
+santa claus hat~
+聖誕老人的帽子(santa claus hat)~
+一頂紅色的聖誕帽(hat)放在地上。~
+~
+9 1|2|64|256 17
+0~ 0~ 1501150~ 0~
+5 11000 0
+X unreal matter~
+
+#16046
+cotton~
+棉花(cotton)~
+一大堆雪白的棉花(cotton)放在這裡。~
+~
+8 1|2|64|256 1
+0~ 0~ 0~ 0~
+0 0 0
+#0
+
+#ROOMS
+#16001
+陰暗的森林小路~
+這是一條穿越森林的道路，兩旁的樹木生長得特別茂密，
+只有林間空隙不時射入幾許陽光，兩旁依稀可以看到昆蟲和動
+物。路邊釘了一張牌子(sign)。
+~
+0 0 3
+E
+sign~
++-------------------------------------------------+
+再往前是楓紅林區，林中的居民為了不被外人打擾而在林
+區布下了迷陣，如果你能夠突破這個迷陣，就可以進入楓
+紅村了。
+
+Posted By Zeel 2001.08.09
++-------------------------------------------------+
+~
+D 1
+~
+~
+0 0 16002
+D 3
+~
+~
+0 0 9924
+S
+#16002
+陰暗的森林小路~
+這是一條穿越森林的道路，兩旁的樹木生長得特別茂密，
+只有林間空隙不時射入幾許陽光，兩旁依稀可以看到昆蟲和動
+物的蹤跡。南邊通往一塊空地。
+~
+0 0 3
+D 1
+~
+~
+0 0 16003
+D 2
+~
+~
+0 0 16042
+D 3
+~
+~
+0 0 16001
+S
+#16003
+寧靜的森林小路~
+這是一條穿越森林的道路，兩旁的樹木生長得十分茂密，
+只有林間空隙不時射入幾許陽光，兩旁的蟲聲似乎漸漸少了。
+~
+0 0 3
+D 1
+~
+~
+0 0 16004
+D 3
+~
+~
+0 0 16002
+S
+#16004
+安靜的森林小路~
+這是一條穿越森林的道路，兩旁的樹木生長得十分茂密，
+只有林間空隙不時射入幾許陽光，兩旁的蟲聲似乎漸漸少了。
+~
+0 0 3
+D 0
+~
+~
+0 0 16047
+D 1
+~
+~
+0 0 16005
+D 3
+~
+~
+0 0 16003
+S
+#16005
+安靜的森林小路~
+這是一條穿越森林的道路，兩旁的樹木生長得十分茂密，
+只有林間空隙不時射入幾許陽光，兩旁的蟲聲漸漸少了。往東
+邊有一條小徑延伸到一片寬廣的平原上。
+~
+0 0 3
+D0
+~
+~
+0 0 16006
+D3
+~
+~
+0 0 16004
+S
+#16006
+通往楓紅林的小徑~
+到了這裡，兩旁的樹種已經完全都是楓樹。
+你已經到達了楓紅林的入口。
+~
+0 0 3
+D 0
+~
+~
+0 0 16007
+D 1
+~
+~
+0 0 16043
+D 2
+~
+~
+0 0 16005
+D 3
+~
+~
+0 0 16047
+S
+#16007
+通往楓紅林的小路~
+這裡十分的安靜，沒有蟲聲，鳥聲，以及任何的雜音。
+地上落滿了豔紅的楓葉，踩在上面沙沙作響。
+~
+0 0 3
+D 0
+~
+~
+0 0 16008
+D 1
+~
+~
+0 0 16046
+D 2
+~
+~
+0 0 16006
+S
+#16008
+楓紅林~
+你已經進入了楓紅村導師所布下的迷陣了，現在退出的話
+還來得及。
+~
+0 0 3
+D 0
+~
+~
+0 0 16010
+D 1
+~
+~
+0 0 16009
+D 2
+~
+~
+0 0 16007
+S
+#16009
+楓紅林~
+這邊通往一塊空曠的平地，只是跟你的目標似乎沒有關係。
+~
+0 0 3
+D 2
+~
+~
+0 0 16046
+D 3
+~
+~
+0 0 16008
+S
+#16010
+楓紅林~
+這裡十分的安靜，沒有蟲聲，鳥聲，以及任何的雜音。
+地上落滿了豔紅的楓葉，踩在上面沙沙作響。
+~
+0 0 3
+D 1
+~
+~
+0 0 16013
+D 2
+~
+~
+0 0 16008
+D 3
+~
+~
+0 0 16011
+S
+#16011
+楓紅林~
+這裡十分的安靜，沒有蟲聲，鳥聲，以及任何的雜音。
+地上落滿了豔紅的楓葉，踩在上面沙沙作響。
+~
+0 4 3
+D 0
+~
+~
+0 0 16016
+D 3
+~
+~
+0 0 16014
+S
+#16012
+楓紅林~
+這裡十分的安靜，沒有蟲聲，鳥聲，以及任何的雜音。
+地上落滿了豔紅的楓葉，踩在上面沙沙作響。
+~
+0 0 3
+D 3
+~
+~
+0 0 16013
+S
+#16013
+楓紅林~
+這裡十分的安靜，沒有蟲聲，鳥聲，以及任何的雜音。
+地上落滿了豔紅的楓葉，踩在上面沙沙作響。
+~
+0 0 3
+D 0
+~
+~
+0 0 16011
+D 3
+~
+~
+0 0 16015
+S
+#16014
+楓紅林~
+這裡十分的安靜，沒有蟲聲，鳥聲，以及任何的雜音。
+地上落滿了豔紅的楓葉，踩在上面沙沙作響。
+~
+0 0 3
+D 0
+~
+~
+0 0 16012
+D 1
+~
+~
+0 0 16011
+D 2
+~
+~
+0 0 16015
+S
+#16015
+楓紅林~
+這裡十分的安靜，沒有蟲聲，鳥聲，以及任何的雜音。
+地上落滿了豔紅的楓葉，踩在上面沙沙作響。
+~
+0 0 3
+D 0
+~
+~
+0 0 16013
+D 1
+~
+~
+0 0 16010
+S
+#16016
+楓紅村的入口~
+在你的前面，就是從光明之鎮移民出來的人們所建立的
+楓紅村了。你看到兩名守衛手持長劍守在這裡。
+~
+0 0 3
+D 0
+~
+~
+0 0 16017
+D 2
+~
+~
+0 0 16011
+S
+#16017
+晨曦路~
+這裡是楓紅村中的主要幹道，向東可以通到星光武具專賣
+店和河漢雜貨店。向北行去，則先通往公共廣場再向西連接夕
+霧大道。
+~
+0 0 1
+D 0
+~
+~
+0 0 16023
+D 1
+~
+~
+0 0 16018
+D 2
+~
+~
+0 0 16016
+S
+#16018
+晨曦路~
+晨曦路是楓紅村的商業道路，向東走去，可以通到星光武
+具店和河漢雜貨店。
+~
+0 0 1
+D 1
+~
+~
+0 0 16019
+D 3
+~
+~
+0 0 16017
+S
+#16019
+晨曦路~
+在你的北邊就是村中唯一的武具商店，也許貨色不是十分
+齊全，但應該或多或少有所幫助。繼續向東的話可以通到河漢
+雜貨店。
+~
+0 0 1
+D 0
+~
+~
+1 0 16020
+D 1
+~
+~
+0 0 16021
+D 3
+~
+~
+0 0 16018
+S
+#16020
+星光武具店~
+這家武具店雖然不大，但是一切的物品都還井井有條的擺
+放在兩旁的架子上，這都是老闆娘的努力。你看到一位有著亮
+金色長髮的婦女在這裡檢查商品。
+~
+0 0 1
+D 2
+~
+~
+1 0 16019
+S
+#16021
+晨曦路~
+這裡是晨曦路的盡頭，南邊是村裡的雜貨店，西邊通往村
+子的入口，往東你可以前往楓紅村的小漁港。
+~
+0 0 1
+D 1
+~
+~
+0 0 16058
+D 2
+~
+~
+1 0 16022
+D 3
+~
+~
+0 0 16019
+S
+#16022
+河漢雜貨店~
+你踏進雜貨店差點沒有摔在地上，所有的商品雜亂無章的擺
+放在地，你定睛一看，才知道原來是因為老闆正在整理商品。
+~
+0 0 1
+D 0
+~
+~
+1 0 16021
+S
+#16023
+公共廣場~
+楓紅村所有的公共活動都是在這裡舉行的，平常沒有活動
+的時候，廣場就變成人們休息聊天的場所。廣場的中央立
+著一個公佈欄(Announce Board)，公佈欄上釘著一張地圖
+(map)。
+~
+0 0 1
+E
+Announce Board~
+.
++-------------------------------------------------+
+歡迎來到楓紅村。這裡是我為五到四十級玩家所編寫的區
+域。這裡目前有三個任務，分別為牧師的教誨、劍士進階
+試煉，以及延續水晶湖區故事的逆襲的魔軍。
+
+如果區域有任何問題，請回報給Zeel或是Pluto處理。
+
+Posted By Zeel 2001.08.09
++-------------------------------------------------+
+~
+E
+map~
+.
+                                                                北
+                                                             西    東
+                                                                南
+
+            接待室--導師家
+                      |
+                 民宅-|-民宅
+                      |
+                    星月街
+                      |
+                      |
+           楓紅武館-旭日巷-民宅
+                      |
+                    旭日巷                    民宅
+                      |                         |
+
+馬蹄餐館-夕霧大道-夕霧大道-夕霧大道-夕霧大道-現在所在   星光武具店
+            |                 |                 |               |
+           民宅              酒館             晨曦路- 晨曦路- 晨曦路- 晨曦路- 楓紅村小漁港
+                                                |                       |
+                                            楓紅村入口              河漢雜貨店
+                                                |
+                                              楓紅林
+楓紅村地圖
+made by Zeel 2001.08.09
+update by Pluto 2001.10.14
+~
+D 2
+~
+~
+0 0 16017
+D 3
+~
+~
+0 0 16024
+S
+#16024
+夕霧大街~
+夕霧大街是楓紅村最主要的幹道，從這裡可以另外通到旭
+日巷，以及村中的酒館以及餐廳。
+~
+0 0 1
+D 1
+~
+~
+0 0 16023
+D 3
+~
+~
+0 0 16025
+S
+#16025
+夕霧大街~
+這裡是夕霧大街一段，聞名遐邇的杜康酒館就開在這裡。
+向西望去，夕霧大街的盡頭便是馬蹄餐館。
+~
+0 0 1
+D 1
+~
+~
+0 0 16024
+D 2
+~
+~
+1 0 16026
+D 3
+~
+~
+0 0 16027
+S
+#16026
+杜康酒館~
+這裡不敢說是光明之島上最出名的酒館，但也已經是數一
+數二的場所。好不容易來到楓紅村卻沒有品嚐這裡的特產美酒
+，不覺得很可惜嗎？
+~
+0 0 1
+D 0
+~
+~
+1 0 16025
+S
+#16027
+夕霧大街~
+這裡是夕霧大街二段，北邊的轉角可以通往旭日巷，西邊則
+通往夕霧大街三段以及馬蹄餐館。路上有著三三兩兩的人群。
+~
+0 0 1
+D 0
+~
+~
+0 0 16030
+D 1
+~
+~
+0 0 16025
+D 3
+~
+~
+0 0 16028
+S
+#16028
+夕霧大街~
+這裡向西通往馬蹄餐館，南邊是村民的住宅，旭日巷則在你
+的東北邊。
+~
+0 0 1
+D 1
+~
+~
+0 0 16027
+D 3
+~
+~
+1 0 16029
+S
+#16029
+馬蹄餐館~
+「炒菜一份！牛肉和餅各一！」
+震耳欲聾的叫賣聲和噴香的氣息，這裡就是遠近馳名的馬
+蹄餐館。
+~
+0 0 1
+D 1
+~
+~
+1 0 16028
+S
+#16030
+旭日巷~
+跟夕霧大道以及晨曦路比較起來，旭日巷明顯安靜了許多
+。在往北走可以通到一間武術道館，導師的家則在更裡面的星
+月街上。
+~
+0 0 1
+D 0
+~
+~
+0 0 16031
+D 2
+~
+~
+0 0 16027
+S
+#16031
+旭日巷~
+這裡向西通往楓紅武館，向東北連接星月街，往東看去則
+是一戶普通的民宅。
+~
+0 0 1
+D 1
+~
+~
+0 0 16033
+D 2
+~
+~
+0 0 16030
+D 3
+~
+~
+0 0 16032
+S
+#16032
+楓紅武道館~
+你一入內，斥喝之聲便充盈著你的耳鼓，裡面的學生正專
+心一致的練習劍法，你還是靜靜的觀看就好。
+~
+0 0 1
+D 1
+~
+~
+0 0 16031
+S
+#16033
+旭日巷~
+從這裡向西看去可以看見遠方的楓紅武館，向北連接星月街，往東看去則
+是一戶普通的民宅。
+~
+0 0 1
+D 0
+~
+~
+0 0 16035
+D 1
+~
+~
+0 0 16034
+D 3
+~
+~
+0 0 16031
+S
+#16034
+民宅~
+進入人家家裡好歹要先敲個門吧。
+~
+0 0 1
+D 3
+~
+~
+0 0 16033
+S
+#16035
+星月街~
+這裡是星月街和旭日巷的交叉口，你隱約看到北邊有著一
+間房子。
+~
+0 0 1
+D 0
+~
+~
+0 0 16036
+D 2
+~
+~
+0 0 16033
+S
+#16036
+星月街~
+東西兩邊都是村民的住宅，北邊隱約有著一棟房子。
+~
+0 0 1
+D 0
+~
+~
+0 0 16039
+D 1
+~
+~
+0 0 16038
+D 2
+~
+~
+0 0 16035
+D 3
+~
+~
+0 0 16037
+S
+#16037
+民宅~
+看到這家人驚訝的表情，你才發現自己走到了別人家了。
+~
+0 0 1
+D 1
+~
+~
+0 0 16036
+S
+#16038
+民宅~
+這家人的桌上還擺著熱騰騰的飯菜，可是人呢？
+~
+0 0 1
+D 3
+~
+~
+0 0 16036
+S
+#16039
+星月街~
+北邊就是導師的家了，向南可以折回旭日巷。
+~
+0 0 1
+D 0
+~
+~
+0 0 16040
+D 2
+~
+~
+0 0 16036
+S
+#16040
+導師家的客廳~
+你意外的發現導師並沒有把他的大門鎖起來，你輕易的進
+到了他的客廳。環目四顧，除去這間客廳，整個房子便只餘下
+旁邊的接待室而已，導師的生活真是清貧。
+~
+0 0 1
+D 2
+~
+~
+0 0 16039
+D 3
+~
+~
+0 0 16041
+S
+#16041
+接待室~
+這裡是導師用來接待客人或是休息的地方。端坐在你眼前的
+人正是楓紅村中最為人景仰的導師。他看來約四十歲，眼中散發
+著睿智的光輝，房內散發著一股威嚴的氣息，讓你不敢輕舉妄動。
+~
+0 0 1
+D 1
+~
+~
+0 0 16040
+D 5
+~
+~
+0 -1 16059
+S
+#16042
+林間空地~
+這邊似乎是旅行者紮營時所清出的空地，地上還散佈著一
+些乾糧和營火的灰燼。
+~
+0 0 3
+D 0
+~
+~
+0 0 16002
+S
+#16043
+楓林中的小路~
+這裡不知道通到那裡，你開始擔心自己是不是走錯路了。
+~
+0 0 3
+D 0
+~
+~
+0 0 16046
+D 1
+~
+~
+0 0 16044
+D 3
+~
+~
+0 0 16006
+S
+#16044
+楓林中的小路~
+死路一條。
+你除了折回去之外，北邊似乎還有一條小徑可以離開這裡。
+~
+0 0 3
+D 0
+~
+~
+0 0 16045
+D 3
+~
+~
+0 0 16043
+S
+#16045
+林間空地~
+地上散佈著斑斑血跡，似乎有幾隻動物在這裡發生爭鬥的
+樣子。
+~
+0 0 3
+D 2
+~
+~
+0 0 16044
+D 3
+~
+~
+0 0 16046
+S
+#16046
+楓林中的小路~
+這裡不知道通到那裡，你開始擔心自己是不是走錯路了。
+~
+0 0 3
+D 0
+~
+~
+0 0 16009
+D 1
+~
+~
+0 0 16045
+D 2
+~
+~
+0 0 16043
+D 3
+~
+~
+0 0 16007
+S
+#16047
+死寂的林間小路~
+這裡不知道通到那裡，你開始擔心自己是不是走錯路了。
+~
+0 0 3
+D 1
+~
+~
+0 0 16006
+D 2
+~
+~
+0 0 16004
+S
+#16048
+民宅~
+房中空無一人，可能都在外面的廣場上吧。
+~
+0 0 1
+D 2
+~
+~
+0 0 16023
+S
+#16049
+民宅~
+這間房子已經空置很久，屋主似乎是遷移到別的村莊去了
+。
+~
+0 0 1
+D 0
+~
+~
+0 0 16028
+S
+#16050
+試煉之道 - 起點~
+劍士試煉現在正式開始，你準備好了嘛！
+~
+0 262144 1
+D 0
+~
+~
+0 0 16051
+>room_leave 128 100~
+if is_qmark($n) != maple_trail_quit 100001
+add_qmark $n maple_trail_quit 150 1 0 0 0 1
+endif
+~
+|
+S
+#16051
+試煉之道 - 火焰之間~
+你看到一位身穿紅色鎧甲的劍士站在這裡，他所散發出來
+的殺氣讓你渾身顫抖。
+
+房間一角有一扇紅色的門，可能就是離開的出路。
+~
+0 262144 1
+D 0
+~
+~
+4 16038 16052
+D 2
+~
+~
+0 0 16050
+>room_leave 128 100~
+if is_qmark($n) != maple_trail_quit 100001
+add_qmark $n maple_trail_quit 150 1 0 0 0 1
+endif
+~
+|
+S
+#16052
+休息室~
+這裡是讓你調整狀態，休養生息的場所，請確定你的狀況
+已經達到顛峰之後才打開下一扇門。
+~
+0 262144 1
+D 0
+~
+~
+0 0 16053
+D 2
+~
+~
+4 16038 16051
+>room_leave 128 100~
+if is_qmark($n) != maple_trail_quit 100001
+mpadd_qmark $n maple_trail_quit 150 1 0 0 0 1
+endif
+~
+|
+S
+#16053
+試煉之道 - 大地之間~
+一位身穿黃袍的劍士站在這裡，你直覺認定他就是你下一
+個對手。
+~
+0 262144 1
+D 2
+~
+~
+0 0 16052
+D 3
+~
+~
+4 16039 16054
+>room_leave 128 100~
+if is_qmark($n) != maple_trail_quit 100001
+add_qmark $n maple_trail_quit 150 1 0 0 0 1
+endif
+~
+|
+S
+#16054
+試煉之道~
+這裡是通往最後一個試煉之間的通道，兩旁的牆壁都由黑
+耀石所鋪成，在光源的映照下顯得詭異莫名。
+~
+0 262144 1
+D 1
+~
+~
+4 16039 16053
+D 3
+~
+~
+0 0 16055
+>room_leave 128 100~
+if is_qmark($n) != maple_trail_quit 100001
+add_qmark $n maple_trail_quit 150 1 0 0 0 1
+endif
+~
+|
+S
+#16055
+休息室~
+這裡是讓你調整狀態，休養生息的場所，請確定你的狀況
+已經達到顛峰之後才打開下一扇門。
+~
+0 262144 1
+D 1
+~
+~
+0 0 16054
+D 3
+~
+~
+0 0 16056
+>room_leave 128 100~
+if is_qmark($n) != maple_trail_quit 100001
+add_qmark $n maple_trail_quit 150 1 0 0 0 1
+endif
+~
+|
+S
+#16056
+試煉之道 - 星辰之間~
+眼前的劍士便是你最後的對手，絕對不可掉以輕心。
+因為他是導師所給予你最後，最大的難關！
+~
+0 262144 1
+D 1
+~
+~
+0 0 16055
+D 3
+~
+~
+4 16040 16057
+>room_leave 128~
+if is_qmark($n) != maple_trail_quit 100001
+add_qmark $n maple_trail_quit 150 0 0 0 0 1
+endif
+~
+|
+S
+#16057
+試煉之道 - 終點~
+恭喜你已經通過劍士的進階試煉，現在請通過眼前的出口
+，回到光明的世間。
+~
+0 262144 1
+D 1
+~
+~
+4 16040 16056
+D 3
+~
+~
+0 0 16041
+S
+#16058
+楓紅村小漁港~
+這個小小的村落，依靠著這裡的居民到海上捕魚維持生活。
+因此，這個漁港對於楓紅村來說可以說是居民的經濟命脈。
+~
+0 0 1
+D 3
+~
+~
+0 0 16021
+S
+#16059
+隱密的訓練場所~
+這裡是安卡導師練習劍法的小房間，中間佇立著一個幻影，
+看來你可以向他請益劍法的精妙之處。
+~
+0 1|4|8|16|512|65536|1048576 0
+D 4
+~
+~
+0 -1 16041
+>room_enter 16 100~
+if isnpc($n)
+        transfer $n 16041
+        break
+endif
+if is_qmark($n) == maple_swd_trail 100006
+        echoat $n 舞劍幻影(phantom of dance)說：「歡迎，導師認可的人選。」
+else
+        echoat $n 舞劍幻影(phantom of dance)說：「你還未獲得導師的認可！」
+        echoat $n 一股力量將你推了出去。
+        transfer $n 16041
+endif
+~
+|
+S
+#16060
+冒險者的私人小漁船~
+這艘小小的漁船是冒險者的個人財產，能夠快速地前往史卡
+拉貝的維芬海港。
+~
+0 0 1
+D 3
+~
+~
+0 0 16021
+>room_rand 30~
+if roomvalue($0) > 0
+	if roomvalue($0) == 1
+		deldoor 3
+	endif
+        if rmobcount(10242) > 0
+                modrvt v0 + 1
+                if roomvalue($0) == 2
+                        echo 你感覺船隻已經出發了。
+                        force adventurer-solace say 我們大約只需不到半天的時間就可以到達了。
+                endif
+                if roomvalue($0) == 16
+                        force adventurer-solace say 我們已經到了維芬海港了。
+                        transfer all 3049
+                        modrvt v0 = 0
+                        makedoor 3 0 0 0 0 16021
+                endif
+        else
+                modrvt v0 = 0
+        endif
+endif
+~
+|
+S
+#0
+
+
+#SPECIALS
+M 16011 spec_guard
+M 16010 spec_thief
+M 16009 spec_janitor
+M 16022 spec_fido
+M 16025 spec_fido
+S
+
+
+#RESETS
+M 0 16001 1 16041 Lord Anka-m
+E 1 16012 0 16  Equipt with maple sword
+E 1 16011 0 10  Equipt with maple bracer
+E 1 16043 0 5   Equipt with Armor maple
+*
+M 0 16029 1 16059 phantom of dance
+E 1 3022 0 16 Equipt with longsword
+*
+M 0 16002 1 16023 Cleric Cloud-m
+E 1 16011 0 14  Equipt with maple bracer
+*
+M 0 16003 1 16032 Apprentice Alodesia-m
+E 1 16013 0 16 Equipt with sword
+E 1 16017 0 12 Equipt with cape
+E 1 16016 0 7 Equipt with leggings
+*
+M 0 16004 1 16032 Apprentice Martin-m
+E 1 16013 0 16 Equipt with sword
+E 1 16017 0 12 Equipt with cape
+E 1 16016 0 7 Equipt with leggings
+*
+M 0 16005 1 16022 grocer-m
+G 0 16025 0
+G 0 16026 0
+G 0 16027 0
+*
+M 0 16006 1 16026 tavern boss-m
+G 0 16033 0
+G 0 16028 0
+G 0 16029 0
+G 0 16030 0
+*
+M 0 16007 1 16029 multi cook-m
+G 0 16031 0
+G 0 16032 0
+G 0 16034 0
+*
+M 0 16008 1 16020 Boss Anna-m
+E 1 16013 0 16
+G 0 16035 0
+G 0 16036 0
+G 0 16020 0
+G 0 16021 0
+G 0 16022 0
+G 0 16023 0
+G 0 16024 0
+*
+M 0 16009 1 16011 young villager-m
+*
+M 0 16009 1 16012 young villager-m
+*
+M 0 16009 1 16013 young villager-m
+*
+M 0 16009 1 16014 young villager-m
+*
+M 0 16009 1 16015 young villager-m
+*
+M 0 16010 3 16017 thief-m
+E 0 16020 0 16 Equipt with sword
+*
+M 0 16011 2 16016 village guard-m
+E 0 16017 0 12 Equipt with cloak
+E 0 16013 0 16 Equipt with sword
+E 0 16013 0 18 Equipt with sword
+E 0 16014 0 5 Equipt with armor
+*
+M 0 16011 13 16017 village guard-m
+E 0 16017 0 12 Equipt with cloak
+E 0 16013 0 16 Equipt with sword
+E 0 16013 0 18 Equipt with sword
+E 0 16014 0 5 Equipt with vest
+*
+M 0 16012 2 16032 Apprentice-m
+E 0 16019 0 16 Equipt with sword
+*
+M 0 16013 2 16033 Apprentice-m
+E 0 16019 0 16 Equipt with sword
+*
+M 0 16014 2 16023 man-m
+*
+M 0 16014 1 16034 man-m
+*
+M 0 16014 1 16037 man-m
+*
+M 0 16014 1 16038 man-m
+*
+M 0 16015 2 16023 old man-m
+*
+M 0 16016 1 16051 swordsman fire-m
+E 1 16005 0 16 Equipt with fire sword
+E 1 16008 0 10 Equipt with flame bracer
+G 0 16038 0
+*
+M 0 16017 1 16053 swordsman Illusion-n
+E 1 16006 0 16 Equipt with earth sword
+E 1 16009 0 10 Equipt with earth bracer
+G 0 16039 0
+*
+M 0 16028 1 16056 swordsman Illusion-w
+E 1 16007 0 16 Equipt with longsword star
+E 1 16010 0 10 Equipt with star bracer
+G 0 16040 0
+*
+M 0 16020 5 16008 insect-m
+*
+M 0 16021 5 16007 sparrow-m
+*
+M 0 16022 4 16011 wolf
+*
+M 0 16024 4 16003 squarrel-m
+*
+M 0 16025 3 16004 fox
+*
+M 0 16026 3 16001 bee
+*
+O 0 16037 1 16023
+*
+
+D 0 16051 0 2 close & lock 試煉之道之門
+D 0 16052 2 2 close & lock 試煉之道之門
+D 0 16053 3 2 close & lock 試煉之道之門
+D 0 16054 1 2 close & lock 試煉之道之門
+D 0 16056 3 2 close & lock 試煉之道之門
+D 0 16057 1 2 close & lock 試煉之道之門
+S
+
+
+#SHOPS
+16005 15 17 0 0 0 105 100 10 21
+16006 17 0 0 0 0 105 100 19 24
+16007 17 19 0 0 0 110 100 11 21
+16008 5 9 0 0 0 110 100 11 20
+0
+
+#$

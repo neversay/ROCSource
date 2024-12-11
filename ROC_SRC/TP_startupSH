@@ -1,0 +1,123 @@
+#! /bin/sh
+# Written by Furey.
+# With additions from Tony.
+# With changes from Kahn.
+# Ported to 'sh' by Loki for those who don't have 'csh'.
+# Thanks to Alan and Grodyn for thier help on the redirecting stuff - Loki
+
+# Set the port number.
+if [ "$1" != "" ]
+then
+         port=$1 
+else
+         port=6666
+fi
+
+# Force use newest src. Keric
+#make clean
+#make update
+#make install
+
+# Change to area directory.
+cd ../area
+#make update
+
+# Set limits. (cannot be used in a 'sh' script - Loki)
+# nohup
+# nice
+# limit stack 1024k
+if [ -r SHUTDOWN.TXT ]
+then
+         rm -f SHUTDOWN.TXT
+fi
+
+while [ 1 ]
+do
+
+	# If you want to have logs in a different directory,
+	#   change the 'logfile=' line to reflect the directory name.
+	# (It isn't used but I let it in anyway)
+	index=1000
+	exist=`ps -e | grep "envy2 6666"`
+	if [ "$exist" = "" ]
+	then
+		svn update
+		cd ../src
+		hasUpdate=`svn update | grep "U"`
+		if [ "$hasUpdate" = "" ]
+		then
+			echo "There's no any update"
+		else
+			make clean
+			make
+		fi
+		cd ../area
+		while [ 1 ]
+		do
+			logfile=../log/$index.log
+			if [ -r $logfile ]
+			then
+				# If you don't have bc you have a problem... :(
+				#index=`echo $index + 1|bc`
+				rm $logfile
+			else
+				break
+			fi
+		done
+
+		# Update to new code if possible.
+		if [ -r ../src/envy.new ]
+		then
+			\mv ../src/envy ../src/envy.old
+			\mv ../src/envy.new ../src/envy
+		fi
+
+		if [ -r ../src/envy_logger.new ]
+		then
+			\mv ../src/envy_logger ../src/envy_logger.old
+			\mv ../src/envy_logger.new ../src/envy_logger
+		fi
+
+		# Run envy.
+		# Thanks to Alan and Grodyn for their help on the redirecting stuff - Loki
+		../src/envy2 $port >$logfile 2>&1
+		isRunning=`grep 'Init_socket: bind: Address already in use' $logfile`
+		if [ "$isRunning" = "" ]
+		then
+			hasRock=`grep 'EnvyMud is ready to rock on port 6666' $logfile`
+			if [ "$hasRock" = "" ]
+			then
+				echo "Last run has some error"
+				cp $logfile BugLog.txt
+				cp $logfile ./TestArea/BugLog.txt
+
+				hasUpdate=`svn update | grep "U"`
+				svn commit BugLog.txt ./TestArea/BugLog.txt -m '程式自動上傳錯誤檔'
+				while [ "$hasUpdate" = "" ]
+				do
+					sleep 60
+					hasUpdate=`svn update | grep "U"`
+				done
+			else
+				echo "Last run has successfully rocked"
+			fi
+		else
+			echo "Init_socket: bind: Address already in use"
+			rm $logfile
+		fi
+		if [ -r core ]
+		then
+			\mv core ../src/
+		fi
+	fi
+
+#  # Restart, giving old connections a chance to die.
+#  if [ -r SHUTDOWN.TXT ]
+#  then
+#		    sleep 1
+#  else
+#        # rm -f SHUTDOWN.TXT
+#        exit 0
+#  fi
+ 	sleep 15
+ done

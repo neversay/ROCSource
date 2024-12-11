@@ -1,0 +1,5575 @@
+#AREADATA
+Name	    {36 42} ¦W¼C¤s²ø~
+Identity    swordcottage~
+Builders    Kention~
+Translator  Kention~
+Modifier    ~
+VNUMs	    64101 64300
+Security    1
+Recall      3001
+Death       3001
+F_toggle    0
+End
+
+#MOBILES
+#64101
+Jwo ho sin young man~
+¨ôÅb¤s(Jwo ho sin)~
+¤@­Ó¦~»´¤H(Young man)¦b³o¸Ìªï±µ¤s²øªº«È¤H¡C
+~
+¥LÀYÀ¹«C¥Ö´U¡A¨­¬ïªø³T°¨±¾¡A­t³d¤Þ¾Éªì¤J¦W¼C¤s²øªº¦U¸ô
+­^¶¯¦nº~¡C¥Lº¡Áy¯º®eªº©M§A¥´®¥§@´¥¡C
+~
+1|2|64|4096 8|32 800 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8|32768|65536
+S 13 20000
+>talk_prog p hair dress~
+	if is_qmark($n) == swordcottage 200001
+		say ³o­Ó...§Ú¤]¤£¤Ó²M·¡
+		say §A¥i¥H¥h°Ý°Ý§O¤H¡C
+	else
+		say ¤°»ò¾v¹¢¡H
+	endif
+~
+>tick_prog 10~
+	if is_qmark($i) > swordcottage_enter 100001
+		mpmod_qmark $i swordcottage_enter v0 - 1
+	endif
+~
+>greet_prog 100~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n ¦W¼C¤s²ø¤£Åwªï§A¡A½Ð¦^§a
+	else
+		mpechoat $n $I®¥·qªº¦V§AÁù°`
+		tell $n Åwªï¥úÁ{¦W¼C¤s²ø¡A¦³¤°»ò°ÝÃD½Ð¾¨ºÞ§h©J¡D
+			if is_qmark($i) != swordcottage_enter
+				mpadd_qmark $i swordcottage_enter -1 0 0 0 0 1
+			endif
+	endif
+~
+>talk_prog topic~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n §ÚµLªk¦^µª§Aªº°ÝÃD¡A§A½Ð¦^§a
+	else
+		tell $n ½Ð°Ý¦³¤°»ò°ÝÃD¡H
+		mpechoat $n ¡Ð¡Ð¡Ð½Ð°Ý§Ú¯à¶i¥h¶Ü(Enter)¡H
+		mpechoat $n ¡Ð¡Ð¡Ð½Ð°Ý²ø¥D¦b­þ¸Ì(where)¡H
+		mpechoat $n ¡Ð¡Ð¡ÐÃö©ó¦W¼C¤s²øªº°ÝÃD(About)
+	endif
+~
+>talk_prog enter~
+	if is_qmark($n) != swordcottage_killer
+			if is_qmark($i) > swordcottage_enter 100006
+				tell $n ¹ï¤£°_¡A¤s²ø¤ºªº«È¤H¤wº¡¡A§Ú¨S¿ìªkÅý±z¶i¥h¡C
+				sorry $n
+			else
+					if resp($n) > 30
+						if sex($n) == 2
+							tell $n ¦nªº¡A¦W¼C¤s²ø«D±`Åwªï¹³±z³o¼Ë¦³¦Wªº«L¤k
+							mpechoat $n $I¥´¶}ªùÅý§A¶i¥h¡C
+							mpechoaround $n $I¥´¶}ªùÅý$n¶i¥h¡C
+							mptransfer $n 64151
+							mpmod_qmark $i swordcottage_enter v0 + 1
+						else
+							tell $n ¦nªº¡A¦W¼C¤s²ø«D±`Åwªï¹³±z³o¼Ë¦³¦Wªº«L«È
+							mpechoat $n $I¥´¶}ªùÅý§A¶i¥h¡C
+							mpechoaround $n $I¥´¶}ªùÅý$n¶i¥h¡C
+							mptransfer $n 64151
+							mpmod_qmark $i swordcottage_enter v0 + 1
+						endif
+					else
+						mpechoat $n $I¥J²Óªº¥´¶q§A...
+						mpechoaround $n $I¥J²Óªº¥´¶q$n...
+						tell $n ¹ï¤£°_¡A§Ú®£©È¨S¿ìªkÅý±z¶i¥h¡C
+						tell $n ¦W¼C¤s²ø¥uÅwªï¦³¦Wªº«L«È©Î¬O«L¤k¡A$n±z½Ð¦^§a¡C
+					endif			
+			endif
+	else
+		tell $n ¦W¼C¤s²ø¤£Åwªï±z¡A½Ð¦^§a¡C
+	endif
+~
+>talk_prog where~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n §ÚµLªk¦^µª±zªº°ÝÃD¡A±z½Ð¦^§a¡C
+	else
+		tell $n ¥u­n©¹«e¤@ª½¨«¡A²ø¥D´N¦b¤jÆU¸Ì­±¡D
+	endif
+~
+>talk_prog about~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n §ÚµLªk¦^µª±zªº°ÝÃD¡A±z½Ð¦^§a¡C
+	else
+		tell $n ·Qª¾¹D¤°»ò¶Ü¡H
+		mpechoat $n ¡Ð¡Ð¡Ð¦W¼C¤s²øªº¥Ñ¨Ó(From)¡H
+		mpechoat $n ¡Ð¡Ð¡Ð¦W¼C¤s²øªº²ø¥D(Master)¡H
+	endif
+~
+>talk_prog from~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n §ÚµLªk¦^µª±zªº°ÝÃD¡A±z½Ð¦^§a¡C
+	else
+		mpechoat $n $I»¡µÛ¡G¦W¼C¤s²ø­ì¥»¥u¬O¤@­Ó´¶³qªº¤s²ø¡A«á¨Ó¦]¬°²Ä
+		mpechoat $n $I»¡µÛ¡G¤T¥ô²ø¥D³ß¦n¼C³N¡A©ó¬O«K§ï¦W¬°¦W¼C¤s²ø¡A¦P
+		mpechoat $n $I»¡µÛ¡G®É¼sÁÜ­^¶¯¼C«L¨ì¤s²ø¤º§@«È¡C²{¦bªº²ø¥D«h¬O
+		mpechoat $n $I»¡µÛ¡G²Ä¤»¥ô²ø¥D¡A¦ý¬O«o¦]¬°¨S¦³¨à¤l¡A¦Ó¥´ºâ©ÛÂØ
+		mpechoat $n $I»¡µÛ¡G¤@¦W¦~»´¤H¨Ó¬D°_¤j·~¡C
+		mpechoat $n $I»¡µÛ¡G¤j­P¤W´N¬O³o­Ó¼Ë¤l¤F¡C
+	endif
+~
+>talk_prog master~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n §ÚµLªk¦^µª±zªº°ÝÃD¡A±z½Ð¦^§a¡C
+	else
+		mpechoat $n $I»¡µÛ¡G²{¥ô²ø¥D¯³¹ý¥Í¥ý¥Í¬O²Ä¤»¥ô²ø¥D¡A²{¦b´N¦b¤j
+		mpechoat $n $I»¡µÛ¡GÆU¸Ì­±¡A±z¥i¥H¥h«ô³X¥L¡C
+	endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		yell ¶ã°Ú¡I¡I$n¦b¦W¼C¤s²ø¦æ¥ûªü¡I¡I
+	else
+		mpadd_all_qmark $n swordcottage_killer 200 0 0 0 1
+	endif
+~
+>fight_prog 100~
+	say ¦W¼C¤s²ø¤£Åwªï¾x¨Æªº¤H¡I
+	mpechoat $n $I¤@´§¤â¡A¤@°}±j¤jªº­·§â§A±À¤F¥X¥h¡I
+	mpechoaround $n $n³Q$I±À¤F¥X¥h¡I
+	mptransfer $n 64121
+	mpnowait
+~
+|
+#64102
+chin-mob cher sen-swordcottage~
+¯³¹ý¥Í(Chin cher sen)~
+²ø¥D¯³¹ý¥Í(Chin cher sen)¯«ªö«³«³ªº¯¸¦b³o¸Ì¡C
+~
+¥L´N¬O´xºÞ¾ã­Ó¦W¼C¤s²øªº²ø¥D-¯³¹ý¥Í(Chin cher sen)¡A
+¦¿´ò¤W¶Ç¨¥¥L¯à¦b«B¤¤»R¼C¦Ó¨­¤W¤£ªg¥bÂI«Bºw¡C°£¤F°ª¶W
+ªº¼C³N¡A¯³¹ý¥Í¤]¥H¯À¦³¥¿¸q·P¦Ó»D¦W¡D¦ý¬O¦­¦~³à©dªº¥L
+¡A¦ü¥G¥¿¬°¤F°ß¤@ªº¤k¨à¡A¯³¬M¤ëªº±B¨Æ¦Ó·Ð´oµÛ¡D
+~
+1|2|64|2048|4096 8|32|128 1000 S
+55 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 60000
+S 41 70
+S 42 70
+S 43 100
+S 44 100
+>tick_prog 10~
+	if is_qmark($i) != swordcottage_hairdress
+		say «ç»ò·|¤£¨£¤F©O...
+		sigh
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n §AÁÙ¤£Â÷¶}¶Ü¡H¨º§Ú´N°e§A¤@µ{§a¡I
+	mpkill $n
+else
+	nod $n
+	tell $n ¤[¥õ¤j¦W¡AÅwªï¨Ó¨ì¦W¼C¤s²ø
+endif
+~
+>talk_prog disappear~
+	if is_qmark($n) == swordcottage_killer
+		say §A³o¥û¤â¡IÁÙ´±°Ý§Ú¨Æ±¡¡I
+		mpkill $n
+	else
+		if is_qmark($n) == castsword
+			say ³o¥ó¨Æ±¡¸òÅ±¼C¨¦ªº¤H¨S¦³Ãö«Y¡C
+			mpechoat $n $I§âÀY§O¹L¥h¡A¦ü¥G¤£·Q²z§A¡C
+			mpechoaround $n $I§âÀY§O¹L¥h¡A¦ü¥G¤£·Q²z$n¡C
+		else
+			if is_qmark($i) != swordcottage_hairdress
+				if is_qmark($n) == swordcottage
+					tell $n ¨ä¹ê¬O§Ú¾v©d(wife)¯d¤U¨Óªº¾v¹¢(hair dress)³Q§Ú§Ë¥á¤F¡C
+					tell $n ÁöµM§ä¤F¤£¤Ö¦a¤è¡A¥i¬O´N¬O§ä¤£¨ì¡C
+					sigh
+					mpmod_qmark $n swordcottage v2 = 1
+				else
+					tell $n ¨ä¹ê¬O§Ú¾v©d(wife)¯d¤U¨Óªº¾v¹¢(hair dress)³Q§Ú§Ë¥á¤F¡C
+					tell $n ÁöµM§ä¤F¤£¤Ö¦a¤è¡A¥i¬O´N¬O§ä¤£¨ì¡C
+					sigh
+					mpadd_qmark $n swordcottage -1 0 0 1 0 1
+				endif
+			else
+				±zªº¤°»òªF¦è±¼¤F¶Ü¡H
+			endif
+		endif
+	endif
+~
+>talk_prog p hair dress~
+if is_qmark($n) == swordcottage_killer
+		say §A³o¥û¤â¡IÁÙ´±°Ý§Ú¨Æ±¡¡I
+		mpkill $n
+else
+	if is_qmark($n) == swordcottage 300001
+		if is_qmark($i) != swordcottage_hairdress
+			tell $n ¬O¤@­Ó·t¬õ¦âªº¾v¹¢¡A¤£ª¾¹D±¼¦b­þ¤F
+		else
+			tell $n §Ú¤w¸g¦«¤H¦b²ø¤º´M§ä¡A¤£³Ò±z¶O¤ß¡C
+		endif
+	endif
+endif
+~
+>talk_prog p gin-ming~
+	if is_qmark($n) == swordcottage_killer
+		say §A³o¥û¤â¡IÁÙ´±°Ý§Ú¨Æ±¡¡I
+		mpkill $n
+	else
+	if is_qmark($n) == jd_liu 100001
+		mpechoat $n §A±N¬h·q©ú°U¥Iªº¨Æ±¡§i¶D$I
+		gasp $n
+		tell $n ±z»{ÃÑ·q©ú¡H§Ú¤]§ä¥L§ä¤F³\¤[¡A¦ý¤@ª½¨S¦³®ø®§¡C
+		tell $n ¦ý§A»¡·í¦~¶³­·»P¬î«B¤@°_¨ì¤s²ø±Æ¸Ñ¯Éª§¡A§Ú«o¤£°O±o¦³³o¦^¨Æ
+		tell $n ·í¦~¶È¦³¬î«B¤W¤s¨Ó§ä§Ú¡A¥L¦P®É§i¶D§Ú¶³­·¦³¨Æ¤£¯à¨ì¨Ó¡A½Ð¥L¥N¬°­Pºp
+		tell $n ¦ý...«ç»ò·|¦³³oºØ¨Æ¡H
+		ponder
+		tell $n ¦pªG§A©Ò»¡ªºÄÝ¹ê¡A¨º»ò°È¥²¥ý§ä¥X¶³­·¥¢ÂÜªº¦a¤è¡C
+		tell $n §õÁ`ºÞ½T¹ê§i¶D§Ú¡A·í®É¶³­·¨S¦³½ñ¤J¤s²ø
+		tell $n ©Î³\¥L¦b¤W¤s²øªº¸ô¤W¦³¨Æ...©Î¬O¥¢ÂÜ¤F¡H
+		tell $n ³Â·Ð±z¶]¤@½ë¡A¦b¨Ó¤s²øªº¸ô¤W§ä§ä¡C
+		tell $n §Ú¶X³o¬q®É¶¡°Ý¤@¤U§õÁ`ºÞ·í®Éªº¸Ô²Óª¬ªp¡C¤]°Ý°Ý¬î«B¡C
+		tell $n ³Â·Ð±z¤F
+		bow $n
+		mpmod_qmark $n jd_liu v0 = 2
+		mpechoat $n §AÄ±±o¤s¤U¨º®y¤g°ï¹ê¦b¤Ó¥iºÃ¤F...­n¦A¥h½Õ¬d¤@¦¸¶Ü¡H
+	else
+		tell $n ·q©úªü¡I¦n¤[¨S¬Ý¨ì¥L¤F¡A¤£ª¾¹D¥Lªñªp¦p¦ó...
+	endif
+	endif
+~
+>give_prog 11144~
+	if is_qmark($n) == jd_liu 100003
+		mpechoat $n $IÅ¸§ÝµÛ¤âÅª§¹³o«Ê«H
+		tell $n §Úª¾¹D¤F¡A§Ú°¨¤WÅý¬î«B¹L¨Ó¤@½ë¡A½Ð¥L¦n¦n»¡©ú
+		tell $n ³o«Ê«H³Â·Ð±z±a¥hµ¹·q©ú¡AÅý¥Lª¾¹D³o¥ó¨Æ§a...­ü¡C
+		mpat 64137 mptransfer chen-swordcottage 64247
+		give letter $n
+	else
+		?
+		tell $n §Aµ¹§Ú³o­Ó°µ¤°»ò¡H
+		drop letter
+	endif
+~
+>talk_prog p where is chow-yu~
+if is_qmark($n) == swordcottage_killer
+		say §A³o¥û¤â¡IÁÙ´±°Ý§Ú¨Æ±¡¡I
+		mpkill $n
+else
+	if is_qmark($n) == jd_liu 100004
+		tell $n »¡¨ÓºF·\¡A¬î«B¤@Å¥¨ì§Ú­n§ä¥L¡A°¨¤WÂ÷¶}¤F¤s²ø¡A¤]¨Ó¤£¤ÎÄd¦í¥L
+		tell $n ¬Ý¨Ó³o¥ó¨Æ¬O¯uªº¤F¡A§Æ±æ¤Ö«L¯à¬°·q¦W³ø³o±þ¤÷¤§¤³¡C
+		bow $n
+		tell $n §Ú²q¬î«BÀ³¸Ó·|¦^¨ì¥L»{¬°³ÌÁô±Kªº¦a¤è¡A¤]³\¬O·íªì¤Ö«Lµo²{¶³­·¿ò®Ñªº¦a¤è
+		tell $n ½Ð¤Ö«L¶]³o³Ì«á¤@½ë¡A´ÀªZªL¥h°£³o­Ó±ÑÃþ§a¡I
+		tell $n Ä@¼C¯«Kention«O¦ö§A¡C
+		mpmod_qmark $n jd_liu v0 = 5
+	else
+		tell §A§ä¬î«B¶Ü¡H¥LÀ³¸Ó¦b«È©Ð¸Ìªü¡C
+	endif
+endif
+~
+>talk_prog wife~
+	if is_qmark($n) == castsword
+		say ³o¥ó¨Æ±¡¸òÅ±¼C¨¦ªº¤H¨S¦³Ãö«Y¡C
+		mpechoat $n $I§âÀY§O¹L¥h¡A¦ü¥G¤£·Q²z§A¡C
+		mpechoaround $n $I§âÀY§O¹L¥h¡A¦ü¥G¤£·Q²z$n¡C
+	else
+		if is_qmark($n) == swordcottage_killer
+			say §A³o¥û¤â¡IÁÙ´±°Ý§Ú¨Æ±¡¡I
+			mpkill $n
+		else
+			if is_qmark($n) == swordcottage 300001
+				if is_qmark($i) == swordcottage_talking
+					mpechoat $n $I²{¦b¥¿¦b¸ò§O¤H»¡¸Ü¡C
+				else
+					if is_qmark($i) != swordcottage_hairdress
+						if resp($n) > 65
+							mpcallout 1 mpadd_qmark self swordcottage_talking
+							mpcallout 1 mpechoat $n $I»¡µÛ¡G¬JµM±z°Ý°_¤F¡A¨Æ±¡¬O³o¼Ëªº...
+							mpcallout 1 mpechoaround $n $I¦ü¥G¦b¸ò$n°Q½×¤°»ò...
+							mpcallout 2 mpechoat $n $I»¡µÛ¡G¤Q´X¦~«e¡A§Ú¨ü¤Í¤H©Ò°U¡A¥X®ü«e©¹¥t¤@­Ó®q
+							mpcallout 3 mpechoat $n $I»¡µÛ¡G¨ì¹F¸Ó®q¤§«á¡A§Úµo²{·í¦a©~¥Á»P§Ú±Ú¦çµÛ¡A²ßºD¬Ò¤£¬Û¦P
+							mpcallout 4 mpechoat $n $I»¡µÛ¡G«ê¥©¨º¦ì¤Í¤H¥²¶·¯d¦b®q¤W¤@¬q®É¶¡¡A§Æ±æ¯d§Ú§@¦ñ
+							mpcallout 5 mpechoat $n $I»¡µÛ¡G¥¿¦n®a¤¤µL¨Æ¡A§Ú¤]¤£¥[±ÀÃã¡A´N¯d¦b¸Ó®q½m¼C
+							mpcallout 5 mpechoaround $n $I¦ü¥G¦b¸ò$n°Q½×¤°»ò...
+							mpcallout 6 mpechoat $n $I»¡µÛ¡G¦b½m¼Cªº¦P®É¡A§Ú»{ÃÑ¤F¤@¦ì·í¦aªº¤Ö¤k
+							mpcallout 7 mpechoat $n $I»¡µÛ¡G¦o¸g±`°e¤@¨Ç­¹ª«¥H¤Î¤ô¹L¨Óµ¹§Ú¡A¨Ã¥B¦b®ÇÃä¬ÝµÛ§Ú½m¼C
+							mpcallout 8 mpechoat $n §A¦n¹³Ä±±o³oºØ¼@±¡«Ü¦Õ¼ô...
+							mpcallout 8 mpechoaround $n $nÅS¥X¤@ÂI¤£¥i¸m«Hªºªí±¡
+							mpcallout 9 mpechoat $n $I­W¯ºµÛ»¡¡G¬Oªº¡A«á¨Óªº¨Æ±¡±zÀ³¸Ó¤]²q¨ì¤F
+							mpcallout 10 mpechoat $n $I»¡µÛ¡G§Ú«á¨Ó»P¨º¦ì¤Ö¤k¬ÛÅÊ¡A¨Ã¥Bµ²¤F±B
+							mpcallout 11 mpechoat $n $I»¡µÛ¡G¦ý³o¤]¬O¤@¤Á¤£©¯ªº¶}©l...
+							mpcallout 11 mpechoaround $n $I¦ü¥G¦b¸ò$n°Q½×¤°»ò...
+							mpcallout 12 mpechoat $n $I»¡µÛ¡G¦o¦³¤F¨­¥¥¤§«á¡A§Ú±`±`¥X¥~¬¼Ây¤@¨Ç¬¹¯bµ¹¦o¸É¨­¤l
+							mpcallout 13 mpechoat $n $I»¡µÛ¡G¦P®É¤]°U¤£Â_¨Ó¦^ªº²î°¦À°§Ú®´¤@¨ÇÃÄ«~¦^¨Ó
+							mpcallout 14 mpechoat $n $I»¡µÛ¡G¦ý¬O¦o¤´µM¤£©¯¹L¥@¡A´N¦b¦o¥Í¬M¤ëªº¨º¤Ñ±ß¤W
+							mpcallout 15 mpechoaround $n $I¦ü¥G¦b¸ò$n°Q½×¤°»ò...
+							mpcallout 16 mpechoat $n $I»¡µÛ¡G¦]¬°Ãø²£¡A¬y¦å¹L¦h¡A¦]¦Ó¦º¤`...
+							mpcallout 17 mpechoat $n $I»¡µÛ¡G§Ú·í®É´d¼«Ãø­@¡A«K¤@¼C¼A¶}¤F®q¤Wªº¤j¥Û
+							mpcallout 18 mpechoat $n $I»¡µÛ¡G«á¨Ó¤Í¤HÄU§Ú¦^¨Ó®a¶m¡A¤@¤è­±¬O¸ÓÄ~©Ó®a·~¡A¥t¤@¤è­±¤]¬O¬Ý§Ú¾ã¤é·TÃû...
+							mpcallout 18 mpechoaround $n $I¦ü¥G¦b¸ò$n°Q½×¤°»ò...
+							mpcallout 19 mpechoat $n $I»¡µÛ¡G©ó¬O§Ú¦b·í¦a«Ø¥ß¤F¤@¶¡¥Û«Ç¡A±N§Úªº°t¼C¸m¤J
+							mpcallout 20 mpechoat $n $I»¡µÛ¡G¤]ºâ¬O¬°¤F¬ö©À¤`©d
+							mpcallout 21 mpechoat $n $I»¡µÛ¡G·í®É¦o¯dµ¹§Úªº¡A´N¥u³Ñ³o­Ó¾v¹¢
+							mpcallout 21 mpechoaround $n $I¦ü¥G¦b¸ò$n°Q½×¤°»ò...
+							mpcallout 22 mpechoat $n $I¥J²Óªº¥´¶q§A...
+							mocallout 22 mpechoaround $I¥J²Óªº¬Ý¤F¬Ý$n...
+							mpcallout 23 mpechoat $n $I»¡µÛ¡G¤Ö«LÁn¦W»·¼½¡A¤£ª¾¬O§_¥i¥H©e°U±zÀ°§Ú§ä¦^³o­Ó¾v¹¢¡H(yes/no)
+							mpcallout 23 mpdel_qmark self swordcottage_talking
+						else
+							tell $n ¦o¦b¤Q¼Æ¦~«e«K¤w¹L¥@¡A¥u¯d¤U¬M¤ë»P§Ú¬Û¨Ì¬°©R¡D
+							glare
+							tell $n ¤Q¦~¥Í¦º¨â¯í¯í...
+							sigh
+							tell $n ¤£³Ò±z¦h¶O¤ß¡A§Ú¦Û¤v¦A§ä§ä«K¬O¡C
+						endif
+					else
+						tell $n ¦o¦b¤Q¼Æ¦~«e«K¤w¹L¥@¡A¥u¯d¤U¬M¤ë»P§Ú¬Û¨Ì¬°©R¡D
+						glare
+						tell $n ¤Q¦~¥Í¦º¨â¯í¯í...
+						sigh
+					endif
+				endif
+			else
+				tell $n ¦o¦b¤Q¼Æ¦~«e«K¤w¹L¥@¡A¥u¯d¤U¬M¤ë»P§Ú¬Û¨Ì¬°©R¡D
+				glare
+				tell $n ¤Q¦~¥Í¦º¨â¯í¯í...
+				sigh
+			endif
+		endif
+	endif
+~
+>talk_prog yes~
+if is_qmark($i) != swordcottage_hairdress
+	tell $n ¨º´N¦³³Ò±z¤F
+	bow
+	tell $n ¤]³\±z¥i¥H°Ý°Ý§õÁ`ºÞ¡A¥L¹ï²ø¤ºªº±¡ªp¤ñ¸û¼ô±x¡C
+	tell $n Ä@¼C¯«Kention«O¦ö§A¡C
+	mpmod_qmark $n swordcottage v2 = 2
+	mpadd_qmark $i swordcottage_hairdress	200 0 0 0 0 -1
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpmod_all_qmark $n swordcottage_killer timer = -1
+		say ¬M¤ë¡A§A¯R..¨S¿ìªk..¦A..·ÓÅU§A..¤F..
+		mpecho ¸Iªº¤@Án¡A$I­Ë¦a¤£°_¡C
+		rumor ¦W¼C¤s²ø²ø¥D$I³Q$n±þ®`¤F¡I¦W¼C¤s²ø¤U¥O¥Ã¤[³q½r$n¡I
+	else
+		mpadd_all_qmark $n swordcottage_killer -1 0 0 0 0 1
+		rumor ¦W¼C¤s²ø²ø¥D$I³Q$n±þ®`¤F¡I¦W¼C¤s²ø¤U¥O¥Ã¤[³q½r$n¡I
+	endif
+~
+>give_prog 64135~
+		if is_qmark($n) == swordcottage_killer
+			say §A³o¥û¤â¡IÁÙ´±¨Ó¨£§Ú¡I
+			mpkill $n
+			mpjunk hair
+		else
+				if is_qmark($n) == swordcottage 300003
+					tell $n ¤Ó¦n¤F¡I¨S·Q¨ì±z¯uªº§ä¨ì¤F¡I
+					mpjunk hair
+					tell $n ¯u¬O¤Ó·PÁÂ§A¤F¡C
+					bow $n
+					tell $n ¤@¨Ç·LÁ¡ªºÁÂÂ§¡A§Æ±æ±z¯à¦¬¤U¡C
+					mpoload 64138 $n viclv target
+					mpexp $n 10000
+					mpmod_qmark $n swordcottage v2 = 4
+				else
+					tell $n ³o¦ü¥G¤£¬O§A§ä¨ìªº§a¡H
+					drop hair
+					tell $n ½Ð¨º¦ì§ä¨ìªº¥ý¥Í¨Ó¨£§Ú¡A§Ú·|¦n¦nªº¹SÁÂ¥L¡C
+				endif
+		endif
+~		
+>fight_prog 20~
+wear sword
+yell [1;31mÚ]¤é¤Ñ¼C[0m 
+flaming
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 20~
+wear sword
+yell [1;34m¬y­·¼C»R[0m 
+storm
+mpnowait
+earth
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>fight_prog 10~
+wear sword
+yell [1;36mµº¥Ø¼Cªá[0m 
+mpat 5 c 'cure blind'
+c virtual
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c 'dispel magic' self
+mpat 5 c sanc
+mpnowait
+~
+>fight_prog 30~
+wear sword
+yell [1;32m¼CÅQ¤Ñ¤U[0m 
+perf emp
+mpnowait
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+~
+|
+#64103
+uen chun lon-swordcottage~
+¶³±qÀs(uen chun lon)~
+¶³±qÀs(uen chun lon)¸yÃ´ªø¼C¡A¯«ªö«³«³ªº¯¸¦b¤@®Ç¡C
+~
+¥L¬O²ø¥D¦­¦~»{ÃÑªº¬G¥æ¡AÁöµM¸ò²ø¥D·³®t10¦~¡A«o¤£´î¨â
+¤H±¡½Ë¡A¾Ú»¡¦b¬Y¦¸¤s¸é§T§ø®É¡A¯³¹ý¥Í»P¯À¥¼¿Ñ­±ªº¥L¤@
+¦PÀ»°h¤s¸é¡A«á¨Ó«KÀ³¯³¹ý¥ÍªºÁÜ½Ð¨ì¤s²ø¤º°µ«È¡D
+~
+1|2|64|2048|4096 8|32|128 1000 S
+53 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 30000
+S 41 40
+S 42 40
+S 43 70
+S 44 70
+>talk_prog topic~
+	if is_qmark($n) == castsword
+		tell $n §A¬OÅ±¼C¨¦ªº¤H§a¡H
+		tell $n ²ø¥D¤£¤Ó³ßÅwÅ±¼C¨¦ªº¤H¡A¸ò¥L»¡¸Ü¥i±o·í¤ßÂI¡C
+	else
+		if is_qmark($n) == swordcottage_killer
+			say ©êºp¡A²ø¥D¤£Åwªï§A¡A§Ú¥u¦n½Ð§A¥X¥hºO¡C
+			mpkill $n
+		else
+			say ¬O³X«Èªü¡A½Ð¦n¦n¨É¨ü¤s²øªº­·´º§a¡C
+			say ³o»ò»¡°_¨Ó¡A§Ú¤]¬O³X«È©O¡I«¢«¢«¢¡I
+		endif
+	endif
+~
+>talk_prog underwear~
+	say ¨ººØªF¦èªº¸Ü...§Ú¤£¤Ó²M·¡³á¡C
+	shrug
+~
+>talk_prog p hair dress~
+	if is_qmark($n)¡@== swordcottage 200001
+		tell $n ¾v¹¢ªü¡C
+		tell $n ¹ï¤£°_¡A³oºØ¤pªF¦è§Ú³q±`¤£·|ª`·Nªº¡C
+		mpechoat $n $I¹ïµÛ§A­W¯ºµÛ¡C
+		mpechoaround $n $I¹ïµÛ$n­W¯ºµÛ¡C
+	else
+		say ¾v¹¢¡H§A·Q­nªº¸Ü¤]³\¥i¥H¥hªþªñªº§ø¤l¶R§a¡C
+	endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpecho $I ¬½¬½ªºÀü¤F§A¤@²´¡AµM«áÀZµM­Ë¦a¡C
+	else
+		mpecho $I ¬½¬½ªºÀü¤F§A¤@²´¡AµM«áÀZµM­Ë¦a¡C
+		mpadd_all_qmark $n swordcottage_killer 200 0 0 0 0 1
+	endif
+~
+>fight_prog 40~
+wear sword
+yell [1;32m¼CÅQ¤Ñ¤U[0m 
+perf emp
+mpnowait
+perf emp
+mpnowait
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+mpnowait
+~
+|
+#64104
+Lee-mob ie ven~
+§õ¶h¤Z(Lee ie ven)~
+Á`ºÞ§õ¶h¤Z(Lee ie ven)¦b³o¸Ì¦£µÛ³B²z¨Æ±¡¡C
+~
+¬Y¦¸¯³¹ý¥Í¦b¤s¤W½m¼C¤£·V¨ü¶Ë¡A«á¨Ó©Ó»X§õ¶h¤Z¬Û±Ï¡A¯³
+¹ý¥Í«KÁÜ½Ð¥L¦Ü¤s²ø°µÁ`ºÞ¡C¦W¸q¤WÁöµM¬OÁ`ºÞ¡A¹ê»Ú¤W¥L
+¹ï¯³¹ý¥Íªº¤F¸Ñ¤ñ½Ö³£ÁÙ­n²`¡D
+~
+1|64|2048|4096 8|32|128 1000 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>talk_prog p hair dress~
+if is_qmark($n) == swordcottage_killer
+	mpecho $I»¡µÛ¡GÁÂÁÂ±zªºÃö¤ß¡A¤£¹L§Ú­Ì¥i¥H¦Û¤v¸Ñ¨M¡C
+else
+	if is_qmark($n) >= swordcottage 300001
+		if rand(50)
+			tell $n ¤§«e¦n¹³¦b­þÃä¬Ý¨ì¹L...
+			tell $n ²ø¥D±`¥h½m²ß³õ½m¼C¡A¤§«e¤]¨ì¹L¦s¼C«Ç°£¥h§¯Å]¡A¤]³\§A¥i¥H¨ì³o¨â­Ó¦a¤è§ä§ä¡C
+			tell $n ¦ý¦s¼C«Ç²{¦b³Q²ø¥D«Ê°_¨Ó¤F¡A¤@¯ë¤H¤£¯à¶i¥h¡A±z­n¶i¥h°È¥²¤p¤ß¡C
+			tell $n ¹ï²ø¥D¨Ó»¡¡A¨º¥i¬O³Ì¬Ã¶QªºÄ_ª«­þ¡C
+		else
+			say §Ú·Q·Q¡A¦n¹³¦³¬Ý¹L...
+			say ¥i¬O§Ú¤£¤Ó°O±o¡AÅý§Ú¦A·Q·Q¡A³Â·Ð±z¹LÂI®É¶¡¦A¹L¨Ó°Ý§Ú¤@¦¸
+			sigh
+	else
+		say ¤°»ò¾v¹¢¡H
+	endif
+endif
+~
+>greet_prog 10~
+	say ³o¥i«ç»ò¿ìªü¡A¨ºÀYµëÀs(Chiao)¹ê¦b¬O...
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n ¦W¼C¤s²ø¤£Åwªï§A¡A½Ð¦^§a¡C
+else
+	tell $n Åwªï¨Ó¨ì¦W¼C¤s²ø¡C
+	tell $n ´£¿ô±z¡A¦s¼C«Ç¤º¦³¤£©ú§¯Å]¥X²{¡A½Ð¤£­n¤Ó¾aªñ¡C
+	tell $n ¦pªG±z¦¨¥\¥´­Ë§¯Å]¡A½Ð®³µÛÃÒ¾Ú¦^¨Ó¡A²ø¤º¦³Á¡Â§­PÃØ¡C
+	tell $n Ä@¼C¯«Kention«O¦ö±zªº¥­¦w¡C
+	bow $n
+endif
+~
+>talk_prog chiao~
+if is_qmark($i) != swordcottage_talk
+	if is_qmark($n) != swordcottage_killer
+		if is_qmark($n) >= swordcottage 200001
+			tell $n ÁÂÁÂ±zªºÀ°¦£¡A§Ú­Ì¤£·|§Ñ°Oªº¡C
+			break
+		else	
+				mpadd_qmark $i swordcottage_talk
+				mpcallout 1 tell $n ¬O³o¼Ë¤lªº¡A³Ìªñ¦³¹²¤Hµo²{³s±µ¤s²øªº¨º­Ó´òªy¥X²{µëÀs¡C
+				mpcallout 2 tell $n ¥X²{µëÀsÁÙ¤£¥´ºò¡A¦ý¬O§Ú­Ìµo²{¨e¦³¥û²rªº§ðÀ»©Ê¡A¦W¼C¤s²ø¤£¤Ö¹²¤H®a¯b³£³Q¨e«r¶Ë¡C
+				mpcallout 3 mpechoat $n ¡Ð¡Ð§Ú¥i¥HÀ°¦£¶Ü¡H(Help)
+				mpcallout 3 mpechoat $n ¡Ð¡Ð¨º¯u¬O¤Ó¿ò¾Ñ¤F(Sorry)
+				mpcallout 3 tell $n ©Ò¥H§Ú²{¦b«Ü¶Ë¸£µ¬ªü...
+				mpdel_qmark $i swordcottage_talk
+		endif
+	else
+		mpecho $I»¡µÛ¡GÁÂÁÂ±zªºÃö¤ß¡A¤£¹L§Ú­Ì¥i¥H¦Û¤v¸Ñ¨M¡C
+	endif
+else
+		mpechoat $n §O¤H¦b»¡¸Ü¡A¤£­n´¡¼L¤ñ¸û¦n¡C
+endif
+~
+>talk_prog sorry~
+	say §Æ±æ¦³¿ìªk¥i¥H»°¨«¨e¡C
+	sigh
+~
+>talk_prog help~
+if is_qmark($i) != swordcottage_talk
+	if is_qmark($n) != swordcottage_killer
+		if is_qmark($n) == swordcottage
+			if is_qmark($n) < swordcottage 200001
+			else	
+				if is_qmark($n) == swordcottage
+					mpcallout 1 mpadd_qmark $i swordcottage_talk
+					mpcallout 1 tell $n §AÄ@·NÀ°¦£¡H¨º¯u¬O¤Ó¦n¤F¡I
+					mpcallout 2 tell $n µëÀs´N¦b¤s²ø«á­±ªº´òªy¸Ì¡C
+					mpcallout 3 tell $n §A±þ¦ºµëÀs¤§«á¡A´N¨Ó¸ò§Ú¦^³ø§a(report)¡I
+					mpcallout 3 mpmod_qmark $n swordcottage v1 = 1
+					mpcallout 4 tell $n Ä@¼C¯«Kention«O¦ö§A¡C
+					mpcallout 4 tell $n ¨º´N³Â·Ð§A¤F¡I
+					mpcallout 4 mpdel_qmark $i swordcottage_talk
+				else
+					mpcallout 1 mpadd_qmark $i swordcottage_talk
+					mpcallout 1 tell $n §AÄ@·NÀ°¦£¡H¨º¯u¬O¤Ó¦n¤F¡I
+					mpcallout 2 tell $n µëÀs´N¦b¤s²ø«á­±ªº´òªy¸Ì¡C
+					mpcallout 3 tell $n §A±þ¦ºµëÀs¤§«á¡A´N¨Ó¸ò§Ú¦^³ø§a(report)¡I
+					mpcallout 3 mpadd_qmark $n swordcottage -1 0 1 0 0 1
+					mpcallout 4 tell $n Ä@¼C¯«Kention«O¦ö§A¡C
+					mpcallout 4 say ¨º´N³Â·Ð§A¤F¡I
+					mpcallout 4 mpdel_qmark $i swordcottage_talk
+				endif	
+			endif
+		endif
+	else
+		mpecho $I»¡µÛ¡GÁÂÁÂ±zªºÃö¤ß¡A¤£¹L§Ú­Ì¥i¥H¦Û¤v¸Ñ¨M¡C
+	endif
+else
+		mpechoat $n §O¤H¦b»¡¸Ü¡A¤£­n´¡¼L¤ñ¸û¦n¡C
+endif
+~
+>talk_prog report~
+	if is_qmark($n) == swordcottage 200003
+		tell $n ¯u¬O¨¯­W±z¤F¡C
+		tell $n ³o´N·í°µµ¹±zªº³ø¹S§a¡A¤p·N«ä¡A½Ð¯º¯Ç¡C
+		mpskillexp $n 10000
+		mpgold $n 100000
+		mpmod_qmark $n swordcottage v1 = 7
+		break
+	else
+		if is_qmark($n) == swordcottage 200006
+			tell $n ­ì¨Ó...¬Ý¨Ó¬O§Ú­Ì¨S¦³¦n¦n¬ù§ô¦Û¤vªºªø¤u¡C
+			tell $n ³y¦¨±zªº§xÂZ¯u¬O©êºp¡A¤]·PÁÂ±z¶êº¡ªº¸Ñ¨M³o¦¸ªº¨Æ±¡
+			tell $n ³o¬O¤@ÂI¤p·N«ä¡A½Ð¯º¯Ç¡C
+			mpgold $n 100000
+			mpmod_qmark $n swordcottage v1 = 7
+			break
+		endif
+	say §A­n¸ò§Ú¦^³ø¤°»ò¡H
+	endif
+~
+>talk_prog p strange~
+	if is_qmark($n) == swordcottage 200002
+		tell $n ©_©Çªº¦a¤è¡H§A¬O»¡µëÀs³r¯dªº­ì¦]¶Ü¡H
+		tell $n ³o»ò»¡¨Ó¡A§Úªº½TÅ¥¹L¤s²ø¤ºªø¤u­Ìªº¦Õ»y...
+		tell $n »¡¬O¨ä¤¤¤@­Óªø¤u°½¤FµëÀsªº©]©ú¯](light orb)¡A©Ò¥HµëÀs¤~¤£Â_§@¶Ã
+		tell $n ¦ý§Ú»{¬°³o¥u¬O¶Ç¨¥¦Ó¤w¡C
+		mpmod_qmark $n swordcottage v1 = 4
+	else
+		tell $n ¦³¤°»ò©_©Çªº¦a¤è¶Ü¡H
+	endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+yell $n¦b¦W¼C¤s²øÀÝ±þµL¶dªü¡I
+	if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+~
+>fight_prog 100~
+	if insameroom(sen-swordcottage)
+		say ²ø¥D¡I¦³¼Ä¤H¤J«I¡I
+		mpforce sen-swordcottage mpkill $n
+	else
+		$I¨³³tªº°k¶]¤F¡I
+		mpgoto 64190
+	endif
+~
+|
+#64105
+Bie wu chae-swordcottage~
+¥ÕµL¯Ê(Bie wu chae)~
+¥ÕµL¯Ê(Bie wu chae)¦b³o¸Ì­Y¦³©Ò«äªº¿â¨B¡C
+~
+¯³¹ý¥Í¤@¥Í¦¬¤F¼Æ¤Q¦W§Ì¤l¡A¦ý¬O¥L¤]´¿¸g»¡¹L¡A³Ìº¡·Nªº
+«K¬O¥ÕµL¯Ê³o­Ó¤j§Ì¤l¡CµL¯Ê¦Û¤p³à¥¢Âù¿Ë¡A¸ô¹Lªº²ø¥D«K
+±N¥LÄâ¦^²ø¤º¼¾¾iªø¤j¡A¦P®É¶Ç±Â»P¥L¼Cªk¡A®Ú¾Ú²ø¤ºªºÁÁ
+¶Ç¡A¥L¤]¬O²ø¥D¤º©wªº¤k´B¡D
+~
+1|2|64|2048|4096 8|32|128 1000 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 20000
+S 41 50
+S 42 50
+S 43 40
+S 44 40
+>talk_prog p hair dress~
+	if is_qmark($n) == castsword
+		mpecho $IÅS¥X¤£¤Ó°ª¿³ªºªí±¡¡C
+		say Å±¼C¨¦±¼¤Fªº¾v¹¢³£¦b¦W¼C¤s²ø¶Ü¡H
+	else
+		if is_qmark($n) == swordcottage 300001
+			tell $n ®v¥Àªº¾v¹¢¡H
+			ponder
+			tell $n §Ú¤]¤£¤Ó²M·¡¡C¦pªG¬O®v¤÷½Ð±zÀ°ªº¦£¡A§Æ±æ±z¦b²ø¤ºÀ°¦£§ä§ä¬Ý¡C
+			tell $n ¸U¨Æ«ô°U¤F¡C
+		else
+			tell $n ¤°»ò¾v¹¢¡H
+		endif
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n ½Ð±z°¨¤WÂ÷¶}¦W¼C¤s²ø¡I
+	mpkill $n
+else
+	nod $n
+	tell $n ¬O«È¤H¶Ü¡HÅwªï¨Ó¨ì¦W¼C¤s²ø¡A§Ú¬O²ø¥Dªº§Ì¤l¡C
+	smile $n
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+mpecho $I¦º«e¥ÎºÉ¥þ¨­¤O®ð¬I®i³Ì«á¤@©Û¼C§Þ¡I
+storm slash
+mpnowait
+storm slash
+mpnowait
+mpecho ¼C§Þ¤@§¹¡A$I¤]¸òµÛ­Ë¦a¤£°_¡C
+if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+~
+>fight_prog 20~
+wear sword
+yell [1;31mÚ]¤é¤Ñ¼C[0m 
+flaming
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 30~
+wear sword
+yell [1;32m¼CÅQ¤Ñ¤U[0m 
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+~
+|
+#64106
+sho ji yum-swordcottage~
+¿½µµ¶³(Sho ji yum)~
+¿½µµ¶³(Sho ji yum)¦b³o¸Ì±M¤ß½m¼C¡C
+~
+µµ¶³¦Û¥®´NÂQ©¹½mªZ¡A¥¿¥©¥LªºÂù¿Ë¤]»P¯³¹ý¥Í¬°¬G¥æ¡A«K
+±N¥L°e¦Ü¦W¼C¤s²ø¤º¡DÁöµM¨­¬°¤G§Ì¤l¦h¤Ö¨ü¤F¤@ÂI©e©}¡A
+¤£¹L¥L¤´µM¼ç¤ß½m¼C¡A´Á±æ¦³¤@¤Ñ¯à°÷¸ò¦Û¤vªº®v¥S¤@¸û°ª
+¤U¡D
+~
+1|2|64|2048|4096 8|32|128 1000 S
+46 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 20000
+S 41 30
+S 42 30
+S 43 40
+S 44 40
+>talk_prog p hair dress~
+	if is_qmark($n) == castsword
+		mpecho $IÁy¦âÅÜªº«ÜÃø¬Ý¡C
+		say §AÃhºÃ¬O§Ú­Ì°½ªº¶Ü¡H§OÀH«K¨Ó³o»z¿à¤H¡I
+		mpechoat $n ¬Ý¥L¤@Áy¤õ¤jªº¼Ë¤l¡A§ÖÂI¨«¤ñ¸û¦n¡C
+	else
+		if is_qmark($n) == swordcottage 300001
+			tell $n ®v¥Àªº¡H°Ú°Ú¡A§Ú¤£ª¾¹D­C¡C
+			mpecho $I§ì¤F§ìÀY¡C
+			tell $n §Ú¹ï§äªF¦è³Ì¤£¾Õªø¤F¡C²{¦bº¡¸£¤l·Qªº³£¬O«ç»ò°£¥hÂÃ¼C«Çªº§¯Å]¡C
+		else
+			tell $n ¤°»ò¾v¹¢¡H
+		endif
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n §Öºu§a¡I
+	mpkill $n
+else
+	nod $n
+	tell $n ¬O·sªº³X«Èªü¡AÅwªï¨Ó¨ì¦W¼C¤s²ø¡C
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+mpmod_all_qmark $n swordcottage_killer timer +50
+mpecho $I¦º«e¥ÎºÉ¥þ¨­¤O®ð¬I®i³Ì«á¤@©Û¼C§Þ¡I
+flaming
+mpnowait
+flaming
+mpnowait
+mpecho ¼C§Þ¤@§¹¡A$I¤]¸òµÛ­Ë¦a¤£°_¡C
+	if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+~
+>fight_prog 30~
+wear sword
+yell [1;34m¬y­·¼C»R[0m 
+storm
+mpnowait
+earth
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>fight_prog 10~
+wear sword
+yell [1;36mµº¥Ø¼Cªá[0m 
+mpat 5 c 'cure blind'
+c virtual
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c 'dispel magic' self
+mpat 5 c sanc
+mpnowait
+~
+|
+#64107
+chin-swordcottage in yo~
+¯³¬M¤ë(chin in yo)~
+¯³¬M¤ë(chin in yo)¯¸¦b³oÃä¡AÁy¤WÅS¥X·L¯ºªºªí±¡¡C
+~
+»WµÛ¤Î¸yªºªø¾v¡A¬M¤ë¦³µÛ«GÄRªº¥~ªí¸ò²¢¬üªº¯º®e¡A¨­
+¬°¦W¼C¤s²ø²ø¥DªºÄ_¨©¤k¨à¡A¯³¬M¤ë­I­tµÛ¥²¶·¶ùµ¹¼C³N
+°ª¶W¼C«Èªº¨Ï©R¡A³Ì¨Îªº¤H¿ï¦ÛµM¬O¦oªº¨â­Ó®v¥S¡A¤£¹L
+¦o¥»¤H¦ü¥G¨Ã¤£«ç»ò¾á¤ß³o­Ó°ÝÃD¡C
+~
+1|64|2048|4096 8|32|128 1000 S
+38 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 1|8
+P 8
+S 13 30000
+S 41 70
+S 42 70
+S 43 70
+S 44 70
+R half-elf~
+A8
+mpgoto self+wake
+say ¤S¬O·sªº¤@¤Ñ©O¡C
+mpecho ¬M¤ë¦ù¤F­ÓÃi¸y
+mpecho ¬M¤ë½w½w¨«¥X©Ð¶¡¡C
+mpgoto 64206
+~
+A19
+say ®t¤£¦h¸Ó¥ð®§¤F©O¡C
+mpecho ¬M¤ë½w½w¨«¦^¦Û¤vªº©Ð¶¡
+mpgoto 64215
+rest
+~
+|
+>talk_prog p hair dress~
+	if is_qmark($n) == castsword
+		say ¹ï¤£°_¡A¯R­n§Ú§O¸òÅ±¼C¨¦ªº¤H¥æ½Í¡C
+	else
+		if is_qmark($n) == swordcottage 300001
+			say ®Qªº¾v¹¢¡H
+			say ¯R¤@ª½«ÜÄ_¨©ªº¦¬µÛ¡A«ç»ò·|§Ë¥á¤F©O¡H
+			say §Ú¤]¥h§ä§ä¦n¤F¡C
+		else
+			say ¤°»ò¾v¹¢¡H
+		endif
+	endif
+~
+>talk_prog underwear~
+	say ¨º¡A¨ººØªF¦è...
+	blush
+	say §Ú¡A§Ú¬O¬ïµÛ¨S¿ù¡A¥i¬O­n°µ¤°»ò©O¡H
+	mpechoat $n ¡Ð¡Ð¡Ð§Ú¥u¬O°Ý°Ý¦Ó¤w(nothing)
+	if is_qmark($n) == swordcottage 100001
+	mpechoat $n ¡Ð¡Ð¡Ð¥i¥Hµ¹§Ú¶Ü(give me)¡H
+	endif
+~
+>talk_prog nothing~
+	if sex($n) == 2
+		say ³£¬O¤k¥Í¡A¦n©_¤°»ò©O¡H
+		giggle $n
+	else
+		say ¬O¡A¬O³o¼Ë¶Ü
+		say §Ú¥­±`¡A¥­±`³£·|©ñ¦b¦çÂd¸Ì...°Ú¡I¥¢¡A¥¢Â§¤F
+		say ¹ï¡A¹ï¤£°_¡A§Ú¹ï³oºØ¸ÜÃD¹ê¦b...
+		mpechoat $n ®`²Ûªº¹ï§A¯º¤F¯º
+		mpechoaround $n $I®`²Ûªº¹ï$n¯º¤F¯º
+	endif
+~
+>talk_prog p give me~
+	if is_qmark($n) == swordcottage 100001
+		say ³o¡A³oºØ¨Æ±¡...
+			mpmod_qmark $n swordcottage v0 + 1
+			if sex($n) == 2
+				mpcallout 1 tell $n ¦P¼Ë³£¬O¤k¥Í¡A«ç»ò·|¸ò§Ú­n¤º¦ç©O¡H§Úªº¤º¦ç¤S¨S¦³¤ñ¸û¯S§O
+				mpcallout 2 mpechoat $n $I»´»´ªº©Ô¶}¦Û¤vªº»â¤f
+				mpcallout 2 mpechoaround $n $I©M$n¦n¹³¦b°Q½×¤°»ò¯µ±K¸ÜÃD¡D
+				mpcallout 3 tell $n ´N¬O«Ü´¶³qªº¤º¦ç¦Ó¤w
+				mpcallout 4 mpechoat $n ©p¥J²Óªº¬Ý¤F¬Ý¡A¦oªº¨­§÷¯u¬O..§c¡A¦oªº¤º¦ç¯uªº«Ü´¶³q
+				mpcallout 5 mpechoat $n ¡Ð¡Ð¡Ð§Ú·Q±a¦^¥hµ¹µôÁ_®v·í¼Ò«¬(take back)
+			else
+				blush
+				mpcallout 1 tell $n «ç»ò·|¸ò§Ú­n¤º¦ç©O¡H
+				mpcallout 2 mpechoat $n ¡Ð¡Ð¡Ð§Ú·Q±a¦^¥hµ¹µôÁ_®v·í¼Ò«¬(take back)
+				mpcallout 3 mpechoat $n ¡Ð¡Ð¡Ð§Ú·Q»`¶°¡A³o¬O§Úªº¿³½ì(instering)
+			endif
+	else
+		say §A¦³¸ò§Ú­n¤°»ò¶Ü¡H
+	endif
+~
+>talk_prog instering~
+	if is_qmark($n) == swordcottage 100002
+		tell $n ¥i¡A¥i¬O¯uªº¤£¯àµ¹§A¡I
+		mpechoat $n $Iº¦¬õ¤FÁy»¡µÛ¡G¯u¡A¯uªº«Ü©êºp¡I
+		mpechoat $n §A¤ß²z·QµÛ¡A¦pªG¦o¤£ªÖµ¹¡A¨º¥u¦n¥h°½¤F¡I
+		mpmod_qmark $n == swordcottage v0 = 4
+	else
+		say ¤°»ò¿³½ì¡H
+	endif
+~
+>talk_prog p take back~
+	if is_qmark($n) == swordcottage 100002
+		if sex($n) == 2
+			if resp($n) < -1
+				mpcallout 1 ponder
+				mpcallout 2 tell $n §Ú·Q§Ú¥i¥H¬Û«H©p¡A©pµ¥§Ú¤@¤U³á
+				mpcallout 3 mpechoat $n $I§â©p©Ô¨ì¨¤¸¨¥h
+				mpcallout 3 mpechoaround $n $n¸ò$I¦n¹³¦b°½°½°Ó¶q¤°»ò
+				mpcallout 4 mpechoat $n $I½w½wªº¸Ñ¶}¨­¤Wªº¦çªA
+				mpcallout 5 mpechoat $n $I¦b©pªº­±«e»´»´ªº§â¤º¦ç²æ¤U¨Ó
+				mpcallout 6 mpechoat $n $I¬ÂÄn¦³½oªº¨­§÷Åý©p¬Ý¶Ì¤F¡A¥Õ¸Ì³z¬õªº¦Ù½§¸ò¯»¬õ¦âªº...
+				mpcallout 7 mpechoat $n $Iµo²{©p¦b¬Ý¦o¡A®`²Ûªº¯º¤F¯º
+				mpcallout 8 mpechoat $n $I§â¦çªA¬ï¤F¦^¥h
+				mpcallout 9 tell $n §O§i¶D¯R³á¡A¥L¤@©w·|½|§Úªº
+				mpcallout 10 $I§â¤º¦ç¶ëµ¹©p
+				mpcallout 10 mpoload 64115 $n viclv target
+				mpcallout 10 mpmod_qmark $n swordcottage v0 = 5
+			else
+				tell $n $Iº¦¬õ¤FÁy»¡µÛ¡G¹ï¡A¹ï¤£°_¡A´Nºâ³o¼ËÁÙ¬O¤£¯àµ¹§A¡I
+				mpechoat $n §A¤ß¸Ì·QµÛ¡A¦pªG¦o¤£ªÖµ¹¡A¨º¥u¦n¥h°½¤F¡I
+				mpmod_qmark $n == swordcottage v0 = 4
+			endif
+		else
+			tell $n $Iº¦¬õ¤FÁy»¡µÛ¡G¹ï¡A¹ï¤£°_¡A´Nºâ³o¼ËÁÙ¬O¤£¯àµ¹§A¡I
+			mpechoat $n §A¤ß¸Ì·QµÛ¡A¦pªG¦o¤£ªÖµ¹¡A¨º¥u¦n¥h°½¤F¡I
+			mpmod_qmark($n) == swordcottage v0 = 4
+		endif
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	scr
+	mpechoat $n $I¬Ý¨ì§A´N°¨¤W°k¶]¤F¡I
+	mpgoto 64190
+else
+	tell $n °Ú§r¡A¬O«È¤H¶Ü¡HÅwªï§A¨Ó°ÑÆ[³o¸Ì¡C
+	smile $n
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpmod_all_qmark $n swordcottage_killer timer = -1
+		say ¯R...§Ú...¹ï¤£°_...
+		mpecho $Iªº¨­Åé½w½w­Ë¦b¦a¤W¡C
+		rumor ¦W¼C¤s²ø²ø¥Dªº¤dª÷$I³Q$n´Ý§Ôªº±þ®`¤F¡I¦W¼C¤s²ø±q¦¹³q½r$n¡I
+	else
+		mpadd_all_qmark $n swordcottage_killer -1 0 0 0 0 1
+	endif
+~
+>fight_prog 40~
+	if insameroom(chae-swordcottage)
+		say µL¯Ê­ô¤p¤ß¡I
+		mpforce chae-swordcottage say ¬M¤ëª`·NÂI¡I§O¨ü¶Ë¤F¡I
+		mpgroup chae-swordcottage $i 0 1
+		mpforce chae-swordcottage follow chin-swordcottage
+		mpforce chae-swordcottage pro chin-swordcottage
+	else
+		yell ±Ï©R°Ú¡I
+		mptransfer chae-swordcottage
+		mpforce chae-swordcottage say ¬M¤ë¡I¨S¦³¨ü¶Ë§a¡I
+		mpforce chae-swordcottage mpkill $n
+		mpgoto self
+	endif
+~
+>fight_prog 40~
+	if insameroom(yum-swordcottage)
+		say µµ¶³­ô¤p¤ß¡I
+		mpforce yum-swordcottage say ¬M¤ë¡A¯¸«á­±ÂI¡I
+	else
+		yell ±Ï©R°Ú¡I
+		mptransfer yum-swordcottage
+		mpforce yum-swordcottage mpecho µµ¶³½Ä¹L¨ÓÀÉ¦b¬M¤ëªº¨­«e¡I
+		mpforce yum-swordcottage say ¬M¤ë¤p¤ß¡I
+		mpforce yum-swordcottage follow chin-swordcottage
+		mpgroup yum-swordcottage $i 0 1
+		mpforce yum-swordcottage pro chin-swordcottage
+		mpforce yum-swordcottage mpkill $n
+		mpgoto self
+	endif
+~
+>fight_prog 30~
+	if insameroom(sen-swordcottage)
+		say ¯R¡I
+		mpforce sen-swordcottage say «á°h¡I
+	else
+		mptransfer sen-swordcottage
+		mpforce sen-swordcottage follow chin-swordcottage
+		mpgroup sen-swordcottage $i 0 1
+		mpforce sen-swordcottage pro chin-swordcottage
+		mpforce sen-swordcottage say «ç»ò¦^¨Æ¡I
+		mpforce sen-swordcottage mpkill $n
+
+	endif
+~
+>fight_prog 50~
+	if insameroom(lon-swordcottage)
+		say ¶³¤j­ô¡I
+		mpforce lon-swordcottage say ·í¤ßÂI¡C
+		mpforce lon-swordcottage mpkill $n
+		mpforce lon-swordcottage pro chin-swordcottage
+	else
+		yell ¶³¤j­ô¡I§A¦b¶Ü¡H§Ö¨ÓÀ°§Ú§r¡I
+		mptransfer lon-swordcottage
+		mpforce lon-swordcottage follow chin-swordcottage
+		mpgroup lon-swordcottage $i 0 1
+		mpforce lon-swordcottage pro chin-swordcottage
+		mpforce lon-swordcottage mpecho ¶³±qÀs©¿µM½Ä¤F¹L¨Ó¡AÀÉ¦b¬M¤ëªº¨­«e¡I
+		mpforce lon-swordcottage say ¬Ý¨Ó¬O¨ë«È¤j¾r¥úÁ{¤F¡C
+		mpforce lon-swordcottage mpkill $n
+	endif
+~
+|
+#64108
+wang gen we~
+¤ý«Tºû(Wang gen we)~
+¤ý«Tºû(Wang gen we)¦b³o¸Ì¨ì³B³­µÛ¯ºÁy¡C
+~
+º¡Áyªº¯º®e¬Ý°_¨Ó¤Ï¦Ó¦³ÂIº¼ÀY¹«¥Ø¡A¨­¬°¦W¼C¤s²ø¤ºªº
+ªºªø¤u¡A¥L¤]±`±`ÂÇ¬G¤U¤s¡A¥H«K¨ì«°Âí¦n¦nªº¨É¼Ö¤@µf
+¡C
+~
+11|64|4096 8|32 800 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>rand_prog 10~
+	say §Ú­Ì²ø¥Dªº¨º¦ì©h®QÁÙ¯u¬Oº}«G°Ú¡I
+	drool
+~
+>talk_prog girl~
+	if is_qmark($n) == swordcottage 100002
+		tell $n ¯µ±K¥i§O»¡¥X¥hªü¡I
+		hehe $n
+	else
+		if is_qmark($n) == swordcottage 100001
+			tell $n §Ú¤£¬O©e°U§A¥h°½¤F¶Ü¡H
+		else
+			say ¯u·Q¤@¿Ë¤è¿Aªü...
+			drool
+				if is_qmark($i) == swordcottage_talking
+					mpechoat $n $I¥¿¦b»¡¸Ü¡Aµ¥µ¥§a
+							if resp($n) < -1
+								mpcallout 1 mpadd_qmark self swordcottage_talking
+								mpcallout 1 tell $n §c...¨ä¹ê¨S¤°»ò¯S§Oªº¨Æ
+								mpcallout 2 tell $n ¨ä¹ê¬O§Ú..§Ú..§Ú·Q­n...
+								mpcallout 3 mpechoat $n $I¬Ý¤F¤@¤U¥|©P
+								mpcallout 3 mpechoaround $n $I¬Ý¤F¤@¤U¥|¶g
+								mpcallout 4 tell $n ºâ¤F¡A¤Ï¥¿©p¨S¤°»ò¦W®ð¡A¤]¤£©È©p»¡
+								mpcallout 5 tell $n ÁöµMª¾¹D¤£¤Ó¦n¡A¨ä¹ê§Ú·Q­n¬M¤ëªº¤º¦ç
+								mpcallout 6 tell $n §O»¡¥X¥h°Ú¡A¨Æ¦¨¤§«á§Ú¤@©w­«­«¹SÁÂ
+								mpcallout 7 mpechoat $n ¡Ð¡Ð§A³o­ÓÅÜºA¡A¬Ý§Ú¨îµô§A¡I(Kill wang)
+								mpcallout 7 mpechoat $n ¡Ð¡Ð¦n§a¡A§Ú´NÀ°§A¤@¦¸(ok)
+								mpcallout 7 mpadd_qmark $n swordcottage -1 0 0 0 65536|1048576 1
+								mpcallout 7 mpdel_qmark self swordcottage_talking
+							else
+								tell $n §c...¨ä¹ê¨S¤°»ò¯S§Oªº¨Æ¡A¤Ñ®ð¯u¦n¤£¬O¶Ü¡Aªü«¢¡Aªü«¢«¢«¢«¢«¢...
+								emote ¤pÁnªº°áµÛ¡GÁÙ¬OÄ~Äò°½Ãi°µ¥Õ¤é¹Ú§a...
+							endif
+				endif
+		endif
+	endif
+~
+>give_prog 64114~
+	if is_qmark($n) == swordcottage 100005
+		mppurge cloth
+		mpmod_qmark $n swordcottage v0 = 6
+		tell $n ·Fªº¤Ó¦n¤F¡I
+		tell $n ³o¬Oµ¹§Aªº¼ú½à¡I
+		mpskillexp $n 20000
+		mpecho $IÅw³ßªºÂ÷¶}¤F¡C
+		mppurge self
+	else
+		tell §Aµ¹§Ú³o­Ó·F¶Ü¡H
+		mppurge underwear
+		mpechoat $n ÁöµM¥L³o»ò»¡¡A¤]¨S¦³§âªF¦èÁÙµ¹§Aªº·N«ä...
+	endif
+~
+>give_prog 64115~
+	if is_qmark($n) == swordcottage 100005
+		mppurge underwear
+		mpmod_qmark $n swordcottage v0 = 7
+		tell $n ·Fªº¤Ó¦n¤F¡I
+		tell $n ³o¬Oµ¹§Aªº¼ú½à¡I
+		mpskillexp $n 10000
+		mpecho $IÅw³ßªºÂ÷¶}¤F¡C
+		mppurge self
+	else
+		tell §Aµ¹§Ú³o­Ó·F¶Ü¡H
+		mppurge underwear
+		mpechoat $n ÁöµM¥L³o»ò»¡¡A¤]¨S¦³§âªF¦èÁÙµ¹§Aªº·N«ä...
+	endif
+~
+>talk_prog ok~
+	if is_qmark($n) == swordcottage 100000
+		tell $n ¦¨¥æ¡I§A§Ö¥h§a¡I
+		mpmod_qmark $n swordcottage v0 = 1
+	else
+		tell $n §A¦b»¡¤°»ò°­¸Ü¡H
+	endif
+~
+>talk_prog p light orb~
+if is_qmark($n) == swordcottage 200004
+	mpechoat $n $I¬Ý¤F¤@¤U¥|©P
+	mpechoaround $n $I¨³³tªºÀôÅU¤F©P³ò
+	tell $n §Ú¥H¬°§Ú°µ±o«ÜÁô±K¤F¡A¨S·Q¨ì§A©~µMª¾¹D¡A¤£Â²³æ¤£Â²³æ¡C
+	tell $n ÁöµM¹ï§A¨í¥Ø¬Û¬Ý¡A¦ý¬O³o­ÓªF¦è¥i¤£¯à¥Õ¥Õµ¹§A¡C
+	tell $n ®³ÂI¿ú¨Ó´N½æ§A¡I¤£¦h¤£¤Ö¡A¤@¦Ê¸U¨â¡I
+	mpechoat $n §AÄ±±o³o³Ã¥ë®Ú¥»¬O­Ó¤p¤H...
+else
+	tell $n ¤°¡A¤°»ò©]©ú¯]¡I§Ú¤°»ò¤]¤£ª¾¹D¡I
+	mpechoat $n ¬Ý¨Ó¥L¤j·§°½¤F¤°»ò¤£¸Ó°½ªºªF¦è§a...
+endif
+~
+>bribe_prog 1000000~
+	if is_qmark($n) == swordcottage 200004
+		grin $n
+		tell $n ÁöµM±Ë¤£±o¡A´N½æµ¹§A§a¡I
+		mpechoat $n §AÄ±±o¥L­þ¸Ì¦³±Ë¤£±oªº¼Ë¤l...
+		mpoload 64134 $n viclv target
+		mpecho $I©êµÛ¤@¤j³Uª÷¹ô¡AÅw³ßªºÂ÷¶}¤F¡C
+		mpmod_qmark $n swordcottage v1 = 5
+		mppurge self
+	else
+		tell $n §Aµ¹¤p¤H³oµ§¿ú¬O¥´ºâÅý¤p¤H¾i¦Ñ¶Ü¡H
+		tell $n ¨º¤p¤H´N¤£«È®ðªº¦¬¤U¤F¡I
+		mpecho $IÅw³ßªºÂ÷¶}¤F¡C
+		mppurge self
+	endif
+~
+>death_prog 100~
+		say §ÚÁÙ¨S¨ú¦Ñ±C°Ú¡I
+	if is_qmark($n) == swordcottage 200004
+		mpmod_qmark $n swordcottage v1 = 5
+		mpechoat $n $I¨­¤W±¼¥X¤F¤@Áû¯]¤l¡I
+		mpoload 64134 36
+	endif
+~
+|
+#64109
+learner~
+§Ì¤l(learner)~
+¤@¦W§Ì¤l(Learner)¦b³o¸Ì§V¤O½m¼C¡C
+~
+³o¦W§Ì¤l§V¤Oªº±N®v¤÷¶Ç±Âªº¼Cªk¤£Â_½m²ß¡C
+~
+1|2|64|4096 8|32 800 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+S 13 10000
+S 41 10
+S 42 10
+S 43 10
+S 44 10
+P 8
+>greet_prog 100~
+	if is_qmark($n) == castsword
+		mpechoat $n $I§N§Nªº¬Ý¤F§A¤@²´¡AÀH§Y¤S°µ°_¥L¦Û¤vªº¨Æ¡C
+	else
+		mpechoat $n $I¦V§AÁù­Ó°`¡AÀH§Y¤S°µ°_¦Û¤vªº¨Æ¡C
+	endif
+~
+>fight_prog 30~
+storm
+mpnowait
+~
+|
+#64110
+maty~
+¹²¤H(Maty)~
+¤@¦W¹²¤H(maty)¦b³o¸Ì¤£Â_¥´±½µÛ¡C
+~
+¦W¼C¤s²øªº¹²¤H³£¬O¥Ñ²ø¥D¿Ë¦Û¬D¿ïªº¡A³q±`¤]·|¤@ÂI°ò¥»ªº¼Cªk¨¾¨­¡C
+~
+1|64|4096 8|32 800 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>death_prog 100~
+	if is_qmark($n) == swordcottage_killer
+		yell $n¦b¦W¼C¤s²øÀÝ±þµL¶dªü¡I
+	else
+		mpadd_all_qmark $n swordcottage_killer 50 0 0 65536|1048576 1
+	endif
+~
+|
+
+#64111
+maty~
+¹²¤H(Maty)~
+¤@­Ó¹²¤H(Maty)¥¿¦b³oÃä¦YªF¦è¡C
+~
+ÁöµM¥u¬O¤@¸J§N¶º¡A¥L¤]¦Yªº¬z¬z¦³¨ý¡C¨{¤l¤]
+¦³ÂI¾j¤F(Hungry)¡A­n¸ò¥L­n¨Ó¦Y¶Ü¡H
+~
+1|2|64|4096 8|32 800 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R human~
+C 1|8
+P 8
+>tick_prog 30~
+	mpecho $I¦Y¤F¨â¤f¸J¸Ìªº¶º¡A¤S°Ù¤F¤@¶ô§N¦×¡C
+~
+>talk_prog hungry~
+	if is_qmark($i) != swordcottage_rice
+		if is_qmark($n) == castsword
+			say ºuºuºu¡I§Ú­Ì³o¨SªF¦èµ¹Å±¼C¨¦ªº¤H¦Y¡I
+		else
+			say ®³¥h®³¥h¡A§O¦A·Ð§Ú¤F
+			mpechoat $n $I¶ëµ¹§A¤@¸J§N¶º¡C
+			mpechoaround $n $I¶ëµ¹$n¤@¸J§N¶º¡C
+			mpoload 64162 $n viclv target
+			mpadd_qmark $i swordcottage_rice 10 0 0 0 0
+		endif
+	else
+		say ¦Aµ¹§Ú¦Û¤v³£¤£°÷¦Y¤F¡I
+		curse
+	endif
+~
+>fight_prog 20~
+	say ¬Ý©Û¡I
+	flaming
+	mpnowait
+~
+|
+
+#64120
+chiao-swordcottage~
+µë(Chiao)~
+¤@°¦µëÀs(Chiao)¦b³oÃä¥|³B´å°Ê¡C
+~
+µëÀs¹³³D¡A¥i¬O«o¦³¥|¨¬¡A¤pÀY²ÓÀV¡A¯à§]¤H¡C¶Ç»¡¦À¶í
+ªº³½º¡¤T¤d¤»¦Ê±ø¡A«hµë¨Ó¬°¤§ªø¡A¨£¤H¥ý¥H²C¤ô°g´b¡A
+¦A¥[¥H¸É­¹¡A¨Ï¤H¦åºÉ¦Ó¤`¡C
+~
+1|64|128 1|2|8|32|64|128|2097152|17179869184 -500 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8|65536|1048576 1
+R dragon~
+C 1|32
+P 4|8|64
+S 13 30000
+S 41 50
+S 42 50
+S 43 40
+S 44 40
+>greet_prog 100~
+if is_inv_obj($n) == 64134
+	mpechoat $n µëÀs¦ü¥G¨nµÛ§A¨­¤W¬Y­ÓªF¦è²rÁ@¡C
+	mpechoaround $n µëÀs¤£Â_ªº¨nµÛ$n¡A¬O¥´ºâ¦Y¤F¥L¶Ü¡H
+else
+	if is_qmark($n) == swordcottage 200001
+		mpechoat $n $IµÛ«æªº¥|³B´å°Ê¡A¦ü¥G¦bªþªñ´M§ä¤°»ò...
+		mpechoaround $n $N¦n¹³µo²{$I¤@¨Ç©_©ÇªºÁ|°Ê...
+		mpechoat $n ­n¥ý¦^¥h°Ý°ÝÁ`ºÞ¶Ü¡H(strange)
+		mpmod_qmark $n swordcottage v1 = 2
+	else
+		mpecho µëÀs¦b³o¸Ì¨ì³B´å°ÊµÛ¡C
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	mpecho $I¦º«eµo¥X©_©Çªº§q¥s¡I
+	c 'frost breath' $n
+if is_qmark($n) == swordcottage 200002
+	mpmod_qmark $n v1 = 3
+	mpechoat $n §AÄ±±o¥i¥H¥h¦VÁ`ºÞ¦^³ø¤F¡C
+endif
+~
+>give_prog 64134~
+	if is_qmark($n) == swordcottage 200005
+		mpechoat $n µëÀs°ª¿³ªº¦b§A¨­®Ç´å¨Ó´å¥h¡C
+		mpechoaround $n µëÀs¦b$nªº¨­Ãä´å¨Ó´å¥h¡A¬Ý¨Ó¬O¨M©w¦n¤µ¤Ñªº±ßÀ\¤F¡I
+		mpmod_qmark $n swordcottage v1 = 6
+		mpechoat $n µëÀs¦V§AÂI¤FÂIÀY¡A«K±aµÛ©]©ú¯]®ø¥¢¦b´òªº²`³B...
+		mpechoaround $n µëÀs¦V$nÂI¤FÂIÀY¡A²ö«D$n¾Ç¤F¹¥Ã~³N¤£¦¨¡H¡I
+		mpechoat $n §Aªºµ½¦æ±o¨ì¼C¯«KentionªºÆg½à¡C
+		mpechoaround $n $nªº¨­¤WÀôÂ¶µÛ²§¼Ëªº¥ú½÷...
+		mpsillkexp $n 50000
+		mpresp $n 1
+		mpechoat $n §Ö¥h¸òÁ`ºÞ¦^³ø§a¡I
+		mppurge self
+	else
+		mpechoat $n µëÀs¹ï§A·n¤F·nÀY¡A¦ü¥G»¡³o¤£¬O¥LªºªF¦è...
+		mpechoaround $n µëÀs¦V$n·n¤F·nÀY¡A²ö«D$n¾Ç¤F¹¥Ã~³N¤£¦¨¡H¡I
+	endif
+~
+>fight_prog 10~
+	if is_level($n) < 39
+		mpechoat $n $I¦V§A¦R¥X¤j¶qªº³èªj¡I§AÄ±±o©ü©ü±ýºÎ...
+		mpechoaround $n $N¦ü¥G³Q$Iµ¹°g´b¤F...
+		c 'charm pe' $n
+		mpnowait
+		mpforce $n follow chiao-swordcottage
+	else
+		mpechoat $n $I¦V§A¦R¥X¤j¶qªº³èªj¡I¦ý¬O¹ï§A¦ü¥G¨S¦³¤°»ò¼vÅT¡I
+	endif
+~
+>fight_prog 30~
+	c 'frost breath' $n
+	mpnowait
+~
+>fight_prog 40~
+	c 'gas breath' $n
+	mpnowait
+~
+>fight_prog 20~
+	$I©¿µM¦V§A²r§ð¦Ó¨Ó¡I
+	fre
+	mpnowait
+~
+|
+#64130
+Ghost~
+Å^¾y(Ghost)~
+Å^¾y(Ghost)­YÁô­Y²{ªºº}¯B¦b³o¸Ì
+~
+¤Ñ¦a¶¡ªº¨Æª«¦b¸g¾ú¹L¤@¬q®É¶¡ªº¬~Â§«á³£¦³¥i¯àÅÜ¦¨³oºØ¤p©Çª«¡C
+~
+1|2|4 0 -200 S
+40 0 0 0d0+100 0d0+-100
+10000 0
+0 8 0
+R Ghost~
+#64131
+Ghost~
+ÃSÃR(Ghost)~
+ÃSÃR(Ghost)¥¿¥Î¤p¤pªº²´·ú¬ÝµÛ§A
+~
+¦p¦PÅ^¾y¤@¼Ë¡A¤£¹L³o­Ó¤p©Çª«¦ü¥G¤ñ¸û¦n©_...¡C
+~
+1|2|4 0 -200 S
+40 0 0 0d0+-100 0d0+100
+10000 0
+0 8 0
+R Ghost~
+#64132
+zombie~
+íL«Í(zombie)~
+íL«Í(Zombie)¦b³o¸Ì´M§ä¬¡¤Hªº®ð®§
+~
+¬Ý¨Ó¥¦«K¬O²ø¤ºÁÁ¶Çªº©Çª«¤F¡A²¦³º¦s¼C«ÇÅf²HµL¥ú¡A¤S
+¥Rº¡³±®ð¡A»ø«Í©Î³\¬O±q­þ­Ó¦a¤è¯}Àð¦Ó¤J¡A´N¯d¦b³o¸Ì
+¤F§a¡C¥J²Ó¤@¬Ý¡A¥Lªº¼L¨¤ÁÙ¯dµÛ¨Ç³\ÂA¦å¡A¬O¤£¬O¤£¤[
+¥H«e¤~§l¹L¦å©O¡H
+~
+1|2|32|64|2048|8192|1048576 8|32|4096 -1000 S
+48 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R undead~
+S 13 30000
+S 17 100
+S 18 10
+S 19 10
+S 41 50
+S 42 50
+S 43 40
+S 44 40
+>fight_prog 20~
+	fre
+	mpnowait
+~
+>fight_prog 30~
+	feed
+	mpnowait
+	feed
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == swordcottage 300002
+		mpforcer here modrvt v0 = 1
+		mpechoat $n $I¤@­Ë¤U¡A¼²¯}¤F©Ð¶¡¦aªOªº¤@¨¤¡C
+	else
+		mload 64164 1 floor
+		mpechoat $n $IªºÀY³Q§A¬å¤F¤U¨Ó¡I
+	endif
+~
+|
+#64133
+Swordman-swordcottage-fight~
+¼C«È(Swordman)~
+¼C«È(Swordman)¦b³o¸Ì´M§ä¯à¥æ¤âªº¹ï¶H¡C
+~
+¥L²{¦b¦b¦W¼C¤s²ø§@«È¡A¦P®É¦b¤s²ø¤º»P¨ä¥L³X«È¤Á½R¼C§Þ¡A
+­n¹Á¸Õ»P¥L²á²á¶Ü¡H
+~
+1|64|2048|4096 8|32 1000 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+S 13 30000
+S 41 30
+S 42 30
+S 43 30
+S 44 30
+P 8
+>talk_prog topic~
+	mpechoat $n $I¥J²Óªº¥´¶q§A
+	tell $n ¬Ý°_¨Ó±z¦ü¥G¦³¨Çµ´¬¡¡A­n¤£­n»P§Ú¤Á½R¤Á½R©O¡H
+	mpechoat $n ¦nªü¡A¨º´N¸Õ¸Õ¬Ý§a(try it) 
+	mpechoat $n ¤µ¤Ñ¤£¤Ó¾A¦X¡A©êºp(sorry)
+~
+>talk_prog p try it~
+	say ¨º½Ð¤p¤ß¡A§Ú­n¶i§ð¤F¡I
+	mpkill $n
+~
+>talk_prog sorry~
+	say ¦nªº¡A¥çµL§«¡A§Æ±æ¤U¦¸ÁÙ¦³¾÷·|»P§A¥æ¤â¡C
+	bow $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say «z¡I§Ú³Q¥´±Ñ¤F¡I
+mpgreward exp $n 38 2000
+mpmload 64134
+mpforce Swordman-swordcottage-calm say ÁÂÁÂ§Aªº«ü±Ð¡A§Ú­n¦A·Q·Q§Ú§Þ¥©ªº¯Ê³´¡C
+mpforce Swordman-swordcottage-calm bow $n
+mpgoto 5
+mppurge self
+~
+>fight_prog 20~
+wear sword
+say ¬Ý§Úªº±Û­·¼C¡I
+storm
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+|
+#64134
+Swordman-swordcottage-calm~
+¼C«È(Swordman)~
+¼C«È(Swordman)¦b³o¸Ì«ä¯Á¦Û¤v§Þ¥©ªº¯Ê³´¡C
+~
+¥L²{¦b¦b¦W¼C¤s²ø§@«È¡A¦P®É¦b¤s²ø¤º»P¨ä¥L³X«È¤Á½R¼C§Þ¡A
+¦ý¦]¬°­è¤~¤@¾Ô¥¢±Ñ¹L¡A²{¦b¥¿¦b«ä¯Á¦Û¤vªº¼C§Þ¯Ê³´¡C
+~
+1|64|2048|4096 8|32 1000 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+S 13 25000
+C 1|8
+P 8
+>talk_prog topic~
+	tell $n §A¦n¡A¥i¥HÅý§Ú¤@­Ó¤HÀR¤@ÀR¶Ü¡H
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say «z¡I§ÚÁÙ¨S·Q³q¦Û¤vªº§Þ¥©¯Ê³´ªü¡I
+~
+>fight_prog 20~
+wear sword
+say ¬Ý§Úªº±Û­·¼C¡I
+storm
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>tick_prog 10~
+	mpecho $IÅS¥X­Y¦³©Ò«äªº¼Ë¤l¡A¦A«×±N¼C´¤¦b¤â¤W¡I
+	mpmload 64133
+	mpgoto 5
+	mpppurge self
+~
+|
+#64135
+SwordWoman-swordcottage-fight~
+«L¤k(SwordWoman)~
+«L¤k(SwordWoman)¦b³o¸Ì§ä´M¥æ¤âªº¹ï¶H¡C
+~
+¦o²{¦b¦b¦W¼C¤s²ø§@«È¡A¦P®É¦b¤s²ø¤º»P¨ä¥L³X«È¤Á½R¼C§Þ¡A
+§O¬Ý¦o¬O¤k©Ê¡A¼C§Þ¤´µM¬Û·íºë´ï¡C
+~
+1|64|2048|4096 8|32 1000 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+S 13 14000
+S 41 16
+S 42 17
+S 43 17
+S 44 18
+P 8
+>talk_prog topic~
+	mpechoat $n $I¥J²Óªº¥´¶q§A
+	tell $n ±z¦ü¥G¤]¬O­Ó²ßªZ¤§¤H¡A¯à§_»P§Ú¤¬¬Û¤Á½R©O¡H
+	mpechoat $n ¦nªº¡A¨º´N¸Õ¸Õ¬Ý§a(try it) 
+	mpechoat $n ¤µ¤Ñ¤£¤Ó¾A¦X¡A©êºp(sorry)
+~
+>talk_prog p try it~
+	say ¨º½Ð¤p¤ß¡A§Ú­n¶i§ð¤F¡I
+	mpkill $n
+~
+>talk_prog sorry~
+	say ½Ð¤£­n¦b·N¡A§Æ±æ¤U¦¸ÁÙ¦³¾÷·|»P§A¥æ¤â¡C
+	bow $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say «z¡I¨S·Q¨ì§ÚÁÙ¬O¿é¤F¡I
+mpgreward exp $n 38 2000
+mpmload 64136
+mpforce Swordwoman-swordcottage-calm say ÁÂÁÂ§Aªº±Ð¾É¡A§Ú­n¦b·Q·Q¡C
+mpforce Swordwoman-swordcottage-calm bow $n
+mpgoto 5
+mppurge self
+~
+>fight_prog 20~
+wear sword
+say ¬Ý§Úªº¤õµK¼C¡I
+flaming
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>rand_prog 5~
+	mpecho $IÅS¥X­Y¦³©Ò«äªº¼Ë¤l¡A¦A«×±N¼C´¤¦b¤â¤W¡I
+	mpmload 6413
+	mpgoto 5
+	mpppurge self
+~
+|
+#64136
+SwordWoman-swordcottage-calm~
+«L¤k(SwordWoman)~
+«L¤k(SwordWoman)¦b³o¸Ì­Y¦³©Ò«ä¡C
+~
+¦o²{¦b¦b¦W¼C¤s²ø§@«È¡A¦P®É¦b¤s²ø¤º»P¨ä¥L³X«È¤Á½R¼C§Þ¡A
+¤è¤~¦ü¥G¿éµ¹¤F½Ö¡A¦o¥¿¦b«ä¦Ò¦p¦ó¬ð¯}¡C
+~
+1|64|2048|4096 8|32 1000 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>talk_prog topic~
+	tell $n ½ÐÅý§ÚÀR¤@ÀR¡C
+	sorry $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say ¦Aµ¹§Ú¤@ÂI®É¶¡...
+~
+>fight_prog 20~
+wear sword
+say ¬Ý§Úªº¤õµK¼C¡I
+flaming
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>tick_prog 15~
+	mpecho $IÅS¥X­Y¦³©Ò«äªº¼Ë¤l¡A¦A«×±N¼C´¤¦b¤â¤W¡I
+	mpmload 64135
+	mpgoto 5
+	mpppurge self
+~
+|
+#64137
+water Ghost~
+¤ô°­(Water Ghost)~
+¤ô°­(Ghost)­YÁô­Y²{ªºº}¯B¦b³o¸Ì
+~
+¥L¦ü¥G·Q§ä§A·í´À¦º°­¡I
+~
+1|4|32|64|128 8|32|65536|2097152|17179869184 -600 S
+40 0 0 0d0+100 0d0+-100
+10000 0
+0 8 0
+R Ghost~
+>fight_prog 30~
+	feed
+	mpnowait
+~
+|
+#64138
+chen-swordcottage chow-yu~
+³¯¬î«B(Chen Chow-yu)~
+«e¥ô²MªeÂíÂíªø³¯¬î«B(Chen Chow-yu)¦b³o¸Ì¨Ó¦^¿â¨B¡C
+~
+		¥L«K¬O¶Ç»D¤¤­·«BÂù«L¤§¤@ªº³¯¬î«B¡A¦Û±qÂ÷¶}²Mªe
+Âí«á¡A²{¦b¥L«È©~¦b¦W¼C¤s²ø¡A°¸º¸«üÂI«á½ú¼Cªk¡A»á¨ü
+«á½úÅwªï¡C
+~
+1|2|64|2048|4096 8|32|128 1000 S
+42 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>greet_prog 100~
+if is_inv_obj($n) == 64140
+	if is_qmark($n)==jd_liu 100005
+		mpechoat $n $I¤@¬Ý¨ì§A¨­¤Wªº¥ÉÃ¹º~¡AÀ~ªº­Ë°h¤T¨B¡I
+		mpcallout 1 tell $n §A¡I§A«ç»ò·|¦³³o­ÓªF¦è¡I
+		mpcallout 2 mpechoat $n Å¥¨ì³o¥y¸Ü¡A§A¤j·§²q¨ì¨Æ±¡ªº¤@¥b¤F...
+		mpcallout 2 tell $n ¨º¤@¼Cªº½T¨ë¤¤³o­Ó¥ÉÃ¹º~¡A¨ë¬ï¤F¥Lªº¯Ý¤f°Ú¡I
+		mpcallout 3 mpkill $n
+		mpcallout 3 wear sword
+		mpcallout 3 mpoload 64104
+		mpcallout 3 mpechoat $n $I©¿µM©Þ¥X¤@§â¼C´Â§A¨ë¨Ó¡I
+		mpcallout 3 say ¥i´c¡A¥u¦n±þ§A·À¤f¤F¡I
+	else
+		mpechoat $n $I¬Ý¨ì§A¨­¤Wªº°t¹¢¡AÅS¥X¤F¥j©Çªºªí±¡¡C
+	endif
+endif
+~
+>talk_prog topic~
+	tell $n ³á¡A­ì¨Ó¬O«È¤Hªü
+	mpechoat $n $I¹ï§A¯º¤F¯º¡C
+	tell $n Åwªï¨Ó¨ì¦W¼C¤s²øªü
+	mpechoat $n ¤£ª¾¹D¬°¤°»ò¡A§AÄ±±o¥L¯º°_¨Ó¦³ºØ³±®ð...
+~
+>death_prog 100~
+if is_qmark($n)==jd_liu 100005
+	yell ¶ã«z¡I¶³­·¡I¨S·Q¨ì§ÚÁÙ¬O³Q§Aªº«á¤H©Ò±þ¡I
+	mpmod_qmark $n jd_liu v0 = 6
+	mpechoat $n $I¦º«e±q¨­¤W±¼¥X¤@­Ó¯}ÂÂªº¥]µö¡C
+	mpechoat $n ·Q¥²¨º­Ó¥]µö´N¬O¬h¶³­·ªº¿òª«¡A§Ö®³¥hµ¹¬h·q©ú§a¡C
+	mpoload 11143 36 floor
+else
+	yell ¶ã«z¡I±þ¤H°Õ¡I
+endif
+~
+|
+#64150
+swordgod-SD kention-SD statue-SD~
+¼C¯«¹³(SwordGod Kention Statue)~
+¤@´L¼C¯«ªº¯«¹³(SwordGod Kention Statue)³QÂ\¦b³oÃä¡C
+~
+¥L¦n¹³¥i¥HÀ°§A¸Ñ¨M¤@¨Ç§x´b¡A­n¤£­n¹Á¸Õ°Ý¥L¤°»ò©O¡H
+~
+1|2|64|2048|4096 8|32|128 1000 S
+70 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+R god~
+>talk_prog topic~
+	if is_qmark($n) == swordcottage
+		mpechoat $n §A·Q¸ß°Ý­þ¤@¥ó¨Æ±¡¡H¡H
+			if is_qmark($n) >= swordcottage 200001
+				mpechoat $n Ãö©óµëÀs	-	(chiao)
+			endif
+			if is_qmark($n) >= swordcottage 300001
+				mpechoat $n Ãö©ó¾v¹¢	-	(hair dress)
+			endif
+			if is_qmark($n) >= jd_liu 100001
+				mpechoat $n Ãö©ó¤p¬h	-	(liu)
+			endif
+		mpechoat $n Ãö©ó¼C¯«	-	(Kention)
+	endif
+~
+>talk_prog kention~
+	mpechoat $n ¼C¯«Kention¬O³o­Ó°Ï°ìªº§@ªÌ¡A¥Ø«e¥¿¦b¸ú½Z¶Å¤¤¡C
+~
+>talk_prog chiao~
+		if is_qmark($n) == swordcottage 200000
+			mpechoat $n §A¸ò³o¥ó¨Æ²@µLÃö«Y¡C
+		endif
+		if is_qmark($n) == swordcottage 200001
+			mpechoat $n §A¤£¬O¸òÁ`ºÞ±µ¤U³o­Ó¥ô°È¤F¶Ü¡H§Ö¥h¥´­ËµëÀs§a¡C
+		endif
+			if is_qmark($n) == swordcottage 200002
+		mpechoat $n §A¬Ý¨ì¤FµëÀsªº¤ÏÀ³¡A¬O­n±þ±¼µëÀs¡AÁÙ¬O­n¥h§äÁ`ºÞ©O¡H
+			endif
+			if is_qmark($n) == swordcottage 200003
+		mpechoat $n §A¥´­ËµëÀs¤F¡A§Ö¥h¸òÁ`ºÞ¦^³ø§a¡C
+			endif
+		if is_qmark($n) == swordcottage 200004
+			mpechoat $n §AÅ¥¨ì¤FÁ`ºÞ»¡ªº¶Ç¨¥¡A¥h½Õ¬d¤@¤U§a¡C
+		endif
+		if is_qmark($n) == swordcottage 200005
+			mpechoat $n §A¸òªø¤u¶R¨ì¤FÄ_ª«¤£¬O¶Ü¡H
+		endif
+  	if is_qmark($n) == swordcottage 200006
+			mpechoat $n §A¶êº¡¸Ñ¨M³o¥ó¨Æ¤F¡A§Ö¥h§äÁ`ºÞ§a¡C
+		endif
+		if is_qmark($n) == swordcottage 200007
+			mpechoat $n §A§â³o¥ó¨Æ¸Ñ¨M¤F¡C
+		endif
+	endif
+~
+>talk_prog p hair dress~
+	if is_qmark($n) == swordcottage 300000
+		mpechoat $n §A¸ò³o¥ó¨Æ²@µLÃö«Y¡C
+	endif
+	if is_qmark($n) == swordcottage 300001
+		mpechoat $n ²ø¥DªºªF¦è±¼¤F¡A¸ò¥L¦h°Ý¤@¨Ç±¡³ø§a¡C
+	endif
+	if is_qmark($n) == swordcottage	300002
+		mpechoat $n À°²ø¥D§ä¦^¾v¹¢§a¡C
+	endif
+	if is_qmark($n) == swordcottage 300003
+		mpechoat $n ³£§ä¦^¨Ó¤F¡A´NÁÙµ¹²ø¥D§a¡C
+	endif
+	if is_qmark($n) == swordcottage 300004
+		mpechoat $n §A§â³o¥ó¨Æ¸Ñ¨M¤F¡C
+	endif
+~
+>talk_prog liu~
+	if is_qmark($n) != jd_liu
+		mpechoat $n §A¸ò³o¥ó¨Æ²@µLÃö«Y¡C
+	if is_qmark($n) == jd_liu 100001
+		mpechoat $n §A¤£¬O­è±µ¤U¥ô°È¶Ü¡H§Ö¥h§ä²ø¥D§a
+	if is_qmark($n) == jd_liu 100002
+		mpechoat $n §AµªÀ³²ø¥D¥h§ä¿ò®Ñ¡A§Ö¥h§a
+	if is_qmark($n) == jd_liu 100003
+		mpechoat $n §A§ä¨ì«H¤F¡A§Ö®³¥hµ¹²ø¥D»P¤p¬h§a
+	if is_qmark($n) == jd_liu 100004
+		mpechoat $n ¤p¬hµ¹§A«Hª«¤F¡A§Ö¥h§ä²ø¥D°Ý¬î«Bªº¤U¸¨§a
+	if is_qmark($n) == jd_liu 100005
+		mpechoat $n ²ø¥D§i¶D§A¬î«B¥i¯àªº¸úÂÃ³B¡A¥h¥´­Ë¥L§a
+	if is_qmark($n) == jd_liu 100006
+		mpechoat $n §A¥´­Ë¬î«B¤F¡A§Ö§â¿òª«¥æµ¹¤p¬h§a
+	if is_qmark($n) == jd_liu 100007
+		mpechoat $n §A¤w¸g§¹¦¨¥ô°È¤F¡C
+	endif
+~
+|
+#0
+
+#OBJECTS
+#64100
+chu tin sword-jdsword~
+[1;34mÅ±³»¼C[0m(chu tin sword)~
+¤@¬`¨I­«ªº¥¨¼C(Sword)³Q´¡¦b³oÃäªº¦a¤W¡C~
+~
+5 1|2|64|256|16777216 1|32768
+200~ 40~ 50~ 3~
+50 0 0
+E
+chu~
+¶Ç»D¦W¦K¼Ú§M¤l¦b¤s¤W´M§äÄq§÷¡AµL·N¶¡µo²{¥¨¤jªºª÷ÄÝ¡A©ó¬O
+±N¾ã¶ôª÷ÄÝÀJµZ¥´¿i¦¨¼C¡A¦p¦P¥ÈÄ¬¼C¤@¯ë¼C¨­º£¶Â¡A­«¶q«o¸û
+¥ÈÄ¬¼C­«¤W¤Q­¿¡A¥þªø¦@¤»§`¤­¦T¡A´§»R³o§â¥¨¼C¯à¯}¤sµõ¥Û¡A
+«á¬°Å±¼C¥Í¦C¬°¤C¤j¦W¼C¤§¤@¡C
+~
+E
+tin~
+¶Ç»D¦W¦K¼Ú§M¤l¦b¤s¤W´M§äÄq§÷¡AµL·N¶¡µo²{¥¨¤jªºª÷ÄÝ¡A©ó¬O
+±N¾ã¶ôª÷ÄÝÀJµZ¥´¿i¦¨¼C¡A¦p¦P¥ÈÄ¬¼C¤@¯ë¼C¨­º£¶Â¡A­«¶q«o¸û
+¥ÈÄ¬¼C­«¤W¤Q­¿¡A¥þªø¦@¤»§`¤­¦T¡A´§»R³o§â¥¨¼C¯à¯}¤sµõ¥Û¡A
+«á¬°Å±¼C¥Í¦C¬°¤C¤j¦W¼C¤§¤@¡C
+~
+E
+sword~
+¶Ç»D¦W¦K¼Ú§M¤l¦b¤s¤W´M§äÄq§÷¡AµL·N¶¡µo²{¥¨¤jªºª÷ÄÝ¡A©ó¬O
+±N¾ã¶ôª÷ÄÝÀJµZ¥´¿i¦¨¼C¡A¦p¦P¥ÈÄ¬¼C¤@¯ë¼C¨­º£¶Â¡A­«¶q«o¸û
+¥ÈÄ¬¼C­«¤W¤Q­¿¡A¥þªø¦@¤»§`¤­¦T¡A´§»R³o§â¥¨¼C¯à¯}¤sµõ¥Û¡A
+«á¬°Å±¼C¥Í¦C¬°¤C¤j¦W¼C¤§¤@¡C
+~
+A
+18 -8
+A
+19 20
+A
+43 10
+X obsidian~
+
+#64101
+sword gen shi~
+[1;33mÃF¹z¼C[0m(Sword of gen shi)~
+¤@§âªxµÛ¶À¦â¥ú«Gªºµu¼C(Sword)³Q©ñ¦b³oÃä¡C~
+~
+5 1|2|64|256|1024|65536|16777216 1|8192
+80~ 5~ 15~ 3~
+1 0 0
+E
+gen~
+¶Ç»¡ÃF¹z¨ã¦³±Ù±þ§¯Å]ªº¤O¶q¡A¼Ú§M¤l´N®Ú¾Ú³o¶µ¶Ç»¡¡A¹B¥Îµ}¦³
+ªºÀs°©²V¦X¶À»É¡A»s§@¥X¤F§¯Å]©Ò¬ÈÄßªºÃF¹z¼C¡A¨Ã¥B¥HÀs¦å¦b¨ä
+¤W¼g¤W©G¤å¡A±N°£Å]ªº¤O¶q«Ê¦b¼C¤¤¡CÃF¹z¼C¥»¨­²Óµu¡A§Ï©»¤P­º
+¤@¯ë¡A¦ý¼C¨­«oÁôÁô³zÅS¥X¤@ºØÀ£¾z¤O¡C
+~
+E
+shi~
+¶Ç»¡ÃF¹z¨ã¦³±Ù±þ§¯Å]ªº¤O¶q¡A¼Ú§M¤l´N®Ú¾Ú³o¶µ¶Ç»¡¡A¹B¥Îµ}¦³
+ªºÀs°©²V¦X¶À»É¡A»s§@¥X¤F§¯Å]©Ò¬ÈÄßªºÃF¹z¼C¡A¨Ã¥B¥HÀs¦å¦b¨ä
+¤W¼g¤W©G¤å¡A±N°£Å]ªº¤O¶q«Ê¦b¼C¤¤¡CÃF¹z¼C¥»¨­²Óµu¡A§Ï©»¤P­º
+¤@¯ë¡A¦ý¼C¨­«oÁôÁô³zÅS¥X¤@ºØÀ£¾z¤O¡C
+~
+E
+sword~
+¶Ç»¡ÃF¹z¨ã¦³±Ù±þ§¯Å]ªº¤O¶q¡A¼Ú§M¤l´N®Ú¾Ú³o¶µ¶Ç»¡¡A¹B¥Îµ}¦³
+ªºÀs°©²V¦X¶À»É¡A»s§@¥X¤F§¯Å]©Ò¬ÈÄßªºÃF¹z¼C¡A¨Ã¥B¥HÀs¦å¦b¨ä
+¤W¼g¤W©G¤å¡A±N°£Å]ªº¤O¶q«Ê¦b¼C¤¤¡CÃF¹z¼C¥»¨­²Óµu¡A§Ï©»¤P­º
+¤@¯ë¡A¦ý¼C¨­«oÁôÁô³zÅS¥X¤@ºØÀ£¾z¤O¡C
+~
+A
+40 2
+A
+44 5
+A
+17 -10
+A
+41 -10
+X dragon bone~
+
+#64102
+sword devil winner~
+[1;37m³Ó¨¸¼C[0m(Sword of devil winner)~
+¤@§â³zµÛ»È¥úªº¼C(Sword)³Q©ñ¦b³oÃä¡C~
+~
+5 1|2|64|256|1024|65536|16777216 1|8192
+150~ 5~ 15~ 3~
+20 0 0
+E
+sword~
+¼Ú§M¤l½a¨ä¤@¥ÍÅ±¼C¡A¦ý¬O¥L¥Í«e±`»¡¡A¥Í¥­³Ìº¡·Nªº´N¬O³o§â³Ó
+¨¸¼C¡A¬JµM¦W¬°³Ó¨¸¡A³o§â¼C¤]´N´¿¦b¼C«È¤â¤W±Ù§¯µL¼Æ¡A¼C¨­µ§
+®¼¥Bªø¡A¼C¾W¦y¾U¡A¦ü¥G¥i¥H±ÙÂ_©Ò¦³ªºªF¦è¤@¯ë¡C«á¨Ó³QÅ±¼C¥Í
+µû¬°¤C¤j¦W¼C¤§¤@¡C
+~
+E
+devil~
+¼Ú§M¤l½a¨ä¤@¥ÍÅ±¼C¡A¦ý¬O¥L¥Í«e±`»¡¡A¥Í¥­³Ìº¡·Nªº´N¬O³o§â³Ó
+¨¸¼C¡A¬JµM¦W¬°³Ó¨¸¡A³o§â¼C¤]´N´¿¦b¼C«È¤â¤W±Ù§¯µL¼Æ¡A¼C¨­µ§
+®¼¥Bªø¡A¼C¾W¦y¾U¡A¦ü¥G¥i¥H±ÙÂ_©Ò¦³ªºªF¦è¤@¯ë¡C«á¨Ó³QÅ±¼C¥Í
+µû¬°¤C¤j¦W¼C¤§¤@¡C
+~
+E
+winner~
+¼Ú§M¤l½a¨ä¤@¥ÍÅ±¼C¡A¦ý¬O¥L¥Í«e±`»¡¡A¥Í¥­³Ìº¡·Nªº´N¬O³o§â³Ó
+¨¸¼C¡A¬JµM¦W¬°³Ó¨¸¡A³o§â¼C¤]´N´¿¦b¼C«È¤â¤W±Ù§¯µL¼Æ¡A¼C¨­µ§
+®¼¥Bªø¡A¼C¾W¦y¾U¡A¦ü¥G¥i¥H±ÙÂ_©Ò¦³ªºªF¦è¤@¯ë¡C«á¨Ó³QÅ±¼C¥Í
+µû¬°¤C¤j¦W¼C¤§¤@¡C
+~
+A
+43 10
+A
+1 1
+A
+18 5
+A
+19 5
+X platinum~
+
+#64103
+gen chin sword~
+[1;35m¯Â¶v¼C[0m(Chin gen sword)~
+¯Â¶v¼C(Chin gen sword)³Q´¡¦b³oÃäªº¦a¤W~
+~
+5 1|2|64|256|1024|65536|16777216 1|8192
+150~ 80~ 90~ 3~
+120 0 0
+E
+gen~
+ÄY®æ¨Ó»¡¡A¯Â¶v¼C¨Ã¤£¬O¼Ú§M¤l¥´³yªº¡A¼Ú§M¤l¥u¬O±N¤s¤W¤@¶ô
+»Å¦ü¼C«¬ªº¥Û¶ô·h¤U¤s«áµy·L¿iÅ±¦Ó¦¨¡A¦]¬°§÷®Æ³æ¯Â¡A¾ã§â¼C
+ªºÃC¦â¤@Åé¦¨«¬¡A»PÅ±³»¼C«D±`Ãþ¦ü¡A¦ý¸ûÅ±³»¼C§ó­«¦Ó¶w¡A«á
+¨Ó³QÅ±¼C¥Íµû¬°¤C¤j¦W¼C¤§¤@¡C
+~
+E
+chin~
+ÄY®æ¨Ó»¡¡A¯Â¶v¼C¨Ã¤£¬O¼Ú§M¤l¥´³yªº¡A¼Ú§M¤l¥u¬O±N¤s¤W¤@¶ô
+»Å¦ü¼C«¬ªº¥Û¶ô·h¤U¤s«áµy·L¿iÅ±¦Ó¦¨¡A¦]¬°§÷®Æ³æ¯Â¡A¾ã§â¼C
+ªºÃC¦â¤@Åé¦¨«¬¡A»PÅ±³»¼C«D±`Ãþ¦ü¡A¦ý¸ûÅ±³»¼C§ó­«¦Ó¶w¡A«á
+¨Ó³QÅ±¼C¥Íµû¬°¤C¤j¦W¼C¤§¤@¡C
+~
+E
+sword~
+ÄY®æ¨Ó»¡¡A¯Â¶v¼C¨Ã¤£¬O¼Ú§M¤l¥´³yªº¡A¼Ú§M¤l¥u¬O±N¤s¤W¤@¶ô
+»Å¦ü¼C«¬ªº¥Û¶ô·h¤U¤s«áµy·L¿iÅ±¦Ó¦¨¡A¦]¬°§÷®Æ³æ¯Â¡A¾ã§â¼C
+ªºÃC¦â¤@Åé¦¨«¬¡A»PÅ±³»¼C«D±`Ãþ¦ü¡A¦ý¸ûÅ±³»¼C§ó­«¦Ó¶w¡A«á
+¨Ó³QÅ±¼C¥Íµû¬°¤C¤j¦W¼C¤§¤@¡C
+~
+A
+18 -10
+A
+19 10
+X basalt~
+
+#64104
+sword dragon spring~
+Às¬uÄ_¼C(Sword of Dragon spring)~
+¤@§â¨èµÛÀs¯¾ªº¼C(Sword)³Q©ñ¦b³oÃä¡C~
+~
+5 1|2|64|256|16777216 1|8192
+120~ 0~ 0~ 3~
+10 0 0
+A
+18 5
+A
+19 5
+A
+1 -1
+
+#64110
+bamboo~
+¦Ë¤l(Bamboo)~
+¤@®Ú¦Ë¤l(Bamboo)³Q´¡¦b³o¸Ì¡D~
+~
+5 1|2|256|1024 1|8192
+20~ 0~ 0~ 3~
+10 20 0
+A
+2 1
+A
+18 2
+A
+19 -1
+X wooden~
+
+
+#64111
+Cloth~
+¥¬¦ç(Cloth)~
+¤@¥ó¥¬¦ç(Cloth)³Q¥á¦b³o¸Ì¡C~
+~
+9 0 1|8
+0~ 0~ 40~ 0~
+8 200 0
+E Cloth~
+¤@¥ó´¶³qªº¥¬¦ç¡C
+~
+A
+17 -5
+X Cloth~
+
+#64112
+Silk Cloth~
+µ·¦ç(Silk Cloth)~
+¤@¥ó¤â¤u»s¦¨ªºµ·¦ç(Silk Cloth)³Q©ñ¦b³o¸Ì¡C~
+~
+9 0 1|8
+0~ 0~ 64~ 0~
+5 500 0
+E
+Silk~
+³o¤@¥ó¦çªAªº½è·P¬Û·íªº¦n¡AÀ³¸Ó¬O¥Î°ª¯ÅªºÅúµ·§@¦¨ªº¡C
+~
+E
+Cloth~
+³o¤@¥ó¦çªAªº½è·P¬Û·íªº¦n¡AÀ³¸Ó¬O¥Î°ª¯ÅªºÅúµ·§@¦¨ªº¡C
+~
+A
+40 1
+A
+17 10
+X Fiber~
+
+#64113
+Boots~
+¥¬¹u(Boots)~
+¤@Âù¥¬¹u(Boots)³Q©ñ¦b³o¸Ì¡C~
+~
+9 0 1|64
+0~ 0~ 80~ 0~
+5 100 0
+E Boots
+¤@Âù«Ü´¶³qªº¥¬»s¹u¤l¡C
+~
+A
+17 -8
+X Cloth~
+
+#64114
+pink cloth~
+¯»¬õ¦â¥~¦ç(Pink cloth)~
+¤@¥ó¯»¬õ¦âªº¤k©Ê¤º¦ç(Pink Cloth)³Q©ñ¦b³oÃä~
+~
+9 0 1|8
+0~ 0~ 50~ 0~
+1 0 0
+A
+6 2
+X fiber~
+
+#64115
+underwear-white~
+¯Â¥Õ¦â¤º¦ç(Underwear)~
+¤@¥ó¯Â¥Õ¦âªº¤k©Ê¤º¦ç(underwear)³Q©ñ¦b³oÃä~
+~
+9 0 1|8
+0~ 0~ 50~ 0~
+1 0 0
+X fiber~
+A
+17 30
+A
+39 -20
+
+#64116
+cloth~
+°¨»o(cloth)~
+¤@¥ó¶Â¦âªº°¨»o(Cloth)³Q©ñ¦b³oÃä~
+~
+9 0 1|8
+0~ 0~ 70~ 0~
+7 0 0
+X fiber~
+A
+17 -20
+
+#64117
+Long Gwon~
+ªø³T(Long Gwon)~
+¤@¥óªø³T(Long Gwon)³Q©ñ¦b³oÃä~
+~
+9 4194304 1|8
+0~ 0~ 80~ 0~
+5 0 0
+E
+long~
+¤@¥ó¤â¤uºë¬üªº¨k¥Îªø³T¡C
+~
+E
+Gwon~
+¤@¥ó¤â¤uºë¬üªº¨k¥Îªø³T¡C
+~
+X Fiber~
+
+#64118
+Clean Forst Sword~
+«CÁ÷¼C(Clean Forst Sword)~
+¤@§â¬Û·í¾U§Qªº¼C(Sword)³Q©ñ¦b³o¸Ì¡C~
+~
+5 1|2|256|1024 1|8192
+120~ 0~ 0~ 3~
+10 2000 0
+E
+Clean~
+¦ÑÅK¦K¹B¥Î¤s¤WªºÁ÷¤ô©Ò¥´³y¦Ó¦¨ªº¼C¡C
+~
+E
+Forst~
+¦ÑÅK¦K¹B¥Î¤s¤WªºÁ÷¤ô©Ò¥´³y¦Ó¦¨ªº¼C¡C
+~
+E
+Sword~
+¦ÑÅK¦K¹B¥Î¤s¤WªºÁ÷¤ô©Ò¥´³y¦Ó¦¨ªº¼C¡C
+~
+A
+18 6
+A
+19 8
+A
+3 1
+X Emerald~
+
+#64119
+wood sword~
+¤ì¼C(Wood Sword)~
+¤@§â¤ì¼C(Wood Sword)³Q©ñ¦b³oÃä¡C~
+~
+5 0 1|8192
+50~ 0~ 0~ 3~
+3 200 0
+A
+1 1
+L 1
+X wood~
+
+#64120
+iron sword~
+ÅK¼C(Iron Sword)~
+¤@§âÅK¼C(Iron Sword)³Q©ñ¦b³oÃä¡C~
+~
+5 1 1|8192
+70~ 0~ 0~ 3~
+10 2000 0
+A
+18 3
+A
+19 3
+X iron~
+
+#64121
+Long Gwon~
+¶Â¦âªø³T(Long Gwon)~
+¤@¥ó¶Â¦âªø³T(Long Gwon)³Q©ñ¦b³oÃä~
+~
+9 4194304 1|8
+0~ 0~ 80~ 0~
+5 0 0
+E
+long~
+¤@¥ó¤â¤uºë¬üªº¨k¥Î¶Â¦âªø³T¡C
+~
+E
+Gwon~
+¤@¥ó¤â¤uºë¬üªº¨k¥Î¶Â¦âªø³T¡C
+~
+X Fiber~
+
+#64130
+moon art glass~
+[1;36m¯[¼þ¤ë¹¢[0m(Art glass of moon)~
+¤@­Ó¤W©¶¤ë¥~«¬ªº¹¢«~(Art glass)³Q©ñ¦b³oÃä¡C~
+~
+9 1|64|256 1|4|16384
+0~ 0~ 30~ 0~
+1 30000 0
+E
+moon~
+³o¬O¤@­Ó¥Î¯[¼þ»s¦¨ªº¶µÁå¡A¯[¼þªº¦â±mÅý¾ã
+­Ó¶µÁå³£´²µo¥X¤£¦Pªº¥ú«G¡C
+~
+E
+art~
+³o¬O¤@­Ó¥Î¯[¼þ»s¦¨ªº¶µÁå¡A¯[¼þªº¦â±mÅý¾ã
+­Ó¶µÁå³£´²µo¥X¤£¦Pªº¥ú«G¡C
+~
+E
+glass~
+³o¬O¤@­Ó¥Î¯[¼þ»s¦¨ªº¶µÁå¡A¯[¼þªº¦â±mÅý¾ã
+­Ó¶µÁå³£´²µo¥X¤£¦Pªº¥ú«G¡C
+~
+A
+40 2
+A
+44 7
+A
+3 1
+A
+5 -1
+X crystal~
+
+#64131
+Water bracer~
+¦b¤ô¤@¤è(Water bracer)~
+¤@­Ó²LÂÅ¦âªºÅ@µÃ(bracer)³Q©ñ¦b³o¡C~
+~
+9 1|2|256 1|4096
+0~ 0~ 60~ 0~
+5 20000 0
+A
+1 1
+A
+19 3
+A
+5 -2
+X ice~
+
+#64132
+chaio scale~
+µëÀsÅì(Chaio Scale)~
+¤@¶ô¥¨¤jªºµëÀsÅì¤ù(Chaio Scale)³Q©ñ¦b³oÃä¡C~
+~
+9 1|2|4|16|64|256|512 1|8
+0~ 0~ 60~ 0~
+40 20000 0
+A
+5 3
+A
+2 -1
+A
+17 -30
+A
+41 10
+X dragon scale~
+
+#64133
+chaio tooth~
+µëÀs¤ú(Chaio Tooth)~
+¤@®Ú¥¨¤jªºµëÀs¤ú¾¦(Chaio Tooth)³QÂ\¦b³oÃä¡C~
+~
+5 1|2|4|16|64|256|512 1|8192
+90~ 26~ 30~ 2~
+30 30000 0
+A
+19 12
+A
+18 -3
+X bone~
+
+#64134
+light orb~
+©]©ú¯](Light orb)~
+¤@Áû¬Ã¶Qªº©]©ú¯](Light orb)³Q©ñ¦b³oÃä¡C~
+~
+1 1|64|256 1
+0~ 0~ -1~ 0~
+1 4000000 0
+A
+4 1
+
+#64135
+hair dress~
+¾v¹¢(Hair dress)~
+¤@­Ó·t¬õ¦âªº¾v¹¢(Hair dress)³Q©ñ¦b³oÃä¡C~
+~
+8 1 1|16
+0~ 0~ 0~ 0~
+1 300 0
+A
+4 1
+A
+3 1
+X ebony~
+
+#64136
+south mountain bamboo~
+«n¤s¤§¦Ë(South Mountain Bamboo)~
+¤@°¦ºÑºñ´¹¼üªº¦Ë¤l(Bamboo)³Q©ñ¦b³o¸Ì~
+~
+27 1|2|4|16 65537
+10~ 5~ 75~ 10~
+5 0 0
+E
+south~
+³o¬O¤@®Ú¥Î¥ÉÀJ¨è¦Ó¦¨ªº¦Ë¤l¡A¬Û·íªº¹G¯u
+~
+E
+mountain~
+³o¬O¤@®Ú¥Î¥ÉÀJ¨è¦Ó¦¨ªº¦Ë¤l¡A¬Û·íªº¹G¯u
+~
+E
+bamboo~
+³o¬O¤@®Ú¥Î¥ÉÀJ¨è¦Ó¦¨ªº¦Ë¤l¡A¬Û·íªº¹G¯u
+~
+A
+18 1
+A
+44 3
+X jade~
+
+#64137
+leaf leggings~
+Á¡¸­¦è´Ý(Leaf Leggings)~
+¤@Âù¬\¶À¦âªº×H¥Ò(leggings)³Q©ñ¦b³oÃä~
+~
+9 1 1|32
+0~ 0~ 50~ 0~
+7 0 0
+A
+40 1
+A
+2 1
+A
+41 -5
+A
+42 -5
+X wood~
+
+#64138
+moon light gloves~
+¤ë©úªQ¤U(Moon Light Gloves)~
+¤@Âù¥ú«Gªº¤â®M(gloves)³Q©ñ¦b³oÃä~
+~
+9 1|2|1024 1|128
+100~ 0~ 40~ 0~
+5 0 0
+A
+18 2
+A
+44 6
+X feather~
+
+#64139
+drunken moon silver bell bow~
+[1;37m¼Ü¤ë»È¹a[0m(Drunken moon - Silver bell bow)~
+¤@§âÃ´µÛ»È¦â¹aÅLªºªø¤}³QÀÁ¦b³oÃä~
+~
+5 1|64|128|256|1024|2048|65536 1|32768
+70~ 0~ 0~ 14~
+5 0 0
+E
+drunken~
+³o§âªø¤}ªº¥½ºÝ¥Îµ·¸hÃ´µÛ¨âÁû»È¦âªº¹aÅL¡A·í§A®³°_¤}ªº®É­Ô¡A
+¹aÅLÁn²M¯ÜªºÅT°_¡A¬Û·í®®¦Õ¡C
+~
+E
+moon~
+³o§âªø¤}ªº¥½ºÝ¥Îµ·¸hÃ´µÛ¨âÁû»È¦âªº¹aÅL¡A·í§A®³°_¤}ªº®É­Ô¡A
+¹aÅLÁn²M¯ÜªºÅT°_¡A¬Û·í®®¦Õ¡C
+~
+E
+silver~
+³o§âªø¤}ªº¥½ºÝ¥Îµ·¸hÃ´µÛ¨âÁû»È¦âªº¹aÅL¡A·í§A®³°_¤}ªº®É­Ô¡A
+¹aÅLÁn²M¯ÜªºÅT°_¡A¬Û·í®®¦Õ¡C
+~
+E
+bell~
+³o§âªø¤}ªº¥½ºÝ¥Îµ·¸hÃ´µÛ¨âÁû»È¦âªº¹aÅL¡A·í§A®³°_¤}ªº®É­Ô¡A
+¹aÅLÁn²M¯ÜªºÅT°_¡A¬Û·í®®¦Õ¡C
+~
+E
+bow~
+³o§âªø¤}ªº¥½ºÝ¥Îµ·¸hÃ´µÛ¨âÁû»È¦âªº¹aÅL¡A·í§A®³°_¤}ªº®É­Ô¡A
+¹aÅLÁn²M¯ÜªºÅT°_¡A¬Û·í®®¦Õ¡C
+~
+A
+18 12
+A
+40 1
+A
+35 -2
+A
+41 -7
+A
+42 -7
+X silver~
+
+#64140
+jade rohan~
+¥ÉÃ¹º~(Jade Rohan)~
+¤@­ÓÀJ¤uºë´ïªº¥ÉÃ¹º~(Jade Rohan)³Q©ñ¦b³oÃä¡C~
+~
+9 1|64|256 1|4|16384
+0~ 0~ 30~ 0~
+1 30000 0
+E
+jade~
+³o¬O¬h·q©ú(Liu Gin-ming)°U¥Iµ¹§AªºªF¦è¡A
+¬O¬h¶³­·(Liu Yun-fon)ªº¿òª«¡C
+~
+E
+rohan~
+³o¬O¬h·q©ú(Liu Gin-ming)°U¥Iµ¹§AªºªF¦è¡A
+¬O¬h¶³­·(Liu Yun-fon)ªº¿òª«¡C
+~
+A
+18 2
+A
+44 5
+X jade~
+
+#64160
+beef~
+¤û¦×(Beef)~
+¤@¶ô§N±¼ªº¤û¦×³Q©ñ¦b³oÃä¡C~
+~
+19 0 1
+0~ 0~ 0~ 0~
+5 300 0
+X flesh~
+
+#64161
+bacon~
+¾M¦×(Bacon)~
+¤@¶ô¾M¦nªº¦×(Bacon)³Q©ñ¦b³oÃä¡C~
+~
+19 0 1
+0~ 0~ 0~ 0~
+10 300 0
+X flesh~
+
+#64162
+cold rice~
+§N¶º(Cold rice)~
+¤@¸J§N¶º(Cold Rice)³QÂ\¦b³oÃä¡C~
+~
+19 0 1
+0~ 0~ 0~ 0~
+10 300 0
+X food~
+
+#64163
+firewood~
+¤ì®ã(Firewood)~
+¤@®¹¤ì®ã(Firewood)³Q©ñ¦b³oÃä¡C~
+~
+27 0 1|65536
+30~ 0~ 0~ 0~
+30 150 0
+L 1
+A
+2 -1
+A
+1 1
+X wood~
+
+#64164
+zombie head~
+»ø«ÍÀY(Zombie head)~
+¤@Áû»ø«ÍÀY(Zombie head)³Q¥µ¦b³oÃä¡C~
+~
+13 0 0
+0~ 0~ 0~ 0~
+5 0 0
+X fresh~
+
+#64180
+pluto remind book~
+´¶¾|¦hªº´£¿ô(Pluto's remind)~
+¤@¥»¥ú«Gªº®Ñ(Book)³Q©ñ¦b³o¸Ì~
+~
+5 1|2|4|16 1|8192
+999~ 80~ 100~ 3~
+1 0 0
+X chaos matter~
+
+#64181
+amenda romantic necklace~
+­·¤¤¶Ç©_ªº®öº©(Amenda's romantic)~
+¤@­Ó°{Ä£µÛ¬õ¦â¥ú¨~ªº¶µÁå(necklace)³Q©ñ¦b³o~
+~
+9 1|2|4|16 1|4
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+
+#64182
+zcecil support necklace~
+¼v¤lªº·t¤¤¤ä«ù(Zcecil's support)~
+¤@­Ó¶Â¦âªº¶µÁå(necklace)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|4
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+
+#64183
+reticent angry cape~
+Â´¹ÚªÌªº¼««ã(reticent's angry)~
+¤@¥ó¤j¬õ¦âªº¤æÁO(cape)¦b³o¸Ìµo¥X²§¼ËªºÀ£­¢·P~
+~
+9 1|2|4|16 1|1024
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+19 500
+A
+43 500
+
+#64184
+Faraway plan ring~
+ªk©Ô«Âªº­pµe(Faraway's plan)~
+¤@­Ó²`ÂÅ¦âªº§Ù«ü(Ring)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|2
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+1 10
+A
+2 10
+
+#64185
+adol yell bracer~
+¨È¯S¾|ªº©I³Û(Adol's yell)~
+¤@­Ó¹³¬O¦b§o³Ûªº¤âÀô©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|4096
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+40 200
+
+#64186
+feena laugh bracer~
+µá®Rªº¼J¯º(Feena's laugh)~
+¤@­Ó¨è¦³¯º®eªº¤âÀô(bracer)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|4096
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+40 500
+
+#64187
+jye hard work gloves~
+³Ç¥ìªº­W¤u(Jye's hard work)~
+¤@¹ï²§±`ÆF±Óªº¤â®M(gloves)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|128
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+18 500
+
+#64188
+xian big dog head~
+®u¦wªº¤jª¯ÀY(Xian's big dog head)~
+¤@­Ó¤j«¬ªºª¯ÀY(Dog head)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|16
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+17 -500
+
+#64189
+zeel adjudicate light~
+¤è´£­×ªº¼f§P(Zeel's adjudicate)~
+¤@°}±j¯Pªº¥ú¨~(light)º}¯B¦b³oÃä~
+~
+1 1|2|4|16 1
+0~ 0~ 0~ 0~
+1 0 0
+X chaos matter~
+A
+24 -500
+
+#64190
+neversay pen~
+¤l¤£»yªºµ§(Neversay's pen)~
+¤@°¦µ§(pen)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|16384
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+3 10
+A
+4 10
+
+#64191
+whisperwind saying ring~
+­·¹aªº§C»y(Whisperwind's saying)~
+¤@­Ó¦ü¥G¦b¶D»¡¤°»òªº§Ù«ü(ring)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|2
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+1 10
+A
+2 10
+
+#64192
+kention thinking arm~
+¤Tµ¥¥Íªº«ä¦Ò(kention's thinking)~
+¤@­Ó²`ÂÅ¦âªºÅ@Áu(arm)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|256
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+40 500
+
+#64193
+amethyst fantasy shoes~
+µµ¤ô´¹ªº¹Ú¤Û(Amethyst's fantasy)~
+¤@Âù±µªñ³z©úªºµµ¦â¾c¤l(Shoes)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|64
+0~ 0~ 99~ 0~
+1 0 0
+X amethyst~
+A
+39 -1000
+
+#64194
+snarl  belt~
+¥v¯Çº¸ªº·M²Â(Snarl's foolish)~
+¤@Àô¶Â¦âª¬ªº±a¤l(belt)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|2048
+0~ 0~ 99~ 0~
+1 0 0
+X aura~
+
+#64195
+get gallant leggings~
+»\¯Sªº­·¬y(Get's gallant)~
+¤@ÂùÂAÆvªº¬õ¦â×H¥Ò(leggings)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|32
+0~ 0~ 99~ 0~
+1 0 0
+X ruby~
+
+#64196
+slay paper~
+¥v¹pªº¤å½Z(Slay's paper)~
+¤@¥÷¤å½Z(paper)³Q©ñ¦b³oÃä~
+~
+9 1|2|4|16 1|512
+0~ 0~ 99~ 0~
+1 0 0
+X paper~
+
+#64197
+coconet protect armor~
+·¦¤l¯«ªº¦uÅ@(Coconet's protect)~
+¤@­Ó°í©T¦Ó«á­«ªº¶ê´ß(Armor)³Q¥á¦b³oÃä~
+~
+9 1|2|4|16 1|8
+0~ 0~ 99~ 0~
+1 0 0
+X obsidian~
+
+#64198
+asla create arrow~
+ªü´µ©Ôªº³Ð³y(Asla's create)~
+¤@§â¦y¾Uªº½b¥Ú(Arrow)³Q©ñ¦b³o¸Ì~
+~
+27 1|2|4|16 65537
+10~ 5~ 75~ 10~
+1 0 0
+X chaos matter~
+
+#0
+
+#ROOMDATA
+#64101
+¤s¸ô¤J¤f~
+§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A°~®kªº¶¥±è¤Q¤À°ªÁq¡A
+¥H©¹­n«ô³X¦W¼C¤s²øªº«È¤H³£¥²¶·¸g¹L³o±ø¹D¸ô¡Ð·íµM§A¤]¤£¨Ò
+¥~¡C
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 11151
+D0
+~
+~
+0 0 64102
+S
+#64102
+¤s¸ô~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A°~®kªº¶¥±è¤Q¤À°ªÁq¡A
+¸ô®Çªºªá¯óªøªº¤Q¤À­Z±K¡A¥H©¹­n«ô³X¦W¼C¤s²øªº«È¤H³£¥²¶·¸g
+¹L³o±ø¹D¸ô¡Ð·íµM§A¤]¤£¨Ò¥~¡C
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64101
+D0
+~
+~
+0 0 64103
+S
+#64103
+¤s¸ô~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A°~®kªº¶¥±è¤Q¤À°ªÁq¡A
+ÁöµM§AÄ±±o¨«¤F¤@¬q®É¶¡¡A¥i¬O¦W¼C¤s²ø¦ü¥GÁÙ«Ü»·¡C¥H©¹­n«ô
+³X¦W¼C¤s²øªº«È¤H³£¥²¶·¸g¹L³o±ø¹D¸ô¡Ð·íµM§A¤]¤£¨Ò¥~¡CªF¤è
+¦³¤@®y°ªÁqªº¤g°ï¡A¤W­±¦³¤@¨Ç¥j¦Ñªº¸}¦L¡A¤£ª¾¹D¬O­þÃäªº¤p
+«Äª¦¤W¥h¹Lª±¡C
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64102
+D3
+~
+~
+0 0 64104
+>room_command climb up~
+	if is_qmark($n) == jd_liu 100002
+	or if is_qmark($n) == jd_liu 100006
+		echoat $n §Ï©»¦³¤H¦b«á­±±À§A¤@§â¤@¯ë¡A§A»´ÃPªºª¦¹L¤F¤g°ï
+		echoaround $n $n¦n¹³³Q¤Hµ¹¥á¹L¥h¤@¯ë¡A®ø¥¢¦b¤g°ïªº¥t¥~¤@Ãä¡I
+		transfer $n 64246
+	else
+    echoat $n §A¹Á¸Õª¦¤W³o®y¤g°ï¡A¥i¬O«oºL¤F¤U¨Ó
+    echoaround $n $n¹Á¸Õª¦¤W¤g°ï¡A¥i¬O«oºL¤F¤U¨Ó
+endif
+~
+|
+S
+#64104
+¥b¤s¸y~
+		³o¸Ì¬O³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A°~®kªº¶¥±è¤Q¤À°ªÁq¡A¥|
+©Pªº¾ðªL¤]¶V¨Ó¶V­Z±K¡AÁöµM§AÄ±±o¨«¤F¤@¬q®É¶¡¡A¥i¬O¦W¼C¤s
+²ø¦ü¥GÁÙ«Ü»·¡C³q¸ô³q©¹ªF¤è©M¦è¤è¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64103
+D3
+~
+~
+0 0 64105
+S
+#64105
+¥b¤s¸y~
+		³o¸Ì¬O³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A°~®kªº¶¥±è¤Q¤À°ªÁq¡A¥|
+©Pªº¾ðªL¤]¶V¨Ó¶V­Z±KÁöµM§AÄ±±o¨«¤F¤@¬q®É¶¡¡A¥i¬O¦W¼C¤s²ø
+¦ü¥GÁÙ«Ü»·¡C³q¸ô³q©¹ªF¤è©M¥_¤è¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64104
+D0
+~
+~
+0 0 64106
+S
+#64106
+¤s¸ô¥b³~~
+		³o¸Ì¬O³q©¹¦W¼C¤s²øªº¸ô³~¡A§A¯¸¦b¤s¸y¶¡ªº¤@¤p¶ôªÅ¦a¤W
+¡AÁöµM§AÄ±±o¨«¤F¤@¬q®É¶¡¡A¥i¬O¦W¼C¤s²ø¦ü¥GÁÙ«Ü»·¡C«e¤èªº
+¹D¸ô³q©¹¥_¤è¸ò«n¤è¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64107
+D2
+~
+~
+0 0 64105
+S
+#64107
+¥b¤s¸y~
+		³o¸Ì¬O³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A°~®kªº¶¥±è¤Q¤À°ªÁq¡AÁö
+µM§AÄ±±o¨«¤F¤@¬q®É¶¡¡A¥i¬O¦W¼C¤s²ø¦ü¥GÁÙ«Ü»·¡C¹D¸ô³q©¹ªF
+¤è©M«n¤è¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64108
+D2
+~
+~
+0 0 64106
+S
+#64108
+±µªñ¤s³»ªº¸ô~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s¸ô¶V¨Ó¶V°~®k¡A¦Û¤v
+ªº¨B¥ï¦ü¥G¤]¦³ÅÜºCªºÁÍ¶Õ¡C¾Ú»¡³o±ø¤s¸ô«K¬O¦ÒÅç¶i¤J¦W¼C¤s
+²øªº«È¤H¬O§_¨ã¦³¨¬°÷ªº¯à¤O¦Ó³]¸mªº¡C±µ¤U¨Óªº¸ô³q©¹¦è¤è©M
+«n¤è¡C
+~
+0 65536|1048576 1
+D3
+~
+~
+0 0 64107
+D2
+~
+~
+0 0 64109
+S
+#64109
+±µªñ¤s³»ªº¸ô~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s¸ô¶V¨Ó¶V°~®k¡A¦Û¤v
+ªº¨B¥ï¦ü¥G¤]¦³ÅÜºCªºÁÍ¶Õ¡C¾Ú»¡³o±ø¤s¸ô«K¬O¦ÒÅç¶i¤J¦W¼C¤s
+²øªº«È¤H¬O§_¨ã¦³¨¬°÷ªº¯à¤O¦Ó³]¸mªº¡C¤s³»ªº¸ô³q©¹¥_¤è©M«n
+¤è¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64108
+D2
+~
+~
+0 0 64110
+S
+#64110
+±µªñ¤s³»ªº¸ô~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s¸ô¶V¨Ó¶V°~®k¡A¦Û¤v
+ªº¨B¥ï¦ü¥G¤]¦³ÅÜºCªºÁÍ¶Õ¡C¾Ú»¡³o±ø¤s¸ô«K¬O¦ÒÅç¶i¤J¦W¼C¤s
+²øªº«È¤H¬O§_¨ã¦³¨¬°÷ªº¯à¤O¦Ó³]¸mªº¡CÁöµMµø³¥ºCºC¶}Áï°_¨Ó
+¡A¤£¹L¤£ª¾¹D§AÁÙ¦³¨S¦³¤ß±¡ªY½à¡H
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64109
+D3
+~
+~
+0 0 64111
+S
+#64111
+±µªñ¤s³»ªº¸ô~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s¸ô¶V¨Ó¶V°~®k¡A¦Û¤v
+ªº¨B¥ï¦ü¥G¤]¦³ÅÜºCªºÁÍ¶Õ¡C¾Ú»¡³o±ø¤s¸ô«K¬O¦ÒÅç¶i¤J¦W¼C¤s
+²øªº«È¤H¬O§_¨ã¦³¨¬°÷ªº¯à¤O¦Ó³]¸mªº¡CÁöµMµø³¥ºCºC¶}Áï°_¨Ó
+¡A¤£¹L¤£ª¾¹D§AÁÙ¦³¨S¦³¤ß±¡ªY½à¡H³q¸ô³q©¹ªF¤è©M¦è¤è¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64110
+D3
+~
+~
+0 0 64112
+S
+#64112
+¤s³»~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s¸ô¶V¨Ó¶V°~®k¡A¦Û¤v
+ªº¨B¥ï¦ü¥G¤]¦³ÅÜºCªºÁÍ¶Õ¡C¾Ú»¡³o±ø¤s¸ô«K¬O¦ÒÅç¶i¤J¦W¼C¤s
+²øªº«È¤H¬O§_¨ã¦³¨¬°÷ªº¯à¤O¦Ó³]¸mªº¡Cªþªñªºµn¤sªÌ¤]¶V¨Ó¶V
+¤Ö¡A§A¶}©lÃhºÃ¤s²øªº­¹ª«¨ì©³¬O½Ð½Ö­I¤W¥hªº¡H
+
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64111
+D0
+~
+~
+0 0 64113
+S
+#64113
+¤s³»~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s¸ô¶V¨Ó¶V°~®k¡A¦Û¤v
+ªº¨B¥ï¦ü¥G¤]¦³ÅÜºCªºÁÍ¶Õ¡C¾Ú»¡³o±ø¤s¸ô«K¬O¦ÒÅç¶i¤J¦W¼C¤s
+²øªº«È¤H¬O§_¨ã¦³¨¬°÷ªº¯à¤O¦Ó³]¸mªº¡Cªþªñªºµn¤sªÌ¤]¶V¨Ó¶V
+¤Ö¡A§A¶}©lÃhºÃ¤s²øªº­¹ª«¨ì©³¬O½Ð½Ö­I¤W¥hªº¡H³q¸ô³q©¹¥_¤è
+©M«n¤è¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64114
+D2
+~
+~
+0 0 64112
+S
+#64114
+¤s³»~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s¸ô¶V¨Ó¶V°~®k¡A¦Û¤v
+ªº¨B¥ï¦ü¥G¤]¦³ÅÜºCªºÁÍ¶Õ¡C¾Ú»¡³o±ø¤s¸ô«K¬O¦ÒÅç¶i¤J¦W¼C¤s
+²øªº«È¤H¬O§_¨ã¦³¨¬°÷ªº¯à¤O¦Ó³]¸mªº¡Cªþªñªºµn¤sªÌ¤]¶V¨Ó¶V
+¤Ö¡A§A¶}©lÃhºÃ¤s²øªº­¹ª«¨ì©³¬O½Ð½Ö­I¤W¥hªº¡H³q¸ô³q©¹ªF¤è
+©M«n¤è¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64115
+D2
+~
+~
+0 0 64113
+S
+#64115
+¤s³»~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s²ø´N¦b²´«e¤F¡A§Ö¥[
+§â«lµn¤W¥h§a¡C
+~
+0 65536|1048576 1
+D3
+~
+~
+0 0 64114
+D2
+~
+~
+0 0 64116
+S
+#64116
+¤s³»~
+		§A½ñ¤W¤F³q©¹¦W¼C¤s²øªº¦±§é¤s¸ô¡A¤s²ø´N¦b²´«e¤F¡A§Ö¥[
+§â«lµn¤W¥h§a¡C³q¸ô³q©¹¥_¤è©M«n¤è¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64115
+D2
+~
+~
+0 0 64117
+S
+#64117
+¤sÅq~
+		§Ö±µªñ³»ºÝªº­·´º¬Û·íªº°g¤H¡A¥|©P³£¬O°ªÁqªººñ¾ð¥H¤Î³¥
+ªá¡A¤£¹L©¹«e¬ÝÁÙ¥i¥H¡A¦pªG­n©¹¤U¬Ý¡A¥ý½T©w¦Û¤v¦³¨¬°÷ªºÁx
+¶q§a¡D
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64116
+D3
+~
+~
+0 0 64118
+S
+#64118
+¤sÅq~
+		§Ö±µªñ³»ºÝªº­·´º¬Û·íªº°g¤H¡A¥|©P³£¬O°ªÁqªººñ¾ð¥H¤Î³¥
+ªá¡A¤£¹L©¹«e¬ÝÁÙ¥i¥H¡A¦pªG­n©¹¤U¬Ý¡A¥ý½T©w¦Û¤v¦³¨¬°÷ªºÁx
+¶q§a¡D³q¸ô³q©¹ªF¤è©M¦è¤è¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64117
+D3
+~
+~
+0 0 64119
+S
+#64119
+¤sÅq~
+		§Ö±µªñ³»ºÝªº­·´º¬Û·íªº°g¤H¡A¥|©P³£¬O°ªÁqªººñ¾ð¥H¤Î³¥
+ªá¡A¤£¹L©¹«e¬ÝÁÙ¥i¥H¡A¦pªG­n©¹¤U¬Ý¡A¥ý½T©w¦Û¤v¦³¨¬°÷ªºÁx
+¶q§a¡D³q¸ô³q©¹ªF¤è©M¥_¤è¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64118
+D0
+~
+~
+0 0 64120
+S
+#64120
+¤sÅq~
+		§Ö±µªñ³»ºÝªº­·´º¬Û·íªº°g¤H¡A¥|©PÅÜ¦¨­@´HªºªQ¾ð¥H¤Îºñ
+¯ó¡A¦a¤W¦ü¥GÁÙ¦³¦B³·ªì¿Äªº²ª¸ñ¡D
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64119
+D0
+~
+~
+0 0 64121
+S
+#64121
+¤sÅq~
+		§Ö±µªñ³»ºÝªº­·´º¬Û·íªº°g¤H¡A¥|©PÅÜ¦¨­@´HªºªQ¾ð¥H¤Îºñ
+¯ó¡A¦a¤W¦ü¥GÁÙ¦³¦B³·ªì¿Äªº²ª¸ñ¡D¤s²øªº¤jªù¦b¥_¤è¡C
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64120
+D0
+~
+~
+0 0 64122
+S
+#64122
+¦W¼C¤s²ø¤J¤f~
+		ª¦¤W¦W¼C¤s²ø¤§«á¡A§A¨­«áªºµø³¥Àþ¶¡¶}Áï¤F°_¨Ó¡A±q³o­Ó
+¦a¤èÁÙ¯à°÷»»±æ²MªeÂí©O¡C§A­±«e°ª¹F¤T¤V¦hªº¥¨¤jµP§{¡A¤W­±
+²M²M·¡·¡¼gµÛ¥|­Ó¤j¦r¡Ð
+
+		¦W	¼C	¤s	²ø
+		
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64121
+S
+#64123
+¨«¹D~
+    ¤@±ø³æ¯Âªº¨«´Y¡A«nÃä³q©¹¤@­Ó©Ð¶¡¡AªFÃä«hÄ~Äò©µ¦ù¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64127
+D2
+~
+~
+0 0 64124
+S
+#64124
+¹²¤H©Ð~
+		³oÃä¬O¦W¼C¤s²øªº¹²¤H©Ò©~¦íªº©Ð¶¡¡A¸Ì­±¦¬¬Bªº¬Û·í¾ã»ô
+¡A¤£¹L¤s²øªº¹²¤H¦¬¤J¤j·§¤£¿ù¡A´X¥ó¦çªA³£¬O¥Î¬Û·í°ªµ¥ªº®Æ
+¤l°µ¦¨ªº¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64123
+D2
+~
+~
+0 0 64125
+S
+#64125
+¹²¤H©Ð~
+		³oÃä¬O¦W¼C¤s²øªº¹²¤H©Ò©~¦íªº©Ð¶¡¡A¸Ì­±¦¬¬Bªº¬Û·í¾ã»ô
+¡A¬Ý°_¨Ó¤j·§¤]¨S¤°»ò¯S§Oªº¦a¤è¡C«nÃä³q©¹¤@¶¡¤p«¬ªº©Ð¶¡¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64124
+D2
+~
+~
+1|2 0 64126
+S
+#64126
+¹²¤H©Ð­Ü®w~
+		³oÃä¬O¦W¼C¤s²øªº¹²¤H©Ò¨Ï¥Îªº­Ü®w¡A¸Ì­±¦¬¬Bªº¬Û·í¾ã»ô
+Â\©ñµÛ¤@¨Ç¤é±`ªºÂøª«¡A¤£¹LÁÙ¬O¨S¤°»ò¯S§Oªº¦a¤è¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64125
+S
+#64127
+¨«¹D~
+		¤@±ø³æ¯Âªº¨«´Y¡A«nÃä³q©¹¤@­Ó©Ð¶¡¡A¦èÃä©MªFÃä«hÄ~Äò©µ
+¦ù¡C
+~
+0 8|65536|1048576 1
+D3
+~
+~
+0 0 64123
+D2
+~
+~
+0 0 64128
+D1
+~
+~
+1|2 0 64131
+S
+#64128
+¼p®vªº©Ð¶¡~
+		³oÃä¬O¦W¼C¤s²øªº¹²¤H©Ò©~¦íªº©Ð¶¡¡A¤£¹L±q³o¸Ì­±Â\©ñªº
+¼p¨ã¨Ó¬Ý¡A³oÃäÀ³¸Ó¬O¼p®v­Ìªº©Ð¶¡§a¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64127
+D2
+~
+~
+0 0 64129
+S
+#64129
+¼p®vªº©Ð¶¡~
+		¼p®v¦³°½¦Yªº²ßºD¶Ü¡H³oÃäªº®à¤l³£¦³ÂIªo¿°¡A¦aªO¤WÁÙ¥i
+¥H¬Ý¨ì´X®Ú¦Y³Ñªº°©ÀY..¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64128
+D2
+~
+~
+0 0 64130
+S
+#64130
+¼p®vªº­Ü®w~
+		¬Ý¨Ó´NºâÂ³­ÜªÅ¤F¡A³o¸s¼p®v¤]¤£·|¾j¨ì¡A¦]¬°³o¶¡­Ü®w°ï
+º¡¤F­Ó¬O¦U¼Ëªº¤fÂ³ÁÙ¦³°s¡A¯u¬O¦³¨ÇÁV¿|ªº¼p®v....
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64129
+S
+#64131
+³q¹D~
+		³o¸Ìªþªñ³£¬O©Ð¶¡¡A±Mªù¬°¤F©~¦í¦b¦W¼C¤s²ø¤ºªº§Ì¤l¥H¤Î
+¹²¤H©Ò«Ø³yªº¡A¥|©P¤]Â\©ñ¤F¤@¨Çªá¬Ö§@¬°Â\¹¢¡A·PÄ±°_¨Ó¬Û·í
+ªº¨å¶®¡C¦èÃä³q©¹¹²¤H©Ð¡AªFÃäÄ~Äò³q©¹¨«¹D¡A«nÃä¥i¥H«e©¹§Ì
+¤lªº©Ð¶¡¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64135
+D2
+~
+~
+0 0 64132
+D3
+~
+~
+0 0 64127
+S
+#64132
+§Ì¤l©Ð¶¡~
+		³oÃä¬O¦W¼C¤s²øªº¾Ç®{¸ò§Ì¤l©Ò©~¦íªº©Ð¶¡¡A¦]¬°¾Fªñ¹²¤H
+©Ð¡A©Ò¥H¤]¦¬¬Bªº¬Û·í°®²b¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64131
+D2
+~
+~
+0 0 64133
+S
+#64133
+§Ì¤l©Ð¶¡~
+		³oÃä¬O¦W¼C¤s²øªº¾Ç®{¸ò§Ì¤l©Ò©~¦íªº©Ð¶¡¡A¦]¬°¾Fªñ¹²¤H
+©Ð¡A©Ò¥H¤]¦¬¬Bªº¬Û·í°®²b¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64132
+D2
+~
+~
+0 0 64134
+S
+#64134
+­Ü®w~
+		³oÃä¬O¦W¼C¤s²øªº¾Ç®{¸ò§Ì¤l©Ò¨Ï¥Îªº­Ü®w¡A¸Ì­±©ñµÛ³\³\
+¦h¦hªº¹D¨ã¸ò§÷®Æ¡A·íµMÁÙ¦³¤@¨Ç¤£·|»GÃaªº­¹§÷¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64133
+S
+#64135
+³q¹D~
+		³o¸Ìªþªñ³£¬O©Ð¶¡¡A±Mªù¬°¤F©~¦í¦b¦W¼C¤s²ø¤ºªº§Ì¤l¥H¤Î
+¹²¤H©Ò«Ø³yªº¡A¥|©P¤]Â\©ñ¤F¤@¨Çªá¬Ö§@¬°Â\¹¢¡A·PÄ±°_¨Ó¬Û·í
+ªº¨å¶®¡C¦èÃä¬O³q¹D¡AªFÃä¤]Ä~Äò³q©¹¨«¹D¡A«nÃä¥i¥H«e©¹§Ì¤l
+ªº©Ð¶¡¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64139
+D2
+~
+~
+0 0 64136
+D3
+~
+~
+0 0 64131
+S
+#64136
+«È©Ð~
+		³oÃä¬O¦W¼C¤s²øªº«È¤H©Ò¨Ï¥Îªº©Ð¶¡¡A¦W¼C¤s²ø¦b¥~Án¦W
+»·¼½¡A¦³¤£¤Ö³X«È«e¨Ó«ô³X¡A¦³®É­Ô²ø¥D¤]·|½Ð¥L­Ì¯d±J¤@±ß
+¡A©Ò¥H³o´X¶¡«È©Ð¤]±`±`³Q¨Ï¥Î¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64135
+D2
+~
+~
+0 0 64137
+S
+#64137
+«È©Ð~
+		³oÃä¬O¦W¼C¤s²øªº«È¤H©Ò¨Ï¥Îªº©Ð¶¡¡A¦W¼C¤s²ø¦b¥~Án¦W
+»·¼½¡A¦³¤£¤Ö³X«È«e¨Ó«ô³X¡A¦³®É­Ô²ø¥D¤]·|½Ð¥L­Ì¯d±J¤@±ß
+¡A©Ò¥H³o´X¶¡«È©Ð¤]±`±`³Q¨Ï¥Î¡C
+~
+0 8|1024|65536|1048576 1
+D0
+~
+~
+0 0 64136
+D2
+~
+~
+0 0 64138
+S
+#64138
+­Ü®w~
+		³o¸Ì©ñµÛ´Ö³Q©MªEÀY¡AÁÙ¦³´X±i§É³æ¡A¬O®³¨Ó´À´«ªº¡C¤£¹L
+¦³¨Ç§É³æ¤w¸gµo¾`¤F¡A¤j·§¬O¹²¤H¨S¦³ª`·N¨ì§a¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64137
+S
+#64139
+³q¹D~
+		³o¸Ìªþªñ³£¬O©Ð¶¡¡A±Mªù¬°¤F©~¦í¦b¦W¼C¤s²ø¤ºªº§Ì¤l¥H¤Î
+¹²¤H©Ò«Ø³yªº¡A¥|©P¤]Â\©ñ¤F¤@¨Çªá¬Ö§@¬°Â\¹¢¡A·PÄ±°_¨Ó¬Û·í
+ªº¨å¶®¡C¦èÃä¬O³q¹D¡A«nÃä¥i¥H¦^¨ì¨«´Y¡C
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64140
+D3
+~
+~
+0 0 64135
+S
+#64140
+¨«´Y~
+		³o¸Ì¬O³q©¹©Ð¶¡ªº¨«´Y¡A¨«´Yªº¥~³òÁÙºØ¤F¬Û·í¦hªºªá¯ó
+§@¬°´ºÆ[¸Ë¹¢¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64139
+D2
+~
+~
+0 0 64141
+S
+#64141
+¨«´Y~
+		³o¸Ì¬O³q©¹©Ð¶¡ªº¨«´Y¡A¨«´Yªº¥~³òÁÙºØ¤F¬Û·í¦hªºªá¯ó
+§@¬°´ºÆ[¸Ë¹¢¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64140
+D1
+~
+~
+0 0 64144
+D2
+~
+~
+0 0 64142
+S
+#64142
+°j´Y~
+		³o¸Ì¥u¬O¤@­Ó°j´Y¡AµLªk³q©¹¥ô¦ó¦a¤è¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64141
+S
+#64143
+¼s³õ~
+		§A¯¸¦b¦W¼C¤s²ø¼s³õªº¦è¥_¨¤¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64146
+D2
+~
+~
+0 0 64144
+S
+#64144
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¦è¤è¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C¦è¤è¥i¥H³q©¹¤@´É¸û¤jªº«Ø¿vª«¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64143
+D1
+~
+~
+0 0 64147
+D2
+~
+~
+0 0 64145
+D3
+~
+~
+1|2 0 64141
+S
+#64145
+¼s³õ~
+		§A¯¸¦b¦W¼C¤s²ø¼s³õªº¦è«n¨¤¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64144
+D1
+~
+~
+0 0 64148
+S
+#64146
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¤¤¥¡¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64149
+D2
+~
+~
+0 0 64147
+D3
+~
+~
+0 0 64143
+S
+#64147
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¤¤¥¡¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64146
+D1
+~
+~
+0 0 64150
+D2
+~
+~
+0 0 64148
+D3
+~
+~
+0 0 64144
+S
+#64148
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¤¤¥¡¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64147
+D1
+~
+~
+0 0 64151
+D3
+~
+~
+0 0 64145
+S
+#64149
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¥_¤è¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C¥_¤è¸û»·³B¦³¤@´É¥¨¤jªº«Ø¿vª«¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64193
+D1
+~
+~
+0 0 64152
+D2
+~
+~
+0 0 64150
+D3
+~
+~
+0 0 64146
+S
+#64150
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¤¤¥¡¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64149
+D1
+~
+~
+0 0 64153
+D2
+~
+~
+0 0 64151
+D3
+~
+~
+0 0 64147
+S
+#64151
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº«n¤è¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C«n¤è¬O§A¹L¨Óªº¤J¤f¡C
+~
+0 4|65536|1048576 1
+D0
+~
+~
+0 0 64150
+D1
+~
+~
+0 0 64154
+D2
+~
+~
+0 0 64122
+D3
+~
+~
+0 0 64148
+S
+#64152
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¤¤¥¡¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64155
+D2
+~
+~
+0 0 64153
+D3
+~
+~
+0 0 64149
+S
+#64153
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¤¤¥¡¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64152
+D1
+~
+~
+0 0 64156
+D2
+~
+~
+0 0 64154
+D3
+~
+~
+0 0 64150
+S
+#64154
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªº¤¤¥¡¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64153
+D1
+~
+~
+0 0 64157
+D3
+~
+~
+0 0 64151
+S
+#64155
+¼s³õ~
+		§A¯¸¦b¦W¼C¤s²ø¼s³õªºªF¥_¤è¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡C
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64156
+D3
+~
+~
+0 0 64152
+S
+#64156
+¼s³õ~
+		§A¥¿¯¸¦b¦W¼C¤s²ø¼s³õªºªF¤è¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡CªF¤è¥i¥H³q©¹¤@´É¸û¤jªº«Ø¿vª«¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64155
+D1
+~
+~
+1|2 0 64160
+D2
+~
+~
+0 0 64157
+D3
+~
+~
+0 0 64153
+S
+#64157
+¼s³õ~
+		§A¯¸¦b¦W¼C¤s²ø¼s³õªºªF«n¤è¡A³o¸Ì¬Û·íªº¿ñÁï¡A¥­±`°£
+¤F¤@¨Ç¨åÂ§»E·|¡A¬O¤£·|¦³¤°»ò¤H¦b³oÃä»E¶°ªº¡A¦³ªº¥u¬O¤T
+¤T¨â¨âªº§Ì¤l¸ò³X«È¦Ó¤w¡CªF¤è¥i¥H³q©¹¤@´É¸û¤jªº«Ø¿vª«¡C
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64156
+D3
+~
+~
+0 0 64154
+S
+#64158
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²øªº½m²ß³õ¦è«n¤è¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|2097152 0
+D1
+~
+~
+0 0 64162
+D2
+~
+~
+0 0 64159
+S
+#64159
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªº¦è¤è¡A³o­Ó½m²ß³õ¥D­n¬O´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64158
+D1
+~
+~
+0 0 64163
+D2
+~
+~
+0 0 64160
+S
+#64160
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªº¦è¤è¡A³o­Ó½m²ß³õ¥D­n¬O´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64159
+D1
+~
+~
+0 0 64164
+D2
+~
+~
+0 0 64161
+D3
+~
+~
+0 0 64156
+S
+#64161
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªº¦è«n¤è¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64160
+D1
+~
+~
+0 0 64165
+S
+#64162
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªº¥¿¥_¤è¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D1
+~
+~
+0 0 64166
+D2
+~
+~
+0 0 64163
+D3
+~
+~
+0 0 64158
+S
+#64163
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªº¥¿¤¤¥¡¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64162
+D1
+~
+~
+0 0 64167
+D2
+~
+~
+0 0 64164
+D3
+~
+~
+0 0 64159
+S
+#64164
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªº¥¿¤¤¥¡¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64163
+D1
+~
+~
+0 0 64168
+D2
+~
+~
+0 0 64165
+D3
+~
+~
+0 0 64160
+S
+#64165
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªº¥¿«n¤è¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64164
+D1
+~
+~
+0 0 64169
+D3
+~
+~
+0 0 64161
+S
+#64166
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªºªF¥_¤è¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡CªF¤è¦³¤@®°ªù¡C
+~
+0 8|65536|1048576|2097152 0
+D1
+~
+~
+3 0 64170
+D2
+~
+~
+0 0 64167
+D3
+~
+~
+0 0 64162
+S
+#64167
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªºªF¤è¡A³o­Ó½m²ß³õ¥D­n¬O´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64166
+D2
+~
+~
+0 0 64168
+D3
+~
+~
+0 0 64163
+S
+#64168
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªºªF¤è¡A³o­Ó½m²ß³õ¥D­n¬O´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64167
+D2
+~
+~
+0 0 64169
+D3
+~
+~
+0 0 64164
+S
+#64169
+½m²ß³õ~
+		³o¸Ì¬O¦W¼C¤s²ø½m²ß³õªºªF«n¤è¡A³o­Ó½m²ß³õ¥D­n´£¨Ñ¤s
+²øªº§Ì¤l¥H¤Î§Æ±æ¹L©Ûªº³X«È¨Ï¥Î¡A²ø¥D¥»¤H¤]±`±`¦b³o­Ó¦a
+¤è«ü¾É¦Û¤vªº§Ì¤l¡C
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64168
+D3
+~
+~
+0 0 64165
+S
+#64170
+®ã©Ð~
+		³o¸Ì¬O¦s©ñ¦W¼C¤s²ø®ã¤õªº¦a¤è¡C¦a¤W¦³µÛ¤j¤j¤p¤pªº¤ì
+®ã¡C¦W¼C¤s²ø¦]¬°¦ì³B°ª¦a¡A¥V¤Ñ®É­Ô¬Û·í´H§N¡A¥[¤Wª¤­¹¤]
+¥²¶·¨Ï¥Î¤ì§÷¡A¦]¦¹³o¸Ìªº¤ì§÷§y¿nªº¯S§O¦h¡C
+~
+0 8|65536|1048576|1048576 1
+D1
+~
+~
+0 0 64174
+D2
+~
+~
+0 0 64171
+D3
+~
+~
+3 0 64166
+S
+#64171
+®ã©Ð~
+		³o¸Ì¬O¦s©ñ¦W¼C¤s²ø®ã¤õªº¦a¤è¡C¦a¤W¦³µÛ¤j¤j¤p¤pªº¤ì
+®ã¡C¦W¼C¤s²ø¦]¬°¦ì³B°ª¦a¡A¥V¤Ñ®É­Ô¬Û·í´H§N¡A¥[¤Wª¤­¹¤]
+¥²¶·¨Ï¥Î¤ì§÷¡A¦]¦¹³o¸Ìªº¤ì§÷§y¿nªº¯S§O¦h¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64170
+D1
+~
+~
+0 0 64175
+S
+#64172
+¦s¼C«Ç~
+		¦p¦P¦W¤l©Ò±Ô­zªº¡A³o¸Ì´N¬O±MªùÂ\©ñ¼Cªº¦a¤è¡A¥|©P¦U
+¦¡¦U¼Ëªº¼CÂ\©ñµÛ¡A¤£¹L¬Ý°_¨Ó³£¬O¬Û·í´¶³qªº¼C¡A¾U§Qªº¼C
+ÁöµM¦³¡A«o¨S¦³©Ò¿×ªºÄ_¼C¡A¬O³Q¦¬°_¨Ó¤F¶Ü¡H³o¸Ìªº¦Ç¹Ð¸ò
+Âøª«¯S§O¦h¡A¾Ú»¡¦³©Çª««I¤J«á¡A²ø¥D«K¤U¥O±N³o­Ó©Ð¶¡¼È®É
+ªº«ÊÂê¡A©Ò¥H¦³«Üªø¤@¬q®É¶¡¨S¦³¤H¥´²z¤F¡C³o¶¡©Ð¶¡ªº¦aªO
+¦³¨Ç»´·L¯}·l¡C
+~
+0 4|8|512|65536|1048576 1
+D1
+~
+~
+0 0 64176
+D2
+~
+~
+0 0 64173
+
+>room_command search default~
+if roomvalue($0) == 1
+        if is_qmark($n) == swordcottage 300002
+               callout 1 echoat $n §A¦b³oÃä¨ì³B¶Ã«õ...
+               callout 1 echoaround $n $N¦b³oÃä¨ì³B¶Ã«õ
+               callout 2 echoat $n §A§ä¨ì¤@­Ó·t¬õ¦âªº¾v¹¢...
+               callout 2 echoaround $n $N«õ¥X¤@­Ó·t¬õ¦âªº¾v¹¢...
+               callout 2 oload 64135 15 floor
+               call out 2 modrvt v0 = 2
+               callout 2 mod_qmark $n swordcottage v2 = 3
+        else
+                echoat $n §AªºÂù¤âªgº¡¦Ç¹Ð¡C
+                echoaround $n $N«õ¥X¤@°ï¦Ç¹Ð¡C
+        endif
+else
+        echoat $n ³o¸Ì¦n¹³¦³¤H¶i¨Ó¹L¡C
+        echoaround $n $n¥|³B±i±æ¤F¤@¤U¡C
+endif
+~
+>room_time 100~
+if rnplayer($) == 0
+        if roomvalue($0) == 2
+                purge all.hair
+                modrvt v0 = 0
+        endif
+endif
+~
+|
+S
+#64173
+¦s¼C«Ç~
+		¦p¦P¦W¤l©Ò±Ô­zªº¡A³o¸Ì´N¬O±MªùÂ\©ñ¼Cªº¦a¤è¡A¥|©P¦U
+¦¡¦U¼Ëªº¼CÂ\©ñµÛ¡A¤£¹L¬Ý°_¨Ó³£¬O¬Û·í´¶³qªº¼C¡A¾U§Qªº¼C
+ÁöµM¦³¡A«o¨S¦³©Ò¿×ªºÄ_¼C¡A¬O³Q¦¬°_¨Ó¤F¶Ü¡H³o¸Ì¥|©PªºªF
+¦è¯S§O¦h¡A¾Ú»¡¦³©Çª««I¤J«á¡A²ø¥D«K¤U¥O±N³o­Ó©Ð¶¡¼È®Éªº
+«ÊÂê¡A©Ò¥H¦³«Üªø¤@¬q®É¶¡¨S¦³¤H¥´²z¤F¡C
+~
+0 4|8|512|65536|1048576 1
+D0
+~
+~
+0 0 64172
+D1
+~
+~
+0 0 64177
+>room_command search around~
+	if roomvalue($0) == 0
+		echoat $n §A¦b³oÃä¥J²ÓªººN¯ÁµÛ...
+		echoaround $n $n¦b³oÃä¥J²Óªº·j¯ÁµÛ...
+			if rand(70)
+				echoat $n §AºN¨ì¤@§â¤ì¼C...
+				echoaround $n $nºN¨ì¤@§â¤ì¼C...
+				oload 64119 1 floor
+        			modrvt v0 = 1
+			else
+				echoat $n §AºN¨ì¤@§âÅK¼C...
+				echoaround $n $nºN¨ì¤@§âÅK¼C...
+				oload 64120 36 floor
+        			modrvt v0 = 1
+			endif
+	else
+		echoat $n §A¤°»ò³£¨S§ä¨ì
+		echoaround $n $n¦n¹³¤°»ò³£¨S§ä¨ì
+	endif
+~
+>room_time 100~
+if rnplayer($) == 0
+        if roomvalue($0) == 1
+                purge all.sword
+                modrvt v0 = 0
+        endif
+endif
+~
+|
+S
+#64174
+®ã©Ð~
+		³o¸Ì¬O¦s©ñ¦W¼C¤s²ø®ã¤õªº¦a¤è¡C¦a¤W¦³µÛ¤j¤j¤p¤pªº¤ì
+®ã¡C¦W¼C¤s²ø¦]¬°¦ì³B°ª¦a¡A¥V¤Ñ®É­Ô¬Û·í´H§N¡A¥[¤Wª¤­¹¤]
+¥²¶·¨Ï¥Î¤ì§÷¡A¦]¦¹³o¸Ìªº¤ì§÷§y¿nªº¯S§O¦h¡C
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64175
+D3
+~
+~
+0 0 64170
+S
+#64175
+®ã©Ð~
+		³o¸Ì¬O¦s©ñ¦W¼C¤s²ø®ã¤õªº¦a¤è¡C¦a¤W¦³µÛ¤j¤j¤p¤pªº¤ì
+®ã¡C¦W¼C¤s²ø¦]¬°¦ì³B°ª¦a¡A¥V¤Ñ®É­Ô¬Û·í´H§N¡A¥[¤Wª¤­¹¤]
+¥²¶·¨Ï¥Î¤ì§÷¡A¦]¦¹³o¸Ìªº¤ì§÷§y¿nªº¯S§O¦h¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64174
+D2
+~
+~
+3 0 64176
+D3
+~
+~
+3 0 64171
+S
+#64176
+¦s¼C«Ç~
+		¦p¦P¦W¤l©Ò±Ô­zªº¡A³o¸Ì´N¬O±MªùÂ\©ñ¼Cªº¦a¤è¡A¥|©P¦U
+¦¡¦U¼Ëªº¼CÂ\©ñµÛ¡A¤£¹L¬Ý°_¨Ó³£¬O¬Û·í´¶³qªº¼C¡A¾U§Qªº¼C
+ÁöµM¦³¡A«o¨S¦³©Ò¿×ªºÄ_¼C¡A¬O³Q¦¬°_¨Ó¤F¶Ü¡H³o¸Ìªº¦Ç¹Ð¸ò
+Âøª«¯S§O¦h¡A¾Ú»¡¦³©Çª««I¤J«á¡A²ø¥D«K¤U¥O±N³o­Ó©Ð¶¡¼È®É
+ªº«ÊÂê¡A©Ò¥H¦³«Üªø¤@¬q®É¶¡¨S¦³¤H¥´²z¤F¡C
+~
+0 4|8|512|65536|1048576 1
+D0
+~
+~
+3 0 64175
+D2
+~
+~
+0 0 64177
+D3
+~
+~
+0 0 64172
+S
+#64177
+¦s¼C«Ç~
+		¦p¦P¦W¤l©Ò±Ô­zªº¡A³o¸Ì´N¬O±MªùÂ\©ñ¼Cªº¦a¤è¡A¥|©P¦U
+¦¡¦U¼Ëªº¼CÂ\©ñµÛ¡A¤£¹L¬Ý°_¨Ó³£¬O¬Û·í´¶³qªº¼C¡A¾U§Qªº¼C
+ÁöµM¦³¡A«o¨S¦³©Ò¿×ªºÄ_¼C¡A¬O³Q¦¬°_¨Ó¤F¶Ü¡H³o¸Ìªº¦Ç¹Ð¸ò
+Âøª«¯S§O¦h¡A¾Ú»¡¦³©Çª««I¤J«á¡A²ø¥D«K¤U¥O±N³o­Ó©Ð¶¡¼È®É
+ªº«ÊÂê¡A©Ò¥H¦³«Üªø¤@¬q®É¶¡¨S¦³¤H¥´²z¤F¡C
+~
+0 4|8|512|65536|1048576 1
+D0
+~
+~
+0 0 64176
+D3
+~
+~
+0 0 64173
+S
+#64178
+µL¯Êªº©Ð¶¡~
+		³o¸Ì¬O¥ÕµL¯Êªº©Ð¶¡¡AÀð¾À¤W±¾µÛ¤@§â¥Õ¦âªº¼C§@
+¬°¸Ë¹¢¡A§É¾Q¾a¦b¤@®ÇªºÀðÃä¡A¾ãÅé¬Ý°_¨Ó¬Û·íµÎ¾A¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64181
+D2
+~
+~
+3 0 64179
+S
+#64179
+¨«´Y~
+		¥_Ãä¸ò«nÃä³£¦U¦Û³q©¹¤@­Ó©Ð¶¡¡A¦èÃäªºÀð¾À¤W«h
+±¾¤F¤@§â¼C·í¸Ë¹¢¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64178
+D1
+~
+~
+0 0 64182
+D2
+~
+~
+3 0 64180
+S
+#64180
+µµ¶³ªº©Ð¶¡~
+		³oÃä¬O¿½µµ¶³ªº©Ð¶¡¡A¤j·§¸òµL¯Êªº©Ð¶¡¤]¨S¤°»ò¤£¦P¡C
+¥u¬O§â¸Ë¹¢¥Îªº¼C§ï¦¨¤F´X±iµe¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64179
+D1
+~
+~
+0 0 64183
+S
+#64181
+µL¯Êªº©Ð¶¡~
+		³o¸Ì¬O¥ÕµL¯Êªº©Ð¶¡¡A©Ð¶¡¤¤¥¡©ñ¸m¤F¤@±i®à¤l¡A¤W­±Â\
+©ñµÛ¯ù³ý¸òªM¤l¡AÁÙ¦³¤@±i´Ñ½L¡C
+~
+0 8|65536|1048576 1
+D2
+~
+~
+3 0 64182
+D3
+~
+~
+0 0 64178
+S
+#64182
+¨«´Y~
+		¥_Ãä¸ò«nÃä³£¦U¦Û³q©¹¤@­Ó©Ð¶¡¡AªFÃä¥i¥H¦^¨ì¤jÆU¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64181
+D1
+~
+~
+0 0 64185
+D2
+~
+~
+3 0 64183
+D3
+~
+~
+0 0 64179
+S
+#64183
+µµ¶³ªº©Ð¶¡~
+		³oÃä¬O¿½µµ¶³ªº©Ð¶¡¡A°£¤F®à¤l¤§¥~¡AÀð¤WÁÙ¦h¤F´X
+±iµe¡A¤j·§¬O¥Lªº¦¬ÂÃ§a¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64182
+D3
+~
+~
+0 0 64180
+S
+#64184
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¥|©P±¾º¡¤F
+¦U¦¡¦U¼Ëªº¼C¡A°£¤F¸Ë¹¢¤§¥~¡A¤j·§ÁÙ¦³¨º»ò¤@ÂI¬¯ïúªº
+·N¨ý§a¡C³o¸Ì¬O¤jÆUªº¦è¥_¤è¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64187
+D2
+~
+~
+0 0 64185
+S
+#64185
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¥|©P±¾º¡¤F
+¦U¦¡¦U¼Ëªº¼C¡A°£¤F¸Ë¹¢¤§¥~¡A¤j·§ÁÙ¦³¨º»ò¤@ÂI¬¯ïúªº
+·N¨ý§a¡C¦è¤è³q©¹¤@­Óªø´Y¡AªF¤è«h¦^¨ì¤jÆU¥¿¤¤¥¡¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64184
+D1
+~
+~
+0 0 64188
+D2
+~
+~
+0 0 64186
+D3
+~
+~
+0 0 64182
+S
+#64186
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¥|©P±¾º¡¤F
+¦U¦¡¦U¼Ëªº¼C¡A°£¤F¸Ë¹¢¤§¥~¡A¤j·§ÁÙ¦³¨º»ò¤@ÂI¬¯ïúªº
+·N¨ý§a¡C³o¸Ì¬O¤jÆUªº¦è«n¤è¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64185
+D1
+~
+~
+0 0 64189
+S
+#64187
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¦aªO¤WçEµÛ
+¬õ¦a´à¡Aªþªñ«hÂ\©ñµÛ´X±i´È¤l´£¨Ñ«È¤H¥ð®§¨Ï¥Î¡C²ø¥D
+´N¦b§Aªº¥k¤âÃä¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64190
+D2
+~
+~
+0 0 64188
+D3
+~
+~
+0 0 64184
+S
+#64188
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¦aªO¤WçEµÛ
+¬õ¦a´à¡Aªþªñ«hÂ\©ñµÛ´X±i´È¤l´£¨Ñ«È¤H¥ð®§¨Ï¥Î¡C¥k¤â
+Ãä¥i¥H¦^¨ì¤jÆU¥¿¤¤¥¡¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64187
+D1
+~
+~
+0 0 64191
+D2
+~
+~
+0 0 64189
+D3
+~
+~
+0 0 64185
+S
+#64189
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¦aªO¤WçEµÛ
+¬õ¦a´à¡Aªþªñ«hÂ\©ñµÛ´X±i´È¤l´£¨Ñ«È¤H¥ð®§¨Ï¥Î¡C¥kÃä
+³q©¹ªù¤f¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64188
+D1
+~
+~
+0 0 64192
+D3
+~
+~
+0 0 64186
+S
+#64190
+¦W¼C¤s²ø¤jÆU¤¤¥¡~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A«e¤èÂ\¤F¤@
+±i¤Ó®v´È¡AÀð¾À¤W«h±¾µÛ¤@§â¥´³yºë¬üªºÄ_¼C¡AÁöµM¦W¼C
+¤s²ø¥H¼C·í§@¸Ë¹¢«~¡A¤£¹L³o§â¼C¦ü¥G¨Ã¤£¬O¬°¤F¸Ë¹¢¦Ó
+¥´³y¥X¨Óªº¡H
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64208
+D1
+~
+~
+0 0 64194
+D2
+~
+~
+0 0 64191
+D3
+~
+~
+0 0 64187
+S
+#64191
+¦W¼C¤s²ø¤jÆU¤¤¥¡~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¨â®Ç¦³µÛ°ª
+Áqªº¬W¤l¡A¬W¤l¤W¥Î²Ó¥\ÀJ¤W¤F²Ó½oªº¹Ïµe¡C«e¤è¤£»·³B
+¦ü¥G´N¬O²ø¥Dªº¦ì¸m¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64190
+D1
+~
+~
+0 0 64195
+D2
+~
+~
+0 0 64192
+D3
+~
+~
+0 0 64188
+S
+#64192
+¦W¼C¤s²ø¤jÆU¤¤¥¡~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¨â®Ç¦³µÛ°ª
+Áqªº¬W¤l¡A¬W¤l¤W¥Î²Ó¥\ÀJ¤W¤F²Ó½oªº¹Ïµe¡C¨­«á«h¬O§A
+¹L¨Óªº¦ËªL¨«¹D¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64191
+D1
+~
+~
+0 0 64196
+D2
+~
+~
+0 0 64193
+D3
+~
+~
+0 0 64189
+S
+#64193
+¦ËªL¨«¹D~
+		³o¸Ì¬O¤@±øªøªøªº¨«¹D¡A®ÇÃäºØº¡¤F¦Ë¤l(Bamboo)¡A
+«á­±¬O§A¹L¨Óªº¼s³õ¡A«e¤è«h¬O¤jÆU¡C
+~
+0 65536|1048576 1
+E
+bamboo~
+¤@±Æ¤@±Æªº¦Ë¤lªø¦b³oÃä¡A§A·Q°Å¤@ÂI±a¦^¥h¶Ü¡H
+~
+D0
+~
+~
+0 0 64192
+D2
+~
+~
+0 0 64149
+>room_command cut p bamboo~
+	if roomvalue($0) == 0
+		echoat $n §A°Å¤U¤F¤@§â¦Ë¤l
+		echoaround $n $n°Å¤U¤F¤@§â¦Ë¤l
+		oload 64110 1 floor
+		modrvt v0 = 1
+	else
+		echoat $n ¦Ë¤l³£§Ö³Q©Þ¥ú¤F¡I
+	endif
+~
+>room_time 100~
+if rnplayer($) == 0
+        if roomvalue($0) == 1
+                purge all.bamboo
+                modrvt v0 = 0
+        endif
+endif
+~
+|
+S
+#64194
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¦aªO¤WçEµÛ
+¬õ¦a´à¡Aªþªñ«hÂ\©ñµÛ´X±i´È¤l´£¨Ñ«È¤H¥ð®§¨Ï¥Î¡C²ø¥D
+´N¦b§Aªº¥ª¤âÃä¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64197
+D2
+~
+~
+0 0 64195
+D3
+~
+~
+0 0 64190
+S
+#64195
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¦aªO¤WçEµÛ
+¬õ¦a´à¡Aªþªñ«hÂ\©ñµÛ´X±i´È¤l´£¨Ñ«È¤H¥ð®§¨Ï¥Î¡C¥ª¤â
+Ãä¦^¨ì¤jÆUªº¥¿¤¤¥¡¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64194
+D1
+~
+~
+0 0 64198
+D2
+~
+~
+0 0 64196
+D3
+~
+~
+0 0 64191
+S
+#64196
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¦aªO¤WçEµÛ
+¬õ¦a´à¡Aªþªñ«hÂ\©ñµÛ´X±i´È¤l´£¨Ñ«È¤H¥ð®§¨Ï¥Î¡C¥ªÃä
+¬O§A¶i¨Óªºªù¤f¡A¥kÃä¸ò«e¤è«hÄ~Äò©µ¦ù¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64195
+D1
+~
+~
+0 0 64199
+D3
+~
+~
+0 0 64192
+S
+#64197
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¥|©P±¾º¡¤F
+¦U¦¡¦U¼Ëªº¼C¡A°£¤F¸Ë¹¢¤§¥~¡A¤j·§ÁÙ¦³¨º»ò¤@ÂI¬¯ïúªº
+·N¨ý§a¡C³o¸Ì¬O¤jÆUªºªF¥_¤è¡C
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64198
+D3
+~
+~
+0 0 64194
+S
+#64198
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¥|©P±¾º¡¤F
+¦U¦¡¦U¼Ëªº¼C¡A°£¤F¸Ë¹¢¤§¥~¡A¤j·§ÁÙ¦³¨º»ò¤@ÂI¬¯ïúªº
+·N¨ý§a¡CªF¤è³q©¹¶ºÆU¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64197
+D1
+~
+~
+3 0 64201
+D2
+~
+~
+0 0 64199
+D3
+~
+~
+0 0 64195
+S
+#64199
+¦W¼C¤s²ø¤jÆU~
+		³o¸Ì¬O¦W¼C¤s²ø²ø¥D¤Þ¨£«È¤H¥Îªº¤jÆU¡A¥|©P±¾º¡¤F
+¦U¦¡¦U¼Ëªº¼C¡A°£¤F¸Ë¹¢¤§¥~¡A¤j·§ÁÙ¦³¨º»ò¤@ÂI¬¯ïúªº
+·N¨ý§a¡C³o¸Ì¬O¤jÆUªºªF«n¤è¡AÂ\©ñµÛ´X­Óªá²~·í¸Ë¹¢¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64198
+D3
+~
+~
+0 0 64196
+S
+#64200
+¶ºÆU~
+		³o¸Ì¬O²ø¤º¹²¤H¥ÎÀ\ªº¦a¤è¡A²{¦b¤]ÁÙ¦³¤T¤T¨â¨â
+ªº¹²¤H¦b³o¸Ì¦Y§N¶º¡C©Î³\§A¥i¥H¸ò¥L­Ì­n¤@¸J¡H
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64201
+S
+#64201
+¶ºÆU~
+		³o¸Ì¬O²ø¥D©Û«Ý«È¤Hªº¶ºÆU¡A²ø¥D¦pªG­n¸ò«È¤H»E
+À\¡A´N·|·|¦b³oÃä¥ÎÀ\¡A¤£¹L¡A¦]¬°²{¦b¤£¬O¥ÎÀ\®É¶¡
+¡A®à¤l¤W­±¨Ã¨S¦³µæÀa¡C¥k¤è¥i¥H³q©¹¼p©Ð¡A¥ªÃä«h¦^
+¨ì¤jÆU¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64200
+D1
+~
+~
+0 0 64204
+D2
+~
+~
+0 0 64202
+D3
+~
+~
+3 0 64198
+S
+#64202
+¶ºÆU~
+		³o¸Ì¬O²ø¥D¥­±`¦Y¶ºªº¦a¤è¡A¤ñ¸û°_©Û«Ý«È¤HªºÀ\
+ÆU¡A³o¸ÌÅã±o¾ë¯Àªº¦h¡A¦ý¬O¥i±¤ªº¬O¡Ð¡Ð¤´µM¨S¦³µæ
+Àa¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64201
+S
+#64203
+Â³­Ü~
+		¦]¬°¤s²ø¦ì³B°ª³B¡A¥­±`°£¤F¤s²øªº¹²¤H·|ºØµæ¤§¥~
+¡A½_¦Ì¥H¤Î¨ä¥Lªº­¹«~«h»Ý­n©e°U¥L¤H±q¤s¤U¹B¤W¨Ó¡A¦ý
+¬O¦p¤Ñ¦â¤£¨Î´N·|¯Ô»~®É¶¡¡A¦]¦¹³oÃä³q±`³£·|©ñµÛ¤£¤Ö
+ªºÀx³ÆÂ³­¹¡C
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64204
+S
+#64204
+¼p©Ð~
+		²ø¥D¤£¥u¹ï¼C¬D­ç¡A¹ï­¹ª«¤]¦³¿W¯Sªº­n¨D¡A©Ò¥H¤s
+²øªº¼p®v³£¬O¥~¸u°ª©úªº®v¤÷¨Ó´x¼pªº¡C¥ªÃä¥i¥H¦^¨ìÀ\
+ÆU¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64203
+D2
+~
+~
+0 0 64205
+D3
+~
+~
+0 0 64201
+S
+#64205
+¼p©Ð~
+		³o¸ÌÂ\º¡¦U¬O¦U¼Ëªº¸J½L¼p¨ã¡AÁÙ¦³´X­Ó¹²¤H¦b³oÃä
+¬~¸J¡A¸J½L³£¬O¤Wµ¥ªº²¡¾¹¡A·íµM¤]¬O±q¤s¤U¹B¤W¨Óªº¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64204
+S
+#64206
+¥Û¤s~
+		§Aª¦¤W¤s²ø«á°|ªº¥Û¤s¡A¥|©P§Gº¡¤F¯BµÓ¡A±ß¤Wªº®É­Ô
+¦p¦³¬P¥ú¡A³o¸Ì§óÅã±o®öº©µL¤ñ¡C¦èÃä³q©¹¤s²øªº¤ô¦À¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64207
+D3
+~
+~
+0 0 64218
+S
+#64207
+°j´Y~
+		³o¸Ì¬O¤s²ø«á°|ªº°j´Y¡A¥ª¤è¥i¥H³q©¹¥Û¤s¡A¥k¤è«h¦^
+¨ì¨«´Y¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64208
+D3
+~
+~
+0 0 64206
+S
+#64208
+¨«´Y~
+		³o¸Ì¬O¤s²ø«á°|ªº¨«´Y¡A¥ª¥k¤è¥i¥H³q©¹°j´Y¡A«á¤è¬O
+§A¹L¨Óªº¤pªù¡A«e¤è¦ü¥G¬O²ø¥D®a¤Hªº©Ð¶¡¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64209
+D3
+~
+~
+0 0 64207
+D0
+~
+~
+0 0 64212
+D2
+~
+~
+0 0 64190
+S
+#64209
+°j´Y~
+		³o¸Ì¬O¤s²ø«á°|ªº°j´Y¡A¥ª¤è¥i¥H¦^¨ì¨«´Y¡A¥k¤è«h³q
+©¹¤@­Ó©Ð¶¡¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64210
+D3
+~
+~
+0 0 64208
+S
+#64210
+²½¾Â~
+		³o¸Ì¬O²ø¤ºªº²½¾Â¡A¥¿¤¤¥¡Â\µÛ¼C¯«Kentionªº¯«¹³
+¡A¼C¯«¹³ªº¥ª¤â®³µÛ¤@¨÷®Ñ¡A¥k¤â«h®³µÛ¤@§â¼C¡A¤£¹L
+§A¥Ø¥ú¤@Âà¡Aµo²{´N¦b¼C¯«¹³ªº±×«á¤èÂ\µÛ¤@´L®³µÛ©_
+©ÇªZ¾¹ªº¤k¯«¹³¡A¤k¯«¹³ªºªí±¡«h¦³¦p¦B³·¤@¯ë§Nºz¡A
+¦ÓªZ¾¹ªº«eºÝ¥¿¦n³»¦b¼C¯«¹³­I«á¡A³o¦³¤°»ò¯S§Oªº§t
+·N¶Ü¡H
+~
+0 8|1024|65536|1048576 6
+D3
+~
+~
+0 0 64209
+S
+#64211
+¨«´Y~
+		³oÃäªºÀð¾À¤´µM¨Ï¥Î¼C¨Ó·í¸Ë¹¢¡A¦ý¬O¥|¶gªºÂ\³]©úÅã
+°ª¯Å¤F°_¨Ó¡A«e¤è³q©¹²ø¥Dªº©Ð¶¡¡A¥k¤è¥i¥H¦^¨ì¨«´Y¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64214
+D1
+~
+~
+0 0 64212
+S
+#64212
+¨«´Y~
+		³oÃäªºÀð¾À¤´µM¨Ï¥Î¼C¨Ó·í¸Ë¹¢¡A¦ý¬O¥|¶gªºÂ\³]©úÅã
+°ª¯Å¤F°_¨Ó¡A§A­±«eªºÀð¾À·N¥~ªº¨S¦³¥ô¦óªº¸Ë¹¢«~¡A¦Ó¥B
+¯»¨êªº¯S§O°®²b¡C
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64213
+D3
+~
+~
+0 0 64211
+D2
+~
+~
+0 0 64208
+S
+#64213
+¨«´Y~
+		³oÃäªºÀð¾À¤´µM¨Ï¥Î¼C¨Ó·í¸Ë¹¢¡A¦ý¬O¥|¶gªºÂ\³]©úÅã
+°ª¯Å¤F°_¨Ó¡A«e¤è³q©¹¬M¤ëªº©Ð¶¡¡A¥ª¤è¥i¥H¦^¨ì¨«´Y¡C
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64215
+D3
+~
+~
+0 0 64212
+S
+#64214
+²ø¥Dªº©Ð¶¡~
+		³o­Ó©Ð¶¡¥X¥G·N¥~ªº¾ë¯À¡A°£¤F®a¨ã¤§¥~¨S¦³¥ô¦ó¨ä¥L
+ªºÂ\³]¡A­ì¥»ªºÂù¤H§É¤W¥u³Ñ¤U¤@­ÓªEÀY¡A¬Ý°_¨Ó§óÅã±o©t
+±I¡C
+~
+0 8|65536|1048576 1
+D2
+~
+~
+3 0 64211
+S
+#64215
+¬M¤ëªº©Ð¶¡~
+		§AÂô¤J¤F¬M¤ëªº©Ð¶¡¸Ì­±¡A¥|©P¦Êº¡¤F¦U¦¡¦U¼Ëªº¸Ë¹¢
+«~¡A®Þ§©¥x¤W¤]©ñµÛ¤@­±¤j»ÉÃè¡A®à¤W·íµM¦³¤k«Ä¤l®aªº¯Ú
+¯×¸ò®Þ¤l¡A¤@®ÇªºÂd¤lÁöµM¨S¦³¶}µÛ¡A¤£¹L§A²q·Q¨º¤j·§¬O
+¦çÂd§a¡H
+~
+0 8|65536|1048576 1
+D2
+~
+~
+3 0 64213
+>room_command search p underwear~
+	if is_qmark($n) == swordcottage 100004
+		if insameroom(chin-swordcottage)
+			echoat $n ¥D¤HÁÙ¦b§A«ç»ò°½¡I
+		else
+			echoat $n ¦bªFÂ½¦è§ä¤§«á¡A§A§ä¥X¤@¥ó¤º¦ç...
+			echoaround $n $N¦bÂ½½c­ËÂd¤§«á¡A¦n¹³µo²{¤F¤°»ò...
+			mod_qmark $n swordcottage v0 = 5
+			oload 64114 36 floop
+		endif
+	else
+		echoat $n §A·Q·F¤°»òÃa¨Æ°Ú¡H
+	endif
+~
+|
+S
+#64216
+ÂÃ¼C«Ç~
+		³o¸Ì¦s©ñªºªG¯u¬O¦n¼C¡A¤£¦ý­«¶q«ê·í¡A¥~«¬¤]¬Û·íªº
+Àu¶®¡A¤£¹L¬°¤°»ò·|¯S·NÂÃ¦b³oºØ¦a¤è©O¡H
+~
+0 8|65536|1048576 1
+D5
+~
+~
+3 0 64217
+S
+#64217
+¶Â·tªº³q¸ô~
+		§A¥´¶}¤FÂÃ¼C«Ç¸Ì­±¶Â·tªº³q¸ô¡A³o¸Ì¬Û·íªº¯U¤p¡A³Ì
+¦h¥u¯à³q¹L¨â­Ó¤H¡A³q¹D«ùÄò©¹«e¤è©µ¦ù¡C
+~
+0 1|4|8|16|512|65536|1048576 1
+D4
+~
+~
+3 0 64216
+D0
+~
+~
+0 0 64243
+S
+
+#64218
+´òªyÃä½t~
+		³o­Ó¤ô¦À¡A©Î³\À³¸Ó»¡´òªy¡A¨Ã¤£¬O¤s²ø©Ò³y¡A¦Ó¬O«Ø¥ß
+¤s²ø¤§®É§â¥¦¯Ç¤J¤s²øªº½d³ò¤º¡A¾ã­Ó´òªy¬Û·íªº¼s¤j¡A©¹ªF
+¥i¥H¦^¨ì¥Û¤s¡A©¹¦è«h¬O´òªy¡C
+~
+0 65536|1048576 2
+D1
+~
+~
+0 0 64206
+D3
+~
+~
+0 0 64219
+S
+
+#64219
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D1
+~
+~
+0 0 64220
+D2
+~
+~
+0 0 64222
+D5
+~
+~
+0 0 64228
+S
+#64220
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D1
+~
+~
+0 0 64221
+D2
+~
+~
+0 0 64223
+D3
+~
+~
+0 0 64219
+D5
+~
+~
+0 0 64229
+S
+#64221
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D1
+~
+~
+0 0 64218
+D2
+~
+~
+0 0 64224
+D3
+~
+~
+0 0 64220
+D5
+~
+~
+0 0 64230
+S
+#64222
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64219
+D1
+~
+~
+0 0 64223
+D2
+~
+~
+0 0 64225
+D5
+~
+~
+0 0 64231
+S
+#64223
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64220
+D1
+~
+~
+0 0 64224
+D2
+~
+~
+0 0 64226
+D3
+~
+~
+0 0 64222
+D5
+~
+~
+0 0 64232
+S
+#64224
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64221
+D2
+~
+~
+0 0 64227
+D3
+~
+~
+0 0 64223
+D5
+~
+~
+0 0 64233
+S
+#64225
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64222
+D1
+~
+~
+0 0 64226
+D5
+~
+~
+0 0 64234
+S
+#64226
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64223
+D1
+~
+~
+0 0 64227
+D3
+~
+~
+0 0 64225
+D5
+~
+~
+0 0 64235
+S
+#64227
+´òªy~
+		³o¸Ì¬O´òªyªº¥¿¤W¤è¡A´ò¸Ìªº¤ô¬Û·í²Mº«¡A¬Ýªº¨£¦³³\¦h
+ªº³½½¼¡CÁöµM¦p¦¹¡A§AÁ`·PÄ±¨ì³o­Ó´òªy´²µoµÛ¤@ªÑ²§¼ËªºÀ£
+­¢¤O...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64224
+D3
+~
+~
+0 0 64226
+D5
+~
+~
+0 0 64239
+S
+#64228
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D1
+~
+~
+0 0 64229
+D2
+~
+~
+0 0 64231
+D4
+~
+~
+0 0 64219
+D5
+~
+~
+0 0 64237
+S
+#64229
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D1
+~
+~
+0 0 64230
+D2
+~
+~
+0 0 64232
+D3
+~
+~
+0 0 64228
+D4
+~
+~
+0 0 64220
+D5
+~
+~
+0 0 64238
+S
+#64230
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16 8
+D2
+~
+~
+0 0 64233
+D3
+~
+~
+0 0 64229
+D4
+~
+~
+0 0 64221
+S
+#64231
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64228
+D1
+~
+~
+0 0 64232
+D2
+~
+~
+0 0 64234
+D4
+~
+~
+0 0 64222
+D5
+~
+~
+0 0 64239
+S
+#64232
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64229
+D1
+~
+~
+0 0 64233
+D2
+~
+~
+0 0 64235
+D3
+~
+~
+0 0 64231
+D4
+~
+~
+0 0 64223
+D5
+~
+~
+0 0 64240
+S
+#64233
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64230
+D2
+~
+~
+0 0 64236
+D3
+~
+~
+0 0 64232
+D4
+~
+~
+0 0 64224
+S
+#64234
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64231
+D1
+~
+~
+0 0 64235
+D4
+~
+~
+0 0 64225
+S
+#64235
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64232
+D1
+~
+~
+0 0 64236
+D3
+~
+~
+0 0 64234
+D4
+~
+~
+0 0 64226
+S
+#64236
+¤ô©³~
+		³o¸Ì¬O´òªyªº¤ô¤¤¡A¥|³B³£¬O³½¡A¥ú½u¦b³oÃä¤]ÁÙºâ©ú«G¡A
+¥u¬O²§¼ËªºÀ£­¢·P¶V¨Ó¶V¨I­«...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64233
+D3
+~
+~
+0 0 64235
+D4
+~
+~
+0 0 64227
+S
+#64237
+²`¤ô~
+		§A¼ç¶i§ó²`ªº¤ô¤¤¡A¥ú½u¦b³oÃäºCºCªº®ø¥¢¤F¡A¥|©Pªº³½
+¸s¤]ºCºCªº´î¤Ö¡A¥u³Ñ¤U¨º­Ó©_©Çªº·PÄ±´Ý¦sµÛ¡C
+~
+0 1|8|16|65536 8
+D1
+~
+~
+0 0 64238
+D2
+~
+~
+0 0 64239
+D4
+~
+~
+0 0 64228
+S
+#64238
+²`¤ô~
+		§A¼ç¶i§ó²`ªº¤ô¤¤¡A¥ú½u¦b³oÃäºCºCªº®ø¥¢¤F¡A¥|©Pªº³½
+¸s¤]ºCºCªº´î¤Ö¡A¥u³Ñ¤U¨º­Ó©_©Çªº·PÄ±´Ý¦sµÛ¡C
+~
+0 1|8|16|65536|1048576 8
+D2
+~
+~
+0 0 64240
+D3
+~
+~
+0 0 64239
+D4
+~
+~
+0 0 64232
+S
+#64239
+²`¤ô~
+		§A¼ç¶i§ó²`ªº¤ô¤¤¡A¥ú½u¦b³oÃäºCºCªº®ø¥¢¤F¡A¥|©Pªº³½
+¸s¤]ºCºCªº´î¤Ö¡A¥u³Ñ¤U¨º­Ó©_©Çªº·PÄ±´Ý¦sµÛ¡C
+~
+0 1|8|16|65536|1048576 8
+D0
+~
+~
+0 0 64237
+D1
+~
+~
+0 0 64240
+D4
+~
+~
+0 0 64231
+S
+#64240
+²`¤ô~
+		§A¼ç¶i§ó²`ªº¤ô¤¤¡A¥ú½u¦b³oÃäºCºCªº®ø¥¢¤F¡A¥|©Pªº³½
+¸s¤]ºCºCªº´î¤Ö¡A¥u³Ñ¤U¨º­Ó©_©Çªº·PÄ±´Ý¦sµÛ¡C
+~
+0 1|8|16|65536|1048576 8
+D0
+~
+~
+0 0 64238
+D3
+~
+~
+0 0 64239
+D4
+~
+~
+0 0 64232
+D5
+~
+~
+0 0 64241
+S
+#64241
+¬}¸]«e~
+		§A¦b¤@­Ó¥¨¤jªº¬}¸]«e­±¡A¨ººØ²§¼Ëªº·PÄ±´N¦b²´«e¤F¡C
+¬}¸]¬Ý°_¨Ó«Ü¤p¡A¤j·§¥u¦³¤@­Ó¤H¯à¶i¥h¡C
+~
+0 1|8|16|65536|1048576 8
+D0
+~
+~
+0 0 64242
+D4
+~
+~
+0 0 64240
+S
+#64242
+¬}¸]~
+    ¤Ñ°Ú¡I¥X²{¦b§A­±«eªº¬O¤@ÀY¥¨¤jªºµëÀs¡I³o¤U¥i¥H¸ÑÄÀ
+¬°¤°»ò³oÃä´X¥G¨S¦³³½ªº¦s¦b¡A¦]¬°³£³Q·í¦¨­¹ª«¤F¡I
+~
+0 1|8|16|512|65536|1048576 8
+D2
+~
+~
+0 0 64241
+S
+#64243
+¶Â·tªº³q¸ô~
+		³o¤@±ø¼éÀãªº³q¸ôÀ³¸Ó¤£¬O¤ÑµM§Î¦¨ªº¡A¥|©PªºÀð¾ÀÁÙ¦³
+«õ±¸ªº²ª¸ñ¡A¬O¤£¬O¤°»ò®É­Ô¯d¤U¨Óªº¯µ±K³q¹D©O¡H
+~
+0 1|4|8|16|512|65536|1048576 1
+D2
+~
+~
+0 0 64217
+D0
+~
+~
+0 0 64244
+S
+#64244
+¦º¸ô~
+		³q¹D¦b³o¸Ì°±¦í¡A²´«e¥u³Ñ¤U¤@¤j°ï±Y¸¨ªº©¥¥Û¡A¬Ý¨Ó¬O
+µLªk¦A©¹«e¨«¤F¡A¤£ª¾¹D¦³¤°»ò¤èªk¥i¥H¹L¥h¡H¥Îª¦ªº¶Ü¡H
+~
+0 1|4|8|16|512|65536|1048576 1
+D2
+~
+~
+0 0 64243
+>room_command climb~
+	echoat $n §A¨ì³Bª¦§rª¦¤]ª¦¤£¨ì¨ºÃä¥h¡A³o¬}¸]´N³o»ò¤j¦Ó¤wªü¡H
+	echoaround $n $n¹³¾Àªê¤@¼Ë¦b¸¨¥Û¤W¨ì³B¶Ãª¦¡C
+	echo ¸¨¥Ûªº«á­±¶Ç¨Ó¤@°}Án­µ¡G³o¸ÌÁÙ¨S¦³¿ìªk¹L¥h¡A§Ö¦^¥h§a¡C
+~
+|
+S
+#64245
+³q¸ôªº¥t¤@ÀY~
+		§A±q¸¨¥Û³Bª¦¤F¹L¨Ó¡A­n¦^¥h¤]¥u¯àª¦¦^¥h¡C«e¤è³q©¹¤@
+­Ó¿ñÁïªº¥­¥x¡C
+~
+0 1|4|8|16|512|65536|1048576 1
+D0
+~
+~
+0 0 64245
+>room_command climb~
+	echoat $n §A¶¶µÛ¸¨¥Ûª¦¤F¦^¥h
+	echoaround $n $n¶¶µÛ¸¨¥Ûª¦¤F¦^¥h
+	transfer $n 64245
+~
+|
+S
+#64246
+¤p®|~
+    §Aª¦¹L¤g©Y«áµo²{¤@±ø«D±`Áô±Kªº¤p®|¡A¥ª¤âÃä
+¬O§A¨Óªº¤g°ï¡A¥kÃäªº¤s¾À¤W¦³­Ó¶È¯à®e¯Ç¤@¤Hªº¬}
+¥Þ¡A¸Ì­±ÁÙ¦³¨Ç³\ªº´c¯ä¡C
+~
+0 4|512 1
+D3
+~
+~
+0 0 64103
+D0
+~
+~
+0 0 64247
+>room_command climb up~
+		echoat $n §Ï©»¦³¤H¦b«á­±±À§A¤@§â¤@¯ë¡A§A»´ÃPªºª¦¹L¤F¤g°ï
+		echoaround $n $n¦n¹³³Q¤Hµ¹¥á¹L¥h¤@¯ë¡A®ø¥¢¦b¤g°ïªº¥t¥~¤@Ãä¡I
+		transfer $n 64103
+~
+|
+S
+#64247
+¶Â·tªº¬}¥Þ~
+		§A½ñ¤J¬}¥Þ¡AÅå¨£¬}¥Þ¤º¦³¤@¨ã¬\°©¡I¬\°©ªº¤â
+¸}¬Ò³QÅKÁåÂê¦º¦bÀð¤W¡A¯Ý«eªº¦Ø°©«h¬O¸H¤F¤@¤j¶ô
+¡A§Ï©»¦º«eÁÙ³QÄY¦D«þ¥´¹L¡I¥|©P«D±`ªº­â¶Ã¡A°£¤F
+°©ÀY¡AÁÙ¦³¤@¨Ç¥¬¤ù¸ò¯È±iªº¸H¤ù¡C
+~
+0 1|4|8|16|512|65536|1048576 1
+D3
+~
+~
+0 0 64246
+>room_command search p around~
+	if is_qmark($n) == jd_liu 100002
+		echoat $n §A§â¦a¤Wªº¥¬¸ò°©ÀYÂ½¶}¨Ó...
+		echoat ¦b°©ÀYªº¤U­±§Aµo²{¤@«Ê«Ê¥Ö¦ÑÂÂªº«H¡I
+		oload 11144 36 floor
+		mod_qmark $n jd_liu v0 = 3
+	else
+		§A¥uµo²{¤@°ï°©ÀY¦Ó¤w¡C
+	endif
+~
+|
+S
+#0
+
+
+#RESETS
+
+M 0 64101 1 64122 ;¨ôÅb¤s
+E 0 64116 0 5	  ;°¨»o
+M 0 64102 1 64190 ;¯³¹ý¥Í
+E 0 64100 65536|1048576 16    ;Å±³»¼C
+E 0 64121 0 5	  ;ªø³T
+E 0 64131 0 14	  ;¦b¤ô¤@¤è
+M 0 64103 1 64190 ;¶³±qÀs
+E 0 64104 0 16	  ;Às¬uÄ_¼C
+E 0 64117 0 5	  ;ªø³T
+M 0 64104 1 64192 ;§õ¶h¤Z
+E 0 64116 0 5	  ;°¨»o
+M 0 64105 1 64189 ;¥ÕµL¯Ê
+E 0 64118 0 16	  ;«CÁ÷¼C
+E 0 64117 0 5	  ;ªø³T
+M 0 64106 1 64198 ;¿½µµ¶³
+E 0 64118 0 16	  ;«CÁ÷¼C
+E 0 64117 0 5	  ;ªø³T
+M 0 64107 1 64206 ;¯³¬M¤ë
+E 0 64130 0 3	  ;¯[¼þ¤ë¹¢
+E 0 64112 0 5	  ;µ·¦ç
+M 0 64108 1 64134 ;¤ý«Tºû
+E 0 64111 0 5	  ;¥¬¦ç
+M 0 64109 3 64167 ;§Ì¤l
+E 0 64120 65536|1048576 16	  ;ÅK¼C
+E 0 64111 0 5	  ;¥¬¦ç
+M 0 64109 3 64169 ;§Ì¤l
+E 0 64120 65536|1048576 16	  ;ÅK¼C
+E 0 64111 0 5	  ;¥¬¦ç
+M 0 64110 2 64127 ;¹²¤H
+E 0 64111 0 5	  ;¥¬¦ç
+E 0 64113 0 8	  ;¥¬¹u
+M 0 64110 2 64132 ;¹²¤H
+E 0 64111 0 5	  ;¥¬¦ç
+E 0 64113 0 8	  ;¥¬¹u
+M 0 64110 2 64144 ;¹²¤H
+E 0 64111 0 5	  ;¥¬¦ç
+E 0 64113 0 8	  ;¥¬¹u
+M 0 64111 1 64200 ;¹²¤H(­¹)
+E 0 64111 0 5	  ;¥¬¦ç
+E 0 64113 0 8	  ;¥¬¹u
+M 0 64133 4 64157	;¼C«È
+E 0 64120 65536|1048576 16	  ;ÅK¼C
+M 0 64135 3 64155	;«L¤k
+E 0 64120 65536|1048576 16	  ;ÅK¼C
+M 0 64138 1 64137	;³¯¬î«B
+M 0 64120 1 64242 ;µëÀs
+E 0 64132 0 5     ;Åì¤ù
+E 0 64133 0 16	  ;¤ú¾¦
+M 0 64150 1 64210 ;¯«¹³
+M 0 64132 1 64172	;»ø«Í
+M 0 64137 5 64234	;¤ô°­
+
+S
+#$

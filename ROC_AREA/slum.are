@@ -1,0 +1,6524 @@
+#AREADATA
+Name        ±_¥Þ³h¥Á°Ï~
+Identity    slum~
+Builders    Neversay~
+Translator  ----~
+Modifier    ----~
+VNUMs	      9400 9499
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#9400
+libei-slum~
+³h¥Á¸]¤§¤ý§Q«ô(Libei)~
+Áà­®¦Ü·¥ªº³h¥Á°Ï¤§¤ý§Q«ô(Libei)Å¸§Ý¦a¬ÝµÛ§A¡C
+~
+¤@¦ìÁà­®¤£³ôªº¦ÑÀY¤l¡A´¤µÛÏ^§ú¡A¯dµÛ¤f¤ô¡AÅ¸§Ý¦a¬ÝµÛ§A¡A¥L¬O³o­Ó°Ï
+°ìªº¦a¤U²ÎªvªÌ¡A¤]³\§A¥i¥H¦V¥L­n¤@¥÷¤u§@(job)¨Ó§@¡C
+~
+1|2|64|2048|67108864 8|32|128|512 0 S
+1 700 300 10d10+-150 0d-150+0
+-1 0
+0 8 1
+R Human~
+C 2
+P 8
+>fight_prog 100~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell ¤£­n´Û¤H¤Ó¬Æ¡I
+    	c 'magic missile' $n 
+  endif
+  if rand(60)
+  	say [1;36m®£---Äß---ªº---Á`---©M---¡I[0m
+  	c 2 'magic missile' $n
+  	mpechoat $n §A¤ß¤¤¬ðµM«_¥X¤@ªÑ²ö¦Wªº®£Äß¡I
+  	mpforce $n flee
+  	mpforce $n flee
+  	mpforce $n flee
+  endif
+~
+>all_greet_prog 100~
+  if is_qmark($n) == slum_all_enemy
+    	say §A­n¬°§Aªº¼É¦æ¥I¥X¥N»ù¡I
+    	mpkill $n
+    	break
+  endif
+  if is_qmark($n) != slum_libei_quest
+  or is_qmark($n) == slum_libei_quest 300001
+    	mpadd_qmark $n slum_libei_quest -1 0 0 1 0 1
+    	say Åwªï¥úÁ{±_¥Þ¡A«_ÀIªÌ¡A§A»Ý­n¤u§@(job)¶Ü¡H
+    	break
+  endif
+  if level($n) >= 12
+    	sigh
+    	say ¤k¨à§r......
+  endif
+~
+>talk_prog topic~
+  if is_qmark($n) != slum_libei_quest
+  	mpadd_qmark $n slum_libei_quest -1 0 0 1 0 1
+ 	say §A¦n§r¡A«_ÀIªÌ¡A·Q­n§ä¤u§@(job)¶Ü¡H
+	break
+  endif
+  if is_qmark($n) > slum_libei_quest 300001
+	say ¦n¦n§V¤O§¹¦¨¥ô°È§a¡C
+	break
+  endif
+  if is_qmark($n) == slum_libei_quest
+	if is_qmark($n) & slum_libei_quest 100512
+      		say ¯u¬O¤Ó·PÁÂ§A¤F¡A±_¥Þªº­^¶¯$n¡C
+		break
+	endif
+	if is_qmark($n) & slum_libei_quest 100256
+	        say °Ú¡A·PÁÂ§A¯}°£¤F§Ú¤k¨à¨­¤Wªº¶A©G¡A$n¡C
+		break
+	endif
+	if is_qmark($n) & slum_libei_quest 100128
+	        say ÁÂÁÂ§A±Ï¤F§Ú°ß¤@ªºÄ_¨©¡A±_¥Þªº­^¶¯$n¡C
+		break
+	endif
+	if is_qmark($n) & slum_libei_quest 100002
+	        say ·Ç³Æ¦n­n¬°§Ú¤u§@(job)¤F¶Ü¡H
+		break
+	endif
+  endif
+~
+>talk_prog job~
+  if is_qmark($n) == slum_libei_nojob
+    	say Ãi´kªÌ¡Iµ¥§Ú®ð®ø¤F¦A»¡§a¡I
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300510
+    	say ¥ý§â§Ú¥æ¥Nªº¨Æ±¡¿ì§¹¦A»¡§a¡C
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 100512
+    	say °Ú¡A§A¤w¸g§¹¦¨§Ú¯àµ¹§Aªº©Ò¦³¥ô°È¤F¡AÁÂÁÂ§A¤F¡A«_ÀIªÌ¡C
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 100002
+    	if level($n) >= 12
+      		if is_qmark($n) & slum_libei_quest 100128
+        		say /*save slum1*/
+        		say /*mpmod_qmark $n slum_libei_quest v2 | 256*/
+        		say /*mpmod_qmark $n slum_libei_quest v1 | 1*/
+        		say /*remove curse use eilien's qmark*/
+        		say /*mpadd_qmark $n slum_libei_saveslum -1 1 0 0 0 1*/
+        		break
+      		endif
+      		if is_qmark($n) & slum_libei_quest 100002     
+        		mpechoat $n $I¬ðµM¥HÄYµÂªº²´¥ú¬ÝµÛ§A¡C
+        		mpcallout 1 say «_ÀIªÌ§r¡A§A¥iª¾¥¢¥h»PÀò±oªºµh­W¡H
+        		mpcallout 1 mpoload 9425 1
+        		mpcallout 2 give secret $n
+        		mpcallout 3 mpechoat $n $I§CÁn»¡¡G¡u¥h§a¡A«_ÀIªÌ¡A³o­Ó¥ô°È§Ú¥u¦³«H¥ô§A¤F¡C¡v
+        		mpcallout 3 mpmod_qmark $n slum_libei_quest v2 | 128
+        		mpcallout 3 mpmod_qmark $n slum_libei_quest v1 | 1
+        		mpcallout 3 mpadd_qmark $n slum_libei_eilien -1 1 0 0 0 1
+      		endif
+      		break
+    	endif
+    	say ³Ìªñ¦~¬ö¤j¤F¡A¤£¤j·RÁ¿ªø½g¤j½×......
+    	mpechoat $n $I±N¤â¦ù¶i³S¤l¸Ì¡A¶}©l§äªF¦è......
+    	if rand(20)
+      		mpoload 9420 1
+      		mpmod_qmark $n slum_libei_quest v2 | 4
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	if rand(25)
+      		mpoload 9421 1
+      		mpmod_qmark $n slum_libei_quest v2 | 16
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	if rand(33)
+      		mpoload 9422 1
+      		mpmod_qmark $n slum_libei_quest v2 | 64
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	if rand(50)
+      		mpoload 9423 1
+      		mpmod_qmark $n slum_libei_quest v2 | 8
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	mpoload 9424 1
+    	mpmod_qmark $n slum_libei_quest v2 | 32
+    	mpcallout 1 mpcall job_1 $n
+    	break
+  endif
+  mpadd_qmark $n slum_libei_quest -1 1 0 0 0 1
+  mpmod_qmark $n slum_libei_quest v2 | 2
+  mpechoat $n $I¸C°_¤@°¦²´¡A¥ª¥k¥´¶q§A......
+  say ¶â¡A§Ú¬Ý§A¸ê½èÁÙ¤£¿ù¡AÀ³¸Ó¬O¥i¥H°U¥I­«¥ôªº¤H¡C
+  say ³o¼Ë§a¡A§A¥ý¨ì¤W­±¡A§ä¨Ì´¶¦è¶©(epsilon)¡A­n¥L¸ò§A¤¶²Ð±_¥Þªº
+  say ¤j²¤¦a²zÀô¹Ò(environment)§a¡I
+  mpecho $I¤S·Q¤F¤@¤U......
+  mpcallout 1 say ¦pªGÅ¥§¹¤¶²Ð¡A°O±o¦^¨Ó³ø³Æ(complete)¤@Án¡C
+~
+>defun_prog job_1~
+      say ³o«Ê«H®³¥h§a¡A¸Ì­±¤w¸g¸Ô²Ó¥æ¥N¤@¤Á¤F¡C
+      give mail $n
+      break
+~
+>talk_prog complete~
+  if is_qmark($n) & slum_libei_quest 100002
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300002
+    	if is_qmark($n) & slum_libei_quest 200002
+      		mpmod_qmark $n slum_libei_quest v0 | 2
+      		mpmod_qmark $n slum_libei_quest v1 = 0
+      		mpmod_qmark $n slum_libei_quest v2 = 0
+      		say «Ü¦n¡A¬Ý¨Ó§A¤w¸g¦³´À§Ú¿ì¨Æªº¯à¤O»P»{ª¾¤F¡A²{¦b¡A¦pªG§A»Ý­n
+      		say ¤u§@(job)¡A´N¸ò§Ú»¡§a¡C
+      		mpexp $n 200
+      		mpgold $n 3000
+    	endif
+  endif
+~
+>talk_prog restart~
+  mpechoat $n §A¸ò$I¨ú®ø¥¿¦b¶i¦æ¤¤ªº¥ô°È¡C
+  mpechoaround $n $N¸ò$I¨ú®ø¥ô°È¡C
+  if is_qmark($n) == slum_libei_deny
+    	say ¤£¦æ¡A§A­«·s¥ô°ÈªºÀW²v¤ÓÀWÁc¤F¡Aµ¥¤@¤U¦A»¡§a¡C
+    	say §Ú¤£·|¶±¥ÎÃi´kªÌªº¡C
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300124
+    	mpmod_qmark $n slum_libei_quest v2 r 124
+	mpdel_qmark $n slum_str_quest
+	mpdel_qmark $n slum_dex_quest
+	mpdel_qmark $n slum_int_quest
+	mpdel_qmark $n slum_wis_quest
+	mpdel_qmark $n slum_con_quest
+    	mpmod_qmark $n slum_libei_quest v1 = 0
+    	mpadd_qmark $n slum_libei_deny 10 1 0 0 1 1
+    	say ¦n¡A¥ô°È­«·s¶}©l¡C
+  endif
+  if is_qmark($n) & slum_libei_quest 300128
+    	mpmod_qmark $n slum_libei_quest v2 r 128
+	mpdel_qmark $n slum_libei_eilien
+    	say ¦n¡A¨º½Ð§A¦A­«·s¬@±Ï§Ú¤k¨à§a¡C
+  endif
+  if is_qmark($n) & slum_libei_quest 300512
+    	mpmod_qmark $n slum_libei_quest v2 r 256
+	mpdel_qmark $n slum_libei_saveslum
+    	say ¦n¡A½Ð§A¦A­«·s«O½Ã±_¥Þ¤@¦¸§a¡C
+  endif
+~
+>talk_prog epsilon~
+  if is_qmark($n) > slum_libei_quest 100002
+    	say §A¤£¬Oª¾¹D¥L¤F¶Ü¡H´N¬O¼Ó¤W¨º¦ì§r¡C
+    	break
+  endif
+  say ¦b¤J¤f¼uµ^»¡¬G¨Æªº´N¬O¤F¡C
+~
+>give_prog 9415~
+  mpjunk signed
+  if is_qmark($n) & slum_libei_quest 300004
+  if is_qmark($n) & slum_libei_quest 200004
+  	if is_qmark($n) <= slum_str_quest 200001
+    		say §A®Ú¥»¨S¦³§V¤O¤u§@¡I
+    		say ¯u¬O¥i´cªº´ÛÄFªÌ¡I
+    		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+    		mpmod_qmark $n slum_libei_quest v2 r 4
+    		mpmod_qmark $n slum_libei_quest v1 r 4
+    		mpdel_qmark $n slum_str_quest
+    		break
+  	endif
+    	mpechoat $n $I±N«H¨ç¬Ý¤F¤@¹M......
+	if is_qmark($n) !& slum_libei_quest 100004
+		mpexp $n 100
+	endif
+    	mpmod_qmark $n slum_libei_quest v0 | 4
+    	mpmod_qmark $n slum_libei_quest v2 r 4
+    	mpmod_qmark $n slum_libei_quest v1 r 4
+    	if is_qmark($n) >= slum_str_quest 200020
+    		if wis($n) >= 16
+    		or race($n) == gnome
+    			mpechoat $n ¦]¬°§A°ª¶WªººÍ´¼¡A§A±o¨ìÃB¥~ªº¸gÅç­È¡I
+    			mpexp $n 100
+    		endif
+    		if int($n) >= 16
+    		or race($n) == human
+    			mpechoat $n ¦]¬°§A°ª¶Wªº«¡©ï§Þ¥©¡A§A±o¨ìÃB¥~ªºÁ~¸ê¡I
+    			mpgold 5000
+    		endif
+    	endif
+	if is_qmark($n) < slum_str_quest 200004
+      		mpexp $n 40
+      		mpgold $n 500
+  		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) < slum_str_quest 200014
+      		mpexp $n 240
+      		mpgold $n 7500
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) < slum_str_quest 200024
+      		mpexp $n 400
+      		mpgold $n 12500
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) < slum_str_quest 200032
+      		mpexp $n 560
+      		mpgold $n 22500
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) >= slum_str_quest 200032
+      		mpexp $n 700
+      		mpgold $n 45000
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+    	endif
+  endif
+  endif
+~
+>give_prog 9418~
+  mpjunk signed
+  if is_qmark($n) & slum_libei_quest 300008
+  if is_qmark($n) & slum_libei_quest 200008
+  	if is_qmark($n) <= slum_dex_quest 200001
+  	  	say §A®Ú¥»¨S¦³§V¤O¤u§@¡I
+    		say ¯u¬O¥i´cªº´ÛÄFªÌ¡I
+    		mpadd_qmark $n slum_libei_nojob 20 0 1 0 1 1
+    		mpmod_qmark $n slum_libei_quest v2 r 8
+    		mpmod_qmark $n slum_libei_quest v1 r 8
+    		mpdel_qmark $n slum_dex_quest
+    		break
+  	endif
+  	mpechoat $n $I±N«H¨ç¬Ý¤F¤@¹M......
+  	if is_qmark($n) !& slum_libei_quest 100008
+		mpexp $n 200
+	endif
+  	mpmod_qmark $n slum_libei_quest v0 | 8
+  	mpmod_qmark $n slum_libei_quest v2 r 8
+  	mpmod_qmark $n slum_libei_quest v1 r 8
+  	mpadd_qmark $i count_mark 2 1 0 0 0 0
+  	if is_qmark($n) & slum_libei_quest 200002
+    		mpgold $n 7500
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200004
+  	  	mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200008
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  		endif
+  	if is_qmark($n) & slum_libei_quest 200016
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200032
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200064
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($i) > count_mark 200004
+  		if wis($n) >= 15
+  		or race($n) == gnome
+  			mpechoat $n ¦]¬°§A°ª¶WªººÍ´¼¡A§A±o¨ìÃB¥~ªº¸gÅç­È¡I
+    			mpexp $n 120
+  		endif
+  		if int($n) >= 16
+    		or race($n) == human
+    			mpechoat $n ¦]¬°§A°ª¶Wªº«¡©ï§Þ¥©¡A§A±o¨ìÃB¥~ªºÁ~¸ê¡I
+    			mpgold $n 6000
+    		endif
+  	endif
+  	mpdel_qmark $i count_mark
+	mpcall end_1 $n
+	mpdel_qmark $n slum_dex_quest
+  endif
+  endif
+~
+>give_prog 9416~
+  mpjunk potion
+  if is_qmark($n) & slum_libei_quest 300016
+  if is_qmark($n) & slum_libei_quest 200016
+  	if is_qmark($n) <= slum_int_quest 200001
+    		mpecho $I¬Ý¬Ý¤â¤WªºÃÄ¤ô......
+    		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+    		mpmod_qmark $n slum_libei_quest v2 r 16
+    		mpmod_qmark $n slum_libei_quest v1 r 16
+    		mpdel_qmark $n slum_int_quest
+    		mpcallout 1 say §A®Ú¥»¨S¦³§V¤O¤u§@¡I
+    		mpcallout 1 say ¯u¬O¥i´cªº´ÛÄFªÌ¡I
+    		break
+  	endif
+  	mpecho $IÁ|°_ÃÄ¤ô¡A¤@¶¼¦ÓºÉ......
+  	if is_qmark($n) !& slum_libei_quest 100016
+		mpexp $n 200
+	endif
+  	mpmod_qmark $n slum_libei_quest v0 | 16
+  	mpmod_qmark $n slum_libei_quest v2 r 16
+  	mpmod_qmark $n slum_libei_quest v1 r 16
+	if is_qmark($n) > slum_int_quest 200015
+		if wis($n) >= 16
+  		or race($n) == gnome
+  			mpechoat $n ¦]¬°§A°ª¶WªººÍ´¼¡A§A±o¨ìÃB¥~ªº¸gÅç­È¡I
+    			mpexp $n 140
+  		endif
+  		if int($n) >= 19
+    		or race($n) == human
+    			mpechoat $n ¦]¬°§A°ª¶Wªº«¡©ï§Þ¥©¡A§A±o¨ìÃB¥~ªºÁ~¸ê¡I
+    			mpgold $n 10000
+    		endif
+	endif
+  	if is_qmark($n) & slum_int_quest 200002
+    		mpexp $n 60
+    		mpgold $n 5000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200004
+    		mpexp $n 80
+    		mpgold $n 6000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200008
+    		mpexp $n 100
+    		mpgold $n 10000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200016
+    		mpexp $n 150
+    		mpgold $n 12500
+  	endif
+  	if is_qmark($n) & slum_int_quest 200032
+    		mpexp $n 190
+    		mpgold $n 15000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200064
+    		mpexp $n 220
+    		mpgold $n 20000
+  	endif
+  	mpcall end_1 $n
+	mpdel_qmark $n slum_int_quest
+endif
+endif
+~
+>give_prog 9419~
+  mpjunk mail
+  if is_qmark($n) & slum_libei_quest 300032
+  if is_qmark($n) & slum_libei_quest 200032
+    	mpecho $I¬Ý¬Ý¤â¤W«H¨ç.....
+    	if is_qmark($n) <= slum_con_quest 200001
+      		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+      		mpmod_qmark $n slum_libei_quest v2 r 32
+      		mpmod_qmark $n slum_libei_quest v1 r 32
+      		mpdel_qmark $n slum_con_quest
+      		mpcallout 1 say §A®Ú¥»¨S¦³§V¤O¤u§@¡I
+      		mpcallout 1 say ¯u¬O¥i´cªº´ÛÄFªÌ¡I
+      		break
+    	endif
+    	if is_qmark($n) !& slum_libei_quest 100032
+		mpexp $n 200
+	endif
+    	mpmod_qmark $n slum_libei_quest v0 | 32
+    	mpmod_qmark $n slum_libei_quest v2 r 32
+    	mpmod_qmark $n slum_libei_quest v1 r 32
+    	if is_qmark($n) > slum_con_quest 200023
+		if wis($n) >= 17
+  		or race($n) == gnome
+  			mpechoat $n ¦]¬°§A°ª¶WªººÍ´¼¡A§A±o¨ìÃB¥~ªº¸gÅç­È¡I
+    			mpexp $n 120
+  		endif
+  		if int($n) >= 17
+    		or race($n) == human
+    			mpechoat $n ¦]¬°§A°ª¶Wªº«¡©ï§Þ¥©¡A§A±o¨ìÃB¥~ªºÁ~¸ê¡I
+    			mpgold $n 5000
+    		endif
+	endif
+    	if is_qmark($n) <= slum_con_quest 200005
+      		mpexp $n 120
+      		mpgold $n 5000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200011
+      		mpexp $n 220
+      		mpgold $n 10000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200017
+      		mpexp $n 360
+      		mpgold $n 20000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+     	if is_qmark($n) <= slum_con_quest 200021
+      		mpexp $n 520
+      		mpgold $n 30000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+     	is_qmark($n) <= slum_con_quest 200027
+      		mpexp $n 700
+      		mpgold $n 40000
+    	else 
+	      	mpexp $n 740
+	      	mpgold $n 50000
+    	endif
+        mpcall end_1 $n
+        mpdel_qmark $n slum_con_quest
+      	break
+  endif
+  endif
+say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+~
+>give_prog 9417~
+  mpjunk mail
+  if is_qmark($n) & slum_libei_quest 300064
+  if is_qmark($n) & slum_libei_quest 200064
+    	mpecho $I¬Ý¬Ý¤â¤W«H¨ç.....
+    	if is_qmark($n) <= slum_wis_quest 200001
+      		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+      		mpmod_qmark $n slum_libei_quest v2 r 64
+      		mpmod_qmark $n slum_libei_quest v1 r 64
+      		mpdel_qmark $n slum_wis_quest
+      		mpcallout 1 say §A®Ú¥»¨S¦³§V¤O¤u§@¡I
+      		mpcallout 1 say ¯u¬O¥i´cªº´ÛÄFªÌ¡I
+      		break
+    	endif
+    	if is_qmark($n) !& slum_libei_quest 100064
+		mpexp $n 200
+	endif
+    	mpmod_qmark $n slum_libei_quest v0 | 64
+    	mpmod_qmark $n slum_libei_quest v2 r 64
+    	mpmod_qmark $n slum_libei_quest v1 r 64
+    	if is_qmark($n) > slum_wis_quest 200030
+		if wis($n) >= 19
+  		or race($n) == gnome
+  			mpechoat $n ¦]¬°§A°ª¶WªººÍ´¼¡A§A±o¨ìÃB¥~ªº¸gÅç­È¡I
+    			mpexp $n 200
+  		endif
+  		if int($n) >= 19
+    		or race($n) == human
+    			mpechoat $n ¦]¬°§A°ª¶Wªº«¡©ï§Þ¥©¡A§A±o¨ìÃB¥~ªºÁ~¸ê¡I
+    			mpgold $n 5000
+    		endif
+	endif
+    	if is_qmark($n) <= slum_wis_quest 200021
+      		mpexp $n 120
+      		mpgold $n 5000
+      		mpcall end_1 $n
+      		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200031
+      		mpexp $n 240
+      		mpgold $n 10000
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200041
+      		mpexp $n 400
+      		mpgold $n 20000
+      		mpcall end_1 $n
+      		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200051
+      		mpexp $n 500
+      		mpgold $n 12000
+      		mpcall end_1 $n
+      		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200061
+      		mpexp $n 660
+      		mpgold $n 40000
+    	else
+      		mpexp $n 760
+      		mpgold $n 55000 
+    	endif
+    	mpcall end_1 $n
+	mpdel_qmark $n slum_wis_quest
+      	break
+  endif
+  endif
+say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+~
+>defun_prog end_1~
+    mpmod_qmark $n slum_libei_quest v1 = 0
+    if rnad(90)
+	mpcallout 1 say ¶â¡A«Ü¦n¡A¥ô°È§¹¦¨¤F§r¡C
+	mpcallout 2 say ´Á«Ý¤U¦¸ªº¦X§@¡C
+    else
+    	mpcallout 1 say ¶â¡A«Ü¦n¡A¥ô°È§¹¦¨¤F§r¡C
+    	mpcallout 2 say ³á¡A§Ú¤âÃä­è¦n¦³¨ÇªF¦è¯à°e§A...
+    	mpcallout 3 mpechoat $n $I¶}©lÂ½§ä°_©U§£¸ÌªºªF¦è...
+    	mpcallout 5 say ´N°e§A³o­Ó§a¡I
+    	if is_qmark($n) == slum_str_quest
+    		mpoload 35005 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    	if is_qmark($n) == slum_dex_quest
+    		mpoload 35006 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    	if is_qmark($n) == slum_con_quest
+    		mpoload 35007 10
+		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf    		break
+    	endif
+    	if is_qmark($n) == slum_int_quest
+    		mpoload 35008 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    	if is_qmark($n) == slum_wis_quest
+    		mpoload 35009 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    endif
+~
+|
+#9401
+eilien-slum virgin~
+·R²ú¦w(Eilien)~
+¤@¦ì¤åÀRªº¤Ö¤k(virgin)¦b³o¸Ì¦£¸L¦a¾ã²z®a°È¡C
+~
+¤@¦ì²¢¬üªº¤åÀR¤Ö¤k¡AºyµÛ²¢²¢ªº¯º®e±æµÛ§A¡C
+~
+1|2|64|67108864 4|8|16|32 1000 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Half-elf~
+C 2
+P 8
+#9402
+story-teller epsilon-slum~
+¨Ì´¶¦è¶©(epsilon)~
+±_¥Þªº»¡¬G¨ÆªÌ(story-teller)¦b³o¸Ì³ä³ä°áµÛ±_¥Þªº¬G¨Æ¡C
+~
+¤@¦W¦~¦Ñ¾m­Iªº¨k¤H¡A§¤¦b¦a¤W¦ÛÅU¦Û¦a»¡µÛ¬G¨Æ¡C
+~
+1|2|64|262144|67108864 8|32 0 S
+1 400 300 15d10+-150 0d-120+0
+-1 0
+0 8 1
+R Human~
+C 2
+P 8
+>fight_prog 100~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 30 0 0 0 1 1
+    	yell °Ú¡I¦³¤H§ðÀ»§Ú¡I 
+  endif
+~
+>greet_prog 100~
+  if level($n) >= 12
+    	if is_qmark($n) & slum_libei_quest 100512
+    	or is_qmark($n) & slum_libei_quest 300128
+    	or is_qmark($n) & slum_libei_quest 300512
+      		mpechoat $n $I»¡¡G¡u±z¦n¡A­^«iªº«_ÀIªÌ¡C¡v
+      		bow $n
+      		break
+    	endif
+    	if is_qmark($n) >= slum_libei_quest 100003
+     		mpechoat $n $I¦V§A»¡¡G¡u¦~»´¤H¡A§Q«ô§ä§A¦³¨Æ¡C¡v
+     		break
+    	endif
+  endif
+  if rand(40)
+    	mpechoat $n »¡¬G¨Æªº¦ÑÀY®³°_°Òªû¬Âµ^¡A¦ÛÅU¦Û¦a°Û°_ºq¨Ó......
+    	mpcallout 1 mpechoat $n ¡uªø­·§r¡A½ÐÅ¥§Ú¤@ºq¡F¬y¤ô§r¡A¥i§_Å¥¨£³o¬qÅÊ¦±¡H¡v
+    	mpcallout 2 mpechoat $n ¡u¨S¦³µ²ªGªº·RÅÊ¬O¦h»ò¦aµh­W¡H¨S¦³ÅÊ±¡ªº¬Û«ä¬O¦h»ò¦aµL©`¡H¡v
+  endif
+~
+>talk_prog topic~
+    mpechoat $n $I»¡µÛ¡u§A¦n¡A«_ÀIªÌ¡A¦³ªÅÅ¥Å¥¦ÑÀY¤l»¡¬G¨Æ¶Ü¡H¡v    
+    mpechoat $n $I»¡µÛ¡u·QÅ¥Å¥³o­Ó¦a¤èªº²ÎªvªÌ--§Q«ô(Libei)ªº¬G¨Æ¶Ü¡H¡v
+    mpechoat $n $I»¡µÛ¡uÁÙ¬OÅ¥Å¥±_¥Þªº¬G¨Æ(story)©O¡H¡v
+~
+>talk_prog mission~
+  if is_qmark($n) & slum_libei_quest 300128
+    	say ³o­Ó¥ô°È§r¡AÁÙ¨S§¹¦¨¡I
+    	say ³Þ¡ANeversay¡A§AÁÙ­nª±®aµ¥¦h¤[¡H
+    	break
+  endif
+  say §A»¡¤°»ò¡H§ÚÅ¥¤£À´¡C
+~
+>talk_prog way~
+  	mpechoat $n $I»y­«¤ßªø¦a»¡¡G
+  	mpechoat $n ¡uªº½T¦³³o±ø±¶®|¡A´N¦ì¦b±_¥Þªº³ÌªF«n¤è¡A¤£¹L§A­n¤p¤ß¡A¨º±ø±¶®|
+  	mpechoat $n ¥Rº¡¤F¶ÂÀ°¥÷¤l§G¤Uªº³´¨À©M­«­«¦M¾÷¡AÁöµM§Ú°O±o§Ú­Ì¦b»P¶ÂÀ°ªº
+  	mpechoat $n ¾Ôª§¤¤´¿²MªÅ¤F¨º±ø¹D¸ô¡A¨Ã¥B¶}¤Fª½³q±¶®|¡A¦ý§A­Ì»Ý­nµs¸éºVÂê
+  	mpechoat $n ©ÎªÌ¾Ô¤h¼²ªù¤~¯à±N¨º¨Ç³¯ÂÂªºªù¯}Ãa±¼¡A¦pªG§A­Ì¿ï¾Ü¶¶µÛ¸ô¨«¡A
+  	mpechoat $n ¨º­·ÀI±N·|«Ü¤j¡AÄ@¾Ô¯««O¦ö§A¡A«_ÀIªÌ¡C¡v
+~
+>talk_prog job~
+  if is_qmark($n) > slum_libei_quest 100001
+    	mpechoat $n $I»¡µÛ¡u§A¤£¬O¤w¸gª¾¹D­n¨ì­þ¸Ì§ä¤F¶Ü¡H¡v
+    	mpechoat $n $I»¡µÛ¡u´N¦b¤U­±§r¡I¡v
+    	chu
+    	break
+  endif
+  if is_qmark($n) == slum_libei_quest 300001
+    	say ³á¡A­n§ä§Q«ô(Libei)§r¡A©¹¤U§ä´N¹ï¤F
+    	chu
+    	break
+  endif
+  mpadd_qmark $n slum_libei_quest -1 0 0 1 0 1
+  say §A©¹¤U¨«¡A§ä§Ú­Ìªº»â¾ÉªÌ§Q«ô(Libei)½Í½Í¬Ý¡C
+~
+>talk_prog libei~
+  mpechoat $n $I»¡µÛ¡u§Q«ô§r¡A¥L¬O¤@¦W¶Ç©_¤Hª«¡A³o­n±q¥L¦~»´ªº®É­Ô¶}©lÁ¿°_----¡v
+  mpechoat $n $I»¡µÛ¡u·í¦~¡A±_¥ÞÁÙ¬O¶ÂÀ°ªº¤@³¡¥÷®É¡A¥L±a»â¤@¸s¤l§Ì§L¡A¾Ô³Ó¤F¡v
+  mpechoat $n $I»¡µÛ¡u¶ÂÀ°¤T¤j¶Õ¤O¡A±N±_¥Þ±q¶Â·tªºÀ°¬£¶Õ¤O¤¤¤ÀÂ÷¥X¨Ó¡A­««Ø¤F¡v
+  mpechoat $n $I»¡µÛ¡u±_¥Þªº·s¯´§Ç......¡v
+  mpcallout 1 mpcall libei_1 $n
+  mpcallout 2 mpechoat $n $I»¡µÛ¡u§Ú²{¦b¥u§Æ±æ¡A±_¥Þ¯à¦b¥Lªº±a»â¤U¡A¥­ÀR¦a¹L¤é¤l¡A¡v
+  mpcallout 3 mpechoat $n $I»¡µÛ¡u¤£­n¦A¦³¾Ô¶Ã¤F¡C¡v
+~
+>defun_prog libei_1~
+  mpechoat $n $I»¡µÛ¡u­ü¡A¥i±¤·³¤ë¶Ê¤H¦Ñ¡A¦p¤µ¤G¤Q¦~¤]¹L¥h¤F¡A§Q«ôªºÅé¤O¤]¤j¤£¦p«e¤F¡C¡v
+  mpechoat $n $I»¡µÛ¡u¥L¦³·Q¹L±N³o­Ó¦ì¤l¶Çµ¹¥L»P¬À¦è§Q¨È(Sensilia)ªº¤k¨à·R²ú¦w(Eilien)¡A¡v
+  mpechoat $n $I»¡µÛ¡u¤£¹L¶ÂÀ°¦n¹³Å¥¨ì¤F­·Án¡A³ºµM±N¦o¾Û¨«¤F¡C¡v
+  mpcallout 1 mpcall eilien_1 $n
+~
+>talk_prog story~
+  say ´X¦Ê¦~«e¡A·í²Ä¤T¦¸½Ã«°¤§§Ðµ²§ô«á¡A¥v¥d©Ô¨©´N¶}©l¼Z¸¨¤F......
+  say ·í®ÉªºÃø¥Á­Ì¡A¦]¬°¨S¦³´Ï¨­¤§¦a¡A¥u¦n©¹³o¸Ì»E¶°¡A¦b¦¹«Ø¥ß¤F
+  say ³h¥Á°Ï¡C
+  mpcallout 1 glare
+  mpcallout 2 mpcall story_1 $n
+  mpcallout 3 mpcall story_2 $n
+  mpcallout 4 sigh
+~
+>defun_prog story_1~
+  say µM«á¡A¶Â·tªº¶Õ¤O¬V«ü¤F±_¥Þ¡A±N±_¥ÞÅÜ¦¨¤F¬r«~»P²]¶Ãªº¤j¥»Àç
+  say ¤£¹L¡A¤G¤Q¦~«e¦b§Q«ô(Libei)ªº»â¾É¤U¡A§Ú­Ì²×©ó±N¶ÂÀ°¶Õ¤O»°¥X
+  say ±_¥Þ¡AÁÙ±_¥Þ©~¥Á¤@­Ó¦w¹çªº¥Í¦sÀô¹Ò¡C
+~
+>defun_prog story_2~
+  say ¦ý¡A³Ìªñ¶ÂÀ°¶Õ¤O¤S¶}©lÄø°Ê¤F¡A§Q«ô¬°¤F¨¾½d¥¼µM¡A¤]¶}©l¥|³B
+  say ©Û§L¶R°¨¡A¬Ý¨Ó¤@³õ´c°«Á×µL¥iÁ×¤F......
+~
+>talk_prog sensilia~
+   say ¬À¦è§Q¨È¡A¦o¬O¤@¦ì¬üÄRªººëÆF¶Ä§L¡AÅ¥»¡¬O¦b¤@³õ°¸µMªº
+   say ¾Ô§Ð¤U±µ¨ü¶ÂÀ°ªº¶±¥Î¡A¦b±_¥Þ»P§Q«ô¤j¥´¥X¤â¡A«á¨Ó«o»P¥L
+   say ¼Y¤J·Rªe¡A¥Í¤U¤F¤@­Ó¤k¨à·R²ú¦w(Eilien)¡A³o´N¬O·R±¡ªºÅ]¤O§r¡I
+   mpcallout 1 giggle
+   mpcallout 2 mpcall sensilia_1 $n
+~
+>defun_prog sensilia_1~
+  say ¥i±¤¦o¦b¤@¦¸¾Ô°«¤¤¤¤¤F¶ÂÀ°ªº·tºâ¡AºG¦º©ó¥£Áõ¥«³õ¡A­ü......
+  say ¬°¤F³o¥ó¨Æ¡A§Q«ô¤j¶}±þ§Ù¡A¦]¦¹±o¸o¤F©Ò¦³¶ÂÀ°¡A¥H¤Î²³¶ÂÀ°
+  say ­I«á¼µ¸yªº¶Â¹D®a±Ú¡A¦Ü¦¹¥H«á¡A¶ÂÀ°»P±_¥Þ´N¶Õ¤£¨â¥ß¤F......
+~
+>talk_prog eilien~
+  say ·R²ú¦w¦o¬O§Ú­Ì»â¾ÉªÌ§Q«ô(Libei)»PºëÆF¬À¦è§Q¨È(Sensilia)
+  say ªº¤k¨à¡A§A¤j·§µLªk±q¦oªº¥~ªí¬Ý¥X¦o¬O¤@¦W¥bºëÆF¡I
+  say ­ü¡A¦o¥i¬O¥þ±_¥Þ³Ì°Q¤H³ßÅwªº¥i¤H¨à§r¡I
+  say ¦ý¦o«o³Q¨¸´cªº¶ÂÀ°¾Û¨«¡A­µ°T¥þµL......
+  mpcallout 1 mpcall eilien_1 $n
+~
+>defun_prog eilien_1~
+  if is_qmark($n) & slum_libei_quest 100128
+    	mpechoat $n $I»¡µÛ¡uÁÙ¦n±z±N¦o±q¥£Áõ¥«³õ±Ï¤F¦^¨Ó¡A­n¤£µM¦o±N·|­«ºt¸ò¦o¡v
+    	mpechoat $n $I»¡µÛ¡u¥À¿Ë¤@¼Ëªº´d¼@§r¡I¡v
+    	mpechoat $n $I»¡µÛ¡u­ü¡A¤£¹L¦o¨üªºÅåÀ~¤Ó¤j¡A§Q«ô¬°¤F¦oªº¦w¥þ¡A±N¦o¦w¸m¡v
+    	mpechoat $n $I»¡µÛ¡u¦b¤j¦v¤º¡A¤£Åý¦o¨ì³B¨«°Ê¡A¤£¹L³o¤]¦n......²¦³º²{¦b¡v
+    	mpechoat $n $I»¡µÛ¡u¶ÂÀ°ªº¶Õ¤O¤Ó¹L²s¼û¡AÁÙ¬O¤p¤ß¬°¤W¡C¡v
+  else
+    	mpechoat $n $I»¡µÛ¡u²{¦b¦o¥Í¦º¤£©ú¡A§Q«ôÁÙ¦b´M§ä¥i¥H²`¤JÀI¹Ò¬@±Ï¦oªº«i¡v
+    	mpechoat $n $I»¡µÛ¡u¤h¡A¥u¥i±¤¹M´M¤£µÛ¡A­ü¡C¡v
+    	sigh
+  endif
+~
+>talk_prog environment~
+  say §Ú·Q·Q......
+mpcall environment_x $n
+~
+>talk_prog yes~
+    if is_qmark($n) == slum_libei_quest 300003
+      	if is_qmark($n) == slum_libei_quest 200000
+        	say §Ú¸Ü³£ÁÙ¨S»¡§¹´N«æµÛ¦^µª§r¡I
+        	break
+      	endif
+      	mpmod_qmark $n slum_libei_quest v1 | 3
+      	mpmod_qmark $n slum_libei_quest v0 | 1
+      	mpechoat $n $I»¡µÛ¡u«Ü¦n¡A¦^¥h¦V§Q«ô³ø³Æ§a¡A±_¥Þ»Ý­n¦h´X­Ó¹³§A¤@¼Ëªº¤H¤â¡C¡v
+    endif
+~
+>talk_prog no~
+  mpechoat $n $I»¡µÛ¡u¨º§Ú¦A­«½Æ¤@¹M.....¡v
+  mpcall environment_x $n
+~
+>defun_prog environment_x~
+  mpechoat $n $I»¡µÛ¡G¡u»¡¨ì±_¥Þ§r¡A³Ì¥D­nªº¹D¸ô´N¬O[1;35m¯}Äê¤jµó[0m¤F¡A¦b¯}Äê¤jµóªº°_ÂI¡A¡v
+  mpechoat $n $I»¡µÛ¡G¡u´N¬O¹©¹©¦³¦Wªº¡u[1;35m²³¥Í¤§Âk[0m¡v¼o±ó³õ¡A©¹ªF¨««h¬O[1;35m³h¥Á°Ï½XÀY[0m¡A¡v
+  mpechoat $n $I»¡µÛ¡G¡u½XÀY©¹¥_´N¬O[1;35m±_¥Þ­Ü®w[0m¡A¥H¤Î[1;35m½XÀYÁA±æ¥x[0m¡C¡v
+  mpcallout 1 mpcall environment_1 $n
+  if is_qmark($n) & slum_libei_quest 300001
+    	mpcallout 2 mpmod_qmark $n slum_libei_quest v1 | 1
+    	mpcallout 2 mpechoat $n $I»¡µÛ¡G¡u«ç¼Ë¡A¤j·§ÁA¸Ñ¤F§a¡H(yes/no)¡v
+  endif
+~
+>defun_prog environment_1~
+  mpechoat $n $I»¡µÛ¡G¡u¶¶µÛµó¹D©¹¥_¨«¡A´N¬O»®»®¦³¦Wªº[1;35mÀZ¼o°s§a[0m¡A¦b¨º¸Ì©¹¥_¨«¡A¡v
+  mpechoat $n $I»¡µÛ¡G¡u§A¥i¥H¬Ý¨ì¤@´É¤j¦v°|¡A¨º¬O§Q«ô¬°¤F¥Lªº¤k¨à·R²ú¦w(Eilien)©Ò¡v
+  mpechoat $n $I»¡µÛ¡G¡u»\ªº¤j¦v¡C¦A©¹¥_¨«¡A´N¬O³o¸Ì¤F¡A¦A¥_´N¨S¦³¤°»ò­È±o¤¶²Ðªº¤F¡C¡v
+~
+|
+#9403
+goods keeper-slum~
+­Ü®wºÞ²z­û(goods keeper)~
+ºÉ³dªº­Ü®wºÞ²z­û(goods keeper)¥´µÛÃhºÃªº²´¥ú±æµÛ§A¡C
+~
+¤@¦ì±j§§ªº¨k¤l¡A¤â¤¤®³µÛ¤@¥»Ã¯¤l¡A¨¯¶Ô¦a°O¸ü¨C¤éªº¶i¥X³fª«¡C
+~
+1|2|64|67108864 4|8|32|128|8192 0 S
+1 400 0 10d10+-200 0d-100+0
+-1 0
+0 8 1
+R Human~
+C 3
+P 8
+>greet_prog 60~
+  if hour($) > 8
+    	if hour($) < 21
+      		say ­ü¡A¯u¬O¤@¦~¤ñ¤@¦~Ãiªº¸Ó¦º¥£Áõ(slave)......
+      		break
+    	endif
+  endif
+  mpecho $Iºò±i¦aªF±i¦è±æ¡A¦ü¥G¦b¬°¤°»òªF¦è§â­·¡C
+~
+>fight_prog 80~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell °Ú¡I¦³¤H§ðÀ»§Ú¡I 
+  endif
+~
+>talk_prog topic~
+  say ­ü¡A²{¦b­Ü®w§ï«Øªº¶i«×ÄY­«¸¨«á¡A¯u¬O­n©R......
+~
+>give_prog 9420~
+  if is_qmark($n) & slum_libei_quest 100004
+  	mpadd_qmark $n slum_str_quest -1 1 1 0 0 1
+  	say ¶â¡A§A¤S¨Ó°Õ¡A¦n¡A§Ú¤£¥Î¦h»¡(hint)¤F¡Aª½±µ¥h§@§a¡C
+  	say °µ§¹¤F´N»¡¤@Án(complete)¡C
+  	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300004
+  	mpecho $I±N«H¨ç±qÀY¨ì§À¥J²Ó¬Ý¤F¤@¹M......
+  	mpjunk mail
+  	mpadd_qmark $n slum_str_quest -1 1 1 0 0 1
+  	mpcallout 1 say ¶â¡A¦Ñ·Ý¤l­n§A¨Ó§ä§Ú°µ¤u¬O§a¡A¦n¡C
+  	mpcallout 2 mpecho $IÂ½¶}¤â¤WªºÃ¯¤l¡A¥J²Ó´M§ä¥i¥HÅý§A§@ªº¤u§@¡C
+  	mpcallout 3 mpcall job_1 $n
+  	mpcallout 4 say ¤£¹L­n¤p¤ß¡A³Ìªñ¨ºÃä±`±`¦³©ÇÁn¥X²{¡A¥i¯à¦³¬YºØªF¦è¸ú¦b¸Ì­±¡C
+  	mpcallout 5 say ¦pªG§¹¦¨¤F©Î¤£·Q§@¤F¡A°O±o¨Ó¸ò§ÚÁ¿¤@Án(complete)¡C
+  	break
+  endif
+  say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+  give mail $n
+~
+>defun_prog job_1~
+  say ¦n§a¡A§Ú­Ì³oÃä¦b§ï«Ø·s­Ü®w¡A¥¿¦n¯Ê·h¿jÀY(brick)¤u¤H¡A§A´N¤U¥h
+  say À°§Ú­Ì§ä(search)´X¶ô¤W¨Ó[1;31m¥æµ¹§Ú[0m¦n¤F¡A§Ú·Q[1;31m¤T¤Q¶ô¿j[0m´N°÷¤F¡C
+~
+>give_prog 9429~
+  mpjunk brick
+  if is_qmark($n) & slum_libei_quest 300004
+    	if is_qmark($n) >= slum_str_quest 200001
+      		mpmod_qmark $n slum_str_quest v1 + 1
+      		if is_qmark($n) > slum_str_quest 200030
+        		say «Ü¦n¡C³o¼Ë´N°÷¤F(complete)¡A¨¯­W§A¤F¡C
+        		nod $n
+        		break
+      		endif
+      		say «Ü¦n¡A¦A¦h·h´X¶ô¤W¨Ó§a¡C
+      		break
+    	endif
+  endif
+  say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+~
+>talk_prog complete~
+  if is_qmark($n) & slum_libei_quest 200004
+    	say §A¤£¬O¦­´N§¹¦¨¤F¡H
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300004
+    	if is_qmark($n) <= slum_str_quest 200001
+      		say ­J»¡¡I§A®Ú¥»ÁÙ¨S°µ§¹¡I
+      		break
+    	endif
+    	mpoload 9415 1
+	mpmod_qmark $n slum_libei_quest v1 | 4
+    	if is_qmark($n) <= slum_str_quest 200010
+      		say °Ú¡A°µ§¹°Õ¡H
+      		tsk $n
+      		mpgold $n 2500
+      		say ²{¦bªº¦~»´¤H¯u¬O¦Y¤£¤F­W¡A¤~·h¨S´X¶ô¿j´N¨ü¤£¤F¤F¡C
+      		mpechoat $n $I±N¬õ¦â«H¨çÃ±¤F¦W¡C
+      		mpcallout 1 give signed $n
+      		mpcallout 1 say ¦^¥h§â³o«Ê«H¥æµ¹§Q«ô´N¥i¥H¤F¡C
+      		break
+    	endif
+    	if is_qmark($n) <= slum_str_quest 200030
+      		say ¶â¡A°µ§¹°Õ¡C
+      		nod
+      		mpgold $n 4000
+      		say §A³o³Ã¥ëÁÙ¤£¿ù¡A¦Ü¤Ö¤ñ³o¨Ç¡u²×¨­§KÁ~³Ò¤u¡v­n§V¤O¡C
+      		mpechoat $n $I±N¬õ¦â«H¨çÃ±¤F¦W¡C
+      		mpcallout 1 give signed $n
+      		mpcallout 1 say ¦^¥h§â³o«Ê«H¥æµ¹§Q«ô´N¥i¥H¤F¡C
+      		break
+    	else
+      	say «Ü¦n¡A§A°µ±o«D±`¦n¡I
+      	good $n
+      	mpgold $n 5500
+      	giggle
+      	say ¹³§A³o¼Ëªº¦~»´¤H¤£¦h¤F¡A¦p¦ó¡A¦³¨S¦³·N«ä¨Ó§Ú³oÃä¤u§@¡H
+      	mpechoat $n $I±N¬õ¦â«H¨çÃ±¤F¦W¡C
+      	mpcallout 1 give signed $n
+      	mpcallout 1 say ¦^¥h§â³o«Ê«H¥æµ¹§Q«ô´N¥i¥H¤F¡C
+      	break
+    endif
+  endif
+  say §A»¡Ô£¡H§ÚÅ¥¤£À´¡C
+~
+>talk_prog hint~
+if is_qmark($n) & slum_libei_quest 300004
+  	say §A§Ñ¤F¥ô°È¤º®e¤F¡H
+  	sigh
+  	mpcallout 1 mpcall job_1 $n
+endif
+~
+>talk_prog slave~
+  say °Ú¡H§Ú¦³»¡¹L¡u¥£Áõ¡v³o­Ó¦r¶Ü¡H
+  ? $n
+  say §AÅ¥¿ù¤F§a¡A§Ú»¡ªº¬O¡u²×¥Í§KÁ~³Ò¤u¡v§a¡I
+~
+>tick_prog 100~
+mpjunk mail
+mpjunk brick
+drop all
+~
+|
+#9404
+merchant-slum~
+¦Ï¤ò°Ó¤H(merchant of fleece)~
+²¤ÅãÁs¸~ªº¦Ï¤ò°Ó¤H(merchant of fleece)µL²á¦a³ÜµÛ°s¡C
+~
+¤@¦ì¤W¤F¦~¬ö¡Aº¡Áy­·Á÷½K¯¾ªºªÎ­D¦Ï¤ò°Ó¤H¡C
+~
+1|2|64|8388608|67108864 8|32|8192 200 S
+1 350 200 10d10+-150 0d-100+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8
+>fight_prog 100~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell °Ú¡I¦³¤H§ðÀ»§Ú¡I 
+  endif
+~
+>all_greet_prog 100~
+  if is_qmark($n) == slum_woman_damage
+	mpmod_qmark $n slum_libei_quest v2 r 8
+	mpdel_qmark $n slum_dex_quest
+	mpdel_qmark $n slum_woman_damage
+	say §A³o­Ó¥ÕÃ¨¡I¥ÕÃ¨¡I
+	angry $n
+	mpcallout 1 say §Ú¤£¬O¥s§A¤£­n¶Ë®`¥L­Ì¤F¶Ü¡H§A¬O¦ÕÅ¤°Õ¡I
+	mpcallout 2 say ºu¡I§Aµ¹§Úºu±o»·»·ªº¡I
+	mpcallout 2 mpechoat $n $i±N§A¤@¸ô½|¥X°s§a......
+	mpcallout 3 mpforce $n w
+	break
+  endif
+  if rand(50)
+    	say ¯u¬O¥i´cªº®Q­Ì......
+    	mpecho $I¥Î¤O©ñ¤U¤â¤W°sªM¡C
+  endif
+~
+>talk_prog topic~
+  say ­ü¡A³£¬O¨º¨Ç®Q­Ì¡AÅý§Úªº¦Ï¤ò¥Í·N·l¥¢ºG­«......
+~
+>give_prog 9423~
+  mpjunk mail
+  if is_qmark($n) & slum_libai_quest 100008
+  	mpadd_qmark $n slum_dex_quest -1 1 1 0 0 1
+    	say ³á¡A¤S¬O§A§r¡A¥¿¦n³Ìªñ¨º¨Ç®Q­Ì¤S¶}©l©úª¾¬G¥Ç¤F¡C
+    	say §A´N¦AÀ°§Ú¤@¦¸§a(hint)¡I
+    	say ¦Ñ³W¯x¡A°µ§¹¤F´N»¡¤@Án(complete)¡C
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300008 
+  	mpadd_qmark $n slum_dex_quest -1 1 1 0 0 1
+    	mpechoat $n $I±N«H¨ç§Ö³t¦aÅª¤F¤@¹M¡C
+    	mpcallout 1 say §Q«ô¥LÁÙ¯u¬O¦³¨D¥²À³¡C
+    	mpcallout 2 look $n
+    	mpcallout 3 mpcall job_1 $n
+    	mpcallout 4 mpcall job_2 $n
+    	mpcallout 5 mpcall job_3 $n
+    	mpcallout 6 mpcall job_4 $n
+    	break
+  endif
+say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+~
+>defun_prog job_1~
+  say ³Þ¡I§A¡A§AÀ³¸Óª¾¹D§Úªº¤u§@§a¡H
+  say §Ú¬O±Mªù±N¦Ï¤ò®³µ¹·í¦a°ü¤k¯¼Â´¡AµM«á¦¬¶°¦¨«~¥¬®Æªº¥]°Ó¡A
+  say ¤£¹L§Ú³Ìªñµo²{¦³¨Ç¤H·|±N­ì®Æ°½¬Ù°_¨Ó¡A¥t§@¥Î³~¡A¯u¬O¥i´c¡I
+~
+>defun_prog job_2~
+  say §A¡I§AÀ°§ÚªuµÛ¯}Äê¤jµó¡A¨ì¨C­Ó¦³[1;37m¯¼Â´¾÷[0mªº®a¸Ì´M§ä¦o­Ì°½¤u
+  say ´î®ÆªºÃÒ¾Ú¡I[1;37m(search fleece)[0m
+  mpecho $I¹y¤F¤@¤U¡C
+~
+>defun_prog job_3~
+  say ¤£¹L­n°O±o¡A¤d¸U[1;37m§O¶Ë®`¦o­Ì¨ä¤¤¥ô¦ó¤@­Ó[0m¡A§Ú­nªº¬O§ä´M¦o­Ì
+  say ªº¸oÃÒ¡A¤£¬O­n¦o­Ì¦º¡I¦o­Ì¦º¤F¥i´N¨S¤H¥i¥H´À§ÚÂ´¥¬¤F¡C
+  say ¦pªG§A»{¬°¤w¸g§ì§¹¤F¡A´N¨Ó¸ò§Ú³ø³Æ¤@¤U(complete)§a¡C
+  hmm
+  say ¹ï¤F¡AÁÙ¦³¤@¥ó¨Æ......
+~
+>defun_prog job_4~
+  say ¦o­Ì³£¦³¦Û¤vªº¤é±`§@®§¡A¦pªG§A¦b¦o­Ì¦b®aªº®É­Ô¥h·íµM§ì¤£¨ì¤°»òÃÒ¾Ú¡A
+  say ¦pªG·Qª¾¹D¦o­Ìªº¤é±`¦æµ{¡A´N¸ò§ÚÁ¿¤@Án(help)§a¡I
+~
+>give_prog all~
+  if is_qmark($n) != slum_dex_quest
+    	say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+	drop all
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300008
+    	if vnum($o) == 9444
+      		if is_qmark($n) & slum_dex_quest 200002
+        		say §A¤w¸gµ¹¹L§Ú¤@¦¸¤F¡A¦A§ä¨ä¥L¤HªºÃÒ¾Ú§a¡C
+			mpjunk fleece
+        		break
+      		endif
+      		say «¢«¢¡A§Ú¦­´N®Æ¨ì·RÄR´µ³o®Q­Ì·|§@³oºØ¨Æ¤F¡I
+      		cackle
+      		mpmod_qmark $n slum_dex_quest v1 | 2
+		mpjunk fleece
+      	endif
+   	if vnum($o) == 9445
+      		if is_qmark($n) & slum_dex_quest 200004
+        		say §A¤w¸gµ¹¹L§Ú¤@¦¸¤F¡A¦A§ä¨ä¥L¤HªºÃÒ¾Ú§a¡C
+			mpjunk fleece
+        		break
+      		endif
+      		say ­ó¡I­ì¨Ó¹p¼Ú®R¸¦³o®Q­Ì¤]·|·F³oºØ¨Æ¡A¯u¬O¥O§Ú¤j¶}²´¬É¡I
+      		angry
+      		mpmod_qmark $n slum_dex_quest v1 | 4
+		mpjunk fleece
+   	endif
+    	if vnum($o) == 9446
+      		if is_qmark($n) & slum_dex_quest 200008
+        		say §A¤w¸gµ¹¹L§Ú¤@¦¸¤F¡A¦A§ä¨ä¥L¤HªºÃÒ¾Ú§a¡C
+			mpjunk fleece
+        		break
+      		endif
+      		say ¹É¹É¡I¨S·Q¨ì¥dµY³o»ò¥i·Rªº®Q­Ì¤]·|·F³oºØ¨Æ¡I
+      		tsk
+      		mpmod_qmark $n slum_dex_quest v1 | 8
+		mpjunk fleece
+	endif
+    	if vnum($o) == 9447
+      		if is_qmark($n) & slum_dex_quest 200016
+        		say §A¤w¸gµ¹¹L§Ú¤@¦¸¤F¡A¦A§ä¨ä¥L¤HªºÃÒ¾Ú§a¡C
+			mpjunk fleece
+        		break
+      		endif
+      		say ³o......³s¨¯¦N«½¤]·|·F³oºØ¨Æ¡H
+      		glare
+      		mpmod_qmark $n slum_dex_quest v1 | 16
+		mpjunk fleece
+      	endif
+    	if vnum($o) == 9448
+      		if is_qmark($n) & slum_dex_quest 200032
+        		say §A¤w¸gµ¹¹L§Ú¤@¦¸¤F¡A¦A§ä¨ä¥L¤HªºÃÒ¾Ú§a¡C
+			mpjunk fleece
+        		break
+      		endif
+      		say ºÃ¡H§Ú­Ë¬O¨S·Q¨ì©g¨qçM³o®Q­Ì¤]·|·F³oºØ¨Æ¡I
+      		hmm
+      		mpmod_qmark $n slum_dex_quest v1 | 32
+		mpjunk fleece
+      	endif
+    	if vnum($o) == 9449
+      		if is_qmark($n) & slum_dex_quest 200064
+        		say §A¤w¸gµ¹¹L§Ú¤@¦¸¤F¡A¦A§ä¨ä¥L¤HªºÃÒ¾Ú§a¡C
+			mpjunk fleece
+        		break
+      		endif
+      		say ¤Ó¦n¤F¡I­ì¨Ó±d»_©g³o®Q­Ì¤]·|·F³oºØ¨Æ¡I
+      		grin
+      		mpmod_qmark $n slum_dex_quest v1 | 64
+		mpjunk fleece
+      	endif
+    	if is_qmark($n) == slum_dex_quest 200127
+      		say ³á¡A§A¤w¸gÀ°§Ú§ä¨ì°÷¦hªºÃÒ¾Ú¤F¡A¥i¥Hµ²§ô¤F(complete)¡C
+      		break
+    	endif
+  endif
+~
+>tick_prog 100~
+mpjunk all.fleece
+drop all
+~
+>talk_prog complete~
+  if is_qmark($n) & slum_libei_quest 200008
+    	say §A¤£¬O¦­´N§¹¦¨¤F¡H
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300008
+    	if is_qmark($n) == slum_woman_damage
+      		mpmod_qmark $n slum_libei_quest v2 r 8
+		mpdel_qmark $n slum_dex_quest
+      		mpdel_qmark $n slum_woman_damage
+      		say §A³o­Ó¥ÕÃ¨¡I¥ÕÃ¨¡I
+      		angry $n
+      		mpcallout 1 say §Ú¤£¬O¥s§A¤£­n¶Ë®`¥L­Ì¤F¶Ü¡H§A¬O¦ÕÅ¤°Õ¡I
+      		mpcallout 2 say ºu¡I§Aµ¹§Úºu±o»·»·ªº¡I
+      		mpcallout 2 mpechoat $n $i±N§A¤@¸ô½|¥X°s§a......
+      		mpcallout 3 mpforce $n w
+      		break
+    	endif
+    	if is_qmark($n) <= slum_dex_quest 200001
+      		say ÄF°­¡I§A®Ú¥»¨S¦³µ¹§Ú¥ô¦óªF¦è¡I
+      		break
+    	endif
+    	say «Ü¦n¡I
+    	mpmod_qmark $n slum_libei_quest v1 | 8
+    	if is_qmark($n) & slum_dex_quest 200002
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200004
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200008
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200016
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200032
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200064
+      		mpgold $n 1200
+    	endif
+      	say ³o¼Ëªº¼ú½à¤£¿ù§a¡I
+      	mpoload 9418
+      	mpechoat $n $I±Nµµ¦â«H¨çÃ±¤F¦W¡C
+      	mpcallout 1 give signed $n
+      	mpcallout 2 say ¦^¥h§â³o«Ê«H¥æµ¹§Q«ô´N¥i¥H¤F¡C
+      	break
+  endif
+  say §A¦b»¡¤°»ò§r¡H
+~
+>talk_prog hint~
+if is_qmark($n) & slum_libei_quest 300008
+ 	say ¦n¡A¨º§Ú¦A»¡¤@¹M......
+ 	mpcallout 1 mpcall job_2 $n
+ 	mpcallout 2 mpcall job_3 $n
+ 	mpcallout 3 mpcall job_4 $n
+endif
+~
+>talk_prog help~
+if is_qmark($n) & slum_libei_quest 300008
+	mpdel_qmark $n slum_libei_womancycle
+	mpechoat $n $I§CÁn§i¶D§A¨C­Ó®a®x¥D°üªº§@®§®É¶¡......
+	mpcallout 1 mpechoat $n §AºCºC°O¤U¨C­Ó¤Hªº§@®§®É¶¡......
+	if int($n) < 13
+		mpcallout 2 mpadd_qmark $n slum_libei_womancycle 12 1 0 0 1 0
+		mpcallout 2 mpechoat $n §A°O¤U¨Ó¤F¡A¥H§Aªº´¼¤O¤j·§¯à°O¦í¥b¤Ñ¡C
+		break
+	endif
+	if int($n) < 20
+		mpcallout 2 mpadd_qmark $n slum_libei_womancycle 24 1 0 0 1 0
+		mpcallout 2 mpechoat $n §A°O¤U¨Ó¤F¡A¥H§Aªº´¼¤O¤j·§¯à°O¦í¤@¤Ñ¡C
+		break
+	endif
+	if int($n) < 25
+		mpcallout 2 mpadd_qmark $n slum_libei_womancycle 48 1 0 0 1 0
+		mpcallout 2 mpechoat $n §A°O¤U¨Ó¤F¡A¥H§Aªº´¼¤O¤j·§¯à°O¦í¨â¤Ñ¡C
+		break
+	endif
+	mpcallout 2 mpadd_qmark $n slum_libei_womancycle -1 1 0 0 1 0
+	mpcallout 2 mpechoat $n §A°O¤U¨Ó¤F¡A§A¶W¤Hªº¸£¤OÅý§A¥Ã¤£§ÑÃh¡A°£«D¦º¤`©ÎÂ÷¥h¡C
+endif
+say Ô£¡H§A­n§ÚÀ°§A¤°»ò¡H
+~
+|
+#9405
+Midia-slum old witch-slum~
+¦Ñ§Å±C(old witch)~
+Áà­®¡B¦ÑºAÀsÁéªº§Å±C(old witch)¡A¦b³o¸Ì½NµÛ²´¬Ý§A¡C
+~
+¤@¦ì¦~¬ö¤j±o§A²q¤£¥X¨Óªº¦Ñ¤Ó±C¡A®³µÛ´Î¤lÅÍ°ÊÁçÄl¤¤ªº¿@´ö¡C
+~
+1|2|64|67108864 4|8|16|32 200 S
+16 0 150 0d0+0 0d0+0
+-1 0
+0 8 2
+C 2
+R Human~
+P 4|8
+>fight_prog 100~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell °Ú¡I¦³¤H§ðÀ»§Ú¡I 
+  endif
+~
+>talk_prog topic~
+  say ­ü§r¡A³ÌªñÃÄ§÷ªº¨ÑÀ³¶q¤Ó¤Ö¤F......
+~
+>talk_prog herb~
+  say ¤£ª¾¹D«ç»ò¤À¿ëÃÄ§÷¡H
+  say ¥i¥H¬Ý¬Ý(read)®ÇÃä³³Åø¤Wªº¹Ï¤ù(paint)§r¡I
+  chu $n
+~
+>talk_prog complete~
+  if is_qmark($n) & slum_libei_quest 200016
+    	say §A¤£¬O½Õ¹LÃÄ¤F¶Ü¡H
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300016
+    	if is_qmark($n) <= slum_int_quest 200001
+      		say §A®Ú¥»ÁÙ¨S¦³µ¹§Ú¥ô¦óÃÄ§÷§r¡I
+      		break
+    	endif
+    	mpecho $I¶}©l®³¤j´Î¤lÅÍ°ÊÁç¤l......
+    	mpoload 9416 1
+    	mpmod_qmark $n slum_libei_quest v1 | 16
+    	mpcallout 1 mpecho ¬ðµMÅFªº¤@Án¡IÁç¤l«_¥X°}°}¿@·Ï......
+    	mpcallout 2 say «y¡B«y¡B«y¡I
+	mpcallout 3 give potion $n
+    	mpcallout 3 mpecho $I±N¤@­ÓªÅ¤ô³U¥[º¡Áç¤¤ªºÃÄ¤ô¡C
+    	mpcallout 4 say §â³o²~ÃÄ¤ô®³µ¹§Q«ô§a¡C
+  endif
+~
+>give_prog 9421~
+  mpjunk mail
+  if is_qmark($n) & slum_libei_quest 300016
+  	mpadd_qmark $n slum_int_quest -1 1 1 0 0 1
+    	if is_qmark($n) & slum_libei_quest 100016
+      		mpechoat $n $I¥´¶}«H¨ç¡AÂ²²¤¦aÅª¤F¤@¤U......
+      		say °Ú¡A§Q«ô¦Ñ¯f¤S´_µo°Õ¡A³o»ò§Ö......
+      		say ¥i±¤§Ú³oÃäÃÄ§÷ÁÙ¨S¸É³f¡C
+      		say À°¦Ñ±C¤l¤@¤U§a¡A§Ú·Q§AÀ³¸Óª¾¹D«ç»ò°µ(hint)¡C
+      		say °µ¦n¤F°O±o»¡¤@Án(complete)¡C
+      		break
+    	endif
+    	mpechoat $n $I¥´¶}$O¡AÂ²²¤¦aÅª¤F¤@¤U......
+    	mpcallout 1 say ­ü§r¡A¥L¦Ñ¤ò¯f¤S¥Ç¤F¡A¯u¬O·³¤ë¤£ÄÇ¤H§r¡I
+    	mpcallout 1 sigh
+    	mpcallout 2 mpecho $I±N³³Åø±È¶}¡A©¹¸Ì­±Á@¤@Á@......
+    	mpcallout 2 hmm
+    	mpcallout 3 mpcall job_1 $n
+    	mpcallout 4 mpcall job_2 $n
+    	mpcallout 5 say ¦pªGÄ±±o±Ä°÷¤F¡A¨º´NÁ¿¤@Án§a(complete)¡C
+    	break
+  endif
+  say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+~
+>defun_prog job_1~
+  say ­ü§r¡AÃÄ¯ó­è¦n¥Î§¹¤F¡A¯u¬OÁV¿|§r¡A¦b³o­Óºò­nÃöÀY¥Î§¹......
+  hmm $n
+~
+>defun_prog job_2~
+  if sex($n) <= 1
+    	say ¤p¥ë¤l§r¡A§AÀ°§Ú¤@­Ó¦£§a......
+  else
+    	say ¤p©h®Q¡AÀ°¦Ñ¤Ó±C¤@­Ó¦£§a......
+  endif
+  say À°§Ú¨ìµó¤W[1;37m±Ä(dig)¯óÃÄ(herb)[0m¡A¦pªG§A°÷Áo©ú¡AÀ³¸Ó¯à§ä¨ì¤£¤Ö
+  say ¦³¥ÎªºÃÄ§÷¤~¹ï¡C
+~
+>talk_prog hint~
+if is_qmark($n) & slum_libei_quest 300016
+  	say ¶â......
+  	mpcallout 1 mpcall job_2 $n
+endif
+~
+>give_prog all~
+  if is_qmark($n) < slum_int_quest 200001
+    	say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300016
+    	if vnum($o) == 9402
+      		if is_qmark($n) & slum_int_quest 200002
+        		say ³o­ÓÃÄ§÷§A¤§«eµ¹¹L¤F§r......
+        		break
+      		endif
+      		if int($n) <= 8
+        		if rand(50)
+          			say ¤£¹ï¡AÁöµMªø±o«Ü¹³¡A³o­Ó´Óª«¤£¬OÃÄ¥Î§÷®Æ¡C
+          			break
+        		endif
+      		endif
+      		say «Ü¦n¡I³o­ÓÃÄ§÷¤£¿ù......
+      		mpmod_qmark $n slum_int_quest v1 | 2
+      		mpcallout 1 mpecho $I±N$O§ë¶iÁç¤l¤¤......
+      		mpcallout 2 mpecho Áç¤l¶}©l«_ªw......
+      	endif
+    	if vnum($o) == 9403
+      		if is_qmark($n) & slum_int_quest 200004
+        		say ³o­ÓÃÄ§÷§A¤§«eµ¹¹L¤F§r......
+        		break
+      		endif
+      		if int($n) < 12
+        		if rand(60)
+          			say ¤£¹ï¡A³o±ø¬\ÃÃ¤£°÷°®¡A¤£¯à§@ÃÄ¥Î§÷®Æ¡C
+          			break
+        		endif
+      		endif
+      		say «Ü¦n¡I³o­ÓÃÄ§÷¤£¿ù......
+      		mpmod_qmark $n slum_int_quest v1 | 4
+      		mpcallout 1 mpecho $I±N$O§ë¶iÁç¤l¤¤......
+      		mpcallout 2 mpecho Áç¤l¶}©l«_·Ï......
+    	endif
+    	if vnum($o) == 9405
+      		if is_qmark($n) & slum_int_quest 200008
+        		say ³o­ÓÃÄ§÷§A¤§«eµ¹¹L¤F§r......
+        		break
+      		endif
+      		if int($n) < 15
+        		if rand(60)
+          			say ¤£¹ï¡A³oÁû¯óÃÄÁöµM«Ü¹³¡A¦ý³o¬O¤£¯à§@ÃÄ¥Î§÷®Æªº¨ººØ¡C
+          			break
+        		endif
+      		endif
+      		say «Ü¦n¡I³o­ÓÃÄ§÷¤£¿ù......
+      		mpmod_qmark $n slum_int_quest v1 | 8
+      		mpcallout 1 mpecho $I±N$O§ë¶iÁç¤l¤¤......
+      		mpcallout 2 mpecho Áç¤l¶}©lºuªm......
+    	endif
+    	if vnum($o) == 9409
+      		if is_qmark($n) & slum_int_quest 200016
+        		say ³o­ÓÃÄ§÷§A¤§«eµ¹¹L¤F§r......
+        		break
+      		endif
+      		if int($n) < 18
+        		if rand(60)
+          			say ¤£¹ï¡A³o¯óÃÄÁöµM«Ü¹³¡A¦ý³o¬O¤£¯à§@ÃÄ¥Î§÷®Æªº¨ººØ¡C
+          			break
+        		endif
+      		endif
+      		say «Ü¦n¡I³o­ÓÃÄ§÷¤£¿ù......
+      		mpmod_qmark $n slum_int_quest v1 | 16
+      		mpcallout 1 mpecho $I±N$O§ë¶iÁç¤l¤¤......
+      		mpcallout 2 mpecho Áç¤l¶}©lÅ¸°Ê......
+     	endif
+     	if vnum($o) == 9410
+      		if is_qmark($n) & slum_int_quest 200032
+        		say ³o­ÓÃÄ§÷§A¤§«eµ¹¹L¤F§r......
+        		break
+      		endif
+      		if int($n) < 20
+        		if rand(60)
+          			say ¤£¹ï¡A³o¯óÃÄÁöµM«Ü¹³¡A¦ý³o¬O¤£¯à§@ÃÄ¥Î§÷®Æªº¨ººØ¡C
+          			break
+        		endif
+      		endif
+      		say °Ú¡A³o­ÓÃÄ§÷«Üµ}¦³¡A¹ê¦b¬O¤£¥i¦h±o§r¡C
+      		mpmod_qmark $n slum_int_quest v1 | 32
+      		mpcallout 1 mpecho $I±N$O§ë¶iÁç¤l¤¤......
+      		mpcallout 2 mpecho Áç¤l¶}©l§Ý°Ê......
+    	endif
+    	if vnum($o) == 9411
+      		if is_qmark($n) & slum_int_quest 200064
+		        say ³o­ÓÃÄ§÷§A¤§«eµ¹¹L¤F§r......
+        		break
+      		endif
+      		if int($n) < 22
+        		if rand(60)
+          			say ¤£¹ï¡A³oÁû¯óÃÄÁöµM«Ü¹³¡A¦ý³o¬O¤£¯à§@ÃÄ¥Î§÷®Æªº¨ººØ¡C
+          			break
+        		endif
+      		endif
+      		say ¤Ó¦n¤F¡I³o­ÓÃÄ§÷¥i¥H¤j¤j¼W±jÃÄªº®Ä¤O¡I
+      		mpmod_qmark $n slum_int_quest v1 | 64
+      		mpcallout 1 mpecho $I±N$O§ë¶iÁç¤l¤¤......
+      		mpcallout 2 mpecho Áç¤l¶}©lÂÛÂÛ¸õ......
+    	endif
+    	if is_qmark($n) == slum_int_quest 200127
+      		say ¥²­nÃÄ§÷¤w¸g¦¬¶°§¹¤F¡A¥i¥H¶}©l§@ÃÄ¤F(complete)¡C
+    	endif
+  endif
+~
+>tick_prog 100~
+  mpjunk all.herb
+  drop all
+~
+|
+#9406
+manager-slum~
+¼o±ó³õºÞ²zªÌ(manager of junk-yard)~
+¤@¦ì¥þ¨­´²µo±j¯P¯ä¨ýªº¼o±ó³õºÞ²zªÌ(manager)¯¸¦b³o¸Ì¡C
+~
+¤@¦ì¬ïµÛ¯}¦|¥¬Á_¦¨ªº¦çªA¡AÀYÀ¹Äê´U¤lªº¦Ñ³Ã¥ë¡A½a·¥µL²á¦a§¤¦b¦a¤W¡C
+~
+1|2|64|8388608|67108864 8|32|8192 200 S
+1 350 200 0d0+-150 0d-100+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8
+>fight_prog 100~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell °Ú¡I¦³¤H§ðÀ»§Ú¡I 
+  endif
+~
+>rand_prog 30~
+  say ¼K¼K¡A¤HÁ`¦³¦^Âk¦¹¦aªº¤@¤Ñ§r¡I
+~
+>talk_prog topic~
+  say äú¡A³o¯ä¨ý¥i¯uÅý¤H¤ßÃm¯«©É§r¡I
+~
+>talk_prog hint~
+if is_qmark($n) & slum_libei_quest 300032
+  	say §Aªº°O©Ê¤ñ§ÚÁÙ®t¡I
+  	sigh
+  	mpcallout 1 mpcall job_1 $n
+  	mpcallout 2 mpcall job_2 $n
+endif
+~
+>defun_prog job_1~
+  say ¶â¡A¦Ñ¤j¥æ¥N§Ú­n§A¨ì¥_Ãäªº¼o±ó³õ¸Ì[1;37m«õ¡u¿¸Ãþ¡v(dig fungus)[0m¡A
+  say ¨º§A´N¥h¨Ä¨Ä§ä§a¡A¶V¦h¶V¦n¡C
+~
+>defun_prog job_2~
+  say Ô£¡H§A°Ý§Ú«õ¨º­Ó§@¤°»ò¡H§AÃø¹D¤£ª¾¹D¦n«Ä¤l­n¤Ö°Ý°ÝÃD¶Ü¡H
+  grin $n
+~
+>talk_prog complete~
+  if is_qmark($n) & slum_libei_quest 200032
+    	say §A¤£¬O°µ§¹¤F¶Ü¡H
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300032
+    	if is_qmark($n) <= slum_con_quest 200001
+      		say ­ó¡A§A®Ú¥»¨S¦³§@¥ô¦ó¤u§@¡I
+      		break
+    	endif
+    	mpmod_qmark $n slum_libei_quest v1 | 32
+    	if is_qmark($n) <= slum_con_quest 200007
+      		say ³o¼Ëªº¶q¦³ÂI¤Ö¤F......
+      		mpgold $n 2000
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200013
+      		say ³o¼Ëªº¶q®t¤£¦h°÷¤F¡C
+      		mpgold $n 3000
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200019
+      		say ¶â¡A§Aªº¦¬Ã¬¶qÆZ¦hªº¹À¡I
+      		mpgold $n 4000
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200025
+      		say ¤µ¤Ñ¥i¯u¬O¤jÂ×¦¬§r¡I
+      		mpgold $n 5000
+    	else
+      		say ¤Ó´Î¤F¡A§Ú§@¤F³o»ò¤[ºÞ²z­ûÁÙ¨S¤@¦¸¨£¹L³o­Ó¦hªº³f¡I
+      		mpgold $n 7000
+    	endif
+    	mpcall end_1 $n
+      	break
+  endif
+  say §A¦b»¡¤°»ò§r¡H
+~
+>defun_prog end_1~
+    mpoload 9419 1
+    mpecho $I®³°_¤F¤@ªKÄê¦Ð¤òµ§¡A¦b«H¨ç¤W­±Ã±¤F¤@­ÓÀs­¸»ñ»Rªº¦W¦r¡C
+    mpcallout 1 give signed $n
+    mpcallout 2 say ¦n¤F¡A¦^¥h§â³o«Ê«H®³µ¹§Q«ô´N¥i¥H¤F¡C
+~
+>give_prog 9424~
+  mpjunk mail
+  if is_qmark($n) & slum_libei_quest 100032
+    	mpadd_qmark $n slum_con_quest -1 1 1 0 0 1
+    	say «¢¡A§A¤S¨Ó°Õ¡I«Ü¦n«Ü¦n¡A§Ú³oÃä¤H¤â¯Ê±o«Ü§r¡I
+    	say §AÀ³¸Óª¾¹D«ç»ò¤u§@¤F§a(hint)¡H
+    	say ¦pªG°µ§¹¤F§O§Ñ¤F»¡¤@Án(complete)¡C
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300032
+    	mpechoat $n $I±N«H¨ç¤j²¤Åª¤F¤@¤U¡C
+    	mpadd_qmark $n slum_con_quest -1 1 1 0 0 1
+    	mpcallout 1 mpcall job_1 $n
+    	mpcallout 2 mpcall job_2 $n
+    	mpcallout 3 say ¹ï¤F¡A¼o±ó³õ¨ºÃä¶V²`¤J¥i¬O¶V¬rªº¡AÅé½è¤£¦nªº¦Û¤v«O­«¡C
+    	mpcallout 4 say ¦pªG§AÄ±±o«õ±o°÷¦h¡A´N¥i¥H¥s°±¤F(complete)¡C
+  endif  
+~
+>give_prog 9428~
+  mpjunk fungus
+  if is_qmark($n) & slum_libei_quest 300032
+    	if is_qmark($n) < slum_con_quest 200001
+      		say §Aµ¹§Ú³o­ÓªF¦è§@¤°»ò¡H
+      		break
+    	endif
+    	say ¶â¡A«Ü¦n¡I
+    	mpmod_qmark $n slum_con_quest v1 + 2
+    	if is_qmark($n) >= slum_con_quest 200027
+      		say ¶â¡ã¡ã§Ú·Q³o¼Ë´N°÷¦h¤F(complete)¡C
+    	endif
+    break
+  endif
+  say ³o¬O¤°»òªF¦è§r¡H 
+~
+>tick_prog 100~
+mpjunk gill
+drop all
+~
+|
+#9407
+representative-slum~
+½Í§PªÌ(representative)~
+¦Ñ½mºë©úªºÂ¾·~½Í§PªÌ(representative)¼««ã¦a¯¸¦b³o¸Ì¡C
+~
+§A¬Ý¨ì¤@¦ìº¡Áy¤jÄGÅ½ªº¬õ¾v¤¤¦~¤H¯¸¦b³o¸Ì¡A¥HÃhºÃªº²´¥ú¥´¶q§A¡C
+~
+1|2|64|67108864 8|32|512 -100 S
+1 300 0 6d6+-120 0d-100+0
+-1 0
+0 8 1
+C 1
+R Human~
+P 8
+>fight_prog 100~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell °Ú¡I¦³¤H§ðÀ»§Ú¡I 
+  endif
+~
+>talk_prog topic~
+  say ¥i´cªº¶ÂÀ°¡I³º´±§â§Ú»°¥X¨Ó¡I
+~
+>talk_prog hint~
+if is_qmark($n) & slum_libei_quest 300064
+  	mpcall job_3 $n
+  	mpcallout 1 mpcall job_4 $n
+endif
+~
+>talk_prog wis~
+say ©Ò¿×´¼¼z(wis)¡A´N¬O§A«Ý¤H³B¨Æ¯à¤OªºÁ`©M¡A·í§Aªº´¼¼z¶V°ª¡A§A½Í§P©M
+say °Q»ùÁÙ»ùªº¯à¤O¤]¶V°ª¡C©Ò¥H¡A¦pªG§A¦ÛÄ±´¼¼z¤£°÷¡A¥i§O¨Ó±µ³o­Ó¥ô°È¡C
+say ¦pªG§A¥Í±o¤ÕªZ¦³¤O¡A§A¥i¥H¸Õ¸Õ¬Ý±jµwªº¥ß³õ¡F¬Û¤Ï¦a¡A¦pªG§A¬OÄÝ©ó
+say ´¼¼z«¬ªº¤Hª«¡A¨º§A¥i¥H¸ÕµÛ¥Î¤ÀªRªº¥ß³õ¨Ó¹ï¥I¥L¡C
+~
+>talk_prog strong man~
+  say ¥LÀ³¸Ó¦b[1;37m°¨À¸¹ÎªºÆ[²³®u[0m¨ºÃä¡AºÊµøµÛ§Ú­Ì¤â¤U¡C
+~
+>give_prog 9422~
+  mpjunk mail
+  if is_qmark($n) & slum_libei_quest 100064
+  	mpadd_qmark $n slum_wis_quest -1 1 1 0 0 1
+    	say °Ú¡A§A¨Óªº­è¦n¡A¨º­Ó³Ã¥ë³ºµM¦A«×Ãö³¬¨ó°Ó¤jªù¡A
+    	say §Ú­Ì¥¿¦n»Ý­n¤@­Ó±K¨Ï¨Ó·í§@·¾³q¾ô¼Ù¡A´N§A¨Ó§a¡I
+    	say §Ú·Q§AÀ³¸Óª¾¹D¥L¦b­þ¸Ì¤F§a(hint)¡H
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300064
+    	mpecho $I±M¤ß¦a¬Ý§¹¤â¤Wªº«H¨ç¡C
+    	mpadd_qmark $n slum_wis_quest -1 1 1 0 0 1
+    	mpcallout 1 hmm
+    	mpcallout 1 say ¹É¡A§Q«ô«ç»ò¦Ñ¬O¬£³oºØÁ{®É¤uµ¹§Ú......
+    	mpcallout 2 say ¦n¡A§Aª¾¹D§Úªº¤u§@¬O¤°»ò¶Ü¡H
+    	mpcallout 3 mpcall job_1 $n
+    	mpcallout 4 mpcall job_2 $n
+    	mpcallout 5 mpcall job_3 $n
+    	mpcallout 6 mpcall job_4 $n
+    	break
+  endif
+~
+>defun_prog job_1~
+  say ¨S¿ù¡A§Ú¬O¤@¦W½Í§P±M®a¡A­t³d¬°±_¥Þ¦È¨ú³Ì¤j§Q¯q¡C
+  say ³Ìªñ¥_Ãä¨º­Ó°¨À¸¹Î¨Ó§Ú­Ì³o¸Ì¤½ºt¡AÁÈ¶i¤j§â»È¤l¡A
+  say ¦ý§Ú­Ì«o±o¤£¨ì¥ô¦ó§Q¯q¡I¦]¬°¥þµ¹¶ÂÀ°¦û¥h¤F¡A¯u¬O¥i´c¡I
+  angry
+~
+>defun_prog job_2~
+  say §ó¥i´cªº¬O¡A¥L­Ì³ºµMÃö³¬¨ó°Ó¤jªù¡A§â§Ú³o­Ó±M®a»°¤F¥X¨Ó¡I
+  say ¯u¬O¥Ø¤¤µL¤H§r¡I§Ú¥i¬O¥v¥d©Ô¨©¤j¾Ç°|²¦·~ªº°ª§÷¥Í§r¡I
+  mpechoat $n §A¬ðµM©ú¥Õ¥L¬°¤°»ò·|³Q»°¥X¨Ó¤F
+~
+>defun_prog job_3~
+  say ­ü¡A§A¡I§AÀ°§Ú¶i°¨À¸¹Î¡A§ä¤@­Ó[1;37m³C§Î¤jº~(strong man)[0m¡A
+  say ¶Ç¹F§Úªº¼««ã»P¤£º¡¡I
+  hmm
+~
+>defun_prog job_4~
+  say ¥_Ãä¦³¤@±ø«K¹D¥i¥Hª½±µ¶i°¨À¸¹Î¡A§A´N±q¨ºÃä¶i¥h§a¡C
+  say ¤£¹L[1;37m¥i§O¶Ë®`¥L[0m¡A§Ú­Ì¤£·Q¡u²{¦b¡v¸ò¶ÂÀ°¥´°_¨Ó¡AÀ´¶Ü¡H
+~
+>all_greet_prog 100~
+  if is_qmark($n) != slum_libei_quest
+	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300064
+    if is_qmark($n) == slum_representative_nojob
+      	say ¤Ñ­þ¡I§Q«ô³ºµM¬£¤F¤@­Ó¥uÀ´®±ÀYªº¥ÕÃ¨¹L¨Ó¡I
+      	say °Ú¡I§A§â§Ú¦h®Éªº¤ß¦å¥þ³¡·d¯{¤F¡I
+      	say §Aµ¹§Úºu¦^¥h¦Y¦Ñ¦Ì¶º§a§A¡I
+      	mpmod_qmark $n slum_libei_quest v1 r 64
+      	mpmod_qmark $n slum_libei_quest v2 r 64
+      	mpdel_qmark $n slum_wis_quest
+      	mpadd_qmark $n slum_libei_nojob 25 1 0 0 1 1
+      	mpcallout 1 mpechoat $n $I§¹¥þ¤£ÅU§Î¶H¦a¤j½|§A¡A±N§A½|¤UÁA±æ¥x......
+      	mpcallout 2 mpforce $n d
+      	break
+    endif
+    mpdel_qmark $n slum_strong_notalk
+    if is_qmark($n) & slum_wis_quest 232768
+      	mpmod_qmark $n slum_libei_quest v1 | 64
+      	mpechoat $n [1;37m§A±N¹ï¤èªº¸Ü¶Çµ¹¤F$IÅ¥¡A¥L³¬°_²´­W«ä......[0m
+      	mpmod_qmark $n slum_wis_quest v1 r 65025
+      	mpoload 9417 1
+      	if is_qmark($n) >= slum_wis_quest 200060
+        	mpcallout 1 say «¢«¢¡A¥LªGµM¦­´N§Þ½a¤F¡A¥u·|¥Î³oºØÄF¤p«Äªº¤â¬q­A¿à¡A³o¤U§Ú­Ì³Óºâ¤j¼W¡I
+        	mpgold $n 10000
+      	else
+        	mpcallout 1 say ­ü¡A¶ÂÀ°¶Õ¤O·|³o»ò±j²±¤£¬O¨S¦³­ì¦]ªº¡A³o¤U­n»P§Q«ô¦n¦n°Ó°Q¹ïµ¦¤F¡C
+        	mpgold $n 5000
+      	endif
+      	mpcallout 1 mpecho $I®³°_ÀH¨­¦Ðµ§¡A¦b«H«Ê¤WÃ±¦W¡C
+      	mpcallout 2 give signed $n
+      	mpcallout 2 say §â³o«Ê«H®³µ¹§Q«ô´N¦æ¤F¡C
+	mpcallout 3 c 2 'cure critical' $n
+      	break
+    endif
+    if is_qmark($n) & slum_wis_quest 208192
+      	mpmod_qmark $n slum_wis_quest v1 | 16384
+      	mpechoat $n §A¸Ô­z¤F¹ï¤èªº¤ÏÀ³......
+      	mpcallout 1 say «¢¡A¥LªGµM§Þ½a¤F¡A«Ü¦n¡I
+      	mpcallout 2 mpechoaround $n $I¬ðµM¾a¦b$N¦Õ®Ç¡A¹ï$e»¡®¨®¨¸Ü¡C
+      	mpcallout 2 mpcall secret_2 $n
+      	mpcallout 3 dance
+	mpcallout 4 c 'cure critical' $n
+      	break
+    endif
+    if is_qmark($n) & slum_wis_quest 202048
+      	mpmod_qmark $n slum_wis_quest v1 | 4096
+      	mpechoaround $n $N±N¶ÂÀ°¥N¨¥¤Hªº¸Ü¦Ñ¦Ñ¹ê¹ê¦aÁ¿µ¹½Í§P±M®aÅ¥¡C
+      	mpechoat $n §A±N¶ÂÀ°¥N¨¥¤Hªº¸Ü¦Ñ¦Ñ¹ê¹ê¦aÁ¿µ¹½Í§P±M®aÅ¥¡C
+      	say ¶â..............
+      	hmm
+      	mpcallout 1 say ­ó¡A§A¦A¥h¸ò¥L½Í¤@¦¸¡A§Ú²q¥LÁ¿¤£¥X·sªá¼Ëªº¡C
+      	mpcallout 2 c 2 'cure critical' $n
+	break
+    endif
+    if is_qmark($n) & slum_wis_quest 200512
+      	mpmod_qmark $n slum_wis_quest v1 | 1024
+      	mpechoaround $n $N±N¶ÂÀ°¥N¨¥¤Hªº¸Ü¦Ñ¦Ñ¹ê¹ê¦aÁ¿µ¹½Í§P±M®aÅ¥¡C
+      	mpechoat $n §A±N¶ÂÀ°¥N¨¥¤Hªº¸Ü¦Ñ¦Ñ¹ê¹ê¦aÁ¿µ¹½Í§P±M®aÅ¥¡C
+      	say ¥i´cªº¶ÂÀ°²V²V¡A¥H¬°¥ý¦û¤F¦a½L´N¦p¦¹²s¨g¡I
+      	say ­ó¡A¤£¹L²{¦b¤£¬O·N®ð¥Î¨Æªº®É­Ô......
+      	mpechoat $n $I¬ðµM¾a¦b§A¦Õ®Ç¡C
+      	mpechoaround $n $I¬ðµM¾a¦b$N¦Õ®Ç¡A¹ï$e»¡®¨®¨¸Ü¡C
+      	mpcallout 1 mpcall secret_1 $n
+      	mpcallout 2 say ¥h§a¡A§â§Úªº°T®§¶Ç¹Fµ¹¨º¨Ç²V²V¡I
+      	mpcallout 3 c 2 'cure critical' $n
+	break
+    endif
+  endif
+~
+>defun_prog secret_1~
+  mpechoat $n $I®¨®¨»¡¡G¡u¨ä¹ê¡A²{¦b¦Ñ¤j¨Ã¤£·Q»P¥L­Ì°_½Ä¬ð¡A¦ý¬O§Ú­Ì¤]¡v
+  mpechoat $n $I®¨®¨»¡¡G¡u¤£¯à¥¢¤F«Â­·¡A©Ò¥H§A¥²¶·¦b±jµw»P°hÅý¤§¶¡¨ú¥­¡v
+  mpechoat $n $I®¨®¨»¡¡G¡u¿ÅÂI¡A³o´N­n¾a§Aªº´¼¼z(wis)¤F......¡v
+~
+>defun_prog secret_2~
+  mpechoat $n $I®¨®¨»¡¡G¡u²{¦b¡A§Ú­ÌÂ÷³Ó§Q¤£»·¤F¡AÄ~Äò¦V¥L¬IÀ£¡A
+  mpechoat $n ª½¨ì¥L¨ü¤£¤F¬°¤î¡I¨ì®É­Ô§Ú­Ì´N¬°±_¥Þ¥ß¤U¤j¥\¤F¡I¡v
+  dance
+~
+|
+#9408
+worker-slum~
+½XÀY¤u¤H(worker)~
+¨¯¶Ô¤u§@ªº½XÀY¤u¤H(worker)¦b³o¸Ì§V¤O¦a·h¹B³fª«¡C
+~
+¤@¦ì³Q©Þ±¼¯Í»H¡A³Q¤HÃþ·í§@¥£Áõªº¤pºëÆF¡C
+~
+1|2|33554432|67108864 8192 300 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+R Fairy~
+W backstab~ 250 100
+W weaken~ 200 100
+A6
+mpgoto 9434+mpecho ½XÀY¤u¤H(worker)µLºë¥´ªö¦a¨Ó¨ì³o¸Ì¡C
+say ¤W¤u¤F......
+~
+A20
+mpecho ½XÀY¤u¤H(worker)µLºë¥´ªö¦a¦^¨ì­Ü®w......+mpgoto 9423+mpecho ½XÀY¤u¤H(worker)µLºë¥´ªö¦a¨Ó¨ì³o¸Ì¡C
+mpecho ½XÀY¤u¤H(worker)¦V­Ü®wºÞ²z­ûÃ±¨ì¡AµM«á¦U¦Û¦^®a......
+mpgoto 9400
+~
+|
+>tick_prog 100~
+  if inroom($i) == 9434
+	s
+	s
+	s
+	sad
+  else
+	n
+	n
+	n
+	sigh
+  endif
+  if hour($) == 20
+	break
+  endif
+  if inroom($i) == 9400
+  or inroom($i) == 9434
+  or inroom($i) == 9439
+  else
+        echo $I¥^¥^¦£¦£¶]¦^½XÀY¨ø³f¹D......   
+	mpgoto 9434
+  endif
+~
+|
+#9409
+smuggler-slum~
+½XÀY¨«¨p¤u¤H(smuggler)~
+¯«¯µ¤¼¤¼¡A®³µÛ¤@®¹¤£ª¾¦Wª«Åéªº½XÀY¤u¤H(smuggler)¡C
+~
+¥L¤â¤W®³µÛ¤@®¹¤p¡A¦ý¨H­«²§±`ªºª««~¡A§Î¸ñ¥iºÃ¦a·h¹B³fª«¡C
+~
+1|2|128|33554432|67108864 512|32768 -300 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+R Human~
+A22
+mpgoto 9434+mpecho ½XÀY¨«¨p¤u¤H(smuggler)°­°­¯©¯©¦a¨«¹L¨Ó¡C
+~
+A3
+s+s+s+mpecho ½XÀY¨«¨p¤u¤H(smuggler)°½°½ºNºNª¦¤W¤p¶Â²î+mpgoto 9454
+mpoload 9430 1+mpgoto 9439+mpecho ½XÀY¨«¨p¤u¤H(smuggler)¨³³t¦aª¦¤U¤p¶Â²î¡C
+n+n
+n+open e+e+d+s+open d+d+drop goods
+~
+A4
+open u+u+close d+n+u+nod
+~
+A5
+mpecho ½XÀY¨«¨p¤u¤H(smuggler)¨³³t¦aÂ÷¶}¡C+mpgoto 9400+mpjunk all
+~
+|
+#9410
+protector-slum smuggler~
+¨«¨p½XÀY«OÅ@ªÌ(protector of smuggler)~
+­±¤ÕÄYµÂªº½XÀY«OÅ@ªÌ(protector of smuggler)¯¸¦b³o¸Ì¡C
+~
+¤@¦ì¨­§÷°ª¤j¡A¦Ù¦×µo¹Fªº¦~»´¨k¤l¡A¥L¬O½XÀYªº«OÅ@ªÌ»PºÊµøªÌ¡A¨¾¤î
+¦³¤H§«®`¹B³f¡C
+~
+1|2|64|8192|33554432|67108864 0 -300 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+R Human~
+
+#9411
+boat-slum seller~
+½æ²îªÌ(boat seller)~
+¤@¦ì½Gªø¡Aº¡­±­·Á÷ªº¦Ñ¤H(boat seller)µ¥µÛ¤H¨Ó¶R¥Lªº²î¡C
+~
+¥L´¿¸g¬O³h¥Á°Ï´ä¤fªººÞ²z­û¡A«á¨Ó°h¥ð¤F´N¨Ó³o¸Ì½æ²î¡C
+~
+1|2|64 0 100 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+R Human~
+
+#9412
+swagman-slum~
+¬y®öº~(swagman)~
+¤@¦ì¥þ¨­Å¼¤¼¤¼ªº¬y®öº~(swagman)¦b³o¸Ì§ä´M¤U¤@À\¡C
+~
+§A»D¨ì¥L¨­¤Wµo¥X¨Óªº¯ä¨ý¡AÅý§A·Q°_©U§£³õ¯S¦³ªº¨ý¹D¡C
+~
+1|4|64|33554432 1024 0 S
+6 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+R Human~
+>rand_prog 20~
+  mpecho $IÂ½§äµÛ¸ôÃäªº©U§£°ï¡A·Q­n§ä¨ì¨Ç­¹ª«¡C
+~
+|
+
+#9413
+cur-slum dog~
+³¥ª¯(cur)~
+¤@°¦ªøµÛÁw½Hªº³¥ª¯(cur)¯¸¦b³o´÷±æ¦a±æµÛ§A¡C
+~
+¤@°¦¤¿²r¡A°§¾jªº³¥ª¯¡A¦ü¥G·Q§â§A·í¦­À\¦Y¤F¡C
+~
+1|64|128|8192|33554432 256|34359738368 -200 S
+6 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+R Animal~
+>all_greet_prog 30~
+  mpechoat $n $I¹ïµÛ§A¨g§p
+  mpechoaround $n $I¹ïµÛ$N¨g§p
+~
+>rand_prog 10~
+  rest
+  mpecho $I§¤¦b¦a¤W§ìÄo......
+  mpcallout 2 stand
+~
+|
+
+#9414
+order keeper-slum~
+¯´§ÇºûÅ@ªÌ(order keeper)~
+¤@¦W±j§§¡A©ÜµÛ¥Ö¥Òªº¯´§ÇºûÅ@ªÌ(order keeper)«ÂªZ¦a¯¸¦b³o¸Ì¡C
+~
+¥L¬O±_¥Þ³h¥Á°Ï¯´§ÇªººûÅ@ªÌ¡A¦b³o¸ÌÄµ§ÙµÛ¡A·Ç³Æ§ðÀ»³h¥Á°Ï¤§¼Ä¡C
+~
+1|64|8192|33554432 8192 0 S
+12 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+R Human~
+>greet_prog 100~
+  if is_qmark($n) == slum_all_enemy
+    yell ±_¥Þ¤§¼Ä$N¦b³o¸Ì¡I
+    mpkill $n
+    break
+  endif
+  if rand(30)
+    mpechoat $n $IÄµ§i§A¡G¡u§O¦b±_¥Þ¤º§ðÀ»­«­n¤Hª«(VIP)¡A§_«h§Ú­Ì¤£·|¤â¤U¯d±¡¡I¡v
+  endif
+~
+>talk_prog VIP~
+  say ©Ò¿×­«­n¤Hª«¡A¨Ò¦p±_¥Þªº¦ÑÁó­Ì¡AÁÙ¦³¤£·|ÀH·N¨«°Êªº¤Hª«¡A
+  say ¥L­Ì¹ï±_¥Þªº¹B§@¦³­«­nªº¦a¦ì¡A¦pªG¦³¤HÁx´±§ðÀ»¥L­Ì¡A§Ú­Ì
+  say ±N·|¬I¥HÄY¼FªºÃg§Ù¡I
+~
+|
+
+#9415
+spy-slum sinister gang~
+¶ÂÀ°¶¡¿Ò(spy)~
+¤@¦W§Î¸ñ¥iºÃ¡A°­°­¯©¯©ªº¤H(spy)¯¸¦b³o¸Ì¡C
+~
+¥L¨­¤W¬ïµÛ¦Ç¦âªº¦çªA¡A¤p¤ß¦a¸ú¦b³±¼v¤U¡AÁ×§K§O¤H¬Ý¨£¥L¡C
+~
+1|64|33554432 32768|65536 -150 S
+8 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+R Human~
+
+#9416
+Alice-slum woman~
+·RÄR´µ(Alice)~
+¤@¦ì«æ©Ê¤lªº®a®x¥D°ü(Woman)¯¸¦b³o¸Ì¡C
+~
+¦o¬O¤@¦ì¦³ÂI«æ©Ê¤lªº¤H¡A­n¸ò¦oÁ¿¸Ü½Ð§â´¤®É¶¡¡A¦o«D±`¨S¦³­@¤ßµ¥¤H¡C
+~
+1|2|64|128|33554432|67108864 0 100 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 0
+R Human~
+A5
+stand
+mpecho ·RÄR´µ(Alice)¥´¤F¤@Án«¢¤í¡A°_§É¤F¡C
+~
+A7
+say ­ü§r¡AÀ³¸Ó­n¥h¬~¦çªA¤F¡I
+mpecho ·RÄR´µ(Alice)«æ«æ¦£¦£©ñ¤U¤â¤W¤u§@¡A®³°_¬~¦çÄx´N¨«......+open n+n
+clo s+e+e+e
+e+e+mpecho ·RÄR´µ(Alice)©¹«n¨«¥h¡C+mpgoto 9443+mpecho ·RÄR´µ(Alice)«æ«æ¦£¦£»°¨ì¡AµM«á®³¥X¤@°ï¦çªA¨Ó¬~......
+~
+A13
+say ²×©ó¬~§¹¤F......+mpecho ·RÄR´µ(Alice)±N¦çªA¦¬¶iÄx¤l¸Ì¡A¥´¹D¦^©²¡C+n+w+w+w
+w+w+open s+mpgoto 9444+mpecho ·RÄR´µ(Alice)«æ«æ¦£¦£¦a»°¦^¨Ó¡A·Ç³Æ¶}©l¤u§@......
+close n+mpecho ·RÄR´µ(Alice)±N¦Ï¤ò½u©â¶i¯¼Â´¾÷¸Ì¡A¶}©l§V¤O¤u§@¡C
+~
+A19
+say ­ü§r¡A¸ò¹p¼Ú®R¸¦(Leonady)ªº¬ù©w³£§Ñ±o¤@°®¤G²b¤F¡I+open n
+mpecho ·RÄR´µ(Alice)«æ«æ¦£¦£¦a¥Xªù¤F¡C+n+close s+e+open s+mpgoto 9445
+say ¶Ù¡A¹p¼Ú®R¸¦¡A§Ú¨Ó§ä©p¤F¡I+mpforce leonady-slum say ¶â¡A§¤¤U§a¡C
+~
+A23
+say °Ú¡A§Ú¸Ó¦^®a¤F¡I+wave leonady-slum+mpforce leonady-slum say ¦n¨«¡A¤£°e¤F¡C
+mpecho ·RÄR´µ(Alice)«æ¦£»°¦^®a......+open n+n+close s+w+open s+mpgoto 9444+mpecho ·RÄR´µ(Alice)«æ¦£»°¦^¨Ó+close n
+mpecho ·RÄR´µ(Alice)¥´¤F¤@Án¨þ¤í¡A½ö¤F¤U¨Ó¡C+sleep
+~
+|
+>fight_prog 70~
+ if is_qmark($n) == slum_woman_damage
+   	break
+ endif
+ if is_qmark($n) & slum_libei_quest 300008
+   	say °Ú¡I¨º­ÓÃa¤ßªº°Ó¤H³ºµM³ºµM¥s¤H§ðÀ»§Ú¡I¡I
+   	mpadd_qmark $n slum_woman_damage -1 1 0 0 1 1
+ endif
+~
+>rand_prog 40~
+  if inroom($i) == 9444
+    	mpecho $I§V¤O¦aÂ´¥¬¡C
+    	mpcallout 1 mpecho Â´¥¬¾÷¬ì³Ø¬ì¡B³Ø¦a¹B§@µÛ¡C
+    	break
+  endif
+  if inroom($i) == 9443
+    	mpecho $I§V¤O¦a¬~¦çªA¡C
+  endif
+  if rmobcount(9417) > 0
+    	mpecho $I§Ö¼Ö¦a»P¹p¼Ú®R¸¦²á¤Ñ¡C
+  endif  
+~
+|
+
+#9417
+Leonady-slum woman~ 
+¹p¼Ú®R¸¦(Leonady)~
+¤@¦ì±aµÛ­^®ðªº¦~»´°ü¤H(woman)¯¸¦b³o¸Ì¡C
+~
+¦o¬O¤@¦ì«Ü¦³³d¥ô·Pªº®a®x¥D°ü¡A¨C¤Ñ³£·|·Ç®É¦a°µ®a¨Æ¡A²@¬í¤£®t¡C
+~
+1|2|64|128|33554432|67108864 0 100 S
+10 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 0
+R Human~
+A1
+say ¶â¡A¸ÓºÎÄ±¤F¡C
+sleep
+~
+A6
+stand
+mpecho ¹p¼Ú®R¸¦(Leonady)°_§É¤F¡A¶}©lÂ´°_¦Ï¤ò¥¬......
+~
+A11
+say ¶â¡A¸Ó¥h¬~¦çªA¤F¡C+mpecho ¹p¼Ú®R¸¦(Leonady)±N¬~¦çÄx®³°_¨Ó¡C
+open n+mpecho ¹p¼Ú®R¸¦(Leonady)®³µÛ¬~¦çÄx¥Xªù¤F¡C+n+clo s+e
+e+e+e+mpecho ¹p¼Ú®R¸¦(Leonady)©¹«n¨«¥h¡C
+mpgoto 9443+mpecho ¹p¼Ú®R¸¦(Leonady)½òµÛºÝ¥¿ªº¨B¥ï¨Ó¤F¡C
+mpecho ¹p¼Ú®R¸¦(Leonady)±N¬~¦çÄx¤¤ªº¦çª«®³¥X¨Ó¬~¡C
+~
+A16
+say ¶â¡A¸Ó¦^¥h¤F¡C+mpecho ¹p¼Ú®R¸¦(Leonady)±N¦çª«¦¬¦^Äx¤l¸Ì¡C
+mpecho ¹p¼Ú®R¸¦(Leonady)½òµÛºÝ¥¿ªº¨B¥ï¦^®a¤F¡C+n+w+w
+w+w+open s+mpgoto 9445
+mpecho ¹p¼Ú®R¸¦(Leonady)®³µÛ¬~¦çÄx¦^¨Ó¤F¡C+clo n+mpecho ¹p¼Ú®R¸¦(Leonady)¶}©lÂ´°_¦Ï¤ò¥¬......
+~
+|
+>fight_prog 70~
+ if is_qmark($n) == slum_woman_damage
+   	break
+ endif
+ if is_qmark($n) & slum_libei_quest 300008
+   	say °Ú¡I¨º­ÓÃa¤ßªº°Ó¤H³ºµM³ºµM¥s¤H§ðÀ»§Ú¡I¡I
+   	mpadd_qmark $n slum_woman_damage -1 1 0 0 1 1
+ endif
+~
+>rand_prog 40~
+  if inroom($i) == 9445
+    	mpecho $I§V¤O¦aÂ´¥¬¡C
+    	mpcallout 1 mpecho Â´¥¬¾÷¬ì³Ø¬ì¡B³Ø¦a¹B§@µÛ¡C
+    	break
+  endif
+  if inroom($i) == 9443
+    	mpecho $I§V¤O¦a¬~¦çªA¡C
+  endif  
+~
+|
+
+#9418
+Carlin-slum woman~
+¥dµY(Carlin)~
+¤@¦ì²¢¬ü¡A¥i·Rªº¤Ö°ü(woman)¡A±aµÛ³ß§¶§¶ªº¯«±¡¯¸¦b³o¸Ì¡C
+~
+¦o¨­¤W¬ïµÛ·s¸Ë¡A¬Ý°_¨Ó¦n¹³¬O­èµ²±Bªº¼Ë¤l¡AÁy¤WªxµÛ¬õ·w¡C
+~
+1|2|64|128|33554432|67108864 0 100 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 0
+R Human~
+A2
+mpgoto 9446+mpecho ¥dµY(Carlin)°½°½ºNºN¶]¦^¨Ó¡A©M¦çºÎµÛ¡C+sleep
+~
+A8
+stand+mpecho ¥dµY(Carlin)Ãi¬v¬v¦a°_§É¤F¡C
+mpecho ¥dµY(Carlin)®³µÛ¤@Äx«Ý¬~¦çª«¥Xªù¤F¡C+open n+n+close s+e+e
+e+mpecho ¥dµY(Carlin)©¹«n¨«¥h¡C+mpgoto 9443+mpecho ¥dµY(Carlin)±aµÛ¤@Äx¦çª«Ãi¬v¬v¦a¨Ó¤F¡C
+mpecho ¥dµY(Carlin)¶}©l¬~¦çª«¡C
+~
+A13
+mpecho ¥dµY(Carlin)¦¬°_¦çª«¡A³ß§¶§¶¦a¦^®a¤F¡C+n+w
+w+w+open s+mpgoto 9446+mpecho ¥dµY(Carlin)±aµÛ¤@Äx¦çª«³ß§¶§¶¦a¨Ó¤F¡C
+clo n+mpecho ¥dµY(Carlin)¶}©l¤u§@¡A¾Þ§@Â´¥¬¾÷Â´¥¬¡C
+~
+A20
+mpecho ¥dµY(Carlin)ªxµÛ¤@Áy¬õ·w¡A°½°½¶]¥X¥h......+open n+n+close s
+w+w+w
+mpecho ¥dµY(Carlin)°½°½ºNºN¦a©¹¦è¨«¥h¡C+mpgoto 9400
+~
+|
+>fight_prog 70~
+ if is_qmark($n) == slum_woman_damage
+   	break
+ endif
+ if is_qmark($n) & slum_libei_quest 300008
+   	say °Ú¡I¨º­ÓÃa¤ßªº°Ó¤H³ºµM³ºµM¥s¤H§ðÀ»§Ú¡I¡I
+   	mpadd_qmark $n slum_woman_damage -1 1 0 0 1 1
+ endif
+~
+>rand_prog 40~
+  if inroom($i) == 9446
+    	mpecho $I§V¤O¦aÂ´¥¬¡C
+    	mpcallout 1 mpecho Â´¥¬¾÷¬ì³Ø¬ì¡B³Ø¦a¹B§@µÛ¡C
+    	break
+  endif
+  if inroom($i) == 9443
+    	mpecho $I§V¤O¦a¬~¦çªA¡C
+  endif  
+~
+|
+
+#9419
+Thingiwa-slum woman~
+¨¯¦N«½(Thingiwa)~
+¤@¦ì¦Ç¾vªº¤¤¦~°ü¤k(woman)¯¸¦b³o¸Ì¡C
+~
+¦o¬O¤@¦ì¦Ç¾vÂÅ²´¡A¬Ý°_¨Ó¤Q¤À²ø­«ªº¤¤¦~¤k¤l¡C
+~
+1|2|64|128|33554432|67108864 0 100 S
+11 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 0
+R Human~
+A5
+stand
+mpecho ¨¯¦N«½(Thingiwa)¶}©l¨¯¶Ô¦aÂ´¥¬¡C
+~
+A11
+open s+mpecho ¨¯¦N«½(Thingiwa)´£µÛ¤@Äx«Ý¬~¦çª«¥X¥h¤F......+s+clo n+s+s+s+w
+s+s+mecho ¨¯¦N«½(Thingiwa)©¹«n¨«¥h¡C+mpgoto 9443+mpecho ¨¯¦N«½(Thingiwa)Ã­­«¦a¨Ó¨ì³o¡C
+mpecho ¨¯¦N«½(Thingiwa)±N¬~¦çÄxªº¦çª«®³¤F¥X¨Ó¡A¶}©l¬~¦ç¡C
+~
+A16
+say ³o¼ËÀ³¸Ó°÷¤F¡C
+mpecho ¨¯¦N«½(Thingiwa)±N¬~¦çÄxªº¦çª«¦¬¤F¶i¥h¡A½ñµÛÃ­­«ªº¨B¥ïÂ÷¶}¡C+n+n+n
+e+n+n
+n+open n+mpgoto 9447+mpecho ¨¯¦N«½(Thingiwa)¦^¨Ó¤F¡C+close s
+mpecho ¨¯¦N«½(Thingiwa)§¤¤F¤U¨Ó·Ç³ÆÂ´¥¬¡C
+~
+A23
+sleep
+~
+|
+>fight_prog 70~
+ if is_qmark($n) == slum_woman_damage
+   	break
+ endif
+ if is_qmark($n) & slum_libei_quest 300008
+   	say °Ú¡I¨º­ÓÃa¤ßªº°Ó¤H³ºµM³ºµM¥s¤H§ðÀ»§Ú¡I¡I
+   	mpadd_qmark $n slum_woman_damage -1 1 0 0 1 1
+ endif
+~
+>rand_prog 40~
+  if inroom($i) == 9447
+    	mpecho $I§V¤O¦aÂ´¥¬¡C
+    	mpcallout 1 mpecho Â´¥¬¾÷¬ì³Ø¬ì¡B³Ø¦a¹B§@µÛ¡C
+    	break
+  endif
+  if inroom($i) == 9443
+    	mpecho $I§V¤O¦a¬~¦çªA¡C
+  endif  
+~
+|
+
+#9420
+Nischoco-slum woman~
+©g¨qçM(Nischoco)~
+¤@¦ì¬Ý°_¨Ó¤Q¤À´¶³qªº°ü¤H(woman)¯¸¦b³o¸Ì¡C
+~
+¤@¦ì¨S¤°»ò¯S¼xªº¦~»´°ü¤H¡A¹ï§Aµø­YµL¸@¡C
+~
+1|2|64|128|33554432|67108864 0 100 S
+10 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 0
+R Human~
+A7
+stand
+~
+A10
+open w+mpecho ©g¨qçM(Nischoco)±N¬~¦çÄx®³¤F°_¨Ó¡A¥^¥^Â÷¶}¡C+w+clo e+s
+s+s+w
+s+s+mpecho ©g¨qçM(Nischoco)©¹«n¨«¥h¡C+mpgoto 9443+mpecho ©g¨qçM(Nischoco)¨Ó¤F¡C
+mpecho ©g¨qçM(Nischoco)¶}©l®³°_´¨¤l¬~¦ç¡C
+~
+A16
+mpecho ©g¨qçM(Nischoco)±N¦çª«¦¬¦n¡A¥^¥^Â÷¶}¡C+n+n+n+e
+n+n+n+open e
+mpgoto 9448+mpecho ©g¨qçM(Nischoco)¨Ó¤F¡C+close w
+mpecho ©g¨qçM(Nischoco)¶}©lÂ´¥¬¡C
+~
+A21
+sleep
+~
+|
+>fight_prog 70~
+ if is_qmark($n) == slum_woman_damage
+   break
+ endif
+ if is_qmark($n) & slum_libei_quest 300008
+   	say °Ú¡I¨º­ÓÃa¤ßªº°Ó¤H³ºµM³ºµM¥s¤H§ðÀ»§Ú¡I¡I
+   	mpadd_qmark $n slum_woman_damage -1 1 0 0 1 1
+ endif
+~
+>rand_prog 40~
+  if inroom($i) == 9448
+    	mpecho $I§V¤O¦aÂ´¥¬¡C
+    	mpcallout 1 mpecho Â´¥¬¾÷¬ì³Ø¬ì¡B³Ø¦a¹B§@µÛ¡C
+    	break
+  endif
+  if inroom($i) == 9443
+    	mpecho $I§V¤O¦a¬~¦çªA¡C
+  endif
+~
+|
+
+#9421
+Compeny-slum woman~
+±d»_©g(Compeny)~
+¤@¦ì²´·ú¤j¤j¶ê¶êªº¤Ö°ü(woman)¦n©_¦a¥´¶qµÛ§A¡C
+~
+¦oªº²´·ú¤S¤j¤S«G¡A©{¦p¤Ñ¤W©ú¬P¡A¤Q¤À¦a¦n¬Ý¡C
+~
+1|2|64|128|33554432|67108864 0 100 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 0
+R Human~
+A6
+stand+mpecho ±d»_©g(Compeny)¥´¤F­Ó¤j«¢¤í¡A¤@¸LªÑ¦aª¦¤F°_¨Ó¡C
+mpecho ±d»_©g(Compeny)¿³­P©ù´­¦a¶}©lÂ´¥¬¡C
+~
+A8
+say °Ú¡A­n¬~¦çªA¡A®tÂI§Ñ¤F¡I
+open w+mpecho ±d»_©g(Compeny)«æ«æ¦£¦£±N¦çªA¶ë¶i¬~¦çÄx¸Ì¡A½Ä¤F¥X¥h¡C+w+s+s
+w+s+s
+mpecho ±d»_©g(Compeny)©¹«n¨«¥h¡C+mpgoto 9443+mpecho ±d»_©g(Compeny)«_«_¥¢¥¢¦a»°¤F¹L¨Ó¡C
+say ­ü§r¡A¯u¬O¦£¦º§Ú¤F¡C+mpecho ±d»_©g(Compeny)®³¥X¬~¦ç´Î¡A¶}©l¬~¦çªA¡C
+~
+A15
+say ­ü¡AÁ`ºâ¬~¦n¤F¡C
+mpecho ±d»_©g(Compeny)º¡¨¬¦a±N¦çªA¦¬¶i¬~¦çÄx¡C+mpecho ±d»_©g(Compeny)ÂÛÂÛ¸õ¸õ¦aÂ÷¶}¤F¡C+n+n+n+e
+n+n+open e+mpgoto 9449+mpecho ±d»_©g(Compeny)ÂÛÂÛ¸õ¸õ¦a¦^¨Ó¤F¡C+clos w
+rest+mpecho ±d»_©g(Compeny)¶}©lÂ´¥¬¡C
+~
+A22
+sleep
+~
+|
+>fight_prog 70~
+ if is_qmark($n) == slum_woman_damage
+   	break
+ endif
+ if is_qmark($n) & slum_libei_quest 300008
+   	say °Ú¡I¨º­ÓÃa¤ßªº°Ó¤H³ºµM³ºµM¥s¤H§ðÀ»§Ú¡I¡I
+   	mpadd_qmark $n slum_woman_damage -1 1 0 0 1 1
+ endif
+~
+>rand_prog 40~
+  if inroom($i) == 9449
+    	mpecho $I§V¤O¦aÂ´¥¬¡C
+    	mpcallout 1 mpecho Â´¥¬¾÷¬ì³Ø¬ì¡B³Ø¦a¹B§@µÛ¡C
+    	break
+  endif
+  if inroom($i) == 9443
+    	mpecho $I§V¤O¦a¬~¦çªA¡C
+  endif
+~
+|
+
+#9422
+guard-slum house~
+ªZ¸ËÄµ½Ã(guard)~
+¤@¦ì¬ïµÛÁå¥Ò¡A±aµÛµu¼C©Mªø¼Cªº¤j¦v¦u½Ã(guard of house)¯¸¦b³o¸Ì¡C
+~
+¥L¨­¤Wªº¦Ù¦×»P»íªZªº¨­§÷ÃÒ©ú¤F¥Lªº¹ê¤O¡A³Ì¦n¨S¨Æ§O·S¥L¡C
+~
+1|2|64|16384|8388608|67108864 8 0 S
+17 0 0 0d0+0 0d0+0
+-1 0 
+0 8 1
+C 1
+R Human~
+P 8
+>all_greet_prog 100~
+  if is_qmark($n) & slum_libei_quest 100256
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 100128
+    	say «_ÀIªÌ¡A§Ú­Ì®a¤p©j¦³½Ð¡C
+  endif
+~
+>defun_prog open~
+  	say ±z¦n¡A§Ú­Ìªº­^¶¯¡I
+  	mpoload 9400
+  	un n
+  	op n
+  	mppurge key
+  	bow $n
+~
+|
+
+#9423
+guard-slum gate~
+Ãö¥dªºÄµ½Ã(guard of gate)~
+¤@¦ì­t³d¦uÅ@Ãö¥dªºÄµ½Ã(guard of gate)¯¸¦b³o¸Ì¡C
+~
+¥L¬O¤@¦ì¦~»´¡B¥Rº¡ºë¤Oªº¤HÃþ¦u½Ã¡A¥¿©¾¤ß¯Õ¯Õ¦a°õ¦æ¥Lªº¤u§@¡C
+~
+1|2|64|67108864 8|32 0 S
+15 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+P 8
+R Human~
+
+#9424
+bodyguard-slum~
+¶K¨­ªZ¸ËÄµ½Ã(bodyguard)~
+±þ®ðÄËÄËªºªZ¸ËÄµ½Ã(bodyguard)¥¿¸Õ¹Ï«OÅ@¥Lªº¥D¤H¡I
+~
+¤@¦ìÅ@¥D¤ß¤Áªº¶Ä§L¡A®³µÛªø¼C§ðÀ»§A¡I
+~
+1|2|8388608|67108864 128 0 S
+15 0 0 -1d-4+0 0d0+0
+-1 0
+0 8 1
+P 8
+C 1
+R Human~
+
+#9425
+bartender-slum~
+°s§a°s«O(bartender)~
+¤@¦ì¦£µÛ¨ÑÀ³°à°sµ¹«È¤Hªº°s«O(bartender)¯¸¦b³o¸Ì¡C
+~
+¤@¦ì¥Ö½§ÂK¶Â¡A¨­§÷°ª¤jªº¨k¤H¡A¦ü¥G¥H«e¬O¤ô¤â¡C
+~
+1|2|64|33554432|67108864 0 0 S
+13 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+R Human~
+P 8
+
+#9426
+keeper-slum inn~
+®È©±¥D¤H(keeper of inn)~
+¬Û·íÃi´kªº®È©±¥D¤H(keeper of inn)¦Ê¯ëµL²á¦a¯¸¦b³o¸Ì¡C
+~
+¤@¦ì¨­§÷¨«¼Ëªº¤¤¦~°ü¤k¡A¥¿¥´¶qµÛ§Aªº¿ú¥]¡A¦pªG§A­n¥ð®§(rest)ªº¸Ü¡A
+¥i¥H¸ò¦o¸ß°Ý(talk)®ÈÀ]©Ð¶¡¯²»ù¡C
+~
+1|2|64|128|33554432|67108864 8|32 0 S
+1 300 0 7d0+0 0d0+0
+-1 0
+0 8 2
+C 0
+P 8
+R Human~
+>greet_prog 60~
+  	mpechoat $n ®ÈÀ]¥D¤HÃi¬v¬v¦a»¡¡G¡uÅwªï¥úÁ{¡C¡v
+~
+>fight_prog 100~
+  if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell °Ú¡I¦³¤H§ðÀ»§Ú¡I 
+  endif
+~
+>talk_prog topic~
+  say ·Q­n¦n¦n¥ð®§¤@¤U(rest)¶Ü¡H
+~
+>talk_prog rest~
+  if ispc($n)
+    	if is_qmark($n) & slum_libei_quest 10512
+      		say °Ú¡A­ì¨Ó§A´N¬O¨º­Ó¬@±Ï§Ú­Ì³h¥Á°Ïªº­^¶¯¡I
+      		say ³o¼Ë¦n¤F¡A§Úºâ§A¤@¶ô¿ú´N°÷¤F¡C
+      		bow $n
+      		break
+    	endif
+    	mpechoat $n ®ÈÀ]¥D¤H¥´¶q§A¥þ¨­¤W¤U......
+    	if level($n) <= 7
+      		say ¤£¤G»ù¡A¤­¦Ê¥v¹ô¡C
+      		mpcall negotiate $n 
+      		break
+    	endif
+    	if level($n) <= 14
+      		say ¤£¤G»ù¡A¤@¤d¥v¹ô¡C
+      		mpcall negotiate $n
+      		break
+    	endif
+    	if level($n) <= 21
+      		say ¤£¤G»ù¡A¨â¤d¥v¹ô¡C
+      		mpcall negotiate $n
+      		break
+    	endif
+    	if level($n) <= 28
+      		say ¤£¤G»ù¡A¤T¤d¥v¹ô¡C
+      		mpcall negotiate $n
+      		break
+    	endif
+    	if level($n) <= 35
+      		say ¤£¤G»ù¡A¤­¤d¥v¹ô¡C
+      		mpcall negotiate $n
+      		break
+    	endif
+    	if level($n) <= 42
+      		mpechoat $n 
+      		mpechoat $n [1;37m°ü¤Hªº²´¤¤¬ðµMµo¥X¥ú¨~¡C[0m
+      		say ¤£¤G»ù¡A¤@¸U¥v¹ô¡I
+      		mpcall negotiate $n
+    	endif
+  endif
+~
+>defun_prog negotiate~
+  if wis($n) >15
+  or int($n) >19
+  or resp($n) > 3
+    	mpechoat $n ¸g¹L¤@°}°Q»ùÁÙ»ù¤§«á¡A§A²×©ó¬å±¼¤@¨Ç»ù¿ú¡C
+    	if level($n) <= 7
+      		mpcallout 1 say ¦n°Õ¡Aºâ§A¤T¦Ê´N¦n¤F¡C
+      		break
+    	endif
+    	if level($n) <= 14
+      		mpcallout 1 say ¦n°Õ¡Aºâ§A¤»¦Ê´N¦n¤F¡C
+      		break
+    	endif
+    	if level($n) <= 21
+      		mpcallout 1 say ¦n°Õ¡Aºâ§A¤@¤d¤G´N¦n¤F¡C
+      		break
+    	endif
+    	if level($n) <= 28
+      		mpcallout 1 say ¦n°Õ¡Aºâ§A¤@¤d¤K´N¦n¤F¡C
+      		break
+    	endif
+    	if level($n) <= 35
+      		mpcallout 1 say ¦n°Õ¡Aºâ§A¤T¤d´N¦n¤F¡C
+      		break
+    	endif
+    	if level($n) <= 42
+      		mpcallout 1 say ¦n°Õ¡Aºâ§A¤»¤d´N¦n¤F¡C
+      		mpcallout 2 mpechoat $n §A¦³¤@ºØ¶i¤F¶Â©±ªº·PÄ±¡C
+      		break
+    	endif
+  endif
+~
+>bribe_prog 10000~
+  if level($n) <= 42
+    	mpcall twof $n
+  endif
+~
+>bribe_prog 6000~
+  if level($n) <= 42
+    	if wis($n) > 15
+    	or int($n) > 19
+    	or resp($n) > 3
+      		mpcall twof $n
+    	endif
+  endif
+~
+>bribe_prog 5000~
+  if level($n) <= 35
+    	mpcall twof $n
+  endif
+~
+>bribe_prog 3000~
+  if level($n) <= 28
+    	mpcall twof $n
+  endif
+  if level($n) <= 35
+    	if wis($n) > 15
+    	or int($n) > 19
+    	or resp($n) > 3
+      		mpcall twof $n
+    	endif
+  endif
+~
+>bribe_prog 2000~
+  if level($n) <= 21
+    	mpcall twof $n
+  endif
+~
+>bribe_prog 1800~
+  if level($n) <= 28
+    	if wis($n) > 15
+    	or int($n) > 19
+    	or resp($n) > 3
+      		mpcall twof $n
+    	endif
+  endif
+~
+>bribe_prog 1200~
+  if level($n) <= 21
+    	if wis($n) > 15
+    	or int($n) > 19
+    	or resp($n) > 3
+      		mpcall twof $n
+    	endif
+  endif
+~
+>bribe_prog 1000~
+  if level($n) <= 14
+    	mpcall twof $n
+  endif
+~
+>bribe_prog 600~
+  if level($n) <= 14
+    	if wis($n) > 15
+    	or int($n) > 19
+    	or resp($n) > 3
+      		mpcall twof $n
+    	endif
+  endif
+~
+>bribe_prog 500~
+  if level($n) <= 7
+    	mpcall twof $n
+  endif
+~
+>bribe_prog 300~
+  if level($n) <= 7
+    	if wis($n) > 15
+    	or int($n) > 19
+    	or resp($n) > 3
+      		mpcall twof $n
+    	endif
+  endif
+~
+>bribe_prog 1~
+  if is_qmark($n) & slum_libei_quest 10512
+  or level($n) >= 43
+    	say §Ú°¨¤W±a±z¥h±zªº©Ð¶¡......
+    	mptransfer $n 9442
+    	break
+  endif
+  if sex($n) == 0
+  or sex($n) == 1
+    	say ¯ä¤p¤l¡A§A®³¤@¶ô¿ú·Q¨ÓàF°ä¦Ñ®Q§r¡I
+    break
+  endif
+  if sex($n) == 2
+    	say ¤p©h®Q¡A§O®³¤@¶ô¿ú°äÄF©p¦Ñ®Q¡I
+  endif
+~
+>defun_prog twof~
+  mpechoat $n ®ÈÀ]¥D¤H±N§A±a¤W¤G¼Ó¡C
+  mptransfer $n 9442
+  break
+~
+|
+
+#9427
+crazy Libei-slum~
+¼««ãªº§Q«ô(crazy Libei)~
+¥¢¥h²z´¼ªº§Q«ô(Libei)¡I
+~
+¥LÀY¾v¨g¶Ã¡A¯«±¡¶Ñ®«¡A­n¬°¦º¥hªº¤k¨à´_¤³¡I
+~
+1|2|8192|8388608|67108864 8|128 -200 S
+21 0 0 0d0+0 0d0+0
+3500 0
+0 8 1
+C 2
+R Human~
+P 8
+
+#9428
+wererat-slum~
+¹«¤H(wererat)~
+¤@°¦¤p¦ý§ðÀ»©Ê±jªº¹«¤H(wererat)¯¸¦b³o¸Ì¡C
+~
+¤@°¦¤p¦ý§ðÀ»©Ê±jªº¹«¤H¡C
+~
+1|2|32|64|67108864 0 -100 S
+6 0 0 -2d0+10 0d0+0
+0 0
+0 8 0
+W magic missile~ 100 300
+R Animal~
+C 0
+
+#9429
+captain-slum boat~
+¨«¨p²î¥D¤H(captain of boat)~
+¤@¦ì´£°ªÄµÄ±¡AÀH®É·Ç³Æ¹ï¥I¤J«IªÌªº²îªø(captain of boat)¡C
+~
+¤@¦ì´£°ªÄµÄ±¡AÀH®É·Ç³Æ¹ï¥I¤J«IªÌªº²îªø¡C
+~
+1|2|32|64|67108864 0 -500 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8
+>fight_prog 30~
+  say ¦³¤H­n§T³f¡I¡I
+  mpecho ¨«¨p½XÀY«OÅ@ªÌ»DÁn»°¨Ó¡I
+  mpmload 9410
+  mpforce protector-slum say ¥i´cªº$N¡A³º´±¯}Ãa±_¥Þªºªv¦w¡I
+  mpforce protector-slum mpkill $n
+~
+>death_prog 100~
+  mpecho §A¬Ý¨£$I¨­¤W±¼¥X¤@¥]¨«¨p³f(goods)¡C
+  mpoload 9430 1 floor
+~
+|
+#0
+
+
+#OBJECTS
+#9400
+key~
+¤j¦vÆ_°Í(key)~
+¤@§â¥ÍÅK»sªºÆ_°Í(key)½ö¦b³o¨à¡C~
+~
+18 0 1
+9417~ 0~ 0~ 0~
+1 0 0
+L 1
+X iron~
+
+#9402
+red flower herb~
+ªx¯»¬õ¤pÂIªºªá(red flower)~
+¤@¦·±a¯»¬õ¤pÂIªºªá(red flower)½ö¦b³o¨à¡C~
+~
+19 64 1
+10~ 0~ 40~ 1~
+1 0 0
+L 1
+X herb~
+
+#9403
+black rattan herb~
+³qÅé¶Â¦âªº¬\ÃÃ(black rattan)~
+¤@ªK¶Â¦âªº¬\ÃÃ(black rattan)½ö¦b³o¨à¡C~
+~
+19 64 1
+10~ 0~ 40~ 1~
+1 0 0
+L 1
+X herb~
+
+#9405
+purple herb~
+¸G¤pªºµµ´³³¥¯ó(purple herb)~
+¤@®è¸G¤p¤£°_²´ªºµµ´³¯ó(purple herb)½ö¦b³o¨à¡C~
+~
+19 64 1
+10~ 0~ 40~ 1~
+1 0 0
+L 1
+X herb~
+
+#9409
+golden herb~
+ª÷¶À¦âªø¯ó(golden herb)~
+¤@®èª÷¶À¦âªº³æ¤l¸­ªø¯ó(golden herb)ÀRÀR¦a½ö¦b³o¸Ì¡C~
+~
+19 64 1
+10~ 0~ 40~ 1~
+1 0 0
+L 1
+X herb~
+
+#9410
+bloody herb~
+¦å¬õ¦â¯óÃÄ(bloody herb)~
+¤@®è¦å¬õ¦âªº¯óÃÄ(bloody herb)½ö¦b³o¸Ì¡C~
+~
+19 64 1
+10~ 0~ 50~ 1~
+1 0 0
+L 1
+X herb~
+
+#9411
+blue flower herb~
+ÂÅ¦â¤pªá(blue flower)~
+¤@¦·µ}¦³ªºÂÅ¦â¤pªá(blue flower)½ö¦b³o¸Ì¡C~
+~
+19 64 1
+10~ 0~ 50~ 1~
+1 0 0
+L 1
+X herb~
+
+#9415
+signed red mail~
+Ã±¹L¦Wªº¬õ¦â«H¨ç(red mail)~
+¤@­ÓÃ±µÛ¼ã¯ó©m¦Wªº«H¨ç(red mail)¡A¤W­±ÁÙ·s²K¤F¤@¨Ç±K»y¡A¦n¹³¬O§A¤u§@ªºµû»y¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X paper~
+
+#9416
+black potion~
+¶Â¦â·P«_ÃÄ¤ô(black potion)~
+¤@²~¶Âº£º£ªºÃÄ¤ô(black potion)½ö¦b³o¸Ì¡C~
+~
+10 16384 1
+1~ poison~ 0~ 0~
+1 0 0
+L 1
+X liquid~
+
+#9417
+signed black mail~
+Ã±¹L¦Wªº¶Â¦â«H¨ç(black mail)~
+¤@­ÓÃ±µÛºÝ¥¿©m¦Wªº«H¨ç(black mail)¡A¤W­±ÁÙ·s²K¤F¤@¨Ç±K»y¡A¦n¹³¬O§A¤u§@ªºµû»y¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X paper~
+
+#9418
+signed purple mail~
+Ã±¹L¦Wªºµµ¦â«H¨ç(purple mail)~
+¤@­ÓÃ±µÛ²Ó±K©m¦Wªº«H¨ç(purple mail)¡A¤W­±ÁÙ·s²K¤F¤@¨Ç±K»y¡A¦n¹³¬O§A¤u§@ªºµû»y¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X paper~
+
+#9419
+signed gray mail~
+Ã±¹L¦Wªº¦Ç¦â«H¨ç(gray mail)~
+¤@­ÓÃ±µÛÁà­®©m¦Wªº«H¨ç(gray mail)¡A¤W­±ÁÙ·s²K¤F¤@¨Ç±K»y¡A¦n¹³¬O§A¤u§@ªºµû»y¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X paper~
+
+#9420
+red mail~
+¬õ¦â«H¨ç(red mail)~
+¤@«Ê¬õ¦âªº«H¨ç(red mail)¡A¤W­±¼gµÛ¤@¨Ç¦r(words)¡C
+~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+mail words~
+.
+		[1;31m®³µÛ³o«Ê«H¡A¨ì[1;37m¼o¼V­Ü®w[1;31m¡A§ä[1;37m­Ü®wºÞ²z­û¡A[0m
+		[1;31m±N³o«Ê«H®³µ¹¥L¬Ý¡A¥L·|ª¾¹D«ç»ò§@ªº¡C[0m
+		[1;36m¤Á°O¡A¤O¶q¤£¬O¤@¤Á[0m
+				[1;31m¯¬¡C¥´¤u¶¶§Q[0m  ±_¥Þ¤§¤ý§Q«ô
+
+¤U­±«h¬O¤@°ï§A¬Ý¤£À´ªº©_©Ç²Å¸¹¡A¥i¯à¬O¥L­Ì¤§¶¡ªº±K»y§a¡C
+~
+L 1
+X paper~
+
+#9421
+yellow mail~
+¶À¦â«H¨ç(yellow mail)~
+¤@«Ê¶À¦âªº«H¨ç(yellow mail)¡A¤W­±¼gµÛ¤@¨Ç¦r(words)¡C
+~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+mail words~
+.
+		[1;33m«y¡B«y¡I³Ìªñ¤Ñ®ð¤£Ã­©w¡A¯f±¡¤S¶}©l´c¤Æ¤F¡A§Ú­n§A[0m
+		[1;33m®³µÛ³o«Ê«H¡A¨ì[1;37m¦Ñ§Å±Cªº­T«Î[1;33m¡A§ä[1;37m¦Ñ§Å±C¡A[0m
+		[1;33m±N³o«Ê«H®³µ¹¦o¬Ý¡A¥s¦o°t­ÓÃÄµ¹§Ú¦Y¦Y¡C[0m
+		[1;36mª¾ÃÑ¯à±aµ¹¤H§ó±j¤jªºÀu¶Õ¡A¤Á°O[0m
+				[1;33m¯¬¡C¥´¤u¶¶§Q[0m  ±_¥Þ¤§¤ý§Q«ô
+
+¤U­±«h¬O¤@°ï§A¬Ý¤£À´ªº©_©Ç²Å¸¹¡A¥i¯à¬O¥L­Ì¤§¶¡ªº±K»y§a¡C
+~
+L 1
+X paper~
+
+#9422
+black mail~
+¶Â¦â«H¨ç(black mail)~
+¤@«Ê¶Â¦âªº«H¨ç(black mail)¡A¤W­±¼gµÛ¤@¨Ç¦r(words)¡C
+~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+mail words~
+.
+		[1;30m¸ò¶Â·t¶Õ¤Oªº¹ï§Ü¬O§Ú³Ì¹½´cªº¤u§@¡A¥u¤£¹L§Ú[0m
+		[1;30mµLªk°kÁ×¡C				    [0m
+		[1;30m®³µÛ³o«Ê«H¡A¨ì[1;37m½XÀYÁA±æ¥x[1;30m¡A§ä[1;37m½Í§PªÌ¡A[0m
+		[1;30m±N³o«Ê«H®³µ¹¥L¬Ý¡A¥L·|ª¾¹D«ç»ò§@ªº¡C[0m
+		[1;36mºÍ´¼¬O¹ï§Ü¨¸´cªº³Ì¤j¥»¿ú[0m
+				[1;33m¯¬¡C¥´¤u¶¶§Q[0m  ±_¥Þ¤§¤ý§Q«ô
+
+¤U­±«h¬O¤@°ï§A¬Ý¤£À´ªº©_©Ç²Å¸¹¡A¥i¯à¬O¥L­Ì¤§¶¡ªº±K»y§a¡C
+~
+L 1
+X paper~
+
+#9423
+purple mail~
+µµ¦â«H¨ç(purple mail)~
+¤@«Êµµ¦âªº«H¨ç(puple mail)¡A¤W­±¼gµÛ¤@¨Ç¦r(words)¡C
+~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+mail words~
+.
+		[1;35m®³µÛ³o«Ê«H¡A¨ì[1;37mÀZ¼o°s§a[1;35m¡A§ä[1;37m¦Ï¤ò°Ó¤H¡A[0m
+		[1;35m±N³o«Ê«H®³µ¹¥L¬Ý¡A¥L·|ª¾¹D«ç»ò§@ªº¡C[0m
+		[1;36m±Ó±¶±a¨Ó·N·Q¤£¨ìªº§Q¯q¡C[0m
+				[1;35m¯¬¡C¥´¤u¶¶§Q[0m  ±_¥Þ¤§¤ý§Q«ô
+
+¤U­±«h¬O¤@°ï§A¬Ý¤£À´ªº©_©Ç²Å¸¹¡A¥i¯à¬O¥L­Ì¤§¶¡ªº±K»y§a¡C
+~
+L 1
+X paper~
+
+#9424
+gray mail~
+¦Ç¦â«H¨ç(gray mail)~
+¤@«Ê¦Ç¦âªº«H¨ç(gray mail)¡A¤W­±¼gµÛ¤@¨Ç¦r(words)¡C
+~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+mail words~
+.
+		[37m®³µÛ³o«Ê«H¡A¨ì[1m²³¥Í¤§Âk[0;37m¡A§ä[1;37m¼o±ó³õºÞ²zªÌ¡A[0m
+		[37m±N³o«Ê«H®³µ¹¥L¬Ý¡A¥L·|ª¾¹D«ç»ò§@ªº¡C[0m
+		[1;36m¦~»´¤HªºÅé¤O¬O§Úµ¥¶À©ü¤§¤H³Ì¸r¼}ªº¡C[0m
+				[37m¯¬¡C¥´¤u¶¶§Q[0m  ±_¥Þ¤§¤ý§Q«ô
+
+¤U­±«h¬O¤@°ï§A¬Ý¤£À´ªº©_©Ç²Å¸¹¡A¥i¯à¬O¥L­Ì¤§¶¡ªº±K»y§a¡C
+~
+L 1
+X paper~
+
+#9425
+secret mail~
+¯µ±K«H¨ç(secret mail)~
+¤@«Ê¥ÎÄú«Ê¹Lªº«H¨ç(secret mail)¡A¤W­±¼gµÛ¤@¨Ç¦r(words)¡C
+~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+mail words~
+.
+		¥J²Ó¬ÝµÛ¡A«_ÀIªÌ¡A§Ú²{¦b­n¥æ¥I§A¤@¥ó«D±`­«­nªº¥ô°È¡A
+		§A¥²¶·À°§Ú§¹¦¨¡A¦Ó¥B¤£¯à¬ªº|¥X¥h¡A³o±i¯È¬Ý§¹«á°O±o
+		¾P·´¡A¥H½T«O¾÷±K¤£·|¥~¬y¡C
+		§A¬Ý¨£¤F¤@¦æ[1;37m¾÷±K¤å¦r(secret)[0m¡A¦ü¥G¦³¨ÇªF¦è¼g¦b¤W­±¡C
+~
+E
+secret~
+.
+		§A©Î³\ª¾¹D§Ú¦³¤@­Ó¤k¨à¡A¥s°µ[1;37m·R²ú¦w(Eilien)[0m¡A¦o¤£¤[«e
+		³Q¨¸´cªº¶ÂÀ°©Ò§T¨«¡A¤U¸¨¤£©ú¡C
+		§Ú²q´ú¥L­Ì·|±N§Úªº¤k¨à·í§@½Í§PÄw½X¡A¨Ó«Â¯Ù§Ú¡C
+		[1;37m§A¥²¶·¼ç¤J¶ÂÀ°¡AÀ°§Ú¬d¥X·R²ú¦w¥Ø«e³Q¥}¸T¦b¦ó³B[0m¡AÅý§Ú
+		­Ì¯à¦³©Ò·Ç³Æ¡A¨Ã¥B°µ¥X­pµe¡A¦A¥h¬@±Ï¦o¡C
+		¦³¤@±ø[1;37m±¶®|(way)[0m¥i¥H³q©¹¶ÂÀ°ªº²Ä¤G°Ï°ì----´cÅ]À°ªº®Ö
+		¤ß¡A§Ú¬Û«H·R²ú¦w³Ì¦³¥i¯à³Q¥}¸T¦b´cÅ]À°ªº[1;37m¤j¦v°|(yard)[0m
+		¤¤¡A§A¥i¥H¥ý±q³o´X¤è­±µÛ¤â½Õ¬d¡A¦pªG§A¦³¤°»òºÃ°Ý¡A½Ð
+		ª½±µ¦V§Úªº¤ß¸¡[1;37m¨Ì´¶¦è¶©(Epsilon)¸ß°Ý(mission)[0m¡C
+		ÁÙ¦³¡A¸ô³~¥ûÀI¡A³Ì¦n¦h§ä´X¦W§Ó¦P¹D¦XªÌ¦P¦æ¡C
+~
+L 1
+T 20
+X paper~
+
+#9427
+mushroom~
+¿iÛ£(mushroom)~
+¤@´Ê¬Ý°_¨Ó¥i¥H¥Í¦Yªº¿iÛ£(mushroom)½ö¦b³o¸Ì¡C~
+~
+19 0 1
+0~ 0~ 40~ 0~
+1 0 0
+L 1
+X food~
+
+#9428
+gill fungus~
+­»¿¸(gill fungus)~
+¤@®èµo´²µÛ»¤¤H­»¨ýªº¿¸Ãþ(gill fungus)½ö¦b³o¨à¡C~
+~
+19 16384 1
+0~ 0~ 50~ 1~
+1 0 0
+L 1
+X herb~
+
+#9429
+brick~
+¿jÀY(brick)~
+¤@¶ô¨H­«ªº¿jÀY(brick)½ö¦b³o¸Ì¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+25 0 0
+L 1
+X stone~
+
+#9430
+goods~
+¨«¨p³f(goods)~
+¤@¥]¨H­«ªº¨«¨p³f(goods)©ñ¦b³o¸Ì¡C~
+~
+8 16384 1
+1500~ 0~ 0~ 0~
+10 0 0
+L 1
+X fiber~
+
+#9444
+fleece alice~
+·RÄR´µ®aªº¦Ï¤ò(fleece of alice)~
+·RÄR´µ®a¨pÂÃªº¦Ï¤ò(fleece)½ö¦b³o¸Ì¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+T 20
+X wool~
+
+#9445
+fleece leonady~
+¹p¼Ú®R¸¦®aªº¦Ï¤ò(fleece of leonady)~
+¹p¼Ú®R¸¦®a¨pÂÃªº¦Ï¤ò(fleece)½ö¦b³o¸Ì¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+T 20
+X wool~
+
+#9446
+fleece carlin~
+¥dµY®aªº¦Ï¤ò(fleece of carlin)~
+¥dµY®a¨pÂÃªº¦Ï¤ò(fleece)½ö¦b³o¸Ì¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+T 20
+X wool~
+
+#9447
+fleece thingiwa~
+¨¯¦N«½®aªº¦Ï¤ò(fleece of thingiwa)~
+¨¯¦N«½®a¨pÂÃªº¦Ï¤ò(fleece)½ö¦b³o¸Ì¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+T 20
+X wool~
+
+#9448
+fleece nischoco~
+©g¨qçM®aªº¦Ï¤ò(fleece of nischoco)~
+©g¨qçM®a¨pÂÃªº¦Ï¤ò(fleece)½ö¦b³o¸Ì¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+T 20
+X wool~
+
+#9449
+fleece compeny~
+±d»_©g®aªº¦Ï¤ò(fleece of compeny)~
+±d»_©g®a¨pÂÃªº¦Ï¤ò(fleece)½ö¦b³o¸Ì¡C~
+~
+13 16384 1
+0~ 0~ 0~ 0~
+1 0 0
+T 20
+X wool~
+
+#9451
+key gate~
+¹hªùÆ_°Í(key of gate)~
+¤@§â¹hªùÆ_°Í(key of gate)½ö¦b³o¸Ì¡C~
+~
+18 0 1
+9451~ 0~ 0~ 0~
+1 0 0
+L 1
+X bronze~
+#0
+
+#ROOMDATA
+#9400
+±_¥Þ³h¥Á°Ï¼È¦s°Ï~
+    ³o¸Ì°ïº¡¤F¦U¦¡Âøª«©M©U§£¡A¦a¤W²L§|¿nº¡¦º¤ô¡A¨¤¸¨¹««ÍÄê±oµo³I¡A
+¥O¤H©ü¯tªº´c¯äµL©Ò¤£¦b¡A³o¸Ì¬O³h¥Á°ÏªºÁô±K¨¤¸¨¡A¤£ºÞ§A¦b³o¸Ì°µ¤°»ò
+³£¨S¦³¤H·|ª`·N¡C
+    ¥t¥~¡A§A¦b¤£»·³Bªº¼oª«°ï¤¤¬Ý¨ì¤F¤@±i¯È±ø(note)¡A¦ü¥G¼g¤F¨Ç¤°»ò¡C
+~
+0 0 0
+E
+note~
+¦¹©Ð¶¡¬°³]­pµ¹¦UºØª«¥ó¡Bmob§@¬°¼È¦s¥Î¡A¨S¨Æªº½Ð§ÖÂ÷¶}¡C
+                                                  Neversay
+~
+S
+#9401
+±_¥Þ--³h¥Á°Ï(slum)ªº¤J¤f~
+    §A¨Ó¨ì¤@³B»P¥v¥d©Ô¨©«°§¹¥þ¤£¦Pªº²V¶Ã¥@¬É¡CÅ¼¶Ã¡BµL§Ç¡BÂ²æÕªºµó
+¹D¤@¸ô©µ¦ù¶i¥h¡AªÅ®ð¥Rº¡³¯»Gªº¯ä¨ý¡Aªd¤g¦a±óº¡ªG¥Ö©M°Êª«¤ºÅ¦¡C¤T¨â
+¹C¥Á±q§A¨­®Ç¸g¹L¡AªÓ¾áªo±oµo¶Âªº¥¬³U¡A¥^¥^®ø¥¢©¼¤è¡C³o¸Ì¬O±_¥Þ³h¥Á
+°Ï¡A¥v¥d©Ô¨©²V¶Ã¤§·½¡C
+    §A«nÃäªº¥v¥d©Ô¨©ªeÅy¤£®É¾p¨Ó¤@¿´¤p²î(vessel)¡A¬Ý°_¨Ó»á¬°¯«¯µ¡F
+µó¹D¨â®Çªº¥ÛªO«Î±`¦³©~¥Á¨«°Ê¡A¦n¤£¼ö¾x¡C
+    §A§CÀY¤@¬Ý¡A¸}¤U¦ü¥G½òµÛ¤F¤@±i¯È±ø(note)¡C
+~
+0 4 1
+D1
+¯}Äê¤jµóµó¤f~
+~
+0 -1 9402
+D3
+¥v¥d©Ô¨©µó¹D~
+~
+0 -1 3046
+E
+vessel~
+¨º´X¿´¤p²î¦ü¥G¸ü¤F¤j¶q­«ª«¡A´X¥G¨I¶i¤ô¸Ì¡C
+~
+E
+note~
+³o­Ó°Ï°ì¬O¥ÑNeversay¦bNov,7,2001«Ø¥ßªº¡A¥Î¥H´À¥N­ì¥»ªº¥Í¤Æ¤u¼t¡A
+²Î¤@ROC­·®æ¡C
+~
+>room_enter 15 30~
+  if hour($) == 10
+	echo »·¤è¾p¨Ó¤@¸sÂù®é¦|²î......
+  	callout 1 echo ¤@¦W¤ô¤âµn¤W²îÀY¡A¤j³Û¡G¡u¨ì³f°Õ¡Iº®²îÅý¹D¡I¡v
+  	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷......
+  endif
+  if hour($) == 21
+  	echo §A¬Ý¨ì´X¿´Âù®é¦|²î»·»·¾p¨Ó......
+  	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷¡A©¹¤U´å¦Ó¥h......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 23
+  		echo §A¬Ý¨ì¤@¿´¤p¶Â²î¨³±¶¦a©¹¤W´å¦E¥h¡C
+  	endif
+  	if hour($) == 8
+  		echo §A¬Ý¨ì¤@¿´¤p¶Â²î§Ö³t¦a¾p¦V¤U´å¡C
+  	endif
+  endif
+  if hour($) > 9
+  	echoat $n §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+  	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+|
+S
+#9402
+¯}Äê¤jµóµó¤f~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó©¹ªF¦è¤è©µ¦ù¦Ó¥h¡Aªd¦aµó¹D¨â
+®Ç°ïº¡¦UºØäú¤ßªº°ï¿nª«(junk)¡A¤@¨Ç©_§Î²§ª¬ªº´Óª«(plant)±qµw¤Æªº¤g
+¦a¸Ì©âªÞ¦¨ªø¡Bµo´²´c¯ä¡C«nÃä¬O¤@¶¡¦ÑÂÂªº¥b¥Þ©~¥Û«Î¡A§ó«n«h¥i¬Ý¨£¥v
+¥d©Ô¨©ªeªº¯EÕðªe¤ô´Â¦è©b¥h¡A¥H¤Î°f¬y¦Ó¤Wªº¤p²î(vessel)¡F¥_¤è«h¬O¤@
+®y¥¨¤jªº©U§£¤s¡A´X¥G¤ñ©Ð¤lÁÙ°ª¡C
+~
+0 0 1
+D0
+©U§£³õ~
+~
+0 -1 9427
+D1
+¯}Äê¤jµó~
+~
+0 -1 9403
+D2
+¤@¯ë¦í®a~
+~
+3 -1 9444
+D3
+³h¥Á°Ï¤J¤f~
+~
+0 -1 9401
+E
+vessel~
+¨º´X¿´¤p²î¦ü¥G¸ü¤F¤j¶q­«ª«¡A¾ã¿´²î´X¥G¨I¶i¤ô¸Ì¡C
+~
+E
+junk~
+¨º°ï©U§£¸Ì¨S¤°»ò­È¿úªºªF¦è¡C
+~
+E
+plant~
+¨º´XÂO©_©Çªº´Óª«¤¤¦ü¥G¦³¤@¨â´Ê¬O«Ü¦nªºÅ]ªkÃÄ§÷(herb)¡C
+~
+E
+herb~
+³o¸Ì¦³¤@®èªx¯»¬õ¤pÂIªºªá¡A§A¦ü¥G¥i¥H±N¥¦©Þ¥X¨Ó(dig herb)¡C
+~
+>room_command dig herb~
+  if robjcount(9402) >= 2
+	echoat $n ³o¸ÌªºÃÄ§÷¦ü¥G³Q§A±Ä§¹¤F¡C
+	break
+  endif
+  if rand(70)
+      	oload 9402 1 $n floor
+      	echoat $n §A±q¦a¤W©Þ¥X¤@®èªx¯»¬õ¤pÂIªºªá¡C
+      	echoaround $n $n±q¦a¤W©Þ¥X¤@®èªx¯»¬õ¤pÂIªºªá¡C
+      	break
+  endif
+  echoat $n §A§ä¤F¤@·|¨à¡A«o¤°»ò¤]¨S§ä¨ì¡C
+~
+>room_enter 15 30~
+  if hour($) == 11
+    	echo §A¬Ý¨ì¤@¸sÂù®é¦|²î»·»·¾p¨Ó......
+    	callout 1 echo ¤@¦W¤ô¤âµn¤W²îÀY¡A¤j³Û¡G¡u¨ì³f°Õ¡Iº®²îÅý¹D¡I¡v
+    	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷......
+  endif
+  if hour($) == 20
+    	echo §A¬Ý¨ì´X¿´Âù®é¦|²î»·»·¾p¨Ó......
+    	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷¡A©¹¤U´å¦Ó¥h......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 0
+  	  	echo §A¬Ý¨ì¤@¿´¤p¶Â²î¨³±¶¦a©¹¤W´å¦E¥h¡C
+  	endif
+  	if hour($) == 7
+  	  	echo §A¬Ý¨ì¤@¿´¤p¶Â²î§Ö³t¦a¾p¦V¤U´å¡C
+  	endif
+  endif
+  if hour($) > 9
+    	echoat $n §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+|
+S
+#9403
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó©¹ªF¦è¤è©µ¦ù¦Ó¥h¡Aªd¦aµó¹D¨â
+®Ç°ïº¡¦UºØäú¤ßªº°ï¿nª«(junk)¡A¤@¨Ç©_§Î²§ª¬ªº´Óª«(plant)±qµw¤Æªº¤g
+¦a¸Ì©âªÞ¦¨ªø¡Bµo´²´c¯ä¡C«nÃä¬O¤@¶¡¦ÑÂÂªº¥b¥Þ©~¥Û«Î¡A§ó«n«h¥i¬Ý¨£¥v
+¥d©Ô¨©ªeªº¯EÕðªe¤ô´Â¦è©b¥h¡A¥H¤Î°f¬y¦Ó¤Wªº¤p²î(vessel)¡F¥_Ãä«h¬O¤@
+¶¡Â²­®ªº¤ì¿v®ÈÀ]¡A¤W­±±¾µÛ¤pµP¤l(board)¡A¸Ì­±¶Ç¨Ó¤@°}ª£Åú¨§ªº­»¨ý¡C
+~
+0 0 1
+D0
+ÀZ¼o®È©±~
+~
+0 -1 9441
+D1
+¯}Äê¤jµó~
+~
+0 -1 9404
+D2
+¤@¯ë¦í®a~
+~
+3 -1 9445
+D3
+¯}Äê¤jµóµó¤f~
+~
+0 -1 9402
+E
+vessel~
+¨º´X¿´¤p²î¦ü¥G¸ü¤F¤j¶q­«ª«¡A¾ã¿´²î´X¥G¨I¶i¤ô¸Ì¡C
+~
+E
+junk~
+¥_Ãäªº©U§£ªd§|¿nº¡¤Fäú¤ßªº¼p¾l©MÄú²\¡C
+~
+E
+plant~
+¨º´XÂO©_©Çªº´Óª«¤¤¦ü¥G¦³¤@¨â´Ê¬O¤£¿ùªºÅ]ªkÃÄ§÷(herb)¡C
+~
+E
+herb~
+³o¸Ì¦³¤@®è³qÅé¶Â¦âªº¬\ÃÃ¡A§A¦ü¥G¥i¥H±N¥¦©Þ¥X¨Ó(dig herb)¡C
+~
+E
+board~
+§A¬Ý¨ìµP¤l¤Wµe¤F¤@­Ó¾m­Iªº¦Ñ¤H¡AµL¤O¦a¨«µÛ¸ô¡C
+~
+>room_command dig herb~
+  if robjcount(9403) >= 2
+        echoat $n ³o¸ÌªºÃÄ§÷¦ü¥G³Q§A±Ä§¹¤F¡C
+        break
+  endif
+  if int($n) >= 12
+  or is_qmark($n) == slum_witch_herb  
+    	if rand(60)
+      		oload 9403 1 $n floor
+      		echoat $n §A±q¦a¤W©Þ¥X¤@ªK¶Â¦â¬\ÃÃ¡C
+      		echoaround $n $n±q¦a¤W©Þ¥X¤@ªK¶Â¦â¬\ÃÃ¡C
+      		break
+    	endif
+    	echoat $n §A§ä¤F¤@·|¨à¡A«o¤°»ò¤]¨S§ä¨ì¡C
+    	break
+  endif
+  echoat $n §AµLªk§PÂ_³oÂO´Óª«¨º¤@®è¯à©Þ°_¨Ó§@ÃÄ¡C
+~
+>room_rand 20~
+echo ©U§£µo¥X¤@°}°}ªº¯ä¨ý¡Aäú----
+~
+>room_enter 15 30~
+  if hour($) == 12
+    	echo §A¬Ý¨ì¤@¸sÂù®é¦|²î»·»·¾p¨Ó......
+    	callout 1 echo ¤@¦W¤ô¤âµn¤W²îÀY¡A¤j³Û¡G¡u¨ì³f°Õ¡Iº®²îÅý¹D¡I¡v
+    	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷......
+  endif 
+  if hour($) == 19
+    	echo §A¬Ý¨ì´X¿´Âù®é¦|²î»·»·¾p¨Ó......
+    	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷¡A©¹¤U´å¦Ó¥h......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 1
+    		echo §A¬Ý¨ì¤@¿´¤p¶Â²î¨³±¶¦a©¹¤W´å¦E¥h¡C
+  	endif
+  	if hour($) == 6
+  	  	echo §A¬Ý¨ì¤@¿´¤p¶Â²î§Ö³t¦a¾p¦V¤U´å¡C
+  	endif
+  endif
+  if rand(50)
+    	echoat $n ©U§£°ïªº¯ä¨ýÂt±o§A§Ö¦R¤F¡C
+    	break
+  endif
+  if hour($) > 9
+    	echoat $n §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+|
+S
+#9404
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó©¹ªF¦è¤è©µ¦ù¦Ó¥h¡A¤@¨Ç©_§Î²§
+ª¬ªº´Óª«(plant)±qµw¤Æªº¤g¦a¸Ì©âªÞ¦¨ªø¡Bµo´²´c¯ä¡C«nÃä¬O¤@¶¡¦ÑÂÂªº
+¥b¥Þ©~¥Û«Î¡A§ó«n«h¥i¬Ý¨£¥v¥d©Ô¨©ªeªº¯EÕðªe¤ô´Â¦è©b¥h¡A¥H¤Î°f¬y¦Ó¤W
+ªº¤p²î(vessel)¡F¥_Ãä¬O¤@¶¡¯ó¯ó·f«Ø¦¨ªº­T«Î(cottage)¡A¸Ì­±ÄÆ¨Ó¤@ºØ
+§A»¡¤£¥Xªº¶æ»ó¨ý¹D¡C
+~
+0 0 1
+D0
+§Å±C¤p«Î~
+~
+3 -1 9437
+D1
+¯}Äê¤jµó»P¨«¨p½XÀY¥æ¤f~
+~
+0 -1 9405
+D2
+¤@¯ë¦í®a~
+~
+3 -1 9446
+D3
+¯}Äê¤jµó~
+~
+0 -1 9403
+E
+vessel~
+¨º´X¿´¤p²î¦ü¥G¸ü¤F¤j¶q­«ª«¡A¾ã¿´²î´X¥G¨I¶i¤ô¸Ì¡C
+~
+E
+plant~
+¨º´XÂO©_©Çªº´Óª«¤¤¦ü¥G¦³¤@¨â´Ê¬O¤£¿ùªºÅ]ªkÃÄ§÷(herb)¡C
+~
+E
+herb~
+³o¸Ì¦³¤@®è³qÅé¶Â¦âªº¬\ÃÃ¡A§A¦ü¥G¥i¥H±N¥¦©Þ¥X¨Ó(dig herb)¡C
+~
+E
+cottage~
+¨º¶¡­T«Î¹³§Ö­Ë¤U¦üªº¡A·n·n®Ì®Ì¡A¦³®É·|¦³¤@°}·Ï±q¸Ì­±ÄÆ¥X¡C
+~
+>room_command dig herb~
+  if robjcount(9403) >= 2
+        echoat $n ³o¸ÌªºÃÄ§÷¦ü¥G³Q§A±Ä§¹¤F¡C
+        break
+  endif
+  if int($n) >= 12
+  or is_qmark($n) == slum_witch_herb
+    	if rand(60)
+      		oload 9403 1 $n floor
+      		echoat $n §A±q¦a¤W©Þ¥X¤@ªK¶Â¦â¬\ÃÃ¡C
+      		echoaround $n $n±q¦a¤W©Þ¥X¤@ªK¶Â¦â¬\ÃÃ¡C
+      		break
+    	endif
+    	echoat $n §A§ä¤F¤@·|¨à¡A«o¤°»ò¤]¨S§ä¨ì¡C
+    	break
+  endif
+  echoat $n §AµLªk§PÂ_³oÂO´Óª«¨º¤@®è¯à©Þ°_¨Ó§@ÃÄ¡C
+~
+>room_enter 15 30~
+  if hour($) == 13
+    	echo §A¬Ý¨ì´X¿´Âù®é¦|²î»·»·¾p¨Ó......
+    	callout 1 echo ¤@¦W¤ô¤âµn¤W²îÀY¡A¤j³Û¡G¡u¨ì³f°Õ¡Iº®²îÅý¹D¡I¡v
+    	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷......
+  endif
+  if hour($) == 18
+    	echo §A¬Ý¨ì´X¿´Âù®é¦|²î»·»·¾p¨Ó......
+    	callout 3 echo ªe¤W¦|²î¸s½w½w¾pÂ÷¡A©¹¤U´å¦Ó¥h......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 2
+    		echo §A¬Ý¨ì¤@¿´¤p¶Â²î¨³±¶¦a©¹¤W´å¦E¥h¡C
+  	endif
+  	if hour($) == 5
+  	  	echo §A¬Ý¨ì¤@¿´¤p¶Â²î§Ö³t¦a¾p¦V¤U´å¡C
+  	endif
+  endif
+  if rand(50)
+    	echo ¤@°}·Ï±q¥_Ãäªº¤p­T«Î¤¤§j¥X¡C
+    	break
+  endif
+  if hour($) > 9
+    	echoat $n §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+|
+S
+#9405
+¯}Äê¤jµó»P¨«¨p½XÀY¥æ¤f~
+    ªF¦è¦Vªº¯}Äê¤jµó»P«n¥_¦Vªº¨«¨p½XÀY¨ø³f¹D¦b¦¹¥æ·|¡A¨Ó©¹ªº·h¹B¤u
+©M¨®¾r´X¥G¶ë¦í¤F©Ò¦³ªº¸ô¡C¥_¤è³q©¹½XÀYªººÊµøÁA±æ»O¡A«n¤è«h¬O¤H¼é»E
+¶°ªº³h¥Á°Ï¥Í©R½u--¨«¨p½XÀY¡A§ó«n¤è§A¥i¥H¬Ý¨ì±K±K³Â³Âªº¤p²î(vessel)
+°±¾a¦b©¤¤W¡C¦b¤£¸g·Nªº¤@¿h¤¤¡A§Aµo²{¦bµó¹Dªº¨¤¸¨¦³¤@ÂO´Óª«(plant)
+¨¯­W¦a¥ÍªøµÛ¡C
+~
+0 0 1
+D0
+¨«¨p½XÀY¨ø³f¹D~
+~
+0 -1 9434
+D1
+¯}Äê¤jµó~
+~
+0 -1 9406
+D2
+¨«¨p½XÀY¨ø³f¹D~
+~
+0 -1 9438
+D3
+¯}Äê¤jµó~
+~
+0 -1 9404
+E
+vessel~
+¨º´X¿´¤p²î¦ü¥G¸ü¤F¤j¶q­«ª«¡A¾ã¿´²î´X¥G¨I¶i¤ô¸Ì¡C
+~
+E
+plant~
+¨ºÂO§V¤O¥Í¦sªº´Óª«¤¤¦ü¥G¦³¤@¨â´Ê¬O¤£¿ùªºÅ]ªkÃÄ§÷(herb)¡C
+~
+E
+herb~
+³o¸Ì¦³´XÁû¸G¤pªºµµ´³³¥¯ó¡A§A¦ü¥G¥i¥H±N¥¦©Þ¥X¨Ó(dig herb)¡C
+~
+>room_command dig default~
+echoat $n §A­n©Þ¤°»ò¡H
+~
+>room_command dig herb~
+if robjcount(9405) >= 2
+	echoat $n ³o¸ÌªºÃÄ§÷¦ü¥G³Q§A±Ä§¹¤F¡C
+	break
+endif
+if int($n) >= 15
+or is_qmark($n) == slum_witch_herb
+	if rand(50)
+		oload 9405 1 $n floor
+		echoat $n §A±q¦a¤W©Þ¥X¤@Áûµµ´³³¥¯ó¡C
+		echoaround $n $n±q¦a¤W©Þ¥X¤@Áûµµ´³³¥¯ó¡C
+		break
+	endif
+	echoat $n §A§ä¤F¤@·|¨à¡A«o¤°»ò¤]¨S§ä¨ì¡C
+	break
+endif
+echoat $n §AµLªk§PÂ_³oÂO´Óª«¨º¤@®è¯à©Þ°_¨Ó§@ÃÄ¡C
+~
+>room_enter 15 30~
+if hour($) == 14
+	echo §A¬Ý¨ì´X¿´Âù®é¦|²î»·»·¾p¨Ó......
+	callout 1 echo ¤@¦W¤ô¤âµn¤W²îÀY¡A¤j³Û¡G¡u¨ì³f°Õ¡Iº®²îÅý¹D¡I¡v
+	callout 2 echo ¦|²î¸s½w½w¾a©¤¡A·Ç³Æ¨ø³f¡C
+endif
+if hour($) > 14
+	if hour($) <= 16
+		echo ¤ô¤â©M·h¹B¤u¦¨¸sµ²¶¤·h¹B³fª«¡A¸g¹L§A¨­Ãä¡C
+		callout 1 echo ¤@¸s·h¹B¤u¾áµÛ­«ª«¨«¹L¡C
+		break
+	endif
+endif
+if hour($) == 17
+	echo »·¤è¦|²î¸s°_¦|¡AÂ÷¶}´ä¤f¤F.....
+	break
+endif
+if mobcount(9429) > 0
+	if hour($) == 3
+		echo §A¬Ý¨ì¤@¿´¤p¶Â²î¨³±¶¦a¾a©¤¡C
+		callout 1 echo ¤@¸s¤u¤H°­°­¯©¯©¦aµn¤W¤p²î......
+		callout 2 echo ¤@¸s¤u¤H¯«¸g¤¼¤¼¦a·hµÛ³fª«¶i­Ü®w¡C
+		break
+	endif
+	if hour($) == 4
+		echo §A¬Ý¨ì¤@¿´¤p¶Â²î§Ö³t¦a¾pÂ÷´ä¤f¡A©¹¤U´å¦Ó¥h¡C
+		break
+	endif
+endif
+if rand(50)
+	echoat $n ¤@°}²D­·§j¨Ó......
+	break
+endif
+if hour($) > 9
+	echoat $n §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+	break
+endif
+echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+|
+S
+#9406
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó©¹ªF¦è¤è©µ¦ù¦Ó¥h¡Aªd¦aµó¹D¨â
+®Ç°ïº¡¦UºØäú¤ßªº°ï¿nª«(junk)¡Aµo´²µÛ¿@¯P´c¯ä¡C«nÃä¥i¬Ý¨£¥v¥d©Ô¨©ªe
+ªº¯EÕðªe¤ô´Â¦è©b¥h¡F¥_Ãä«h¬O¤@¶¡¦ÑÂÂªº­Ü®w¡A¤jªùºò³¬¡C
+~
+0 0 1
+D0
+¼o¼V­Ü®w~
+~
+3 -1 9423
+D1
+¯}Äê¤jµóÂà¨¤~
+~
+0 -1 9407
+D3
+¯}Äê¤jµó»P¨«¨p½XÀY¥æ¤f~
+~
+0 -1 9405
+E
+junk~
+¨º°ï©U§£¦ü¥G´X¦Ê¤Ñ¨S¤H²M²z¤F¡A»GÄê¥|´²ªº°Êª«ªÏÅéµo´²äú¤ßªº¯ä¨ý¡C
+~
+>room_rand 20~
+  echo ©U§£µo¥X¤@°}°}ªº¯ä¨ý¡Aäú----
+~
+>room_enter 15 30~
+  if rand(60)
+    	echo ©U§£°ïªº¯ä¨ýÂt±o§A§Ö¦R¤F¡C
+    	break
+  endif
+  if hour($) > 9
+    	echo §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+    	break
+  endif
+  echo µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+|
+S
+#9407
+¯}Äê¤jµóÂà¨¤~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó¦b³oÃä©¹¦è¤è©M¥_¤è©µ¦ù¦Ó¥h¡C
+§A¥i¥HÅ¥¨£«nÃäÁn¶Õ¯E¤jªº¬y¤ô½ÄÀ»ªe©¤¬~¦ç¥Û®É²£¥Íªº¥¨ÅT¡AªF¤è«h¬O¤@
+¤ù²`¨H¦Ó®£©Æªº³±·t¡A¦ü¥G¦³¤H¦b¨º¨nµÛ§Aªº¤@Á|¤@°Ê¡C
+~
+0 0 1
+D0
+¯}Äê¤jµó~
+~
+0 -1 9408
+D1
+¤Ó·t¬Ý¤£²M·¡~
+~
+0 -1 9451
+D2
+¬~¦ç³B~
+~
+0 -1 9443
+D3
+¯}Äê¤jµó~
+~
+0 -1 9406
+>room_enter 15 30~
+  if rand(40)
+    	echo §AÁô¬ùÅ¥¨ì«n¤è¶Ç¨Óªº®öÀÜÁn¡C
+    	callout 1 echo ¼M°Õ¡I¼M°Õ¡I
+  endif
+  if hour($) > 9
+    	echoat $n §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+|
+S
+#9408
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó´Â«n¥_©µ¦ù¦Ó¥h¡C³o¸Ìªº¦a­±´Ý
+¯dµÛ·í¦~¥v¥d©Ô¨©²Ä¤G¦¸½Ã«°¤§§Ð®Éªº«°Àð¿ò¸ñ(ruin)¡A¦ýªþªñªº¦æ¤H¦æ¦â
+¥^¥^¡A½Ö¤]µL¤ß¦h¥[¯d·N¡C­Ë¬OªFÃäªº°s§a(bar)¤H¨Ó¤H©¹¡A¼ö¾x³\¦h¡A¯h
+¾Îªº§A©Î³\¥i¥H¦b¸Ì­±±o¨ì¤@¨è¤p·²¡C
+~
+0 0 1
+D0
+¯}Äê¤jµó~
+~
+0 -1 9409
+D1
+¥b¶É­Ë°s§a~
+~
+0 -1 9421
+D2
+¯}Äê¤jµóÂà¨¤~
+~
+0 -1 9407
+E
+ruin~
+³o¬q·í¦~¤j¾Ô³Ì¿E¯Pªº¾Ô³õ¡A¦p¤µ¥u³Ñ¤U¤@¤p¬q´Ý¦sÀð°ò¨Ñ¤H¾Ì¤Ý¡A§A¥i¥H
+¦b©U§£¹Ð¤g±»®IªºÂ©ª«°ï¤¤¬Ý¨ì¤@¶ôµP¤l¡A¼gµÛ¡G
+                      ÂÔ¬ö©À    ²Ä¤G¦¸½Ã«°¤§§Ðªº­^¶¯­Ì
+~
+E
+bar~
+°s§a¥~­±ªºµP¤lµeµÛ¤@´É¥b­Ëªº¿i§{¡AÁÙ¦³¤@ªM·¸¥X¨Óªº³Á°s¡C
+~
+>room_rand 30~
+if pcnum($) > 0
+    	echo ¤@°}²Y²D¤§­·§j¹L´ÝÀð¸}¡C
+    	break
+endif
+~
+>room_enter 15 30~
+  if hour($) < 9
+  or hour($) > 20
+    	echo §AÅ¥¨ì¹©ªmªº¤HÁn±q°s§a¸Ì¶Ç¥X¡C
+    	break
+  endif
+  echoat $n §AÅ¥¨ìµó¹Dªº¯ÉÂZ¡A¦³¦p¼é¤ô¯ë´é¨Ó¡C
+~
+|
+S
+#9409
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó¦b³o¸ÌÂà¤F­ÓÅs¡A¥Ñ«n´ÂªF©µ¦ù
+¦Ó¥h¡C³o¸Ìªº¦a­±¨Ìµ}ÁÙ¦³¥j¤j²z¥Û«°Àðªº´Ý¸ñ¡A¤T¨â¹B¥¬¨®±q©¼ºÝøGøG¨«
+¨Ó¡A±y¶¢¦a»°µÛ°¨¾r¡A®ø¥¢¦bµó¹D¥t¤@ºÝ¡A¤@ªÑ¹çÀRªº·PÄ±Å¢¸nµÛ§A¡C
+    ¥j«°Àð¥t¤@Ãä¥ÍªøµÛ¤@¤ù¦p¦PÂø¯ó¯ëªº´Óª«(plant)¡A·L­·§j¹L¡A´N¦p¦P
+»·¤è¥v¥d©Ô¨©ªeªº¶À©ü®ö¯¾¤@¼Ë¡Aã`¥ú°{°{¡C§Aªº¥_Ãä¬O¤@´É¬ü½ü¬ü«·ªº¤j
+¦v(house)¡A¥¨¤j¤ì¹h­«­«¥]³ò¡A¦ü¥G¬O¤°»òÅv¶Q¦íªº¦a¤è¡C
+~
+0 0 1
+D0
+¤j²z¥Û»¨¦vªº¤J¤f~
+~
+0 -1 9417
+D1
+¯}Äê¤jµó~
+~
+0 -1 9410
+D2
+¯}Äê¤jµó~
+~
+0 -1 9408
+E
+plant~
+¤@¾ã¤ùÀH­··n¦²ªºª÷¶À¦âªø¯ó¡A§A¦ü¥G¯à¦b¸Ì­±µo²{¤@¨Ç¯S®íªºÃÄ¯ó(herb)¡C
+~
+E
+herb~
+§Aµo²{¤@¨â®èªø±o¯S§O¦nªº¶Àª÷¦âªø¯ó¡A¦ü¥G¥i¥H±N¥¦©Þ¥X¨Ó(dig herb)¡C
+~
+E
+house~
+§A¬Ý¨£¦v°|ªù¤f¦³´X¦WªZ¸Ë¦u½Ã¾n¦u¡AÅX»°©Ò¦³±µªñªº¤H¡C
+~
+>room_command dig herb~
+  if robjcount(9409) >= 2
+        echoat $n ³o¸ÌªºÃÄ§÷¦ü¥G³Q§A±Ä§¹¤F¡C
+        break
+  endif
+  if int($n) >= 18
+  or is_qmark($n) == slum_witch_herb
+    	if rand(40)
+      		oload 9409 1 $n floor
+      		echoat $n §A±q¦a¤W©Þ¥X¤@Áûª÷¶À¦âªø¯ó¡C
+      		echoaround $n $n±q¦a¤W©Þ¥X¤@Áûª÷¶À¦âªø¯ó¡C
+      		break
+    	endif
+    	echoat $n §A§ä¤F¤@·|¨à¡A«o¤°»ò¤]¨S§ä¨ì¡C
+    	break
+  endif
+  echoat $n §AµLªk§PÂ_³oÂO´Óª«¨º¤@®è¯à©Þ°_¨Ó§@ÃÄ¡C
+~
+>room_enter 15 30~
+if hour($) > 9
+  	echo ´X½ø¹B¥¬¨®±q§A¨­Ãä¸g¹L¡C
+  	break
+endif
+echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+>room_rand 20~
+  echo ¤@°}²Y²D¤§­·§j¹L´ÝÀð¸}¡C
+~
+|
+S
+#9410
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó¦b³o¸Ì´Â¦è¤è»P¥_¤è©µ¦ù¶}¨Ó¡A
+ªdÀ×ªºµó¹D´À¸ô¤Wªº©U§£µÛ¤W½ê¬õªº¥~¦ç¡A³s¸ôÃäªº´Óª«(plant)¤]¬V¦¨¦å
+¬õ¦â¤F¡C§A¬Ý¨ìªFÃä¦³¤@³B¤j«¬©U§£²Õ¦X¦¨ªº¬}¥Þ(hole)¡AµS¦p¦º³½ªº®ð¨ý
+±q¬}²`³B¶Ç¨Ó¡A¯ä±oÅý§A¤£¸T§O¹LÀY¡C
+~
+0 0 1
+D0
+¯}Äê¤jµó~
+~
+0 -1 9411
+D1
+¤Ó·t¤F¬Ý¤£²M·¡~
+~
+0 -1 9414
+D3
+¯}Äê¤jµó~
+~
+0 -1 9409
+E
+plant~
+´XÂO¦å¬õ´Óª«´²§G¦b¬}¤fªþªñ¡A¨ä¤¤´X®è(herb)¬Ý°_¨Ó¯S§OÂAÆv¡C
+~
+E
+herb~
+³o®è´Óª«¬õ±o©{¦p¬¡¤HªºÂA¦å¡A¦ü¥G¥i¥H±N¥¦©Þ°_¨Ó§@ÃÄ(dig herb)¡C
+~
+E
+hole~
+¥¨¤jªº©U§£¬}¥ÞÅý§A·Q¨ì¬Y¨Ç³¥Ã~±i¤f«ã§qªº¼Ë¤l¡A¥Ñ¥~Æ[¬Ý¡A¸Ì­±¦ü¥G¬O
+½w½w¦V¤U½w­°¡A¦A¸Ì­±«o¶Â±oÅý§A¬Ý¤£¨£©³¡A¥u¦³§ó¾aªñ¤~¯à¬Ý²M¤F¡C
+~
+>room_command dig herb~
+  if robjcount(9410) >= 2
+        echoat $n ³o¸ÌªºÃÄ§÷¦ü¥G³Q§A±Ä§¹¤F¡C
+        break
+  endif
+  if int($n) >= 20
+  or is_qmark($n) == slum_witch_herb
+    	if rand(40)
+      		oload 9410 1 $n floor
+      		echoat $n §A±q¦a¤W©Þ¥X¤@®è¦å¬õ¦â¯óÃÄ¡C
+      		echoaround $n $n±q¦a¤W©Þ¥X¤@®è¦å¬õ¦â¯óÃÄ¡C
+      		break
+    	endif
+    	echoat $n §A§ä¤F¤@·|¨à¡A«o¤°»ò¤]¨S§ä¨ì¡C
+    	break
+  endif
+  echoat $n §AµLªk§PÂ_³oÂO´Óª«¨º¤@®è¯à©Þ°_¨Ó§@ÃÄ¡C
+~
+>room_enter 15 30~
+  if hour($) > 9
+    	echo ´X¦W¦æ¤H¯«¦â¥^¥^¦a¨«¹L¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A¬ÒµL¤HÁn¡C
+~
+>room_rand 20~
+if rand(40)
+  	echo ±q¬}¸Ì¶Ç¨Ó¤@°}´c¯ä¡C
+  	break
+endif
+echo ¬}¥Þ¤¤¶Ç¨Ó¤@°}¼Ò¼Ò½k½kªºÁn­µ¡A¦³¦pªd¼æ¤j¤f§]¾½ªº¤UÃ`Án¡C
+callout 1 echo "äú------¶ã------äú¡I"
+~
+|
+S
+#9411
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµóªuµÛ¥j«°Àðªº¿ò¸ñ¡A©¹«n¥_¤è©µ
+¦ù¦Ó¥h¡Aµó¹DªºªFÃä¬O¤@´É¤jªùºò³¬¡B´X¥G¶ò³´ªº¦ÑÂÂ¥ÛªO«Î¡A´XÂOÂø¯ó
+(herb)Âø¶Ã¦aªø¦b¼o±óªºªùµ¡¡B¥ÛÁ_¤W¡A¨Ï±o³o«Î¤l§óÅã¯î²D¡C
+~
+0 0 1
+D0
+¯}Äê¤jµó~
+~
+0 -1 9412
+D1
+µL¤H©~¦íªº¦í®a~
+~
+3 -1 9450
+D2
+¯}Äê¤jµó~
+~
+0 -1 9410
+E
+herb~
+³oÂOÂø¯ó¦ü¥G¦³¨Ç¦W°ó¡A§A¬ðµM«Ü·Q°Ê¤â§ä§ä¬Ý(dig herb)¡C
+~
+>room_command dig herb~
+  if robjcount(9411) >= 2
+        echoat $n ³o¸ÌªºÃÄ§÷¦ü¥G³Q§A±Ä§¹¤F¡C
+        break
+  endif
+  if int($n) >= 22
+  or is_qmark($n) == slum_witch_herb
+    	if rand(30)
+      		oload 9411 1 $n floor
+      		echoat $n §A±q¦a¤W©Þ¥X¤@¦·ÂÅ¦â¤pªá¡C
+      		echoaround $n $n±q¦a¤W©Þ¥X¤@¦·ÂÅ¦â¤pªá¡C
+      		break
+    	endif
+    	echoat $n §A§ä¤F¤@·|¨à¡A«o¤°»ò¤]¨S§ä¨ì¡C
+    	break
+  endif
+  echoat $n §AµLªk§PÂ_³oÂO´Óª«¨º¤@®è¯à©Þ°_¨Ó§@ÃÄ¡C
+~
+>room_enter 15 30~
+  if hour($) > 9
+    	echo ´X¦W¦æ¤H¯«¦â¥^¥^¦a¨«¹L¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+>room_rand 40~
+  echo ¤@°}²Y²D¤§­·§j¹L´ÝÀð¸}¡C
+~
+|
+S
+#9412
+¯}Äê¤jµó~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµóªuµÛ¥j«°Àð(ruin)ªº¿ò¸ñ¡A©¹«n
+¥_¤è©µ¦ù¦Ó¥h¡CªFÃä¬O¤@´É¶Ã¥Û°ï¬ä¦¨ªº¤p«Î¤l¡A¸Ì­±¶Ç¨ÓÂ´¥¬¾÷ªº¾Þ§@Án
+©M´«¿õªº¨ê¨êÁn¡C§A¥i¥H¬Ý¨ì¦è¤è»·³B¦³¤@´ÉµØ·H¦î¥ß¦b¨º¡A»P¤@¯ë³h¥Á¦í
+¦v¤j¤£¬Û¦P¡C
+~
+0 0 1
+D0
+¯}Äê¤jµóµó©³~
+~
+0 -1 9413
+D1
+¤@¯ë¦í®a~
+~
+3 -1 9449
+D2
+¯}Äê¤jµó~
+~
+0 -1 9411
+E
+ruin~
+³o¬qÀð°ò·l·´¦a«D±`ÄY­«¡A´X¥G¥u³Ñ¸}¤U½ñªº°ò¥Û(stone)¦Ó¤w¡C
+~
+E
+stone~
+§Aµo²{³o¨Ç°ò¥Û¤W­±§Gº¡¤M²ª»P½bÁL²ª¡A¦³¨Ç³ºµM¬O·s²K¤Wªº¡C
+~
+>room_enter 15 30~
+  if hour($) > 9
+    	echo ´X¦W¦æ¤H¯«¦â¥^¥^¦a¨«¹L¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+>room_rand 20~
+  echo ¤@°}²Y²D¤§­·§j¹L´ÝÀð¸}¡C
+~
+|
+S
+#9413
+¯}Äê¤jµóµó©³~
+    ¥v¥d©Ô¨©³h¥Á°Ïªº¥D­nµó¹D--¯}Äê¤jµó´N¨ì¦¹¬°¤î¡A§Aªº¸}½ò¦bªdÀ×ªº
+¦a¤W¡A´X¥G©Þ¤£¥X¨Ó¡C¥_Ãä¬O¤@´É´¶³qªº¥ÛªO¦í¦v¡AªF¤è¬O¤@´É²¤Åã¦ÑÂÂªº
+¥Û«Î¡A¦Ó«Î¤lªº­T¯ó«Î³»(roof)¦ü¥G¯}¤F¤@­Ó¬}¡C
+~
+0 0 1
+D0
+¾aªñ°¨À¸¹Îªº¦í®a~
+~
+3 -1 9447
+D1
+«Î³»¯}¬}ªº¦í®a~
+~
+3 -1 9448
+D2
+¯}Äê¤jµó~
+~
+0 -1 9412
+E
+roof~
+³o­Ó«Î³»ªº¬}¯}¤F«Ü¤[¡A«o¨S¤H¨Ó­×¡C
+~
+>room_enter 15 30~
+  if hour($) > 9
+    	echo ´X¦W¦æ¤H¯«¦â¥^¥^¦a¨«¹L¡C
+    	break
+  endif
+  echoat $n µó¤W§N§N²M²M¡A°£¤F»·¤è´XÁnª¯§p¡A¬ÒµL¤HÁn¡C
+~
+>room_rand 20~
+if hour($) > 7
+  	if rand(60)
+    		echo ±q¦è¤è¶Ç¨Ó¤@°}Åw©IÁn¡A¦ü¥G¬O¤j°¨À¸¹Î¥¿¦bªíºt¡C
+    		break
+  	endif
+endif
+echo ¤@°}²Y²D¤§­·§j¹L´ÝÀð¸}¡C
+~
+|
+S
+#9414
+³±·t±_¥Þªº¤J¤f~
+    §A½ñµÛº¡¦aªº¼o¤ì¥Û®h¡A¶i¤J¤@¶¡¥Rº¡»G¯ä¨ýªº¬}¥Þ¡A§N­·±q¶Ã¥Û°ï¦¨
+ªº¯}ÀðÄé¶i¨Ó¡A§j±o§Aª½¥´ÎG¶Û¡C¦è¤è¬O¬}¥Þªº¥X¤f¡A¥i¥H¦^¨ì¯}Äê¤jµó¡A
+¦b§A¤U¤èÁÙ¦³¤@­Ó²`§|¡A¤@ªÑ¿@¯Pªº´c¯ä±q¸Ì­±¶Ç¨Ó¡A§A¥i¥H±q¬}¥Þ³q©¹¦a
+©³§ó²`³B¡C§AÁÙª`·N¨ì¤F©U§£°ïªº¨¤¸¨ÁYµÛ¤@¦W¦Ñ¤H¡A¤f¤¤³ä³ä¦³µü¡C
+~
+0 4|8 0
+D3
+¯}Äê¤jµó~
+~
+0 -1 9410
+D5
+¤Ó·t¤F¬Ý¤£²M·¡~
+~
+0 -1 9415
+>room_rand 10~
+  echo §A»D¨ì¤@ªÑ·¥¨ä®£©Æªº¨ý¹D¡AÅý§A¦³ªÑ·Q°k¥X¥hªº½Ä°Ê¡C
+~
+>room_enter 15 40~
+  echoat $n §AÅ¥¨ì¤@Án¨g¼S±q¬}¸Ì¶Ç¨Ó¡A§AµLªk§PÂ_¬O¤£¬O¬}¥Þ¦ÛµM²£¥ÍªºÁn­µ¡C
+~
+|
+S
+#9415
+±_¥Þ¦a¤U~
+    §A¨Ó¨ì¤F¬}¥Þªº©³³¡¡A¦Ã¤ô±q¾À­±º¯³z¬y¤U¡Aªg±o§Aªº¸}³£¬O¸{¤ô¡C
+¨ë»óªº¦º«Í¯ä»P¼ô¦×ªº­»¨ý²V¦X¦b¤@°_¡A´X¥GÅý§A«Ý¤£¤U¥h¡A§A¥u·Q§Ö§ÖÂ÷
+¶}³o¸Ì¡C§Aª`·N¨ì¥_¤èÁÙ¯à¦A©¹¸Ì­±§ó²`¤J¡A¤W¤è«h¬O§A±¼¤U¨Óªº¦a¤è¡AÀð
+¤W·fµÛ¤@®y¦ÑÂÂªº¤ì±è¡AÅý§A¯àª¦¦^¤W­±¡C
+    §Aµo²{Àð¾À¤W¦³³\¦h·¥Ãøµo²{¤p¬}(hole)¡A¦ü¥G¦³©Ò¥È¾÷¡C
+~
+0 1|4|16|1048576 0
+D0
+¤Ó·t¤F¬Ý¤£²M·¡~
+~
+0 -1 9416
+D4
+¤Ó·t¤F¬Ý¤£²M·¡~
+~
+0 -1 9414
+E
+hole~
+³o¨Ç¬}¹³¬O¤H«õ¥X¨Óªº¡A¸Ì­±¦³¨Ç«G«Gªºª÷ÄÝ¦b°{Ã{¡C
+~
+>room_rand 20~
+if rand(30)
+  	echo «£«£«£«£------³Ø°Õ¡C
+  	break
+endif
+if rand(60)
+  	echo §AÅ¥¨ì¤@ªÑ¼Ò½kªºÅm»y±q¥_¤è¶Ç¨Ó¡C
+endif
+echo ¡u¤k¨à§r......¡v
+~
+|
+S
+#9416
+±_¥Þ³Ì²`³B~
+    §A¨Ó¨ì©U§£¬}¥Þªº³Ì²`³B¡A·´¨®¡BÄê¥¬¡B¼o¯¼Â´¾÷°ï¦¨¯U¤pÀð¾À¤ä¼µµÛ
+¨ä¤W¤s¤@¯ë­«ªº¦U¦¡©U§£¡C¦Ã¤ô±q»ØÁ_¤¤¼ë¼ë¬y¥X¡A¦b§A¸}¤U§Î¦¨¤@¹D¤pªe
+¡A´²µoµÛ¶º«á¼p¾lªº¨ý¹D¡C§A¥i¥H©¹«n¨«Â÷¶}³o­Ó°­¦a¤è¡A¤£¹L¦b§AÂ÷¶}¤§
+«e¡A§A¬Ý¨ì¨®½ü«÷¦¨ªº¤ìÀY®y¦ì¤W§¤µÛ¤@¶ô¤H§Î¶Â¼v¡A¦ü¥G¤£¬O¦º¤H«ÍÀe¡A
+§A¥i¥H¦A¾aªñ¤@ÂI¡A¬Ý²M¨º¨ì©³¬O¤°»ò¡C
+~
+0 1|4|16|1024|1048576 0
+D2
+¤Ó·t¤F¬Ý¤£²M·¡~
+~
+0 -1 9415
+>room_rand 10~
+if rand(40)
+  	echo ¤@°¦¦Ñ¹«±q§A¸}¤U½Ä¹L¥h¡C
+  	break
+endif
+echo ¡u§s------§s§s¡I¡v
+~
+|
+S
+#9417
+¤j²z¥Û»¨¦vªº¤J¤f~
+    ³o¸Ì¬O³h¥Á°Ï³Ì»¨µØªº¦v°|(house)¡AµØÄRµ{«×µ´¹ï¤£¿é¥v¥d©Ô¨©«°¤º
+¥ô¦ó¤@´É´I»¨«Ø¿v¡A¤£¹L¡A¬°¦ó¦³¤H±N©Ð¤l»\¦bªv¦w²V¶Ãªº³h¥Á°Ï¡H
+    §Aª`·N¨ì»¨¦vªº¤ì¹h¤jªù¬OÂêµÛªº¡A»¨¦v©P³ò§G¤U¤F¼Æ¦W¨­§÷°ª¤jªºªZ
+¸ËÄµ½Ã¡A§N´Ë´Ëªºªø¥Ù½Ý¦b¤@®Ç¡AÄµ§i¤£±o¦³¤H¾Õ¦Û±µªñ¡C
+~
+0 4|1048576 0
+D0
+»¨¦v¤¤®x~
+~
+15 9400 9418
+D2
+¯}Äê¤jµó~
+~
+0 -1 9409
+E
+house~
+¤@¶¡¯Â¥Õ¤j²z¥Û»\¦¨ªº¦v°|¡A³s³Ì¥~­±ªº³òÀð¤]¬O¤j²z¥Û»\¦¨ªº¡A©_©Çªº¬O
+¡A³oªþªñ³s¤@ÂI©U§£¤]¬Ý¤£¨ì¡A»P³h¥Á°ÏªºÅ¼¶Ã­·®æ¤j¬Û³w®x¡C
+~
+>room_enter 4 100~
+if isnpc($n)
+  	if vnum($n) == 9400
+  	or vnum($n) == 9423
+  	or vnum($n) == 9425
+  	or vnum($n) == 9428 
+    		break
+  	endif
+  	force $n s
+  	break
+endif
+if ispc($n)
+  	if is_qmark($n) & slum_libei_quest 100128
+    		force guard-slum mpcall open $n
+    		break 
+  	endif
+  	echoat $n [1;36mÄµ½Ã¡u³Þ¡vªº¤@Án¥s¦í§A¡A±N§A»°¤F¦^¥h¡C[0m
+  	force $n s
+endif
+~
+>room_leave 15 100~
+ modrvt d0 | 6
+ echo Äµ½Ã±NªùÃö¤W¡C
+~
+|
+
+S
+#9418
+»¨¦v¤¤®x~
+    ³o¸Ì¬O¤jªù»P¦v°|¥»Åé¶¡ªº³z¤Ñ¤¤®x¡AªÚ­»ªºªd¤g¨ýÅý§A¨­¤ß¬°¤§¤@ºZ
+¡A¤Þ¤ô¹D¬y¶i¨Óªº¬¡¤ô³òÂ¶µÛ¤¤®x¡AÄéµ@ºñ·N¯sµMªººñ¦â´Óª«(plant)»PÂA
+ªá¡C§A¦b¤@­Ó¨¤¸¨µo²{¤@­Ó¤p­]®E¡A¤W­±ºØ¤F´X®èºë½o¤p¥©ªºµµªá¡A¦b¶é®E
+ªº«e¤èÁÙ©ñ¤F¤@­ÓµP¤l(board)¡A¤W­±¼g¤F¤@¨Ç¦r¡C§A¥i¥H©¹«nÂ÷¶}³o¤ù¥@
+¥~¥P¹Ò¡A¦^¨ì»êÅ¼ªº³h¥Á°Ï¡A¤]¥i¥H¶¶µÛ¤¤®x®Çªº¤j²z¥Û¼Ó±è©¹¤W¨«¶i¦v°|¡C
+~
+0 4|1048576 1
+D2
+¤j²z¥Û»¨¦vªº¤J¤f~
+~
+0 -1 9417
+D4
+»¨¦v¤jÆU~
+~
+0 -1 9419
+E
+board~
+µP¤l¤W­±ªº¦r®S¨q·¥¤F¡Aµ´¹ï¬O¥X©ó±Ð¾i¨}¦nªº¤k«Ä¤§¤â¡G
+
+                ·R²ú¦wªº¤p¤p¶é®E¡AÄmµ¹ª¨ª¨¡C
+~
+>room_enter 15 80~
+  if rand(30)
+    	echoat $n §A¬Ý¨£¤@°¦¤pªQ¹«±q§A¸}¤UÆp¹L¡C
+    	break
+  endif
+  if rand(50)
+    	echoat $n ¤@°}²D­·§j¨Ó¡AÅý¦Êªá·n¦²¤£¤î¡A¦³¦p½¡½¡ÅÖ»R¡C
+    	break
+  endif
+  echoat $n ´X°¦½¹½º±q§AÀY¤W»R¹L¡C
+~
+|
+S
+#9419
+»¨¦v¤jÆU~
+    ¤@¹D·L­·±q´¯¶}ªº¥Ûµ¡Äé¶i¡A³o¸Ì¹jµ´¤F³h¥Á°Ïªº³ÙÄÛ»PÅ¼¶Ã¡A¥u¯d¤U
+¨å¶®ªº¹çÀR©M«~¨ý¡A¸¨¸¨¤j¤èªºÂ\³]©MÂ²³æªº®a¨ãÅý¦¹³B¥Rº¡¥O¤H¦w¤ßªº®ð
+ª^¡A§A¥i¥H±q¥Ûµ¡»·²·¾ã­Ó³h¥Á°Ïªº´º½o(survey view)¡A§A¤]¥i¥H´`µÛ¼Ó
+±è©¹¤U¨«¡A©Î¬O©¹¥_¶i¤J¥t¤@­Ó©Ð¶¡¡C
+~
+0 4|8|1048576 0
+D0
+·R²ú¦wªº»Ó©Ð~
+~
+3 -1 9420
+D5
+»¨¦v¤¤®x~
+~
+0 -1 9418
+>room_command survey view~
+if month($) <= 3
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;37m§A¬Ý¨ì»·¤èµó¤WµS¦³²Ó³·¡A¬K©]ªº´H·NÅý§A¤£¸TÁYµÛ²ä¤l¦R®ð¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;31m¤õ¬õªº¤Ó¶§±¾¦b¶À©üªº««¹õ¤W¡A¬MµÛ¬K¤Ñ«ã©ñªºÂAªá¡A¤Q¤À¬üÄR¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;32m§A¬Ý¨ì»·¤èµó¤Wº³º³ÄcÄc¡A¬¡¼âªº¬K¤Ñ®ðª^¤]¶Ç¶i¤F¦v°|¡C[0m
+  	endif
+	break
+endif
+if month($) <= 8
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;36m§A¬Ý¨ì»·¤èµó¤WÅ¢¸n¤@¼hÁ¡Ãú¡A®L¤Ñªº´»¼ö®ø´²¤@ªÅ¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;31m¤õ¬õªº¤i¶§±¾¦b¶À©üªº««¹õ¤W¡AÅå¤Hªº¼ö®ðÅý§Aº¡Áy¤j¦½¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;32m§A¬Ý¨ì»·¤èµó¤W¼ö¾x«D¤Z¡A®L¤Ñªº®ð®§Åý¸Uª«ªYªY¦Vºa¡C[0m
+  	endif
+	break
+endif
+if month($) <= 12
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;36m§A¬Ý¨ì»·¤è¬î­·§j°_¡A§N©]´H¬PÅýµó¹DÅã±oªÅÃm±I¹æ¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;33m¶ê«óªº¤Ó¶§½w½w­°¤J¸s¤s¶¡¡A·L´Hªº¬î¤éÅý§A·P¶Ë²ö¦W¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;36m§A¬Ý¨ì»·¤èµó¤W²³¤H¨Æ°ÈÁc¦£¡A¦£µÛÀxÂ³¹L¥V¡C[0m
+	ebdif
+	break
+endif
+  if hour($) <= 5
+  or hour($) >= 21
+    	echoat $n [1;37m§A¬Ý¨ìµó¤W¤j³·­è°±¡A¤j³·©]ªº´H·NÅý§A¤£¸TÁYµÛ²ä¤l¦R®ð¡A[0m
+    	rcall moon $n
+	break
+  endif
+  if hour($) > 16
+        echoat $n [1;31m»þ¨æªº¥V­·±N¶À©üªº««¶§§j±o²@µL¼ö«×¡A¥u¬Ý¨ì·L®zªº¬õ¤õ­°¤U¤j¦a¡C[0m
+	break
+  endif
+  if hour($) > 5
+    	echoat $n [1;37m§A¬Ý¨ì»·¤èµó¤W²³¤H¬Ò»qµÛ¤j¦ç«pªA¦Ó¦æ¡A²@µL·x·Nªº¤Ó¶§´½¦b¤ÑªÅ¡C[0m
+  endif
+~
+>room_defun moon~
+  if day($) == 0
+    	echoat $n [1;36m¤ÑªÅÅxº¡»È¬P¡A¤£¨£¬õ¤ë¡C[0m
+	break
+  endif
+  if day($) <= 11
+    	echoat $n [1;31m§A¤]¬Ý¨ì¤W©¶¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ²Y§Nªº¬õ¥ú¡C[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n [1;31m§A¤]¬Ý¨ì¬üÄRªºº¡¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ¹¡º¡ªº¬õ·w¡C[0m
+	break
+  endif
+  	echoat $n [1;31m§A¤]¬Ý¨ì¤U©¶¤ëÄa¦b©]ªÅ¤¤¡A´²µoµÛ¸Þ²§ªº¬õ¥ú¡C[0m
+	break
+~
+|
+S
+#9420
+·R²ú¦w(Eilien)ªº»Ó©Ð~
+    ³o©Ð¶¡¥u¦³¤@±i§É¡B¤@­Ó¯ù®à¡B¤@²~ªá©M¤@­Ó®ÑÂd¡AÅã±o¤Q¤À²M²n¡C
+¦b³o©Ð¶¡¤¤¡A§A»D¨ì¤@ªÑ²VÂø¤Ö¤kÅé­»ªº²H²Hªá¯ó­»¡F®à¤W«h©ñ¤F¤@¥»ºë¸Ë
+¸Ö¶°(poems)¡A¦ü¥G¬O¦o¦Û¤v¼gªº¡AÀð¤W±¾ªº¨v¹³(picture)¤]¬O¡A¥i¨£©Ð¶¡
+ªº¥D¤H«~¨ý¤Q¤À°ª¶®¡C
+~
+0 4|8|1048576 0
+D2
+»¨¦v¤jÆU~
+~
+3 -1 9419
+E
+poems~
+³o¥»¸Ö¶°¤Wªº¦r¸ñ¤Q¤À®S¨q¡BÅÖ²Ó¡A¨C­¶³£ÃD¤F¤@­º¸Ö¡A¥i±¤§A¬Ý¤£À´¡C
+~
+E
+picture~
+¨v¹³ªºµ§­·¤Q¤À¬X®z¡Aµeªº¬O¤@¦W¥Õ¾v»a»aªº¦ÑªÌ¡A§A¤@¬Ý´Nª¾¹D¬O³h¥Á°Ï
+¦Ñ¤j§Q«ôªº¹³¡A¦ý¦bÃ¸ªÌºë§®ªºµ§ªk¤U¡A§Q«ôªº­±¤ÕÅã±o¨S¨º»ò®£©Æ¤F¡C§@
+ªÌ¦bµe¤U­±¸p¦W¡Q
+¡@¡@¡@¡@¡@¡@¡@¡@¡@ª¨ª¨ªºµe¡@¡@¡@·R§Aªº¤k¨à·R²ú¦w
+~
+>room_rand 15~
+echo ¤@°}²M­·±qµ¡¤l§j¶i¨Ó¡C
+~
+|
+S
+#9421
+¥b¶É­Ë°s§a~
+    §A¶i¤J¤@¶¡¯U¯¶¡B°s®ð¨R¤Ñ¤ÎÅ¼¶Ãªº¤p°s§a¡A¤@¨ÇµL·~¹C¥Á»E¶°¦b³o¸Ì
+³Ü°s²á¤Ñ¡A¦³¨Ç¤H«h¦b°s§a¬ÝªO(read board)¤W§ä¤u§@¡C°s«O®ï¶Ô¦a¬°¦Ï¤ò
+¥¬°Ó¤H­Ë°s¡A¹ïµL·~¹C¥Á©M§A«h¬O²z³£¤£²z¡C©¹¦è¥i¥HÂ÷¶}°s§a¡A§A¤]¥i¥H
+©¹¤U¨«¡A¶i¤J¦s°sªº¦aµ¢¡C
+~
+0 8|1024|131072 0
+D3
+¯}Äê¤jµó~
+~
+0 -1 9408
+D5
+¤Ó·t¤F¬Ý¤£²M·¡~
+~
+7 -1 9422
+>room_mask read board~
+if ispc($n)
+  echoaround $n $nª`·N¦a¬ÝµÛ¤@«h¼s§i¡C
+  echoat $n ³¯ÂÂ¡Bªgº¡°sº{ªºªO¤l¤W¼g¤F¦n´X¤Q«hªºÀ³¼x¼s§i¡A¦b¤@­Ó¨¤¸¨§AºË¨ì¤F¤@
+  echoat $n «h«Ü¯S®íªº¼s§i¡G
+  echoat $n .                       ¼x±_¥Þ¤§¹²¡A·NªÌ¬¢³h¥Á¸]¦Ñ¤j
+  force bartender-slum say ºÃ¡A§A¦n¹³·Q§ä¤u§@§a¡H§A¥i¥H¨ì°s§a¥_Ãäªº¡u±_¥Þ¡v§ä
+  force bartender-slum say »¡¬G¨Æªº¦ÑÀY­n(talk)¤u§@(job)¡C
+  add_qmark $n slum_libei_quest -1 0 0 1 0 1
+endif
+~
+>room_enter 63 80~
+  if rand(30)
+    	echoat $n °s§a§nÂøªº¾¸­µ¶Ç¶i§A¦Õ¸Ì¡C
+    	break
+  endif
+  echoat $n §A¶i¨Ó®É°s§a¦wÀR¤F¤@·|¨à¡AµM«á¦^´_§n¾x¡C
+~
+|
+S
+#9422
+¥b¶É­Ë°s§a¦a¤U°sµ¢~
+    º¡«Çªº°s¨ý½Ä»ó¦Ó¨Ó¡A´X¥GÅý§A·í³õ¾K­Ë¡A¤@°}½Õ¾A«á¡A§A²×©ó²ßºD¤F
+³oªÑ®ð¨ý¡C³o¸Ì¦³º¡«Çªº¸m°s¬[©M°s±í(beer)¡A¨ä¤¤´X­Óªº®ê¨S¶ëÃ­¡A¸²µå
+°s¥Äº¯¥X¨Ó¡A¦b¦a¤W¿n¦¨¤@­Ó¤p²L¦À¡C¦b¸Ì­±²¾°Ê§A­n«D±`¤p¤ß¡A¥H§K±Ä¨ì
+°s¦À©Î¼²Â½°s±í¡C
+~
+0 1|4|8|16 0
+D4
+¥b¶É­Ë°s§a~
+~
+7 -1 9421
+E
+beer~
+¦³´X­Ó°s±íªº¬C¤lÃP¤F¡A§A¦ü¥G¥i¥H±N¥¦©Þ¶}¡A§l¤W´X¤f(suck beer)
+~
+>room_enter 63 80~
+echoat $n ¤@ªÑ¿@¯Pªº°s­»½Ä¶i§Aªº»ó¤l¸Ì¡C
+~
+>room_command suck beer~
+if ispc($n)
+  	echoat $n §A©Þ±¼¶ë¤l¡A²r¤O§l¤@¤f¦A¬C¦^¶ë¤l¡A¶â¡ã¡ã°s¬O»Äªº¡C
+  	echoaround $n $n©Þ±¼°s±í¬C¤l¡A°½°½§l¤F¤@¤f¡C
+	oload 3000 1 $n floor
+  	force $n drink beer
+  	force $n drink beer
+  	purge barrel
+  	c poison $n viclv
+endif
+~
+|
+S
+#9423
+¼o¼V­Ü®w~
+    §A¨Ó¨ì¤@¶¡Ác¦£Å¼¶Ãªº­Ü®w¡Aµo¾`ªº¦ÑÂÂ¤ìªOÀð±¾µÛ¦n´X§âÆ_°Í¡A§Ö´²
+¬[ªº®Ñ®à¤W©ñµÛ¤@¨÷¦W¥U(book)¡A®à«áªººÞ²z­ûµL½ì¦aÂ½°Ê®Ñ­¶¥´µo®É¶¡¡C
+¦èÃä»P«nÃä¬O­Ü®wªº¥X¤f¡A¥t¦³¤@­Ó¦V¤Uªº¼Ó±è³q¦VÀx³f«Ç¡C
+~
+0 4|8 1
+D2
+¯}Äê¤jµó~
+~
+3 -1 9406
+D3
+¨«¨p½XÀY¨ø³f¹D~
+~
+3 -1 9434
+D5
+¼o¼V­Ü®w¦a¤U¼Ó~
+~
+0 -1 9424
+E
+book~
+§A¬Ý¨ì¤@°ï¦W¦r¦C¦b¨ä¤W¡A¤j³¡¤À¬O¤pºëÆF©m¤ó¡A§Aµo²{¦W¥Uªº«Ê­±¼gµÛ¡G
+
+                           ¡u²×¨­§K¶O³Ò¤u¡v¦WÃ¯¡C
+~
+>room_enter 63 70~
+  if ispc($n)
+	echoat $n §AÅ¥¨ì·h¹B¤u§V¤O·h¹B³fª«ªº©I³ÜÁn¡C
+  endif
+~
+|
+S
+#9424
+¼o¼V­Ü®w¦a¤U¼Ó~
+    §A¨Ó¨ì¼o¼V­Ü®wªºÀx³f«Ç¡A´X°¦º¶·Àªº¤õ§â´¡¦b¥Û¾À¤W¡A¦ü¥G«Ü¤[¨S¦³
+ÂI¹L¤F¡Cªu¼Ó±è©¹¤W§A¥i¥H¦^¨ì­Ü®w¤@¼Ó¡A«nÃä¬Ý°_¨Ó¹³¤@®°¶Â¨I¨Iªºªù¡C
+~
+0 1|8|16 0
+D2
+­Ü®wÅKªù~
+~
+0 -1 9425
+D4
+¼o¼V­Ü®w~
+~
+0 -1 9423
+>room_enter 63 100~
+  if is_qmark($n) & slum_libei_quest 300004
+    	if is_qmark($n) > slum_str_quest 200024
+      		echoat $n ¤@°¦¹«¤H¬ðµM±q³±¼v³B¶]¤F¥X¨Ó¡A¶}©l§ðÀ»§A¡I
+      		mload 9428
+      		force wererat-slum mpkill $n
+      		break
+    	endif
+  endif
+  if rand(40)
+  	echoat $n §A¬Ý¨ì¤@¹D¶Â¼v±q¸}¤UÂ«¹L¡C
+  	break
+  endif
+  echoat $n ¡u§s§s¡ã¡ã§s¡I¡v  
+~
+|
+S
+#9425
+­Ü®wÅKªù~
+    §A¬Ý¨£¤@®°¥¨¤jÅKªù¥ß¦b²´«e¡A¹jµ´­ÜÀx«Ç»P¨«¹D¡C§A¥i¥H©¹¥_¨ì¹B¿é
+¨«¹D¤W¡A©Î¥´¶}ÅKªùÄ~Äò©¹¤U¨«¡C
+~
+0 1|4|8|16 0
+D0
+¼o¼V­Ü®w¦a¤U¼Ó~
+~
+0 -1 9424
+D5
+­Ü®w³Ì©³¼h~
+~
+3 -1 9426
+S
+#9426
+­Ü®w³Ì©³¼h~
+    ³o¸Ì°ïº¡¤F¦UºØª«¸ê¡A¥]¬A«Ø¿v§÷®Æ(building)¡B¥Á¥Íª«¸ê(civil)©M
+«Ý¿é¥Xªº°Ó·~³f«~(goods)¡A¾ã¶¡¦a¤U­Ü®w´²µoµÛ¾`¨ý¡B¸{¤ô¨ý©M»GÄê¨ý¡A
+¦ü¥G¦³´X¤Q¦~¨S²M²z¤F¡C
+~
+0 1|8|16 0
+D4
+­Ü®wÅKªù~
+~
+3 -1 9425
+E
+building~
+§A¬Ý¨£¤@¤j°ï¤ì§÷¡B¦Çªd©M¿jÀY¡A¦pªG§A¦³¤°»ò»Ý­nªº¸Ü¡A¥i¥H¥J²Ó§ä§ä¬Ý
+(search brick)¡C
+~
+E
+civil~
+§A¬Ý¨ì¤@¤j­Ü³Á¯»©MÂøÂ³¡A¥H¤Î¹s¸Hªº¥Á¥Í¥Î«~°ï¦b¤@°_¡A¦pªG§A¦³»Ý­nªº
+¸Ü¡A¥i¥H¥J²Ó§ä§ä¬Ý(search food)¡C
+~
+E
+goods~
+¦û¤F¥b­Ó­Ü®wªº¦Ï¤ò­ì®Æ©M¥¬®Æ¦¨«~¤«µM¦³§Ç¦a°ï©ñ¦b¤@°_¡A¤W­±ÁÙ»\¤F¨¾
+¹Ðªº«OÅ@¤ò¥Ö¡A¦A¥ÎÅK¹hÂê¦b³Ì¸Ì­±¡AÅãµM³o§å³fª««D±`­«­n¡A¤£¹L±Ó¾Uªº
+§Aµo²{¤F¦Ï¤ò¥¬¤UÁÙÂÃ¤F¤@¨Ç²§ª«¡A¦ü¥G´N¬O¶Ç»D¤¤ªº¨«¨p¶Â³f¡H
+~
+>room_command search brick~
+if robjcount(9429) <= 3
+  	if is_qmark($n) & slum_libei_quest 300004
+    		oload 9429 1 $n floor
+		echoaround $n $n §ä¨ì¤F´X¶ô¿jÀY¡C
+    		echoat $n §A§ä¨ì¤F´X¶ô¨H­«ªº¿jÀY¡C
+    		break
+  	endif
+endif
+echoat $n §A¤@µL©ÒÀò¡C
+~
+>room_command search food~
+if rand(40)
+    	oload 3009 1 $n victim
+	echoaround $n $n§ä¨ì¤F´X¶ô­¹ª«¡C
+    	echoat $n §A§ä¨ì¤F´X¶ô¦³ÂI¹L´Áªº­¹ª«¡C
+    	break
+endif
+echoat $n ­ü§r¡I§A¨ü¶Ë¤F¡I
+c 'cause light' $n
+~
+>room_command search good~
+echoat $n §A¤@µL©ÒÀò¡C
+~
+>room_rand 30~
+if robjcount(9430) > 0
+	purge goods
+  	echo ¨«¨p³f®ø¥¢¤F¡C
+endif
+~
+|
+S
+#9427
+²³¥Í¤§Âk¼o±ó³õ¤J¤f~
+    §A¤@½ñ¶i³o¸Ì¡A¤@ªÑ±j¯Pªº«Í¯äÄj¤Ñ¦Ó¨Ó¡A®tÂI§â§AÂt·w¹L¥h¡I
+³o¸Ìªº¹D¸ô³Q¼o±óªº¯}¨®©M®a¨ã¦ûº¡¡A¶Ã¥ÛÁ_¤]³QÄê¦|©M¯}ºô¡B¦Ï¥Ö¶ëº¡¡C
+³o¸Ì¬O³h¥Á°Ï¸U²³¸Uª«ªº³Ì²×Âk³B--²³¥Í¤§Âk¼o±ó³õ¡A¦b³o¸Ì§A¥i¥H¬Ý¨ì¦U
+ºØ¦U¼Ëªº¼o±óª«¡A¬Æ¦Ü¬O¬y®öº~ªº«ÍÅé¡C
+©¹«n§A¥i¥HÂ÷¶}³o­Ó°­¦a¤è¡A©¹¥_«h¬O§ó²`¤J¡C
+~
+0 4 2
+D0
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9428
+D2
+¯}Äê¤jµóµó¤f~
+~
+0 -1 9402
+>room_enter 15 60~
+  echoat $n §A»D¨ì¤@ªÑ®£©Æªº¯ä¨ý¼³»ó¦Ó¨Ó¡C
+~
+|
+S
+#9428
+²³¥Í¤§Âk¼o±ó³õ~
+    §A¶i¤J¤F¤@³B°ï¿n¨®²îªº¼o±ó³õ¡A´X´T¯}ºô±¾¦b¨®³m¤W¡AÀH­·ÄÆÀú¡A²Y
+²D²§±`¡A§AÁÙ¬Ý¨ì¤@¨ÇµL¥Îªº¤j«¬®a¨ã¸Ì­±ªøº¡¤F¿¸Ãþ(fungus)¡C§A¥i¥H¦V
+«n¨«¦^¨ì¼o±ó³õªº¤J¤f¡A¤]¥i©¹¨ä¥L¨â­Ó¤è¦VÄ~Äò²`¤J¡C
+~
+0 0 2
+D0
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9429
+D1
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9431
+D2
+²³¥Í¤§Âk¼o±ó³õ¤J¤f~
+~
+0 -1 9427
+E
+fungus~
+³o°ï¿¸¦ü¥G¥i¥H©Þ°_¨Ó(dig fungus)¡C
+~
+>room_rand 20~
+  echo §AÅ¥¨ì¨g­·§j¹L¯}ºôªº¦y¾UÁn­µ¡C
+~
+>room_command dig fungus~
+  if con($n) < 22
+   	if rand(30)
+    		c 'cause light' $n viclv
+    		echoat $n §A³Q¥i©Èªº¬r®ð©Ò¶Ë¡I
+   	endif
+  endif
+  if rand(30)
+    	oload 9427 1 $n floor
+    	echoat $n §Aµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+	echoaround $n $nµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I 
+    	break
+  endif
+  if rand(20)
+    	oload 9428 1 $n floor
+    	echoat $n §Aµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+	echoaround $n $nµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+    	break
+  endif
+  echoat $n §A¤°»ò¤]¨S§ä¨ì¡C
+~
+| 
+S
+#9429
+²³¥Í¤§Âk¼o±ó³õ~
+    §A¶i¤J¤@³B°ï©ñÂÂ®a¨ãªº©U§£¤s¤¤¡A°ïÅ|¼Æ¼hªº±T¹ò©U§£¸ô¤¤¡A§A¥²¶·
+¤p¤ß¦a«e¶i¤~¤£¦Ü©ó¶^­Ë¡C¶V²`¤J¼o±ó³õ¡Aäú¤ßªº¯ä¨ý¶V¿@¡A§Ö²Tº¡§Aªº»ó
+µÄ¤F¡C¦b§A¸}¤U¤£»·³B¡A§Aµo²{¤@¸sÂO¥Íªº¿¸Ãþ(fungus)¡A¦è¤è¬O¥t¤@®y©U
+§£¤s¡A¥_Ãä«h¬O¤@³Bµo´²´c¯äªº¥­¦a¡A«n¤è´Â¦V¼o±ó³õªº¤J¤f¡C
+~
+0 0 2
+D0
+²³¥Í¤§Âk¬r²G§|~
+~
+0 -1 9430
+D1
+²³¥Í¤§Âk¬r²G§|~
+~
+0 -1 9432
+D2
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9428
+E
+fungus~
+³o°ï¿¸¦ü¥G¥i¥H©Þ°_¨Ó(dig fungus)¡C
+~
+>room_rand 15~
+  echo «e¤èªº©U§£¤s±Y¶ò¤F¡A¤@°ï©U§£ºu¨ì§A¸}¤U¡C
+~
+>room_command dig fungus~
+  if con($n) < 22
+	if rand(50)
+    		c 'cause light' $n viclv
+    		echoat $n §A³Q¥i©Èªº¬r®ð©Ò¶Ë¡I
+	endif
+  endif
+  if rand(25)
+    	oload 9427 1 $n floor
+    	echoat $n §Aµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+	echoaround $n $nµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+    	break
+  endif
+  if rand(30)
+    	oload 9428 1 $n floor
+    	echoat $n §Aµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+	echoaround $n $nµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+    	break
+  endif
+  echoat $n §A¤°»ò¤]¨S§ä¨ì¡C
+~
+| 
+S
+#9430
+²³¥Í¤§Âk¬r²G§|~
+    §A½ñµÛº¡¦aªd¤ô©M±Æªnª«¨Ó¨ì³o¡A¥O¤H²¿®§ªº¯ä¨ýÅý§A¥u·Q©Þ»L´N¶]¡A
+¦ý§AÁÙ¬O­@µÛ©Ê¤lºCºC±´¯Á¡C³o¸Ì¬O³h¥Á°ÏÂ²­®±Æ¤ô¹D¨t²Îªº³Ì²×¶×¶°°Ï¡A
+Â©ª«»P¦Ñ¹««Í¬yº¡¦a¡C§A¦b¤@¹ÎÂ©ª«¤¤µo²{¤@¤jÂO­Z²±ªº¿¸Ãþ(fungus)¡A¦ü
+¥G¥i¥H§ä¨ì¤£¿ùªº¿¸Ãþ¡C«nÃä¬O¤@³B¥¨¤jªº©U§£¤s¡AªFÃä«h¬O¤@®y¦À¶í¡C
+~
+0 0 2
+D1
+²³¥Í¤§Âk¬r²G¦À~
+~
+0 -1 9433
+D2
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9429
+E
+fungus~
+³o°ï¿¸¦ü¥G¥i¥H©Þ°_¨Ó(dig fungus)¡C
+~
+>room_rand 30~
+  echo §A»D¨ì¤@ªÑ·¥¯äªº¨ý¹D¡A¦ü¥G¬O¦UºØ±Æªnª«ªº²V¦Xª«¡C
+~
+>room_command dig fungus~
+  if con($n) < 22
+	if rand(60)
+    		c 'cause serious' $n viclv
+    		echoat $n §A³Q¥i©Èªº¬r®ð©Ò¶Ë¡I
+	endif
+  endif
+  if rand(15)
+    	oload 9427 1 $n floor
+    	echoat $n §Aµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+	echoaround $n $nµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+    	break
+  endif
+  if rand(55)
+    	oload 9428 1 $n floor
+    	echoat $n §Aµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+	echoaround $n $nµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C 
+    	break
+  endif
+  echoat $n §A¤°»ò¤]¨S§ä¨ì¡C
+~
+| 
+S
+#9431
+²³¥Í¤§Âk¼o±ó³õ~
+    §A¶i¤J¤@³B°ï©ñÂÂ®a¨ãªº©U§£¤s¤¤¡A°ïÅ|¼Æ¼hªº±T¹ò©U§£¸ô¤¤¡A§A¥²¶·
+¤p¤ß¦a«e¶i¤~¤£¦Ü©ó¶^­Ë¡C¶V²`¤J¼o±ó³õ¡Aäú¤ßªº¯ä¨ý¶V¿@¡A§Ö²Tº¡§Aªº»ó
+µÄ¤F¡C¦b§A¸}¤U¤£»·³B¡A§Aµo²{¤@¸sÂO¥Íªº¿¸Ãþ(fungus)¡C§A©ïÀY¤@±æ¡Aµo
+²{¥_Ãä¬O¤@³B¥­¦a¡A¦è¤è«h´Â¦V¼o±ó³õªº¤J¤f¡C
+~
+0 0 2
+D0
+²³¥Í¤§Âk¬r²G§|~
+~
+0 -1 9432
+D3
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9428
+E
+fungus~
+³o°ï¿¸¦ü¥G¥i¥H©Þ°_¨Ó(dig fungus)¡C
+~
+>room_command dig fungus~
+  if con($n) < 22
+	if rand(30)
+    		c 'cause light' $n viclv
+    		echoat $n §A³Q¥i©Èªº¬r®ð©Ò¶Ë¡I
+	endif
+  endif
+  if rand(20)
+    	oload 9427 1 $n floor
+    	echoat $n §Aµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+	echoaround $n $nµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+    	break
+  endif
+  if rand(30)
+    	oload 9428 1 $n floor
+    	echoat $n §Aµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+	echoaround $n $nµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+    	break
+  endif
+  echoat $n §A¤°»ò¤]¨S§ä¨ì¡C
+~
+| 
+S
+#9432
+²³¥Í¤§Âk¬r²G§|~
+    §A½ñµÛº¡¦aªd¤ô©M±Æªnª«¨Ó¨ì³o¡A¥O¤H²¿®§ªº¯ä¨ýÅý§A¥u·Q©Þ»L´N¶]¡A
+¦ý§AÁÙ¬O­@µÛ©Ê¤lºCºC±´¯Á¡C³o¸Ì¬O³h¥Á°ÏÂ²­®±Æ¤ô¹D¨t²Îªº³Ì²×¶×¶°°Ï¡A
+Â©ª«»P¦Ñ¹««Í¬yº¡¦a¡A¬Æ¦Ü¥i¥Hµo²{¦º¤`¤w¤[ªº¬y®öº~«ÍÅé¡C§A¦b¤@¹ÎÂ©ª«
+¤¤µo²{¤@¤jÂO­Z²±ªº¿¸Ãþ(fungus)¡A¦ü¥G¥i¥H§ä¨ì¤£¿ùªº¿¸Ãþ¡C«nÃä»P¦èÃä
+³£¬O¥¨¤jªº©U§£¤s¡A¥_Ãä«h¬O¤@®y¦À¶í¡C
+~
+0 0 2
+D0
+²³¥Í¤§Âk¬r²G¦À~
+~
+0 -1 9433
+D2
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9431
+D3
+²³¥Í¤§Âk¼o±ó³õ~
+~
+0 -1 9428
+E
+fungus~
+³o°ï¿¸¦ü¥G¥i¥H©Þ°_¨Ó(dig fungus)¡C
+~
+>room_command dig fungus~
+  if con($n) < 22
+	if rand(60)
+    		c 'cause serious' $n viclv
+    		echoat $n §A³Q¥i©Èªº¬r®ð©Ò¶Ë¡I
+	endif
+  endif
+  if rand(15)
+    	oload 9427 1 $n floor
+    	echoat $n §Aµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I
+	echoaround $n $nµo²{¤@Áû¥i­¹¥Îªº¿¸Ãþ¡I 
+    	break
+  endif
+  if rand(55)
+    	oload 9428 1 $n floor
+    	echoat $n §Aµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+	echoaround $n $nµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+    	break
+  endif
+  echoat $n §A¤°»ò¤]¨S§ä¨ì¡C
+~
+| 
+S
+#9433
+²³¥Í¤§Âk¬r²G¦À~
+    §A¨Ó¨ì²³¥Í¤§Âk¼o±ó³õªº³Ì²`³B¡A²´«e¬O¤@¤ù¶×¶°©Ò¦³¦Ã¤ô¬y©Ò§Î¦¨ªº
+¤j¦À¶í¡C©U§£¡BÁT«K¡BÄê¤ì©MµL¦W¯B«Í¦b¦À¶í¤¤¥´Âà¡B«_ªw¡A´²µo¦º¤`ªº´c
+¯ä¡A§A²×©óª¾¹D¬°¦ó³o¸Ì¥s°µ²³¥Í¤§Âkªº­ì¦]¤F¡C¦b¦À¶í¥|©Pªøº¡¤F­Z²±ªº
+¿¸Ãþ(fungus)¡AÀHµÛ»GÄêªº­··n¦²°_»R¡AÁÙ¦³´X¦Ê°¦¦Ñ¹«¬ï±ô¨ä¤¤¡A¬Ý±o§A
+ÀY¥Öµo³Â¡C
+~
+0 0 2
+D2
+²³¥Í¤§Âk¬r²G§|~
+~
+0 -1 9432
+D3
+²³¥Í¤§Âk¬r²G§|~
+~
+0 -1 9430
+E
+fungus~
+³o°ï¿¸¦ü¥G¥i¥H©Þ°_¨Ó(dig fungus)¡C
+~
+>room_command dig fungus~
+  if con($n) <= 21
+	if rand(90)
+    		c 'cause serious' $n viclv
+	endif
+	if rand(30)
+    		c 'poison' $n viclv
+    		echoat $n §A³Q¥i©Èªº¬r®ð©Ò¶Ë¡I
+	endif
+  endif
+  if rand(80)
+    	oload 9428 1 $n floor
+    	echoat $n §Aµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C
+    	echoaround $n $nµo²{¤@Áû©_§Î©Çª¬¡Bªá¯¾´³Äãªº¿¸Ãþ¡C 
+	break
+  endif
+  echoat $n §A¤°»ò¤]¨S§ä¨ì¡C
+~
+>room_rand 50~
+  if hour($) > 14
+    	if hour($) < 18
+      		echo §A¨£¨ì¯Q¾~­¼µÛ¶À©üªºÁ¡¼Ç­¸¨ì«ÍÅé¤W°Ö­¹«Í¦×¡C
+      		callout 1 echo §AÅ¥¨£¯Q¾~²Y¼Fªº¥sÁn¡G¡u°×¡ã¡ã°×¡I¡v
+    	endif
+  endif
+~
+| 
+S
+#9434
+¨«¨p½XÀY¨ø³f¹D~
+    ³o¸Ì¬O½XÀY¨ø³f¹Dªº³Ì¥½ºÝ¡A§A¥i¥H¬Ý¨£·h¹B¤u¤H¤é©]¤£°±¦a¹B¿é³f
+«~¡A±N¨H­«ªº¤ì½c¦ª¶iªFÃäªº­Ü®w¸Ì¡C©¹«n±æ¥h¥i¥H¨£¨ìÁc¦£ªº¹B³f½XÀY¡A
+¤W¤è«h¬O¤ì¼Î·f¦¨ªºÁA±æ°ª¶ð¡A§A¥i¥HÃkµÛ¤ì±è¤W¥h¡C¹jµÛ¤@¹DÀð¡A§A±æ¨£
+¤F¥_Ãä°¨À¸¹Îªº¤j±b´×³»½t¡C
+~
+0 0 1
+D1
+¼o¼V­Ü®w~
+~
+3 -1 9423
+D2
+¯}Äê¤jµó»P¨«¨p½XÀY¥æ¤f~
+~
+0 -1 9405
+D4
+¨«¨p½XÀYÁA±æ»O~
+~
+0 -1 9435
+>room_rand 20~
+if hour($) > 7
+    echo ±q¦è¤è¶Ç¨Ó¤@°}Åw©IÁn¡A¦ü¥G¬O¤j°¨À¸¹Î¥¿¦bªíºt¡C
+endif
+~
+|
+S
+#9435
+¨«¨p½XÀYÁA±æ»O~
+    §A¤p¤ßÁlÁl¦aªuµÛ¼Ó±èª¦¤W¤ì¬[ªºÁA±æ¥x¡A¦V¤U¤@±æ¡A¨£¨ì³h¥Á°Ïªº¥þ
+´º(survey view)¡C§ßÃ­Äæ§ý¡A§A¬Ý¨£«n¤è´ä¤f¥X¤JÁc¦£ªº¤p¦|²î¡AÁÙ¦³»·
+¤è·Ê·Ê¤£µ´ªº¥v¥d©Ô¨©ªe¡AµÎ²nªº²D­·ª½Åý§A·Q­¼­·­¸°_¡C¦bÁA±æ¥xªº¨¤¸¨
+§A¨£¨ì¤@¦ì±j§§ªº¨k¤H¯¸¦b»OÃä½t¡A¦ü¥G¦b³B²z¤°»ò¨Æ±¡¡C
+~
+0 4 0
+D0
+³q©¹°¨À¸¹Îªº¨«¹D~
+~
+0 -1 9436
+D5
+¨«¨p½XÀY¨ø³f¹D~
+~
+0 -1 9434
+>room_command survey view~
+if month($) <= 3
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;37m§A¬Ý¨ì»·¤èµó¤WµS¦³²Ó³·¡A¬K©]ªº´H·NÅý§A¤£¸TÁYµÛ²ä¤l¦R®ð¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;31m¤õ¬õªº¤Ó¶§±¾¦b¶À©üªº««¹õ¤W¡A¬MµÛ¬K¤Ñ«ã©ñªºÂAªá¡A¤Q¤À¬üÄR¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;32m§A¬Ý¨ì»·¤èµó¤Wº³º³ÄcÄc¡A¬¡¼âªº¬K¤Ñ®ðª^¤]´²§G¨ìÁA±æ»O¤W¡C[0m
+  	endif
+  	break
+endif
+if month($) <= 8
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;36m§A¬Ý¨ì»·¤èµó¤WÅ¢¸n¤@¼hÁ¡Ãú¡A®L¤Ñªº´»¼ö®ø´²¤@ªÅ¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;31m¤õ¬õªº¤i¶§±¾¦b¶À©üªº««¹õ¤W¡AÅå¤Hªº¼ö®ðÅý§Aº¡Áy¤j¦½¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;32m§A¬Ý¨ì»·¤èµó¤W¼ö¾x«D¤Z¡A®L¤Ñªº®ð®§Åý¸Uª«ªYªY¦Vºa¡C[0m
+  	endif
+  	break
+endif
+if month($) <= 12
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;36m§A¬Ý¨ì»·¤è¬î­·§j°_¡A§N©]´H¬PÅýµó¹DÅã±oªÅÃm±I¹æ¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;33m¶ê«óªº¤Ó¶§½w½w­°¤J¸s¤s¶¡¡A·L´Hªº¬î¤éÅý§A·P¶Ë²ö¦W¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;36m§A¬Ý¨ì»·¤èµó¤W²³¤H¨Æ°ÈÁc¦£¡A¦£µÛÀxÂ³¹L¥V¡C[0m
+  	endif
+  	break
+endif
+if hour($) <= 5
+or hour($) >= 21
+    	echoat $n [1;37m§A¬Ý¨ìµó¤W¤j³·­è°±¡A¤j³·©]ªº´H·NÅý§A¤£¸TÁYµÛ²ä¤l¦R®ð¡A[0m
+    	rcall moon $n
+	break
+endif
+if hour($) > 16
+        echoat $n [1;31m»þ¨æªº¥V­·±N¶À©üªº««¶§§j±o²@µL¼ö«×¡A¥u¬Ý¨ì·L®zªº¬õ¤õ­°¤U¤j¦a¡C[0m
+	break
+endif
+if hour($) > 5
+    	echoat $n [1;37m§A¬Ý¨ì»·¤èµó¤W²³¤H¬Ò»qµÛ¤j¦ç«pªA¦Ó¦æ¡A²@µL·x·Nªº¤Ó¶§´½¦b¤ÑªÅ¡C[0m
+endif
+~
+>room_rand 5~
+  echo §AÅ¥¨ì¤u¤H¹B°e³fª«ªº©I³ÜÁn±q¤U¤è¶Ç¨Ó¡C
+~
+>room_defun moon~
+  if day($) == 0
+    	echoat $n [1;36m¤ÑªÅÅxº¡»È¬P¡A¤£¨£¬õ¤ë¡C[0m
+	break
+  endif
+  if day($) <= 11
+    	echoat $n [1;31m§A¤]¬Ý¨ì¤W©¶¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ²Y§Nªº¬õ¥ú¡C[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n [1;31m§A¤]¬Ý¨ì¬üÄRªºº¡¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ¹¡º¡ªº¬õ·w¡C[0m
+	break
+  endif
+  echoat $n [1;31m§A¤]¬Ý¨ì¤U©¶¤ëÄa¦b©]ªÅ¤¤¡A´²µoµÛ¸Þ²§ªº¬õ¥ú¡C[0m
+  break
+~
+|
+S
+#9436
+³q©¹°¨À¸¹Îªº¨«¹D~
+    §A¯¸¦bÁA±æ¥xªºÃä½t¡AÅ¥µÛ©I©Iªº­·Án§j¹L¡AÁ|¥Ø¤@±æ¡A¥v¥d©Ô¨©«°ªº
+«°Àð¡B¤j¹D¤@ÄýµL¿ò¡A§ó»·¤èªº¤s³»¯«·µ¤]¦b´º¬É¤§¤¤¡A¥¿¤U¤è«h¬O¼ö¾xªº
+¤j°¨À¸¹Î¡C§A·PÄ±¨ì¤@°}¤ßÃm¯«©É¡A§Ö¼Ö¦aª½·Q¸õ¤U¥h¡C
+    §Aµo²{¸}¤U¦³¤@¬qÃ·¯Á¡A¦ü¥G¥i¥H°½°½·È¤U¥h¡A±q±b´×ªº¯}¬}¤¤¶i¤J°¨
+À¸¹Î¡A©¹«n¥i¥H¦^¨ìÁA±æ»O¡C
+~
+0 4 0
+D2
+¨«¨p½XÀYÁA±æ»O~
+~
+0 -1 9435
+D5
+¦bªÅ¤¤ªºªíºt¥­¥x¤W~
+~
+0 -1 4427
+>room_rand 20~
+  echo §AÅ¥¨ì¤@°}°}Åw©IÁn±q¤U¤èªº±b´×¤§¤º¶Ç¨Ó¡C
+~
+|
+S
+#9437
+¦Ñ§Å±Cªº­T«Î~
+    §A¨«¶i¤@¶¡¥Rº¡¨ë»óÃÄ¤ô¨ýªº¤p­T«Î¤¤¡A«Î¤l¤¤¥¡¬[¤F¤@Áç¼öÄËÄËªº¿@
+´ö¡A¸Ì­±º}µÛ´X¤Q¤ä¦Ñ¹«§À¤Ú©M»h»i°®¡Aª½¬Ý±o§A·Q¦R¡C§Aµo²{¦a¤WÂ\¤F¦n
+´XÂ»³³Åø¡A¤W­±µe¤F¦UºØ©_©Çªº¹Ï®×(paint)¡AÁÙ¦³´X¤ÇÅÎ°®ªº´Óª«¡A¤£¹L
+§A»{¤£¥X¨º¬O¤°»òªF¦è¡A¦b¨¤¸¨¡A§A¬Ý¨£¤@¦W¦Ñ°ü¤H¤@Ãä­óµÛºq¡A¤@Ãä¦£¸L
+¦a¾ã²zÃÄ§÷¡C©¹«n¨«¥i¥HÂ÷¶}³o¸Ì¡A¦^¨ì¯}Äê¤jµó¡C
+~
+0 4|8 0
+D2
+¯}Äê¤jµó~
+~
+3 -1 9404
+E
+paint~
+§A¤@ÂI¤]¬Ý¤£À´¤W­±µe¨Ç¤°»ò¡C
+~
+>room_rand 10~
+  if rand(50)
+    	echo ©BÂP¡A©BÂP¡I
+    	break
+  endif
+  echo Áç¤l¸ÌµNªº´ö¬ðµM«_¥X¤@°}¿@·Ï¡AÅý§AÀ~¤F¤@¸õ¡C
+~
+>room_mask read paint~
+  if is_qmark($n) & slum_libei_quest 300016
+    	echoat $n §A¥J²Ó¦aºÝ¸Ô³o¨Ç³³Åø¤Wªº¹Ï¤ù¡Aº¥º¥ÁA¸Ñ­ì¨Ó³o¬O
+    	echoat $n ¦UºØ¯óÃÄªº¹Ïµe¡A§A¶}©l½æ¤O°O¾Ð³o¨Ç¹Ïµe......
+    	callout 1 echoat $n §AºCºC°O¦í¤F³o¨Ç¹Ïµe......
+    	callout 2 add_qmark $n slum_witch_herb 15 1 0 0 1 0
+    	callout 2 echoat $n §A§¹¥þ°O¦í¤F¡A§A¼È®É¯à¤À¿ë³o¨Ç¯óÃÄªº¼Ë¤l¤F¡C
+    	break
+  endif
+echoat $n §A¤@ÂI¤]¬Ý¤£À´¤W­±µe¨Ç¤°»ò¡C    
+~
+|
+S
+#9438
+¨«¨p½XÀY¨ø³f¹D~
+    ³o¸Ì¬O³h¥Á°Ï³ÌÁc¦£ªº   ½XÀY¨ø³f¹D¡A§A¬Ý¨ì«n¤è¿´¿´¤ù¦|½w½w¶i´ä¡A¦£
+¸Lªº¤u¤H¹³¿ÂÃÆ¤@¯ëª¦¤Wª¦¤U¡A±q²î¸¡«õ¥X³fª«¡A¸g¥Ñ³o±ø¤j¹D¹B¶i¥_Ãä­Ü
+®w¸Ì¡A§A¥i¥H´`µÛ¹D¸ô©¹¥_¦^¨ì¯}Äê¤jµó¡A©ÎªÌ©¹«n¨ì´ç½XÀY¡A§A¤]µo²{¦a
+­±(ground)¦ü¥G¦³¨Ç©_©Ç¡C
+~
+0 0 1
+D0
+¯}Äê¤jµó»P¨«¨p½XÀY¥æ¤f~
+~
+0 -1 9405
+D2
+¨«¨p½XÀY±µ»é¤f~
+~
+0 -1 9439
+D5
+¨«¨p½XÀY¦a¤U»é¤f~
+~
+3 -1 9440
+E
+ground~
+§Aµo²{³o¸Ìªº¦aªO¦³¤@­ÓÅK©ÔÀô¡A¦n¹³¥i¥H©Ô¶}¤@­ÓÁ_¡I
+~
+S
+#9439
+¨«¨p½XÀY±µ»é¤f~
+    §A¬Ý¨ì¯E¯E¿º¿ºªº¥v¥d©Ô¨©ªe¥ÑªF©b¬y¦V¦è¡A³\¦h¥¨¤jªº¤T®é¦|²î°±¾a
+¦b¤£»·¤èªººûªâ´ä¤¤¡A¦Ó¤@¨Ç¸û¤pªº²î°¦«hÄ~Äò°f¬y¦Ó¤W¡A°±ªy¦b³h¥Á°Ï½X
+ÀY¡C§AÅ¥¨ì²î¤Wªº¤ô¤â§V¤O¦[³Ü¡AÁÙ¦³·h¹B¤u¾á­t­«ª«ªº©I³Ü¡A©¹¥_¡A§A¥i
+¥H¦^¨ì½XÀY¹B³f¹D¡C
+~
+0 0 1
+D0
+¨«¨p½XÀY¨ø³f¹D~
+~
+0 -1 9438
+
+>room_time 100~
+  if hour($) == 14
+    	echo §A¬Ý¨ì´X¿´Âù®é¦|²î»·»·¾p¨Ó......
+    	callout 1 echo ¤@¦W¤ô¤âµn¤W²îÀY¡A¤j³Û¡G¡u¨ì³f°Õ¡Iº®²îÅý¹D¡I¡v
+    	callout 2 echo ¦|²î¸s½w½w¾a©¤¡A·Ç³Æ¨ø³f¡C
+    	callout 3 echo ²îÁã±q²î©¶¥á¤F¤U¨Ó¡A²îª©ºM¤F¤U¨Ó¡A²î¤f¶}¤F¡C
+    	callout 3 makedoor 2 ²î¿µ¥ÒªO board 1 -1 9452
+    	callout 3 force 9452 echo ²îª©ºM¤U¨Ó¤F¡A§A¨ì¹F³h¥Á°Ï´ä¤f¤F¡C
+    	break
+  endif
+  if hour($) > 14
+	if hour($) <= 16
+	  	echo ¤ô¤â©M·h¹B¤u±q²î¤W·h¤U¤@½c¤S¤@½cªº³fª«¡A¸g¹L§A¨­Ãä¡C
+	  	callout 1 echo ¤@¸s·h¹B¤u¾áµÛ­«ª«¨«¹L¡C
+	  	callout 2 echo ¡u¼K­×--¼K­×--¡v
+	  	break
+	endif
+  endif
+  if hour($) == 17
+  	deldoor 2
+  	echo »·¤è¦|²î¸s°_¦|¡AÂ÷¶}´ä¤f¤F.....
+   	force 9452 echo ²îª©¦¬¦^¨Ó¤F¡A§A·Ç³ÆÂ÷¶}³h¥Á°Ï´ä¤f¤F¡C
+  	break
+  endif
+  if hour($) ==3
+    	echo §A¬Ý¨ì¤@¿´¤p¶Â²î¨³±¶¦a¾a©¤¡A©ñ¤U·tªù¡C
+    	makedoor 2 ¶Â·tªº¤p²îª© board 1 -1 9454
+    	callout 1 echo ¤@¸s¤u¤H°­°­¯©¯©¦aµn¤W¤p²î......
+    	callout 2 echo ¤@¸s¤u¤H¯«¸g¤¼¤¼¦a·hµÛ³fª«¶i­Ü®w¡C
+    	break
+  endif
+  if hour($) ==4
+    	echo §A¬Ý¨ì¤@¿´¤p¶Â²î§Ö³t¦a¾pÂ÷´ä¤f¡A©¹¤U´å¦Ó¥h¡C
+    	deldoor 2
+    	break
+  endif
+~
+>room_enter 63 70~
+  if rand(60)
+    	echo §AÅ¥¨ì¥v¥d©Ô¨©ªeªºªeÀÜÅFÅF¬y¹L¡C
+    	break
+  endif
+  echo §A¬Ý¨£´X°¦ªe¶­±y±y¦a·Æµ¾¹L¤ô­±¡A®ø¶h»·¤è¡C
+~
+|
+S
+#9440
+¨«¨p½XÀY¦a¤U»é¤f~
+    §A¶¶µÛ±è¤lª¦¤U¨Ó¡A¨Ó¨ì¤@¶¡³±·t¼éÀãªº·t«Ç¡AªeÀÜ¨RÀ»ªºÁn­µ¦³¦p¥¨
+®ö¾_±o§AÂù¦Õµo»ï¡A­nÝ³µÛ¦Õ¦·¤~¯à§Ô¨ü¦í¡C§Aµo²{©Ð¶¡ªº°¼¾À¦³¤@±ø¯U¯¶
+ªº¤ì»s³q¹D¡A²î°¦¦ü¥G¥i¥H±q³o¸Ì±N¿µ¤¤ª«°½°½¹B¹L¨Ó¡A¦Ó¥B¡A§A¤]µo²{¥_
+Ãä¦³¤@¹D¥ÍÄÃªºÅKªù¡A¤£¹L¥´¤£¶}¡C¦pªG§A¦³²î¡A©¹«n¥i¥H¨ì¥v¥d©Ô¨©ªe¡A
+©¹¤W§A¥i¥H¦^¨ì½XÀY¡C
+~
+0 1|8|16 1
+D2
+ªe¤W~
+~
+0 -1 3204
+D4
+¨«¨p½XÀY¨ø³f¹D~
+~
+7 -1 9438
+>room_rand 20~
+  echo ¾_¦Õ±ýÅ¤ªºªeÀÜ½Ä¶i§A¦Õ¸Ì¡C  
+~
+|
+S
+#9441
+ÀZ¼o®È©±~
+    ³o¶¡®È©±§Ï©»§Ö­Ë³¬¤F¤@¼Ë¡A´³»éªº¤ìÀð±¾µÛ´X±i¦Ï¥Ö¡A¶É­Ë¤ì®à¤W¡A
+»êÅ¼ªº³³ªM²±µÛº¡º¡ªºÃÇ«Í¡A¬Ý±o§A­ËºÉ­G¤f¡C©±¥D¤H¦bÂd»O«áµL²á¦aÂ´µÛ
+¤ò¤y¡A¤@®Çªº°s±í¯}¤F­Ó¤p¬}¡A³Á°s­»¨ýÄÆ¤Fº¡©±³£¬O¡C§A¥i¥HªuµÛ¼Ó±è¤W
+¤G¼Ó¥ð®§¡A¤]¥i¥H©¹«nÂ÷¶}³o¶¡¯}ÂÂªº®È©±¡C
+~
+0 4|8|1024|262144 0
+D2
+¯}Äê¤jµó~
+~
+0 -1 9403
+S
+#9442
+®È©±¤G¼Ó~
+    ¯}ÂÂ«È´Ìªº¤G¼Ó¥Rº¡¼éÀãªº¾`®ð¡A¤ìªOÀðÅ¼±o³s¾`µß³£ªø¥X¨Óªº¡A¦ù¤â
+¤@ªgº¡¤â¶Â¦Ã¡A§AÃhºÃ³o¶¡®ÈÀ]ªº¥D¤H¬O§_¦³¦b§V¤O¥´±½¡C³z¹L¥b·´ªºµ¡¤á
+¡A§A¥i¥H¶ÉµÛ¤W¥b¨­¦V¥~ÁA±æ(survey view)¡A¬Ý¬Ý¤jµóªº´º¦â¡A¤]¥i¥Hªu
+µÛ¼Ó±è¦V¤U¨«¡C
+~
+0 4|1024|65536|262144|1048576 0
+D5
+ÀZ¼o®È©±~
+~
+0 -1 9441
+>room_rand 30~
+    	modhmv pc 04.5 10 00000000
+    	modhmv pc 14.5 10 00000000
+    	modhmv pc 24.5 10 00000000
+    	echo ¸g¹L¥R¤Àªº¥ð®§¡A§A·PÄ±ª¬ªp§ó¦n¤F¡I
+  if rand(50)
+   	callout 1 echo ¤@°¦¦Ñ¹«±qÀð¸}¯}¬}Æp¤F¥X¨Ó¡A¨³³t®ø¥¢¦b¥t¤@Ãä......
+    	break
+  endif
+  callout 1 echo ¤@°}¾`®ð¼³­±¦Ó¨Ó......
+~
+>room_command survey view~
+if month($) <= 3
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;37m§A¬Ý¨ì»·¤èµó¤WµS¦³²Ó³·¡A¬K©]ªº´H·NÅý§A¤£¸TÁYµÛ²ä¤l¦R®ð¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;31m¤õ¬õªº¤Ó¶§±¾¦b¶À©üªº««¹õ¤W¡A¬MµÛ¬K¤Ñ«ã©ñªºÂAªá¡A¤Q¤À¬üÄR¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;32m§A¬Ý¨ì»·¤èµó¤Wº³º³ÄcÄc¡A¬¡¼âªº¬K¤Ñ®ðª^¤]¶Ç¶i¤F®È©±©Ð¶¡¡C[0m
+  	endif
+  	break
+endif
+if month($) <= 8
+  	if hour($) <= 5
+  	or hour($) >=21
+    		echoat $n [1;36m§A¬Ý¨ì»·¤èµó¤WÅ¢¸n¤@¼hÁ¡Ãú¡A®L¤Ñªº´»¼ö®ø´²¤@ªÅ¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;31m¤õ¬õªº¤i¶§±¾¦b¶À©üªº««¹õ¤W¡AÅå¤Hªº¼ö®ðÅý§Aº¡Áy¤j¦½¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;32m§A¬Ý¨ì»·¤èµó¤W¼ö¾x«D¤Z¡A®L¤Ñªº®ð®§Åý¸Uª«ªYªY¦Vºa¡C[0m
+	endif
+  	break
+endif
+if month($) <= 12
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n [1;36m§A¬Ý¨ì»·¤è¬î­·§j°_¡A§N©]´H¬PÅýµó¹DÅã±oªÅÃm±I¹æ¡A[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n [1;33m¶ê«óªº¤Ó¶§½w½w­°¤J¸s¤s¶¡¡A·L´Hªº¬î¤éÅý§A·P¶Ë²ö¦W¡C[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n [1;36m§A¬Ý¨ì»·¤èµó¤W²³¤H¨Æ°ÈÁc¦£¡A¦£µÛÀxÂ³¹L¥V¡C[0m
+  	endif
+  	break
+endif
+  if hour($) <= 5
+  or hour($) >= 21
+    	echoat $n [1;37m§A¬Ý¨ìµó¤W¤j³·­è°±¡A¤j³·©]ªº´H·NÅý§A¤£¸TÁYµÛ²ä¤l¦R®ð¡A[0m
+    	rcall moon $n
+	break
+  endif
+  if hour($) > 16
+        echoat $n [1;31m»þ¨æªº¥V­·±N¶À©üªº««¶§§j±o²@µL¼ö«×¡A¥u¬Ý¨ì·L®zªº¬õ¤õ­°¤U¤j¦a¡C[0m
+	break
+  endif
+  if hour($) > 5
+    	echoat $n [1;37m§A¬Ý¨ì»·¤èµó¤W²³¤H¬Ò»qµÛ¤j¦ç«pªA¦Ó¦æ¡A²@µL·x·Nªº¤Ó¶§´½¦b¤ÑªÅ¡C[0m
+  endif
+~
+>room_defun moon~
+  if day($) == 0
+    	echoat $n [1;36m¤ÑªÅÅxº¡»È¬P¡A¤£¨£¬õ¤ë¡C[0m
+	break
+  endif
+  if day($) <= 11
+    	echoat $n [1;31m§A¤]¬Ý¨ì¤W©¶¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ²Y§Nªº¬õ¥ú¡C[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n [1;31m§A¤]¬Ý¨ì¬üÄRªºº¡¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ¹¡º¡ªº¬õ·w¡C[0m
+	break
+  endif
+  echoat $n [1;31m§A¤]¬Ý¨ì¤U©¶¤ëÄa¦b©]ªÅ¤¤¡A´²µoµÛ¸Þ²§ªº¬õ¥ú¡C[0m
+~
+|
+S
+#9443
+¬~¦ç³B~
+    §A¨Ó¨ì¤@³B¤j¥Û²ÖÅ|ªºªeÅy¡A´ø«æªº¥v¥d©Ô¨©ªe¦b³o¸Ì§Î¦¨¤@ªl¤pÆW¡A
+ÃZ§Z¥Û©M¥¨©¥¬P§Gªe­±¡A¦³¨Ç¥¨¤j¨ì¥i¥H½ö¦b¤W­±ÅÎ¤Ó¶§¡C§A¬Ý¨£ªe©¤®Ç©ñ
+µÛ´XªK¬~¦çºl¡A¦ü¥G¬O¥­±`°ü¤H¨Ó¬~¦çªº¦a¤è¡C©¹¥_§A¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 0 1
+D0
+¯}Äê¤jµóÂà¨¤~
+~
+0 -1 9407
+>room_enter 15 70~
+  if rand(60)
+    	echoat $n §AÅ¥¨ì¥v¥d©Ô¨©ªeªºªeÀÜÅFÅF¬y¹L¡C
+    	break
+  endif
+  echoat $n §A¬Ý¨£´X°¦ªe¶­±y±y¦aµ¾¹L¤ô­±¡A®ø¶h»·¤è¡C
+~
+|
+S
+#9444
+³±·tªº¾Fªe¦í®a~
+    §A¨Ó¨ì¤@³B«õ¤F¥b¼h¼Ó²`ªº§|¡AµM«á¥Î¥ÛªO¬ä¦¨ªº¥b¥Þ©~©Ð«Î¡A¼éÀãªº
+¨ý¹D¥|³BÄjº©¡A²V¦XµÛ¦Ï¤òªº¨ý¹D¡AÅý§A«Ü·Q¥´¼QÀ¡¡C³o¸Ì°£¤F¤@¥x¯¼¯½¾÷
+©M´X¥ó«K©yªº®a¨ãÃoÂd¥~¡A¨Ã¨S¦³¨ä¥L­È±o§Aª`·NªºªF¦è¡C«nÃäªºµ¡¤á¥b¶}
+µÛ¡A§A¥i¥H¬Ý¨£·Ê·Êªe¤ô¦V¦è¬y¡C©¹¥_¥i¥HÂ÷¶}³o¶¡¤p«Î¡C
+~
+0 1|4|8|16 0
+D0
+¯}Äê¤jµóµó¤f~
+~
+3 -1 9402
+>room_enter 15 100~
+if is_qmark($n) == slum_libei_womancycle
+if being(Alice-slum)
+	echoat $n ´N§A©Ò°O±oªº¡A·RÄR´µªº·|¦b¦­¤W¤CÂI»P¤U¤È¤Q¥|ÂI¤§¶¡Â÷¶}³o¸Ì¡C
+	echoat $n ¥t¥~¡A¦o¤]·|¦b±ß¤W¤Q¤EÂI»P¥b©]¤G¤Q¤TÂI¤§¶¡Â÷¶}©Ð«Î¡C
+endif
+endif
+if rand(70)
+	echoat $n §AÅ¥¨ì¥v¥d©Ô¨©ªeªºªeÀÜÅFÅF§@ÅT¡C
+	callout 1 echoat $n ÅF³Ø¡IÅF³Ø¡I
+endif
+~
+>room_rand 60~
+if is_qmark($r) == slum_libei_womancycle
+if being(Alice-slum)
+	if hour($) == 6
+		echoat $r [1;33m§A¦³¹w·P·RÄR´µ­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 13
+		echoat $r [1;33m§A¦³¹w·P·RÄR´µ­n¦^®a¤F¡C[0m
+	endif
+	if hour($) == 18
+		echoat $r [1;33m§A¦³¹w·P·RÄR´µ­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 23
+		echoat $r [1;33m§A¦³¹w·P·RÄR´µ­n¦^®a¤F¡C[0m
+	endif
+endif
+endif
+~
+>room_command search fleece~
+  if robjcount(9444) > 0
+	echoat $n §A§ä¤£¨ì¥ô¦ó¥iºÃª««~¡C
+	break
+  endif
+  if rmobcount(9416) > 0
+    	echoat $n ·RÄR´µ¦b®a¡A§AµLªk¤U¤â´M§ä¡C
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+~
+>room_defun find~
+      echoat $n §A¦n¹³§ä¨ì¤°»òªF¦è¤F¡C
+      oload 9444 1 $n floor
+      break
+~
+>room_defun nofind~
+  echoat $n §A¤@µL©ÒÀò¡C
+  echoaround $n $n§ä¤F§ä¥|©P¡A«o¤@µL©ÒÀò¡C
+~
+|
+S
+#9445
+¥Rº¡¾`¨ýªº¾Fªe¦í®a~
+    §A¨Ó¨ì¤@³B«õ¤F¥b¼h¼Ó²`ªº§|¡AµM«á¥Î¥ÛªO¬ä¦¨ªº¥b¥Þ©~©Ð«Î¡A¼éÀãªº
+¨ý¹D¥|³BÄjº©¡A²V¦XµÛ¦Ï¤òªº¨ý¹D¡AÅý§A«Ü·Q¥´¼QÀ¡¡C³o¸Ì°£¤F¤@¥x¯¼¯½¾÷
+©M´X¥ó«K©yªº®a¨ãÃoÂd¥~¡A¨Ã¨S¦³¨ä¥L­È±o§Aª`·NªºªF¦è¡C«nÃäªºµ¡¤á¥b¶}
+µÛ¡A§A¥i¥H¬Ý¨£·Ê·Êªe¤ô¦V¦è¬y¡C©¹¥_¥i¥HÂ÷¶}³o¶¡¤p«Î¡C
+~
+0 1|4|8|16 0
+D0
+¯}Äê¤jµó~
+~
+3 -1 9403
+>room_enter 15 100~
+if is_qmark($n) == slum_libei_womancycle
+if being(Leonady-slum)
+	echoat $n ´N§A©Òª¾¡A¹p¼Ú®R¸¦·|¦b¤¤¤È¤Q¤@ÂI¨ì¤U¤È¤Q¤CÂI¤§¶¡Â÷¶}³o¸Ì¡C
+endif
+endif
+if rand(70)
+	echo §AÅ¥¨ì¥v¥d©Ô¨©ªeªºªeÀÜÅFÅF§@ÅT¡C
+	callout 1 echo ÅF³Ø¡IÅF³Ø¡I
+endif
+~
+>room_rand 60~
+if is_qmark($r) == slum_libei_womancycle
+if being(Leonady-slum)
+	if hour($) == 10
+		echoat $r [1;33m§A¦³¹w·P¹p¼Ú®R¸¦­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 16
+		echoat $r [1;33m§A¦³¹w·P¹p¼Ú®R¸¦­n¦^®a¤F¡C[0m
+	endif
+endif
+endif
+~
+>room_command search fleece~
+  if robjcount(9445) > 0
+        echoat $n §A§ä¤£¨ì¥ô¦ó¥iºÃª««~¡C
+        break
+  endif
+  if rmobcount(9417) > 0
+    	echoat $n ¹p¼Ú®R¸¦¦b®a¡A§AµLªk¤U¤â´M§ä¡C
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+~
+>room_defun find~
+      echoat $n §A¦n¹³§ä¨ì¤°»òªF¦è¤F¡C
+      oload 9445 1 $n floor
+      break
+~
+>room_defun nofind~
+  echoat $n §A¤@µL©ÒÀò¡C
+  echoaround $n $n§ä¤F§ä¥|©P¡A«o¤@µL©ÒÀò¡C
+~
+|
+S
+#9446
+³q­·¤£¨}ªº¾Fªe¦í®a~
+    §A¨Ó¨ì¤@³B«õ¤F¥b¼h¼Ó²`ªº§|¡AµM«á¦A¥Î¥ÛªO¬ä¦¨ªº¥b¥Þ©~©Ð«Î¡A¼éÀã
+ªº¨ý¹D¥|³BÄjº©¡A²V¦XµÛ¦Ï¤òªº¨ý¹D¡AÅý§A«Ü·Q¥´¼QÀ¡¡C³o¸Ì°£¤F¤@¥x¯¼¯½
+¾÷©M´X¥ó«K©yªº®a¨ãÃoÂd¥~¡A¨Ã¨S¦³¨ä¥L­È±o§Aª`·NªºªF¦è¡C«nÃäªºµ¡¤á¥b
+¶}µÛ¡A§A¥i¥H¬Ý¨£·Ê·Êªe¤ô¦V¦è¬y¡C©¹¥_¥i¥HÂ÷¶}³o¶¡¤p«Î¡C
+~
+0 1|4|8|16 0
+D0
+¯}Äê¤jµó~
+~
+3 -1 9404
+>room_enter 15 100~
+if is_qmark($n) == slum_libei_womancycle
+if being(Carlin-slum)
+	echoat $n ´N§A©Òª¾¡A¥dµY·|¦b¤KÂI¨ì¤Q¥|ÂI¤§¶¡Â÷¶}³o¸Ì¡C
+endif
+endif
+if rand(70)
+    echo §AÅ¥¨ì¥v¥d©Ô¨©ªeªºªeÀÜÅFÅF§@ÅT¡C
+    callout 1 echo ÅF³Ø¡IÅF³Ø¡I
+endif
+~
+>room_rand 60~
+if is_qmark($r) == slum_libei_womancycle
+if being(Carlin-slum)
+	if hour($) == 7
+		echoat $r [1;33m§A¦³¹w·P¥dµY­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 13
+		echoat $r [1;33m§A¦³¹w·P¥dµY­n¦^®a¤F¡C[0m
+	endif
+	if hour($) == 19
+		echoat $r [1;33m§A¦³¹w·P¥dµY­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 2
+		echoat $r [1;33m§A¦³¹w·P¥dµY­n¦^®a¤F¡C[0m
+	endif
+endif
+endif
+~
+>room_command search fleece~
+  if robjcount(9446) > 0
+        echoat $n §A§ä¤£¨ì¥ô¦ó¥iºÃª««~¡C
+        break
+  endif
+  if rmobcount(9418) >0
+    	echoat $n ¥dµY¦b®a¡A§AµLªk¤U¤â´M§ä¡C
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+~
+>room_defun find~
+      echoat $n §A¦n¹³§ä¨ì¤°»òªF¦è¤F¡C
+      oload 9446 1 $n floor
+      break
+~
+>room_defun nofind~
+  echoat $n §A¤@µL©ÒÀò¡C
+  echoaround $n $n§ä¤F§ä¥|©P¡A«o¤@µL©ÒÀò¡C
+~
+|
+S
+#9447
+¾aªñ°¨À¸¹Îªº¦í®a~
+    §A¨Ó¨ì¤@³B«õ¤F¥b¼h¼Ó²`ªº§|¡AµM«á¦A¥Î¥ÛªO¬ä¦¨ªº¥b¥Þ©~©Ð«Î¡A¼éÀã
+ªº¨ý¹D¥|³BÄjº©¡A²V¦XµÛ¦Ï¤òªº¨ý¹D¡AÅý§A«Ü·Q¥´¼QÀ¡¡C³o¸Ì°£¤F¤@¥x¯¼¯½
+¾÷©M´X¥ó«K©yªº®a¨ãÃoÂd¥~¡A¨Ã¨S¦³¨ä¥L­È±o§Aª`·NªºªF¦è¡C§AÅ¥¨ì°}°}ªº
+Åw©IÁn±q¤£»·³BÁôÁô³z¨Ó¡A³oªþªñ¦ü¥G¦³¤°»ò¼ö¾xªº¬¡°Ê¡C©¹«n§A¥i¥HÂ÷¶}
+³o¶¡Â²­®ªº¤p«Î¡C
+~
+0 1|4|8|16 0
+D2
+¯}Äê¤jµóµó©³~
+~
+3 -1 9413
+>room_enter 15 100~
+if is_qmark($n) == slum_libei_womancycle
+if being(Thingiwa-slum)
+	echoat $n ´N§A©Òª¾¡A¨¯¦N«½·|¦b¤Q¤@ÂI¨ì¤Q¤CÂI¤§¶¡Â÷¶}³o¸Ì¡C
+endif
+endif
+  if rand(60)
+  if hour($) > 7
+    	if hour($) < 20
+      		echoat $n §AÅ¥¨ì¤£»·³B°¨À¸¹ÎªºÅw©IÁn³z¹LÀð¾À¶Ç¤F¶i¨Ó¡C
+    	endif
+  endif
+  endif
+~
+>room_rand 60~
+if is_qmark($r) == slum_libei_womancycle
+if being(Thingiwa-slum)
+	if hour($) == 10
+		echoat $r [1;33m§A¦³¹w·P¨¯¦N«½­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 16
+		echoat $r [1;33m§A¦³¹w·P¨¯¦N«½­n¦^®a¤F¡C[0m
+	endif
+endif
+endif
+~
+>room_command search fleece~
+  if robjcount(9447) > 0
+        echoat $n §A§ä¤£¨ì¥ô¦ó¥iºÃª««~¡C
+        break
+  endif
+  if rmobcount(9419) > 0
+    	echoat $n ¨¯¦N«½¦b®a¡A§AµLªk¤U¤â´M§ä¡C
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+~
+>room_defun find~
+      echoat $n §A¦n¹³§ä¨ì¤°»òªF¦è¤F¡C
+      oload 9447 1 $n floor
+      break
+~
+>room_defun nofind~
+  echoat $n §A¤@µL©ÒÀò¡C
+  echoaround $n $n§ä¤F§ä¥|©P¡A«o¤@µL©ÒÀò¡C
+~
+|
+S
+#9448
+«Î³»¯}¬}ªº¦í®a~
+    §A¨Ó¨ì¤@³B«õ¤F¥b¼h¼Ó²`ªº§|¡AµM«á¦A¥Î¥ÛªO¬ä¦¨ªº¥b¥Þ©~©Ð«Î¡A¼éÀã
+ªº¨ý¹D¥|³BÄjº©¡A²V¦XµÛ¦Ï¤òªº¨ý¹D¡AÅý§A«Ü·Q¥´¼QÀ¡¡C³o¸Ì°£¤F¤@¥x¯¼¯½
+¾÷©M´X¥ó«K©yªº®a¨ãÃoÂd¥~¡A¨Ã¨S¦³¨ä¥L­È±o§Aª`·NªºªF¦è¡C¤£¹L§Aµo²{³o
+®aªº«Î³»¯}¤F¤@­Ó¬}¡A­T¯ó°©¬[¾ã­ÓÅS¤F¥X¨Ó¡C©¹¦è§A¥i¥HÂ÷¶}³o¶¡¤p«Î¡C
+~
+0 4|8|16 0
+D3
+¯}Äê¤jµóµó©³~
+~
+3 -1 9413
+>room_enter 15 100~
+if is_qmark($n) == slum_libei_womancycle
+if being(Nischoco-slum)
+	echoat $n ´N§A©Òª¾¡A©g¨qçM·|¦b¦­¤W¤QÂI»P¤U¤È¤Q¤CÂI¤§¶¡Â÷¶}³o¸Ì¡C
+endif
+endif
+~
+>room_rand 60~
+if is_qmark($r) == slum_libei_womancycle
+if being(Nischoco-slum)
+	if hour($) == 9
+		echoat $r [1;33m§A¦³¹w·P©g¨qçM­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 16
+		echoat $r [1;33m§A¦³¹w·P©g¨qçM­n¦^®a¤F¡C[0m
+	endif
+endif
+endif
+~
+>room_command search fleece~
+  if robjcount(9448) > 0
+        echoat $n §A§ä¤£¨ì¥ô¦ó¥iºÃª««~¡C
+        break
+  endif
+  if rmobcount(9420) > 0
+    	echoat $n ©g¨qçM¦b®a¡A§AµLªk¤U¤â´M§ä¡C
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+~
+>room_defun find~
+      echoat $n §A¦n¹³§ä¨ì¤°»òªF¦è¤F¡C
+      oload 9448 1 $n floor
+      break
+~
+>room_defun nofind~
+  echoat $n §A¤@µL©ÒÀò¡C
+  echoaround $n $n§ä¤F§ä¥|©P¡A«o¤@µL©ÒÀò¡C
+~
+|
+S
+#9449
+¥ÛÀY°ï¦¨ªº¦í®a~
+    §A¨Ó¨ì¤@³B«õ¤F¥b¼h¼Ó²`ªº§|¡AµM«á¦A¥Î¥ÛªO¬ä¦¨ªº¥b¥Þ©~©Ð«Î¡A¼éÀã
+ªº¨ý¹D¥|³BÄjº©¡A²V¦XµÛ¦Ï¤òªº¨ý¹D¡AÅý§A«Ü·Q¥´¼QÀ¡¡C³o¸Ì°£¤F¤@¥x¯¼¯½
+¾÷©M´X¥ó«K©yªº®a¨ãÃoÂd¥~¡A¨Ã¨S¦³¨ä¥L­È±o§Aª`·NªºªF¦è¡C©¹¦è§A¥i¥HÂ÷
+¶}³o¶¡©Ð«Î¡C
+~
+0 1|4|8|16 0
+D3
+¯}Äê¤jµó~
+~
+3 -1 9412
+>room_enter 100~
+if is_qmark($n) == slum_libei_womancycle
+if being(Compeny-slum)
+	echoat $n ´N§A©Òª¾¡A±d»_©g·|¦b¦­¤W¤KÂI»P¤U¤È¤Q¤»ÂI¤§¶¡Â÷¶}³o¸Ì¡C
+endif
+endif
+~
+>room_rand 60~
+if is_qmark($r) == slum_libei_womancycle
+if being(Compeny-slum)
+	if hour($) == 7
+		echoat $r [1;33m§A¦³¹w·P±d»_©g­n¥Xªù¤F¡C[0m
+	endif
+	if hour($) == 15
+		echoat $r [1;33m§A¦³¹w·P±d»_©g­n¦^®a¤F¡C[0m
+	endif
+endif
+endif
+~
+>room_command search fleece~
+  if robjcount(9449) > 0
+        echoat $n §A§ä¤£¨ì¥ô¦ó¥iºÃª««~¡C
+        break
+  endif
+  if rmobcount(9421) > 0
+    	echoat $n ±d»_©g¦b®a¡A§AµLªk¤U¤â´M§ä¡C
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+~
+>room_defun find~
+      echoat $n §A¦n¹³§ä¨ì¤°»òªF¦è¤F¡C
+      oload 9449 1 $n floor
+      break
+~
+>room_defun nofind~
+  echoat $n §A¤@µL©ÒÀò¡C
+  echoaround $n $n§ä¤F§ä¥|©P¡A«o¤@µL©ÒÀò¡C
+~
+|
+S
+#9450
+¤[µL¤H©~ªº¦í®a~
+    §A¨Ó¨ì¤@³B«õ¤F¥b¼h¼Ó²`ªº§|¡AµM«á¦A¥Î¥ÛªO¬ä¦¨ªº¥b¥Þ©~©Ð«Î¡A¼éÀã
+ªº¨ý¹D¥|³BÄjº©¡A¯}ÂÂªº®a¨ã©M·´ÃaªºÃoÂdµL§U¦aÀZ¾a¦bÀð¤W¡A¦ü¥G¥u­n°Ê
+¤@¤U´N·|¶ò±¼¡A¦a¤W´²µÛ«Î³»ÄÆ¸¨ªº­T¯ó¡Aº¡«Çªº»jµïºô¶D»¡¦oªº³¯ÂÂ»P¯î
+¼o¡C§A¨Ã¨S¦³µo²{¥ô¦ó¦³»ù­ÈªºªF¦è¡A¤£¹L¦Ñ®à¤l¤Wªº¤@«Ê«H(letter)¤Þ°_
+¤F§Aªºª`·N¡C©¹¦è§A¥i¥HÂ÷¶}³o¶¡¯î¼oªº¤p«Î¡C
+~
+0 1|8|16 0
+D3
+~
+~
+3 -1 9411
+E
+letter~
+³o«Ê«H¦ü¥G¬O«Ü¤[¥H«e¼gªº¡A²Ó¨qªº®õ¬¥´µ®Ñªk³£¦³ÂI¿Æ¦â¤F¡G
+
+		©¹¨Æ¦p­·¡A¦^¾Ð¦p¹Ú¡C
+				--Hana
+~
+S
+#9451
+³q©¹¶ÂÀ°¦a±aªºÃö¥d~
+    §A¨Ó¨ì¤@±ø·t«Ñªº«Ñ¤f¡A¯}±Ñªº¤jªù(gate)¥ÎÂêÁå®¹¦íªù§â¡A¤£Åý¥ô¦ó
+¤H»´©ö³q¹L¡Cªù«e¯¸¤F¼Æ¦WÄµ½Ã¡A¥u­n¦³¤H¾aªñ¡A«K¬O¤@°}²Ê¾|ªº°Ý­Ô»y¡A
+µM«á¥Î¤â¤WªZ¾¹»°¤H¡C³o¸Ì¦n¹³¬O¬YºØ­n¦a¤@¼Ë¡A¶Â·tµÂ±þªº®ðª^Å¢¸nµÛ§A
+¡AÅý§A¤£¸T·P¨ì¤@°}´HÅ¸¡C©¹¦è§A¥i¥HÂ÷¶}³o¸Ì¡C
+~
+0 1 1
+D1
+¦MÀI·t«Ñ¦èºÝ~
+gate~
+7 9451 9455
+D3
+¯}Äê¤jµóÂà¨¤~
+~
+0 -1 9407
+>room_enter 8 100~
+  if is_qmark($n) & slum_libei_quest 100128
+  or is_qmark($n) & slum_libei_quest 300128
+    	force guard-slum say ±z¦n¡I
+	modrvt d1 r 6
+	echoat $n ¦u½Ã®¥·q¦a¦C¦b¨â®Ç¡Aµ¥§A¶i¤J¡C
+	echoaround $n ¦u½Ã®¥·q¦a¦C¦b¨â®Ç¡Aµ¥$n¶i¤J¡C
+	break  
+  endif
+  echoat $n [1;36m¦u½Ã±N§A»°¤F¦^¥h¡C[0m
+  force $n w
+~
+>room_enter 2 100~
+  if is_qmark($n) & slum_libei_quest 100128
+  or is_qmark($n) & slum_libei_quest 300128
+    	force guard-slum say ±z¦n¡I
+  else
+  	echoat $n ¦u½Ã¥Hª°ºÃªº²´¥ú¥´¶q§A¡C
+  endif
+~
+>room_leave 15 100~
+  if pcnum($) > 1
+  	break
+  else
+	if exitinfo($1) == 1
+  		echo ¦u½Ã±NªùÃö¤F°_¨Ó¡C
+  		modrvt d1 | 6
+  	endif
+  endif
+~
+|
+S
+#9452
+Âù®é¦|²îªº¥ÒªO~
+    ³o¸Ì¬O¥v¥d©Ô¨©Âù®é¦|²îªº¥ÒªO¡A²¤Åã³¯ÂÂªº¥ÒªO©M­é¸¨ªº¬õº£¨£ÃÒ¤F
+³o¿´²î¹L©¹ªº¥úºa¡A©¹¤U¬O²î¿µ¡A©¹¤W¬O²î®éªºÁA±æ»O¡A¤£¹L§A¨S¦³«i®ðª¦
+¤W¥h¡C©ïÀY¤@±æ¡A¥i¥H¬Ý¨ìªe©¤ªº­·´º(survey view)¡A¯¸¦b²î©¶Ãä½t¡A§A
+¥i¥H²M·¡±´¨£¹º¯}ªe®öªº²ª¸ñ¡C
+~
+0 4|65536|1048576 0
+D5
+²î¿µ©³~
+~
+0 -1 9453
+>room_enter 63 100~
+ if is_qmark($n) & slum_libei_quest 100768
+ or is_qmark($n) & slum_libei_quest 300768
+   	echoat $n ²îªø¬Ý§A¤W¨Ó¡AÀqÀqÂIÀY¡C
+   	break
+ endif
+ if ispc($n)
+  	if hour($) >= 14
+    		if hour($) <= 17
+      			echoat $n ¤@¦W¤jº~¨«¹L¨Ó¡A»¡¡G¡u¨S¨Æªº§O¦b³o¸ÌÂZ¶Ã§Ú­Ìªº§@·~¡I¡v
+			echoat $n [1;36m¥L±N§A»°¤F¤U¥h¡C[0m
+      			echoaround $n ¤@¦W¤jº~¨«¹L¨Ó¡A±N$n»°¤F¤U¥h¡C
+      			transfer $n 9439
+      			break
+    		endif
+  	endif
+  	if hour($) >= 3
+    		if hour($) <= 5
+      			echoat $n ¤@¦W¤jº~¨«¹L¨Ó¡A»¡¡G¡u¨S¨Æªº§O¦b³o¸ÌÂZ¶Ã§Ú­Ìªº§@·~¡I¡v
+      			echoat $n [1;36m¥L±N§A»°¤F¤U¥h¡C[0m
+      			echoaround $n ¤@¦W¤jº~¨«¹L¨Ó¡A±N$n»°¤F¤U¥h¡C
+      			transfer $n 9439
+    		endif
+  	endif
+ endif
+~
+>room_time 100~
+  if hour($) == 14
+    	echo Âù®é¦|²î¸s½w½w¾a¦V¥v¥d©Ô¨©³h¥Á°Ïªº´ä¤f......
+    	echo ¤@¦W¤ô¤â¤j³Û¡G¡u¨ì©¤°Õ¡A·Ç³Æ¨ø³f¡I¡v
+    	force 9453 echo ¤@¦W¤ô¤â¤j³Û¡G¡u¨ì©¤°Õ¡A·Ç³Æ¨ø³f¡I¡v
+    	echo ¤ô¤â±N²îª©­°¤F¤U¥h¡AÅý´ä¤f¤u¤H¤W¨Ó·h¹B¡C
+	makedoor 0 ³h¥Á°Ï´ä¤f door 0 0 9439
+	break
+  endif
+  if hour($) == 15
+  or hour($) == 16
+    	echo §A¬Ý¨£·h¹B¤u¤W²î¨Ó¡A¦£µÛ±N³fª«·h¤U¥h¡C
+    	break
+  endif
+  if hour($) == 17
+    	echo ¤ô¤â±N²îÁã¦¬¤F¤W¨Ó¡C
+    	echo ¤@°}ÄÌ¶Ã¡A¤ô¤â­Ì±N²î¦|¤É¤F°_¨Ó¡C
+    	echo ¤@¦W¤ô¤â¤j³Û¡G¡u·Ç³Æ±Ò¯è°Õ¡I¡v
+    	force 9453 echo ¤@¦W¤ô¤â¤j³Û¡G¡u·Ç³Æ±Ò¯è°Õ¡I¡v
+    	echo Âù®é¦|²î¸s½w½w¾pÂ÷¥v¥d©Ô¨©³h¥Á°Ï´ä¤f......
+	deldoor 0
+    	break
+  endif
+  if hour($) == 2
+    	echo Âù®é¦|²î¸s½w½w¾a¦V±æ¶m´ä´äªú¡C
+    	echo ¤@¦W¤ô¤â¤j³Û¡G¡u¨ì©¤°Õ¡A·Ç³Æ¸Ë³f¡I¡v
+    	force 9453 echo ¤@¦W¤ô¤â¤j³Û¡G¡u¨ì©¤°Õ¡A·Ç³Æ¸Ë³f¡I¡v
+    	echo ¤ô¤â±N²îª©­°¤F¤U¥h¡AÅý´ä¤f¤u¤H·h³f¤W¨Ó¡C
+    	break
+  endif
+  if hour($) == 3
+  or hour($) == 4
+    	echo §A¬Ý¨£·h¹B¤u¦£µÛ±N³fª«·h¤W¨Ó¡C
+    	break
+  endif
+  if hour($) == 5
+    	echo ¤ô¤â±N²îÁã¦¬¤F¤W¨Ó¡C
+    	echo ¤@°}ÄÌ¶Ã¡A¤ô¤â­Ì±N²î¦|¤É¤F°_¨Ó¡C
+    	echo ¤@¦W¤ô¤â¤j³Û¡G¡u·Ç³Æ±Ò¯è°Õ¡I¡v
+    	force 9453 echo ¤@¦W¤ô¤â¤j³Û¡G¡u·Ç³Æ±Ò¯è°Õ¡I¡v
+    	echo Âù®é¦|²î¸s½w½w¾pÂ÷±æ¶m´ä¡C
+    	break
+  endif
+  if rand(50)
+    	echo ²îªuµÛ¥v¥d©Ô¨©ªe¯è¦æµÛ¡A¥|©P§§ÄRªº­·¥úºÉ¦¬²´©³¡C
+    	break
+  endif
+  echo ´X°¦¤£ª¾¦Wªº¤ô³¾±y±y­¸¹L²î©¶¥ª¥k¡A¦A°¿©¿­¸Â÷¡C
+~
+>room_command survey view~
+  if hour($) == 0
+  or hour($) == 1
+    	echoat $n [1;33m³o¿´²î¶¶µÛ¥v¥d©Ô¨©ªe¯è¦æ¡A¨â®Ç­ì©lªº¶Â´ËªL¤£®É¶Ç¨ÓÄÌ°ÊÁn¡C[0m
+    	break
+  endif
+  if hour($) >= 14
+    	if hour($) <= 17
+      		echoat $n [1;36m³o¿´²î¥Ø«e°±ªy¦b¥v¥d©Ô¨©³h¥Á°Ï¡A²´«eªº´º¶H¬O¤@¤ùÅ¼¶Ã¡C[0m
+      		break
+    	endif
+      	echoat $n [1;33m³o¿´²î¶¶µÛ¥v¥d©Ô¨©ªe¯è¦æ¡A¨â®Ç­ì©lªº¶Â´ËªL¤£®É¶Ç¨ÓÄÌ°ÊÁn¡C[0m
+      	break
+  endif
+  if hour($) >= 2
+    	if hour($) <= 5
+      		echoat $n [1;31m³o¿´²î¥Ø«e°±ªy¦b±æ¶m´ä¡A²`©]´²µo¬õ·wªº¤j¦a¥u¯àÅý§A¬Ý¨ì«°Âí¤j·§ªº½ü¹ø¡C[0m
+      		rcall moon $n
+    		break
+    	endif
+  endif
+  echoat $n [1;33m³o¿´²îªuµÛ¥v¥d©Ô¨©ªe°f¬y¦Ó¤W¡A¨â®Ç­ì©lªº¶Â´ËªL¤£®É¶Ç¨ÓÄÌ°ÊÁn¡C[0m
+~
+>room_defun moon~
+  if day($) <= 11
+    	echoat $n [1;31m§A¤]¬Ý¨ì¤W©¶¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ²Y§Nªº¬õ¥ú¡C[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n [1;31m§A¤]¬Ý¨ì¬üÄRªºº¡¤ë±¾¦b©]ªÅ¤¤¡A´²µoµÛ¹¡º¡ªº¬õ·w¡C[0m
+	break
+  endif
+  echoat $n [1;31m§A¤]¬Ý¨ì¤U©¶¤ëÄa¦b©]ªÅ¤¤¡A´²µoµÛ¸Þ²§ªº¬õ¥ú¡C[0m
+  break
+~
+|
+S
+#9453
+²î¿µ©³~
+    ¤@³B¯U¤p¡B²V¶Ã¡A°ïº¡³fª«Âøª«ªº²î¿µ¡A§A¥i¥HÅ¥¨£ªe®ö©ç¥´¤ìªOªºÁn
+­µ¡AÁÙ¦³¤ìªO¹Ç¹Ç§@ÅT¡A¦n¹³§Ö­n¸ÑÅéªºÁn­µ¡A¤£¹L¤ñ°_¨Æª«Ác¦£ªº¥ÒªO¡A
+­Ë¬O²MÀR¦h¤F¡A§A¥i¥H¦b³o¸Ì¦n¦n¥ð®§·Ç³Æ¡Aµ¥«Ý²×¯¸¨ì¨Ó¡C
+~
+0 4|65536|1048576 0
+D4
+¥ÒªO~
+~
+0 -1 9452
+>room_time 100~
+    	modhmv pc 04.3 12 00000000
+    	modhmv pc 14.3 12 00000000
+    	modhmv pc 24.3 12 00000000
+    	echo ¸g¹L¥R¤Àªº¥ð®§¡A§A·PÄ±ª¬ªp§ó¦n¤F¡I  
+~
+|
+S
+#9454
+¤p¶Â²îªº²î¿µ~
+    ¤@¶¡¯U¯¶¡B¶Â·tªº²î¿µ¡A§A»D¨ì¤@ªÑ­»¨ý¡A¦n¹³¬O¼Æ¤QºØ­»®Æ²V©M¦b¤@
+°_ªº¨ý¹D¡A¤£¹L²Ó¤ßªº§AÁÙ¦b¨ä¤¤»D¨ì¤F¤@ªÑ¥O¤H°g¾Kªº²§¨ý¡A¦ü¥G¬O¬YºØ
+¥v¥d©Ô¨©©Ò¤£¤¹³\ªº¸TÃÄ¡H©Î³\°Ê¤â§ä§ä¬Ý(search goods)¯à¦³©Òµo²{¡C
+~
+0 1|4|8|65536|1048576 0
+>room_time 100~
+if rmobcount(9429) != 0
+  if hour($) == 3
+  	echo ²î¿µ¥_Ãäªº±Kªù¶}¤F¡C
+  	makedoor 0 ³h¥Á°Ï´ä¤f door 0 0 9439
+  endif
+  if hour($) == 4
+  	echo ²î¿µ¥_Ãäªº±KªùÃö¤F°_¨Ó¡C
+  	deldoor 0
+  endif
+endif
+~
+|
+S
+#9455
+¦MÀI·t«Ñ¦èºÝ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹¥_Ãä¶i¤J·t«Ñ¡A¤]¥i¥H©¹¦è¦^¨ì±_¥Þ³h¥Á°Ï¡C
+~
+0 1|65536 1
+D0
+¦MÀI·t«Ñ~
+~
+0 -1 9456
+D1
+¦MÀI·t«Ñ~
+door~
+7 -1 9458
+D3
+³q©¹¶ÂÀ°¦a±aªºÃö¥d~
+gate~
+0 -1 9451
+>room_enter 63 100~
+if rand(80)
+	modhmv $n 03.3 6 12000001 
+	echoat $n ­ü§r¡A§A³Q·t³Bªº¾÷Ãö¹º¶Ë¤F¡I
+	if ispc($n)
+		echoaround $n $n³Q¾÷Ãö¹º¶Ë¤F¡C
+	else
+		echoaround $n $N³Q¾÷Ãö¹º¶Ë¤F¡C
+	endif
+endif
+if exitinfo($1) & 4
+  if wis($n) >= 13
+	echoat $n §Aµo²{ªFÃä¦³¤@¹DÂê¦íªºÂÂªù¡C
+	if int($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¥ÎÅ]ªkÅF¶}(knock east)¡C
+		break
+	endif
+	if dex($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼À¶}(knock east)¡C
+		break
+	endif
+	if str($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼²¶}(knock east)¡C
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n ¥B¸g¹L§Aªº¤ÀªR¡A³o¹Dªù«Ü®e©ö³Q[1;35mÅ]ªk[0m¯}Ãa¡C
+	endif
+  endif
+endif
+~
+>room_command knock east~
+  if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n §A¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	callout 1 echoat $n [1;35m§A¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	callout 1 echoaround $n [1;35m$n¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§AªºÅ]ªk¯à¶q¬½¬½¦aÅF¶}¤F³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9458 modrvt d3 == 1
+		callout 2 force 9458 echo ¦èÃäªºªù³QÅF¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n §A¸Õ¹Ï¼À¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¼À¶}³o¹Dªù......
+	if rand(70)
+		callout 1 echoat $n [1;37m§A¦¨¥\¦a±Nªù¼À¶}¡I[0m
+		callout 1 echoaround $n $n±Nªù¼À¶}¤F¡C
+		callout 1 modrvt d1 == 1
+		callout 1 force 9458 modrvt d3 == 1
+		callout 1 force 9458 echo ¦èÃäªºªù¦n¹³³Q¼À¶}¤F¡C
+	else
+		callout 1 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n §A°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	echoaround $n $n°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	callout 1 echoat $n [1;31m§A¶}©l©¹«e²r½Ä¡I[0m
+	callout 1 echoaround $n [1;31m$n¶}©l©¹«e²r½Ä¡I[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§A¥Î¤O¼²¶}³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9458 modrvt d3 == 1
+		callout 2 force 9458 echo ¦èÃäªºªù³Q¼²¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+~
+>room_defun cool~
+if int($n) >= 16
+	echoaround $n $nªº¶}ªùÅ]ªk¹ï³o¹Dªù³y¦¨¤F
+else
+	echoaround $n $nªº²r¤O¤@¼²¹ï³o¹Dªù³y¦¨¤F
+endif
+	echoaround $n .               [5;1;31m¤Æ  ¦¨  öÒ  ¯»[0m
+        echoaround $n .                    [5;1;31m¦Ç  ­¸  ´ó  ·À[0mªº¶Ë®`¡I
+	echo [1;37mªù³Q¥´¶}¤F¡I[0m
+~
+|
+S
+#9456
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹ªF¨«¡A¤]¥i¥H©¹«n¨«¡C
+~
+0 1|65536 1
+D1
+¦MÀI·t«Ñ~
+~
+0 -1 9457
+D2
+¦MÀI·t«Ñ~
+~
+0 -1 9455
+>room_enter 63 80~
+  c 'cause light' $n 15
+  c poison $n 10
+  echoat $n §A³Q·t³Bªº¬r®ð©Ò¶Ë¡I
+~
+|
+S
+#9457
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹«n¨«¡A¤]¥i¥H©¹¦è¨«¡C
+~
+0 1|65536 1
+D2
+¦MÀI·t«Ñ~
+~
+0 -1 9458
+D3
+¦MÀI·t«Ñ~
+~
+0 -1 9456
+>room_rand 50~
+  if pcnum($) > 0
+  	c 'cause critical' $r 25
+	if ispc($r)
+  		echo $r³Q·t³BªºÂY¤M©Ò¶Ë¡I
+  	else
+  		echo $R³Q·t³BªºÂY¤M©Ò¶Ë¡I
+  	endif
+  endif
+~
+|
+S
+#9458
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹¥_¨«¡A¤]¥i¥H©¹«n¨«¡C
+~
+0 1|65536 1
+D0
+¦MÀI·t«Ñ~
+~
+0 -1 9457
+D1
+¦MÀI·t«Ñ~
+door~
+7 -1 9465
+D2
+¦MÀI·t«Ñ~
+~
+0 -1 9459
+D3
+¦MÀI·t«Ñ~
+door~
+7 -1 9455
+>room_enter 15 100~
+if rand(80)
+	modhmv $n 03.7 15 12000001 
+	echoat $n ­ü§r¡A§A³Q·t³Bªº¾÷Ãö¹º¶Ë¤F¡I
+	if ispc($n)
+		echoaround $n $n³Q¾÷Ãö¹º¶Ë¤F¡C
+	else
+		echoaround $n $N³Q¾÷Ãö¹º¶Ë¤F¡C
+	endif
+endif
+if exitinfo($3) & 4
+  if wis($n) >= 13
+	echoat $n §Aµo²{¦èÃä¦³¤@¹DÂê¦íªºÂÂªù¡C
+	if int($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¥ÎÅ]ªkÅF¶}(knock west)¡C
+		rcall eastdoor $n
+		break
+	endif
+	if dex($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼À¶}(knock west)¡C
+		rcall eastdoor $n
+		break
+	endif
+	if str($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼²¶}(knock west)¡C
+		rcall eastdoor $n
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n ¥B¸g¹L§Aªº¤ÀªR¡A³o¹Dªù«Ü®e©ö³Q[1;35mÅ]ªk[0m¯}Ãa¡C
+	endif
+  endif
+endif
+~
+>room_command knock west~
+  if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n §A¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	callout 1 echoat $n [1;35m§A¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	callout 1 echoaround $n [1;35m$n¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§AªºÅ]ªk¯à¶q¬½¬½¦aÅF¶}¤F³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9455 modrvt d1 == 1
+		callout 2 force 9455 echo ªFÃäªºªù³QÅF¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n §A¸Õ¹Ï¼À¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¼À¶}³o¹Dªù......
+	if rand(70)
+		callout 1 echoat $n [1;37m§A¦¨¥\¦a±Nªù¼À¶}¡I[0m
+		callout 1 echoaround $n $n±Nªù¼À¶}¤F¡C
+		callout 1 modrvt d3 == 1
+		callout 1 force 9455 modrvt d1 == 1
+		callout 1 force 9455 echo ªFÃäªºªù³Q¼À¶}¤F¡I
+	else
+		callout 1 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n §A°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	echoaround $n $n°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	callout 1 echoat $n [1;31m§A¶}©l©¹«e²r½Ä¡I[0m
+	callout 1 echoaround $n [1;31m$n¶}©l©¹«e²r½Ä¡I[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§A¥Î¤O¼²¶}³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9455 modrvt d1 == 1
+		callout 2 force 9455 echo ªFÃäªºªù³Q¼²¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+~
+>room_command knock east~
+  if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n §A¸Õ¹Ï¼À¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¼À¶}³o¹Dªù......
+	if rand(70)
+		callout 1 echoat $n [1;37m§A¦¨¥\¦a±Nªù¼À¶}¡I[0m
+		callout 1 echoaround $n $n±Nªù¼À¶}¤F¡C
+		callout 1 modrvt d1 == 1
+		callout 1 force 9465 modrvt d3 == 1
+		callout 1 force 9465 echo ¦èÃäªºªù³Q¼À¶}¤F¡I
+	else
+		callout 1 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n §A¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	callout 1 echoat $n [1;35m§A¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	callout 1 echoaround $n [1;35m$n¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§AªºÅ]ªk¯à¶q¬½¬½¦aÅF¶}¤F³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9465 modrvt d3 == 1
+		callout 2 force 9465 echo ¦èÃäªºªù³QÅF¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n §A°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	echoaround $n $n°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	callout 1 echoat $n [1;31m§A¶}©l©¹«e²r½Ä¡I[0m
+	callout 1 echoaround $n [1;31m$n¶}©l©¹«e²r½Ä¡I[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§A¥Î¤O¼²¶}³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9465 modrvt d3 == 1
+		callout 2 force 9465 echo ¦èÃäªºªù³Q¼²¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+~
+>room_defun eastdoor~
+if exitinfo($1) & 4
+  if wis($n) >= 13
+	echoat $n §Aµo²{ªFÃä¦³¤@¹DÂê¦íªºÂÂªù¡C
+	if dex($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼À¶}(knock east)¡C
+		break
+	endif
+	if int($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¥ÎÅ]ªkÅF¶}(knock east)¡C
+		break
+	endif
+	if str($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼²¶}(knock east)¡C
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n ¥B¸g¹L§Aªº¤ÀªR¡A³o¹Dªù«Ü®e©ö³Q[1;33m¼À¶}[0m¡C
+	endif
+  endif
+endif
+~
+>room_defun cool~
+if int($n) >= 16
+	echoaround $n $nªº¶}ªùÅ]ªk¹ï³o¹Dªù³y¦¨¤F
+else
+	echoaround $n $nªº²r¤O¤@¼²¹ï³o¹Dªù³y¦¨¤F
+endif
+	echoaround $n .               [5;1;31m¤Æ  ¦¨  öÒ  ¯»[0m
+        echoaround $n .                   [5;1;31m¦Ç  ­¸  ´ó  ·À[0mªº¶Ë®`¡I
+	echo [1;37mªù³Q¥´¶}¤F¡I[0m
+~
+|
+S
+#9459
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹¥_¨«¡A¤]¥i¥H©¹¦è¨«¡C
+~
+0 1|65536 1
+D0
+¦MÀI·t«Ñ~
+~
+0 -1 9458
+D3
+¦MÀI·t«Ñ~
+~
+0 -1 9460
+>room_enter 63 80~
+	modhmv 23.8 15 00000000
+	echoat $n §A·PÄ±¨­¤Wªººë¤O¬y¥¢¤j¥b¡A¦ü¥G¬O·t«Ñªº[1;30m¶Â·tÅ]ªk[0m©Ò¦Ü¡I
+~
+|
+S
+#9460
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹ªF¨«¡A¤]¥i¥H©¹«n¨«¡C
+~
+0 1|65536 1
+D1
+¦MÀI·t«Ñ~
+~
+0 -1 9459
+D2
+¦MÀI·t«Ñ~
+~
+0 -1 9461
+>room_enter 15 75~
+	echoat $n »·¤è¶Ç¨Ó¤@ÁnºG¥s¡C	
+~
+>room_leave 15 60~
+	c curse $n 10
+~
+|
+S
+#9461
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹¥_¨«¡A¤]¥i¥H©¹ªF¨«¡C
+~
+0 1|65536 1
+D0
+¦MÀI·t«Ñ~
+~
+0 -1 9460
+D1
+¦MÀI·t«Ñ~
+~
+0 -1 9462
+>room_enter 15 80~
+ c 'chill touch' $n 10
+ echoat $n §A³Q¤@ªÑ­á®ð³òÂ¶¡I
+~
+|
+S
+#9462
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹ªF¨«¡A¤]¥i¥H©¹¦è¨«¡C
+~
+0 1|65536 1
+D1
+¦MÀI·t«Ñ~
+~
+0 -1 9463
+D3
+¦MÀI·t«Ñ~
+~
+0 -1 9461
+>room_enter 63 60~
+  modhmv all 03.2 3 00000000
+  if int($n) > 20
+  	echoat $n »·³B¶Ç¨Ó¤@°}¹ï¸Ü¡A§A¥uÅ¥²M·¡[1;30m¡u¦º......¡v[0m³o­Ó­µ¡C
+  else
+	echoat $n »·¤è¶Ç¨Ó¤@°}¼Ò½kªº¹ï¸Ü¡A¤£¹L§AÅ¥¤£²M·¡¡C
+  endif
+~
+|
+S
+#9463
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹¥_¨«¡A¤]¥i¥H©¹¦è¨«¡C
+~
+0 1|65536 1
+D0
+¦MÀI·t«Ñ~
+~
+0 -1 9464
+D3
+¦MÀI·t«Ñ~
+~
+0 -1 9462
+>room_enter 63 40~
+  c 'acid blast' $r 14
+  echoat $r §A³Q¬ð¦p¨ä¨Óªº¼â»Ä¼â¨ì¡I
+  echoaround $r $r³Q¤£©ú¨Ó·½ªº»Ä²G«I»k¡I
+~
+|
+S
+#9464
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹¥_¨«¡A¤]¥i¥H©¹«n¨«¡C
+~
+0 1|65536 1
+D0
+¦MÀI·t«Ñ~
+~
+0 -1 9465
+D2
+¦MÀI·t«Ñ~
+~
+0 -1 9463
+>room_enter 15 60~
+  echoat $n [1;30m·í§A¤@¶i¨Ó¡A¥|­±¤K¤è­¸¨Ó¦UºØ©_²§¶ÂÂÎ¡I[0m
+  if con($n) <= 13
+	c poison $n 5
+	echoat $n §A³Q°AÂÎ¥m«r¡A¦ü¥G¤¤¬r¤F¡I
+  	echoaround $n $n³Q°AÂÎ¥m«r¡A¦ü¥G¤¤¬r¤F¡I
+  	break
+  endif
+  if dex($n) <= 13
+  	c blind $n 5
+  	echoat $n ¶ÂÂÎªºÅé²G«I¤J§Aªº²´¤¤¡AÅý§A¤°»ò¤]¬Ý¤£¨ì¡I
+  	break
+  endif
+  if str($n) <= 13
+  	c 'cause serious' $n 15
+  	echoat $n °AÂÎ¨ë¬ï¤F§Aªº¥Ö½§¡A¦nµh¡I
+  endif
+~
+|
+S
+#9465
+¦MÀI·t«Ñ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹ªF¨«¡A¤]¥i¥H©¹«n¨«¡C
+~
+0 1|65536 1
+D1
+¦MÀI·t«ÑªFºÝ~
+~
+0 -1 9466
+D2
+¦MÀI·t«Ñ~
+~
+0 -1 9464
+D3
+¦MÀI·t«Ñ~
+door~
+7 -1 9458
+>room_enter 15 100~
+  if rand(80)
+	modhmv $n 03.7 15 12000001 
+	echoat $n ­ü§r¡A§A³Q·t³Bªº¾÷Ãö¹º¶Ë¤F¡I
+	if ispc($n)
+		echoaround $n $n³Q¾÷Ãö¹º¶Ë¤F¡C
+	else
+		echoaround $n $N³Q¾÷Ãö¹º¶Ë¤F¡C
+	endif
+  endif
+if exitinfo($3) & 4
+  if wis($n) >= 13
+	echoat $n §Aµo²{¦èÃä¦³¤@¹DÂê¦íªºÂÂªù¡C
+	if dex($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼À¶}(knock west)¡C
+		break
+	endif
+	if int($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¥ÎÅ]ªkÅF¶}(knock west)¡C
+		break
+	endif
+	if str($n) >= 16
+		echoat $n ¦ü¥G¥i¥H¼²¶}(knock west)¡C
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n ¥B¸g¹L§Aªº¤ÀªR¡A³o¹Dªù«Ü®e©ö³Q[1;35m¼À¶}[0m¡C
+	endif
+  endif
+endif
+~
+>room_command knock west~
+  if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n §A¸Õ¹Ï¼À¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¼À¶}³o¹Dªù......
+	if rand(70)
+		callout 1 echoat $n [1;37m§A¦¨¥\¦a±Nªù¼À¶}¡I[0m
+		callout 1 echoaround $n $n±Nªù¼À¶}¤F¡C
+		callout 1 modrvt d3 == 1
+		callout 1 force 9458 modrvt d1 == 1
+		callout 1 force 9458 echo ªFÃäªºªù³Q¼À¶}¤F¡I
+	else
+		callout 1 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n §A¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	echoaround $n $n¸Õ¹Ï¨Ï¥ÎÅ]ªkÅF¶}³o¹Dªù......
+	callout 1 echoat $n [1;35m§A¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	callout 1 echoaround $n [1;35m$n¤â¤W¶}©l»E¶°¤@¹D¯ÂºéªºÅ]ªk¯à¶q¡C[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§AªºÅ]ªk¯à¶q¬½¬½¦aÅF¶}¤F³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9458 modrvt d1 == 1
+		callout 2 force 9458 echo ªFÃäªºªù³QÅF¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n §A°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	echoaround $n $n°h«á¨â¤T¨B¡A·Ç³Æ¼²¶}³o¹Dªù......
+	callout 1 echoat $n [1;31m§A¶}©l©¹«e²r½Ä¡I[0m
+	callout 1 echoaround $n [1;31m$n¶}©l©¹«e²r½Ä¡I[0m
+	if rand(70)
+		callout 2 echoat $n [1;37m§A¥Î¤O¼²¶}³o¹Dªù¡I[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9458 modrvt d1 == 1
+		callout 2 force 9458 echo ªFÃäªºªù³Q¼²¶}¤F¡I
+	else
+		callout 2 echoat $n §A¥¢±Ñ¤F¡I
+	endif
+	break
+  endif
+~
+>room_defun cool~
+if int($n) >= 16
+	echoaround $n $nªº¶}ªùÅ]ªk¹ï³o¹Dªù³y¦¨¤F
+else
+	echoaround $n $nªº²r¤O¤@¼²¹ï³o¹Dªù³y¦¨¤F
+endif
+	echoaround $n .               [5;1;31m¤Æ  ¦¨  öÒ  ¯»[0m
+        echoaround $n .                   [5;1;31m¦Ç  ­¸  ´ó  ·À[0mªº¶Ë®`¡I
+	echo [1;37mªù³Q¥´¶}¤F¡I[0m
+~
+|
+S
+#9466
+¦MÀI·t«ÑªFºÝ~
+    ³o¬O¤@³B¶Â·t¡A¯U¤pªº«Ñ¤l¡A§A¥i¥H»D¨ì¤@ªÑ¦MÀIªº®ðª^¡C
+§A¥i¥H©¹ªF¨«¡A¶i¤J¶ÂÀ°°Ï°ì¡A¤]¥i¥H©¹¦è¨«¡A²`¤J·t«Ñ¡C
+~
+0 1|65536 1
+D1
+³±·tµó¹D¤J¤f~
+~
+0 -1 2164
+D3
+¦MÀI·t«Ñ~
+~
+0 -1 9465
+>room_enter 15 100~
+  echoat $n »·¤è¶Ç¨ÓªÅ¬}©I¸¹ªº°­»ï¡C
+  if rand(50)
+  	if primeattr($n) == 3
+  	or primeattr($n) == 4
+		c mute $n 10
+ 		echoat $n §AÅ¥¨ì°­»ï¤¤ÄÆÀúµÛ¤@¥y¸Ü¡G¡u¦º§a......¡v
+ 	endif
+  endif
+~
+|
+S
+#0
+
+
+#RESETS
+* quest mob
+M 0 9400 1 9416
+M 0 9401 1 9420
+M 0 9402 1 9414
+M 0 9403 1 9423
+M 0 9404 1 9421
+M 0 9405 1 9437
+M 0 9406 1 9427
+M 0 9407 1 9435
+*normal mob
+M 0 9408 3 9400
+M 0 9409 3 9400
+M 0 9410 1 9439
+E 0 3022 0 16
+M 0 9410 1 9438
+E 0 3022 0 16
+M 0 9410 1 9405
+E 0 3022 0 16
+M 0 9410 1 9434
+M 0 9411 1 9439
+G 0 3050 0
+G 0 3051 0
+M 0 9412 3 9406
+M 0 9412 3 9429
+M 0 9413 2 9402
+M 0 9413 2 9410
+M 0 9413 1 9409
+*guard
+M 0 9414 2 9403
+E 0 3022 0 16
+E 0 3066 0 5
+M 0 9414 2 9408
+E 0 3022 0 16
+E 0 3066 0 5
+M 0 9415 2 9407
+E 0 3021 0 16
+*normal mob
+M 0 9416 1 9444
+M 0 9417 1 9445
+M 0 9418 1 9446
+M 0 9419 1 9447
+M 0 9420 1 9448
+M 0 9421 1 9449
+M 0 9422 2 9417
+E 0 3021 0 18
+E 0 3022 0 16
+E 0 3072 0 5
+M 0 9423 2 9451
+E 0 3022 0 16
+E 0 3072 0 5
+M 0 9425 1 9421
+G 0 3000 0
+G 0 3002 0
+M 0 9426 1 9441
+M 0 9429 1 9454
+E 0 3022 0 16
+*goods
+O 0 9430 0 9454
+*doors
+D 0 9406 0 1
+D 0 9423 2 1
+D 0 9421 5 1
+D 0 9422 4 1
+D 0 9438 5 1
+D 0 9440 4 1
+S
+
+#SHOPS
+9411 22 0 0 0 0 100 70 0 23
+9425 17 0 0 0 0 100 70 0 23
+0
+
+#SPECIALS
+M 9413 spec_fido
+S
+
+
+#$

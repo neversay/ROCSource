@@ -1,0 +1,7332 @@
+#AREADATA
+Name        º¿©Ô°Ç«°~
+Identity    malathar~
+Builders    Yaegar~
+Translator  Feena~
+Modifier    Feena~
+VNUMs         80100 80299
+Security    1
+Recall      4580
+Death       401
+F_toggle    65536|1048576
+End
+
+
+#MOBILES
+#80100
+duke ruler stalatharata-npc~
+¥v¶ð©Ô¯Á©Ô¶ð¤½Àï(Duke Stalatharata)~
+º¿©Ô°Ç«°»â¦aªº²ÎªvªÌ¡A¥v¶ð©Ô¯Á©Ô¶ð¤½Àï(Duke Stalatharata)¯¸¦b³o¸Ì¡C
+~
+³o¦ì¤½Àï¬O¤@¦W¥Ö½§¥Õ´·ªº¤¤¦~ºëÆF¡A¦³µÛ¦¸µ¥ºØ±Ú©Ò¨S¦³ªº·Å¤åÀu¶®¡A¤@ªÑ¥i
+¨£ªºÆF®ð³òÂ¶¦b¥Lªº¨­Ãä¡A§A¹ï¥L°ª¶Qªº­·ªö·P¨ì·q¬È¡C
+~
+1|2|64|2048|4096|8192|262144 4|8|32|128|512|524288 1000 S
+60 20000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1|2|4|8
+P 4|8|256|2048|1048576|2097152|4194304|8388608|67108864|1073741824|2147483648
+S 18 125
+S 19 125
+S 23 -50
+S 24 -50
+S 39 -400
+S 40 25
+S 41 50
+S 42 50
+S 43 75
+S 44 75
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+group form
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell ¥i´cªºº¿©Ô°Ç¤§¼Ä¡I§Ú­nÅX³v§A¡I
+        mpkill $n
+else
+        if ispc($n)
+                tell $n §Ú¥Hº¿©Ô°Ç²ÎªvªÌ¤§¦W¡AÅwªï§A»YÁ{¦¹¦a¡C
+                hello $n
+        endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100029
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 30
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        nod $n
+                        mpcallout 1 tell $n §Aªº¨Æ§Ú¤w¸gÅ¥»¡¤F¡A¦b¦¹§Ú±o¥ý·PÁÂ§A¨Ó¦^©bªi¡C
+                        mpcallout 2 tell $n ¯àÅý¦V¨Ó»P§Ú­Ìº¿©Ô°Ç¤£©Mªº·R¼ä±öµá¦P·N©M½Í¡A§Aªº½T¬O³Ç¥Xªº¤H¤~¡C
+                        mpcallout 3 tell $n ¤£¹L¤´µM¦³ÂI±ß¤F¡A¶Â·t¶Õ¤O¤w¸g±µªñ¡A§ð¹L¨Ó¥u¬O¿ð¦­ªº¨Æ¡C
+                        mpcallout 4 tell $n §A¦pªG­nÂ÷¶}¦¹¦aªº¸Ü³Ì¦n§ÖÂI¡Aµ¥¨ì¼Ä¤H¶i¥Ç®É¦A°k´N¤Ó±ß¤F¡C
+                        mpcallout 5 tell $n ¦pªG§A­n¥X«°¡A¥ý¸ò¶ø°Ç¶ð¼»©Ô½T»{¤@¤U¡A§K±o¸I¤W¼Ä¤H¡C
+                        mpcallout 6 wave $n
+                        mpcallout 6 mpdel_qmark self malathar_talking
+                endif
+        else
+                tell $n §Ú¥Hº¿©Ô°Ç²ÎªvªÌ¤§¦W¡AÅwªï§A»YÁ{¦¹¦a¡C
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog report~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100042
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 43
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        say ³o¯u¬O¤Ó¥O¤H·N¥~¤F......
+                        gasp
+                        mpcallout 1 tell $n §Úª¾¹D¤F¡A§Aªº±¡³ø«Ü¦³»ù­È¡AÁÂÁÂ§Aªº¨ó§U¡C
+                        mpcallout 2 tell $n §Ú·|¬£¤H¥h§â¾ã¥ó¨Æ±¡½Õ¬d²M·¡ªº¡A©ñ¤ß§a¡I
+                        mpcallout 3 mpgold $n 5000000
+                        mpcallout 4 wave $n
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>give_prog 80190~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100042
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 43
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpjunk $o
+                        ? $n
+                        mpcallout 1 mpecho $IÂ½¶}§ðÀ»­pµe®Ñ¬Ý¤F¬Ý¡A¨Ã§ä¨Ó¤@¦WÂ½Ä¶©x¡C
+                        mpcallout 3 mpecho Â½Ä¶©x±N¤º®e¥¿½TµL»~¦aÂ½Ä¶¥X¨Ó¡C
+                        mpcallout 5 mpecho ¨S¦h¤[¡A$IªºÁy¦âÅÜ¤F¡C
+                       mpcallout 6 say ¼Ä¤H³ºµM¤w¸g§G¸p³o»ò¤[¤F¡A§Ú­Ì«o¨S¦³§´µ½¨¾³Æ¡A¯u¬O¥¢µ¦¡I
+                        mpcallout 7 tell $n °µ±o¦n¡A¤£·\¬O¦«º¸»Pº~®¦¥L­Ì·¥¤O±À¯òªº¤H§÷¡AªGµM¦³¤@®M¡C
+                        if resp($n) < 70
+                        or is_qmark($n) != enable_level_41
+                        or is_qmark($n) != sandrock_questmark 100255
+                        or is_qmark($n) !& sealevil_quest 100002
+                        or is_qmark($n) != Ageemephy_questmark 100511
+                        or is_qmark($n) != malathar_quest 200045
+                                mpcallout 8 tell $n ¸g¹L³o¦¸±Ð°V¡A§Ú­Ì¥H«á·|§ó¥[´£°ªÄµÄ±¡A¤£·|¦A³Q¼Ä¤H±o³x¤F¡C
+                                mpcallout 9 tell $n §Ú¥²¶·¦n¦n¹SÁÂ§A¡A«iªÌ¡C
+                                mpcallout 10 mpcall malathar_hiddenpower $n
+                                mpcallout 10 mpexp $n 30000
+                                mpcallout 10 mpskillexp $n 25000
+                                mpcallout 10 mpresp $n 3
+                                mpcallout 11 tell $n ¦A¨£¤F¡I«iªÌ¡I
+                                mpcallout 12 wave $n
+                        else
+                                mpcallout 8 tell $n ¸g¹L³o¦¸±Ð°V¡A§Ú­Ì¥H«á·|§ó¥[´£°ªÄµÄ±¡A¤£·|¦A³Q¼Ä¤H±o³x¤F¡C
+                                mpcallout 9 mpecho $I±q¤@®Çªº¥Õª÷¬Á¼þÂd¤¤¨ú¥X¤@­Ó¸ËµÛ§Ù«üªººë½o¤ì²°¡C
+                                mpcallout 10 tell $n ½Ð¦¬¤U³oªT¥NªíºaÄ£»P­^«iªº§Ù«ü¡A³o¬O¯u¥¿«iªÌªº¶H¼x¡I
+                                mpcallout 11 tell $n §Aªº¦W¦r±N·|¥Ã»·¯d¦b¥»«°ªº¬ö©À¸O¤§¤W¡I
+                                mpcallout 12 mpechoat $n $I±N§Ù«ü¤p¤ßÁlÁl¦a¥æ¥I¨ì§A¤â¤¤¡C
+                                mpcallout 13 mpcall malathar_hiddenpower $n
+                                mpcallout 13 mpexp $n 50000
+                                mpcallout 13 mpskillexp $n 35000
+                                mpcallout 13 mpresp $n 3
+                                mpcallout 13 mpoload 80189 $n 36 target
+                                mpcallout 14 tell $n ¦A¨£¤F¡I«iªÌ¡I
+                                mpcallout 15 wave $n
+                        endif
+                        mpcallout 14 mpdel_qmark self malathar_talking
+                endif
+        else
+                ? $n
+                give $o $n
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+        give $o $n
+endif
+~
+>defun_prog malathar_hiddenpower~
+if is_qmark($n) == max_skill_exp
+        mpmod_qmark $n max_skill_exp v0 + 10
+else
+        mpadd_qmark $n max_skill_exp -1 10 0 0 0 1
+endif
+mpechoat $n §A·P¨ì¦Û¨­¼ç¦bªº¤O¶qÄ±¿ô¤F¡I
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        say ­·°Ú¡A§U§Ú¯»¸H¼Ä¤H¨­¤Wªº¨¾Å@¡I
+        mpecho $I¥l¨Ó¤@°}«I²¤ªº±j­·¡I
+        cast 2 'crushing hand' $r
+        mpnowait
+        cast 'double heal'
+        mpnowait
+        cast 'double heal'
+        mpnowait
+        cast 'double heal'
+        mpnowait
+else
+        if rand(33)
+                say µô¨M¤§¼C¡I
+                mpecho $I°ªÁ|ªZ¾¹¡A¨Ï¥X«Â¤O±j¤jªº¼Cªk¡I
+                perform empslash
+                mpnowait
+        else
+                if rand(50)
+                        say ¦B°Ú¡A¼¹µõ²´«eªº¼Ä¤H¡I
+                        mpecho ªÅ®ð¤¤ªº¤ô¥÷¦b¤@Àþ¶¡¾®©T¦¨°í¦B¡I
+                        icecore
+                        mpnowait
+                else
+                        mpechoat $n ·í§A¥¿¦£µÛ»P$I¾Ô°«®É¡A¤@­Ó°­°­¯©¯©ªº³Ã¥ë©¿µM¦Û­I«áÑ¶¤F§A¤@¤M¡I
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+cast armageddon $n
+mpnowait
+~
+|
+#80101
+duchess-npc wife destelandara-npc~
+¨fµ·¯SÄõÌH©Ô¤½Àï¤Ò¤H(Duchess Destelandara)~
+º¿©Ô°Ç«°¤½Àïªº¤Ò¤H¨fµ·¯SÄõÌH©Ô(Duchess Destelandara)¶ÆºC¦a¬ÝµÛ§A¡C
+~
+³o¦ì¤½Àï¤Ò¤H¬O¤@¦W¬ü±o¹L¤õ¡B¥Ö½§¥Õ´·ªººëÆF¡A¦ý«o¦³µÛ©M¬ü»ª¤£·f°tªº¶ÆºC
+­Ó©Ê¡C¦o¦ü¥G¹ï§Aªº¨ì¨Óµy·P¿³½ì¡A¦ý¦o¨º¥­ÀRµLªiªºÁy¤W«o³sÂI¯º®e³£¨S¦³¡C
+°£¦¹¤§¥~¡A¦o¦ü¥G¤]»{¬°§AÀ³¸Ó¹ï¦oÁ¾¨õ¦Ó¥B©^©Ó¡A¤]³\§A³Ì¦nÁù­Ó°`......
+~
+1|2|64|1048576 4|8|128|512|524288|68719476736 1000 S
+58 12000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1|2
+P 4|8|64|1048576|2097152|4194304|8388608|67108864|1073741824|2147483648
+S 17 -1000
+S 23 -35
+S 35 -35
+S 39 -500
+S 40 40
+S 42 150
+S 44 150
+S 45 300
+S 46 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+group form
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell µLÂ§ªº´c®{¡I§A¬O«ç»ò¶i¨Óªº¡I
+        mpkill $n
+else
+        if ispc($n)
+                mpechoat $n $I²H²H¦a±æ¤F§A¤@²´¡Aªí±¡¤@ÂI¤]¨SÅÜ¡C
+        endif
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        say ¦B®Vªº§j®§¡I
+        mpecho $I±N¥k¤âÁ|¨ì¼LÃä¡A§j¥X¦B´Hªº®ð®§¡I
+        cast 'chill touch' $r
+        mpnowait
+        cast 'chill touch' $r
+        mpnowait
+        cast 'chill touch' $r
+        mpnowait
+else
+        if rand(33)
+                say ¹qÀ»¤§Âñ¡I
+                mpecho «C¦âªº°{¹q´Â§A¼A¨Ó¡I
+                cast 2 'call lightning'
+                mpnowait
+        else
+                if rand(50)
+                        say Às¤§©H­ý¡I
+                        mpecho $I©ß¥X¼ÆªT«Â¤O±j¤jªº¯à·½¼u¡I
+                        cast 2 powerball $r
+                        mpnowait
+                        cast 2 powerball $r
+                        mpnowait
+                else
+                        mpechoat $n ·í§A¥¿¦£µÛ»P$I¾Ô°«®É¡A¤@­Ó°­°­¯©¯©ªº³Ã¥ë©¿µM¦Û­I«áÑ¶¤F§A¤@¤M¡I
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80102
+archmage mage tuo-npc~
+¤jªk®v¡E¦«º¸(Archmage Tuo)~
+¤½Àï©¾¸Ûªº¥bºëÆFÅU°Ý¡A¤jªk®v¦«º¸(Archmage Tuo)¯¸¦b³o¸Ì¡C
+~
+¾¨ºÞ¥L¬O²V¦å¨à¡]¥b¤H¥bºëÆF¡^¡A¤jªk®v¦«º¸¦b³o­Ó¦a¤è¤´µM³Æ¨ü²³¤H´L·q¡C¥L
+¬O­Ó¦³ÂI¦Ñªº¨k¤H¡A¤£¹L¥L¤´µM¯à±N¥Lªº¯à¤O±±¨î±o«Ü¦n¡A¦Ó¥B¥LªºÅ]ªk¦­¤w¸g
+Äl¤õ¯Â«C¡A¦pªG§A¹B®ð¦nªº¸Ü¡A¥L¤]³\·|ªáÂI®É¶¡¶Ç±Âµ¹§A¤@¨Çª¾ÃÑ¡C
+~
+1|64|512|1024 8|16|128|512|1048576|134217728 1000 S
+56 15000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Half-elf~
+C 2
+P 1|2|8|64|128|1024|1048576|2097152|4194304|8388608|67108864|268435456|2147483648
+S 3 5
+S 4 5
+S 23 -100
+S 24 -100
+S 30 -125
+S 39 -250
+S 40 35
+S 42 1000
+S 44 50
+S 46 1000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>entry_greet_prog 100~
+if is_qmark($r) == malathar_enemy
+	yell §A³o­Ó´c´Ò³ºµMÁÙ´±¥X²{¦b³o¸Ì¡I
+	mpkill $r
+	cast curse $r
+	mpnowait
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell §A³o­Ó´c´Ò³ºµMÁÙ´±¥X²{¦b³o¸Ì¡I
+        mpkill $n
+        cast curse $n
+        mpnowait
+else
+        if is_qmark($n) == malathar_quest 100038
+                if is_qmark($n) == malathar_quest_divine
+                        mpmod_qmark $n malathar_quest v0 = 39
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        tell $n ³á¡A¬O§A°Ú¡A¨Ó±o¥¿¦n¡C
+                        mpcallout 1 hmm
+                        mpcallout 2 tell $n ¬Ý°_¨Ó§A¤w¸g±o¨ì¤F¥L­Ì©Ò¿×ªº¯«¤O¥[Å@¡A¦³¨S¦³¥Î­Ë¬O¥t¤@¦^¨Æ¡C
+                        mpcallout 3 tell $n ¥ý¤£´£³o­Ó¡A¤§«e¦b§A¥h·R¼ä±öµáªº®É­Ô......
+                        mpcallout 4 mpecho $I°±¤F¤@¤U¡A¦ü¥G¦³ÂI¬°Ãøªº¼Ë¤l¡C
+                        mpcallout 5 tell $n ®õ´µ¦«©Ô¯S¨Ó§ä¹L§Ú¡A¥L¦ü¥G·Q¨£§A¤@­±¡C
+                        mpcallout 6 tell $n ¤§«e¥L¤@ª½¤Ï¹ï¾a¥~¦a¤Hªº¤O¶q»P´cÅ]¹ï§Ü¡A¥LÄ±±o³o¼Ë¦³°dº¿©Ô°Çªº¥úºa¾ú¥v¡C
+                        mpcallout 7 tell $n ³o¦¸¥L§ä§A¥i¯à¤]¤£·|¦³¤°»ò¦n¨Æ¡A¤£¹L§AÁÙ¬O¥h¨£¥L¤@­±§a¡C
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                else
+                        ponder $n
+                        tell $n ÁÙ¨S±o¨ì¯«¤Oªº¥[Å@¶Ü¡H¦~»´¤H¡H
+                endif
+        else
+                if ispc($n)
+                        tell $n ¦~»´¤H¡A§A¦n°Ú¡C
+                        nod $n
+                endif
+        endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100033
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 34
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        tell $n ³á¡A¬O§A°Ú¡A¨Ó±o¯u¬O®É­Ô¡C
+                        mpcallout 1 mpecho $I¦n¹³¦b«ä¦Ò¤°»ò¨Æªº¼Ë¤l¡C
+                        mpcallout 2 tell $n §A¤]¬Ý¨£¤F¡A¤W¦¸ªº´cÅ]¤h§L¥u¬O¼Ä¤Hªº¥ý¾W³¡¶¤¡C
+                        mpcallout 3 tell $n «Ü¿ò¾Ñªº¬O......§Ú­xªº¾Ô¤h­Ì¦b¨º³õ¾Ô°«¤¤§é·lºG­«¡C
+                        mpcallout 4 tell $n ·R¼ä±öµá¨ºÃäÁöµM¤]¬£¥X¤F´©§L¡A¤£¹L®ÄªG¤]«Ü¦³­­¡C
+                        mpcallout 5 tell $n µM¦Ó¡A¥L­Ì¦b¾Ô°«µ²§ô«á¶Ç¨Ó°T®§¡A­n·Ç³Æ¨Ï¥Î¯«ªº¤O¶q»P¼Ä­x¹ï§Ü¡C
+                        mpcallout 6 tell $n ­n¬O´cÅ]¦A¦¸¤J«I¡A¥L­Ì´N­n¬£¥X¨ü¨ì¯«¤O¥[Å@ªº´©§L¡C
+                        mpcallout 7 ponder
+                        mpcallout 8 tell $n ÁöµM¤£ª¾¹D³o­Ó±¡³ø¬O¯u¬O°²¡A¤£¹LÁ`¤ñ§ô¤âµLµ¦­n¦n¡C
+                        mpcallout 9 tell $n ¥t¥~¡A¹ï¤è¤]§Æ±æ§A¤@¦P¥h±µ¨ü¯«¤Oªº¥[Å@¡C
+                        mpcallout 9 mpechoaround $n §Aµo²{$Nªºªí±¡¦n¹³¦³ÂI»øµw¡C
+                        mpcallout 10 tell $n §A¥h¨£¥L­Ìªº§Å¤k¡A´N»¡¬O§Ú«ô°U§A¥hªº¡C
+                        mpcallout 10 mpdel_qmark self malathar_talking
+                endif
+        else
+                tell $n ¦~»´¤H¡A§A¦n°Ú¡C
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog report~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100011
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 12
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpmod_qmark $n malathar_quest v2 = 12
+                        mpforce $n follow $i
+                        mpechoat $n §A±N¥ý«eµo¥Íªº¨Æ§i¶D¤F$I......
+                        mpcallout 1 hmm
+                        mpcallout 2 tell $n ¨S·Q¨ì¼Ä¤H³ºµM¬£¤F¨ã¦³ªþÅé¯à¤Oªº¶¡¿Ò¶i¨Ó¡I§Ú³ºµM¨Sµo²{¡I
+                        mpcallout 3 tell $n ¯u¬O¤ÓÁV¿|¤F¡A§Ú¥²¶·§ä®É¶¡»P¤½Àï»Õ¤U½Í½Í¤~¦æ¡C
+                        mpcallout 4 tell $n ÁöµM§Ú¤£»{ÃÑ§A¡A¤£¹LÁÂÁÂ§Aªº±¡³ø¡C
+                        mpcallout 5 mpexp $n 25000
+                        mpcallout 6 mpechoat $n Á{¨««e¡A§AÅ¥¨ì$Iªº¦Û¨¥¦Û»y......
+                        mpcallout 7 mpechoat $n ¡u³o¦¸»¡¤°»ò¤@©w­n¥L¦P·N©M·R¼ä±öµá©M½Í¤~¦æ......¡v
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog Ageemephy~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100012
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 13
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        mpecho $IÅS¥X¤@°Æ«Ü¶Ë¸£µ¬ªºªí±¡¡C
+                        mpcallout 1 tell $n ·R¼ä±öµá´N¬O§Ú­Ìº¿©Ô°Ç«n¤è®ü¬v¤Wªº¤@­Ó¤p®q¡A¬O¿W¥ßªº¦Ûªv°Ï°ì¡C
+                        mpcallout 2 tell $n ¨º­Ó¦a¤èªº¤H­Ì¦V¨Ó«O«ùµÛ¹ï¥~«Ê³¬ªººA«×¡A«Ü¤Ö¥D°Ê»P¥~¬É±µÄ²¡C
+                        mpcallout 3 tell $n §Ú­Ì»P¥L­Ì¥»¨Ó¬O¬Û¦wµL¨Æ¡A¤£¹L°Ú......
+                        mpcallout 4 glare
+                        mpcallout 5 tell $n ¦n´X¦~«e¡A§Ú­Ì©M¥L­Ì°_¤Fª§°õ¡A«á¨Ó¨Æ±¡¾x¤j¤F¡AÂù¤è´N¶}©l§N¾Ô¡C
+                        mpcallout 6 tell $n §Ú­Ì»P¥L­Ì¬O®B¤`¾¦´HªºÃö«Y¡A¬Û«H¥L­Ì¤]¦³¤HÁA¸Ñ³o¤@ÂI¡C
+                        mpcallout 7 tell $n ¥i¬O¤½Àï»Õ¤U«o¤£Ä@·N©Ó»{·í¦~ªº¿ù»~¡A¦Ó¹ï¤èªº»â¾É¤H¤]¤@¼Ë¡C
+                        mpcallout 8 tell $n ¦Ó²{¦b·t¶Â¥D®_ªº¤ö¤ú¤w¸g¶i¥Ç¨ì³o¤@±a¤F¡A§Ú¾á¤ß¼Ä¤H·|¤jÁ|¤J«I¡C
+                        mpcallout 9 tell $n ¤@¥¹º¿©Ô°Ç¤£©¯²_³´¡A¤U¤@­Ó´N½ü¨ì·R¼ä±öµá¤F¡C
+                        mpcallout 10 tell $n ´Nºâ¤£²_³´¡A±o¤£¨ì·R¼ä±öµá´©§Uªºº¿©Ô°Ç®£©È¤]±o©Ó¨ü¥¨¤jªº¥´À»¡C
+                        mpcallout 11 tell $n ¦]¦¹¡A§Ú»¡¤°»ò¤@©w­n³]ªk»¡ªA¤½ÀïÂIÀYµªÀ³»P¥L­Ì©M½Í¡I
+                        mpcallout 12 tell $n ¦Ü¤Ö§Ú­Ì±o¥ýªí²{¥X¸Û·N¡A§_«h¤°»ò³£¤£¥Î½Í¤F......
+                        mpcallout 13 mpecho »¡µÛ¡A$I´ÂµÛ¤½Àïªº®c·µ¨«¥h¤F......
+                        mpcallout 14 mpgoto 80187
+                        mpcallout 14 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog crystal~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100020
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 21
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        mpechoat $n §A±N¯ô®RµX¶}¥X¨Óªº±ø¥ó¤@¦r¤£º|¦a§i¶D¤F$I¡C
+                        mpcallout 1 ponder
+                        mpcallout 2 tell $n ³o­Ó±ø¥ó­ËÁÙ¤£¹L¥÷¡A¥i¬O¨ºªT¤ô´¹¤w¸g°e¥h¬ã¨s¤F¡C
+                        mpcallout 3 tell $n ¨S¿ìªk¡A®³³o­Ó¥h§a......
+                        mpcallout 4 mpechoat $n $I±N³ÈÀw¤ô´¹ªº¸H¤ù§O¦b§Aªº¦çªA¤W¡C
+                        mpcallout 5 tell $n ³o¬O¥Î§ÚªºÅ]¤O©T©wªº¡A¤@¯ë¤èªk®³¤£¤U¨Ó¡C
+                        mpcallout 6 tell $n §A¥h¦V¹ï¤è³ø¤W§Úªº¦W¦r´N¥i¥H¤F¡A§Ö¥h§a¡I
+                        mpcallout 6 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>give_prog 80178~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100011
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 12
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpmod_qmark $n malathar_quest v2 = 12
+                        mpforce $n follow $i
+                        tell $n °Ú¡A§Aªº¨Æ§ÚÅ¥»¡¤F¡A°µ±o¯uº}«G¡C
+                        mpcallout 1 tell $n ¤£¹L¨S·Q¨ì¼Ä¤H·|¬£¶¡¿Ò«e¨Ó¡A¬Æ¦Üªþ¨­¦b¤u·|·|ªø¨­¤W¡C
+                        mpcallout 2 tell $n ¬Ý°_¨Ó¡A·t¶Â¶Õ¤O·Q¶i¥Ç¦¹¦aªº·N¹Ï¤w¸g«Ü©úÅã¤F¡C
+                        mpcallout 3 worry
+                        mpcallout 4 tell $n §Ú¥²¶·©M¤½Àï»Õ¤U½Í½Í¤~¦æ¡A§A¨¯­W¤F¡AÁÂÁÂ§AªºÀ°¦£¡C
+                        mpcallout 5 mpresp $n 2
+                        mpcallout 5 mpexp $n 20000
+                        mpcallout 5 mpskillexp $n 15000
+                        mpcallout 6 mpechoat $n Á{¨««e¡A§AÅ¥¨ì$Iªº¦Û¨¥¦Û»y......
+                        mpcallout 7 mpechoat $n ¡uªGµMÁÙ¬O»Ý­n·R¼ä±öµáªº¤O¶q¤~¦æ­þ......¡v
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                endif
+        else
+                say ³á¡A³o¯u¬O¤£±o¤F¡A§Ú±o¦n¦n¬ã¨s¬ã¨s¡I
+                mpgold $n 300000
+        endif
+        mpjunk $o
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+        give $o $n
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        say °ªÁ|µÛ¸t¤§¤õ¬²ªº¤K¦ì¨Ï®{¡A±NµI¿N§Aªº¨­Âß¡I
+        mpecho $I¤@¤f®ð¥l¨Ó¤K¹D¸t¤õ¡I
+        cast 2 flamestrike $n
+        mpnowait
+        cast 2 flamestrike $r
+        mpnowait
+        cast 2 flamestrike $n
+        mpnowait
+        cast 2 flamestrike $r
+        mpnowait
+else
+        if rand(33)
+                say «i²rªº¾Ô¯«­þ¡A½ç¤©§^¯}¼Ä¤§ÃÙºq¡I
+                mpecho ¤@ªÑ¥O¤H¤Ï­Gªº®ð®§ª½¼³¦Ó¨Ó¡I
+                cast 2 'gas breath'
+                mpnowait
+        else
+                if rand(50)
+                        yell You¡ã¡ãCan Not Pass¡ã¡ã!!
+                        mpecho $I©I³ÛµÛ¸T§Òªº©G¤å¡A¨Ï¥X¤F¦Û¨­³Ì±jªºÅ]ªk¡I
+                        cast 2 'fulgurant dance'
+                        mpnowait
+                else
+                        mpechoat $n ·í§A¥¿¦£µÛ»P$I¾Ô°«®É¡A¤@­Ó°­°­¯©¯©ªº³Ã¥ë©¿µM¦Û­I«áÑ¶¤F§A¤@¤M¡I
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80103
+priest lallinthenera~
+¤j²½¥q¡E©ÔªL§Æ©Ô(High Priest Lallinthera)~
+¤j²½¥q©ÔªL§Æ©Ô(High Priest Lallinthera)¯¸¦b§Aªº­±«e¡C
+~
+³o¦W¿Ë¤Áªº¦~ªøºëÆF¦¨¬°ºëÆF¤§¯«¦bº¿©Ô°Ç»â¦aªºª½±µ¥Nªí¡A¤w¸g¦³¼Æ¦Ê¦~ªº¾ú
+¥v¤F¡C¥Lªº´¼¼z¡A¥H¤Î¥L¦b¥e¬P¾Ç»PªvÀø¤è­±ªºª¾ÃÑ§ó¬OµL¤H¯à¥X¨ä¥k¡A¤]³\¥L
+·|´À§AªvÀø¡C
+~
+1|2|64|2048|1048576 4|8|32|128|512|524288|549755813888 1000 S
+56 15000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 2
+P 1|2|8|64|128|1024|1048576|2097152|4194304|8388608|67108864|268435456|2147483648
+S 3 5
+S 4 5
+S 23 -100
+S 24 -100
+S 30 -125
+S 39 -250
+S 40 35
+S 42 1000
+S 44 50
+S 46 1000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell °Z¦³¦¹²z¡A³ºµM¦³¼É®{´±¦b³o¸Ì¸v­h¡I
+        mpkill $n
+else
+        if ispc($n)
+                tell $n §A¦n¡A½Ð°Ý¦³¤°»ò«ü±Ð¶Ü¡H
+                nod $n
+        endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100003
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 4
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n §A¦n¡A¥~¨Óªº®È«È......¤£¡A©Î³\¸ÓºÙ©I§A¬°«i¤h¡C
+                        mpcallout 1 tell $n Å¥»¡§A¥ý«e¦b«°¥~¸I¨ì¤F¤@¸s¨¸´c¥Íª«¡A¬O¶Ü¡H
+                        mpcallout 2 mpforce $n nod
+                        mpcallout 3 sigh
+                        mpcallout 4 tell $n ªGµM¨Ó¤F¡A·t¶Â¶Õ¤O(darkforce)ªºÅ]¤ö²×©ó¤]¦ù©¹³o­Ó°ê®a¤F¡C
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        else
+                tell $n §A¦n¡A½Ð°Ý¦³¤°»ò«ü±Ð¶Ü¡H
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog darkforce~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100004
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 5
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n §Ú·Q§AÀ³¸ÓÅ¥¹L©Î¬O¸I¹L·¬¬õ§øªº¥dº¿´µ¡A¥H¤Î¨ä¥L¦a¤èªº¨¸´c¶Õ¤O¡C
+                        mpcallout 1 tell $n ¦P¼Ëªº¡A§AÀ³¸Ó¤]Å¥¹L¥L­Ì¤f¤¤©Ò¿×ªº¡u·t¶Â¥D®_¡v¡C
+                        mpcallout 2 tell $n ÁöµM©|¥¼ÃÒ¹ê¡A¤£¹L®Ú¾Ú§Ú¥e¤Rªºµ²ªG¡A³o¦¸½ü¨ì§Ú­Ìº¿©Ô°Ç¤F¡C
+                        mpcallout 3 tell $n §Ú»{¬°¨º¨Ç¤p´c°­¥¸­Ô´N¬O¥L­Ìªº¥ý»º°»¹î³¡¶¤¡C
+                        mpcallout 4 tell $n ¤@¦ý¼Ä­x¤jÁ|¤J«I¡A§Ú­Ì²{¦bªºª¬ªp(conditions)¥i¯à«ÜÃøÀ³¥I¥L­Ì¡C
+                        mpcallout 5 sigh
+                        mpcallout 5 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog conditions~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100005
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 6
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        glare
+                        mpcallout 1 ponder
+                        mpcallout 2 sigh
+                        mpcallout 3 tell $n ÁöµM§Ú­Ì«°¸Ìªí­±¤W¬Ý°_¨Ó¨S¤°»ò¡A¦ý¬O......
+                        mpcallout 4 tell $n «e°}¤l«°¤º¬Y¨Ç¯µ±Kªº¨¾¿m³]¬I³Q¯}Ãa¤F¡A²{¦b¤~­è­×¦n¤@³¡¥÷¡C
+                        mpcallout 5 tell $n ³Ìªñ¤S¤£Â_¦³¤p³W¼Òªº¼Ä­x¦bÃä¹ÒÄÌÂZ¡C
+                        mpcallout 6 tell $n «Õ·t±KªL©M«Õ·t¦a°ì¤@±a¤]¤£«ç»ò¥­ÀRªº¼Ë¤l¡C
+                        mpcallout 7 tell $n ³ÌÁV¿|ªº¬O¡A§Ú­Ì©M«n¤èªº·R¼ä±öµá®q¤§¶¡¾x»ø¤F¡C
+                        mpcallout 8 tell $n ­n¬O¦A³o¼Ë¤U¥h¡A§Ú¾á¤ßº¿©Ô°Ç¦b¤£¤[ªº¥¼¨Ó¥i¯à·|¦¨¬°²Ä¤G­Ó°­Âí©Î¬O®õ¬¥´µ§r¡I
+                        mpcallout 9 worry
+                        mpcallout 10 mpechoat $n ®Ú¾Ú§Aªø¦~ªº«_ÀI¸gÅç¡A²´«e³o­Ó¦Ñ¥ý¥Í¤K¦¨¥¿¦bµ¥µÛ§Aªº¨ó§U(help)......
+                        mpcallout 10 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog help~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100006
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 7
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n ¨ó§U¡H¤£¡A³o¬O§Ú­Ì¦Û¤vªº°ÝÃD¡A¤£Ãö§Aªº¨Æ¡C
+                        mpcallout 1 tell $n ¤£¹L¦pªG§A¯uªº·Q¨ó§U§Ú­Ì¡A¨º»ò½Ð§A¨ì²½¾Â®½Äm§Aªºªk¤O§a¡C
+                        mpcallout 2 tell $n ¥u­nª`¤J(pour)´N¥i¥H¤F¡A¤£·|¯Ó·l§A¤Ó¦hªºªk¤O¡C
+                        mpcallout 2 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog finish~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) != malathar_quest 100007
+        or is_qmark($n) != malathar_quest 300010
+        else
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 8
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n ¨¯­W¤F¡A«i¤h¡C
+                        mpcallout 1 tell $n ³o­ÓªF¦è¬O§Ú­Ìº¿©Ô°Çªº¯S²£¡A½Ð¦¬¤U§a¡C
+                        mpcallout 2 mpechoat $n $Iµ¹¤F§A¤@Áû¯óºñ¦âªºªG¹ê¡A¦n¤j......
+                        mpcallout 2 mpoload 80174 $n 30 target
+                        mpcallout 3 tell $n ¥t¥~¡A¶¶«Kµ¹§A­Ó©¾§i¡A§ÚÃhºÃ«°¤º¦³¼Ä¤Hªº¶¡¿Ò¡A§A¥i­n¤p¤ß¡C
+                        mpcallout 4 tell $n ­n¬O¶¡¿ÒÄ±±o§A¹ï¥L­Ìªº­pµe¦³©Ò«Â¯Ù¡A¥L­Ì¥i¯à·|¹ï§A¤£§Q¡AÂÔ°O¡C
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        cast 2 'lightning bolt' $n
+        mpnowait
+        cast 2 'lightning bolt' $n
+        mpnowait
+        cast 2 'lightning bolt' $r
+        mpnowait
+        cast 2 'lightning bolt' $r
+        mpnowait
+else
+        if rand(33)
+                cast 2 whirlwind
+                mpnowait
+        else
+                if rand(50)
+                        cast curse $r
+                        mpnowait
+                        cast tardy $r
+                        mpnowait
+                        cast 'faerie fire' $r
+                        mpnowait
+                        cast weaken $r
+                        mpnowait
+                else
+                        mpechoat $n ·í§A¥¿¦£µÛ»P$I¾Ô°«®É¡A¤@­Ó°­°­¯©¯©ªº³Ã¥ë©¿µM¦Û­I«áÑ¶¤F§A¤@¤M¡I
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80104
+haan dragon platinum wyrm~
+¥Õª÷Às(Platinum Dragon)~
+³oÀY³QºÙ¬°º~®¦ªº¥Õª÷Às(Platinum Dragon)¦b³o¸ÌºÎÄ±¡A¨e¬O¤½Àïªº·ù¤Í¡C
+~
+¦b¼Æ¦Ê¦~«eªº¤p´c°­¾Ôª§¤¤¡A·¥±jªºº~®¦´¿¸g¬O¤½Àïªº¾Ô°¨¡A¦ý²{¦b¨eªº¥þ²±´Á
+¤w¸g¹L¥h¤F¡A¦Ó¨e²{¦b¤j³¡¥÷ªº®É¶¡³£¦bºÎÄ±¡A¨Ã¥B¦b¹Ú¤¤¦^¾Ð¹L¥hªº¥úºa¡C­¸
+Às¬O«Üªø¹Øªº¡A¦ÓºëÆFªº¹Ø©R§óªø¡A¦Ó²{¦b¨e»P¨eªº¥D¤H³£¦]¬°¨Ó¤é¤£¦h¦Ó·P¨ì
+´d¶Ë¡C
+~
+1|2|64|2048|1048576|8388608 4|8|32|128|512|524288|549755813888 1000 S
+57 35000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Dragon~
+C 1|4|32
+P 4|8|64|128|1048576|2097152|4194304|8388608|16777216|33554432|67108864|2147483648
+S 17 -1000
+S 23 -35
+S 24 -35
+S 35 -35
+S 39 -400
+S 41 100
+S 42 100
+S 45 500
+S 46 500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        cast 2 'fire breath' $n
+        mpnowait
+else
+        if ispc($n)
+                mpechoat $n À~¡I§A¬Ý¨ì¤@ÀY¤j±oÀ~¤Hªº¥Õª÷Às¡I
+                if is_qmark($n) == malathar_quest 100013
+                        mpechoat $n ¬ÝµÛ²´«e³oÀY¦ÑÀs¡A¤£§«°Ý°Ý¥L¹ïº¿©Ô°Ç»P·R¼ä±öµá®q¤§¶¡±¡¶Õªº¬Ýªk¡C
+                endif
+        endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100008
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 9
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n $I½w½w±i¶}Âù²´¡A¥´¶q¤F§A´X¤U......
+                        mpcallout 1 tell $n §ä§Ú³oÀY¨Ó¤éµL¦hªº¦ÑÀs¦³¤°»ò¨Æ¡H
+                        mpcallout 2 tell $n ¨S¨Æªº¸Ü´N¨«§a¡A³o¸Ì¤£¬O¦~»´¤Hªº¹C¼Ö³õ¡C
+                        mpcallout 3 mpechoat $n §A©¿µM·Q°_¤j²½¥q´£¹Lªº¶¡¿Ò(spy)¡A©Î³\¨e·|¦³ÂI±¡³ø¤]»¡¤£©w¡H
+                        mpcallout 3 mpdel_qmark self malathar_talking
+                endif
+        else
+                mpechoat $n ¨e¦ü¥G¤£·Q²z§A¡AÄ~ÄòºÎÄ±¡C
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog spy~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100009
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 10
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n $I½w½w±i¶}Âù²´¡A¥´¶q¤F§A´X¤U......
+                        mpcallout 1 tell $n ¶¡¿Ò¡H§A¤]µo²{¤F¶Ü¡H
+                        mpcallout 2 mpecho $Iªº²´¯«¦ü¥G¦³ÂI¤£¤@¼Ë¤F¡C
+                        mpcallout 3 tell $n ±q´X­Ó¤ë«e¶}©l¡A§Ú¤w¸gª`·N¨ì¦³ªÑ²§¼Ëªº¶Õ¤O½L½õ¦b«°¤º¡C
+                        mpcallout 4 tell $n µM¦Ó«°¤ºªº¬¡°Ê¨Ã¨S¦³¤°»òÅÜ¤Æ¡A¦]¦¹§Ú±À´ú......
+                        mpcallout 5 tell $n ¼Ä¤H¥i¯à°°¸Ë¦¨¤@¯ë©~¥Á¡A©Î¬OªþÅé©ó©~¥Á¨­¤W¡C
+                        mpcallout 6 tell $n ¦Ü©ó¬O½Ö......³o¤w¸g¶W¥X§Úªº¯à¤O½d³ò¤F¡C
+                        mpcallout 7 tell $n ¦pªG»¡«°¤º¨ä¥L¤H¤]¨Sµo²{¡A¨º»ò¥i¯à±o­É¥Î«n¤è®qÀ¬ªº¤O¶q¤F......
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog Ageemephy~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100013
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 14
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n §A±N¥ý«e±q¤jªk®v¦«º¸¨º¸ÌÅ¥¨ÓªºªF¦è²¤¬°´y­z¤F¤@¹M¡C
+                        mpcallout 1 mpechoat $n $I½w½w±i¶}Âù²´¡A¥´¶q¤F§A´X¤U......
+                        mpcallout 2 tell $n §A¤w¸gª¾¹D³o¨â­Ó¶Õ¤Oªº§N¾Ôª¬ºA¡A¨º§Ú¤]¤£¥Î¦h»¡¤F¡C
+                        mpcallout 3 tell $n ­º¥ý§Ú­n¬°§Aªº­^«iªí¥Ü·q·N¡A·PÁÂ§A°£¥h¤F«°¤º¨ºªÑ²§±`ªº¤O¶q¡C
+                        mpcallout 4 tell $n ¦Ü©ó¦«º¸©Ò»¡ªº¸Ü¬O¹ïªº¡AÂù¤è¥²¶·¦P¤ß¨ó¤O¤~¯à©è¿m³o¦@¦Pªº¼Ä¤H¡C
+                        mpcallout 5 tell $n ¦ý¬O¡A«n¤è®qÀ¬ªºª¬ªp»Pº¿©Ô°Ç¤£¦P......
+                        mpcallout 6 yawn
+                        mpcallout 7 tell $n º¿©Ô°Ç°ò¥»¤W¬O¤½Àï¿WÅó¤jÅv¡A«n¤è®qÀ¬¨ºÃä«o¤£¤@¼Ë¡C
+                        mpcallout 8 tell $n °£¤F§øªø»Pªø¦Ñ¥H¥~¡A®q¤Wªº½åªÌ¡B§Å¤k¡B¥Á§L¶¤ªø¦b®q¤W³£¨ã¦³¤£¤pªº¼vÅT¤O¡C
+                        mpcallout 9 tell $n ¤H¦h¼LÂø¡A©Ò¥H§Y¨Ïº¿©Ô°Ç¦³·N©M½Í¡A¹ï¤è¤]¤£¨£±o·|¦³µ½·N¦^À³¡C
+                        mpcallout 10 tell $n ¦pªG§A¯à»¡ªAÂù¤è¡A¨º»òÅK©w¬O¤j¥\¤@¥ó¡A´N¬Ý§A¦³¨S¦³³o­Ó·NÄ@»P¯à¤O¤F......
+                        mpcallout 11 tell $n ­n¬O§A¦³¿³½ì¡A¥i¥H¥ý»P¥L­Ìªº§Å¤k½Í½Í¡A´N»¡¬O§Úº~®¦(Haan)¬£§A¥hªº¡C
+                        mpcallout 11 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog Hailock~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100026
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 27
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n §A§â¤§«eµo¥Íªº¨Æ¡A¥H¤Î®ü©Ô§Jªø¦Ñ©Ò»¡ªº¥þ³£§i¶D¤F$I¡C
+                        mpcallout 1 mpechoat $n $I½w½w±i¶}Âù²´¡A¥´¶q¤F§A´X¤U......
+                        mpcallout 2 tell $n ¤ñ·Q¹³¤¤ªºÁÙ­n¶¶§Q¡A²{¦b´N®tÁ{ªù¤@¸}¤F¡C
+                        mpcallout 3 tell $n ­n¬O¦«º¸ÄUªA¤£¤F¤½Àï¡A¥²­nªº®É­Ô¥u¦n¾a§Ú¥X°¨¤F......
+                        mpcallout 4 tell $n ¦Ü©ó¹ï¤èªºªø¦Ñ©Ò«üªº......À³¸Ó¬O³o­Ó¡C
+                        mpcallout 5 mpechoat $n $IÀs§À©¿µM±½¹L§AÀY¤W¡A±µµÛ¤@­Ó¤pªF¦è¸¨¨ì§Aªº¤â¤¤¡C
+                        mpcallout 6 mpoload 80179 $n 36 target
+                        mpcallout 6 tell $n ±N³o­ÓªF¦è¥æµ¹¥L¡A¥LÀ³¸Ó´N©ú¥Õ¤F¡A°²¦p§Ë¥á(lost)ªº¸Ü¦A¨Ó§ä§Ú¡C
+                        mpcallout 6 mpdel_qmark self malathar_talking
+                endif
+        endif
+        if is_qmark($n) == malathar_quest 100028
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 29
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n °µ±o«Ü¦n¡A¥t¥~§Ú¤]¦³¦n®ø®§¡A´N¬O¤½Àï²×©óµªÀ³©M¸Ñ¤F¡C
+                        mpcallout 1 tell $n ÁöµMÅý¥L¦P·Nªº¤â¬qµy·L²Ê¼É¤F¤@ÂI......
+                        mpcallout 2 tell $n §A¨¯­W¤F¡A¦A¨ÓÀ³¸Ó´N¨S§Aªº¨Æ¤F¡C
+                        mpcallout 3 tell $n ³o¬Oµ¹§Aªº¹S³Ò¡A·PÁÂ§A³o»ò¼ö¤ß¨ó§U¡C
+                        mpcallout 4 mpexp $n 50000
+                        mpcallout 4 mpskillexp $n 20000
+                        mpcallout 4 mpoload 80180 $n 36 target
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog lost~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100027
+                if is_qmark($n) != malathar_enemy
+                        mpoload 80179 $n 36 target
+                        mpexp $n -5000
+                        mpechoat $n $I±N¤âÅN¥æµ¹¤F§A¡C
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        cast 'acid breath' $r
+        mpnowait
+        cast 'fire breath' $r
+        mpnowait
+else
+        if rand(33)
+                cast 'frost breath' $r
+                mpnowait
+                cast 'lightning breath' $r
+                mpnowait
+        else
+                if rand(50)
+                        cast 2 'gas breath'
+                        mpnowait
+                else
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80105
+guard elite elf elven~
+µ×­^ºëÆF½Ã§L(Elite Elven Guard)~
+¤@¦W¤½ÀïºX¤Uªºµ×­^ºëÆF½Ã§L(Elite Elven Guard)ªí±¡»{¯u¡A°Ê¤]¤£°Ê¦a¯¸¦b³o¸Ì¡C
+~
+¤½ÀïºX¤Uªºµ×­^ºëÆF½Ã§L¬O±q³ÌÀu¨qªº¾Ô¤h¤¤¿î¿ï¥X¨Óªº¡A³o¨Ç¾Ô¤h¤¤¦³³\¦h³£
+´¿°Ñ»P¹L¤p´c°­¾Ôª§¡A¦Ó¥B¥L­Ì¥Ã»·¹ï¤½Àï®Ä©¾¡C
+~
+1|2|64|2048|4096|8192|262144|8388608 8|32|128|512|8192 1000 S
+45 8000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1|4|8
+P 8|128|16777216|1073741824
+S 18 70
+S 19 70
+S 24 -50
+S 40 20
+S 41 50
+S 42 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell $N¬O­Ó¥i´cªº¸o¥Ç¡I«OÅ@µL¶d¸s²³¡I½Ä°Ú¡I
+        mpkill $n
+endif
+~
+>fight_prog 100~
+if rand(33)
+        frenzy
+        mpnowait
+        cast 2 'double heal'
+        mpnowait
+else
+        if rand(50)
+                cast curse $n
+                mpnowait
+                fulgurant
+                mpnowait
+        else
+                mpat 5 mpdis_magic self 'seal magic'
+                cast 'mystic mirror'
+                mpnowait
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 15
+        mpechoat $n $IÁ{¦º¤§«e´Â§A¼Q¥X¤@ªÑ¬rÃú¡I
+        mpechoaround $n $IÁ{¦º¤§«e´Â$N¼Q¥X¤@ªÑ¬rÃú¡I
+        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+endif
+~
+|
+#80106
+scout elite elf elven~
+µ×­^ºëÆF¥¸­Ô(Elite Elven Scout)~
+¤@¦W¤½ÀïºX¤Uªºµ×­^ºëÆF¥¸­Ô(Elite Elven Scout)¥HÃhºÃªº²´¥ú¨nµÛ§A¬Ý¡C
+~
+¤½ÀïºX¤Uªºµ×­^ºëÆF¥¸­Ô¬O¦Ñ½mªº¹C«L»P±K±´¡A¥L­Ì¤À¦¨³\¦h¤p²Õ¡AÂÇ¥H±´¬d¨º
+¨Ç¦MÀIªº¤p´c°­»P­¹¤H§¯¤§Ãþªº¼Ä¤H¡A³oºØ²Õ¦X¦P®É¤]«K©ó»â¦aªºÃä¹Ò¨µÅÞ¡C
+~
+1|4|64|2048|8192|524288|16777216 8|32|128|512|32768|65536 1000 S
+40 8000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1|4|8|16
+P 8|128|16384|1073741824
+S 23 -80
+S 40 20
+S 43 75
+S 44 75
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>entry_prog 100~
+if is_qmark($r) == malathar_enemy
+        yell $R¬O­Ó¥i´cªº¸o¥Ç¡I«OÅ@µL¶d¸s²³¡I½Ä°Ú¡I
+        mpkill $r
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell $N¬O­Ó¥i´cªº¸o¥Ç¡I«OÅ@µL¶d¸s²³¡I½Ä°Ú¡I
+        mpkill $n
+endif
+~
+>fight_prog 100~
+if rand(33)
+        meteoric
+        mpnowait
+        meteoric
+        mpnowait
+else
+        if rand(50)
+                cast fireball $r
+                mpnowait
+                cast fireball $r
+                mpnowait
+                cast fireball $r
+                mpnowait
+        else
+                skilldrv multihit $n
+                skilldrv multihit $n
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 15
+        skilldrv multihit $n
+        skilldrv multihit $n
+endif
+~
+|
+#80107
+guard city elf elven~
+º¿©Ô°Ç«°¥«¦u½Ã(Malatharan City Guard)~
+¤@¦W©¾¸Ûªºº¿©Ô°Ç«°¥«¦u½Ã(Malatharan City Guard)¦bµó¤W¨µÅÞ¡C
+~
+º¿©Ô°Ç«°ªº¦u½Ã­Ì¡A¥H¥L­Ì¹ï¤¯·O¤½Àïªº©¾¸Û¤ß¦Ó»D¦W¡C¥L­Ì¬ïµÛ·t¬õ¦â»Pª÷¦â
+ªº«°¥«¾Ô³T¡A®³µÛ¾W¾Uªº¼C»P°í©Tªº¬Þ¡C
+~
+1|2|64|2048|4096|8192|262144|8388608 8|32|128|512|8192 1000 S
+30 7500 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1|4|8
+P 8|128|16777216|1073741824
+S 18 30
+S 19 30
+S 24 -25
+S 40 20
+S 41 25
+S 42 25
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+wear all
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell $N¡I§A³o­Ó´Ý¼ÉªºÃa³J¡I¤£­ã§A¶i«°¡I
+        mpkill $n
+        snare $n
+        mpnowait
+endif
+~
+>fight_prog 100~
+if rand(33)
+        flaming
+        mpnowait
+else
+        if rand(50)
+                cast 'sun flash'
+                mpnowait
+        else
+                skilldrv multihit $n
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80108
+citizen elf elven~
+º¿©Ô°Ç¥«¥Á(Citizen of Malathar)~
+¤@¦Wº¿©Ô°Ç«°ªº¥«¥Á(Citizen of Malathar)±y¶¢¦a´²¨B¡C
+~
+³o®y«°¥«¦³¬Û·í¦hªº¥«¥Á³£·R¦n©M¥­¡A¥L¬O¨ä¤¤¤@­Ó¡C¦b³o»ò±j¤Oªº¤H­Ì¡A¹³¬O
+¦u½Ã¡Bµ×­^½Ã§L¡B¥Õª÷Àsº~®¦¥H¤Î¤½Àïªº«OÅ@¤§¤U¡A¥«¥Á­Ì·íµM·|·P¨ì¦w¤ß¡C
+~
+1|64|128 32|512 1000 S
+12 3000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80109
+citizen elf elven~
+º¿©Ô°Ç¥«¥Á(Citizen of Malathar)~
+¤@¦Wº¿©Ô°Ç«°ªº¥«¥Á(Citizen of Malathar)±y¶¢¦a´²¨B¡C
+~
+³o®y«°¥«¦³¬Û·í¦hªº¥«¥Á³£·R¦n©M¥­¡A¦o¬O¨ä¤¤¤@­Ó¡C¦b³o»ò±j¤Oªº¤H­Ì¡A¹³¬O
+¦u½Ã¡Bµ×­^½Ã§L¡B¥Õª÷Àsº~®¦¥H¤Î¤½Àïªº«OÅ@¤§¤U¡A¥«¥Á­Ì·íµM·|·P¨ì¦w¤ß¡C
+~
+1|64|128 32|512 1000 S
+12 3000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80110
+acolyte-npc~
+¨Í²½(Acolyte)~
+¤@¦W¨k©Ê¨Í²½(Acolyte)¯¸¦b³o¸Ì¡C
+~
+³o®y«°¥«ªº¦uÅ@¯«ªº¨Í²½¥¿¬°¥Lªº¤u§@¦£±oµJÀYÄêÃB¡C¥L¬ïµÛ¶Ç²Îªº¶Â¦âªø³T¡A
+³o­ÓÃC¦â¥NªíµÛ¤£©¯¡A«üªº¬O¨º¨Ç³QºëÆF¤§¯«»P¤½Àï±q®£©Æªº¤p´c°­¤â¤¤±Ï¥X¨Ó
+ªººëÆF­Ì¤§©R¹B¡C
+~
+1|64|128 8|32|512 1000 S
+15 5000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80111
+acolyte-npc~
+¤k¨Í²½(Acolyte)~
+¤@¦W¤k©Ê¨Í²½(Acolyte)¯¸¦b³o¸Ì¡C
+~
+³o®y«°¥«ªº¦uÅ@¯«ªº¨Í²½¥¿¬°¥Lªº¤u§@¦£±oµJÀYÄêÃB¡C¥L¬ïµÛ¶Ç²Îªº¶Â¦âªø³T¡A
+³o­ÓÃC¦â¥NªíµÛ¤£©¯¡A«üªº¬O¨º¨Ç³QºëÆF¤§¯«»P¤½Àï±q®£©Æªº¤p´c°­¤â¤¤±Ï¥X¨Ó
+ªººëÆF­Ì¤§©R¹B¡C
+~
+1|64|128 8|32|512 1000 S
+15 5000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80112
+guardian high elf elven~
+º¿©Ô°Ç°ª¶¥½Ã¤h(High Guardian of Malathar)~
+³o¦W°ª¶¥½Ã¤h(High Guardian of Malathar)ÄYµÂ¦a¯¸¦b§Aªº­±«e¡C
+~
+¦b¤p´c°­¾Ôª§¤¤ªº­^«iºëÆFÃM¤h¡A³o¦W°ª¶¥½Ã¤h´¿¸g³Q¥Lªº¼Ä¤H®»¦í¡A¨Ã¥B©ü¦º
+¹L¥h¡A¦b³Q·í¦¨¦º«Í©ß±ó«á¡A¥L³QºëÆF¤§¯«©Ò¬@±Ï¡A¯«µ¹¤F¥L¯«©_ªº¤O¶q¡A¥N»ù
+¬O¥L¥²¶·µo»}¡A¦b¦³¥Í¤§¦~¥þ¤O¦uÅ@«°¥«»P¤½Àï¡C¦³µÛ¯Â¼ä¤ßÆF»P«i®ðªº¥L«Ü°ª
+¿³¯à³o»ò°µ¡A¦Ó¥L¨ì¥Ø«e¬°¤î¤´µM¤@ª½¿í´`µÛ¥Lªº»}¨¥¡C
+~
+1|2|64|2048|4096|8192|262144|8388608 4|8|16|32|128|512|8192|524288 1000 S
+99 12000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1|2|4|8|32
+P 4|8|64|2048|4194304|8388608|67108864|268435456|1073741824|2147483648
+S 19 70
+S 23 -50
+S 35 -50
+S 40 50
+S 41 50
+S 42 50
+S 43 50
+S 44 50
+S 45 350
+S 46 350
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell ¿í´`»P¯«¤§»}¨¥¡A¦uÅ@º¿©Ô°Ç«°¤£¨ü¥~¼Ä«I¥Ç¡I
+        yell §Ú­nÅý§A­Ì©ú¥Õ¡A¨S¦³¥ô¦ó¤H¯à¶V¹L§Úªº¼C¾W¡I
+        mpkill $n
+        hunt $n
+        mpnowait
+        earth
+        mpnowait
+else
+        if ispc($n)
+                mpechoat $n §A·P¨ü¨ì¤@ªÑ±jªÌªº®ð¶Õ......
+        endif
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+mpat 5 cast 2 'double heal'
+if rand(25)
+        perform empslash
+        mpnowait
+        perform empslash
+        mpnowait
+else
+        if rand(33)
+                change $r
+                flaming
+                mpnowait
+                fulgurant
+                mpnowait
+        else
+                if rand(50)
+                        icecore
+                        mpnowait
+                        storm
+                        mpnowait
+                else
+                        frenzy
+                        mpnowait
+                        change $r
+                        frenzy
+                        mpnowait
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+mpecho ´Ý¾lªº¯«¤OÅý$Iµo°Ê¤F¤£­p«áªGªº³Ì«á²r§ð¡I
+skilldrv multihit $r
+skilldrv multihit $r
+skilldrv multihit $r
+skilldrv multihit $r
+~
+|
+#80113
+cooshee dog pet~
+ºëÆF¤ü(Cooshee)~
+¤@°¦ºëÆF¤ü(Cooshee)¦b³o¸Ì¡A¨e¬OºëÆF­Ì©¾¹êªºÃdª«»PÂy¤ü¡C
+~
+³o¬O¤s¨¦ºëÆF­ÌÃØ°eµ¹¥L­Ì¦í¦bº¿©Ô°Ç«°ªº»·¿Ë­Ì¤§Â§ª«¡A³oºØª¯¥H©¾¤ß¥H¤ÎÁo
+±Ó¦Ó»D¦W¡CºëÆF­Ì§â¨e­Ì·í¦¨Ãdª«¡BÂy¤ü¡B¬Ýªù¤ü¥H¤Î¥¸­Ô¤ü¡A­n¬O±þ¦º©Î¬O¶Ë
+¨ì¨ä¤¤¤@°¦¡A±N·|¨ü¨ì©M±þ¦ººëÆF¦Pµ¥ÄY¼FªºÃg»@¡A³o¬OºëÆF­Ì¹ï¨e­Ìªº·RÅ@¡C
+~
+1|64|128 8|32|512 400 S
+10 5000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Animal~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80114
+pegasus~
+­¸°¨(Pegasus)~
+¤@¤Ç­¸°¨(Pegasus)¯¸¦b³o¸Ì¡A¨e¬O¬Y¨Çµ×­^½Ã§L©¾¹êªº®yÃM¡C
+~
+­¸°¨¬O¨º¨Ç¬°«OÅ@¤½Àï¡B¬°¤½Àï¦Ó¾Ôªº°ª¶¥½Ã¤h­Ì±M¥Îªº®yÃM¡C³o¨Ç­^®¼¡B¦³¯Í
+»Hªº°¨¤Ç°ª¶Q¦ÓÁo©ú¡A¦Ó¥B·|«Ü¼Ö·NÄë¬¹¥Í©R¥H«OÅ@¦Û¤vªº¥D¤H¡C
+~
+1|64 8|32|128|512|524288 500 S
+25 5000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Animal~
+C 1
+P 8
+>fight_prog 100~
+if rand(50)
+        kick $r
+        mpnowait
+        kick $r
+        mpnowait
+        kick $r
+        mpnowait
+else
+        skilldrv multihit $r
+endif
+~
+|
+#80115
+unicorn~
+¿W¨¤Ã~(Unicorn)~
+¤@¤Ç¿W¨¤Ã~(Unicorn)¯¸¦b³o¸Ì¡A¨e¬O¬Y¨Ç¶Q±Úªº®yÃM¡C
+~
+¿W¨¤Ã~¬O´£¨Ñµ¹º¿©Ô°Ç«°¤¤ªº¶Q±Ú­Ì·í®yÃM¨Ï¥Î¡A«e´£¬O¸Ó¶Q±Ú¥²¶·­n¦³¸ê®æ°t
+µ¹¹²¤H¤~¦æ¡C³oºØ³¥Ã~«D±`ªºÁo©ú¡A¦Ó¥B¨e­Ì¤£·|§ë¨­©ó¨S¦³³Óºâªº¾Ô°«¡A¤£¹L
+¨e­Ì¤£¤Ó³ßÅwÅý¨e­Ìªº¥D¤H³´¤J¥i¥H¨Æ¥ýÁ×§Kªº¦º¤`¦M¾÷¤¤¡C
+~
+1|64 1|2|8|32|128|512 1000 S
+30 5000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Beast~
+C 1|4
+P 8
+>fight_prog 100~
+if rand(50)
+        skilldrv multihit $r
+        skilldrv multihit $r
+else
+        bashhead
+        mpnowait
+        bashhead
+        mpnowait
+endif
+~
+|
+#80116
+scout elf elven~
+ºëÆF¥¸­Ô(Elven Scout)~
+¤@¦WºëÆF¥¸­Ô(Elven Scout)¦b³o¸Ì¡A·Ç³Æ«e©¹Ãä¹Ò°»¹î¤p´c°­­Ìªº°Ê¦V¡C
+~
+³o¨Ç¬°¤½Àï½æ©Rªº¥¸­Ô¥Ñ¦~»´ªººëÆF²Õ¦¨¡A¥L­Ì§Æ±æ¦³´Â¤@¤é¯à¦¨¬°µ×­^¥¸­Ô¡A
+¤£¹L¥L­Ì§ó§Æ±æ¯à¦b§xÃøªºÃä¹Ò°»¹î»P¾Ô°«¥ô°È¤¤¦s¬¡¤U¨Ó¡C
+~
+1|4|64|2048|8192 8|32|128|512|32768|65536 1000 S
+18 7500 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1|4|8
+P 8|128|16384|1073741824
+S 23 -50
+S 40 20
+S 43 35
+S 44 35
+#80117
+child elf elven~
+ºëÆF«Äµ£(Elven child)~
+¤@¦WºëÆF«Äµ£(Elven child)¦b³o¸Ìª±­A¡C
+~
+³o­Ó¤p«Ä¦b¥L¤÷¥À®a¶mªºµó¹D¤W§Ö¼Ö¦a¼^À¸¡A§¹¥þ¤£¾å±o¥L¦³¦h¤Ö±Ú¤H³Ìªñ­è¦º
+¦b¤p´c°­­Ìªº¤â¤W¡C
+~
+1|64 32|512 400 S
+5 2000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80118
+child elf elven~
+ºëÆF«Äµ£(Elven child)~
+¤@¦WºëÆF«Äµ£(Elven child)¦b³o¸Ìª±­A¡C
+~
+³o­Ó¤p«Ä¦b¦o¤÷¥À®a¶mªºµó¹D¤W§Ö¼Ö¦a¼^À¸¡A§¹¥þ¤£¾å±o¦o¦³¦h¤Ö±Ú¤H³Ìªñ­è¦º
+¦b¤p´c°­­Ìªº¤â¤W¡C
+~
+1|64 32|512 400 S
+5 2000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80119
+menelas-npc mage~
+ªk®v¡E±K¹p©Ô´µ(Menelas the Mage)~
+ªk®v±K¹p©Ô´µ(Menelas the Mage)Åwªï§A¨Ó¨ì¥Lªº°Ó©±¡C
+~
+±K¹p©Ô´µ¬Oº¿©Ô°Ç¤jªk®v¦«º¸¹L¥hªº®{§Ì¡A¥L³Ð¥ß¤F¤@¶¡¥Í·N¬Û·í¦nªº°Ó©±¡A±M
+½æÅ]ªkª««~¡A³o¹ï³ßÅwÅ]ªkªººëÆF­Ì¨Ó»¡¬O«Ü¨üÅwªïªºªF¦è¡C
+~
+2|4|8|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80120
+grein-npc armorer~
+¨¾¨ãçE¦ÑÁó¡E®æ¨½®¦(Grein the Armorer)~
+¨¾¨ãçE¦ÑÁó®æ¨½®¦(Grein the Armorer)¥Î²Ê°×ªºÁn­µÅwªï§A¨Ó¨ì¥Lªº¨¾¨ãçE¡C
+~
+®æ¨½®¦¬O¤p´c°­¾Ôª§¤¤ªº¦Ñ§L¡A§C¶¥ªººëÆF¨B§L¡C¹³¥L¨º¨Ç§ó§C¶¥ªººëÆF¦P¦ñ­Ì
+¤@¼Ë¡A«i´±¦a¬°¨º¨Ç¶Q±Ú­Ì¡Ð¡Ð¨º¨Ç´X¥G¤w¸g§Ñ°O³o¨Ç¬°¤F¬@±Ï¥L­Ìªº§C¶¥¨B§L
+ªº¶Q±Ú¦Ó¾Ô¡C¤£¹L¡A®æ¨½®¦¤w¸g­p¹º­n¦b¨¾¨ã¥Í·N¤W¡A©M¥Lªº¥S§Ì¦«¬¥´µ¤@°_ÁÈ
+¤j¿ú¡A¥L¥S§Ì¦b­x¤õ¤è­±¬O³o­Ó°ê®a¤º³Ì¨ü¤H´L·qªº´X­Ó°Ó¤H¤§¤@¡C
+~
+1|2|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80121
+tolos-npc weaponsmith smith~
+ªZ¾¹çE¦ÑÁó¡E¦«¬¥´µ(Tolos the Weaponsmith)~
+ªZ¾¹çE¦ÑÁó¦«¬¥´µ(Tolos the Weaponsmith)¦b§A¨«¶i¥Lªº©±çE®É§N§N¦a¨nµÛ§A¬Ý¡C
+~
+¦«¬¥´µ¬O®æ¨½®¦ªº¥S§Ì¡A¥L¹ï¥Lªº¾Ô¤Í¥H¤Î¥L¾Ô«áªº«Ý¹J³£¨S¤°»ò¦n·P¡C¤£¹L¡A
+¥L¤´µM¦³µÛºëÆF»´µø¥~¨ÓªÌªº­Ó©Ê¡A¤£ºÞ§A¬O¤°»òºØ±Ú¡A¥L³£·|¥Î§NºzªººA«×¹ï
+«Ý§A¡C¾¨ºÞ¥L¦³³oºØ¯ÊÂI¡A¦«¬¥´µÁÙ¬O­Ó¥ú©ú¥¿¤jªº°Ó¤H¡A·|µ¹§A¦n»ù¿úªº¡C
+~
+1|2|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80122
+mithara-npc herbalist healer~
+¯óÃÄÂåªÌ¡E»e¬À©Ô(Mithara the Herbalist)~
+¯óÃÄÂåªÌ»e¬À©Ô(Mithara the Herbalist)¦b§A¨«¶i©±¸Ì®Éµ¹¤F§A¤@­ÓÅwªï¥úÁ{ªº²¢¯º¡C
+~
+»e¬À©Ô¬O¦ì¨ü¤H·q­«ªº¯óÃÄ¾Ç®a»PÂå¥Í¡A¦pªG§A·Q­n¶R½æÃÄ¤Y¡B¯óÃÄ¡BÃÄ¤ô©Î¬O
+¨ä¥LÃþ¦üªºªF¦è¡A¦o³£¯àÀ°§A¡C¥t¥~¡A¥u­n¤@ÂI¤p¿ú¡A¦o¤]¯àÀ°§AÀø¶Ë¡C
+~
+1|2|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80123
+loothala-npc cook elf~
+¼p®v¡EÅS¬À©Ô(Loothala the fine Elven Cook)~
+Àu¨qªººëÆF¼p®vÅS¬À©Ô(Loothala the fine Elven Cook)Åwªï§A¥úÁ{¦oªºÀ\ÆU¡C
+~
+<¤£¡A¦o¤£·|§âºëÆFµN¨Ó¦Y......>
+ÅS¬À©Ô©Ò°µ¬ü­¹»P¥i¤fªºÂI¤ß¬Û·í¦³¦W¡A§A¦b³o¸Ì¥i¥H¬Ý¨ì¥ô¦ó¤@­Ó¦ÑÅ¹¡A°£¦¹
+¤§¥~¡A¦X²zªº»ù®æ¤]¬O§l¤ÞÅU«È«e¨Óªº­ì¦]¤§¤@¡C
+~
+1|2|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80124
+dyenkalas-npc grocer~
+Âø³f©±¦ÑÁó¡EÀ¹®¦¥d©Ô´µ(Dyenkalas the Grocer)~
+Âø³f©±¦ÑÁóÀ¹®¦¥d©Ô´µ(Dyenkalas the Grocer)Åwªï§A¥úÁ{¥Lªº°Ó©±¡C
+~
+À¹®¦¥d©Ô´µ¥i¥Hº¡¨¬§A¦b°ò¥»±´ÀI¥Î«~¤è­±ªº»Ý¨D¡A¹³¬Oªo¿O¡B¤õ§â¡B¤ò´à¡B­I
+¥]¡B³U¤lµ¥µ¥¡C
+~
+1|2|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80125
+wolthan-npc blacksmith smith~
+ÅK¦K¡E´ì´Ë(Wolthan the Blacksmith)~
+ÅK¦K´ì´Ë(Wolthan the Blacksmith)¯à´À§A­×¸É·lÃaªº¸Ë³Æ¡C
+~
+´ì´Ë¬O­Ó¤£¿àªºÅK¦K¡A¯àÀ°§A§âÃa±¼ªº¸Ë³Æ­×¦n¡C¤H­Ì»¡¥Lªº¦¬¶O¦³ÂI©ù¶Q¡A¦ý
+¬O¥Lªº¤âÃÀ¥i¥H»¡§¹¬üµL¯Ê¡A´X¥G¨S¦³­×²z¥¢±Ñªº¬ö¿ý¡C
+~
+1|2|64|268435456 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80126
+sage tasstellat-npc~
+½åªÌ¡E®õ´µ¦«©Ô¯S(Tasstellat the Sage)~
+½åªÌ®õ´µ¦«©Ô¯S(Tasstellat the Sage)µ¥µÛ­nÅ²©w§A¨­¤W©Ò¦³ªº¤£©úª««~¡C
+~
+®õ´µ¦«©Ô¯SºÍ´¼¦Ó¥B¹¡¾Ç¡A³sº¾¸Hªº¤p¨Æ¤]¤£¨Ò¥~¡A¨­¬°½åªÌªº¥L¥i¥HÅ²©w§A¨­
+¤W©Ò¦³ªºªF¦è¡A¤£ºÞ¬OÅ]ªkª««~©Î¬O´¶³qª««~¡C¨­¬°°¶¤jªºÅK­×´µ¯««á¸Ç¡A¥L±N
+¥Lªº¤HÃþ¦å²ÎÁôÂÃ±o¬Û·í¦n¡C
+~
+1|2|64|16777216 4|8|16|32|128|512|549755813888 1000 S
+50 12500 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Human~
+C 1|2
+P 4|8|64|128|1048576|2097152|4194304|8388608|67108864|2147483648
+S 23 -100
+S 39 -300
+S 40 35
+S 41 150
+S 42 150
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>all_greet_prog 100~
+if ispc($n)
+        if is_qmark($i) != malathar_talking
+                if is_qmark($n) == malathar_quest 100041
+                        if is_inv_obj($n) == 10664
+                        or is_equ_obj($n) == 10664
+                                mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                                mpmod_qmark $n malathar_quest v0 = 42
+                                mpechoat $n §A¤â¤Wªº¸t¼ä¤ô´¹©¿µM´²µo¥X¯}¨¸ªº¸t¥ú¡I
+                                mpechoaround $n $N¤â¤Wªº¸t¼ä¤ô´¹©¿µM´²µo¥X¯}¨¸ªº¸t¥ú¡I
+                                mpcallout 1 say «¢«¢«¢«¢¡I³ºµM³Q§A¬Ý¬ï¤F¡I¨º»ò´NÅý§A¦º§a¡I
+                                mpcallout 2 say ³o­Ó³Ã¥ëªºÆF»î»P°O¾Ð¤w¸g³Q§Ú®ø¤Æ¤F¡A¦A¨Ó´N½ü¨ì§A¤F¡I
+                                mpcallout 3 mpecho Àþ¶¡¡A$Iªº¨­Åé¶}©lº¦¤j¡A³vº¥ÅÜ¦¨¤@°¦ªÎ§§ªº¥¨¤j´cÅ]¡I
+                                mpcallout 4 mpecho ¦P®É¡A¥L­I«á¤]¥X²{¤F¨â¦W®£©Æªº¬üÄRÅ]¤k¡I
+                                mpcallout 5 mpecho ­n¬O§A¥´¤£¹L¥L­Ì¡A¨º»ò¦Ü¤Ö¤]±o§iª¾(report)¤½Àï³o­Ó±¡³ø¡I
+                                mpcallout 6 mpecho ¥H§K¨ì®ÉÅý¥L­Ì¶]¤F¡A¦Ó¨Ï±o¤½Àï¥L­Ì¥¢¥h¤F¤Ï¨î¥ý¾÷¡I
+                                mpcallout 6 mpmload 80162
+                                mpcallout 6 mpmload 80163
+                                mpcallout 7 mpmload 80161
+                                mpcallout 8 mpgoto 5
+                                mpcallout 9 mppurge self
+                        endif
+                endif
+        endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100039
+                if is_qmark($n) != malathar_enemy
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpmod_qmark $n malathar_quest v0 = 40
+                        tell $n ­ó¡A¨º­Ó³Ìªñ«Ü¬¡ÅDªº¥~¦a³Ã¥ë´N¬O§A°Ú¡H
+                        mpcallout 1 mpechoat $n $I¦ü¥G¤£«ç»ò§â§A©ñ¦b²´¸Ìªº¼Ë¤l¡C
+                        mpcallout 2 tell $n §Aµ¹§ÚÅ¥¦n¡A§Ú¤£ºÞ§A¤§«e°µ¤F¤°»ò¨Æ¡AÁ`¤§§Ú­Ì¤£»Ý­n§AªºÀ°¦£¡C
+                        mpcallout 3 tell $n º¿©Ô°Çªº¨Æ¥Ñ§Ú­Ìº¿©Ô°Ç¦Û¤v¸Ñ¨M¡A§AÀ´¤F¶Ü¡H
+                        mpcallout 4 tell $n ª¾¹Dªº¸Ü´N§ÖÂIÂ÷¶}³o¸Ì¡A§_«h¤@¥¹³Q´cÅ]±þ¦º´N¬O§A¦Û¤v­Ë·°¤F¡C
+                        mpcallout 5 mpechoat $n ......ÁÙ¯u¦p¦«º¸©Ò»¡ªº¡A³o³Ã¥ë¥i¯u¤£¤Íµ½°Ú¡C
+                        mpcallout 5 mpdel_qmark self malathar_talking
+                endif
+        else
+                if ispc($n)
+                        tell $n ©êºp©êºp¡A¤§«e¥X¤F¤@ÂI¤p¨Æ¡Aª««~Å²©wªA°È¼È®É°±¤î¤¤¡C
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        cast 2 powerball $r
+        mpnowait
+else
+        if rand(33)
+                mpgoto self
+                cast 'mystic mirror'
+                mpnowait
+                cast 'mystic armor'
+                mpnowait
+                cast 'flaming armor'
+                mpnowait
+                mpkill $r
+        else
+                if rand(50)
+                        cast blindness $r
+                        mpnowait
+                        cast blindness $n
+                        mpnowait
+                        cast weaken $r
+                        mpnowait
+                        cast weaken $n
+                        mpnowait
+                else
+                        mpechoat $n ·í§A¥¿¦£µÛ»P$I¾Ô°«®É¡A¤@­Ó°­°­¯©¯©ªº³Ã¥ë©¿µM¦Û­I«áÑ¶¤F§A¤@¤M¡I
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80127
+cartograhper kas-npc~
+¦a¹ÏÃ¸®v¡E¥d´µ(Kas the Cartographer)~
+¦a¹ÏÃ¸®v¥d´µ(Kas the Cartographer)Åwªï§A¥úÁ{¥Lªº°Ó©±¡A¨Ã®³¤F±i¦a¹Ïµ¹§A¡C
+~
+¥d´µ¬O­Ó¾Õ©ó®È¦æªººëÆF¡A¨Æ¹ê¤W¥L¦Û»{¬°¤w¸g±´°É¹L¤F³o­Ó¤wª¾¥@¬Éªº¨C­Ó¨¤
+¸¨¡A¨Ã¥B¥i¥H½æ§A¤@¨Ç¥LÃ¸»sªº¦a¹Ï¡C¦pªG§A«ù¦³µLªk²z¸Ñªº¦a¹Ï¡A¥i¥H°Ý¥L¬Ý
+¬Ý¡A©Î³\¥L¯à°÷µ¹§A¤@¨Ç´£¥Ü¡C
+~
+1|2|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>talk_prog topic~
+say »Ý­n¤°»ò¶Ü¡H
+~
+>talk_prog p restore~
+if is_qmark($n) == myth_map_restore 100000
+	tell $n §â¦a¹Ïµ¹§Ú¡AµM«á¥I 100 ¸U¡C
+	break
+endif
+if is_qmark($n) == myth_map_restore 100001
+	tell $n ¥I§Ú 100 ¸U¡C
+	break
+endif
+if is_inv_obj($n) == 21262
+	mpadd_qmark $n myth_map_restore -1 0 0 0 0 1
+	mpechoat $n $I¥´¶qµÛ§A¤â¤¤ªº¦a¹Ï...
+	tell $n ³o±i¦a¹Ï¬O¥X¦Û°g´µ¨ô¿Õªº¤âÃÀ¡A¤WÀYªº¯µ³N¥u¦b¯S©w¦aÂI®É¤~°_§@¥Î¡C
+	tell $n ¤£¹L³oªF¦è¤w¸g·´·l¨ìµLªk¨Ï¥Î¤F¡C
+	tell $n ¦pªG§A·Q­×¡A´N¥ý§â¦a¹Ïµ¹§Ú¡A¦A¥I 100 ¸U´N¦æ¤F¡C
+endif
+~
+>bribe_prog 1000000~
+if is_qmark($n) == myth_map_restore 100001
+	mpdel_qmark $n myth_map_restore
+	mpoload 21263 $n 1 target
+	mpechoat $n $I®³¥X¤@²~ÃÄ¤ô¶î¦b¦a¹Ï¤W¡Aªx¶À¥ß§YÅÜ¦¨¤@±i¥Õ¯È¡C
+	mpechoat $n $Iµ¹¤F§A¯µ³N¯è®ü¹Ï(arcane map).
+	mpcallout 1 tell $n ³o¼Ë´N­×¦n¤F¡C
+else
+	? $n
+endif
+~
+>bribe_prog 10000~
+mpechoat $n $Iµ¹¤F§A°Ï°ì¦a¹Ï(map of the area).
+mpoload 80171 $n 1 target
+~
+>give_prog 21262~
+if is_qmark($n) == myth_map_restore 100000
+	tell $n ¦A¥I§Ú 100 ¸U¡A°¨¤WÀ°§A­×¦n¡C
+	mpmod_qmark $n myth_map_restore v0 = 1
+	mpjunk $o
+else
+	? $n
+	give $o $n
+	drop $o
+endif
+~
+>give_prog all~
+? $n
+give $o $n
+drop $o
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+	mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+	mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80128
+noble elf elven~
+ºëÆF¶Q±Ú(Elven Noble)~
+¤@¦WºëÆF¶Q±Ú(Elven Noble)°ª¶Æ¦a­n¨D§A´L·q¥L¡C
+~
+¦Û±q¤p´c°­¾Ôª§¤§«á¡A­ì¥»¦]¬°¾Ôª§¦ÓÅÜ±oÁ¾»¹ªººëÆF¶Q±Ú­Ì¡A²{¦b¤SÅÜ¦^¤F­ì
+¥»ªº°ª¶Æ¼Ò¼Ë¡CÁöµM¥L­Ìªº½T¬O©¾¸Û¦Ó¥B«i´±ªº¥«¥Á¡A¦ý¥L­Ì§â§O¤H¬Ý¦¨§Cµ¥¶¥
+¯ÅªººA«×¡AÅý¥L­Ì¦¨¬°³\¦h¥«¥Á¥H¤Î¥£¹²­Ìµh«ëªº¹ï¶H¡C
+~
+1|4|64 8|32|512 1000 S
+30 3000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 20
+endif
+~
+|
+#80129
+noble elf elven~
+ºëÆF¶Q±Ú(Elven Noble)~
+¤@¦WºëÆF¶Q±Ú(Elven Noble)°ª¶Æ¦a­n¨D§A´L·q¦o¡C
+~
+¦Û±q¤p´c°­¾Ôª§¤§«á¡A­ì¥»¦]¬°¾Ôª§¦ÓÅÜ±oÁ¾»¹ªººëÆF¶Q±Ú­Ì¡A²{¦b¤SÅÜ¦^¤F­ì
+¥»ªº°ª¶Æ¼Ò¼Ë¡CÁöµM¥L­Ìªº½T¬O©¾¸Û¦Ó¥B«i´±ªº¥«¥Á¡A¦ý¥L­Ì§â§O¤H¬Ý¦¨§Cµ¥¶¥
+¯ÅªººA«×¡AÅý¥L­Ì¦¨¬°³\¦h¥«¥Á¥H¤Î¥£¹²­Ìµh«ëªº¹ï¶H¡C
+~
+1|4|64 8|32|512 1000 S
+30 3000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 20
+endif
+~
+|
+#80130
+guildmaster elven rastellagnar-npc~
+ºëÆF¤u·|·|ªø(The Elven Guildmaster)~
+ºëÆF¤u·|ªº·|ªø·ç´µ¦«ÂÅ¥[(Rastellagnar)¯¸¦b³o¸Ì¡C
+~
+·ç´µ¦«ÂÅ¥[±Mªù¨ó§UºëÆF­Ì¡A¥H¤Î¨ä¥L¦n¾Çªº¾Ç®{ºë¶i¥L­Ì¦Û¨­¦bºëÆFÅ]ªk¤Wªº
+ª¾ÃÑ¡C
+~
+1|2|64|1024 4|8|16|32|128|512 1000 S
+30 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>all_greet_prog 100~
+if ispc($n)
+        if is_qmark($n) != malathar_quest 100011
+        or is_qmark($n) >= malathar_quest 300012
+        else
+                if is_inv_obj($n) == 10664
+                or is_equ_obj($n) == 10664
+                        mpmod_qmark $n malathar_quest v2 + 1
+                        mpechoat $n §A¤â¤Wªº¸t¼ä¤ô´¹©¿µM´²µo¥X¯}¨¸ªº¸t¥ú¡I
+                        mpechoaround $n $N¤â¤Wªº¸t¼ä¤ô´¹©¿µM´²µo¥X¯}¨¸ªº¸t¥ú¡I
+                        mpecho ¦b¸t¥úªº·ÓÄ£¤U¡A$Iµh­W¦a©I¸¹µÛ¡A«b¨º¶¡±j¤jªºªZ¸Ë´cÅ]¦Û¥LÅé¤º¤ÀÂ÷¦Ó¥X¡I
+                        mpecho ¦b´cÅ]¥X²{ªºÀþ¶¡¡A§A¬Ý¨ì$I³Q´cÅ]¤@¸}¿å¤U¼Ó±è¥h¤F¡I
+                        mpmload 80158
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell º¿©Ô°Çºa¥ú¤£·À......¡I
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80131
+guildmaster human julistha-npc~
+¤HÃþ¤u·|·|ªø(The Human Guildmistress)~
+¤HÃþ¤u·|ªº·|ªø¯ü²ú²ï(Julistha)§Nºz¦aµû¦ôµÛ§Aªº¹ê¤O¡C
+~
+¯ü²ú²ï¬Û·í¦aµ½¾Ô¡A¨Æ¹ê¤W¦o¬Æ¦Ü¯à°V½mºëÆF­Ìªº¾Ô°«§Þ³N¡A¥u¬OºëÆF­Ì«o¦]¬°
+¤£³\¨ä¥LºØ±Ú¦b¥ô¦ó¤è­±°µ±o¤ñ¥L­Ì¦n¦Ó¥X¦W...
+~
+1|2|64|262144 4|8|16|32|128|512 0 S
+30 10000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Human~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell ¥i´cªº$N...¥v¥d©Ô¨©ªº¥«ªø¬O§Ú«ô§âªº...§A¦^«°´N¾å±o¤F......
+if is_qmark($n) != skarabrae_enemy
+        mpadd_qmark $n skarabrae_enemy 120 1 0 0 0 1
+else
+        mpmod_qmark $n skarabrae_enemy + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80132
+macy-npc~
+±ö§Æ(Macy)~
+¶ÂºëÆF¤u·|ªº·|ªø±ö§Æ(Macy)¹ïµÛ§A·L¯º¡A·Qª¾¹D¦o°½¤F¤°»òªF¦è¶Ü¡H:)
+~
+±ö§Æ¬O¦³¥v¥H¨Ó³ÌÀu¨qªº¶ÂºëÆF¥¸­Ô¡AºëÆF­Ì¹ï©ó¦oªº§Þ¥©»á¤£¯à½Ì¸Ñ¡A¥L­ÌÅý
+¦o¯d¦b³o¸Ìªº²z¥Ñ¡A¬O¦]¬°¦o¯à¶Ç±ÂºëÆF­Ìªº¥¸­ÔÁô¹P»P¨ä¥LÃþ¦üªº§Þ¥©¡C
+~
+1|2|64|2048 4|8|16|32|128|512 0 S
+30 10000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Drow~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell «Ü¦n...§A³º´±...»P²`¤g«Ò°êªº¤H...¬°¼Ä......
+if is_qmark($n) != drow_empire_enemy
+        mpadd_qmark $n drow_empire_enemy 120 1 0 0 0 1
+else
+        mpmod_qmark $n drow_empire_enemy + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80133
+guildmaster dwarf keruggan-npc~
+§J¾|®Ú(Keruggan)~
+¸G¤H¤u·|ªº·|ªø§J¾|®Ú(Keruggan)¦ü¥G¹ï¦³«È¤H¤Wªù·P¨ì³Y²§¡C
+~
+¾ãÅé»¡¨Ó¡AºëÆF­Ì¨Ã¤£³ßÅw¡B¤]¤£«ç»ò«H¥ô¸G¤H¡A§J¾|®Ú¯à¦b³o¸ÌÀç·~ªº°ß¤@­ì
+¦]¡A¬O¦]¬°¥L¦P®É¤]¬O¤×®Ú¤ý°ê¬£¨ìº¿©Ô°Çªº¨Ï¸`¡C¥Lªº«È¤H«D±`¤Ö¡A¦]¬°ºëÆF
+»{¬°¸G¤Hªº§Þ¯à­ì©l¤S²Ê«U¡A¦ý¬O¥L¤´µMºÉ¨ä¥þ¤O¥HÁÈ¨ú¥ô¦ó¥i¯àªº§Q¼í¡C
+~
+1|2|64|4096 4|8|16|32|128|512 0 S
+30 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Dwarf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell ¤×®Ú¤ý°ê...¤£·|©ñ¹L§Aªº......
+if is_qmark($n) != juargan_enemy
+        mpadd_qmark $n juargan_enemy 120 1 0 0 0 1
+else
+        mpmod_qmark $n juargan_enemy + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80134
+guildmaster fairy moredhein-npc~
+²ö·ç®ü®¦(Moredhein)~
+§¯ºë¤u·|ªº·|ªø²ö·ç®ü®¦(Moredhein)¯¸¦b³o¸Ì¡C
+~
+§¯ºë¬O³o¶ô¤j³°¤W¤@¤ä»á¨ü·q­«ªººØ±Ú¡A¤H­Ì¹ï©ó¥¦­Ì©Ò¾Ö¦³ªº¦ÛµMª¾ÃÑ·P¨ì·q
+¨Ø¡C
+~
+1|2|64|8192 4|8|16|32|128|512 0 S
+30 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R fairy~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell §A±þ¤F§Ú...´N¬O»P...ºñ¾ð¤ý°ê¬°¼Ä......
+if is_qmark($n) != greenwoods_killer
+        mpadd_qmark $n greenwoods_killer 120 1 0 0 0 1
+else
+        mpmod_qmark $n greenwoods_killer + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80135
+guildmaster beholder bloonit-npc~
+¥¬Ã¹¥§¯S(Bloonit)~
+²´Å]¤u·|ªº·|ªø¥¬Ã¹¥§¯S(Bloonit)¥Î¤ßÆF¶Ç°Tªº¤è¦¡Åwªï§Aªº¨ì¨Ó¡C
+~
+¥¬Ã¹¥§¯S¬O­Ó¯«¯µªº¤Hª«¡A¨­¤W©ÜµÛµµ¦âªø³T¡Aªø³T¾B¦í¤F¥L¨ºÀ~¤HªºÄ²¤â§Î¼L
+¤Ú¡Bµo¥úªºµµ¦â¥Ö½§¥H¤Î²yª¬ªº¶À¦â²´·ú¡C¤£¹L¥L¤´µM¬O­Ó·¥¨Îªº¾É®v¡A¦Ó¥L¤j
+³¡¥÷ªº®É¶¡³£¦b§í¨î¥L·Q¦Y±¼§A¸£¤lªº¥»¯à½Ä°Ê......
+~
+1|2|64|1048576 4|8|16|32|128|512 0 S
+30 10000 0 0d0+0 0d0+0
+0 0
+8 8 0
+R beholder~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell ©B«z°Ú°Ú°Ú°Ú¡ã¡ã¡ã
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80136
+guildmaster hobbit aelian-npc~
+¦ã½¬(Aelian)~
+¶P¤ñ¯S¤u·|ªº·|ªø¦ã½¬(Aelian)§N»Å¦a¬ÝµÛ§A¡C
+~
+¥L¨ü¨ìºëÆF¥¸­Ô­Ìªº·q­«¡A¦]¬°¥L¦³µÛ·¥¨Îªºµø¤O»P³t«×¡A³o¬O¨º¨Ç¥¸­Ô­Ì©Ò¨S
+¦³ªº¡C
+~
+1|2|64|16777216 4|8|16|32|128|512|524288 0 S
+30 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R hobbit~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell §Aµ¹§Ú°O¦í...¯ä¤p¤l...§A´N¤£­n¨ì¶P¤ñ¯S¤@±Ú...ªº¬G¶m......
+if is_qmark($n) != hobbitcity_killer
+        mpadd_qmark $n hobbitcity_killer 120 1 0 0 0 1
+else
+        mpmod_qmark $n hobbitcity_killer + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80137
+servant elf elven~
+¤£¤Íµ½ªººëÆF¥£¹²(surly Elven Servant)~
+¤@¦W¤£¤Íµ½ªººëÆF¥£¹²(surly Elven Servant)¯äµÛ¤@±iÁy¦b¤u§@¡C
+~
+¡u­Ë·°ªºÁ`¬O§Ú¡A¤£¬O¶Ü¡H¥u¤£¹L¦]¦¹§Ú¦Ñª¨¤£¬O¶Q±Ú¡A¦Ó¥B¤S¨S°Ñ¥[¹L¤p´c°­
+¾Ôª§¡A§Ú´N±o¸¨¨ì²M²z§O¤Häú¤ßªº¼p¾l¡A¥H¤ÎÀ°¥L­Ì±iÃ¹¥ë­¹ªº¤U³õ......ºâ¤F
+ºâ¤F¡A¤@°ïª¯§¾¡I¡v
+~
+1|64|128 32|512 0 S
+10 3000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80138
+servant elf elven~
+¤£¤Íµ½ªººëÆF¥£¹²(surly Elven Servant)~
+¤@¦W¤£¤Íµ½ªººëÆF¥£¹²(surly Elven Servant)¯äµÛ¤@±iÁy¦b¤u§@¡C
+~
+¡u­Ë·°ªºÁ`¬O§Ú¡A¤£¬O¶Ü¡H¥u¤£¹L¦]¦¹§Ú¦Ñª¨¤£¬O¶Q±Ú¡A¦Ó¥B¤S¨S°Ñ¥[¹L¤p´c°­
+¾Ôª§¡A§Ú´N±o¸¨¨ì²M²z§O¤Häú¤ßªº¼p¾l¡A¥H¤ÎÀ°¥L­Ì±iÃ¹¥ë­¹ªº¤U³õ......ºâ¤F
+ºâ¤F¡A¤@°ïª¯§¾¡I¡v
+~
+1|64|128 32|512 0 S
+10 3000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80139
+owner t'kana shopkeeper pet~
+Ãdª«©±¦ÑÁó¡E´£¥d¨º(T'Kana, the Pet Shop Owner)~
+´£¥d¨º(T'Kana)¼ö±¡¦aÅwªï§A¥úÁ{¥LÂ²¾ëªº°Ó©±¡C
+~
+¦b³\¦h¦~¥H«e¡A´£¥d¨º±aµÛ³\¦h©_©Ç¦Ó¯«¯µªºÃdª«±q»»»·ªº«n¤è¨Ó¨ìº¿©Ô°Ç«°¡A
+¦Ó¥LªºÃdª«¤j¨üÅwªï¡A¦]¦¹¥L¨M©w¯d¤U¨Ó¶}©±¡C
+~
+1|2|64 4|8|16|32|128|512 1000 S
+35 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Hobbit~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell $N...§Ú¶A©G§A...³Q®£Às«rÄê...³Q»·¥j¥¨Ã~...½ò«ó......
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80140
+allertathala-npc guard captian elf~
+¶ø°Ç¶ð¼»©Ô¶¤ªø(Captain Allertathala)~
+¶ø°Ç¶ð¼»©Ô¶¤ªø(Captain Allertathala)¥Ñ°J¦aÅwªï§A¨Ó¨ì¥Lªº¿ì¤½«Ç¡C
+~
+³o¦ì¶¤ªø¬O¤@¦W¤¤¦~ºëÆF¡A¥L±j§§ªº¦×Åé¬O±q¦h³õ¾Ô°«¤¤ÁëÁå¥X¨Óªº¡A¥t¥~¡Aºë
+ÆF­Ìªº¨­Åé¤]·|¦³¬Í²ª¡A§Ú´±¸ò§A¥´½ä»¡¥L¨­¤Wªº¶Ë¬Í¤ñ§A²{¦b¬Ý¨£ªºÁÙ­n¦h¡C
+¥LªºÁ|¤î°ª¶®¦ý¬O«ÜÂÔ·V¡A¦b¸ò§A«¢©Ôªº¦P®É¤]¤£§Ñ«O«ùÄµ§Ù¡C¥L²`·R¥L©Ò©~¦í
+ªº«°¥«¥H¤Î¥L©Ò®Ä©¾ªº¤½Àï¡A¬Æ¦Ü¥i¥H¬°¤F«OÅ@¥¦­Ì¦Ó¦º¡C
+~
+1|2|64|2048|4096|8192|262144|8388608 4|8|128|512|8192|524288 1000 S
+52 18000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1|2|4|8|32
+P 4|8|64|128|2048|1048576|2097152|4194304|8388068|16777216|33554432|67108864|1073741824|2147483648
+S 1 5
+S 2 5
+S 3 5
+S 4 5
+S 5 5
+S 17 -500
+S 18 50
+S 19 75
+S 23 -35
+S 24 -35
+S 29 -20
+S 35 -20
+S 39 -500
+S 40 25
+S 41 50
+S 42 50
+S 43 35
+S 44 35
+S 45 300
+S 46 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+~
+>talk_prog topic~
+if is_qmark($i) != malathar_talking
+        if isnpc($n)
+        or is_qmark($n) == malathar_enemy
+        else
+                if is_qmark($n) != malathar_quest
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n ³o¸Ì¬OºëÆFªº°ê«×¡Aº¿©Ô°Ç¡C
+                        mpcallout 1 tell $n ¥u­n¤£¦b«°¤º¬°«D§@¤ï¡A§Ú­Ì¬O«ÜÅwªï¥~¦a¤Hªº¡C
+                        mpcallout 2 tell $n ¤£¹L³Ìªñ¦b«°¥~¦³¨Ç¤p³Â·Ð(trouble)¡A§A¸g¹Lªº®É­Ô¥i­n¤p¤ßÂI¡C
+                        mpcallout 3 mpadd_qmark $n malathar_quest -1 1 0 0 0 1
+                        mpcallout 3 mpdel_qmark self malathar_talking
+                else
+                        if is_qmark($n) == malathar_quest 100030
+                                if mobcount(80159) == 0
+                                        mpat $n mpmod_qmark $n malathar_quest v0 = 31
+                                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                                        mpechoat $n §A±N¤½Àï´£¹Lªº¨Æ§i¶D¤F$I¡C
+                                        mpcallout 1 tell $n ¶â......§A¥ý¨Ó°Ý¬O¹ïªº¡A¤×¨ä¬O¤W¦¸§A´¦¬ï¤F¼Ä­x¶¡¿Ò¡C
+                                        mpcallout 2 tell $n ¦b¨º¥ó¨Æ¤§«á¡A¥ý«eªº¤p´c°­³¡¶¤¬¡°ÊÅÜ±o¤ñ¸û¨S¨º»òÀWÁc¡C
+                                        mpcallout 3 tell $n ¦ý¬O§Ú­Ìªº¥¸­Ô«oµo²{¦³§C¦ì´cÅ]¥X²{¦bÃä¹Ò¡A¦Ó¥B¦ü¥G¤£¬O¤@¯ëªº°»¹î¶¤¡C
+                                        mpcallout 4 tell $n ¬Ý¼Ë¤l¼Ä¤Hªº°Ê¦V¦³©Ò§ïÅÜ¤F......
+                                        mpcallout 5 mpforcer here echotoarea ©¿µM¶¡¡A¥þ«°ÄµÄÁ¤j§@¡AªÅ¤¤¥X²{¤@­Ó­Óªº¶Â¼v¡I
+                                        mpcallout 6 say ÁV¿|¡I¼ÄÅ§¡I¥L­Ì³ºµM¥ÎªÅ­°³¡¶¤¡H¡I
+                                        mpcallout 7 yell ¥þÅé§Ù³Æ¡I¤£¯àÅý¼Ä¤H¸v­h¡I
+                                        mpcallout 8 tell $n §A§ÖÂI¸ú°_¨Ó§a¡I¼Ä¤H´N­n§ð¶i¨Ó¤F¡I
+                                        mpcallout 8 mpdel_qmark self malathar_talking
+                                        mpcallout 8 mpat 80102 mpmload 80159
+                                        mpcallout 8 mpat 80105 mpmload 80159
+                                        mpcallout 8 mpat 80112 mpmload 80159
+                                        mpcallout 8 mpat 80120 mpmload 80159
+                                        mpcallout 8 mpat 80125 mpmload 80159
+                                        mpcallout 8 mpat 80131 mpmload 80159
+                                        mpcallout 8 mpat 80139 mpmload 80159
+                                        mpcallout 8 mpat 80147 mpmload 80159
+                                        mpcallout 8 mpat 80158 mpmload 80159
+                                        mpcallout 8 mpat 80165 mpmload 80159
+                                        mpcallout 8 mpat 80102 mpmload 80159
+                                        mpcallout 8 mpat 80105 mpmload 80159
+                                        mpcallout 8 mpat 80112 mpmload 80159
+                                        mpcallout 8 mpat 80120 mpmload 80159
+                                        mpcallout 8 mpat 80125 mpmload 80159
+                                        mpcallout 8 mpat 80131 mpmload 80159
+                                        mpcallout 8 mpat 80139 mpmload 80159
+                                        mpcallout 8 mpat 80147 mpmload 80159
+                                        mpcallout 8 mpat 80158 mpmload 80159
+                                        mpcallout 8 mpat 80165 mpmload 80159
+                                        mpcallout 8 mpat 80102 mpmload 80159
+                                        mpcallout 8 mpat 80105 mpmload 80159
+                                        mpcallout 8 mpat 80112 mpmload 80159
+                                        mpcallout 8 mpat 80120 mpmload 80159
+                                        mpcallout 8 mpat 80125 mpmload 80159
+                                        mpcallout 8 mpat 80131 mpmload 80159
+                                        mpcallout 8 mpat 80139 mpmload 80159
+                                        mpcallout 8 mpat 80147 mpmload 80159
+                                        mpcallout 8 mpat 80158 mpmload 80159
+                                        mpcallout 8 mpat 80165 mpmload 80159
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 5 mpechotoall [1;31m¡iÄµ³ø¡j¡G¡u´cÅ]³¡¶¤¶i¥Çº¿©Ô°Ç«°¡I¡v[m
+                                else
+                                        tell $n ©êºp¡A§Ú²{¦b¨SªÅ¡A¥t¥~½Ð§Aª`·N«°¤ºªº¼Ä­x¡I
+                                endif
+                        else
+                                tell $n Åwªï¥úÁ{¡A§A¦³¤°»ò¨Æ¶Ü¡H
+                        endif
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog trouble~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100001
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 2
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n ¤]¹ï¡A³oºØ¨ÆÀ³¸Ó§i¶D¥~¦a¤H¡A¦³ªÅ§Ú¬£¤H¥h¶K­Ó§i¥Ü¡C
+                        mpcallout 1 ponder
+                        mpcallout 2 tell $n «e°}¤l«°¥~¦³¤@¨Ç¨¸´cªº¥Íª«¡A±MªùÄÌÂZ¸ô¹Lªº¤H¡C
+                        mpcallout 3 tell $n ÁöµM«Â¯Ù©Ê¤£¤j¡A¤£¹L¤]Á`¤£¯à©ñµÛ¤£ºÞ¡C
+                        mpcallout 4 tell $n Á`¤§§A¥­±`­n¦h¯d·NÂI¡C
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>talk_prog report~
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) != malathar_quest 100002
+        or is_qmark($n) != malathar_quest 200015
+        else
+                if is_qmark($n) != malathar_enemy
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n §A»¡¤°»ò¡H¨¸®ð¡I¡H
+                        mpcallout 1 stare
+                        mpcallout 2 say ¤£¥i¯à°Ú......¤£¡A¦³¥i¯à¡A¥u¬O......
+                        mpcallout 3 tell $n ³o¼Ë§a¡A§Ú¦A¥t¥~¬£¤H½Õ¬d¬Ý¬Ý¡AÁÂÁÂ§Aªº±¡³ø¡C
+                        mpcallout 3 mpat $n mpmod_qmark $n malathar_quest v0 = 3
+                        mpcallout 4 mpexp $n 10000
+                        mpcallout 4 mpskillexp $n 3000
+                        mpcallout 4 thank $n
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n §O¤HÁ¿¸Ü®É¤£­n´¡¼L¡C
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        yell ¨¸´c¤§®{¡A¤£­ã§A¦b¦¹¦a¬°«D§@¤ï¡I¬Ý§Ú¨îµô§A¡I
+        mpkill $n
+        snare $n
+else
+        if ispc($n)
+                if mobcount(80159) == 0
+                        mpcall malathar_warrior_five $n
+                else
+                        tell $n §A¤£»°§Ö¥hÁ×Ãø¡AÁÙ¦b³o¸Ì·F¤°»ò¡I
+                endif
+        endif
+endif
+~
+>defun_prog malathar_warrior_five~
+if is_qmark($n) == malathar_quest 100031
+        mpmod_qmark $n malathar_quest v0 = 32
+endif
+if is_qmark($n) == malathar_quest 100032
+        mpmod_qmark $n malathar_quest v0 = 33
+        mpforcer here stun $n 20
+        if is_qmark($n) == malathar_quest 200015
+                mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                tell $n §AÁÙ¬¡µÛ¯u¬O¤Ó¦n¤F¡A¼Ä¤H³o¦¸¨Ó±o¤Ó¬ðµM¡A®tÂI¨Ó¤£¤ÎÀ³¹ï¡C
+                mpcallout 1 mpecho $I¦ü¥GÃP¤F¤@¤f®ð¡C
+                mpcallout 2 tell $n §Ú±o¶i¦æ·Ç³Æ¡A¼Ä¤HÀ³¸Ó·|¦A«×µo°Ê§ðÀ»¡C
+                mpcallout 3 tell $n §AÁÙ¬O¥ýÂ÷¶}§a¡A¤U¦¸®£©È´N¨S¦³³o»ò¦n¹B¤F¡C
+                mpcallout 4 wave $n
+                mpcallout 4 mpdel_qmark self malathar_talking
+        else
+                if is_qmark($n) == malathar_quest 200045
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        gasp $n
+                        mpcallout 1 tell $n ¯u¡B¯u¬O¥O¤H¤£´±¬Û«H......
+                        mpcallout 2 mpecho $I¦YÅå¦a¬ÝµÛ¤â¤Wªº³ø§i®Ñ¡A¦ü¥G¬Ý¨ì¤°»ò¯«©_ªºªF¦è¡C
+                        mpcallout 3 tell $n ¨S·Q¨ì©Ò¦³ªº¼Ä­x³ºµM³Q§A¤@­Ó¤H¥þ·À¤F¡A¯u¬O¥i©È°Ú......
+                        mpcallout 4 ponder
+                        mpcallout 5 tell $n ¨º»ò§Ú·Q......§AÀ³¸Ó¦³¸ê®æ±µ¨ü³o­ÓªF¦è§a......
+                        mpcallout 6 mpecho $I±q®à¤lªº§¨¼h¤¤¨ú¥X¤F¤@ªT¥É¥Û¡C
+                        mpcallout 7 tell $n ³o­ÓªF¦è¡A§Ú­Ì¥u¹{µ¹¦b¾Ô³õ¤Wªí²{¯S§O­^«iªº«iªÌ¡C
+                        mpcallout 8 tell $n ²{¦b§Ú»{¬°§A¦³³o­Ó¸ê®æ¡A½Ð§A¦¬¤U§a¡I
+                        mpcallout 9 mpoload 80183 $n 36 target
+                        mpcallout 9 mpresp $n 3
+                        mpcallout 9 mpexp $n 10000
+                        mpcallout 9 mpskillexp $n 30000
+                        mpcallout 9 mpdel_qmark self malathar_talking
+                else
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tsk $n
+                        mpcallout 1 tell $n ¥»¨Ó§Ú¬O­n§AÁ×Ãøªº¡A·Q¤£¨ì§A©~µM¤]§ë¤J¾Ô³õ¤F¡C
+                        mpcallout 2 tell $n ¦Ó¥BÁÙ¨ú±o¤F¬Û·íªº¾ÔªG¡A¯u¬O¤£¿ù¡C
+                        mpcallout 3 hand $n
+                        mpcallout 4 tell $n ·PÁÂ§Aªº¨ó§U¡C
+                        mpcallout 5 mpresp $n 1
+                        mpcallout 5 mpexp $n 10000
+                        mpcallout 5 mpskillexp $n 17500
+                        mpcallout 5 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        tell $n Åwªï¥úÁ{¡A§A¦³¤°»ò¨Æ¶Ü¡H
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        frenzy
+        mpnowait
+else
+        if rand(33)
+                change $r
+                fulgurant
+                mpnowait
+                cast paralyze $n
+                mpnowait
+        else
+                if rand(50)
+                        circular
+                        mpnowait
+                        icecore
+                        mpnowait
+                else
+                        mpechoat $n ·í§A¥¿¦£µÛ»P$I¾Ô°«®É¡A¤@­Ó°­°­¯©¯©ªº³Ã¥ë©¿µM¦Û­I«áÑ¶¤F§A¤@¤M¡I
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+~
+|
+#80141
+rabbit~
+¨ß¤l(Rabbit)~
+¤@°¦¥i·Rªº¤p¨ß¤l(Rabbit)¦b³oªþªñÂÛ¸õµÛ¡C
+~
+¡u°Ú°Ú¡ã¡ã¬Ý¬Ý³o°¦¦nº}«Gªº¨ß¤l¡A·Qª¾¹D¨e³Q§Ú®_¤F¦Y±¼«á·|¬O¤°»ò¼Ë¶Ü¡H¡v
+§A³o»ò·Qªº¹ï§a¡H¬°¤°»ò§A¨S¬Ý¥X¨Ó«¨¡H¶â¡A¶Ë®`»P´ÛÄF³o°¦³n®zªº¨ß¤l¡C
+¤p¤ßÂI§a¡Iº¿©Ô°Ç«°ªº¨ß¤l¥i¬O«ÜÃaªº¡C
+~
+1|64|128 8|32|128|512 400 S
+10 2000 0 0d0+0 0d0+0
+0 0
+8 8 0
+R Animal~
+C 1
+P 8
+#80142
+deer~
+°ª¶Qªº³À(noble-looking deer)~
+¤@°¦¬Ý°_¨Ó«Ü°ª¶Qªº³À(deer)°ª¶Æ¦a¾®µøµÛ§A¡C
+~
+«z³á¡I·|³Q¨e°ä¨ìªº¶Ì¥Ê¦Ü¤Ö¦³¦Ê¤À¤§¤Q¡A§â¨e¾Q¦b¾ÀÄl¤W¤£¬O¥ó«Ü´Îªº¨Æ¶Ü¡H
+¤£¹L§Ú«ØÄ³§A¤p¤ß¡A¦b³o­Ó°Ï°ìªº³¥¥Í°Êª«³£³Q½á¤©¤F¯S®íªº¤O¶q¡AÅý¨e­Ì±o¥H
+¥Í¦s¤U¥h......
+~
+1|64|128 8|32|128|512 500 S
+12 2000 0 0d0+0 0d0+0
+0 0
+8 8 0
+R Animal~
+C 1
+P 8
+#80143
+squirrel~
+ªQ¹«(Squirrel)~
+¤@°¦¬Ý°_¨Ó«Ü¤¿¼ÉªºªQ¹«(Squirrel)¥¿¦b¥´¶qµÛ§A¡I
+~
+º¿©Ô°ÇªºªQ¹«¬O¤jªk®v¦«º¸¦b¬Y¦¸¹êÅç¤¤ªº²£ª«¡A¦ý¬O¥X¤F­«¤jªº¿ù»~¡A¥Ñ©ó³o
+­Ó½t¬G¡A¥¿±`ªº¤H­Ì¦h¥b¤£´±±µªñ¨e­Ì¡C
+~
+1|32|64 8|32|128|512 0 S
+15 2500 0 0d0+0 0d0+0
+0 0
+8 8 0
+R Animal~
+C 1
+P 8
+#80144
+stablemaster master elf~
+°¨´\¥D¤H(Stablemaster)~
+³o¦W°¨´\¥D¤H(Stablemaster)¤p¤ßÁlÁl¦aª`µøµÛ§A¡C
+~
+³o­Ó°¨´\¥D¤Hªº¤ß±¡¬Ý°_¨Ó¤£¤Ó¦n¡A¤p¤ß§O·S¤õ¥L......
+~
+1|64|8192 8|32|128|512 1000 S
+50 10000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80145
+stablehad hand elf~
+¤£¤Íµ½ªº°¨¤Ò(surly stablehand)~
+¤@¦W¤£¤Íµ½ªº°¨¤Ò(surly stablehand)¨S¦n®ð¦a¨nµÛ§A¬Ý¡C
+~
+³o¨Ç¥bºëÆF©t¨à¦b³o«°¥«¸Ì¡A³q±`³£¬O°µµÛ¹³²M²z°¨´\¡B¥´±½¤½¦@´Z©Ò¤@Ãþªº¨õ
+·L¤u§@¡C¥L­Ì¤@ª½¨S¿ìªk¦³¦n¤u§@¡A­ì¦]¬O¥L­Ìªº¨¥¦æÁ|¤î¡A¥H¤Î¨­¤W¨ººØ³s¯«
+³£·|³QÀ~¶]ªº¨ý¹D¡C
+~
+1|64|128 8|32|512 0 S
+15 3000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Half-elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80146
+golem~
+¥¨¹³(Huge Golem)~
+¤@´L¥¨¤jªº¥Û¹³(Huge Golem)¾×¦í¤F§Aªº¥h¸ô¡C
+~
+³o­Ó«p¹êªºÅ]ªkª«Åé¬O¥Ñ¤jªk®v¦«º¸©Ò³]­pªº¡A¬O¬Û·í§¹¬üªº¦u½Ã¡A¥¦¤£·|·P¨ì
+¯h¾Î¡B¹½·Ð©Î¬O³g°ý¡A¤]µ´¤£·|¦b¥ô¦ó§Î¦¡ªº¸ì¸ï»PÀ£¤O¤U©}ªA¡C
+~
+1|2|64 4|8|16|32|128|8192 0 S
+50 8000 0 0d0+0 0d0+0
+0 0
+8 8 0
+R Statue~
+C 1
+P 8
+S 18 50
+S 19 50
+>greet_prog 100~
+if is_qmark($n) == malathar_enemy
+        mpechoat $n $I©¿µM¹ï§A®i¶}§ðÀ»¡I
+        mpkill $n
+endif
+~
+>fight_prog 100~
+if rand(50)
+        frenzy
+        mpnowait
+else
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+endif
+~
+|
+#80147
+librarian elf elven~
+ºëÆF¹Ï®ÑÀ]­û(Elven Librarian)~
+¤@¦WºëÆF¹Ï®ÑÀ]­û(Elven Librarian)¥^¦£¦a¶]¹L§A¨­Ãä¡A±N®Ñ¥»©ñ¦^¦U³B¡C
+~
+³o¨Ç¼ö±¡¡B¤u§@¹L«×ªº¹Ï®ÑÀ]­û¥¿»{¯u¦a¾Ä¾Ô¡A¥H¨D»°±o¤W­n¨Dªº¶i«×¡Ð¡Ð±N®Ñ
+¥»©ñ¦^­ì³B¥H¤Î´À¼Æ¦Ê¸U¥UªºÂÃ®Ñ½s»s¥Ø¿ý¡C
+~
+1|64|128 32|128|512 1000 S
+30 3000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80148
+librarian elf elven~
+ºëÆF¹Ï®ÑÀ]­û(Elven Librarian)~
+¤@¦WºëÆF¹Ï®ÑÀ]­û(Elven Librarian)¥^¦£¦a¶]¹L§A¨­Ãä¡A±N®Ñ¥»©ñ¦^¦U³B¡C
+~
+³o¨Ç¼ö±¡¡B¤u§@¹L«×ªº¹Ï®ÑÀ]­û¥¿»{¯u¦a¾Ä¾Ô¡A¥H¨D»°±o¤W­n¨Dªº¶i«×¡Ð¡Ð±N®Ñ
+¥»©ñ¦^­ì³B¥H¤Î´À¼Æ¦Ê¸U¥UªºÂÃ®Ñ½s»s¥Ø¿ý¡C
+~
+1|64|128 32|128|512 1000 S
+30 3000 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Elf~
+C 1
+P 8
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+~
+|
+#80149
+griffon~
+¼««ãªº·àølÃ~(Angry Griffon)~
+¤@ÀY¼««ãªº·àølÃ~(Angry Griffon)¦V«e²r½Ä¡A¨Ã¶}©l§ðÀ»¡I
+~
+§q³á³á³á³á³á³á³á³á³á³á³á³á³á¡I¡I
+
+·àølÃ~ªº§Q¤ö¶Ã§S¥´±o§A*** ÂA¦åª½¬y ***(281-330)¡I
+§A¥¿¦b¼Q¦å¡I
+§A¦º¤F¡I
+~
+1|2|32|64 8|32|8192 -400 S
+50 5000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Beast~
+C 1
+P 8
+#80150
+ocelot~
+°\¿ß(Ocelot)~
+¤@°¦°\¿ß(Ocelot)ÅS¥X¨eªº¤ö¤l¡A¨Ãµo¥X¥û²rªº¨g§qÁn¡C
+~
+°\¿ß¦³¤@ÂI¹³¬O¤j¤@¸¹ªº®a¿ß¡A°£¦¹¤§¥~¡A¨e­Ì¤]³\¥i¥H«rÂ_§Aªº²ä¤l¡C
+~
+1|2|256 8|32 0 S
+5 1000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Beast~
+C 1
+P 8
+#80151
+alsatian-npc dog~
+¨Èº¸ÂÄ´µ¤ü(Alsatian)~
+¤@±ø³¥ÆZªº¨Èº¸ÂÄ´µ¤ü(Alsatian)ÅS¥X¨eªº¦y¤ú©H­ýµÛ¡C
+~
+¦³¤H´¿»¡¦pªG°Êª«­Ì·|Á¿¸Ü¡A¨e­Ì·|§i¶D§A¥@¬É¤W©_§®ªº¨Æª«¡A¤£¹L­n¬O³o±øª¯
+·|Á¿¸Ü¡A¤]³\¨e·|»¡¡uºu³J¡I¡v
+~
+1|2|256 8|32 0 S
+8 1000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Beast~
+C 1
+P 8
+#80152
+sloth-npc~
+¤T³k¾ðÃi(Three-toed Sloth)~
+¤@°¦¤T³k¾ðÃi(Three-toed Sloth)¦Q±¾¦b³o¸Ì¡C
+~
+³o°¦¾ðÃi¬Ý°_¨Ó§¹¥þ¨S¦³§ðÀ»©Ê¡A¦ý­n¬OÅý¨e§ì¨gªº¸Ü¡A¨e·|®_¤F§A¡I
+~
+1|2|256 8|32 0 S
+11 1000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Animal~
+C 1
+P 8
+#80153
+kangaroo-npc~
+³U¹«(Kangaroo)~
+¤@°¦¤Íµ½ªº³U¹«(Kangaroo)¹x¥Ö¦a¸õ¹L§A­±«e¡C
+~
+¨eªº½T«Ü¹x¥Ö¡A·í³o°¦¤j«¬¬õ¤ò°Êª«¾aªñ§A®É¡A§A¬Û«H¨e¤£·|¶Ë®`§A¡C
+~
+1|2|256 8|32 0 S
+14 2000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Animal~
+C 1
+P 8
+#80154
+rhino-npc rhinoceros-npc~
+µR¤û(Rhinoceros)~
+¤@ÀYµR¤û(Rhinoceros)µo¥X§C¨IªºÁn­µ¸g¹L³o¸Ì¡C
+~
+¨e¥i¥H¨ë¬ï§A¡AÅý§AÅÜ±o¹³¦Ï¦×¦ê¤@¼Ë¡C
+~
+1|2|256 8|32 0 S
+17 2000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Animal~
+C 1
+P 8
+#80155
+gorilla~
+¤jµVµV(Huge Gorilla)~
+¤@°¦¤jµVµV(Huge Gorilla)ºVµÛ¨eªº¯Ý½£¡A¨Ãµo¥X«ÂÀ~ªº§q¥sÁn¡C
+~
+³o³Ã¥ë·|¬°¤F¤@®Ú­»¿¼¦Ó¼¹Äê§Aªº¤âÁu¡C
+~
+1|2|256 8|32 0 S
+20 2000 0 0d0+0 0d0+0
+0 0
+8 8 1
+R Animal~
+C 1
+P 8
+#80156
+pegasus~
+­¸°¨(Pegasus)~
+¤@¤Ç¨ü¹L¨}¦n°V½mªº­¸°¨(Pegasus)¨Ä¨Ä¦a¦b³o¸Ìµ¥«ÝµÛ¡C
+~
+³oÀY³¥Ã~¬O­x»Ý¹L³Ñ«~¡A¨eªº­¸¦æ®É¼Æ¤w¸g¶W¹L¼Ð·Ç¡A²{¦b¨e¬O¦¸¯Å°Ó«~¡A³Q¥Î
+³Ì§Cªº»ù®æ¥X°â¡C¬Û«H§Ú¡A¤£­n·Q¸ÕµÛ¥h¶R¤@¤Ç·sªº­¸°¨......
+~
+1|2|256 8|32|128 1000 S
+30 3500 0 0d0+0 0d0+0
+0 0
+8 8 2
+R Animal~
+C 1
+P 8
+#80157
+goblin scout~
+¤p´c°­¥¸­Ô(goblin scout)~
+¤@¦W¬ïµÛÂ²«KªZ¸Ëªº¤p´c°­(goblin)¦b³o¸Ì¶i¦æ°»¹î¤u§@¡C
+~
+¥L¥­±`ªº¤u§@¬O­t³d°»¹î¡A°¸º¸ÄÌÂZ¤@¤U¸ô¹Lªº¤H¡A¤£¹L¾Ô°«¯à¤O«o¤£«ç»ò¼Ë¡A
+»¡Â²³æÂI¡A´N¬OÂø³½......
+~
+1|2|32|64 8|32 -350 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Goblin~
+C 1
+P 8
+S 13 4000
+S 16 -500
+>fight_prog 100~
+if ispc($n)
+        if is_qmark($n) > malathar_quest 200014
+                say °Ú¡I¬O¨º³Ã¥ë¡I¶]°Ú¡I
+                mpecho $I¤@¤U¤l´N°k±oµL¼vµLÂÜ¤F¡C
+                mpechoat $n ¬Ý¼Ë¤l¥L¤j·§¤]¤£´±¦A§ä§A³Â·Ð¤F¡C
+                mpechoat $n ¤£¹L§AÄ±±o³o¨Ç³Ã¥ë¨­¤W±aµÛ¨¸®ð......¥h¸ò¶¤ªø³ø§i¤@Án¦n¤F¡C
+                mppurge self
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_quest 100002
+        if is_qmark($n) < malathar_quest 200015
+                mpmod_qmark $n malathar_quest v1 + 1
+        else
+                if is_qmark($n) == malathar_quest
+                        mpechoat $n §A±þ±o°÷¦h¤F¡A¥L­Ì¤j·§¤]¤£´±¦A§ä§A³Â·Ð¤F¡C
+                        mpechoat $n ¤£¹L§AÄ±±o³o¨Ç³Ã¥ë¨­¤W±aµÛ¨¸®ð......¥h¸ò¶¤ªø³ø§i¤@Án¦n¤F¡C
+                endif
+        endif
+endif
+~
+|
+#80158
+doll demon~
+³ÈÀw´cÅ](doll demon)~
+¤@¦W¨­±jÅé§§¡B¾Ö¦³±j¤jÅ]¤Oªº´cÅ](demon)¼««ã¦aÀüµÛ§A¡I
+~
+ÁöµM¥L¬Ý°_¨Ó¤Q¤À±j¤j¡A¦ý¬O§Aµo²{¥Lªº²´¯«¦ü¥G¦³ÂIµA´²¡A§Ï©»³Q¤°»ò±±¨î¦í
+¦üªº¡CµL½×¦p¦ó¡A§A±o·Q¿ìªk¥´­Ë¥L¤~¦æ¡A§_«h¾ÞÁa¥Lªº¹õ«á¥D¨ÏªÌ¥i¯à·|©R¥O
+¥L±þ¤F§A¡I
+~
+1|2|32|64|2048|8192|262144|1073741824 8|32|128|524288|549755813888 -1000 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Demon~
+C 1|2|4|8|32
+P 4|8|128|2048|1048576|4194304|268435456|1073741824|2147483648
+W flamestrike~ 100 500
+W dispel evil~ 100 500
+S 13 20000
+S 17 -250
+S 18 25
+S 19 25
+S 23 -30
+S 24 -30
+S 35 -30
+S 39 200
+S 40 25
+S 43 30
+S 44 30
+S 45 444
+S 46 444
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 5 mpoload 80175 36
+mpat 5 mpoload 80176 36
+mpat 5 mpoload 80177 36
+mpat 5 mpoload 80178 36
+mpat 5 wear all
+mptransfer rastellagnar-npc 5
+~
+>fight_prog 100~
+if rand(25)
+        mpecho $I±þ¬õ¤F²´¡I®i¶}´XªñºÆ¨gªº²r§ð¡I
+        frenzy
+        mpnowait
+else
+        if rand(33)
+                mpecho ¤@ªÑ¶Â·tªº¤O¶qªþµÛ¦b$IªºªZ¾¹¤W¡I
+                flaming
+                mpnowait
+                earth
+                mpnowait
+        else
+                if rand(50)
+                        disarm $r
+                        get all
+                        cast tardy $r
+                        mpnowait
+                        cast 'double heal'
+                        mpnowait
+                else
+                        if inroom($i) == 80168
+                        or inroom($i) == 80167
+                        or inroom($i) == 80166
+                                mpechoat $n $I¤@¼C±N§A¾_¶}¡I
+                                mpechoaround $n $I¤@¼C¾_­¸¤F$N¡I
+                                mptransfer $n 80197
+                        endif
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpat 5 mppurge rastellagnar-npc
+mpecho $Iµo¥Xµh­WªºÀz¥sÁn«á«K­Ë¤F¤U¥h¡I
+mpecho ¤£¦p§â¨ºªT³ÈÀw¤ô´¹®³¥hµ¹³o«°¤ºªk¤O³Ì±jªº¤H¬ã¨s¬Ý¬Ý§a¡H
+~
+|
+#80159
+demon-soldier-evil demon soldier~
+´cÅ]¤h§L(demon soldier)~
+¤@¦W­±¥Ø²uÀñªº´cÅ]¤h§L(demon soldier)´Â§A½Ä¤F¹L¨Ó¡I
+~
+¥~ªí¬Ý°_¨Ó©M¤@¯ë´cÅ]¨S¦³¦h¤jªº¤£¦P¡A¦ü¥G¬O§C¦ìªº´cÅ]¡AÄÝ©ó°ò¼hªº¤h§L¶¥
+¯Å¡CÁöµM¹ê¤O¨Ã¤£¬ð¥X¡A¤£¹L­n¬O§A¥»¨­¹ê¤O¤Ó»¹©Î¬O¤Ó¹L¤j·N¡AÁÙ¬O¦³¥i¯à·|
+³Q¥Lµ¹¥´­Ëªº......
+~
+1|32|64|8192|524288 8|32|32768|524288|1048576 -1000 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Demon~
+C 1|32
+P 1|4|8|8388608|67108864|1073741824|2147483648
+S 13 5000
+S 18 25
+S 19 25
+S 40 20
+S 43 25
+S 44 25
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 5 mpoload 80181 36
+mpat 5 wear all
+~
+>rand_prog 100~
+if area($i) != malathar
+        mpecho $I¬ðµM¤Æ¦¨¤@¹D¶Â¼v®ø¥¢µLÂÜ¡C
+        mppurge self
+else
+        if race($r) != Demon
+                mpforce $r mpkill $I
+                mpkill $r
+        endif
+endif
+~
+>all_greet_prog 100~
+if isnpc($n)
+        if race($n) != Demon
+                mpforce $n mpkill $I
+                mpkill $n
+        endif
+else
+        hunt $n
+endif
+~
+>entry_greet_prog 100~
+if isnpc($n)
+	if race($n) != Demon
+		mpkill $n
+		yell ½Ä°Ú¡ã¡ã¬°¤F¥D®_¦Ó¾Ô¡I¡I
+	endif
+else
+	hunt $r
+endif
+~
+>fight_prog 50~
+if fightwith($i) == demon-soldier-evil
+        mpdis_magic $n 'polymorph other'
+        mpgoto self
+endif
+if rand(33)
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        cast whirlwind
+        yell §ðÀ»¼Ä¤H¡I
+        mpforce $n yell ¥i´cªº´cÅ]¡I
+else
+        if rand(50)
+                mptrip $n
+                skilldrv speedhit $n
+                skilldrv speedhit $n
+                yell ±þ¡ã¡ã¡ã
+                mpforce $n yell ¦º§a¡I¨¸´c¤§®{¡I
+        else
+                cast apocalypse
+                mpnowait
+                yell ¬ðÀ»¡I¬ðÀ»¡I
+                mpforce $n yell «OÅ@µL¶d¸s²³¡I½Ä°Ú¡ã¡ã¡I
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell ¥D...¥D®_...¸U...¸U·³......
+if mobcount(80159) <= 1
+        mpat 5 mpechotoall [1;32m¡i¾Ô³ø¡j¡G¡u¶i¥Çº¿©Ô°Çªº´cÅ]³¡¶¤³Q¦u­xÀ»¼ì¡I¡v[m
+endif
+if is_qmark($n) == malathar_quest 100031
+        if is_qmark($n) < malathar_quest 200045
+                mpmod_qmark $n malathar_quest v1 + 1
+        else
+                if is_qmark($n) == malathar_quest 200045
+                        mpmod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+#80160
+swordman~
+·R¼ä±öµá¼C¤h(swordman)~
+¤@¦W¦~»´ªº¼C¤h(swordman)³Q«ü¬£¨Ó¦¹¦a¨ó¨¾¡C
+~
+·R¼ä±öµá®q¥X¨­ªº¼C¤h¡A¬Ý°_¨ÓÁÙ«Ü¦~»´¡AÁöµM¥»¨­¨ã¦³¤@©wªº¹ê¤O¡A¤£¹L¾Ô°«
+¸gÅç´N¶û¤Ö¤FÂI......
+~
+1|64|8192|16384 8|32|8192 1000 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 1|2
+P 4|8|16|8388608|67108864|1073741824|2147483648
+S 13 5000
+S 17 -250
+S 18 50
+S 19 50
+S 39 -300
+S 40 30
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 5 mpoload 80182 36
+mpat 5 wear all
+~
+>fight_prog 100~
+if rand(33)
+        cast 'turn undead' $n
+        mpnowait
+        mpforcer here cast 'polymorph other' $n 40
+else
+        if rand(50)
+                storm
+                mpnowait
+                skilldrv heavyhit $n
+                skilldrv heavyhit $n
+        else
+                fulgurant
+                mpnowait
+        endif
+endif
+~
+>rand_prog 100~
+if area($i) != malathar
+or mobcount(80159) == 0
+        mpecho $IÂ÷¶}¤F³o­Ó¦a¤è¡C
+        mppurge self
+else
+        if insameroom(demon-soldier-evil)
+                mpforce demon-soldier-evil mpkill $I
+                mpkill demon-soldier-evil
+                yell ¸Ó¦ºªº´cÅ]¡I±µ§Ú³o¤@¼C¡I
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell ¥i«ë­þ......¡I
+~
+|
+#80161
+Spipa demon~
+¥v²¦©¬(Spipa)~
+¤@¦W·¥¬°ªÎ§§ªº´cÅ](Spipa)¤@ÁyÄÛ±i¡A¥H¤£®hªº²´¥ú¨nµÛ§A¡C
+~
+·t¶Â¥D®_¤â©³¤Uªº¤@¦W­x©x¡A­t³dÄw¹º¶i§ðº¿©Ô°Çªº¨Æ©y¡A¥i¥H»¡¬O³o¤@³s¦ê¨Æ
+¥óªº¹õ«á¶Â¤â¡C¦ý¬O¡A³o³Ã¥ë¤£¦ý¥»¨­¾Ô¤O§C¦H¡A¸£µ¬¨ä¹ê¤]¦n¤£¨ì­þ¸Ì¥h¡A¯u
+¥¿¨¯­Wªº¬O¥Lªº¤â¤U­Ì¡A°£¤F¯S§O¾Õªøª§¥\½Ó¹L»P«D±`­@¥´¥H¥~¡A¥L¥»¨­¥i¥H»¡
+¨S¦³¥bÂI¹ê¤O¥i¨¥¡A¬Ý¼Ë¤l¶Â·t¶Õ¤Oªº¤@¤è¤]¬O¦³³oºØ¼o®ã¥DºÞ¦s¦bªº......
+~
+1|2|32|64|1073741824 8|32|1024|4096|524288 -1000 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Demon~
+C 1|32
+P 1|2|8|64|8388608
+W armageddon~ 100 1
+S 13 750000
+S 41 -25
+S 42 -25
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self malather_flee_check -1 75 0 0 0 1
+mpat 5 mpoload 80184 36
+mpat 5 wear all
+mpgroup self Fegass-m 1 0
+mpgroup self Entise-m 1 0
+~
+>tick_prog 100~
+if is_qmark($i) == malather_flee_check 100001
+	rumor ¼çÂÃ¦bº¿©Ô°Ç«°ªº$I¤w¸g®øÁn°Î¸ñ¤F¡C
+	mpat 80153 mpforcer here modrvt t0 = 250
+	mppurge self
+else
+	mpmod_qmark self malather_flee_check v0 - 1
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpat 80153 mpforcer here modrvt t0 = 250
+yell ©p¡B©p­Ì³o¨â­Ó¥Õ·ö¡B¼oª«¡ã¡ã³ºµMÅý§Ú³Q¤Hµ¹¥´±Ñ¤F......
+mpecho $I¦bµo¥X³Ì«áªº«ã¸¹«á´N­Ë¤F¤U¥h¡I
+mpgreward merit $n +36 10
+mpoload 80190 13
+~
+|
+#80162
+Fegass-m demon~
+µá¹Åµ·(Fegass)~
+¤@¦W¥~«¬§NÆvªºÅ]¤k(Fegass)¬Ý°_¨Ó¦ü¥G¦³µÛº¡¸¡¨cÄÌ¡C
+~
+º¿©Ô°Ç§ðÀ»¦æ°ÊÁ`«ü´§©x¡E´cÅ]¥v²¦©¬ªº°Æ©x¤§¤@¡A¦oªº¤u§@´N¬O´À³o­Ó¨S¸£µ¬
+ªº¥DºÞ¥X¥D·N¡A¨Ã¥BÀÀ©w¦UºØ§@¾Ô­pµe¡C¤£¹L¥Ñ©ó¥v²¦©¬¤£¦ý¸£µ¬«Ü®t¡A¤S·R¦Û
+§@Áo©ú¡A©Ò¥H¦oªº´£®×¨ì«á¨Ó¦h¥b·|ÅÜ½è¡AÅý¦o¬Û·íÀYµh¡A«o¤SµL¥i©`¦ó¡C
+~
+1|2|32|64|8388608|1073741824 8|32|128|524288|8589934592 -1000 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Demon~
+C 1|2|32
+P 1|2|8|64|128|1024|262144|1048576|2097152|4194304|8388608|67108864|268435456|2147483648
+S 3 10
+S 4 10
+S 13 32500
+S 23 -35
+S 24 -35
+S 35 -35
+S 40 25
+S 41 -30
+S 42 150
+S 44 50
+S 45 300
+S 46 5000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self malather_flee_check -1 76 0 0 0 1
+mpat 5 mpoload 80185 36
+mpat 5 mpoload 80186 36
+mpat 5 wear all
+~
+>tick_prog 100~
+if is_qmark($i) == malather_flee_check 100001
+	mppurge self
+else
+	mpmod_qmark self malather_flee_check v0 - 1
+endif
+~
+>fight_prog 75~
+if fightwith($i) / demon-soldier-evil
+        mpdis_magic $n 'polymorph other'
+        mpgoto self
+endif
+if rand(33)
+        say §A­Ì³o¨Ç¤H¡ã¡ã·Ð¤£·Ð°Ú¡ã¡ã¡ã¡I¡I
+        mpecho $I¥­¤é²Ö¿nªºÀ£¤O¤Æ¦¨«ã¤õ¨g´é¦Ó¥X¡I
+        cast 2 'angry fire storm' $r
+        mpnowait
+        cast 2 'angry fire storm' $n
+        mpnowait
+else
+        if rand(50)
+                say Âø¸H°{»·ÂI¡ã¡ã¡I¡I
+                mpecho $Iªºªí±¡¦ü¥G¶V¨Ó¶V¤£®®¤F......
+                cast curse $r
+                mpnowait
+                cast paralyze $r
+                mpnowait
+                cast mute $r
+                mpnowait
+        else
+                say ¾x°÷¤F¨S°Ú¡ã¡ã¡I¡I
+                mpecho $IÀH¤â´N¬O¨âµo°ª¯à¶qªi°Ê²y¡I
+                cast 2 'gdouble heal'
+                mpnowait
+                cast 2 powerball $r
+                mpnowait
+        endif
+endif
+~
+>hitprcnt_prog 15~
+if rand(20)
+        cast 'sun flash'
+        mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell ·t¶Â¥D®_¡A¸U·³¡ã¡ã¡I
+mpgreward merit $n 5
+~
+|
+#80163
+Entise-m demon~
+­^½{µ·(Entise)~
+¤@¦W­±®e§N®mªºÅ]¤k(Entise)¯¸¦b³o¸Ì¡A§AÄ±±o¦o¦n¹³«Ü¤£°ª¿³ªº¼Ë¤l¡C
+~
+º¿©Ô°Ç§ðÀ»¦æ°ÊÁ`«ü´§©x¡E´cÅ]¥v²¦©¬ªº°Æ©x¤§¤@¡A¦o¦b¹L¥h¬O¦W¬Û·í±j®«ªº¾Ô
+¤h¡A¦]¬°¦b¬Y³õ¾Ôª§¥Ç¤F¿ù»~¡A©Ò¥H³QÂà½Õ¦Ü¦¹¾á¥ô¥v²¦©¬ªºÅ@½Ã¡A¤£¹L¦o¤@ÂI
+³£¤£³ßÅw³o­Ó¤u§@¡A¤@¥b­ì¦]¬O¦]¬°¥DºÞ¹ê¦b¤Ó®t«l¤F......
+~
+1|2|32|64|2048|4096|8192|262144|1073741824 8|32|128|524288|134217728 -1000 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Demon~
+C 1|4|8|32
+P 1|2|8|64|128|1024|4194304|8388608|67108864|268435456|1073741824|2147483648
+S 1 10
+S 2 10
+S 5 10
+S 13 32500
+S 17 -250
+S 18 50
+S 19 50
+S 39 -250
+S 40 20
+S 41 150
+S 42 -30
+S 43 50
+S 44 25
+S 45 5000
+S 46 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self malather_flee_check -1 76 0 0 0 1
+mpat 5 mpoload 80187 36
+mpat 5 mpoload 80188 36
+mpat 5 wear all
+~
+>tick_prog 100~
+if is_qmark($i) == malather_flee_check 100001
+	mppurge self
+else
+	mpmod_qmark self malather_flee_check v0 - 1
+endif
+~
+>fight_prog 75~
+if fightwith($i) == demon-soldier-evil
+        mpdis_magic $n 'polymorph other'
+        mpgoto self
+endif
+if rand(33)
+        say ......­·¤ú»R¿V¡C
+        mpecho $IÀ£§C¨­Åé¡A´ÂµÛ¼Ä¤H´§¥X±j¤Oªº¤@¼C¡I
+        mpat 5 mpoload 70914 36
+        mpat 5 wear sword
+        storm
+        mpnowait
+        storm
+        mpnowait
+        flaming
+        mpnowait
+        mpat 5 remove sword
+        mpat 5 mpjunk sword
+else
+        if rand(50)
+                say ...¹p«Ò¼v»R¡C
+                mpecho ¤@¹D·tº»¤§¹p¤Æ¦¨¤F$Iªº§L¾¹¡I
+                mpat 5 mpoload 70914 36
+                mpat 5 wear sword
+                circular
+                mpnowait
+                fulgurant
+                mpnowait
+                sprinkle
+                mpnowait
+                mpat 5 remove sword
+                mpat 5 mpjunk sword
+        else
+                say ...±æ¤ë©I¸¹¡C
+                mpecho ¦b¨º¤@Àþ¶¡¡A$I­I«á§Ï©»¥X²{¤F¤@½ü·s¤ë......¡I
+                mpat 5 mpoload 70914 36
+                mpat 5 wear sword
+                perform empslash
+                mpnowait
+                mpat 5 remove sword
+                mpat 5 mpjunk sword
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+        endif
+endif
+~
+>hitprcnt_prog 15~
+if rand(20)
+        icecore
+        mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell ·t¶Â¥D®_¡A¸U·³¡ã¡ã¡I
+mpgreward merit $n 5
+~
+|
+#0
+
+#OBJECTS
+#80100
+sword lightbringer~
+ºëÆF¤ý°ê¤§¼C¡E±s¥ú¨ÏªÌ(lightbringer)~
+ºëÆF¤ý°ê¤§¼C¡E±s¥ú¨ÏªÌ(lightbringer)©ñ¦b³o¸Ì¡A´²µo¥XÄ£¥Øªº¥ú½÷¡C~
+~
+5 1|2|64|1024 1|8192
+150~ 0~ 45~ 3~
+25 0 0
+A
+1 1
+A
+2 1
+A
+5 1
+A
+18 5
+A
+19 5
+E
+lightbringer sword~
+±s¥ú¨ÏªÌ¬OºëÆF¤§¯«¬°Í¢¯S§O³ß·Rªº§g¥D­Ì©Ò¥´³yªº¤C§âªZ¾¹¤§¤@¡A¥¦¬O¦b¤p´c°­
+¾Ôª§¤¤°ß¤@¯d¦sªº¤@§âªZ¾¹¡A²{¦b«h³Qº¿©Ô°Çªº¥v¶ð©Ô¯Á©Ô¶ð¤½Àï¦¬ÂÃµÛ¡C
+~
+V Goblin~ 50 100 50 100
+V Hobgoblin~ 50 100 50 100
+V Undead~ 0 125 0 150
+X light matter~
+#80101
+malathar crown~
+º¿©Ô°Ç¤§«a(Crown of Malathar)~
+³o³»ÄÝ©óº¿©Ô°Ç«°¤½Àïªº¤ý«a(Crown)©ñ¦b³o¸Ì¡C~
+~
+9 1|2|1024|4096 1|16
+0~ 0~ 150~ 0~
+25 0 0
+A
+3 1
+A
+4 1
+A
+35 8
+A
+42 10
+E
+crown~
+³o³»¤ý«a¬O¥ÑºëÆF¤§¯«¬°º¿©Ô°Çªº¤½Àï­Ì©Ò¥´³yªº¡A¥¦µ¹¤©¥L­Ì»·°ª©ó¤@¯ëºëÆF
+ªº´¼¯à¡C
+~
+X light matter~
+#80102
+famous cloak~
+°ª¯ÅÅ@³T(Famous Cloak)~
+³o¥óÄÝ©óº¿©Ô°Ç«°¥v¶ð©Ô¯Á©Ô¶ð¤½Àïªº°ª¯ÅÅ@³T(Famous Cloak)¦b§A¸}ÃäÄÆ´­µÛ¡C~
+~
+9 2|1024|32768 1|1024
+0~ 0~ 150~ 0~
+25 0 0
+A
+3 -1
+A
+40 -4
+A
+44 9
+F 524288
+E
+cloak~
+³o¥óÅ@³T¬O¥Ñ¤jªk®v¦«º¸©Ò³]­p¡A¦b¤@¦¸°¸µMªº¬Iªk¤¤Åý¥¦ÅÜ¦¨¤W¯Å«~¡A¥u­n¨S
+¦³¯}·l¡A¥¦·|¤@ª½ÄÆ´­µÛ¡C
+~
+X light matter~
+#80103
+duchess ring~
+¤½Àï¤Ò¤H¤§§Ù(Duchess' Ring)~
+º¿©Ô°Ç«°¤½Àï¤Ò¤Hªº§Ù«ü(ring)¥á¦b³o¸Ì¡A°{°{µo¥ú¡C~
+~
+8 1 1|2
+0~ 0~ 0~ 0~
+10 0 0
+A
+3 1
+A
+4 1
+X gold~
+#80104
+duchess diadem~
+¤½Àï¤Ò¤H¤§«a(Duchess' Diadem)~
+º¿©Ô°Ç«°¤½Àï¤Ò¤HªºÀY«a(diadem)°{Ä£µÛ¥ú¨~¡C~
+~
+8 1 1|16
+0~ 0~ 0~ 0~
+10 0 0
+A
+23 -3
+A
+24 -3
+X silver~
+#80105
+duchess slippers~
+¤½Àï¤Ò¤H¤§¾c(Duchess' Slippers)~
+º¿©Ô°Ç«°¤½Àï¤Ò¤Hªº«K¾c(slippers)©ñ¦b³o¸Ì¡C~
+~
+9 1|4096 1|64
+0~ 0~ 120~ 0~
+20 0 0
+A
+5 2
+A
+14 50
+E
+slippers~
+³o¬O¥Ñ¤jªk®v¦«º¸¬°¤½Àï¤Ò¤H¯S§O»s§@ªº¡A¥¦¯à´£¨Ñ¨Ï¥ÎªÌÅå¤Hªº¬X³n«×¡C
+~
+X fiber~
+#80106
+tuo robe~
+¦«º¸¤§³T(tuo's Robe)~
+¤jªk®v¦«º¸ªº³T¤l(robe)©ñ¦b³o¸Ì¡C~
+~
+9 1|1024|4096 1|8
+0~ 0~ 300~ 0~
+20 0 0
+A
+1 -2
+A
+2 -2
+A
+3 2
+A
+4 1
+A
+5 -2
+A
+12 25
+A
+13 -20
+A
+14 -40
+A
+24 -3
+E
+robe~
+¾Ú»¡¤jªk®vªº³T¤l¾Ö¦³¦Û¤vªº¥Í©R¡A¤@¥¹©Ü¤W¥¦ªº¸Ü±q¦¹´N²æ¤£¤U¨Ó¤F......
+~
+X silver~
+#80107
+power gem~
+¤O¶qÄ_¥Û(Power Gem)~
+¤@Áû¤O¶qÄ_¥Û(Power Gem)½ö¦b³o¸Ì¡C~
+~
+8 32|256|1024 1|16384
+0~ 0~ 0~ 0~
+50 0 0
+A
+12 50
+E
+gem~
+¤O¶qÄ_¥Û¬O¥Ñ¬Y¨Ç¦Ñ¤H©Ò³Ð³y¥X¨Óªº¡A¯à´£¨Ñ¥L­Ì±j¤jªºÅ]ªk¯à¶q¡C
+~
+X gem~
+#80108
+tuo spellbook~
+¤jªk®v¦«º¸ªºÅ]ªk®Ñ(Archmage Tuo's Spellbook)~
+¤jªk®v¦«º¸ªºÅ]ªk®Ñ(Archmage Tuo's Spellbook)©ñ¦b³o¸Ì¡C~
+~
+2 1|2|1024 1|16384
+40~ powerball~ poison~ acid breath~
+50 0 0
+E
+spellbook~
+·í¾\Åª³o¥»¦«º¸ªºÅ]ªk®Ñ®É¡A¤£¨ü§ô¿£ªº¥¨¤jÅ]ªk¯à¶q´ÂµÛ§A§u»wªº¥Ø¼Ð¦Ó¥h¡A
+¦h¥b·|Åý¥Ø¼Ð¨ü¨ì­P©Rªº¶Ë®`¡C
+~
+X paper~
+#80109
+tuo scroll~
+¤jªk®v¦«º¸ªºÀ³«æ¨÷¶b(Archmage of Tuo's emergency Scroll)~
+¤jªk®v¦«º¸ªºÀ³«æ¨÷¶b(Archmage of Tuo's emergency Scroll)©ñ¦b³o¸Ì¡C~
+~
+2 1|2|1024 1|16384
+40~ double heal~ double heal~ double heal~
+10 0 0
+E
+scroll~
+¨÷¶b¤W­±¼gµÛ¡G¡u·í¾D¨ìºò«æ¦MÃø®É¡A®Ô»w³o¨÷¶b¡C¡v
+~
+X paper~
+#80110
+tuo wand~
+¤jªk®v¦«º¸ªº©_²§ªk§ú(Archmage Tuo's Wondrous Wand)~
+¤jªk®v¦«º¸ªº©_²§ªk§ú(Archmage Tuo's Wondrous Wand)©ñ¦b³o¸Ì¡C~
+~
+3 1|1024 1|16384
+40~ 3~ 3~ identify~
+5 0 0
+E
+wand~
+³o§âªk§ú¯à¨ó§U«ù¦³ªÌÁA¸Ñ¦Û¤v©Ò¾Ö¦³ªºª««~¬O¤°»òªF¦è¡C
+~
+X oak~
+#80111
+yuul orb~
+±yº¸Ä_¯](Orb of Yuul)~
+±yº¸Ä_¯](Orb of Yuul)¦w¸m¦b¦¹¡A°{Ä£µÛ©_§®ªº¥ú¨~¡C~
+~
+4 1|2|1024 1|16384
+40~ 3~ 3~ protection~
+25 0 0
+E
+orb~
+ºëÆF¤§¯«¬°Í¢ªº²½¥q­Ì³Ð³y¤F³oÁûÄ_¯]¡AÅý¥L­Ì¯à«OÅ@¦Û¤v¡C
+~
+X crystal~
+#80112
+priest mitre~
+¤j²½¥qÂ§«a(High Priest's Mitre)~
+¤j²½¥q©ÔªL§Æ©ÔªºÂ§«a(Mitre)©ñ¦b³o¸Ì¡C~
+~
+9 1|64|1024 1|16
+0~ 0~ 150~ 0~
+15 0 0
+A
+17 -15
+E
+mitre~
+³o³»¯«¯µªºÀY«a´£¨Ñ¨Ø±aªÌ·¥¬°¦³®Äªº«OÅ@¡C
+~
+X mithril~
+#80113
+holy symbol~
+ºëÆF¤§¯«¸t¼Ð(Holy Symbol of Yaegar)~
+¤@­ÓºëÆF¤§¯«ªº¸t¼Ð(Holy Symbol of Yaegar)©ñ¦b³o¸Ì¡C~
+~
+9 1|2|1024 1|16384
+0~ 0~ 150~ 0~
+20 0 0
+A
+4 1
+A
+5 1
+A
+41 3
+A
+42 4
+E
+symbol~
+¦b¥@¬É¤¤¥u¯à¦³¤@­Ó¤H¾Ö¦³³o¥óª««~¡A¨º­Ó¤H´N¬OºëÆF¤§¯«ªº¿Ë±K¦n¤Í¡Aº¿©Ô°Ç
+«°ªº¤j²½¥q©ÔªL§Æ©Ô¡A¦pªGÍ¢µo²{ÁÙ¦³¨ä¥L¤H¨­¤W¦³³o¥óª««~¡AÍ¢ÅK©w·|¬Û·í¦a
+Åå´j......
+~
+X diamond~
+#80114
+dragon hoard~
+Às¤§¯µÄ_(Dragon's Hoard)~
+¤@°ïÀs©Ò§y¿nªºª÷¹ô(coins)°ï¦b³o¸Ì¡C~
+~
+20 1 1|16384
+50000~ 0~ 0~ 0~
+50 50000 0
+X gold~
+#80115
+dragon scale~
+¥Õª÷ÀsÅì(Scale from a Platinum Dragon)~
+³o¤ùÀsÅì(scale)¥i¥H®³¨Ó°µ¥X¤@­±§¹¬üªº¬ÞµP......~
+~
+9 1|128|2048 1|512
+0~ 0~ 200~ 0~
+25 0 0
+A
+13 25
+A
+23 -3
+A
+24 -3
+E
+scale~
+³o¤ùÀsÅì¬O±q¥¨¤jªº¥Õª÷Àsº~®¦¨­¤W¨ú±oªº¡C
+~
+X dragon scale~
+#80116
+treasure chest~
+Ä_½c(Treasure Chest)~
+¥Õª÷Àsº~®¦ªºÄ_½c(Treasure Chest)¡A¥¦¬Ý°_¨Ó«D±`¦a­«......~
+~
+15 8|64 0
+1000~ 15~ 80117~ 0~
+250 0 0
+E
+chest~
+³o­Ó½c¤l¸Ë¦³º~®¦ªº°]Ä_¡C
+~
+X steel~
+#80117
+wyrm key~
+­¸ÀsÆ_°Í(WyrmKey)~
+º~®¦ªº­¸ÀsÆ_°Í(WyrmKey)½ö¦b³o¸Ì¡C~
+~
+18 1 1|16384
+0~ 0~ 0~ 0~
+5 0 0
+E
+key~
+³o§âÆ_°Í¬O®³¨Ó¶}º~®¦ªºÄ_½c¥Îªº¡C
+~
+T 3
+X steel~
+#80118
+bone helmet~
+ÀJ¹¢µØÄRªº¥Õ°©ÀY²¯(Beautifully-Carved Bone Helmet)~
+³o³»ÀY²¯(helmet)¬Ý°_¨Ó´Î·¥¤F¡I³o¬O±qÀs¤§¯µÄ_¤¤§ä¥X¨ÓªºªF¦è¡Aµ´¹ï«Ü­È¿ú¡C~
+~
+9 1|2|128|4096 1|16
+0~ 0~ 100~ 0~
+50 0 0
+A
+1 -1
+A
+2 -1
+A
+3 -1
+A
+4 -1
+A
+5 -1
+A
+12 -15
+A
+13 -25
+A
+14 -35
+A
+17 25
+A
+18 -3
+A
+19 -3
+E
+helmet~
+³o³»ÀY²¯¬O§A¬Ý¹L³Ì¬üÄRªºªF¦è......
+~
+X dragon bone~
+#80119
+elite helm~
+ºë½oÀY²¯(Elite Helm)~
+¤@³»ºë½oªºÀY²¯(Elite Helm)©ñ¦b³o¸Ì¡C~
+~
+9 64 1|16
+0~ 0~ 200~ 0~
+15 0 0
+A
+1 1
+A
+5 1
+A
+17 -10
+X steel~
+#80120
+ring signet~
+º¿©Ô°ÇÃÑ§O§Ù«ü(Malatharan Signet Ring)~
+¤@Áûº¿©Ô°ÇÃÑ§O§Ù«ü(Malatharan Signet Ring)½ö¦b³o¸Ì¡C~
+~
+9 64 1|2
+0~ 0~ 100~ 0~
+5 0 0
+A
+19 3
+A
+44 3
+E
+ring~
+³oÁû§Ù«üÀJ¹¢µØ¬ü¡A¤WÀY¦³µÛº¿©Ô°Ç¤½Àï»â¦aªº¯¾³¹¡C
+~
+X silver~
+#80121
+armor elite~
+µ×­^½Ã§LÅ@¥Ò(Armor of an Elite Guard)~
+µ×­^½Ã§LªºÅ@¥Ò(Armor of an Elite Guard)½ö¦b³o¸Ì¡C~
+~
+9 64 1|8
+0~ 0~ 200~ 0~
+20 0 0
+A
+18 3
+A
+19 1
+X steel~
+#80122
+silvery leggings~
+»È¥Õ¦âÅ@»L(Silvery Leggings)~
+¤@¹ï»È¥Õ¦âªºÅ@»L(Silvery Leggings)©ñ¦b³o¸Ì¡C~
+~
+9 64 1|32
+0~ 0~ 130~ 0~
+15 0 0
+A
+3 1
+A
+4 1
+X steel~
+#80123
+shiny steel sword~
+°{Ä£¿û¼C(Shiny Steel Sword)~
+¤@§â°{Ä£ªº¿û¼C(Shiny Steel Sword)¦b³o¸Ì¡C~
+~
+5 1|64|131072|16777216 1|8192
+150~ 0~ 40~ 3~
+30 0 0
+A
+18 2
+A
+19 2
+A
+43 20
+X steel~
+#80124
+malathar shield~
+º¿©Ô°Ç¯¾³¹¤§¬Þ(Shield bearing the Coat of Arms of Malathar)~
+¤@­±Æ^¦³º¿©Ô°Ç¯¾³¹ªº¬ÞµP(Shield)¦b³o¸Ì¡C~
+~
+9 64 1|512
+0~ 0~ 150~ 0~
+20 0 0
+A
+19 2
+A
+17 -15
+X steel~
+#80125
+sturdy longbow~
+°í©Tªø¤}(sturdy longbow)~
+¤@±i°í©Tªºªø¤}(sturdy longbow)½ö¦b³o¸Ì¡C~
+~
+5 64 1|32768
+150~ 0~ 0~ 14~
+15 0 0
+A
+2 2
+A
+18 7
+A
+19 9
+A
+43 10
+X wooden~
+#80126
+sturdy arrow~
+°í©T§Q½b(sturdy arrow)~
+¤@§ô°í©Tªº§Q½b(sturdy arrow)½ö¦b³o¸Ì¡C~
+~
+27 64 1|65536
+300~ 0~ 0~ 0~
+20 0 0
+A
+14 -10
+A
+43 8
+X steel~
+#80127
+humble scout cloak~
+²ÊÁW¥¸­Ô¤æ½´(humble Scout's Cloak)~
+¤@¥ó²ÊÁWªº¥¸­Ô¤æ½´(humble Scout's Cloak)¦b³o¸Ì¡C~
+~
+9 4 1|4
+0~ 0~ 175~ 0~
+10 0 0
+A
+1 1
+A
+14 50
+X cloth~
+#80128
+dirty boots~
+»êÅ¼ªº¹u¤l(dirty boots)~
+¤@Âù»êÅ¼ªº¹u¤l(dirty boots)½ö¦b³o¸Ì¡A¬Ý°_¨Ó«Ü­@¥Î¡C~
+~
+9 0 1|64
+0~ 0~ 75~ 0~
+10 0 0
+A
+2 2
+A
+14 50
+A
+18 2
+E
+boots~
+³oÂùÅ¼¤¼¤¼ªº¹u¤l¬Oº¿©Ô°Ç¬Y­ÓºëÆF¥¸­Ôªº¡A¥¦ªº¥D¤H¬ïµÛ¥¦¶i¦æ¹L¼Æ¤£²Mªº¥ô
+°È¡A¥H«OÅ@ºëÆF¤j³°¤£¨ü¤p´c°­»P­¹¤H§¯Å§À»¡A¥¦¤w¸g¦]¦¹¦Ó¿i·l±o«ÜÄY­«¤F¡C
+~
+X leather~
+#80129
+Malatharan War Banner~
+º¿©Ô°Ç¾ÔºX(Malatharan War Banner)~
+¤@¤äº¿©Ô°Ç¾ÔºX(Malatharan War Banner)©ñ¦b³o¸Ì¡C~
+~
+1 1 1|16384
+0~ 0~ 24~ 0~
+5 0 0
+A
+5 2
+A
+41 5
+E
+banner~
+º¿©Ô°ÇªººëÆF¾Ô¤h­Ì¥Î³oª±·N¨à¦b¶Â©]¤¤·Ó©ú¡C
+~
+X steel~
+#80130
+sturdy shield~
+°í©T¬ÞµP(sturdy shield)~
+¤@­±¬Ý°_¨Ó«Ü°í©TªººëÆFÅ@¬Þ(shield)©ñ¦b³o¸Ì¡C~
+~
+9 64 1|512
+0~ 0~ 150~ 0~
+10 0 0
+A
+41 5
+A
+42 2
+X steel~
+#80131
+sturdy sword~
+°í©Tªø¼C(sturdy sword)~
+¤@§â¬Ý°_¨Ó«Ü°í©TªººëÆFªø¼C(sword)©ñ¦b³o¸Ì¡C~
+~
+5 64 1|8192
+150~ 0~ 0~ 3~
+15 0 0
+A
+4 1
+A
+18 8
+A
+44 12
+X steel~
+#80132
+sturdy helm~
+°í©TÀY²¯(sturdy helm)~
+¤@³»¬Ý°_¨Ó«Ü°í©TªººëÆFÀY²¯(helm)©ñ¦b³o¸Ì¡C~
+~
+9 64 1|16
+0~ 0~ 150~ 0~
+10 0 0
+A
+23 -3
+A
+24 -3
+X steel~
+#80133
+sturdy breastplate~
+°í©T¯Ý¥Ò(sturdy breastplate)~
+¤@¥ó¬Ý°_¨Ó«Ü°í©TªººëÆF¯Ý¥Ò(breastplate)©ñ¦b³o¸Ì¡C~
+~
+9 64 1|8
+0~ 0~ 150~ 0~
+10 0 0
+A
+27 -4
+A
+24 -3
+X steel~
+#80134
+sturdy leggings~
+°í©TÅ@»L(sturdy leggings)~
+¤@Âù¬Ý°_¨Ó«Ü°í©TªººëÆFÅ@»L(leggings)©ñ¦b³o¸Ì¡C~
+~
+9 64 1|32
+0~ 0~ 150~ 0~
+10 0 0
+A
+14 -10
+X steel~
+#80135
+acolyte mittens~
+¨Í²½¤â®M(Acolyte's Mittens)~
+¤@ÂùºëÆF¨Í²½­Ì¥Î¨Ó«O·x¤â³¡ªºµ³¤ò¤â®M(mitten)¡C~
+~
+13 256 1|128
+0~ 0~ 0~ 0~
+5 0 0
+A
+37 -3
+X wool~
+#80136
+High Guardian's Two-Handed Sword~
+°ª¶¥½Ã¤hÂù¤â¼C(High Guardian's Two-Handed Sword)~
+¤@§â°ª¶¥½Ã¤h©Ò¥ÎªºÂù¤â¼C(High Guardian's Two-Handed Sword)¡C~
+~
+5 1|2|64|256|1024 1|32768
+200~ 70~ 75~ 3~
+80 0 0
+A
+1 3
+A
+18 10
+A
+19 10
+E
+sword~
+³o§â¥¨¤jªºªZ¾¹¬O¥Ñ°¶¤jªººëÆF¤§¯«¥Î¨ä¯«¯µªº¤O¶q©ÒÅ±¡A±M¨Ñ¬°¯«¦Ó¾Ôªº½Ã¤h
+°õ¦æ­«­n¥ô°È©Ò¥Î¡C
+~
+X steel~
+>obj_act wear~
+if objval1($o) != 70
+	oset self v1 = 70
+	oset self v2 = 75
+endif
+~
+|
+#80137
+High Guardian's Face Mask~
+°ª¶¥½Ã¤h­±¨ã(High Guardian's Face Mask)~
+°ª¶¥½Ã¤h±qÅK­±¤H¨º¸Ì­É¨Óªº­±¨ã(Mask)¡C~
+~
+9 2|256|1024|2048|4096 1|16
+0~ 0~ 200~ 0~
+50 0 0
+A
+19 6
+A
+28 5
+X steel~
+
+#80138
+pet collar~
+Ãdª«¶µ°é(Pet's Collar)~
+³o­Ó¶µ°é(collar)¥Nªí¨Ø±aªÌ¬OºëÆF°ê«×¤¤¤@°¦©¾¹êªºÃdª«......~
+~
+9 1024|4096 1|4
+0~ 0~ 100~ 0~
+10 0 0
+A
+17 -10
+E
+collar~
+­n¬O§A¥¿À¹µÛ³oª±·N¨à¡A©Ò¦³ªººëÆF­Ì³£·|¶}©l¹ï§A»¡¡u¨Äª¯ª¯¡I¨Äª¯ª¯¡I¥h§â
+¨º­Ó«r¦^¨Ó¡I¡v
+~
+X leather~
+#80139
+toy~
+ºëÆF«Äµ£ªºª±¨ã(Elven Child's Toy)~
+¤@­ÓºëÆF¤p«Ä¤£¤p¤ß§â¥Lªºª±¨ã(toy)¿ò¯d¦b³o¸Ì¡C~
+~
+13 0 1|16384
+0~ 0~ 0~ 0~
+1 0 0
+A
+1 1
+X wooden~
+#80140
+wand fud~
+¬D­çªÌ¤§§ú(Wand of Fud)~
+¤@§â¬D­çªÌ¤§§ú(wand of fud)©t¿W¦aÅ÷¥ß¦b³o¸Ì¡C~
+~
+4 64 1|16384
+10~ 3~ 3~ create food~
+5 0 0
+E
+wand fud~
+¦³¤H»¡¹L³oºØªk§ú¥i¥H¸É¨¬¤@­Ó¤H¨C¤é©Ò»Ý­nªºÀç¾i¡A¾Ú»¡¬Y­Ó°ê¤ý´N¬O¾a¥¦¡A
+¨ì²{¦b¤´µM¦s¬¡µÛ......
+~
+X emerald~
+#80141
+cup water~
+¤@ªM¤ô(Cup of Water)~
+¤@ªM¤ô(water)´X¥G§Ö­nº¡¥X¨Ó¤F¡I~
+~
+3 64 1|16384
+10~ 3~ 3~ create water~
+5 0 0
+E
+cup water~
+·í§A®³µÛ©Î·n°Ê³o­ÓªM¤l¡A·|Åý¤ô¼â¥X¨Ó¡AÂq¨ì¦a¤W¡C
+~
+X liquid~
+#80142
+stone shield~
+Å@¬Þ´¹¥Û(Shield Stone)~
+¤@¶ô°{°{µo¥úªºÅ@¬Þ´¹¥Û(shield stone)©ñ¦b³o¸Ì¡C~
+~
+4 1|64 1|16384
+10~ 3~ 3~ shield~
+5 0 0
+E
+stone~
+·í§A®³µÛ©Î¬O´§»R³o¶ôÅ@¬Þ´¹¥Û¡A·|¦b§A¨­®Ç³Ð³y¥X¤@­±Å]ªkªºÅ@¬Þ¡C
+~
+X crystal~
+#80143
+staff acid~
+»Ä»kªk§ú(Staff of Acid)~
+¤@§â»Ä»kªk§ú(Staff of Acid)©ñ¦b³o¸Ì¡C~
+~
+4 1|64 1|16384
+10~ 3~ 3~ acid blast~
+10 0 0
+E
+staff~
+­ì¥»¬O³Q³]­p¥Î¨Ó±Mªù¹ï¥I­¹¤H§¯ªº³oºØªk§ú¡A¹ï©ó¨ä¥LºØÃþªº¼Ä¤H¤]¦³¨}¦nªº
+®ÄªG¡A½à¥L­Ì¤@°O­P©Rªº»Ä²G§a¡IYEAH¡I
+~
+X mercury~
+#80144
+scroll random~
+ÀH¾÷¨÷¶b(Random Scroll)~
+¤@­ÓÀH¾÷ªº¨÷¶b(scroll)¡I¡I~
+~
+2 2|64 1|16384
+20~ blindness~ teleport~ cure blindness~
+10 0 0
+E
+scroll~
+®Ô»w¥¦¡AµM«á¬Ý¬Ý·|µo¥Í¤°»ò¨Æ§a¡I
+~
+X paper~
+#80145
+chair~
+¬Ý°_¨Ó«ÜµÎ¾Aªº´È¤l(Comfortable-looking Chair)~
+¤@±i¬Ý°_¨Ó«ÜµÎ¾Aªº´È¤l(Comfortable-looking Chair)©ñ¦b³o¸Ì¡C~
+~
+12 64 1
+0~ 0~ 0~ 0~
+100 0 0
+E
+chair~
+³o¬O¬Y­ÓºëÆF¶Q±Ú©Î¾ÇªÌªº¥ð¶¢´È¡C
+~
+X wooden~
+#80146
+ottoman~
+³n¹Ô¹¹(ottoman)~
+¤@±i³n¹Ô¹¹(ottoman)©ñ¦b³o¸Ì¡C~
+~
+12 64 1
+0~ 0~ 0~ 0~
+50 0 0
+E
+ottoman~
+³o±i³n¹Ô¹¹¬OÅý¤H®³¨ÓÀÁ¸}¥Îªº¡C
+~
+X wool~
+#80147
+table~
+¾ó¤ì®à(Oak Table)~
+¤@±iÀJ¤uºë²Óªº¾ó¤ì®à(Oak Table)©ñ¦b³o¸Ì¡C~
+~
+12 64 1
+0~ 0~ 0~ 0~
+250 0 0
+E
+table~
+³o±iµØÄRªº¾ó¤ì®à¬Ý°_¨Ó«D±`¦a²Â­«......
+~
+X oak~
+#80148
+light globe~
+¥ú¤§²yÅé(Light Globe)~
+¤@Áû¥ú²y(Light Globe)¦b³o¸ÌÅD°ÊµÛ¡C~
+~
+1 1|32768 16384
+0~ 0~ 24~ 0~
+1 0 0
+E
+globe~
+³o­Óº}«Gªº¸Ë¸m´£¨Ñ³o­Ó«°¥«©]¶¡ªº·Ó©ú¡C
+~
+X light matter~
+#80149
+spellbook book~
+Å]ªk®Ñ(Spellbook)~
+¤@¥»Å]ªk®Ñ(Spellbook)µo¥X©_©Çªº»ïÁn¡C~
+~
+13 2|64|128|4096 1|16384
+0~ 0~ 0~ 0~
+10 0 0
+A
+3 -2
+A
+4 -2
+A
+12 -25
+E
+spellbook book~
+³Þ¡I¤£­n¾ß¥¦¡I³á¡A¤Ñ°Ú...¤Ó±ß¤F...
+~
+X paper~
+#80150
+spellbook book~
+Å]ªk®Ñ(Spellbook)~
+¤@¥»«C»É«Ê­±ªºÅ]ªk®Ñ(Spellbook)©ñ¦b³o¸Ì¡C~
+~
+4 64 1|16384
+30~ 3~ 3~ stone skin~
+10 0 0
+E
+book spellbook~
+³o¥»Å]ªk®Ñ¬O¬Y­Ó±j¤Oªºªk®v©Ò¾Ö¦³ªº¡A¥L±q¨Ó¨S¿ìªk¦n¦n¦a¨Ï¥X¥Û¥Ò³N¡A©Ò¥H
+¥L§â¥Û¥Ò³Nª`¤J³o¥»®Ñ¡A»Ý­n¨Ï¥Îªº®É­Ô¥u­n´§»R´N¥i¥H¤F¡C
+~
+X paper~
+#80151
+tattered scroll~
+¯}Äê¨÷¶b(tattered scroll)~
+³o­Ó¨÷¶b(scroll)¬Ý°_¨Ó³QÅª¹L«Ü¦h¦¸......~
+~
+2 64 1|16384
+30~ invis~ bless~ armor~
+5 0 0
+E
+scroll~
+³o­Ó±²¶b³Q¤H®³¹L«Ü¦h¦¸¡A²{¦b¥¦ªºÃä½t¤w¸gÅÜ±o¯}¯}ÄêÄêªº¤F¡C
+~
+X paper~
+#80152
+old history book~
+¥j¦Ñªº¾ú¥v®Ñ(old history book)~
+¤@¥»¥j¦Ñªº¾ú¥v®Ñ(old history book)½ö¦b³o¸Ì¡C~
+~
+13 0 1|16384
+0~ 0~ 0~ 0~
+10 0 0
+E
+book~
+³o¥»¦³ÂIµL½ìªºÂÂ®Ñ¬O¥Ñ¤@­Ó¥s°µ¦NªBªº¤H©Ò¼gªºÃ¹°¨«Ò°ê¥j¾ú¥v¡C
+~
+X paper~
+#80153
+old science book~
+¥j¦Ñªº¬ì¾Ç®Ñ(old science book)~
+¤@¥»¥j¦Ñªº¬ì¾Ç®Ñ(old science book)½ö¦b³o¸Ì¡C~
+~
+13 0 1|16384
+0~ 0~ 0~ 0~
+10 0 0
+E
+book~
+³o¥»¦³ÂIµL½ìªºÂÂ®Ñ¬O¥Ñ¤@­Ó¥s°µ¹Fº¸¤åªº¤H©Ò¼gªº¬ì¾Ç¸ê®Æ¡C
+~
+X paper~
+#80154
+old geography book~
+¥j¦Ñªº¦a²z®Ñ(old geography book)~
+¤@¥»¥j¦Ñªº¦a²z®Ñ(old geography book)½ö¦b³o¸Ì¡C~
+~
+13 0 1|16384
+0~ 0~ 0~ 0~
+10 0 0
+E
+book~
+³o¥»¦³ÂIµL½ìªºÂÂ®Ñ¬O¥Ñ¤@­Ó¥s°µ¦«°Ç±Kªº¤H©Ò¼gªº¦a²z¸ê®Æ¡C
+~
+X paper~
+#80155
+desk~
+µØÄRªº®Ñ®à(Ornate Desk)~
+¤@±iµØÄRªº®Ñ®à(Ornate Desk)©ñ¦b³o¸Ì¡C~
+~
+12 1 0
+0~ 0~ 0~ 0~
+10000 0 0
+E
+desk~
+³o±i®Ñ®à¬Ý°_¨Ó­«¨ì«ÜÃø·h°Ê......
+~
+X wooden~
+#80156
+antique phonograph~
+¥j¦Ñªº¯dÁn¾÷(Antique Phonograph)~
+¤@ºØ¥ÎÅ]ªk´¹¥Û¨ÓÀx¦sÁn­µ°O¿ýªº³]³Æ(Antique Phonograph)³Q©ñ¸m¦b¦¹¡C~
+~
+8 2 0
+0~ 0~ 0~ 0~
+25 0 0
+E
+phonograph~
+½å¤H­Ì¯d¦b³o¸Ì­±ªºÁn­µ°O¿ý¡AÅ¥°_¨Ó¦³¤£¤ÖÂø­µ......
+~
+X gem~
+#80157
+fountain~
+¥j¦Ñªº¤ô¦À(Old Fountain)~
+³o­Ó¤ô¦À(Fountain)Åý¨Ó¨ìº¿©Ô°Ç«°ªº®È«È¯à¸É¥RÀx¤ô¡A¤w¸g¦³¼Æ¦Ê¦~¾ú¥v¤F¡C~
+~
+25 64 0
+1000~ 0~ 0~ 0~
+5000 0 0
+X stone~
+#80158
+yaegar portrait~
+ºëÆF¤§¯«ªºµe¹³(Portrait of Yaegar)~
+«z¡I¦h«Óªº¤H°Ú¡I¦h´Îªºµe¹³(Portrait)°Ú¡I~
+~
+2 1|2|64|128|4096|4194304 1|16384
+30~ combat mind~ shield~ protection~
+5 0 0
+A
+1 1
+A
+2 1
+A
+3 1
+A
+4 1
+A
+5 1
+E
+portrait~
+³o¬O§A©Ò¾Ö¦³ªº³Ì´ÎªF¦è¡I¦³µÛºëÆF¤§¯«Ã±¦Wªºµe¹³¡I
+~
+X paper~
+#80159
+sturdy backpack~
+°í©T­I¥](sturdy backpack)~
+¤@­Ó°í©Tªº­I¥](sturdy backpack)©ñ¦b³o¸Ì¡C~
+~
+15 0 1|65536
+40~ 1~ 0~ 0~
+10 0 0
+X leather~
+#80160
+sturdy helmet~
+°í©TÀY²¯(sturdy helmet)~
+¤@³»°í©TªººëÆFÀY²¯(sturdy helmet)³Q¥á¦b³o¸Ì¡C~
+~
+9 0 1|16
+0~ 0~ 150~ 0~
+5 0 0
+A
+17 -5
+X steel~
+#80161
+waterskin~
+¥Ö»s¤ô³U(waterskin)~
+¤@­Ó¥Ö»s¤ô³U(waterskin)©ñ¦b³o¸Ì¡C~
+~
+17 0 1|16384
+5~ 5~ 0~ 0~
+5 0 0
+X leather~
+#80162
+elven girdle~
+ºëÆF¸y±a(elven girdle)~
+³o±ø¸y±a(girdle)¯à¼W±j¬ïÀ¹ªÌªº±Ó±¶«×¡C~
+~
+9 0 1|2048
+0~ 0~ 150~ 0~
+5 0 0
+A
+2 1
+X tin~
+#80163
+find elven blade~
+ºë½oºëÆF¤b(fine elven blade)~
+¤@§âºë½oªººëÆF¤b(fine elven blade)¦b³o¸Ì°{°{µo¥ú¡C~
+~
+5 1|1024 1|8192
+150~ 0~ 0~ 9~
+15 0 0
+A
+18 2
+A
+19 2
+X steel~
+#80164
+find elven bow~
+ºë½oºëÆF¤}(fine elven bow)~
+¤@§âºë½oªººëÆF¤}(fine elven bow)©ñ¦b³o¸Ì¡C~
+~
+5 1|1024 1|32768
+150~ 0~ 0~ 14~
+15 0 0
+A
+18 2
+A
+19 2
+X wooden~
+#80165
+fine elven dagger~
+ºë½oºëÆF¤P(fine elven dagger)~
+³o§â¤P­º(dagger)¬O¥óº¡¾A¦X®³¨Ó­I¨ëªºªZ¾¹¡C~
+~
+5 1|1024 1|8192
+150~ 0~ 0~ 11~
+15 0 0
+A
+18 2
+A
+19 2
+X steel~
+#80166
+fine elven mace~
+ºë½oºëÆFÂñ(fine elven mace)~
+³o§âºëÆFÂñ(mace)¨ü¹LÅ]ªkªº±j¤Æ¡C~
+~
+5 1|64|1024 1|8192
+150~ 0~ 0~ 8~
+18 0 0
+A
+1 2
+X steel~
+#80167
+potion~
+ÃÄ¤ô(potion)~
+¤@²~ÃÄ¤ô(potion)©ñ¦b³o¸Ì¡C~
+~
+10 64 1|16384
+10~ heal~ cure blindness~ tardy~
+10 1000 0
+X liquid~
+#80168
+herb~
+ÃÄ¯ó(medical herb)~
+¦Y¤U¥h¤§«á¡A³oºØÃÄ¯ó(herb)¥i¥HÅýªA¥ÎªÌ¹ï¬r¯À¦³·¥°ªªº©è§Ü¤O¡C~
+~
+26 64 1
+10~ cure poison~ 0~ 0~
+1 400 0
+X herb~
+
+#80169
+bread~
+ºëÆFÄÑ¥](elven bread)~
+¤@¨ÇºëÆFÄÑ¥](elven bread)©ñ¦b³o¸Ì¡C~
+~
+19 0 1
+25~ 0~ 0~ 0~
+1 0 0
+X food~
+
+#80170
+wine~
+ºëÆF¸²µå°s(elven wine)~
+¤@¨ÇºëÆF¸²µå°s(elven wine)©ñ¦b³o¸Ì¡C~
+~
+17 0 1|16384
+5~ 5~ 2~ 0~
+5 0 0
+X liquid~
+#80171
+map~
+°Ï°ì¦a¹Ï(map of the area)~
+³o±i¦a¹Ï(map)´yÃ¸¥Xº¿©Ô°Ç«°©PÃäªº¦a°Ï¡C~
+~
+13 0 1|16384
+0~ 0~ 0~ 0~
+1 0 0
+E
+map~
+¡@
+¡@     TOPFIRE
+¡@       |
+¡@       |-----------------------TROLL
+DALE-----|
+¡@       |
+¡@       |---MIRKWOOD
+¡@       |              ------------------MALATHAR
+¡@       |              |                    |
+¡@       ----------------                    |
+¡@                      |    DRUIDS          |
+¡@                      |      |             |
+¡@                      --------           OCEAN
+¡@
+~
+X paper~
+#80172
+potion brew~
+ÃÄ°s(herbal brew)~
+³o²~ÃÄ°s(herbal brew)¯àµ¹¤©§A·¥°ªªº³t«×¡C~
+~
+10 0 1|16384
+10~ fly~ refresh~ combat mind~
+5 0 0
+X liquid~
+#80173
+brain mind nightmare druid~
+Ãx¦ºªº¼w¾|¨Ì(dying druid)~
+§A¬Ý¨£¤@­Ó§Ö­n±¾±¼ªº¼w¾|¨Ì(druid)½ö¦b³o¸Ì¡A¥O§A·Q¾aªñÁ@Á@¡C~
+~
+12 0 0
+150~ 0~ 0~ 1~
+1 0 0
+E
+druid~
+§A¹ï³o­Ó³Q§é¿iªº³Ã¥ë¸£¤¤ªº´c¹Ú·P¨ì¦³¿³½ì¡A¥¦¤Ó¹L¯u¹ê¡A§AÄ±±o§A§Ï©»¯à¶i
+¤J¨Ã¥B´ê¤W¤@¸}......
+~
+X Flesh~
+#80174
+elven fruit~
+ºëÆFªG¹ê(elven fruit)~
+¤@Áû¯óºñ¦âªººÓ¤jªG¹ê(elven fruit)¡A¦n¹³«Ü¦n¦Yªº¼Ë¤l¡C~
+~
+26 64 1
+30~ double heal~ double recharge~ double refresh~
+1 0 0
+X food~
+#80175
+evil dragon sword~
+¨¸Às¼C(evil dragon sword)~
+¤@§â¾Ú»¡¬O¥Î¶ÂÀs¤§¤ú¥´³y¦¨ªº¨¸¼C(evil dragon sword)¡C~
+~
+5 2|16|64|256|512|2048|131072|4194304|16777216 1|8192
+150~ 0~ 0~ 3~
+10 0 0
+A
+4 1
+A
+44 15
+H dispel good~ 30 45 4
+H harm~ 30 45 4
+H lifesteal~ 25 35 4
+V Elf~ 30 100 0 100
+X dragon bone~
+#80176
+demon bloody riband~
+îîÅ]¦åµ·(demon bloody riband)~
+¼Æ¤£²Mªº¦å¦â²Óµ·(bloody riband)ÀôÂ¶¦¨¶ê°éª¬¡C~
+~
+9 16|512|2048|33554432 1|2048
+0~ 0~ 100~ 0~
+3 0 0
+A
+40 4
+X black matter~
+#80177
+black ganoid shield~
+¶ÂÅì°­¬Þ(black ganoid shield)~
+¤@­±¶Â±oµo«G¡A¨¸®ð¥|·¸ªº¥i©È¬ÞµP(shield)¡C~
+~
+9 1|16|64|512|2048 1|512
+0~ 0~ 300~ 0~
+10 0 0
+A
+14 -35
+A
+42 10
+X scale~
+#80178
+doll crystal~
+³ÈÀw¤ô´¹(doll crystal)~
+¤@Áû¥Î³~¤£©úªº¤ô´¹(crystal)¡C~
+~
+8 1|2|16384 1
+0~ 0~ 0~ 0~
+1 0 0
+X crystal~
+#80179
+peace bracelet~
+¥­©M¤âÅN(peace bracelet)~
+¤@­Ó¶H¼x©M¥­¦@³Bªºª÷¦â¤âÅN(peace bracelet)¡C~
+~
+9 64 1|4096
+0~ 0~ 100~ 0~
+1 0 0
+X gold~
+#80180
+goldmoon circle~
+ª÷¤ë¤§Àô(goldmoon circle)~
+¤@­Óª÷¥ú°{°{¡A¬Û·íÄ£²´ªº¤âÅN(goldmoon circle)¡C~
+~
+9 1|64|256|1024|16777216 1|4096
+0~ 0~ 150~ 0~
+1 0 0
+A
+5 1
+A
+17 -15
+X gold~
+#80181
+demon axe~
+´cÅ]¥¨©ò(demon axe)~
+¤@§â¶Â¦âªº¥¨¤j©òÀY(demon axe)¡C~
+~
+5 2|4|64|512 1|8192
+200~ 35~ 50~ 9~
+30 0 0
+A
+13 30
+A
+18 8
+A
+19 8
+X steel~
+#80182
+blessed sword~
+¸t¯¬ªø¼C(blessed sword)~
+¤@§â¨ü¹L¯«¤§¯¬ºÖªºªø¼C(blessed sword)¡C~
+~
+5 1|64|1024 1|8192
+200~ 0~ 0~ 3~
+12 0 0
+A
+33 -5
+A
+40 3
+X iron~
+#80183
+pity tears~
+««¼¦¤§²\(pity tears)~
+¤@Áû²\¯]§Îª¬ªºÄ_¥É(pity tears)¥¿°{Ä£µÛ¬X©Mªº¥ú¨~¡C~
+~
+1 1|256|1024|32768|65536|33554432 1
+0~ 0~ -1~ 0~
+1 0 0
+Z 4
+A
+4 1
+A
+18 4
+A
+19 2
+A
+35 1
+X jade~
+#80184
+ice angry headdress~
+´H¦B«ã¤õ(angry of ice)~
+¤@ªT¦B§NªºÀY¹¢(headdress)°{Ä£µÛ®£©Æªº´H¥ú¡C~
+~
+9 1|2|64|128|256|512 1|16
+0~ 0~ 130~ 0~
+2 0 0
+E
+ice angry headdress~
+§AÁ`Ä±±o³o­ÓÀY¹¢ªº³y«¬¦n¹³¦³¬YºØ·N¸q¡A¤£¹L«o¤S¤£¾å±o»s§@ªÌ·Q­nªí¹F¨Ç¤°
+»ò·N«ä......
+~
+A
+2 1
+A
+40 3
+X ice~
+#80185
+anima ring~
+´cÆFÅ]§Ù(anima ring)~
+¤@ªT±a¦³±j¤j¨¸®ðªº§Ù«ü(anima ring)¡C~
+~
+9 2|16|64|256|512|2048|16777216 1|2
+0~ 0~ 200~ 0~
+1 0 0
+A
+12 35
+A
+17 20
+A
+44 20
+P 1|32|64|32768|1048576
+X black matter~
+#80186
+snakeskin sleeves~
+³D¥ÖÅ@Áu(snakeskin sleeves)~
+¤@Âù¥Î¬YºØ¦aº»¤~¦³ªº¬r³D¤§¥Ö°µ¦¨ªºÅ@Áu(snakeskin sleeves)¡C~
+~
+9 1|4|64|128|256|512|2048|131072 1|256
+0~ 0~ 150~ 0~
+8 0 0
+A
+12 50
+A
+13 -45
+X leather~
+#80187
+cruel claw~
+¥û´Ý¦å¤ö(cruel claw)~
+¤@°Æªgº¡¦å¸ñ¡A¬Ý°_¨Ó«ÜÀb¤Hªº§Q¤ö(cruel claw)¡C~
+~
+9 2|16|64|256|512|2048|33554432 1|128
+0~ 0~ 125~ 0~
+10 0 0
+A
+5 1
+A
+43 13
+X bone~
+H cause critical~ 33 50 4
+H harm~ 33 50 4
+>obj_repop 100~
+oset self v0 = 17
+~
+>obj_act wear~
+if objval0($o) != 17
+	echoat $n ¸Ë³Æ§ó·s§¹¦¨¡C
+	oforcer here oload 80187 36 $n target
+	ogoto self
+	purge self
+endif
+~
+|
+
+#80188
+zeal bracer~
+¨g¼öµÃ¥Ò(zeal bracer)~
+¤@°Æ¯àµ¹¤©¨Ø±aªÌ§ó±j§ðÀ»¤OªºµÃ¥Ò(zeal bracer)¡C~
+~
+9 1|16|64|128|256|512|2048 1|4096
+0~ 0~ 250~ 0~
+5 0 0
+A
+19 4
+H giant strength~ 40 60 1
+X chaos matter~
+#80189
+destiny ring~
+©R¹B¯«§Ù(destiny ring)~
+¤@ÁûÄ­ÂÃµÛ±j¤j¤O¶qªº¯«©_§Ù«ü(destiny ring)¡C~
+~
+9 1|2|64|256|1024|2048|16777216 1|2
+0~ 0~ 333~ 0~
+0 300000 0
+C 300000
+Z 4
+A
+2 1
+A
+18 3
+A
+19 4
+H detect evil~ 100 50 1
+X elemental alloy~
+#80190
+malathar fight-plan~
+º¿©Ô°Ç§ðÀ»­pµe®Ñ(malathar fight-plan)~
+¤@¥»¥Î´cÅ]¤å¦r©Ò¼gªº§ðÀ»­pµe®Ñ(malathar fight-plan)¡C~
+~
+8 64|256 1
+10000~ 0~ 0~ 0~
+1 0 0
+X paper~
+#0
+
+#ROOMS
+#80100
+º¿©Ô°Ç¥­­ì~
+§A±q¶Â·tªº´ËªL¤¤Æp¥X¡A¨Ó¨ìºëÆFªº»â¦a¡Eº¿©Ô°Ç¥­­ì¡Aµ½¨}ªº¥v¶ð©Ô¯Á©Ô
+¶ð¤½Àï¦b¹ï¥L¦³¦p¯«»P¾É®vªººëÆF¤§¯«ºÊ·þ¤U¡A²ÎªvµÛ³o­Ó¦a¤è¡C»·¤èÁq¥ßµÛ°ª
+Áqªº¦y¶ð¡A¤Þ»â§A©¹¶¯°¶ªººëÆF¤§«°¡Eº¿©Ô°Ç¦Ó¥h¡C
+
+¤p¸ô®Ç¦³­Ó¤p¤pªº¼Ð¥Ü(sign)¡C
+~
+0 4 2
+D1
+©¹º¿©Ô°Çªº¹D¸ô
+~
+¹D¸ô~
+0 -1 80101
+D3
+¥­­ì
+~
+~
+0 -1 80007
+E
+sign~
+**********************************************************************
+*****³o¡@­Ó¡@°Ï¡@°ì¡@¬O¡@¥Ñ¡@¢ç¢Ï¢Ó¢Õ¢Ï¢à¡@©Ò¡@ºc¡@«ä¡@«Ø¡@¿v¡@ªº*****
+**********************************************************************
+*****  Built on a standard text editor especially for AnonyMud   *****
+*****  in October 1995, but suitable for any Merc 2.2 Mud.       *****
+**********************************************************************
+*****  Thanks to - Rainman Lenny Argh Garth Lok Fle Marc Marius  *****
+*****  Special thanks to J.R.R. Tolkien, Michael Moorcock for    *****
+*****  inspiration, and to anyone else I have left out :)        *****
+**********************************************************************
+~
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80101
+©¹º¿©Ô°Çªº¹D¸ô~
+§A¥¿¨«¦b¤@±ø¼e¼s§¹µ½ªº¹D¸ô¤W¡A¸ô®Ç«h¬O«O¾i±o«Ü¤£¿ùªº¾ð¤ì©M³òÆX¡C§A
+¥i¥HÅ¥¨ì¥_Ãä¶Ç¨Ó¹³¬O°¨¥sªºÁn­µ¡Aº¿©Ô°Ç«°«h¦b§AªºªFÃä¡C
+~
+0 0 2
+D0
+©¹¿W¨¤Ã~ªÅ¦aªº¤p¸ô
+~
+¤p¸ô~
+0 -1 80102
+D1
+©¹º¿©Ô°Çªº¹D¸ô
+~
+¹D¸ô~
+0 -1 80104
+D3
+º¿©Ô°Ç¥­­ì
+~
+¥­­ì~
+0 -1 80100
+>room_enter 127 100~
+if ispc($n)
+        if is_qmark($n) == malathar_quest 100002
+                if is_qmark($n) < malathar_quest 200015
+                        if rand(33)
+                                echo ¤@¸s¤p´c°­©¿µM¦Û¸ô®Ç½Ä¤F¥X¨Ó¡I
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                        else
+                                echo §AÄ±±o³oªþªñ¦n¹³¦³ÂI°ÊÀR......
+                        endif
+                endif
+      endif
+endif
+~
+|
+S
+#80102
+©¹¿W¨¤Ã~ªÅ¦aªº¤p¸ô~
+·í§A¶i¤J³o³B¬X©MªºªL¶¡ªÅ¦a®É¡A§A·P¨ì¤@ªÑ¬ð¦p¨ä¨Óªº©M¥­»P¹çÀR·P´é¤W
+§Aªº¤ßÀY¡C³o¸Ìªº¥sÁnÅÜ±o§ó¤jÁn¤F¡A¦Ó¥B§AÄ±±o¦Û¤v¥i¥H»D¨ì°¨ªº®ð¨ý¡CÀôÂ¶
+¦b§A©P³òªºÆF®ð¡AÅý§AÄ±±o¨S¦³¤°»ò¨Æ¤ñ½ö¤U¨Ó¦n¦n¥ð®§¤@¬q®É¶¡§ó´Îªº¤F¡C
+~
+0 4 3
+D1
+¿W¨¤Ã~ªÅ¦a
+~
+ªÅ¦a~
+0 -1 80103
+D2
+©¹º¿©Ô°Çªº¹D¸ô
+~
+¹D¸ô~
+0 -1 80101
+S
+#80103
+¿W¨¤Ã~ªÅ¦a~
+§A¤w¸g¶i¤J¤Fº¿©Ô°Çªº¿W¨¤Ã~¸t¦a¡A¿W¨¤Ã~¬Oº¿©Ô°ÇªººëÆF­Ì¿Ë±KªºªB¤Í¥H
+¤Î¹Ù¦ñ¡CµM¦Ó¡A¾¨ºÞ¨e­Ì¤Ñ©Êµ½¨}·Å©M¡A¿W¨¤Ã~­Ì°Q¹½¤J«IªÌ¡A¯S§O¬O¦³ªZ¸Ë¦Ó
+¥B±a¦³«Â¯Ù©Êªº³Ã¥ë¡A¬°¤FÅX³v³o¨Ç¤J«IªÌ¡A¨e­Ì·|²@¤£¦Ò¼{¦a¨Ï¥Î·¥¬°±j¤jªº
+¤O¶q¡C¦A¥[¤WºëÆF¬°¤F«OÅ@¨e­Ì¡AºëÆF¤jªk®v¦«º¸¦b³o­Ó¦a¤è§G¤U¤F±j¤OªºÅ]ªk
+¥H¨¾¤î¦³¤H¹ï¿W¨¤Ã~¨Ï¥ÎÅ]ªk§ðÀ»¡C
+~
+0 128|8192 3
+D3
+©¹¿W¨¤Ã~ªÅ¦aªº¤p¸ô
+~
+¤p¸ô~
+0 -1 80102
+S
+#80104
+©¹º¿©Ô°Çªº¹D¸ô~
+ªuµÛ³o±ø¸ô©¹«e¡A§AÂ÷ºëÆFªº«°¥«¤S§óªñ¤@¨B¤F¡A·í§A¸g¹L´X³B¹A®a¡A¦UºØ
+³¥¥Í°Êª«¦n©_¦a°±¤U¨Ó¨nµÛ§A¬Ý¡C¨º®y«°¥«ªº¤jªù¤w¸g¥i¥H¬Ý¨£¤F¡A½Ã¤h­Ì¾n¦u
+¦bªþªñ¡A§Y¨Ï¦b³oºØ¶ZÂ÷¤U¡A¥L­Ì¨­¤W¨ºµØÄRªº¦çªA¤´µM¬Ý±o§A²´ªá¼º¶Ã¡C¤£»·
+³B¦ü¥G¦³®y¬ö©À¹³¡C
+~
+0 0 2
+D1
+ºëÆF¤ý¬ö©À¹³
+~
+¬ö©À¹³~
+0 -1 80105
+D3
+©¹º¿©Ô°Çªº¹D¸ô
+~
+¹D¸ô~
+0 -1 80101
+>room_enter 127 100~
+if ispc($n)
+        if is_qmark($n) == malathar_quest 100002
+                if is_qmark($n) < malathar_quest 200015
+                        if rand(33)
+                                echo ¤@¸s¤p´c°­©¿µM¦Û¸ô®Ç½Ä¤F¥X¨Ó¡I
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                                mload 80157
+                        else
+                                echo §AÄ±±o³oªþªñ¦n¹³¦³ÂI°ÊÀR......
+                        endif
+                endif
+      endif
+endif
+~
+|
+S
+#80105
+ºëÆF¤ý¬ö©À¹³~
+º¿©Ô°Çªº¶Q±Ú­Ì¦b³o±ø¸ôªº³o­Ó¦a¤è¡A¥ß¤F¤@®y¥¨¤jªº¤j²z¥Û¬ö©À¹³¡AÄmµ¹
+¨º¨Ç¦º¦b¤p´c°­¾Ôª§¤¤ªº°ê¤ý­Ì¡A¨º´X³õ¾Ôª§Åý¤j³¡¥÷ªººëÆF°ê«×·´·À¤F¡CÀJ¹³
+¬O¤@¸sºëÆF«i´±¦a«OÅ@¤@­Ó¤âµL¤oÅKªº°ü¤k¥H¤Î¦oªº«Ä¤l¡A§K¨ü®£©Æªº¤p´c°­¸s
+ªº«I®`¡AÀJ¹³¥»¨­°{°{µo¥ú¡A©³³¡¨è¦³»Ê¤å(inscription)¡C
+~
+0 128 2
+D1
+¯S§O¬ð¥Xªº¹A®a
+~
+¹A®a~
+0 -1 80106
+D3
+©¹º¿©Ô°Çªº¹D¸ô
+~
+¹D¸ô~
+0 -1 80104
+E
+statue inscription~
+¤W­±¨èµÛ¡G
+¡uBan Qall Tasla'tebel'th M'es oOoranthelarita. G'kesta malla O Tostallth.¡v
+¦b³o¦æ¤U­±ÁÙ¦³¤@¦æ¡G
+¡uÄmµ¹³o¨Ç¬°¤F«OÅ@¥L­Ìªº¤H¥Á¦Ó­^«iÄë¬¹ªº°ê¤ý¡A¥L­Ì¤£À³¸Ó³Q¿ò§Ñ¡C¡v
+~
+S
+#80106
+¯S§O¬ð¥Xªº¹A®a~
+·í§A±µªñ«°¥«ªº¤jªù¡A§A¸g¹L¤@¶¡¯S§O¬ð¥Xªº¹A®a¡A¥¦¤ñ¥¦ªº¾F©~­Ì¨Ó±oº}
+«G¡B§¹µ½³\¦h¡C¤@ªÑ±a¦³¨ë¿E©Êªº¯óÃÄ¨ý¹DÀH­·ÄÆ¶i¤F§Aªº»ó¤l¡A¨ÃÅý§Aªº²´·ú
+²\¬y¤£¤î¡C¨ä¤¤¤@®°µ¡¤á¤W¦³­±¤p¼Ð¥Ü(sign)¡C
+~
+0 4 2
+D1
+º¿©Ô°Ç«°ªº¤jªù
+~
+¤jªù~
+0 -1 80108
+D2
+¯óÃÄÂåªÌªº°Ó©±
+~
+°Ó©±~
+0 -1 80107
+D3
+ºëÆF¤ý¬ö©À¹³
+~
+¬ö©À¹³~
+0 -1 80105
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+
+¡u³o¸Ì¬O»e¬À©Ô¤p©jªº®a¡A¶R½æÃÄ¯ó¡BÃÄ¤ô¡BÃÄ»I¡BÃÄ«~¥H¤ÎÅ]ªk¥Î«~¡CÀç·~®É
+¶¡¬°¨C¤Ñ¦­¤W¨ì¶À©ü¡A¾Ôª§´Á¶¡°£¥~¡C¡v
+
+¤U­±¼gµÛ¡G
+
+¡uÅwªï¥~¨Ó®È«È¡C¡v
+
+¦A¤U­±«h¼gµÛ¡G
+
+¡u½ÐºÞ¦n§AªºÃdª«¡C¡v
+~
+S
+#80107
+¯óÃÄÂåªÌªº°Ó©±~
+¶i¤J¯óÃÄÂåªÌªº°Ó©±¡A§Aµo²{¦Û¤v«Ü§Ö´N²ßºD¥ý«e»D¨ìªº©Ç¨ý¡A¬Æ¦Ü»D°_¨Ó
+ÁÙ¦³ÂI¤£¿ù¡C»e¬À©Ô«Ü§Ö¦aÅý§Aª¾¹D¨º­ÓªF¦è¬O·Ï¯ó¡A¦o±Mªù¬ã¨s¨º­Ó¡C¦P®É¦o
+¤]¦³¤@¤j°ï¨ä¥LªºªF¦è¡A¥]¬AÃÄ¤ô¡BÃÄ¯ó¥H¤ÎÃÄ»I¡C
+~
+0 8 0
+D0
+¯óÃÄÂåªÌªº°Ó©±¥~­±
+~
+°Ó©±~
+0 -1 80106
+S
+#80108
+º¿©Ô°Ç«°ªº¤jªù~
+§AÁ`ºâ©è¹Fº¿©Ô°Ç«°ªº¤jªù¡A¥¨¤jªº¾ó¤ìªù¤W¸Ë¹¢µÛªø±øª¬ªº«C»É¡C¯à·Fªº
+¦u½Ã­Ì¾n¦u¦b«°ªùªº¤º¥~¨â°¼¡A¨¾³Æ¾x¨Æªº³Ã¥ë©Î¬O±°¹ÜªÌ«e¨Ó¡C¤£¹L¡A³o®yº¿
+©Ô°Ç«°¤@ª½¹ï©M¥­ªº®È¤H­Ì´¯¶}¤jªù¡A¥¦¤w¸g¦³¤»¤Q¦~ªº·³¤ë¨S¦³Ãö¤W«°ªù¤F¡C
+
+«°ªù¤W¶K¤F±i¼Ð¥Ü(sign)¡C
+~
+0 0 1
+D1
+¤jªù¤º°¼
+~
+¤jªù~
+0 -1 80109
+D3
+¯S§O¬ð¥Xªº¹A®a
+~
+¹A®a~
+0 -1 80106
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+Åwªï¨Ó¨ì³o®y¥Ñµ½¨}ªº¥v¶ð©Ô¯Á©Ô¶ð¤½Àï»P¨fµ·¯SÄõÌH©Ô¤½Àï¤Ò¤H©Ò²Îªv¡A©M¥­
+ªººëÆF¤§«°¡Eº¿©Ô°Ç¡C³o®y«°Åwªï®È«È¡A¦ý¬O²V²V¡Bµl¤l¡B¸o¥Ç©Î¬O¨Ó¾x¨Æªº³Ã
+¥ë±N·|¨Ìªk¨ü¨ì³ÌÄY¼FªºÃg»@¡C
+
+·PÁÂ±zªº°t¦X¡C
+
+¶¤ªø¡E¶ø°Ç¶ð¼»©Ô¡C
+~
+S
+#80109
+¤jªù¤º°¼~
+§A²{¦b¥¿¯¸¦bº¿©Ô°Ç«°ªùªº¤º°¼¡A«e¤è¬O¦³¦Wªº°¨©Ô´µµó¡A³o±øµó¹D¨â°¼¦³
+«Ü°ªªº¥ÛÀð¡A°¨©Ô´µµó©¹«nÂà¦V¶ðªLµó¡A¨º±øµó¹D¦ì©ó¥«°Ï¡C¦b¾Ôª§ªº®É­Ô¡A³o
+±ø¯U¯¶ªºµó¹D«K©ó¨¾¦u¡A¦P®É§Aµo²{Àð³»¤W¦³¤@Áçªo¡A¤@¥¹¦³¼Ä¤H·Q±q³o±øµóÂô
+¤J¡Aªo´N·|¶ÉÂm¦Ó¥X¡C
+~
+0 4 1
+D1
+¦u½Ã¶ð
+~
+¶ð~
+0 -1 80137
+D3
+¤jªù¥~°¼
+~
+¤jªù~
+0 -1 80108
+S
+#80110
+¿ÕÂÄ©Ôµó~
+§A¥¿¨«¦b¿ÕÂÄ©Ôµó¤W¡A³o±øµó¹D©¹ªF³q¦V¥¸­Ô»P¦u½Ã­Ì©~¦íªº°Ï°ì¡A¥H¤Î°¨
+´\¡F©¹¦è³q©¹¤½Àï©~¦íªº®c·µ¡A¨º´É«Ø¿vª«®y¸¨¦b³o®y¹ïºÙ«°¥«ªº¥¿¤¤¥¡¡C
+~
+0 0 1
+D1
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80112
+D3
+®c·µ
+~
+®c·µ~
+0 -1 80190
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80111
+¦u½Ã¦í³B~
+§A¤w¸g¶i¤J¤Fº¿©Ô°Çµ×­^½Ã§Lªº­xÀç¤¤¡A¤j³¡¥÷ªº½Ã§L³£¥Xªù¨ì«°ªù©Î¬O»â
+¦a©P³ò¥h¾n¦u¤F¡A¥u¦³¤@¤p³¡¥÷¦]¬°¥Í¯f¡B¨ü¶Ë©Î¥ð°²ªº½Ã§L¯d¦b³o­Ó¦a¤è©ñÃP
+¨­¤ß¡B²á¤Ñ°Ûºq©Î¬O¨I«ä¡C¥L­Ì¤£·|¹ï³X«È¦³¤°»ò¼Ä·N¡A¤Ï¦Ó·|«Ü°ª¿³¦a»P¨Ó¦Û
+»·¤èªº¥~¦a¤H¶¢²á¡A¤£¹L¦b³o¨Ç«i²rªº¾Ô¤h­±«e¡AÁÙ¬O¤£­n¦³¤°»ò«I²¤©Êªº¦æ¬°
+¤ñ¸û¦n¡C
+~
+0 8 0
+D0
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80112
+S
+#80112
+¿ÕÂÄ©Ôµó~
+§A¥¿¯¸¦bµ×­^½Ã§L­Ìªº¦í³B¥~¡A©¹¥_©¹«n³£¬O¦u½Ãªº¦í³B¡A©¹¦è¬O¤½Àïªº®c
+·µ¡A¦Ü©óªFÃä«h¬O¨ä¥L¤Hªº¦í³B¡C
+~
+0 0 1
+D0
+¦u½Ã¦í³B
+~
+¦í³B~
+0 -1 80113
+D1
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80114
+D2
+¦u½Ã¦í³B
+~
+¦í³B~
+0 -1 80111
+D3
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80110
+S
+#80113
+¦u½Ã¦í³B~
+§A¤w¸g¶i¤J¤Fº¿©Ô°Çµ×­^½Ã§Lªº­xÀç¤¤¡A¤j³¡¥÷ªº½Ã§L³£¥Xªù¨ì«°ªù©Î¬O»â
+¦a©P³ò¥h¾n¦u¤F¡A¥u¦³¤@¤p³¡¥÷¦]¬°¥Í¯f¡B¨ü¶Ë©Î¥ð°²ªº½Ã§L¯d¦b³o­Ó¦a¤è©ñÃP
+¨­¤ß¡B²á¤Ñ°Ûºq©Î¬O¨I«ä¡C¥L­Ì¤£·|¹ï³X«È¦³¤°»ò¼Ä·N¡A¤Ï¦Ó·|«Ü°ª¿³¦a»P¨Ó¦Û
+»·¤èªº¥~¦a¤H¶¢²á¡A¤£¹L¦b³o¨Ç«i²rªº¾Ô¤h­±«e¡AÁÙ¬O¤£­n¦³¤°»ò«I²¤©Êªº¦æ¬°
+¤ñ¸û¦n¡C
+~
+0 8 0
+D2
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80112
+S
+#80114
+¿ÕÂÄ©Ôµó~
+§A¥¿¯¸¦bµ×­^½Ã§L­Ìªº¦í³B¥~¡A©¹¥_©¹«n³£¬O¦u½Ãªº¦í³B¡A©¹¦è¬O¤½Àïªº®c
+·µ¡A¦Ü©óªFÃä«h¬O¨ä¥L¤Hªº¦í³B¡C
+~
+0 0 1
+D0
+¦u½Ã¦í³B
+~
+¦í³B~
+0 -1 80116
+D1
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80117
+D2
+¦u½Ã¦í³B
+~
+¦í³B~
+0 -1 80115
+D3
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80112
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80115
+¦u½Ã¦í³B~
+§A¤w¸g¶i¤J¤Fº¿©Ô°Çµ×­^½Ã§Lªº­xÀç¤¤¡A¤j³¡¥÷ªº½Ã§L³£¥Xªù¨ì«°ªù©Î¬O»â
+¦a©P³ò¥h¾n¦u¤F¡A¥u¦³¤@¤p³¡¥÷¦]¬°¥Í¯f¡B¨ü¶Ë©Î¥ð°²ªº½Ã§L¯d¦b³o­Ó¦a¤è©ñÃP
+¨­¤ß¡B²á¤Ñ°Ûºq©Î¬O¨I«ä¡C¥L­Ì¤£·|¹ï³X«È¦³¤°»ò¼Ä·N¡A¤Ï¦Ó·|«Ü°ª¿³¦a»P¨Ó¦Û
+»·¤èªº¥~¦a¤H¶¢²á¡A¤£¹L¦b³o¨Ç«i²rªº¾Ô¤h­±«e¡AÁÙ¬O¤£­n¦³¤°»ò«I²¤©Êªº¦æ¬°
+¤ñ¸û¦n¡C
+~
+0 8 0
+D0
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80114
+S
+#80116
+¦u½Ã¦í³B~
+§A¤w¸g¶i¤J¤Fº¿©Ô°Çµ×­^½Ã§Lªº­xÀç¤¤¡A¤j³¡¥÷ªº½Ã§L³£¥Xªù¨ì«°ªù©Î¬O»â
+¦a©P³ò¥h¾n¦u¤F¡A¥u¦³¤@¤p³¡¥÷¦]¬°¥Í¯f¡B¨ü¶Ë©Î¥ð°²ªº½Ã§L¯d¦b³o­Ó¦a¤è©ñÃP
+¨­¤ß¡B²á¤Ñ°Ûºq©Î¬O¨I«ä¡C¥L­Ì¤£·|¹ï³X«È¦³¤°»ò¼Ä·N¡A¤Ï¦Ó·|«Ü°ª¿³¦a»P¨Ó¦Û
+»·¤èªº¥~¦a¤H¶¢²á¡A¤£¹L¦b³o¨Ç«i²rªº¾Ô¤h­±«e¡AÁÙ¬O¤£­n¦³¤°»ò«I²¤©Êªº¦æ¬°
+¤ñ¸û¦n¡C
+~
+0 8 0
+D2
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80114
+S
+#80117
+¿ÕÂÄ©Ôµó~
+§A¥¿¯¸¦bµ×­^¥¸­Ô­Ìªº¦í³B¥~¡A©¹¥_©¹«n³£¬O¥¸­Ôªº¦í³B¡A©¹¦è¬O¤½Àïªº®c
+·µ¡A¦Ü©óªFÃä«h¬O°¨´\¡C
+~
+0 0 1
+D0
+¥¸­Ô¦í³B
+~
+¦í³B~
+0 -1 80119
+D1
+¿ÕÂÄ©Ôµó©M¤p«Ñªº¥æÂI
+~
+µó¹D~
+0 -1 80120
+D2
+¥¸­Ô¦í³B
+~
+¦í³B~
+0 -1 80118
+D3
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80114
+S
+#80118
+¥¸­Ô¦í³B~
+§A¤w¸g¶i¤J¤Fº¿©Ô°Çµ×­^¥¸­Ôªº­xÀç¤¤¡A¤j³¡¥÷ªº¥¸­Ô³£¥Xªù¨ì«°ªù©Î¬O»â
+¦a©P³ò¥h¨µÅÞ¤F¡A¥u¦³¤@¤p³¡¥÷¦]¬°¥Í¯f¡B¨ü¶Ë©Î¥ð°²ªº½Ã§L¯d¦b³o­Ó¦a¤è©ñÃP
+¨­¤ß¡B²á¤Ñ°Ûºq©Î¬O¨I«ä¡C¥L­Ì¤£·|¹ï³X«È¦³¤°»ò¼Ä·N¡A¤Ï¦Ó·|«Ü°ª¿³¦a»P¨Ó¦Û
+»·¤èªº¥~¦a¤H¶¢²á¡A¤£¹L¦b³o¨ÇÃøÄñªº¹C«L­±«e¡AÁÙ¬O¤£­n¦³¤°»ò«I²¤©Êªº¦æ¬°
+¤ñ¸û¦n¡C
+~
+0 8 0
+D0
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80117
+S
+#80119
+¥¸­Ô¦í³B~
+§A¤w¸g¶i¤J¤Fº¿©Ô°Çµ×­^¥¸­Ôªº­xÀç¤¤¡A¤j³¡¥÷ªº¥¸­Ô³£¥Xªù¨ì«°ªù©Î¬O»â
+¦a©P³ò¥h¨µÅÞ¤F¡A¥u¦³¤@¤p³¡¥÷¦]¬°¥Í¯f¡B¨ü¶Ë©Î¥ð°²ªº½Ã§L¯d¦b³o­Ó¦a¤è©ñÃP
+¨­¤ß¡B²á¤Ñ°Ûºq©Î¬O¨I«ä¡C¥L­Ì¤£·|¹ï³X«È¦³¤°»ò¼Ä·N¡A¤Ï¦Ó·|«Ü°ª¿³¦a»P¨Ó¦Û
+»·¤èªº¥~¦a¤H¶¢²á¡A¤£¹L¦b³o¨ÇÃøÄñªº¹C«L­±«e¡AÁÙ¬O¤£­n¦³¤°»ò«I²¤©Êªº¦æ¬°
+¤ñ¸û¦n¡C
+~
+0 8 0
+D2
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80117
+S
+#80120
+¿ÕÂÄ©Ôµóµó¤f~
+§A¨Ó¨ì³o±øµóªº¤@³Bµó¤f¤W¡A±q³o¸Ì§A¥i¥H©¹ªF©¹°¨´\¦Ó¥h¡A©¹¦è¬Oµ×­^½Ã
+§L»P¥¸­Ô­Ìªº¦í³B¡A¦A¹L¥h«h¬O®c·µ¡A¥_Ãä¦³¤@±ø¯U¯¶ªº¤p«Ñ¡C
+~
+0 4 1
+D0
+¯U¯¶ªº¤p«Ñ
+~
+¤p«Ñ~
+0 -1 80121
+D1
+°¨´\
+~
+°¨´\~
+0 -1 80177
+D3
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80117
+S
+#80121
+¯U¯¶ªº¤p«Ñ~
+§A¥¿ªuµÛ¤@±ø¯U¯¶ªº¤p«Ñ«e¶i¡A§A¤£ª¾¹D¦Û¤v¥¿©¹¤°»ò¦a¤è¦Ó¥h¡C¬Ý°_¨Ó³o¤@
+±a¤w¸g«Ü¤[¨S¦³¤H¸g¹L¤F......
+
+§A¤@©w¬OºÆ¤F¡A¦]¬°§A²´«e¦ü¥G¥X²{¤ÛÄ±¡A«e¤è³±·t³B§Ï©»¦³¤@®y¶ð......
+~
+0 1|4|8|8192 0
+D0
+¶ð©³
+~
+¶ð~
+0 -1 80122
+D2
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80120
+S
+#80122
+¶ð©³~
+§A½T©w§A¬Ý¨ì¤@®y¶ð¡A¥¦¥¿¦n®y¸¨¦b³o±ø¤p«Ñªº¤¤¶¡¡A«Ü©úÅã¦a¬O¥Î§Aª¾ÃÑ
+½d³ò¥H¥~ªºÅ]ªk§Ë¦¨ªº¡C§A·P¨ì¤@ªÑ¯«¯µªº¤O¶q±Æ¥¸µÛ§A¡A¦ý§A¨­¬°±´ÀIªÌ©Ò¾Ö
+¦³ªº¦n©_¤ßÅX¨Ï§A©¹«e¶i¡C§A¥i¥H¨«¶i³±·t³B¡Aµn¤W¥x¶¥¶i¤J¶ð¤¤¡A©Î¬O¦^ÀY©¹
+¤p«Ñ¦Ó¥h......
+~
+0 1|8|8192 0
+D2
+¤p«Ñ
+~
+¤p«Ñ~
+0 -1 80121
+D4
+©¹¶ð¤W
+~
+¶ð~
+0 -1 80123
+S
+#80123
+µn¤W¥x¶¥~
+§A¥Ø«e¤H¦b³o®y¶ðªº¤¤¬q¡A¦Ó¥B§Aµo²{³o®y¶ð¹ê»Ú¤W¤ñ±q¥~­±¬Ý°_¨ÓÁÙ­n¨Ó
+±o¥¨¤j¡C§A³Ý¤F¤f®ð¡A·Ç³ÆÄ~Äò©¹¤Wª¦¡A¦ý§A©¿µM°±¤U¸}¨B¡A¦]¬°§A¬Ý¨£¤W¤èªº
+³±·t³B«_¥X¤@­Ó©Ç²§ªº¼v¤l......
+~
+0 1|8|8192 0
+D4
+¶ð³»
+~
+³»ºÝ~
+0 -1 80169
+D5
+¶ð©³
+~
+©³³¡~
+0 -1 80122
+S
+#80124
+¶ðªLµó~
+§A¥¿¯¸¦b¶ðªLµó¤W¡A³o¸Ì¬Oº¿©Ô°Ç«°°Ó·~¬¡°Êªº¤¤¤ß¡C¥_Ãä¦³µÛ¦U¦¡¦U¼Ëªº
+°Ó®a»P©±çE¡A©¹«n¬O¤½Àïªº®c·µ¡C
+~
+0 0 1
+D0
+¶ðªLµó
+~
+µó¹D~
+0 -1 80125
+D2
+®c·µ
+~
+®c·µ~
+0 -1 80188
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80125
+¶ðªLµó~
+§A¤H¦b¶ðªLµó¤W¡A³o±øµó¹D¸g¹L³o®yºëÆF¤§«°ªº³\¦h°Ó®a¡C«nÃä¬O¤½Àïªº®c
+·µ¡A¶ðªLµó©¹«n¥_¨â­Ó¤è¦V©µ¦ù¡C
+
+¦èÃä¬O¨¾¨ãçE¡AªFÃä«h¬OªZ¾¹çE¡C
+~
+0 0 1
+D0
+¶ðªLµó
+~
+µó¹D~
+0 -1 80128
+D1
+ªZ¾¹çE
+~
+ªZ¾¹çE~
+0 -1 80127
+D2
+¶ðªLµó
+~
+µó¹D~
+0 -1 80124
+D3
+¨¾¨ãçE
+~
+¨¾¨ãçE~
+0 -1 80126
+S
+#80126
+¨¾¨ãçE~
+§A¶i¤J¤F³o®a¨¾¨ãçE¡A³o®a©±ªº©Ò¦³¤H¬O¨ü¤H´L·qªº¦ÑÁó®æ¨½®¦¡A­t³d¸gÀç
+ªº¤]¬O¥L¡C¦UºØ¨¾¨ã³¯¦C¦b©±çEªºÀð¾À¤W¡A®æ¨½®¦ªº°Ó«~¦³³o»ò¦h¡AÅý§AÀ~¤F¤@
+¤j¸õ¡C
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8 0
+D1
+¶ðªLµó
+~
+µó¹D~
+0 -1 80125
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@·Qª¾¹D³o¸Ì¦b½æ¤°»òªF¦è¡A¿é¤JLIST¡C
+¡@·Q¶R§A³ßÅwªºªF¦è¡A¿é¤JBUY <ª««~¦WºÙ>¡C
+¡@·Q¦C¥X¯S©wºØÃþªºª««~¡A¿é¤JLIST <ª««~ºØÃþ>¡C
+¡@¦pªG¬YºØª««~¦³³\¦h¶µ¡A©Î¬O§A­n¯S©w¤@¶µªF¦è¡A¿é¤JBUY x.<ª««~¦WºÙ>
+¡@¦b³o¸Ìªº¢æ«üªº¬O¦Cªí¤Wªºª««~¸¹½X¡C
+¡@·Q­n½æªF¦è¡A¿é¤JSELL <ª««~¦WºÙ>¡C
+¡@¦pªG§A·Q¥ýª¾¹D¦ÑÁó·|¥X¦h¤Ö¿ú¶R§AªºªF¦è¡A¿é¤JVALUE <ª««~¦WºÙ>¡C
+
+¡@·PÁÂ±z¡C
+¡@¡@¡@©±¥D¡C¡v
+~
+S
+#80127
+ªZ¾¹çE~
+§A¶i¤J¤F³o®aªZ¾¹çE¡A³o®a©±ªº©Ò¦³¤H»P¸gÀçªÌ¬O¨¾¨ãçE¦ÑÁóªº¥S§Ì¡A¦«¬¥
+´µ¡C¦UºØªZ¾¹³¯¦C¦b©±çEªºÀð¾À¤W¡A¦«¬¥´µªº°Ó«~¦³³o»ò¦h¡AÅý§AÀ~¤F¤@¤j¸õ¡C
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8 0
+D3
+¶ðªLµó
+~
+µó¹D~
+0 -1 80125
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@·Qª¾¹D³o¸Ì¦b½æ¤°»òªF¦è¡A¿é¤JLIST¡C
+¡@·Q¶R§A³ßÅwªºªF¦è¡A¿é¤JBUY <ª««~¦WºÙ>¡C
+¡@·Q¦C¥X¯S©wºØÃþªºª««~¡A¿é¤JLIST <ª««~ºØÃþ>¡C
+¡@¦pªG¬YºØª««~¦³³\¦h¶µ¡A©Î¬O§A­n¯S©w¤@¶µªF¦è¡A¿é¤JBUY x.<ª««~¦WºÙ>
+¡@¦b³o¸Ìªº¢æ«üªº¬O¦Cªí¤Wªºª««~¸¹½X¡C
+¡@·Q­n½æªF¦è¡A¿é¤JSELL <ª««~¦WºÙ>¡C
+¡@¦pªG§A·Q¥ýª¾¹D¦ÑÁó·|¥X¦h¤Ö¿ú¶R§AªºªF¦è¡A¿é¤JVALUE <ª««~¦WºÙ>¡C
+
+¡@·PÁÂ±z¡C
+¡@¡@¡@©±¥D¡C¡v
+~
+S
+#80128
+¶ðªLµó~
+§A¤H¦b¶ðªLµó¤W¡A³o±øµó¹D¸g¹L³o®yºëÆF¤§«°ªº³\¦h°Ó®a¡C«nÃä¬O¤½Àïªº®c
+·µ¡A¶ðªLµó©¹«n¥_¨â­Ó¤è¦V©µ¦ù¡C
+
+¦èÃä¬OÀ\ÆU¡AªFÃä«h¬OÂø³f©±¡C
+~
+0 0 1
+D0
+¶ðªLµó
+~
+µó¹D~
+0 -1 80131
+D1
+Âø³f©±
+~
+Âø³f©±~
+0 -1 80130
+D2
+¶ðªLµó
+~
+µó¹D~
+0 -1 80125
+D3
+À\ÆU
+~
+À\ÆU~
+0 -1 80129
+S
+#80129
+ÅS¬À©ÔªºÀ\ÆU~
+·í§A¶i¤J³o®a¥j¶®ªº¤p«¬¦Û§U¦¡À\ÆU¡A¤@ªÑ­»¨ýÄÆ¤F¹L¨Ó¡A¦ü¥G¬O­èµN¦nªº
+ºëÆF­¹ª«¡C¤p¤pªºÀ\®à¤W¾QµÛ®æ¤lª¬ªº®à¥¬¡A¿O¤õ¬M·ÓµÛ¥ú·Æ©ú«Gªº¾ó¤ì¦aªO¡A
+¤@¦W¯º®eº¡­±ªººëÆF°ü¤k¯¸¦b«p¹êªº¾ó¤ìÂd¥x«á­±¹ï§A¥´©Û©I¡C
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8 0
+D1
+¶ðªLµó
+~
+µó¹D~
+0 -1 80128
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@·Qª¾¹D³o¸Ì¦b½æ¤°»òªF¦è¡A¿é¤JLIST¡C
+¡@·Q¶R§A³ßÅwªºªF¦è¡A¿é¤JBUY <ª««~¦WºÙ>¡C
+¡@·Q¦C¥X¯S©wºØÃþªºª««~¡A¿é¤JLIST <ª««~ºØÃþ>¡C
+¡@¦pªG¬YºØª««~¦³³\¦h¶µ¡A©Î¬O§A­n¯S©w¤@¶µªF¦è¡A¿é¤JBUY x.<ª««~¦WºÙ>
+¡@¦b³o¸Ìªº¢æ«üªº¬O¦Cªí¤Wªºª««~¸¹½X¡C
+¡@·Q­n½æªF¦è¡A¿é¤JSELL <ª««~¦WºÙ>¡C
+¡@¦pªG§A·Q¥ýª¾¹D¦ÑÁó·|¥X¦h¤Ö¿ú¶R§AªºªF¦è¡A¿é¤JVALUE <ª««~¦WºÙ>¡C
+
+¡@·PÁÂ±z¡C
+¡@¡@¡@©±¥D¡C¡v
+~
+S
+#80130
+Âø³f©±~
+§A¶i¤J¤F³o®a¥j¶®ªº¤pÂø³f©±¡A³o®a©±ªº¥D¤H¬O­Ó«Ü¸ÛÀµªººëÆF¡A¦W¥sÀ¹®¦
+¥d©Ô´µ¡C¥L·L¯ºµÛ¡A¨Ã¥B¹ï§A®i¥Ü¦UºØ¥L¯à´£¨Ñªº«_ÀI¥Î«~¡C
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8 0
+D3
+¶ðªLµó
+~
+µó¹D~
+0 -1 80128
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@·Qª¾¹D³o¸Ì¦b½æ¤°»òªF¦è¡A¿é¤JLIST¡C
+¡@·Q¶R§A³ßÅwªºªF¦è¡A¿é¤JBUY <ª««~¦WºÙ>¡C
+¡@·Q¦C¥X¯S©wºØÃþªºª««~¡A¿é¤JLIST <ª««~ºØÃþ>¡C
+¡@¦pªG¬YºØª««~¦³³\¦h¶µ¡A©Î¬O§A­n¯S©w¤@¶µªF¦è¡A¿é¤JBUY x.<ª««~¦WºÙ>
+¡@¦b³o¸Ìªº¢æ«üªº¬O¦Cªí¤Wªºª««~¸¹½X¡C
+¡@·Q­n½æªF¦è¡A¿é¤JSELL <ª««~¦WºÙ>¡C
+¡@¦pªG§A·Q¥ýª¾¹D¦ÑÁó·|¥X¦h¤Ö¿ú¶R§AªºªF¦è¡A¿é¤JVALUE <ª««~¦WºÙ>¡C
+
+¡@·PÁÂ±z¡C
+¡@¡@¡@©±¥D¡C¡v
+~
+S
+#80131
+¶ðªLµó~
+§A¤H¦b¶ðªLµó¤W¡A³o±øµó¹D¸g¹L³o®yºëÆF¤§«°ªº³\¦h°Ó®a¡C«nÃä¬O¤½Àïªº®c
+·µ¡A¶ðªLµó©¹«n¥_¨â­Ó¤è¦V©µ¦ù¡C
+
+¦èÃä¬OÅ]ªk°Ó©±¡AªFÃä«h¬OÅK¦KçE¡C
+~
+0 0 1
+D0
+°¨©Ô´µµó»P¶ðªLµóªºÂà¨¤~
+µó¹D~
+0 -1 80134
+D1
+ÅK¦KçE
+~
+ÅK¦KçE~
+0 -1 80133
+D2
+¶ðªLµó
+~
+µó¹D~
+0 -1 80128
+D3
+Å]ªk°Ó©±
+~
+°Ó©±~
+0 -1 80132
+S
+#80132
+¥j¦ÑªºÅ]ªk°Ó©±~
+§A¨«¶i¤F¤@®a¦³ÂI³±·tªº°Ó©±¡A©±¤º¦³µÛ¿@«pªº¥j¦Ñ¦Ï¥Ö¯È»P¾¥¤ôªº®ð¨ý¡C
+¤@°ï¬Ý°_¨Ó«Ü¤£¿ùªºÅ]§ú©Mªk§ú°ï¦b°Ó©±¤º°¼¥Í¦Ç¹Ð¡A¦³¨Ç¬Ý°_¨Ó¦³ÂI©Ç²§ªº·s
+Å]§ú»Pªk§ú¦b¤@®Çªº¬Á¼þ®i¥ÜÂd¸Ì°{°{µo¥ú¡C
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8 0
+D1
+¶ðªLµó
+~
+µó¹D~
+0 -1 80131
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@·Qª¾¹D³o¸Ì¦b½æ¤°»òªF¦è¡A¿é¤JLIST¡C
+¡@·Q¶R§A³ßÅwªºªF¦è¡A¿é¤JBUY <ª««~¦WºÙ>¡C
+¡@·Q¦C¥X¯S©wºØÃþªºª««~¡A¿é¤JLIST <ª««~ºØÃþ>¡C
+¡@¦pªG¬YºØª««~¦³³\¦h¶µ¡A©Î¬O§A­n¯S©w¤@¶µªF¦è¡A¿é¤JBUY x.<ª««~¦WºÙ>
+¡@¦b³o¸Ìªº¢æ«üªº¬O¦Cªí¤Wªºª««~¸¹½X¡C
+¡@·Q­n½æªF¦è¡A¿é¤JSELL <ª««~¦WºÙ>¡C
+¡@¦pªG§A·Q¥ýª¾¹D¦ÑÁó·|¥X¦h¤Ö¿ú¶R§AªºªF¦è¡A¿é¤JVALUE <ª««~¦WºÙ>¡C
+
+¡@·PÁÂ±z¡C
+¡@¡@¡@©±¥D¡C¡v
+~
+S
+#80133
+ÅK¦KçE~
+§A¶i¤J¤FÅK¦KçE¡A¤@­Ó¤S¼ö¤S¼éÀãªº¦a¤è¡AÁë³yÄl¤¤·n¦²ªº¤õ¿V§ë®g¥X»R°Ê
+ªº¼v¤l¡CÅK¦K¯¸¦bÁë³yÄl«e¡A¤£­@·Ð¦a¬ÝµÛ§A¡C
+
+¡u³Þ¡A§A·Q­nÔ£¡H§ÖÂI¡I§Ú¨S¨º»ò¦h¶¢¤u¤Ò¡A§Aª¾¹Dªº¡I¡v
+³o­ÓÅK¦Kªº¨­Åé¯u¬O§§±o¥i¥H.......
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8 0
+D3
+¶ðªLµó
+~
+µó¹D~
+0 -1 80131
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@¦³ªF¦è­n­×²zªº¸Ü¡A¥u»Ý­n¿é¤JREPAIR <ª««~¦WºÙ> wolthan©Îsmith´N¥i¥H¡C
+¡@¥L·|«Ü§Ö¦a­×¦n¡AµM«á§âªF¦èÁÙµ¹§A¡A¶O¥Î·|±q§Aªº°]²£¤¤¦Û°Ê¦©°£¡C¦pªG§A
+¡@ªº¿ú¤£°÷¡AÅK¦K´ì´Ë·|§â§AÅF¥X¥h¡F¦pªG§AªºªF¦è®Ú¥»¨SÃa¡A©Î¬O¥L¨S¿ìªk­×
+¡@²zªº¡A¥L·|©G½|§A¡C§Oµo¤õ¡A¥L¤Ñ¥Í´N¬O³o°ÆÃaµÊ®ð¡A§A·Q³ø´_ªº¸Ü¥u·|Åý§A
+¡@¦º±o§ó§Ö¦Ó¤w¡C
+
+¡@·PÁÂ±z¡C
+¡@¡@¡@©±¥D¡C¡v
+~
+S
+#80134
+°¨©Ô´µµó»P¶ðªLµóªºÂà¨¤~
+§A¨Ó¨ìº¿©Ô°Ç«°¨â±ø¥D­nµó¹DªºÂà¨¤³B¡A§A¥i¥H©¹«n´Â°Ó©±µó»P®c·µ¨«¥h¡A
+©Î¬O©¹¦è´Â«°ªù¦Ó¥h¡C
+~
+0 0 1
+D2
+¶ðªLµó
+~
+µó¹D~
+0 -1 80131
+D3
+°¨©Ô´µµó»P¤@®y¶ð
+~
+µó¹D~
+0 -1 80135
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80135
+°¨©Ô´µµó¶ð©³~
+§A¥¿¯¸¦b¤@®y¶ðªº©³³¡¡A¹³³o¼Ëªº¶ð¦b°¨©Ô´µµó¤W¦³¨â®y¡A³o¬O²Ä¤G®y¡C§A¥i
+¥H©¹¶ð¤W¨«¡A©Î¬OªuµÛ°¨©Ô´µµó©¹ªF©Î©¹¦è¨«¡C
+
+¤@­±¤p¤pªº°ÐÃB(plaque)±¾¦b¶ð¤W¡C
+~
+0 0 1
+D1
+°¨©Ô´µµó»P¶ðªLµóªºÂà¨¤
+~
+Âà¨¤~
+0 -1 80134
+D3
+°¨©Ô´µµó
+~
+µó¹D~
+0 -1 80136
+D4
+©¹¶ð¤W
+~
+¶ð~
+0 -1 80182
+E
+plaque~
+°ÐÃB¤W¼gµÛ¡G
+¡u³o®y¶ð¬O¶ø°Ç¶ð¼»©Ô¶¤ªøªº¿ì¤½«Ç¡AÅwªï¨ì¦¹ªí¹F§Aªº¬Ýªk¡C¡v
+~
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80136
+°¨©Ô´µµó~
+§AªuµÛ°¨©Ô´µµó©¹«e¨«¡A¥Ø«eªº¦ì¸m¬O¦b¨â®y¥¨¶ðªº¤¤¶¡¡C§A¥i¥H©¹¦è´Âº¿
+©Ô°Çªº«°ªù¨«¥h¡A©Î¬O©¹ªF´Â¥«°Ï¦Ó¥h¡C
+~
+0 0 1
+D1
+¶ð©³
+~
+¶ð~
+0 -1 80135
+D3
+¶ð©³
+~
+¶ð~
+0 -1 80137
+S
+#80137
+¶ð©³~
+§A¥¿¯¸¦b¤@®y¦u½Ã¶ðªº©³³¡¡A³o¸ÌÂ÷º¿©Ô°Ç«°ªù«Üªñ¡C§A¥i¥H©¹¦è´Â«°ªù¨«
+¥h¡A©Î¬O©¹ªF¦V²Ä¤G®y¶ð¦Ó¥h¡A¦A¤£µM¤]¥i¥H©¹¤W¶i¤J¶ð¤¤¡C§AÄ±±o§A¦n¹³¥i¥H
+Å¥¨ì¼Ò½kªº¦y¥sÁn¦Û¶ð¤¤¶Ç¨Ó......
+
+³o¸Ì¦³±i¤â¼gªº§i¥Ü(note)°v¦b¤£»·³Bªº§i¥ÜªO¤W¡C
+~
+0 0 1
+D1
+°¨©Ô´µµó
+~
+µó¹D~
+0 -1 80136
+D3
+º¿©Ô°Ç«°ªº¤jªù
+~
+¤jªù~
+0 -1 80109
+D4
+¶ð
+~
+¶ð~
+0 -1 80138
+E
+note~
+§i¥Ü¤W¼gµÛ¡G
+¡u¡@¤p¡@¤ß¡@·à¡@øl¡@Ã~¡@¡I¡@¡I¡@¡v
+~
+S
+#80138
+¦u½Ã¶ð~
+³á³á¡ã§A¦³³Â·Ð¤F¡C·í§A¶i¨ì³o¸Ì¡A§A¬Ý¨£¤@°¦¥¨¤jªº·àølÃ~§N§N¦a¨nµÛ§A
+Á@¡A¦b¨eºÆ¨g¦a´Â§Aªº³ïÄV½Ä¹L¨Ó«e¡A¨eªº³¾³ñ©M§Q¤ö¦­¤w»W¶Õ«Ýµo¡I
+~
+0 1|8192 0
+D5
+¶ð©³
+~
+¶ð~
+0 -1 80137
+S
+#80139
+¶ø²¦´µµó~
+§A¥¿¯¸¦b¶ø²¦´µµó¤W¡A³o±øªF¦è¦Vµó¹D¬ï¹L¦u½Ãªº©~¦í°Ï¡A¥H¤Î¥Á¶¡°Ï°ì¡A
+©¹ªF´Â¦V®c·µ¡A©¹¦è³q©¹¤@®y¦ì©ó¼sÁï¤½¶é¤ºªº±Ð°ó¡C
+~
+0 0 1
+D1
+®c·µ
+~
+®c·µ~
+0 -1 80184
+D3
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80140
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80140
+¶ø²¦´µµó~
+§AªuµÛ¶ø²¦´µµó©¹«e¨«¡A³q¹L¦u½Ã¥»³¡»P¥¸­Ô¤¤¤ß¡A©~¦í¦b³o¨â­Ó¦a¤èªººë
+ÆF­Ì°¸º¸·|¸g¹L§A¤À®Ç¡A¦n©_¦a¨nµÛ§A¬Ý¡A¤£¹L³o±øµó¦h¥b³£ªÅµL¤@¤H¡C§AÁô¬ù
+¥i¥H¬Ý¨£«°¥«±Ð°ó¦b¦èÃä»·³B¡A¤½Àïªº®c·µ«h¦bªFÃä¡C
+~
+0 0 1
+D0
+¦u½Ã¥»³¡
+~
+¦u½Ã¥»³¡~
+0 -1 80142
+D1
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80139
+D2
+¥¸­Ô¤¤¤ß
+~
+¥¸­Ô¤¤¤ß~
+0 -1 80141
+D3
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80143
+S
+#80141
+¥¸­Ô¤¤¤ß~
+³o¸Ì¬O¨º¨Ç·Q¦¨¬°µ×­^¥¸­Ôªº¦~»´ºëÆF­Ì©~¦í»P¾Ç²ßªº¦a¤è¡A¥L­Ì¤@¦~¤§¤¤
+µ´¤j³¡¥÷ªº®É¶¡¤£·|¦b³o¸Ì¡A¦Ó¬O¥~¥X¬¼Ây¡A°lÂÜ¤p´c°­¤J«IªÌ©Î»P¨ä¾Ô°«¡C¥u
+¦³¦b¤£¾A¦X©Î¨S¦³¥²­n¨ì³¥¥~¥hªº©u¸`¡A¥L­Ì¤~·|¯d¦b³o­Ó¦a¤è¡C
+~
+0 8 0
+D0
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80140
+S
+#80142
+¦u½Ã¥»³¡~
+³o¸Ì¬O«°¥«¦u½Ãªº¥»³¡¡A¦Û³o¸Ì°ö°V¥X¨Óªº¦u½Ã­Ì¡A§V¤O¦a¬°ºû«ùº¿©Ô°Ç«°
+µó¹Dªº©M¥­¦Ó§V¤OµÛ¡A¥L­Ì¦h¥b³B²z¤p«¬ªº¹Hªk¨Æ¥ó¡A¤ñ¸ûÄY­«ªº°ÝÃD«h¥Ñµ×­^
+½Ã§L³B²z¡C¥L­Ì¤£¬O«Ü³ßÅw¤@¯ë¥Á¶¡¤H¶i¤J¥L­Ìªº©ÐªÙ¡A¤£¹L¥L­ÌÁÙ¬O·|®e³\§A
+¶i¤J¡A¥L­Ì·|§â§A·í¦¨¥u¬O­ÓµLª¾ªº¥~¦a¤H¡A¥i¯à¤£¤Ó·|Á¿ºëÆF»y¡A©Ò¥H¤£¾å±o
+¥L­Ì¥¿¥s§AÂ÷¶}¡C
+~
+0 8 0
+D2
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80140
+S
+#80143
+¶ø²¦´µµó~
+§AªuµÛ¶ø²¦´µµó©¹«e¨«¡A³q¹LÃdª«©±»P¦a¹ÏÃ¸®vªº°Ó©±¡A³o¨â®a°Ó©±ªºÅU«È
+­Ì°¸º¸·|¸g¹L§A¤À®Ç¡A¦n©_¦a¨nµÛ§A¬Ý¡A¤£¹L³o±øµó¦h¥b³£ªÅµL¤@¤H¡C§AÁô¬ù¥i
+¥H¬Ý¨£«°¥«±Ð°ó¦b¦èÃä»·³B¡A¤½Àïªº®c·µ«h¦bªFÃä¡C
+~
+0 0 1
+D0
+Ãdª«©±
+~
+Ãdª«©±~
+0 -1 80145
+D1
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80140
+D2
+¦a¹Ï©±
+~
+°Ó©±~
+0 -1 80144
+D3
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80147
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80144
+¥j¦Ñªº¦a¹Ï©±~
+³o®a¦wÀRªº°Ó©±±MªùÃ¸»s»P³c½æ¦a¹Ï¡A¨º¦ì¦a¹ÏÃ¸®v¦b³o¤è­±ªº½T«Ü±Mºë¡A
+ÁöµM»¡¥L³Ìªñ¦¬¶°ªº¦a¹Ï¤SÂÂ¤S¤£¦X®É©y¡C
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8 0
+D0
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80143
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@¥Ø«e¦³½æªºªF¦è¡A»ù®æ³£¼g¦b¼Ð¥Ü¤W¡C
+¡@¬Ý¨ì§A³ßÅwªºªF¦è¡Aµ¹¿úª½±µ¥æ³f¡C
+¡@
+¡@                         ·PÁÂ±z¡A©±¥D¡C
+¡@¥Ø«e¦³¡G
+¡@
+¡@°Ï°ì¦a¹Ï(map of the area)      ¢C10000
+¡@                                       ¡v
+~
+S
+#80145
+Ãdª«©±~
+³\¦h©_¯S¤Ö¨£ªº¥Íª«¦b³o¸Ì³Q·í¦¨Ãdª«¶R½æ¡A¦pªG§A¦³²{ª÷¦Ó¥B·Q¶R¤@°¦ªº
+¸Ü¡C©±¤ºªº°Ó«~«Ü¤£¿ù¡A°Êª«­Ì«Ü°·±d¡A»ù®æ¤]¤£·|¤ÓÂ÷ÃÐ¡C
+
+©±çE«á¤èªºÀð¤W¦³±i¼Ð¥Ü(sign)¡C
+~
+0 8|4096 0
+D2
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80143
+E
+sign~
+¼Ð¥Ü¤W¼gµÛ¡G
+¡uÅwªï¥úÁ{¡C
+¡@·Qª¾¹D³o¸Ì¦b½æ¤°»òªF¦è¡A¿é¤JLIST¡C
+¡@·Q¶R§A³ßÅwªºªF¦è¡A¿é¤JBUY <ª««~¦WºÙ>¡C
+¡@·Q¦C¥X¯S©wºØÃþªºª««~¡A¿é¤JLIST <ª««~ºØÃþ>¡C
+¡@¦pªG¬YºØª««~¦³³\¦h¶µ¡A©Î¬O§A­n¯S©w¤@¶µªF¦è¡A¿é¤JBUY x.<ª««~¦WºÙ>
+¡@¦b³o¸Ìªº¢æ«üªº¬O¦Cªí¤Wªºª««~¸¹½X¡C
+¡@·Q­n½æªF¦è¡A¿é¤JSELL <ª««~¦WºÙ>¡C
+¡@¦pªG§A·Q¥ýª¾¹D¦ÑÁó·|¥X¦h¤Ö¿ú¶R§AªºªF¦è¡A¿é¤JVALUE <ª««~¦WºÙ>¡C
+
+¡@·PÁÂ±z¡C
+¡@¡@¡@©±¥D¡C¡v
+~
+S
+#80146
+Ãdª««Ç~
+§A¦b³o¸Ì·F»ò¡Hºu¨ì¦aº»¥h§a¡I
+~
+0 8 0
+S
+#80147
+¶ø²¦´µµó~
+§A¥¿ªuµÛ¶ø²¦´µµó©¹«e¨«¡A¬ï¹L©~¦í°Ï¡C¥«¥Á­Ì°¸º¸·|¸g¹L§A¨­®Ç¡A¦n©_¦a
+¨nµÛ§A¬Ý¡A¤£¹L³o±øµó¦h¥b³£ªÅµL¤@¤H¡C§AÁô¬ù¥i¥H¬Ý¨£«°¥«±Ð°ó¦b¦èÃä»·³B¡A
+¤½Àïªº®c·µ«h¦bªFÃä¡C
+~
+0 0 1
+D0
+©Ð«Î
+~
+©Ð«Î~
+0 -1 80148
+D1
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80143
+D3
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80149
+S
+#80148
+©Ð«Î~
+³o´É©Ð«Î¬O¬Y¨Çº¿©Ô°Ç¥«¥Áªº®a¡A²{¦bºëÆF¦h¥b¦Û¦¨¤@­Ó¤p®a®x¡C¥t¥~¡AÂô
+¶i¥L¤H®a¤¤¡B«I¥Ç¥L¤H°]²£¬O·|³Q¦u½Ã¶e®·ªº¡A©Ò¥H§A³Ì¦n§ÖÂIÂ÷¶}¡C
+~
+0 8 0
+D2
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80147
+S
+#80149
+¶ø²¦´µµó~
+§A¨Ó¨ì¶ø²¦´µµó»P¤@±ø¯¶«Ñªº¥æ·|³B¡A«Ñ¤l©¹«n¦Ó¥h¡C¦èÃä»·³B«h¬O§»°¶ªº
+º¿©Ô°Ç¤j±Ð°ó¡C
+~
+0 0 1
+D1
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80147
+D2
+¯U¯¶ªº¤p«Ñ
+~
+¤p«Ñ~
+0 -1 80150
+D3
+±Ð°ó
+~
+±Ð°ó~
+0 -1 80170
+S
+#80150
+¯U¯¶ªº¤p«Ñ~
+§AªuµÛ¤@±ø¯¶«Ñ©¹«e¨«¡A³o±ø«Ñ¤l¦b¥_Ãä»P¶ø²¦´µµó¥æ·|¡A²×¤î©ó«nÃä¤@®y
+¿O¤õ³q©úªº¶ð¡C§A¥i¥HÅ¥¨ì¼Ò½kªº©H­ýÁn±q¶ð¤¤¶Ç¨Ó¡C
+~
+0 8 0
+D0
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80149
+D2
+¿O¤õ³q©úªº¶ð
+~
+¶ð~
+0 -1 80151
+S
+#80151
+¿O¤õ³q©úªº¶ð~
+·í§A¾aªñ³o®y¿O¤õ³q©úªº«Ø¿vª«®É¡AÁn­µ©¿µM°±¤î¤F¡A§Ï©»©~¦í¦b¶ð¸Ìªº¤H
+¤w¸g»®µMª`·N¨ì§Aªº¨Ó³X¡C¤@®°´¯¶}ªº«ýªù³q©¹¶ð¤¤¤@®y½L±Û¦Ó¤Wªº¶¥±è¡A³o®y
+¶¥±èªººÉÀY¬O¤@³Bºë¥©ªº¶ÂÂ`©¥¥­¥x¡A¥ú·Æ¦Ó¥B¥¼­×¹¢¹L¡C
+~
+0 4|8|8192 0
+D0
+¯U¯¶ªº¤p«Ñ
+~
+¤p«Ñ~
+0 -1 80150
+D4
+¬üÄRªº¶ð
+~
+¶ð~
+0 -1 80152
+S
+#80152
+©¹¶ð¤W¤è~
+§A¦b³o®y¥¨¶ð¤¤©¹¤W(©Î¬O©¹¤U¡H)ªº¥b¸ô¤W¡A°±¤U¸}¨B³Ý¤f®ð¡C§AÄ±±o§A¥i
+¥HÅ¥¨ì¼Ò½kªºÁn­µ¡A¦P®É§A½T©w»D¨ì¤F¯óÃÄ¿U¿Nªº¨ý¹D¡C§A¥ªÃä¦ü¥G¦³¶ô«p­«ªº
+¥¨¥Û(monolith)¡A¥kÃäÀð¾À¤W±¾µÛ¤@­±Ááª÷ªº°ÐÃB(plaque)¡C
+~
+0 8|8192 0
+D4
+¶ð³»
+~
+¶ð~
+0 -1 80153
+D5
+¶ð©³
+~
+¶ð~
+0 -1 80151
+E
+monolith~
+³o¶ô«p­«ªº¥¨¥Û³Q¨è¦¨¹³¬O¤Hªº¼Ò¼Ë¡A¤£¹L¨è±o¤£«ç»òºë²Ó¡A§A²q·Q³o¬O¬Y
+¤H¼Ò¥é¬Y®yÀJ¹³°µ¥X¨Óªº¡AÁöµM»¡¦b§A°V½m¹Lªº²´¤O¤¤¡A³o­Ó¡uÀJ¹³¡v¤£¹L¬O­Ó
+¨S¦³¥Í©RªºªF¦è½}¤F¡C
+~
+E
+plaque~
+°ÐÃB¤W¼gµÛ¡G
+¡uÅwªï¨Ó¨ìº¿©Ô°Ç½åªÌ¡E®õ´µ¦«©Ô¯Sªº¦í³B¡A¥L¬Oª¾ÃÑªº´£¨ÑªÌ¡A¼Wªø¤ß´¼
+ªº¾É®v¡A©Ò¦³Å]ªk¤Î´¶³qª««~ªºÅ²©w±M®a¡A»ù®æ«OÃÒ¦X²z¡C¡v
+~
+S
+#80153
+¶ð³»~
+§A¶i¤J¤F¤@­Ó¼eÁïªº¶ê§Î©Ð¶¡¸Ì¡A©Ð¸Ì°ïº¡¤F®ÑÄy¡B¥j¸³¡B¤pª±·N¨à¡B¤uÃÀ
+«~¡B¬ö©À«~¡B²b¤Æ¾¹¡B¿NªM¡B¤ô¬û¡B¯ù³ý¡BÁç½L¡BÅ]§ú¡B§Ù«ü¡B¼C¡A©Ò¦³§A·Q±o
+¨ìªºªF¦è¦b³o¸Ì³£¦³¥i¯à¬Ý¨ì¡C©Ð¶¡¥¿¤¤¥¡¦³¤@¨ã¤õ¬Ö¡A¸Ì­±¸ËµÛ¥¿¦b¿U¿Nªº¯ó
+ÃÄ¡A³oÅý©Ð¶¡¸Ì¥Rº¡¤F¨ë¿E©Êªº·ÏÃú¡C¤@¦W¦~¦ÑªººëÆF¥¿¦£µÛ·d©_©Çªºµo©úª«¡A
+¥u¨£¥L±N¤@­Ó¶Â¦âªº½Lª¬ª«©ñ¶i¨º­ÓªF¦è¸Ì­±¡A´Nµo¥X¤F¦³ÂI©Ç²§ªºÁn­µ¡A¦ñÀH
+µÛ¤@¤j°ïÂø­µ©M¼R¼RÁn¡C¥L¦¬¶°¤F¤j¶qªº½Lª¬ª«¡A³o¨Ç½Lª¬ª«³£©ñ¦b¦â±mÂAÄRªº
+¯È«Ê®M¸Ì­±¡A«Ê®M¤WÀYµeº¡¤F¬Ý°_¨Ó¦³ÂI°©½G¦p®ã¡Bªø¾v¡B¥Ö½§¦Ç¥Õªº¤HÃþ¡H
+~
+0 8|8192 0
+D5
+¶ð¤¤
+~
+¶ð~
+0 -1 80152
+>room_leave 63 100~
+if insameroom(tasstellat-npc)
+        if is_qmark($n) == malathar_quest 100040
+                echoat $n §A­èÂ÷¶}³o¸Ì®É¡A©¿µM·P¨ì©Ð¸Ì¦ü¥G¦³ªÑ¦ü´¿¬ÛÃÑªº¨¸®ð¡H¡I
+                echoat $n ¦L¶H¤¤¤§«e§A¦b³o®y«°¤º¤]¸I¹L«D±`Ãþ¦üªº®ð®§......¸Ó¤£·|......
+                mod_qmark $n malathar_quest v0 = 41
+        endif
+endif
+~
+>room_time 100~
+if pcnum($) == 0
+        if roomtimer($0) == 0
+                if mobcount(80126) == 0
+		if mobcount(80161) == 0
+                        mload 80126
+		endif
+                endif
+        endif
+endif
+~
+|
+S
+#80154
+¤Ú¨½´µµó~
+§A¥¿¯¸¦b¤Ú¨½´µµó¤W¡A³o±ø«n¥_¦Vªºµó¹D©¹¥_³q©¹¤½Àïªº®c·µ¡A©¹«n³q©¹¦U
+­Ó¤u·|¡C³o¸Ì¦³®y¶¯°¶ªº¤½ÀïÀJ¹³(statue)¡A¬ïµÛ¥þ®MªºµØÄRÂ§ªA¡C
+~
+0 0 1
+D0
+®c·µ
+~
+®c·µ~
+0 -1 80186
+D2
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80155
+E
+statue~
+¯u¬O­Ó¦Û¤jªº²Â³J¡C
+~
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80155
+¤Ú¨½´µµó~
+§AªuµÛ¤Ú¨½´µµó©¹«e¨«¡Aº¿©Ô°Ç«°¤u·|·|ªø­Ìªº¦í³B¶°¤¤¦b³o¤@±a¡C«nÃä»·
+³B¦³µÛºëÆF¤u·|ªº¶ð¡A¥H¤Î¶Ç»¡¤¤ªºº¿©Ô°Ç¹Ï®ÑÀ]¡F¥_Ãä«h¬OµØÄRªº¤½Àï®c·µ¡C
+
+¸G¤H¤u·|¦b¦èÃä¡A¤HÃþ¤u·|¦bªFÃä¡C
+~
+0 0 1
+D0
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80154
+D1
+¤HÃþ¤u·|
+~
+¤u·|~
+0 -1 80157
+D2
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80158
+D3
+¸G¤H¤u·|
+~
+¤u·|~
+0 -1 80156
+S
+#80156
+¸G¤H¤u·|~
+§A¶i¤J¤FÀJ¤u²ÊÁWªº¥Û³y¤jÆU¡A³o­Ó©Ð¶¡¬O¨å«¬ªº¸G¤H«Ø¿v¡Ð¡Ð¹ê¥Î¡Bºc³y¨}¦n¡B
+«Ø±o¬Û·í¤£¿à¡A¤£¹L«o§¹¥þ¨S¦³¥bÂI·Q¹³ªÅ¶¡¥i¨¥¡C
+~
+0 8 0
+D1
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80155
+S
+#80157
+¤HÃþ¤u·|~
+³o¸Ì¬O¤HÃþ¤u·|©Ò¦b¡A¥­±`º¿©Ô°Ç«°¸ÌªººëÆF­Ì¥ç·|¨Ó¦¹¾Ç²ß¤@¨Ç¤HÃþªºª¾ÃÑ¡C
+~
+0 8 0
+D3
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80155
+S
+#80158
+¤Ú¨½´µµó~
+§AªuµÛ¤Ú¨½´µµó©¹«e¨«¡Aº¿©Ô°Ç«°¤u·|·|ªø­Ìªº¦í³B¶°¤¤¦b³o¤@±a¡C«nÃä»·
+³B¦³µÛºëÆF¤u·|ªº¶ð¡A¥H¤Î¶Ç»¡¤¤ªºº¿©Ô°Ç¹Ï®ÑÀ]¡F¥_Ãä«h¬OµØÄRªº¤½Àï®c·µ¡C
+
+§¯ºë¤u·|¦b¦èÃä¡A¶ÂºëÆF¤u·|¦bªFÃä¡C
+~
+0 0 1
+D0
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80155
+D1
+¶ÂºëÆF¤u·|
+~
+¤u·|~
+0 -1 80160
+D2
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80161
+D3
+§¯ºë¤u·|
+~
+¤u·|~
+0 -1 80159
+S
+#80159
+§¯ºë¤u·|~
+§A­è¶i¨Óªº³o­Ó©Ð¶¡¡A³Q¬Y¨ÇºëÆFÃÀ³N®aµ¹µe¦¨Ãþ¦ü´ËªLªº¬üÄRÀô¹Ò¡A¤WÀY
+ÁÙ¦³µÛ´ËªL¥Íª«ªºµe¹³¡Aµe±o¬Û·í¤£¿ù¡A¯u¬O§¹¬ü¡C¦b³o®y¶ð¤¤¡Aªø±o·¥°ªªº¤u
+·|·|ªø¥þ¨­³Q½Å¦âªø³T©ÒÂÐ»\µÛ¡C
+~
+0 8 0
+D1
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80158
+S
+#80160
+¶ÂºëÆF¤u·|~
+§A¨«¶i¤F¤@³B¬Ý°_¨Ó¹³¬O¼o±óª«©ç½æ³õªº¦a¤è¡A©Ð¶¡¤¤¥¡°ï¤F¤@¤j°ï¦U¦¡¦U
+¼Ëªº³f«~¡A§¤¦b¨º°ïªF¦è¤WÀYªº¤H¬O¶ÂºëÆF¤u·|ªº·|ªø¡A¦o¯«¸g¤¼¤¼¦a¹ïµÛ§AÅS
+¥X¸Þ²§ªº¯º®e¡C
+~
+0 8 0
+D3
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80158
+S
+#80161
+¤Ú¨½´µµó~
+§AªuµÛ¤Ú¨½´µµó©¹«e¨«¡Aº¿©Ô°Ç«°¤u·|·|ªø­Ìªº¦í³B¶°¤¤¦b³o¤@±a¡C«nÃä»·
+³B¦³µÛºëÆF¤u·|ªº¶ð¡A¥H¤Î¶Ç»¡¤¤ªºº¿©Ô°Ç¹Ï®ÑÀ]¡F¥_Ãä«h¬OµØÄRªº¤½Àï®c·µ¡C
+
+¶P¤ñ¯S¤u·|¦b¦èÃä¡A²´Å]¤u·|¦bªFÃä¡C
+~
+0 0 1
+D0
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80158
+D1
+²´Å]¤u·|
+~
+¤u·|~
+0 -1 80163
+D2
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80164
+D3
+¶P¤ñ¯S¤u·|
+~
+¤u·|~
+0 -1 80162
+S
+#80162
+¶P¤ñ¯S¤u·|~
+³o¸Ì¬O¶P¤ñ¯S¤u·|©Ò¦b¡A¤u·|·|ªø¬O­Ó¨ÏºëÆF¥¸­Ô­Ì·q­«ªº¶P¤ñ¯S¤H¡C
+~
+0 8 0
+D1
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80161
+S
+#80163
+²´Å]¤u·|~
+§A¶i¤J¤F¤@­Ó¥ú½u©ü·tªº¬ã¨s«Ç¡A«Î¸Ì¦³³\¦h¤p¤pªº¹¢ª«¡A¥Î¨Ó«O¦s¤@±i°{
+°{µo¥úªº¤âÃ¸¸£Åè¹Ï¡A¹Ï¤ù¤W¦³¤p¤pªº¼ÐÅÒªþµÛ¦b¦U­Ó¥D­n³¡¦ì¤W¡A°£¦¹¤§¥~¡A
+«Î¸Ìªº®à´È¤]»¡©ú¤F³oºØ¯S§OªºÆF¯à¤O©Ò±a¨Óªº¼vÅT¡C
+~
+0 8 0
+D3
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80161
+S
+#80164
+©¹¹Ï®ÑÀ]ªº¤p¸ô~
+§A¨Ó¨ì¤F¤Ú¨½´µµó¤@³BÂà¨¤¡Aµó¹D¦b¦¹Âà¦V§»°¶ªºº¿©Ô°Ç¹Ï®ÑÀ]¡A¨º­Ó¦a¤è
+¦P®É¤]¬OºëÆF¤u·|·|ªøªº¦í³B¡C
+
+º¿©Ô°Ç«°ªº½XÀY¦b«nÃä¡C
+~
+0 4 1
+D0
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80161
+D1
+©¹¹Ï®ÑÀ]ªº¤p¸ô
+~
+¤p¸ô~
+0 -1 80165
+D2
+½XÀY
+~
+~
+0 -1 80200
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80165
+©¹¹Ï®ÑÀ]ªº¤p¸ô~
+·í§A§ó±µªñ¹Ï®ÑÀ]¡A§Aª`·N¨ì¨º­Ó¦a¤è¦³®yÅý¤H¦L¶H²`¨èªº¶ð¡A©M³o®y«°¥«
+¥t¥~¤T­Ó°Ï°ìªº¶ð«Ü¬Û¹³¡A»»«ü¤ÑªÅ¡A¥~ªí¥¼¸g¸Ë¹¢¡A¦Ó¬O¶KµÛ¥Õª÷ªºÁ¡ªO¡C
+¦u½Ã­Ì¦¨¸sµ²¶¤¦a¸g¹L¡A¬°¤F«OÅ@¨º¨Ç¬Ý°_¨Ó«Ü­«­nªº¨k¤k¶Q±Ú¡C
+~
+0 0 1
+D1
+¶ð©³
+~
+¶ð~
+0 -1 80166
+D3
+©¹¹Ï®ÑÀ]ªº¤p¸ô
+~
+¤p¸ô~
+0 -1 80164
+S
+#80166
+¶ð©³~
+¶i¤J³o®y¶ð«á¡A§Aµo²{§A¥i¥H©¹¤W¨«¡A©Î¬O©¹¤U¨«¨º®yÀJ¤uºë²Óªº¤j²z¥Û¶¥
+±è¡A¶¥±è¦]¬°¥ú²yÅ]ªkªºÃö«Y¦Ó¨C¹j¤@¬q®É¶¡´N·|µo¥ú¡C³o¼h¼Ó¦³±i®Ñ®à¡A¨S¦³
+¤H¦b¡A¤£¹L®à¤W¦³¥»µn°OÃ¯(register)¡C®Ñ®à«á­±ªºÀð¾À¤WÀY¦³­±¤j«¬ªº§i¥ÜµP
+(bulletin board)¡A¦ì©ó¦w¨È»Pº¿©Ô°ªÁqªºÀJ¹³¤§¶¡¡A¥L­Ì¬O¾Ç²ßºëÆF¤å¤Æªº¶}
+¸ô¥ý¾W¡C
+~
+0 8 0
+D3
+©¹¹Ï®ÑÀ]ªº¤p¸ô
+~
+¤p¸ô~
+0 -1 80165
+D4
+©¹¶ð¤W
+~
+¶ð~
+0 -1 80167
+D5
+¶ð¤U¤èªº¹Ï®ÑÀ]
+~
+¹Ï®ÑÀ]~
+0 -1 80196
+E
+register~
+©Ò¦³¶i¤J¹L³o®y¤j¹Ï®ÑÀ]ªº¤H¡A¦W¦r³£·|³Q¯d¦b³o¥»µn°OÃ¯¤W¡A·í§A©êµÛÃhºÃªº
+¤ßºA©¹¤U¬Ý¡A§A¦Û¤vªº¦W¦r»®µM¥X²{¦b¦Cªíªº¥½§À¡C¬Ý¤F¬Ý¤W­±ªº¦Cªí¡A§A¬Ý¨£
+¤F¹³Lenny¡BGarth¡BRainman¡BArgh¡BFle¡BMarc¡BTempest¡BMarius¡BCookie¡B
+Amadeus¥H¤ÎSvelteµ¥¦W¦r¡A¤]¦³¤@¨Ç¦W¦r³Q§R±¼¡A¹³¬OSnikt¡BGloppy»PDizzy
+µ¥µ¥¡C
+~
+E
+board bulletin~
+³o­±§i¥ÜµP¤W¦³¤@¤j°ï§i¥Ü³Q°v¦b¤W­±¡A¤j³¡¥÷¹ï§A³£¨S¤°»ò¥Î¡C¤£¹L¡A¦³¤@±i
+³o®y¶ðªº¤º³¡¤À§G¹Ï¡G
+
+ºÞ²z³B¡G¦a­±
+¤å®Ñ³B¡G¤@¼Ó
+¤u·|·|ªø¿ì¤½«Ç¡G¤G¼Ó
+¹Ï®ÑÀ]¡G¦a¤U¤@¼Ó
+­Ü®w¡G¦a¤U¤G¼Ó
+~
+S
+#80167
+¤å®Ñ³B~
+¨«¨ì³o®y¶ðªº¤¤¬q¡A§A¨Ó¨ì¤@¼Ó¡A³o¸Ì¦³³\¦hªº¹²§Ð¥¿¦£µÛ³B²zªÅ½c¤l¡B°µ
+¤ÈÀ\¡B±N¤å¥óÂkÀÉ¡BÀ°¹Ï®ÑÀ]À]­ûªw©@°Ø¡B°ï¿n®Ñ¥»µ¥µ¥¡C¥L­Ì¦ü¥G§¹¥þ¨Sµo²{
+§Aªº¨ì¨Ó¡C
+~
+0 8 0
+D4
+¤u·|·|ªø¿ì¤½«Ç
+~
+¿ì¤½«Ç~
+0 -1 80168
+D5
+¶ð©³
+~
+¶ð~
+0 -1 80166
+S
+#80168
+¤u·|·|ªø¿ì¤½«Ç~
+§A¨Ó¨ì¤@­Ó¥ú½u©ü·tªº©Ð¶¡¸Ì¡A©Ð¸Ìªº®Ñ¬[¤W°ïº¡¤FÃö©óºëÆFª¾ÃÑªº®Ñ¥»¡A
+©Ð¸ÌÁÙ¦³±i¬Ý°_¨Ó¹³¬O¥Î°í¹êªº¶ÂÂ`¥Û¨è¦¨ªº®Ñ®à¡C¤u·|·|ªø§¤¦b®Ñ®à«e­±¡A¥¿
+¦b¾\ÅªµÛ©_¯S¦Ó¯«¯µªº®ÑÄy¡A¸Ì­±¼gªº¬O²¤¬°§C¤Uªºª¾ÃÑ......
+~
+0 4|8 0
+D5
+¤å®Ñ³B
+~
+¤å®Ñ³B~
+0 -1 80167
+>room_leave 127 100~
+if is_qmark($n) == malathar_quest 100011
+        if is_qmark($n) >= malathar_quest 300012
+                echoat $n ­ì¥»ªþ¨­¦b·ç´µ¦«ÂÅ¥[¨­¤Wªº¶¡¿Ò²{¦b¤w¸g°k¤F¥X¨Ó¡I
+                echoat $n ­n¬O§A¯uªº§ä¤£¨ì¥L¡A¨º»ò§AÁÙ¬O¥h¦V³o®y«°¤ºªk¤O³Ì±jªº¤H¦^³ø(report)¤@Án§a¡H
+        endif
+endif
+~
+|
+S
+#80169
+¶ð³»~
+©è¹F¤F¶ð³»¡A§A¨Ó¨ì¤@®°¥b¶}µÛªºªù«e¡A§A´X¥G¨S¿ìªk±À¶}¥¦¡A¤j·§¬O³Q¤@
+¤j°ïªº®Ñµ¹°ô¦í¤F§a¡C¦b¤@°}§V¤Oªº±ÀÀ½¤§«á¡Aªùµy·L¶}¤F¤@ÂI¡A§A¶i¤J³o­Ó®Ñ
+¥»´²±o¨ì³B³£¬Oªº©Ð¶¡¸Ì­±¡AÀ~¤F¤jªk®v¦«º¸¤@¸õ¡A¦ý¥LªºÅåÀ~¥¿³vº¥ÂàÅÜ¦¨¤£
+º¡¡C¥LÄYµÂ¦a¬ÝµÛµ²µ²¤Ú¤Ú¹Dºpªº§A¡A¨Ã¥Bµ¹§A¨â­Ó¿ï¾Ü¡A¤@¬OµªÀ³¥Lªº­n¨D¡A
+¤G¬O°¨¤WÂ÷¶}³o¸Ì¡C
+
+§A¬Ý¨£¤@­Ó¯}Äêªº¨÷¶b(scroll)³QÂH¦bÀð¤W¡C
+~
+0 8 0
+D5
+¶ðªº¤¤¬q
+~
+¶ð~
+0 -1 80123
+E
+scroll~
+¨÷¶b¤W¼gµÛ¡G
+¡@¤jªk®v¦«º¸¥i¥HÀ°§U§A¼W±j¥H¤U³o´XºØ¯à¤O¡G
+
+¡@¤O¶q¡B±Ó±¶¡BÅé½è¡B´¼¤O¡B´¼¼z¡B¥Í©R¡BÆF¤O¡BÅé¤O¡A¨C¼W¥[¤@¯Å´N¥i¥H´£¤É
+¡@¬Y¨ÇÄÝ©Ê¡C
+
+¡@­n¼W±jªº¸Ü¡A¿é¤JEnhance <ÄÝ©Ê>©Î¬OEnhance 8 ¥H´£°ª§Aªº¯à¤O¡C
+¡@³o·|ªá±¼§A¤Q¤­¸Uª÷¹ô»P¤T¤Q¸U¸gÅçÂI¼Æ¡A³o¨â¶µ³£·|¦Û°Ê±q§A©Ò¾Ö¦³ªº³¡¥÷
+¡@¤¤¦©°£¡A¦pªG¼Æ¶q¤£°÷¡A¤jªk®v±N·|©Úµ´¼W±j§Aªº¯à¤O¡C
+
+¡@½Ð¦h¥[¯d·N¡C
+¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@The Enhancement Team (TM).
+~
+S
+#80170
+±Ð°ó~
+§A¥¿¯¸¦bº¿©Ô°Ç±Ð°ó¥~¡A³o¸Ì¨Ñ©^µÛºëÆF°ê«×¤º©Ò¦³ªº¯«¬é¡C§»°¶ªº¤j²z¥Û
+¬W¸s¦C¦b¤jÆU¤§¤¤¡A±q³o¸Ì§A¥i¥H©¹«n«e©¹²½¾Â¡A©Î¬O©¹¥_«e©¹¯«Â¾¤H­û­Ìªº¨p
+¤H©Ð¶¡¡C
+~
+0 8 0
+D0
+¨p¤H©Ð¶¡
+~
+©Ð¶¡~
+0 -1 80172
+D1
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80149
+D2
+³q©¹²½¾Âªº°¼´Y
+~
+°¼´Y~
+0 -1 80171
+S
+#80171
+³q©¹²½¾Âªº°¼´Y~
+§A¶i¤J¤F±Ð°ó¤º³q©¹²½¾Âªº°¼´Y¡A¤j²½¥q©ÔªL§Æ©Ô¯¸¦b³o­Ó¦a¤è¡A´À¤HªvÀø
+¯e¯f»P²b¤Æ¨¸®ð¡C
+~
+0 8 0
+D0
+±Ð°ó¥X¤J¤f
+~
+±Ð°ó~
+0 -1 80170
+D3
+²½¾Â
+~
+²½¾Â~
+0 -1 80173
+S
+#80172
+¯«Â¾¤H­ûªº¨p¤H©Ð¶¡~
+©¹¥_¬O¯«Â¾¤H­ûªº±JªÙ¡A¦èÃä«h¬OºëÆF±Ð°óªº¯«¸t»È¦æ¡A§A¥i¥H¦b¨º¸Ì¦s´Ú
+©Î´£´Ú¡C
+~
+0 8 0
+D0
+¯«Â¾¤H­ûªº±JªÙ
+~
+ÆU°ó~
+0 -1 80174
+D2
+±Ð°ó¥X¤J¤f
+~
+¥X¤J¤f~
+0 -1 80170
+D3
+»È¦æ
+~
+»È¦æ~
+0 -1 80175
+S
+#80173
+²½¾Â~
+³o¸Ì¬O±Ð°ó¤ºªº²½¾Â¡A¤j²½¥q¥¿¯¸¦b²½¾Â«e­±¡C¦b³o­Ó¦a¤è¡A§A·P¨ì¤@ªÑ±j
+¯Pªº©M¥­¹çÀR·P¡AÄ±±o¦Û¤v¯u¥¿¦a¦Û¥~¬Éªº­WÃø¤¤¸Ñ©ñ¤F¡C
+~
+0 8 0
+D1
+³q©¹²½¾Âªº°¼´Y
+~
+°¼´Y~
+0 -1 80171
+>room_command pour default~
+if ispc($n)
+        if is_qmark($n) != malathar_quest 100007
+        or is_qmark($n) > malathar_quest 300009
+                echoat $n ²{¦b¨S¦³¥²­n³o»ò°µ¡A°±¤â§a¡C
+        else
+                if mpnum($n) < 100
+                        echoat $n §AªºÅ]ªk¯à¶q¤Ó¤Ö°Õ¡A¥ð®§¤@¤U¦A¨Ó¡C
+                else
+                        echoat $n §A±NÅ]¤Oª`¤J²½¾Â¤§¤¤......
+                        modhmv $n 11.100 100 0
+                        stun $n 3
+                        mod_qmark $n malathar_quest v2 + 1
+                        if is_qmark($n) == malathar_quest 300010
+                                echoat $n ³o¼Ë¤j·§°÷¤F§a¡H¥i¥H¸ò²½¥q»¡§A§¹¦¨(finish)¤F¡C
+                        endif
+                endif
+        endif
+endif
+~
+|
+S
+#80174
+±JªÙ~
+¦~»´¨Í²½­Ì¥­±`¦£©óÀ°§U¶Ë±w»P½a¤H¡A©Î¬O¹ï«H©^²§±Ðªº³¥ºëÆF¶Ç±Ð¡A·í¥L
+­Ì¤£¦£ªº®É­Ô¡A³o¸Ì´N¬O¥L­Ì¥ð®§ªº¦a¤è¡C³o­Ó¦a¤è¨S¦³¤°»ò¸ËæC¡A¬Û·í¥­¤Z¡A
+°£¤F¤@±i¤j²½¥qªºµe¹³¡A¥H¤Î¤@±i³Q®Ø°_¨Óªº¹Ïµe(picture)¡A¸Ì­±µeªº¬O³o®y
+±Ð°óªº¦uÅ@¯«Yaegar¡C
+~
+0 8 0
+D2
+¨p¤H©Ð¶¡
+~
+©Ð¶¡~
+0 -1 80172
+E
+picture yaegar~
+¦h»ò­^«T°Ú¡I
+~
+S
+#80175
+¯«¸t»È¦æ~
+§A¶i¤J¤F¯«¸t»È¦æ¡AÀð¾À¤W¦³µÛ¦Û°Ê¦s´£´Úªº¸Ë¸m¡A¤@±i¤p¼Ð¥Ü(sign)ÂH¦b
+¸Ë¸m¤W¤èªºÀð¾À¤WÀY¡C´£´Ú¦¬¾Úªº¸H¤ù³Q¶Ã¥µ¦b¦a¤W¡A¥t¥~¡A·í§A½ò¨ì¬Y¨ÇÄê±¼
+ªº­¹ª«®É¡A§A§Ô¤£¦í¯}¤f¤j½|¡C
+~
+0 8|2048|16384 0
+D1
+¨p¤H©Ð¶¡
+~
+©Ð¶¡~
+0 -1 80172
+E
+sign~
+¦Û°Ê¦s´£´Ú¸Ë¸m«ü¥O¡G
+¡@·Q¬d¸ß§Aªº±b¤áÁÙ¦³¦h¤Ö¿ú¡A¿é¤JBALANCE¡C
+¡@·Q­n¦s´Ú¡A¿é¤JDEPOSIT X¡A³o¸ÌªºX«üªº¬O§A·Q¦sªºª÷ÃB¡C
+¡@·Q­n´£´Ú¡A¿é¤JWITHDRAW X¡A³o¸ÌªºX«üªº¬O§A·Q´£ªºª÷ÃB¡C
+¡@·Q­n¶U´Ú¡A½Ð¥ÎC»y¨¥¼g¦n¯à¶¶§Q°õ¦æªºµ{¦¡±Hµ¹coder¡C
+
+¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@¡@ºÞ²zªÌ¡C
+~
+S
+#80176
+°¨´\~
+§A¥¿¬ï¹L¤@¤ù¶}Áïªº°Ï°ì¡A°®¯ó´²±o¨ì³B³£¬O¡A°¸º¸ÁÙ·|¬Ý¨ì¤@ªb¥¿¦b«_¥X
+¤ô®ðªºÁT«K¡C°¨¤Ò¦b¥|©P¶]¨Ó¶]¥h¡A¥¿¦b²M²z³o¨Ç»êÅ¼ªº±Æªnª«¡C
+~
+0 8 0
+D0
+°¨´\
+~
+°¨´\~
+0 -1 80177
+D1
+°¨´\
+~
+°¨´\~
+0 -1 80179
+S
+#80177
+°¨´\~
+§A¥¿¬ï¹L¤@¤ù¶}Áïªº°Ï°ì¡A°®¯ó´²±o¨ì³B³£¬O¡A°¸º¸ÁÙ·|¬Ý¨ì¤@ªb¥¿¦b«_¥X
+¤ô®ðªºÁT«K¡C°¨¤Ò¦b¥|©P¶]¨Ó¶]¥h¡A¥¿¦b²M²z³o¨Ç»êÅ¼ªº±Æªnª«¡C
+~
+0 8 0
+D0
+°¨´\
+~
+°¨´\~
+0 -1 80178
+D1
+°¨´\¥D¤Hªº©Ð¶¡
+~
+©Ð¶¡~
+0 -1 80180
+D2
+°¨´\
+~
+°¨´\~
+0 -1 80176
+D3
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80120
+S
+#80178
+°¨´\~
+§A¥¿¬ï¹L¤@¤ù¶}Áïªº°Ï°ì¡A°®¯ó´²±o¨ì³B³£¬O¡A°¸º¸ÁÙ·|¬Ý¨ì¤@ªb¥¿¦b«_¥X
+¤ô®ðªºÁT«K¡C°¨¤Ò¦b¥|©P¶]¨Ó¶]¥h¡A¥¿¦b²M²z³o¨Ç»êÅ¼ªº±Æªnª«¡C
+~
+0 8 0
+D1
+°¨´\
+~
+°¨´\~
+0 -1 80181
+D2
+°¨´\
+~
+°¨´\~
+0 -1 80177
+S
+#80179
+°¨´\~
+§A¥¿¬ï¹L¤@¤ù¶}Áïªº°Ï°ì¡A°®¯ó´²±o¨ì³B³£¬O¡A°¸º¸ÁÙ·|¬Ý¨ì¤@ªb¥¿¦b«_¥X
+¤ô®ðªºÁT«K¡C°¨¤Ò¦b¥|©P¶]¨Ó¶]¥h¡A¥¿¦b²M²z³o¨Ç»êÅ¼ªº±Æªnª«¡C
+~
+0 8 0
+D0
+°¨´\¥D¤Hªº©Ð¶¡
+~
+©Ð¶¡~
+0 -1 80180
+D3
+°¨´\
+~
+°¨´\~
+0 -1 80176
+S
+#80180
+°¨´\¥D¤Hªº©Ð¶¡~
+³o­Ó©Ð¶¡©M°¨´\¤º¨ä¥L©Ð¶¡´X¥G¨S¦³¤°»ò¤£¦P¡A°£¤F©Ð¸Ì¦³¤@®M°¨´\¥D¤H±M
+¥Îªº®à´È¡A°¨´\¥D¤H¬O­Ó¥Ö½§ÂK¶Â¡B¦³¨ë«Cªº»í±ï¥bºëÆF¡C
+~
+0 8 0
+D0
+°¨´\
+~
+°¨´\~
+0 -1 80181
+D2
+°¨´\
+~
+°¨´\~
+0 -1 80179
+D3
+°¨´\
+~
+°¨´\~
+0 -1 80177
+S
+#80181
+°¨´\~
+§A¥¿¬ï¹L¤@¤ù¶}Áïªº°Ï°ì¡A°®¯ó´²±o¨ì³B³£¬O¡A°¸º¸ÁÙ·|¬Ý¨ì¤@ªb¥¿¦b«_¥X
+¤ô®ðªºÁT«K¡C°¨¤Ò¦b¥|©P¶]¨Ó¶]¥h¡A¥¿¦b²M²z³o¨Ç»êÅ¼ªº±Æªnª«¡C
+~
+0 8 0
+D2
+°¨´\
+~
+°¨´\~
+0 -1 80180
+D3
+°¨´\
+~
+°¨´\~
+0 -1 80178
+S
+#80182
+¶¤ªø¿ì¤½«Ç~
+§A¨«¶i¤F¤@³B¸ËæC±oº¡¤£¿ùªº¿ì¤½«Ç¡A³o¸Ì¬O¦u½Ã¶¤ªø±µ¨£³X«Èªº¦a¤è¡C¥L
+·|»P§A°Q½×Ãö©ó§Aªº¨Æ±¡¡A¨Ã¸ÕµÛµ¹§A¬Y¨Ç©¾§i¡A¤£¹L¥L¤@ª½«O«ùµÛÄµ§Ùª¬ºA¡C
+¥L¹ï§A¸ØÄ£»¡¨ä¹ê¥Lªº¿ì¤½«Ç¬O­ÓÅ]ªk¤O³õ¡A®ÉªÅ³q¹D°¸º¸·|¥X²{¦b³o¸Ì¡AÅ¥°_
+¨Ó«Ü¹³¬O¦b§j¤û¡A¤£¹L§A¥Ã»·¤]¤£·|ª¾¹D¬O¯uªºÁÙ¬O°²ªº.......
+~
+0 8 0
+D5
+¶ð©³
+~
+¶ð~
+0 -1 80135
+S
+#80183
+¤é¤§«Ç~
+§A¤w¸g¶i¤J¤F®c·µ¤¤ªº¤Ó¶§¤§«Ç¡A³o­Ó¦a¤è¥H¥¦¨º¦p¦P¤ô´¹¯ë³z©úªº¥¨¤jµ¡
+¤á¦Ó»D¦W¡A³o¨Çµ¡¤á¥i¥H§l¦¬¨Ã¥B¼W±j¤Ó¶§ªº¥ú½u¡AÅý«Ç¤º¾ã¤Ñ³£«Ü©ú«G¡C¤@¨Ç
+¥ð¶¢´È©M³n¹Ô´²¸¨¦b¦aªO¦U³B¡A¦P®É§A¬Ý¨ì¤@¹ïºëÆF¶Q±ÚÃi¬v¬v¦aÅõ¦b·Å·xªº¶§
+¥ú©³¤U¡A°ã¶¼µÛ¤W¦nªººëÆF¸²µå°s¡C
+~
+0 8 0
+D0
+¦èªù
+~
+¦èÃä~
+0 -1 80184
+D1
+«nªù
+~
+«nÃä~
+0 -1 80186
+S
+#80184
+¦èªù~
+§A¥¿¯¸¦b®c·µªº¦èªù¡A³o¹Dªù´Â¦V¶ø²¦´µµó¡A¨º±øµó¥Ñ®c·µ©¹¦è³q©¹±Ð°ó¡C
+½Ã§L­Ì¦bªù¤f±r«Þ¡A°¸º¸·|´Â§A³o¸Ì§ë¨ÓÃhºÃªº²´¥ú¡C§A©P³òÁq¥ßµÛ¾ú¥NºëÆF¤ý
+ªº¶¯°¶¥Û¹³¡C
+~
+0 8 0
+D0
+¤ë¤§«Ç
+~
+¤ë«G~
+0 -1 80185
+D1
+¤ý®y«Ç
+~
+¤ý®y~
+0 -1 80187
+D2
+¤é¤§«Ç
+~
+¤Ó¶§~
+0 -1 80183
+D3
+¶ø²¦´µµó
+~
+µó¹D~
+0 -1 80139
+S
+#80185
+¤ë¤§«Ç~
+³o­Ó©Ð¶¡©M¤Ó¶§¤§«Ç¤@¼Ò¤@¼Ë¡A°£¤F³o¸Ìªºµ¡¤á¸g¹L¥©§®ªº³]­p¡A¯à§l¦¬¨Ã
+¤Ï®g¤ë¥ú¡A§Y¨Ï¦b³Ì¶Â·tªº©]±ß¡A³o¸Ì¤@¼Ë·|¦³¥ú©ú¡C¶Q±Ú­ÌÃi¬v¬v¦a½ö¦b³o­Ó
+¦a¤è¡AÃi´²¦a°ÛµÛ¥j¦Ñªº¦±¤l¡A©Î¬O°¸º¸ª±ª±Â²³æªº¹CÀ¸¡C
+~
+0 8 0
+D1
+¥_ªù
+~
+¥_Ãä~
+0 -1 80188
+D2
+¦èªù
+~
+¦èÃä~
+0 -1 80184
+S
+#80186
+«nªù~
+§A¥¿¯¸¦b«nªù¡Aªù¥~¬O¤Ú¨½´µµó¡A¨º±øµó¬ï¹L¤u·|°Ï¡A³q©¹º¿©Ô°Ç¹Ï®ÑÀ]¡C
+¦b³oªþªñ§A¥i¥H¬Ý¨ì¤½Àïªº¥Û¥¨¹³¡A«nªù©P³ò§G¸mµÛªáÀô¡A¥Î¨Ó¬ö©À¬Y¨Ç¸`¤é¡C
+~
+0 8 0
+D0
+¤ý®y«Ç
+~
+¤ý®y~
+0 -1 80187
+D1
+¤ô¤§«Ç
+~
+¤ô~
+0 -1 80189
+D2
+¤Ú¨½´µµó
+~
+µó¹D~
+0 -1 80154
+D3
+¤é¤§«Ç
+~
+¤Ó¶§~
+0 -1 80183
+S
+#80187
+¤ý®y«Ç~
+¤½Àï©M¥Lªº©d¤l¦b³o¸Ì±µ¨£¥L­Ìªº¦Ú¥Á¡A¥L­Ì§¤¦b¤j«¬ªº¥Õª÷¤ý®y¤W¡Aµ×­^
+½Ã§L­Ì«h¯¸¦b¤ý®y¨â°¼¡C¦³®É­Ô¤jªk®v¦«º¸©Î¬O¤j²½¥q©ÔªL§Æ©Ô·|¨Ó³o­Ó¦a¤è¡A
+¥u¤£¹L¥L­Ì¨â­Ó³£¤£¤Ó³ßÅw³oºØ¹L¥÷®ï¶Ôªº¹ï«Ý¡C·í§A¦b¤j²z¥Û¦aªO¤Wº©¨B¡A§A
+ªº¸}¨BÁn°jÂ¶¦b³o¶¡¬WÆU¤§¤¤¡A¦P®É§A·P¨ì¦³¦n´XÂù²´·ú¨nµÛ§A¡A§A©¿µMÄ±±o¦Û
+¤v³Ì¦n¾¨§Ö¦Û³o­Ó¦a¤è®ø¥¢¡C
+~
+0 8 0
+D0
+¥_ªù
+~
+¥_Ãä~
+0 -1 80188
+D1
+ªFªù
+~
+ªFÃä~
+0 -1 80190
+D2
+«nªù
+~
+«nÃä~
+0 -1 80186
+D3
+¦èªù
+~
+¦èÃä~
+0 -1 80184
+>room_enter 127 100~
+if ispc($n)
+        if mobcount(80159) == 0
+                if is_qmark($n) == malathar_quest 100031
+                        mod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+~
+|
+S
+#80188
+¥_ªù~
+§A¥¿¯¸¦b®c·µªº¥_ªù¡A©¹¥~¬Ý¥h¬O¶ðªLµó¡A¨º±øµó¬ï¹L¦U¦¡¦U¼Ëªº°Ó®a»P©±
+çE¡A³q©¹º¿©Ô°Çªº«°ªù¡C¤H­Ì°±¤U¨Ó¨Ã±i¤j²´·ú¦n©_¦a¨nµÛ§A¬Ý¡A§A«Ü§Ö´N·NÃÑ
+¨ì§Aªº¥~ªí«Ü©úÅã¦a¤ñ©P³òªº¤H­Ì­n¨Ó±oÃå»½¡C
+~
+0 8 0
+D0
+¶ðªLµó
+~
+µó¹D~
+0 -1 80124
+D1
+ªÅ¤§«Ç
+~
+¤ÑªÅ~
+0 -1 80191
+D2
+¤ý®y«Ç
+~
+¤ý®y~
+0 -1 80187
+D3
+¤ë¤§«Ç
+~
+¤ë«G~
+0 -1 80185
+S
+#80189
+¤ô¤§«Ç~
+·í§A¶i¤J³o­Ó©Ð¶¡ªºÀþ¶¡¡A§A¶}©l·W±i¤F¡A¦]¬°§A©¿µMµo²{§A¦b²`¤ô©³¤U¡I
+¤£¹L§A¸ÕµÛ©¿²¤¥X²{¦b§Aµø½u¤¤ªº¤Û¶H¡A«Ü§Ö´NÂí©w¤U¨Ó¡A¦P®ÉÁA¸Ñ§A©Ò¦bªº³o
+­Ó©Ð¶¡¡A¨ä¹ê¬O¥Î¬Á¼þªOºc¦¨¡A¤Ï®g¥X¬y°Êªº®ü¤ô»P¦hºØªº®ü¬v¥Íª«¡A³oÅý¤HÃø
+¥H¦w©w¤ß±¡¡A¤£¹L­Ë¬O¬Û·í¬üÄR¡C§A±o¦º©R¦a¶°¤¤ºë¯«¥H¬ï¹L³o­Ó©Ð¶¡¡A·Q¹³§A
+¯uªº¦b¤ô¤W¦æ¨«¡AÁöµM³o¨S¤°»ò¥Î´N¬O......
+~
+0 8 0
+D0
+ªFªù
+~
+ªFÃä~
+0 -1 80190
+D3
+«nªù
+~
+«nÃä~
+0 -1 80186
+S
+#80190
+ªFªù~
+§A¥¿¯¸¦b®c·µªºªFªù¡A­±¦V¿ÕÂÄ©Ôµóªº¦è¬qºÉÀY¡A¨º±øµó©¹ªF³q©¹°¨´\¡A¥H
+¤Î¤jªk®vªº¶ð¡C´X­Ó¥¸­Ô¦bªþªñÂàµÛ¡A¥L­ÌªºÃdª«ºëÆF¤ü¦b¥L­Ì¨­®Ç¶]¨Ó¶]¥h¡A
+¦b³o­Ó¦a¤è¡A§A©¿µM¦³¤@ºØ±j¯Pªº­¯¥Í·P¡C
+~
+0 8 0
+D0
+ªÅ¤§«Ç
+~
+¤ÑªÅ~
+0 -1 80191
+D1
+¿ÕÂÄ©Ôµó
+~
+µó¹D~
+0 -1 80110
+D2
+¤ô¤§«Ç
+~
+¤ô~
+0 -1 80189
+D3
+¤ý®y«Ç
+~
+¤ý®y~
+0 -1 80187
+S
+#80191
+ªÅ¤§«Ç~
+°Ú¡I§A¥¿¦b©¹¤U±¼¡I
+
+
+
+
+
+µ¥µ¥......¨Ã¤£¬O³o¼Ë¡A¯uÅý¤H¤£´±¬Û«H¡A³o¾ã­Ó©Ð¶¡³Q§Ë¦¨¼e¼s¤ÑªÅªº¼Ò
+¼Ë¡A¦Ó¥B¨S¦³Àð¾À¡B¦aªO©M¤ÑªáªO¡C¤H­Ì¦b¥|©Pº©¨B¡A¹ï²´«eªº´º¶H§¹¥þ¤£·P¨ì
+§xÂZ¡A§AÄ±±o¦Û¤v¤â¸}¨Ã¥Î¦aª¦¤Wª¦¤U¡A¥u¬°¤F§ä­Ó¤ä¼µÂI¬O¥ó«ÜÄøªº¨Æ¡C
+~
+0 8 0
+D2
+ªFªù
+~
+ªFÃä~
+0 -1 80190
+D3
+¥_ªù
+~
+¥_Ãä~
+0 -1 80188
+S
+#80192
+¤¤¥¡ÂÃ®Ñ°Ï~
+§A¥Ø«e¦ì©ó¤¤¥¡ÂÃ®Ñ°Ï¡A¹Ï®ÑÀ]­û­Ì±q³o¸Ì®³³\¦h±`±`³Q­É¾\¡BÂkÁÙ¡B¶R½æ
+ªº®ÑÄy¡C§A³Q³o­Ó¦a¤èªºÃe¤jÂÃ®Ñ¶qµ¹À~¨ì¤F¡A·í§Aª¾¹D³o¸Ìªº®Ñ¬[¦Ü¤Ö¦³¤C¤Q
+­^§`°ª¡A¦Ó¥B¤@±æµL»Ú®É¡A§A§Ô¤£¦íÅå¹Ä¥XÁn......
+~
+0 8 0
+D0
+¶¥±è
+~
+¶¥±è~
+0 -1 80196
+D1
+ªFÁl
+~
+ªFÃä~
+0 -1 80195
+D2
+«nÁl
+~
+«nÃä~
+0 -1 80193
+D3
+¦èÁl
+~
+¦èÃä~
+0 -1 80194
+E
+ground floor~
+³o¸Ìªº¦aªO¤W¦³­Ó¶ê§Îªº¿NµJ²ª¸ñ¡C
+~
+S
+#80193
+«nÁl~
+§A¦b«nÁl³o¸Ì¡A³o¸Ì¦¬ÂÃµÛ³Ìªñ(¤Ö©ó¤­¦Ê¦~)ÁÊ¤Jªº·s®Ñ¡C©P³òªº¸}¨BÁn¬Û
+·í­â¶Ã¡A¬Æ¦Ü¨S¦³¤Hª`·N¨ì§Aªº¨ì¨Ó¡A§A½T©w§A¥i¥H§â¤@®M®Ñ©Î¬O¤°»òªF¦è¸Ë¶i
+¤f³U·È¥X¥h¦Ó¨S¤H·|ª¾¹D......
+~
+0 8 0
+D0
+¤¤¥¡ÂÃ®Ñ°Ï
+~
+°Ï°ì~
+0 -1 80192
+S
+#80194
+¦èÁl~
+³o¸Ìªº¦Ç¹Ð¦h±o­n©R¡A©M¹Ï®ÑÀ]¨ä¥L¦a¤è¤ñ°_¨ÓÂ²ª½¹³¨Fºz¡C³o¸Ì¬O¤£¦X®É
+©y©Î¹L´Á¤åÄmªº¦s©ñ°Ï¡A¬Ý°_¨Ó¤@ÂI·N«ä¤]¨S¦³¡C¨S¦³¤H·|¨ì³o­Ó¦a¤è§ä®Ñ¡A¹ï
+§A¨Ó»¡¤@ÂI³£¤£·N¥~¡C
+~
+0 8 0
+D1
+¤¤¥¡ÂÃ®Ñ°Ï
+~
+°Ï°ì~
+0 -1 80192
+S
+#80195
+ªFÁl~
+»«ªG¡I
+§A¹ï³o­Ó¦a¤è·P¨ìÅå³Y¡A³o®y¹Ï®ÑÀ]¯uªº¦³Å]ªk¹Ï®Ñ°Ï¡A°½°½¢Ï¨«´X¥»§a¡I
+¥u¬O§O¤Ó³g¤ß¡A§_«h·|³Q¶e¨ì¡Ð¡Ð¨ä¹ê¨S¦³¦h¤Ö¹Ï®ÑÀ]­û·|¦b·N¡A¥L­Ì¥u·|¾á¤ß
+¤Ö¼Æªº®ÑÄy......
+~
+0 8 0
+D3
+¤¤¥¡ÂÃ®Ñ°Ï
+~
+°Ï°ì~
+0 -1 80192
+S
+#80196
+¶¥±è~
+§A¯¸¦b³o®y³e³q¾ã®y¶ðªº¶¥±è©³³¡¡A±q³o¸Ì§A¥i¥H©¹«n«e©¹¤¤¥¡ÂÃ®Ñ°Ï¡A©Î
+¬O½Õ¬d¤U­±¨º±ø¦Ç¹Ð¹M§G¡B¬Ý°_¨Ó¦³ÂI·N«äªº±×©Y......
+
+­n¤£µM¡A§A¤]¥i¥H¨«¦^¦a­±¥h......
+~
+0 4|8 0
+D2
+¤¤¥¡ÂÃ®Ñ°Ï
+~
+°Ï°ì~
+0 -1 80192
+D4
+¦a­±
+~
+¦a­±~
+0 -1 80166
+D5
+­Ü®w(¦a¤U¤G¼Ó)
+~
+¦a¤U¤G¼Ó~
+0 -1 80197
+S
+#80197
+­Ü®w(¦a¤U¤G¼Ó)~
+§A¨Ó¨ì¤F¦a¤U¤G¼Ó¡A³o­Ó¦Ç¹Ð¹M§Gªº§C¸G¦a¤U­Ü®w¡A¬Ý°_¨Ó¦ü¥G´X¦Ê¦~¨S¦³
+¤H¤U¨Ó¹L³o¸Ì¤F¡C³o¸Ì¬Ý°_¨Ó¨S¤°»ò¦³½ìªºªF¦è¡AµM¦Ó§AÄ±±o§A¦n¹³Å¥¨ì¬Y³B¶Ç
+¨ÓÂMÁn......
+~
+0 1|4|8 0
+D0
+ÂMÁn¦p¹p
+~
+ÂMÁn~
+0 -1 80198
+D4
+¶¥±è
+~
+¶¥±è~
+0 -1 80196
+S
+#80198
+ÂMÁn¦p¹p~
+­ì¥»§A¹ï©ó¤U­±¨ì©³ÀxÂÃ¤F¤°»òªF¦è·P¨ì¦³¿³½ì¡A²{¦b§A«h¤ñ¸û¦n©_¨ì©³¬O
+½Ö¡A©Î¬O¤°»òªF¦è¥¿¦bµo¥X³o»ò¥¨¤jªºÁn­µ¡AÅý§Aªº¦Õ¦·¶ä¶ä§@ÅT¡A¸}¤Uªº«Ø¿v
+ª«¼@¯P¦a¾_°ÊµÛ¡C
+~
+0 1|8 0
+D2
+­Ü®w(¦a¤U¤G¼Ó)
+~
+¦a¤U¤G¼Ó~
+0 -1 80197
+D3
+Às¥Þ
+~
+±_¥Þ~
+0 -1 80199
+S
+#80199
+Às¥Þ~
+§c³á......§A§ä¥XÂMÁnªº¨Ó·½¤F......¤@ÀYÀs¡A¥¨¤jªºÀs¡A»lÁY¦b§A­è¶i¨Ó
+ªº³o­Ó¤j¬}¸Ì­±¡A¨eÅs¦±ªº§À¤ÚÂÐ»\µÛ¤@­Ó«p¹êªºÄ_½c¡C§A¦ô­p³oÀYÀs¤@©w¦³¤K
+¤Q©Î¤E¤Q­^§`¨º»òªø¡A©M§A¤§«e¾Ô°«¹LªºÀs¬Û¤ñ¡A²´«e³oÀYÀs¦Ü¤Ö¬O¨e­Ìªº¨â­¿
+ªø¡A¦Ó¥B¨eÁÙ¬O¥Õª÷Às¡A¦bÀs±Ú¤§¤¤¬O¼Æ¤@¼Æ¤Gªº±j«l¡C©_©Çªº¬O³o±øÀs¨Ã¥¼¹ï
+§Aªº¨ì¨Ó²£¥Í¥ô¦óªº¤ÏÀ³¡A§AÃP¤F¤f®ð¡A¦P®É·Qª¾¹D±µ¤U¨Ó¸Ó«ç»ò¿ì......
+~
+0 1|8|128|8192 0
+D1
+ÂMÁn¦p¹p
+~
+ÂMÁn~
+0 -1 80198
+S
+#80200
+½XÀY~
+³o¸Ì¬Oº¿©Ô°Ç«°ªº½XÀY¡A«nÃä¬O¤@±æµL»Úªº¤j®ü¡C¦b®ü¤¤¥¡¡A§A¥i¥H¬Ý¨ì¤@
+®y¤p®q¡C
+~
+0 1|8|128|8192 0
+D0
+~
+~
+0 -1 80164
+D2
+~
+~
+0 -1 71100
+S
+#0
+
+
+#RESETS
+O 1 80173 1 80105                   LOADS PORTAL
+*
+M 1 80115 2 80103                   LOADS UNICORNS
+M 1 80122 1 80107                   LOADS HERBALIST
+G 1 80167 0 0
+G 1 80168 0 0
+M 1 80107 2 80108                   LOADS 2 CITY GUARDS
+E 1 80129 0 0   HOLDS BANNER
+E 1 80130 0 11  HOLDS SHIELD
+E 1 80131 0 16  WIELD SWORD
+E 1 80132 0 6   WEARS HELM
+E 1 80133 0 5   WEARS BREASTPLATE
+E 1 80134 0 7   WEARS LEGGINGS
+M 1 80108 6 80110                   LOADS MALE CITIZEN
+M 1 80109 6 80110                   LOADS FEMALE CITIZEN
+M 1 80105 1 80111                   LOADS ELITE GUARD
+E 1 80119 0 6   WEARS HELM
+E 1 80120 0 1   WEARS RING
+E 1 80121 0 5   WEARS ARMOR
+E 1 80122 0 7   WEARS LEGGINGS
+E 1 80123 0 16  WIELD SWORD
+E 1 80124 0 11  HOLDS SHIELD
+M 1 80113 1 80114                   LOADS COOSHEE
+M 1 80105 1 80116                   LOADS ELITE GUARD
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+M 1 80106 1 80118                   LOADS ELITE SCOUT
+E 1 80125 0 16  WIELDS BOW
+E 1 80127 0 3   WEARS CLOAK
+E 1 80127 0 4   WEARS CLOAK
+E 1 80128 0 8   WEARS BOOTS
+E 1 80126 0 20   WEARS ARROW
+M 1 80113 1 80121                   LOADS COOSHEE
+M 1 80146 1 80123                   LOADS GOLEM
+M 1 80108 1 80124                   LOADS MALE CITIZEN
+M 1 80109 1 80124                   LOADS FEMALE CITIZEN
+M 1 80107 1 80125                   LOADS GUARD
+E 1 80129 0 0
+E 1 80130 0 11
+E 1 80131 0 16
+E 1 80132 0 6
+E 1 80133 0 5
+E 1 80134 0 7
+M 1 80120 1 80126                   LOADS ARMORER
+G 1 80160 0 0
+G 1 80162 0 0
+M 1 80121 1 80127                   LOADS WEAPONSMITH
+G 1 80163 0 0
+G 1 80164 0 0
+G 1 80165 0 0
+G 1 80166 0 0
+M 1 80123 1 80129                   LOADS COOK
+G 0 80169 0 0
+G 0 80170 0 0
+M 1 80124 1 80130                   LOADS GROCER
+G 1 80159 0 0
+G 1 80161 0 0
+M 1 80116 2 80131                   LOADS SCOUTS
+E 1 80125 0 16  WIELDS BOW
+E 1 80126 0 17  HOLDS JAVELIN
+E 1 80127 0 3   WEARS CLOAK
+E 1 80128 0 8   WEARS BOOTS
+M 1 80119 1 80132                   LOADS MAGIC SHOP OWNER
+G 1 80140 0     GIVES WAND
+G 1 80141 0     GIVES CUP
+G 1 80142 0     GIVES STONE
+G 1 80143 0     GIVES STAFF
+G 1 80144 0     GIVES SCROLL
+M 1 80125 1 80133                   LOADS SMITH
+M 1 80105 2 80135                   LOADS ELITE GUARD
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+M 1 80113 1 80136                   LOADS COOSHEE
+M 1 80112 1 80137                   LOADS HIGH GUARDIAN
+E 1 80136 0 16  WIELDS SWORD
+E 1 80137 0 6   WEARS MASK
+M 1 80149 2 80138                   LOADS GRIFFONS
+M 1 80110 1 80139                   LOADS MALE ACOLYTE
+E 1 80135 0 9   WEARS MITTENS
+M 1 80111 1 80139                   LOADS FEMALE ACOLYTE
+E 1 80135 0 9
+M 1 80116 1 80141                   LOADS SCOUTS
+E 1 80125 0 16
+E 1 80126 0 17
+E 1 80127 0 3
+E 1 80128 0 8
+M 1 80107 2 80142                   LOADS 2 GUARDS
+E 1 80129 0 0
+E 1 80130 0 11
+E 1 80131 0 16
+E 1 80132 0 6
+E 1 80133 0 5
+E 1 80134 0 7
+M 1 80127 1 80144                   LOADS CARTOGRAPHER
+M 1 80139 1 80145                   LOADS PET SHOP OWNER
+M 1 80150 1 80146                   LOADS PET
+M 1 80151 1 80146                   LOADS PET
+M 1 80152 1 80146                   LOADS PET
+M 1 80153 1 80146                   LOADS PET
+M 1 80154 1 80146                   LOADS PET
+M 1 80155 1 80146                   LOADS PET
+M 1 80156 1 80146                   LOADS PET
+M 1 80117 1 80147                   LOADS MALE CHILD
+M 1 80118 1 80148                   LOADS FEMALE CHILD
+M 1 80109 1 80148                   LOADS FEMALE CITIZEN
+*M 1 80126 1 80153                   LOADS SAGE
+O 1 80148 0 80153                   LOADS LIGHT GLOBE
+O 1 80155 0 80153                   LOADS DESK
+O 1 80156 0 80153                   LOADS PHONOGRAPH
+O 1 80157 0 80154                   LOADS FOUNTAIN
+M 1 80113 1 80155                   LOADS COOSHEE
+M 1 80133 1 80156                   LOADS DWARVEN GUILDMASTER
+M 1 80131 1 80157                   LOADS HUMAN GUILDMASTER
+M 1 80108 1 80158                   LOADS MALE CITIZEN
+M 1 80107 1 80158                   LOADS MALE GUARD
+E 1 80129 0 0
+E 1 80130 0 11
+E 1 80131 0 16
+E 1 80132 0 6
+E 1 80133 0 5
+E 1 80134 0 7
+M 1 80134 1 80159                   LOADS DRYAD GUILDMASTER
+M 1 80132 1 80160                   LOADS KENDER GUILDMASTER
+M 1 80136 1 80162                   LOADA AVIAN GUILDMASTER
+M 1 80135 1 80163                   LOADS ILLITHID GUILDMASTER
+M 1 80128 1 80164                   LOADS MALE NOBLE
+M 1 80137 1 80164                   LOADS MALE SERVANT
+M 1 80129 1 80165                   LOADS FEMALE NOBLE
+M 1 80138 1 80166                   LOADS FEMALE SERVANT
+M 1 80105 1 80166                   LOADS ELITE GUARD
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+M 1 80137 2 80167                   LOADS MALE SERVANT
+M 1 80138 2 80167                   LADS FEMALE SERVANT
+M 1 80147 2 80167                   LOADS LIBRARIAN
+G 1 80148 0     GIVES LIGHT
+G 1 80152 0     GIVES OLD BOOK
+M 1 80130 1 80168                   LOADS ELF GUILDMASTER
+G 1 80158 0 0                     LOADS PORTRAIT
+G 1 80151 0 0                     LOADS SCROLL
+O 1 80148 0 80168                   LOADS LIGHT
+O 1 80155 0 80168                   LOADS DESK
+M 1 80102 1 80169                   LOADS MAGE
+E 1 80106 0 12  WEARS ROBE
+E 1 80107 0 17  HOLDS GEM
+G 1 80108 0     GIVES SPELLBOOK
+G 1 80109 0     GIVES SCROLL
+G 1 80110 0     GIVES WAND
+O 1 80155 0 80169                   LOADS DESK
+O 1 80148 0 80169                   LOADS LIGHT
+M 1 80106 1 80170                   LOADS SCOUT
+E 1 80125 0 16
+E 1 80126 0 17
+E 1 80127 0 3
+E 1 80127 0 4
+E 1 80128 0 8
+M 1 80110 6 80172                   LOADS ACOLYTE MALE
+E 1 80135 0 6
+M 1 80111 6 80172                   LOADS ACOLYTE FEMALE
+E 1 80135 0 6
+M 1 80103 1 80173                   LOADS PRIEST
+E 1 80112 0 6   WEARS MITRE
+E 1 80113 0 17  HOLDS SYMBOL
+G 1 80111 0     GIVES ORB
+M 1 80145 6 80176                   LOADS STABLEHAND
+M 1 80115 1 80179                   LOADS UNICORN
+M 1 80144 1 80180                   LOADS STABLEMASTER
+M 1 80114 2 80181                   LOADS PEGASII
+M 1 80140 1 80182                   LOADS CAPTAIN
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+O 1 80145 0 80183                   LOADS CHAIR
+O 1 80146 0 80183                   LOADS OTTOMAN
+O 1 80147 0 80183                   LOADS TABLE
+O 1 80158 0 80183                   LOADS PORTRAIT
+M 1 80128 4 80183                   LOADS NOBLE
+M 1 80105 1 80184                   LOADS ELITE GUARD
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+O 1 80145 0 80185
+O 1 80146 0 80185
+O 1 80147 0 80185
+O 1 80148 0 80185
+M 1 80129 2 80185                   LOADS FEMALE NOBLE
+M 1 80105 1 80186                   LOADS ELITE GUARD
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+M 1 80100 1 80187                   LOADS DUKE
+E 1 80100 0 16  WIELDS SWORD
+E 1 80101 0 6   WEARS CROWN
+E 1 80102 0 12  WEARS CLOAK
+M 1 80101 1 80187                   LOADS DUCHESS
+E 1 80103 0 2   WEARS RING
+E 1 80104 0 6   WEARS DIADEM
+E 1 80105 0 8   WEARS SLIPPERS
+M 1 80105 1 80188                   LOADS ELITE GUARD
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+O 1 80145 0 80189
+O 1 80146 0 80189
+O 1 80147 0 80189
+O 1 80148 0 80189
+M 1 80128 1 80189                   LOADS NOBLE
+M 1 80105 1 80190                   LOADS ELITE GUARD
+E 1 80119 0 6
+E 1 80120 0 1
+E 1 80121 0 5
+E 1 80122 0 7
+E 1 80123 0 16
+E 1 80124 0 11
+O 1 80145 0 80191
+O 1 80146 0 80191
+O 1 80147 0 80191
+O 1 80148 0 80191
+M 1 80129 1 80192                   LOADS FEMALE NOBLE
+M 1 80147 1 80193                   LOADS MALE LIBRARIAN
+M 1 80148 6 80194                   LOADS FEMALE LIBRARIAN
+O 1 80152 0 80194
+O 1 80153 0 80194
+O 1 80154 0 80194
+M 1 80147 1 80195                   LOADS MALE LIBRARIAN
+O 1 80149 0 80195
+O 1 80150 0 80195
+O 1 80151 0 80195
+M 1 80104 1 80199                   LOADS HAAN
+E 1 80114 0 11  EQUIPS SHIELD
+G 1 80117 0     GIVES KEY
+O 1 80116 0 80199                   LOADS CHEST
+P 1 80114 0 80116                  LOADS HOARD INTO CHEST
+P 1 80118 0 80116                  LOADS HELMET INTO CHEST
+S
+
+
+#SHOPS
+80119 2 3 4 0 0 120 80 8 19
+80120 9 0 0 0 0 120 80 8 19
+80121 5 0 0 0 0 120 80 8 19
+80122 10 26 0 0 0 150 50 8 19
+80123 17 19 0 0 0 180 20 8 19
+80124 1 8 15 18 27 150 50 8 19
+80139 0 0 0 0 0 100 100 8 19
+0
+
+
+#SPECIALS
+M  80100 spec_executioner                 Duke Stalatharata
+M  80101 spec_cast_cleric                 Duchess Destelandara
+M  80102 spec_cast_mage                   The Archmage Tuo
+M  80103 spec_cast_adept                  The High Priest Lallinthera
+M  80104 spec_breath_any                  The Platinum Dragon
+M  80105 spec_guard                       An Elite Elven Guard
+M  80106 spec_cast_judge                  An Elite Elven Scout
+M  80107 spec_guard                       A Malatharan City Guard
+M  80110 spec_cast_cleric                 An Acolyte of Yaegar
+M  80111 spec_cast_cleric                 An Acolyte of Yaegar
+M  80112 spec_executioner                 The High Guardian of Malathar
+M  80113 spec_fido                        A Cooshee
+M  80117 spec_thief                       An Elven child
+M  80118 spec_thief                       An Elven child
+M  80137 spec_janitor                     A surly Elven Servant
+M  80138 spec_janitor                     A surly Elven Servant
+M  80140 spec_guard                       Captain Allertathala
+M  80145 spec_poison                      A surly stablehand
+M  80146 spec_executioner                 A Huge Golem
+M  80149 spec_breath_gas                  An Angry Griffon
+S
+
+
+#$

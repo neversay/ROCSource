@@ -1,0 +1,9186 @@
+#AREADATA
+Name        星光之城~
+Identity    thoran~
+Builders    Xanax~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      26500 26599
+Security    1
+Recall      3001
+F_toggle    8192|524288|1048576
+End
+
+
+
+#MOBILES
+#26500
+demon wolf~
+魔狼(demon wolf)~
+魔狼(demon wolf)在這邊磨著牠的利牙。
+~
+這一隻魔狼比起其他正常品種的狼約大了 2 倍有餘。牠看起來心情似乎不太好。
+~
+32|64 8|32|512 -1000 S
+37 1000 0 50d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+R Animal~
+>greet_prog 40~
+if ispc($n)
+	mpecho $I 忽然向你撲咬過來....
+	hunt $n
+	skilldrv multihit $n
+endif
+~
+>rand_prog 20~
+mpasound 忽然附近傳來一陣恐怖的狼嚎聲....
+~
+|
+#26501
+bloody bat~
+血腥蝙蝠(bloody bat)~
+這隻血腥蝙蝠(bloody bat)在你的眼前到處亂飛。
+~
+這隻蝙蝠的外型看起來就像會飛的野獸。
+~
+32|64 8|32|512 -1000 S
+40 0 0 0d0+0 0d-600+0
+50 0
+7 7 0
+P 8|4194304
+R Bat~
+>fight_prog 30~
+if hitprcnt($i) < 20
+	mpecho $I 傷勢嚴重，立即飛往空中脫離戰鬥....
+	mpdef_rembch $n
+	mpgoto 5
+	mpcallout 8 mpcall thoran_bat_unique-skill $b
+endif
+~
+>defun_prog thoran_bat_unique-skill~
+if area($b) == thoran
+	mpgoto $b
+	mpcallout 1 mpkill $b
+	mpcallout 1 mpecho $I 忽然出現....
+	mpcallout 1 mpdef_rembch null-tar
+else
+	mpdef_rembch null-tar
+endif
+~
+|
+#26502
+whore~
+妓女(whore)~
+一個妓女(whore)在這邊想著如何詐取你身上所有的錢財。
+~
+這個女人身體十分的骯髒，她與客人搞完之後，幾乎都不清理身子的。
+她不斷的向你招手，你確定要嗎？
+~
+64 8|32 -1000 S
+35 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+sigh
+say 我一直都記得，當年我最愛的情人....，
+mpcallout 1 say 將一顆大寶石鑲嵌(inlay)在一個箱子上....，
+mpcallout 2 say 送給我後向我求婚的情形....，
+mpcallout 3 say 可惜....，他....他在前往涅盤大地的時候....，
+mpcallout 4 say 被那邊的野獸給....，
+mpcallout 5 sigh
+mpcallout 5 mpdel_qmark self thoran_talking
+~
+>greet_prog 15~
+if is_qmark($i) == thoran_talking
+or isnpc($n)
+	break
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+blush $n
+mpcallout 1 mpechoat $n $I 伸起了她的小手向你召喚著....
+mpcallout 1 mpechoaround $n $I 伸起了她的小手向 $n 召喚著....
+mpcallout 2 say 喂！ $n ！想不想來一次啊....？
+mpcallout 3 say 我的收費不會很貴喔....！
+mpcallout 4 mpechoat $n $I 話說完，向你眨了眨眼睛....
+mpcallout 4 mpechoaround $n $I 話說完，向 $n 眨了眨眼睛....
+mpcallout 5 mpecho 忽然你覺得有點想吐....
+mpcallout 5 mpdel_qmark self thoran_talking
+~
+|
+#26503
+villager~
+女村民(villager)~
+這個女村民(villager)在這邊無所事事。
+~
+~
+64 8|32 1000 S
+40 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+>talk_prog topic~
+mpecho $I用奇怪的眼光看著你....
+say 你是誰？為什麼要跟我說話，我不認識你。
+~
+>rand_prog 18~
+if rand(50)
+	say 平常冒險的時候到了一個奇怪的地方，
+	say 如果覺得房間裡似乎有什麼古怪，
+	say 記得要對裡頭的東西搜尋一番(search around)。
+else
+	say 東敲敲西敲敲(knock)，總能敲出些什麼。
+endif
+~
+|
+#26504
+zombie~
+僵屍(zombie)~
+這具僵屍(zombie)在這邊漫無目的的漫遊著。
+~
+牠看起來像是人類，一種突變的人類。
+~
+32|64|4096|1048576 8|32 -1000 S
+40 0 0 0d0+0 0d0+0
+50 0
+7 7 0
+R Undead~
+P 8|4194304
+>fight_prog 100~
+if ispc($r)
+	if rand(25)
+		c curse $r
+	endif
+	if rand(25)
+		c poison $r
+	endif
+	if rand(25)
+		c weaken $r
+	else
+		c blindness $r
+	endif
+endif
+if rand(40)
+	mpechoat $n $I 忽然用牠具有劇毒的牙齒往你咬了過來....
+	mpechoaround $n $I 忽然用牠具有劇毒的牙齒往 $n 咬了過去....
+	if dex($n) < 18
+		mpforcer here add_affect $n poison 0 80 5 -1 4096
+	else
+		if rand(30)
+			mpforcer here add_affect $n poison 0 80 5 -1 4096
+		else
+			mpecho $n 用高超的敏捷度閃過了 $I 的咬蝕....
+		endif
+	endif
+endif
+~
+|
+#26505
+ghost~
+鬼魂(ghost)~
+一具鬼魂(ghost)在這邊漫無目的的遊蕩著。
+~
+~
+32|64|4096 8|32 -1000 S
+41 0 0 0d0+0 0d-1000+0
+50 0
+7 7 0
+R Ghost~
+P 8|4194304
+>fight_prog 100~
+if ispc($r)
+	if rand(25)
+		c curse $r
+	endif
+	if rand(25)
+		c poison $r
+	endif
+	if rand(25)
+		c weaken $r
+	else
+		c blindness $r
+	endif
+endif
+~
+>fight_prog 10~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26506
+ghoul~
+食屍鬼(ghoul)~
+一具食屍鬼(ghoul)在這邊尋找可供食用的屍體。
+~
+食屍鬼曾經是人類，但是現在牠身上富有彈性的肌肉都已經腐蝕見骨。牠的指甲與牙齒
+似乎相當的尖銳。
+~
+32|64|4096|1048576 8|32 -1000 S
+42 0 0 0d0+0 0d0+0
+50 0
+7 7 0
+R Undead~
+>fight_prog 40~
+mpechoat $n $I 忽然用牠具有劇毒的指甲往你劃了過來....
+mpechoaround $n $I 忽然用牠具有劇毒的指甲往 $n 劃了過去....
+mpforcer here add_affect $n poison 0 80 1 -1 4096
+~
+|
+#26507
+wight~
+浮游靈(wight)~
+浮游靈(wight)為了找尋替死鬼而到處飄浮。
+~
+浮游靈看起來有點像僵屍，但是它們是以靈體的方式存在。
+~
+32|64|4096 8|32 -1000 S
+22 0 0 0d0+0 0d-1000+0
+50 0
+7 7 0
+R Ghost~
+P 8|4194304
+>fight_prog 8~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26508
+wraith~
+幽魂(wraith)~
+這具幽魂(wraith)在這邊正尋找著生人來吃。
+~
+這具幽魂看起來就像是骷髏。相當不幸地，幽魂兼具了不死族與鬼魂族的特點。
+~
+32|64|4096 8|32 -1000 S
+32 0 0 0d0+0 0d-1000+0
+50 0
+7 7 1
+R Ghost~
+P 8|4194304
+>fight_prog 10~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26509
+maiden vampire~
+吸血鬼仕女(maiden vampire)~
+吸血鬼仕女(maiden vampire)正尋找著一些生人來吸血。
+~
+她是個非常非常美的吸血鬼，真的真的非常的美。但是你最好不要太接近她，記住，
+更別被她給咬中了。或許，你想要獲得永恆的詛咒生命的話，被她咬一下是無所謂。
+~
+32|64|4096 8|32 -1000 S
+43 3000 0 0d0+0 0d0+0
+50 0
+7 7 2
+C 3
+R Vampire~
+P 8|4194304
+>fight_prog 100~
+feed
+feed
+feed
+~
+>fight_prog 30~
+if is_equ_obj($n) == 26545
+	break
+endif
+grin
+mpechoat $n $I 忽然張開尖牙，向你咬了過來....
+mpechoaround $n $I 忽然張開尖牙，向 $n 咬了過去....
+if dex($n) < 18
+	mpforcer here add_affect $n poison 0 80 2 -1 1024
+	mpforcer here add_affect $n poison 0 80 3 -1 4096
+	mpforcer here add_affect $n poison 0 80 4 -1 536870912
+else
+	mpechoat $n 你用高超的敏捷度閃開了 $I 的咬蝕....
+	mpechoaround $n $n 用高超的敏捷度閃開了 $I 的咬蝕....
+endif
+~
+>tick_prog 100~
+if hour($) >= 6
+	if hour($) < 18
+		if inroom($i) != 5
+			curse
+			say 啊！我討厭陽光啊....！
+			mpecho $I 忽然消失在你的眼前....
+			mpgoto 5
+		endif
+	else
+		if inroom($i) == 5
+			if rand(50)
+				mpgoto 26559
+			else
+				mpgoto 26558
+			endif
+			mpecho $I 忽然出現在這邊....
+			grin
+			say 黑夜降臨，又是我活動的好時機....。
+		endif
+	endif
+else
+	if inroom($i) == 5
+			if rand(50)
+				mpgoto 26557
+			else
+				mpgoto 26556
+			endif
+			mpecho $I 忽然出現在這邊....
+			grin
+			say 黑夜降臨，又是我活動的好時機....。
+		endif
+	endif
+endif
+~
+>rand_prog 30~
+if hitprcnt($i) <= 30
+	mpat 5 c 'double heal'
+endif
+~
+>hitprcnt_prog 50~
+mpat 5 c 'double heal'
+~
+|
+#26510
+gildra-thoran Gildra~
+葛達(Gildra)~
+葛達(Gildra)在這邊展示著一些他製作的器皿。
+~
+他是一個個頭相當矮小的人，站起來大約只有 5 呎的高度，我想他應該連 100 磅
+都沒有。
+~
+2 8|32 1000 S
+40 1000 0 0d0+0 0d0+0
+50 0
+7 7 1
+C 9
+P 8|4194304
+R Half-dwarf~
+>talk_prog topic~
+say 您好，歡迎光臨 星光之城(Thoran City)。
+sm $n
+~
+>talk_prog p thoran city~
+say 我們這間店是星光之城中唯一的一家店鋪。
+~
+>fight_prog 50~
+if hitprcnt($i) < 50
+	c 'double heal'
+	mpnowait
+endif
+if insameroom(elpmi-thoran)
+	if rand(30)
+		yell 傲米(Elpmi)讓我來恢復你的狀況吧！
+		c 'full heal' elpmi-thoran
+		mpnowait
+		break
+	endif
+	if rand(30)
+		c 'double heal' elpmi-thoran
+		mpnowait
+	else
+		c heal elpmi-thoran
+		mpnowait
+	endif
+endif
+~
+>fight_prog 100~
+if being($b)
+	skilldrv speedhit $n
+	skilldrv heavyhit $n
+else
+	if insameroom(elpmi-thoran)
+		yell 傲米(Elpmi)快來保護我啊....！
+		mpforce elpmi-thoran yell 葛達(Gildra)不要怕，我來了....！
+		mpgroup self elpmi-thoran 1 0
+		mpdef_rembch elpmi-thoran
+		mpforce elpmi-thoran protect gildra-thoran
+	else
+		if mobcount(26511) > 0
+			yell 傲米(Elpmi)快來保護我啊....！
+			mpforce elpmi-thoran yell 葛達(Gildra)不要怕，我來了....！
+			mptransfer elpmi-thoran
+			mpgroup self elpmi-thoran 1 0
+			mpdef_rembch elpmi-thoran
+			mpforce elpmi-thoran protect gildra-thoran
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26511
+elpmi-thoran Elpmi~
+傲米(Elpmi)~
+傲米(Elpmi)在這邊保護著葛達(Gildra)。
+~
+他的個頭可比葛達大多了，站起來大約 6 呎高，而且體重接近 200 磅。
+~
+2 8|32 1000 S
+40 1000 0 0d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+R Half-dwarf~
+C 9
+>talk_prog topic~
+say 據說有些被魔法封印的容器，例如箱子、袋子....等等....，
+mpcallout 1 say 是沒有辦法直接打開的....，
+mpcallout 2 say 只有封印的主人，或是魔法更高強的人才能夠解除上頭的魔法....，
+mpcallout 3 say 進而打開箱子，取走裡頭的寶物。
+~
+>hitprcnt_prog 20~
+if insameroom(gildra-thoran)
+	mpforce gildra-thoran c 'full heal' elpmi-thoran
+endif
+~
+>fight_prog 100~
+skilldrv multihit $n
+~
+>fight_prog 50~
+if isgroup($i)
+	say 嚐嚐我的劍法吧！
+	if rand(50)
+		perform empslash
+		mpnowait
+	else
+		flaming
+		mpnowait
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26512
+kira-thoran Kira~
+基拉(Kira)~
+基拉(Kira)在這邊照顧他的酒吧。
+~
+他看著你的眼光相當的和善，讓你很想跟他暢談天南地北。那麼就儘量跟他說你在
+旅程中發生的趣事吧！
+~
+2 8|32 1000 S
+43 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+sigh
+say 我的店裡頭有不少嗜酒成癮的客人....，
+if insameroom(bizmark-thoran)
+	if rand(50)
+		mpcallout 1 say 就像他....
+		mpcallout 1 point bizmark-thoran
+		mpcallout 2 say 自從在一次冒險旅途中失去了一隻眼睛後....，
+		mpcallout 3 say 每天幾乎就是賴在這邊不走。
+		mpcallout 3 mpdel_qmark self thoran_talking
+	else
+		mpcallout 1 say 大部分都是過去探索舊大陸的佼佼者....，
+		mpcallout 2 say 像 比斯馬克(Bizmark)....，
+		mpcallout 2 point bizmark-thoran
+		mpcallout 3 say 就是不可多得的冒險者....，
+		mpcallout 4 say 可惜在一次的意外中失去了右眼。
+		mpcallout 4 mpdel_qmark self thoran_talking
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26513
+bizmark-thoran Bizmark~
+比斯馬克(Bizmark)~
+比斯馬克(Bizmark)正在酒吧前暢飲他的飲料。
+~
+他的眼睛充滿了血絲與倦意，或許他真的喝太多了，不過他的右眼似乎是瞎了，
+取代右眼的是一顆閃亮的綠寶石。
+~
+2 8|32|64|512 1000 S
+65 0 0 30d30+0 0d0+0
+50 0
+7 7 1
+S 40 500
+P 8|4194304
+C 9
+>repop_prog 100~
+mpoload 26504
+mpoload 26505
+mpoload 26509
+mpat 5 wear all
+~
+>fight_prog 100~
+if is_qmark($i) == thoran_bizmark_waiting
+	mpgoto self
+	break
+endif
+flaming
+mpnowait
+flaming
+mpnowait
+icecore
+mpnowait
+icecore
+mpnowait
+icecore
+mpnowait
+earth
+mpnowait
+earth
+mpnowait
+earth
+mpnowait
+~
+>greet_prog 100~
+if inroom($i) == 26512
+	if rembch($n)
+		if is_qmark($n) == thoran_bizmark_quest 100001
+			mpadd_qmark self talking 20 0 0 0 1 0
+			sigh
+			say 我的友啊！我將賽巴洛司的爪子帶來了....，
+			mpcallout 1 say 希望能夠慰你們在天之靈....，
+			mpcallout 2 mpecho $I 跪了下去，開始嚎啕大哭....
+			mpcallout 2 mpecho 在這種情境下，你不禁也心情沈重....
+			mpcallout 4 mpecho $I 訕訕的站了起來，並向你站的方向走了過來....
+			mpcallout 6 say 謝謝你的幫忙，為我的摯友們報仇....，
+			mpcallout 7 mpexp $n 10000
+			mpcallout 7 mpresp $n 3
+			mpcallout 7 mpadd_qmark $n thoran_quest -1 4 0 0 0 1
+			mpcallout 7 mpmod_qmark $n thoran_quest v0 | 4
+			mpcallout 7 mpdel_qmark $n thoran_bizmark_quest
+			mpcallout 8 say 我實在無以回報，只有一個跟隨我多年的東西可以送你....，
+			mpcallout 9 mpecho $I 將他自己右眼的義眼拿了下來....，
+			mpcallout 10 say 這個義眼其實是一顆完美寶石的璞石....，
+			mpcallout 11 say 有著極為強大的魔力....，
+			mpcallout 12 say 但是因為我的資質駑鈍，因此無法善用它....，
+			mpcallout 13 say 或許交給英雄你才是最適當的吧！
+			mpcallout 14 mpechoat $n $I 將這顆 璞石(stone) 交給了你....
+			mpcallout 14 mpechoaround $n $I 將這顆 璞石(stone) 交給了 $n ....
+			mpcallout 14 mpoload 26555 $n viclv target
+			mpcallout 15 wave $n
+			mpcallout 16 mppurge self
+			mpcallout 16 mpat 26504 mpecho $I來了。
+			mpcallout 16 mpat 26504 mpmload 26550
+			mpcallout 16 mpat 26504 mpforcer here modrvt timer = 200
+			mpcallout 16 mpecho $I 轉身離去....
+		endif
+	endif
+endif
+~
+>tick_prog 100~
+if being($b)
+	if inroom($i) == 26512
+		if is_qmark($i) != thoran_bizmark_waiting
+			tell $b 你讓我在墓地等太久了，我不等你了....
+			mpat $b mpdel_qmark $b thoran_bizmark_quest
+			mpat $b mpadd_qmark $b thoran_quest -1 4 0 0 0 1
+			mpat $b mpmod_qmark $n thoran_quest v0 | 4
+			if is_qmark($i) == talking
+				mpdel_qmark self talking
+			endif
+			if is_qmark($i) == thoran_bizmark_waiting
+				mpdel_qmark self thoran_bizmark_waiting
+			endif
+			mpmodify mdr = 0
+			mpmodify pdr = 0
+			mpdef_rembch null-tar
+			mpgoto 26504
+			mpecho $I來了。
+		endif
+	endif
+else
+	if is_qmark($i) == thoran_bizmark_waiting
+		if is_qmark($i) == talking
+			mpdel_qmark self talking
+		endif
+		if is_qmark($i) == thoran_bizmark_waiting
+			mpdel_qmark self thoran_bizmark_waiting
+		endif
+		mpmodify mdr = 0
+		mpmodify pdr = 0
+		mpgoto 26504
+		mpecho $I來了。
+	endif
+endif
+if inroom($i) == 26512
+	if is_qmark($i) == thoran_bizmark_waiting
+		break
+	endif
+	if is_qmark($i) == talking
+		mpdel_qmark self talking
+	endif
+	mpgoto 26504
+	mpecho $I來了。
+endif
+~
+>rand_prog 8~
+if is_qmark($i) == thoran_bizmark_waiting
+	break
+endif
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking 10 0 0 0 1 0
+if insameroom(kira-thoran)
+	say 基拉(Kira)，給我來一杯啤酒(beer)....
+	if rand(60)
+		mpforce kira-thoran say 好的，沒問題....
+		mpcallout 1 mpforce kira-thoran say 您的啤酒好了....
+		mpcallout 1 mpforce kira-thoran mpoload 26508
+		mpcallout 2 mpforce kira-thoran give beer bizmark-thoran
+		mpcallout 3 drink beer
+		mpcallout 4 say 啊！真是好喝....！
+		mpcallout 4 mpjunk all.beer
+		mpcallout 4 mpdel_qmark self talking
+	else
+		mpforce kira-thoran say 比斯馬克(Bizmark)，你就少喝一點吧....
+		mpcallout 1 say 你少管我，我再說一次，我要一杯啤酒(beer)....
+		mpcallout 2 mpforce kira-thoran sigh
+		mpcallout 2 mpforce kira-thoran say 真是無可救藥的酒鬼....
+		mpcallout 3 mpforce kira-thoran say 喂！比斯馬克(Bizmark)，你的酒來了....
+		mpcallout 3 mpoload 26508
+		mpcallout 4 mpforce kira-thoran give beer bizmark-thoran
+		mpcallout 5 drink beer
+		mpcallout 6 say 嗯！好喝....！
+		mpcallout 6 mpjunk all.beer
+		mpcallout 6 mpdel_qmark self talking
+	endif
+endif
+~
+>talk_prog restart~
+if is_qmark($n) & thoran_quest 100004
+or is_qmark($n) == bizmark_killed
+	break
+endif
+if is_qmark($n) == thoran_bizmark_quest 100000
+	mpdel_qmark $n thoran_bizmark_quest
+	mpechoat $n 遠方傳來一陣聲響「本項任務你已經可以重解了。」
+	break
+endif
+if is_qmark($i) == talking
+or inroom($i) == 26512
+or being($b)
+	tell $n 我現在很忙，等一下再說。
+	break
+endif
+if is_qmark($n) == thoran_bizmark_quest 100001
+	mpadd_qmark self talking 10 0 0 0 1 0
+	mpadd_qmark self thoran_bizmark_waiting 12 0 0 0 1 0
+	mpdef_rembch $n
+	say 請你跟我來。
+	mpmodify mdr + 100000
+	mpmodify pdr + 100000
+	mpcallout 1 mpgoto 26512
+	mpcallout 1 mpecho $I 轉身往星光之城的 墓地 而去....
+endif
+~
+>talk_prog p right eyes~
+if being($b)
+	break
+endif
+if is_qmark($i) == talking
+or inroom($i) == 26512
+	break
+endif
+if is_qmark($n) & thoran_quest 100004
+or is_qmark($n) == thoran_bizmark_quest
+	break
+endif
+if resp($n) < 10
+or is_qmark($n) == bizmark_killed
+	mpechoat $n $I 的左眼惡狠狠的瞪視著你，讓你不禁感到不寒而慄....
+	mpechoaround $n $I 的左眼惡狠狠的瞪視著 $n ，讓你在旁也感到不寒而慄....
+	mpcallout 1 say 滾！不要在我前面提起任何有關眼睛的事情。
+else
+	mpadd_qmark self talking 10 0 0 0 1 0
+		mpcallout 11 mpdel_qmark self talking
+	sigh
+	mpcallout 1 shake
+	mpcallout 1 say 那是好久以前的事情了，我實在不想再提起....，
+	mpcallout 2 say 不過難得有名氣那麼大的英雄來到這裡....，
+	mpcallout 3 say 那麼我就娓娓道來，一一跟英雄您說了....，
+	mpcallout 4 mpecho $I 吞了吞口水，開始回首以前的痛苦經歷....
+	mpcallout 6 say 我的眼睛，是在一次屠龍的過程中被弄瞎的....，
+	mpcallout 7 sigh
+	mpcallout 7 mpecho 屠龍過程的痛苦，似乎仍在 $I 的腦海中徘徊....
+	mpcallout 9 say 我....我只有一個不小心，非但失去了我的右眼....，
+	mpcallout 10 say 連帶著我所有的隊友(partner)全都葬送在那條龍的龍焰之下。
+	mpcallout 11 sigh
+endif
+~
+>talk_prog partner~
+if being($b)
+	break
+endif
+if is_qmark($i) == talking
+or inroom($i) == 26512
+or is_qmark($n) == bizmark_killed
+	break
+endif
+if is_qmark($n) & thoran_quest 100004
+or is_qmark($n) == thoran_bizmark_quest
+	break
+endif
+if resp($n) >= 10
+	mpadd_qmark self talking 10 0 0 0 1 0
+	mpcallout 5 mpdel_qmark self talking
+	say 我的隊友，全部都是萬中選一的一時之選....，
+	mpcallout 1 say 我們曾經同時遭受到一群高等級惡魔與不死族的圍攻....，
+	mpcallout 2 say 非但沒有受傷，而且順利殲滅了那些該死的不死生物....，
+	mpcallout 3 say 沒想到遇到了那條該死的龍(dragon)....，
+	mpcallout 4 mpecho $I 的表情開始變的扭曲....
+	mpcallout 5 say 卻仍然沒有辦法承受牠的一擊，只有一擊！
+endif
+~
+>talk_prog dragon~
+if being($b)
+	break
+endif
+if is_qmark($i) == talking
+or inroom($i) == 26512
+or is_qmark($n) == bizmark_killed
+	break
+endif
+if is_qmark($n) & thoran_quest 100004
+or is_qmark($n) == thoran_bizmark_quest
+	break
+endif
+if resp($n) >= 10
+	mpadd_qmark self talking 10 0 0 0 1 0
+	mpcallout 7 mpdel_qmark self talking
+	say 那條龍....那條龍就是棲息在蠻荒大火山的火龍 - 賽巴洛司....，
+	mpcallout 1 say 其實這條龍危害整個蠻荒森林已經很久了....，
+	mpcallout 2 say 我們準備了很長的時間，為了就是史卡拉貝居民的安全....，
+	mpcallout 3 say 沒想到準備了那麼久，卻連賽巴洛司的一擊都擋不住....，
+	mpcallout 4 sigh
+	mpcallout 5 say 如果....如果你能夠帶回牠的爪子(claw)，為我的隊友報仇....，
+	mpcallout 6 say 讓我可以用牠的爪子祭拜我那幾個隊友在天之靈....，
+	mpcallout 7 say 那麼....我死也瞑目了。
+endif
+~
+>talk_prog claw~
+if being($b)
+	break
+endif
+if is_qmark($i) == talking
+or inroom($i) == 26512
+or is_qmark($n) == bizmark_killed
+	break
+endif
+if is_qmark($n) & thoran_quest 100004
+or is_qmark($n) == thoran_bizmark_quest
+	break
+endif
+if resp($n) >= 10
+	mpadd_qmark self talking 10 0 0 0 1 0
+	mpcallout 6 mpdel_qmark self talking
+	mpadd_qmark $n thoran_bizmark_quest -1 0 0 0 0 1
+	say 賽巴洛司 躲在蠻荒森林(Savage Forest)的深處....，
+	mpcallout 1 say 據說牠住的火山有著異常高的溫度....，
+	mpcallout 2 say 因此若貿然進入，會受到火山高熱的傷害....，
+	mpcallout 3 say 據說蠻荒森林中土人有辦法能夠阻擋那些高熱....，
+	mpcallout 4 say 不過他們的話很難懂....，
+	mpcallout 5 say 不知道有什麼管道可以學....，
+	mpcallout 6 say 總而言之，請你一切小心了。
+endif
+~
+>give_prog 4200~
+if being($b)
+	drop $o
+	break
+endif
+if is_qmark($n) == bizmark_killed
+	mpjunk $o
+	break
+endif
+if is_qmark($i) == talking
+or inroom($i) == 26512
+	tell $n 我現在很忙，等一下再說。
+	give claw $n
+	break
+endif
+if is_qmark($n) == thoran_bizmark_quest 100000
+	mpadd_qmark self talking 2 0 0 0 1 0
+	mpcallout 7 mpdel_qmark self talking
+	mpmod_qmark $n thoran_bizmark_quest v0 = 1
+	mpadd_qmark self thoran_bizmark_waiting 12 0 0 0 1 0
+	mpdef_rembch $n
+	mpjunk $o
+	mpmodify mdr + 100000
+	mpmodify pdr + 100000
+	mpecho $I 看到賽巴洛司的爪子，忽然淚流滿面....
+	mpcallout 1 sigh
+	mpcallout 2 say 我的右眼，以及我三位隊友的生命....，
+	mpcallout 3 say 啊！威望....聲名....，一切都是浮雲啊....！
+	mpcallout 4 sob $n
+	mpcallout 5 say 讓我將爪子放到我朋友的墳前祭拜他吧....！
+	mpcallout 6 say 同時也請你跟我來。
+	mpcallout 7 mpgoto 26512
+	mpcallout 7 mpecho $I 轉身往星光之城的 墓地 而去....
+endif
+~
+>death_prog 100~
+if is_qmark($n) != bizmark_killed
+	mpadd_qmark $n bizmark_killed 200 0 0 0 0 1
+endif
+if is_qmark($n) == thoran_bizmark_quest
+	mpdel_qmark $n thoran_bizmark_quest
+endif
+yell 可惡的 $n ，我會記得你所作過的事！
+~
+|
+#26514
+yram-thoran Yram~
+藍(Yram)~
+失去了女兒的藍(Yram)正在深沈的哀痛著。
+~
+她看起來十分的驚恐害怕。由於失去了心愛的女兒，她已經整整有一個星期的時間
+完全沒有照料自己的生活了。或許你能夠給予她一點幫助。
+~
+2 8|32 1000 S
+35 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+P 8|4194304
+>talk_prog restart~
+if is_qmark($n) & thoran_quest 100001
+	say 你已經完成此項任務了。
+	break
+endif
+if is_qmark($i) == thoran_anir_quest
+	break
+endif
+if is_qmark($n) <= thoran_anir_quest 100008
+or is_qmark($n) >= thoran_anir_quest 100012
+	mpechoat $n 遠方傳來一陣聲響「本項任務已經可以重解。」
+	mpdel_qmark $n thoran_anir_quest
+endif
+~
+>talk_prog topic~
+if is_qmark($n) & thoran_quest 100001
+	break
+endif
+if is_qmark($i) == thoran_anir_quest
+	if inroom($i) != 26510
+		if rembch($n)
+			if rand(30)
+				bow $b
+				say 謝謝您帶回了我的小奈亞....，
+				say 如果奈亞能夠恢復，我一定一生為您做牛做馬。
+				break
+			endif
+			if rand(33)
+				sob
+				say 希望小奈亞能夠忍受住儀式的痛苦。
+				say 若不是大恩人 $b 的協助，她也無法脫離吸血鬼的魔掌。
+			else
+				mpecho $I 焦急的等待著....
+				say 希望奈亞能夠有與您同樣的勇氣，度過這次的難關。
+			endif
+		else
+			if rand(50)
+				sigh
+				say 我的小奈亞正在裡頭受苦，
+				say 希望她能夠順利度過難關。
+			else
+				say 多拿恩牧師正在裡頭進行淨化儀式，
+				say 請你現在不要任意進入。
+			endif
+		endif
+	else
+		mpgoto 26508
+	endif
+endif
+~
+>rand_prog 20~
+if is_qmark($i) == thoran_anir_quest
+	if inroom($i) != 26510
+		if rand(20)
+			say 我真擔心我的小奈亞會變成吸血鬼。
+			break
+		endif
+		if rand(25)
+			if insameroom($b)
+				say 謝謝您能夠帶回我的小奈亞，我實在無以回報。
+			endif
+			break
+		endif
+		if rand(33)
+			say 怎麼那麼久呢？多拿恩牧師好慢啊！
+		else
+			say 神啊！請您能夠保佑我的小奈亞能夠順利治癒。
+		endif
+	else
+		if is_qmark($i) == thoran_anir_quest 100099
+			break
+		else
+			mpgoto 26508
+		endif
+	endif
+endif
+~
+>talk_prog anir~
+if is_qmark($n) & thoran_quest 100001
+	break
+endif
+if is_qmark($i) == thoran_anir_quest
+	break
+endif
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+mpechoat $n $I 抬起頭看著你....
+mpechoaround $n $I 抬起頭看著 $n 的臉....
+mpcallout 1 say 我可憐的女兒 - 奈亞(Anir)....，
+mpcallout 2 say 自從被可怕的吸血鬼(vampire)看上之後....，
+mpcallout 3 say 我們就每天過著不得安寧的生活....，
+mpcallout 4 say 直到前幾天，那可恨的吸血鬼(vampire)竟然直接進到我們家中....，
+mpcallout 5 say 將我的 奈亞(Anir) 給帶走了....，
+mpcallout 6 say 直到現在 奈亞(Anir) 都是生死未卜....，
+mpcallout 7 mpcall thoran_anir_quest $n
+~
+>defun_prog thoran_anir_quest~
+if is_qmark($n) & thoran_quest 100001
+or is_qmark($n) == thoran_anir_quest
+	break
+endif
+if is_qmark($n) != thoran_quest
+	mpadd_qmark $n thoran_quest -1 0 0 0 0 1
+endif
+say 那麼你願意幫我帶回我的小奈亞(Anir)嗎(yes/no)？
+mpdel_qmark self thoran_talking
+~
+>talk_prog yes~
+if is_qmark($n) & thoran_quest 100001
+or is_qmark($n) == thoran_anir_quest
+	break
+endif
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+mpadd_qmark $n thoran_anir_quest -1 0 0 0 0 1
+mpechoat $n $I 對你露出十分感激的表情....
+mpechoaround $n $I 對 $n 露出十分感激的表情....
+mpcallout 1 say 您的大恩大德，我真是沒齒難忘....，
+mpcallout 2 say 位於此處北邊，我們星光之城的教堂....，
+mpcallout 3 say 對於吸血鬼(vampire)有很大的嚇阻能力....，
+mpcallout 4 say 或許你可以去問問教堂裡的牧師....，
+mpcallout 5 say 有關吸血鬼(vampire)的一些事情。
+mpcallout 5 mpdel_qmark self thoran_talking
+~
+>talk_prog no~
+if is_qmark($n) & thoran_quest 100001
+	break
+endif
+if is_qmark($i) == thoran_anir_quest
+	break
+endif
+sigh
+~
+>talk_prog daughter~
+if is_qmark($n) & thoran_quest 100001
+	break
+endif
+if is_qmark($i) == thoran_anir_quest
+	break
+endif
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+sob $n
+say 我的女兒 - 奈亞(Anir)....，
+mpcallout 1 say 自從被 吸血鬼(vampire) 抓去之後....，
+mpcallout 2 say 到現在一點消息都沒有....，
+mpcallout 3 say 奈亞(Anir) 是我唯一活下去的依靠....，
+mpcallout 4 say 我不能夠失去她啊！
+mpcallout 5 cry $n
+mpcallout 5 mpdel_qmark self thoran_talking
+~
+>rand_prog 20~
+if is_qmark($i) == thoran_anir_quest
+	break
+endif
+if is_qmark($i) == thoran_talking
+	break
+endif
+sob
+say 我可憐的女兒(daughter)啊....！
+mpcallout 1 say 你到底現在身在何處啊....？
+mpcallout 2 cry
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26515
+anir-thoran Anir~
+奈亞(Anir)~
+奈亞(Anir)蜷縮在角落哭泣著。
+~
+她是一位披著烏黑頭髮的美麗女孩。但是你卻看到這位女孩的脖子上有兩個被牙齒咬過
+的傷口(wound)。如果她是被吸血鬼咬過，那麼用不了多久她也會變成吸血鬼。
+~
+2|64|1048576|67108864 8|32|512 1000 S
+40 1000 0 0d0+0 0d0+0
+50 0
+7 7 2
+C 1
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self thoran_anir_quest -1 0 0 0 0 1
+~
+>rand_prog 50~
+if is_qmark($i) != thoran_anir_quest
+	if is_qmark($i) != thoran_anir-vampire_quest
+		rumor 據說星光之城的 奈亞(Anir) 被吸血鬼咬過後也成為可怕的吸血鬼了....
+		mpadd_qmark self thoran_anir-vampire_quest 240 0 0 0 1 0
+		mpgoto 26597
+		mpmload 26548
+		mpgoto 5
+	endif
+endif
+~
+>give_prog 26544~
+if is_qmark($n) & thoran_quest 100001
+	drop garlic
+	break
+endif
+if is_qmark($i) == thoran_talking
+	drop garlic
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+mpjunk all.garlic
+if is_qmark($n) == thoran_anir_quest 100002
+	mpmod_qmark $n thoran_anir_quest v0 = 3
+	mpechoat $n $I 將你給她的大蒜吃了下去....，
+	mpechoaround $n $I 將 $n 給她的大蒜吃了下去....，
+	mpcallout 1 mpecho $I 的身體停止了顫抖....，
+	mpcallout 2 mpecho $I 身上的邪氣似乎少了一些....。
+	mpcallout 3 mpcall thoran_anir_quest $n
+endif
+~
+>defun_prog thoran_anir_quest~
+if mobcount(26522) > 0
+	say 咬我的吸血鬼還在這邊....，
+	mpcallout 1 say 我無法脫離牠的控制的....，
+	mpcallout 2 say 除非能夠先毀滅牠的肉身....，
+	mpcallout 3 say 我才有辦法脫離這裡隨你們回去。
+else
+	mpmod_qmark $n thoran_anir_quest v0 = 4
+	nod $n
+	mpcallout 1 say 我的身體可以動了....，
+	mpcallout 2 say 英雄您就帶領我到教堂去吧....！
+	mpcallout 3 mpgroup $n self 1 1
+	mpcallout 3 mpadd_qmark self thoran_anir_return 50 0 0 0 1 0
+	mpcallout 3 mpdef_rembch $n
+endif
+mpdel_qmark self thoran_talking
+~
+>entry_prog 100~
+if inroom($i) == 26551
+	if robjcount(26589) > 0
+		if is_qmark($i) == thoran_anir_return
+			if being($b)
+				say 那麼 $b 我就先進入傳送門了....
+				mpecho $I 進入了傳送門之中....
+				mpgoto 26548
+			endif
+		endif
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_anir_quest 100003
+	mpcall thoran_anir_quest $n
+endif
+~
+>rand_prog 40~
+if is_qmark($i) == thoran_anir_return
+	if being($b)
+		if insameroom($b)
+		else
+			if is_qmark($i) >= thoran_anir_return 1005
+				mpmod_qmark $i thoran_anir_return timer - 5
+			endif
+		endif
+	else
+		mppurge self
+	endif
+else
+	if being($b)
+		mpechoat $b 遠方傳來一陣聲響「由於你遲遲未能完成帶領 奈亞(Anir) 回到教堂的步驟。」
+		mpechoat $b 遠方傳來一陣聲響「因此此項任務失敗，若要重新開始任務(restart)請告知 藍(Yram)。」
+		mppurge self
+	endif
+endif
+~
+>talk_prog yram~
+if is_qmark($n) & thoran_quest 100001
+	break
+endif
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+mpechoat $n 你向 $I 敘述有關 藍(Yram) 委託你的經過....
+mpechoarond $n $n 向 $I 敘述有關 藍(Yram) 委託你的經過....
+mpcallout 1 mpechoat $n $I 抬起頭了，用她那水汪汪的淚眼看著你....
+mpcallout 1 mpechoaround $n $I 抬起了頭，用她那水汪汪的淚眼看著 $n ....
+mpcallout 1 say 藍(Yram)是我的媽媽，我被吸血鬼抓來這邊好久了....，
+if is_qmark($n) == thoran_anir_quest 100001
+	mpmod_qmark $n thoran_anir_quest v0 = 2
+	mpcallout 2 say 你是我的媽媽叫你來救我的嗎....？
+	mpcallout 3 say 但是我被吸血鬼咬過了....，
+	mpcallout 4 say 我該怎麼辦？
+endif
+mpcallout 4 mpdel_qmark self thoran_talking
+~
+>talk_prog wound~
+if is_qmark($n) & thoran_quest 100001
+or is_qmark($i) == thoran_talking
+	break
+endif
+if mobcount(26522) > 0
+	shiver
+	say 不知道，我什麼都不知道....
+	say 我的主子還在，我什麼都不知道....
+	break
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26516
+donovan-thoran Donovan~
+多拿恩(Donovan)~
+多拿恩(Donovan)在這邊虔誠的膜拜著。
+~
+他正模擬著教堂中膜拜神明的情形，也許神明真的是存在。
+~
+2 8|32|512 1000 S
+44 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+C 3
+P 8|4194304
+>defun_prog thoran_anir_death~
+mpmod_qmark $n thoran_anir_quest v0 = 15
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+if mobcount(26514) > 0
+	mptransfer yram-thoran
+else
+	mpmload 26514
+endif
+mpadd_qmark yram-thoran thoran_anir_quest 10 99 0 0 1 0
+mpecho 藍(Yram) 獲悉 奈亞(Anir) 被救回來的消息，趕到了教堂之中....
+mpforce yram-thoran say 奈亞(Anir) ！你....你怎麼死了....，我的女兒啊....！
+mpcallout 1 say 藍(Yram) ，請冷靜，現在 奈亞(Anir) 只是假死狀態而已....，
+mpcallout 2 mpforce yram-thoran say 是....是嗎？是我太緊張了，那麼我們該怎麼辦....？
+mpcallout 3 say 不用擔心，接下來交給我就行了....，
+mpcallout 4 mpecho $I 拿出一杯聖水，倒在 奈亞的屍體(Anir's corpse) 上頭....
+mpcallout 5 mpecho 早晨的第一道陽光由窗口射到了 奈亞的屍體(Anir's corpse) 上頭....
+mpcallout 6 mpecho 奈亞的屍體(Anir's corpse) 上的聖水，發出了耀眼的光芒....
+mpcallout 7 mpecho 奈亞的屍體(Anir's corpse) 上的聖水，漸漸被滲入了屍體之中....
+mpcallout 8 mpecho 原本已經乾枯的 奈亞的屍體(Anir's corpse)，漸漸出現了血色....
+mpcallout 10 mpecho 奈亞的屍體(Anir's corpse) 心臟上的 木樁(timber) 發出了耀眼的光芒....
+mpcallout 11 mpecho 木樁(timber) 由 奈亞的屍體(Anir's corpse) 激射而出，卻沒有任何鮮血流出....
+mpcallout 11 mpoload 26545 99 floor
+mpcallout 12 mpcall thoran_anir_death1 $n
+~
+>defun_prog thoran_anir_death1 $n~
+if robjcount(26558) > 0
+	mppurge corpse-thoran
+	mpmload 26549
+	mpecho 奈亞的屍體(Anir's corpse)，竟然坐起身子，並且張開了眼睛....
+	mpforce anir2-thoran say 我回來了，我親愛的母親....
+	mpecho 藍(Yram) 的臉上露出不敢相信的表情....
+	mpcallout 1 mpforce yram-thoran say 喔！我的女兒啊....！
+	mpcallout 1 mpecho 藍(Yram) 緊緊地抱住了已經復活的 奈亞(Anir)....
+	mpcallout 2 mpecho $I 看到這邊，眼角也泛出了淚光....
+	mpcallout 3 say 好吧！你們母女倆回家聚一聚吧！你們一定有很多話要說....，
+	mpcallout 4 mpforce yram-thoran bow donovan-thoran
+	mpcallout 4 mpforce anir2-thoran bow donovan-thoran
+	mpcallout 4 mpforce yram-thoran bow $n
+	mpcallout 4 mpforce anir2-thoran bow $n
+	mpcallout 5 mpforce yram-thoran say 大恩大德，此生不知如何回報，唯有來生做牛做馬以圖報恩了....，
+	mpcallout 6 mpecho 藍(Yram) 與 奈亞(Anir) 手牽手走出了教堂....
+	mpcallout 6 mppurge yram-thoran
+	mpcallout 6 mppurge anir2-thoran
+	mpcallout 7 mpechoat $n $I 轉身面向你....
+	mpcallout 7 mpechoaround $n $I 轉身面向 $n ....
+	mpcallout 8 say $n 你兼具勇敢與慈悲的勇者精神，值得我輩的效法....
+	mpcallout 8 mpforcer here stun $n 5
+	mpcallout 8 mpat $n mpdel_qmark $n thoran_anir_quest
+	mpcallout 8 mpat $n mpmod_qmark $n thoran_quest v0 | 1
+	mpcallout 9 sm $n
+	mpcallout 9 mpexp $n 20000
+	mpcallout 9 mpresp $n 5
+	mpcallout 10 say 在這邊祝福你在往後的冒險旅程中事事順利。
+	mpcallout 11 wave $n
+	mpcallout 11 mpdel_qmark self thoran_talking
+else
+	mpecho 儀式忽然中斷，忽然讓現場的人士紛紛不知所措....
+	if insameroom(yram-thoran)
+		if is_qmark(yram-thoran) == thoran_anir_quest
+			mpdel_qmark yram-thoran thoran_anir_quest
+			mptransfer yram-thoran 26506
+		endif
+	endif
+endif
+~
+>talk_prog p cope with~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if rembch($n)
+	if is_qmark($n) <= thoran_master_quest 100004
+		if is_qmark($n) >= thoran_master_quest 100002
+			if is_qmark($n) & thoran_master_quest 300004
+				mpadd_qmark self thoran_talking 5 0 0 0 1 0
+				say 或許剛剛那位壯士所說的....，
+				mpcallout 1 say 就是涅盤大地野獸群的弱點....，
+				mpcallout 2 say 可惜他尚未說清楚就死去了。
+				mpcallout 2 mpdel_qmark self thoran_talking
+				mpcallout 2 mpdel_qmark self thoran_master_quest
+				mpcallout 2 mpdef_rembch null-tar
+			endif
+		endif
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == thoran_anir_quest 100011
+	if robjcount(26558) > 0
+		mpmod_qmark $n thoran_anir_quest v0 = 13
+		if hour($) == 6
+			say 時刻也到了，讓我們開始進行驅魔儀式(ceremony)吧。
+			mpmod_qmark $n thoran_anir_quest v0 = 14
+			mpcall thoran_anir_death $n
+		else
+			say 時刻未到，尚無法進行驅魔儀式(ceremony)，
+			say 必須等待一天中早晨第一道陽光之時才行。
+		endif
+		break
+	endif
+	if is_inv_obj($n) == 26558
+		mpmod_qmark $n thoran_anir_quest v0 = 12
+		say 快將 奈亞(Anir) 的屍體放下，我們必須要開始驅魔儀式(ceremony)了....
+	endif
+	break
+endif
+if is_qmark($n) <= thoran_master_quest 100004
+	if is_qmark($n) >= thoran_master_quest 100002
+		if is_qmark($n) !& thoran_master_quest 300004
+			mpmod_qmark $n thoran_master_quest v2 | 4
+			mpadd_qmark self thoran_talking 5 0 0 0 1 0
+			mpadd_qmark self thoran_master_quest 20 0 0 0 1 0
+			mpmload 26553
+			mpecho 當你進入此處，發現一位受傷的士兵正接受著 $I 的治療....
+			if insameroom(soldier-thoran)
+				mpcallout 1 mpforce soldier-thoran say 牧....牧師....，我們幾乎全軍覆沒....了....，
+				mpcallout 2 say 先別說那些，能夠回來就好....，
+				mpcallout 3 mpforce soldier-thoran say 不....我....是不行的了，有些事一....一定要....先說....，
+				mpcallout 4 mpecho 受傷的士兵(injured soldier) 緊抓住 $I 的手....
+				mpcallout 4 say 不，我不能夠讓星光之城的弟兄在我面前死去....
+				mpcallout 5 mpforce soldier-thoran say 不....不是....，牧師....你先聽我說....，我不說....不能....瞑目....，
+				mpcallout 6 say 好吧！你快說吧！
+				mpcallout 7 mpecho 受傷的士兵(injured soldier) 深呼吸一口氣....
+				mpcallout 8 mpforce soldier-thoran say 是....是這樣的，我們一團人攻進涅盤大地....野獸的巢穴....，
+				mpcallout 9 mpforce soldier-thoran say 發現....發現野獸殺之不盡....，
+				mpcallout 10 mpforce soldier-thoran say 但是....但....我們隊友中....有人誤用火球術....，
+				mpcallout 11 mpforce soldier-thoran say 粉碎(smash)了....他們巢穴中的某....，
+				mpcallout 12 mpecho 受傷的士兵(injured soldier) 話說到這邊忽然劇烈地咳嗽了起來....
+				mpcallout 13 say 你....你怎麼樣了....？
+				mpcallout 14 mpforce soldier-thoran say 野獸....就....不....，
+				mpcallout 15 mpecho 受傷的士兵(injured soldier) 話說到這邊就死去了....
+				mpcallout 15 mpoload 26540 99 floor
+				mpcallout 15 mppurge soldier-thoran
+				mpcallout 16 sigh
+				mpcallout 17 say 多少是獲得怎麼對付(cope with)涅盤大地那些野獸的訊息了....。
+				mpcallout 17 mpdef_rembch $n
+				mpcallout 18 mpecho $I 請教堂中的其他牧師將屍體給送了出去....
+				mpcallout 18 mppurge corpse-thoran
+				mpcallout 18 mpdel_qmark self thoran_talking
+			endif
+		endif
+	endif
+endif
+if is_qmark($i) == thoran_anir_quest
+	if rembch($n)
+		if is_qmark($n) == thoran_anir_quest 100006
+			mpadd_qmark self thoran_talking 10 0 0 0 1 0
+			mpmod_qmark $n thoran_anir_quest v0 = 7
+			if insameroom(anir2-thoran)
+				mpforce anir2-thoran bow $n
+				say 謝謝您，大恩人。
+			endif
+			if insameroom(yram-thoran)
+				mpforce yram-thoran bow $n
+				mpforce yram-thoran say 謝謝您，大恩人。
+				mpcallout 1 agree yram-thoran
+				mpcallout 2 say 沒錯，若沒有你的幫忙....，
+				mpcallout 3 say 小奈亞根本無法脫離吸血鬼的魔掌。
+				mpcallout 4 mpforce yram-thoran nod donovan-thoran
+				mpcallout 5 mpforce yram-thoran say 無論如何，我一定要重重的酬謝您....，
+				mpcallout 6 mpcall thoran_anir_reward $n
+			endif
+		endif
+	endif
+endif
+~
+>defun_prog thoran_anir_reward~
+if is_qmark($n) == thoran_anir_quest 200001
+else
+                mpforcer here stun $n 5
+	mpat $n mpdel_qmark $n thoran_anir_quest
+	mpat $n mpmod_qmark $n thoran_quest v0 | 1
+	mpexp $n 5000
+	mpresp $n 2
+	if isgood($n)
+		mpechoat $n 藍(Yram) 由自己的身上拿出了一只發著藍光戒指拿給了你....
+		mpechoaround $n 藍(Yram) 由自己的身上拿出了一只發著藍光戒指拿給了 $n ....
+		mpoload 26611 $n 30 target
+	else
+		mpechoat $n 藍(Yram) 由自己的身上拿出了一只發著藍紅光戒指拿給了你....
+		mpechoaround $n 藍(Yram) 由自己的身上拿出了一只發著紅光戒指拿給了 $n ....
+		mpoload 26612 $n 30 target
+	endif
+	mpcallout 1 mpforce yram-thoran say 這是我們母女兩的小小心意....，
+	mpcallout 2 mpforce yram-thoran say 請大恩人接納....，
+	mpcallout 3 mpforce yram-thoran wave $n
+	mpcallout 3 mpforce anir2-thoran wave $n
+	mpcallout 4 mpecho 藍(Yram) 與 奈亞(Anir) 母女走出了教堂，消失在你的視線中....
+	mpcallout 4 mppurge yram-thoran
+	mpcallout 4 mppurge anir2-thoran
+	mpcallout 4 mpat anir-thoran mppurge anir-thoran
+	mpcallout 4 mpdel_qmark self thoran_anir_quest
+	mpcallout 4 mpdef_rembch null-tar
+	mpcallout 4 smile $n
+	mpcallout 5 wave $n
+	mpcallout 5 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog ceremony~
+if is_qmark($n) & thoran_quest 100001
+or is_qmark($i) == thoran_anir_quest
+or is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_anir_quest 100012
+or is_qmark($n) == thoran_anir_quest 100013
+	if robjcount(26558) > 0
+		if hour($) == 6
+			say 讓我們開始驅魔儀式(ceremony)吧....
+			mpmod_qmark $n thoran_anir_quest v0 = 14
+			mpcall thoran_anir_death $n
+		else
+			say 時刻未到，無法進行驅魔儀式(ceremony)....
+		endif
+	else
+		say 沒有 奈亞(Anir) 的屍體，我無法進行驅魔儀式(ceremony)。
+	endif
+	break
+endif
+if is_qmark($n) < thoran_anir_quest 100004
+	say 將 奈亞(Anir) 帶到我的跟前來吧！
+	mpat 26598 mpdel_qmark anir-thoran thoran_anir_quest
+	mpat 26598 mpadd_qmark anir-thoran thoran_anir_quest 240 0 0 0 0 1
+	break
+endif
+if is_qmark($n) == thoran_anir_quest 100004
+	if insameroom(anir-thoran)
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		mpmod_qmark $n thoran_anir_quest v0 = 5
+		gasp $n
+		gasp anir-thoran
+		say 小奈亞妳沒事吧....！
+		mpecho $I 開始仔細的觀看 奈亞(Anir) 的身體....
+		mpcallout 1 say 她被吸血鬼給咬了....，
+		mpcallout 2 say 不過幸好已經先吃了大蒜抑制她體內的邪氣....，
+		mpcallout 3 say 讓我為她進行淨化儀式吧！
+		mpcallout 3 mpcall thoran_anir_yram $n
+	endif
+endif
+~
+>defun_prog thoran_anir_yram~
+if mobcount(26514) > 0
+	mptransfer yram-thoran
+else
+	mpmload 26514
+endif
+mpadd_qmark yram-thoran thoran_anir_quest 24 0 0 0 1 0
+mpmod_qmark anir-thoran thoran_anir_quest timer = -1
+mpecho 奈亞(Anir) 的母親 藍(Yram) 聽到了自己女兒被救回的消息，急忙地跑了過來....
+mpcallout 1 mpforce yram-thoran say 小奈亞妳沒事吧？牧師，小奈亞她沒有事吧？
+mpcallout 2 say 放心，小奈亞的傷勢不是問題....，
+mpcallout 3 say 讓我為小奈亞進行淨化程序....，
+mpcallout 4 say 你們都先出去！
+mpcallout 4 mpdef_rembch $n
+mpcallout 4 mpforce yram-thoran mpdef_rembch $n
+mpcallout 4 mpforce anir-thoran follow self
+mpcallout 4 mpforce anir-thoran group leave
+mpcallout 4 mpdel_qmark anir-thoran thoran_anir_return
+mpcallout 4 mpforce anir-thoran mpdef_rembch null-tar
+mpcallout 5 mpecho 藍(Yram) 趕緊走到教堂之外....
+mpcallout 5 mptransfer yram-thoran 26508
+mpcallout 5 mpadd_qmark self thoran_anir_quest 24 0 0 0 1 0
+mpcallout 5 mpdel_qmark self thoran_talking
+~
+>rand_prog 40~
+if is_qmark($i) == thoran_anir_quest 100012
+	mpat $b mpmod_qmark $b thoran_anir_quest v0 = 6
+	mpmod_qmark self thoran_anir_quest v0 + 1
+	mptransfer yram-thoran
+	mpdel_qmark yram-thoran thoran_anir_quest
+	mptransfer anir-thoran 5
+	mpmload 26549
+	yell 好了，奈亞(Anir) 的淨化儀式已經完成，你們可以進來了....！
+	break
+endif
+if is_qmark($i) < thoran_anir_quest 100012
+	if being($b)
+		if insameroom($b)
+			tell $b 請你出去，讓我能夠專心為小奈亞進行淨化儀式。
+			break
+		endif
+		if pcnum($) > 0
+			say 請不相干的人出去，我將為奈亞進行淨化儀式。
+			break
+		endif
+		if insameroom(anir-thoran)
+			mpmod_qmark self thoran_anir_quest v0 + 1
+			mpecho $I 專心的為 奈亞(Anir) 進行淨化儀式....
+		endif
+	else
+		mpat yram-thoran mppurge yram-thoran
+		mpat anir-thoran mppurge anir-thoran
+		mpdel_qmark self thoran_anir_quest
+	endif
+endif
+~
+>talk_prog garlic~
+if is_qmark($i) == thoran_anir_quest
+or is_qmark($i) == thoran_talking
+	break
+endif
+say 大蒜(garlic)是一種用來驅魔相當有效的東西，聽說星光之城中有賣。
+~
+>talk_prog timber~
+if is_qmark($i) == thoran_anir_quest
+or is_qmark($i) == thoran_talking
+	break
+endif
+say 木樁(timber)是用來對付吸血鬼最佳的武器之一，聽說星光之城中有賣。
+~
+>talk_prog p drive out~
+if is_qmark($n) & thoran_quest 100001
+or is_qmark($i) == thoran_anir_quest
+or is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+say 如果已經變成了吸血鬼可就相當麻煩了....，
+mpcallout 1 say 大蒜或是什麼驅魔的東西已經沒有太大的用處....，
+mpcallout 2 say 首先你必須將其打回原型，反正吸血鬼死不了....，
+mpcallout 3 say 然後將木樁(timber)釘死在牠原型的心臟上頭....，
+mpcallout 4 say 然後在天亮之前送牠的身體回到這裡的教堂....，
+mpcallout 5 say 我必須利用一天第一道最聖潔的陽光....，
+mpcallout 6 say 以便我進行驅魔儀式....，
+mpcallout 7 say 將牠身體中污穢的吸血鬼血液去除殆盡。
+mpcallout 7 mpdel_qmark self thoran_talking
+~
+>talk_prog clean~
+if is_qmark($i) == thoran_anir_quest
+or is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+nod $n
+say 事實上只要尚未完全變化成吸血鬼....，
+mpcallout 1 say 要治療都是相當容易的....，
+mpcallout 2 say 只要強迫讓它吃下大蒜(garlic)....，
+mpcallout 3 say 接著帶到教堂中讓我進行淨化儀式(ceremony)即可。
+mpcallout 3 mpdel_qmark self thoran_talking
+~
+>talk_prog vampire~
+if is_qmark($i) == thoran_anir_quest
+or is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_anir_quest 100000
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	mpmod_qmark $n thoran_anir_quest v0 = 1
+	gasp $n
+	say 你問我吸血鬼....？
+	mpcallout 1 say 吸血鬼是種可怕的種族....，
+	mpcallout 2 say 被吸血鬼咬過的人若沒有經過淨化(clean)治療....，
+	mpcallout 3 say 過了一段時間都會變成吸血鬼....，
+	mpcallout 4 say 到時候想要恢復正常的話....，
+	mpcallout 5 say 就必須要到教堂藉由神明的力量....，
+	mpcallout 6 say 將吸血鬼的血液完全由體內驅除(drive out)才行....，
+	mpcallout 7 say 我曾經淨化過一位已經成為吸血鬼的男子....，
+	mpcallout 8 say 不過在送他來之前....，
+	mpcallout 9 say 你必須要在它的心臟上釘上木樁(timber)才行。
+	mpcallout 9 mpdel_qmark self thoran_talking
+endif
+~
+>rand_prog 20~
+if is_qmark($i) == thoran_anir_quest
+or is_qmark($i) == thoran_talking
+	break
+endif
+say 我的主上啊....！
+if rand(30)
+	mpcallout 1 say 請您賜給我勇氣....，
+	mpcallout 2 say 讓我知道如何面對邪惡與陰險。
+	break
+endif
+if rand(30)
+	mpcallout 1 say 請您教誨我謙遜....，
+	mpcallout 2 say 讓我知道如何接受讚美與建議。
+else
+	mpcallout 1 say 請您賦予我誠美....，
+	mpcallout 2 say 讓我無時無刻都能知足常樂。
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26517
+ave-thoran Ave~
+伊芙(Ave)~
+伊芙(Ave)在這邊仔細的看著她手上的水晶球。
+~
+她雖然已經滿頭白髮且滿臉皺紋，但是卻是一位年高德劭的老婆婆。
+~
+2 8|32|512 1000 S
+35 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+C 2
+P 8|4194304
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+mpechoat $n $I 緩緩的抬起了頭，靜靜地看著你....
+mpechoaround $n $I 緩緩的抬起了頭，靜靜地看著 $n ....
+mpcallout 1 say 我的水晶球可以知道一些你無法知道的事情....
+mpcallout 2 say 如果你想要使用我的水晶球的話....，
+mpcallout 3 say 必須付出(pay) 100 點的經驗值....，
+mpcallout 4 say 讓我能夠有足夠的魔力驅使水晶球為你解惑。
+mpcallout 4 mpdel_qmark self thoran_talking
+~
+>talk_prog pay~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+nod $n
+mpexp $n -100
+say 讓我看看水晶球中出現了什麼....
+if is_qmark($n) != thoran_quest
+	mpadd_qmark $n thoran_quest -1 0 0 0 0 1
+endif
+mpcallout 1 mpecho $I 開始喃喃地念起咒語....
+mpcallout 2 mpecho $I 手上的 水晶球(crystal ball) 開始發出耀眼的光芒....
+mpcallout 3 mpecho $I 靜靜地看著 水晶球(crystal ball) 裡頭出現的影像....
+mpcallout 4 mpecho $I 開始進入沈思之中....
+mpcallout 6 hmm
+mpcallout 7 say 我看到了一些東西....
+mpcallout 8 mpcall thoran_ave_quest $n
+~
+>defun_prog thoran_ave_quest~
+if is_qmark($n) !& thoran_quest 100001
+	say 我看到了在城堡中，還有著可憐的女孩慘遭惡魔荼毒....
+endif
+if is_qmark($n) !& thoran_quest 100002
+	say 我看到了在你的睡夢中，城堡的魔法牆仍然不斷困擾著你....
+endif
+if is_qmark($n) !& thoran_quest 100004
+	say 我看到了獨眼的冒險者，他的內心在哀嚎、在懊悔....
+endif
+if is_qmark($n) !& thoran_quest 100008
+	say 我見到了被魔法封印的寶物，正在尋找它的主人....
+endif
+if is_qmark($n) !& thoran_quest 100016
+	say 我發覺了涅盤大地的神明正在憤怒，星光之城的居民有危險了....
+endif
+mpcallout 1 mpecho $I 話說完，再度陷入沈思之中....
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26518
+horse~
+馬匹(horse)~
+一匹駿馬(horse)在這裡奔馳著。
+~
+牠是一匹十分巨大的馬，站起來到肩部大約有 6 呎的高度。這匹馬十分的神俊，是高
+級良馬的樣本。
+~
+2|64 8|32|512 1000 S
+35 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+C 9
+P 8|4194304
+R Horse~
+>rand_prog 20~
+mpecho $I 發出「嘶....嘶....」的聲音....
+~
+|
+#26519
+green slime~
+綠黏怪(green slime)~
+一些綠黏怪(green slime)由牆壁上漸漸的分泌出來。
+~
+~
+2 8|32 -1000 S
+35 500 0 0d0+0 0d0+0
+50 0
+7 7 0
+R Worm~
+P 8|4194304
+>greet_prog 30~
+if ispc($n)
+	mpechoat $n $I 忽然向你吐出了黏液....
+	mpechoaround $n $I 忽然向 $n 吐出了黏液....
+	mpkill $n
+endif
+~
+|
+#26520
+giant spider~
+巨蜘蛛(giant spider)~
+一支巨蜘蛛(giant spider)在這邊吐絲編織著自己的網子。
+~
+這隻蜘蛛並沒有什麼特別，但是比起其他品種，這隻蜘蛛十分的巨大。
+~
+2 8|32 -1000 S
+36 500 0 0d0+0 0d-250+0
+50 0
+7 7 0
+C 9
+R Arachnid~
+P 8|4194304
+>fight_prog 40~
+mpecho $I 忽然向你噴撒出大量的毒液....
+mpforcer here add_affect pc poison 0 80 1 -1 1024
+~
+|
+#26521
+gargoyle~
+石像鬼(gargoyle)~
+石像鬼(gargoyle)駐守在這邊抵抗著外來勢力。
+~
+它是一具具有翅膀的石頭生物，並擁有尖利的利牙與爪子。它看起來就像惡魔一般的可怕。
+~
+2|1048576 8|32 1000 S
+46 0 0 0d0+-1000 0d0+0
+50 0
+7 7 0
+R Demon~
+P 8|4194304
+>greet_prog 100~
+if is_qmark($n) == thoran_enemy
+	say 攻擊星光之城的敵人....！
+	mpkill $n
+	c powerball $n
+	break
+endif
+if rand(30)
+	tell $n 進入星光之城內部的城堡請不要隨便惹事。
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+skilldrv multihit $n
+if rand(30)
+	c fireball $n
+	mpnowait
+endif
+if rand(30)
+	c powerball $n
+	mpnowait
+endif
+if rand(30)
+	c 'star fire' $n
+	mpnowait
+endif
+if rand(20)
+	c 'angry fire storm' $n
+	mpnowait
+endif
+~
+|
+#26522
+vampire2-thoran huge vampire huge~
+巨型吸血鬼(huge vampire)~
+這隻吸血鬼(huge vampire)在這邊尋找可以咬蝕的生物。
+~
+他是一個擁有金色頭髮、深藍色眼睛的英俊男士。但是事實上，他是在尋找他自己的獵物。
+~
+32|64|262144|524288 8|32|128|512|8192 -1000 S
+45 3000 0 50d30+0 0d0+0
+50 0
+7 7 1
+C 37
+P 8|4194304
+R Vampire~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 26519
+mpoload 26520
+mpoload 26534
+mpoload 26541
+mpat 5 wear all
+~
+>fight_prog 30~
+if is_equ_obj($n) == 26545
+	break
+endif
+grin
+mpechoat $n $I 忽然張開尖牙，向你咬了過來....
+mpechoaround $n $I 忽然張開尖牙，向 $n 咬了過去....
+if dex($n) < 18
+	mpforcer here add_affect $n poison 0 80 2 -1 1024
+	mpforcer here add_affect $n poison 0 80 3 -1 4096
+	mpforcer here add_affect $n poison 0 80 4 -1 536870912
+else
+	mpechoat $n 你用高超的敏捷度閃開了 $I 的咬蝕....
+	mpechoaround $n $n 用高超的敏捷度閃開了 $I 的咬蝕....
+endif
+~
+>fight_prog 50~
+if rand(50)
+	c fireball $n
+	mpnowait
+else
+	c powerball $n
+	mpnowait
+endif
+~
+>fight_prog 100~
+feed
+mpnowait
+feed
+mpnowait
+feed
+mpnowait
+~
+>tick_prog 100~
+if hour($) >= 6
+	if hour($) <= 18
+		say 又是討厭的白天了....
+		mpecho $I 忽然化為一縷白煙消失了....
+		mppurge self
+	endif
+endif
+~
+|
+#26523
+rust beast~
+遲鈍野獸(rust beast)~
+一隻行動遲鈍的野獸(rust beast)站在這邊。
+~
+他是一隻巨大、高挺的生物，並有著長長的耳朵。
+~
+32|64 8|32 -1000 S
+37 0 0 0d0+0 0d0+0
+50 0
+7 7 0
+R Beast~
+C 1
+P 4194304
+>fight_prog 40~
+mpecho $I 忽然對你展開瘋狂的咬食....
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+~
+|
+#26524
+spectre~
+幽靈(spectre)~
+一襲幽靈(spectre)飄浮在這邊。
+~
+牠看起來就像是鬼魂一般。事實上，幽靈就是鬼魂的一種。
+~
+32|64 8|32 -1000 S
+37 0 0 0d0+0 0d-1000+0
+50 0
+7 7 0
+R Ghost~
+P 8|4194304
+>repop_prog 100~
+mpkill $r
+~
+>fight_prog 10~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26525
+dhart-thoran Dhart~
+達特(Dhart)~
+達特(Dhart)在附近漫無目的的閒晃著。
+~
+他站起來大約有 6 呎高，一頭黑色的頭髮。當你出現在他的眼前，他用著他的眼睛上下
+打量著你。
+~
+64 8|32|512 -1000 S
+45 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+C 3
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+	if is_inv_obj($n) != 26554
+		if rand(50)
+			say 你身上的通行卡(passing card)沒有了嗎？
+			break
+		endif
+	endif
+endif
+say 通往涅盤大地的路，只有在中午時分才會開啟。
+~
+>rand_prog 25~
+if is_qmark($i) == thoran_talking
+	break
+endif
+curse
+say 竟然把我從城堡內趕出來....
+mpcallout 1 say 有生之年我一定要報復(retaliate)你們。
+~
+>talk_prog retaliate~
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if is_qmark($i) == thoran_talking
+	break
+endif
+if resp($n) < 10
+	mpechoat $n $I 用一種很不屑的眼光看著你....
+	mpechoaround $n $I 用一種很不屑的眼光看著 $n ....
+	say 你是誰啊？誰在跟你說話？知名度不夠少來跟我攀談！
+	break
+endif
+if resp($n) < 20
+	mpechoat $n $I 用一種懷疑的眼光看著你....
+	mpechoaround $n $I 用一種懷疑的眼光看著 $n ....
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	say 跟我問原因....？
+	mpcallout 1 hmm
+	mpcallout 2 say 本來不太想說，但是說了也沒差....，
+	mpcallout 3 say 我本來是在城堡中的一個廚師....，
+	mpcallout 4 say 但是最近城堡裡頭的生態實在是不像樣....，
+	mpcallout 5 say 我竟然在偶爾的機會中發現了一個巨大的地下城(dungeon)....，
+	mpcallout 6 say 可惜還沒有下去就被城堡的總管發現....，
+	mpcallout 7 say 然後現在就被趕出來而失業了....，
+	mpcallout 8 say 不過為了整個星光之城的安全著想....，
+	mpcallout 9 say 我一定還會想辦法再回去(return)看看的。
+	mpcallout 9 mpdel_qmark self thoran_talking
+else
+	mpechoat $n $I 用一種敬佩的眼光看著你....
+	mpechoaround $n $I 用一種敬佩的眼光看著 $n ....
+	say 哇！你就是那個傳說中的冒險者啊....！
+	mpcallout 1 say 失敬失敬！有什麼事情(event)我可以幫幫你的嗎？
+endif
+~
+>talk_prog dungeon~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 10
+	if resp($n) < 20
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		say 我不太清楚那個地下城裡頭到底是怎麼一回事....，
+		mpcallout 1 say 不過可以確定一點的....，
+		mpcallout 2 say 下面應該有不少不死生物....，
+		mpcallout 3 say 甚至還有可怕的吸血鬼(vampire)在裡頭。
+		mpcallout 3 mpdel_qmark self thoran_talking
+	endif
+endif
+~
+>talk_prog vampire~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 10
+	if resp($n) < 20
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		say 據說在星光之城內已經有人的小孩子受害了....，
+		mpcallout 1 say 她的小孩子被吸血鬼抓去....，
+		mpcallout 2 say 到現在都還是沒有任何蹤跡。
+		mpcallout 2 mpdel_qmark self thoran_talking
+	endif
+endif
+~
+>talk_prog return~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 10
+	if resp($n) < 20
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		say 回去？那對我來說一點問題都沒有....，
+		mpcallout 1 say 我自然知道如何通過那堵城堡口的魔法牆....，
+		mpcallout 2 say 我可以教你如何通過那堵魔法牆....，
+		mpcallout 3 say 但是你必須幫我(help)做些事情....，
+		mpcallout 4 say 這樣才能夠表現你的誠意。
+		mpcallout 4 mpdel_qmark self thoran_talking
+	endif
+endif
+~
+>talk_prog help~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 10
+	if resp($n) < 20
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		nod $n
+		if rand(50)
+			mpadd_qmark $n thoran_dhart_quest -1 0 0 0 0 1
+			say 那麼你幫我拿把 吉斯邪劍(Gith Sword) 好了....，
+			mpcallout 1 say 聽說那把劍用起來還蠻不錯的。
+		else
+			mpadd_qmark $n thoran_dhart_quest -1 1 0 0 0 1
+			say 那麼你幫我拿個 黃金假面(golden mask) 好了....，
+			mpcallout 1 say 聽說那個面具可以賣不少的錢。
+		endif
+		mpdel_qmark self thoran_talking
+	endif
+endif
+~
+>give_prog 1912~
+if is_qmark($i) == thoran_talking
+	tell $n 抱歉，我現在很忙，等一下再拿給我。
+	give gith $n
+	break
+endif
+if is_qmark($n) == thoran_dhart_quest 100000
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	mpjunk all.gith
+	mpdel_qmark $n thoran_dhart_quest
+	if is_qmark($n) != thoran_quest
+		mpadd_qmark $n thoran_quest -1 2 0 0 0 1
+	else
+		mpmod_qmark $n thoran_quest v0 | 2
+	endif
+	sm $n
+	say 沒想到你真的拿到了....，
+	mpcallout 1 say 那麼我把通過城堡魔法牆的 通行卡(passing card) 拿給你吧....
+	mpcallout 2 mpechoat $n $I 將 魔法通行卡(passing card) 拿給了你....
+	mpcallout 2 mpechoaround $n $I 將 魔法通行卡(passing card) 拿給了 $n ....
+	mpcallout 2 mpoload 26554 $n viclv target
+	mpcallout 3 say 想要使用這張卡，只要將卡插入(insert)魔法牆的缺口就可以了....，
+	mpcallout 4 say 但是用完之後，可別忘了將卡抽回來(drawout)。
+	mpcallout 4 mpdel_qmark self thoran_talking
+else
+	drop gith
+endif
+~
+>give_prog 9622~
+if is_qmark($i) == thoran_talking
+	tell $n 抱歉，我現在很忙，等一下再拿給我。
+	give mask $n
+	break
+endif
+if is_qmark($n) == thoran_dhart_quest 100001
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	mpjunk all.mask
+	mpdel_qmark $n thoran_dhart_quest
+	if is_qmark($n) != thoran_quest
+		mpadd_qmark $n thoran_quest -1 2 0 0 0 1
+	else
+		mpmod_qmark $n thoran_quest v0 | 2
+	endif
+	sm $n
+	say 沒想到你真的拿到了....，
+	mpcallout 1 say 那麼我把通過城堡魔法牆的 通行卡(passing card) 拿給你吧....
+	mpcallout 2 mpechoat $n $I 將 魔法通行卡(passing card) 拿給了你....
+	mpcallout 2 mpechoaround $n $I 將 魔法通行卡(passing card) 拿給了 $n ....
+	mpcallout 2 mpoload 26554 $n viclv target
+	mpcallout 3 say 想要使用這張卡，只要將卡插入(insert)魔法牆的缺口就可以了....，
+	mpcallout 4 say 但是用完之後，可別忘了將卡抽回來(drawout)。
+	mpcallout 4 mpdel_qmark self thoran_talking
+else
+	drop mask
+endif
+~
+>talk_prog event~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 20
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	say 有關 星光之城 的事情啊，這可說來話長了....，
+	mpcallout 1 say 當初星光之城建城的由來與經過....，
+	mpcallout 2 say 只有我們的堡主才知道....，
+	mpcallout 3 say 但是他已經失蹤好久了....。
+	mpcallout 4 say 不過這段時間，大家還是守著這個地方....，
+	mpcallout 5 say 畢竟聽老一輩的人說....，
+	mpcallout 6 say 當初星光之城建城花了十分龐大的心血(painstaking effort)。
+	mpcallout 6 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog p painstaking effort~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 20
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	say 整座星光之城，其實是使用著巨大的魔力....，
+	mpcallout 1 say 讓星光之城的岩盤....，
+	mpcallout 2 say 能夠飄浮在星界的盡頭....，
+	mpcallout 3 say 至於岩盤上的建築物....，
+	mpcallout 4 say 都是居民們由岩盤中擷取出石礦....，
+	mpcallout 5 say 篳路藍縷地搭建而成....。
+	mpcallout 6 say 因此整個星光之城所有城牆(wall)都是由岩石堆砌出來的。
+	mpcallout 6 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog wall~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 20
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	say 你說那些半門半牆的魔法牆啊....，
+	mpcallout 1 say 據說那些牆是由堡主想出來的花樣....，
+	mpcallout 2 say 避免涅盤大地(nirvana)那些低智慧的野獸(beast)....，
+	mpcallout 3 say 能夠侵入星光之城之中....，
+	mpcallout 4 say 我們入口的魔法牆....，
+	mpcallout 5 say 只需要在適當的地方敲擊(knock)就可以打開....，
+	mpcallout 6 say 但是城堡門口的魔法牆就需要魔法通行卡(passing card)了。
+	mpcallout 6 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog beast~
+say 涅盤大地上的那些奇異生物智力都很低，
+say 但是破壞力與嗜血的程度十分的可怕。
+~
+>talk_prog nirvana~
+say 涅盤大地是星界的盡頭，
+say 上頭有許多在舊大陸沒見過的奇異生物。
+~
+>talk_prog p passing card~
+if is_qmark($i) == thoran_talking
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+	say 想要再次(again)跟我拿通行卡(passing card)啊？
+	say 抱歉，不二價 - 5000 點經驗加上 20 萬金幣才行。
+	break
+endif
+if resp($n) >= 20
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	say 你說通行卡要怎麼取得啊....？
+	mpcallout 1 grin $n
+	mpcallout 2 say 其實我這邊就有不少存貨....，
+	mpcallout 3 say 我看你是位相當成熟的冒險者....，
+	mpcallout 4 say 在新舊大陸都有不小的名氣....，
+	mpcallout 5 say 就特別 50000 元金幣賣你就好。
+	mpcallout 5 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog again~
+if is_qmark($n) & thoran_quest 100002
+	if is_inv_obj($n) != 26554
+		if goldamt($n) >= 200000
+			nod $n
+			mpgold $n -200000
+			mpexp $n -5000
+			mpechoat $n $I 將 通行卡(passing card) 拿給了你....
+			mpechoaround $n $I 將 通行卡(passing card) 拿給了 $n ....
+			mpoload 26554 $n viclv target
+		else
+			say 你身上的錢不夠喔。
+		endif
+	else
+		say 你身上不是已經有一張通行卡了嗎？
+	endif
+endif
+~
+>bribe_prog 50000~
+mpjunk all.coins
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) & thoran_quest 100002
+or is_qmark($n) == thoran_dhart_quest
+	break
+endif
+if resp($n) >= 20
+	if is_qmark($n) != thoran_quest
+		mpadd_qmark $n thoran_quest -1 2 0 0 0 1
+	else
+		mpmod_qmark $n thoran_quest v0 | 2
+	endif
+	sm $n
+	mpechoat $n $I 將 魔法通行卡(passing card) 拿給了你....
+	mpechoaround $n $I 將 魔法通行卡(passing card) 拿給了 $n ....
+	say 想要使用這張卡，只要將卡插入(insert)魔法牆的缺口就可以了....，
+	say 但是用完之後，可別忘了將卡抽回來(drawout)。
+	mpoload 26554 $n viclv target
+endif
+~
+|
+#26526
+dragon-thoran red dragon~
+紅龍(red dragon)~
+一隻巨大的紅龍(red dragon)靜靜的守候在這邊。
+~
+這隻龍站起來大約有 12 呎的高度同時約 3 呎寬，整隻龍的顏色是火紅色，看起來十分
+的危險，但是當牠看到你的到來，卻沒有對你做出任何的攻擊。
+~
+2|64|1024|4096|262144|8388608 8|32|128|512|8192|8589934592 0 S
+48 3000 0 20d50+-1000 0d0+0
+50 0
+7 7 1
+R Dragon~
+P 8|4194304
+>talk_prog restart~
+if is_qmark($i) == thoran_talking
+or is_qmark($n) > thoran_master_quest 100007
+	break
+endif
+if is_qmark($n) <= thoran_master_quest 100007
+	mpechoat $n 遠方傳來一陣聲響「本項任務你已經可以重解了。」
+	mpdel_qmark $n thoran_master_quest
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+or is_qmark($n) & thoran_quest 100016
+	break
+endif
+if is_qmark($n) >= thoran_master_quest 100002
+	if is_qmark($n) <= thoran_master_quest 100004
+		say 你尋找到什麼線索了嗎？
+		if is_qmark($n) !& thoran_master_quest 300008
+			if is_qmark($n) & thoran_master_quest 300001
+				mpechoat $n -- 線索：涅盤大地的野獸因為帕拉瑪斯的強大魔力可以無限再生(unlimited reborn)。 --
+			endif
+		endif
+		if is_qmark($n) !& thoran_master_quest 300016
+			if is_qmark($n) & thoran_master_quest 300002
+				mpechoat $n -- 線索：涅盤大地的野獸會由一個「核(core)」中再生。 --
+			endif
+		endif
+		if is_qmark($n) !& thoran_master_quest 300032
+			if is_qmark($n) & thoran_master_quest 300004
+				mpechoat $n -- 線索：粉碎(smash)涅盤大地野獸的魔力源可能是涅盤大地野獸的弱點。 --
+			endif
+		endif
+	endif
+endif
+~
+>talk_prog smash~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) !& thoran_master_quest 300032
+	if is_qmark($n) & thoran_master_quest 300004
+		mpmod_qmark $n thoran_master_quest v2 | 32
+		mpmod_qmark $n thoran_master_quest v0 + 1
+		mpadd_qmark self thoran_talking 5 0 0 0 1 0
+		mpforce $n say 粉碎(smash)涅盤大地野獸的魔力源可能是涅盤大地野獸的弱點。
+		mpcallout 1 nod $n
+		mpcallout 2 say 如果粉碎他們的魔力源令那些野獸如此害怕的話....，
+		mpcallout 3 say 那麼這些魔力源必定是這些野獸的弱點所在。
+		mpcallout 4 mpdel_qmark self thoran_talking
+		mpcallout 4 mpcall thoran_master_quest4 $n
+	endif
+endif
+~
+>talk_prog p unlimited reborn~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) !& thoran_master_quest 300008
+	if is_qmark($n) & thoran_master_quest 300001
+		mpmod_qmark $n thoran_master_quest v2 | 8
+		mpmod_qmark $n thoran_master_quest v0 + 1
+		mpadd_qmark self thoran_talking 5 0 0 0 1 0
+		mpforce $n say 涅盤大地的野獸因為帕拉瑪斯的強大魔力可以無限再生(unlimited reborn)。
+		mpcallout 1 nod $n
+		mpcallout 2 say 沒想到帕拉瑪斯的魔力這麼的強大....，
+		mpcallout 3 say 難怪許多冒險者進入涅盤大地之後....，
+		mpcallout 4 say 還沒見過帕拉瑪斯就已經戰死了。
+		mpcallout 4 mpdel_qmark self thoran_talking
+		mpcallout 4 mpcall thoran_master_quest4 $n
+	endif
+endif
+~
+>talk_prog core~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) !& thoran_master_quest 300016
+	if is_qmark($n) & thoran_master_quest 300002
+		mpmod_qmark $n thoran_master_quest v2 | 16
+		mpmod_qmark $n thoran_master_quest v0 + 1
+		mpadd_qmark self thoran_talking 5 0 0 0 1 0
+		mpforce $n say 涅盤大地的野獸會由一個「核(core)」中再生。
+		mpcallout 1 nod $n
+		mpcallout 2 say 是嗎？那麼如果能夠順利將核給摧毀....，
+		mpcallout 3 say 那麼涅盤大地的野獸群們的危險性將會大減....，
+		mpcallout 4 say 這也是解除我詛咒的一個重要線索。
+		mpcallout 4 mpdel_qmark self thoran_talking
+		mpcallout 4 mpcall thoran_master_quest4 $n
+	endif
+endif
+~
+>defun_prog thoran_master_quest4~
+if is_qmark($n) >= thoran_master_quest 100005
+	mpadd_qmark self thoran_talking 5 0 0 0 1 0
+	mpmod_qmark $n thoran_master_quest v0 = 6
+	say 那麼根據 $n 整個蒐集的線索來說....
+	mpcallout 1 say 有關涅盤大地野獸群們的秘密應該是相當明朗了....，
+	mpcallout 2 say 只要我們能夠將野獸的魔力根源 - 核(core) 粉碎(smash) 掉....，
+	mpcallout 3 say 那麼就能夠斷絕那些野獸無限再生的力量....，
+	mpcallout 4 say 但是那些核到底有多少個....？
+	mpcallout 5 say 你到涅盤大地一定要非常小心啊！
+	mpcallout 5 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog master~
+if is_qmark($i) == thoran_talking
+or is_qmark($n) == thoran_master_quest
+	break
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+mpechoat $n 你大膽地向 $I 詢問有關 堡主(master) 的事情....
+mpechoaround $n $n 大膽地向 $I 詢問有關 堡主(master) 的事情....
+mpcallout 1 mpecho $I 緩緩地抬起頭來....
+if resp($n) < 15
+	mpcallout 2 say 愚昧的冒險者啊....，
+	mpcallout 3 say 依你現在的實力....，
+	mpcallout 4 say 是無法解決我目前的困擾的....，
+	mpcallout 5 say 先增強自己的實力....，
+	mpcallout 6 say 才能....才能助我進入涅盤大地....，
+	mpcallout 7 say 解除被 帕拉瑪斯(Primus) 下的詛咒(curse)。
+	mpcallout 7 mpdel_qmark self thoran_talking
+else
+	mpcallout 2 mpecho $I 靜靜地看著你，露出些微喜悅的眼光....
+	mpcallout 3 say 大名鼎鼎的冒險者 $n 啊....！
+	mpcallout 4 say 我已經耳聞你的事蹟很久了....，
+	mpcallout 5 say 星光之城不過是一個小地方....，
+	mpcallout 6 mpcall thoran_master_quest1 $n
+endif
+~
+>talk_prog primus~
+if is_qmark($i) == thoran_talking
+	break
+endif
+say 帕拉瑪斯(Primus) 是涅盤大地的主宰....，
+mpcallout 1 say 擁有強大的力量可以控制涅盤大地內的許多生物。
+~
+>talk_prog curse~
+if is_qmark($i) == thoran_talking
+	break
+endif
+say 帕拉瑪斯(Primus) 在我身上種下詛咒....，
+mpcallout 1 say 讓我必須要以這樣的模樣生存下去....，
+mpcallout 2 say 我已經很久都沒有與我的城民見面了。
+mpcallout 2 sigh
+~
+>defun_prog thoran_master_quest1~
+mpadd_qmark $n thoran_master_quest -1 0 0 0 0 1
+say 你如何知道我就是這裡的堡主呢？
+mpechoat $n 你要用什麼樣的話語回答 $I 的問題？
+mpechoat $n ----  剛剛我遇到一個小女孩(little girl)，她告訴我有關你的事情。 ----
+mpechoat $n ----  一名冒險者應當對於周遭環境十分敏感(sensitive)，我由此而得知的。 ----
+mpdel_qmark self thoran_talking
+~
+>talk_prog p little girl~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_master_quest 100000
+	mpadd_qmark self thoran_talking 5 0 0 0 1 0
+	mpmod_qmark $n thoran_master_quest v0 = 1
+	mpmod_qmark $n thoran_master_quest v1 | 1
+	mpforce $n say 剛剛我遇到一個小女孩(little girl)，她告訴我有關你的事情。
+	mpcallout 1 sm $n
+	mpcallout 1 say 是嗎？那位小女孩我曾經對她有過恩惠....，
+	mpcallout 2 say 沒想到她....她還能夠記得....，
+	mpcallout 3 say 是的，我就是星光之城的堡主....，
+	mpcallout 4 mpcall thoran_master_quest2 $n
+endif
+~
+>talk_prog sensitive~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_master_quest 100000
+	mpadd_qmark self thoran_talking 5 0 0 0 1 0
+	mpmod_qmark $n thoran_master_quest v0 = 1
+	mpmod_qmark $n thoran_master_quest v1 | 2
+	mpforce $n say 一名冒險者應當對於周遭環境十分敏感(sensitive)，我由此而得知的。
+	mpcallout 1 say 喔？看起來你應該是位相當有自信的冒險者....，
+	mpcallout 2 say 沒錯，我就是星光之城的堡主....，
+	mpcallout 3 mpcall thoran_master_quest2 $n
+endif
+~
+>defun_prog thoran_master_quest2~
+say 整座星光之城是許久以前我於星界中旅遊時....，
+mpcallout 1 say 耗費了許多法力，在星界中的一座巨大岩盤上....，
+mpcallout 2 say 慢慢的建造而成....，
+mpcallout 3 say 後來除了我的家人，還有我的朋友....，
+mpcallout 4 say 都來到這座岩盤上頭居住....，
+mpcallout 5 say 漸漸地這裡的居民也越來越多....，
+mpcallout 6 say 史卡拉貝大陸的居民們多半都不知道這裡的存在....，
+mpcallout 7 say 在星界裡放大量施放魔法的過程中....，
+mpcallout 8 say 我已經觸怒了涅盤大地的主宰 - 帕拉瑪斯(Primus)....，
+mpcallout 9 say 他在我身上下了詛咒(curse)，讓我永遠變成這個樣子....，
+mpcallout 10 say 雖然，我的子民們目前安然無恙....，
+mpcallout 11 say 但是我卻永遠躲在這邊，無法面對我的子民....，
+mpcallout 12 mpcall thoran_master_quest3 $n
+~
+>defun_prog thoran_master_quest3~
+sigh
+say 我要到何時才能夠脫離這個身軀？
+mpechoat $n 選擇你要對堡主說的話：
+mpechoat $n --  我會幫你調查(check)看看如何能夠解除你身上的詛咒。  --
+mpechoat $n --  這件事情太困難了，我找時間(next time)再來找你吧！ --
+mpdel_qmark self thoran_talking
+~
+>talk_prog check~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_master_quest 100001
+	mpadd_qmark self thoran_talking 5 0 0 0 1 0
+	mpmod_qmark $n thoran_master_quest v0 = 2
+	mpforce $n say 我會幫你調查(check)看看如何能夠解除你身上的詛咒。
+	mpcallout 1 sm $n
+	mpcallout 2 say 那太好了，如果查詢到任何特別的線索....，
+	mpcallout 3 say 或是有什麼疑問或奇怪的地方....，
+	mpcallout 4 say 都可以回來問我，我會幫你解答的。
+	mpcallout 4 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog p next time~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_master_quest 100001
+	mpadd_qmark self thoran_talking 5 0 0 0 1 0
+	mpdel_qmark $n thoran_master_quest
+	mpforce $n say 這件事情太困難了，我找時間(next time)再來找你吧！
+	mpcallout 1 sigh
+	mpcallout 2 say 好吧！畢竟涅盤大地是相當危險的地方....，
+	mpcallout 3 say 已經有不少冒險者喪生在那邊了。
+	mpcallout 3 mpdel_qmark self thoran_talking
+	mpcallout 4 wave $n
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if is_qmark($n) == thoran_enemy
+	mpdis_magic self all
+	say 侵犯星光之城的敵人都該死....！
+	hunt $n
+	c 'fire breath' $n
+endif
+~
+>fight_prog 100~
+skilldrv speedhit $n
+skilldrv speedhit $n
+if rand(30)
+	c 'fire breath' $n
+	mpnowait
+endif
+if rand(30)
+	c 'acid breath' $n
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+rumor 星光之城的堡主被 $n 給誤殺了....
+if is_qmark($n) != thoran_enemy
+	mpadd_qmark $n thoran_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n thoran_enemy timer + 100
+endif
+~
+|
+#26527
+guardian sorrow~
+憂傷守衛(guardian of sorrow)~
+憂傷守衛(guardian of sorrow)守在這邊引起了你陣陣的感傷。
+~
+他站起來竟然高達 12 呎左右。他的表情看起來並不高興，也不知道發生了什麼事情。
+~
+2|64 8|32|512 -1000 S
+48 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+C 1|5|32
+R Giant~
+P 8|4194304
+>tick_prog 100~
+if is_qmark($i) != thoran_sorrow_quest
+	if inroom($i) == 5
+		mppurge self
+	endif
+endif
+~
+>talk_prog topic~
+sigh
+say 我的箱子(chest)不見了....，
+mpcallout 1 say 我的箱子(chest)....不見了。
+~
+>talk_prog chest~
+sigh
+say 我只要我的箱子(chest)....，
+mpcallout 1 say 我只要....我的箱子(chest)....，
+mpcallout 2 say 其它的全部給你....，
+mpcallout 3 say 其它的....全部給你。
+~
+>give_prog 26593~
+if is_qmark($n) != thoran_quest
+	mpadd_qmark $n thoran_quest -1 0 0 0 0 1
+endif
+mpjunk all.chest
+mpecho $I 露出了十分驚喜的面容....
+mpcallout 1 say 這就是我要的箱子....，
+mpcallout 2 say 這就是....我要的箱子(chest)....。
+mpcallout 3 say 裡面的雜物給你....，
+mpcallout 4 say 外面的箱子我要....，
+mpcallout 5 mpecho $I 開始喃喃的念起咒語....
+mpcallout 6 mpecho 木製箱子(wooden chest) 發出了奇特的光芒....
+mpcallout 7 mpecho 木製箱子(wooden chest) 上頭的魔法封印消失了....
+mpcallout 9 mpechoat $n $I 拿出了箱子裡頭的東西，並拿給了你....
+mpcallout 9 mpechoaround $n $I 拿出了箱子裡頭的東西，並拿給了 $n ....
+mpcallout 9 mpcall thoran_sorrow_reward $n
+mpcallout 10 say 再見了....，
+mpcallout 11 mpecho $I 轉身走開，消失在你的視野之中....
+mpcallout 12 mpadd_qmark self thoran_sorrow_quest 240 0 0 0 1 0
+mpcallout 12 mpgoto 5
+~
+>defun_prog thoran_sorrow_reward~
+if is_qmark($n) & thoran_quest 100008
+	mpoload 26537 $n viclv target
+else
+	mpmod_qmark $n thoran_quest v0 | 8
+  if primeattr($n) == 1
+  or primeattr($n) == 5
+    mpoload 26610 $n 30 target
+  else
+    mpoload 26613 $n 30 target
+  endif
+endif
+~
+|
+#26528
+fiel-thoran Fiel~
+費爾(Fiel)~
+費爾(Fiel)在這邊處理一些文書工作。
+~
+他看起來十分的討人厭，嚴重到你有那種想要殺掉他的衝動。
+~
+2|8388608 8|32|512 1000 S
+40 2500 0 0d0+0 0d0+99
+50 0
+7 7 1
+P 8|1024|2097152|4194304|16777216
+C 5
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if rand(30)
+	say 看我的火球三連擊....
+	c 3 fireball
+	mpnowait
+	break
+endif
+if rand(30)
+	say 看我的能量球三連擊....
+	c 3 powerball
+	mpnowait
+else
+	say 看我的星星之火三連擊....
+	c 3 'star fire'
+	mpnowait
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if being($b)
+	if rembch($n)
+		sm $n
+		say 你要諮詢(consultation)我些什麼嗎？
+	else
+		say 我目前是 $b 的諮詢對象....，
+		mpcallout 1 say 暫時無法回答你的任何問題。
+	endif
+	break
+endif
+if resp($n) < 10
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	say 拜託，我很忙好嗎？請不要煩我....。
+	mpcallout 1 say 請你離我遠一點....，
+	mpcallout 2 say 你身上的臭味讓我無法工作。
+	mpcallout 3 curse $n
+	mpcallout 3 mpdel_qmark self thoran_talking
+	break
+endif
+if resp($n) < 15
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	mpecho $I 很無禮的看了你一眼....
+	say 有什麼事情嗎....？
+	mpcallout 1 say 我很忙，不過看著你小有名氣的份上....，
+	mpcallout 2 say 我可以提供一些服務(service)....。
+	mpcallout 3 say 但是通常我的服務是需要費用(cost)的。
+	mpcallout 3 mpdel_qmark self thoran_talking
+else
+	mpadd_qmark self thoran_talking 10 0 0 0 1 0
+	mpecho $I 抬起頭看著你，隨即露出驚訝的表情....
+	mpcallout 1 say 唉呀！原來是在史卡拉貝赫赫有名的 $n 啊....！
+	mpcallout 2 say 失敬失敬！需要我提供什麼樣的服務(service)嗎....？
+	mpcallout 3 say 通常呢！我的服務是需要費用的....，
+	mpcallout 4 say 不過 $n 您不一樣，因此我特別....打您五折....，
+	mpcallout 5 say 這樣的費用(cost)應該不會太高吧！
+	mpcallout 6 gig $n
+	mpcallout 6 mpdel_qmark self thoran_talking
+endif
+~
+>talk_prog service~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if being($b)
+	if rembch($n)
+		sm $n
+		say 你要諮詢(consultation)我些什麼嗎？
+	else
+		say 我目前是 $b 的諮詢對象....，
+		mpcallout 1 say 暫時無法回答你的任何問題。
+	endif
+	break
+endif
+say 我可以回答你的一些諮詢(consultation)，但是需要一些費用(cost)。
+~
+>talk_prog cost~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if being($b)
+	if rembch($n)
+		sm $n
+		say 你要諮詢(consultation)我些什麼嗎？
+	else
+		say 我目前是 $b 的諮詢對象....，
+		mpcallout 1 say 暫時無法回答你的任何問題。
+	endif
+	break
+endif
+if resp($n) >= 10
+	if resp($n) < 15
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		mpecho $I 用白眼瞪了你一眼....
+		mpcallout 1 say 像你這種普普通通的知名度....，
+		mpcallout 2 say 我想....，用 3000 元換我 3 分鐘....，
+		mpcallout 3 say 我想我應該是相當相當的善良了吧....！
+		mpcallout 4 say 你已經確定需要我的諮詢(consultation)了嗎？
+		mpcallout 4 mpdel_qmark self thoran_talking
+	else
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		sm $n
+		mpcallout 1 say 像 $n 您這種鼎鼎大名的冒險者....，
+		mpcallout 2 say 我想....，只要 2000 元我可以為您付出 5 分鐘....，
+		mpcallout 3 say 這段期間內我可以為您任何的問題做完整的回答....。
+		mpcallout 4 say 你已經確定需要我的諮詢(consultation)了嗎？
+		mpcallout 4 mpdel_qmark self thoran_talking
+	endif
+endif
+~
+>talk_prog consultation~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if being($b)
+	if rembch($n)
+		mpcall thoran_consultation $n
+	else
+		say 我目前是 $b 的諮詢對象....，
+		mpcallout 1 say 暫時無法回答你的任何問題。
+	endif
+	break
+endif
+if resp($n) >= 10
+	if resp($n) < 15
+		if goldamt($n) < 3000
+			say 你身上的錢不夠啦，笨蛋！
+		else
+			mpadd_qmark self thoran_talking 10 0 0 0 1 0
+			mpadd_qmark self thoran_consultation 3 0 0 0 1 0
+			mpgold $n -3000
+			mpdef_rembch $n
+			nod $n
+			mpcallout 1 mpcall thoran_consultation $n
+		endif
+	else
+		if goldamt($n) < 2000
+			say 唉呀！您身上的錢不夠喔！
+		else
+			mpadd_qmark self thoran_talking 10 0 0 0 1 0
+			mpadd_qmark self thoran_consultation 5 0 0 0 1 0
+			mpgold $n -2000
+			mpdef_rembch $n
+			nod $n
+			mpcallout 1 mpcall thoran_consultation $n
+		endif
+	endif
+else
+	faint
+	say 你沒有搞錯吧！我肯開口罵你已經是最大極限了。
+	say 在搞清楚自己的斤兩前，趕快滾離我的房間。
+endif
+~
+>defun_prog thoran_consultation~
+say 我所知道的東西大致上有：
+say 1. 有關「在星光之城的環境(environment)中，需要注意些什麼。」
+say 2. 有關「探訪涅盤大地途中，有哪些危險性(danger)。」
+say 3. 有關「進入星光之城地下城(dungeon)時，有著什麼技巧。」
+mpcallout 1 say 不知道你對上述的內容，有著什麼樣的疑問呢？
+mpcallout 1 mpdel_qmark self thoran_talking
+~
+>talk_prog environment~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if being($b)
+	if rembch($n)
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		say 在星光之城的環境中有許多值得探訪的東西....，
+		mpcallout 1 say 但是卻經常有人將那些重要訊息給忽略了....，
+		mpcallout 2 say 事實上，冒險者在不熟悉的環境中探險時....，
+		mpcallout 3 say 應該隨時保持高度的警覺心....，
+		mpcallout 4 say 隨時對物品或線索進行搜查(search around/victim)的動作....，
+		mpcallout 5 say 許多奇怪的現象，例如一些孔洞....，
+		mpcallout 6 say 或許是需要一些東西的插入(insert)才有辦法作用....，
+		mpcallout 7 say 但是別忘了將插入的東西給抽回來(drawout)....，
+		mpcallout 8 say 甚至一些空的容器，都可以嘗試放進(putin)一些物品....，
+		mpcallout 9 say 試試看是否會產生任何相關的線索....。
+		mpcallout 10 say 一個冒險者若不能夠時時眼光四面、耳聽八方....，
+		mpcallout 11 say 那麼經常抱怨任務困難，或是戰死沙場....，
+		mpcallout 12 say 那麼這種事也算常有啦！
+		mpcallout 12 mpdel_qmark self thoran_talking
+	else
+		say 我目前是 $b 的諮詢對象....，
+		mpcallout 1 say 暫時無法回答你的任何問題。
+	endif
+else
+	if resp($n) >= 10
+		say 如果想要諮詢(consultation)任何的問題....，
+		mpcallout 1 say 我們可以討論看看價位(cost)你能不能接受。
+	else
+		faint
+		say 你沒有搞錯吧！我肯開口罵你已經是最大極限了。
+		say 在搞清楚自己的斤兩前，趕快滾離我的房間。
+	endif
+endif
+~
+>talk_prog danger~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if being($b)
+	if rembch($n)
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		say 涅盤大地是一個相當危險的地方....，
+		mpcallout 1 say 據說裡頭到處都是會主動攻擊的奇怪生物....，
+		mpcallout 2 say 不知是否與涅盤大地主宰的強大魔力有關....，
+		mpcallout 3 say 涅盤大地的野獸們死後會不斷的由巢穴中再生....，
+		mpcallout 4 say 而且冒險者們也無法由這些野獸的屍體上獲得任何的好處....，
+		mpcallout 5 say 不過如果冒險者對於空空如也的屍體有興趣那是例外....，
+		mpcallout 6 say 至於涅盤大地的主宰的資料目前仍是一團迷....，
+		mpcallout 7 say 但是據說他的可怕....，
+		mpcallout 8 say 可以與舊大陸的幽冥巨獸並駕齊驅。
+		mpcallout 8 mpdel_qmark self thoran_talking
+	else
+		say 我目前是 $b 的諮詢對象....，
+		mpcallout 1 say 暫時無法回答你的任何問題。
+	endif
+else
+	if resp($n) >= 10
+		say 如果想要諮詢(consultation)任何的問題....，
+		mpcallout 1 say 我們可以討論看看價位(cost)你能不能接受。
+	else
+		faint
+		say 你沒有搞錯吧！我肯開口罵你已經是最大極限了。
+		say 在搞清楚自己的斤兩前，趕快滾離我的房間。
+	endif
+endif
+~
+>talk_prog dungeon~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if being($b)
+	if rembch($n)
+		mpadd_qmark self thoran_talking 10 0 0 0 1 0
+		say 其實進入星光之城地下城的路徑....，
+		mpcallout 1 say 已經被堡主給封閉了....，
+		mpcallout 2 say 但是他還是留下了特別的方式....，
+		mpcallout 3 say 讓知道途徑的人能夠進入地下城之中....，
+		mpcallout 4 say 其實詳細的方法我也不太清楚....，
+		mpcallout 5 say 但是聽說跟城堡內一個「生物傳送門」有關係....，
+		mpcallout 6 say 不過「生物傳送門」完全都不會動....，
+		mpcallout 7 say 真不知道怎麼讓牠能夠到前往地下城的入口前....，
+		mpcallout 8 say 讓牠啟動(active)傳送的步驟。
+		mpcallout 8 mpdel_qmark self thoran_talking
+	else
+		say 我目前是 $b 的諮詢對象....，
+		mpcallout 1 say 暫時無法回答你的任何問題。
+	endif
+else
+	if resp($n) >= 10
+		say 如果想要諮詢(consultation)任何的問題....，
+		mpcallout 1 say 我們可以討論看看價位(cost)你能不能接受。
+	else
+		faint
+		say 你沒有搞錯吧！我肯開口罵你已經是最大極限了。
+		say 在搞清楚自己的斤兩前，趕快滾離我的房間。
+	endif
+endif
+~
+>rand_prog 50~
+if being($b)
+	if is_qmark($i) == thoran_consultation
+	else
+		tell $b 抱歉，你的諮詢時間到了喔！
+		mpdef_rembch null-tar
+	endif
+else
+	if is_qmark($i) == thoran_consultation
+		sigh
+		say 又是一個解任務沒有完成就脫離遊戲的玩家。
+		mpdel_qmark self thoran_consultatoin
+	endif
+endif
+~
+|
+#26529
+agle-thoran Agle~
+愛葛(Agle)~
+愛葛(Agle)靜靜地在這邊站著。
+~
+她看起來是個天真無邪的女孩，但是一些現場的狀況卻透露了另外一種訊息，這麼奇怪的
+環境，為什麼她一個小女孩會獨自待在這邊(why you are here)？
+~
+2 8|32 -1000 S
+34 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+P 8|4194304
+>talk_prog p why you are here~
+say 堡主(master)....堡主他....好可憐....，
+mpcallout 1 say 本來....本來他不會噴火的。
+mpcallout 2 sob $n
+~
+|
+#26530
+durtreg-thoran Durtreg~
+得瑞克(Durtreg)~
+得瑞克(Durtreg)病重躺在這邊隨時準備撒手人寰。
+~
+你看到一個有著棕色頭髮與滿臉皺紋的老女人，不過，她似乎快要死去了。
+~
+2 8|32|512 1000 S
+40 0 0 0d0+0 0d0+0
+0 0
+7 7 1
+P 8|128
+C 1|2
+S 13 -1000
+>repop_prog 100~
+mpadd_qmark self thoran_quest 480 0 0 0 1 0
+~
+>tick_prog 100~
+if inroom($i) == 5
+	if is_qmark($i) != thoran_quest
+		mppurge self
+	endif
+else
+	if is_qmark($i) != thoran_quest
+		mpgoto 5
+		mpadd_qmark self thoran_quest 120 0 0 0 1 0
+	endif
+endif
+~
+>rand_prog 20~
+if is_qmark($i) != thoran_durtreg_quest
+	if rand(30)
+		say 我好累，我好想睡覺....
+		break
+	endif
+	if rand(33)
+		sigh
+		say 我就快死了....
+		mpecho $I 話還沒說完就劇烈的咳嗽了起來....
+	else
+		say 我需要....我需要 神仙水(god potion) 來....來....
+		mpecho $I 話還沒說完就劇烈的咳嗽了起來....
+	endif
+endif
+~
+>give_prog 13027~
+mpjunk all.god
+if is_qmark($i) != thoran_durtreg_quest
+	say 神....神仙水(god potion)....，
+	mpecho $I 立即將 神仙水(god potion) 喝了下去....
+	mpadd_qmark self thoran_durtreg_quest 1 0 0 0 1 0
+else
+	say 太好了，越多 神仙水(god potion) 越好....
+	mpecho $I 將 神仙水(god potion) 又喝了下去....
+	mpmod_qmark self thoran_durtreg_quest timer + 1
+endif
+~
+>talk_prog topic~
+if is_qmark($i) != thoran_durtreg_quest
+	if rand(30)
+		say 我好累，我好想睡覺....
+		say 我想要多看幾種礦石(mineral)啊！
+		break
+	endif
+	if rand(33)
+		sigh
+		say 我就快死了....
+		mpecho $I 話還沒說完就劇烈的咳嗽了起來....
+	else
+		say 我需要....我需要 神仙水(god potion) 來....來....
+		mpecho $I 話還沒說完就劇烈的咳嗽了起來....
+	endif
+	break
+else
+	if rand(50)
+		say 喝過了 神仙水(god potion) ，我已經好多了。
+	else
+		say 我想要多看幾種礦石(mineral)啊！
+	endif
+endif
+~
+>give_prog all~
+if is_qmark($i) != thoran_durtreg_quest
+	say 我....我....，神....神仙....水....。
+	drop $o
+	break
+endif
+if vnum($o) == 26553
+	mpecho $I 仔細的把玩著 $O ....
+	mpcallout 1 say 這是 明礬(alum) 的結晶....，
+	mpcallout 2 say 可以減緩甚至中和一些化學作用喔。
+	mpcallout 3 mpechoat $n $I 將 明礬的結晶(crystal of alum) 還給了你....
+	mpcallout 3 mpechoaround $n $I 將 明礬的結晶(crystal of alum) 還給了 $n ....
+	mpcallout 3 mpjunk all.mineral
+	mpcallout 3 mpoload 26580 $n viclv target
+	break
+endif
+if vnum($o) == 26555
+	mpecho $I 仔細的把玩著 $O ....
+	mpcallout 1 say 這個東西並沒有什麼特別的功效....
+	mpcallout 2 say 不過我卻曾經看過這顆石頭....
+	mpcallout 3 say 好像是在....開某些箱子的時候。
+	mpcallout 4 mpechoat $n $I 將 $O 還給了你....
+	mpcallout 4 mpechoaround $n $I 將 $O 還給了 $n ....
+	mpcallout 4 mpjunk all.stone
+	mpcallout 4 mpoload 26555 $n viclv target
+	break
+endif
+if vnum($o) == 26565
+	mpecho $I 仔細的把玩著 $O ....
+	mpcallout 1 say 這顆紅寶石可不得了....，
+	mpcallout 2 say 裡頭蘊藏著極大的能量....，
+	mpcallout 3 say 可以讓任何物體、甚至是大型機器得以運轉。
+	mpcallout 4 mpechoat $n $I 將 能量紅寶石(energy ruby) 還給了你....
+	mpcallout 4 mpechoaround $n $I 將 能量紅寶石(energy ruby) 還給了 $n ....
+	mpcallout 4 mpjunk all.ruby
+	mpcallout 4 mpoload 26581 $n viclv target
+else
+	sorry $n
+	say 這並非我感興趣或是我認識的物品....
+	give $o $n
+endif
+~
+>talk_prog mineral~
+if is_qmark($i) != thoran_durtreg_quest
+	say 我....我喜歡....蒐集....
+	mpecho $I 話還沒說完，就劇烈的咳嗽了起來....
+else
+	say 我喜歡蒐集各式各樣的礦石，那是我的興趣....。
+	if is_inv_obj($n) == 26553
+	or is_inv_obj($n) == 26555
+	or is_inv_obj($n) == 26565
+		mpcallout 1 say 你的身上似乎放有不少有趣的礦石....，
+		mpcallout 2 say 不介意的話可以拿給我看一看嗎？
+	else
+		mpcallout 1 say 不過或許我已經沒有足夠的生命可以讓我鑽研我的興趣了。
+		mpcallout 2 sigh
+	endif
+endif
+~
+|
+#26531
+portrait-thoran guardian portrait~
+傳送守衛(guardian portrait)~
+一道傳送門(portrait)懸掛在牆上。
+~
+當你注意的看著這到傳送門，發覺這道傳送門竟然會動。或許它不是傳送門也說不定。
+~
+2|64 8|32|512|524288|1048576 1000 S
+30 0 0 0d0+0 0d0+0
+50 0
+7 7 0
+R Phantom~
+>rand_prog 50~
+if inroom($i) == 26548
+	mpecho 當 $I 進入這邊，忽然虛幻的實體變得真實....
+	mpdis_magic self 'charm person'
+	yell 啊....啊....啊！
+	mpoload 26588 99 floor
+	mppurge self
+endif
+~
+|
+#26532
+witch~
+巫女(witch)~
+一個面貌醜陋的巫女(witch)正在這邊尋找著蜥蜴的尾巴。
+~
+她看起來與一般的女巫沒有什麼兩樣。不過她的動作似乎讓人覺得她的腦袋有
+點問題。
+~
+2 8|32 -1000 S
+40 3000 0 0d0+0 0d0+50
+50 0
+7 7 2
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if rand(50)
+	if hitprcnt($i) < 50
+		c 'double heal'
+		mpnowait
+	endif
+endif
+if rand(25)
+	c blindness $n
+	mpnowait
+endif
+if rand(25)
+	c poison $n
+	mpnowait
+endif
+if rand(25)
+	c curse $n
+	mpnowait
+endif
+if rand(25)
+	c 'chill touch' $n
+	mpnowait
+else
+	c weaken $n
+	mpnowait
+endif
+~
+>greet_prog 100~
+say 任意闖入，該死！
+if rand(25)
+	c blindness $n
+	mpnowait
+endif
+if rand(25)
+	c poison $n
+	mpnowait
+endif
+if rand(25)
+	c curse $n
+	mpnowait
+endif
+if rand(25)
+	c 'chill touch' $n
+	mpnowait
+else
+	c weaken $n
+	mpnowait
+endif
+~
+|
+#26533
+syruc-thoran Syruc~
+賽魯克(Syruc)~
+賽魯克(Syruc)在這邊正準備要做一頓豐盛的晚餐。
+~
+他看起來又老又髒，他應該已經連續工作很久一段時間了吧！
+~
+2|64 8|32|512 1000 S
+39 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+>greet_prog 100~
+if is_qmark($n) <= thoran_master_quest 100004
+	if is_qmark($n) >= thoran_master_quest 100002
+		say 奇怪，去涅盤大地的冒險者(adventurer)，為什麼沒有一個能夠回來？
+	endif
+endif
+~
+>talk_prog topic~
+say 你沒看見我在忙嗎？走開，別吵我。
+~
+>talk_prog adventurer~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+say 是啊，我也覺得奇怪....，
+mpcallout 1 say 為什麼涅盤大地是那麼令人害怕的一個地方....，
+mpcallout 2 say 不過我是有聽說一些有關涅盤大地的消息啦....！
+mpcallout 3 say 聽說裡頭的野獸們是會不斷的再生的....，
+mpcallout 4 say 應該是說，裡頭的野獸即使被冒險者打死了....，
+mpcallout 5 say 又會在某處再度出現....，
+mpcallout 6 say 據說是涅盤大地主宰 帕拉瑪斯(Primus) 的強大魔力使然。
+mpcallout 6 mpcall thoran_syruc_quest $n
+~
+>defun_prog thoran_syruc_quest~
+if is_qmark($n) !& thoran_master_quest 300001
+	mpmod_qmark $n thoran_master_quest v2 | 1
+endif
+~
+|
+#26534
+shadow demon~
+陰影惡魔(shadow demon)~
+你看到隱約中一隻巨大的惡魔(demon)站在陰影之中。
+~
+他就像一般你平常在史卡拉貝大陸所見到的惡魔一樣。但是確有著更加尖利的
+牙齒與爪子。
+~
+2|32|1048576 8|32|512 -1000 S
+50 2000 0 0d0+-500 0d0+0
+50 0
+7 7 1
+P 8|4194304
+R Demon~
+C 35
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if rand(50)
+	c 'lifesteal' $n
+	mpnowait
+else
+	c 'soulsteal' $n
+	mpnowait
+endif
+~
+|
+#26535
+werewolf~
+狼人(werewolf)~
+一隻狼人(werewolf)在此對著星空明月嚎叫。
+~
+他看起來真的很像一隻巨大會站立的狗。而且有著銳利的牙齒與爪子。
+~
+2|32 8|32 -1000 S
+40 0 0 20d40+0 0d0+0
+50 0
+7 7 1
+R Animal~
+P 8|4194304
+C 33
+>fight_prog 60~
+mpecho 忽然 $I 對你展開了瘋狂的咬食....
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+~
+|
+#26536
+iron golem~
+鐵巨像(iron golem)~
+一座鐵巨像(iron golem)正威額額的站在這邊。
+~
+他看起來就像全身長滿銅筋鐵骨的巨人。他站在這邊似乎在守護著什麼東西。
+~
+2|32|128|8192 8|32 -1000 S
+50 0 0 50d0+0 0d0+0
+50 0
+7 7 1
+R Statue~
+P 8|4194304
+C 33
+>greet_prog 100~
+if ispc($n)
+	hunt $n
+endif
+~
+>fight_prog 100~
+skilldrv multihit $n
+~
+|
+#26537
+hellhound-thoran~
+地獄犬(hellhound)~
+一隻地獄犬(hellhound)在這邊等著要噬咬你。
+~
+牠看起來像一隻狗，雖然很小，但是卻非常危險、兇惡。當牠看見你已經開始舔拭
+牠的尖牙了。牠的嘴邊還掛有一小片牛肉(beef)，不知道是哪裡來的。
+~
+2|262144|8388608 8|32|512 -1000 S
+40 2000 0 50d20+0 0d0+0
+50 0
+7 7 1
+C 33
+R Animal~
+P 8|512|4194304
+>give_prog 16034~
+if is_qmark($i) == thoran_hellhound_quest
+	mpechoat $n $I 咬著你丟給牠的 牛肉(roast beef) ....
+	mpechoaround $n $I 咬著 $n 丟給牠的 牛肉(roast beef) ....
+	mpmod_qmark self thoran_hellhound_quest timer + 1
+else
+	mpechoat $n 你將 $O 丟給了 $I ....
+	mpechoaround $n $n 將 $O 丟給了 $I ....
+	mpcallout 1 mpecho 原本兇惡的 $I ，開始坐下來咬食 $O ....
+	mpcallout 1 mpgoto self
+	mpcallout 1 mpadd_qmark self thoran_hellhound_quet 5 0 0 0 1 0
+endif
+~
+>fight_prog 100~
+if is_qmark($i) == thoran_hellhound_quest
+	mpgoto self
+	break
+endif
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+~
+>rand_prog 3~
+mpecho $I 大聲地吠了兩聲....
+mpecho 忽然 $I 嘴上的那一小片 牛肉(beef) 掉了下來....
+mpoload 16034 5 floor
+~
+>rand_prog 100~
+if is_qmark($i) == thoran_hellhound_quest
+	break
+endif
+if pcnum($) > 0
+	if ispc($r)
+		if is_inv_obj($r) == 16034
+		else
+			mpkill $r
+		endif
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($i) == thoran_hellhound_quest
+	break
+endif
+if is_inv_obj($n) != 16034
+	mpecho $I 向你吠了兩聲後，就往你撲了過來....
+	mpkill $n
+	skilldrv multihit $n
+else
+	mpecho $I 向你吠了兩聲，伸出舌頭....
+	mpecho $I 似乎看著你身上的某項物品....
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if robjcount(26590) > 0
+	mpecho $I 死前噴出了許多火焰，綁著 吊床(hammock) 的繩子被火焰給燒斷了....！
+	mpecho 吊床(hammock) 上頭的東西掉了下來，滾進了水溝中流走了....
+	mppurge hammock1-thoran
+	mpat 26587 mppurge hammock2-thoran
+endif
+~
+|
+#26538
+nightmare-thoran nightmare~
+夢魘(nightmare)~
+你最害怕的夢魘(nightmare)就在這邊。
+~
+它看起來就像是你做最差最差的惡夢。而且，現在你遇見它，卻不是醒來就可以解決的。
+~
+32|64 8|32|512 -1000 S
+40 0 0 0d0+0 0d-1000+0
+50 0
+7 7 0
+R Phantom~
+P 8|4194304
+#26539
+zombie~
+僵屍(zombie)~
+這具僵屍(zombie)在這邊漫無目的的漫遊著。
+~
+牠看起來像是人類，一種突變的人類。
+~
+2|32|4096|1048576 8|32 -1000 S
+40 0 0 0d0+0 0d0+0
+50 0
+7 7 0
+R Undead~
+P 8|4194304
+C 1
+>fight_prog 100~
+if ispc($r)
+	if rand(25)
+		c curse $r
+	endif
+	if rand(25)
+		c poison $r
+	endif
+	if rand(25)
+		c weaken $r
+	else
+		c blindness $r
+	endif
+endif
+if rand(40)
+	mpechoat $n $I 忽然用牠具有劇毒的牙齒往你咬了過來....
+	mpechoaround $n $I 忽然用牠具有劇毒的牙齒往 $n 咬了過去....
+	if dex($n) < 18
+		mpforcer here add_affect $n poison 0 80 5 -1 4096
+	else
+		if rand(30)
+			mpforcer here add_affect $n poison 0 80 5 -1 4096
+		else
+			mpecho $n 用高超的敏捷度閃過了 $I 的咬蝕....
+		endif
+	endif
+endif
+~
+|
+#26540
+ghost~
+鬼魂(ghost)~
+一具鬼魂(ghost)在這邊漫無目的的遊蕩著。
+~
+~
+2|32|4096 8|32 -1000 S
+41 0 0 0d0+0 0d-1000+0
+50 0
+7 7 0
+R Ghost~
+P 8|4194304
+>fight_prog 10~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26541
+ghoul~
+食屍鬼(ghoul)~
+一具食屍鬼(ghoul)在這邊尋找可供食用的屍體。
+~
+食屍鬼曾經是人類，但是現在牠身上富有彈性的肌肉都已經腐蝕見骨。牠的指甲與牙齒
+似乎相當的尖銳。
+~
+2|32|4096|1048576 8|32 -1000 S
+40 0 0 0d0+0 0d0+0
+50 0
+7 7 0
+R Undead~
+P 8|4194304
+C 1
+>fight_prog 100~
+if ispc($r)
+	if rand(25)
+		c curse $r
+	endif
+	if rand(25)
+		c poison $r
+	endif
+	if rand(25)
+		c weaken $r
+	else
+		c blindness $r
+	endif
+endif
+if rand(40)
+	mpechoat $n $I 忽然用牠具有劇毒的牙齒往你咬了過來....
+	mpechoaround $n $I 忽然用牠具有劇毒的牙齒往 $n 咬了過去....
+	if dex($n) < 18
+		mpforcer here add_affect $n 'demon tremor' 0 80 5 -1 4096
+	else
+		if rand(30)
+			mpforcer here add_affect $n 'demon tremor' 0 80 5 -1 4096
+		else
+			mpecho $n 用高超的敏捷度閃過了 $I 的咬蝕....
+		endif
+	endif
+endif
+~
+|
+#26542
+wight~
+浮游靈(wight)~
+浮游靈(wight)為了找尋替死鬼而到處飄浮。
+~
+浮游靈看起來有點像僵屍，但是它們是以靈體的方式存在。
+~
+2|32|4096 8|32 -1000 S
+41 0 0 0d0+0 0d-1000+0
+50 0
+7 7 0
+R Ghost~
+P 8|4194304
+>fight_prog 10~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26543
+wraith~
+幽魂(wraith)~
+這具幽魂(wraith)在這邊正尋找著生人來吃。
+~
+這具幽魂看起來就像是骷髏。相當不幸地，幽魂兼具了不死族與鬼魂族的特點。
+~
+2|32|4096 8|32 -1000 S
+41 0 0 0d0+0 0d-1000+0
+50 0
+7 7 1
+R Ghost~
+P 8|4194304
+>fight_prog 10~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26544
+maiden vampire~
+吸血鬼仕女(maiden vampire)~
+吸血鬼仕女(maiden vampire)正尋找著一些生人來吸血。
+~
+她是個非常非常美的吸血鬼，真的真的非常的美。但是你最好不要太接近她，記住，
+更別被她給咬中了。或許，你想要獲得永恆的詛咒生命的話，被她咬一下是無所謂。
+~
+2|32|4096 8|32 -1000 S
+43 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+R Vampire~
+P 8|4194304
+C 3
+>fight_prog 30~
+if is_equ_obj($n) == 26545
+	break
+endif
+grin
+mpechoat $n $I 忽然張開尖牙，向你咬了過來....
+mpechoaround $n $I 忽然張開尖牙，向 $n 咬了過去....
+if dex($n) < 18
+	mpforcer here add_affect $n poison 0 80 2 -1 1024
+	mpforcer here add_affect $n poison 0 80 3 -1 4096
+	mpforcer here add_affect $n poison 0 80 4 -1 536870912
+else
+	mpechoat $n 你用高超的敏捷度閃開了 $I 的咬蝕....
+	mpechoaround $n $n 用高超的敏捷度閃開了 $I 的咬蝕....
+endif
+~
+|
+#26545
+vampire~
+吸血鬼(vampire)~
+這隻吸血鬼(vampire)在這邊尋找可以咬蝕的生物。
+~
+他是一個擁有金色頭髮、深藍色眼睛的英俊男士。但是事實上，他是在尋找他自己的獵物。
+~
+2 8|32 -1000 S
+46 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+R Vampire~
+P 8|4194304
+C 7
+>fight_prog 30~
+if is_equ_obj($n) == 26545
+	break
+endif
+grin
+mpechoat $n $I 忽然張開尖牙，向你咬了過來....
+mpechoaround $n $I 忽然張開尖牙，向 $n 咬了過去....
+if dex($n) < 18
+	mpforcer here add_affect $n poison 0 80 2 -1 1024
+	mpforcer here add_affect $n poison 0 80 3 -1 4096
+	mpforcer here add_affect $n poison 0 80 4 -1 536870912
+else
+	mpechoat $n 你用高超的敏捷度閃開了 $I 的咬蝕....
+	mpechoaround $n $n 用高超的敏捷度閃開了 $I 的咬蝕....
+endif
+~
+|
+#26546
+spectre~
+幽靈(spectre)~
+一襲幽靈(spectre)飄浮在這邊。
+~
+牠看起來就像是鬼魂一般。事實上，幽靈就是鬼魂的一種。
+~
+2 8|32 -1000 S
+37 0 0 0d0+0 0d-1000+0
+50 0
+7 7 0
+R Ghost~
+P 8|4194304
+>fight_prog 10~
+if ispc($r)
+	mpechoat $r $I 的身體忽然發出亮光，向你附身過來....
+	mpechoaround $r $I 的身體忽然發出亮光，向 $r 附身過去....
+	if wis($n) < 16
+		mpechoat $r 你的身體被附身了....
+		mpechoaround $r $r 的身體被附身了....
+		mpforcer here add_affect $r 'demon tremor' 0 80 4 -5 536870912
+	else
+		mpechoat $r 你的高超智慧，讓 $I 的附身完全無用....
+		mpechoaround $r $r 的高超智慧，讓 $I 的附身完全無用....
+	endif
+endif
+mppurge self
+~
+|
+#26547
+villager gina~
+女村民 - 吉娜(Gina the villager)~
+這個女村民(villager)在這邊找著一些事情做。
+~
+她叫做吉娜(Gina)，她身上留著大約 5 呎長的金色頭髮。你發覺不僅是你，連你所有的同
+伴都開始注視著這位女孩子。如果你希望認識她的話，最好動作快點。
+~
+64 8|32 1000 S
+35 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+P 8|4194304
+>greet_prog 100~
+if is_qmark($n) <= thoran_master_quest 100004
+	if is_qmark($n) >= thoran_master_quest 100002
+		say 奇怪(strange)，怎麼最近總是覺得心神不寧....
+	endif
+endif
+~
+>talk_prog strange~
+if is_qmark($n) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+say 其實也沒什麼....，
+mpcallout 1 say 我曾經聽我過世的父親提過....，
+mpcallout 2 say 涅盤大地的野獸們雖然受到帕拉瑪斯的管轄....，
+mpcallout 3 say 但是事實上帕拉瑪斯並沒有那麼多的時間可以管理牠們....，
+mpcallout 4 say 聽說管理這些野獸的是好幾個「核」(core)。
+mpcallout 4 mpdel_qmark self thoran_talking
+~
+>talk_prog core~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) !& thoran_master_quest 300002
+	mpmod_qmark $n thoran_master_quest v2 | 2
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+say 我聽我過世的父親提到一些有關「核」的事情....，
+mpcallout 1 say 這些野獸主要由「核」中出現....，
+mpcallout 2 say 也由這些「核」所掌管著....，
+mpcallout 3 say 我只知道這些了。
+mpcallout 3 mpdel_qmark self thoran_talking
+~
+>rand_prog 20~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if pcnum($) > 0
+	if ispc($r)
+		if rand(50)
+			sm $r
+			mpechoat $r 當 $I 對著你微笑時，你的表情都傻掉了....
+			mpechoaround $r 當 $I 對著 $r 微笑時， $r 的表情都傻掉了....
+		else
+			bow $r
+			say 您好，歡迎光臨 星光之城(Thoran City)。
+		endif
+	endif
+endif
+~
+>talk_prog p thoran city~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+say 我們星光之城可是我們堡主在很久很久以前....，
+mpcallout 1 say 旅行到星界的時候，使用強大魔力所創建的唷....！
+mpcallout 2 say 我心儀我們的堡主(master)好久了....，
+mpcallout 3 blush
+mpcallout 4 say 但是....最近幾年來一直見不到他。
+mpcallout 4 mpdel_qmark self thoran_talking
+~
+>talk_prog master~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 5 0 0 0 1 0
+say 我們的堡主是我最仰慕的人....，
+mpcallout 1 say 我在小的時候就聽我的父母訴說過他的功績....，
+mpcallout 2 say 我在很小很小的時候曾經見過我們堡主一面喔....，
+mpcallout 3 say 但是，之後就沒有再見過他了。
+mpcallout 3 mpdel_qmark self thoran_talking
+~
+|
+#26548
+vampire1-thoran maiden vampire~
+吸血鬼之女(maiden vampire)~
+一個貌似奈亞的吸血鬼之女(maiden vampire)正尋找著一些生人來吸血。
+~
+她是個非常非常美的吸血鬼，真的真的非常的美。不過，你似乎覺得她的面孔似曾相識，
+好像那個........奈亞(Anir)....！
+~
+32|64|128|4096|1048576 8|32|512 -1000 S
+45 2000 0 0d0+100 0d-200+0
+50 0
+7 7 2
+R Vampire~
+P 8|4194304
+C 35
+S 16 -1000
+>greet_prog 100~
+if is_qmark($i) == thoran_anir_death
+	break
+endif
+if ispc($n)
+	if is_equ_obj($n) == 26545
+		say 啊....，木樁(timber)....，討厭啊！
+		if rand(70)
+			mpechoat $n $I 見到你手上的木樁，立即逃之夭夭....
+			mpechoaround $n $I 見到 $n 手上的木樁，立即逃之夭夭....
+			e
+			s
+			w
+			n
+		endif
+	else
+		grin $n
+		say 血，我要血....
+		mpkill $n
+		feed
+		feed
+		feed
+	endif
+endif
+~
+>fight_prog 30~
+if is_equ_obj($n) == 26545
+	break
+endif
+grin
+mpechoat $n $I 忽然張開尖牙，向你咬了過來....
+mpechoaround $n $I 忽然張開尖牙，向 $n 咬了過去....
+if dex($n) < 18
+	mpforcer here add_affect $n poison 0 80 2 -1 1024
+	mpforcer here add_affect $n poison 0 80 3 -1 4096
+	mpforcer here add_affect $n poison 0 80 4 -1 536870912
+else
+	mpechoat $n 你用高超的敏捷度閃開了 $I 的咬蝕....
+	mpechoaround $n $n 用高超的敏捷度閃開了 $I 的咬蝕....
+endif
+~
+>fight_prog 100~
+feed
+mpnowait
+feed
+mpnowait
+feed
+mpnowait
+~
+>talk_prog topic~
+if is_qmark($i) == thoran_anir_death
+or is_qmark($i) == thoran_talking
+	break
+endif
+grin
+say 我最喜歡吸食人血了....
+mpkill $n
+feed
+feed
+feed
+~
+>talk_prog yram~
+if is_qmark($i) == thoran_talking
+or is_qmark($i) == thoran_anir_death
+	break
+endif
+if is_qmark($n) == thoran_anir_quest 100001
+	mpmod_qmark $n thoran_anir_quest v0 = 11
+	mpmod_qmark $n thoran_anir_quest v1 = 1
+	say 藍(Yram)？她是誰？我不認識....。
+	mpcallout 1 say 想不想擁有永恆的生命....？
+	mpcallout 1 grin
+	mpcallout 2 mpkill $n
+endif
+~
+>repop_prog 100~
+mpadd_qmark self thoran_anir_quest 240 0 0 0 1 0
+~
+>tick_prog 100~
+if is_qmark($i) == thoran_anir_death
+	break
+endif
+wak
+if hour($) >= 6
+	if hour($) < 18
+		if inroom($i) != 5
+			curse
+			say 啊！我討厭陽光啊....！
+			mpecho $I 忽然消失在你的眼前....
+			mpat 5 c 'full heal'
+			mpgoto 5
+		endif
+	else
+		if inroom($i) == 5
+			if rand(50)
+				mpgoto 26556
+			else
+				mpgoto 26557
+			endif
+			mpat 5 c 'full heal'
+			mpecho $I 忽然出現在這邊....
+			grin
+			say 黑夜降臨，又是我活動的好時機....。
+		endif
+	endif
+else
+	if inroom($i) == 5
+			if rand(50)
+				mpgoto 26558
+			else
+				mpgoto 26559
+			endif
+			mpat 5 c 'full heal'
+			mpecho $I 忽然出現在這邊....
+			grin
+			say 黑夜降臨，又是我活動的好時機....。
+		endif
+	endif
+endif
+~
+>rand_prog 50~
+if is_qmark($i) != thoran_anir_quest
+	if mobcount(26515) > 0
+		mpgoto anir-thoran
+		mppurge anir-thoran
+	endif
+	mppurge self
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+say 我是不死之身，你是殺不了我的....
+mpecho $I 化作一道煙霧消失在你的眼前....
+mpat 26598 mpecho 一道煙霧出現在這邊，並且化作一隻吸血鬼....
+mpat 26598 say 我需要休息....
+mpat 26598 mpmload 26548
+mpat 26598 mpadd_qmark 2.vampire1-thoran thoran_anir_death 12 0 0 0 1 0
+mpat 26598 mpforce 2.vampire1-thoran sleep
+mppurge self
+~
+|
+#26549
+anir2-thoran Anir~
+奈亞(Anir)~
+奈亞(Anir)精神屹屹的站在這邊。。
+~
+她是一位披著烏黑頭髮的美麗女孩，脖子旁被吸血鬼所咬的傷口已經消失了。
+~
+2 8|32|512 1000 S
+34 0 0 0d0+0 0d0+0
+50 0
+7 7 2
+P 8|4194304
+>talk_prog topic~
+if is_qmark($n) >= thoran_anir_quest 100006
+	sm $n
+	say 您好，我最崇拜的英雄。
+endif
+~
+|
+#26550
+bizmark1-thoran Bizmark~
+比斯馬克(Bizmark)~
+比斯馬克(Bizmark)正在酒吧前暢飲他的飲料。
+~
+他的眼睛充滿了血絲與倦意，或許他真的喝太多了，不過他的右眼似乎是瞎了，
+但是原本在上頭的寶石已經不見。
+~
+2 8|32|64|512 1000 S
+44 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+C 41
+>repop_prog 100~
+mpoload 26504
+mpoload 26505
+mpoload 26509
+mpat 5 wear all
+~
+>talk_prog topic~
+if is_qmark($n) & thoran_quest 100004
+	if rand(50)
+		sm $n
+		say 你好啊！怎麼英雄您今天有時間再度造訪此處呢？
+	else
+		say 大英雄！來喝一杯吧！
+	endif
+endif
+~
+>rand_prog 15~
+if is_qmark($i) == thoran_talking
+	break
+endif
+mpadd_qmark self thoran_talking 10 0 0 0 1 0
+if insameroom(kira-thoran)
+	say 基拉(Kira)，給我來一杯啤酒(beer)....
+	if rand(60)
+		mpforce kira-thoran say 好的，沒問題....
+		mpcallout 1 mpforce kira-thoran say 您的啤酒好了....
+		mpcallout 1 mpforce kira-thoran mpoload 26508
+		mpcallout 2 mpforce kira-thoran give beer bizmark-thoran
+		mpcallout 3 drink beer
+		mpcallout 4 say 啊！真是好喝....！
+		mpcallout 4 mpjunk all.beer
+		mpcallout 4 mpdel_qmark self thoran_talking
+	else
+		mpforce kira-thoran say 比斯馬克(Bizmark)，你就少喝一點吧....
+		mpcallout 1 say 你少管我，我再說一次，我要一杯啤酒(beer)....
+		mpcallout 2 mpforce kira-thoran sigh
+		mpcallout 2 mpforce kira-thoran say 真是無可救藥的酒鬼....
+		mpcallout 3 mpforce kira-thoran say 喂！比斯馬克(Bizmark)，你的酒來了....
+		mpcallout 3 mpoload 26508
+		mpcallout 4 mpforce kira-thoran give beer bizmark-thoran
+		mpcallout 5 drink beer
+		mpcallout 6 say 嗯！好喝....！
+		mpcallout 6 mpjunk all.beer
+		mpcallout 6 mpdel_qmark self thoran_talking
+	endif
+endif
+~
+|
+#26551
+james-thoran james boss transport station~
+詹姆士(James)~
+貨運站站長 - 詹姆士(James) 正忙著簽署各式各樣的文件。
+~
+他是貨運站的站長詹姆士(James)，負責整個星光之城與史卡拉貝大陸
+的物流通路。如果你想要到史卡拉貝大陸，可以透過詹姆士的協助。
+~
+2 8|32|512 1000 S
+40 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+C 3
+>talk_prog topic~
+say 你想要到那邊呢？直接跟我說就行了。
+say 至於價位請參閱本貨運站的告示牌。
+say 但突然改變心意，想更改目的地的話，我們是不會退費的喔。
+~
+>talk_prog skarabrae~
+if goldamt($n) < 5000
+	say 抱歉，你身上的錢不夠。
+	break
+endif
+mpgold $n -5000
+if is_qmark($n) == thoran_james_quest
+	say 好的， $n 要前往的地點改為 史卡拉貝城 。
+	mpmod_qmark $n thoran_james_quest v0 = 1
+else
+	say 好的， $n 要前往 史卡拉貝城 。
+	mpadd_qmark $n thoran_james_quest 10 1 0 0 0 1
+endif
+say 請你儘速進入(enter)星光之門(Star-Gate) 之中，以免時效過了無法傳送。
+~
+>talk_prog p City of Mega~
+if goldamt($n) < 9000
+	say 抱歉，你身上的錢不夠。
+	break
+endif
+mpgold $n -9000
+if is_qmark($n) == thoran_james_quest
+	say 好的， $n 要前往的地點改為 魔法之都 - 麥格城 。
+	mpmod_qmark $n thoran_james_quest v0 = 2
+else
+	say 好的， $n 要前往 魔法之都 - 麥格城 。
+	mpadd_qmark $n thoran_james_quest 10 2 0 0 0 1
+endif
+say 請你儘速進入(enter)星光之門(Star-Gate) 之中，以免時效過了無法傳送。
+~
+>talk_prog p Castle Reinhold~
+if goldamt($n) < 9000
+	say 抱歉，你身上的錢不夠。
+	break
+endif
+mpgold $n -9000
+if is_qmark($n) == thoran_james_quest
+	say 好的， $n 要前往的地點改為 羅胡城堡 。
+	mpmod_qmark $n thoran_james_quest v0 = 4
+else
+	say 好的， $n 要前往 羅胡城堡 。
+	mpadd_qmark $n thoran_james_quest 10 4 0 0 0 1
+endif
+say 請你儘速進入(enter)星光之門(Star-Gate) 之中，以免時效過了無法傳送。
+~
+>talk_prog p south pole~
+if goldamt($n) < 9000
+	say 抱歉，你身上的錢不夠。
+	break
+endif
+mpgold $n -9000
+if is_qmark($n) == thoran_james_quest
+	say 好的， $n 要前往的地點改為 南極冰洋 。
+	mpmod_qmark $n thoran_james_quest v0 = 8
+else
+	say 好的， $n 要前往 南極冰洋 。
+	mpadd_qmark $n thoran_james_quest 10 8 0 0 0 1
+endif
+say 請你儘速進入(enter)星光之門(Star-Gate) 之中，以免時效過了無法傳送。
+~
+>talk_prog p Keep of Mahn-Tor~
+if goldamt($n) < 15000
+	say 抱歉，你身上的錢不夠。
+	break
+endif
+mpgold $n -15000
+if is_qmark($n) == thoran_james_quest
+	say 好的， $n 要前往的地點改為 曼托爾堡壘 。
+	mpmod_qmark $n thoran_james_quest v0 = 16
+else
+	say 好的， $n 要前往 曼托爾堡壘 。
+	mpadd_qmark $n thoran_james_quest 10 16 0 0 0 1
+endif
+say 請你儘速進入(enter)星光之門(Star-Gate) 之中，以免時效過了無法傳送。
+~
+>talk_prog p High Tower of Sorcery~
+if goldamt($n) < 15000
+	say 抱歉，你身上的錢不夠。
+	break
+endif
+mpgold $n -15000
+if is_qmark($n) == thoran_james_quest
+	say 好的， $n 要前往的地點改為 魔法高塔 。
+	mpmod_qmark $n thoran_james_quest v0 = 32
+else
+	say 好的， $n 要前往 魔法高塔 。
+	mpadd_qmark $n thoran_james_quest 10 32 0 0 0 1
+endif
+say 請你儘速進入(enter)星光之門(Star-Gate) 之中，以免時效過了無法傳送。
+~
+>talk_prog p Eastern Desert~
+if goldamt($n) < 30000
+	say 抱歉，你身上的錢不夠。
+	break
+endif
+mpgold $n -30000
+if is_qmark($n) == thoran_james_quest
+	say 好的， $n 要前往的地點改為 東方大沙漠 。
+	mpmod_qmark $n thoran_james_quest v0 = 64
+else
+	say 好的， $n 要前往 東方大沙漠 。
+	mpadd_qmark $n thoran_james_quest 10 64 0 0 0 1
+endif
+say 請你儘速進入(enter)星光之門(Star-Gate) 之中，以免時效過了無法傳送。
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thoran_enemy
+	mpmod_qmark $n thoran_enemy timer + 50
+else
+	mpadd_qmark $n thoran_enemy 50 0 0 0 0 1
+endif
+~
+|
+#26552
+vampire4-thoran vampire~
+吸血鬼(vampire)~
+這隻吸血鬼(vampire)在這邊尋找著可憐的生物來吸血。
+~
+他看起來已經相當久沒有吸過血的樣子。
+~
+32|64 8|32|128|512|1048576 -1000 S
+43 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+R Vampire~
+P 8|4194304
+C 7
+>fight_prog 30~
+if is_equ_obj($n) == 26545
+	break
+endif
+grin
+mpechoat $n $I 忽然張開尖牙，向你咬了過來....
+mpechoaround $n $I 忽然張開尖牙，向 $n 咬了過去....
+if dex($n) < 18
+	mpforcer here add_affect $n poison 0 80 2 -1 1024
+	mpforcer here add_affect $n poison 0 80 3 -1 4096
+	mpforcer here add_affect $n poison 0 80 4 -1 536870912
+else
+	mpechoat $n 你用高超的敏捷度閃開了 $I 的咬蝕....
+	mpechoaround $n $n 用高超的敏捷度閃開了 $I 的咬蝕....
+endif
+~
+>fight_prog 100~
+feed
+mpnowait
+feed
+mpnowait
+feed
+mpnowait
+~
+>tick_prog 100~
+if hour($) >= 6
+	if hour($) <= 18
+		say 又是討厭的白天了....
+		mpecho $I 忽然化為一縷白煙消失了....
+		mppurge self
+	endif
+endif
+~
+|
+#26553
+soldier-thoran injured soldier~
+受傷的士兵(injured soldier)~
+一位剛攻打涅盤大地負傷回來的士兵(injured soldier)在這邊接受治療。
+~
+他剛剛才參與攻打涅盤大地的戰役回來，或許由他身上可以獲得一些資訊。
+~
+2|64 8|32|512 -1000 S
+40 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+P 8|4194304
+C 7
+#26554
+master-thoran master thoran~
+星光之城堡主(Master of Thoran)~
+星光之城的堡主(Master of Thoran)靜靜地站在這邊。
+~
+星光之城堡主看起來炯炯有神、英俊挺拔，自從被解除詛咒後，星光之城再度恢復了原來
+的繁榮與安寧。
+~
+2|64|1024|4096|262144|8388608 8|32|128|512|8192|8589934592 0 S
+50 3000 0 20d50+-1000 0d0+0
+50 0
+7 7 1
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self thoran_master_quest 240 0 0 0 1 0
+~
+>tick_prog 100~
+if is_qmark($i) != thoran_master_quest
+	if mobcount(26526) > 0
+		mpat dragon-thoran mppurge dragon-thoran
+		mppurge self
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == thoran_talking
+	break
+endif
+if is_qmark($n) == thoran_master_quest 100007
+	mpadd_qmark self thoran_talking 5 0 0 0 1 0
+	mpmod_qmark $n thoran_master_quest v0 = 8
+	sm $n
+	say 謝謝你的大力幫助， $n 。
+	mpcallout 1 say 如果沒有你的幫忙....，
+	mpcallout 2 say 我將只能夠以醜陋的外型度過一生....，
+	mpcallout 3 say 我不知道該如何報答你....，
+	mpcallout 4 mpecho $I 低著頭思考了一陣子....
+	mpcallout 6 sm
+	mpcallout 7 say 我這邊有個不錯的裝備....，
+	mpcallout 8 say 它對你往後的冒險旅途....，
+	mpcallout 9 say 一定是相當有用的....。
+	mpcallout 10 mpcall thoran_master_reward $n
+	break
+endif
+if is_qmark($n) & thoran_quest 100016
+	bow $n
+	say 我的大恩人，歡迎光臨 星光之城(Thoran City)。
+else
+	sm $n
+	say 歡迎光臨 星光之城(Thoran City)。
+endif
+~
+>defun_prog thoran_master_reward~
+if is_qmark($n) & thoran_quest 100016
+	if is_qmark($n) & thoran_master_quest 200001
+		mpcallout 1 mpecho $I 由身後拿出了一根十字架....
+		mpcallout 2 say 送你這根十字架的原因....，
+		mpcallout 3 say 主要是你在這項任務的過程中....，
+		mpcallout 4 say 表現了十分自信的態度....，
+		mpcallout 5 mpecho $I 將 黃金十字架(golden cross) 拿給了你....
+		mpcallout 5 mpoload 26538 $n viclv target
+		mpcallout 6 wave $n
+		mpcallout 6 say 再見了，我的英雄！
+		mpcallout 6 mpdel_qmark self thoran_talking
+		mpcallout 6 mpdel_qmark $n thoran_master_quest
+	break
+	endif
+	if is_qmark($n) & thoran_master_quest 200002
+		mpcallout 1 mpecho $I 由身後拿出了一個燭台....
+		mpcallout 2 say 送你這個燭台的原因....，
+		mpcallout 3 say 主要是你在這項任務的過程中....，
+		mpcallout 4 say 表現了十分謙遜的態度....，
+		mpcallout 5 mpecho $I 將 聖光燭台(Holder of divine light) 拿給了你....
+		mpcallout 5 mpoload 26539 $n viclv target
+		mpcallout 6 wave $n
+		mpcallout 6 say 再見了，我的英雄！
+		mpcallout 6 mpdel_qmark self thoran_talking
+		mpcallout 6 mpdel_qmark $n thoran_master_quest
+	endif
+else
+	if is_qmark($n) & thoran_master_quest 200001
+		mpcallout 1 mpecho $I 由身後拿出了一根權杖....
+		mpcallout 2 say 送你這根權杖的原因....，
+		mpcallout 3 say 主要是你在這項任務的過程中....，
+		mpcallout 4 say 表現了十分謙遜的態度....，
+		mpcallout 5 mpecho $I 將 智慧權杖(wisdom of sceptre) 拿給了你....
+		mpcallout 5 mpoload 26535 $n viclv target
+		mpcallout 6 wave $n
+		mpcallout 6 say 再見了，我的英雄！
+		mpcallout 6 mpdel_qmark self thoran_talking
+		mpcallout 6 mpdel_qmark $n thoran_master_quest
+		mpcallout 6 mpmod_qmark $n thoran_quest v0 | 16
+	break
+	endif
+	if is_qmark($n) & thoran_master_quest 200002
+		mpcallout 1 mpecho $I 由身後拿出了一面盾牌....
+		mpcallout 2 say 送你這面盾牌的原因....，
+		mpcallout 3 say 主要是你在這項任務的過程中....，
+		mpcallout 4 say 表現了十分自信的態度....，
+		mpcallout 5 mpecho $I 將 勇猛盾牌(shield of courage) 拿給了你....
+		mpcallout 5 mpoload 26607 $n viclv target
+		mpcallout 6 wave $n
+		mpcallout 6 say 再見了，我的英雄！
+		mpcallout 6 mpdel_qmark self thoran_talking
+		mpcallout 6 mpdel_qmark $n thoran_master_quest
+		mpcallout 6 mpmod_qmark $n thoran_quest v0 | 16
+	 endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+rumor 星光之城的堡主被 $n 給誤殺了....
+if is_qmark($n) != thoran_enemy
+	mpadd_qmark $n thoran_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n thoran_enemy timer + 100
+endif
+~
+|
+#26555
+vampire5-thoran vampire guard~
+吸血鬼守衛(vampire guard)~
+這隻吸血鬼守衛(vampire guard)在這邊阻止有人帶走變成吸血鬼的 奈亞(Anir)。
+~
+他看起來比一般吸血鬼強壯許多。
+~
+32|64 8|32|128|512|1048576 -1000 S
+45 0 0 0d0+0 0d0+0
+50 0
+7 7 1
+R Vampire~
+P 8|4194304
+C 39
+S 16 -1000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self thoran_anir_death 10 0 0 0 1 0
+~
+>fight_prog 30~
+if is_equ_obj($n) == 26545
+	break
+endif
+grin
+mpechoat $n $I 忽然張開尖牙，向你咬了過來....
+mpechoaround $n $I 忽然張開尖牙，向 $n 咬了過去....
+if dex($n) < 18
+	mpforcer here add_affect $n poison 0 80 2 -1 1024
+	mpforcer here add_affect $n poison 0 80 3 -1 4096
+	mpforcer here add_affect $n poison 0 80 4 -1 536870912
+else
+	mpechoat $n 你用高超的敏捷度閃開了 $I 的咬蝕....
+	mpechoaround $n $n 用高超的敏捷度閃開了 $I 的咬蝕....
+endif
+~
+>fight_prog 100~
+feed
+mpnowait
+feed
+mpnowait
+feed
+mpnowait
+~
+>rand_prog 40~
+if is_qmark($i) != thoran_anir_death
+	mpecho $I 忽然化作一縷清煙後消失了....
+	mppurge self
+endif
+~
+|
+#0
+
+
+
+#OBJECTS
+#26500
+lantern~
+油燈(lantern)~
+一具油燈(lantern)被放置在這邊。~
+~
+1 1 1|16384
+0~ 0~ 0~ 0~
+2 10 0
+L 10
+C 1000
+X brass~
+
+#26501
+torch~
+火把(torch)~
+一根火把(torch)被丟棄在這邊。~
+~
+1 1 1|16384
+0~ 0~ 0~ 0~
+2 10 0
+L 5
+C 500
+X wooden~
+
+#26502
+bread~
+一塊麵包(piece of bread)~
+一塊麵包(piece of bread)被放在這邊。~
+~
+19 0 1
+20~ 0~ 0~ 0~
+1 10 0
+L 15
+C 300
+X food~
+
+#26503
+water flask~
+水瓶(water flask)~
+一罐裝滿水的水瓶(water flash)被放置在這邊。~
+~
+17 0 1
+50~ 50~ 0~ 0~
+5 15 0
+L 30
+C 3000
+X stone~
+
+#26504
+fine sword~
+精緻長劍(sword)~
+一把看起來不錯的劍(sword)被放在這邊。~
+~
+5 1 1|8192
+150~ 0~ 0~ 3~
+10 1000 0
+A
+18 4
+A
+19 2
+X iron~
+
+#26505
+fine shield~
+精緻大盾牌(shield)~
+一面盾牌(shield)被放置在這邊。~
+~
+9 1 1|512
+0~ 0~ 150~ 0~
+5 500 0
+A
+17 -15
+X iron~
+
+#26506
+halberd~
+戟(halberd)~
+一把長戟(halberd)被放在這邊。~
+~
+5 64 1|8192
+150~ 0~ 0~ 13~
+1 0 0
+L 30
+C 10000
+A
+19 8
+X iron~
+
+#26507
+wine glass~
+酒杯(wine glass)~
+一杯酒杯(wine glass)被丟棄在這邊。~
+~
+17 0 1
+5~ 0~ 0~ 0~
+1 0 0
+L 15
+C 1500
+X wooden~
+
+#26508
+beer mug~
+一大杯啤酒(beer mug)~
+一大杯啤酒(beer mug)被放置在這邊。~
+~
+17 0 1
+5~ 5~ 1~ 0~
+1 0 0
+L 25
+C 2500
+X wooden~
+
+#26509
+beer~
+啤酒(beer)~
+一杯啤酒(beer)被放置在這邊。~
+~
+17 0 1
+5~ 5~ 1~ 0~
+1 0 0
+L 20
+C 2000
+X liquid~
+
+#26510
+bible~
+聖經(bible)~
+一本聖經(bible)被丟棄在這邊。~
+~
+13 1 1|16384
+0~ 0~ 0~ 0~
+2 0 0
+A
+3 1
+A
+4 1
+X paper~
+
+#26511
+incense stick~
+焚香火把(incense stick)~
+一隻焚香火把(incense stick)被放置在這邊。~
+~
+1 1 1|16384
+0~ 0~ 0~ 0~
+2 50 0
+X ebony~
+
+#26512
+crystal ball~
+水晶球(crystal ball)~
+一顆水晶球(crystal ball)在這邊閃閃發亮著。~
+~
+13 1 1|16384
+0~ 0~ 0~ 0~
+5 50 0
+A
+3 1
+A
+44 4
+X crystal~
+
+#26513
+scales dragon~
+龍之麟(scales of a dragon)~
+一片龍之麟(scales of dragon)被丟棄在這邊。~
+~
+9 1 1|512
+0~ 0~ 300~ 0~
+5 0 37
+C 1000
+L 30
+A
+17 -10
+X dragon scale~
+
+#26514
+head dragon~
+龍之首(head of a dragon)~
+一顆龍之首(head of dragon)被丟棄在這邊。~
+~
+9 1 1|16
+0~ 0~ 300~ 0~
+5 0 37
+L 30
+A
+17 -10
+X dragon bone~
+
+#26515
+tail dragon~
+龍之尾(tail of a dragon)~
+一條龍之尾(tail of dragon)被丟棄在這邊。~
+~
+9 1 1|32
+0~ 0~ 300~ 0~
+5 0 37
+L 30
+A
+17 -10
+X dragon bone~
+
+#26516
+wings gargoyle~
+石像鬼之翼(wings of a gargoyle)~
+一片石像鬼之翼(wings of gargoyle)被放置在這邊。~
+~
+9 1 1|1024
+0~ 0~ 250~ 0~
+5 1000 0
+F 512|524288
+E
+wings gargoyle~
+穿上這個石像鬼之翼，非但能夠看見暗夜中的物體，還能夠御空飛行。
+~
+X stone~
+
+#26517
+intelligence staff~
+智力手杖(intelligence staff)~
+一根智力手杖(intelligence staff)佇立在這邊。~
+~
+9 1 1|16384
+0~ 0~ 350~ 0~
+3 500 0
+A
+3 1
+A
+4 1
+X wooden~
+
+#26518
+pencil~
+鉛筆(pencil)~
+一根鉛筆(pencil)靜靜的躺在這邊。~
+~
+5 1 1|8192
+100~ 0~ 0~ 11~
+5 0 0
+X wooden~
+
+#26519
+vampire teeth~
+吸血鬼之牙(teeth of a vampire)~
+一顆吸血鬼之牙(teeth of vampire)掉在這邊。~
+~
+5 1|64 1|8192
+100~ 0~ 0~ 10~
+5 1000 0
+H lifesteal~ 25 25 4
+A
+18 7
+X bone~
+
+#26520
+black cape~
+黑色披風(black cape)~
+黑色披風(black cape)被掛在這邊隨風飄揚。~
+~
+9 1 1|1024
+0~ 0~ 100~ 0~
+3 0 0
+A
+1 -1
+A
+17 -8
+X cloth~
+
+#26521
+broom~
+掃把(broom)~
+一根掃把(broom)被放在這邊。~
+~
+5 1 1|8192
+100~ 0~ 0~ 5~
+5 1000 0
+X wooden~
+
+#26522
+cauldron~
+大鍋子(cauldron)~
+一面大鍋子(cauldron)在這邊冒著泡泡、煮著東西。~
+~
+13 1 1
+0~ 0~ 0~ 0~
+10 50 0
+X iron~
+
+#26523
+kert's dagger~
+可兒的匕首(Kert's dagger)~
+一把散發出淡綠色光芒的匕首(dagger)被放在這邊。~
+~
+5 1|2|4|16|64|131072 1|8192
+150~ 0~ 0~ 11~
+3 0 0
+T 40
+Z 2
+A
+18 10
+A
+44 50
+X bronze~
+P 1|32|64|32768|2097152
+
+
+#26524
+ring truth~
+真實之戒(ring of truth)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 真實(truth)。~
+~
+9 1 1|2
+0~ 0~ 250~ 0~
+2 1000 37
+L 30
+A
+2 -2
+A
+18 2
+A
+43 30
+Z 1
+X marble~
+
+#26525
+ring honor~
+榮耀之戒(ring of honor)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 榮耀(honor)。~
+~
+9 1|16777216 1|2
+0~ 0~ 250~ 0~
+2 1000 37
+L 30
+A
+1 -1
+A
+5 -1
+A
+18 2
+A
+43 30
+Z 2
+X marble~
+
+#26526
+sword vengeance~
+復仇之劍(sword of vengeance)~
+一把外觀非常漂亮的劍(sword)被丟棄在這邊。~
+~
+5 1 1|8192
+300~ 0~ 0~ 3~
+10 5000 39
+L 5
+C 5000
+Z 1
+A
+1 1
+A
+2 1
+A
+5 1
+X steel~
+
+#26527
+boots striding~
+跨越之靴(boots of striding)~
+一雙刻有古老花紋的靴子(boots)被放置在這邊。~
+~
+9 1 1|64
+0~ 0~ 200~ 0~
+5 1000 0
+Z 1
+A
+14 100
+A
+43 20
+X leather~
+
+#26528
+plate chest chestplate valor~
+英勇鎧甲(chest plate of valor)~
+一套笨重的鎧甲(plate)被放在這邊，上面刻著 - 英勇(valor)。~
+~
+9 1 1|8
+0~ 0~ 200~ 0~
+5 1000 0
+Z 1
+A
+5 -1
+A
+39 30
+A
+19 5
+X marble~
+
+#26529
+gloves power~
+力量手套(gloves of power)~
+一套手套(gloves)被丟棄在這邊，上面刻著 - 力量(power)。~
+~
+9 1 1|128
+0~ 0~ 220~ 0~
+5 1000 0
+A
+1 2
+A
+19 3
+X leather~
+
+#26530
+shield courage~
+勇猛盾牌(shield of courage)~
+一面盾牌(shield)被放置在這邊，上面刻著 - 勇猛(courage)。~
+~
+9 1 1|512
+0~ 0~ 240~ 0~
+5 1000 0
+Z 1
+A
+19 3
+A
+43 20
+X marble~
+
+#26531
+cape invulnerability~
+無敵披風(cape of invulnerability)~
+一件披風(cape)被掛在這邊，上面刻著 - 無敵(invulnerability)。~
+~
+9 1 1|1024
+0~ 0~ 260~ 0~
+5 1000 0
+A
+42 5
+A
+44 15
+X fiber~
+
+#26532
+belt strength~
+猛力腰帶(belt of strength)~
+一條腰帶(belt)被放置在這邊，上面刻著 - 猛力(strength)。~
+~
+9 1 1|2048
+0~ 0~ 270~ 0~
+5 1000 0
+A
+1 3
+X fiber~
+
+#26533
+bracelet love~
+真愛手鐲(bracelet of love)~
+一副手鐲(bracelet)被遺棄在這邊，上面刻著 - 真愛(love)。~
+~
+9 1 1|4096
+0~ 0~ 190~ 0~
+5 1000 0
+A
+3 1
+A
+4 1
+A
+12 25
+X marble~
+
+#26534
+bracelet hate~
+憎恨手鐲(bracelet of hate)~
+一副手鐲(bracelet)被遺棄在這邊，上面刻著 - 憎恨(hate)。~
+~
+9 1|512|2048 1|4096
+0~ 0~ 180~ 0~
+5 1000 0
+A
+3 -1
+A
+4 -1
+A
+5 -1
+A
+19 4
+X marble~
+
+#26535
+sceptre wisdom~
+智慧權杖(sceptre of wisdom)~
+一根權杖(sceptre)被擺放在這邊，上面刻著 - 智慧(wisdom)。~
+~
+9 1 1|16384
+0~ 0~ 210~ 0~
+5 1000 0
+Z 4
+A
+4 3
+A
+12 30
+A
+17 -10
+X marble~
+
+#26536
+arm plates striking~
+烈擊臂甲(arm plates of striking)~
+一副臂甲(arm plates)被放置這邊，上面刻著 - 烈擊(striking)。~
+~
+9 1 1|256
+0~ 0~ 350~ 0~
+5 1000 39
+Z 1
+A
+2 -2
+A
+19 4
+X marble~
+
+#26537
+silver ankh~
+白銀護符(silver ankh)~
+一副由銀製成的護符(ankh)靜靜的躺在這邊。~
+~
+9 1 1|4
+0~ 0~ 210~ 0~
+5 1000 0
+A
+23 -3
+X silver~
+
+#26538
+golden cross~
+黃金十字架(golden cross)~
+依附黃金製成的十字架(cross)被亂丟在這邊。~
+~
+1 1 1|16384
+0~ 0~ 0~ 0~
+5 1000 0
+Z 4
+A
+23 -1
+A
+24 -2
+A
+40 1
+A
+3 1
+A
+4 1
+X gold~
+
+#26539
+divine light holder-thoran~
+聖光燭台(Holder of divine light)~
+一個燭台(Holder)擺放在這邊，並發散出朦朧的聖光。~
+~
+1 1 1|16384
+0~ 0~ 0~ 0~
+5 1000 0
+Z 4
+A
+40 2
+A
+44 5
+X gold~
+>obj_rand 100~
+	if objval2($o) == 1
+		oset holder-thoran value2 = 0
+		echoat $n 燭臺上面的蠟燭燒光了...。
+	endif
+~
+|
+S
+#26540
+corpse-thoran soldier corpse injured~
+受傷士兵的屍體(injured soldier's corpse)~
+一具士兵的屍體(soldier's corpse)擺放在這邊。~
+~
+23 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X flesh~
+
+#26541
+leggings doom~
+末日脛甲(leggings of doom)~
+一副脛甲(leggings)被放置在這邊，上面刻著 - 末日(doom)。~
+~
+9 1|512|2048 1|32
+0~ 0~ 230~ 0~
+5 1000 0
+A
+17 -5
+A
+19 2
+X marble~
+
+#26542
+treasure chest~
+寶藏箱(treasure chest)~
+一箱寶藏箱(treasure chest)被放置在這邊。~
+~
+15 0 0
+10000~ 1~ -1~ 0~
+0 0 0
+X bronze~
+
+#26543
+pile coins~
+一堆金幣(pile of coins)~
+一堆金幣(pile of coins)在這邊閃閃發光著。~
+~
+20 0 1
+10000~ 0~ 0~ 0~
+0 0 0
+C 10000
+X gold~
+
+#26544
+garlic~
+大蒜(garlic)~
+一顆大蒜(garlic)在這邊發出刺鼻的氣味。~
+~
+19 0 1
+0~ 0~ -1~ 0~
+0 0 0
+L 30
+C 3000
+X herb~
+
+#26545
+timber-thoran timber~
+木樁(timber)~
+一根巨大堅硬的木樁(timber)被放在這邊。~
+~
+5 1|64|256|65536 1|8192
+90~ 0~ 0~ 11~
+0 0 0
+L 36
+A
+18 5
+A
+19 2
+X wooden~
+V Vampire~ 0 100 50 100
+
+#26546
+furniture1-thoran desordely furniture~
+雜亂的家具(desordely furniture)~
+一堆雜亂的家具(desordely furniture)被丟棄在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+furniture~
+這一堆散亂的家具堆滿了各式各樣的雜物，應該是附近的居民
+將已經廢棄的家具隨便亂丟到這邊來。
+~
+X wooden~
+
+#26547
+clothes~
+發出惡臭的衣物(dirty clothes)~
+一堆發出惡臭的衣物(dirty clothes)被丟棄在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+25 0 0
+E
+clothes~
+這堆發出惡臭的衣服，也不知道是哪一家缺德的人隨便亂丟到這邊的。
+一堆一堆的衣服像是許多年未被清洗過。
+~
+X cloth~
+
+#26548
+desordely furniture~
+雜亂的家具(desordely furniture)~
+一堆雜亂的家具(desordely furniture)被丟棄在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+furniture~
+這一堆散亂的家具堆滿了各式各樣的雜物，應該是附近的居民
+將已經廢棄的家具隨便亂丟到這邊來。
+~
+X wooden~
+
+#26549
+clothes~
+發出惡臭的衣物(dirty clothes)~
+一堆發出惡臭的衣物(dirty clothes)被丟棄在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+25 0 0
+E
+clothes~
+這堆發出惡臭的衣服，也不知道是哪一家缺德的人隨便亂丟到這邊的。
+一堆一堆的衣服像是許多年未被清洗過。
+~
+X cloth~
+
+#26550
+furniture2-thoran destroyed furniture~
+被破壞的家具(destroyed furniture)~
+一堆被敲壞的家具(destroyed furniture)散落在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+furniture~
+這一堆家具已經被破壞了，到處都是碎屑。
+~
+X wooden~
+
+#26551
+chest1-thoran large chest~
+巨大的箱子(large chest)~
+一個巨大的箱子(large chest)在散亂的家具中。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+chest~
+這裡有個巨大的箱子，但是下面不知連接著什麼東西，因此這個箱子
+沒有辦法移動。不過箱子上有個凹槽(fillister)，似乎裡頭曾經鑲嵌
+過什麼東西。
+~
+E
+fillister~
+你注意看著這個凹槽，發現凹槽上面似乎存有一些礦石(mineral)的碎
+屑。你無法立即得知這些礦石碎屑的成分，但是這些碎屑似乎可以刮
+取下來。
+~
+X bronze~
+
+#26552
+chest2-thoran large chest~
+巨大的箱子(large chest)~
+一個巨大的箱子(large chest)在散亂的家具中。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+chest~
+這裡有個巨大的箱子，但是下面不知連接著什麼東西，因此這個箱子
+沒有辦法移動。不過箱子上有個凹槽(fillister)，似乎裡頭曾經鑲嵌
+過什麼東西。
+~
+E
+fillister~
+你注意看著這個凹槽，凹槽上乾乾淨淨的，沒有什麼特別。
+~
+X bronze~
+
+#26553
+mineral pieces~
+礦石碎屑(mineral pieces)~
+一些尚未得知任何成分的礦石碎屑(mineral pieces)被丟在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X stone~
+
+#26554
+card-thoran passing card~
+通行卡(passing card)~
+一張提供進入星光城堡的通行卡(passing card)被丟在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X paper~
+
+#26555
+stone-thoran stone~
+璞石(stone)~
+一顆隱約發出聶人光芒的石頭(stone)被丟棄在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X stone~
+
+#26556
+large table~
+巨大的餐桌(large table)~
+一張巨大的餐桌(table)擺放在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+table~
+這一張桌子大約有整整10英尺的長度，坐個20人應該不成問題。
+~
+X wooden~
+
+#26557
+long chair~
+長椅(long chair)~
+一張相當舒適的椅子(chair)擺放在這邊。~
+~
+12 0 1
+0~ 0~ 0~ 0~
+20 0 0
+E
+chair~
+這一張椅子坐起來應該十分舒適，但是上頭沾滿了灰塵。
+~
+X wooden~
+
+#26558
+corpse-thoran corpse anir~
+奈亞的屍體(Anir's corpse)~
+奈亞的屍體(Anir's corpse)靜靜地躺在這邊，心臟位置插了一根木樁(timber)。~
+~
+12 16384 1
+0~ 0~ 0~ 0~
+100 0 0
+E
+corpse~
+這是奈亞的屍體，藍要是看到這具屍體一定會很難過。
+~
+T 24
+#26559
+tombstone allan~
+艾倫的墓碑(allan's tombstone)~
+一塊墓碑(tombstone)被放在這邊，墓碑的主人是 - 艾倫(Allan)。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+allan~
+給我最至愛的好友 - 艾倫(Allan)
+
+	愚友 - 比司馬克(Bizmark) 僅立
+~
+X marble~
+
+#26560
+tombstone alisa~
+愛麗莎的墓碑(alisa's tombstone)~
+一塊墓碑(tombstone)被放在這邊，墓碑的主人是 - 愛麗莎(Alisa)。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+alisa~
+給我最至愛的好友 - 愛麗莎(Alisa)
+
+	愚友 - 比司馬克(Bizmark) 僅立
+~
+X marble~
+
+#26561
+tombstone branddon~
+布藍登的墓碑(branddon's tombstone)~
+一塊墓碑(tombstone)被放在這邊，墓碑的主人是 - 布藍登(Branddon)。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+branddon~
+給我最至愛的好友 - 布藍登(Branddon)
+
+	愚友 - 比司馬克(Bizmark) 僅立
+~
+X marble~
+
+#26562
+throne1-thoran large throne~
+巨大的王座(large throne)~
+一張巨大的王座(large throne)座落在整個房間的中央。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+throne~
+這張巨大的王座，上頭鑲嵌著各式各樣珍貴的珠寶，但是似乎已經很久沒有人
+用了，因此整個王座上頭滿滿的都是蜘蛛絲。
+~
+X marble~
+
+#26563
+throne2-thoran large throne~
+巨大的王座(large throne)~
+一張巨大的王座(large throne)座落在整個房間的中央。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+throne~
+這張巨大的王座，上頭鑲嵌著各式各樣珍貴的珠寶，但是似乎已經很久沒有人
+用了，不過剛剛似乎有經過清潔，上頭的蜘蛛絲已經被清乾淨了。
+~
+X marble~
+
+#26564
+throne3-thoran large throne~
+巨大的王座(large throne)~
+一張巨大的王座(large throne)座落在整個房間的中央。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+throne~
+這張巨大的王座，上頭鑲嵌著各式各樣珍貴的珠寶，但是似乎已經很久沒有人
+用了，不過剛剛似乎有經過清潔，上頭的蜘蛛絲已經被清乾淨了，同時上頭鑲
+嵌的其中一顆寶石似乎剛剛已經被挖走了。
+~
+X marble~
+
+#26565
+ruby~
+王座上的紅寶石(ruby)~
+一顆發散出閃亮光芒的紅寶石(ruby)被丟棄在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X ruby~
+
+#26566
+bed1-thoran bed jill~
+珠兒的床鋪(Jill's bed)~
+一張乾淨且雕琢樸實的床鋪放在這邊，上頭刻著 - 珠兒(Jill)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26567
+bed2-thoran bed cindy~
+莘蒂的床鋪(Cindy's bed)~
+一張乾淨且雕琢樸實的床鋪放在這邊，上頭刻著 - 莘蒂(Cindy)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26568
+bed3-thoran bed winnie~
+溫妮的床鋪(Winnie's bed)~
+一張乾淨且雕琢樸實的床鋪放在這邊，上頭刻著 - 溫妮(Winnie)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26569
+bed4-thoran bed kert~
+可兒的床鋪(Kert's bed)~
+一張乾淨且雕琢樸實的床鋪放在這邊，上頭刻著 - 可兒(Kert)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26570
+bed5-thoran bed jill~
+珠兒的床鋪(Jill's bed)~
+一張似乎剛剛才被人翻過的床鋪放在這邊，上頭刻著 - 珠兒(Jill)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26571
+bed6-thoran bed cindy~
+莘蒂的床鋪(Cindy's bed)~
+一張似乎剛剛才被人翻過的床鋪放在這邊，上頭刻著 - 莘蒂(Cindy)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26572
+bed7-thoran bed winnie~
+溫妮的床鋪(Winnie's bed)~
+一張似乎剛剛才被人翻過的床鋪放在這邊，上頭刻著 - 溫妮(Winnie)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26573
+bed8-thoran bed kert~
+可兒的床鋪(Kert's bed)~
+一張似乎剛剛才被人翻過的床鋪放在這邊，上頭刻著 - 可兒(Kert)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X stone~
+
+#26574
+jill's bra~
+珠兒的胸罩(Jill's bra)~
+一個粉紅色的胸罩(bra)被放在這邊，上面似乎繡有一個字 - 珠兒(Jill)。~
+~
+13 0 1|8
+0~ 0~ 0~ 0~
+1 0 0
+E
+jill's bra~
+這是一個粉紅色的胸罩，胸罩的尺寸相當大，依你看來主人胸部的尺寸至少
+應該有 E 的程度。
+~
+A
+3 1
+X fiber~
+
+#26575
+hair pin~
+莘蒂的髮夾(Cindy's hair pin)~
+一個十分可愛的髮夾，上頭似乎刻有一個字 - 莘蒂(Cindy)。~
+~
+13 64|256 1|16
+0~ 0~ 0~ 0~
+1 0 0
+E
+cindy's hair pin~
+這根髮夾是淺藍色的，上頭隱約可以看出似乎附有一些魔力。
+~
+A
+4 1
+A
+17 10
+X fiber~
+
+#26576
+winnie's private letter~
+溫妮的私信(Winnie's private letter)~
+一封溫妮的私信(Winnie's private letter)被棄置在這邊。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+winnie's private letter~
+這封信上頭的筆跡已經不甚清楚了，以下是你尚能辨別的字眼：
+
+........要必須要非常小心涅盤大地的那些野獸，....反正，....晚上看不到。
+....千萬....使用光源....
+
+以下的內容就完全看不清楚了。
+~
+X paper~
+
+#26577
+kert's dagger~
+可兒的匕首(Kert's dagger)~
+一把散發出淡綠色光芒的匕首(dagger)被放在這邊。~
+~
+5 1|2|4|16|64|131072 1|8192
+150~ 0~ 0~ 11~
+3 0 0
+T 40
+X bronze~
+P 1|32|64|32768|2097152
+
+#26578
+decorated bed~
+裝飾華麗的床鋪(decorated bed)~
+一張裝飾十分華麗的床鋪(decorated bed)擺放在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+X wooden~
+
+#26579
+machine1-thoran huge machine~
+巨大的機械(huge machine)~
+一具巨大的機械(huge machine)擺放在這邊，不斷的發出閃電。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+huge machine~
+你注意看著這具機械，發覺這具機械似乎缺了什麼東西，因此在運轉上產生了問題，不斷
+的發出閃電。面版上有顆按鈕(button)，不過強烈的閃電讓你無法接近這具機械半步。右
+邊的透明容器裡頭裝著滿滿的水，但是水卻不斷的冒出氣泡，似乎閃電的來源就是來自於
+這反應激烈的透明容器，不知道要放什麼東西進去(putin)才能讓這些水平靜下來。
+~
+E
+button~
+深紅色的按鈕，不過由於強力的閃電，因此你幾乎無法接近去按下它。
+~
+X iron~
+
+#26580
+alum-thoran crystal alum~
+明礬結晶(crystal of alum)~
+明礬的結晶(crystal of alum)被放置在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+crystal alum~
+明礬的結晶，聽說具有安定化學作用的功效。
+~
+X stone~
+
+#26581
+ruby-thoran energy ruby~
+能量紅寶石(energy ruby)~
+一顆含有巨大能量(energy)的紅寶石(ruby)被丟棄在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X ruby~
+
+#26582
+machine2-thoran huge machine~
+巨大的機械(huge machine)~
+一具巨大的機械(huge machine)靜靜地被擺放在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+huge machine~
+你注意看著這具機械，平靜地被擺放在這邊，似乎失去了啟動的能量。
+面版上有顆深紅色的按鈕(button)，或許就是啟動這台機器的開關。按
+鈕的旁邊有個凹槽(fillister)，感覺上像是啟動這台機器的「鑰匙」。
+~
+E
+button~
+深紅色的按鈕，像是啟動這台機器的開關。
+~
+X steel~
+
+#26583
+machine3-thoran huge machine~
+巨大的機械(huge machine)~
+一具巨大的機械(huge machine)在這邊發出急速運轉的聲音。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+huge machine~
+你注意看著這具機械，這台機器已經有了充足的能源，開始順利運轉。
+面版上有顆深紅色的按鈕(button)，或許就是啟動這台機器的開關。按
+鈕的旁邊有個凹槽(fillister)，感覺上像是啟動這台機器的「鑰匙」。
+~
+E
+button~
+深紅色的按鈕，像是啟動這台機器的開關。
+~
+X steel~
+
+#26584
+machine4-thoran huge machine~
+巨大的機械(huge machine)~
+一具巨大的機械(huge machine)靜靜地被擺放在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+huge machine~
+你注意看著這具機械，平靜地被擺放在這邊，似乎失去了啟動的能量。
+面版上有顆深紅色的按鈕(button)，或許就是啟動這台機器的開關。按
+鈕的旁邊有個凹槽(fillister)，凹槽中已經放置了一顆璞石(stone)。
+~
+E
+button~
+深紅色的按鈕，像是啟動這台機器的開關。
+~
+X steel~
+
+#26585
+machine5-thoran huge machine~
+巨大的機械(huge machine)~
+一具巨大的機械(huge machine)在這邊發出急速運轉的聲音。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+huge machine~
+你注意看著這具機械，這台機器已經有了充足的能源，開始順利運轉。
+面版上有顆深紅色的按鈕(button)，或許就是啟動這台機器的開關。按
+鈕的旁邊有個凹槽(fillister)，凹槽中已經放置了一顆璞石(stone)。
+~
+E
+button~
+深紅色的按鈕，像是啟動這台機器的開關。
+~
+X steel~
+
+#26586
+machine6-thoran huge machine~
+巨大的機械(huge machine)~
+一具巨大的機械(huge machine)靜靜地被擺放在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+huge machine~
+你注意看著這具機械，平靜地被擺放在這邊，似乎失去了啟動的能量。
+面版上有顆深紅色的按鈕(button)，或許就是啟動這台機器的開關。按
+鈕的旁邊有個凹槽(fillister)，凹槽中已經放置了一顆發出金黃色光
+芒的璞石(stone)。
+~
+E
+button~
+深紅色的按鈕，像是啟動這台機器的開關。
+~
+X steel~
+
+#26587
+stone2-thoran stone~
+金黃色璞石(stone)~
+一顆隱約發出金黃色光芒的石頭(stone)被丟棄在這邊。~
+~
+8 1|2 1
+0~ 0~ 0~ 0~
+5 0 0
+X stone~
+
+#26588
+portrait1-thoran portrait~
+傳送門(portrait)~
+一道傳送門(portrait)飄浮在這邊。~
+~
+12 1|2 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+portrait~
+當你注意的看著這到傳送門，發覺這道傳送門竟然會動。或許它不是傳送門也說不定。
+~
+X aura~
+
+#26589
+portrait2-thoran portrait~
+發出光芒的傳送門(portrait)~
+一道發出光芒的傳送門(portrait)飄浮在這邊。~
+~
+12 1|2 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+portrait~
+這道傳送門發出了閃亮的光芒，你可以選擇進入傳送門(enter portrait)之中。
+~
+X aura~
+
+#26590
+hammock1-thoran hammock~
+放著重物的吊床(hammock)~
+一張吊床(hammock)高高的懸掛在這邊，上頭放著不知名的重物。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+hammock~
+這張吊床上頭不知道放了什麼東西，懸掛吊床的線被拉得筆直，隨時都有可能斷裂。
+整張吊床十分的高，如果不爬上什麼東西上看的話根本無法看到吊床上的東西。
+~
+X wool~
+
+#26591
+hammock2-thoran hammock~
+放著不知名物品的吊床(hammock)~
+一張吊床(hammock)懸掛在閣樓的旁邊，上頭放著不知名的物品。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+hammock~
+這張吊床上頭不知道放了什麼物品，懸掛吊床的線被拉的筆直，隨時都有可能斷裂。
+由於登上了閣樓，你可以看清楚放在吊床上頭的物品應該是個箱子，吊床與箱子距離
+閣樓還有一段距離，不管你如何伸長了手，只能夠些微的推到吊床的邊緣，完全無法
+拿到(grab)箱子。
+~
+X wool~
+
+#26592
+hammock3-thoran hammock~
+一張普通的吊床(hammock)~
+一張吊床(hammock)懸掛在閣樓的旁邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+hammock~
+這是一張普通的吊床，上頭沒有任何東西。
+~
+X wool~
+
+#26593
+chest-thoran wooden chest~
+木製的盒子(wooden chest)~
+一個製作精細的木製盒子(wooden chest)被丟棄在這裡。~
+~
+12 0 1
+0~ 0~ 0~ 0~
+5 0 0
+E
+wooden chest~
+這是一個製作精細的木製小盒子，但是上頭卻沒有任何的鑰匙孔，你不知道如何打
+開它。
+~
+X wooden~
+
+#26594
+coffin1-thoran coffin closed~
+緊閉的棺材(closed coffin)~
+一具關閉的棺材(closed coffin)被放置在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+closed coffin~
+這具棺材上頭刻有不少古樸的花紋，不過大部分都因年代久遠而模糊了，當你看清楚其中
+這些模糊花紋的內容是，發覺........是敘述吸血鬼吸食人血的紋畫。
+~
+X marble~
+
+#26595
+coffin2-thoran coffin opened~
+打開的棺材(opened coffin)~
+一具已經被打開的棺材(opened coffin)被放置在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+opened coffin~
+這具棺材上頭刻有不少古樸的花紋，不過大部分都因年代久遠而模糊了，當你看清楚其中
+這些模糊花紋的內容是，發覺........是敘述吸血鬼吸食人血的紋畫。你看了看棺材的裡
+頭，發現裡頭完全是空的，不過血跡卻是新鮮的。
+~
+X marble~
+
+#26596
+coffin3-thoran coffin gorgeous~
+華麗的棺材(gorgeous coffin)~
+一具緊閉的華麗棺材(gorgeous coffin)被放置在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+gorgeous coffin~
+這具棺材上頭有著非常華麗的雕刻，你仔細看著上頭圖騰的內容，皆是敘述著遠古舊大陸
+吸血鬼一族與人類的戰爭史。目前這具棺材是緊閉著，棺材裡頭透露一股十分強大的魔力
+，你最好不要嘗試打開它，因為打開它之後你將必須面對....。
+~
+X marble~
+
+#26597
+coffin4-thoran coffin gorgeous~
+華麗的棺材(gorgeous coffin)~
+一具已經打開的華麗棺材(gorgeous coffin)被放置在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+gorgeous coffin~
+這具棺材上頭有著非常華麗的雕刻，你仔細看著上頭圖騰的內容，皆是敘述著遠古舊大陸
+吸血鬼一族與人類的戰爭史。目前這具棺材已經打開了，你可以感受到打開後的棺材釋放
+出十分強大的魔力，棺材的主人一定是十分可怕的生物....，或者應該說種族。
+~
+X marble~
+
+#26598
+altar1-thoran bloody altar~
+沾滿血跡的祭壇(bloody altar)~
+沾滿血跡的祭壇(bloody altar)座落在這裡。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+bloody altar~
+你隱約的感受到這座祭壇似乎有著強大的魔力保護著，這座祭壇與地板接觸的地方似乎是
+鬆動的，或許這座祭壇是可移動的。
+~
+X marble~
+
+#26599
+altar2-thoran moved bloody altar~
+被移動的血腥祭壇(moved bloody altar)~
+沾滿血跡的祭壇(bloody altar)座落在這裡，但是已經被移動了。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+bloody altar~
+你隱約的感受到這座祭壇似乎有著強大的魔力保護著。
+這座祭壇已經被移動過，原來的位置出現了一根拉桿(rod)。
+~
+X marble~
+
+#26600
+kert's dagger~
+可兒的匕首(Kert's dagger)~
+一把散發出淡綠色光芒的匕首(dagger)被放在這邊。~
+~
+5 1|2|4|16|64|16384 1|8192
+150~ 0~ 0~ 11~
+3 0 0
+T 400
+A
+18 10
+A
+44 50
+X bronze~
+P 1|32|64|32768|2097152
+
+#26601
+ring honor~
+榮耀之戒(ring of honor)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 榮耀(honor)。~
+~
+9 1|16777216 1|2
+0~ 0~ 250~ 0~
+2 1000 37
+L 30
+Z 1
+A
+1 -1
+A
+5 -1
+A
+18 2
+A
+43 30
+X marble~
+#26602
+ring honor~
+榮耀之戒(ring of honor)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 榮耀(honor)。~
+~
+9 1|1024|2048|16777216 1|2
+0~ 0~ 250~ 0~
+2 1000 37
+Z 1
+L 30
+A
+1 -1
+A
+5 -1
+A
+18 2
+A
+43 15
+X marble~
+#26603
+ring truth~
+真實之戒(ring of truth)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 真實(truth)。~
+~
+9 1|512|1024|16777216 1|2
+0~ 0~ 250~ 0~
+2 1000 37
+L 30
+Z 1
+A
+2 -2
+A
+18 2
+A
+43 15
+X marble~
+#26604
+plate chest chestplate valor~
+英勇鎧甲(chest plate of valor)~
+一套笨重的鎧甲(plate)被放在這邊，上面刻著 - 英勇(valor)。~
+~
+9 1|1024 1|8
+0~ 0~ 200~ 0~
+5 1000 0
+Z 1
+A
+5 -2
+A
+39 30
+A
+19 5
+X marble~
+#26605
+boots striding~
+跨越之靴(boots of striding)~
+一雙刻有古老花紋的靴子(boots)被放置在這邊。~
+~
+9 1|512 1|64
+0~ 0~ 200~ 0~
+5 1000 0
+A
+14 100
+A
+43 14
+X leather~
+#26606
+arm plates striking~
+烈擊臂甲(arm plates of striking)~
+一副臂甲(arm plates)被放置這邊，上面刻著 - 烈擊(striking)。~
+~
+9 1|512 1|256
+0~ 0~ 350~ 0~
+5 1000 39
+Z 1
+A
+2 -2
+A
+19 4
+X marble~
+#26607
+shield courage~
+勇猛盾牌(shield of courage)~
+一面盾牌(shield)被放置在這邊，上面刻著 - 勇猛(courage)。~
+~
+9 1|1024|2048 1|512
+0~ 0~ 240~ 0~
+5 1000 0
+Z 4
+A
+19 3
+A
+43 15
+X marble~
+#26608
+ring truth~
+真實之戒(ring of truth)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 真實(truth)。~
+~
+9 1|512|2048|16777216 1|2
+0~ 0~ 250~ 0~
+2 1000 37
+Z 1
+L 30
+A
+2 -2
+A
+18 2
+A
+43 15
+X marble~
+#26609
+plate chest chestplate valor~
+英勇鎧甲(chest plate of valor)~
+一套笨重的鎧甲(plate)被放在這邊，上面刻著 - 英勇(valor)。~
+~
+9 1|1024 1|8
+0~ 0~ 200~ 0~
+5 1000 0
+A
+41 -10
+A
+17 30
+A
+39 30
+A
+19 5
+X marble~
+#26610
+arm plates striking~
+烈擊臂甲(arm plates of striking)~
+一副臂甲(arm plates)被放置這邊，上面刻著 - 烈擊(striking)。~
+~
+9 1|512 1|256
+0~ 0~ 350~ 0~
+5 1000 0
+A
+2 -2
+A
+19 4
+X marble~
+#26611
+ring truth~
+真實之戒(ring of truth)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 真實(truth)。~
+~
+9 1|512|2048|16777216 1|2
+0~ 0~ 250~ 0~
+2 1000 0
+Z 4
+L 30
+A
+2 -2
+A
+18 2
+A
+43 8
+X marble~
+#26612
+ring honor~
+榮耀之戒(ring of honor)~
+一只漂亮的戒指(ring)被放置在這邊，上頭刻著 - 榮耀(honor)。~
+~
+9 1|1024|2048|16777216 1|2
+0~ 0~ 250~ 0~
+2 1000 0
+Z 4
+L 30
+A
+1 -1
+A
+5 -1
+A
+18 2
+A
+43 8
+X marble~
+#26613
+sword vengeance~
+復仇之劍(sword of vengeance)~
+一把外觀非常漂亮的劍(sword)被丟棄在這邊。~
+~
+5 1 1|8192
+300~ 0~ 0~ 3~
+10 5000 0
+L 5
+C 5000
+A
+1 1
+A
+2 1
+A
+5 1
+X steel~
+#0
+
+#ROOMDATA
+#26500
+星界之路~
+你正漫步在一條通往一座星空都市的路上。在你的北邊，你可以看到星空之城的城門。往
+下，你看到浩瀚無垠的星界奇觀。這邊的空中浮著一排字(word)。
+~
+0 8192 1
+D0
+~
+~
+0 0 26501
+D5
+~
+~
+0 0 1949
+E
+word~
+這個區域是由 Pluto 於 2002/5/19 翻譯並改編完成。這個區域雖然是翻譯並改編自其他
+區域，但是本區域原容量由 3x KB 變成現在的 18x KB ，幾可說是一個嶄新的原創區域。
+本區域主要分為兩個部分，地上城鎮的部分幾乎沒有任何危險，地下城的部分危險性也不
+是非常大，但是冒險者必須要注意每一個房間與 NPC 的任何訊息，才是 Pluto 撰寫本區
+域的主要目的。
+~
+S
+#26501
+星光之城的城門~
+通過了星界中錯綜複雜的路徑，你終於到達了傳說中星空之城的城門口。巨大、堅硬
+的岩石漂浮在星界之中，組成了這一座相當巨大的城市。路到了這邊就中斷了，在你面前
+是一道巨大而且光滑的牆壁，光滑的程度連平靜的湖面也是自嘆弗如。你似乎可以聽到由
+牆壁對面傳過來的熱鬧聲音，但是卻不知道如何通過這道牆壁(wall)。
+~
+0 4|8192 1
+E
+wall~
+牆壁上十分的光滑，卻有一個小地方稍微凹陷了進去。你仔細的審視這個地方，發覺
+似乎是經過人手經年累月的敲擊，才讓這個地方稍微凹了進去。
+~
+D2
+~
+~
+0 0 26500
+>room_rand 20~
+if roomvalue($0) == 1
+	echo 悄悄地星光之城的魔法城門又再度出現了....
+	deldoor 0
+	modrvt v0 = 0
+endif
+~
+>room_command knock wall~
+if roomvalue($0) == 0
+	echoat $n 你在牆壁凹陷的地方用力的敲了敲....
+	echoaround $n $n 在牆壁凹陷的地方用力的敲了敲....
+	echo 敲擊的力道十分輕微，但是回聲卻十分的響亮....
+	callout 2 echo 過了一會兒，整座牆壁竟然在你面前消失了....！
+	callout 2 makedoor 0 這座牆壁現在已經完全消失了 wall 0 0 26502
+	callout 2 modrvt v0 = 1
+	break
+endif
+if roomvalue($0) == 1
+	echoat $n 這面牆壁已經消失了....
+endif
+~
+|
+S
+#26502
+星界之路~
+你漫步在星界之路上頭。這條路幾乎貫穿了整個星空之城。整條路在此依舊往北邊與南
+邊持續的延伸。在東邊你看到血腥酒店，而西邊則是葛達的商行。
+~
+0 4 1
+D0
+~
+~
+0 0 26505
+D1
+~
+~
+0 0 26504
+D2
+~
+~
+3 0 26501
+D3
+~
+~
+0 0 26503
+S
+#26503
+葛達的商行~
+當你進到裡頭，微弱的採光由建築物旁的窗簾透了進來。而門口掛著一面牌子，上頭宣
+稱這裡就是葛達的商行。往東你可以回到星界之路。
+~
+0 8 0
+D1
+~
+~
+0 0 26502
+S
+#26504
+血腥酒店~
+室內唯一的一道照明是由天窗上直接投射到整個酒店中間，彷彿就像黑夜中的北極星
+一般。往回看看你進來的門，一面招牌掛在門的上面，上面刻著「血腥酒店」四個大字。
+往西你可以回到星界之路上。
+~
+0 4|8|131072|262144 0
+D3
+~
+~
+0 0 26502
+>room_time 100~
+if rnplayer($) == 0
+	if roomtimer($0) == 0
+		if mobcount(26513) == 0
+			mload 26513
+		endif
+		if mobcount(26550) > 0
+			purge all.bizmark1-thoran
+		endif
+	else
+		if mobcount(26550) == 0
+			mload 26550
+		endif
+		if mobcount(26513) > 0
+			purge all.bizmark-thoran
+		endif
+	endif
+endif
+~
+|
+S
+#26505
+星界之路~
+你繼續漫步在星界之路上頭。整條星界之路往北邊與南邊持續延伸下去。往東，
+你可以看到星光之城堡主的家，但是已經頹圮損壞已久，你找不到入口可以進入，往
+西則可以看到藍的家。
+~
+0 0 1
+D0
+~
+~
+0 0 26508
+D2
+~
+~
+0 0 26502
+D3
+~
+~
+3 0 26506
+S
+#26506
+藍的家~
+當你進到此處，整個空間充斥著悲傷的哀嚎聲，讓你感到十分的哀傷與失望。房間裡頭
+並沒有任何照明，因此整個房間十分的黑暗，而黑暗中又充斥著憂傷。往東你可以回到星界
+之路上。
+~
+0 8 0
+D1
+~
+~
+3 0 26505
+S
+#26507
+堡主的家~
+這一棟建築物看起來像是懶洋洋的座落在這些生鏽的柵欄後邊。建築物大門口的鐵柵欄
+像是被扭曲而且極度的變形。正確的入口是在這棟建築物的旁邊，但是呼呼的風聲讓人感覺
+到這邊就像是鬼屋一般。往北你可以回到會客室。
+~
+0 8 0
+D0
+~
+~
+3 0 26509
+S
+#26508
+星界之路~
+你繼續漫步在星界之路上頭。整條星界之路往北邊與南邊持續延伸下去。往西，
+你可以看到一座教堂，往東則可以看到堡主宅第的會客室。
+~
+0 0 1
+D0
+~
+~
+0 0 26511
+D1
+~
+~
+3 0 26509
+D2
+~
+~
+0 0 26505
+D3
+~
+~
+0 0 26510
+S
+#26509
+會客室~
+這間房子大約有 50 英尺見方的面積，是堡主宅第的會客室。往西你可以回到星界
+之路，往南可以進入堡主宅第之內。
+~
+0 8 0
+D2
+~
+~
+3 0 26507
+D3
+~
+~
+3 0 26508
+S
+#26510
+教堂~
+這裡是星光之城的教堂。教堂的一側是教堂的鐘樓，由外側打進來的美麗燈光讓這棟
+建築看起來十分的美麗。往東你可以回到星界之路。
+~
+0 8 0
+D1
+~
+~
+0 0 26508
+S
+#26511
+星界之路~
+你繼續漫步在星界之路上頭。整條星界之路往北邊與南邊持續延伸下去。往東邊你看
+到星光之城的墓地。
+~
+0 0 1
+D0
+~
+~
+0 0 26513
+D1
+~
+~
+0 0 26512
+D2
+~
+~
+0 0 26508
+S
+#26512
+墓地~
+這裡就是星光之城的墓地。雖然星光之城的人口還算不少，但是奇怪的是墓地中的墳墓
+卻是出奇的少。往西你可以回到星界之路。
+~
+0 4 1
+D3
+~
+~
+0 0 26511
+>room_rand 20~
+if rmobcount(26513) > 0
+	break
+endif
+if hour($) < 5
+	if rand(30)
+		echo 這邊吹來陣陣的冷風，讓你覺得毛骨悚然....。
+		break
+	endif
+	if rand(33)
+		echo 你隱約聽到似乎有人叫著你的名字，你聽不太清楚....。
+	else
+		echo 遠方似乎飄出了一襲灰影，你揉了揉眼睛卻又不見了....。
+		if roomchar($) >= 1
+			mload 26524
+			force spectre mpkill $r
+		endif
+	endif
+endif
+~
+|
+S
+#26513
+星界之路~
+你繼續漫步在星界之路上頭。往北你看到了星界之路已經到了盡頭，而開始轉向為星光
+之路，往南星界之路持續的延伸下去。在你的東邊與西邊都是古老、近乎頹圮的房子。
+~
+0 0 1
+D0
+~
+~
+0 0 26516
+D1
+~
+~
+0 0 26515
+D2
+~
+~
+0 0 26511
+D3
+~
+~
+0 0 26514
+S
+#26514
+古老頹圮的房子~
+這棟房子急需修復，你進入後檢視了裡頭的結構，發現這棟房子還能夠佇立在這邊簡直
+是建築上的奇蹟。往東你可以回到星界之路上。
+~
+0 8 0
+D1
+~
+~
+0 0 26513
+>room_time 100~
+if roomvalue($1) < 720
+	modrvt v1 + 1
+else
+	modrvt v1 = 0
+	if robjcount(26546) > 0
+	else
+		oload 26546 99 floor
+	endif
+	if robjcount(26550) > 0
+		purge furniture2-thoran
+	endif
+	if robjcount(26551) > 0
+		purge chest1-thoran
+	endif
+	if robjcount(26552) > 0
+		purge chest2-thoran
+	endif
+endif
+if robjcount(26546) > 0
+or robjcount(26550) > 0
+else
+	oload 26546 99 floor
+endif
+~
+>room_command search around~
+if roomvalue($0) == 1
+	break
+endif
+modrvt v0 = 1
+echoat $n 你開始針對這間古老的房間進行搜索....
+echoaround $n $n 開始針對這間古老的房間進行搜索....
+if robjcount(26546) > 0
+	echoat $n 你開始對這些 雜亂的家具(furniture) 進行搜索....
+	echoaround $n $n 開始對這些 雜亂的家具(furniture) 進行搜索....
+	callout 1 echoat $n 你發現這些家具(furniture)裡頭似乎壓著什麼東西。
+	callout 1 modrvt v0 = 0
+endif
+if robjcount(26547) > 0
+	echoat $n 你開始對這些 惡臭的衣物(clothes) 進行搜索....
+	echoaround $n $n 開始對這些 惡臭的衣物(clothes) 進行搜索....
+	callout 1 echoat $n 你並沒有發覺什麼特別的東西。
+	callout 1 modrvt v0 = 0
+endif
+~
+>room_command search furniture~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26546) > 0
+	modrvt v0 = 1
+	echoat $n 你開始仔細搜索這些 雜亂的家具(furniture)....
+	echoaround $n $n 開始仔細搜索這些 雜亂的家具(furniture)....
+	callout 2 echoat $n 你發現在家具裡頭似乎有些東西，但是看的不是非常清楚....
+	callout 2 echoaround $n $I 發現在家具裡頭似乎有著一些東西。
+	callout 3 echoat $n 家具裡的那些東西如果不把這些家具敲破是看不到的。
+	callout 3 modrvt v0 = 0
+	break
+endif
+if robjcount(26550) > 0
+	if robjcount(26551) == 0
+		modrvt v0 = 1
+		echoat $n 你開始仔細搜索這些 破壞的家具(furniture)....
+		echoaround $n $n 開始仔細搜索這些 破壞的家具(furniture)....
+		callout 2 echoat $n 你發現這些家具的殘骸中有個大箱子(chest)....
+		callout 2 echoaround $n $n 發現這些家具的殘骸中有個大箱子(chest)....
+		callout 3 echoat $n 你將家具殘骸中的箱子(chest)給搬了出來....
+		callout 3 echoaround $n $n 將家具殘骸中的箱子(chest)給搬了出來....
+		callout 3 oload 26551 99 floor
+		callout 3 modrvt v0 = 0
+	endif
+endif
+~
+>room_command inlay stone~
+if roomvalue($0) == 1
+	break
+endif
+if is_inv_obj($n) == 26587
+	if robjcount(26551) > 0
+	or robjcount(26552) > 0
+		modrvt v0 = 1
+		echoat $n 你將 金黃色璞石(golden stone) 鑲嵌(inlay)到大箱子上....
+		echoaround $n $n 將 金黃色璞石(golden stone) 鑲嵌到大箱子上....
+		purge $n stone2-thoran
+		callout 2 echo 鑲上 金黃色璞石(golden stone) 的箱子，發出了耀眼的光芒....
+		callout 3 echo 你發現箱子的形體正在慢慢消失....
+		callout 4 echo 在一陣更加耀眼的黃色光芒後....
+		callout 4 purge chest1-thoran
+		callout 4 purge chest2-thoran
+		callout 5 echo 箱子不見了，只留下了一項物品在地上....
+		callout 5 rcall thoran_chest_reward $n
+		callout 5 modrvt v0 = 0
+	else
+		echoat $n 這裡並沒有可以讓你鑲嵌石頭的東西或地方....
+		modrvt v0 = 0
+	endif
+else
+	echoat $n 你身上並沒有這項物品....
+	modrvt v0 = 0
+endif
+~
+>room_defun thoran_chest_reward~
+if primeattr($n) == 1
+	oload 26605 viclv $n floor
+	break
+endif
+if primeattr($n) == 2
+	oload 26529 viclv $n floor
+	break
+endif
+if primeattr($n) == 3
+	oload 26531 viclv $n floor
+	break
+endif
+if primeattr($n) == 4
+	oload 26533 viclv $n floor
+	break
+endif
+if primeattr($n) == 5
+	oload 26609 viclv $n floor
+endif
+~
+>room_command scrape mineral~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26551) > 0
+	echoat $n 你小心地刮取凹槽上的那些礦石碎屑....
+	echoaround $n $n 小心地刮取凹槽上的那些礦石碎屑....
+	purge chest1-thoran
+	oload 26552 99 floor
+	oload 26553 viclv $n target
+endif
+~
+>room_command knock furniture~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26546) > 0
+	modrvt v0 = 1
+	echoat $n 你使用手上的武器，用力地敲向這些家具....
+	echoaround $n $n 使用手上的武器，用力地敲向這些家具....
+	if str($n) < 18
+		callout 1 echoat $n 你的力氣不足，似乎無法敲破這些家具....
+		callout 1 modrvt v0 = 0
+	else
+		callout 1 echo 劈哩砰啷！這些雜亂的家具被你給敲碎了。
+		callout 1 purge furniture1-thoran
+		callout 1 oload 26550 99 floor
+		callout 1 modrvt v0 = 0
+	endif
+endif
+~
+|
+S
+#26515
+古老頹圮的房子~
+這棟房子急需修復，你進入後檢視了裡頭的結構，發現這棟房子還能夠佇立在這邊簡直
+是建築上的奇蹟。往西你可以回到星界之路上。
+~
+0 8 0
+D3
+~
+~
+0 0 26513
+>room_command search around~
+echoat $n 你開始針對這間古老的房間進行搜索....
+echoaround $n $n 開始針對這間古老的房間進行搜索....
+if robjcount(26548) > 0
+	echoat $n 你開始對這些 雜亂的家具(furniture) 進行搜索....
+	echoaround $n $n 開始對這些 雜亂的家具(furniture) 進行搜索....
+	callout 1 echoat $n 你並沒有發覺什麼特別的東西。
+endif
+if robjcount(26549) > 0
+	echoat $n 你開始對這些 惡臭的衣物(clothes) 進行搜索....
+	echoaround $n $n 開始對這些 惡臭的衣物(clothes) 進行搜索....
+	callout 1 echoat $n 你並沒有發覺什麼特別的東西。
+endif
+~
+|
+S
+#26516
+星界之路與星光之路的交叉口~
+這邊是星界之路與星光之路的交叉路口。星界之路往南北兩個方向延伸而去，而星光之
+路則是沿著東西兩個方向延伸而去。
+~
+0 0 1
+D0
+~
+~
+0 0 26523
+D1
+~
+~
+0 0 26517
+D2
+~
+~
+0 0 26513
+D3
+~
+~
+0 0 26519
+S
+#26517
+星光之路~
+你正漫步在星光之路上頭。在星光之城中，星光之路是東西向的主要道路。往北你看到
+貨運站，而西邊則是一個交叉路口。
+~
+0 0 1
+D0
+~
+~
+3 0 26518
+D3
+~
+~
+0 0 26516
+S
+#26518
+貨運站~
+這裡是星光之城的貨運站，當然包括居民在內。所有居民都可以藉著這個貨運站，搭乘馬
+匹以到達想去的地方，往南你可以回到星光之路上。在貨運站的裡頭，有著一面巨大的告示牌
+(plaque)，同時貨運站中有一道奇異的光門(gate)，看起來似乎是一道傳送門。
+~
+0 4|8|32768 0
+D2
+~
+~
+3 0 26517
+E
+plaque~
+            星光貨運站價位表
+----------------------------------------
+     目的地                      價位
+----------------------------------------
+史卡拉貝聖殿(Skarabrae)          5000
+麥格城(City of Mega)             9000
+南極冰洋(South Pole)             9000
+羅胡城堡(Castle Reinhold)        9000
+曼托爾堡壘(Keep of Mahn-Tor)     15000
+魔法高塔(High Tower of Sorcery)  15000
+東方大沙漠(Eastern Desert)       30000
+----------------------------------------
+~
+E
+gate~
+這道門是星光之城前往史卡拉貝大陸的魔法傳送門，讓居民能夠不必經過
+危險的星界而到達舊大陸去。
+~
+>room_command enter star-gate~
+if rmobcount(26551) == 0
+or is_qmark($n) != thoran_james_quest
+	echoat $n 你無法進入這道光門之中....
+	echoaround $n $n 想要進入光門之中卻失敗了....
+	break
+endif
+if is_qmark($n) == thoran_james_quest 100001
+	del_qmark $n thoran_james_quest
+	echoat $n 你進入了這道光門之中....
+	echoaround $n $n 進入了這道光門之中....
+	echoat $n 你的眼前出現一道白光，但很快就消失了....
+	echoat $n 很快的你已經到達了 史卡拉貝城 的聖殿。
+	transfer $n 3001
+	break
+endif
+if is_qmark($n) == thoran_james_quest 100002
+	del_qmark $n thoran_james_quest
+	echoat $n 你進入了這道光門之中....
+	echoaround $n $n 進入了這道光門之中....
+	echoat $n 你的眼前出現一道白光，但很快就消失了....
+	echoat $n 很快的你已經到達了 麥格城 的大門前了。
+	transfer $n 8001
+	break
+endif
+if is_qmark($n) == thoran_james_quest 100004
+	del_qmark $n thoran_james_quest
+	echoat $n 你進入了這道光門之中....
+	echoaround $n $n 進入了這道光門之中....
+	echoat $n 你的眼前出現一道白光，但很快就消失了....
+	echoat $n 很快的你已經到達了 羅胡城堡 的光之神殿。
+	transfer $n 8239
+	break
+endif
+if is_qmark($n) == thoran_james_quest 100008
+	del_qmark $n thoran_james_quest
+	echoat $n 你進入了這道光門之中....
+	echoaround $n $n 進入了這道光門之中....
+	echoat $n 你的眼前出現一道白光，但很快就消失了....
+	echoat $n 很快的你已經到達了 南極冰洋 的邊緣。
+	transfer $n 1805
+endif
+if is_qmark($n) == thoran_james_quest 100016
+	del_qmark $n thoran_james_quest
+	echoat $n 你進入了這道光門之中....
+	echoaround $n $n 進入了這道光門之中....
+	echoat $n 你的眼前出現一道白光，但很快就消失了....
+	echoat $n 很快的你已經到達了 曼托爾堡壘 下的荒地了。
+	transfer $n 2360
+endif
+if is_qmark($n) == thoran_james_quest 100032
+	del_qmark $n thoran_james_quest
+	echoat $n 你進入了這道光門之中....
+	echoaround $n $n 進入了這道光門之中....
+	echoat $n 你的眼前出現一道白光，但很快就消失了....
+	echoat $n 很快的你已經到達了 魔法高塔 前的小空地。
+	transfer $n 1311
+endif
+if is_qmark($n) == thoran_james_quest 100064
+	del_qmark $n thoran_james_quest
+	echoat $n 你進入了這道光門之中....
+	echoaround $n $n 進入了這道光門之中....
+	echoat $n 你的眼前出現一道白光，但很快就消失了....
+	echoat $n 很快的你已經到達了 東方大沙漠 前的小空地。
+	transfer $n 5038
+endif
+~
+|
+S
+#26519
+星光之路~
+你持續的漫步在這條星光之城的東西向主要道路上。在北邊你看到吉普賽人的紮營處，往東
+你看到一個交叉路口，往西星光之路持續延伸著。
+~
+0 0 1
+D0
+~
+~
+0 0 26520
+D1
+~
+~
+0 0 26516
+D3
+~
+~
+0 0 26521
+S
+#26520
+吉普賽營地~
+在這裡你看到不少外表塗得五顏六色的馬車。往南你可以回到星光之路。
+~
+0 0 1
+D2
+~
+~
+0 0 26519
+S
+#26521
+星光之路~
+你繼續漫步在這座城市的東西向主要幹道上。在北邊你看到伊芙的帳棚，而在東邊你看到
+星光之路。
+~
+0 0 1
+D0
+~
+~
+0 0 26522
+D1
+~
+~
+0 0 26519
+S
+#26522
+伊芙的帳棚~
+這座帳棚裡頭閃耀著紅色的光芒。一張由黑色棉布鋪陳在上的矮小桌子放在入口之前。
+往南你可以回到星光之路上。
+~
+0 8 0
+D2
+~
+~
+0 0 26521
+S
+#26523
+星界之路上~
+你繼續漫步在星界之路上。整條路往南繼續的延伸，在北邊你可以看到市民廣場，在這邊
+往上你又看到一塊大岩石，雖然岩石比起支撐星光之城的岩盤小得多，但是你可以感受到上頭
+傳來的巨大魔力。
+~
+0 0 1
+D0
+~
+~
+0 0 26524
+D2
+~
+~
+0 0 26516
+>room_time 100~
+if hour($) == 11
+	if hasdoor(4)
+	else
+		echo 在這個空間的上方，忽然出現了美麗的雲彩....
+		force 8100 echo 在這個的空間的下方，忽然出現了奇特的圖案....
+		callout 1 echo 通往 涅盤大地 的通路，漸漸地開啟了....
+		callout 1 force 8100 echo 通往 星光之城 的通路，漸漸地開啟了....
+		callout 1 makedoor 4 通往涅盤大地的通路被打開了 sky 0 0 8100
+		callout 1 force 8100 makedoor 5 通往涅盤大地的通路被打開了 sky 0 0 26523
+	endif
+	break
+endif
+if hour($) == 13
+	if hasdoor(4)
+		echo 空間上方傳來陣陣的驚雷聲....
+		force 8100 echo 空間的下方，再度出現了奇特的圖案....
+		callout 1 echo 通往 涅盤大地 的通路，漸漸地關閉了....
+		callout 1 force 8100 echo 通往 星光之城 的通路，漸漸地關閉了....
+		callout 1 deldoor 4
+		callout 1 force 8100 deldoor 5
+	endif
+endif
+~
+|
+S
+#26524
+市民廣場~
+這座雄偉的市民廣場非常的美麗壯觀。紅色與藍色的花卉整齊的排列畫出了整座市民
+廣場的範圍，中央是一個由大理石雕刻而成的水池。往南你可以看到星光之路，而東邊的
+柵欄內是一座美麗的花園，但是你無法通過。北邊則是一座雄偉城堡，但是在你面前又是
+一面巨大的圍牆，光滑的牆壁上，有一個奇怪的缺口(breach)。
+~
+0 0 1
+D2
+~
+~
+0 0 26523
+E
+breach~
+你仔細看著這個缺口，似乎可以插入什麼東西，應該是卡片一類的物品。
+~
+>room_command insert card~
+if roomvalue($0) == 0
+	if is_inv_obj($n) == 26554
+		echoat $n 你將身上的 通行卡(passing card) 拿了出來，插進缺口中....
+		echoaround $n $n 將身上的 通行卡(passing card) 拿了出來，插進缺口中....
+		purge $n card-thoran
+		callout 2 echo 你聽到「隆！隆！」的聲音由牆壁內傳出....
+		callout 4 echo 你聽到「喀啦！喀啦！」的聲音由牆壁內傳出....
+		callout 6 echo 前頭的牆壁忽然出現了一扇已經開啟的魔法門....
+		callout 6 makedoor 0 這座牆壁現在已經完全消失了 wall 0 0 26526
+		callout 6 modrvt v0 = 1
+	else
+		echoat $n 你身上並沒有 通行卡(passing card)。
+	endif
+	break
+endif
+if roomvalue($0) == 1
+	if is_inv_obj($n) == 26554
+		echoat $n 你將身上的 通行卡(passing card) 拿了出來，插進缺口中....
+		echoaround $n $n 將身上的 通行卡(passing card) 拿了出來，插進缺口中....
+		callout 1 echoat $n 但是缺口內已經放有一張卡了，你要抽出來(drawout)嗎？
+		callout 1 echoaround $n 但是缺口內已經放有一張卡了。
+	else
+		echoat $n 你身上並沒有 通行卡(passing card)。
+	endif
+endif
+~
+>room_command drawout card~
+if roomvalue($0) == 0
+	echoat $n 缺口中並沒有任何的東西....
+	break
+endif
+if roomvalue($0) == 1
+	echoat $n 你將缺口中的 通行卡(passing card) 抽了出來....
+	echoaround $n $n 將缺口中的 通行卡(passing card) 抽了出來....
+	oload 26554 viclv $n target
+	modrvt v0 = 0
+	callout 1 echo 突然一陣震動，原本在你面前的魔法門消失了....
+	callout 1 deldoor 0
+endif
+~
+|
+S
+#26525
+花園~
+這座花園的規劃就沒有剛剛市民廣場那麼來得氣象萬千。裡頭大部分的花朵都已經枯
+黃凋謝了，在北邊是一間會客室的廳堂。
+~
+0 0 1
+D0
+~
+~
+0 0 26527
+S
+#26526
+城堡的入口~
+這座裝飾華麗的巨大城門通常是處於開放的狀態。燃燒炙烈的火把發出昏黃的光芒照
+亮了整個通往城堡內部的道路。在東邊是一間會客室，西邊是通道口，往南可以回到市民
+廣場去。
+~
+0 4|8 0
+D1
+~
+~
+0 0 26527
+D2
+~
+~
+3 0 26524
+D3
+~
+~
+0 0 26529
+S
+#26527
+會客室~
+這裡是一間放著兩座床鋪、小巧整齊的房間，房間的另外一個角落放著一面桌子與兩張
+椅子，在另外一個角落則放著發出溫暖熱氣的火爐。在北邊是餐廳，南邊則是城堡前的花園
+。往西你可以回到城堡的入口。
+~
+0 8 0
+D0
+~
+~
+0 0 26528
+D2
+~
+~
+0 0 26525
+D3
+~
+~
+0 0 26526
+S
+#26528
+餐廳~
+這間房間十分的寬敞，整個房間的面積大約有40英尺見方，中央擺了一張大約10英尺
+長的餐桌。你從來沒有看過那麼大的一張桌子。往南則是通往會客室。
+~
+0 8 0
+D2
+~
+~
+0 0 26527
+S
+#26529
+通道口~
+這裡只是一個供人駐留的空間而不能夠稱為是一個完整的房間，那麼稱呼它為房間的元
+素只因為它是在「城牆的裡頭」。往東可以回到城堡的入口處，往西則是一間禮拜堂。
+~
+0 8 0
+D1
+~
+~
+0 0 26526
+D3
+~
+~
+0 0 26530
+S
+#26530
+禮拜堂~
+七彩的光線由破碎的鑲彩玻璃間射出，照亮的整個禮拜堂。裡頭的長椅與板凳上頭沾
+滿了滿滿的灰塵。在北邊是講堂，往東則通往通道口，有一座樓梯通往禮拜堂頂的高塔。
+~
+0 8 0
+D0
+~
+~
+0 0 26535
+D1
+~
+~
+0 0 26529
+D4
+~
+~
+0 0 26531
+S
+#26531
+通往高塔的樓梯~
+一座巨大、堅石製成的螺旋樓梯連接了禮拜堂高約20英尺的二樓樓版。蜘蛛網幾乎佈滿了
+整個樓梯間讓你穿越期間時幾乎伸手不見五指。你可以看到整個禮拜堂屋頂的深樑以巨大的跨
+度承受了整個屋頂的重量。往北你可以看到巨大的樓梯平台，往下可以俯瞰整個禮拜堂。
+~
+0 8 0
+D0
+~
+~
+0 0 26532
+D5
+~
+~
+0 0 26530
+S
+#26532
+巨大樓梯的平台~
+巨大的樓梯擁有巨大的平台，這個梯間平台大約有16英尺見方的面積。往北則是禮拜堂
+修士們的休息室，往南可以回到樓梯，往西則是整座塔的大廳。
+~
+0 8 0
+D0
+~
+~
+0 0 26534
+D2
+~
+~
+0 0 26531
+D3
+~
+~
+0 0 26533
+S
+#26533
+大廳~
+由馬賽克磁磚拼組成的地板往遠方延伸進入一片黑暗之中。你感受到整座塔有一股晦暗
+、陰森的氣氛往你直襲而來。往東可以回到樓梯的平台上。
+~
+0 8 0
+D1
+~
+~
+0 0 26532
+S
+#26534
+修士休息室~
+整間大約20英尺寬40英尺長的房間中丟滿了破損的家具與被撕破的衣服。房間裡微弱的
+照明來自於北面與東面牆上殘破不堪的鑲彩玻璃。往南你可以回到梯間的平台。
+~
+0 8 0
+D2
+~
+~
+0 0 26532
+S
+#26535
+講堂~
+講堂中昏暗的光線來自於西面牆壁上破損的鑲彩玻璃與佈滿鐵條的鐵窗上。整座房間幾乎
+佈滿了蜘蛛網。往北你看到整座城堡的信仰中心，往東你看到城堡的儲藏室，往南可以回到禮
+拜堂去。
+~
+0 8 0
+D0
+~
+~
+0 0 26536
+D1
+~
+~
+3 0 26537
+D2
+~
+~
+0 0 26530
+S
+#26536
+星光之城的信仰中心~
+這個房間可以俯瞰整個禮拜堂。一張裝飾華麗、巨大的王座座落在整個禮拜堂的中央，但
+是上頭卻是佈滿了灰塵與蜘蛛絲。往南你可以回到講堂。
+~
+0 8 0
+D2
+~
+~
+0 0 26535
+>room_time 100~
+if roomvalue($1) < 720
+	modrvt v1 + 1
+else
+	modrvt v1 = 0
+	if robjcount(26562) > 0
+	else
+		oload 26562 99 floor
+	endif
+	if robjcount(26563) > 0
+		purge throne2-thoran
+	endif
+	if robjcount(26564) > 0
+		purge throne3-thoran
+	endif
+endif
+if robjcount(26562) > 0
+or robjcount(26563) > 0
+or robjcount(26564) > 0
+else
+	oload 26562 99 floor
+endif
+~
+>room_command clean throne~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26562) > 0
+	modrvt v0 = 1
+	echoat $n 你開始清潔 巨大的王座(large throne) ....
+	echoaround $n $n 開始清潔 巨大的王座(large throne) ....
+	callout 2 echoat $n 上頭的蜘蛛絲都已經被你清潔乾淨了。
+	callout 2 echoaround $n $n 已經將 巨大的王座(large throne) 清潔乾淨。
+	callout 2 purge throne1-thoran
+	callout 2 oload 26563 99 floor
+	callout 2 modrvt v0 = 0
+endif
+~
+>room_command dig gem~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26563) > 0
+	modrvt v0 = 1
+	echoat $n 你開始嘗試挖出王座上那已經鬆動的寶石(gem)....
+	echoaround $n $n 開始嘗試挖出王座上那已經鬆動的寶石(gem)....
+	callout 2 echoat $n 你挖出了一顆 紅寶石(ruby)。
+	callout 2 echoaround $n $n 挖出了一顆 紅寶石(ruby)。
+	callout 2 purge throne2-thoran
+	callout 2 oload 26564 99 floor
+	callout 2 oload 26565 viclv $n target
+	callout 2 modrvt v0 = 0
+endif
+~
+>room_command search throne~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26562) > 0
+	modrvt v0 = 1
+	echoat $n 你開始針對 巨大的王座(large throne) 進行搜索....
+	echoaround $n $n 開始針對 巨大的王座(large throne) 進行搜索....
+	callout 2 echoat $n 由於蜘蛛絲過於濃密，你實在無法仔細地對 巨大的王座(large throne) 進行徹底搜索....
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26563) > 0
+	modrvt v0 = 1
+	echoat $n 你開始針對 巨大的王座(large throne) 進行搜索....
+	echoaround $n $n 開始針對 巨大的王座(large throne) 進行搜索....
+	callout 2 echoat $n 你發現 巨大的王座(large throne) 上頭鑲嵌的 寶石(gem) 其中一顆似乎已經鬆動了....
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26564) > 0
+	modrvt v0 = 1
+	echoat $n 你開始針對 巨大的王座(large throne) 進行搜索....
+	echoaround $n $n 開始針對 巨大的王座(large throne) 進行搜索....
+	callout 2 echoat $n 你發現 巨大的王座(large throne) 上頭鑲嵌的 寶石(gem) 其中一顆已經被挖走了。
+	callout 2 modrvt v0 = 0
+endif
+~
+|
+S
+#26537
+城堡儲藏室~
+佈滿灰塵的捲軸與記事本堆滿了整間城堡的儲藏室。在這間房間的中央有一張巨大的桌子。
+雖然是儲藏室，但是堆在裡頭的東西卻都沒有什麼價值。往東你看到侍女的休息室，往西可以回
+到講堂去。
+~
+0 8 0
+D1
+~
+~
+3 0 26538
+D3
+~
+~
+3 0 26535
+S
+#26538
+侍女休息室~
+房間中擺放著四張有著一模一樣紋飾的床鋪，每張床鋪上都刻有主人的名字，在北邊是一
+間書房，東邊則是金庫，西邊可以回到儲藏室中。
+~
+0 8 0
+D0
+~
+~
+3 0 26539
+D1
+~
+~
+1|2|4|32|64 -1 26540
+D3
+~
+~
+3 0 26537
+>room_time 100~
+if roomvalue($1) < 720
+	modrvt v1 + 1
+else
+	if robjcount(26570) > 0
+		purge bed5-thoran
+	endif
+	if robjcount(26571) > 0
+		purge bed6-thoran
+	endif
+	if robjcount(26572) > 0
+		purge bed7-thoran
+	endif
+	if robjcount(26573) > 0
+		purge bed8-thoran
+	endif
+endif
+if robjcount(26566) > 0
+or robjcount(26570) > 0
+else
+	oload 26566 99 floor
+endif
+if robjcount(26567) > 0
+or robjcount(26571) > 0
+else
+	oload 26567 99 floor
+endif
+if robjcount(26568) > 0
+or robjcount(26572) > 0
+else
+	oload 26568 99 floor
+endif
+if robjcount(26569) > 0
+or robjcount(26573) > 0
+else
+	oload 26569 99 floor
+endif
+~
+>room_command search bed~
+if robjcount(26566) > 0
+or robjcount(26567) > 0
+or robjcount(26568) > 0
+or robjcount(26569) > 0
+	echoat $n 你要搜索誰的床？
+endif
+~
+>room_command search jill's bed~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26566) > 0
+	modrvt v0 = 1
+	echoat $n 你開始搜索 珠兒的床鋪(Jill's bed) ....
+	echoaround $n $n 開始搜索 珠兒的床鋪(Jill's bed) ....
+	callout 2 echoat $n 你發現了一個 胸罩(bra)....
+	callout 2 echoaround $n $n 在 珠兒的床鋪(Jill's bed) 發現一個 胸罩(bra) ....
+	callout 2 purge bed1-thoran
+	callout 2 oload 26570 99 floor
+	callout 2 oload 26574 30 floor
+	callout 2 modrvt v0 = 0
+else
+	echoat $n 這裡沒有 珠兒的床鋪(Jill's bed)....
+endif
+~
+>room_command search cindy's bed~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26567) > 0
+	modrvt v0 = 1
+	echoat $n 你開始搜索 莘蒂的床鋪(Cindy's bed) ....
+	echoaround $n $n 開始搜索 莘蒂的床鋪(Cindy's bed) ....
+	callout 2 echoat $n 你發現了一隻 髮夾(hair pin) ....
+	callout 2 echoaround $n $n 在 莘蒂的床鋪(Cindy's bed) 發現一個 髮夾(hair pin) ....
+	callout 2 purge bed2-thoran
+	callout 2 oload 26571 99 floor
+	callout 2 oload 26575 30 floor
+	callout 2 modrvt v0 = 0
+else
+	echoat $n 這裡沒有 莘蒂的床鋪(Cindy's bed)....
+endif
+~
+>room_command search winnie's bed~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26568) > 0
+	modrvt v0 = 1
+	echoat $n 你開始搜索 溫妮的床鋪(Winnie's bed) ....
+	echoaround $n $n 開始搜索 溫妮的床鋪(Winnie's bed) ....
+	callout 2 echoat $n 你發現了一封 私信(private letter) ....
+	callout 2 echoaround $n $n 在 溫妮的床鋪(Winnie's bed) 發現一封 私信(private letter) ....
+	callout 2 purge bed3-thoran
+	callout 2 oload 26572 99 floor
+	callout 2 oload 26576 30 floor
+	callout 2 modrvt v0 = 0
+else
+	echoat $n 這裡沒有 溫妮的床鋪(Winnie's bed)....
+endif
+~
+>room_command search kert's bed~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26569) > 0
+	modrvt v0 = 1
+	echoat $n 你開始搜索 可兒的床鋪(Kert's bed) ....
+	echoaround $n $n 開始搜索 可兒的床鋪(Kert's bed) ....
+	callout 2 echoat $n 你發現了一把 匕首(dagger) ....
+	callout 2 echoaround $n $n 在 可兒的床鋪(Kert's bed) 發現一把 匕首(dagger) ....
+	callout 2 purge bed4-thoran
+	callout 2 oload 26573 99 floor
+	callout 2 oload 26600 30 floor
+	callout 2 modrvt v0 = 0
+else
+	echoat $n 這裡沒有 可兒的床鋪(Kert's bed)....
+endif
+~
+|
+S
+#26539
+書房~
+整座房間的三面牆壁放滿了各式各樣的遠古書籍，剩下的一面牆面則是一座火爐。往北你
+看到一間臥室，往南可以回到侍女的休息室。
+~
+0 8 0
+D0
+~
+~
+3 0 26541
+D2
+~
+~
+3 0 26538
+S
+#26540
+金庫~
+這一間金庫裡頭幾乎是空空如也，看起來似乎有很長一段時間沒被使用過了。往西可以回到
+侍女的休息室。
+~
+0 8 0
+D3
+~
+~
+1|2|4|32|64 -1 26538
+>room_command search around~
+if roomvalue($0) == 0
+	echoat $n 你在這間金庫之中四處查看....
+	echoaround $n $n 在這間金庫之中四處查看著....
+	callout 2 echoat $n 你赫然發現了地板下有一些金幣....
+	callout 2 echoaround $n $n 赫然發現地板下有一些金幣....
+	callout 2 oload 26543 30 floor
+	callout 2 modrvt v0 = 1
+	callout 2 modrvt timer = 120
+else
+	echoat $n 你在這間金庫之中四處查看....
+	echoaround $n $n 在這間金庫之中四處查看著....
+	callout 2 echoat $n 這間房間並沒有什麼特別的....
+	callout 2 echoat $n $n 四處查看後並沒有發現什麼特別的東西....
+endif
+~
+|
+S
+#26541
+臥室~
+房間中西面牆上的窗口，有一襲亮紅色的高級布料由天花板垂放下來蓋住了窗子。在房間
+的中央是一間巨大的床鋪，上頭有絲絨製成的棉被與枕頭。房間的北面有一個大櫃子，裡頭放
+滿了各式各樣的礦物，房間的主人或許對這方面相當有研究。往東通往一間休息室，往南則通
+往書房。
+~
+0 8 0
+D1
+~
+~
+3 0 26542
+D2
+~
+~
+3 0 26539
+S
+#26542
+休息室~
+天花板由一根巨大的深樑支撐著，空間感覺上十分的壓迫。房間中擺放著一堆雜亂的椅子與板凳。
+往北通往一間會客室，往西可以回到臥室之中。
+~
+0 8 0
+D0
+~
+~
+3 0 26543
+D3
+~
+~
+3 0 26541
+S
+#26543
+會客室~
+一張巨大的床被擺放在整個房間的中央，四個角落各有一根支架往上撐起了床鋪的遮罩。
+幾張看起來十分舒適的沙發椅散佈在房間的四周。往北通往一座大廳，往南你看到一間休息室
+，同時往上你看到一間小房間。
+~
+0 8 0
+D0
+~
+~
+0 0 26545
+D2
+~
+~
+3 0 26542
+D4
+~
+~
+3 0 26544
+S
+#26544
+巨大機械室~
+在這間昏暗的房間中，你只能夠隱約的看到有一具閃耀著綠色光芒、同時不斷冒泡的機具在房間
+的中央。這具機器不斷的發出閃電互擊的聲響，不斷的震撼著你的心靈。往下可以回到會客室。
+~
+0 8 0
+D5
+~
+~
+3 0 26543
+>room_time 100~
+if roomvalue($1) < 720
+	modrvt v1 + 1
+else
+	modrvt v1 = 0
+	if robjcount(26579) > 0
+	else
+		oload 26579 99 floor
+	endif
+	if robjcount(26582) > 0
+		purge machine2-thoran
+	endif
+	if robjcount(26583) > 0
+		purge machine3-thoran
+	endif
+	if robjcount(26584) > 0
+		purge machine4-thoran
+	endif
+	if robjcount(26585) > 0
+		purge machine5-thoran
+	endif
+	if robjcount(26586) > 0
+		purge machine6-thoran
+	endif
+endif
+if robjcount(26579) > 0
+or robjcount(26582) > 0
+or robjcount(26583) > 0
+or robjcount(26584) > 0
+or robjcount(26585) > 0
+or robjcount(26586) > 0
+else
+	oload 26579 99 floor
+endif
+~
+>room_rand 30~
+if robjcount(26579) > 0
+	echo 你被機器旁的強大電流傷害了....
+	modhmv pc 03.15 45 0
+endif
+~
+>room_command drawout stone~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26579) > 0
+	echoat $n 你被機器旁的強大電流傷害了....
+	echoaround $n $n 被機器旁的強大電流傷害了....
+	modhmv $n 03.15 45 0
+	break
+endif
+if robjcount(26582) > 0
+or robjcount(26583) > 0
+	echo 機器上的插槽中並沒有任何的東西....
+	break
+endif
+if robjcount(26584) > 0
+or robjcount(26585) > 0
+	echoat $n 你將機器上的 璞石(stone) 由凹槽拔了出來....
+	echoaround $n $n 將機器上的 璞石(stone) 由凹槽拔了出來....
+	oload 26555 viclv $n target
+	if robjcount(26584) > 0
+		purge machine4-thoran
+		oload 26582 99 floor
+	endif
+	if robjcount(26585) > 0
+		purge machine5-thoran
+		oload 26583 99 floor
+	endif
+	break
+endif
+if robjcount(26586) > 0
+	echoat $n 你將機器上的 金黃色璞石(stone) 由凹槽拔了出來....
+	echoaround $n $n 將機器上的 金黃色璞石(stone) 由凹槽拔了出來....
+	oload 26587 viclv $n target
+	purge machine6-thoran
+	oload 26582 99 floor
+endif
+~
+>room_command insert stone~
+if roomvalue($0) == 1
+	break
+endif
+if is_inv_obj($n) != 26555
+	echoat $n 你身上並沒有這項東西....
+	break
+endif
+if robjcount(26579) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將身上的 璞石(stone) 插入機器的插槽中....
+	echoaround $n $n 嘗試將身上的 璞石(stone) 插入機器的插槽中....
+	callout 2 echoat $n 你無法順利將東西插入，反而被機械發出的強大電流傷害了....
+	callout 2 echoaround $n $n 無法順利將東西插入，反而被機械發出的強大電流傷害了....
+	callout 2 modhmv $n 03.15 45 0
+	callout 2 modrvt v0 = .
+	break
+endif
+if robjcount(26582) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將身上的 璞石(stone) 插入機器的插槽中....
+	echoaround $n $n 嘗試將身上的 璞石(stone) 插入機器的插槽中....
+	purge $n stone-thoran
+	callout 2 echoat $n 你將 璞石(stone) 插入機器上的插槽(fillister)了....
+	callout 2 echoaround $n $n 將 璞石(stone) 插入機器上的插槽(fillister)了....
+	callout 2 purge machine2-thoran
+	callout 2 oload 26584 99 floor
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26583) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將身上的 璞石(stone) 插入機器的插槽中....
+	echoaround $n $n 嘗試將身上的 璞石(stone) 插入機器的插槽中....
+	purge $n stone-thoran
+	callout 2 echoat $n 你將 璞石(stone) 插入機器上的插槽(fillister)了....
+	callout 2 echoaround $n $n 將 璞石(stone) 插入機器上的插槽(fillister)了....
+	callout 2 purge machine3-thoran
+	callout 2 oload 26585 99 floor
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26584) > 0
+or robjcount(26585) > 0
+or robjcount(26586) > 0
+	echoat $n 這台機器的插槽中已經有 璞石(stone) 了....
+	echoaround $n $n 嘗試將 璞石(stone) 放入插槽，但是插槽中已經有了其他東西....
+	break
+endif
+~
+>room_command putin alum~
+if roomvalue($0) == 1
+	break
+endif
+if is_inv_obj($n) != 26580
+	echoat $n 你身上並沒有這項東西....
+	break
+endif
+if robjcount(26579) > 0
+	modrvt v0 = 1
+	echoat $n 你將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	echoaround $n $n 將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	purge $n alum-thoran
+	echoat $n 你被機械發出的強大電流傷害了....
+	echoaround $n $n 被機械發出的強大電流傷害了....
+	modhmv $n 03.15 45 0
+	callout 2 echo 機器的透明容器內，開始產生許多氣泡....
+	callout 3 echo 整座機器開始劇烈震動，產生的氣泡越來越多....
+	callout 4 echo 透明容器內的氣泡漸漸變少，機器的震動開始趨於和緩....
+	callout 5 echo 透明容器內的氣泡消失了，機器旁的閃電也完全消失....
+	callout 5 purge machine1-thoran
+	callout 5 oload 26582 99 floor
+	callout 5 modrvt v0 = 0
+	break
+endif
+if robjcount(26582) > 0
+or robjcount(26584) > 0
+or robjcount(26586) > 0
+	modrvt v0 = 1
+	echoat $n 你將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	echoaround $n $n 將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	purge $n alum-thoran
+	callout 2 echo 但是沒有發生什麼特別的事情....
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26583) > 0
+	modrvt v0 = 1
+	echoat $n 你將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	echoaround $n $n 將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	purge $n alum-thoran
+	callout 2 echo 原本開始運轉的機器，漸漸地又平靜了下來....
+	callout 2 purge machine3-thoran
+	callout 2 oload 26582 99 floor
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26585) > 0
+	modrvt v0 = 1
+	echoat $n 你將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	echoaround $n $n 將身上的 明礬結晶(crystal of alum) 放入了透明容器中....
+	purge $n alum-thoran
+	callout 2 echo 原本開始運轉的機器，漸漸地又平靜了下來....
+	callout 2 purge machine5-thoran
+	callout 2 oload 26584 99 floor
+	callout 2 modrvt v0 = 0
+	break
+endif
+~
+>room_command putin ruby~
+if roomvalue($0) == 1
+	break
+endif
+if is_inv_obj($n) != 26581
+	echoat $n 你身上並沒有這項東西....
+	break
+endif
+if robjcount(26579) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	echoaround $n $n 嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	callout 2 echoat $n 你無法順利將東西放入，反而被機械發出的強大電流傷害了....
+	callout 2 echoaround $n $n 無法順利將東西放入，反而被機械發出的強大電流傷害了....
+	callout 2 modhmv $n 03.15 45 0
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26582) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	echoaround $n $n 嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	purge $n ruby-thoran
+	callout 2 echo 整台機器似乎有了生命一般，開始運轉了起來....
+	callout 2 purge machine2-thoran
+	callout 2 oload 26583 99 floor
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26583) > 0
+or robjcount(26585) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	echoaround $n $n 嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	callout 2 echo 透明容器中已經有一顆 能量紅寶石(nergy ruby) 了....
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26584) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	echoaround $n $n 嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	purge $n ruby-thoran
+	callout 2 echo 整台機器似乎有了生命一般，開始運轉了起來....
+	callout 2 purge machine4-thoran
+	callout 2 oload 26585 99 floor
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26586) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	echoaround $n $n 嘗試將 能量紅寶石(energy ruby) 放入透明容器中....
+	purge $n ruby-thoran
+	callout 2 echo 整台機器似乎有了生命一般，開始運轉了起來....
+	callout 3 echo 機器上的 金黃色璞石(stone) 發出更加耀眼的光芒....
+	callout 4 echo 忽然一陣巨響，整台機器爆炸了....
+	callout 4 purge machine6-thoran
+	callout 4 modhmv pc 03.65 85 0
+	callout 4 modrvt v0 = 0
+endif
+~
+>room_command push button~
+if roomvalue($0) == 1
+	break
+endif
+if robjcount(26579) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試按下機械上的 紅色按鈕(button) ....
+	echoaround $n $n 嘗試按下機械上的 紅色按鈕(button) ....
+	callout 2 echoat $n 你被機械發出的強大電流傷害了....
+	callout 2 echoaround $n $n 被機械發出的強大電流傷害了....
+	callout 2 modhmv $n 03.15 45 0
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26582) > 0
+or robjcount(26584) > 0
+or robjcount(26586) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試按下機械上的 紅色按鈕(button) ....
+	echoaround $n $n 嘗試按下機械上的 紅色按鈕(button) ....
+	callout 2 echo 但是這具機械像是失去動力般沒有任何反應....
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26583) > 0
+	modrvt v0 = 1
+	echoat $n 你嘗試按下機械上的 紅色按鈕(button) ....
+	echoaround $n $n 嘗試按下機械上的 紅色按鈕(button) ....
+	callout 2 echo 這台機械雖然有了動力，但是按下 按鈕(button) 後卻仍然沒有反應....
+	callout 2 modrvt v0 = 0
+	break
+endif
+if robjcount(26585) > 0
+	modrvt v0 = 1
+	echoat $n 你按下了機器上的 紅色按鈕(button) ....
+	echoaround $n $n 按下了機器上的 紅色按鈕(button) ....
+	callout 2 echo 透明容器中的 能量紅寶石(energy ruby) 開始急遽的縮小....
+	callout 4 echo 插槽上的 璞石(stone) 開始發出耀眼的光芒....
+	callout 5 echo 插槽上的 璞石(stone) 由淡綠色變為金黃色了....
+	callout 5 purge machine5-thoran
+	callout 5 oload 26586 99 floor
+	callout 5 modrvt v0 = 0
+endif
+~
+|
+S
+#26545
+大廳~
+這座大廳引導著你走向修士休息室的方向。整座大廳往北持續延伸，往東你可以看到修士的
+息室，往西你看到一間酒窖，往南可以回到會客室。
+~
+0 8 0
+D0
+~
+~
+0 0 26548
+D1
+~
+~
+3 0 26546
+D2
+~
+~
+0 0 26543
+D3
+~
+~
+0 0 26547
+S
+#26546
+修士的休息室~
+這間房間處於一股異乎尋常的寧靜之中。天花板由一根巨大的深樑支撐著，空間感覺上十
+分的壓迫。一股濃煙由地板中的空隙不斷的冒出，灰白的煙霧幾乎籠罩了你的視線。往西可以
+通往大廳。
+~
+0 8 0
+D3
+~
+~
+3 0 26545
+S
+#26547
+酒窖~
+石材尖拱結構構成了這座酒窖的天花板，許多巨大的酒桶圍塑構成了這個置放酒桶的空
+間，但是這些酒桶周邊用以固定的鐵環已經生鏽，因此許多珍貴的酒料都因此而流失殆盡。
+往東可以回到大廳之上。
+~
+0 8 0
+D1
+~
+~
+0 0 26545
+S
+#26548
+大廳~
+這座大廳引導你走向修士經常使用的房間。整座大廳延伸到這邊已經到了盡頭，往東通往
+一間廚房，往西則可以看到侍衛長的房間。不過北邊的牆壁(wall)後頭，不斷的傳來奇怪的哀
+嚎聲。
+~
+0 8 0
+D1
+~
+~
+0 0 26549
+D2
+~
+~
+0 0 26545
+D3
+~
+~
+3 0 26550
+E
+wall~
+你注意看著這道牆，發覺這道牆上頭隱約有一道凹痕，但是卻不知代表了什麼意義。
+~
+>room_command search wall~
+echoat $n 你開始搜索這道牆壁....
+echoaround $n $n 開始搜索這道牆壁....
+callout 2 echoat $n 你覺得這道牆壁應該是道傳送門，但是卻找不到任何按鈕或暗門....
+callout 2 echoaround $n $n 並沒有發覺什麼特別的....
+~
+>room_rand 50~
+if robjcount(26589) > 0
+	if roomvalue($0) == 0
+		echo 忽然一陣奇異的感覺在你心頭湧起，
+		echo 這邊的景物似乎跟原來的不太一樣了。
+		purge portrait2-thoran
+	endif
+endif
+~
+>room_command enter portrait~
+if robjcount(26589) > 0
+	echoat $n 你進入了 傳送門(portrait) 之中....
+	echoaround $n $n 進入了 傳送門(portrait) 之中....
+	echoat $n 你忽然被傳送到一個奇特的地方....
+	transfer $n 26551
+endif
+~
+>room_command active portrait~
+if robjcount(26588) > 0
+	if roomvalue($0) == 0
+		echoat $n 你啟動了傳送門的傳送程序....
+		echoaround $n $n 啟動了傳送門的啟動程序....
+		purge portrait1-thoran
+		oload 26589 99 floor
+		modrvt timer = 10
+		modrvt v0 = 1
+		callout 1 echo 傳送門(portrait) 發出閃耀的光芒....
+	else
+		echoat $n 你啟動了傳送門的傳送程序....
+		echoaround $n $n 啟動了傳送門的啟動程序....
+		callout 1 echo 但是什麼事情都沒有發生....
+	endif
+endif
+~
+>room_enter 14 100~
+if vnum($n) == 26531
+	if ischarmed($n)
+		force portrait-thoran mpdis_magic self 'charm person'
+	endif
+endif
+~
+|
+S
+#26549
+廚房~
+這裡就是烹調所有城堡的侍衛、修士等人膳食的地方。當然，這裡的家具與主廳及臥室那些雕工
+精細，幾可蔚為藝術品的家具是天差地遠的。往西你可以回到大廳之中。
+~
+0 8 0
+D3
+~
+~
+0 0 26548
+S
+#26550
+侍衛長的房間~
+這裡就是侍衛長在閒暇時間休息睡覺的地方。這裡幾乎沒有什麼裝飾品，只有一張小小的床鋪，
+一張桌子與一張椅子而已。往東你可以回到大廳之上。
+~
+0 8 0
+D1
+~
+~
+3 0 26548
+S
+#26551
+大廳~
+這座大廳引導你走向修士經常使用的房間。往東你看到守衛的休息室，往西則通往一間房間。
+往下，則通往一個漆黑的地下城。
+~
+0 4|8 0
+D1
+~
+~
+3 0 26552
+D3
+~
+~
+3 0 26553
+D5
+~
+~
+0 0 26554
+>room_command enter portrait~
+if robjcount(26589) > 0
+	echoat $n 你進入了 傳送門(portrait) 之中....
+	echoaround $n $n 進入了 傳送門(portrait) 之中....
+	echoat $n 你忽然被傳送到一個奇特的地方....
+	transfer $n 26548
+endif
+~
+|
+S
+#26552
+守衛休息室~
+當星光之城的守衛沒有輪值的時候，就是在這間房間中休息。往西你可以回到大廳之上。
+~
+0 8 0
+D3
+~
+~
+3 0 26551
+S
+#26553
+陰暗之間~
+這一個陰暗的房間，是由完美的六角型排列組合而成。房間的上頭吊著一個吊床。
+這張吊床的上頭載著非常重的東西，因此懸掛吊床的繩索被拉的筆直。一張巨大的椅子
+擺放在這間房間之中。房間內地板下有條水溝流過，而上頭有個閣樓，不過上去閣樓的
+樓梯已經毀壞，而且支撐閣樓的結構似乎搖搖欲墜。往東你可以回到大廳之上。
+~
+0 8 0
+D1
+~
+~
+3 0 26551
+>room_time 100~
+if roomvalue($1) < 720
+	modrvt v1 + 1
+else
+	modrvt v1 = 0
+	if robjcount(26590) > 0
+	else
+		oload 26590 99 floor
+	endif
+	if objcount(26591) > 0
+	else
+		force 26587 oload 26591 99 floor
+	endif
+	if objcount(26592) > 0
+		force 26587 purge hammock3-thoran
+	endif
+endif
+~
+>room_command climb chair~
+if isfight($n)
+	echoat $n 你正在戰鬥中！
+	break
+endif
+if robjcount(26557) > 0
+	echoat $n 你爬到椅子的上頭，想要進入了閣樓中....
+	echoaround $n $n 爬到了椅子的上頭，想要進入閣樓中....
+	if roomvalue($0) == 0
+		if pcnum($26587) < 2
+			callout 1 transfer $n 26587
+			callout 1 echoat $n 你進入了閣樓之中....
+			callout 1 echoaround $n $n 進入了閣樓之中....
+		else
+			callout 1 echoat $n 閣樓上擠了太多人，你上不去....
+			callout 1 echoaround $n 閣樓上擠了太多人， $n 上不去....
+		endif
+	else
+		callout 1 echoat $n 但是閣樓已經毀壞，你無法爬上去....
+		callout 1 echoaround $n 但是閣樓已經毀壞， $n 無法爬上去....
+	endif
+else
+	callout 1 echoat $n 但你找不到椅子可以讓你爬上閣樓....
+endif
+~
+|
+S
+#26554
+地下城~
+這裡是帶領你通往晦暗地下城的入口處。當你來到這邊，想像著你將可能會遇到的生物，
+不由得全身害怕的顫抖起來。往東通往一間拷問室，南邊整個大廳繼續延伸，往上可以回到可
+愛、具有陽光照耀的平地上。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26555
+D2
+~
+~
+0 0 26556
+D4
+~
+~
+0 0 26551
+S
+#26555
+拷問室~
+這裡就是星光之城堡主用來懲處犯人的地方，在拷問室裡頭的四面牆壁上，滿滿都是被拷問
+者的鮮血。往西你可以回到地下城的入口。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26554
+S
+#26556
+地下城~
+這裡是帶領你通往晦暗地下城的入口處。當你來到這邊，想像著你將可能會遇到的生物，
+不由得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26554
+D1
+~
+~
+0 0 26557
+D2
+~
+~
+0 0 26559
+D3
+~
+~
+0 0 26558
+>room_enter 4 100~
+if is_inv_obj($n) == 26558
+	echo 你忽然聽到一陣聲響「我們不會讓你輕易帶走 奈亞(Anir) 的屍體的....
+	echo 忽然一縷輕煙化作幾隻吸血鬼向你猛攻而來....
+	mload 26555
+	mload 26555
+	force vampire5-thoran mpgroup self 2.vampire5-thoran 1 1
+	force vampire5-thoran mpkill $n
+endif
+~
+|
+S
+#26557
+地下室~
+這間地下室中唯一的裝飾只有一張簡單的床鋪。往西你可以回到地下城。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26556
+S
+#26558
+地下室~
+這間地下室中唯一的裝飾只有一張簡單的床鋪。往東你可以回到地下城。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26556
+S
+#26559
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26556
+D1
+~
+~
+0 0 26560
+D2
+~
+~
+0 0 26562
+D3
+~
+~
+0 0 26561
+S
+#26560
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26559
+S
+#26561
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26559
+S
+#26562
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26559
+D1
+~
+~
+0 0 26563
+D2
+~
+~
+0 0 26565
+D3
+~
+~
+0 0 26564
+S
+#26563
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26562
+S
+#26564
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26562
+S
+#26565
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26562
+D1
+~
+~
+0 0 26566
+D2
+~
+~
+0 0 26568
+D3
+~
+~
+0 0 26567
+S
+#26566
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26565
+S
+#26567
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26565
+S
+#26568
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26565
+D1
+~
+~
+0 0 26569
+D2
+~
+~
+0 0 26571
+D3
+~
+~
+0 0 26570
+S
+#26569
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26568
+S
+#26570
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26568
+S
+#26571
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26568
+D1
+~
+~
+0 0 26572
+D2
+~
+~
+0 0 26574
+D3
+~
+~
+0 0 26573
+>room_enter 4 100~
+if is_inv_obj($n) == 26558
+	echo 你忽然聽到一陣聲響「我們不會讓你輕易帶走 奈亞(Anir) 的屍體的....
+	echo 忽然一縷輕煙化作幾隻吸血鬼向你猛攻而來....
+	mload 26555
+	mload 26555
+	force vampire5-thoran mpgroup self 2.vampire5-thoran 1 1
+	force vampire5-thoran mpkill $n
+endif
+~
+|
+S
+#26572
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26571
+S
+#26573
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26571
+S
+#26574
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26571
+D1
+~
+~
+0 0 26575
+D2
+~
+~
+0 0 26577
+D3
+~
+~
+0 0 26576
+S
+#26575
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26574
+S
+#26576
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26574
+S
+#26577
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26574
+D1
+~
+~
+0 0 26578
+D2
+~
+~
+0 0 26580
+D3
+~
+~
+0 0 26579
+S
+#26578
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26577
+S
+#26579
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26577
+S
+#26580
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳往北邊與南邊持續延伸。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26577
+D1
+~
+~
+0 0 26581
+D2
+~
+~
+0 0 26583
+D3
+~
+~
+0 0 26582
+>room_enter 4 100~
+if is_inv_obj($n) == 26558
+	echo 你忽然聽到一陣聲響「我們不會讓你輕易帶走 奈亞(Anir) 的屍體的....
+	echo 忽然一縷輕煙化作幾隻吸血鬼向你猛攻而來....
+	mload 26555
+	mload 26555
+	force vampire5-thoran mpgroup self 2.vampire5-thoran 1 1
+	force vampire5-thoran mpkill $n
+endif
+~
+|
+S
+#26581
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26580
+S
+#26582
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26580
+S
+#26583
+地下城~
+這裡是帶領你通往晦暗地下城之中。當你來到這邊，想像著你將可能會遇到的生物，不由
+得全身害怕的顫抖起來。東邊與西邊都是地下室，而整個大廳到這裡已經是盡頭。這裡似乎有
+一塊地板(floor)的顏色不太一樣。
+~
+0 8|16 0
+D0
+~
+~
+0 0 26580
+D1
+~
+~
+0 0 26584
+D3
+~
+~
+0 0 26585
+E
+floor~
+你仔細看著這一塊顏色不同的地板，發覺這塊地板似乎灰塵較少，與其他地板上頭已經佈滿了
+灰塵的狀況不太一樣，或許可以敲敲看這塊地板。
+~
+>room_rand 50~
+if roomvalue($0) == 0
+	if hasdoor(5)
+		deldoor 5
+		force 26588 deldoor 4
+		echo 地下的鐵板忽然自行移動遮住了通往地下的樓梯進口....
+		force 26588 echo 往上的出口忽然間不見了....
+	endif
+endif
+~
+>room_command knock floor~
+echoat $n 你輕輕的敲擊這塊顏色不同的地板....
+echoaround $n $n 輕輕的敲擊這塊顏色不同的地板....
+callout 1 echoat $n 這塊地板發出了金屬「鏗！鏗！」的聲響，或許這塊地板可以移動....
+callout 1 echoaround $n 這塊地板發出了金屬「鏗！鏗！」的聲響....
+~
+>room_command move floor~
+echoat $n 你嘗試將金屬地板移開....
+echoaround $n $n 嘗試將金屬地板給移開....
+if hasdoor(5)
+	callout 1 echo 但是這塊地板已經被移開了。
+else
+	if str($n) < 20
+		callout 1 echoat $n 但是你的力量不足，完全無法移動這塊地板。
+		callout 1 echoaroun $n 但是 $n 的力量不足，完全無法移動這塊地板。
+	else
+		callout 1 echoat $n 你將金屬地板給移開，下面出現了一道樓梯....
+		callout 1 echoaround $n $n 將金屬地板給移開，下面出現了一道樓梯....
+		callout 1 makedoor 5 這邊出現了一道樓梯 stair 0 0 26588
+		callout 1 modrvt v0 = 1
+		callout 1 modrvt timer = 20
+		callout 1 force 26588 makedoor 4 這邊出現了一道樓梯 stair 0 0 26583
+		callout 1 force 26588 modrvt v0 = 1
+	endif
+endif
+~
+|
+S
+#26584
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往西你可以回到地下城
+大廳。
+~
+0 8|16 0
+D3
+~
+~
+0 0 26583
+S
+#26585
+地下室~
+唯一裝飾著這間地下室的東西只有一個簡單的床鋪與破爛的草席。往東你可以回到地下城
+大廳。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26583
+S
+#26587
+閣樓上~
+你正在閣樓的上頭，上頭的空間十分的狹隘，因此你必須微微的彎著腰才能夠順利棲身於
+閣樓之中。支撐閣樓的結構十分的脆弱，當你登上閣樓時已經發出類似「嘰嘎、嘰嘎」的聲音
+，閣樓上的人還是不要太多的好，以免整個倒塌。你可以往下爬回(climb down)房間之中。
+~
+0 4|8 0
+>room_time 100~
+if robjcount(26591) > 0
+or robjcount(26592) > 0
+else
+	if mobcount(26537) > 0
+		oload 26591 99 floor
+	endif
+endif
+~
+>room_command grab chest~
+if robjcount(26591) > 0
+	if roomvalue($0) & 512
+		if roomvalue($0) & 1024
+			echoat $n 你趁著吊床與箱子一起盪過來的時候趕緊拿走了 箱子(chest)....
+			echoaround $n $n 趁著吊床與箱子一起盪過來的時候趕緊拿走了 箱子(chest)....
+			modrvt v0 r 512
+			modrvt v0 r 1024
+			modrvt v1 = 0
+			purge hammock2-thoran
+			oload 26592 99 floor
+			oload 26593 viclv $n target
+		endif
+		if roomvalue($0) & 2048
+			echoat $n 你想要拿走吊床上的箱子，但是距離過遠沒有成功....
+			echoaround $n $n 想要拿走吊床上的箱子，但是距離過遠沒有成功....
+		endif
+	else
+		echoat $n 你想要拿走吊床上的箱子，但是你只能夠輕微的推到吊床而已....
+		echoaround $n $n 想要拿走吊床上的箱子，但是 $n 只能夠輕微的推到吊床而已....
+	endif
+endif
+~
+>room_command push hammock~
+if robjcount(26591) > 0
+	if roomvalue($0) !& 512
+		echoat $n 你輕輕的推動閣樓旁的吊床，讓吊床與上頭的箱子輕輕的擺動了起來....
+		echoaround $n $n 輕輕的推動閣樓旁的吊床，讓吊床與上頭的箱子輕輕的擺動了起來....
+		modrvt v0 | 512
+		modrvt v0 | 1024
+		modrvt v1 + 1
+	endif
+endif
+~
+>room_command climb down~
+echoat $n 你爬回了下面的房間....
+echoaround $n $n 往下爬到了下面的房間....
+transfer $n 26553
+~
+>room_rand 100~
+if roomvalue($0) & 512
+	if roomvalue($1) >= 10
+		echo 閣樓旁的吊床與箱子的擺動漸漸的緩和了下來....
+		modrvt v0 r 512
+		modrvt v0 r 1024
+		modrvt v0 r 2048
+		modrvt v1 = 0
+		break
+	endif
+	if roomvalue($0) & 1024
+		echo 你看見閣樓旁的吊床與箱子往你的遠方盪了過去....
+		modrvt v0 r 1024
+		modrvt v0 | 2048
+		modrvt v1 + 1
+		break
+	endif
+	if roomvalue($0) & 2048
+		echo 你看見閣樓旁的吊床與箱子往你這邊盪了過來....
+		modrvt v0 | 1024
+		modrvt v0 r 2048
+		modrvt v1 + 1
+	endif
+endif
+if rand(40)
+	if pcnum($) >= 3
+		if roomvalue($0) & 8
+		 	echo 閣樓因無法承受長時間的過量載重，已經崩塌了....
+	 		echo 你因為閣樓的結構崩塌，受到嚴重的創傷....
+	 		modhmv pc 03.70 90 0
+	 		transfer all 26553
+	 		modrvt v0 = 0
+	 		force 26553 modrvt v0 = 1
+	 		force 26553 modrvt timer = 240
+	 		break
+		endif
+		if roomvalue($0) & 4
+		 	echo 支撐閣樓的主樑與柱子交接處，因剪力過大而有粉碎性裂縫....
+	 		echo 趁著整理結構還沒倒塌前，趕緊下樓去吧....
+	 		modrvt v0 | 8
+	 		break
+		endif
+		if roomvalue($0) & 2
+		 	echo 支撐閣樓的主樑因為彎矩過大，已經產生形變....
+		 	echo 趁著整體結構還尚完整，趕緊下樓去吧....
+		 	modrvt v0 | 4
+	 		break
+		endif
+		if roomvalue($0) & 1
+	 		echo 支撐閣樓的結構已經受到輕微的損傷，閣樓似乎開始輕微的搖了起來....
+	 		modrvt v0 | 2
+	 		break
+		endif
+		if roomvalue($0) !& 1
+		 	echo 閣樓上頭的人太多了，支撐的結構發出「嘰嘎、嘰嘎」的聲音....
+		 	modrvt v0 | 1
+		endif
+	endif
+endif
+~
+|
+S
+#26588
+地下城的深處~
+你進入了地下城的深處，剛進入這邊，你可以感受到十分難以忍受的霉臭味，讓你幾乎難
+以順利呼吸。這裡已經十分的黑暗，你利用自己身上的光源才能夠勉強看到四周的景色。你發
+現四周的牆壁上佈滿了血跡，這個場景讓你不禁緊張了起來。這邊有個樓梯，但是樓梯通到天
+花板時卻沒有任何出口。不過樓梯盡頭的天花板(ceiling)的顏色與其他地方不太一樣。
+~
+0 4|8|16 0
+D1
+~
+~
+0 0 26589
+E
+ceiling~
+你仔細看著這一塊顏色不同的天花板，發覺這塊天花板似乎灰塵較少，與其他天花板上頭已經
+佈滿了灰塵的狀況不太一樣，或許可以敲敲看這塊天花板。
+~
+>room_command knock ceiling~
+echoat $n 你輕輕的敲擊這塊顏色不同的天花板....
+echoaround $n $n 輕輕的敲擊這塊顏色不同的天花板....
+callout 1 echoat $n 這塊天花板發出了金屬「鏗！鏗！」的聲響，或許這塊天花板可以移動....
+callout 1 echoaround $n 這塊天花板發出了金屬「鏗！鏗！」的聲響....
+~
+>room_command move ceiling~
+echoat $n 你嘗試將金屬天花板移開....
+echoaroun $n $n 嘗試將金屬天花板給移開....
+if hasdoor(4)
+	callout 1 echo 但是這塊天花板已經被移開了。
+else
+	if str($n) < 20
+		callout 1 echoat $n 但是你的力量不足，完全無法移動這塊天花板。
+		callout 1 echoaround $n 但是 $n 的力量不足，完全無法移動這塊天花板。
+	else
+		callout 1 echoat $n 你將金屬天花板給移開，樓梯的盡頭出現了出口....
+		callout 1 echoaround $n $n 將金屬天花板給移開，樓梯的盡頭出現了出口....
+		callout 1 makedoor 4 這邊出現了一道樓梯 stair 0 0 26583
+		callout 1 modrvt v0 = 1
+		callout 1 force 26583 modrvt v0 = 1
+		callout 1 force 26583 modrvt timer = 20
+		callout 1 force 26583 makedoor 5 這邊出現了一道樓梯 stair 0 0 26588
+	endif
+endif
+~
+|
+S
+#26589
+地下城的深處~
+四周的牆壁都佈滿了血跡，走在這條黑暗的走道中，你開始擔心自己是否會步上與其他犧
+牲者同樣的命運。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26590
+D3
+~
+~
+0 0 26588
+S
+#26590
+地下城的深處~
+四周的牆壁都佈滿了血跡，走在這條黑暗的走道中，你開始擔心自己是否會步上與其他犧
+牲者同樣的命運。
+~
+0 8|16 0
+D1
+~
+~
+0 0 26591
+D3
+~
+~
+0 0 26589
+S
+#26591
+地下城的深處~
+四周的牆壁都佈滿了血跡，走在這條黑暗的走道中，你開始擔心自己是否會步上與其他犧
+牲者同樣的命運。在走道的兩旁各有兩扇門，你可以感受到由門後面傳遞過來的不明訊息。你
+的直覺告訴你這些訊息是屬於不安的、危險的。
+~
+0 8|16 0
+D0
+~
+~
+3 0 26592
+D1
+~
+~
+0 0 26594
+D2
+~
+~
+3 0 26593
+D3
+~
+~
+0 0 26590
+>room_enter 2 100~
+if is_inv_obj($n) == 26558
+	echo 你忽然聽到一陣聲響「我們不會讓你輕易帶走 奈亞(Anir) 的屍體的....
+	echo 忽然一縷輕煙化作幾隻吸血鬼向你猛攻而來....
+	mload 26555
+	mload 26555
+	force vampire5-thoran mpgroup self 2.vampire5-thoran 1 1
+	force vampire5-thoran mpkill $n
+endif
+~
+|
+S
+#26592
+地下城內的房間~
+當你進到這間房間之中，發現裡頭幾乎是完全黑暗的。當你使用照明裝備照亮了房間之後
+，才發覺裡頭赫然放有一具棺材。除了棺材之外，這裡的屍臭味非常的重，你開始懷疑這具棺
+材與吸血鬼之間具有一定的關連性。
+~
+0 1|8|16 0
+D2
+~
+~
+3 0 26591
+>room_time 100~
+if robjcount(26594) == 0
+	if robjcount(26595) == 0
+		if hour($) >= 6
+			if hour($) <= 18
+				oload 26594 99 floor
+			else
+				oload 26595 99 floor
+				mload 26552
+			endif
+		else
+			oload 26595 99 floor
+			mload 26552
+		endif
+		break
+	endif
+endif
+if hour($) == 7
+	if robjcount(26595) > 0
+		purge coffin2-thoran
+	endif
+	if robjcount(26594) == 0
+		oload 26594 99 floor
+	endif
+	echo 白晝降臨，外頭忽然飄進一縷白煙，進入了 棺材(coffin) 之中....
+	callout 1 echo 棺材(coffin) 忽然自己關閉了....
+	break
+endif
+if hour($) == 19
+	if robjcount(26594) > 0
+		purge coffin1-thoran
+	endif
+	if robjcount(26595) == 0
+		oload 26595 99 floor
+	endif
+	echo 黑夜降臨，房間中的 棺材(coffin) 忽然緩緩打開....
+	callout 1 echo 裡頭忽然飄出一隻 吸血鬼(vampire) ....！
+	callout 1 mload 26552
+endif
+~
+|
+S
+#26593
+地下城內的房間~
+當你進到這間房間之中，發現裡頭幾乎是完全黑暗的。當你使用照明裝備照亮了房間之後
+，才發覺裡頭赫然放有一具棺材。除了棺材之外，這裡的屍臭味非常的重，你開始懷疑這具棺
+材與吸血鬼之間具有一定的關連性。
+~
+0 1|8|16 0
+D0
+~
+~
+3 0 26591
+>room_time 100~
+if robjcount(26594) == 0
+	if robjcount(26595) == 0
+		if hour($) >= 6
+			if hour($) <= 18
+				oload 26594 99 floor
+			else
+				oload 26595 99 floor
+				mload 26552
+			endif
+		else
+			oload 26595 99 floor
+			mload 26552
+		endif
+		break
+	endif
+endif
+if hour($) == 7
+	if robjcount(26595) > 0
+		purge coffin2-thoran
+	endif
+	if robjcount(26594) == 0
+		oload 26594 99 floor
+	endif
+	echo 白晝降臨，外頭忽然飄進一縷白煙，進入了 棺材(coffin) 之中....
+	callout 1 echo 棺材(coffin) 忽然自己關閉了....
+	break
+endif
+if hour($) == 19
+	if robjcount(26594) > 0
+		purge coffin1-thoran
+	endif
+	if robjcount(26595) == 0
+		oload 26595 99 floor
+	endif
+	echo 黑夜降臨，房間中的 棺材(coffin) 忽然緩緩打開....
+	callout 1 echo 裡頭忽然飄出一隻 吸血鬼(vampire) ....！
+	callout 1 mload 26552
+endif
+~
+|
+S
+#26594
+地下城的深處~
+四周的牆壁都佈滿了血跡，走在這條黑暗的走道中，你開始擔心自己是否會步上與其他犧
+牲者同樣的命運。在走道的兩旁各有兩扇門，你可以感受到由門後面傳遞過來的不明訊息。你
+的直覺告訴你這些訊息是屬於不安的、危險的。
+~
+0 8|16 0
+D0
+~
+~
+3 0 26595
+D1
+~
+~
+0 0 26597
+D2
+~
+~
+3 0 26596
+D3
+~
+~
+0 0 26591
+S
+#26595
+地下城內的房間~
+當你進到這間房間之中，發現裡頭幾乎是完全黑暗的。當你使用照明裝備照亮了房間之後
+，才發覺裡頭赫然放有一具棺材。除了棺材之外，這裡的屍臭味非常的重，你開始懷疑這具棺
+材與吸血鬼之間具有一定的關連性。
+~
+0 1|8|16 0
+D2
+~
+~
+3 0 26594
+>room_time 100~
+if robjcount(26594) == 0
+	if robjcount(26595) == 0
+		if hour($) >= 6
+			if hour($) <= 18
+				oload 26594 99 floor
+			else
+				oload 26595 99 floor
+				mload 26552
+			endif
+		else
+			oload 26595 99 floor
+			mload 26552
+		endif
+		break
+	endif
+endif
+if hour($) == 7
+	if robjcount(26595) > 0
+		purge coffin2-thoran
+	endif
+	if robjcount(26594) == 0
+		oload 26594 99 floor
+	endif
+	echo 白晝降臨，外頭忽然飄進一縷白煙，進入了 棺材(coffin) 之中....
+	callout 1 echo 棺材(coffin) 忽然自己關閉了....
+	break
+endif
+if hour($) == 19
+	if robjcount(26594) > 0
+		purge coffin1-thoran
+	endif
+	if robjcount(26595) == 0
+		oload 26595 99 floor
+	endif
+	echo 黑夜降臨，房間中的 棺材(coffin) 忽然緩緩打開....
+	callout 1 echo 裡頭忽然飄出一隻 吸血鬼(vampire) ....！
+	callout 1 mload 26552
+endif
+~
+|
+S
+#26596
+地下城內的房間~
+當你進到這間房間之中，發現裡頭幾乎是完全黑暗的。當你使用照明裝備照亮了房間之後
+，才發覺裡頭赫然放有一具棺材。除了棺材之外，這裡的屍臭味非常的重，你開始懷疑這具棺
+材與吸血鬼之間具有一定的關連性。
+~
+0 1|8|16 0
+D0
+~
+~
+3 0 26594
+>room_time 100~
+if robjcount(26594) == 0
+	if robjcount(26595) == 0
+		if hour($) >= 6
+			if hour($) <= 18
+				oload 26594 99 floor
+			else
+				oload 26595 99 floor
+				mload 26552
+			endif
+		else
+			oload 26595 99 floor
+			mload 26552
+		endif
+		break
+	endif
+endif
+if hour($) == 7
+	if robjcount(26595) > 0
+		purge coffin2-thoran
+	endif
+	if robjcount(26594) == 0
+		oload 26594 99 floor
+	endif
+	echo 白晝降臨，外頭忽然飄進一縷白煙，進入了 棺材(coffin) 之中....
+	callout 1 echo 棺材(coffin) 忽然自己關閉了....
+	break
+endif
+if hour($) == 19
+	if robjcount(26594) > 0
+		purge coffin1-thoran
+	endif
+	if robjcount(26595) == 0
+		oload 26595 99 floor
+	endif
+	echo 黑夜降臨，房間中的 棺材(coffin) 忽然緩緩打開....
+	callout 1 echo 裡頭忽然飄出一隻 吸血鬼(vampire) ....！
+	callout 1 mload 26552
+endif
+~
+|
+S
+#26597
+地下城深處的祭壇~
+在整個地下城深處的最終點，你看到了一個祭壇(altar)。這座祭壇上頭沾滿了血跡，與
+一般神聖祭壇潔白無邪的印象完全不一樣。祭壇的中央有一具棺材(coffin)，這具棺材比起
+一般的棺材大的多。
+~
+0 1|8|16 0
+D3
+~
+~
+0 0 26594
+>room_command push altar~
+rcall thoran_altar $n
+~
+>room_command move altar~
+rcall thoran_altar $n
+~
+>room_defun thoran_altar~
+if robjcount(26598) > 0
+	echoat $n 你用力地推動 沾滿血跡的祭壇(bloody altar) ....
+	echoaround $n $n 用力地推動 沾滿血跡的祭壇(bloody altar) ....
+	if mobcount(26552) > 0
+		callout 1 echoat $n 祭壇上頭的保護力場讓你無法接近，也讓你受傷了....
+		callout 1 echoaround $n 祭壇上頭的保護力場讓 $n 無法接近....
+		callout 1 modhmv $n 03.25 45 0
+	else
+		if hour($) >= 6
+			if hour($) <= 18
+				callout 1 echoat $n 祭壇上頭的保護力場讓你無法接近，也讓你受傷了....
+				callout 1 echoaround $n 祭壇上頭的保護力場讓 $n 無法接近....
+				callout 1 modhmv $n 03.25 45 0
+			else
+				callout 1 echoat $n 你將 沾滿血跡的祭壇(bloody altar) 給移開了....
+				callout 1 echoaround $n $n 將 沾滿血跡的祭壇(bloody altar) 給移開了....
+				callout 1 purge altar1-thoran
+				callout 1 oload 26599 99 floor
+				callout 1 modrvt v0 = 1
+				callout 1 modrvt timer = 30
+			endif
+		else
+			callout 1 echoat $n 你將 沾滿血跡的祭壇(bloody altar) 給移開了....
+			callout 1 echoaround $n $n 將 沾滿血跡的祭壇(bloody altar) 給移開了....
+			callout 1 purge altar1-thoran
+			callout 1 oload 26599 99 floor
+			callout 1 modrvt v0 = 1
+			callout 1 modrvt timer = 30
+		endif
+	endif
+endif
+~
+>room_command pull rod~
+if robjcount(26599) > 0
+	echoat $n 你扳動 祭壇(altar) 下的 拉桿(rod) ....
+	echoaround $n $n 扳動 祭壇(altar) 下的 拉桿(rod) ....
+	if hasdoor(2)
+		callout 1 echo 但是沒有發生什麼事情....
+	else
+		echo 你聽到「愘」的一聲....
+		callout 1 echo 忽然南面的牆壁忽然往上升起....
+		callout 1 makedoor 2 這座牆壁現在已經完全消失了 wall 0 0 26598
+		callout 1 force 26598 makedoor 0 這座牆壁現在已經完全消失了 wall 0 0 26597
+		callout 1 modrvt v1 = 1
+		callout 1 modrvt timer = 30
+	endif
+else
+	echoat $n 這裡沒有什麼 拉桿(rod)。
+endif
+~
+>room_time 100~
+if robjcount(26598) == 0
+	if robjcount(26599) == 0
+		oload 26598 99 floor
+	else
+		if roomvalue($0) == 0
+			purge altar2-thoran
+			oload 26598 99 floor
+			echo 沾滿血跡的祭壇(bloody altar) 漸漸地移動回到了原來的位置....
+		endif
+		if roomvalue($1) == 0
+			deldoor 2
+			force 26598 deldoor 0
+			echo 南面的牆壁再度降下....
+			force 26598 echo 北面的牆壁再度降下....
+		endif
+	endif
+endif
+if robjcount(26596) == 0
+	if robjcount(26597) == 0
+		if hour($) >= 6
+			if hour($) <= 18
+				oload 26596 99 floor
+			else
+				oload 26597 99 floor
+				mload 26522
+			endif
+		else
+			oload 26597 99 floor
+			mload 26522
+		endif
+		break
+	endif
+endif
+if hour($) == 7
+	if robjcount(26597) > 0
+		purge coffin4-thoran
+	endif
+	if robjcount(26596) == 0
+		oload 26596 99 floor
+	endif
+	echo 白晝降臨，外頭忽然飄進一縷白煙，進入了 棺材(coffin) 之中....
+	callout 1 echo 華麗的棺材(gorgeous coffin) 忽然自己關閉了....
+	break
+endif
+if hour($) == 19
+	if robjcount(26596) > 0
+		purge coffin3-thoran
+	endif
+	if robjcount(26597) == 0
+		oload 26597 99 floor
+	endif
+	echo 黑夜降臨，房間中的 華麗的棺材(coffin) 忽然緩緩打開....
+	callout 1 echo 裡頭忽然飄出一隻 巨型吸血鬼(huge vampire) ....！
+	callout 1 mload 26522
+endif
+~
+|
+S
+#26598
+祭壇旁邊的密室~
+當你扳動了祭壇下的拉桿，才發覺這邊有間密室，裡頭關了一個人，竟然是....！
+~
+0 1|8|16 0
+>room_defun thoran_anir_death~
+if is_qmark($n) == thoran_anir_quest 100001
+	if rmobcount(26548) > 0
+		if is_qmark(vampire1-thoran) == thoran_anir_death
+			if is_equ_obj($n) == 26545
+				purge $n timber-thoran
+				echoat $n 你將手上的 木樁(timber) ，插向變成吸血鬼的奈亞心臟....
+				echoaround $n $n 將手上的 木樁(timber) ，插向變成吸血鬼的奈亞心臟....
+				mod_qmark $n thoran_anir_quest v0 = 11
+				callout 1 echo 木樁(timber) 插進了奈亞的心口....
+				callout 2 echo 奈亞(Anir) 大叫一聲，隨即側身死去....
+				callout 2 purge vampire1-thoran
+				callout 2 oload 26558 99 floor
+			else
+				echoat $n 你手上並沒有 木樁(timber) 這樣武器....
+			endif
+		else
+			echoat $n 吸血鬼 奈亞(Anir) 目前精神飽滿，你目前完全無法近身....
+			echoround $n 吸血鬼 奈亞(Anir) 目前精神飽滿， $n 目前完全無法近身....
+			force vampire1-thoran
+			force vampire1-thoran mpkill $n
+		endif
+	else
+		echoat $n 這裡沒有你要刺的對象....
+	endif
+endif
+~
+>room_command pierce anir~
+rcall thoran_anir_death $n
+~
+>room_command stab anir~
+rcall thoran_anir_death $n
+~
+>room_command nail anir~
+rcall thoran_anir_death $n
+~
+|
+S
+#0
+
+#RESETS
+O 0 26590 0 26553	    hammock
+O 0 26589 0 26551	    portrait
+O 0 26578 0 26541	    decorated bed
+O 0 26559 0 26512	    tombstone
+O 0 26560 0 26512	    tombstone
+O 0 26561 0 26512	    tombstone
+O 0 26557 0 26542	    chair
+O 0 26557 0 26553	    chair
+O 0 26557 0 26549	    chair
+O 0 26556 0 26549	    table
+O 0 26557 0 26530	    chair
+O 0 26556 0 26528	    table
+O 0 26547 0 26514	    clothes
+O 0 26548 0 26515	    furniture
+O 0 26549 0 26515	    clothes
+M 0 26551 1 26518	    James
+M 0 26500 3 26500           wolf
+M 0 26500 3 26502           wolf
+M 0 26500 3 26505           wolf
+M 0 26501 2 26508           bat
+M 0 26501 2 26511           bat
+M 0 26502 3 26520           gypsie
+M 0 26502 3 26520           gypsie
+M 0 26502 3 26520           gypsie
+M 0 26503 3 26500           villager
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+M 0 26503 3 26502           villager
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+M 0 26547 1 26502           gina
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+M 0 26504 2 26556           zombie
+M 0 26504 2 26557           zombie
+M 0 26505 2 26558           ghost
+M 0 26505 2 26559           ghost
+M 0 26506 1 26560           ghoul
+M 0 26507 2 26561           wight
+M 0 26507 2 26562          wight
+M 0 26508 1 26563           wraith
+M 0 26509 2 26564           maiden vampire
+E 0 26519 0 16               wield teeth
+E 0 26520 0 12               wear cape
+M 0 26509 2 26565           maiden vampire
+E 0 26519 0 16               wield teeth
+E 0 26520 0 12               wear cape
+M 0 26510 1 26503           Gildra
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+G 0 26500 0                  give lantern
+G 0 26501 0                  give torch
+G 0 26502 0                  give bread
+G 0 26503 0                  give water flask
+G 0 26544 0		     give garlic
+G 0 26545 0		     give timber
+M 0 26512 1 26504           Kira
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+G 0 26506 0                  give shotglass
+G 0 26507 0                  give wine glass
+G 0 26508 0                  give beer mug
+*M 0 26513 1 26504           Bizmark 放到 room prog 中 reborn
+*E 0 26504 0 16               wield sword
+*E 0 26505 0 11               wear shield
+*G 0 26509 0                  give beer
+M 0 26511 1 26503           Elpmi
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+M 0 26514 1 26506           Yram
+M 0 26515 1 26598           Anir
+M 0 26516 1 26510           Donovan
+G 0 26510 0                  give bible
+G 0 26511 0                  give incense
+M 0 26517 1 26522           Ave
+E 0 26512 0 17               give crystal ball
+M 0 26518 1 26518           horse
+M 0 26519 1 26501           green slime
+M 0 26520 2 26525           spider
+M 0 26520 2 26527           spider
+M 0 26521 2 26526           gargoyle
+E 0 26516 0 12               wear wings
+M 0 26521 2 26529           gargoyle
+E 0 26516 0 12               wear wings
+M 0 26523 1 26530           rust monster
+M 0 26524 1 26577           spectre
+M 0 26525 1 26524           Dhart
+M 0 26526 1 26532           red dragon
+E 0 26513 0 11               wear scales
+E 0 26514 0 6                wear head
+E 0 26515 0 7                wear tail
+M 0 26527 1 26533           guardian of sorrow
+M 0 26528 1 26537           Fiel
+E 0 26505 0 11               wear shield
+E 0 26518 0 16               wield pencil
+E 0 26517 0 17               hold calculator
+M 0 26529 1 26534           Agle
+M 0 26530 1 26541           Durtreg
+M 0 26531 1 26539           guardian portrait
+M 0 26532 2 26544           witch
+E 0 26521 0 16               wield broom
+G 0 26522 0                  give cauldron
+M 0 26532 2 26544           witch
+E 0 26521 0 16               wield broom
+G 0 26522 0                  give cauldron
+M 0 26533 1 26547           Syruc
+M 0 26534 1 26548           shadow demon
+M 0 26535 1 26556           werewolf
+M 0 26536 2 26554           golem
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+M 0 26536 2 26554           golem
+E 0 26504 0 16               wield sword
+E 0 26505 0 11               wear shield
+M 0 26537 1 26553           hellhound
+M 0 26538 1 26555           nightmare
+M 0 26539 3 26557           zombie
+M 0 26539 3 26569           zombie
+M 0 26539 3 26581           zombie
+M 0 26540 3 26558           ghost
+M 0 26540 3 26570           ghost
+M 0 26540 3 26582           ghost
+M 0 26541 3 26560           ghoul
+M 0 26541 3 26572           ghoul
+M 0 26541 3 26584           ghoul
+M 0 26542 3 26561           wight
+M 0 26542 3 26573           wight
+M 0 26542 3 26585           wight
+M 0 26544 2 26564           maiden vampire
+E 0 26519 0 16               wield teeth
+E 0 26520 0 12               wear cape
+M 0 26544 2 26576           maiden vampire
+E 0 26519 0 16               wield teeth
+E 0 26520 0 12               wear cape
+M 0 26543 2 26563           wraith
+M 0 26543 2 26575           wraith
+M 0 26545 2 26566           vampire
+E 0 26519 0 16               wield teeth
+E 0 26520 0 12               wear cape
+M 0 26545 0 26578           vampire
+E 0 26519 0 16               wield teeth
+E 0 26520 0 12               wear cape
+M 0 26546 2 26567           spectre
+M 0 26546 2 26579           spectre
+S
+
+#SHOPS
+26510 1 9 17 19 0 120 80 0 23      Gildra
+26512 19 0 0 0 0 120 80 0 23       Kira
+0
+
+#SPECIALS
+M 26516 spec_cast_adept            Donovan
+M 26517 spec_cast_mage             Ave
+M 26531 spec_cast_mage             Guardian Portrait
+M 26532 spec_cast_mage             witch
+S
+#$
+
+--
+Only the insane have the strength to prosper;
+Only those who prosper truly judge what is sane.
+
+Proverb.
+

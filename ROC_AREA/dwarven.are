@@ -1,0 +1,1982 @@
+#AREADATA
+Name        矮人王國~
+Identity    dwarven~
+Builders    Anon~
+Translator  Zcecil~
+Modifier    YH~
+VNUMs	      6500 6599
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#6500
+dwarven guard~
+矮人守衛(dwarven guard)~
+一個矮人守衛(dwarven guard)站在這裡維持秩序.
+~
+他全副武裝的防守著這裡。
+~
+1|2|64 64 500 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+C 1
+>repop_prog 100~
+if rand(34)
+	mpat 5 mpoload 6509
+else
+	if rand(50)
+		mpat 5 mpoload 6504
+	else
+		mpat 5 mpoload 6508
+	endif
+endif
+mpat 5 mpoload 6505
+mpat 5 mpoload 6510
+mpat 5 wear all
+~
+|
+#6501
+dwarven miner~
+矮人礦工(dwarven miner)~
+一個矮人礦工(miner)在這裡辛苦的挖著礦.
+~
+他看起來相當的髒，而且好像有點工作過度。
+~
+65 0 900 S
+9 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+>repop_prog 100~
+mpat 5 mpoload 6518
+mpat 5 wear all
+~
+|
+#6502
+dwarven cityguard~
+矮人城市守衛(dwarven cityguard)~
+一個城市守衛(cityguard)在街道上巡邏.
+~
+他看起來既強壯且兇惡。
+~
+1|64 0 500 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+C 1
+>repop_prog 100~
+if rand(34)
+	mpat 5 mpoload 6509
+else
+	if rand(50)
+		mpat 5 mpoload 6504
+	else
+		mpat 5 mpoload 6508
+	endif
+endif
+mpat 5 mpoload 6505
+mpat 5 mpoload 6510
+mpat 5 wear all
+~
+|
+#6503
+storekeeper~
+店主(storekeeper)~
+店主(storekeeper)正站在這裡，等著您來購物.
+~
+他外表看來很遲鈍，不過卻是作生意的高手。
+~
+1|2|64 8|32|64|128 900 S
+32 500 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+P 8
+>greet_prog 100~
+if is_qmark($n) == homeport_dwarf_quest 100001
+	if is_inv_obj($n) == 18013
+		mppurge $n all.vnum 18013
+		mpmod_qmark $n homeport_dwarf_quest v0 | 2
+		mpadd_qmark self talking 2 0 0 0 0 0
+		mpcallout 3 mpdel_qmark self talking
+		mpcallout 1 mpechoat $n 你總算到達矮人王國的商會地。
+		mpcallout 2 mpechoat $n 可是你手中的信物不知何時早已遺落。
+		mpcallout 3 mpechoat $n 是要回去跟商人回報(report)這件事情，還是跟這裡的店主說明請求相信(believe)呢？
+	endif
+endif
+~
+>talk_prog believe 相信~
+if is_qmark($n) & homeport_dwarf_quest 165536
+	tell $n 你還待在這幹嘛？
+	tell $n 他不是很急著要貨嗎？
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 他正在說話。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100055
+	tell $n 是是是，我也很想相信你。
+	tell $n 但是你一直沒解釋清楚呀。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100015
+	tell $n 是是是，我相信你說的好嗎。
+	tell $n 所以你快點付錢把貨拿走吧。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100007
+	tell $n 是是是，我相信你說的好嗎。
+	tell $n 所以你到底是不是要拿礦石回去？
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100003
+	mpmod_qmark $n homeport_dwarf_quest v0 | 4
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 2 mpdel_qmark self talking
+	mpechoat $n $I搔了搔頭，把頭轉向你。
+	mpcallout 1 tell $n 真不知道是否該相信你。
+	mpcallout 2 tell $n 所以，你是要拿礦石回去對吧？
+endif
+~
+>talk_prog yes~
+if is_qmark($n) & homeport_dwarf_quest 165536
+	tell $n 你還待在這幹嘛？
+	tell $n 他不是很急著要貨嗎？
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 他正在說話。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100023
+	mpmod_qmark $n homeport_dwarf_quest v0 | 32
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 3 mpdel_qmark self talking
+	tell $n 你確定？他一向只跟我買礦石(ore)如果不是的話....
+	mpcallout 1 tell $n 難道是要你來拿那個東西？！
+	mpcallout 2 ponder
+	mpcallout 3 tell $n 如果你要來拿那個東西的話，我想他應該有跟你說清楚吧？
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100015
+	tell $n 好呀，給我五萬元。
+	tell $n 我就把礦石給你，讓你帶回去。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100007
+	mpmod_qmark $n homeport_dwarf_quest v0 | 8
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 4 mpdel_qmark self talking
+	tell $n 原來是要礦石呀，那就簡單了。
+	mpcallout 1 tell $n 不過....你沒有信物，這樣又很麻煩。
+	mpcallout 2 look $n
+	mpcallout 3 soga
+	mpcallout 4 tell $n 這樣吧，給我五萬元我就把礦石給你，讓你帶回去。
+endif
+~
+>talk_prog no~
+if is_qmark($n) & homeport_dwarf_quest 165536
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 他正在說話。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100015
+	tell $n 啊？你不拿貨要怎麼回去交差。
+	tell $n 把錢付一付趕緊把東西取走吧。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100023
+	mpmod_qmark $n homeport_dwarf_quest v0 r 16
+	mpmod_qmark $n homeport_dwarf_quest v0 | 8
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 1 mpdel_qmark self talking
+	tell $n 我想也是，果然還是要來拿礦石吧？
+	tell $n 他一向都只跟我買礦石，沒買過其他的。
+	mpcallout 1 tell $n 給我五萬元，我就把礦石給你，讓你帶回去。
+	mpcallout 1 tell $n 不過你沒帶信物，我無法輕易相信你不是詐欺師。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100007
+	mpmod_qmark $n homeport_dwarf_quest v0 | 16
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 2 mpdel_qmark self talking
+	tell $n 啊？不是要來拿礦石(ore)嗎...
+	mpcallout 1 ponder
+	mpcallout 2 tell $n 那是你是要來拿其他東西囉？
+endif
+~
+>talk_prog 那個東西~
+if is_qmark($n) == homeport_dwarf_quest 100055
+	ponder $n
+endif
+~
+>talk_prog ore 礦石~
+if is_qmark($n) & homeport_dwarf_quest 165536
+	tell $n 你還待在這幹嘛？
+	tell $n 他不是很急著要貨嗎？
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100015
+	tell $n 給我五萬元，我就把礦石給你，讓你帶回去。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100001
+	mpmod_qmark $n homeport_dwarf_quest v0 | 14
+	tell $n 給我五萬元，我就把礦石給你，讓你帶回去。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100003
+	mpmod_qmark $n homeport_dwarf_quest v0 | 11
+	tell $n 給我五萬元，我就把礦石給你，讓你帶回去。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100007
+	mpmod_qmark $n homeport_dwarf_quest v0 | 8
+	tell $n 給我五萬元，我就把礦石給你，讓你帶回去。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100023
+	mpmod_qmark $n homeport_dwarf_quest v0 r 16
+	mpmod_qmark $n homeport_dwarf_quest v0 | 8
+	tell $n 我想也是，他一向都只跟我買礦石，沒買過其他的。
+	mpcallout 1 tell $n 給我五萬元，我就把礦石給你，讓你帶回去。
+	mpcallout 1 tell $n 不過你沒帶信物，我無法輕易相信你不是詐欺師。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100055
+	mpmod_qmark $n homeport_dwarf_quest v0 r 48
+	mpmod_qmark $n homeport_dwarf_quest v0 | 8
+	tell $n 我想也是，他一向都只跟我買礦石，沒買過其他的。
+	mpcallout 1 tell $n 給我五萬元，我就把礦石給你，讓你帶回去。
+	mpcallout 1 tell $n 不過你沒帶信物，我無法輕易相信你不是詐欺師。
+	break
+endif
+~
+>talk_prog p dwarven-armor~
+if is_qmark($n) & homeport_dwarf_quest 165536
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 他正在說話。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100055
+	mpmod_qmark $n homeport_dwarf_quest v0 | 65536
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 10 mpdel_qmark self talking
+	gasp
+	mpcallout 1 tell $n 西克索真的這樣跟你說嘛？
+	mpcallout 2 mpechoat $n $I喃喃自語說：這明明就是機密....但沒有信物的人卻知道....
+	mpcallout 3 mpechoat $n $I陷入沉思。
+	mpcallout 5 tell $n 好吧，既然西克索都這樣跟你說了，那你稍等一下。
+	mpcallout 6 mpechoat $n $I 打開了商店的櫃子，謹慎的拿出了一件護甲。
+	mpcallout 7 mpoload 18016 $n 36 target
+	mpcallout 8 mpechoat $n $I把護甲給了你。
+	mpcallout 9 tell $n 請務必把這胸甲交給西克索。
+	mpcallout 10 bow $n
+endif
+~
+>bribe_prog 50000~
+if is_qmark($n) == homeport_dwarf_quest 100015
+	mpechoat $n $I點了點錢，把礦石給了你。
+	mpoload 18014 $n viclv target
+	mpmod_qmark $n homeport_dwarf_quest v0 | 65536
+else
+	thank $n
+endif
+~
+>give_prog 18013~
+if is_qmark($n) == homeport_dwarf_quest 100001
+or is_qmark($n) == homeport_dwarf_quest 100003
+	mpjunk $o
+	mpechoat $n $I笑笑的看了你給他的信物。
+	tell $n 你來晚了一步，剛剛我已經接到消息，西克索已經收到我們運過去的貨品了。
+	tell $n 不過還是辛苦你這趟旅程的幫忙。
+	mpdel_qmark $n homeport_dwarf_quest
+	if is_qmark($n) == homeport_quest
+		mpmod_qmark $n homeport_quest v0 | 16
+	else
+		mpadd_qmark $n homeport_quest -1 16 0 0 0 1
+	endif
+else
+	mpjunk $o
+	stare $n
+	tell $n 這東西你從哪搞來的？
+	tell $n 上面沒有標記，沒收！
+endif
+~
+|
+#6504
+baker~
+麵包師(baker)~
+一位麵包師(baker)正在這裡工作.
+~
+他身上沾滿了麵粉。
+~
+1|2|64 8|32|64|128 900 S
+25 500 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+P 8
+#6505
+dwarven citizen~
+矮人平民(dwarven citizen)~
+一位矮人平民(dwarven citizen)在這裡閒晃.
+~
+他看起來生活沒什麼壓力，沒事情作只好在街上閒晃著。
+~
+65 8 100 S
+16 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Dwarf~
+#6506
+dwarven citizen~
+矮人平民(dwarven citizen)~
+一位矮人平民(dwarven citizen)在這裡逛街.
+~
+她看起來生活沒什麼壓力，沒事情作只好逛街買東西。
+~
+65 8 100 S
+16 0 0 0d0+0 0d0+0
+1000 0
+0 8 2
+R Dwarf~
+#6507
+dwarven cityguard~
+矮人城市守衛(dwarven cityguard)~
+矮人城市守衛(dwarven cityguard)在街道上巡邏.
+~
+他看起來既強壯而兇惡。
+~
+1|64 0 500 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+C 1
+>repop_prog 100~
+if rand(34)
+	mpat 5 mpoload 6509
+else
+	if rand(50)
+		mpat 5 mpoload 6504
+	else
+		mpat 5 mpoload 6508
+	endif
+endif
+mpat 5 wear all
+~
+|
+#6508
+dwarven mine leader~
+礦坑領班(dwarven mine leader)~
+礦坑領班(dwarven mine leader)站在這樣督促著礦工.
+~
+他看起來比一般的礦工要強壯多了，難怪他會是領班。
+~
+1|2|64 8|32|64|128 0 S
+40 6000 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+P 8
+>repop_prog 100~
+mpat 5 mpoload 6512 1
+mpat 5 mpoload 6516 1
+mpat 5 wear all
+~
+|
+#6509
+dwarven doctor~
+矮人醫生(dwarven doctor)~
+矮人醫生(dwarven doctor)正在這裡治療傷患.
+~
+他相當精於醫術，尤其是外科的手術。
+~
+1|2|64 8|32|64|128 1000 S
+12 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+P 8
+>speech_prog p cure blind~
+if isaffected($i) & 1
+	cast 'cure blind'
+	mpnowait
+	break
+endif
+if fightwith($i) == $n
+	cast blindness
+	mpnowait
+	break
+endif
+if isaffected($n) & 1
+	yabba
+	cast 'cure blind' $n
+	mpnowait
+else
+	say 別裝蒜了! 我看你根本沒瞎!
+endif
+~
+>bribe_prog 3000~
+mpjunk coins
+if fightwith($i) == $n
+	cast 'double heal'
+	mpnowait
+else
+	emote 高聲朗誦：DKOBE YADLKE DOXKDDEY OWIEDHGLD
+	cast 'double heal' $n
+	mpnowait
+endif
+~
+>bribe_prog 2000~
+mpecho $I 把十字架拿出來用力揮動。
+if fightwith($i) == $n
+	cast 'dispel evil'
+	mpnowait
+else
+	cast 'remove curse' $n
+	mpnowait
+endif
+~
+>bribe_prog 1500~
+if fightwith($i) == $n
+	cast disease
+	mpnowait
+else
+	mpecho $I 喃喃唸著魔咒：大地之母蓋雅，我遵從妳的名，讓此人遠離疾病的威脅吧。
+	cast 'cure disease' $n
+	mpnowait
+endif
+~
+>bribe_prog 1200~
+if fightwith($i) == $n
+	cast poison
+	mpnowait
+else
+	mpecho $I 喃喃唸著魔咒：大地之母蓋雅，我遵從妳的名，讓此人遠離毒物的侵害吧。
+	cast 'cure poison' $n
+	mpnowait
+endif
+~
+>bribe_prog 1000~
+if fightwith($i) == $n
+	cast 'cause critical'
+	mpnowait
+else
+	emote 高聲朗誦：DKOBE YADLKE DOXKDDEY OWIEDHGLD
+	cast 'cure critical' $n
+	mpnowait
+endif
+~
+>bribe_prog 700~
+if fightwith($i) == $n
+	cast 'cause serious'
+	mpnowait
+else
+	emote 高聲朗誦：DKOBE YADLKE DOXKDDEY OWIEDHGLD
+	cast 'cure serious' $n
+	mpnowait
+endif
+~
+>bribe_prog 500~
+mpoload 3146 20
+give bandage $n
+say 好的，這是您的繃帶。
+~
+|
+#6510
+dwarven peon~
+矮人勞工(dwarven peon)~
+一個矮人勞工(dwarven peon)正在忙碌著工作.
+~
+一個勞工階層的矮人，正在忙著手邊的工作。
+~
+1|64 0 500 S
+5 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+#6511
+dwarven soldier~
+矮人士兵(dwarven soldier)~
+一個矮人士兵(dwarven soldier)在這裡休息。
+~
+沒有戰爭，讓這名士兵整天沒事作，只能在這待命。
+~
+1|2|64 0 500 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+>repop_prog 100~
+if rand(34)
+	mpat 5 mpoload 6509
+else
+	if rand(50)
+		mpat 5 mpoload 6504
+	else
+		mpat 5 mpoload 6508
+	endif
+endif
+mpat 5 wear all
+~
+|
+#6512
+dwarven officer~
+矮人軍官(barracks officer)~
+一個矮人軍官(barracks officer)在自己的位置上休息.
+~
+和平的日子裡，這名軍官仍然穿戴整齊，過著守紀律的生活。
+~
+3 0 100 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+>repop_prog 100~
+if rand(50)
+	mpat 5 mpoload 6509
+else
+	mpat 5 mpoload 6504
+endif
+mpat 5 mpoload 6505
+mpat 5 mpoload 6510
+mpat 5 wear all
+~
+|
+R Dwarf~
+#6513
+barracks guard~
+軍營守衛(barracks guard)~
+一個軍營守衛(barracks guard)看守著軍營大門.
+~
+他穿著裝備站在軍營入口，隨時作好應戰的準備。
+~
+3 0 100 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+>repop_prog 100~
+if rand(50)
+	mpat 5 mpoload 6509
+else
+	mpat 5 mpoload 6504
+endif
+mpat 5 mpoload 6505
+mpat 5 mpoload 6510
+mpat 5 wear all
+~
+|
+#6514
+exotic merchant~
+外地商人(exotic merchant)~
+一個外地的商人(merchant)在跟人愉快地聊天.
+~
+他看來像是從史卡拉貝來的商人，正在跟同行的伙伴討論事情。
+~
+1|2|64 0 0 S
+6 0 0 0d0+0 0d0+0
+10000 0
+0 8 1
+#6515
+traveler~
+旅人(traveler)~
+一個旅人(traveler)坐在店內休息.
+~
+長途旅行讓他看來有點累，正坐著休息。
+~
+1|2|64 0 0 S
+12 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+#6516
+orc adventurer~
+獸人冒險者(orc adventurer)~
+一個獸人冒險者(orc adventurer)在這裡狼吞虎咽.
+~
+他看來相當的強壯，應該是商人請來護衛商品的傭兵。
+~
+1|2|64 8|32|64 0 S
+45 6000 0 0d0+0 0d0+0
+50 0
+0 8 1
+R Orc~
+P 4|8|128
+>repop_prog 100~
+mpat 5 mpoload 35038
+mpat 5 wear all
+~
+>fight_prog 40~
+if rand(60)
+	sprinkle
+else
+	perform empslash
+endif
+~
+|
+#6517
+gnome adventurer~
+地精冒險者(gnome adventurer)~
+一個地精冒險者(gnome adventurer)安靜地坐在桌前喝著酒.
+~
+他穿著一襲黑袍，應該是商人請來護衛商品的傭兵。
+~
+1|2|64 8|32|64 0 S
+45 6000 0 0d0+0 0d0+0
+50 0
+0 8 1
+R Gnome~
+P 4|8|128
+>repop_prog 100~
+mpat 5 mpoload 35040
+mpat 5 wear all
+~
+>fight_prog 40~
+if rand(60)
+	c fireball
+else
+	c star
+endif
+~
+|
+#6518
+dwarf waitrness~
+矮人女侍(dwarf waitrness)~
+矮小的女侍(waitrness)靈活的穿縮在客人間送上餐點.
+~
+她不像常見的女矮人全身長滿肌肉，反倒有些纖細。她在餐桌間來回穿梭
+的敏捷身法，打破你對矮人緩慢笨重的印象。
+~
+1|2|64 8|32|64 1000 S
+40 20000 0 0d0+0 0d0+0
+50 0
+0 8 2
+R Half-dwarf~
+P 4|8|128
+#6519
+kiriel-df~
+凱莉兒(Kiriel)~
+酒館女主人 - 凱莉兒(Kiriel)坐在台前招呼著客人.
+~
+凱莉兒的外貌讓她成為知名國內外的女矮人。她是矮人跟精靈的混血兒，
+身材像母親的族人一樣纖細，但身高卻完美傳承父親血統，跟普通矮人差
+不多，遠看就像年幼的精靈。不過該長大的部位都有適當發育，大多人都
+不會錯把她當成幼兒。
+~
+1|2|64 8|32|64|128 1000 S
+50 200000 0 0d0+0 0d0+0
+50 0
+0 8 2
+R Half-dwarf~
+P 4|8|128
+#0
+
+
+
+#OBJECTS
+#6502
+key green~
+深綠色鑰匙(deep green key)~
+深綠色的鑰匙(deep green key)~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X tin~
+
+#6504
+dwarven hammer~
+矮人戰鎚(dwarven hammer)~
+一把矮人戰鎚(hammer)掉在地上~
+~
+5 0 8193
+150~ 0~ 35~ 8~
+40 30000 0
+L 30
+A 1 2
+A 5 1
+A 43 15
+E dwarven hammer~
+矮人不僅擅長開採礦石也擅於製作精量的裝備。
+~
+C 30000
+X steel~
+
+#6505
+dwarven plate mail~
+矮人板條甲(dwarven plate mail)~
+矮人板條甲(dwarven plate mail)~
+~
+9 0 9
+0~ 0~ 150~ 0~
+4 50000 0
+L 36
+A 5 3
+E dwarven plate mail~
+矮人不僅擅長開採礦石也擅於製作精量的裝備。
+~
+C 50000
+X iron~
+
+#6506
+stick~
+又長又黑的木棒(stick)~
+一根又長又黑的木棒(stick)掉在地上.~
+~
+4 0 16385
+4~ 10~ 10~  ~
+1 0 0
+L 8
+X wooden~
+
+#6507
+stick~
+又黑又長的木棒(stick)~
+一根又黑又長的木棒(stick)掉在地上.~
+~
+1 0 16385
+0~ 0~ 50~ 0~
+1 0 0
+X wooden~
+
+#6508
+dwarven sword~
+矮人長劍(dwarven sword)~
+一把矮人長劍(dwarven sword)掉在地上。~
+~
+5 0 8193
+150~ 0~ 30~ 1~
+10 25000 0
+L 1
+A 1 1
+A 5 1
+A 18 4
+E dwarven sword~
+矮人不僅擅長開採礦石也擅於製作精量的裝備。
+~
+C 25000
+X steel~
+
+#6509
+dwarven axe~
+矮人戰斧(dwarven axe)~
+一把矮人戰斧(dwarven axe)掉在地上。~
+~
+5 0 8193
+150~ 0~ 30~ 9~
+30 40000 0
+L 30
+A 1 1
+A 5 2
+A 19 5
+E dwarven axe~
+矮人不僅擅長開採礦石也擅於製作精量的裝備。
+~
+C 40000
+X steel~
+
+#6510
+dwarven helmet~
+矮人頭盔(dwarven helmet)~
+一個矮人頭盔(dwarven helmet)掉在地上。~
+~
+9 0 17
+1~ 0~ 150~ 0~
+4 35000 0
+L 1
+A 5 2
+E dwarven helmet~
+矮人不僅擅長開採礦石也擅於製作精量的裝備。
+~
+C 35000
+X steel~
+>obj_repop 100~
+oset self level = 1
+~
+|
+
+#6511
+dwarven gold ring~
+矮人金戒指(dwarven gold ring)~
+一顆作工精細的金戒指(gold ring)掉在地上。~
+~
+9 64 1|2
+1~ 0~ 30~ 0~
+1 100000 0
+L 35
+A 44 3
+E dwarven gold ring~
+不像外表般的粗獷，矮人擁有雕琢珠寶的精細手藝。
+~
+C 100000
+X gold~
+
+#6512
+dwarven gloves~
+矮人手套(dwarven gloves)~
+一雙厚重的手套(gloves)掉在地上。~
+~
+9 0 129
+1~ 0~ 150~ 0~
+2 30000 0
+L 1
+A
+2 1
+A
+1 1
+E dwarven gloves~
+在採礦石時能保護雙手的厚重手套。
+~
+C 30000
+X cloth~
+>obj_repop 100~
+oset self level = 1
+~
+|
+
+#6513
+note~
+短箋(note)~
+小紙片(note)~
+~
+12 0 1
+0~ 0~ 0~ 0~
+0 0 0
+E
+note letter letters~
+這是皇后所寫的情書。裡面充滿了不適合公開在網路上的內容。
+~
+X paper~
+
+#6514
+castle key~
+奇愛城鑰匙(Strangelove castle key)~
+巨大的鑰匙(key)~
+~
+18 0 1
+0~ 0~ 0~ 0~
+0 0 0
+X iron~
+
+#6516
+diamond pick~
+鑽石十字鎬(diamond pick)~
+一把看起來很硬的十字鎬(pick)被放在這裡。~
+~
+5 64|256 32769
+20~ 10~ 60~ 7~
+20 0 37
+L 15
+A 1 2
+A 5 2
+A 18 12
+A 19 12
+X diamond~
+
+#6517
+coal~
+碳(coal)~
+一堆碳(coal)被丟在這裡。~
+~
+13 0 16385
+0~ 0~ 0~ 0~
+100 0 0
+X wooden~
+
+#6518
+mining pick~
+十字鎬(mining pick)~
+一把挖礦用的十字鎬(mining pick)被放在這裡。~
+~
+5 256 8193
+1001100~ 0~ 0~ 7~
+1 0 0
+X iron~
+
+#6519
+pills~
+一盒避孕藥(pills)~
+一盒藥丸(pills)~
+~
+26 0 1
+15~ poison~  ~  ~
+1 5000 0
+E
+pills~
+一顆顆的藥丸，依照日期順序排好。從上面還剩下的藥丸數來看，
+這些藥丸已經很久沒有人服用了。
+~
+X herb~
+
+#6520
+mgo2~
+亞美礦石(MgO2)~
+一顆亞美礦石(MgO2)被丟在這.~
+~
+8 64 16385
+1100~ 0~ 0~ 0~
+1 5000 0
+X metal~
+
+#6521
+dwarven ale~
+矮人麥酒(dwarven ale)~
+一杯深褐色的麥酒(ale)被放在桌上。~
+~
+17 0 1
+10~ 10~ 3~ 0~
+1 500 0
+
+#6522
+rye bread~
+黑麥麵包(rye bread)~
+一塊黑麥麵包(rye bread)被放在桌上。~
+~
+19 0 1
+10~ 0~ -1~ 0~
+1 5000 0
+
+#6523
+glazed doughnut~
+糖霜甜甜圈(glazed doughnut)~
+一個超高熱量的甜甜圈(doughnut)被放在桌上。~
+~
+19 0 1
+10~ 0~ 5~ 0~
+1 5000 0
+
+#6524
+Granite Head marble bread~
+岩石頭(Granite Head)~
+一塊大理石麵包(marble bread)被放在桌上。~
+~
+19 0 1
+10~ 0~ -1~ 0~
+1 5000 0
+
+#6525
+fountain~
+噴泉(fountain)~
+一座立有雕像(statue)的華麗噴泉(fountain).~
+~
+25 1 0
+0~ 0~ 0~ 0~
+500 0 0
+E
+fountain~
+就算是使用超高級的材料所製造成的噴泉。
+噴出的依然只是泉水，所以你還是可以喝。
+~
+E
+statue~
+這是一座頭戴皇冠，手持權杖的女矮人雕像。
+座台下面刻著：
+
+        矮人王國 女王 - 納琳．埃索馬
+
+~
+X jet~
+
+#0
+
+
+
+#ROOMDATA
+#6500
+小徑~
+你正延著一條通往矮人村落的小徑走著，遠遠的地方可以看到一座小山丘。小徑
+往北通到群山之中。
+~
+0 0 2
+D0
+小徑向北方延伸。
+~
+~
+0 -1 6501
+D4
+~
+~
+0 -1 5263
+S
+#6501
+山腳下~
+這裡是一群險峻高山的山腳下，四周則是濃密的森林。北邊有點暗，看不太清楚
+那裡的情形。
+~
+0 0 4
+D0
+向北可以爬上山去。
+~
+~
+0 -1 6502
+D2
+南邊可以回到小徑上。
+~
+~
+0 -1 6500
+S
+#6502
+半山腰~
+從半山腰望下去，你可以清楚的看到山腳下的情景。再向北走一點點，就可以爬
+上山頂了。
+~
+0 0 5
+D0
+從這裡可以隱隱約約的看到山頂。
+~
+~
+0 -1 6503
+D2
+向南邊走就可以下山去。
+~
+~
+0 -1 6501
+S
+#6503
+山頂~
+你站在山頂，呼吸著這裡清新的空氣，心情一陣舒暢。順著南邊的山路就可以下
+山。東邊有個山洞，看來像是礦坑一類的地方。
+~
+0 32768 4
+D1
+東邊的山洞看來是通到地底的。
+~
+~
+0 -1 6540
+D2
+沿著南邊一路可以下山。
+~
+~
+0 -1 6502
+D3
+西邊有個山洞，洞口有個大門。
+~
+~
+0 -1 6504
+S
+#6504
+山洞入口~
+這裡是進入山中的入口。大門看來相當的堅固，從裡面傳來陣陣的聲響。
+~
+0 0 1
+D1
+~
+~
+0 -1 6503
+D3
+~
+~
+1|16|32|64 6502 6505
+S
+#6505
+通道~
+這是一個相當寬敞的通道，兩側牆面插著許多燃燒中的火把，就算身處在密閉的
+山洞中，你仍然能看清四周的環境。西邊有一扇門，裡面傳來鬧哄哄的聲音，往東可
+以回到山洞的入口，北方的通道吹來陣陣微風。
+~
+0 4|8|16 1
+D0
+道路向北延伸。
+~
+~
+0 -1 6506
+D1
+向東走就可以離開這裡。
+~
+大門~
+1|16|32|64 6502 6504
+D3
+西邊看起來很熱鬧。
+~
+木門~
+1|2 -1 6525
+S
+#6506
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。上方的洞頂鑿有一個大孔，讓外界的光線能透入洞內，不需使用火把
+也能獲得足夠的照明。你注意到周邊的岩壁上刻著許多拱形的精細雕刻。
+~
+0 16 1
+D0
+~
+~
+0 -1 6507
+D2
+~
+~
+0 -1 6505
+D3
+~
+~
+0 -1 6509
+S
+#6507
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。這裡的光線充足，就算沒有額外的照明也不會昏暗，你發現有許多人
+聚集在西邊的明亮處，顯著格外熱鬧。東邊岩壁的石窟飄散著迷人的香氣。
+~
+0 16 1
+D0
+~
+~
+0 -1 6508
+D1
+~
+~
+0 -1 6535
+D2
+~
+~
+0 -1 6506
+D3
+~
+~
+0 -1 6510
+S
+#6508
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。這裡的光線充足，就算沒有額外的照明也不會昏暗，四周有許多矮人
+居民在道路上移動，跟一般的熱鬧大城市沒有差別。北邊的岩壁下有個石窟，裡面飄
+出一股濃厚的藥味。
+~
+0 16 1
+D0
+~
+~
+0 -1 6534
+D2
+~
+~
+0 -1 6507
+D3
+~
+~
+0 -1 6511
+S
+#6509
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。這裡的光線充足，就算沒有額外的照明也不會昏暗，四周有許多矮人
+居民在道路上移動，與常見的熱鬧大城市沒有什麼差別。
+~
+0 16 1
+D0
+~
+~
+0 -1 6510
+D1
+~
+~
+0 -1 6506
+D3
+~
+~
+0 -1 6512
+S
+#6510
+城下廣場中央~
+你站在城下廣場的中央，抬頭能看見窟頂有一座巨大的天井。周圍充滿綠意，與
+洞穴內的景色形成強烈對比。正中央設有一座噴泉，上面立有一座女矮人雕像，許多
+居民環繞在噴泉周邊進行休閒活動，使這裡相對其他地方更生氣蓬勃。
+~
+0 16 1
+D0
+~
+~
+0 -1 6511
+D1
+~
+~
+0 -1 6507
+D2
+~
+~
+0 -1 6509
+D3
+~
+~
+0 -1 6513
+S
+#6511
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。這裡的光線充足，就算沒有額外的照明也不會昏暗，四周有許多矮人
+居民在道路上移動，與常見的熱鬧大城市沒有什麼差別。
+~
+0 16 1
+D0
+~
+~
+0 -1 6515
+D1
+~
+~
+0 -1 6508
+D2
+~
+~
+0 -1 6510
+D3
+~
+~
+0 -1 6514
+S
+#6512
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。這裡的光線充足，就算沒有額外的照明也不會昏暗，四周有許多矮人
+居民在道路上移動，與常見的熱鬧大城市沒有什麼差別。你注意到南邊有一條昏暗的
+通道，有守衛站在外頭把持著進出的人們。
+~
+0 16 1
+D0
+~
+~
+0 -1 6513
+D1
+~
+~
+0 -1 6509
+D2
+~
+~
+0 -1 6528
+S
+#6513
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。這裡的光線充足，就算沒有額外的照明也不會昏暗，四周有許多矮人
+居民在道路上移動，與常見的熱鬧大城市沒有什麼差別。
+~
+0 16 1
+D0
+~
+~
+0 -1 6514
+D1
+~
+~
+0 -1 6510
+D2
+~
+~
+0 -1 6512
+S
+#6514
+城下廣場~
+這裡是一座離地幾十公尺的巨大洞窟，空間佇立數根著粗大的石柱用來支撐整個
+洞窟不會坍塌。這裡的光線充足，就算沒有額外的照明也不會昏暗，四周有許多矮人
+居民在道路上移動，與熱鬧的大城市沒有什麼差別。西邊的石窟傳來陣陣的敲打聲。
+~
+0 16 1
+D1
+~
+~
+0 -1 6511
+D2
+~
+~
+0 -1 6513
+D3
+~
+~
+0 -1 6532
+S
+#6515
+城下通道~
+這是一條連接城堡跟城鎮的洞穴，往北可以前往城堡方向前進，往南能回到城下
+廣場。你注意到西邊有另一條昏暗的通道，有衛兵把守著。
+~
+0 8|16 1
+D0
+~
+~
+0 -1 6516
+D2
+~
+~
+0 -1 6511
+D3
+~
+~
+0 -1 6531
+S
+#6516
+岔路口~
+走過洞穴你來到通道的終點。在東、西方分別有一條道路。往西邊的道路可以看
+到一棟巨大的建築物，裡面傳來孩童的吵鬧聲，東邊不遠處能看到一條懸空的石橋，
+橋頭前有一些建築。往南可以回到城下廣場。
+~
+0 8|16 1
+D1
+~
+~
+0 -1 6517
+D2
+~
+~
+0 -1 6515
+D3
+~
+~
+0 -1 6601
+S
+#6517
+護城橋頭~
+在你眼前的是一條能並行兩台馬車寬的大石橋。石橋除了兩端的橋頭、橋尾連接
+著地面，橋梁上完全找不到其他的支撐點，懸空的設計讓人相當懷疑石橋的安全性。
+在橋頭旁有一棟獨立的建築物，往西可以回到岔路口。
+~
+0 4|16 1
+D0
+~
+~
+0 -1 6533
+D1
+~
+~
+0 -1 6518
+D3
+~
+~
+0 -1 6516
+S
+#6518
+護城石橋~
+你走在一條完全懸空的石橋上。雖然石橋相當寬，但是橋面上完全找不到任何的
+圍欄或扶手，如果刮來一陣大風，就會直接掉到橋底的黑暗深淵了。讓人慶幸的是，
+上方破碎的岩頂多少能透進些許亮光，不至於踩空摔落橋下。
+~
+0 16 1
+D1
+~
+~
+0 -1 6519
+D3
+~
+~
+0 -1 6517
+S
+#6519
+護城石橋~
+你走在一條完全懸空的石橋上。雖然石橋相當寬，但是橋面上完全找不到任何的
+圍欄或扶手，如果刮來一陣大風，就會直接掉到橋底的黑暗深淵了。讓人慶幸的是，
+上方破碎的岩頂多少能透進些許亮光，不至於踩空摔落橋下。
+~
+0 16 1
+D1
+~
+~
+0 -1 6520
+D3
+~
+~
+0 -1 6518
+S
+#6520
+護城石橋~
+你走在一條完全懸空的石橋上。雖然石橋相當寬，但是橋面上完全找不到任何的
+圍欄或扶手，如果刮來一陣大風，就會直接掉到橋底的黑暗深淵了。讓人慶幸的是，
+上方破碎的岩頂多少能透進些許亮光，不至於踩空摔落橋下。
+~
+0 16 1
+D1
+~
+~
+0 -1 6521
+D3
+~
+~
+0 -1 6519
+S
+#6521
+護城橋尾~
+走過石橋後來到城堡的大門前。緊閉的城門將你拒之門外，高聳的城牆也沒辦法
+翻越進去，不曉得除了從大門還有什麼方法能穿越這堅固的城門進到裡面。在南方的
+城牆外有一棟建築。
+~
+0 4|16 1
+D1
+東邊是巨大的城門~
+~
+0 -1 -1
+D2
+~
+~
+0 -1 6522
+D3
+~
+~
+0 -1 6520
+S
+#6522
+軍營入口~
+這是軍營入口的房間。這裡排放著幾十套士兵用的戰鎧跟武器，就算給普通士兵
+用的裝備也都非常精良，從此不難看出矮人製作裝備的水平的確相當高超。北邊可以
+離開軍營回到城門邊，往南則有另一個房間。
+~
+0 4|8|16 0
+D0
+~
+~
+0 -1 6521
+D2
+~
+~
+1|2 -1 6523
+S
+#6523
+軍營主房~
+這是軍營主要的房間。放著幾十張亂糟糟的床舖及滿地的垃圾、雜物，讓房間內
+充斥著難聞的氣味，讓人不想在這待太久。南邊有另一間房間，北邊則是軍營入口。
+~
+0 4|8|16 0
+D0
+~
+~
+1|2 -1 6522
+D2
+~
+~
+1|2 -1 6524
+S
+#6524
+軍官寢室~
+這裡是矮人軍營的軍官寢室，整齊放著幾張床舖，地面整潔乾淨沒有垃圾。令人
+費解的是，房間內仍然充斥著一股難聞的氣味，味道甚至比主房更加濃厚。往北能回
+到軍營主房。
+~
+0 4|8|16 0
+D0
+~
+~
+1|2 -1 6523
+D5
+密道~
+~
+1|2 -1 2001
+S
+#6525
+矮人酒館「醜女」~
+這是一間建造於山洞中的酒館，只用一扇木門簡單區隔內外。酒館內燈火通明，
+不像外面的通道昏暗，待在這裡很容易忘記身在洞穴之中。山洞中的酒館意外地聚集
+大量人潮，其中大多是些來矮人王國行商的外族商人，反而本地矮人只有少少幾位。
+雖然店名叫作醜女，但讓人不解的是店員們的外貌並不醜陋，甚至部分店員的身姿就
+算放進史卡拉貝選美大賽中，也能獲得相當程度的支持。酒館內側有一扇木門，裡面
+是作為倉庫的房間，東邊是酒館的出入口，可以由此離開這裡。
+~
+0 8|16 0
+D1
+~
+木門~
+1|2 -1 6505
+D3
+~
+~
+1|2 -1 6526
+S
+#6526
+倉庫~
+一間小小的洞穴倉庫，四周岩壁上釘有許多木架用來放置糧食、雜物。你注意到
+地上有一扇小小的門板，門後傳來一股香甜的氣味。
+~
+0 8|16 0
+D1
+~
+~
+1|2 -1 6525
+D5
+~
+一扇向下的木門~
+1|2 -1 6527
+S
+#6527
+酒窖~
+走下階梯後，來到一間存放大小木桶的酒窖，濃郁的酒香撲鼻而來。兩旁的酒架
+上放著許多名酒，讓人想打開一瓶來喝喝。你注意到地上有一道秘門，不知道這下面
+還存放著些什麼好東西。
+~
+0 8|16 0
+D4
+~
+~
+1|2 -1 6526
+D5
+~
+一道像下的密門，不知道後面有些什麼~
+1|2 -1 2065
+S
+#6528
+昏暗的通道~
+一條直接將岩壁貫穿所造出的通道。這裡就像常見的洞窟一樣，如果不使用照明
+工具，通道內不存在一絲絲光線。
+~
+0 1|4|8|16 0
+D0
+~
+~
+0 -1 6512
+D3
+~
+~
+0 -1 6529
+S
+#6529
+昏暗的通道~
+一成不變的晦暗景物讓你喪失時間概念，不確定在密閉空間內走了多久，好在這
+裡是條單向通道，不至於迷路。延途中你發現通道壁有許多洞穴，洞口都裝有木門，
+可能被矮人們當成住宅使用。拿起手中光源照亮四周，能看到許多虛弱的矮人倚牆坐
+著，有些更直接躺在地上。
+~
+0 1|8|16 0
+D0
+~
+~
+0 -1 6530
+D1
+~
+~
+0 -1 6528
+S
+#6530
+昏暗的通道~
+一成不變的晦暗景物讓你喪失時間概念，不確定在密閉空間內走了多久，好在這
+裡是條單向通道，不至於迷路。延途中你發現通道壁有許多洞穴，洞口都裝有木門，
+可能被矮人們當成住宅使用。拿起手中光源照亮四周，能看到許多虛弱的矮人倚牆坐
+著，有些更直接躺在地上。
+~
+0 1|8|16 0
+D0
+~
+~
+0 -1 6531
+D2
+~
+~
+0 -1 6529
+S
+#6531
+昏暗的通道~
+一成不變的晦暗景物讓你喪失時間概念，不確定在密閉空間內走了多久，好在這
+裡是條單向通道，不至於迷路。延途中你發現通道壁有許多洞穴，洞口都裝有木門，
+可能被矮人們當成住宅使用。拿起手中光源照亮四周，能看到許多虛弱的矮人倚牆坐
+著，有些更直接躺在地上。
+~
+0 1|8|16 0
+D1
+~
+~
+0 -1 6515
+D2
+~
+~
+0 -1 6530
+S
+#6532
+「皮毛」商號~
+這裡是矮人城鎮裡最好的武器店，可以買到一流的矮人手製武器和裝甲。
+~
+0 8|16 0
+D1
+~
+~
+1 -1 6514
+S
+#6533
+守衛小屋~
+這裡是通過石橋前的檢哨站小屋，也是分隔城鎮與城堡的交界處。雖然通過石橋
+並不會受到哨所內的人盤查，但為了在發生事件時能快速將危險止於城堡外，這裡面
+還是駐紮著一些士兵。
+~
+0 4|8|16 0
+D2
+~
+~
+1 -1 6517
+S
+#6534
+醫院~
+這裡是矮人醫院。屋內滿是酒精味，聞起來就像一般醫院，牆上還有一些血跡。
+你看到櫃台上放著一張單子(note)。
+~
+0 8|16 0
+E note~
+避孕藥：時價(list)
+治療失明：免費，只要說(say) cure blind
+中度療傷：700 coins
+高度療傷：1000 coins
+雙重治療：3000 coins
+治療中毒：1200 coins
+治療疾病：1500 coins
+解除詛咒：2000 coins
+錢給(give)，馬上醫。
+
+~
+D2
+~
+~
+0 -1 6508
+S
+#6535
+「岩石頭」麵包店~
+房間裡飄滿甜美的烘焙香氣，架上陳列著各種美味的蛋糕、麵包。你注意到一旁
+的甜甜圈，厚厚的糖霜，看了就忍不住吞口水。
+~
+0 8|16 0
+D3
+~
+~
+0 -1 6507
+S
+#6540
+昏暗的小路~
+這條小路路況相當的差。東邊有個礦坑，小路向西邊山地延伸。
+~
+0 0 4
+D1
+~
+~
+0 0 6541
+D3
+~
+~
+0 -1 6503
+S
+#6541
+礦坑入口~
+向下能進入礦坑，西邊能離開礦坑回到小路上。
+~
+0 4|8|16 4
+D3
+~
+~
+0 0 6540
+D5
+~
+~
+0 -1 6542
+S
+#6542
+礦坑內部~
+四面的牆上都是大洞小洞，全都是礦工們挖出來的。一旁的木梯讓你可以向上下
+兩邊爬。
+~
+0 1|4|8|16 0
+D4
+~
+~
+0 -1 6541
+D5
+~
+~
+0 -1 6554
+S
+#6543
+礦坑內部~
+這裡是礦坑深處，因為氣壓太大，讓你感到很不舒服。通道向東邊延伸，西邊
+則通往通氣孔。
+~
+0 1|8|16 0
+D1
+~
+~
+0 -1 6544
+D3
+~
+~
+0 -1 6554
+S
+#6544
+通道交叉口~
+礦坑內的兩條通道在這裡交會。北邊的通道被木板封住，東邊則有一個房間，
+而另外兩個方向都有通道向外延伸。
+~
+0 1|8|16 0
+D0
+~
+~
+1|2|4|32 -1 6546
+D1
+~
+~
+1|2 -1 6545
+D2
+~
+~
+0 -1 6551
+D3
+~
+~
+0 -1 6543
+S
+#6545
+雜物間~
+這裡是礦坑內的儲物室，裡面存放挖出來的原石跟挖掘工具。
+~
+0 1|8|16 0
+D3
+~
+~
+1|2 -1 6544
+S
+#6546
+廢棄礦坑~
+東邊的礦坑看起來錯綜複雜，隨意入內可能會迷路，南邊能離開這裡。
+~
+0 1|4|8|16 0
+D1
+~
+~
+0 -1 6547
+D2
+~
+~
+1|2|4|32 -1 6544
+S
+#6547
+複雜的礦坑~
+這裡是通道，每個地方看來都一樣，使你迷失了方向。
+~
+0 1|4|8|16 0
+D0
+~
+~
+0 -1 6548
+D3
+~
+~
+0 -1 6546
+S
+#6548
+複雜的礦坑~
+這裡是通道，每個地方看來都一樣，使你迷失了方向。
+~
+0 1|4|8|16 0
+D0
+~
+~
+0 -1 6549
+D2
+~
+~
+0 -1 6547
+S
+#6549
+複雜的礦坑~
+這裡是通道，每個地方看來都一樣，使你迷失了方向。
+~
+0 1|4|8|16 0
+D0
+~
+~
+0 -1 6550
+D3
+~
+~
+0 -1 6548
+S
+#6550
+複雜的礦坑~
+這裡是通道，每個地方看來都一樣，使你迷失了方向。
+~
+0 1|4|8|16 0
+D2
+~
+~
+0 -1 6549
+D3
+~
+~
+0 -1 6552
+S
+#6551
+礦脈~
+這條通道看起來是近期才剛開採的地點。在這裡可以看到許多礦工賣力的敲打
+著岩璧，試著找出有價值的礦物。北邊可以回到交岔口，東邊可以更深入礦脈。
+~
+0 1|8|16 0
+D0
+~
+~
+0 -1 6544
+D1
+~
+~
+0 -1 6555
+S
+#6552
+礦坑出口~
+你終於走出了礦坑。裡頭的通路相當的複雜，看來是沒有幾個礦工能夠活著出
+來。西邊有個被破木板隔出的洞穴，木板的間隙隱約透出油燈閃爍 的光茫，但裡面
+安靜得讓人感到害怕。
+~
+0 1|8|16 0
+D1
+~
+~
+0 -1 6550
+D3
+~
+~
+0 -1 6553
+S
+#6553
+礦坑洞穴~
+這個洞穴存放有一些糧食跟日常用品，還有幾張草床被放在地面上。你注意到
+房間中有張木桌放有圖紙，紙上畫滿密密麻麻的線條，看起來像是某種地圖。旁邊
+的牆放著幾把鐵鎬、推車等，挖掘用的工具。
+~
+0 4|8|65536|1048576 0
+D1
+~
+~
+0 -1 6552
+S
+#6554
+通氣口~
+這裡是礦坑通氣口的底端，空氣有一種沉重的感覺，令你覺得呼吸困難。通氣
+口向上面延伸，另外有一條通道通向東邊。
+~
+0 1|8|16 0
+D1
+~
+~
+0 -1 6543
+D4
+~
+~
+0 -1 6542
+S
+#6555
+礦脈~
+這條通道看起來是近期才剛開採的地點。在這裡可以看到許多礦工賣力的敲打
+著岩璧，試著找出有價值的礦物。南邊可以更深入礦脈。
+~
+0 1|8|16 0
+D2
+~
+~
+0 -1 6556
+D3
+~
+~
+0 -1 6551
+S
+#6556
+礦脈~
+這條通道看起來是近期才剛開採的地點。在這裡可以看到許多礦工賣力的敲打
+著岩璧，試著找出有價值的礦物。這裡是新礦脈的終點，往北可以離開。
+~
+0 1|8|16 0
+D0
+~
+~
+0 -1 6555
+S
+#0
+
+
+
+#SPECIALS
+M 6500 spec_guard
+M 6502 spec_guard
+M 6511 spec_guard
+M 6512 spec_guard
+M 6513 spec_guard
+M 6516 spec_guard
+M 6517 spec_guard
+M 6517 spec_cast_fire
+S
+
+
+
+#RESETS
+M 0 6500 4 6504  *dwarven guard
+M 0 6500 4 6504
+M 0 6500 4 6512
+M 0 6500 4 6515
+M 0 6501 6 6543  *miner
+M 0 6501 6 6551
+M 0 6501 6 6556
+M 0 6502 3 6507  *cityguard
+M 0 6502 3 6508
+M 0 6502 3 6509
+M 0 6503 1 6532  *storekeeper
+G 0 6520 0
+G 0 6504 0
+G 0 6505 0
+G 0 6510 0
+G 0 6511 0
+G 0 6512 0
+M 0 6504 1 6535  *baker
+G 0 6522 0
+G 0 6523 0
+G 0 6524 0
+M 0 6505 3 6507  *citizen male
+M 0 6505 3 6508
+M 0 6505 3 6509
+M 0 6506 3 6510  *citizen female
+M 0 6506 3 6515
+M 0 6506 3 6513
+M 0 6509 1 6534  *doctor
+G 0 6519 0
+M 0 6508 1 6544  *mine leader
+M 0 6510 2 6507  *peon
+M 0 6510 2 6513
+M 0 6511 8 6523  *soldier
+M 0 6511 8 6523
+M 0 6511 8 6523
+M 0 6511 8 6523
+M 0 6511 8 6533
+M 0 6511 8 6533
+M 0 6511 8 6533
+M 0 6511 8 6533
+M 0 6512 3 6524  *officer
+M 0 6512 3 6524
+M 0 6512 3 6524
+M 0 6513 2 6522  *barracks guard
+M 0 6514 3 6525  *merchant
+M 0 6514 3 6525
+M 0 6514 3 6525
+M 0 6515 2 6525  *traveler
+M 0 6515 2 6525
+M 0 6516 1 6525  *orc adventurer
+M 0 6517 1 6525  *gnome adventurer
+M 0 6518 1 6525  *waitrness
+G 0 6521 0
+G 0 6522 0
+M 0 6519 1 6525  *kiriel
+O 0 6517 0 6545  *coal
+O 0 6518 0 6545  *pick
+O 0 6525 0 6510  *fountain
+S
+
+
+
+#SHOPS
+6503 5 9 0 0 0 150 50 0 23
+6504 0 0 0 0 0 150 50 0 23
+6509 26 0 0 0 0 150 50 0 23
+6518 0 0 0 0 0 150 50 0 23
+0
+
+
+
+#$

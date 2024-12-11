@@ -1,0 +1,87 @@
+#! /usr/local/bin/bash
+# Written by Furey.
+# With additions from Tony.
+# With changes from Kahn.
+# Ported to 'sh' by Loki for those who don't have 'csh'.
+# Thanks to Alan and Grodyn for thier help on the redirecting stuff - Loki
+# Ported to 'bash' by Neversay for normal un*x that own bash shell
+
+# Set the port number.
+if [ "$1" != "" ]
+then
+         port=$1 
+else
+         port=8000
+fi
+
+# Change to area directory.
+cd ../area
+
+# Set limits. (cannot be used in a 'sh' script - Loki)
+# nohup
+# nice
+# limit stack 1024k
+if [ -f SHUTDOWN.TXT ]
+then
+         rm -f SHUTDOWN.TXT
+fi
+
+while [ 1 ]
+do
+
+    # If you want to have logs in a different directory,
+    #   change the 'logfile=' line to reflect the directory name.
+    # (It isn't used but I let it in anyway)
+    index=1000
+    exist=`ps aux | grep "../src/envy2 5000"`
+  if [ -z exist ]; then
+    while [ 1 ]
+    do
+        logfile=../log/$index.log
+        if [ -f $logfile ]
+        then
+                 # If you don't have bc you have a problem... :(
+                 index=`echo $index + 1|bc`
+        else
+                 break
+        fi
+    done
+
+    # Update to new code if possible.
+    if [ -f ../src/envy.new ]
+    then
+	\mv ../src/envy ../src/envy.old
+	\mv ../src/envy.new ../src/envy
+    fi
+
+    if [ -f ../src/envy_logger.new ]
+    then
+	\mv ../src/envy_logger ../src/envy_logger.old
+	\mv ../src/envy_logger.new ../src/envy_logger
+    fi
+
+    # Clear OLD unused player files
+    find ../player/? -type f -atime +400 -print -exec rm -f {} \; >> ../log/removed_players
+
+    # gzip player files
+    gzip -fqr -9 ../player/?
+    gzip -fqr -9 ../player/backup/?
+
+    # Run envy.
+    # Thanks to Alan and Grodyn for their help on the redirecting stuff - Loki
+    ../src/envy $port >$logfile 2>&1
+
+    if [ -f core ]
+    then
+	\mv core ../src/
+    fi
+
+    # Restart, giving old connections a chance to die.
+    if [ -f SHUTDOWN.TXT ]
+    then
+	rm -f SHUTDOWN.TXT
+        exit 0
+    fi
+  fi
+    sleep 5
+done

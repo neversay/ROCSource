@@ -1,0 +1,2915 @@
+#AREADATA
+Name        ®ü¬v~
+Identity    river~
+Builders    Picard~
+Translator  Pluto~
+Modifier    Slay~
+VNUMs	      200 299
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#201
+witch hag woman~
+§Å±C(witch)~
+¤@­Ó§Å±C(witch)¦b¦oªº¦í³B§N§N¦a¬ÝµÛ§Aªº¦æ°Ê¡C
+~
+¦oÀ³¸Ó¬O§A¨£¹L³Ì¦Ñªº§Å±C§a¡C¦o¤â®³µÛ¤@°¦Å]§ú¡A¥t¥~¤@°¦¤â®³µÛ¤@¥»¬õ¦â
+ªºÅ]ªk®Ñ¡C
+~
+3 0 0 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Hobbit~
+P 8
+>talk_prog coconut~
+if is_qmark($n) == homeport_coconet_quest 100001
+	if is_qmark($n) != homeport_coconet_quest 200003
+		ponder $n
+		mpechoat $n $I »¡ '·¦¤l¾ð¡H¨ººØªF¦è¹ï§ÚªºÅ]ªk¬ã¨s¤S¨S¥ô¦óÀ°§U¡A¦­´N³Q
+		mpechoat $n $I »¡ 'ªe¤fªº­Z±K¾ðªL©Ò±»»\¤F¡C
+		mpechoat $n $I »¡ '¦n¤F¦n¤F¡A§Ö¨«§O§n§Ú¡A§Ú­nÄ~Äò¬ã¨s¤F¡C
+		if robjcount(216) == 0
+			mpat 208 mpoload 216 1 floor
+			mpat 208 mpforcer 208 modrvt timer = 120
+		endif
+	endif
+endif
+~
+>greet_prog 30~
+say ¥~¨ÓªÌ¡Aºu¥X§Úªº©Ð¶¡....¡I
+say ¸Ü»¡§¹©¿µM´N¥á¤F¤@­Ó¤õ²y¹L¨Ó....¡I
+c fireball $n
+mpgoto self
+say »°§Ö¥X¥h....¡I
+~
+>talk_prog topic~
+if is_qmark($n) & ocean_quest 300001
+	say §AÁÙ·Q­n§ó¦hÃÄ¤ô¶Ü¡H¤@²~ 50000 ªTª÷¹ô¡C
+	hehe $n
+	break
+endif
+say §Ú·Q°µ¤@ºØÃÄ¤ô(potion)¡A»Ý­n«Ü¦h§÷®Æ¡C
+~
+>talk_prog potion~
+if is_qmark($n) & ocean_quest 300001
+	break
+endif
+say ´N¬O¶Ç»¡¤¤ªº¤ô¤¤©I§lÃÄ¤ô....¡C
+say »Ý­n¿P±_(net of swallow)¡B¤HÀY(head)¥H¤Î 15000 ªTª÷¹ô¡C
+say §A·Q­nÀ°§Ú¦¬¶°³o¨Çª««~¶Ü(yes/no)¡H
+~
+>talk_prog yes~
+if is_qmark($n) & ocean_quest 300001
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpadd_qmark $n ocean_quest -1 0 0 0 0 1
+	say ¤Ó´Î¤F¡A½Ð±N­è­è§Ú»¡ªº´X¶µª««~»°ºò®³µ¹§Ú¡C
+endif
+~
+>talk_prog p net of swallow~
+say ¾Ú»¡ªþªñ½XÀYªº²îªø¦³¡C
+~
+>talk_prog head~
+say ³oªþªñ¤H¤£¤Ö§a¡I
+grin
+~
+>give_prog 212~
+if being($b)
+	mpjunk all.head
+	say ²{¦b¥¿¦b»s§@ÃÄ¤ô¡A½Ðµyµ¥¡C
+	break
+endif
+if is_qmark($n) & ocean_quest 100008
+or is_qmark($n) & ocean_quest 100016
+	mpjunk all.head
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpjunk all.head
+else
+	if is_qmark($n) & ocean_quest 100001
+		mpjunk all.head
+		say §A¤w¸gµ¹¹L§Ú³o­ÓªF¦è¤F¡C
+		break
+	endif
+	say OK¡A¦¬¨ì¤HÀY¡I
+	mpmod_qmark $n ocean_quest v0 | 1
+	mpjunk all.head
+	if is_qmark($n) !& ocean_quest 100002
+		say §AÁÙ»Ý­nµ¹§Ú¤@¥÷¿P±_(net of swallow)¡C
+	endif
+	if is_qmark($n) !& ocean_quest 100004
+		say §AÁÙ»Ý­nµ¹§Ú 15000 ªTª÷¹ô¡C
+	endif
+	if is_qmark($n) == ocean_quest 100007
+		mpecho $I §â§÷®Æ»Pª÷¹ô¥á¶iÁç¤l¸Ì¡A¶}©l»s§@ÃÄ¤ô¡C
+		mpmod_qmark $n ocean_quest v0 | 8
+		mpdef_rembch $n
+		mpadd_qmark self ocean_quest -1 0 0 0 0 1
+	endif
+endif
+~
+>give_prog 213~
+if being($b)
+	mpjunk all.swallow
+	say ²{¦b¥¿¦b»s§@ÃÄ¤ô¡A½Ðµyµ¥¡C
+	break
+endif
+if is_qmark($n) & ocean_quest 100008
+or is_qmark($n) & ocean_quest 100016
+	mpjunk all.swallow
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpjunk all.swallow
+else
+	if is_qmark($n) & ocean_quest 100002
+		mpjunk all.swallow
+		say §A¤w¸gµ¹¹L§Ú³o­ÓªF¦è¤F¡C
+		break
+	endif
+	say OK¡A¦¬¨ì¿P±_(net of swallow)¡I
+	mpmod_qmark $n ocean_quest v0 | 2
+	mpjunk all.swallow
+	if is_qmark($n) !& ocean_quest 100001
+		say §AÁÙ»Ý­nµ¹§Ú¤@Áû¤HÀY(head)¡C
+	endif
+	if is_qmark($n) !& ocean_quest 100004
+		say §AÁÙ»Ý­nµ¹§Ú 15000 ªTª÷¹ô¡C
+	endif
+	if is_qmark($n) == ocean_quest 100007
+		mpecho $I §â§÷®Æ»Pª÷¹ô¥á¶iÁç¤l¸Ì¡A¶}©l»s§@ÃÄ¤ô¡C
+		mpmod_qmark $n ocean_quest v0 | 8
+		mpdef_rembch $n
+		mpadd_qmark self ocean_quest -1 0 0 0 0 1
+	endif
+endif
+~
+>bribe_prog 50000~
+if is_qmark($n) & ocean_quest 300001
+	mpoload 214 1 floor
+	say ¦Û¤v¾ß°_¨Ó§a¡A§ÚµLªkÅs¸y¡I
+	yawn
+endif
+~
+>bribe_prog 15000~
+if being($b)
+	mpgold $n 15000
+	mpjunk all.coins
+	say ²{¦b¥¿¦b»s§@ÃÄ¤ô¡A½Ðµyµ¥¡C
+	break
+endif
+if is_qmark($n) & ocean_quest 100008
+or is_qmark($n) & ocean_quest 100016
+	mpjunk all.coins
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpjunk all.coins
+else
+	if is_qmark($n) & ocean_quest 100004
+		mpjunk all.coins
+		say §A¤w¸gµ¹¹L§Ú 15000 ªTª÷¹ô¤F¡C
+		mpgold $n 15000
+		break
+	endif
+	say OK¡A¦¬¨ì 15000 ªTª÷¹ô¡I
+	mpmod_qmark $n ocean_quest v0 | 4
+	mpjunk all.coins
+	if is_qmark($n) !& ocean_quest 100001
+		say §AÁÙ»Ý­nµ¹§Ú¤@Áû¤HÀY(head)¡C
+	endif
+	if is_qmark($n) !& ocean_quest 100002
+		say §AÁÙ»Ý­nµ¹§Ú¤@¥÷¿P±_(net of swallow)¡C
+	endif
+	if is_qmark($n) == ocean_quest 100007
+		mpecho $I §â§÷®Æ»Pª÷¹ô¥á¶iÁç¤l¸Ì¡A¶}©l»s§@ÃÄ¤ô¡C
+		mpmod_qmark $n ocean_quest v0 | 8
+		mpdef_rembch $n
+		mpadd_qmark self ocean_quest -1 0 0 0 0 1
+	endif
+endif
+~
+>rand_prog 40~
+if is_qmark($i) == ocean_quest 100000
+	if insameroom($b)
+		if rand(70)
+			mpecho Áç¤l©¿µM«_¥X¤@°}«C·Ï¡I
+			say §¹¦¨¤F¡I
+			if is_qmark($b) !& ocean_quest 300001
+				mpmod_qmark $b ocean_quest v2 | 1
+				if class($n) < 5
+					mpexp $n 1000
+				endif
+				mpexp $b 2000
+			endif
+			mpoload 214 1 floor
+			say ¦Û¤v¾ß°_¨Ó§a¡A§ÚµLªkÅs¸y¡I
+			yawn
+			mpdel_qmark self ocean_quest
+			mpdef_rembch null-tar
+		else
+			mpecho Áç¤l©¿µM«_¥X¤@°}¶Â·Ï¡I
+			say ¥¢±Ñ¤F¡I±`¦³ªº¨Æ¡A¥u¦n³Â·Ð±z¦A¥h§ä¤@¦¸¡C
+			shrug
+			mpdel_qmark self ocean_quest
+			mpmod_qmark $b ocean_quest v0 = 0
+			mpdef_rembch null-tar
+		endif
+	endif
+endif
+~
+|
+#202
+sailor~
+¤ô¤â(sailor)~
+¤@¦ì¼ô½mªº¤ô¤â(sailor)¦b³o¸Ì³c½æµÛ²î°¦¡C
+~
+ºÞ²z³o¦ì¤ô¤âªº²îªø¦ü¥G¤£¦b³oªþªñ¡C
+~
+3 0 900 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say ¤Ñ®ð«Ü§N¡A¦n·Q­n¤@¥ó®ü¯W¤j¦ç¡C
+	say §ÚÄ@·N¥Î¬Ã¶Qªº¿P±_(net of swallow)¸ò¥L´«¡C
+~
+>death_prog 100~
+mpecho $I ªºÀY³Q¦å²O²O¦a¬å¤F¤U¨Ó¡I
+	mpoload 212 floor
+~
+>give_prog 205~
+bow $n
+	mpoload 213
+	give swallow $n
+~
+|
+#203
+shark~
+ÃT³½(shark)~
+¤@°¦ÃT³½(shark)±iµÛ¤j¼L¦V§A«r¨Ó¡C
+~
+§A«ç»òÁÙ¦³®É¶¡¬ÝµÛ³o°¦ÃT³½¡H¦³®É¶¡¬Ý¥¦¡A­Ë¤£¦p§â¥¦ªº­IÅ_¬å¤U¨Ó·í³½
+¯Í¨Ó¦Y¡C
+~
+97 1075839488 0 S
+24 200 0 10d10+0 0d-30+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>death_prog 50~
+if is_qmark($n) < ocean_quest 200004
+	mpmod_qmark $n ocean_quest v1 + 1
+endif
+	mpechoat $n §A§âÃT³½(shark)ªº­IÅ_¬å¤U¡I
+	mpechoaround $n $n ¦b $I ¦º«á¬å¤U¨eªº­IÅ_¡I
+	mpoload 204 floor
+~
+|
+#204
+cetacean~
+ÄH³½(cetacean)~
+¤@°¦ÄH³½(cetacean)¥¿¦b®ü­±¤W¼Q¤ô¡C
+~
+§O¤Ó±µªñ³o°¦¥¨¤jªºÄH³½¡A¥H§K§Aªº®y²î³Q¥L¥¨¤jªºÅé¿nµ¹¼²Ãaªº¡C
+~
+65 2105856 0 S
+37 1000 0 10d10+-50 0d100+0
+-1 0
+0 8 1
+R Animal~
+C 1
+#205
+octopus~
+³¹³½(octopus)~
+¤@°¦³¹³½(octopus)¦b®ü­±¤U±y¶¢¦a´å¨Ó´å¥h¡C
+~
+¤£­n¤p¬Ý³o¤@°¦¤p¤pªº³¹³½¡A¥L¥i¥H¼Q¥X¾¥¥ÄÅý§AÀþ¶¡´N¥¢©ú¡C
+~
+65 1075839488 0 S
+31 500 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>fight_prog 20~
+mpechoat $n $I ©¿µM¦V§A¦R¥X¤Fäú¤ßªº¾¥¥Ä....¡C
+	c 3 blindness $n
+~
+|
+#206
+swordfish~
+ºX³½(swordfish)~
+¤@°¦¦y¾U¦MÀIªººX³½(swordfish)¥¿¦b®ü­±¤W©b¹£¡C
+~
+¯¸¦bºX³½¦æ¶iªº¸ô½u¤W¬O¤@¥óÄø¨Æ¡A³Q¥¦ªº«eÀYªº¨ëµ¹¨ë¤¤¤£¬O¾xµÛª±ªº¡C
+~
+65 1075847680 0 S
+37 1000 0 10d10+-50 0d100+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>greet_prog 30~
+if isnpc($n)
+		break
+	endif
+	mpechoat $n §A©¿µM¬Ý¨ì¤@°¦ºX³½¦V§A½Ä¤F¹L¨Ó....¡I
+	if level($n) >= 25
+		mpechoat $n §A¤w¸g¨Ó¤£¤Î°{Á×¤F....¡I
+		mpkill $n
+	else
+		if rand(50)
+			mpechoat $n §A¤@­Ó°{¨­¡AÁ×¹L¤FºX³½¦y¾Uªº¼L¤Ú....¡C
+		else
+			mpechoat $n §A¤@­Ó°{¨­¡A¨S¯à°÷°{¹L¥h....¡C
+			mpkill $n
+		endif
+	endif
+~
+|
+#207
+seasnake~
+®ü³D(seasnake)~
+¤@±ø§t¦³¼@¬rªº®ü³D(seasnake)¦b®ü­±¤W´åµÛ¡C
+~
+¾Ú»¡®ü³D¨­¤Wªº¬r¯À¬O¥Íª«¤¤³Ì¬rªº¤@ºØ¡C
+~
+65 1075839488 0 S
+15 100 0 50d-5+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>greet_prog 20~
+if isnpc($n)
+		break
+	endif
+	mpechoat $n §Aªº¦æ°ÊÅå°Ê¤F®ü³D¡A¥¦©¿µM¦V§A§ð¤F¹L¨Ó¡C
+	mpkill $n
+~
+>fight_prog 50~
+mpechoat $n ®ü³Dªº¬r¤ú©¿µM¦V§A¼Q¥X¬r²G....¡I
+	c poison $n
+~
+|
+#208
+beaver~
+®ü¯W(beaver)~
+¤@°¦¥i·Rªº®ü¯W(beaver)¥¿¦b³o¸ÌÀu¶¢¦a´åªa¡C
+~
+¾Ú»¡¤£¤Ö¶Â¤ßªº°Ó¤H¬°¤F¤ò¥Ö±þ¤F¤£¤Ö®ü¯W¡A¦ý³o»ò¥i·Rªº¥Íª«©~µM¤]¦³¤H¬½¤U¤ß®·±þ¡C
+~
+65 2097152 1000 S
+15 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+>death_prog 50~
+mpecho $I ¦º«eªº¥sÁnÅý§A·P¨ì¤Q¤ÀÃø¨ü¡C
+~
+|
+#209
+fisher~
+º®¤Ò(fisher)~
+¤@­Ó½a§xªºº®¤Ò(fisher)«_µÛ­·ÀI¨Ó¨ì®ü¤W®·³½¡C
+~
+¥L¬ïªº¦çªA¯}¯}ÄêÄêªº¡A¬Ý¨Ó¤Q¤À¦a¯Ê¿ú¡C
+~
+65 2097152 200 S
+27 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>greet_prog 20~
+if isnpc($n)
+		break
+	endif
+	mpechoat $n $I ¦£µÛ®·³½¡A®Ú¥»¨Sª`·N¨ì§A¡C
+~
+>talk_prog topic~
+say ³Ìªñ¿ú¯uÃøÁÈ....¡C
+~
+>death_prog 100~
+mpecho $I ªºÀY³Q¦å²O²O¦a¬å¤F¤U¨Ó¡I
+	mpoload 212 floor
+~
+|
+#210
+starfish~
+®ü¬P(starfish)~
+¤@­Ó®ü¬P(starfish)­w¦b¨FÅy¤W¡C
+~
+¨e¤@°Ê¤]¤£°Ê¡A¬Ý¨Ó®Ú¥»¨S¦³¥ô¦ó¨¾¿m¤O¡C
+~
+3 1075838976 0 S
+2 0 0 0d0+50 0d50+0
+-1 0
+0 8 0
+R Fish~
+>fight_prog 100~
+mpgoto self
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpoload 211 floor
+~
+|
+#211
+dragon ichthyosaurus~
+®üÀs(Ichthyosaurus)~
+¤@°¦¥¨¤jªº®üÀs(Ichthyosaurus)¥¿¦b³o¸Ì¨µÅÞµÛ©`´¶¹yªº»â¤g¡C
+~
+¨e¬O¤@°¦¥¨¤jªºÀs¡A¦ý¤´µMÅ¥©R©ó©`´¶¹y¡C
+~
+65 2097280|17179869184 1000 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Dragon~
+>greet_prog 100~
+if isnpc($n)
+	break
+endif
+if is_qmark($n) == ocean_quest 200007
+	good $n
+	say «D±`¦n¡I
+	mpecho $I ©ÀµÛÅ]ªk©G»y¡A¤@§â¤T¤e´u(trident)¥X²{¦b§A­±«e¡C
+	say ³o§â´u¥i¥HÅý§A¦b¤ô¤¤©I§l¡C
+	mpechoat $n $I ±N¤T¤e´u(trident)®³µ¹¤F§A....¡C
+	if class($n) < 5
+		mpexp $n 1500
+	endif
+	mpexp $n 3000
+	mpoload 206 $n viclv target
+	mpmod_qmark $n ocean_quest v1 = 8
+	mpmod_qmark $n ocean_quest v2 | 2
+	break
+endif
+if is_qmark($n) == ocean_quest 200004
+	good $n
+	say «Ü¦n¡A¨º§Ú¦Aµ¹§A¤@­Ó¥ô°È«ç»ò¼Ë(yes/no)¡H
+	mpmod_qmark $n ocean_quest v1 = 5
+	break
+endif
+if is_qmark($n) == ocean_quest 200002
+	say §A¤w¸g¸Ñ¨M¤@°¦¤F¡AÁÙ®t¨â°¦¡I
+	break
+endif
+if is_qmark($n) == ocean_quest 200003
+	say §A¤w¸g¸Ñ¨M¨â°¦¤F¡AÁÙ®t¤@°¦¡I
+	break
+endif
+~
+>talk_prog topic~
+say ³o¸Ì¬OÂk®ü¯« - ©`´¶¹y(Neptune) ºÞªº°Ï°ì¡I
+if is_qmark($n) != ocean_quest
+	mpadd_qmark $n ocean_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) == ocean_quest 200000
+	if level($n) >= 30
+		say ¤]³\§A¥i¥HÀ°¦£°£±¼¦b®ü¤W§@¶Ãªº©Çª«....¡C
+		say «ç»ò¼Ë¡A­nÀ°¦£¶Ü(yes/no)¡H
+	endif
+endif
+~
+>talk_prog neptune~
+say Í¢¬O°¶¤jªº®ü¯«¡A¸U¯«¤§¯« - ¦¶©¼±o(Jupiter) »P­ß¤ý - ´¶¾|¦h(Pluto) ªº¥S§Ì¡C
+~
+>talk_prog restart~
+if is_qmark($n) == ocean_quest 200008
+or is_qmark($n) & ocean_quest 300002
+	mpechoat $n ¤@¹D²øÄYªºÁn­µ»¡¹D¡G¥ô°È¤w¸g§¹¦¨¡AµL¶·­«¨Ó¡C
+	break
+endif
+mpechoat $n ¤@¹D²øÄYªºÁn­µ»¡¹D¡G¦n¡AÅý¤@¤Á³£­«¨Ó§a¡I
+mpmod_qmark $n ocean_quest v1 = 0
+~
+>talk_prog yes~
+if is_qmark($n) == ocean_quest 200005
+		say ³o­Ó¥ô°È¬O°£±¼®ü¤¤§@¶Ãªº¤j®ü©Ç(Kraken)¡C
+		addoil $n
+		mpmod_qmark $n ocean_quest v1 = 6
+		break
+	endif
+	if is_qmark($n) == ocean_quest 200000
+		if level($n) >= 30
+			say «Ü¦n¡A§A¥u­n¥h±þ±¼¤T°¦¤j¥ÕÃT(Great White Shark)´N¦n¡I
+			mpmod_qmark $n ocean_quest v1 = 1
+		endif
+	endif
+~
+>fight_prog 20~
+say ¤£­ã¦b¯«¸tªº²`®ü§@¶Ã¡I¡I
+cast whirlwind
+~
+|
+#212
+tortoise turtle~
+³°Àt(tortoise)~
+³o°¦¯QÀt(turtle)¦b³o¸Ì½wºC¦aª¦µÛ¡C
+~
+¨eª¦¦æªº³t«×¯uªººC¨ì·|Åý§AºÎÄ±¡A¦ý¨º°í©Tªº´ß¥i¤£¬O°²ªº¡I
+~
+3 0 0 S
+29 0 0 0d0+-100 0d0+0
+-1 0
+0 8 0
+R Animal~
+>fight_prog 30~
+if hitprcnt($i) < 50
+	if isaffected($i) !& 128
+		mpat 5 cast sanc
+	endif
+	mpat 5 cast shield
+	mpat 5 cast armor
+	mpecho $I ÁY¶i´ß¸Ì¡A¸ú¤F°_¨Ó¡C
+	mpgoto self
+endif
+~
+|
+#213
+kraken~
+¤j®ü©Ç(Kraken)~
+¶Ç»¡¤¤©~¦í¦b¥_®üªº¤j®ü©Ç(Kraken)¦b³o¸Ì§@¶Ã¡I
+~
+¨e¤j·§¦³´¶³q³¹³½¼Æ­¿¤§¤j¡A§ÖÂI°k¶]§a¡I
+~
+3 2097192|17179869184 -800 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Hydra~
+>greet_prog 30~
+if isnpc($n)
+or isimmort($n)
+	break
+else
+	mpechoat $n $I ´§»RÄ²¤âÅ§À»§A¡I
+	mpkill $n
+endif
+~
+>rand_prog 5~
+if pcnum($) > 0
+	mpechoat $r $I ©¿µM¹ï§A¼Q¥X¤j¶qªº¾¥¥Ä¡I
+	cast blindness $r
+endif
+~
+>fight_prog 10~
+mpecho $I ºÆ¨g¦a´§»RµÛÄ²¤â¡I
+	cast whirlwind
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+if is_qmark($n) == ocean_quest 200006
+	mpmod_qmark $n ocean_quest v1 = 7
+endif
+~
+|
+#214
+angelfish~
+«óÂB(angelfish)~
+¤@°¦«Ü¤pªº«óÂB(angelfish)¥¿¦b³o¸Ì´åµÛ¡C
+~
+¨e¤@¬Ý¨ì§A´N°¨¤W´å¨«¤F¡C
+~
+65 1075838976 0 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+#215
+coelancanth~
+µÄ´Æ³½(colelancanth)~
+¤@°¦«Ü¤j°¦ªºµÄ´Æ³½(colelancanth)´å¤F¹L¨Ó¡C
+~
+³o°¦³½¤Q¤À¦a¯S®í¡A¨Ã¤£±`¨£¡C
+~
+65 1075838976 0 S
+32 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+#216
+great shark~
+¤j¥ÕÃT(Great White Shark)~
+¤@°¦¥i©Èªº¤j¥ÕÃT(Great White Shark)±iµÛ¤j¼L¦V§A«r¨Ó¡I
+~
+§A¥J²Ó¤@¬Ý¡A¨e¤ú¾¦¤WÁÙ±aµÛ¤@¨Ç´Ý¦×»P¦å¸ñ¡A§ÖÂI°k¶]§a¡I
+~
+97 1075839016 -400 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+if is_qmark($n) == ocean_quest 200001
+or is_qmark($n) == ocean_quest 200002
+or is_qmark($n) == ocean_quest 200003
+	mpmod_qmark $n ocean_quest v1 + 1
+endif
+~
+|
+#217
+bass~
+¤jÆt³½(bass)~
+¤@°¦¤jÆt³½(bass)¦b³o¸Ì´åµÛ¡C
+~
+¨e¥þ¨­³£¬O¶Âªº¡A¦Ó¥B¬Û·í¥¨¤j¡C
+~
+65 2097152 0 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+>death_prog 100~
+mpoload 209 floor
+~
+|
+#218
+tuna~
+ÂC³½(tuna)~
+¤@°¦ÂC³½(tuna)¦b³o¸Ì´åµÛ¡C
+~
+ÂC³½¬O¤@ºØ¤Q¤À¾A¦X­¹¥Îªº³½¡C
+~
+65 1075838976 0 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>death_prog 100~
+mpoload 207 floor
+~
+|
+#219
+salmon~
+ÂD³½(salmon)~
+ÂD³½(salmon)¦b³o¸Ì´åµÛ¡C
+~
+ÂD³½¬O¤@ºØ¤Q¤À¾A¦X­¹¥Îªº³½¡C
+~
+65 2097152 0 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>death_prog 100~
+mpoload 208 floor
+~
+|
+#220
+numbfish~
+¹qÅÁ(numbfish)~
+¤@°¦¹qÅÁ(numbfish)©¹§A³o¸Ì´å¤F¹L¨Ó¡I
+~
+¨e¬Ý°_¨ÓÆZ¦MÀIªº¡A³Ì¦n§O¾aªñ¨e¡C
+~
+65 1075838976 0 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>rand_prog 10~
+if pcnum($) > 0
+	if rand(50)
+		cast 'lightning bolt' $r
+	else
+		cast 'chain lightning'
+	endif
+endif
+~
+>fight_prog 10~
+mpecho $I ©¿µM²rµo¥X¤@°}¹q¡I
+	cast lightning
+~
+|
+#221
+alligator~
+Æs³½(alligator)~
+¤@°¦¥¨¤jªºÆs³½(alligator)±i¶}¤j¼L«r¦V§A¡I
+~
+³o¬O¤@°¦¥¨¤jªº¨â´Ï¥Íª«¡A¬Ý¨Ó¬O¦×­¹ªº¡C
+~
+97 2097152 0 S
+24 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+#222
+devil ray fish~
+Å]°­³½(devil ray)~
+³o¬O¤@°¦¥i©Èªº³½(fish)¡A³Ì¦nÂ÷¨e»·ÂI¡C
+~
+¶Ç»¡¤¤³QÅ]°­³½¸I¤W¬O·|³Q¶A©Gªº¡I
+~
+65 1075838976 -1000 S
+24 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>greet_prog 10~
+cast curse $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpoload 210 floor
+~
+|
+#223
+acaleph~
+¤ô¥À(acaleph)~
+¤@­Ó³z©úªº¥Íª«(acaleph)¥¿º}¯B¦b¤ô¤¤¡C
+~
+¦b¤ô¤¤¡A§A´X¥G¬Ý¤£¨ì³o­Ó³z©úªº¥Íª«¡C
+~
+65 2097154 0 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+#224
+whale~
+ÄH³½(whale)~
+¤@°¦¥¨¤jªºÄH³½(whale)®tÂI´N¼²¤W§A¡C
+~
+¨eªºÅé¿n«D±`¥¨¤j¡C
+~
+65 1075838976 0 S
+34 300 0 0d0+0 0d50+0
+-1 0
+0 8 0
+R Animal~
+#225
+dolphin~
+®ü³b(dolphin)~
+¤@°¦®ü³b(dolphin)±q§A¨­®Ç´å¹L¥h¡C
+~
+®ü³b¾Ú»¡¾Ö¦³«Ü°ªªº´¼¯à¡A¦Ü¤Ö¤ñ¥bÃ~¤H°ª¤Ó¦h¤F¡C
+~
+65 2097152 0 S
+33 0 0 0d0+0 0d-15+0
+-1 0
+0 8 0
+R Animal~
+#0
+
+
+
+#OBJECTS
+#201
+book red~
+¬õ¦â®ÑÄy(red book)~
+¤@¥»ªgº¡¦Ç¹Ðªº¬õ¦â®ÑÄy(red book)©ñ¦b³o¸Ì¡C~
+~
+15 64 16385
+50~ 1~ -1~ 0~
+5 1200 0
+E
+book red~
+´x´¤®É¶¡ªº¤H´N´x´¤¤F¥@¬É¡C~
+
+C 1200
+X paper~
+
+#202
+flask glass~
+¬Á¼þÅø¤l(glass flask)~
+¤@²~¥i¥H¸Ë¦UºØ²GÅéªº¬Á¼þÅø¤l(glass flask)³Q¥á¦b¦¹³B¡C
+~
+~
+17 64 16385
+250~ 50~ 0~ 0~
+15 500 0
+
+C 500
+X glass~
+
+#203
+canoe~
+¿W¤ì¦à(canoe)~
+¤@¿´¿W¤ì¦à(canoe)³Q¥á¦b³o¸Ì.~
+~
+22 0 1
+0~ 0~ 0~ 0~
+32 1000 0
+E
+canoe~
+³o¿´¿W¤ì¦àÆZ»´ªº¡C
+~
+
+C 1000
+X wooden~
+
+#204
+fin shark~
+ÃT³½¯Í(shark fin)~
+¤@­Ó¥¨¤jªº³½¯Í(fin)±¼¦b³o¸Ì¡C~
+~
+19 0 1
+15~ 0~ 0~ 0~
+5 15000 0
+C 15000
+X food~
+
+#205
+fur beaver~
+®ü¯Wªº¥Ö(fur)~
+¤@¶ô¬Ã¶Qªº®ü¯W¥Ö(fur)±¼¦b³o¸Ì¡C~
+~
+9 0 9
+0~ 0~ 1501150~ 0~
+1 15000 0
+
+C 15000
+X wool~
+
+#206
+neptune trident~
+®ü¯«¤§´u(Trident of Neptune)~
+¤@§â´²µoµÛ¤j®ü¤§¤Oªº¤T¤e´u(trident)³Q¥á¦b³o¸Ì¡C~
+~
+5 256 8193
+1501150~ 0~ 0~ 11~
+15 50000 0
+E
+neptune trident~
+³o§â´uµ¹¤©¨Ï¥ÎªÌ¶i¤J²`®üªº¤O¶q¡C
+~
+H breathe water~ 50 36 1
+
+C 50000
+X steel~
+
+#207
+tuna~
+ÂC³½(tuna)~
+¤@±øÂC³½(tuna)±¼¦b³o¸Ì¡C~
+~
+19 0 1
+10~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#208
+salmon~
+ÂD³½(salmon)~
+¤@±øÂD³½(salmon)±¼¦b³o¸Ì¡C~
+~
+19 0 1
+10~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#209
+bass~
+Æt³½(bass)~
+¤@¤j±øÆt³½(bass)±¼¦b³o¸Ì¡C~
+~
+19 0 1
+25~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#210
+devil ray fish~
+Å]°­³½(devil ray)~
+¤@±ø¥i©Èªº³½(fish)±¼¦b³o¸Ì¡C~
+~
+19 0 1
+10~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#211
+treasure coins gold~
+°]Ä_(treasure)~
+¤@¤j°ïªº°]Ä_(treasure)°ï¦b³o¸Ì¡C~
+~
+20 0 1
+500~ 0~ 0~ 0~
+1 500 0
+C 500
+X gold~
+
+#212
+head~
+¦å²O²Oªº¤HÀY(head)~
+¤@Áû¦å²O²Oªº¤HÀY(head)±¼¦b³o¸Ì¡C~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X flesh~
+
+#213
+net swallow~
+¿P±_(Net)~
+¤@­Ó¿P±_(net of swallow)~
+~
+19 0 1
+1~ 0~ 0~ 0~
+1 0 0
+X wooden~
+
+#214
+potion~
+¤ô¤¤©I§lÃÄ¤ô(Potion - Breathe water)~
+¤@²~ÃÄ¤ô(potion)´²µoµÛ¤j®ü¤§¤O¡C~
+~
+10 0 1
+36~ breathe water~  ~  ~
+1 0 0
+X liquid~
+
+#215
+Coconut~
+¤@Áû¤j·¦¤l(Coconut)~
+¤@Áû¦¨¼ôªº¤j·¦¤l(Coconut)±¼¸¨¦b¦a¤W¡C~
+~
+26 0 1
+1~ double heal~ full ref~ 0~
+15 0 0
+E
+coconut~
+²M²D¤S°h¤õªº·¦¤l¥Ä¦³§U©óÅé¤Oªº¦^´_¡C
+~
+
+#216
+tree coconut~
+·¦¤l¾ð(Coconut Tree)~
+¤@´Ê¤Q¤À°ª¤jªº·¦¤l¾ð(Coconut Tree)½Ý¥ß¦b³o¸Ì¡C~
+~
+12 0 0
+0~ 0~ 0~ 0~
+200 0 0
+E
+tree coconut~
+¤@´Ê¤Q¤À°ª¤jªº·¦¤l¾ð¡A¬ÝµÛ¨º¾ã¦ê¤w¸g¦¨¼ôªº·¦¤l¡A­Y¯à°÷³Ü¨ì¨º·sÂAªº
+·¦¥Äªº¸Ü¤£ª¾¦³¦h¦n¡C¤]³\§A¥i¥H¸ÕµÛ±À±À¬Ý(push)¡A¤]³\·¦¤l·|±¼¤U¨Ó¤]
+»¡¤£©w®@¡A¦ý¥i­n¤p¤ß§O³Q±¼¸¨ªº·¦¤lµ¹À»¤¤¡A¨º¥i´N¤£¦nª±¤F¡C
+~
+
+#0
+
+
+
+#ROOMDATA
+#200
+®ü¬v~
+buffer room of ocean.are
+~
+0 16|65536|524288|1048576 0
+E update~
+2020/02/17 ²Î¾ã§¹µ² quest qmark ¬° ocean_quest
+  »s³yÃÄ¤ô ¬° ocean_quest & 300001 , v2 | 1
+  ®ø·À®ü©Ç ¬° ocean_quest & 300002 , v2 | 2
+~
+S
+#201
+¦bªe¬y¤W~
+³o±ø¥ÑªFÃä¥v¥d©Ô¨©«°¬y¹L¨Óªºªe¬y°Êªº¤Q¤À½wºC¡C¦bªFÃä¥i¥H¬Ý¨ì¤@®y¾ô¾î¸ó
+¦bªe¬y¤W¡C¦Óªe¬yÄ~Äò©¹¦èÃä¬y°Ê¹L¥h¡C
+~
+0 4 7
+D1
+¤@®y¥v¥d©Ô¨©ªº¾ô¾î¸ó¦bªe¬y¤W¡C
+~
+~
+0 -1 3200
+D3
+³o±øªeÄ~Äò©¹¦èÃä¬y°Ê¹L¥h¡C
+~
+~
+0 -1 202
+S
+#202
+¦bªe¬y¤W~
+§A¦bªe¬y¤W½w½wªºÂ÷¶}¥v¥d©Ô¨©«°¡A¨Ã¥B«°¤ºªº³ÙÄÛÁn¤]¤wº¥º¥»·Â÷¡C¦b«°¦è¿@
+±K´ËªLªº³±¼vÅý§A¦bªe¬y¤W´X¥G¨£¤£¨ì¶§¥ú¡Cªe¬y¥ÑªF©¹¦èÄ~Äò©µ¦ù¡C
+~
+0 4 7
+D1
+ªe¬y©¹ªF¦^¨ì¥v¥d©Ô¨©¡C
+~
+~
+0 -1 201
+D3
+¨º¸Ì¤@¤ù³±¼v¡C
+~
+~
+0 -1 203
+S
+#203
+¦bªe¬y¤W~
+§A¦bªe¬y¤Wº¥º¥»·Â÷¤F¥v¥d©Ô¨©«°«°¦è´ËªLªº³±¼v¡AÄ£²´ªº¶§¥ú­«·s·ÓÄ£¦b§A¨­
+¤W¡C¦ý¨£¨ì¥_Ãä«°¦è´ËªL¦³¤£¤Öªº¥Íª«¦bªe¬yÃä³Ü¤ô¡Cªe¬y¥ÑªF¦V¦èÄ~Äò©µ¦ù¡C
+~
+0 4 7
+D1
+ªe¬y©¹ªF³q©¹¥v¥d©Ô¨©¡C
+~
+~
+0 -1 202
+D3
+ªe¬y©¹¦è©µ¦ù¡C
+~
+~
+0 0 204
+S
+#204
+¼eÁïªºªe¬y~
+ªe¬y¨ì³o¸Ì¤w¸g«D±`¼eÁï¤F¡CÀY³»¤W¤]¤w¸g¨S¦³¾ð¤ìªº¾B½®¡C¥v¥d©Ô¨©«°¦b»·»·
+ªºªFÃä¤w¸g´X¥G¬Ý¤£¨ì¡Cªe¬y¥ÑªF¦V¦èÄ~Äòªº©µ¦ù¡C
+~
+0 4 7
+D1
+¤W´åªºªeÅÜªº¶V¨Ó¶V¯¶¡B¶V·t¤F¡C
+~
+~
+0 -1 203
+D3
+«e­±ªºªe¬y¤¤¥¡¦ü¥G¦³¤@­Ó®q¡C
+~
+~
+0 -1 205
+S
+#205
+ªe¬y¤Àª[ÂI~
+ªe¬y¬y¨ì¦¹³B¦b¤@®y¤p®q¤W¤À§O©¹¦èÃä»P«nÃä©µ¦ù¡Cªe¬yªº¤ô¦b³o¸Ì¤w¸g¶}©l±a
+¦³ÄÐ¨ý¡A¦]¦¹¥i¥H½T©w³o¸Ì¤w¸g±µªñ¤j®ü¡Cªe¬y¦b¦¹¦V¦èÃä»P«nÃäÄ~Äò¬y°Ê¡C
+~
+0 4 7
+D1
+©¹ªF¬O¤@±øªe¬yªº¤ä¬y¡C
+~
+~
+0 -1 204
+D2
+¨º¸Ì¥i¥H³q©¹®qªºªFÃä¡C
+~
+~
+0 -1 207
+D3
+¨º¸Ì¥i¥H³q©¹®qªº¥_Ãä¡C
+~
+~
+0 -1 206
+S
+#206
+¦bªe¬y¤W~
+¸}¤Uªºªe¬y¥Ñ¤p®q©¹¦èÃäÄ~Äò¬y°Ê¡C¦Óªe¬y¤Wªº¤p®qªøº¡¤F¦UºØ´Óª«¡A§A´X¥G§ä
+¤£¨ì¥ô¦óªº¸¨¸}³B¥i¥HÅý§Aµn³°¡Cªe¬y¥Ñ¦è¦VªFÄ~Äò©µ¦ù¡C
+~
+0 4 7
+D1
+§A¬Ý¨ì«nÃäªe¬yªº¤ä¬y¡C
+~
+~
+0 -1 205
+D3
+©¹¨º¸Ì¬O¤@­Ó¥¨¤jªº¤ô°ì¡C
+~
+~
+0 -1 209
+S
+#207
+ªe¬y©¹«nÃä¤À¬y~
+ªe¬y¥Ñ¦¹º¥º¥¬y¶i¤p®qªº´ËªL¤§¤¤¡C©¹«nÃäªºªe¬y¦b¦¹Âà¦V¦èÃä©µ¦ù¡C
+~
+0 4 7
+D0
+ªe¬y©¹ªFÃä¡A©¹¦èÃä¬O¤U´å¡C
+~
+~
+0 -1 205
+D3
+§A¬Ý¨ì®qªº«nÃä¡C
+~
+~
+0 -1 208
+S
+#208
+¤@±ø¤pªe~
+ªe¬y¦b¦¹¬y¶i¤F¤p®qªº½d³ò¤§¤º¡A¦ý¬O¥|©P³£¬O­Z±Kªº´Óª«¡A§A®Ú¥»§ä¤£¨ì¥i¥H
+¤W©¤¸¨¸}ªº¦a¤è¡C
+~
+0 4 7
+D0
+¤@±ø¤p¸ô³q©¹¨º­Ó³±·tªº®q¡C
+~
+~
+0 -1 242
+D1
+§A¬Ý¨ì«nÃäªe¬yªº¤ä¬y¡C
+~
+~
+0 -1 207
+D3
+§A¬Ý¨ì¦è«nÃäªe¬yªº¤ä¬y¡C
+~
+~
+0 -1 210
+>room_time 100~
+if roomtimer($0) == 0
+	if robjcount(216) > 0
+		purge all.coconut
+	endif
+endif
+~
+>room_command push tree~
+if robjcount(216) == 0
+	echoat $n ¤°»ò¡H
+	break
+endif
+if is_qmark($n) == homeport_coconet_quest 100001
+	if roomvalue($1) & 2
+		echoat $n ¦ü¥G¦³¤H¤w¸g¦b§V¤Oªº±À°Ê·¦¤l¾ð¤F¡A©Î³\§A¸Óµyµ¥¤@¤U¡C
+	else
+		if mvnum($n) < 500
+			echoat $n §A¤w¸g¨S¦³Åé¤O¥h±À°Ê·¦¤l¾ð¤F¡C
+			break
+		else
+			modrvt v1 | 2
+			echoat $n §A¨ÏºÉ¤F¦Y¥¤ªº¤O®ð¡A§V¤Oªº±À®ÌµÛ²´«eªº·¦¤l¾ð¡C
+                        echoaround $n §A¬Ý¨ì $N ¦b¶Kªñ·¦¤l¾ð«á¡A«K¶}©l¨Ï«lªº±À®ÌµÛ·¦¤l¾ð¡C
+                        if rand(50)
+                        	callout 1 echoat $n §A¥Î¤Oªº·n®ÌµÛ·¦¤l¾ð¡C
+                        	callout 2 modhmv $n 21.350 500 0
+                        	callout 3 echoat $n µL©`ªº¬O¡A·¦¤l®Ú¥»³s°Ê³£¤£°Ê¡C
+                        	callout 4 modrvt v1 r 2
+                        else
+                        	callout 1 echoat $n §A¥Î¤Oªº·n®ÌµÛ·¦¤l¾ð¡C
+                        	callout 2 modhmv $n 21.350 500 0
+                        	callout 3 echoat $n ²×©ó¡A§AÀY¤Wªº·¦¤l¦ü¥G¶}©lÃP¸¨¡E¡E¡E¡C
+                        	callout 4 echoat $n §A½Ä¤W«e¥h¸Õ¹Ï±µ¦í¨º­Ó­nÃP¸¨ªº·¦¤l¡C
+                        	callout 5 rcall check_coconut $n
+                        endif
+		endif
+	endif
+else
+	echoat $n º¡¨­¬O¦½ªº§A¥õÀY±æ¤F¤@¤U¡A¤~µo²{¾ð¤W¦­¤w¨S¥bÁû·¦¤l¤F¡C
+        echoaround $n ¦b $N ¨Ï«lªº±À®Ì¤F¤@°}¤l¤§«á¡A§A«oµo²{¾ð¤W¦­´N¨S¥bÁû·¦¤l¤F¡C
+endif
+~
+>room_defun check_coconut~
+if is_qmark($n) < homeport_coconet_quest 200003
+	if dex($n) < 22
+		echoat $n ÁöµM·¦¤l²×¨s³Q§A±µ¦í¡A¦ý§A¤]¦]¦¹¦Ó¨ü¶Ë¤F¡C
+		modhmv $n 03.40 60 0
+	else
+		echoat $n §A±Ó±¶ªº±µ¦í¤F±¼¸¨ªº·¦¤l¡Aµ·²@¥¼·l¡C
+	endif
+	oload 215 1 $n target
+	mod_qmark $n homeport_coconet_quest v1 + 1
+	modrvt v1 r 2
+else
+	echoat $n ÁöµM§A¸Õ¹Ï±µ¦í±¼¸¨ªº·¦¤l¡A¤£¹LÁÙ¬O¥¢±Ñ¤F¡A·¦¤lºu¤J¤F®ü¤¤¡A®ø¥¢¤£¨£¡C
+	modrvt v1 r 2
+endif
+~
+|
+S
+#209
+¦b¤jªe¤W~
+¤p®q±Nªe¬y¤À¬°¨â­Ó³¡¤À¡C¦b¤p®q¤W°£¤F¿@±Kªº´Óª«§A¬Ý¤£¨£¥ô¦ó¨ä¥LªF¦è¡C¿@
+±Kªº´Óª«Åý§A§ä¤£¨ì¦a¤è¥i¥H¦b¤p®q¤W¸¨¸}¡Cªe¬y¥ÑªF©¹¦èÄ~Äò©µ¦ù¡C
+~
+0 4 7
+D1
+©¹ªF¬Ý¹L¥h¡A§A¬Ý¨ìªe¬y³q©¹®qªº«nÃä¡C
+~
+~
+0 -1 206
+D2
+§A¬Ý¨ì¦è«nÃäªe¬yªº¤ä¬y¡C
+~
+~
+0 -1 210
+D3
+ªe¬y³vº¥¬y©¹¤@­Ó¥¨¤jªº¤ô°ì¡C
+~
+~
+0 -1 211
+S
+#210
+ªe¬yªº¤À¤ä~
+¤p®q¦b§AªºªFÃäº¥º¥ªº»·Â÷¡C¤p®q¤W¨ì³B³£¬O­Z±Kªº´Óª«¡C¦Óªe¬y¦b¦¹³B»P¥t¥~
+¤@±øªe¬y¶×¶°©¹¦èÃäÄ~Äò©µ¦ù¡C
+~
+0 4 7
+D0
+ªe¬y©¹¦èÃä¡A©¹ªFÃä¬O¤U´å¡C
+~
+~
+0 -1 209
+D1
+±q³o¸Ì©¹¤W´å¥hÀ³¸Ó¥i¥H¨ì¹F®qªº«nÃä¡C
+~
+~
+0 -1 208
+S
+#211
+¼e¼sªºªe¬y~
+ªe¬y¦b¦¹³B¤´Ä~Äòªº©¹¦èÃä¬y°Ê¡C§A©¹§Aªº¦èÃä±æ¥h¡Aµo²{¤w¸g´X¥G¬Ý¤£¨ì¥ô¦ó
+ªº³°¦a¡A¥u¯à°÷¬Ý¨ì¤ÑªÅ»P¼e¼sªe¬y³s±µ¦b¤@°_ªº¤Ñ»Ú½u¡C¦bªFÃä¤£»·³B§A¥i¥H¬Ý¨£
+¤@¶ô¤p®q¡C
+~
+0 4 7
+D1
+©¹ªF¬Oªe¬yªº¤W´å¡C
+~
+~
+0 -1 209
+D3
+¦èÃä¥i¥H¬Ý¨ìªe¬yªºªe¤f¡C
+~
+~
+0 -1 212
+S
+#212
+¥X®ü¤f~
+²×©ó¨ì¹F®ü¬v¤F¡I°}°}ªº®ü®ö½Ä¿EµÛ©¤¤Wªº©¥¥Û¡C®ü­±¤W¨ì³B³£¦³´å°Êªº®ü³D»P
+©¿Áô©¿²{ªººX³½¡C©¹¦è´N·|¶i¤J¼s¤jµL«­ªº®ü¬v¡C§Aµo²{©¹«nÁÙ¦³¤@±ø¤£¤pªºªe¹D¡A
+³o±ø¤ä¬y¤£ª¾¹D·|¬y¦V­þ¡C
+~
+0 4 7
+D1
+©¹ªF¬Oªe¬yªº¤W´å¡C
+~
+~
+0 -1 211
+D2
+~
+~
+0 -1 40000
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 213
+S
+#213
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡CªFÃäªº¥X®ü
+¤f¶ZÂ÷§A¤w¸g¬Û·íªº»·¤F¡C¦b§Aªº¥_Ãä¡B«nÃä»P¦èÃä³£¬OµL«­ªº¤j®ü¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 214
+D1
+§A¬Ý¨ì¤@­Ó¥¨¤jªe¤tªºªe¤f¡C
+~
+~
+0 -1 212
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 215
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 216
+S
+#214
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»P¦èÃä³£¬OµL«­ªº®ü¬v¡C¦bªFÃä§A»·»·ªº¬Ý¨ì¤j³°ªº®ü©¤½u¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 217
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 213
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 221
+S
+#215
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»P¦èÃä³£¬OµL«­ªº®ü¬v¡C¦bªFÃä§A»·»·ªº¬Ý¨ì¤j³°ªº®ü©¤½u¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 213
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 222
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 224
+S
+#216
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»PªFÃä³£¬OµL«­ªº®ü¬v¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 221
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 213
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 224
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 229
+S
+#217
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»P¦èÃä³£¬OµL«­ªº®ü¬v¡C¦bªFÃä§A»·»·ªº¬Ý¨ì¤j³°ªº®ü©¤½u¡C
+~
+0 4 7
+D0
+©¹¥_¦³¤@®y®k¾À¡C
+~
+~
+0 -1 218
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 214
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 220
+S
+#218
+®k¾À®Ç®ü¬v~
+³oÃäªº®ü¤ô¨RÀ»µÛÁG¥Û¡AÅý®ü¦VÅã±o¦³¨Ç«æ¡C¦b¥_Ãä¥i¥H¬Ý¨ì¤@­±¤j®k¾À¡A®k¾À
+¸ÌÀY¦ü¥G¦³¤@±ø³q¹D©¹¸ÌÀY©µ¦ù¡A¦ý¬O§A§ä¤£¨ì¥i¥Hª¦¤W¥hªº¸ô¡C¦bªFÃä¬O¥¨¤jªº®k¾À¡C
+~
+0 4 7
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 217
+D3
+©¹¦è¦³¤@®y®k¾À¡C
+~
+~
+0 -1 219
+S
+#219
+®k¾À®Ç®ü¬v~
+³oÃäªº®ü¤ô¨RÀ»µÛÁG¥Û¡AÅý®ü¦VÅã±o¦³¨Ç«æ¡C¦b¥_Ãä¥i¥H¬Ý¨ì¤@¶ô¤j®k¾À¡A®k¾À
+¸ÌÀY¦ü¥G¦³¤@±ø³q¹D©¹¸ÌÀY©µ¦ù¡A¦ý§A§ä¤£¨ì¥i¥Hª¦¤W¥hªº¸ô¡C¦èÃä¬O°~®kªº©¥¾À¡A
+«nÃä«h¬OµL«­ªº®ü¬v¡C
+~
+0 4 7
+D1
+©¹ªF¦³¤@®y®k¾À¡C
+~
+~
+0 -1 218
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 220
+S
+#220
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»PªFÃä³£¬OµL«­ªº®ü¬v¡C¦b¦èÃä§A»·»·ªº¬Ý¨ì¤j³°ªº®ü©¤½u¡C
+~
+0 4 7
+D0
+©¹¥_¦³¤@®y®k¾À¡C
+~
+~
+0 -1 219
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 217
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 221
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 234
+S
+#221
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»PªFÃä³£¬OµL«­ªº®ü¬v¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 220
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 214
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 216
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 233
+S
+#222
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä»P¦è
+Ãä³£¬OµL«­ªº®ü¬v¡C¦bªFÃä§A»·»·ªº¬Ý¨ì¤j³°ªº®ü©¤½u¡C©¹«nÃä·Å«×¦ü¥G¶V­°¶V§C¡A
+»·»·¦a¥i¥H¬Ý¨ì¤@­Ó¤jÄa±V¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 215
+D2
+©¹«n¦ü¥G¬O¤@¶ô³Q¥_·¥ºµ©~¦íªº¦MÀI¦a±a¡C
+~
+~
+0 -1 1801
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 223
+S
+#223
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»P¦èÃä³£¬OµL«­ªº®ü¬v¡C¦bªFÃä§A»·»·ªº¬Ý¨ì¤j³°ªº®ü©¤½u¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 224
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 222
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 225
+S
+#224
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»P¦èÃä³£¬OµL«­ªº®ü¬v¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 216
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 215
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 223
+D3
+©¹¦èªº®ü¦ü¥G¤Q¤À¦a¡u¥û²r¡v¡C
+~
+~
+0 -1 226
+S
+#225
+«ã¸¹ªº¤j®ü~
+§A¥i¥HÁA¸Ñ¦b³o­Ó®É­Ô¡A§A¤£¯à°÷ÃP¾Ó¤U¨Ó¡C¦]¬°¦³«Ü¦hªº«_ÀIªÌ´¿¸g¦b³o¨g­·
+¼É«B¤§¤¤³à¥¢¤F¥Í©R¡A§A¤£§Æ±æ§A¦Û¤v¨B¤W¥L­Ìªº«á¹Ð¡C
+§Aµo²{³o¸Ìªº®ü¤ô«D±`ªº²`¡A¤]³\¥i¥H¼ç¶i¥h±´¯Á¡Ð«e´£¬O§A¥²¶··|¦b¤ô¸Ì©I§l¡C
+~
+0 4 7
+D0
+©¹¥_ªº®ü¦ü¥G¤Q¤À¦a¡u¥û²r¡v¡C
+~
+~
+0 -1 226
+D1
+©¹ªFªº®ü¦ü¥G¤Q¤À¦a¡u¥û²r¡v¡C
+~
+~
+0 -1 223
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 227
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 228
+D5
+©¹¨º¸Ì´N¬O®ü¤¤¡C
+~
+~
+0 -1 248
+>room_rand 50~
+if pcnum($) == 0
+	break
+endif
+if rand(30)
+		echo ¨g­·¼É®öÅý§A´X¥G¯¸¤£¦í....¡I
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo §N¨æªº±j­·Åý§A´X¥G¯¸¤£¦í¸}¡I
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo °}°}ªº®ü®ö¤£Â_ªº¨R¨ê§Aªº¨­Åé...¡I
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+	endif
+~
+|
+S
+#226
+¤¿²rªº¤j®ü~
+¤Ñ®ðº¥º¥ªºÅÜ®t¡A­·¶Õ¶V¨Ó¶V±j«l¡A®ü®ö¶V¨Ó¶V¤¿²r¡C®ü®ö¦V§A½Ä¤F¹L¨Ó¡A§Aªº
+¤f¤¤º¡¬OÄÐªº®ü¤ô¡C¦ý¬O¥u­nµ¥¨ì­·®ö¥­ÀR¡A§A´N¥i¥HÄ~Äò§Aªº®Èµ{¡C
+§Aµo²{³o¸Ìªº®ü¤ô«D±`ªº²`¡A¤]³\¥i¥H¼ç¶i¥h±´¯Á¡Ð«e´£¬O§A¥²¶··|¦b¤ô¸Ì©I§l¡C
+~
+0 4 7
+D0
+©¹¥_ªº®ü¦ü¥G¤Q¤À¦a¡u¥û²r¡v¡C
+~
+~
+0 -1 229
+D1
+©¹ªFªº®ü¦ü¥G¤Q¤À¦a¡u¥û²r¡v¡C
+~
+~
+0 -1 224
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 225
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 230
+D5
+©¹¨º¸Ì´N¬O®ü¤¤¡C
+~
+~
+0 -1 249
+>room_rand 50~
+if rand(30)
+		echo ¨g­·¼É®öÅý§A´X¥G¯¸¤£¦í....¡I
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo §N¨æªº±j­·Åý§A´X¥G¯¸¤£¦í¸}¡I
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo °}°}ªº®ü®ö¤£Â_ªº¨R¨ê§Aªº¨­Åé...¡I
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+	endif
+~
+|
+S
+#227
+ª¢¼öªº¤j®ü~
+§A²×©ó´ç¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C§Aª`·N¨ì«n¤è¦³¤@®y®qÀ¬¡A¦ý¬O®qÀ¬¤W¦ü¥G¦³¤@®y²r¯Pªº¤õ¤s¡C
+~
+0 4 7
+D0
+¥_Ãä®ü°ìªºªi®ö¦ü¥G¶V¨Ó¶V±j¤j¡A¤Ñ­Ô¤]§ó®t¤F¡C
+~
+~
+0 -1 225
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 231
+S
+#228
+ª¢¼öªº¤j®ü~
+§A²×©ó´ç¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C¥|­±¤K¤è³£¬O½«ÂÅªº¤ÑªÅ¡AÅý§A·P¨ì¤ßÃm¯«©É¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 230
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 225
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 231
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 232
+S
+#229
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»PªFÃä³£¬OµL«­ªº®ü¬v¡C§A¬Ý¨ìªþªñ¦³¤@®y®qÀ¬¡A»P¥v¥d©Ô¨©¤j³°¦ü¥G¨S¦³¬Û³s¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 233
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 216
+D2
+«nÃä®ü°ì¦³¤@¤j¸sªº¶³»E¶°µÛ¡A¦ü¥G¬O­ÓÄµ§i¡C
+~
+~
+0 -1 226
+S
+#230
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b«nÃä¡B¦è
+Ãä»PªFÃä³£¬OµL«­ªº®ü¬v¡C§A¬Ý¨ì¥_Ãä¦³¤@®y®qÀ¬¡A»P¥v¥d©Ô¨©¤j³°¦ü¥G¨S¦³¬Û³s¡C
+~
+0 4 7
+D1
+ªFÃä®ü°ìªº¶³»E¶°µÛ¡A¥¿µo¥Í¤@³õ¼É­·«B¡C
+~
+~
+0 -1 226
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 228
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 235
+S
+#231
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C¥|­±¤K¤è³£¬O½«ÂÅªº¤ÑªÅ¡AÅý§A·P¨ì¤ßÃm¯«©É¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 228
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 227
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 236
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 237
+S
+#232
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C¥|­±¤K¤è³£¬O½«ÂÅªº¤ÑªÅ¡AÅý§A·P¨ì¤ßÃm¯«©É¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 235
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 228
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 237
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 238
+S
+#233
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b¥_Ãä¡B«n
+Ãä»PªFÃä³£¬OµL«­ªº®ü¬v¡C§A¬Ý¨ìªþªñ¦³¤@®y®qÀ¬¡A»P¥v¥d©Ô¨©¤j³°¦ü¥G¨S¦³¬Û³s¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 234
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 221
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 229
+S
+#234
+½«ÂÅªº¤j®ü~
+§A¥¿¦b¤j®ü¤§¤W¡C»·»·ªº§A¥i¥H¬Ý¨ì°}°}ªº®ü®ö½ÄÀ»µÛ©¤¤Wªº©¥¥Û¡C¦b«nÃä»PªF
+Ãä³£¬OµL«­ªº®ü¬v¡C§A¬Ý¨ì¦èÃä¦³¤@®y®qÀ¬¡A»P¥v¥d©Ô¨©¤j³°¦ü¥G¨S¦³¬Û³s¡C¦Ó¥_Ãä
+¦³¤@®y°~®kªºÄa±V¡C
+~
+0 4 7
+D0
+§A¬Ý¨ì«e¤èªº®üÅy¡C
+~
+~
+0 0 245
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 220
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 233
+S
+#235
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C¥_­±»P¦è­±ªº³°¦a¦ü¥G»P¥v¥d©Ô¨©¤j³°¨S¦³¬Û³s¡A³o¸Ì¦³¤@®y½XÀY¥i¥HÅý
+§A¶i¤Jªy²î¡C
+~
+0 4 7
+D0
+©¹¥_¬O­Ó¤p½XÀY¡C
+~
+~
+0 -1 239
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 230
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 232
+S
+#236
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C¥_­±»P¦è­±ªº³°¦a¦ü¥G»P¥v¥d©Ô¨©¤j³°¨S¦³¬Û³s¡A§A¤]ª`·N¨ìªþªñ¤õ¤sº²
+©¥¥¿¦b¬y°Ê¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 231
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 240
+S
+#237
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C¦¹³B¥|­±¤K¤è³£¬OµL«­ªº¤j®ü¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 232
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 231
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 240
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 241
+S
+#238
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C«e¤è¤j³°ªº¥_Ãä»P¦èÃä¨Ã¨S¦³³s±µ¨ì¥v¥d©Ô¨©¤j³°¤W¡C
+~
+0 4 7
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 232
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 241
+S
+#239
+½XÀY~
+³o®y½XÀY¬O¥Ñ·t¦Ç¦âªº¤ìÀYºc¦¨¡C³o­Ó½XÀY¤£¬O«Ü¤j¡A¬Ý°_¨Ó¤£¤Ó¯à°÷©è¾×¯EÃv
+®ü¬vªº¤é«I¤ëÅ§¡C¦ý¬O¥¦ÁÙ¯à°÷Ä~ÄòÅ÷¥ß¦b¦¹ªº­ì¦]¡A´N¬O¦¹³B®ü¬v¤@¦~¥|©u³£¬O­·
+¥­®öÀR¡C³o¸Ì°ß¤@ªº¥X¤f¬O¦^¨ì®ü¬v¤§¤W¡C
+~
+0 0 1
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 235
+S
+#240
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C§Aª`·N¨ì«n¤è»P¦è¤è¦³¤@¶ô¤j³°¡A¦ý¬O¤j³°¤W¦ü¥G¦³µÛ±j¯Pªº¦B³·¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 237
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 236
+S
+#241
+ª¢¼öªº¤j®ü~
+§A²×©ó«×¹L¤F¨g­·¼É«B¡A¨Ó¨ì¤F¥­ÀRªº®ü­±¡C³o­Ó¥­ÀRªº¤j®ü¤U¡A¥¥¨|µÛ³\¦h¬Ã
+©_ªº¥Í©R¡C§A¨£¨ì¦è«nÃäªº¤j³°¤W¦³³\¦h°ªÁqªº¥C³®»P»Aºñªº´ËªL¡C
+~
+0 4 7
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 238
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 237
+S
+#242
+¤@±ø¤p®|~
+§A±jµwªº¬ï¶V³o®y´ËªL¡Aº¥º¥ªº«e­±ªº¤p®|¤w¸g¶V¨Ó¶V©úÅã¡C¨«¨ì¤@­Ó¼eÁïªº¦a
+¤è¡Aµo²{§A¤w¸g½ñ¤W¤@®y¤p®q¡A¤WÀY¦³¤@´É¤p«Î¡A¤p«Îªºµ¡¤áÅS¥X©ú«Gªº¥ú½u¡C 
+~
+0 0 3
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù®ü¡C
+~
+~
+0 -1 243
+D2
+©¹«n¥i¥H¦^¨ì¨º¹Dªe¤t¡C
+~
+~
+0 -1 208
+S
+#243
+¤p«Î¤§¥~~
+§A¯¸¦b¤@´Éºc³yÂ²­®ªº¤p«Î¤§¥~¡A¤p«Îªººc§÷¦ü¥G³£¬O¨ÇÀH¤â¾ß¨ÓªºªF¦è¡C§A¦ü
+¥GÁô¬ùÅ¥¨ì«Î¸Ì¶Ç¨Ó°}°}ªº¾¸­µ¡A¦ý¬O²{¦b«o¤S§¹¥þªºÀR¤î¤F¡C¤p«Îªº¤J¤f¦b§Aªº¦è
+Ãä¡A§A¥i¥H©¹«n¦^¨ì­è­èªº¸ô¤W¡C
+~
+0 0 3
+D2
+©¹«n¦³¤@±ø¤p¸ô¬ï¹L´ËªL¡C
+~
+~
+0 -1 242
+D3
+¦èÃä¦³¤@­Ó¤ìªù¡C
+~
+door wooden~
+3 -1 244
+S
+#244
+¤p«Î¤§¤¤~
+¦b©Ð¶¡¥|©P§A¬Ý¨ì³\¦h®ÑÄy»P¬Á¼þ²~¡A©Î³\¬O³o¶¡©Ð¤lªº¥D¤H¥Î¨Ó»s§@Å]ªkÃÄ¤ô
+ªº©Ð¶¡¡C¦b¤£»·ªº¦a¤è§A¬Ý¨ì¤@´TµeµÛµ´¥@¬ü¤kªºµe¡C¦VªFÃä¶}ªùÂ÷¶}³o¶¡©Ð¶¡¡C
+~
+0 8 0
+D1
+³o¹Dªù³q©¹ªù¥~¡C
+~
+~
+3 -1 243
+S
+#245
+¨FÅy¤W~
+§A¨ì¹F¤F¤@­Ó¤p«¬ªº¨FÅy¡C««ª½°ªÁqªº®k¾ÀÅ÷¥ß¦b§AªºªF¦è¨âÃä¡A¦Ó¼e¼sªº®ü¬v
+¦b§Aªº«nÃä¡C¦b¥_Ãä§A¥i¥H¬Ý¨ì¤@®y©Y«×¤£°~ªº¤s©Y¡A§A¤ß·Q§A©Î³\¥i¥Hª¦±o¤W¥h¡C
+~
+0 8 0
+D0
+³o­Ó¨FÅyÄ~Äò©¹¥_¤s©Y©µ¦ù¡C
+~
+~
+0 0 246
+D2
+§A¬Ý¨ì«e¤èÃe¤jªº®ü¬v¡C
+~
+~
+0 0 234
+S
+#246
+¨FÅy¤W~
+§A¥¿ªuµÛ¨FÅy½w½wªº¦æ¨«¡C³o¸Ì­·¥ú©ú´A¡A¦ý¬O«Ü©¯¹Bªº¨S¦³«Ü¦h¤Hª¾¹D¦³³o­Ó
+¦a¤è¡CÄ~Äò©¹¥_¨«§A¥i¥H¬Ý¨ì¤@®y¥i¥HÃkµnªº°ª¤s¡A©¹«n¥i¥H¦^¨ì®üÃäªº¨FÅy¡CªF¦è
+¨âÃä³£¬O°~®kµLªkÃkª¦ªº®k¾À¡C
+~
+0 8 0
+D0
+§A¬Ý¨ì¤s¸}¤F¡C
+~
+~
+0 0 247
+D2
+§A¬Ý¨ì¤£»·³Bªº¨FÅy»PÃe¤jªº®ü¬v¡C
+~
+~
+0 0 245
+S
+#247
+¦b¤s¸}¤U~
+§A¦b¤@®y¤sªº¤s¸}¤U¡C¤@±ø¯U¯¶ªº¸ô¦ü¥G¥i¥H³q©¹¤s¤W¡C©¹«n¥i¥H¦^¨ì­è­è¤W©¤
+ªº¨FÅy¡C°~®kªº®k¾ÀÅ÷¥ß¦b§AªºªF¦è¨âÃä¡C¦ý¬O¦ü¥G©¹¥_ªº¸ô¥i¥H³q©¹³o®y®k¾Àªº¤W
+ÀY¡C¦b»·³Bªº®k¾À¤W¦ü¥G¦³¤@®y¼q¡C
+~
+0 8 0
+D0
+~
+~
+0 0 20101
+D2
+§A¬Ý¨ì»·¤èªº¨FÅy»PÃe¤jªº®ü¬v¡C
+~
+~
+0 0 246
+S
+#248
+¤j®ü¤¤~
+§A¥¿¦b®ü©³Â÷¤ô­±¤£»·³B¡A¥|©PÁÙºâ«G¡C¥|©P¦³¤£¤Öªº¤p³½´åµÛ¡C
+³o¸Ì¤ñ®ü­±¤W¥­ÀR¦h¤F¡C
+~
+0 0 8
+D0
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 249
+D4
+©¹¨º¸Ì´N¥i¥H¦^¨ì®ü­±¤W¡C
+~
+~
+0 -1 225
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#249
+¤j®ü¤¤~
+§A¥¿¦b®ü©³Â÷¤ô­±¤£»·³B¡A¥|©PÁÙºâ«G¡C¥|©P¦³¤£¤Öªº¤p³½´åµÛ¡C
+³o¸Ì¤ñ®ü­±¤W¥­ÀR¦h¤F¡C
+~
+0 0 8
+D0
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 250
+D2
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 248
+D4
+©¹¨º¸Ì´N¥i¥H¦^¨ì®ü­±¤W¡C
+~
+~
+0 -1 226
+S
+#250
+¤j®ü¤¤~
+§A´å¨ì¤F³o­Ó¦a¤è¡A³o¸Ì©P³ò¦³¤£¤Öªº³½¡AÁÙ¦³¤@¨Ç®ü¯ó¥Íªø¦b³o¸Ì¡C
+ªFÃä¦³¤@¹Î¬À·äÁG¡A¤]³\¥i¥Hª¦¤W¥h¡C
+~
+0 0 8
+D0
+¨º¸Ìªº¤ô¶V¨Ó¶V·t¤F¡C
+~
+~
+0 -1 252
+D1
+¨º¬O¤@­Ó¤ÑµMªº¬À·äÁG¡C
+~
+~
+0 -1 251
+D2
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 249
+S
+#251
+¬À·äÁG~
+§Aª¦¤W¤F³o­Ó¯B¦b¤ô­±¤Wªº¬À·äÁG¡A¥|³£¬O½«ÂÅªº¤j®ü¡A·íµM§A¤]¥i¥H©¹¤U¼ç¤J
+¤ô¤¤¡C
+~
+0 0 4
+D0
+©¹¥_§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 224
+D1
+©¹ªF§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 229
+D2
+©¹«n§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 229
+D3
+©¹¦è§A¥u¬Ýªº¨ì¤@¤ù¼s¤jªº®ü¬v¡C
+~
+~
+0 -1 230
+D5
+©¹¨º¸Ì¥i¥H¼ç¶i®ü¤¤¡C
+~
+~
+0 -1 250
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#252
+¤j®ü¤¤~
+³o¸Ì¤j·§´N¬O®ü¤¤®qÀ¬ªº©³¤U¡A¥|©P¯S§O¦a·t¡C«nÃä¦³¤@¹D¥ú¨~¡A¦Ó¥_Ãä«h§ó·t¤F¡C
+~
+0 0 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 253
+D2
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 250
+S
+#253
+¶i¤J²`®ü~
+§A¶i¤J²`®ü¤§¤¤¤F¡A³o¸Ì¤@¤ù¶Â·t¡A§A¦ü¥G¦A¤]§ä¤£¨ì­è­èªº¥X¤f¡C©¹¥_¦³¤@°}
+±j¤jªº¤ô¬y¡A¤]³\¬O¤°»ò¥i©Èªº¥Íª«¡A³Ì¦n§O¾aªñ¡C§A·P¨ì«D±`ªº§N¡A¥u·Q»°§Ö§ä¨ì
+Â÷¶}³o¸Ìªº¥X¸ô¡C
+~
+0 17 8
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 255
+D2
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 257
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 256
+D4
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 253
+D5
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 263
+>room_leave 16 100~
+echoat $n §Aµo²{§A©~µM¤S´å¦^­ì¦a¤F¡I
+~
+|
+S
+#254
+ºx´õ¤¤~
+§A¤@¶i¨ì³o¸Ì¨Ó¡A´N³Q±²¶i¤@­Ó¥¨¤jªººx´õ¤§¤¤¡C·í§A«j±j°k¥X¥h«á¡A§A²×©óµo
+²{»s³yºx´õªº´N¬O²´«e³o­Ó¥¨¤jªº®ü©Ç¡I¥J²Ó¤@¬Ý¡A¥|©P³£¬O©¥¾À¡A¬Ý¨Ó³o¤@©w¬O¨e
+ªº±_¥Þ¡A¦Ó©¹¤U¬O°ß¤@¥i¯àªº¥Í¸ô¡C
+~
+0 21 8
+D5
+¨º¸Ì¬O§ó²`ªº®ü°ì¡C
+~
+~
+0 -1 264
+S
+#255
+¶i¤J²`®ü~
+§A¥¿¦ì¦b¤@¤ù¼s¤jªº²`®ü¤§¤¤¡A§A¥i¥H¿ï¾Ü©¹¦è¦^¨ì­ìÂI¡A©Î¬O©¹¤U²`¤J²`®ü¡C
+~
+0 17 8
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 253
+D5
+¨º¸Ì¬O§ó²`ªº®ü°ì¡C
+~
+~
+0 -1 265
+S
+#256
+¶i¤J²`®ü~
+§A¥¿¦ì¦b¤@¤ù¼s¤jªº²`®ü¤§¤¤¡A§A¥i¥H¿ï¾Ü©¹ªF¦^¨ì­ìÂI¡A©Î¬O©¹¤U²`¤J²`®ü¡C
+~
+0 17 8
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 253
+D5
+¨º¸Ì¬O§ó²`ªº®ü°ì¡C
+~
+~
+0 -1 266
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#257
+¶i¤J²`®ü~
+§A¨Ó¨ì¤F®üªº¤¤¥¡¡Aµo²{¤F¤@­Ó©¹¤Wªº¥X¤f¡C¨ä¥L¤è¦V³£¥i¥H³q¦æ¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 253
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 261
+D2
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 257
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 256
+D4
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 250
+D5
+¨º¸Ì¬O§ó²`ªº®ü°ì¡C
+~
+~
+0 -1 267
+S
+#258
+¶i¤J²`®ü~
+§A¥¿¦b®ü¤¤´åµÛ¡A¤@¨Ç¯«¯µªº¥úÄÆ¯B¦b¤ô¤¤¡C¦èÃä¦³¤@­Ó¬}¥Þ¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 257
+D1
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 262
+D3
+¨º¸Ì¬O¤@­Ó¬}¥Þ¡C
+~
+~
+0 -1 260
+S
+#259
+¶i¤J²`®ü~
+§A¥¿¦b¤@­Ó¥¨¤j¬}¥Þªº¥_¤è¡A¨º¸Ì¶Ç¨Ó¤@°}«ÂÄYªº®ð®§¡C§A¥i¥H±q³o¸Ì©¹¥_¡BªF
+´å¥h¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 256
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 257
+D2
+¨º¸Ì¬O¤@­Ó¬}¥Þ¡C
+~
+~
+0 -1 260
+D5
+¨º¸Ì¬O§ó²`ªº®ü°ì¡C
+~
+~
+0 -1 269
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#260
+®üÀs¤§¥Þ~
+§A¤£¤p¤ßÂô¤J¤F³o­Ó®ü¤¤¬}¥Þ¡A§A²´«e¥X²{¤F¤@°¦¥¨¤jªº®üÀsÀJ¹³¡C§A¦b¬}¥ÞÀð
+¤W¬Ý¨ì¤@­Ó¤T¤e´u(trident)¡C¥_Ãä¸òªFÃä³£¦³¥X¤f¡C
+~
+0 28 8
+E
+trident~
+³o¬O¥Nªí®ü¯«¡Ð©`´¶¹y(Neptune)¤O¶qªº´u¡A¥u¦³«iªÌ¦³¾÷·|®³¨ì¡C
+~
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 259
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 258
+S
+#261
+¶i¤J²`®ü~
+³o¸Ì¤ñ¨ä¥L¦a¤è·x©M¦h¤F¡A¦]¬°¦³¤@ªÑ¼ö®ð±q©³¤U¶Ç¨Ó¡C¦èÃäªº¤ô´N§N¦h¤F¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 255
+D2
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 262
+D3
+¨º¸Ì¤@¤ùÂÅ¦â¡C
+~
+~
+0 -1 257
+S
+#262
+®ü¤¤~
+³o¸Ì¦³¤@¨Ç¬Ã¯]¡A©s¯q¬Ý¨ì¥¦­Ì¤@©w·|¥X°ª»ùªº¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 261
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 258
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#263
+²`®ü¤¤~
+¤p¤ßÂI¡A§A¤w¸g¶i¤J®ü©³·¥²`¤§³B¤F¡A³o¸Ì¤]³\·|¥X²{¤@¨Ç¥i©Èªº¥Íª«¤]¤£¤@©w¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 264
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 265
+D2
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 267
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 266
+D4
+¨º¸Ì¬O¸û²Lªº®ü°ì¡C
+~
+~
+0 -1 253
+S
+#264
+²`®ü¤¤~
+§A¬ï¹L¤j®ü©Çªº±_¥Þ¡A¶i¤J¤F²`®ü¡C³o¸Ì¥u¦³«nÃä¦³¸ô¡C
+~
+0 17 8
+D2
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 263
+D4
+¨º¸Ì¬O¤j®ü©Çªº±_¥Þ¡C
+~
+~
+0 -1 254
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#265
+²`®ü¤¤~
+³o¸Ì¥|©P¤@¤ù¶Â·t¡A°¸¦Ó¦³¤@¨Ç¥j©Çªº¥Íª«´å¹L§A¨­®Ç¡C¨e­Ì¦ü¥G³£µLµø§Aªº¦s¦b¡C
+~
+0 17 8
+D2
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 268
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 263
+D4
+¨º¸Ì¬O¸û²Lªº®ü°ì¡C
+~
+~
+0 -1 255
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#266
+²`®ü¤¤~
+§A¥¿´å¦b²`®ü¤§¤¤¡A§A©¿µMª`·N¨ì¤@®Ç¦³¤@¿´¨I²î(ship)¡C
+~
+0 17 8
+E
+ship~
+±q¥~Æ[¬Ý°_¨Ó¡A³o¿´²î¤w¸g¨I¤J®ü¤¤¦³«Üªø¤@¬q®É¶¡¤F¡C
+~
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 263
+D2
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 269
+D3
+±q¨º¸Ì¥i¥H¶i¤J¨I²î¤§¤¤¡C
+~
+~
+0 -1 270
+D4
+¨º¸Ì¬O¸û²Lªº®ü°ì¡C
+~
+~
+0 -1 256
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#267
+²`®ü¤¤~
+§A¥¿´å¦b²`®ü¤§¤¤¡AªFÃä¶Ç¨Ó¤@ªÑ¼ö®ð¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 263
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 268
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 269
+D4
+¨º¸Ì¬O¸û²Lªº®ü°ì¡C
+~
+~
+0 -1 257
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#268
+²`®ü¤¤~
+³o¸Ì´N¬O¶Ç»¡ªº²`®üºñ¬w§a¡I¦a©³¤£Â_«_¥X¼ö¤ô¡A¥|©P¤]ªø¤F³\¦hªº¤ôÄ¦¡C¤]¦³
+¤£¤Öªº³½¦b³o¸Ì´åµÛ¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 265
+D3
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 267
+D4
+¨º¸Ì¬O¸û²Lªº®ü°ì¡C
+~
+~
+0 -1 261
+>room_time 80~
+echo ¦a©³«_¥Xªº¼ö¤ôÅý§A·P¨ì¤Q¤ÀµÎªA¡C
+	modhmv pc 04.2 4 0
+~
+|
+S
+#269
+²`®ü¤¤~
+§A¥¿´å¦b²`®ü¤§¤¤¡A¯«¯µªº¥ú¨~°{Ã{µÛ¡C
+~
+0 17 8
+D0
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 266
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 267
+D4
+¨º¸Ì¬O¸û²Lªº®ü°ì¡C
+~
+~
+0 -1 259
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#270
+¨I²î¤¤~
+§A±q¤@®Çªº¤j¯}¬}¶i¤J¤F³o­Ó¨I²î¤§¤¤¡A§Aµo²{¤@®Ç¦³¤@°ï°]Ä_¡I
+~
+0 17 8
+D1
+¨º¸Ì¤@¤ù¶Â·t¡C
+~
+~
+0 -1 266
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m©¿µM¤@°¦¤j¥ÕÃT(Great White Shark)±q·t³B¤¤½Ä¤F¥X¨Ó¡I[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#0
+
+
+
+#SPECIALS
+M 211 spec_breath_any
+M 213 spec_breath_gas
+M 216 spec_fido
+M 220 spec_breath_lightning
+S
+
+
+
+#RESETS
+M 0 220 2 211
+M 0 221 1 211
+M 0 208 2 218
+E 0 205 0 5
+M 0 208 2 219
+E 0 205 0 5
+M 0 209 1 221
+M 0 203 1 224
+M 0 222 3 224
+M 0 203 1 225
+M 0 218 5 226
+M 0 214 2 227
+M 0 215 2 227
+M 0 214 2 228
+M 0 203 1 230
+M 0 203 1 230
+M 0 204 1 231
+M 0 204 1 231
+M 0 204 1 232
+M 0 204 1 232
+M 0 205 1 233
+M 0 205 1 233
+M 0 205 1 234
+M 0 205 1 234
+M 0 206 1 235
+M 0 206 1 235
+M 0 206 1 236
+M 0 206 1 236
+M 0 207 1 237
+M 0 207 1 237
+M 0 207 1 238
+M 0 207 1 238
+M 0 202 1 239
+G 0 203 0
+M 0 201 1 244
+E 0 202 0 17
+O 0 201 0 244
+M 0 210 2 245
+M 0 210 2 246
+M 0 215 2 253
+M 0 213 1 254
+M 0 216 1 256
+M 0 211 1 260
+M 0 216 1 260
+M 0 219 5 263
+M 0 216 1 265
+M 0 217 4 265
+M 0 223 2 265
+M 0 223 2 267
+M 0 225 2 268
+M 0 215 2 269
+M 0 224 1 269
+O 0 211 0 270
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

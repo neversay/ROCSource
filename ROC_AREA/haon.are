@@ -1,0 +1,2766 @@
+#AREADATA
+Name        史卡拉貝西方黑森林~
+Identity    haon~
+Builders    Diku~
+Translator  Amenda~
+Modifier    Amenda~
+VNUMs	      6000 6199
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#6000
+john-haon lumberjack~
+樵夫約翰(John the Lumberjack)~
+樵夫約翰(John the Lumberjack)住在這很多年，也許你能請教他有關森林(forest)的事。
+~
+他是一位六呎高、強壯的男人，衣服下是強壯的肌肉。他的特徵帶著努力的辛勞，
+他嚮往一個平靜安寧的普通人生活。
+~
+3 12 350 S
+15 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say 這個森林(forest)的事，沒人比我清楚。
+~
+>talk_prog forest~
+nod $n
+mpcallout 1 mpcall talk_1 $n
+mpcallout 1 mpechoaround $n $I 裂開大口對 $n 笑著。
+mpcallout 2 mpcall talk_2 $n
+mpcallout 3 say 這座森林東邊的出口就是史卡拉貝城，東南方是小惡鬼的棲息地，
+mpcallout 4 say 北邊通往綠樹王國，西北邊可抵達新囤墾區(shire)，神秘的魔法高塔
+mpcallout 5 say 在森林的西邊，西南方是遠古沼澤以及人類的要塞，
+mpcallout 6 say 不過那裡我就不大清楚了....
+mpcallout 7 bow $n 
+mpcallout 7 say 我所知道的就是這些了，祝你們旅途愉快。
+mpcallout 8 wave $n 
+~
+>defun_prog talk_1~
+say 你問對人了，史卡拉貝西方的這座森林相當廣大，
+say 要是沒有人說明，一般旅人很容易迷失。        
+~
+>defun_prog talk_2~
+say 這座森林一般人簡稱西方黑森林，裡面都是幾千年的蒼天巨木。
+say 史卡拉貝陸上的對外交通大半都要經過這裡，所以基本上森林
+say 裡沒有太危險的動物。
+~
+>talk_prog shire~
+say 這個郡是一個新的囤墾區。
+~
+|
+#6002
+brown bear~
+野生的熊(brown bear)~
+一隻巨大，咖啡色野生的熊(brown bear)瞪視著你
+~
+這是一隻大型的棕熊，有著大爪子和尖銳的牙齒。牠可一點也不像玩具櫥窗中的
+熊玩偶一樣可愛。
+~
+97 0 -50 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Bear~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下$I 的皮......
+	mpoload 35004 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下$I 的皮......
+	mpoload 35004 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 30
+endif
+~
+|
+#6003
+ferocious rabbit~
+兇惡的兔子(ferocious rabbit)~
+一隻凶惡的兔子(ferocious rabbit)，他看起來比一般兔子大多了。
+~
+一隻小型的多毛生物，有著長耳朵和大腳丫，指上長著尖銳的爪子。
+一股可怕的黑暗力量把這隻兔子從溫馴的小動物化為可怕的嗜血野獸。
+~
+97 0 -150 S
+11 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 cinf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35002 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35002 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+~
+|
+#6004
+fallow deer~
+悠閒的鹿(fallow deer)~
+一隻悠閒的鹿(fallow deer)在這晃蕩。
+~
+她是一隻祥和的梅花鹿，有著長而纖細的腿，以及一雙盯著你瞧的大大棕眸，
+看起來煞是有趣。
+~
+83 8 350 S
+10 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35001 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35001 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+~
+|
+#6005
+fox~
+狐狸(fox)~
+一隻咖啡色的狐狸(fox)在這裡找尋兔子當晚餐。
+~
+一隻有著紅棕色的美麗爪子和尾巴的大狐狸。
+~
+65 0 -50 S
+10 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35003 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35003 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+~
+|
+#6006
+traveler elf~
+精靈旅者(elf traveler)~
+離鄉遠遊的精靈旅者(elf traveler)，和同伴們說些你不懂的話。
+~
+他滿面風霜，看來已經走了很長的路。
+~
+41027 8240 800 S
+6 0 0 0d0+0 -15d0+0
+-1 0
+0 8 1
+R Elf~
+C 2
+>talk_prog topic~
+say 精靈族最喜歡綠色的森林。
+~
+>fight_prog 50~
+if level($n) > 35
+	cast power
+else
+	cast chill
+endif
+~
+>hitprcnt_prog 75~
+if isaffected($i) & 1
+mpecho $I 喝下一罐藥水
+	mpdis_magic self blindness
+endif
+if isaffected($i) & 16777216
+	mpecho $I 喝下一罐藥水
+	mpdis_magic self 'seal magic'
+endif
+~
+|
+#6007
+guide elf~
+精靈嚮導(elf guide)~
+有經驗的精靈嚮導(elf guide)，四處打量環境。
+~
+他滿面風霜，看來已經走了很長的路。
+~
+41027 8752 800 S
+26 0 0 0d0+0 -20d0+0
+-1 0
+0 8 1
+R Elf~
+C 2
+>talk_prog topic~
+say 史卡拉貝北方的平原有個精靈山谷，我們想要到那去。
+~
+>greet_prog 50~
+if isnpc($n)
+	break
+endif
+nod $n
+say 嗨，你好，你們也是要到史卡拉貝嗎？
+~
+>fight_prog 50~
+if level($n) > 35
+	cast power
+else
+	c harm
+endif
+~
+>hitprcnt_prog 75~
+if isaffected($i) & 1
+	mpecho $I 喝下一罐藥水
+	mpdis_magic self blindness
+endif
+if isaffected($i) & 16777216
+	mpecho $I 喝下一罐藥水
+	mpdis_magic self 'seal magic'
+endif
+~
+|
+#6008
+pixie~
+小妖精(pixie)~
+一隻在湖面飛翔的小妖精(pixie)，翅膀閃閃發光。
+~
+一個可愛的小妖精，她也在看你喔！
+~
+8259 8368 800 S
+26 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Pixie~
+C 2
+>talk_prog topic~
+blush
+mpecho $I 紅著臉飛走了。
+~
+>rand_prog 20~
+chuckle
+~
+>fight_prog 50~
+if level($n) > 27
+	c 2 fire
+	break
+endif
+c magic
+~
+>hitprcnt_prog 80~
+if isaffected($i) & 1
+	mpecho $I 施法治癒自己的失明！
+	mpdis_magic $i blindness
+endif
+~
+|
+#6009
+hermit forest~
+森林隱者(forest hermit)~
+森林隱者(forest hermit)坐在這裡，慈祥地招呼你過來。
+~
+他很削瘦，但精神奕奕。
+~
+7 568 1000 S
+22 0 0 0d0+-300 0d-200+0
+-1 0
+0 8 1
+S 16 -300
+>greet_prog 100~
+if ispc($n)
+	if is_qmark($n) != western_hermit
+		say 孩子，走過來一點....
+		say 聽馬修說最近有位上進的年輕冒險者，難道就是你嗎？(yes/no)
+	endif
+endif
+~
+>talk_prog yes~
+if is_qmark($n) != western_hermit
+	mpadd_qmark $n western_hermit -1 1 1 1 0 1
+	say 既然是這樣，我要給你一項寶物。
+	smile $n
+	say 不過在此之前，我想看看你的能力....
+	say 黑森林西北邊有一條綠龍，如果你能打敗它，
+	say 把它的眼珠拿給我，我就認為你值得我的幫助。
+	say 我給你一點建議，注意別把 wimpy 設成零喔！
+	wave $n
+endif
+~
+>talk_prog no~
+sigh
+~
+>give_prog 6019~
+if is_qmark($n) == western_hermit 300005
+	say 你已經解過此任務了.
+	drop eyeball
+	break
+endif
+if is_qmark($n) == western_hermit 100001
+	say 你確定你有見到綠龍嗎？
+	drop eyeball
+	break
+endif
+if is_qmark($n) == western_hermit
+	mpmod_qmark $n western_hermit v2 = 5
+	clap $n
+	good
+	mpjunk ball
+	mpoload 6020 18
+	give pill $n
+	mpgold $n 20000
+	if class($n) < 5
+		mpexp $n 1000
+	else
+		mpexp $n 500
+		mpmod_qmark $n western_hermit v1 = 2
+	endif
+	say 這是你的獎勵！希望能對你有所幫助。
+	wave $n
+endif
+~
+|
+#6010
+minotaur~
+年輕的牛頭人(minotaur)~
+離鄉探險的年輕牛頭人(minotaur)，看起來有點緊張。
+~
+他看起來有點緊張，又有點興奮。
+~
+8323 8192 -100 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Minotaur~
+C 1
+>talk_prog topic~
+say 我的家鄉是曼拖爾城堡，在比黑森林更南方的凍原裡。
+~
+>greet_prog 50~
+if isnpc($n)
+	break
+endif
+say 我父親說年輕人要多到外面看看，接受考驗！
+~
+>fight_prog 50~
+if level($n) > 30
+	wear all
+	dis
+	bashhead
+	break
+endif
+~
+|
+#6011
+homesicker~
+思鄉的遊子(homesicker)~
+思鄉的遊子(homesicker)焦急地趕路，想要早點回到故鄉。
+~
+他既期待，又怕受傷害。
+~
+193 1024 100 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>greet_prog 50~
+if isnpc($n)
+	break
+endif
+say 史卡拉貝就快到了，但我反而近鄉情怯....
+~
+>death_prog 100~
+yell 親愛的媽媽，我永遠見不到你了....
+~
+|
+#6012
+exhausted trader~
+萎頓的商人(exhausted trader)~
+萎頓的商人(exhausted trader)無精打采，拖著腳步慢慢走。
+~
+他很失意喔。
+~
+193 1024 100 S
+24 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say 在森林北邊的綠樹王國可以合成各式的魔法捲軸喔！
+~
+>greet_prog 50~
+if isnpc($n)
+	break
+endif
+say 倒楣透了，花那麼多天到綠樹王國，竟連一毛也沒賺到。
+groan
+~
+|
+#6013
+running hobbit~
+快步走的賀比特(running hobbit)~
+快步走的賀比特(running hobbit)差點撞上你。
+~
+一看就知道是急性子。
+~
+193 1024 100 S
+32 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Hobbit~
+>talk_prog topic~
+say 相傳戴上魔戒(ring)的人會有無比的力量，但帶著戒指太久
+say 魔戒就會控制主人的意識！。
+~
+>greet_prog 50~
+if isnpc($n)
+	break
+endif
+bow $n
+say 對不起，我趕路，我要去找爺爺撒姆爾(samuel)。
+~
+>talk_prog samuel~
+say 啥，你不知道我爺爺！他可是魔戒之王主角之一的後代子孫耶！
+~
+>death_prog 90~
+yell 爺爺！你為何要把魔戒銷毀！？現在你孫子被人欺負了....
+~
+>talk_prog ring~
+say 這個任務你可以到我們的家鄉賽伐斯拖普(hobbitcity)去問我爺爺。
+~
+>talk_prog hobbitcity~
+say 那是我們賀比特的家鄉，位在莫瑞亞山脈的附近。
+~
+|
+#6100
+warg vicious~
+大野狼(vicious warg)~
+一隻大野狼(vicious warg)生氣地向你咆哮著。
+~
+他是一隻巨大的黑毛野狼，口水從他的大嘴滴下，他看起來非常危險，非常憤怒。
+大概是餓了吧？
+~
+97 0 -350 S
+23 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>tick_prog 50~
+mpasound 你聽到不遠方傳來的狼嚎
+~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 40
+endif
+~
+|
+#6101
+warg ferocious~
+大野狼(vicious warg)~
+一隻大野狼(vicious warg)生氣地向你咆哮著。
+~
+他是一隻巨大的黑毛野狼，口水從他的大嘴滴下，他看起來非常危險，非常憤怒。
+大概是餓了吧？
+~
+97 0 -350 S
+13 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>tick_prog 50~
+mpasound 你聽到不遠方傳來的狼嚎
+~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+~
+|
+#6102
+wolf grey~
+灰狼(grey wolf)~
+一隻灰狼(grey wolf)飢餓地望著你。
+~
+一隻大型的灰狼，正以打量的眼光看著你，舌頭不斷地舔著狼唇。
+~
+97 0 -150 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>tick_prog 50~
+mpasound 你聽到不遠方傳來的狼嚎
+~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+~
+|
+#6103
+wolf black~
+黑狼(black wolf)~
+一隻很大的黑狼(black wolf)飢餓地望著你。
+~
+一隻大型的黑狼，正以打量的眼光看著你，舌頭不斷地舔著狼唇。
+~
+97 0 -150 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>tick_prog 50~
+mpasound 你聽到不遠方傳來的狼嚎
+~
+>death_prog 80~
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+~
+|
+#6112
+dragon green~
+綠龍(green dragon)~
+一隻巨大的綠龍(green dragon)在這裡，他黃色的眼珠看來很生氣。
+~
+一隻巨大的有翼巨蛇，全身覆滿深綠色的鱗片，雙翼上大大小小的破洞還有角
+上的細孔，訴說著他經歷過的許多惡鬥，他的動作優雅，有著龍族的氣勢。
+~
+67 568 -1000 S
+33 800 0 5d5+0 0d0+0
+50000 0
+0 8 0
+R Dragon~
+C 1
+>talk_prog topic~
+say 我是龍族裡面最瘦弱的，所以才離群索居。
+~
+>greet_prog 100~
+if isnpc($n)
+or inroom($i) != 6143
+	break
+endif
+if is_qmark($n) == western_hermit
+	mpmod_qmark $n western_hermit v0 + 1
+	say 好小子，你也是為我的眼珠而來嗎？
+	star $n
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpoload 6019 1
+~
+|
+#6115
+Shargugh brownie~
+森林精靈夏高(Brownie Shargugh)~
+森林精靈夏高(Brownie Shargugh)微笑地看著你。
+~
+這個褐髮褐眉的森林精靈只有三呎高，他穿著間雜褐色與綠色的衣服，看起
+來正在享受森林的清靜氣氛。
+~
+3 572 1000 S
+13 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Elf~
+>talk_prog topic~
+say 這個森林很容易迷路，最好畫個地圖。
+~
+>greet_prog 70~
+if isnpc($n)
+or is_qmark($n) == western_brownie
+	break
+endif
+say 我肚子好餓(hungry)。
+~
+>talk_prog hungry~
+if is_qmark($n) == western_brownie
+	break
+endif
+sigh
+say 最近一直沒機會到史卡拉貝購物，每天都吃些漿果磨菇，
+say 真懷念咕嚕咕嚕野豬酒吧的烤雞(fried chicken)啊，想到就流口水。
+mpecho $I 的口水都滴出來了。
+~
+>talk_prog chicken~
+if is_qmark($n) == western_brownie
+	break
+endif
+mpecho $I 睜大了眼睛看著 $n
+say 喔？太幸運了！你有嗎？可不可以分我一點？
+~
+>give_prog 3011~
+if is_qmark($n) == western_brownie
+	say 謝謝，不過我剛吃飽而已，還不餓。
+	give fried $n
+	break
+endif
+mpadd_qmark $n western_brownie 10 1 0 0 0 1
+say 啊，謝謝，謝謝....
+mpecho $I 迫不及待地吃起烤雞。
+eat fried
+ponder
+say 無功不受祿，我告訴你一個有用的消息做交換吧。
+say 早上我在森林南方的河堤上看到一些藍莓，這是那個孤僻的得魯伊教士(druid)
+say 最喜歡吃的，不過只有我知道那裡採得到。你如果把藍莓送給他，
+say 他應該會有好東西給你吧...
+mpoload 6016 17
+mpat 6121 drop druid
+smile $n
+~
+>talk_prog druid~
+say 他呀，他很孤僻，自己一個人住在黑森林北邊一個樹洞裡。
+~
+|
+#6116
+elder druid~
+老德魯伊教士(elder druid)~
+老德魯伊教士(elder druid)坐在這裡，他對你的出現很不高興。
+~
+這個德魯伊看起來相當老了，你表面上尊敬他，但實際上你知道他只是一個
+老頑固。
+~
+7 8 0 S
+12 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say 德魯伊的哲學是和大自然和諧地共存。
+~
+>greet_prog 90~
+if isnpc($n)
+	break
+endif
+say 走開，別打擾我清修。
+~
+>give_prog 6016~
+say 呃....這...我最喜歡的森林精靈草莓！
+mpecho $I 興奮極了。
+hop
+say 太謝謝你了，要是你下次採到，請一定要送給我。
+say 這樣吧，這個捲軸給你，算是和你交換。
+mpoload 6017 17
+give scroll $n
+mpjunk strawberry
+~
+|
+#0
+
+
+
+#OBJECTS
+#6000
+axe lumber~
+樵夫斧頭(lumber axe)~
+一把樵夫斧頭(lumber axe)~
+~
+5 0 8193
+1001100~ 0~ 0~ 13~
+10 0 0
+E
+axe lumber~
+一把重型的樵夫用斧，看就知道是用來砍柴用的，但是拿來砍人也不錯。
+~
+X bronze~
+
+#6001
+chequered shirt~
+格子襯衫(chequered shirt)~
+一件格子襯衫(chequered shirt)~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+2 0 0
+E
+shirt~
+一件特大號的厚布襯衫。
+~
+X cloth~
+
+#6002
+boots~
+皮靴(leather boots)~
+一雙皮靴(leather boots)~
+~
+9 0 65
+0~ 0~ 1001100~ 0~
+4 0 0
+E
+boots~
+一雙油煮過數次以防水的硬皮靴，看起來很樸素但很實用。
+~
+X leather~
+
+#6003
+fireplace~
+火爐(fireplace)~
+一個石頭搭的火爐(fireplace)在東邊牆角。~
+~
+15 0 0
+200~ 0~ 0~ 0~
+0 0 0
+E
+fireplace~
+由不同大小的石頭搭成的火爐，一顆疊著一顆，中間用石灰填滿。
+他的煙囪被設計用來將黑煙導出天花板。
+~
+X stone~
+
+#6005
+chest~
+木箱(wooden chest)~
+一個木箱(wooden chest)放在角落。~
+~
+15 0 1
+100~ 13~ 6006~ 0~
+40 0 0
+E
+chest~
+一個堅固的箱子，以短重的木板組合而成，再以榫接合。
+這個箱子還配備了一個簡單的黃銅鎖。
+~
+X wooden~
+
+#6006
+key~
+黃銅鑰匙(brass key)~
+一把黃銅鑰匙(brass key)。~
+~
+18 0 1
+6005~ 0~ 0~ 0~
+1 0 0
+E
+key~
+一隻小而簡單的黃銅鑰匙，上面沒有任何數字或符號。
+~
+X brass~
+
+#6007
+coins gold~
+金幣(gold coins)~
+一堆金幣(gold coins)在地板上。~
+~
+20 0 1
+100~ 0~ 0~ 0~
+0 0 0
+E
+coins~
+一堆顯眼的金幣，看起來很有價值。
+~
+X gold~
+
+#6010
+blackberries~
+黑莓果(blackberries)~
+一些黑莓果(blackberries)長在附近的灌木叢上。~
+~
+19 0 1
+10~ 0~ 0~ 0~
+1 0 0
+E
+blackberries~
+一叢可口的莓果。
+~
+X food~
+
+#6011
+mushroom~
+蘑菇(mushroom)~
+一顆蘑菇(mushroom)長在樹根邊。~
+~
+19 0 1
+6~ 0~ 0~ 0~
+1 0 0
+E
+mushroom~
+一顆美味的磨菇。
+~
+X food~
+
+#6013
+water barrel~
+水桶(barrel)~
+一個水桶(barrel)被留在這。~
+~
+17 0 1
+50~ 50~ 0~ 0~
+5 0 0
+X wooden~
+
+#6014
+belt elf~
+精靈腰帶(elf belt)~
+精靈腰帶(elf belt)靜靜地躺在這裡~
+~
+9 3074 2049
+0~ 0~ 1001100~ 0~
+5 0 35
+A
+18 3
+X cloth~
+
+#6015
+elf mace~
+精靈釘頭鎚(elf mace)~
+一把精靈釘頭鎚(mace)靜靜的躺在地上。~
+~
+5 3136 8193
+1001100~ 0~ 0~ 7~
+5 0 0
+E
+mace~
+一把精心製作的釘頭鎚。
+~
+A
+19 2
+A
+18 3
+X tin~
+
+#6016
+druid strawberry~
+得魯伊最愛的藍莓(druid strawberry)~
+一些得魯伊最愛的藍莓(druid strawberry)長在灌木叢裡。~
+~
+19 0 1
+20~ 0~ 0~ 0~
+1 0 0
+X food~
+
+#6017
+scroll protection~
+加護卷軸(Scroll of protection)~
+一個卷軸(scroll)放置在地上。~
+~
+2 64 1
+18~ protection~  shield~  armor~
+1 0 0
+X wool~
+
+#6018
+necklace pixie pixy~
+小妖精的項鍊(pixy necklace)~
+一個小妖精的項鍊(pixy necklace)放置在地上。~
+~
+9 1027 5
+0~ 0~ 1001100~ 0~
+1 0 0
+A
+2 1
+A
+12 15
+X gem~
+
+#6019
+yellow eyeball~
+黃眼珠(yellow eyeball)~
+一顆黃眼珠(yellow eyeball)放置在地上。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X flesh~
+
+#6020
+pill purple~
+紫色藥丸(purple pill)~
+一顆紫色藥丸(purple pill)放置在地上。~
+~
+26 0 1
+10~ cure critical~ stone skin~  ~
+1 0 0
+X herb~
+
+#6021
+minotaur axe~
+牛頭人戰斧(minotaur axe)~
+一把牛頭人戰斧(axe)靜靜的躺在地上。~
+~
+5 576 8193
+1001100~ 0~ 0~ 1~
+5 0 0
+E
+axe~
+一把精心製作的牛頭人戰斧。
+~
+A
+19 4
+A
+18 2
+X iron~
+
+#6102
+tree opening~
+一株龐大的樹(colossal tree)~
+一株龐大的樹(colossal tree)長在這裡。~
+~
+15 0 0
+1000~ 0~ 0~ 0~
+0 0 0
+E
+tree~
+一棵千年古樹，他的樹皮看起來蒼白且佈滿了爪痕，他的西邊是一個淺洞，
+好像可以潑開樹皮下去一探究竟。
+~
+X juniper~
+
+#6103
+branch~
+灰色的長樹枝(a long, grey branch)~
+一支灰色的長樹枝(a long, grey branch)躺在地上~
+~
+1 0 16385
+0~ 0~ 25~ 0~
+20 0 0
+X wooden~
+
+#6104
+branch~
+灰色的長樹枝(a long, grey branch)~
+一支灰色的長樹枝(a long, grey branch)躺在地上~
+~
+5 0 8193
+100~ 0~ 0~ 7~
+30 0 0
+A
+18 -2
+X wooden~
+
+#6105
+branch~
+灰色的長樹枝(a long, grey branch)~
+一支灰色的長樹枝(a long, grey branch)躺在地上~
+~
+13 0 1
+0~ 0~ 0~ 0~
+40 0 0
+X wooden~
+
+#6106
+toadstool~
+毒蕈(toadstool)~
+一個很大的毒蕈(toadstool)長在路邊。~
+~
+19 0 1
+12~ 0~ 0~ 1~
+5 0 0
+E
+toadstool~
+一顆大型的棕蕈，大約有五磅重，蕈頂覆著一層噁心的爛泥狀物，發散著病
+態的腐爛味道。看起來一點也不可口。
+~
+X herb~
+
+#6107
+toadstool~
+毒蕈(toadstool)~
+一個很大的毒蕈(toadstool)長在路邊。~
+~
+19 0 1
+12~ 0~ 0~ 1~
+5 0 0
+E
+toadstool~
+一顆大型的棕蕈，大約有五磅重，蕈頂覆著一層噁心的爛泥狀物，發散著病
+態的腐爛味道。看起來一點也不可口。
+~
+X herb~
+
+#6110
+potion yellow~
+黃藥水(yellow potion)~
+一罐黃藥水(yellow potion)~
+~
+10 64 1
+15~ giant strength~  ~  ~
+2 0 0
+E
+potion yellow~
+一瓶深黃色的藥水，有著嗆鼻的味道。
+~
+X liquid~
+
+#6111
+shield large~
+大圓盾(large shield)~
+一張大圓盾(large shield)被留在這裡。~
+~
+9 0 513
+0~ 0~ 1001100~ 0~
+15 0 0
+E
+shield large~
+一面硬木盾，裡面嵌著一個鐵製把手。
+~
+X wooden~
+
+#6112
+crown iron~
+鐵皇冠(iron crown)~
+一頂鐵皇冠(iron crown)在這。~
+~
+9 64 17
+0~ 0~ 1001100~ 0~
+10 0 0
+E
+crown iron~
+一個重型的鐵製皇冠。
+~
+X iron~
+
+#6114
+ring iron~
+鐵戒指(iron ring)~
+一只鐵戒指(iron ring)~
+~
+9 64 3
+0~ 0~ 1001100~ 0~
+1 0 0
+E
+ring iron~
+一個重型的鐵製指環，上面沒有任何的裝飾或雕花。
+~
+X iron~
+
+#6155
+morning star~
+流星錘(morning star)~
+一把流星錘(morning star)在這招灰塵。~
+~
+5 64 8193
+1001100~ 0~ 0~ 8~
+10 0 0
+X bronze~
+
+#6156
+spider silk~
+蜘蛛絲(spider silk)~
+一團金色蜘蛛絲(spider silk)在這裡。~
+~
+19 0 1
+15~ 0~ 0~ 0~
+5 0 0
+X fiber~
+
+#0
+
+
+
+#ROOMDATA
+#6000
+濃密、陰暗巨林間的一條小徑~
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+~
+0 9 3
+D0
+~
+~
+0 -1 1100
+D1
+~
+~
+0 -1 6103
+>room_time 100~
+if rmobcount(6000) < 1
+	break
+endif
+if hour($) == 11
+	if month($) >= 5
+		if month($) <= 11
+			if day($n) == 10
+			or day($n) == 25
+				force john-haon rumor 現在是生長的季節，森林中的生物不斷地繁衍著。
+			endif
+			if mobcount(6002) < 10
+				force 6105 mload 6002
+				force 6105 mload 6002
+				force 6117 mload 6002
+				force 6117 mload 6002
+				force 6115 mload 6002
+				force 6115 mload 6002
+				force 6106 mload 6002
+				force 6106 mload 6002
+			endif
+			if mobcount(6003) < 10
+				force 6122 mload 6003
+				force 6122 mload 6003
+				force 6123 mload 6003
+				force 6123 mload 6003
+				force 6124 mload 6003
+				force 6124 mload 6003
+				force 6015 mload 6003
+				force 6015 mload 6003
+				force 6016 mload 6003
+			endif
+			if mobcount(6004) < 10
+				force 6004 mload 6004
+				force 6004 mload 6004
+				force 6108 mload 6004
+				force 6108 mload 6004
+				force 6110 mload 6004
+				force 6110 mload 6004
+				force 6107 mload 6004
+				force 6107 mload 6004
+			endif
+			if mobcount(6005) < 10
+				force 6105 mload 6005
+				force 6105 mload 6005
+				force 6104 mload 6005
+				force 6104 mload 6005
+				force 6117 mload 6005
+				force 6117 mload 6005
+				force 6117 mload 6005
+			endif
+		endif
+	endif
+endif
+~
+|
+S
+#6001
+穿越森林的小徑~
+你站在穿越森林的小徑。東邊是森林邊緣，西邊通往森林深處。
+~
+0 0 3
+E
+birds insects animals~
+Very cute little creatures, they seem to enjoy life.
+~
+E
+tree trees~
+The trees here are quite young and fresh.  They seem to accommodate many kinds
+of birds, insects and other small animals.
+~
+E
+trail~
+The forest trail winds east-west through the trees.
+~
+D1
+~
+~
+0 -1 6024
+D3
+~
+~
+1 -1 6002
+S
+#6002
+穿越森林的小徑~
+你站在穿越森林的小徑。往西樹林越來越濃密。南邊有個小步道(path)。
+~
+0 0 3
+E
+paths~
+這個步道好像是住在森林裡的生物(不管他是什麼)踩出來的。
+~
+D1
+~
+柵門 door~
+1 13734 6001
+D2
+~
+~
+0 -1 6011
+D3
+~
+~
+0 -1 6003
+S
+#6003
+穿越濃密森林的小徑~
+你站在穿越森林的小徑，有些鳥在樹上鳴叫，東邊的光線越來越亮。
+~
+0 0 3
+E
+tree trees~
+The dense crowns of the mature trees leave only a fraction of the sky to be
+seen through the leaves.
+~
+E
+trail~
+The forest trail seems almost fragile compared to the massive trunks.
+~
+D0
+~
+~
+0 -1 13700
+D1
+~
+~
+0 -1 6002
+D3
+~
+~
+0 -1 6004
+S
+#6004
+穿越森林的小徑~
+你站在穿越森林的小徑。往西的樹木枝葉如此繁茂，光線好像透不進去。
+南邊有個幽暗步道。
+~
+0 0 3
+E
+path paths~
+The narrow path is probably used by the animals living in the forest.
+~
+D1
+~
+~
+0 -1 6003
+D2
+~
+~
+0 -1 6005
+D3
+~
+~
+0 -1 6100
+S
+#6005
+穿越森林的小徑~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+小徑通往南和北。
+~
+0 0 3
+E
+tree trees~
+The trees are mostly old beeches and oaks.
+~
+E
+path paths~
+The narrow path is probably used by the animals living in the forest.
+~
+D0
+~
+~
+0 -1 6004
+D2
+~
+~
+0 -1 6006
+S
+#6006
+穿越濃密森林的小徑~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+小徑通往南和北。
+~
+0 0 3
+E
+tree trees~
+The trees are mostly old beeches and oaks.
+~
+E
+path paths~
+The narrow path is probably used by the animals living in the forest.
+~
+D0
+~
+~
+0 -1 6005
+D1
+~
+~
+0 -1 6007
+S
+#6007
+濃密森林裡的三叉路口~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+東邊的光線好像比較亮，小徑通往東西和南方。
+~
+0 0 3
+D1
+~
+~
+0 -1 6008
+D2
+~
+~
+0 -1 6012
+D3
+~
+~
+0 -1 6006
+S
+#6008
+林間空地~
+你站在一個林間的空地。這的樹木好像是被人砍掉的，許多巨樹的根部(root)還
+牢牢地抓緊地面。
+~
+0 0 3
+E
+tree trees~
+The trees are mostly old beeches and oaks.
+~
+E
+stump stumps~
+There are more stumps than logs and some of the stumps are partly covered in
+moss.
+~
+E
+root~
+這些巨樹的根部都很粗大，上面甚至足夠當餐桌用。
+~
+D0
+~
+~
+0 -1 6011
+D1
+~
+~
+0 -1 6009
+D3
+~
+~
+0 -1 6007
+S
+#6009
+一個小湖~
+你眼前突然出現一個小湖，湖水碧綠如玉。湖邊的巨樹底下還有幾張石凳，坐在
+這裡享受陰涼的夏日應該不錯。北邊有個小木屋(cabin)，煙囪還升起一縷清煙。
+~
+0 0 3
+E
+cabin~
+It looks simple but comfortable and the slender trees make the whole place seem
+pretty idyllic.  It's a cabin built from logs.  Wooden logs, not system logs.
+~
+D0
+~
+door wooden~
+3 -1 6010
+D2
+~
+~
+0 -1 6014
+D3
+~
+~
+0 -1 6008
+S
+#6010
+木屋裡面~
+這是只有一個房間的小木屋，陳設非常簡單，只有最簡單的生活家具。
+~
+0 8 0
+D2
+The wooden door leads south.
+~
+door wooden~
+1 -1 6009
+S
+#6011
+一條光亮的小徑~
+這裡的光線充足，樹木又高又細，路邊長了許多野花野草。
+~
+0 0 3
+D0
+~
+~
+0 -1 6002
+D2
+~
+~
+0 -1 6008
+S
+#6012
+濃密樹林裡的一個路口~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象，
+一隻松鼠跑過你的腳邊。
+~
+0 0 3
+D0
+~
+~
+0 -1 6007
+D1
+~
+~
+0 -1 6013
+D2
+~
+~
+0 -1 6021
+S
+#6013
+濃密森林裡的林道~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+~
+0 0 3
+D1
+~
+~
+0 -1 6014
+D3
+~
+~
+0 -1 6012
+S
+#6014
+森林裡的一個陰暗路口~
+你站在森林的陰暗小徑，北邊光線逐漸變亮。
+~
+0 0 3
+D0
+~
+~
+0 -1 6009
+D1
+~
+~
+0 -1 6015
+D3
+~
+~
+0 -1 6013
+S
+#6015
+濃密森林裡的林道~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+~
+0 0 3
+D2
+~
+~
+0 -1 6016
+D3
+~
+~
+0 -1 6014
+S
+#6016
+濃密森林裡的林道~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+~
+0 0 3
+D0
+~
+~
+0 -1 6015
+D2
+~
+~
+0 -1 6124
+S
+#6017
+密林河堤的一條死路~
+你站在一條穿越森林的小徑，前面的樹長得太密而把路封死了。南邊是一條黑色
+的小河(river)，河水由東向西奔流。
+~
+0 9 3
+E
+river~
+The river flows fast and strong.  It is black or looks so in the gloom.
+~
+D3
+~
+~
+0 -1 6123
+S
+#6018
+明亮森林裡的一個路口~
+你站在明亮森林裡的一個路口，一個小步道通往東西方的濃密森林。
+~
+0 0 3
+D0
+~
+~
+0 -1 6023
+D1
+~
+~
+0 -1 6124
+D3
+~
+~
+0 -1 6019
+S
+#6019
+森林裡的一個陰暗路口~
+你站在森林的陰暗小徑，東邊光線逐漸變亮。
+~
+0 0 3
+D0
+~
+~
+0 -1 6020
+D1
+~
+~
+0 -1 6018
+S
+#6020
+濃密森林裡的林道~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+~
+0 0 3
+D2
+~
+~
+0 -1 6019
+D3
+~
+~
+0 -1 6021
+S
+#6021
+濃密森林裡的林道~
+你站在穿越森林的小徑，西邊是個山洞(cave)的入口。
+~
+0 0 3
+E
+cave entrance~
+The irregular opening is eight feet wide and six feet tall.  An acrid smell
+emanates from within.
+~
+D0
+~
+~
+0 -1 6012
+D1
+~
+~
+0 -1 6020
+D3
+~
+~
+0 -1 6022
+S
+#6022
+山洞裡~
+你在一個天然的山洞裡，牆壁上沾了許多穢物(debris)。空氣(air)厚重而不新鮮，
+呼吸起來很不舒服。
+~
+0 9 0
+E
+air smell~
+Kind of transparent, but quite noticeable nevertheless.
+~
+E
+debris~
+It consists mostly of gnawed bones mixed with small pieces of torn fur.
+~
+D1
+~
+~
+0 -1 6021
+S
+#6023
+一片小的青草地~
+你站在森林裡某一片青草地(grass)上，長長的草長到你的膝蓋，周圍的橡樹密實
+得好像一堵牆。
+~
+0 0 2
+E
+grass~
+很適合動物躲藏的草地。
+~
+D2
+~
+~
+0 -1 6018
+S
+#6024
+森林邊緣~
+在你前方是一座茂密的森林(forest)。你身後是史卡拉貝的西城門，
+一條小徑(trail)往西深入森林裡。在森林入口處插了一張牌子(sign)。
+~
+0 4 2
+E
+sign~
+史卡拉貝西方森林是一個中型的區域，通往許多不同的地區，你最好別迷路了。
+森林裡有許多生物和裝備，還有兩個試鍊，適合十五級以上玩家組隊來冒險。這
+個區域由Amenda 編修改寫，有任何問題歡迎回報。
+~
+E
+forest~
+這是一座非常茂密的森林，兩邊都看不到盡頭。
+~
+E
+trail~
+一條小徑曲折向西通過森林。
+~
+D0
+林中小徑~
+~
+0 -1 6025
+D1
+史卡拉貝的西城門
+~
+~
+0 -1 3052
+D3
+小徑往西深入森林裡~
+~
+0 -1 6001
+S
+#6025
+林中小徑~
+一處靜謐、祥和的森林小徑，南方是森林的邊緣，另一條路通向西邊。
+~
+0 4 2
+D2
+森林邊緣~
+~
+0 -1 6024
+D3
+林中小徑~
+~
+0 -1 6026
+S
+#6026
+林中小徑~
+一處靜謐、祥和的森林小徑，森林中的路徑由東指向西方。北邊的樹林有被生物
+踐踏過的跡象，並且痕跡看起來還很新。
+~
+0 4 2
+D0
+森林樹徑~
+~
+0 0 13201
+D1
+林中小徑~
+~
+0 -1 6025
+D3
+林中小徑~
+~
+0 -1 6027
+S
+#6027
+林中小徑~
+一處靜謐、祥和的森林小徑，往南通向森林深處，另一條往東的路則進入小徑。
+你注意到往南的路是不斷蜿蜒急遽向下的斜坡，所以無法再爬回來。
+~
+0 4 2
+D1
+林中小徑~
+~
+0 -1 6026
+D2
+穿越森林的小徑~
+~
+0 -1 6002
+S
+#6100
+濃密、陰暗巨林間的一條小徑~
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+~
+0 9 3
+E
+tree trees trunk trunks~
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+~
+E
+trail~
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+~
+D1
+~
+~
+0 -1 6004
+D3
+~
+~
+0 -1 6101
+S
+#6101
+巨樹林根部的一條小路~
+這些千年古樹(tree)越來越粗大，看起來就像一座座高塔，既使連最低的枝枒也在
+離你頭頂好幾十公尺處。
+~
+0 9 3
+E
+tree trees trunk trunks~
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+~
+D0
+~
+~
+0 -1 13000
+D1
+~
+~
+0 -1 6100
+D3
+~
+~
+0 -1 6102
+S
+#6102
+巨樹林根部的一條小路~
+你在粗大的巨樹根部困難地行走，四週一片寂靜，除了你的喘息聲。
+~
+0 9 3
+E
+trail~
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+~
+D1
+~
+~
+0 -1 6101
+D3
+~
+~
+0 -1 6103
+S
+#6103
+濃密、陰暗巨林間的一條小徑~
+泥濘小徑在這轉彎，因為一株巨樹擋住了去路。四周一片靜寂，一點聲音也沒有。
+~
+0 9 3
+E
+trees trunks~
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+~
+E
+trail~
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+~
+D1
+~
+~
+0 -1 6102
+D2
+~
+~
+0 -1 6108
+D3
+~
+~
+0 -1 6000
+S
+#6104
+濃密、陰暗巨林間的一條小徑~
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D2
+~
+~
+0 -1 6105
+S
+#6105
+濃密、陰暗巨林間的一條小徑~
+這些千年古樹(tree)越來越粗大，看起來就像一座座高塔，既使連最低的枝枒也在
+離你頭頂好幾十公尺處。你覺得這些樹木好像在暗中觀察你。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D0
+~
+~
+0 -1 6104
+D3
+~
+~
+0 -1 6106
+S
+#6106
+濃密巨林裡的一個交口~
+你站在濃密巨林裡的一個交口，一座座古老的樹好像灰色高塔，樹藤掛在枝枒間
+好像一條條粗繩子。
+~
+0 9 3
+E
+path paths~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D1
+~
+~
+0 -1 6105
+D2
+~
+~
+0 -1 6117
+D3
+~
+~
+0 -1 6107
+S
+#6107
+濃密、陰暗巨林間的一條小徑~
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D0
+~
+~
+0 -1 6108
+D1
+~
+~
+0 -1 6106
+S
+#6108
+濃密、陰暗巨林間的一條小徑~
+小徑在巨大的古木間蜿蜒，一個模糊的小岔路(trail)接了出去。
+~
+0 9 3
+E
+trail~
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+~
+D0
+~
+~
+0 -1 6103
+D2
+~
+~
+0 -1 6107
+D3
+~
+~
+0 -1 6109
+S
+#6109
+濃密、陰暗巨林間的一條小徑~
+你走在一條泥濘小徑，到處都是巨樹。四周一片靜寂，一點聲音也沒有。
+~
+0 9 3
+D1
+~
+~
+0 -1 6108
+D3
+~
+~
+0 -1 6110
+S
+#6110
+濃密、陰暗巨林間的一條小徑~
+你走在一條泥濘小徑，兩旁的巨樹緊密的靠在一起好像牆一樣。
+~
+0 9 3
+D0
+~
+~
+0 -1 6144
+D1
+~
+~
+0 -1 6109
+D2
+~
+~
+0 -1 6111
+S
+#6111
+濃密、陰暗巨林間的一條小徑~
+你走在一條蜿蜒的小徑，古樹長得令人吃驚地巨大。
+~
+0 9 3
+D0
+~
+~
+0 -1 6110
+D2
+~
+~
+0 -1 6112
+S
+#6112
+濃密、陰暗巨林間的一條小徑~
+你走在一條泥濘小徑，兩旁的巨樹緊密的靠在一起好像牆一樣，樹藤掛在枝枒間
+好像一條條粗繩子。
+~
+0 9 3
+E
+tree trees trunk trunks~
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+~
+E
+path~
+The path seems fragile and unsafe compared to the enormous trunks that loom
+around it.
+~
+E
+trail~
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+~
+D0
+~
+~
+0 -1 6111
+D1
+~
+~
+0 -1 6113
+D3
+~
+~
+0 -1 6127
+S
+#6113
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D2
+~
+~
+0 -1 6114
+D3
+~
+~
+0 -1 6112
+S
+#6114
+濃密巨林裡的一個交口~
+這裡是一個三叉路口，蒼天古木到處都是。
+~
+0 9 3
+D0
+~
+~
+0 -1 6113
+D1
+~
+~
+0 -1 6115
+D3
+~
+~
+0 -1 6122
+S
+#6115
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D0
+~
+~
+0 -1 6116
+D3
+~
+~
+0 -1 6114
+S
+#6116
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D1
+~
+~
+0 -1 6117
+D2
+~
+~
+0 -1 6115
+S
+#6117
+濃密巨林裡的一個交口~
+你站在林間的一個交口，四周巨樹好像無聲地觀察你。
+~
+0 9 3
+E
+path paths~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D0
+~
+~
+0 -1 6106
+D1
+~
+~
+0 -1 6118
+D3
+~
+~
+0 -1 6116
+S
+#6118
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D2
+~
+~
+0 -1 6119
+D3
+~
+~
+0 -1 6117
+S
+#6119
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+You feel as if they are watching you.
+~
+D0
+~
+~
+0 -1 6118
+D2
+~
+~
+0 -1 6120
+S
+#6120
+濃密、陰暗巨林間的一個河堤~
+你站在一條穿越森林的小徑，南邊有一條向西流速很快的河(river)，河的兩岸
+(banks)都是千年古木。
+~
+0 9 3
+E
+bank banks tree trees trunk trunks~
+The ancient crowns of trees on both banks reach together forming a dense roof
+above the dark river.
+~
+E
+river~
+The river flows fast and strong.  It is black or looks so in the gloom.
+~
+D0
+~
+~
+0 -1 6119
+D3
+~
+~
+0 -1 6121
+S
+#6121
+密林河堤的一條死路~
+你站在一條穿越森林的小徑，前面的樹長得太密而把路封死了。南邊是一條黑色
+的小河(river)，河水由東向西奔流。
+~
+0 9 3
+E
+river~
+The river flows fast and strong.  It is black or looks so in the gloom.
+~
+D1
+~
+~
+0 -1 6120
+S
+#6122
+濃密、陰暗巨林間的一條小徑~
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D1
+~
+~
+0 -1 6114
+D2
+~
+~
+0 -1 6123
+S
+#6123
+河堤邊的一個交口~
+這裡是一個三叉路口，蒼天古木到處都是。南邊是一條黑色的小河(river)，河水
+由東向西奔流。
+~
+0 9 3
+D0
+~
+~
+0 -1 6122
+D1
+~
+~
+0 -1 6017
+D3
+~
+~
+0 -1 6125
+S
+#6124
+森林裡的一個陰暗路口~
+你站在森林的陰暗小徑，西邊光線逐漸變亮，南邊好像是什麼動物的巢穴。樹上
+釘了一塊匾額(plaque)。
+~
+0 0 3
+E
+plaque~
+往南就離開史卡拉貝西方森林，到達別的區域。-- Amenda
+~
+D0
+~
+~
+0 -1 6016
+D2
+~
+~
+0 -1 2801
+D3
+~
+~
+0 -1 6018
+S
+#6125
+密林河堤邊的一條小路~
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，南邊是泛著霧氣的沼澤。
+~
+0 9 3
+E
+path~
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+~
+E
+bank banks tree trees trunk trunks~
+The ancient crowns of trees on both banks reach together forming a dense roof
+above the dark river.
+~
+E
+river~
+The river flows fast and strong.  It is black or looks so in the gloom.
+~
+D0
+~
+~
+0 -1 6126
+D1
+~
+~
+0 -1 6123
+D2
+~
+~
+0 -1 8301
+S
+#6126
+濃密、陰暗巨林間的一條小徑~
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，南邊有條不太明顯的
+獸徑(trail)。
+~
+0 9 3
+E
+trail~
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+~
+D0
+~
+~
+0 -1 6127
+D2
+~
+~
+0 -1 6125
+D3
+~
+~
+0 -1 6128
+S
+#6127
+濃密、陰暗巨林間的一條小徑~
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，樹藤掛在枝枒間好像
+一條條粗繩子。
+~
+0 9 3
+D1
+~
+~
+0 -1 6112
+D2
+~
+~
+0 -1 6126
+S
+#6128
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+~
+0 9 3
+D1
+~
+~
+0 -1 6126
+D3
+~
+~
+0 -1 6129
+S
+#6129
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+~
+0 9 3
+D1
+~
+~
+0 -1 6128
+D3
+~
+~
+0 -1 6135
+S
+#6130
+濃密、陰暗巨林間的一條小徑~
+你走在森林間的一條小徑，西邊的路完全被巨大的蜘蛛網蓋住，蜘蛛絲(wires)上
+好像還裹了一層膠。這個地方讓你覺得毛骨悚然。
+~
+0 9 3
+E
+substance wire wires rope ropes tree trees trunk trunks~
+The sticky substance is hanging like ropes between the ancient trees, crossing
+the path just out of reach.  It might be possible to climb one of the sticky
+trunks.
+~
+D1
+~
+~
+0 -1 6144
+D3
+~
+~
+0 -1 6131
+D4
+~
+~
+0 -1 6132
+S
+#6131
+蜘蛛網~
+你走在窄窄的小徑，俯身自黏黏的繩索嚇走走過....
+
+>
+一隻很大的毒蜘蛛突然從你頭上掉下來！
+一隻很大的毒蜘蛛突然從你頭上掉下來！
+一隻很大的毒蜘蛛突然從你頭上掉下來！
+
+>
+巨大的毒蜘蛛正在刺你！你極力反抗！
+巨大的毒蜘蛛正在刺你！你中毒了！
+巨大的毒蜘蛛正在刺你！你中毒了！
+
+>
+你掉下去了！而且動彈不得！！！！
+~
+0 12 3
+S
+#6132
+在樹上~
+你懸掛在一株巨樹的枝椏上，上面覆蓋了一層黏黏的東西。西邊是一個很大的蜘
+蛛網(web)，掛在好幾株巨木之間，包括你這株巨樹。
+~
+0 13 6
+E
+web~
+The spider web stretches out to the west.  It looks as if it is possible to
+walk on it.
+~
+D3
+~
+~
+0 -1 6133
+D5
+~
+~
+0 -1 6130
+S
+#6133
+蜘蛛網上~
+你小心地在蜘蛛絲上保持平衡。東邊是一個巨大的樹枝，西邊是一個樹洞(cave)，
+裡面好像堆滿蜘蛛絲。
+~
+0 9 6
+E
+cave structure~
+It covers a ground area corresponding to an irregular circle with a diameter of
+about 20 feet and is nearly 10 feet tall.  It looks very old.
+~
+E
+web~
+The immense spider web moves softly.
+~
+D0
+~
+~
+0 -1 6200
+D1
+~
+~
+0 -1 6132
+D3
+~
+~
+0 -1 6134
+S
+#6134
+蜘蛛女王的巢~
+你站在一個樹洞裡，裡面有無數層蜘蛛絲。溫度和濕度都很高，使得裡面很不容
+易呼吸。牆壁上掛滿了繭(cocoons)。
+~
+0 9 6
+E
+cocoons~
+這些如同人頭大小般的繭，像是某些生物急於從裡面跑出來而呈現出爆開的狀態。
+~
+D1
+~
+~
+0 -1 6133
+>room_time 100~
+if roomtimer($0) == 0
+	if rnplayer($) == 0
+		if robjcount(6156) == 0
+			oload 6156 1 floor
+			modrvt t0 = 12
+		else
+			modrvt t0 = 2
+		endif
+	endif
+endif
+~
+|
+S
+#6135
+濃密、陰暗巨林間的一條小徑~
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，樹藤掛在枝枒間
+好像一條條粗繩子。在西邊不遠處可以看見一座巨大的城堡。
+~
+0 9 3
+E
+tree trees trunk trunks~
+The ancient grey giants seem to observe you silently.
+~
+D0
+~
+~
+0 -1 6136
+D1
+~
+~
+0 -1 6129
+D3
+~
+~
+0 -1 8200
+S
+#6136
+濃密、陰暗巨林間的一條小徑~
+你走在一條蜿蜒的小徑，古樹長得令人吃驚地巨大。一條比較特殊的寬林道通向東邊。
+~
+0 9 3
+D1
+~
+~
+0 -1 6142
+D2
+~
+~
+0 -1 6135
+D3
+~
+~
+0 -1 6137
+S
+#6137
+濃密、陰暗巨林間的一條小徑的終點~
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，在你北邊好像有一個
+灌木叢。
+~
+0 9 3
+D0
+~
+~
+0 0 1300
+D1
+~
+~
+0 -1 6136
+S
+#6142
+巨樹林裡一個山洞的洞口~
+你在一個很寬的林道終點，北邊是一個非常大的洞口。四周的樹幹有許多很深很
+粗的刮痕，好像是什麼東西用爪子抓出來。
+~
+0 9 3
+D0
+~
+~
+0 -1 6143
+D3
+~
+~
+0 -1 6136
+S
+#6143
+綠龍的洞~
+你站在一個很大的天然山洞裡，地板上都是一些骨頭和碎肉。
+~
+0 9 3
+D2
+~
+~
+0 -1 6142
+S
+#6144
+濃密、陰暗巨林間的一條小徑~
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，樹幹上好像覆蓋了一
+層黏黏的東西。
+~
+0 9 3
+D0
+~
+~
+0 -1 6150
+D2
+~
+~
+0 -1 6110
+D3
+~
+~
+0 -1 6130
+S
+#6150
+一條窄徑~
+這條窄徑看起來特別陰森，之前常在樹幹上看到的獸跡在這都消失了。
+~
+0 9 3
+D0
+~
+~
+0 -1 6151
+D2
+~
+~
+0 -1 6144
+S
+#6151
+一條窄徑~
+這裡幾乎沒有任何野獸活動的跡象，過密的樹林使得林道陡然向東轉去。
+~
+0 9 3
+D1
+~
+~
+0 -1 6152
+D2
+~
+~
+0 -1 6150
+S
+#6152
+樹環~
+這裡的樹木圍繞著中間一株巨樹環狀地生長，你看到巨樹東邊好像有一扇門。
+~
+0 9 3
+D1
+~
+door~
+3 -1 6153
+D3
+~
+~
+1 -1 6151
+S
+#6153
+巨樹裡面~
+你正在巨樹裡面行走，往下是一片黑暗，或者你可以往西離開樹洞。
+~
+0 9 3
+D3
+~
+door~
+3 -1 6152
+D5
+~
+~
+0 -1 6154
+S
+#6154
+地底的長廊~
+這個長廊原本好像是巨樹的一條根，往南好像有個房間，你隱約聽到一些噪音。
+~
+0 9 3
+D2
+~
+~
+1 -1 6155
+D4
+~
+~
+1 -1 6153
+S
+#6155
+德魯伊祭壇~
+這座祭壇供奉一些你不認識的神。這是一個有趣的地方，但你不會想要待太久。
+當你進入的時候，木製的祭壇好像在發光。
+~
+0 9 3
+D0
+~
+~
+1 -1 6154
+S
+#0
+
+
+
+#SPECIALS
+M 6112 spec_breath_gas
+M 6116 spec_cast_cleric
+S
+
+
+
+#RESETS
+M 0 6000 1 6000
+E 0 6000 0 16
+E 0 6001 0 5
+E 0 6002 0 8
+O 0 6011 0 6006
+M 0 6008 1 6009
+E 0 6018 0 3
+O 0 6003 0 6010
+O 0 6005 0 6010
+P 0 6007 0 6005
+P 0 6006 0 6003
+O 0 6013 0 6010
+M 0 309 5 6012
+O 0 6011 0 6013
+M 0 6005 3 6014
+M 0 309 5 6015
+O 0 6011 0 6016
+M 0 309 5 6017
+M 0 309 5 6019
+M 0 6007 1 6019
+E 0 6015 0 16
+E 0 6014 0 13
+M 0 6006 2 6019
+E 0 6015 0 16
+F 1 6007 -1 6006
+M 0 6002 2 6022
+M 0 6004 3 6023
+M 0 6009 1 6023
+O 0 6010 0 6023
+M 0 6115 1 6100
+E 0 6114 0 1
+O 0 6102 0 6103
+M 0 6102 4 6104
+M 0 6102 4 6104
+O 0 6106 0 6104
+O 0 6105 0 6105
+M 0 6011 1 6106
+M 0 6102 4 6108
+M 0 6102 4 6108
+M 0 6010 1 6109
+E 0 6021 0 16
+O 0 6106 0 6111
+M 0 6103 4 6112
+M 0 6103 4 6112
+O 0 6103 0 6113
+M 0 6100 2 6116
+M 0 6100 2 6116
+M 0 6103 4 6118
+M 0 6103 4 6118
+O 0 6107 0 6119
+O 0 6106 0 6122
+O 0 6104 0 6125
+M 0 6101 2 6127
+M 0 6101 2 6127
+M 0 6013 1 6128
+M 0 6112 1 6143
+G 0 6110 0
+G 0 6112 0
+G 0 6111 0
+M 0 6012 1 6144
+M 0 6116 1 6155
+E 0 6155 0 16
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

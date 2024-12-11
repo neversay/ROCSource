@@ -1,0 +1,103 @@
+Index: Spell/spell_breath.c
+===================================================================
+--- Spell/spell_breath.c	(revision 161)
++++ Spell/spell_breath.c	(working copy)
+@@ -280,7 +280,9 @@
+ 	int        nCurrHP = UMIN(100000, ch->hit / PPL_HP_MULTIPLYER + nFBSklv * 400 + 100);
+ 	           // HP 0 ~ 10K (0, 31, 44, 54, 63, 70, 77, 83, 89, 94, 100)
+ 	int        nDamage = (int)sqrt((int)(nCurrHP));
+-	int        nDmgRate= 100 - affected_value(ch, nGsnChillTouch, APPLY_ADAMAGE) / 4;
++        int        nChillRate = affected_value(ch, nGsnChillTouch, APPLY_ADAMAGE);
++        if (nChillRate < -400) nChillRate = -400;
++	int        nDmgRate= 100 - nChillRate / 2;
+ 
+ 	if(nDmgRate > 100){
+ 		send_to_char(HIC"你運用寒霜的傷害，強化了冰凍吐息的威力！"NOR"\n\r", ch);
+Index: Spell/spell_slash.c
+===================================================================
+--- Spell/spell_slash.c	(revision 161)
++++ Spell/spell_slash.c	(working copy)
+@@ -433,7 +433,7 @@
+ 		       )
+ 		   )
+ 		{
+-			nDamage  = ((40 + level) / 2) * (100 + (nCurrInt - 10) * 3 + (nCurrStr - 10) * 3) / 100;
++			nDamage  = (40 + level) * (100 + (nCurrInt - 10) * 3 + (nCurrStr - 10) * 3) / 200;
+ 			nDamage *= 1 + 0.1 * nSlashSklv + 0.1 * nSunMnSklv + 0.02 * (nSlashSklv) * (nSunMnSklv);
+ 
+ 			nDamage  = nDamage * weakness_damage( vch, sn ) / 100;
+Index: include/parameters.h
+===================================================================
+--- include/parameters.h	(revision 161)
++++ include/parameters.h	(working copy)
+@@ -23,8 +23,8 @@
+ 
+ #define PPL_HP_MULTIPLYER    2
+ 
+-#define MERIT_BONUS_MAX_SKEXP 250000
+-#define BASE_MERIT 50000
++#define MERIT_BONUS_MAX_SKEXP 1000000
++#define BASE_MERIT 100000
+ 
+ #define TOP_COUNT 50
+ 
+Index: handler.c
+===================================================================
+--- handler.c	(revision 162)
++++ handler.c	(working copy)
+@@ -4824,7 +4824,7 @@
+ 
+ bool has_free_skdemote(CHAR_DATA *ch)
+ {
+-  if (ch->level < 38) return TRUE;
++  if (ch->level < 43) return TRUE;    //   skdemote free enable by toi 20130108 
+   if (ch->in_room->vnum == 11000) return TRUE;
+ 
+   /* here, set special classes which have been just patched
+@@ -4846,7 +4846,6 @@
+   if( IS_NPC(ch) ) return;
+   ch->pcdata->skexp_earned -= xp; 
+   ch->pcdata->skexp_used -= xp;
+-
+   if (!has_free_skdemote(ch)) {
+     gain_skill_exp(ch, ( xp - xp/20 ) );
+     sprintf(buf, "你失去了 %d 點技能經驗點.\n\r", xp / 20);
+Index: Act/act_social.c
+===================================================================
+--- Act/act_social.c	(revision 161)
++++ Act/act_social.c	(working copy)
+@@ -3280,7 +3280,7 @@
+ 	},
+ 	{
+     	 "nosmoking",
+-     	"你開始大聲宣揚著拒吸二手煙的理念。",
++     	"你開始大聲宣揚著拒吸測試二手煙的理念。",
+      	"$n開始大聲宣揚著拒吸二手煙的理念。",
+      	"你朝著$N潑了一桶水, 並且大聲地說：「拒吸二手煙!」",
+      	"$n朝著$N潑了一桶水, 並且大聲地說：「拒吸二手煙!」",
+Index: const.c
+===================================================================
+--- const.c	(revision 161)
++++ const.c	(working copy)
+@@ -4085,7 +4085,7 @@
+             SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP },
+             spell_sprinkle_slash, TAR_IGNORE, POS_FIGHTING,
+             &gsn_sprinkle_slash, 500,     12,
+-            "波紋劍", "你的行動不再受到波紋劍氣的束縛",ATTR_ALL, {10,9,8,9,10}
++            "波紋劍", "你的行動不再受到波紋劍氣的束縛",ATTR_ALL, {7,6,5,6,7}
+ 
+     },
+ 
+Index: comm.c
+===================================================================
+--- comm.c	(revision 161)
++++ comm.c	(working copy)
+@@ -82,7 +82,7 @@
+ //*  PURPOSE     :         新增EXP_PER_LEVEL ppl_class變數        *
+ //*****************************************************************
+ #define LINUX2
+-#define MAX_MULTI_LOGIN 4
++#define MAX_MULTI_LOGIN 8
+ 
+ #if defined( WIN32 )
+ char version_str[] = "$VER: EnvyMud 2.0 Windows 32 Bit Version";

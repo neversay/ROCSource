@@ -1,0 +1,4547 @@
+#AREADATA
+Name        ¦aÆF¬}¸]~
+Identity    KoboldCave~
+Builders    Bigmouth~
+Translator  ----~
+Modifier    ----~
+VNUMs	    66100 66199
+Security    1
+Recall      3001
+Death       66184
+F_toggle    0
+End
+
+
+
+#MOBILES
+#66100
+kobold-soldier-striker striker~
+¦aÆF¬ðÀ»¶¤(Kobold Striker)~
+¤@°¦¨­¬ïÂOªL°g±m¸Ëªº¦aÆF(Kobold)´ÂµÛ§A½Ä¤F¹L¨Ó¡I
+~
+¤@°¦¨­¬ïÂOªL°g±m¸Ëªº¦aÆF©¿µM±q®ÇÃäªº¤sªL¸Ì«_¥X¡A¨Ã¥B¦V§A½Ä¾W¦Ó¨Ó¡I
+~
+1|2|64|2048|8192|524288 8|32|32768|65536 -700 S
+33 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+C 1|32
+S 13 10000
+S 16 -2000
+S 18 30
+S 43 30
+>repop_prog 100~
+	mpoload 66103 1
+	mpat 2 wear all
+~
+>fight_prog 100~
+if rand(50)
+	berserk
+	frenzy
+else
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+endif
+~
+>rand_prog 100~
+if notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) == wartime 300003
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk sword-kobold
+endif
+mpgreward exp $n 30 500
+if rand(20)
+	mpmod_qmark $n war_reward v0 + 1
+endif
+~
+|
+#66101
+kobold-soldier-rockpusher rockpusher~
+¦aÆFºu¥Û§L(Kobold Rockpusher)~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸Ì¤£Â_¦a±À¸¨¥ÛÀY¡Aªý¤î¼Ä¤H«e¶i¡I
+~
+³o°¦¦aÆF¦b³o¸Ì±À°ÊµÛ¤@ÁûÁû¸¨¥Û¡A¥Hªý¤î¤U¤èªº¼Ä¤H§ð¤W¨Ó¡I
+~
+1|2|64 8|32|128 -700 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+S 13 30000
+S 16 -2000
+S 24 -100
+S 41 100
+>repop_prog 100~
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+~
+>fight_prog 33~
+q potion
+mpforcer here c 3 'double heal' $i 50
+~
+>rand_prog 100~
+if notbeing(elf-soldier-marshal)
+or inroom($i) != 66109
+	mpecho $I°h¨«¤F¡C
+	if mobcount(66101) == 1
+		mpforcer here modrvt 66108 v0 = 0
+	endif
+	mppurge self
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+	mpecho $I­Ü¬Ó¦a°k¨«¤F¡I
+	if mobcount(66101) == 1
+		mpforcer here modrvt 66108 v0 = 0
+	endif
+	mppurge self
+endif
+~
+>death_prog 100~
+if mobcount(66101) == 1
+	mpforcer here modrvt 66108 v0 = 0
+endif
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+~
+|
+#66102
+kobold-soldier-officer officer~
+¦aÆF¤h©x(Kobold Officer)~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸Ì©R¥O¨ä¥L¦aÆF®i¶}§ðÀ»¡I
+~
+³o¦W¦aÆF¬Ý°_¨Ó¸ò¨ä¥L¦aÆF¨S¤°»ò¤£¦P¡A¦ý¥L«oÅãµM¾Ö¦³«ü´§¨ä¥L¦aÆFªºÅv¤O
+¡C
+~
+1|64|128|2048|8192|262144 8|32|128 -700 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 4|128|32768|65536|67108864
+R Kobold~
+C 1|4
+S 13 30000
+S 16 -2000
+S 17 -400
+S 24 -100
+S 39 -400
+S 41 150
+S 42 150
+S 43 100
+S 44 100
+>repop_prog 100~
+mpgoto 2
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+~
+>tick_prog 100~
+mpforcer here c 'full heal' $i 40
+if mobcount(66103) < 20
+	mpecho ¦b$Iªº©R¥O¤U¡A¤@¦W¦aÆF¾Ô¤h´ÂµÛ§A½Ä¤F¹L¨Ó¡I
+	mpmload 66103
+endif
+~
+>rand_prog 100~
+if notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) == wartime 300003
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+if mobcount(66103) < 20
+	mpecho ¦b$Iªº©R¥O¤U¡A¤@¦W¦aÆF¾Ô¤h´ÂµÛ§A½Ä¤F¹L¨Ó¡I
+	mpmload 66103
+endif
+mpforce $r vis
+mpforce $r vis sneak
+~
+>fight_prog 100~
+untangle $i
+flee
+~
+>death_prog 100~
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+mpmload 66102
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+~
+|
+#66103
+kobold-soldier-fighter fighter~
+¦aÆF¾Ô¤h(Kobold Fighter)~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸Ì»PºëÆF»·©º­x¾Ô°«¡C
+~
+³o¦W¦aÆF¤â«ùÂ²­®ªºªZ¾¹¡A¹³¬O§¹¥þ¤£©È¦º¦ü¦a½Ä¾WµÛ¡C
+~
+1|64|2048 0 -700 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+C 1
+S 13 5000
+S 16 -2000
+S 17 -100
+S 18 50
+S 39 -100
+S 43 50
+>repop_prog 100~
+mpoload 66103 1
+mpat 2 wear all
+~
+>rand_prog 100~
+if mobcount(13647) == 0
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) > war_reward 200004
+or rand(67)
+	mpjunk sword-kobold
+endif
+mpgreward exp $n 30 500
+if rand(10)
+	mpmod_qmark $n war_reward v0 + 1
+	mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 1
+endif
+~
+|
+#66104
+kobold-soldier-elite-fighter elite fighter~
+¦aÆFµ×­^¾Ô¤h(Kobold Elite Fighter)~
+¤@°¦µ×­^ªº¦aÆF¾Ô¤h(Kobold)¥¿¦b³o¸Ì»PºëÆF»·©º­x¾Ô°«¡C
+~
+³o¦W±j§§¦aÆFªº¾Ô°«§Þ¥©¬Ý¨Ó¤Q¤Àºë´ï¡A³Ì¦n¤£­n»P¥L¥¿­±¾Ô°«¡C
+~
+1|64|8192|262144 128 -700 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+C 1|8
+P 4|8|128|4194304
+S 13 50000
+S 16 -2000
+S 17 -300
+S 18 100
+S 19 20
+S 39 -400
+S 43 50
+>repop_prog 100~
+mpoload 66105 1
+mpgoto 2
+wear all
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+~
+>fight_prog 100~
+skilldrv multihit
+if rand(50)
+	wear greatsword-kobold
+	perform empslash
+else
+	circular
+	circular
+	circular
+endif
+~
+>death_prog 100~
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk greatsword-kobold
+endif
+mpgreward exp $n 30 1500
+mpmod_qmark $n war_reward v0 + 3
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+~
+>rand_prog 100~
+if mobcount(13647) == 0
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+~
+|
+#66105
+kobold-soldier-king king sarreitar~
+ÂÄ·ç¶ðº¸(Sarreitar)~
+¦aÆF¤§¤ýÂÄ·ç¶ðº¸(Sarreitar)¥¿¦b³o¸Ìª`µøµÛ§Aªº¨ì¨Ó¡C
+~
+³o¦WÀYÀ¹¤ý«a¡B¤â´¤Åv§úªº¦aÆF¬Ý°_¨Ó²`¤£¥i´ú¡C¦b¥L²´¸ÌÄà¤H¥ú¨~ªºª`µø¤U
+¡A§A±¡¤£¦Û¸T¦a´N·Q­nÅ¥±q¥Lªº§h©J¡AÃø¹D³o´N¬O©Ò¿×ªº¤ýÅQ¤§®ð¡H¤£ºÞ«ç»ò
+¼Ë¡A¨­³B¥L¤H°ê«×ªº§A¡A³Ì¦n¤£­n¹H°f¥Lªº©R¥O¤ñ¸û¦n¡C
+~
+1|2|64|2048|4096|8192|65536|262144|1048576|8388608 8|32|128|8589934592 -700 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+P 8|256|2048|32768|65536|2097152|4194304|1073741824
+S 13 400000
+S 17 -500
+S 18 100
+S 19 50
+S 24 -50
+S 39 -500
+S 40 70
+S 41 150
+S 42 150
+S 44 150
+>repop_prog 100~
+mpoload 66113
+mpoload 66112
+mpat 2 wear all
+~
+>death_prog 100~
+mpjunk all
+if notbeing(elf-soldier-marshal)
+	rumor Å¥»¡¦aÆF¤§¤ýÂÄ·ç¶ðº¸³Q$N[35;1m·t±þ¤F¡I
+else
+	mpgreward exp $n 30 35000
+	mpmod_qmark $n war_reward v0 + 30
+	if rand(33)
+		mpoload 66113 36
+	endif
+endif
+~
+>defun_prog goback~
+if isfight($i)
+else
+	mpgoto 66143
+	close down
+	lock down
+endif
+~
+>tick_prog 100~
+if notbeing(elf-soldier-marshal)
+	if is_qmark($i) == wartype
+		mpdel_qmark self wartype
+	endif
+else
+	if is_qmark($i) == wartype
+		if is_qmark($i) == wartype 100005
+			mpmod_qmark self wartype v0 = 0
+			if mobcount(66104) > 1
+			or mobcount(66136) > 1
+			or mobcount(66137) > 3
+			or mobcount(66138) > 3
+			else
+				if rand(50)
+					if rand(50)
+						mpmload 66104
+						mpmload 66104
+						mpmload 66104
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+					else
+						mpmload 66136
+						mpmload 66136
+						mpmload 66136
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+					endif
+				else
+					if rand(50)
+						mpmload 66136
+						mpmload 66136
+						mpmload 66136
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+					else
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66104
+						mpmload 66104
+						mpmload 66104
+					endif
+				endif
+			endif
+		else
+			mpmod_qmark self wartype v0 + 1
+		endif
+	endif
+endif
+~
+>rand_prog 100~
+if pcnum($) > 0
+	if is_inv_obj($i) != 66100
+		mpoload 66100 1
+	endif
+endif
+if inroom($i) != 66143
+	mpcallout 30 mpcall goback $i
+endif
+~
+>fight_prog 33~
+if inroom($i) == 66143
+	say Å@¾r¡ãÅ@¾r¡ã
+	if rmobcount(66109) < 5
+		mpmload 66109
+		mpgroup $i kobold-soldier-shielder 1
+	endif
+	if rmobcount(66110) < 3
+		mpmload 66110
+		mpgroup $i kobold-soldier-priest 0
+	endif
+endif
+if hitprcnt($i) < 50
+	if notbeing(doll-kobold)
+	or insameroom(doll-kobold)
+	else
+		yell ¦Û¦aº»­«¥Í¡B®µ·´·À¤§¤Oªº¨¸Às¤§°¸°Ú....
+		yell ¦b§^¦¼¦@¥Dªº¦W¸q¤U¥O¦¼«e¨Ó¡AÅ@½Ã§^§a¡I
+		mpecho ¤@¹D·ÏÃú¹L¥h¡A¤@°¦¥¨¤jªºÀs©¿µM¥X²{¡I
+		mptransfer doll-kobold
+		mpgroup $i doll-kobold 1
+	endif
+endif
+~
+>fight_prog 50~
+if rand(40)
+	circular
+	circular
+else
+	say ³o´N¬O¹H°f§Úªº¤U³õ¡I
+	c soulsteal $r
+	c 3 lifesteal $r
+	c 3 energy $r
+endif
+~
+>greet_prog 100~
+if inroom($i) == 66170
+	say ³ºµM³Q§Aµo²{¤F¡I¨ü¦º§a¡I
+	mpkill $n
+	break
+endif
+if is_qmark($i) == istalk
+or isnpc($n)
+	break
+endif
+if is_qmark($n) !& kobold_cave_hero 300001
+or is_qmark($n) & kobold_cave_hero 300512
+or is_qmark($n) > kobold_cave_hero 200005
+or is_qmark($n) != kobold_cave_hero
+	look $n
+else
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	glare $n
+	mpcallout 1 say §A´N¬O³ÌªñÀ°§U§Ú­Ì±Ù±þºëÆF¡B«Ø¥\µL¼Æªº¥~¨ÓªÌ°Ú¡H
+	mpcallout 2 say ªGµM¤@ªí¤H§÷¡A¤@¬Ý´Nª¾¹D¤£¦P¤ZÅT¡I«Ü¦n¡I
+	mpcallout 3 ponder
+	mpcallout 4 say ¤£¹L¡A¤H¤£¥i»ª¬Û¡A§Aªº¯à¤OÁÙ¬O±o¸Õ¹L«á¤~¯àª¾¹D¡C
+	mpcallout 5 mpecho $IÅS¥X·N¨ý¤£©úªº¸Þ²§¯º®e....¡I¡H
+	mpcallout 6 say ¬O³o¼Ëªº¡A§Ú³o¸Ì¥¿¦n¦³¤@¥ó¨Æ±¡»Ý­n§AªºÀ°¦£¡C
+	mpcallout 7 say ÁöµM§Ú­Ì¦aÆF¤]ºâ¬O¤H§÷ÀÙÀÙ¡A¦ý³o¥ó¨ÆÁÙ¬O¥Ñ¥~±Ú¤H¨Ó¤ñ¸û¾A¦X¡C
+	mpcallout 8 say ·íµM¡A§Ú¤]¤£·|Á««Ý§Aªº¡C¦p¦ó¡H(yes/no)
+	mpcallout 8 mpmod_qmark $n kobold_cave_hero v2 | 2
+	mpcallout 8 mpmod_qmark $n kobold_cave_hero v2 r 1
+	mpcallout 8 mpdel_qmark self istalk
+endif
+~
+>talk_prog yes~
+if is_qmark($i) == istalk
+	tell $n §Ú¥¿¦b¦£¡A½Ðµyµ¥¤@¤U¡C
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300002
+	if is_qmark($n) != kobold_cave_hero 200100
+	or is_qmark($n) <= kobold_cave_hero 200006
+		mpadd_qmark self istalk -1 0 0 0 1 0
+		mpmod_qmark $n kobold_cave_hero v2 r 2
+		say ¬O³o¼Ëªº¡A§Úµo²{§Ú­Ì¦aÆF¸Ì¥X¤F¤@¦ì«q®{¡C
+		mpcallout 1 say ¦pªG¤½¶}³B¸m±¼¥Lªº¸Ü¡A®£©È·|°Ê·n¤h®ð¡C
+		mpcallout 2 say ¦]¦¹§Ú¥u¬O§ä­ÓÂÇ¤f±N¥L»°¥X¤F­x¶¤¡C
+		mpcallout 3 say ¦ý¬O­Y©ñµÛ¥L¤£ºÞ¡A¤S©È¥L¦A°µ¥X¤°»ò¹ï¦aÆF¤£§Qªº¨Æ¡C
+		mpcallout 4 say ©Ò¥H¡A§Æ±æ§A«e¥h¯¦±K³B¨M±¼¥L¡C
+		mpcallout 5 say ¥Lªº¦W¦r¥s°µ¡GÃÙ¿ú©ÔÀt´µ¥Ð¥Ø¦ý¥L¡C
+		mpcallout 6 say ¤@¤Á´N«ô°U§A¤F¡I
+		mpcallout 6 mpmod_qmark $n kobold_cave_hero v2 | 4
+		mpcallout 6 mpdel_qmark self istalk
+	else
+		mpadd_qmark self istalk -1 0 0 0 1 0
+		mpechoat $n ¥¿·í§A·Q­nµªÀ³ÂÄ·ç¶ðº¸®É¡A¥~­±©¿µM¶]¨Ó¤F¤@¦W¦aÆF»¼µ¹¤FÂÄ·ç¶ðº¸¤@±i¯È¡C
+		mpmod_qmark $n kobold_cave_hero v2 | 512
+		mpcallout 1 say °Ú¡I¤£¦n·N«ä¡A§Úµo²{³o¥ó¨Æ¤w¸g¤£¥Î¤HÀ°¦£¤F¡I
+		mpcallout 2 say ¯u¬O©êºp¡AÅý§A¥Õ¶]¤@½ë¤F¡I
+		mpcallout 3 wave $n
+		mpcallout 3 mpdel_qmark self istalk
+	endif
+endif
+~
+>talk_prog no~
+if is_qmark($i) == istalk
+	tell $n §Ú¥¿¦b¦£¡A½Ðµyµ¥¤@¤U¡C
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300002
+	mpmod_qmark $n kobold_cave_hero v2 r 2
+	say ¦n§a¡I¬JµM¦p¦¹¡A¨º§Ú¤]¤£«j±j§A¡C
+	mpcallout 1 shrug
+endif
+~
+>talk_prog report~
+if is_qmark($i) == istalk
+	tell $n §Ú¥¿¦b¦£¡A½Ðµyµ¥¤@¤U¡C
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300008
+	mpmod_qmark $n kobold_cave_hero v2 r 8
+	good $n
+	say ¨S·Q¨ì§A³o»ò§Ö´N¦³¦n®ø®§¤F¡I
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 say ¬Ý¨Ó©e°U§A°µ³oºØ¨Æ±¡ÁÙ¯u¬O¤j§÷¤p¥Î°Ú¡H
+	mpcallout 2 ponder
+	mpcallout 3 mpgold $n 1000000
+	mpcallout 3 say ³o¬O§Aªº¼ú½à¡A½Ð¥ý¦¬¤U§a¡I
+	mpcallout 4 say ¦pªG§A¨S¨Æªº¸Ü¡A§Ú³o¸Ì­ËÁÙ¦³¤@¥ó¨Æ»Ý­n§Aªº¨ó§U(help)....
+	mpcallout 4 mpmod_qmark $n kobold_cave_hero v2 | 16
+	mpcallout 4 mpdel_qmark self istalk
+~
+>talk_prog help~
+if is_qmark($i) == istalk
+	tell $n §Ú¥¿¦b¦£¡A½Ðµyµ¥¤@¤U¡C
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300016
+	mpmod_qmark $n kobold_cave_hero v2 r 16
+	say ²³©Ò¬Òª¾¡A§Ú­Ì¦aÆF¤D¬O¤W¥j¥¨Às¬y¶Ç¤U¨Óªº«á¸Ç....
+	mpechoat $n §A¤ß·Q¡G¦³³o¦^¨Æ¶Ü¡I¡H
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 say µM¦Ó¡A¹³¨e­Ì³o»ò°¶¤jªº¦s¦b¡A¥­®É·¥¤Ö¦³ªÅ²z·|§Ú­Ìªº¥Í¬¡¡C
+	mpcallout 2 say ¦p¤µ¡A§Ú­Ì»PºëÆF¤@±Úªº¨M¾Ô¤w¸g¨ì¤F¥Í¦º¦s¤`ªºÃöÀY¡C
+	mpcallout 3 say ÁöµM§Ú­Ì¾Ö¦³µL¤ñªº«H¤ß¡A¦ý¦pªG¯à°÷¬è¨D§Ú­Ì»·¯ªªºÀ°§U¡A
+	mpcallout 4 say ´N¯à°÷¥Î§ó¤ÖªºÄë¬¹¨ÓÀò±o§ó°¶¤jªº³Ó§Q¡I
+	mpcallout 5 say ²½ªÁ¬èÃ«ªº·Ç³Æ¤u§@§Ú¦­¨s¤w¸g§h©J¤â¤U¥h§¹¦¨¤F¡A
+	mpcallout 6 say ¦ý¬O¡A²{¦bÁÙ¯Ê¤Ö³Ì«áªº¤T¼Ëª««~¡A¤~¯à°÷¶i¦æ²½ªÁ¡C
+	mpcallout 7 say ³o¨Ç§÷®Æ¤À§O¬O¡G¯Â²bªºÀs´¹¡BÀs¤ßªºµ²´¹¥H¤ÎÀs¤§»î¾zªº¾®»EÅé¡C
+	mpcallout 8 say ¤£ª¾­^¶¯±z¬O§_¯àÀ°¦£§Ú«e¥h´M§ä©O¡H
+	mpcallout 8 mpmod_qmark $n kobold_cave_hero v2 | 32
+	mpcallout 8 mpdel_qmark self istalk
+endif
+~
+>defun_prog solvequest~
+if is_qmark($n) !& kobold_cave_hero 300064
+or is_qmark($n) !& kobold_cave_hero 300128
+or is_qmark($n) !& kobold_cave_hero 300256
+or is_qmark($n) != kobold_cave_hero
+else
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 applaud $n
+	mpcallout 2 say ¨S·Q¨ì§A¤@­Ó¤H´N§â©Ò¦³³Ñ¤Uªº§÷®Æ§ä»ô¤F¡C
+	mpcallout 3 say ¹ê¦b¤Ó¤F¤£°_¤F¡C
+	mpcallout 4 glare $n
+	mpcallout 5 say ÁöµM§A¬O­Ó¥~±Ú¤H¡A¦ý¬O«o¬°§Ú­Ì¦aÆF°µ¤F³o»ò¦h¨Æ¡C
+	mpcallout 6 ponder
+	mpcallout 7 say §Ú¨M©w¥U«Ê§A¬°¦aÆF±Úªº­^¶¯¡A¨Ã¥B¼s¬°«Å¶Ç§Aªº¥\ÂÝ¡I
+	mpcallout 8 say ¥t¥~¡A³oÂù¤â®M´N°eµ¹§A¡A§@¬°§A³o¦¸ªº¼ú½à§a¡I
+	mpcallout 9 mpechoat $n $I±N¤@Âù¤â®M¥æµ¹¤F§A¡C
+	mpcallout 9 mpechoaround $n $I±N¤@Âù¤â®M¥æµ¹¤F$N¡C
+	mpcallout 9 mpoload 66114 $n 36 target
+	mpcallout 9 mpmod_qmark $n kobold_cave_hero v2 | 512
+	mpcallout 10 grin
+	mpcallout 10 say ´N³o¼Ë¡A§Ú»°µÛ¥h¶i¦æ»ö¦¡¡A¤£°e¤F¡C
+	mpcallout 11 mpforce all south
+	mpcallout 11 mpecho $I±N¦b³õªº¤H³q³q»°¥X¤F¤ý®y«Ç¡C
+	if notbeing(doll-kobold)
+		mpcallout 12 close down
+		mpcallout 12 down
+		mpcallout 12 open down
+		mpcallout 12 unlock down
+		mpcallout 12 mpoload 66100 1
+		mpcallout 13 down
+		mpcallout 14 say ²×©ó´ê»ô¤F»s§@¨¸Às»î©Ò»Ý­nªº­ì®Æ¤F¡C
+		mpcallout 15 grin
+		mpcallout 15 say ³o¤U¤l¡A§Ú¤â¤¤ªº¤O¶q´N¯à§ó¦h¤F¡C
+		mpcallout 16 say ¥D®_§È¦ö¡A§U§Ú¥\¦¨¡I
+		mpcallout 17 mpecho $I¶}©l±N¤â¸Ìªº§÷®Æ¨Ì§ÇÂ\¤W²½¾Â....
+		mpcallout 18 mpecho $I¸÷«ô¤U¨Ó¡A¦VµÛ¬Y­Ó¤£ª¾¦Wªº¨¸¯«½w½w¬èÃ«¡C
+		mpcallout 19 mpecho ¨¸²§ªº¬õ¦â¥ú¨~±q²½¾Â¤Wµo´²¥X¨Ó¡AÆp¤J¤FÀsªº«ÍÀe¤¤¡C
+		mpcallout 20 mpecho ¦b¬õ¦â¥ú¨~§Ï©»¦³¥Í©Rªº¾Þ±±¤U¡AÀs´¹¡BÀs¤ß»PÀs»î½w½w¦a¿Ä¤J¤FÀs«Í¤§¤¤¡C
+		mpcallout 21 mpgroup $i doll-kobold 1
+		mpcallout 21 mppurge dragon-koboldobj
+		mpcallout 21 mpecho Àsªº«ÍÀe§Ï©»¬¡¹L¨Ó¦ü¦a°Ê¤F°_¨Ó¡I
+		mpcallout 21 mpmload 66134
+		mpcallout 22 say ¦¨¥\¤F¡I¦¨¥\¤F¡I¨¸Às°¸»s§@¦¨¥\¤F¡I
+		mpcallout 22 cackle
+		mpcallout 23 sweat
+		mpcallout 23 say ¶â....¤]¸Ó¦^¥h¤F¡A¤£µM¤W­±¦³¬O¦³¤HÂô¶i¨Ó´NÁV¤F¡C
+		mpcallout 24 mpjunk key
+		mpcallout 24 avert
+		mpcallout 24 lock down
+		mpcallout 24 close down
+		mpcallout 24 up
+		mpcallout 24 open up
+		mpcallout 24 up
+		mpcallout 24 mpdel_qmark self istalk
+	endif
+endif
+~
+>give_prog 63099~
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300064
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say §Ú¦¬¨ì¯Â²bÀs´¹¤F¡I
+	mpmod_qmark $n kobold_cave_hero v2 | 64
+	mpcall solvequest $n
+	mpjunk $o
+endif
+~
+>give_prog 5263~
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300128
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say §Ú¦¬¨ìÀs¤ßµ²´¹¤F¡I
+	mpmod_qmark $n kobold_cave_hero v2 | 128
+	mpcall solvequest $n
+	mpjunk $o
+endif
+~
+>give_prog 32133~
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300256
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say §Ú¦¬¨ìÀs¤§»î¤F¡I
+	mpmod_qmark $n kobold_cave_hero v2 | 256
+	mpcall solvequest $n
+	mpjunk $o
+endif
+~
+>give_prog 32166~
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300256
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say §Ú¦¬¨ìÀs¤§»î¤F¡I
+	mpmod_qmark $n kobold_cave_hero v2 | 256
+	mpcall solvequest $n
+	mpjunk $o
+endif
+~
+>give_prog all~
+?
+drop $o
+~
+|
+#66106
+kobold-soldier-shooter shooter~
+¦aÆF®g¤â(Kobold Shooter)~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸Ì¾ÞÁaµÛ©¸¯¥¦V¤U¤è®gÀ»¡C
+~
+³o°¦¦aÆF¬Ý°_¨Ó¤ñ¨ä¥Lªº¦aÆF­n°ª¤j³\¦h¡A¤]¥u¦³¥L³oºØ§§ºÓªºÅé®æ¦³¿ìªk¾Þ
+§@¥¨¤jªº©¸¯¥¡A¶i¦æ®gÀ»¡C
+~
+1|2|64|8192 8|32|128 -700 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+C 1|4
+S 13 30000
+S 16 -2000
+S 41 200
+>rand_prog 100~
+if mobcount(13647) == 0
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	if insameroom(kobold-soldier-ballista)
+	else
+		mpecho $I°h¨«¤F¡C
+		mppurge self
+	endif
+endif
+~
+>fight_prog 100~
+wear all
+if rand(50)
+	if dex($n) >= 20
+		mpechoat $n ©¿µM©ð°_¤@¶ô¤j¥ÛÀY´Â§A­±¤W¯{¹L¨Ó¡A¦ý³Q§AÆF¥©¦a°{¹L¤F¡I
+		mpechoaround $n ©¿µM©ð°_¤@¶ô¤j¥ÛÀY´Â$N­±¤W¯{¹L¥h¡A¦ý³Q$NÆF¥©¦a°{¹L¤F¡I
+		break
+	endif
+	mpechoat $n ©¿µM©ð°_¤@¶ô¤j¥ÛÀY¯{¦b§Aªº­±¤W¡A±N§A¯{ªºÀY·w¥Ø¯t¡I
+	mpechoaround $n ©¿µM©ð°_¤@¶ô¤j¥ÛÀY¯{¦b$Nªº­±¤W¡A±N$N¯{ªºÀY·w¥Ø¯t¡I
+	mpforcer here stun $n 10
+	if rand(50)
+		mpechoat $n §A¦bÀY·w¥Ø¯t¤§¤U¤£¤p¤ß±q±V¾À¤W¼Y¸¨¤U¥h¤F¡I
+		mpechoaround $n $N±q±V¾À¤W±¼¤F¤U¥h¡I
+		if inroom($i) == 66126
+			mptransfer $n 66118
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66127
+			mptransfer $n 66119
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66128
+			mptransfer $n 66120
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66129
+			mptransfer $n 66121
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66130
+			mptransfer $n 66122
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66131
+			mptransfer $n 66123
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66132
+			mptransfer $n 66124
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66133
+			mptransfer $n 66125
+			mpforcer 66118 echoaround $n $N±q±V¾À¤W±¼¤F¤U¨Ó¡I
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+	endif
+endif
+~
+|
+#66107
+kobold-soldier-ballista ballista~
+¦aÆF©¸¯¥(Kobold Ballista)~
+¤@½ø¦aÆF¥´³yªº©¸¯¥(Ballista)³QÂ\¦b³o¸Ì¡C
+~
+³o½ø©¸¯¥¬Ý¨Ó¬O±M¬°³oÃäªº¦a«¬¦Ó³]­pªº¡A¤Q¤G°¦¸}¬W¨c¨c¦a¨ë¤J±V¾À¡A¨Ï±o
+¥¦Ãø¥H²¾°Ê¡C¦Óºë¿û¥´³yªºÂß´ß«hÅý¥¦Ãø¥H³Q¯}Ãa¡A°£¤Fµw¸IµwªººCºC§â¥¦¯{
+Ãa¥H¥~¡A©Î³\§AÁÙ¥i¥H·Q¿ìªkºN¯Á¥X¥¦µ²ºc¤Wªº®zÂI¡A±N¥¦¸ÑÅé(Disable)¡H
+~
+1|2 0 0 S
+1 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 8
+R Object~
+C 1|4
+S 13 100000
+S 16 -2000
+S 39 1000
+S 41 200
+>defun_prog shotone~
+if pcnum($) > 0
+	if rand(50)
+		mpdef_rembch $r
+		mpcall shottwo $b
+	else
+		mpcall shottwo elf-soldier
+	endif
+else
+	mpcall shottwo elf-soldier
+endif
+~
+>defun_prog shottwo~
+mpechoat $n ¤@¤ä©¸½b©¿µM±q±V¾À¤W­¸¨Ó¡A®g¤¤¤F§A¡I
+mpechoaround $n ¤@¤ä©¸½b©¿µM±q±V¾À¤W­¸¨Ó¡A®g¤¤¤F$N¡I
+mpforcer here modhmv $n 01.250 250 10100001
+~
+>repop_prog 100~
+mpforcer here modrvt v0 = 1
+~
+>rand_prog 100~
+if mobcount(13647) == 0
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mppurge self
+endif
+if insameroom(kobold-soldier-shooter)
+	mpecho ¦aÆF®g¤â¾ÞÁaµÛ©¸¯¥¦VµÛ±V¤U®gÀ»¡I
+	if rand(50)
+		if rand(50)
+			if rand(67)
+				mpat 66112 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66113 mpcall shotone $i
+				else
+					mpat 66114 mpcall shotone $i
+				endif
+			endif
+		else
+			if rand(67)
+				mpat 66115 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66118 mpcall shotone $i
+				else
+					mpat 66119 mpcall shotone $i
+				endif
+			endif
+		endif
+	else
+		if rand(50)
+			if rand(67)
+				mpat 66120 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66121 mpcall shotone $i
+				else
+					mpat 66122 mpcall shotone $i
+				endif
+			endif
+		else
+			if rand(67)
+				mpat 66123 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66124 mpcall shotone $i
+				else
+					mpat 66125 mpcall shotone $i
+				endif
+			endif
+		endif
+	endif
+else
+	if rand(5)
+		mpecho ¤@¦W¦aÆF®¨®¨¦aª¦¤F¤W¨Ó....
+		mpmload 66106
+		mpforce kobold-soldier-shooter mpkill $r
+	endif
+endif
+~
+>fight_prog 100~
+mpgoto self
+~
+>death_prog 100~
+mpforcer here modrvt v0 = 0
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 6
+~
+|
+#66108
+kobold-soldier-kulala kulala~
+¥j©Ô©Ô(Kulala)~
+¤@°¦­^®ð¹G¤Hªº¤k¦aÆF(Kobold)¥¿¯¸¦b¦uÅ@¦oªº®a¶é¡C
+~
+¥j©Ô©Ô¬O¦aÆF¤¤¦³¦Wªº¤k­^¶¯¡A¾Ú»¡¦oªº¹ê¤O¬Æ¦Ü¤ñ¦oªº­ô­ô¡Ð¥j©Ô¨¹§ó¬°±j
+®«¡C¦ý¬O¥Ñ©ó¦o¤Ï¹ï¦aÆF¤§¤ýÂÄ·ç¶ðº¸ªº¹ï¥~ÂX±i¬Fµ¦¡A¦]¦¹©l²×¤£±o­«¥Î¡C
+~
+1|2|64|2048|4096|8192|262144|1048576|8388608 8|32|128|512|134217728 0 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Kobold~
+C 1|4|8|32
+P 4|8|4194304|16777216|1073741824
+S 13 50000
+S 16 -2000
+S 17 -500
+S 18 80
+S 19 40
+S 39 -500
+S 40 30
+S 41 50
+S 42 50
+S 43 50
+S 44 50
+>defun_prog godefense~
+mpecho $I©¹ªF¨«¥h¡C
+mpgoto 66116
+mpmload 66109
+mpgroup $i kobold-soldier-shielder 1
+mpmload 66109
+mpgroup $i kobold-soldier-shielder 1
+mpmload 66110
+mpgroup $i kobold-soldier-shielder 0
+mpmload 66110
+mpgroup $i kobold-soldier-shielder 0
+yell °í¦u±^¦ì¡A¦uÅ@§Ú­Ìªº®a¶é¡I
+~
+>repop_prog 100~
+mpoload 66106
+mpoload 66107
+mpoload 66108
+wear all
+~
+>death_prog 100~
+yell ¤£¡ã¡ã
+if is_qmark($n) < war_reward 200010
+or is_qmark($n) != war_reward
+or notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) >= wartime 100105
+	mpjunk bramble-o
+	mpjunk bomber-o
+	mpjunk rosefinch-o
+else
+	if rand(90)
+		mpjunk bramble-o
+		mpjunk bomber-o
+		mpjunk rosefinch-o
+	else
+		if rand(33)
+			mpjunk bramble-o
+			mpjunk bomber-o
+		else
+			if rand(50)
+				mpjunk bomber-o
+				mpjunk rosefinch-o
+			else
+				mpjunk rosefinch-o
+				mpjunk bramble-o
+			endif
+		endif
+	endif
+endif
+if being(elf-soldier-marshal)
+	mpgreward exp $n 30 35000
+	mpmod_qmark $n war_reward v0 + 20
+	mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 50
+endif
+~
+>rand_prog 100~
+if inroom($i) == 66116
+	if notbeing(elf-soldier-marshal)
+	or is_qmark(elf-soldier-marshal) == wartime 300003
+		mpecho $I¬Ý¤F¬Ý©P³òªº¾Ô³õ¡C
+		sigh
+		say ½}¤F¡ã½}¤F¡ã
+		say ¨Æ¤w¦Ü¦¹¡A§Ú¤SÁÙ¯à°µ¨Ç¤°»ò©O¡H
+		say ´NÅýÂÄ·ç¶ðº¸¦Û¤v¥h­±¹ï¥L®¡·N¦k¬°ªº«áªG§a¡C
+		mpecho $I±aµÛ³¡¤UÂà¨­Â÷¶}¤F¡C
+		mppurge kobold-soldier-shielder
+		mppurge kobold-soldier-shielder
+		mppurge kobold-soldier-priest
+		mppurge kobold-soldier-priest
+		mpgoto 66171
+	else
+		if rand(33)
+			yell °í¦u±^¦ì¡A¦uÅ@§Ú­Ìªº®a¶é¡I
+		endif
+	endif
+else
+	if pcnum($) < 1
+	or is_qmark($i) != isqmark
+	else
+		if rand(33)
+			if rand(50)
+				if rand(50)
+					say ­ô­ô¨ü©R¥X©º¡A¤£ª¾¹D²{¦b±¡ªp«ç»ò¤F....
+					glare
+				else
+					say ¦Û±q¦aÆF¤§¤ýÂÄ·ç¶ðº¸¾aµÛ¯«¯¦ªº§U¤O§¤¤W¤ý¦ì¥H¨Ó¡A
+					say °ê¤º¤@ª½±Ä¨ú¹ï¥~ÂX±iªºµ¦²¤¡AÃø¹D¥L¤£ª¾¹D§L¥û¾Ô¦M¡A¶Ë¤H¥ç¥i¶Ë¤v¶Ü¡H
+					sigh
+					say ©M¥­¤é¤l®£©È¤£·|«ùÄò¤Ó¤[¤F°Ú....
+				endif
+			else
+				mpecho $I¬Ý¤F¬Ý¤@¥÷·s°e¹FªºÂ²³ø¡C
+				if rand(50)
+					say ¼x§L¡I¤S­n¼x§L¡I
+					say ÂÄ·ç¶ðº¸·Q­n§Ú­Ì¥þ¥Á¬Ò§L¶Ü¡H
+					say ªø¤[¥H©¹¡A¤£¬O¥ß°ê¤§¹D°Ú¡I
+				else
+					say ºëÆF±Ú¤]¶}©l¾ã§L³Æ¾Ô¤F¶Ü¡H
+					say ¦A³o¼Ë¤U¥h¡A¾Ô¤õÁ`¦³¤@¤Ñ·|©µ¿N¨ì³o¸Ìªº....
+					glare
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($r) != kobold_cave_hero
+or is_qmark($r) <= kobold_cave_hero 100012
+	mpkill $r
+endif
+~
+>fight_prog 100~
+if rand(50)
+	say ¤é¤ë¬P¨°¤j¦aµ×µØ¡A¶×¶°§Ú¨­¡A§U§ÚÀ»°h¨Ó¥Ç¤§¼Ä§a¡I
+	sun
+	sun
+	earth
+	mptrip $n
+	mptrip $r
+	mptrip elf-soldier
+else
+	say ¤ô¤õ­·¹p¥|¤j¤¸¯À¡AÅ¥§Ú©R¥O¡A§U§ÚÀ»°h¨Ó¥Ç¤§¼Ä§a¡I
+	sprinkle $n
+	icecore $n
+	flaming $n
+	storm
+	fulgurant $n
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) != kobold_cave_hero 200020
+or notbeing(kobold-soldier-king)
+	if rand(50)
+		if rand(50)
+			say ­ô­ô¨ü©R¥X©º¡A¤£ª¾¹D²{¦b±¡ªp«ç»ò¤F....
+			glare
+		else
+			say ¦Û±q¦aÆF¤§¤ýÂÄ·ç¶ðº¸¾aµÛ¯«¯¦ªº§U¤O§¤¤W¤ý¦ì¥H¨Ó¡A
+			say °ê¤º¤@ª½±Ä¨ú¹ï¥~ÂX±iªºµ¦²¤¡AÃø¹D¥L¤£ª¾¹D§L¥û¾Ô¦M¡A¶Ë¤H¥ç¥i¶Ë¤v¶Ü¡H
+			sigh
+			say ©M¥­¤é¤l®£©È¤£·|«ùÄò¤Ó¤[¤F°Ú....
+		endif
+	else
+		mpecho $I¬Ý¤F¬Ý¤@¥÷·s°e¹FªºÂ²³ø¡C
+		if rand(50)
+			say ¼x§L¡I¤S­n¼x§L¡I
+			say ÂÄ·ç¶ðº¸·Q­n§Ú­Ì¥þ¥Á¬Ò§L¶Ü¡H
+			say ªø¤[¥H©¹¡A¤£¬O¥ß°ê¤§¹D°Ú¡I
+		else
+			say ºëÆF±Ú¤]¶}©l¾ã§L³Æ¾Ô¤F¶Ü¡H
+			say ¦A³o¼Ë¤U¥h¡A¾Ô¤õÁ`¦³¤@¤Ñ·|©µ¿N¨ì³o¸Ìªº....
+			glare
+		endif
+	endif
+else
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpat assassin-kobold mppurge assassin-kobold
+	say ¤w¸g»¡ªA°÷¦hªºÄµ³Æ¶¤­û¤F¶Ü¡H«Ü¦n¡I
+	mpcallout 1 say ²{¦b´NÅý§Ú­Ì«e¥h¹G­¢ÂÄ·ç¶ðº¸°h¦ì§a¡I
+	mpcallout 2 mpgroup $i $n 0
+	mpcallout 3 mpgroup self guard 1
+	mpcallout 3 mpmload 66133
+	mpcallout 3 mpgroup self guard 1
+	mpcallout 3 mpmload 66133
+	mpcallout 3 mpecho ¤@¸s¦aÆFÅ¥¨ì®ø®§¡A»°¨Ó¥[¤J¤F¥j©Ô©Ôªº¶¤¥î¡C
+	mpcallout 3 east
+	mpcallout 4 mpgroup self guard 1
+	mpcallout 4 mpmload 66133
+	mpcallout 4 mpgroup self guard 1
+	mpcallout 4 mpmload 66133
+	mpcallout 4 mpecho ¤@¸s¦aÆFÅ¥¨ì®ø®§¡A»°¨Ó¥[¤J¤F¥j©Ô©Ôªº¶¤¥î¡C
+	mpcallout 4 east
+	mpcallout 5 mpgroup self guard 1
+	mpcallout 5 mpmload 66133
+	mpcallout 5 mpgroup self guard 1
+	mpcallout 5 mpmload 66133
+	mpcallout 5 mpecho ¤@¸s¦aÆFÅ¥¨ì®ø®§¡A»°¨Ó¥[¤J¤F¥j©Ô©Ôªº¶¤¥î¡C
+	mpcallout 5 north
+	mpcallout 6 mpgroup self guard 1
+	mpcallout 6 mpmload 66133
+	mpcallout 6 mpgroup self guard 1
+	mpcallout 6 mpmload 66133
+	mpcallout 6 mpecho ¤@¸s¦aÆFÅ¥¨ì®ø®§¡A»°¨Ó¥[¤J¤F¥j©Ô©Ôªº¶¤¥î¡C
+	mpcallout 6 north
+	mpcallout 7 mpgroup self guard 1
+	mpcallout 7 mpmload 66133
+	mpcallout 7 mpgroup self guard 1
+	mpcallout 7 mpmload 66133
+	mpcallout 7 mpecho ¤@¸s¦aÆFÅ¥¨ì®ø®§¡A»°¨Ó¥[¤J¤F¥j©Ô©Ôªº¶¤¥î¡C
+	mpcallout 7 mpforce kobold-soldier-king mpgoto kobold-soldier-king
+	mpcallout 7 north
+	mpcallout 8 mpforce kobold-soldier-king say ÁÙ¤£§ÖÂI°h¤U¡I
+	mpcallout 8 mpforce kobold-soldier-king say §A..§A­Ì³o»ò¦h¤H¹L¨Ó³o¸Ì·Q°µ¤°»ò¡I¡H
+	mpcallout 9 say §Ú»{¬°§A¤w¸g¨S¦³¸ê®æ¦A·í°ê¤ý¤F¡I
+	mpcallout 9 say ÂÄ·ç¶ðº¸¡A§A»P¨¸¯«¤Äµ²¡B·N¹Ï¥X½æ¦aÆFªº©Ò§@©Ò¬°¤w¸gÃn¥ú¤F¡I
+	mpcallout 10 mpforce kobold-soldier-king say ¤°..¤°»ò¡H¤£¥i¯à¡Iª¾±¡ªº¤H¦­´N³Q§Ú±þ¥ú¤F¡A©p«ç»òª¾¹Dªº¡H
+	mpcallout 11 mpforce guard say ¤U»O°Õ¤U»O°Õ¡I
+	mpcallout 11 mpforce guard say ¤Ó¹L¥÷¤F¡I
+	mpcallout 11 mpforce guard say °ê¤ý©~µM·Q­n¥X½æ§Ú­Ì....
+	mpcallout 11 mpforce guard say ©Ò¥H³o¨Æ¬O¯uªº¤FÅo¡H
+	mpcallout 11 mpecho ©P³òªº¦aÆF­Ì¶}©lÅÑÅÑ¨p»y....
+	mpcallout 12 mpforce kobold-soldier-king mpecho ÂÄ·ç¶ðº¸Áy¦â¤@ÅÜ¡A¬°¤F¦Û¤vªº¤@®É¥¢¤f«á®¬¤£¤w¡C
+	mpcallout 13 mpforce kobold-soldier-king say ­ó¡I´Nºâ³Q§A­Ìª¾¹D¤F¡A¨º¤]ºâ¤£¤F¤°»ò¡I
+	mpcallout 14 mpforce kobold-soldier-king say ¬JµM§Úªº­I«á¾a¤s¬O¨¸¯«¡AÃø¹D§ÚÁÙ·|©È§A­Ì³o¨Ç®z¤pªº¦aÆF¶Ü¡I
+	mpcallout 15 mpforce kobold-soldier-king yell ¸U¯àªº¨¸¯«°Ú¡I½Ð§U§Ú¤@Áu¤§¤O¡A¸Ý·À³o¨Ç«q®{§a¡I
+	mpcallout 16 mpforce kobold-soldier-king mpecho ªÅ¶¡©¿µM²£¥Í¼@¯Pªº¾_°Ê¡AÅý¦b³õªº°Ê¤H¥ß¨¬¤£Ã­¡B°Ê¼u¤£±o¡I
+	mpcallout 16 mpforcer here stun $n 5
+	mpcallout 17 mpforcer here echo ¤@ªÑ¨¸´cªº®ð®§¤£ª¾±q¦ó¦Ó¨Ó¡Aº©©µ¤F¾ã­ÓªÅ¶¡¡I
+	mpcallout 18 mpforcer here echo ¤£©ú¤Hª« [0m[32;1m»¡µÛ¡u¨S¥ÎªºªF¦è¡I§â§A¨º¨S»ù­ÈªºÆF»î¥æ¥X¨Ó§a¡I¡v[0m
+	mpcallout 18 mpforcer here echo ¤£©ú¤Hª« [0m[32;1m»¡µÛ¡u­ó¡I³s¤@¸s·M¬Nªº¦aÆF³£³B²z¤£¤F¡AÁÙ´±§ä§ÚÀ°À¿§¾ªÑ¡C¡v[0m
+	mpcallout 19 mpforce kobold-soldier-king mpecho ÂÄ·ç¶ðº¸©¿µM­±¥Ø§á¦±¡A¾ã­Ó¨­Åé³vº¥°®¬\ÁY¤p....
+	mpcallout 19 mpforce kobold-soldier-king say «ç..«ç»ò·|¡I§c..°Ú..¶ã«z«z«z«z«z¡I¡I¡I
+	mpcallout 20 mppurge kobold-soldier-king
+	mpcallout 20 mpforcer here echo ¥¢¥h¤ä¼µªº¤ý«a±¼¸¨¨ì¤F¦a¤W¡C
+	mpcallout 20 mpmod_qmark $n kobold_cave_hero v2 | 512
+	mpcallout 20 mpmod_qmark $n kobold_cave_hero v1 = 21
+	mpcallout 20 mpoload 66112 36 floor
+	mpcallout 20 mpforcer here echo ¦bÀþ®§¤§¶¡¡AÂÄ·ç¶ðº¸ªº¨­Åé´N³QÀY³»ªº¤ý«aµ¹§l¦¬¤F¡I
+	mpcallout 21 mpforcer here echo ÀHµÛÂÄ·ç¶ðº¸ªº®ø¥¢¡AªÅ¶¡ªº¾_°Ê²×©ó°±·²....
+	mpcallout 22 sigh
+	mpcallout 23 say ³o¤]ºâ¬O¦Û§@¦Û¨ü§a¡H
+	mpcallout 24 say ³o¦¸ªº¨Æ¥ó¡A¦hÁ«¤F­^¶¯±z¤F¡I
+	mpcallout 24 mpechoat $n $IÂà¹L¨­¨Ó¬Ý¦V§A¡C
+	mpcallout 24 mpechoaround $n $IÂà¹L¨­¨Ó¬Ý¦V$N¡C
+	mpcallout 26 say ¤£¹L¦p¤µ¦Ê¼o«Ý¿³¡A¯à°÷¦^³ø±zªº¤]¥u¦³§Ú­Ì¸Û¼°ªºÁÂ·N¤F¡I
+	mpcallout 27 yell §Ú«Å¥¬¡G$N[0m[33;1m±q¤µ¤Ñ¶}©l«K¬O¦aÆF±Úªº­^¶¯¡I
+	mpcallout 27 mpresp $n 2
+	mpcallout 27 bow $n
+	mpcallout 28 mpgoto 66171
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mpdel_qmark self istalk
+	mpcallout 28 mpecho ¦b¤@¦W¦aÆF»â©R«á¡A»E°_¨Óªº¦aÆF³vº¥´²¥h¡Aµ²§ô¤F³o³õÄÌ°Ê¡C
+endif
+~
+>talk_prog protect~
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200005
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpechoat $n §A±NÃÙ¿ú©ÔÀt´µ¥Ð¥Ø¦ý¥Lªºµo²{§iª¾¤F¥j©Ô©Ô....
+	mpcallout 1 say ........¡I¡H
+	mpcallout 2 say ©~µM¦³³oºØ¨Æ....³o¤£¬O¦b¥X½æ§Ú­Ì¦aÆFªº¥¼¨Ó¶Ü¡H
+	mpcallout 3 ponder
+	if notbeing(kobold-soldier-king)
+		mpcallout 4 say ¤£¹LÂÄ·ç¶ðº¸²{¦b¤]¦º¤F¡A§Ú­Ì´N¤£»Ý­n¦A°l¨s¤F¡I
+		mpcallout 4 mpdel_qmark self istalk
+	else
+		mpcallout 4 say §Úª¾¹D¤F¡A§Ú·|¯¦±K¬£¤H¥h«OÅ@¥Lªº¡C
+		mpcallout 5 say ¦pªG³o¨Æ¦p¹ê¡A¨º¤£¯à¤£ºÞ¡A«D±o±ÀÂ½ÂÄ·ç¶ðº¸²{¦bªº²Îªv¤£¥i¡C
+		mpcallout 6 say ¤£¹L¡A²¦³º¨ÆÃö­«¤j¡A§ÚµLªk½T©w¬O¤£¬O¦³¤ß¤H¹ï°ê¤ýªº®âÅB¡C
+		mpcallout 7 say ¯à§_½Ð­^¶¯±z«e¥h¥J²Ó½Õ¬d¡A½T»{¤@¤U©O¡H(Yes/No)
+		mpcallout 7 mpmod_qmark $n kobold_cave_hero v1 = 6
+		mpcallout 7 mpdel_qmark self istalk
+	endif
+endif
+~
+>talk_prog yes~
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200006
+	say ¤Ó¦n¤F¡I¨º¤@¤Á´N«ô°U§A¤F¡C
+	mpcallout 1 mpmod_qmark $n kobold_cave_hero v1 = 7
+endif
+~
+>talk_prog no~
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200006
+	say ¦n§a¡A¨º§Ú¤]¨S¿ìªk«j±j§A¡C
+	mpcallout 1 mpmod_qmark $n kobold_cave_hero v1 = 100
+endif
+~
+>talk_prog report~
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200008
+	say ¤°»ò¡I¡H¤ý®y©³¤U³ºµM¦³¨ººØªF¦è....
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 say ¬Ý¼Ë¤lÂÄ·ç¶ðº¸ªº­I«áªº½T¦³¨¸´c¶Õ¤Oªº¦s¦b¡C
+	mpcallout 2 say ¦AÅý¥L§â«ùµÛÅv¤O¡A¥LªÖ©w·|±N¦aÆF©ì¤J¾Ôª§ªº²`²Wªº¡C
+	mpcallout 3 say ¦ý¬O¡A²{¦b«o¦³¤@°ïÀY¸£¤£²M·¡¥u·QµÛ«Ø¥\¥ß·~ªº¦aÆF¤ä«ùµÛ¥L¡C
+	mpcallout 4 ponder
+	mpcallout 5 say ¯à§_½Ð±zÀ°¦£§iª¾«°¤¤ªºÄµ³Æ¶¤­û¯u¬Û¡A»¡ªA¥L­ÌÀ°¦£§Ú±ÀÂ½ÂÄ·ç¶ðº¸©O¡H
+	mpcallout 6 say ¦pªG¥i¥Hªº¸Ü¡AºÉ¥i¯à¤£­n°Ê¥ÎªZ¤O¤ñ¸û¦n¡C
+	mpcallout 6 mpmod_qmark $n kobold_cave_hero v1 = 9
+	mpcallout 7 addoil $n
+	mpcallout 7 mpdel_qmark self istalk
+	mpmload 66132
+	mpforce assassin-kobold mpdef_rembch $n
+	mpforce assassin-kobold mpgoto 2
+endif
+~
+|
+#66109
+kobold-soldier-shielder shielder~
+¦aÆF¬Þ½Ã(Kobold Shielder)~
+³o°¦¦aÆF(Kobold)¥¿¦b³o¸Ì¦uÅ@µÛ¦aÆFªº»â¤g¡C
+~
+³o°¦¦aÆF°ªÁ|¤@±i«p«pªº¬ÞµP¡A¹³¤@°ôÀð¦üªº¾×¦í¤F§Aªº¥h¸ô¡C
+~
+1|2|64|4096 8|32|128 0 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|4
+P 4|128|32768|65536
+R Kobold~
+S 13 40000
+S 16 -2000
+S 17 -1500
+S 18 50
+S 19 25
+S 24 -100
+S 41 150
+S 43 150
+>repop_prog 100~
+mpoload 66104
+mpoload 66103 36
+mpat 2 wear all
+~
+>rand_prog 100~
+if being(elf-soldier-marshal)
+or isfight($i)
+else
+	mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(95)
+	mpjunk shield-koboldcave
+endif
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 1500
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 3
+~
+|
+#66110
+kobold-soldier-priest priest~
+¦aÆF²½¥q(Kobold Priest)~
+³o°¦¦aÆF(Kobold)¥¿¦b¬°¥Lªº¦P­M«ì´_ºë¤O¡C
+~
+³o¦W¦aÆF¤£°±³ä³ä°áµÛÃ«¤å¡A¦ý°t¤W¨ä¸G¤p»êÅ¼ªº¥~ªí¤@¬Ý¡A´N¤@ÂI¤]¤£·|Åý
+§A¦³¯«¸tªº·PÄ±¤F¡C
+~
+1|2|64 8|32|128 0 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 4|128|32768|65536|1048576|2097152
+R Kobold~
+>repop_prog 100~
+mpoload 66109 1
+mpat 2 wear all
+~
+>death_prog 100~
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk rod-kobold
+endif
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 1500
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 3
+~
+>rand_prog 100~
+if being(elf-soldier-marshal)
+or isfight($i)
+else
+	mppurge self
+endif
+~
+>fight_prog 20~
+c 'gfull heal'
+~
+|
+#66111
+kobold-soldier-drillmaster drillmaster~
+¦aÆF±Ð©x(Kobold Drillmaster)~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸ÌºÊ·þµÛ·s§Lªº°V½m¡C
+~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸ÌºÊ·þµÛ·s§Lªº°V½m¡C
+~
+1|2|64|2048|8192|262144 8|32|128 -700 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+C 1|4
+S 13 20000
+S 16 -2000
+S 24 -100
+S 41 100
+>death_prog 100~
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+~
+>rand_prog 33~
+if mobcount(13647) == 0
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+	if is_qmark(elf-soldier-marshal) < wartime 100105
+		say ¼Ä¤H§ð¶i¨Ó¤F¡I¤j®a§ÖÂI¥X¥h¨ó¨¾¡I§Ö¡ã§Ö¡ã¡I
+		if inroom(elf-soldier-marshal) == 66143
+		or inroom(elf-soldier-marshal) == 66142
+		or inroom(elf-soldier-marshal) == 66140
+			mpforce kobold-soldier-soldier mpcall northdef $i
+		else
+			mpforce kobold-soldier-soldier mpcall southdef $i
+		endif
+		if rmobcount(66112) < 4
+			mpmload 66112
+		endif
+	endif
+else
+	if rand(25)
+		say ¥ß¥¿¡I©ïÀY¡I®¼¯Ý¡IÁY¤p¸¡¡I³ø¼Æ¡I
+		say ´§¤M¡I¤@¤U¡I¨â¤U¡I¤T¤U¡I
+		if inroom($i) == 66144
+			mpcallout 1 ponder
+			mpcallout 2 say ©_©Ç¡H«ç»ò¦n¹³¤Ö¤F¤@­Ó....
+		endif
+	endif
+endif
+~
+|
+#66112
+kobold-soldier-soldier soldier~
+¦aÆF¨B¨ò(Kobold Soldier)~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸Ì´§»RµÛÂ²­®ªº§L¾¹¡C
+~
+¤@°¦¦aÆF(Kobold)¥¿¦b³o¸Ì´§»RµÛÂ²­®ªº§L¾¹¡C
+~
+1|2|64|2048 0 -700 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+C 1
+S 13 8000
+S 16 -2000
+S 18 50
+S 43 20
+>repop_prog 100~
+mpoload 66103
+mpat 2 wear all
+~
+>defun_prog northdef~
+if inroom($n) == 66144
+	west
+else
+	east
+endif
+n
+n
+n
+~
+>defun_prog southdef~
+if inroom($n) == 66144
+	west
+else
+	east
+endif
+s
+s
+s
+w
+w
+~
+>death_prog 100~
+mpjunk all
+mpgreward exp $n 30 500
+if rand(50)
+	mpmod_qmark $n war_reward v0 + 1
+endif
+~
+|
+#66113
+female kobold~
+¤k¦aÆF(Female Kobold)~
+¤@¦W¤k©Êªº¦aÆF(Female Kobold)¥¿¦b³o¸Ì¶¢³}¡C
+~
+¤@¦W¤k©Êªº¦aÆF(Female Kobold)¥¿¦b³o¸Ì¶¢³}¡C
+~
+1|4|64|128|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+S 16 200
+#66114
+male kobold~
+¨k¦aÆF(Male Kobold)~
+¤@¦W¨k©Êªº¦aÆF(Male Kobold)¥¿¦b³o¸Ì¶¢³}¡C
+~
+¤@¦W¨k©Êªº¦aÆF(Male Kobold)¥¿¦b³o¸Ì¶¢³}¡C
+~
+1|4|64|128|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+S 16 200
+#66115
+kobold child~
+¦aÆF¤p«Ä(Kobold Child)~
+¤@¦W¦aÆF¤p«Ä(Kobold Child)¥¿¦b³o¸Ìª±­A¡C
+~
+¤@¦W¦aÆF¤p«Ä(Kobold Child)¥¿¦b³o¸Ìª±­A¡C
+~
+1|2|4|64|128|33554432 0 -300 S
+10 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+S 16 100
+#66116
+kobold blacksmith~
+¦aÆFÅK¦K(Kobold Blacksmith)~
+¤@¦W¦aÆFÅK¦K(Kobold Blacksmith)¥¿¦b³o¸Ì´§¦½¦p«B¦a¤u§@µÛ¡C
+~
+¤@¦W¦aÆFÅK¦K(Kobold Blacksmith)¥¿¦b³o¸Ì´§¦½¦p«B¦a¤u§@µÛ¡C
+~
+1|2|4|64|33554432 0 -300 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+S 16 300
+#66117
+kobold miner~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦rªº¦WµP¡C
+~
+1|4|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>death_prog 100~
+mpecho $n $IÁ{¦º«eªººG¥s°jÅT¦bÄq§|¤¤....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¶]§A­n·t±þªº¥Ø¼Ð¡C
+else
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¨ì¤H¡C
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho ¦aÆFÄq¤uÅ¥¨ìºG¥s«áÅ¸§Ý¤F¤@¤U¡A¤§«á«K¨³³t¦a±q¬Y­Ó±K¥Þ°k¨«¤F....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+~
+|
+#66118
+kobold gateguard~
+¦aÆFªù½Ã(Kobold Gateguard)~
+¤@¦W¦aÆF±Úªº¦uªù½Ã¤h(Gateguard)¦b³o¸Ì¥ÎµÛÃhºÃªº²´¯«¨nµÛ§A¡C
+~
+¤@¦W¦aÆF±Úªº¦uªù½Ã¤h(Gateguard)¦b³o¸Ì¥ÎµÛÃhºÃªº²´¯«¨nµÛ§A¡C
+~
+1|2|64 8|32 -700 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8|128
+R Kobold~
+S 16 -2000
+>rand_prog 100~
+if being(elf-soldier-marshal)
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+~
+>greet_prog 100~
+if ispc($n)
+	if is_qmark($n) != kobold_cave_hero
+	or is_qmark($n) <= kobold_cave_hero 100012
+		if is_qmark($n) > war_reward 200000
+		or race($n) == elf
+			stare $n
+			if is_qmark($n) & kobold_cave_hero 300512
+				say §ë¾aºëÆFªº«q®{....ºu¶}¡I
+			else
+				say ºëÆF±Úªº¼Ä¤H°Ú....ºu¶}¡I
+			endif
+			if race($n) != elf
+				mpcallout 1 mpechoat $n ©Î³\§A¥i¥H¦V¥L¸ÑÄÀ(Explain)§A¨Ã¤£¬OºëÆF±Úªº¤H¡H
+			endif
+		else
+			if is_qmark($n) != kobold_cave_hero
+			or is_qmark($n) == kobold_cave_hero 100000
+				if isgood($n)
+					stare $n
+				endif
+				say ¥~±Ú¤H¡A§A¨S¦³¶i¤J(Enter)³o¸Ìªº¸ê®æ¡A¨«¶}¡I
+			else
+				say §AµªÀ³±a¨ÓªººëÆF¤HÀY©O¡H¼Æ¶qÁÙ¤£°÷³á....
+			endif
+		endif
+	else
+		salute $n
+		if is_qmark($n) & kobold_cave_hero 300512
+			say ¦aÆF±Úªº­^¶¯¡AÅwªï±z¡I
+		else
+			say ¦aÆF±ÚªºªB¤Í¡AÅwªï±z¡I
+		endif
+		tell $n ¦pªG§A·Q­n¶i¤J(Enter)¦aÆF¬}¸]ªº¸Ü¡A§i¶D§Ú´N¥i¥H¤F¡C
+	endif
+endif
+~
+>talk_prog explain~
+if is_qmark($n) != kobold_cave_hero
+or is_qmark($n) == kobold_cave_hero 100000
+	mpechoat $n §A§V¤O¦a¦Vªù½Ã¸ÑÄÀ§A¨Ã«DºëÆF±Úªº¤H....
+	mpechoaround $n $N§V¤O¦a¦Vªù½Ã¸ÑÄÀ¥L¨Ã«DºëÆF±Úªº¤H....
+	if race($n) == elf
+	or isgood($n)
+		mpcallout 1 say ¤Ö¨Ó¡I§Úªº²´·ú¥i¨S½M¡C
+		mpcallout 2 mpechoat $n $I¬Ý°_¨Ó¤@ÂI¤]¤£¬Û«H§A¡C
+		mpcallout 2 mpechoaround $n $I¬Ý°_¨Ó¤@ÂI¤]¤£¬Û«H$N¡C
+	else
+		if is_qmark($n) > war_reward 200000
+			ponder $n
+			mpcallout 1 say ³o¼Ë°Ú¡H¤]³\¬O§Ú»{¿ù¤H¤F§a....
+			mpcallout 2 say ¦ý¬OÂ¾³d©Ò¦b¡A§Ú¤]¤£¯àÀH«K©ñ¨­¥÷¤£©úªº¤H¶i¥h¡C
+			mpcallout 3 say ³o¼Ë§a¡A§A±q¦èÃäªººëÆFÂí±a¤@¦ÊÁûºëÆF±Úªº¤HÀY¹L¨Ó¡C
+			mpcallout 4 say §Ú´N¥i¥H±N§Aµø¬°§Ú­ÌªºªB¤Í¡C
+			mpcallout 4 mpmod_qmark $n kobold_cave_hero v0 = 1
+			mpcallout 4 mpmod_qmark $n kobold_cave_hero v1 = 45
+			mpcallout 4 mpadd_qmark $n kobold_cave_hero -1 1 45 0 0 1
+		endif
+	endif
+endif
+~
+>talk_prog enter~
+if is_qmark($n) != kobold_cave_hero
+or is_qmark($n) == kobold_cave_hero 100000
+	if is_qmark($n) > war_reward 200000
+	or race($n) == elf
+		stare $n
+		if is_qmark($n) & kobold_cave_hero 300512
+			say §ë¾aºëÆFªº«q®{....ºu¶}¡I
+		else
+			say ºëÆF±Úªº¼Ä¤H°Ú....ºu¶}¡I
+		endif
+		if race($n) != elf
+			mpcallout 1 mpechoat $n ©Î³\§A¥i¥H¦V¥L¸ÑÄÀ(Explain)§A¨Ã¤£¬OºëÆF±Úªº¤H¡H
+		endif
+	else
+		say ¥u¦³¦aÆF±ÚªºªB¤Í¡A¤~¯à¶i¤J³o¸Ì¡C
+		mpcallout 1 ponder $n
+		if level($n) > 35
+			mpcallout 2 say §A¬Ý°_¨Ó¤]ºâ¦³ÂI¯à¤O¡A°÷®æ»P§Ú­Ì¬°¤Í¡C
+			if isevil($n)
+				mpcallout 3 say ³o¼Ë§a¡A§A±q¦èÃäªººëÆFÂí±a¤QÁûºëÆF±Úªº¤HÀY¹L¨Ó¡C
+				mpcallout 4 say §Ú´N¥i¥H±N§Aµø¬°§Ú­ÌªºªB¤Í¡C
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v0 = 1
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v1 = 0
+				mpcallout 4 mpadd_qmark $n kobold_cave_hero -1 1 0 0 0 1
+			else
+				mpcallout 3 say ³o¼Ë§a¡A§A±q¦èÃäªººëÆFÂí±a¤G¤QÁûºëÆF±Úªº¤HÀY¹L¨Ó¡C
+				mpcallout 4 say §Ú´N¥i¥H±N§Aµø¬°§Ú­ÌªºªB¤Í¡C
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v0 = 1
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v1 = 5
+				mpcallout 4 mpadd_qmark $n kobold_cave_hero -1 1 5 0 0 1
+			endif
+		else
+			mpcallout 2 say §Aªº¯à¤O¤Ó®z¤F¡A¤£°÷®æ»P§Ú­Ì¬°¤Í¡C
+			mpcallout 3 wave $n
+		endif
+	endif
+else
+	if is_qmark($n) < kobold_cave_hero 100013
+	or is_qmark($n) != kobold_cave_hero
+	else
+		nod $n
+		mpechoat $n $I¨³³t¦a¥´¶}ªùÅý§A¶i¥h¡C
+		mpechoaround $n $I¨³³t¦a¥´¶}ªùÅý$N¶i¥h¡C
+		mptransfer $n 66134
+	endif
+endif
+~
+>give_prog 13668~
+if is_qmark($n) != kobold_cave_hero
+or is_qmark($n) == kobold_cave_hero 100000
+or is_qmark($n) > kobold_cave_hero 100012
+	? $n
+	drop $o
+else
+	mpjunk $o
+	good $n
+	if is_qmark($n) <= kobold_cave_hero 100013
+		mpmod_qmark $n kobold_cave_hero v0 + 1
+	endif
+	if is_qmark($n) <= kobold_cave_hero 200000
+	or is_qmark($n) != kobold_cave_hero 100003
+	else
+		mpmod_qmark $n kobold_cave_hero v0 = 1
+		mpmod_qmark $n kobold_cave_hero v1 - 1
+	endif
+	if is_qmark($n) == kobold_cave_hero 100011
+		mpmod_qmark $n war_reward v1 = 0
+		mpmod_qmark $n kobold_cave_hero v0 = 13
+		mpcallout 1 gasp $n
+		mpcallout 2 say ¤Ó´Î¤F¡I§A¯u¬O¤@¦ì±j¤jªº«_ÀIªÌ¡I
+		mpcallout 3 say ¦aÆF±Ú¥æ¤F§A³o­ÓªB¤Í¤F¡I
+		mpcallout 4 say ¦pªG§A·Q¶i¤J(Enter)§Ú­Ì¬}¸]ªº¸Ü¡A¥u­n¸ò§Ú»¡¤@Án´N¦n¤F¡C
+	endif
+endif
+~
+>death_prog 100~
+	say ´Nºâ§A±þ¤F§Ú¡A§A¤]µLªk½ñ¶i¦aÆF¬}¸]¤@¨Bªº¡I
+~
+|
+#66119
+kobold youth~
+¦aÆF«C¦~(Kobold Youth)~
+¤@¦W¦aÆF«C¦~(Kobold Youth)¦b¥ß§Ó­n±q­x³ø°ê¡C
+~
+¤@¦W¦aÆF«C¦~(Kobold Youth)¾\ÅªµÛ¼x§L¤å®Ñ¡A²´¸Ì°{Ã{µÛ¼ö¦åªº¥ú½÷¡C
+~
+1|2|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+S 16 200
+>talk_prog topic~
+if rand(50)
+	say ¨º¨ÇºëÆF¹ê¦b¤Ó¥i´c¤F¡I
+else
+	say §Ú¤]­n¥h±q­x¡A±þ¥ú¦èÃäªº¨º¨ÇºëÆF¡I
+endif
+~
+>rand_prog 10~
+if pcnum($) > 0
+	if rand(50)
+		say ¨º¨ÇºëÆF¹ê¦b¤Ó¥i´c¤F¡I
+	else
+		say §Ú¤]­n¥h±q­x¡A±þ¥ú¦èÃäªº¨º¨ÇºëÆF¡I
+	endif
+endif
+~
+|
+#66120
+kobold officer flack~
+¦aÆF«Å¶Ç©x(Kobold Flack)~
+¤@¦W¦aÆF­x©x(Kobold Officer)¥¿¦b³o¸Ì¹ª°Ê¨ä¥L¦aÆF°Ñ­x¡C
+~
+¤@¦W¦aÆF­x©x(Kobold Officer)¥¿¦b³o¸Ì¹ª°Ê¨ä¥L¦aÆF°Ñ­x¡C
+~
+1|2|64|33554432 0 -700 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>rand_prog 50~
+if pcnum($) > 0
+	if rand(50)
+		if rand(50)
+			say ¥[¤JºaÄ£ªº³¡¶¤¡A¶Ó·À¸U´cªººëÆF¡I
+			say §AÁÙ¦bµ¥¤°»ò©O¡A¦P¼Ë¨­¬°±R°ª¦aÆFªº¦P§Ó­Ì¡H
+		else
+			say ²{¦b°_¡A¥u­n±a¨Ó¤@ÁûºëÆFªº¤HÀY¡A
+			say ´N¦³¾÷·|¥ß¨è¥[¤J³¡¶¤¡Aª½¤É±L©x³á¡I
+		endif
+	else
+		if rand(50)
+			say §A­Ìª¾¹D¶Ü¡H¦èÃäºëÆFÂíªººëÆF­Ì¦Y§¹¶º³£¤£¨ê¤úªº¡I
+			say §ó¹L¥÷ªº¬O¡A·í§Ú­Ì¤j­x¨ì¨Ó®É¡A¥L­Ì³ºµM¹ð¦¸¤Ï§Ü¡C
+			say ¦h»òµL®¢ªººØ±Ú°Ú¡I§Ö¨Ó¥[¤J³¡¶¤¡A®ø·À¥L­Ì§a¡I
+		else
+			say ¤Q¸U¦aÆF¤Q¸U­x¡A¤oª÷Ãø¶R¦aÆF¤ß¡I
+			say ¦P­M­Ì¡A¦aÆF­Ì­n¯¸°_¨Ó°Õ¡I
+		endif
+	endif
+endif
+~
+>talk_prog topic~
+say ²{¦b°_¡A¥u­n±a¨Ó¤@ÁûºëÆFªº¤HÀY¡A
+say ´N¦³¾÷·|¥ß¨è¥[¤J³¡¶¤¡Aª½¤É±L©x³á¡I
+look $n
+say §c....´Nºâ¬O¥~±Ú¤H¡A¤]¬O¥i¥H±o¨ì§Ú­Ìªº¼úÀyªº¡C
+~
+>give_prog 13668~
+if race($n) == elf
+	break
+endif
+mpjunk $o
+good $n
+mpgold $n 10000
+if rand(20)
+	if is_qmark($n) >= kobold_cave_hero 100029
+	or is_qmark($n) > kobold_cave_hero 300000
+	or is_qmark($n) != kobold_cave_hero
+	else
+		mpmod_qmark $n kobold_cave_hero v0 + 1
+		if is_qmark($n) == kobold_cave_hero 100029
+			mpmod_qmark $n kobold_cave_hero v0 = 30
+			mpmod_qmark $n kobold_cave_hero v2 | 1
+			mpcallout 1 ponder $n
+			mpcallout 2 tell $n ³o¦ì¥~±Úªº­^¶¯¡A±z±O¼®ºëÆFªº¨ÆÂÝ¤w¸g¶Ç¹M¤jµó¤p«Ñ¤F¡C
+			mpcallout 3 tell $n °¶¤jªº¦aÆF¤ý¤w¸gÅ¥»¡¤F±z¡A§Æ±æ¯à°÷¨£±z¤@­±¡C
+			mpcallout 4 tell $n ½Ð±z¥ß¨è«e¥h¿Ö¨£§a¡I
+		endif
+	endif
+endif
+~
+|
+#66121
+dire-mob wolf-kobold~
+¤j«¬¥û¼É¯T(Dire Wolf)~
+¤@¤Ç³¥©Ê¤Q¨¬ªº¤j«¬¥û¼É¯T(Wolf)¥¿¦b³o¸Ì´M§äÂyª«¡C
+~
+¤@¤Ç³¥©Ê¤Q¨¬ªº¤j«¬¥û¼É¯T¥¿¦b³o¸Ì´M§äÂyª«¡C¨eªº¨­§÷Â²ª½¸ò°¨®t¤£¦h¤j¡I
+~
+1|2|128|2048|8192|524288|1048576|8388608 8|32|32768|65536 -700 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|4|32
+R Animal~
+S 13 10000
+S 18 50
+S 43 50
+>rand_prog 10~
+if pcnum($) > 0
+	if race($r) != werewolf
+		mpechoat $r $I¬ðµM±i¶}¥¨¤f¦V§A«r¨Ó....¡I
+		mpechoaround $r $I¬ðµM±i¶}¥¨¤f¦V$R«r¥h....¡I
+		mpkill $r
+	else
+		if rand(33)
+			mpechoat $b $I¦b§A¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+			mpechoaround $b $I¦b$B¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+			mpmload 66139
+			mpforce dire-mob2 follow $n
+			mpgroup $n dire-mob2
+			mpforce dire-mob2 mpdef_rembch $n
+			mppurge self
+		endif
+	endif
+endif
+~
+>greet_prog 100~
+if race($n) != werewolf
+	mpechoat $n $I¬ðµM±i¶}¥¨¤f¦V§A«r¨Ó....¡I
+	mpechoaround $n $I¬ðµM±i¶}¥¨¤f¦V$N«r¥h....¡I
+	mpkill $n
+else
+	if rand(33)
+		mpechoat $b $I¦b§A¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+		mpechoaround $b $I¦b$B¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+		mpmload 66139
+		mpforce dire-mob2 follow $n
+		mpgroup $n dire-mob2
+		mpforce dire-mob2 mpdef_rembch $n
+		mppurge self
+	endif
+endif
+~
+>entry_prog 100~
+if pcnum($) > 0
+	if race($r) != werewolf
+		mpechoat $r $I¬ðµM±i¶}¥¨¤f¦V§A«r¨Ó....¡I
+		mpechoaround $r $I¬ðµM±i¶}¥¨¤f¦V$R«r¥h....¡I
+		mpkill $r
+	else
+		if rand(33)
+			mpechoat $b $I¦b§A¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+			mpechoaround $b $I¦b$B¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+			mpmload 66139
+			mpforce dire-mob2 follow $n
+			mpgroup $n dire-mob2
+			mpforce dire-mob2 mpdef_rembch $n
+			mppurge self
+		endif
+	endif
+endif
+~
+>fight_prog 100~
+if rand(20)
+	frenzy
+endif
+~
+|
+#66122
+resting kobold~
+¥ð®§¤¤ªº¦aÆF(Resting Kobold)~
+¤@¦W¦aÆF¤h§L(Kobold)¥¿¦b³o¸Ì¥ð®§¡C
+~
+¤@¦W¦aÆF¤h§L(Kobold)¥¿¦b³o¸Ì¥ð®§¡C
+~
+1|2|64|2048 0 -700 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+C 1
+S 13 8000
+S 16 -2000
+S 18 50
+S 43 20
+>repop_prog 100~
+sleep
+~
+>rand_prog 50~
+if pcnum($) > 0
+	if rand(80)
+		?
+		yawn
+		mpcallout 10 sleep
+	else
+		if is_qmark($r) <= kobold_cave_hero 100012
+		or is_qmark($r) > kobold_cave_hero 200000
+		or is_qmark($r) > kobold_cave_hero 300000
+		or is_qmark($r) != kobold_cave_hero
+		else
+			?
+			yawn
+			mpcallout 1 say ..........
+			mpcallout 2 say ¡I¡H
+			mpcallout 3 say ÁV¤F¡I§Ú³£§Ñ°O§Úªí§Ì¤w¸g¤£¦b¡A¨S¤H¥s§Ú°_§É¤F¡C
+			mpcallout 4 say ..........
+			mpcallout 5 sleep
+			mpcallout 5 say ºâ¤F¡AÁÙ¬OÄ~ÄòºÎ§a¡I
+			mpcallout 5 mpmod_qmark $r kobold_cave_hero v1 = 1
+		endif
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($n) <= kobold_cave_hero 100012
+or is_qmark($n) == kobold_cave_hero 200001
+or is_qmark($n) > kobold_cave_hero 300000
+or is_qmark($n) != kobold_cave_hero
+	if is_qmark($n) == kobold_cave_hero 200001
+		say §Úªí§Ì¦W¦r¥sÃÙ¿ú©ÔÀt´µ¥Ð¥Ø¦ý¥L¡A¥H«e³£¬O¥L¥s§Ú°_§Éªº¡C
+		mpcallout 1 say «á¨Ó¥L¤£ª¾¹D¥Ç¤F¤°»ò¿ù¡A³Q»°¥X­x¶¤¤F¡C
+		mpcallout 2 say ¥u¬O¤£ª¾¹D¬°¤°»ò¡A±q¨º®É­Ô°_¥L´N¤@°Æ¬È­º¬È§Àªº¼Ë¤l¡C
+		mpcallout 3 say ¤£ª¾¹D¦b©È¤°»ò(something)¡H
+		mpcallout 4 say ¥L²{¦b¦ü¥G¬O¶]¨ìÄq§|¥h·í­ÓÄq¤u¤F¡C
+		mpcallout 5 sleep
+		mpcallout 5 yawn
+		mpcallout 5 say .....¤Ï¥¿³o¤]¤£Ãö§Úªº¨Æ¡A§ÚÁÙ¬OÄ~ÄòºÎ§a¡I
+		if is_qmark($n) !& kobold_cave_hero 300512
+			mpcallout 5 mpmod_qmark $n kobold_cave_hero v1 = 2
+		endif
+	else
+		?
+		yawn
+		mpcallout 10 sleep
+	endif
+else
+	?
+	yawn
+	mpcallout 1 say ..........
+	mpcallout 2 say ¡I¡H
+	mpcallout 3 say ÁV¤F¡I§Ú³£§Ñ°O§Úªí§Ì¤w¸g¤£¦b¡A¨S¤H¥s§Ú°_§É¤F¡C
+	mpcallout 4 say ..........
+	mpcallout 5 sleep
+	mpcallout 5 say ºâ¤F¡AÁÙ¬OÄ~ÄòºÎ§a¡I
+	mpcallout 5 mpmod_qmark $n kobold_cave_hero v1 = 1
+endif
+~
+|
+#66123
+resting kobold~
+¥ð®§¤¤ªº¦aÆF(Resting Kobold)~
+¤@¦W¦aÆF¤h§L(Kobold)¥¿¦b³o¸Ì¥ð®§¡C
+~
+¤@¦W¦aÆF¤h§L(Kobold)¥¿¦b³o¸Ì¥ð®§¡C
+~
+1|2|64|2048 0 -700 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+C 1
+S 13 8000
+S 16 -2000
+S 18 50
+S 43 20
+>repop_prog 100~
+sleep
+~
+>rand_prog 100~
+if pcnum($) > 0
+	?
+	yawn
+	sleep
+endif
+~
+>talk_prog topic~
+?
+yawn
+sleep
+~
+|
+#66124
+kobold miner-uuddllrrabab~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦r¡ÐÃÙ¿ú©ÔÀt´µ¥Ð¥Ø¦ý¥Lªº¦WµP¡C
+~
+1|4|64|128|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 13 5000
+S 18 30
+S 19 30
+S 43 30
+>rand_prog 100~
+if notbeing(kobold-soldier-king)
+	mppurge self
+endif
+if pcnum($) > 0
+	if is_qmark($r) & kobold_cave_hero 300004
+		look $r
+		fear
+		say §A¤@©w¬O¨ë«È¡I¨Ó±þ§Úªº¨ë«È¡I
+		help!
+		mpecho $I¶XµÛ¥Lªº¥s³ÛÂZ¶Ã¨ì§Aªº¤ß¯«®É¡A¨³³t±q¬Y³B±K¥Þ°k¨«¤F....
+		mppurge self
+	endif
+endif
+~
+>fight_prog 100~
+	if rand(50)
+		yell ±Ï©R°Ú¡ã¦³¨ë«È¡I¦³¤H­n±þ§Ú°Ú¡ã¡ã
+		help!
+	endif
+~
+>death_prog 100~
+yell ¤£¡I§Ú¤£·Q¦º¡ã§Ú¤£·Q¦º°Ú¡ã¡ã¡ã
+if is_qmark($n) & kobold_cave_hero 300004
+	mpmod_qmark $n kobold_cave_hero v2 r 4
+	mpmod_qmark $n kobold_cave_hero v2 | 8
+	mpechoat $n ¬Ý¨Ó§A¤w¸g§¹¦¨¥ô°È¡A¥i¥H¥h¦^³ø¤F(Report)¡C
+endif
+~
+>talk_prog something~
+if is_qmark($n) == kobold_cave_hero 200002
+	fear
+	mpcallout 1 say §Ú..§Ú¤°»ò³£¨S¬Ý¨ì¡I¤°»ò³£¨SÅ¥¨ì¡I
+	mpcallout 2 leave
+	mpmod_qmark $n kobold_cave_hero v1 = 3
+	mpmload 66131
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200003
+	if is_qmark($i) != beassed
+		forget
+		leave
+		break
+	else
+		mpecho $I¤@°ÆÅå»î¥¼©wªº¼Ë¤l¡A¦n¹³ÁÙ¥¼±q­è¤~ªº¨ë±þ¤¤¦^´_¹L¨Ó¡C
+		mpcallout 1 say ¨S·Q¨ì§Y¨Ï§Úºò¦u¯¦±K¡A¥L(He)ÁÙ¬O¤£ªÖ©ñ¹L§Ú....
+		mpcallout 1 mpmod_qmark $n kobold_cave_hero v1 = 4
+		mpcallout 2 glare
+		mpcallout 3 say Ãø¤£¦¨­n§ÚÂ÷¶m­I¤«¤~ªÖ½}¥ð¶Ü¡H
+		mpcallout 4 sigh
+	endif
+endif
+~
+>talk_prog he~
+if is_qmark($n) == kobold_cave_hero 200004
+	say ¥L....´N¬O¦aÆF¤§¤ý¡ÐÂÄ·ç¶ðº¸¡I
+	mpcallout 1 say ¤§«e¡A§Ú¦b¦^®a®É¤£¤p¤ß°g¤F¸ô....
+	mpcallout 2 say µ²ªG¦b¤@³BÁô±Kªº¦a¤è¿s¨£¤FÂÄ·ç¶ðº¸»P¬Y¦ì¡u¨ÏªÌ¡vªº·|­±¡C
+	mpcallout 3 say ¨º¦ì¨ÏªÌ¦ü¥G¬O¥Ñ¬Y­Ó³QºÙ¬°¡u¥D®_¡vªº³Ã¥ë¬£¨Óªº¡A
+	mpcallout 4 say ¥Øªº¬O½çµ¹ÂÄ·ç¶ðº¸¬YºØ¤O¶q¡AÅý¨e²v»â¦aÆFµo°Ê¾Ôª§¡A
+	mpcallout 5 say ÂÇ¦¹®ø¯Ó³o­Ó¤j³°¤W©Ò¦³ºØ±Úªº¤O¶q¡C
+	mpcallout 6 say §Úª¾¹D³o¥ó¨Æ¤§«á¡A¤@ª½«Ü¤p¤ß¡A±q¨Ó¨S¦³¸ò¤H³zÅS¹L¡C
+	mpcallout 7 say «ç»òÁÙ¬O³Qµo²{¤F©O¡H
+	mpcallout 8 sigh
+	mpcallout 9 say ³o¤U¤l¡A¥s§Ú¸Ó¦p¦ó¬O¦n©O¡H
+	mpcallout 10 mpechoat $n §A¤ß·Q¡G³o¸Ì¦³½Ö¬O¥i¥H§È¦ö(Protect)¥L¤£³QÂÄ·ç¶ðº¸¥[®`ªº©O¡H
+	mpcallout 10 mpmod_qmark $n kobold_cave_hero v1 = 5
+endif
+~
+|
+#66125
+kobold miner-uuddllrraba~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦r¡ÐÃÙ¿ú©ÔÀt´µ¥Ð¥Ø¦ý¤]ªº¦WµP¡C
+~
+1|4|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>death_prog 100~
+mpecho $n $IÁ{¦º«eªººG¥s°jÅT¦bÄq§|¤¤....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¶]§A­n·t±þªº¥Ø¼Ð¡C
+else
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¨ì¤H¡C
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho ¦aÆFÄq¤uÅ¥¨ìºG¥s«áÅ¸§Ý¤F¤@¤U¡A¤§«á«K¨³³t¦a±q¬Y­Ó±K¥Þ°k¨«¤F....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+~
+|
+#66126
+kobold miner-uuddllrraba~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦r¡ÐÃÙ½â©ÔÀt´µ¥Ð¥Ø¦ý¥Lªº¦WµP¡C
+~
+1|4|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>death_prog 100~
+mpecho $n $IÁ{¦º«eªººG¥s°jÅT¦bÄq§|¤¤....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¶]§A­n·t±þªº¥Ø¼Ð¡C
+else
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¨ì¤H¡C
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho ¦aÆFÄq¤uÅ¥¨ìºG¥s«áÅ¸§Ý¤F¤@¤U¡A¤§«á«K¨³³t¦a±q¬Y­Ó±K¥Þ°k¨«¤F....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+~
+|
+#66127
+kobold miner-uuddllrraba~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦r¡ÐÃÙ¿ú°ÕÀt´µ¥Ð¥Ø¦ý¥Lªº¦WµP¡C
+~
+1|4|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>death_prog 100~
+mpecho $n $IÁ{¦º«eªººG¥s°jÅT¦bÄq§|¤¤....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¶]§A­n·t±þªº¥Ø¼Ð¡C
+else
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¨ì¤H¡C
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho ¦aÆFÄq¤uÅ¥¨ìºG¥s«áÅ¸§Ý¤F¤@¤U¡A¤§«á«K¨³³t¦a±q¬Y­Ó±K¥Þ°k¨«¤F....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+~
+|
+#66128
+kobold miner-uuddllrraba~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦r¡ÐÃÙ¿ú©ÔÀt¼¹¥Ð¥Ø¦ý¥Lªº¦WµP¡C
+~
+1|4|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>death_prog 100~
+mpecho $n $IÁ{¦º«eªººG¥s°jÅT¦bÄq§|¤¤....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¶]§A­n·t±þªº¥Ø¼Ð¡C
+else
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¨ì¤H¡C
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho ¦aÆFÄq¤uÅ¥¨ìºG¥s«áÅ¸§Ý¤F¤@¤U¡A¤§«á«K¨³³t¦a±q¬Y­Ó±K¥Þ°k¨«¤F....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+~
+|
+#66129
+kobold miner-uuddllrraba~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦r¡ÐÃÙ¿ú©ÔÀt´µ¥Ð¤é¦ý¥Lªº¦WµP¡C
+~
+1|4|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>death_prog 100~
+mpecho $n $IÁ{¦º«eªººG¥s°jÅT¦bÄq§|¤¤....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¶]§A­n·t±þªº¥Ø¼Ð¡C
+else
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¨ì¤H¡C
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho ¦aÆFÄq¤uÅ¥¨ìºG¥s«áÅ¸§Ý¤F¤@¤U¡A¤§«á«K¨³³t¦a±q¬Y­Ó±K¥Þ°k¨«¤F....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+~
+|
+#66130
+kobold miner-uuddllrraba~
+¦aÆFÄq¤u(Kobold Miner)~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡C
+~
+¤@¦W¦aÆFÄq¤u(Kobold Miner)¥¿¦b³o¸Ì¨¯­W¦a«õ±¸µÛ¡A¥Lªº¯Ý«e¶KµÛ¼gµÛ¥Lªº
+¦W¦r¡ÐÃÙ¿ú©ÔÀt´µ¥Ð¥Ø¥¹¥Lªº¦WµP¡C
+~
+1|4|64|33554432 0 -300 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+S 16 200
+>death_prog 100~
+mpecho $n $IÁ{¦º«eªººG¥s°jÅT¦bÄq§|¤¤....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¶]§A­n·t±þªº¥Ø¼Ð¡C
+else
+	mpechoat $n §A¤£¸T¾á¤ß³o¬O§_·|À~¨ì¤H¡C
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho ¦aÆFÄq¤uÅ¥¨ìºG¥s«áÅ¸§Ý¤F¤@¤U¡A¤§«á«K¨³³t¦a±q¬Y­Ó±K¥Þ°k¨«¤F....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+~
+|
+#66131
+kobold assassin~
+¦aÆF¨ë«È(Kobold Assassin)~
+¤@­Ó»XµÛ­±ªº¦aÆF(Kobold)¥¿·Ç³Æ°½Å§¥Lªº¥Ø¼Ð¡C
+~
+¤@­Ó»XµÛ­±ªº¦aÆF(Kobold)¥¿·Ç³Æ°½Å§¥Lªº¥Ø¼Ð¡C
+~
+1|2 0 -300 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+R Kobold~
+>repop_prog 100~
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpgoto 2
+mpoload 66103 35
+wear all
+mpadd_qmark self gotarget 1 0 0 0 1 0
+~
+>tick_prog 50~
+if is_qmark($i) != gotarget
+	mpgoto miner-uuddllrrabab
+	mpadd_qmark miner-uuddllrrabab beassed -1 0 0 0 1 0
+	mpecho ¨¤¸¨ªº³±¼v¸Ì¬ðµM¸õ¥X¤F¤@¦W»XµÛ­±ªº¦aÆF¡I
+	mpkill miner-uuddllrrabab
+endif
+~
+>fight_prog 10~
+	if rand(50)
+		mpecho $I²´¨£¤@À»¤£¤¤¡A¥ß§Y¹P¨«¡I
+		mpgoto 2
+	endif
+~
+>death_prog 100~
+mpat miner-uuddllrrabab mpadd_qmark miner-uuddllrrabab beassed -1 0 0 0 1 0
+~
+|
+#66132
+kobold assassin-kobold~
+¦aÆF¨ë«È(Kobold Assassin)~
+¤@­Ó»XµÛ­±ªº¦aÆF(Kobold)¥¿·Ç³Æ°½Å§¥Lªº¥Ø¼Ð¡C
+~
+¤@­Ó»XµÛ­±ªº¦aÆF(Kobold)¥¿·Ç³Æ°½Å§¥Lªº¥Ø¼Ð¡C
+~
+1|2|128|2048|4096|8192|524288 8|32 -300 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|4
+P 1|4|8|128|32768|65536|4194304
+R Kobold~
+S 18 50
+>repop_prog 100~
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpoload 66103
+mpat 2 wear all
+mpadd_qmark self gotarget 1 0 0 0 1 0
+~
+>tick_prog 50~
+if is_qmark($i) != gotarget
+	mpgoto $b
+	mpecho ¨¤¸¨ªº³±¼v¸Ì¬ðµM¸õ¥X¤F¤@¦W»XµÛ­±ªº¦aÆF¡I
+	bs $b
+	mpgoto $b
+	bs $b
+	mpgoto $b
+	bs $b
+	mpkill $b
+endif
+~
+>fight_prog 33~
+mpecho $I²´¨£¤@À»¤£¤¤¡A¥ß§Y¹P¨«¡I
+mpgoto 2
+~
+>death_prog 100~
+mpjunk all
+mpmload 66132
+mpforce assassin-kobold mpdef_rembch $n
+mpforce assassin-kobold mpgoto 2
+~
+|
+#66133
+kobold guard~
+Äµ³Æ¶¤¶¤­û(Kobold Guard)~
+¤@¦W¦aÆF(Kobold)¥¿¦b³o¸Ìºû«ùªv¦w¡C
+~
+¤@¦W¦aÆF(Kobold)¥¿¦b³o¸Ìºû«ùªv¦w¡C
+~
+1|2|64|8192 0 -700 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+P 1|4|8|128|32768|65536|4194304
+R Kobold~
+S 16 300
+S 18 10
+S 43 20
+>rand_prog 100~
+if pcnum($) > 0
+	if fightwith($r) / kobold
+		if isfight($i)
+		else
+			yell ·MÄøªº¨g®{$R[0m[33;1m¡A³º´±¦b¦¹§ðÀ»§^½ú¦aÆF¡I
+			mpkill $r
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpjunk sword-kobold
+~
+>talk_prog topic~
+if is_qmark($n) < kobold_cave_hero 200009
+or is_qmark($n) == kobold_cave_hero 200020
+or is_qmark($n) != kobold_cave_hero
+or is_qmark($n) & kobold_cave_hero 300512
+else
+	if notbeing(assassin-kobold)
+		mpmload 66132
+		mpforce assassin-kobold mpdef_rembch $n
+		mpforce assassin-kobold mpgoto 2
+	endif
+	if is_qmark($i) != questtalked
+		mpadd_qmark self questtalked -1 0 0 0 1 0
+		mpechoat $n §A±NÂÄ·ç¶ðº¸ªº©Ò§@©Ò¬°§i¶D¤F$I....
+		mpcallout 1 say §A»¡¤°»ò¡H¦aÆF¤ý¦b·t¦a¸Ì±µÄ²¨¸¯«ªº¤O¶q¡H
+		if rand(50)
+			mpcallout 2 say ³o¼Ë¤£¬O«Ü¦n¶Ü¡H
+			mpcallout 3 say ¦³¤F¨¸¯«ªº¤O¶q¡A·Q¥²´N¯à°÷§ó§Öªº®ø·À¦èÃä¨º¸sºëÆF§a¡H
+		else
+			mpcallout 2 say ³o¦³¤°»òÃö«Y©O¡H
+			mpcallout 3 say ¤£¬O¦³¥y¸Ü¶Ü¡Hµ½¯«¨¸¯«¡A¯àÀ°§U§Ú­Ìªº´N¬O¦n¯«¡I
+		endif
+		mpcallout 4 mpforce $n -
+		mpcallout 5 mpechoat $n §A±N¦¹¨Æªº§Q¹ú±o¥¢¥J¥J²Ó²Ó¦a¹ï$I¤ÀªR¡C
+		mpcallout 5 mpechoaround $n $N±N¦¹¨Æªº§Q¹ú±o¥¢¥J¥J²Ó²Ó¦a¹ï$I¤ÀªR¡C
+		if int($n) > 19
+		or wis($n) > 19
+			if rand(80)
+				mpcallout 6 say ­ø­ø....­ì¨Ó¦p¦¹¡I­ì¨Ó¦p¦¹¡I
+				mpcallout 7 say ÁöµM§ÚÁÙ¬O·d¤£¤Ó²M·¡°Õ¡I
+				mpcallout 8 say Á`¤§¥u­nÀ°§U¥j©Ô©Ô¤p©j±ÀÂ½ÂÄ·ç¶ðº¸´N¦n¤F¬O§a¡H
+				mpcallout 8 mpmod_qmark $n kobold_cave_hero v1 + 1
+				if is_qmark($n) == kobold_cave_hero 200009
+					mpcallout 9 mpechoat $n §A²×©ó»¡ªA¤@­Ó¤H¤F¡I
+				else
+					if is_qmark($n) == kobold_cave_hero 200019
+						mpcallout 9 mpechoat $n §AÄ±±o§A»¡ªAªº¤H¼Æ®t¤£¦h¤w¸g°÷¤F¡A¦^¥h§ä¥j©Ô©Ô§a¡I
+						mpcallout 9 mpmod_qmark $n kobold_cave_hero v1 = 20
+					else
+						mpcallout 9 mpechoat $n §A¤S»¡ªA¤@­Ó¤H¤F¡I
+					endif
+				endif
+			else
+				mpcallout 6 say §A¨ì©³¦b»¡¤°»ò°Ú¡H§Ú®Ú¥»Å¥¤£À´¡I
+				mpcallout 7 say Á`¤§§A¬O¦b»¡¦aÆF¤ýªºÃa¸Ü¬O§a¡H
+				mpcallout 8 mpkill $n
+				mpcallout 8 yell §A³o­Ó¶¡¿Ò¡A¦º¨Ó¡I
+			endif
+		else
+			if rand(40)
+				mpcallout 6 say ­ø­ø....­ì¨Ó¦p¦¹¡I­ì¨Ó¦p¦¹¡I
+				mpcallout 7 say ÁöµM§ÚÁÙ¬O·d¤£¤Ó²M·¡°Õ¡I
+				mpcallout 8 say Á`¤§¥u­nÀ°§U¥j©Ô©Ô¤p©j±ÀÂ½ÂÄ·ç¶ðº¸´N¦n¤F¬O§a¡H
+				mpcallout 8 mpmod_qmark $n kobold_cave_hero v1 + 1
+				if is_qmark($n) == kobold_cave_hero 200009
+					mpcallout 9 mpechoat $n §A²×©ó»¡ªA¤@­Ó¤H¤F¡I
+				else
+					if is_qmark($n) == kobold_cave_hero 200019
+						mpcallout 9 mpechoat $n §AÄ±±o§A»¡ªAªº¤H¼Æ®t¤£¦h¤w¸g°÷¤F¡A¦^¥h§ä¥j©Ô©Ô§a¡I
+						mpcallout 9 mpmod_qmark $n kobold_cave_hero v1 = 20
+					else
+						mpcallout 9 mpechoat $n §A¤S»¡ªA¤@­Ó¤H¤F¡I
+					endif
+				endif
+			else
+				mpcallout 6 say §A¨ì©³¦b»¡¤°»ò°Ú¡H§Ú®Ú¥»Å¥¤£À´¡I
+				mpcallout 7 say Á`¤§§A¬O¦b»¡¦aÆF¤ýªºÃa¸Ü¬O§a¡H
+				mpcallout 8 mpkill $n
+				mpcallout 8 yell §A³o­Ó¶¡¿Ò¡A¦º¨Ó¡I
+			endif
+		endif
+	else
+		say §A¤w¸g¹ï§Ú»¡¹L³o¥ó¨Æ¤F¡I
+	endif
+endif
+~
+|
+#66134
+evil dragon doll-kobold~
+¨¸Às°¸(Evil Dragon Doll)~
+¤@°¦´²µoµÛ¨¸®ðªº¥¨Às(Dragon)´X¥G§Ö§â³o¸ÌªºªÅ¶¡µ¹¦ûº¡¤F¡I
+~
+¤@°¦´²µoµÛ¨¸®ðªº¥¨Às(Dragon)´X¥G§Ö§â³o¸ÌªºªÅ¶¡µ¹¦ûº¡¤F¡I
+~
+1|2|64|2048|8192|262144|1048576|8388608|16777216 8|32 -1000 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|2|4|32
+P 4|8|16|64|128|512|32768|65536|1048576|2097152|4194304|8388608|67108864|268435456
+R Dragon~
+S 18 100
+S 19 50
+S 30 -50
+S 31 -30
+S 40 40
+S 43 100
+>repop_prog 100~
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>rand_prog 100~
+if being(kobold-soldier-king)
+	mpecho ¥¢¥h¤F»s³yªÌªº±±¨î¡A¨¸Às°¸¤À±YÂ÷ªR¤F....
+	mppurge self
+	break
+endif
+if inroom($i) != 66170
+	if isfight($i)
+	else
+		mpgoto 66170
+	endif
+endif
+~
+>fight_prog 20~
+mpecho $IÂùÁl¤@®i¡A±a°_¤@°}±Û­·½Ä¦V$N¡I
+cast 3 'whirlwind' $n
+frenzy $n
+mpforcer here cast fear $n 50
+~
+>fight_prog 50~
+mpecho ¤@¹Î¹Î¥O¤H§@¹Ãªº«Í®ð±q$Iªº¨­¤Wº©©µ¶}¨Ó¡I
+cast 3 'gas breath'
+mpechoat $r §A¯«´¼¤@°}«é±«¡A¤£¥Ñ¦Û¥D¦a«K´ÂµÛ$I¨«¥h¡C
+mpechoaround $r $R©¿µM¹³¬O¬¡¦º¤H¯ë¦a´ÂµÛ$I¨«¥h¡C
+mptransfer $r $i
+mpforce $r autocombat
+mpforce $r mpkill $i
+~
+>fight_prog 50~
+mpecho $I¥¨¼L¤@±i¡A±j¯Pªº¯à¶q¬x¶q«K±q¨ä¤¤´é¥X¡I
+cast 'fire breath' $n
+cast 'frost breath' $n
+cast 'lightning breath' $n
+~
+>death_prog 100~
+if notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) >= wartime 100105
+	mpecho ¤@Áû¥ú²y±q$I¤À±YÂ÷ªRªºÂßÅé¤¤ÄÆ¤F¥X¨Ó¡I
+	mpoload 66110 36 floor
+endif
+~
+|
+
+#66135
+elf-soldier-nurse nurse~
+ºëÆFÅ@¤h(Elf Nurse)~
+¤@¦W¨­¬ï¥Õ³TªººëÆFÅ@¤h(Nurse)¥¿¦b³o¸Ì±Ïªv¶Ë§L¡C
+~
+¤@¦W¨­¬ï¥Õ³TªººëÆFÅ@¤h¥¿¦b³o¸Ì±Ïªv¶Ë§L¡C§A¥i¥H¦V¦o¯Á¦^§Aªº¸Ë³Æ(EQ)¡C
+~
+1|2 32|128|32768 500 S
+60 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>talk_prog eq~
+if groupwith($n) / elf-soldier-marshal
+	say ¦nªº¡I½Ðµyµ¥¤@¤U¡C
+	cast 'grave robber' $n
+	cast 'detect invis' $n
+endif
+~
+|
+
+#66136
+kobold-soldier-berserker berserker~
+¦aÆF¨g¼É¾Ô¤h(Kobold Berserker)~
+¤@°¦«Â²rµL¤Ç¦aÆF¾Ô¤h(Kobold)¥¿¦b³o¸Ì»PºëÆF»·©º­x¾Ô°«¡C
+~
+³o¦W¥û¼Éªº¦aÆF¬Ý°_¨Ó«Â¶Õ¤Q¨¬¡A¨¬¥H¯»¸H¤@¤Á¾×¦b¥L²´«eªº¼Ä¤H¡C
+~
+1|64|2048|8192 128 -700 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 4|8|128|4194304
+R Kobold~
+C 1|32
+P 4194304
+S 13 50000
+S 16 -2000
+S 17 500
+S 18 30
+S 19 60
+S 35 -50
+S 41 -200
+S 42 200
+S 43 300
+>repop_prog 100~
+mpoload 66105 36
+mpgoto 2
+wear all
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+~
+>fight_prog 50~
+berserk
+frenzy
+~
+>death_prog 100~
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk greatsword-kobold
+endif
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 2000
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+~
+>rand_prog 100~
+if mobcount(13647) == 0
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+~
+|
+
+#66137
+kobold-soldier-heavy-fighter fighter~
+¦aÆF­«¸Ë¾Ô¤h(Kobold Heavy Fighter)~
+¤@°¦¨­¬ï­«¥Òªº¦aÆF(Kobold)¥¿¦b³o¸Ì¨¾¿mºëÆF»·©º­xªº§ð¶Õ¡C
+~
+³o¦W¨­¬ï­«¥Òªº¦aÆF¬Ý°_¨Óºë©ó¨¾¿m§Þ¥©¡A¥Bµ½©óªÈÄñ¼Ä¤H¡C
+~
+1|64|2048|8192 128 -700 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 4|8|128|4194304
+R Kobold~
+C 1|4|8
+P 4194304
+S 13 70000
+S 16 -2000
+S 17 -2000
+S 18 50
+S 19 30
+S 35 50
+S 41 3000
+S 42 -3000
+S 43 100
+>repop_prog 100~
+mpoload 66103
+mpoload 66115
+mpgoto 2
+wear all
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+~
+>fight_prog 100~
+if isaffected($n) !& 64
+	mpechoat $n $I¬I®i¥Xºë´ïªº¾Ô°«§Þ¥©¡A±N§A¨c¨cÄñ¦í¡A²æ¨­¤£±o¡I
+	mpechoaround $n $I¬I®i¥Xºë´ïªº¾Ô°«§Þ¥©¡A±N$N¨c¨cÄñ¦í¡A²æ¨­¤£±o¡I
+	mpforcer here add_affect $n 'snare' 0 1 39 100 64
+endif
+change $r
+~
+>death_prog 100~
+mpjunk sword-kobold
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk kobold-obj-ha
+endif
+mpgreward exp $n 30 2000
+mpmod_qmark $n war_reward v0 + 3
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+~
+>rand_prog 100~
+if mobcount(13647) == 0
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+~
+|
+
+#66138
+kobold-soldier-sorcerer sorcerer~
+¦aÆF³N¤h(Kobold Sorcerer)~
+¤@°¦¦aÆF³N¤h(Kobold)¥¿¦b³o¸Ì¬Iªk§ðÀ»ºëÆF»·©º­x¡C
+~
+³o¦W¦aÆF³N¤h¤£°±¬I®i¦UºØ¨¸´cªº¶A©G¡AÅý¥Lªº¼Ä¤HÅÜ±oµê®z¡C
+~
+1|64|1048576|8388608 128|8589934592 -700 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Kobold~
+C 2
+P 4|8|128|4194304
+S 13 10000
+S 16 -2000
+S 17 -500
+S 39 -200
+S 40 50
+>repop_prog 100~
+mpgoto 2
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+mpmodify mana + 10000
+mpforcer here c 'full recharge' $i 50
+~
+>fight_prog 70~
+mpechoat $r $I³ä³ä¦a°á¥X¨¸´cªº©G¤å¡A¤@¹D¶ÂÃúÀ³Án´Â§AªþµÛ¦Ó¨Ó¡I
+mpechoaround $r $I³ä³ä¦a°á¥X¨¸´cªº©G¤å¡A¤@¹D¶ÂÃúÀ³Án´Â$RªþµÛ¦Ó¥h¡I
+mpforcer here add_affect $r 'curse' 1140 1 18 -5 1024
+mpforcer here add_affect $r 'curse' 1140 1 19 -5 1024
+if rand(50)
+	cast 3 colour $r
+	cast weaken $r
+else
+	cast tardy $r
+endif
+cast 3 harm $r
+~
+>death_prog 100~
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 2000
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+~
+>rand_prog 100~
+if mobcount(13647) == 0
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I°h¨«¤F¡C
+	mppurge self
+endif
+~
+|
+
+#66139
+dire-mob2 wolf-kobold~
+¤j«¬¥û¼É¯T(Dire Wolf)~
+¤@¤Ç³¥©Ê¤Q¨¬ªº¤j«¬¥û¼É¯T(Wolf)¥¿¦b³o¸Ì´M§äÂyª«¡C
+~
+¤@¤Ç³¥©Ê¤Q¨¬ªº¤j«¬¥û¼É¯T¥¿¦b³o¸Ì´M§äÂyª«¡C¨eªº¨­§÷Â²ª½¸ò°¨®t¤£¦h¤j¡I
+~
+1|2|128|2048|8192|524288|1048576|8388608|536870912 8|32|32768|65536 -700 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|4|32
+H 66111
+R Animal~
+S 13 10000
+S 18 50
+S 43 50
+>tick_prog 100~
+if being($b)
+	if insameroom($b)
+	else
+		mpgoto $b
+	endif
+else
+	mppurge self
+endif
+~
+>rand_prog 10~
+mpechoat $b $I¦b§A¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+mpechoaround $b $I¦b$B¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+~
+>greet_prog 100~
+if rand(33)
+	mpechoat $b $I¦b§A¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+	mpechoaround $b $I¦b$B¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+endif
+~
+>entry_prog 100~
+if rand(33)
+	mpechoat $b $I¦b§A¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+	mpechoaround $b $I¦b$B¨­¤W¤£°±¦a»D»D¶å¶å¡A¤@°Æ«Ü¿Ë¼öªº¼Ë¤l¡C
+endif
+~
+>fight_prog 100~
+if rand(20)
+	frenzy
+endif
+~
+|
+
+#0
+
+#MOBPROGS
+M 66100 kobold_cave_kobs.prg
+M 66101 kobold_cave_kobs.prg
+M 66102 kobold_cave_kobs.prg
+M 66103 kobold_cave_kobs.prg
+M 66104 kobold_cave_kobs.prg
+M 66106 kobold_cave_kobs.prg
+M 66108 kobold_cave_kobs.prg
+M 66109 kobold_cave_kobs.prg
+M 66110 kobold_cave_kobs.prg
+M 66111 kobold_cave_kobs.prg
+M 66112 kobold_cave_kobs.prg
+M 66136 kobold_cave_kobs.prg
+M 66137 kobold_cave_kobs.prg
+M 66138 kobold_cave_kobs.prg
+S
+
+#OBJECTS
+#66100
+iron key~
+ÅKÆ_°Í(Iron Key)~
+¤@§âÆ_°Í(Key)³QÂ\¦b³o¸Ì¡C~
+~
+18 0 1
+66141~ 0~ 0~ 0~
+1 0 0
+X iron~
+
+#66101
+treasure gold coins~
+ª÷»È°]Ä_(treasure of gold coins)~
+¤j¶qªºª÷»È°]Ä_(treasure of gold coins)³Q°ï©ñ¦b³o¸Ì¡C~
+~
+20 1 1
+1000000~ 0~ 0~ 0~
+100 1000000 0
+X gold~
+
+#66102
+giant dragon-koboldobj corpse~
+¥¨Às«ÍÀe(Giant Dragon Corpse)~
+¤@¨ãÃe¤jªº¥¨Às«ÍÅé(Giant Dragon Corpse)³QÂ\¦b³o¸Ì¡C~
+~
+23 0 0
+0~ 0~ 0~ 0~
+200 0 0
+X flesh~
+
+#66103
+asperate short sword-kobold~
+²ÊÁWªºµu¼C(Asperate Short Sword)~
+¤@¬`§@¤u²ÊÁWªºµu¼C³QÂ\¦b³o¸Ì¡C~
+~
+5 0 1|8192
+0301030~ 13~ 15~ 11~
+3 0 0
+X iron~
+
+#66104
+giant steel tower shield-koboldcave~
+¥¨«¬ºë¿û¶ð¬Þ(Giant Steel Tower Shield)~
+¤@­±¥¨¤jªººë¿û¶ð¬Þ³QÂ\¦b³o¸Ì¡C~
+~
+9 134217728 1|512
+25~ 0~ 5001500~ 0~
+130 100000 0
+X steel~
+A 41 18
+P 8|2048|4096|262144|1048576
+
+#66105
+kobold greatsword-kobold~
+¦aÆF¥¨¼C(kobold greatsword)~
+¤@¬`¹ï¦aÆF¦Ó¨¥¤Q¤À¥¨¤jªºÂù¤â¼C(Greatsword)³QÂ\¦b³o¸Ì¡C~
+~
+5 16|512 1|32768
+1501150~ 38~ 68~ 3~
+80 10000 0
+A 19 3
+X steel~
+
+#66106
+platinum bramble-o shield~
+¥Õª÷¤§´Æ(Platinum Bramble)~
+¤@±i¦y¾U¦p´Æªº°{Ä£¥Õ¬Þ(shield)ÀRÀRªºÂ\¦b¦a¤W¡C~
+~
+9 1|2|64|1024 513
+0~ 0~ 3001300~ 0~
+5 20000 0
+A 40 3
+A 43 20
+C 20000
+X platinum~
+
+#66107
+shock earth bomber-o~
+¾Ù¦aÅF(Shock Earth Bomber)~
+¤@¬`¨¬¥H¤Þ°Ê¦a¯ßªº¤j¼C¥¿´¡¦b¦a¤W¡C~
+~
+5 1|2|64|512|1024 8193
+5001500~ 40~ 40~ 3~
+50 1000000 0
+A 18 -10
+A 19 20
+A 40 4
+A 43 30
+H earthquake~ 50 50 4
+X earth aura~
+
+#66108
+rosefinch-o cloak~
+¦¶³¶Ál³T(Rosefinch Cloak)~
+¤@Å§Æv¬õ¦p¤õªº¦Ð¤ò¸n³TÂ\©ñ¦b¦¹³B¡C~
+~
+9 1|256|512|1024|32768 1|1024
+0~ 0~ 1001100~ 0~
+1 1000000 0
+A 41 -5
+A 42 -5
+A 27 -3
+A 44 30
+X phoenix feather~
+
+#66109
+kobold rod-kobold~
+¦aÆF²½ªÁÅv§ú(Kobold Rod)~
+¤@¬`¦aÆF¨Ï¥Îªºªk§ú³QÂ\¦b³o¸Ì¡C~
+~
+5 1|2|128 1|8192
+1001100~ 5~ 5~ 0~
+5 0 0
+A 40 3
+A 44 10
+X gold~
+
+#66110
+evil dragon hatred soul~
+¨¸Às«è»î(Evil Dragon Hatred Soul)~
+¤@Áû¦º¥h¥¨Às«è®ð(Hatred)ªº¾®»EÅé¦b³o¸ÌÄÆ¯BµÛ¡C~
+~
+1 1|2|16|256|512|2048 1
+0~ 0~ -1~ 0~
+0 0 0
+A 19 6
+A 40 2
+R 8|256|2097152
+X dark aura~
+Z 4
+
+#66111
+dire wolf-kobold~
+¤j«¬¥û¼É¯T(Dire Wolf)~
+³¥©Ê¤Q¨¬ªº¥û¼É¯T~
+~
+29 4194304 1|131072
+100~ 2168~ 0~ 0~
+0 0 0
+A 19 3
+A 43 15
+O 66139
+
+#66112
+evil devour crown~
+[0m[35;1m§¯¾½¤§«a[0m(Evil Devour Crown)~
+¤@³»§¯®ð¤Q¨¬ªº¤ý«a(Crown)³Q¥á¦b³o¸Ì¡C~
+~
+9 16|64|512|2048|4096 1|16
+13~ 0~ 1001100~ 0~
+3 0 0
+A 13 -50
+A 40 4
+X Fel Iron~
+Z 4
+>obj_act remove~
+if is_equ_obj($n) == 66113
+	echoat $n §A·P¨ì¤â¤¤ªºÅv§ú©¿µM­«­Y¤d¤ç¡A¥O§AÃø¥HÁ|°_¡A±¼¸¨¦b¦a¡I
+	oforce $n remove stun-soul-koboldobj
+	oforce $n drop stun-soul-koboldobj
+endif
+~
+|
+#66113
+stun-soul-koboldobj rod~
+[0m[35;1mÄà¾zÅv§ú[0m(Stun-Soul Rod)~
+¤@®Ú§l¤Þ¥L¤H¥Ø¥úªºµØÄRÅv§ú(Rod)³Q¥á¦b³o¸Ì¡C~
+~
+5 16|64|512|2048 1|8192
+3001300~ 20~ 20~ 7~
+3 0 0
+A 18 15
+H energy drain~ 15 50 4
+H lifesteal~ 35 50 4
+H lifesteal~ 25 60 4
+X Fel Iron~
+Z 4
+>obj_act wear~
+if is_equ_obj($n) != 66112
+	echoat $n §A·P¨ì¤â¤¤ªºÅv§ú©¿µM­«­Y¤d¤ç¡A¥O§AÃø¥HÁ|°_¡A±¼¸¨¦b¦a¡I
+	echoaround $n $N¥á¤U$O.
+	ogoto self
+endif
+~
+|
+#66114
+demon rune glove~
+´cÅ]²Å¯¾¤â®M(Demon Rune Glove)~
+¤@ÂùÂ¸º¡´cÅ]²Å¸¹ªº¤â®M³Q¥á¦b³o¸Ì¡C~
+~
+9 16|64|512|2048 1|128
+13~ 0~ 1001100~ 0~
+1 0 0
+A 2 1
+A 3 1
+A 4 1
+A 18 2
+A 39 -10
+X cloth~
+Z 4
+
+#66115
+kobold-obj-ha heavy armor~
+¦aÆF­«¸ËñZ¥Ò(Kobold Heavy Armor)~
+¤@°Æ­««¬ñZ¥Ò³QÂ\¦b³o¸Ì¡C~
+~
+9 0 1|8
+15~ 0~ 5001500~ 0~
+100 100000 37
+X steel~
+A 41 25
+A 39 50
+
+#0
+
+
+#ROOMDATA
+#66100
+¤s¹D¤J¤f~
+§A¥¿½ñ¦b¤s¹Dªº¤J¤f¡C³o±ø¤s¹D¬J¤Q¤À¯U¯¶¡A¤]¤£¤Ó¥­¾ã¡A§ó¨S¦³³òÄæ¤§Ãþªº¨¾
+Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h¤F¡I
+~
+0 0 5
+D1
+~
+~
+0 0 66101
+D3
+~
+~
+0 0 13667
+>room_enter 63~
+if $n == elf-soldier-marshal
+	echo !
+endif
+~
+|
+S
+#66101
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o­Ó¤s¹D°£¤F¯U¯¶¥H¥~¡AÁÙ¤Q¤À±T¹ò¤£¥­¡A¤]¨S¦³
+³òÄæ¤§Ãþªº¨¾Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h
+¤F¡I
+~
+0 0 5
+D1
+~
+~
+0 0 66102
+D3
+~
+~
+0 0 66100
+S
+#66102
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o­Ó¤s¹D°£¤F¯U¯¶¥H¥~¡AÁÙ¤Q¤À±T¹ò¤£¥­¡A¤]¨S¦³
+³òÄæ¤§Ãþªº¨¾Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h
+¤F¡I
+~
+0 0 5
+D1
+~
+~
+0 0 66103
+D3
+~
+~
+0 0 66101
+S
+#66103
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o­Ó¤s¹D°£¤F¯U¯¶¥H¥~¡AÁÙ¤Q¤À±T¹ò¤£¥­¡A¤]¨S¦³
+³òÄæ¤§Ãþªº¨¾Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h
+¤F¡I
+¡@¡@¤s¹D«ùÄò¦a¦V¤W©µ¦ù¡A¨Ã¦b¦¹³B¦V¥_Âà§é¡C
+~
+0 0 5
+D0
+~
+~
+0 0 66104
+D3
+~
+~
+0 0 66102
+S
+#66104
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o­Ó¤s¹D°£¤F¯U¯¶¥H¥~¡AÁÙ¤Q¤À±T¹ò¤£¥­¡A¤]¨S¦³
+³òÄæ¤§Ãþªº¨¾Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h
+¤F¡I
+¡@¡@¤s¹D«ùÄò¦a¦V¤W©µ¦ù¡A¨Ã¥B¶}©l»dãé°_¨Ó¡C
+~
+0 0 5
+D1
+~
+~
+0 0 66105
+D2
+~
+~
+0 0 66103
+S
+#66105
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o­Ó¤s¹D°£¤F¯U¯¶¥H¥~¡AÁÙ¤Q¤À±T¹ò¤£¥­¡A¤]¨S¦³
+³òÄæ¤§Ãþªº¨¾Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h
+¤F¡I
+¡@¡@¤s¹D«ùÄò»d»dãéãé¦a¦V¤W©µ¦ù¡C
+~
+0 0 5
+D2
+~
+~
+0 0 66106
+D3
+~
+~
+0 0 66104
+S
+#66106
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o­Ó¤s¹D°£¤F¯U¯¶¥H¥~¡AÁÙ¤Q¤À±T¹ò¤£¥­¡A¤]¨S¦³
+³òÄæ¤§Ãþªº¨¾Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h
+¤F¡I
+¡@¡@¤s¹D«ùÄò»d»dãéãé¦a¦V¤W©µ¦ù¡C
+~
+0 0 5
+D0
+~
+~
+0 0 66105
+D1
+~
+~
+0 0 66107
+S
+#66107
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o­Ó¤s¹D°£¤F¯U¯¶¥H¥~¡AÁÙ¤Q¤À±T¹ò¤£¥­¡A¤]¨S¦³
+³òÄæ¤§Ãþªº¨¾Å@±¹¬I¡A´N¹³¬O³Q³¥Ã~¦ÛµM¦ÓµM½ò¥X¨ÓªºÃ~®|¤@¯ë¡C¤p¤ßÂI¡A§OºL¤U¥h
+¤F¡I
+¡@¡@¤s¹D«ùÄò»d»dãéãé¦a¦V¤W©µ¦ù¡A«e¤è¤£»·³B¦ü¥G´N¨ìºÉÀY¤F¡C
+~
+0 0 5
+D2
+~
+~
+0 0 66108
+D3
+~
+~
+0 0 66106
+S
+#66108
+¯U¯¶ªº¤s¹D~
+§A¥¿¨«¦b¤@±ø¯U¯¶ªº¤s¹D¤W¡C³o±ø±T¹òªº¤s¹D¦b¦¹³B¤w¸g¨ì¤FºÉÀY¡A¦ý§A¦b¤s¾À
+¤Wµo²{¤F³\¦h²Ó¤pªº½ñ¸}¬}¡A¤W­±¦³µÛ³\¦h¬YºØ¤p§Î¥Íª«Ãkª¦¹Lªº²ª¸ñ¡C
+~
+0 0 5
+D0
+~
+~
+0 0 66107
+D4
+~
+~
+0 0 66109
+>room_mask up default~
+echoat $n §A½òµÛ¯U¤p½ñ¸}¬}§V¤O¦V¤WÃk¥h....
+echoaround $n $N½òµÛ¯U¤p½ñ¸}¬}§V¤O¦V¤WÃk¥h....
+if roomvalue($n66108v0) == 1
+	if dex($n) < 20
+		if dex($n) < 17
+			if rand(90)
+				echoat $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N§A¯{¤F¤U¨Ó¡I
+				echoaround $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N$N¯{¤F¤U¨Ó¡I
+				modhmv $n 01.500 1000 10100001
+			else
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N±q¤s±V¤UÃk¤W¨Ó¤F¡C
+			endif
+		else
+			if rand(95)
+				echoat $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N§A¯{¤F¤U¨Ó¡I
+				echoaround $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N$N¯{¤F¤U¨Ó¡I
+				modhmv $n 01.500 1000 10100001
+			else
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N±q¤s±V¤UÃk¤W¨Ó¤F¡C
+			endif
+		endif
+	else
+		if dex($n) < 24
+			if rand(70)
+				echoat $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N§A¯{¤F¤U¨Ó¡I
+				echoaround $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N$N¯{¤F¤U¨Ó¡I
+				modhmv $n 01.500 1000 10100001
+			else
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N±q¤s±V¤UÃk¤W¨Ó¤F¡C
+			endif
+		else
+			if rand(50)
+				echoat $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N§A¯{¤F¤U¨Ó¡I
+				echoaround $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A±N$N¯{¤F¤U¨Ó¡I
+				modhmv $n 01.500 1000 10100001
+			else
+				echoat $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¯{¦V§A¡A¦ý³Q§A¥H±Ó±¶¨ì¤£¥i«äÄ³ªº¨­ªk¸ú¤F¹L¥h¡I
+				echoaround $n ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¯{¦V$N¡A¦ý³Q$N¥H±Ó±¶¨ì¤£¥i«äÄ³ªº¨­ªk¸ú¤F¹L¥h¡I
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N±q¤s±V¤UÃk¤W¨Ó¤F¡C
+			endif
+		endif
+	endif
+else
+	transfer $n 66109
+	force 66109 force $n look
+	force 66109 echoaround $n $N±q¤s±V¤UÃk¤W¨Ó¤F¡C
+endif
+~
+>room_rand 100~
+if roomchar($) > 0
+	if roomvalue($n66108v0) == 1
+		if dex($r) < 18
+		or rand(33)
+			echoat $r ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A¯{±o§AÀY¯}¦å¬y¡I
+			echoaround $r ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¡A¯{±o$RÀY¯}¦å¬y¡I
+			modhmv $r 01.250 500 10100001
+		else
+			echoat $r ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¯{¦V§A¡A¦ý³Q§A¥H±Ó±¶ªº¨­ªk¸ú¤F¹L¥h¡I
+			echoaround $r ¤s³»©¿µM±¼¤U¤@¶ô¥¨¤jªº¸¨¥Û¯{¦V§A¡A¦ý³Q$R¥H±Ó±¶ªº¨­ªk¸ú¤F¹L¥h¡I
+		endif
+	endif
+endif
+~
+|
+S
+#66109
+¯U¯¶ªº¤s¹D~
+§A¦n¤£®e©öª¦¨ì¤F¤s³»¡A¯U¯¶ªº¤s¹D¤S±q¦¹³B¶}©l¥X²{¡A¨Ã¥B´ÂµÛªFÃä¦VµÛ¤s¤U
+©µ¦ù¡C§A¥i¥H±q³o¸Ì±æ¨£»·³B¦³¤@±øªøªøªº®l¨¦¡C
+~
+0 0 5
+D1
+~
+~
+0 0 66110
+D5
+~
+~
+0 0 66108
+
+S
+#66110
+¤s¹D~
+§A¥¿¨«¦b¤@±ø¤s¹D¤W¡C¤s¹Dªº¨â®Ç³vº¥°ª°_¦¨¬°®k¾À¡A¨Ã¥B³vº¥¦V¨â®Ç´²¶}¡A¨Ï
+±o¤s¹D¶V¨Ó¶V¼e´¯¡A¤]¶V¨Ó¶V¦n¨«¤F¡C
+~
+0 0 5
+D1
+~
+~
+0 0 66111
+D3
+~
+~
+0 0 66109
+S
+#66111
+¤s¹D~
+§A¥¿¨«¦b¤@±ø¤s¹D¤W¡C¤s¹Dªº¨â®Ç³vº¥°ª°_¦¨¬°®k¾À¡A¨Ã¥B³vº¥¦V¨â®Ç´²¶}¡A¨Ï
+±o¤s¹D¶V¨Ó¶V¼e´¯¡A¤]¶V¨Ó¶V¦n¨«¤F¡C
+~
+0 4 5
+D1
+~
+~
+0 0 66112
+D3
+~
+~
+0 0 66110
+S
+#66112
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C³o¸Ìªº«n¥_¨â°¼¬O°ª°ªªº±V¾À¡A¦èÃä«h¬O¤s¹D¡A©¹ªF«hÄ~Äò²`¤J®l¨¦¡C
+~
+0 0 5
+D0
+~
+~
+0 0 66118
+D1
+~
+~
+0 0 66113
+D2
+~
+~
+0 0 66122
+D3
+~
+~
+0 0 66111
+S
+#66113
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C³o¸Ìªº«n¥_¨â°¼¬O°ª°ªªº±V¾À¡A¦èÃä«h¬O¤s¹D¡A©¹ªF«hÄ~Äò²`¤J®l¨¦¡C
+~
+0 0 5
+D0
+~
+~
+0 0 66119
+D1
+~
+~
+0 0 66114
+D2
+~
+~
+0 0 66123
+D3
+~
+~
+0 0 66112
+S
+#66114
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C³o¸Ìªº«n¥_¨â°¼¬O°ª°ªªº±V¾À¡A¦èÃä«h¬O¤s¹D¡A©¹ªF«hÄ~Äò²`¤J®l¨¦¡C
+~
+0 0 5
+D0
+~
+~
+0 0 66120
+D1
+~
+~
+0 0 66115
+D2
+~
+~
+0 0 66124
+D3
+~
+~
+0 0 66113
+S
+#66115
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C³o¸Ìªº«n¥_¨â°¼¬O°ª°ªªº±V¾À¡A¦èÃä«h¬O¤s¹D¡A©¹ªF«hÄ~Äò²`¤J®l¨¦¡C
+~
+0 0 5
+D0
+~
+~
+0 0 66121
+D1
+~
+~
+0 0 66116
+D2
+~
+~
+0 0 66125
+D3
+~
+~
+0 0 66114
+S
+#66116
+®l¨¦~
+§A¥¿¨«¦b¤@±ø«Õ´Ëªº®l¨¦¤¤¡C¨â°¼ªº±V¾À±q¦¹³B¶}©l¦¬Ãl¡A¨Ã¥B¦bªFÃä¤£»·³B¥æ
+·|¡A¨Ï±o¹D¸ô¤S¶}©lÅÜ±o¯U¯¶°_¨Ó¡C¬Ý¨Ó°¨¤W´N¨ì¹F³o±ø¸ôªººÉÀY¤F¡C
+~
+0 4 5
+D1
+~
+~
+0 0 66117
+D3
+~
+~
+0 0 66115
+S
+#66117
+¬}¤f«e~
+«n¥_¨â°¼ªº¤s¾À¦bªFÃä­«·s¦XÃl¡AªýÂ_¤F©¹ªFªº¥h¸ô¡C¦ý¬O§Aª`·N¨ì¤s¾À¤W¦³¤@
+³B¤p¤pªº¤s¬}¡A³Q¨â¶ô²ÊÁW«p­«ªºÅKª¸½Dºò±K¦a¾B±»°_¨Ó¡C
+~
+0 0 5
+D1
+³o¨â¶ôÅKª¸½D¤W­±¦³µÛ¹³¬OÆ_°Í¤ÕªºªF¦è¡A¦pªG³o¬O«°ªùªº¸Ü¡A¤j·§«ÜÃø§ð¯}§a¡H
+~
+~
+1|2|4|16|32|64 0 66134
+D3
+~
+~
+0 0 66116
+S
+#66118
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº¥_Ãä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D1
+~
+~
+0 0 66119
+D2
+~
+~
+0 0 66112
+
+S
+#66119
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº¥_Ãä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D1
+~
+~
+0 0 66120
+D2
+~
+~
+0 0 66113
+D3
+~
+~
+0 0 66118
+S
+#66120
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº¥_Ãä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D1
+~
+~
+0 0 66121
+D2
+~
+~
+0 0 66114
+D3
+~
+~
+0 0 66119
+S
+#66121
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº¥_Ãä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D2
+~
+~
+0 0 66115
+D3
+~
+~
+0 0 66120
+S
+#66122
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº«nÃä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D0
+~
+~
+0 0 66112
+D1
+~
+~
+0 0 66123
+S
+#66123
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº«nÃä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D0
+~
+~
+0 0 66113
+D1
+~
+~
+0 0 66124
+D3
+~
+~
+0 0 66122
+S
+#66124
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº«nÃä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D0
+~
+~
+0 0 66114
+D1
+~
+~
+0 0 66125
+D3
+~
+~
+0 0 66123
+S
+#66125
+¼e´¯ªº®l¨¦~
+§A¥¿¨«¦b¤@±ø¼e´¯ªº®l¨¦¤¤¡C³o¸Ì¦a¶Õ¥­©Z¡B¹D¸ôµ§ª½¡A¤ñ°_¤§«eªº¤s¹D­n¦n¨«
+³\¦h¡C§Aªº«nÃä¬O°ª°ª±V¾À¡A¦pªG§A¨­¤â±Ó±¶ªº¸Ü¡A©Î³\¥i¥H¸ÕµÛ¦V¤WÃkµn (Climb)
+¬Ý¬Ý¡A¦ý¦pªG¤£¤p¤ß¶^¤U¨Óªº¸Ü¡AÀ³¸Ó·|«Üµh§a....
+~
+0 0 5
+D0
+~
+~
+0 0 66115
+D3
+~
+~
+0 0 66124
+S
+#66126
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66118
+S
+#66127
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66119
+S
+#66128
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66120
+S
+#66129
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66121
+S
+#66130
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66122
+S
+#66131
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66123
+S
+#66132
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66124
+S
+#66133
+®k¾À¤W~
+³o¸Ìªº¤s¾À¤£ª¾¹D³Q¤°»ò¤H«õ¥X¤F¤@¶ô¸¨¸}¤§³B¡A©¹¤U¥i¥H­«·s¦^¨ì®l¨¦¡C
+~
+0 0 5
+D5
+~
+~
+0 0 66125
+S
+#66134
+»êÅ¼¯U¤pªº¬}¥Þ~
+§A¨­¦b¤@­Óº£¶Â¯U¤pªº¬}¥Þ¸Ì¡A©P³òºÉ¬O©U§£»P¦aÆFªº±Æªnª«¡C³o¸Ìªº³q¹DÅãµM
+§¹¥þ¬O·ÓµÛ¦aÆFªº¨­§÷¶q¨­¶}ÅPªº¡A¥O§A¨«°_¨Ó¤Q¤ÀÃø¨ü¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66135
+D3
+³o¨â¶ôÅKª¸½D¤W­±¦³µÛ¹³¬OÆ_°Í¤ÕªºªF¦è¡A¦pªG³o¬O«°ªùªº¸Ü¡A¤j·§«ÜÃø§ð¯}§a¡H
+~
+~
+1|2|4|16|32|64 0 66134
+S
+#66135
+¬}¥Þ³q¹D~
+§A¨­¦b¤@­Óº£¶Â¯U¤pªº¬}¥Þ¸Ì¡A©P³òºÉ¬O©U§£»P¦aÆFªº±Æªnª«¡C³o¸Ìªº³q¹DÅãµM
+§¹¥þ¬O·ÓµÛ¦aÆFªº¨­§÷¶q¨­¶}ÅPªº¡A¥O§A¨«°_¨Ó¤Q¤ÀÃø¨ü¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66136
+D3
+~
+~
+0 0 66117
+S
+#66136
+¬}¥Þ³q¹Dªº¥æ¤e¤f~
+§A¨­¦b¤@­Óº£¶Â¯U¤pªº¬}¥Þ¸Ì¡A©P³òºÉ¬O©U§£»P¦aÆFªº±Æªnª«¡C³o¸Ìªº³q¹DÅãµM
+§¹¥þ¬O·ÓµÛ¦aÆFªº¨­§÷¶q¨­¶}ÅPªº¡A¥O§A¨«°_¨Ó¤Q¤ÀÃø¨ü¡C
+¡@¡@¥|­±³£¬O¬}¥Þªº¤À¤ä¡AªFÃä¡B¦èÃä»P«nÃäªº³q¹D¬Ý°_¨Ó³£¤Q¤À¯U¯¶¡A¥u¦³¥_Ãäªº
+³q¹D¬Ý¨Ó¦³¸g¹L¤H¬°¶}Æwªº²ª¸ñ¡AÅã±o¼e´¯³\¦h¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66137
+D1
+~
+~
+0 0 66147
+D2
+~
+~
+0 0 66146
+D3
+~
+~
+0 0 66135
+S
+#66137
+¬}¥Þ³q¹D~
+³o¸Ìªº³q¹DÅã±o¼e´¯³\¦h¡A¹³¬O´¿³Q¤H¬°¶}Æw©Ý¼e¹L¡C°£¦¹¤§¥~¡A³q¹Dªº¨â®ÇÀð
+¾À¤WÃ¸º¡¤F³\¦h­ì©l¹ÏÄË¡A¦ý¬O³£¨äÁàµL¤ñ¡AÅý§A§¹¥þ¬Ý¤£¥X¨Ó¬O¦bµe¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66138
+D2
+~
+~
+0 0 66136
+S
+#66138
+¬}¥Þ³q¹D~
+³o¸Ìªº³q¹DÅã±o¼e´¯³\¦h¡A¹³¬O´¿³Q¤H¬°¶}Æw©Ý¼e¹L¡C°£¦¹¤§¥~¡A³q¹Dªº¨â®ÇÀð
+¾À¤WÃ¸º¡¤F³\¦h­ì©l¹ÏÄË¡A¦ý¬O³£¨äÁàµL¤ñ¡AÅý§A§¹¥þ¬Ý¤£¥X¨Ó¬O¦bµe¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66139
+D2
+~
+~
+0 0 66137
+S
+#66139
+¬}¥Þ³q¹Dªº¥æ¤e¤f~
+³o¸Ìªº³q¹DÅã±o¼e´¯³\¦h¡A¹³¬O´¿³Q¤H¬°¶}Æw©Ý¼e¹L¡C°£¦¹¤§¥~¡A³q¹Dªº¨â®ÇÀð
+¾À¤WÃ¸º¡¤F³\¦h­ì©l¹ÏÄË¡A¦ý¬O³£¨äÁàµL¤ñ¡AÅý§A§¹¥þ¬Ý¤£¥X¨Ó¬O¦bµe¨Ç¤°»ò¡C
+¡@¡@ªFÃä»P¦èÃä¶Ç¨Ó¤F³ÙÄÛªºÁn­µ¡A¤£®É¦³¥þ°ÆªZ¸Ëªº¦aÆF¶i¶i¥X¥X¡A¬Ý°_¨Ó¬O¦aÆF
+ªº§LÀç©Ò¦b¡H
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66140
+D1
+~
+~
+0 0 66144
+D2
+~
+~
+0 0 66138
+D3
+~
+~
+0 0 66145
+S
+#66140
+¬}¥Þ³q¹D~
+³o¸Ìªº³q¹DÅã±o¼e´¯³\¦h¡A¹³¬O´¿³Q¤H¬°¶}Æw©Ý¼e¹L¡C°£¦¹¤§¥~¡A³q¹Dªº¨â®ÇÀð
+¾À¤WÃ¸º¡¤F³\¦h­ì©l¹ÏÄË¡A§Aª`·N¨ì¤W­±ªº³\¦h¹Ï®×³£¬O¦bµe¤@ºØ©_©Çªº¥Íª«¡A¬Ý°_
+¨Ó´N¹³¬Oªø¤F¯Í»H«áªº....¤j»hç°¡H
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66142
+D2
+~
+~
+0 0 66139
+S
+#66141
+±K¹D~
+³o¬O¤@±ø±K¹D¡A¥Ñ°®²b¾ã¼äªºÁ³±Û«¬¶¥±è²Õ¦X¦Ó¦¨¡A¤£ª¾¹D¬O°µ¤°»ò¥Îªº¡HªFÃä
+¦³¤@®°°í©TªºÅKªù¡A¦ý¶¥±è¤´µMÄ~Äò©¹¤U©µ¦ù¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+1|2|4|16|32 66100 66169
+D4
+~
+Secret-Door~
+1|2|4|16|32 66100 66143
+D5
+~
+~
+0 0 66170
+S
+#66142
+¤ý®y«e³q¹D~
+³o¸Ìªº³q¹D¤£¶È¼e´¯¡AÁÙÅã±oª÷ºÑ½÷·×¡A¥u¬O¤£ª¾¹D³o¨Çª÷¤l­Ë©³¬OÆ^¤W¥hªºÁÙ
+¬Oº£¤W¥hªº¡C¦A©¹«e¨«¡A´N¬O¦aÆFªº¤ý®y«Ç¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66143
+D2
+~
+~
+0 0 66140
+S
+#66143
+¤ý®y~
+³o¸ÌªºªÅ¶¡Â²ª½¤jªºÀ~¤H¡A¤£ª¾¹D¨­§÷¸G¤pªº¦aÆF­n³o»ò¤jªºªÅ¶¡°µ¤°»ò¡C¤@±ø
+¬õ½Å¦âªº½sÂ´¦a´à¤@ª½±qª÷¦âªº¤ý®y©µ¦ù¨ìªù¤f¡A¬Ý°_¨Ó«D±`»¨µØ¡C¦ý¬Oµ¥§A¥J²Ó¤@
+»D¡A«oÁô¬ù¶å¨ì¤F¨ë»óªº¦å¸{¨ý±q¤W­±¶Ç¨Ó¡AÃø¹D³o¦a´àªºÃC¦â¤£¬O¥ÎÃC®Æ¬Vªº¡A¦Ó
+¬O¤j¶q¦å²G°®±¼«áªº²ª¸ñ¡H
+~
+0 1|8|16|65536|524288|1048576 0
+D2
+~
+~
+0 0 66142
+D5
+§A¦b¦a´à¤Uµo²{¤F¤@®°±Kªù¡I
+~
+Secret-Door~
+1|2|4|16|32 66100 66141
+S
+#66144
+­xÀç~
+µL¼Æ®³µÛÂ²­®ªZ¾¹ªº¦aÆF­Ì¸s»E¦b¦¹³B¡A¦b±Ð©xªº«ü¥O¤U¤@¹M¤S¤@¹M¦a½m²ß§ðÀ»
+°Ê§@¡C¦pªG¬O³Q³o¼Ëªº¤H¤s¤H®ü§ðÀ»¡A´Nºâ¬O¼C¸t¤]¼µ¤£¤F¦h¤[§a¡H§A¤£¸T­«·s¿Å¶q
+°_³o¨Ç¬Ý¦ü®z¤pªº¦aÆFªº¹ê¤O¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66182
+D3
+~
+~
+0 0 66139
+S
+#66145
+­xÀç~
+µL¼Æ®³µÛÂ²­®ªZ¾¹ªº¦aÆF­Ì¸s»E¦b¦¹³B¡A¦b±Ð©xªº«ü¥O¤U¤@¹M¤S¤@¹M¦a½m²ß§ðÀ»
+°Ê§@¡C¦pªG¬O³Q³o¼Ëªº¤H¤s¤H®ü§ðÀ»¡A´Nºâ¬O¼C¸t¤]¼µ¤£¤F¦h¤[§a¡H§A¤£¸T­«·s¿Å¶q
+°_³o¨Ç¬Ý¦ü®z¤pªº¦aÆFªº¹ê¤O¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66139
+D3
+~
+~
+0 0 66171
+S
+#66146
+¬}¥Þ³q¹D~
+§A¨­¦b¤@­Óº£¶Â¯U¤pªº¬}¥Þ¸Ì¡A©P³òºÉ¬O©U§£»P¦aÆFªº±Æªnª«¡C³o¸Ìªº³q¹DÅãµM
+§¹¥þ¬O·ÓµÛ¦aÆFªº¨­§÷¶q¨­¶}ÅPªº¡A¥O§A¨«°_¨Ó¤Q¤ÀÃø¨ü¡C
+¡@¡@¤@±ø¯U¤pªº¦a¹D±×±×¦a³q¦V¤U¼h¡C
+~
+0 1|4|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66136
+D5
+~
+~
+0 0 66148
+S
+#66147
+¬}¥Þ³q¹D~
+§A¨­¦b¤@­Óº£¶Â¯U¤pªº¬}¥Þ¸Ì¡A©P³òºÉ¬O©U§£»P¦aÆFªº±Æªnª«¡C³o¸Ìªº³q¹DÅãµM
+§¹¥þ¬O·ÓµÛ¦aÆFªº¨­§÷¶q¨­¶}ÅPªº¡A¥O§A¨«°_¨Ó¤Q¤ÀÃø¨ü¡C
+¡@¡@¤@±ø¯U¤pªº¦a¹D±×±×¦a³q¦V¤U¼h¡C
+~
+0 1|4|8|16|65536|524288|1048576 0
+D3
+~
+~
+0 0 66136
+D5
+~
+~
+0 0 66149
+S
+#66148
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+¡@¡@¤@±ø¯U¤pªº¦a¹D±×±×¦a³q¦V¤W¼h¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66150
+D4
+~
+~
+0 0 66146
+S
+#66149
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+¡@¡@¤@±ø¯U¤pªº¦a¹D±×±×¦a³q¦V¤W¼h¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D3
+~
+~
+0 0 66150
+D4
+~
+~
+0 0 66147
+S
+#66150
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66157
+D1
+~
+~
+0 0 66149
+D2
+~
+~
+0 0 66148
+D3
+~
+~
+0 0 66151
+S
+#66151
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66158
+D1
+~
+~
+0 0 66150
+D2
+~
+~
+0 0 66159
+D3
+~
+~
+0 0 66152
+S
+#66152
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66153
+D1
+~
+~
+0 0 66151
+D2
+~
+~
+0 0 66160
+D3
+~
+~
+0 0 66161
+S
+#66153
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66154
+D1
+~
+~
+0 0 66158
+D2
+~
+~
+0 0 66152
+D3
+~
+~
+0 0 66162
+S
+#66154
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66164
+D1
+~
+~
+0 0 66155
+D2
+~
+~
+0 0 66153
+D3
+~
+~
+0 0 66163
+S
+#66155
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66165
+D1
+~
+~
+0 0 66156
+D2
+~
+~
+0 0 66158
+D3
+~
+~
+0 0 66154
+S
+#66156
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66166
+D1
+~
+~
+0 0 66167
+D2
+~
+~
+0 0 66157
+D3
+~
+~
+0 0 66155
+S
+#66157
+¦a¥Þ·F¹D~
+³o¸Ì¬O³o­Ó¬}¸]¸Ì²³¦h¦aÆF©Ò¨Ï¥Îªº¥D­n·F¹D¡CÁöµM³q¹D«õ±o¬Û·í¼eÁï¡A¦ý¬OµL
+¼Æ¨Ó©¹ªº¦aÆF­Ì«oÅý¦¹³B¤ñ¤W¼hªº³q¹DÅã±o§ó¥[¾ÖÀ½¡C°£¦¹¤§¥~¡A¦a¤WÁÙ¾QµÛ¤@¼h«p
+«pªºÂ©ª«¡A´²µo¥X¨Óªº¯ä¨ýÅý§A§¹¥þµLªk¤£´±¥¦­Ì­ì¨Ó¬O¨Ç¤°»ò¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66156
+D1
+~
+~
+0 0 66168
+D2
+~
+~
+0 0 66150
+D3
+~
+~
+0 0 66158
+S
+#66158
+Áë³y³õ~
+³o­Ó¤j¼s³õªº¤¤¥¡«Ø³y°_´X®y¤j«¬ªºº²Äl¡A¦³³\¦h¦aÆFªº¤u¦K¥¿¦b®ÇÃä¦£¸L¡A¥´
+³y¥X¤@°ï²ÊÁWªºªZ¾¹¡CÁöµMº²Äl²£¥Íªº·ÏÃú»P¼ö®ð¤j¦h¸g¥Ñ¯S§O³]­pªººÞ¸ô±Æ¨ì¤s¬}
+¤§¥~¡A¦ý¤´¦³³\¦h¥~¬ª¤F¥X¨Ó¡A¨Ï±o³o¸ÌªºªÅ®ðµL¤ñÁV¿|¡C
+¡@¡@¼Æ­Ó¬}¥Þ³q¦V¦a©³§ó²`³B¡A³\¦hÅKÄq­ì¥Û¥¿·½·½¤£µ´¦a±q¨ä¤¤³Q¹B°e¥X¨Ó¡C
+~
+0 1|4|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66155
+D1
+~
+~
+0 0 66157
+D2
+~
+~
+0 0 66151
+D3
+~
+~
+0 0 66153
+D5
+~
+~
+0 0 66172
+S
+#66159
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66151
+S
+#66160
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D0
+~
+~
+0 0 66152
+S
+#66161
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66152
+S
+#66162
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66153
+S
+#66163
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66154
+S
+#66164
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D2
+~
+~
+0 0 66154
+S
+#66165
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D2
+~
+~
+0 0 66155
+S
+#66166
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D2
+~
+~
+0 0 66156
+S
+#66167
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D3
+~
+~
+0 0 66156
+S
+#66168
+©~¦í°Ï~
+³o¦êºò³s¤p¬}¥Þ¸ÌÀ½º¡¤F¤@¸s¸sªº¦aÆF¡AÅý§A¤£¸T§x´b¡A³o»ò¦h¥Íª«·íªì¬O«ç»ò
+À½¶i¨Óªº©O¡H¦b³o»ò¾ÖÀ½¥B»êÅ¼ªºÀô¹Ò¸Ì¡A§A´N³s¤@¨è¤]¤£·Q¦h«Ý¡A¦ý¬Ý³o¨Ç¦aÆFªº
+¼Ë¤l¡A¦n¦ü¦p¦¹¥Í¬¡«Ü¤[¤F¡C
+~
+0 1|8|16|65536|524288|1048576 0
+D3
+~
+~
+0 0 66157
+S
+#66169
+ÂÃÄ_®w~
+³o¸Ì­±°ïº¡¤F¤j¶qªºª÷»È°]Ä_¡C¯u¤£ª¾¹D¬O«ç»ò»`¶°¦Ó¨Óªº¡H
+~
+0 1|8|16|65536|524288|1048576 0
+D3
+~
+~
+1|2|4|16|32 66100 66141
+S
+#66170
+¨¸¯«²½¾Â~
+³o¸Ì¬O¤@®yµØÄRªº²½¾Â¡AÀð¤W¡B¤ÑªáªO»P²½¾Â¤WÃ¸»sµÛ³\¦h¥i©ÈÅ]ª«ªº¹ÏÄË¡Aºë
+¬üªº¤£¹³¬O¦aÆFªº¤âÃÀ¡C³o»ò»¨µØªº¯«¾Â¬°¤°»ò·|«Ø³y¦b³o­ÓÁô±Kªº©Ò¦b©O¡H
+~
+0 1|8|16|65536|524288|1048576 0
+D4
+~
+~
+0 0 66141
+>room_enter 16 100~
+if is_qmark($n) == kobold_cave_hero 200007
+	echoat $n ¨S·Q¨ì¤ý®yªº©³¤U³ºµMÂÃµÛ±R«ô¨¸¯«ªº²½¾Â¡I
+	echoat $n ¬Ý¨Ó§A¸Ó§â³o¥ó¨Æ¦^³ø(Report)µ¹¥j©Ô©Ôª¾¹D¡C
+	mod_qmark $n kobold_cave_hero v1 = 8
+endif
+~
+|
+S
+#66171
+«ü´§©x«Ç~
+³o¸Ì¬O¤@¶¡¾ã»ô¥B°®²bªº©Ð¶¡¡A¤o³\ªºªÅ¶¡¤¤Â\º¡µÛ¦U¦¡§L¾¹¡BñZ¥Ò»P­x¥Î¦a¹Ï
+¡C¬Ý¨Ó³o¸Ì¬O¬Y¦ì¦aÆF°ª¯Å­x©xªº©Ð¶¡¡H
+¡@¡@ªFÃä¬O¦^¨ì­xÀçªº¸ô¡C
+~
+0 8|16|65536|524288|1048576 0
+D1
+~
+~
+0 0 66145
+S
+#66172
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+¡@¡@¤W¤èªº¥X¤f¶Ç¨Ó¤F¥ú«G»P¼ö®ð¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D0
+~
+~
+0 0 66173
+D4
+~
+~
+0 0 66158
+S
+#66173
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D0
+~
+~
+0 0 66174
+D2
+~
+~
+0 0 66172
+S
+#66174
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D0
+~
+~
+0 0 66175
+D1
+~
+~
+0 0 66179
+D2
+~
+~
+0 0 66173
+S
+#66175
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D2
+~
+~
+0 0 66174
+D3
+~
+~
+0 0 66176
+S
+#66176
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D0
+~
+~
+0 0 66177
+D1
+~
+~
+0 0 66175
+D3
+~
+~
+0 0 66178
+S
+#66177
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D2
+~
+~
+0 0 66176
+S
+#66178
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D1
+~
+~
+0 0 66176
+S
+#66179
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D0
+~
+~
+0 0 66180
+D1
+~
+~
+0 0 66181
+D3
+~
+~
+0 0 66174
+S
+#66180
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D2
+~
+~
+0 0 66179
+S
+#66181
+Äq§|~
+³o¸Ì¬O¤S¤p¤S¶ÂªºÄq§|³q¹D¡A§A¥²¶·§V¤OÁY¦¨¤@¹Î¤~¯à«j±j±q³o¸Ì³q¹L¡C³o¸Ìªº
+Àð¤W¥Rº¡«õ±¸ªº²ª¸ñ¡A³\¦h¦aÆFÄq¤u¥¿§V¤O¦a¬°³o¨ÇÀð²K¤W§ó¦hªº²ª¸ñ¡C
+~
+0 1|8|16|512|65536|524288|1048576 0
+D3
+~
+~
+0 0 66179
+S
+#66182
+Àç©Ð~
+³o¸Ì¬O¦aÆF¤h§Lªº¦í³B¡A¤@±Æ±Æªº¦Q§É¦Û¤J¤f©µ¦ù¨ìÀð¨¤³B¡A¤£ª¾¹D¦³¦h¤Ö§É¦ì¡C
+¥Ñ©ó­xÀçªÅ¶¡¦³­­¡B§L­û¼Æ¶q¹L¦h¡A¦aÆF±Ä¨úªº¬O¥ð®§»P°V½m¨â¯ë½ü´«ªº¨î«×¡A¦]¦¹Áö
+µM¥~­±³ÛÁn¾_¤Ñ¡A¦¹¨è³o¸Ì¤´µMºÎº¡¤F¦aÆF¡C
+~
+0 8|16|65536|524288|1048576 0
+D3
+~
+~
+0 0 66144
+S
+#66183
+Áô±KªººëÆFÀç¦a~
+³o¸Ì¬OºëÆF»·©º­x¬°¤F¦w¸m¾Ô³õ¤W¨ü¨ì­«¶Ë©Î¤£©¯¦º¤`ªº­x¤h©Ò«Ø¥ßªºÀç¦a¡A¥Ñ©ó
+¬O«Ø¥ß¦b¦aÆF¥X¨Sªº½d³ò¤¤¡A©Ò¥H¨Ï¥Î¤F¯S§Oªk³NÁôÂÃ°_¨Ó¡C¦pªG§A·Q§ä¦^§Aªº¸Ë³Æ¡A
+¥i¥H¦V³o¸ÌªºÅ@¤h¸ß°Ý¡C·í§A¥ð®§¦n¤F¤§«á¡A§O§Ñ¤FÄ~Äò½ñ¤W¾Ô³õ¦A«×¾Ä¾Ô¡I
+~
+0 4|1024|65536|524288|1048576 0
+D2
+~
+~
+0 0 66100
+S
+#66184
+¦º¤`Àþ¶¡~
+§A¤w¸g¦º¤F¡A¤W¤èµo¥X¤@¹D¥ú¨~¡Aª¦¤W¥h¯à­«ªð²{¥@¡C
+~
+0 4|1024|8192|65536|524288|1048576 0
+D4
+~
+~
+0 0 3054
+>room_rand 100~
+if pcnum($) > 0
+	if roomvalue($0) >= 1
+		if roomvalue($0) == 2
+			modrvt v0 = 0
+			deldoor 4
+			makedoor 4 ¦³¤@¹D¥ú¯í 0 0 0 3054
+			break
+		endif
+		if mobcount(13647) > 0
+			deldoor 4
+			makedoor 4 ¦³¤@¹D¥ú¯í 0 0 0 66183
+		else
+			modrvt v0 = 0
+			deldoor 4
+			makedoor 4 ¦³¤@¹D¥ú¯í 0 0 0 3054
+		endif
+	endif
+endif
+~
+|
+S
+#0
+
+#ROOMPROGS
+R 66100 kobold_cave1.prg
+R 66101 kobold_cave1.prg
+R 66102 kobold_cave1.prg
+R 66103 kobold_cave1.prg
+R 66104 kobold_cave1.prg
+R 66105 kobold_cave1.prg
+R 66106 kobold_cave1.prg
+R 66107 kobold_cave1.prg
+R 66108 kobold_cave1.prg
+R 66109 kobold_cave1.prg
+R 66110 kobold_cave1.prg
+R 66111 kobold_cave1.prg
+R 66118 kobold_cave2.prg
+R 66119 kobold_cave2.prg
+R 66120 kobold_cave2.prg
+R 66121 kobold_cave2.prg
+R 66122 kobold_cave2.prg
+R 66123 kobold_cave2.prg
+R 66124 kobold_cave2.prg
+R 66125 kobold_cave2.prg
+R 66126 kobold_cave3.prg
+R 66127 kobold_cave3.prg
+R 66128 kobold_cave3.prg
+R 66129 kobold_cave3.prg
+R 66130 kobold_cave3.prg
+R 66131 kobold_cave3.prg
+R 66132 kobold_cave3.prg
+R 66133 kobold_cave3.prg
+S
+
+#SPECIALS
+S
+
+#RESETS
+M 0 66111 2 66144
+M 0 66111 2 66145
+M 0 66112 6 66144
+M 0 66112 6 66145
+M 0 66122 1 66182
+M 0 66123 2 66182
+M 0 66113 10 66150
+M 0 66114 10 66150
+M 0 66115 50 66159
+M 0 66115 50 66160
+M 0 66115 50 66161
+M 0 66115 50 66162
+M 0 66115 50 66163
+M 0 66115 50 66164
+M 0 66115 50 66165
+M 0 66115 50 66166
+M 0 66115 50 66167
+M 0 66115 50 66168
+M 0 66116 5 66158
+M 0 66117 5 66174
+E 0 2903 0 16
+M 0 66118 1 66117
+M 0 66119 2 66154
+M 0 66119 2 66154
+M 0 66120 1 66154
+M 0 66124 1 66177
+E 0 2903 0 16
+M 0 66125 1 66178
+E 0 2903 0 16
+M 0 66126 1 66175
+E 0 2903 0 16
+M 0 66127 1 66174
+E 0 2903 0 16
+M 0 66128 1 66181
+E 0 2903 0 16
+M 0 66129 1 66180
+E 0 2903 0 16
+M 0 66130 1 66179
+E 0 2903 0 16
+M 0 66133 16 66150
+E 0 66103 0 16
+M 0 66133 16 66151
+E 0 66103 0 16
+M 0 66133 16 66152
+E 0 66103 0 16
+M 0 66133 16 66153
+E 0 66103 0 16
+M 0 66133 16 66154
+E 0 66103 0 16
+M 0 66133 16 66155
+E 0 66103 0 16
+M 0 66133 16 66156
+E 0 66103 0 16
+M 0 66133 16 66157
+E 0 66103 0 16
+M 0 66135 1 66183
+S
+
+#SHOPS
+0
+
+#$

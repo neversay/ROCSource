@@ -1,0 +1,2290 @@
+act_comm.c:    if ( !str_cmp( ch->name, pnote->sender ) )
+act_comm.c:    if ( is_name( ch->name, pnote->to_list ) )
+act_comm.c:    if ( ch->pnote )
+act_comm.c:	pnote	       = alloc_perm( sizeof( *ch->pnote ) );
+act_comm.c:    pnote->sender	 = str_dup( ch->name );
+act_comm.c:    pnote->csender	  = str_dup( ch->short_descr );
+act_comm.c:    ch->pnote		     = pnote;
+act_comm.c:	if ( to_one[0] != '\0' && str_cmp( ch->name, to_one ) )
+act_comm.c:    if ( str_cmp( ch->name, pnote->sender ) && to_new[0] != '\0' )
+act_comm.c:			( pnote->date_stamp > ch->last_note
+act_comm.c:			 && str_cmp( pnote->sender, ch->name ) ) ? "[1;33mN[m" : " ",
+act_comm.c:		    && str_cmp( ch->name, pnote->sender )
+act_comm.c:		    && ch->last_note < pnote->date_stamp )
+act_comm.c:		ch->last_note = UMAX( ch->last_note, pnote->date_stamp );
+act_comm.c:		    ch->last_note = UMAX( ch->last_note, pnote->date_stamp );
+act_comm.c:	strcpy( buf, ch->pnote->text );
+act_comm.c:	free_string( ch->pnote->text );
+act_comm.c:	ch->pnote->text = str_dup( buf );
+act_comm.c:	free_string( ch->pnote->subject );
+act_comm.c:	ch->pnote->subject = str_dup( argument );
+act_comm.c:	free_string( ch->pnote->to_list );
+act_comm.c:	ch->pnote->to_list = str_dup( argument );
+act_comm.c:	if ( ch->pnote )
+act_comm.c:	    free_string( ch->pnote->text    );
+act_comm.c:	    free_string( ch->pnote->subject );
+act_comm.c:	    free_string( ch->pnote->to_list );
+act_comm.c:	    free_string( ch->pnote->date    );
+act_comm.c:	    free_string( ch->pnote->sender  );
+act_comm.c:	    free_string( ch->pnote->csender );
+act_comm.c:	    ch->pnote->next	   = note_free;
+act_comm.c:	    note_free		     = ch->pnote;
+act_comm.c:	    ch->pnote		     = NULL;
+act_comm.c:	if ( !ch->pnote )
+act_comm.c:		ch->pnote->csender,
+act_comm.c:		ch->pnote->sender,
+act_comm.c:		ch->pnote->subject,
+act_comm.c:		ch->pnote->to_list );
+act_comm.c:	send_to_char( ch->pnote->text, ch );
+act_comm.c:	if ( !ch->pnote )
+act_comm.c:	if ( !str_cmp( ch->pnote->to_list, "" ) )
+act_comm.c:	if ( !str_cmp( ch->pnote->subject, "" ) )
+act_comm.c:	ch->pnote->next			       = NULL;
+act_comm.c:	free_string( ch->pnote->date );
+act_comm.c:	ch->pnote->date			       = str_dup( strtime );
+act_comm.c:	ch->pnote->date_stamp		= current_time;
+act_comm.c:	    note_list	     = ch->pnote;
+act_comm.c:	    pnote->next	       = ch->pnote;
+act_comm.c:	pnote		     = ch->pnote;
+act_comm.c:	ch->pnote	= NULL;
+act_comm.c:	if ( ( drunklevel = ch->pcdata->condition[ COND_DRUNK ] ) > 0 )
+act_comm.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_SILENCE ) )
+act_comm.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+act_comm.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_comm.c:    REMOVE_BIT( ch->deaf, channel );
+act_comm.c:	position	= ch->position;
+act_comm.c:	ch->position	    = POS_STANDING;
+act_comm.c:	ch->position	    = position;
+act_comm.c:	    && !IS_SET( och->deaf, channel )
+act_comm.c:	    && !IS_SET( och->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_comm.c:		&& vch->in_room->area != ch->in_room->area )
+act_comm.c:	    position		    = vch->position;
+act_comm.c:		vch->position	     = POS_STANDING;
+act_comm.c:	    if ( channel == CHANNEL_RUMOR && vch->level > ch->level )
+act_comm.c:	    vch->position	 = position;
+act_comm.c:    if ( ch->level < 3 )
+act_comm.c:    if ( ch->level < 10 )
+act_comm.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+act_comm.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_comm.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+act_comm.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_comm.c:	|| ( IS_NPC( victim ) && victim->in_room != ch->in_room ) )
+act_comm.c:    if ( ( !IS_NPC( ch ) && (	IS_SET( ch->act, PLR_SILENCE )
+act_comm.c:			     || IS_SET( ch->act, PLR_NO_TELL ) ) )
+act_comm.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+act_comm.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_comm.c:    if ( !( victim = ch->reply ) )
+act_comm.c:    if ( ( !IS_NPC( ch ) && (	IS_SET( ch->act, PLR_SILENCE )
+act_comm.c:			      || IS_SET( ch->act, PLR_NO_TELL ) ) )
+act_comm.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_NO_EMOTE ) )
+act_comm.c:    level = UMIN( ch->level,
+act_comm.c:    act( pose_table[pose].message[2*ch->class+0], ch, NULL, NULL, TO_CHAR );
+act_comm.c:    act( pose_table[pose].message[2*ch->class+1], ch, NULL, NULL, TO_ROOM );
+act_comm.c:    if ( ch->position == POS_FIGHTING )
+act_comm.c:    if ( ch->position  < POS_STUNNED  )
+act_comm.c:    if ( ( victim = ch->hunting ) )
+act_comm.c:        	victim->hunted = ch->next_in_hunt;
+act_comm.c:                ch->next_in_hunt = NULL;
+act_comm.c:        for( vch = victim->hunted; vch; vch = vch->next_in_hunt )
+act_comm.c:                if ( vch->next_in_hunt == ch )
+act_comm.c:                	vch->next_in_hunt = ch->next_in_hunt;
+act_comm.c:                        ch->next_in_hunt = NULL;
+act_comm.c:    if ( ( ch->hunted ) )
+act_comm.c:        for( victim = ch->hunted; victim; victim = vch )
+act_comm.c:    if ( ( victim = ch->assassinating ) )
+act_comm.c:        	victim->assassinated = ch->next_in_ass;
+act_comm.c:                ch->next_in_ass = NULL;
+act_comm.c:        for( vch = victim->assassinated; vch; vch = vch->next_in_ass )
+act_comm.c:                if ( vch->next_in_ass == ch )
+act_comm.c:                	vch->next_in_ass = ch->next_in_ass;
+act_comm.c:                        ch->next_in_ass = NULL;
+act_comm.c:    if ( ( ch->assassinated ) )
+act_comm.c:        for( victim = ch->assassinated; victim; victim = vch )
+act_comm.c:    if ( ( victim = ch->rembed ) )
+act_comm.c:    if ( ( room = ch->rrembed ) )
+act_comm.c:    if ( ch->in_room->roomprogs && ( ch->in_room->roomprogs->type & ROOM_LEAVE )
+act_comm.c:	&& !IS_SET( ch->act, PLR_WIZINVIS ) )
+act_comm.c:		rprog_leave_trigger( ch->in_room, ch, 7 );
+act_comm.c:    sprintf( log_buf, "%s has quit.", ch->name );
+act_comm.c:    if ( ( qmark = ch->qmark ) )
+act_comm.c:    d = ch->desc;
+act_comm.c:    if ( strcmp( crypt( argument, ch->pcdata->pwd ), ch->pcdata->pwd ) ) {
+act_comm.c:    if ( ch->position == POS_FIGHTING )
+act_comm.c:    if ( ch->position  < POS_STUNNED  )
+act_comm.c:    sprintf( buf, "[36m%s(%s)©êµÛ°í©wªº¨M¤ß¦V³o­Ó¥@¬É§i§O¡C\n\r[m", ch->short_descr, ch->name );
+act_comm.c:    sprintf( log_buf, "%s has committed suicide.", ch->name );
+act_comm.c:    sprintf( buf, "%s%s%s%s%s", PLAYER_DIR, initial( ch->name ),
+act_comm.c:	    "/", capitalize( ch->name ), ".gz" );
+act_comm.c:    sprintf( buf, "%s%s%s%s", PLAYER_DIR, initial( ch->name ),
+act_comm.c:	    "/", capitalize( ch->name ) );
+act_comm.c:    sprintf( buf, "%s%s", PLAYER_DIR, capitalize( ch->name ) );
+act_comm.c:    if ( ch->level < 1 )
+act_comm.c:    if ( IS_AFFECTED( ch, AFF_CHARM ) && ch->master )
+act_comm.c:	act( "[33m¥i¬O§A¤ñ¸û·Q¸òÀH$N§a¡I[m", ch, NULL, ch->master, TO_CHAR );
+act_comm.c:	if ( !ch->master )
+act_comm.c:    if ( ( ch->level - victim->level < -5
+act_comm.c:	  || ch->level - victim->level >  5 )
+act_comm.c:    if ( ch->master )
+act_comm.c:    if ( ch->master )
+act_comm.c:    ch->master	      = master;
+act_comm.c:    ch->leader	      = NULL;
+act_comm.c:    if ( !ch->master )
+act_comm.c:	REMOVE_BIT( ch->affected_by, AFF_CHARM );
+act_comm.c:    if ( can_see( ch->master, ch ) )
+act_comm.c:	    ch, NULL, ch->master, TO_VICT );
+act_comm.c:	ch, NULL, ch->master, TO_CHAR );
+act_comm.c:    ch->master = NULL;
+act_comm.c:    ch->leader = NULL;
+act_comm.c:    if ( ch->master )
+act_comm.c:    ch->leader = NULL;
+act_comm.c:    for ( fch = char_list; fch; fch = fch->next )
+act_comm.c:	if ( fch->deleted )
+act_comm.c:	if ( fch->master == ch )
+act_comm.c:	if ( fch->leader == ch )
+act_comm.c:	    fch->leader = NULL;
+act_comm.c:    for ( och = ch->in_room->people; och; och = och_next )
+act_comm.c:	och_next = och->next_in_room;
+act_comm.c:	if ( och->deleted )
+act_comm.c:	    && och->master == ch
+act_comm.c:	leader = ( ch->leader ) ? ch->leader : ch;
+act_comm.c:	for ( gch = char_list; gch; gch = gch->next )
+act_comm.c:	    if ( gch->deleted )
+act_comm.c:			gch->level,
+act_comm.c:				      : (char *)class_table[gch->class].cname,
+act_comm.c:			gch->hit,   gch->max_hit,
+act_comm.c:			gch->mana,  gch->max_mana,
+act_comm.c:			gch->move,  gch->max_move,
+act_comm.c:			gch->exp );
+act_comm.c:    	for( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+act_comm.c:    			ch->level - victim->level < 6 
+act_comm.c:    			&& ch->level -victim->level > -6 )
+act_comm.c:    if ( ch->master || ( ch->leader && ch->leader != ch ) )
+act_comm.c:    if ( ch->level < LEVEL_IMMORTAL
+act_comm.c:	&& ( ch->level - victim->level < -5
+act_comm.c:	|| ch->level - victim->level >	5 ) )
+act_comm.c:    if ( ch->gold < amount )
+act_comm.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+act_comm.c:	if ( gch->deleted )
+act_comm.c:    ch->gold -= amount;
+act_comm.c:    ch->gold += share + extra;
+act_comm.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+act_comm.c:	if ( gch->deleted )
+act_comm.c:	    gch->gold += share;
+act_comm.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+act_comm.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_comm.c:    if ( IS_SET( ch->act, PLR_NO_TELL ) )
+act_comm.c:    sprintf( buf, "[36m%s(%s)¦V¶¤¤Í»¡¡u%s¡v¡C[m\n\r", ch->short_descr, ch->name, argument );
+act_comm.c:    for ( gch = char_list; gch; gch = gch->next )
+act_comm.c:	    && !IS_SET( gch->in_room->room_flags, ROOM_CONE_OF_SILENCE )
+act_comm.c:	    && !IS_SET( race_table[gch->race].race_abilities, RACE_MUTE )
+act_comm.c:    sprintf( buf, "[36m\a\a%s(%s)¹Í¤F§A¡C[m\n\r", ch->short_descr, ch->name );
+act_comm.c:    if ( !IS_NPC(ch) && IS_SET(ch->act, PLR_SILENCE) )
+act_comm.c:    || ( victim->in_room != ch->in_room ) )
+act_comm.c:    if ( ach->deleted || bch->deleted )
+act_comm.c:    if ( ach->leader ) ach = ach->leader;
+act_comm.c:    if ( bch->leader ) bch = bch->leader;
+act_info.c:	  || ( IS_SET( race_table[ ch->race ].race_abilities,
+act_info.c:    if ( !ch->desc || !list )
+act_info.c:	    if ( IS_NPC( ch ) || IS_SET( ch->act, PLR_COMBINE ) )
+act_info.c:	if ( IS_NPC( ch ) || IS_SET( ch->act, PLR_COMBINE ) )
+act_info.c:	if ( IS_NPC( ch ) || IS_SET( ch->act, PLR_COMBINE ) )
+act_info.c:	    || ( IS_SET( race_table[ ch->race ].race_abilities,
+act_info.c:    if ( !IS_NPC( victim ) && !IS_SET( ch->act, PLR_BRIEF ) )
+act_info.c:	&& !IS_NPC( ch ) && number_percent( ) < ch->pcdata->learned[gsn_peek] )
+act_info.c:    for ( rch = list; rch; rch = rch->next_in_room )
+act_info.c:	if ( rch->deleted || rch == ch )
+act_info.c:	    && IS_SET( rch->act, PLR_WIZINVIS )
+act_info.c:	else if ( room_is_dark( ch->in_room )
+act_info.c:		     || IS_SET( race_table[ rch->race ].race_abilities,
+act_info.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_HOLYLIGHT ) )
+act_info.c:    if ( !IS_NPC( ch ) && !ch->desc ) 
+act_info.c:    if ( ch->position < POS_SLEEPING )
+act_info.c:    if ( ch->position == POS_SLEEPING )
+act_info.c:	&& !IS_SET( ch->act, PLR_HOLYLIGHT )
+act_info.c:	&& room_is_dark( ch->in_room ) )
+act_info.c:	show_char_to_char( ch->in_room->people, ch );
+act_info.c:	send_to_char( ch->in_room->name, ch );
+act_info.c:	if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_AUTOEXIT ) )
+act_info.c:	    || ( !IS_NPC( ch ) && !IS_SET( ch->act, PLR_BRIEF ) ) )
+act_info.c:	    send_to_char( ch->in_room->description, ch );
+act_info.c:	if ( IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_info.c:	show_list_to_char( ch->in_room->contents, ch, FALSE, FALSE );
+act_info.c:	show_char_to_char( ch->in_room->people,	  ch );
+act_info.c:    pdesc = get_extra_descr( arg1, ch->in_room->extra_descr );
+act_info.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+act_info.c:    for ( obj = ch->in_room->contents; obj; obj = obj->next_content )
+act_info.c:    pdesc = get_pfxextra_descr( arg1, ch->in_room->extra_descr );
+act_info.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+act_info.c:    for ( obj = ch->in_room->contents; obj; obj = obj->next_content )
+act_info.c:    if ( !( pexit = ch->in_room->exit[door] ) )
+act_info.c:	if ( ( pexit = ch->in_room->exit[door] )
+act_info.c:	    ch->short_descr,
+act_info.c:	    ch->name,
+act_info.c:	    IS_NPC( ch ) ? "" : ch->pcdata->title,
+act_info.c:	    ch->level,
+act_info.c:	    ( ch->played / 3600 ) );
+act_info.c:    sprintf( buf, "§A¬O[1m%s[m([1m%s[m)¡C\n\r", race_table[ ch->race ].cname, race_table[ ch->race ].name );
+act_info.c:    if ( get_trust( ch ) != ch->level )
+act_info.c:	    ch->hit,  ch->max_hit,
+act_info.c:	    ch->mana, ch->max_mana,
+act_info.c:	    ch->move, ch->max_move,
+act_info.c:	    ch->practice );
+act_info.c:	    ch->carry_number, can_carry_n( ch ),
+act_info.c:	    ch->carry_weight, can_carry_w( ch ) );
+act_info.c:	    ch->exp,  ch->gold );
+act_info.c:	    ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_AUTOEXIT ) ) ? "¬O"
+act_info.c:	    ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_AUTOLOOT ) ) ? "¬O"
+act_info.c:	    ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_AUTOGOLD ) ) ? "¬O"
+act_info.c:	    ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_AUTOSAC  ) ) ? "¬O"
+act_info.c:    sprintf( buf, "¦b¥Í©R­È³Ñ¤U[1m%d[m¥H¤Uªº®É­Ô·|¦Û°Ê¸õ¶]¡C\n\r", ch->wimpy );
+act_info.c:		ch->pcdata->pagelen );
+act_info.c:    if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_DRUNK]   > 10 )
+act_info.c:    if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_THIRST] ==	 0
+act_info.c:	&& ch->level < LEVEL_IMMORTAL )
+act_info.c:    if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_FULL]   ==	 0
+act_info.c:	&& ch->level < LEVEL_IMMORTAL )
+act_info.c:    switch ( ch->position )
+act_info.c:    if ( ch->level >= L_APP - 5 )
+act_info.c:    if ( ch->level > 25 )
+act_info.c:    if ( ch->level >= 15 )
+act_info.c:	    || ch->level >=
+act_info.c:		skill_table[gsn_dual].skill_level[ch->class] )
+act_info.c:    if ( ch->level >= 10 )
+act_info.c:	sprintf( buf, "µ½´c°}Àç¡G[1m%d[m¡F", ch->alignment );
+act_info.c:	 if ( ch->alignment >  900 ) strcat( buf1, "¤Ñ¨Ï¨º¤@Ãþªº¡C\n\r" );
+act_info.c:    else if ( ch->alignment >  700 ) strcat( buf1, "¸t¤H¤@¯ëªº¡C\n\r" );
+act_info.c:    else if ( ch->alignment >  350 ) strcat( buf1, "¥¿¸qªº¡C\n\r"    );
+act_info.c:    else if ( ch->alignment >  100 ) strcat( buf1, "¤¯·Oªº¡C\n\r"    );
+act_info.c:    else if ( ch->alignment > -100 ) strcat( buf1, "¤¤¥ßªº¡C\n\r" );
+act_info.c:    else if ( ch->alignment > -350 ) strcat( buf1, "¨õ»Àªº¡C\n\r"    );
+act_info.c:    else if ( ch->alignment > -700 ) strcat( buf1, "¨¸´cªº¡C\n\r"    );
+act_info.c:    else if ( ch->alignment > -900 ) strcat( buf1, "´cÅ]¤@¯ëªº¡C\n\r" );
+act_info.c:    if ( ( vch = ch->assassinating ) )
+act_info.c:    	sprintf( buf, "§A²{¦b¥¿¦b·t±þ %s.\n\r", vch->name );
+act_info.c:    if ( ( vch = ch->hunting ) )
+act_info.c:    	sprintf( buf, "§A²{¦b¥¿¦bÂy±þ %s.\n\r", vch->name );
+act_info.c:    if ( ( ch->hunted ) )
+act_info.c:    	for( vch = ch->hunted; vch; vch = vch->next_in_hunt )
+act_info.c:    	    	sprintf( buf, "§A²{¦b¥¿³Q %s Ây±þ.\n\r", vch->name );
+act_info.c:    if ( ch->affected )
+act_info.c:	for ( paf = ch->affected; paf; paf = paf->next )
+act_info.c:	    if ( ch->level >= 20 )
+act_info.c:	if (   wch->level < iLevelLower
+act_info.c:	    || wch->level > iLevelUpper
+act_info.c:	    || ( fImmortalOnly	&& wch->level < LEVEL_HERO )
+act_info.c:	    || ( fClassRestrict && !rgfClass[wch->class] ) )
+act_info.c:	class = class_table[wch->class].who_name;
+act_info.c:	if ( wch->level >= LEVEL_IMMORTAL )
+act_info.c:	    switch ( wch->level )
+act_info.c:	if ( wch->level < LEVEL_IMMORTAL )
+act_info.c:		    wch->level,
+act_info.c:		    IS_SET( wch->act, PLR_KILLER   ) ? "¡]"RED"¥û¤â"NOR"¡^" : "",
+act_info.c:		    IS_SET( wch->act, PLR_THIEF	   ) ? "¡]"RED"¤p°½"NOR") "  : "",
+act_info.c:		    IS_SET( wch->act, PLR_REGISTER ) ? "¡]"HIG"PK"NOR"¡^"	    : "",
+act_info.c:		    IS_SET( wch->act, PLR_AFK	   ) ? "¡]"HIP"µo§b¤¤"NOR"¡^"    : "",
+act_info.c:		    wch->short_descr,
+act_info.c:		    wch->name,
+act_info.c:		    wch->pcdata->title );
+act_info.c:		    wch->level,
+act_info.c:		    IS_SET( wch->act, PLR_WIZINVIS ) ? "¡]"HIY"¯«Áô"NOR"¡^" : "", 
+act_info.c:		    IS_SET( wch->act, PLR_KILLER   ) ? "¡]"RED"¥û¤â"NOR"¡^" : "",
+act_info.c:		    IS_SET( wch->act, PLR_THIEF	   ) ? "¡]"RED"¤p°½"NOR"¡^"  : "",
+act_info.c:		    IS_SET( wch->act, PLR_REGISTER ) ? "¡]"HIG"PK"NOR"¡^"	    : "",
+act_info.c:		    IS_SET( wch->act, PLR_AFK	   ) ? "¡]"HIP"µo§b¤¤"NOR"¡^"    : "",
+act_info.c:		    wch->short_descr,
+act_info.c:		    wch->name,
+act_info.c:		    wch->pcdata->title );
+act_info.c:	if( str_prefix( name, wch->name ) )
+act_info.c:	class = class_table[ wch->class ].cname;
+act_info.c:	if( wch->level >= LEVEL_IMMORTAL )
+act_info.c:	    switch( wch->level )
+act_info.c:	if ( wch->level < LEVEL_IMMORTAL )
+act_info.c:		    wch->level,
+act_info.c:		    race_table[wch->race].cname,
+act_info.c:		    race_table[wch->race].name,
+act_info.c:		    IS_SET( wch->act, PLR_KILLER   ) ? "¡]"RED"¥û¤â"NOR"¡^" : "",
+act_info.c:		    IS_SET( wch->act, PLR_THIEF	   ) ? "¡]"RED"¤p°½"NOR"¡^"  : "",
+act_info.c:		    IS_SET( wch->act, PLR_REGISTER ) ? "¡]"HIG"PK"NOR"¡^"	    : "",
+act_info.c:		    IS_SET( wch->act, PLR_AFK	   ) ? "¡]"HIP"µo§b¤¤"NOR"¡^"    : "",
+act_info.c:		    wch->short_descr,
+act_info.c:		    wch->name,
+act_info.c:		    wch->pcdata->title );
+act_info.c:		    IS_SET( wch->act, PLR_WIZINVIS ) ? "¡]"HIY"¯«Áô"NOR"¡^" : "", 
+act_info.c:		    IS_SET( wch->act, PLR_KILLER   ) ? "¡]"RED"¥û¤â"NOR"¡^" : "",
+act_info.c:		    IS_SET( wch->act, PLR_THIEF	   ) ? "¡]"RED"¤p°½"NOR"¡^"  : "",
+act_info.c:		    IS_SET( wch->act, PLR_REGISTER ) ? "¡]"HIG"PK"NOR"¡^"	    : "",
+act_info.c:		    IS_SET( wch->act, PLR_AFK	   ) ? "¡]"HIP"µo§b¤¤"NOR"¡^"    : "",
+act_info.c:		    wch->short_descr,
+act_info.c:		    wch->name,
+act_info.c:		    wch->pcdata->title );
+act_info.c:    show_list_to_char( ch->carrying, ch, TRUE, TRUE );
+act_info.c:	for ( obj2 = ch->carrying; obj2; obj2 = obj2->next_content )
+act_info.c:		&& victim->in_room->area == ch->in_room->area
+act_info.c:	    if ( victim->in_room->area == ch->in_room->area
+act_info.c:    diff = victim->level - ch->level;
+act_info.c:    hpdiff = ( ch->hit - victim->hit );
+act_info.c:    free_string( ch->short_descr );
+act_info.c:    ch->short_descr = str_dup( buf );
+act_info.c:	free_string( ch->pIndexData->short_descr );
+act_info.c:	ch->pIndexData->short_descr=str_dup( buf );
+act_info.c:    free_string( ch->pcdata->title );
+act_info.c:    ch->pcdata->title = str_dup( buf );
+act_info.c:	    if ( ch->description )
+act_info.c:		strcat( buf, ch->description );
+act_info.c:	free_string( ch->description );
+act_info.c:	ch->description = str_dup( buf );
+act_info.c:    send_to_char( ch->description ? ch->description : "¡]µL¡^¡C\n\r", ch );
+act_info.c:	    ch->hit,  ch->max_hit,
+act_info.c:	    ch->mana, ch->max_mana,
+act_info.c:	    ch->move, ch->max_move,
+act_info.c:	    ch->exp );
+act_info.c:	    ch->hit,  ch->max_hit,
+act_info.c:	    ch->mana, ch->max_mana,
+act_info.c:	    ch->move, ch->max_move,
+act_info.c:	    ch->exp );
+act_info.c:    int	 money = ch->level * ch->level * 20;
+act_info.c:    if ( ch->level < 3 )
+act_info.c:	for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
+act_info.c:	    if ( ch->level < skill_table[sn].skill_level[ch->class] )
+act_info.c:	    	|| ( ch->pcdata->learned[sn] > 0 ) )
+act_info.c:			skill_table[sn].cname, skill_table[sn].name, ch->pcdata->learned[sn] );
+act_info.c:		ch->practice );
+act_info.c:	for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
+act_info.c:	if ( ch->practice <= 0 )
+act_info.c:	else if ( money > ch->gold )
+act_info.c:		&& ch->level < skill_table[sn].skill_level[ch->class] ) )
+act_info.c:		case 1 : for( qmark = ch->qmark; qmark; qmark = qmark->next )
+act_info.c:	adept = IS_NPC( ch ) ? 100 : class_table[ch->class].skill_adept;
+act_info.c:	if ( ch->pcdata->learned[sn] >= adept )
+act_info.c:	    ch->practice--;
+act_info.c:	    ch->gold		    -= money;
+act_info.c:	    ch->pcdata->learned[sn] += int_app[get_curr_int( ch )].learn;
+act_info.c:	    if ( ch->pcdata->learned[sn] < adept )
+act_info.c:		ch->pcdata->learned[sn] = adept;
+act_info.c:    int	 money = ch->level * ch->level * 40;
+act_info.c:    if ( IS_NPC( ch ) || ch->class > 4 )
+act_info.c:    if ( ch->level < 20 )
+act_info.c:	for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
+act_info.c:	    if ( class_table[cn].bclass[ch->class] == L_APP )
+act_info.c:	for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
+act_info.c:	if ( money > ch->gold )
+act_info.c:	    	class_table[cn].bclass[ch->class] > ch->level )
+act_info.c:    	for ( obj = ch->carrying; obj; obj = obj->next_content )
+act_info.c:	ch->gold		    -= money;
+act_info.c:	ch->max_hit	= UMAX( 100, ch->max_hit / 2 );
+act_info.c:	ch->max_mana	= UMAX( 100, ch->max_mana / 2 );
+act_info.c:	ch->max_move	= UMAX( 100, ch->max_move / 2 );
+act_info.c:	ch->class	= cn;
+act_info.c:	ch->pcdata->snd_attr	= class_table[cn].attr_prime;
+act_info.c:	ch->level	= 1;
+act_info.c:    		mob->name, ch->name, class_table[cn].cname );
+act_info.c:	wimpy = ch->max_hit / 5;
+act_info.c:    if ( wimpy > ch->max_hit )
+act_info.c:    ch->wimpy	     = wimpy;
+act_info.c:    if ( strcmp( crypt( arg1, ch->pcdata->pwd ), ch->pcdata->pwd ) )
+act_info.c:    pwdnew = crypt( arg2, ch->name );
+act_info.c:    free_string( ch->pcdata->pwd );
+act_info.c:    ch->pcdata->pwd = str_dup( pwdnew );
+act_info.c:	if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_SILENCE ) )
+act_info.c:	send_to_char( !IS_SET( ch->deaf, CHANNEL_AUCTION  )
+act_info.c:	send_to_char( !IS_SET( ch->deaf, CHANNEL_CHAT	  )
+act_info.c:	    send_to_char( !IS_SET( ch->deaf, CHANNEL_IMMTALK )
+act_info.c:	send_to_char( !IS_SET( ch->deaf, CHANNEL_MUSIC	  )
+act_info.c:	send_to_char( !IS_SET( ch->deaf, CHANNEL_QUESTION )
+act_info.c:	send_to_char( !IS_SET( ch->deaf, CHANNEL_SHOUT	  )
+act_info.c:	send_to_char( !IS_SET( ch->deaf, CHANNEL_YELL	  )
+act_info.c:	    REMOVE_BIT ( ch->deaf, bit );
+act_info.c:	    SET_BIT    ( ch->deaf, bit );
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_AUTOEXIT  )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_AUTOLOOT  )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_AUTOGOLD  )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_AUTOSAC   )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_BLANK     )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_BRIEF     )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_COMBINE   )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_PROMPT    )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_TELNET_GA )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_ARTIFACT )
+act_info.c:	send_to_char(  IS_SET( ch->act, PLR_SILENCE   )
+act_info.c:	send_to_char( !IS_SET( ch->act, PLR_NO_EMOTE  )
+act_info.c:	send_to_char( !IS_SET( ch->act, PLR_NO_TELL   )
+act_info.c:	    SET_BIT    ( ch->act, bit );
+act_info.c:	    REMOVE_BIT ( ch->act, bit );
+act_info.c:	|| ( !IS_NPC( ch ) && !class_table[ch->class].fMana ) )
+act_info.c:	if ( ( ch->level < skill_table[sn].skill_level[ch->class] )
+act_info.c:	    || ( skill_table[sn].skill_level[ch->class] > LEVEL_HERO ) )
+act_info.c:	if ( skill_table[sn].skill_level[ch->class] != level )
+act_info.c:    ( IS_SET ( ch->act, PLR_AUTOEXIT )
+act_info.c:    ( IS_SET ( ch->act, PLR_AUTOLOOT )
+act_info.c:    ( IS_SET ( ch->act, PLR_AUTOGOLD )
+act_info.c:    ( IS_SET ( ch->act, PLR_AUTOSAC )
+act_info.c:    ( IS_SET ( ch->act, PLR_BLANK )
+act_info.c:    ( IS_SET ( ch->act, PLR_BRIEF )
+act_info.c:    ( IS_SET ( ch->act, PLR_COMBINE )
+act_info.c:    ch->pcdata->pagelen = lines;
+act_info.c:   if ( !ch->desc )
+act_info.c:   ch = ( ch->desc->original ? ch->desc->original : ch->desc->character );
+act_info.c:       ( IS_SET ( ch->act, PLR_PROMPT )
+act_info.c:   free_string( ch->pcdata->prompt );
+act_info.c:   ch->pcdata->prompt = str_dup( buf );
+act_info.c:    if ( IS_SET( ch->act, PLR_AFK ) )
+act_info.c:	REMOVE_BIT( ch->act, PLR_AFK );
+act_info.c:	SET_BIT( ch->act, PLR_AFK );
+act_info.c:		number_percent() > skill_table[gsn_scan].skill_level[ch->class])
+act_info.c:	if ( room_is_dark( ch->in_room ) || !check_blind( ch ) )
+act_info.c:		if ( ( pexit = ch->in_room->exit[i] ) )
+act_info.c:	for ( pch = pexit->to_room->people; pch; pch = pch->next_in_room )
+act_info.c:		number_percent() > UMAX( skill_table[gsn_scan].skill_level[ch->class], 95)
+act_move.c:    if ( IS_SET( ch->act, moved ) )
+act_move.c:    in_room = ch->in_room;
+act_move.c:	    && !IS_SET( race_table[ ch->race ].race_abilities,
+act_move.c:	&& ch->master
+act_move.c:	&& in_room == ch->master->in_room )
+act_move.c:	    if ( iClass != ch->class
+act_move.c:		&& !IS_SET( race_table[ ch->race ].race_abilities, RACE_FLY ) )
+act_move.c:	    && strcmp( race_table[ ch->race ].name, "God" )
+act_move.c:	    && strcmp( race_table[ ch->race ].name, "Bear" )
+act_move.c:	    && IS_SET( race_table[ ch->race ].race_abilities, RACE_SWIM ) )
+act_move.c:		|| IS_SET( race_table[ ch->race ].race_abilities,  RACE_FLY )
+act_move.c:		|| IS_SET( race_table[ ch->race ].race_abilities,
+act_move.c:		|| IS_SET( race_table[ ch->race ].race_abilities, RACE_SWIM ) )
+act_move.c:	    for ( obj = ch->carrying; obj; obj = obj->next_content )
+act_move.c:	    &&	 !IS_SET( race_table[ ch->race ].race_abilities, RACE_SWIM ) )
+act_move.c:		&& !IS_SET( ch->act, PLR_WIZINVIS ) )
+act_move.c:	if (   IS_SET( race_table[ ch->race ].race_abilities, RACE_FLY )
+act_move.c:	if ( ch->move < move )
+act_move.c:	ch->move -= move;
+act_move.c:	&& ( IS_NPC( ch ) || !IS_SET( ch->act, PLR_WIZINVIS ) ) )
+act_move.c:	&& ( IS_NPC( ch ) || !IS_SET( ch->act, PLR_WIZINVIS ) ) )
+act_move.c:    if ( !IS_IMMORTAL( ch ) && ch->race == race_lookup( "vampire" )
+act_move.c:		 && !IS_SET( race_table[ ch->race ].race_abilities,
+act_move.c:    if ( ch->desc )
+act_move.c:    SET_BIT( ch->act, moved );
+act_move.c:	fch_next = fch->next_in_room;
+act_move.c:	if ( fch->deleted )
+act_move.c:	if ( fch->master == ch && fch->position == POS_STANDING )
+act_move.c:    REMOVE_BIT( ch->act, moved );
+act_move.c:	&& !IS_SET( ch->act, PLR_WIZINVIS ) && ch->position > POS_DEAD )
+act_move.c:    if ( ch->position > POS_DEAD )
+act_move.c:    if ( ch->position > POS_DEAD )
+act_move.c:	    if ( ( pexit = ch->in_room->exit[door] )
+act_move.c:	    if ( ( pexit = ch->in_room->exit[door] )
+act_move.c:    if ( !( pexit = ch->in_room->exit[door] ) )
+act_move.c:	pexit = ch->in_room->exit[door];
+act_move.c:	    && pexit_rev->to_room == ch->in_room )
+act_move.c:	    for ( rch = to_room->people; rch; rch = rch->next_in_room )
+act_move.c:		if ( rch->deleted )
+act_move.c:	pexit	     = ch->in_room->exit[door];
+act_move.c:	    && pexit_rev->to_room == ch->in_room )
+act_move.c:	    for ( rch = to_room->people; rch; rch = rch->next_in_room )
+act_move.c:		if ( rch->deleted )
+act_move.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+act_move.c:	pexit	     = ch->in_room->exit[door];
+act_move.c:	    && pexit_rev->to_room == ch->in_room )
+act_move.c:	pexit = ch->in_room->exit[door];
+act_move.c:	    && pexit_rev->to_room == ch->in_room )
+act_move.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+act_move.c:	if ( gch->deleted )
+act_move.c:	if ( IS_NPC( gch ) && IS_AWAKE( gch ) && ch->level + 5 < gch->level )
+act_move.c:	  && number_percent( ) > ch->pcdata->learned[gsn_pick_lock] )
+act_move.c:	pexit = ch->in_room->exit[door];
+act_move.c:	    && pexit_rev->to_room == ch->in_room )
+act_move.c:    switch ( ch->position )
+act_move.c:	ch->position = POS_STANDING;
+act_move.c:	ch->position = POS_STANDING;
+act_move.c:    switch ( ch->position )
+act_move.c:	ch->position = POS_RESTING;
+act_move.c:    switch ( ch->position )
+act_move.c:	ch->position = POS_SLEEPING;
+act_move.c:	    && ch->level < skill_table[gsn_sneak].skill_level[ch->class] ) )
+act_move.c:    if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_sneak] )
+act_move.c:	af.duration  = ch->level;
+act_move.c:	    && number_percent() > ch->pcdata->learned[gsn_nightstalk] ) )
+act_move.c:    if ( ch->move < 400 )
+act_move.c:    ch->move -= 400;
+act_move.c:	af.duration  = ch->level / 20 + ( get_curr_dex( ch ) > 24 ? 1 : 0 );
+act_move.c:	    && ch->level < skill_table[gsn_hide].skill_level[ch->class] ) )
+act_move.c:	REMOVE_BIT( ch->affected_by, AFF_HIDE);
+act_move.c:    if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_hide] )
+act_move.c:	SET_BIT( ch->affected_by, AFF_HIDE);
+act_move.c:    REMOVE_BIT	 ( ch->affected_by, AFF_HIDE		    );
+act_move.c:    REMOVE_BIT	 ( ch->affected_by, AFF_INVISIBLE	 );
+act_move.c:    REMOVE_BIT	 ( ch->affected_by, AFF_SNEAK		     );
+act_move.c:    if ( IS_SET( ch->in_room->room_flags, ROOM_NO_RECALL )
+act_move.c:    place = ch->in_room->area->recall;
+act_move.c:    if ( ch->in_room == location )
+act_move.c:    if ( ( victim = ch->fighting ) )
+act_move.c:	    lose = ( ch->desc ) ? 25 : 50;
+act_move.c:	lose = ( ch->desc ) ? 50 : 100;
+act_move.c:    ch->move /= 2;
+act_move.c:    if ( ch->in_room->roomprogs && ( ch->in_room->roomprogs->type & ROOM_LEAVE )
+act_move.c:	&& !IS_SET( ch->act, PLR_WIZINVIS ) )
+act_move.c:	rprog_leave_trigger( ch->in_room, ch, 6 );
+act_move.c:    for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
+act_move.c:	sprintf( buf, "[36m§A¦³%dÂI½m²ßÂI¼Æ¡C[m\n\r", ch->practice );
+act_move.c:    money = ch->level * ch->level * 100;
+act_move.c:	if ( class_table[ch->class].attr_prime == APPLY_STR )
+act_move.c:	pAbility    = &ch->pcdata->perm_str;
+act_move.c:	if ( class_table[ch->class].attr_prime == APPLY_INT )
+act_move.c:	pAbility    = &ch->pcdata->perm_int;
+act_move.c:	if ( class_table[ch->class].attr_prime == APPLY_WIS )
+act_move.c:	pAbility    = &ch->pcdata->perm_wis;
+act_move.c:	if ( class_table[ch->class].attr_prime == APPLY_DEX )
+act_move.c:	pAbility    = &ch->pcdata->perm_dex;
+act_move.c:	if ( class_table[ch->class].attr_prime == APPLY_CON )
+act_move.c:	pAbility    = &ch->pcdata->perm_con;
+act_move.c:	    money   = ch->level * ch->level * 20;
+act_move.c:	pAbility    = &ch->max_hit;
+act_move.c:	    money   = ch->level * ch->level * 20;
+act_move.c:	pAbility    = &ch->max_mana;
+act_move.c:	    money   = ch->level * ch->level * 20;
+act_move.c:	pAbility    = &ch->max_move;
+act_move.c:	if ( ch->pcdata->perm_str < 18 + race_table[ ch->race ].str_mod )
+act_move.c:	if ( ch->pcdata->perm_int < 18 + race_table[ ch->race ].int_mod )
+act_move.c:	if ( ch->pcdata->perm_wis < 18 + race_table[ ch->race ].wis_mod )
+act_move.c:	if ( ch->pcdata->perm_dex < 18 + race_table[ ch->race ].dex_mod )
+act_move.c:	if ( ch->pcdata->perm_con < 18 + race_table[ ch->race ].con_mod )
+act_move.c:	    money   = ch->level * ch->level * 20;
+act_move.c:	    if ( *pAbility < 18 + race_table[ ch->race ].str_mod )
+act_move.c:	    if ( *pAbility < 18 + race_table[ ch->race ].int_mod )
+act_move.c:	    if ( *pAbility < 18 + race_table[ ch->race ].wis_mod )
+act_move.c:	    if ( *pAbility < 18 + race_table[ ch->race ].dex_mod )
+act_move.c:	    if ( *pAbility < 18 + race_table[ ch->race ].con_mod )
+act_move.c:    if ( cost > ch->practice )
+act_move.c:    else if ( money > ch->gold )
+act_move.c:    ch->practice		-= cost;
+act_move.c:    ch->gold			-= money;
+act_move.c:	&& ch->level < skill_table[gsn_chameleon].skill_level[ch->class] )
+act_move.c:	REMOVE_BIT( ch->affected_by, AFF_HIDE );
+act_move.c:    if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_chameleon] )
+act_move.c:	SET_BIT( ch->affected_by, AFF_HIDE );
+act_move.c:	&& ch->level < skill_table[gsn_heighten].skill_level[ch->class] )
+act_move.c:    if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_heighten] )
+act_move.c:	&& ch->level < skill_table[gsn_shadow].skill_level[ch->class] )
+act_move.c:    if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_shadow] )
+act_move.c:	af.duration  = ch->level;
+act_move.c:			  && ch->level
+act_move.c:			  < skill_table[gsn_bash].skill_level[ch->class] ) )
+act_move.c:    if ( ch->fighting )
+act_move.c:	pexit = ch->in_room->exit[door];
+act_move.c:	  chance = ch->pcdata->learned[gsn_bash]/2;
+act_move.c:	    damage( ch, ch, ( ch->max_hit /  5 ), gsn_bash, WEAR_NONE );
+act_move.c:	    damage( ch, ch, ( ch->max_hit / 20 ), gsn_bash, WEAR_NONE );
+act_move.c:		&& pexit_rev->to_room == ch->in_room	    )
+act_move.c:		for ( rch = to_room->people; rch; rch = rch->next_in_room )
+act_move.c:		    if ( rch->deleted )
+act_move.c:	    damage( ch, ch, ( ch->max_hit / 10 ), gsn_bash, WEAR_NONE );
+act_move.c:    if ( ch->deleted || ch->hit <= 1 )
+act_move.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+act_move.c:	if ( !gch->deleted
+act_move.c:	    && !gch->fighting
+act_move.c:	    && ( ch->level - gch->level <= 4 )
+act_move.c:	if ( !( victim = ch->fighting ) )
+act_move.c:		&& number_percent( ) < ch->pcdata->learned[gsn_snare] ) )
+act_move.c:	    af.duration	 = 1 + ( ( ch->level ) / 8 );
+act_move.c:	if ( victim != ch->fighting ) /* TRUE if not fighting, or fighting  */
+act_move.c:	    if ( ch->fighting )	      /* TRUE if fighting other than vict.  */ 
+act_move.c:		    && number_percent( ) < ch->pcdata->learned[gsn_snare] ) )
+act_move.c:		af.duration  = 3 + ( (ch->level ) / 8 );
+act_move.c:		multi_hit( victim, ch->master, TYPE_UNDEFINED );
+act_move.c:		    && number_percent( ) < ch->pcdata->learned[gsn_snare] ) )
+act_move.c:		af.duration  = 1 + ( ( ch->level ) / 8 );
+act_move.c:	&& ch->level < skill_table[gsn_untangle].skill_level[ch->class] )
+act_move.c:	    && number_percent( ) < ch->pcdata->learned[gsn_untangle] ) )
+act_move.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+act_move.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_move.c:    for( croupier = ch->in_room->people;
+act_move.c:    if ( amount > ch->gold )
+act_move.c:	ch->reply = croupier;
+act_move.c:    ch->gold -= amount;
+act_move.c:	    ch->gold += amount;
+act_move.c:	ch->gold += amount;
+act_move.c:	for( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+act_move.c:		if ( !( victim->hunting == ch || ch->hunting == victim
+act_move.c:			|| ch->assassinating == victim ) )
+act_move.c:			if ( ch->hunting == victim )
+act_move.c:			if ( ch->assassinating == victim )
+act_move.c:				number_percent( ) < ch->pcdata->learned[gsn_backstab] )
+act_obj.c:	if ( ch->carry_number + get_obj_number( obj ) > can_carry_n( ch ) )
+act_obj.c:	if ( ch->carry_weight + get_obj_weight( obj ) > can_carry_w( ch ) )
+act_obj.c:	ch->gold += amount;
+act_obj.c:	    obj = get_obj_list( ch, arg1, ch->in_room->contents );
+act_obj.c:	    for ( obj = ch->in_room->contents; obj; obj = obj_next )
+act_obj.c:	      if ( str_cmp( name, ch->name ) && !IS_IMMORTAL( ch ) )
+act_obj.c:		  for ( gch = char_list; gch; gch = gch->next )
+act_obj.c:			  && !str_cmp( name, gch->name ) )
+act_obj.c:	for ( obj = ch->carrying; obj; obj = obj_next )
+act_obj.c:	if ( ch->gold < amount )
+act_obj.c:	ch->gold -= amount;
+act_obj.c:	for ( obj = ch->in_room->contents; obj; obj = obj_next )
+act_obj.c:	obj_to_room( create_money( amount ), ch->in_room );
+act_obj.c:	obj_to_room( obj, ch->in_room );
+act_obj.c:	for ( obj = ch->carrying; obj; obj = obj_next )
+act_obj.c:		obj_to_room( obj, ch->in_room );
+act_obj.c:	if ( ch->gold < amount )
+act_obj.c:	ch->gold     -= amount;
+act_obj.c:    for ( fountain = ch->in_room->contents; fountain;
+act_obj.c:	for ( obj = ch->in_room->contents; obj; obj = obj->next_content )
+act_obj.c:    if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_DRUNK] > 10 )
+act_obj.c:	if ( ch->race == race_lookup( "vampire" ) )
+act_obj.c:	    ch->pcdata->condition[COND_THIRST] = 48;
+act_obj.c:	if ( ch->race != race_lookup( "vampire" ) )
+act_obj.c:	if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_DRUNK ] > 10 )
+act_obj.c:	if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_FULL  ] > 40 )
+act_obj.c:	if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_THIRST] > 40 )
+act_obj.c:	    && ( ch->race != race_lookup( "Vampire" )
+act_obj.c:		&& ch->race != race_lookup( "Undead" ) ) )
+act_obj.c:	if ( !IS_NPC( ch ) && ch->pcdata->condition[COND_FULL] > 40 )
+act_obj.c:	    condition = ch->pcdata->condition[COND_FULL];
+act_obj.c:	    if ( ch->race != race_lookup( "vampire" ) )
+act_obj.c:	    if ( ch->pcdata->condition[COND_FULL] > 40 )
+act_obj.c:	    else if ( condition == 0 && ch->pcdata->condition[COND_FULL] > 0 )
+act_obj.c:	    && ( ch->race != race_lookup( "Vampire" )
+act_obj.c:		&& ch->race != race_lookup( "Undead" ) ) )
+act_obj.c:	if ( obj->level > ch->level )
+act_obj.c:    if ( ch->level < obj->level )
+act_obj.c:	   || ch->level >= skill_table[gsn_dual].skill_level[ch->class] )
+act_obj.c:	for ( obj = ch->carrying; obj; obj = obj_next )
+act_obj.c:		&& !IS_SET( race_table[ ch->race ].race_abilities,
+act_obj.c:                if ( ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_ARTIFACT ) && 
+act_obj.c:                ch->pcdata->learned[gsn_artifact] * obj->hp->percent * 
+act_obj.c:	    && !IS_SET( race_table[ ch->race ].race_abilities,
+act_obj.c:                if ( ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_ARTIFACT ) && 
+act_obj.c:                ch->pcdata->learned[gsn_artifact] * obj->hp->percent * 
+act_obj.c:    if ( arg[0] == '\0' || !str_cmp( arg, ch->name ) )
+act_obj.c:    obj = get_obj_list( ch, arg, ch->in_room->contents );
+act_obj.c:    ch->gold += 1;
+act_obj.c:    if ( obj->level > ch->level ) 
+act_obj.c:	if ( ch->fighting )
+act_obj.c:	    victim = ch->fighting;
+act_obj.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+act_obj.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+act_obj.c:    if ( ( IS_NPC( ch ) && IS_SET( ch->act, ACT_PET ) )
+act_obj.c:	&& !( number_percent( ) < ch->pcdata->learned[gsn_scrolls] ) )
+act_obj.c:    if ( scroll->level > ch->level ) 
+act_obj.c:    if ( ( IS_NPC( ch ) && IS_SET( ch->act, ACT_PET ) )
+act_obj.c:	    && !( number_percent( ) < ch->pcdata->learned[gsn_staves] ) )
+act_obj.c:	for ( vch = ch->in_room->people; vch; vch = vch_next )
+act_obj.c:	    vch_next = vch->next_in_room;
+act_obj.c:	    if ( vch->deleted )
+act_obj.c:    if ( arg[0] == '\0' && !ch->fighting )
+act_obj.c:	if ( ch->fighting )
+act_obj.c:	    victim = ch->fighting;
+act_obj.c:    if ( ( IS_NPC( ch ) && IS_SET( ch->act, ACT_PET ) )
+act_obj.c:	    && !( number_percent( ) < ch->pcdata->learned[gsn_wands] ) )
+act_obj.c:    percent = ch->level * 2; /* Base value */
+act_obj.c:    percent += ch->pcdata->learned[gsn_steal]; /* Character ability */
+act_obj.c:	      ||   ch->level - victim->level < 5 ) )
+act_obj.c:	sprintf( buf, "%s is a bloody thief!", ch->name );
+act_obj.c:		    && ch->level - victim->level < 6 )
+act_obj.c:	    if (    ch->level - victim->level > 5
+act_obj.c:		if ( !IS_SET( ch->act, PLR_THIEF ) )
+act_obj.c:		    SET_BIT( ch->act, PLR_THIEF );
+act_obj.c:	ch->gold     += amount;
+act_obj.c:	|| obj->level > ch->level )
+act_obj.c:    if ( ch->carry_number + get_obj_number( obj ) > can_carry_n( ch ) )
+act_obj.c:    if ( ch->carry_weight + get_obj_weight( obj ) > can_carry_w( ch ) )
+act_obj.c:    for ( keeper = ch->in_room->people; keeper; keeper = keeper->next_in_room )
+act_obj.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_KILLER ) )
+act_obj.c:	sprintf( buf, "%s the KILLER is over here!\n\r", ch->name );
+act_obj.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_THIEF ) )
+act_obj.c:	sprintf( buf, "%s the THIEF is over here!\n\r", ch->name );
+act_obj.c:    if ( IS_SET( ch->in_room->room_flags, ROOM_PET_SHOP ) )
+act_obj.c:	pRoomIndexNext = get_room_index( ch->in_room->vnum + 1 );
+act_obj.c:	    bug( "Do_buy: bad pet shop at vnum %d.", ch->in_room->vnum );
+act_obj.c:	in_room	    = ch->in_room;
+act_obj.c:	ch->in_room = pRoomIndexNext;
+act_obj.c:	ch->in_room = in_room;
+act_obj.c:	if ( IS_SET( ch->act, PLR_BOUGHT_PET ) )
+act_obj.c:	if ( ch->gold < 10 * pet->level * pet->level )
+act_obj.c:	if ( ch->level < pet->level )
+act_obj.c:	ch->gold -= 10 * pet->level * pet->level;
+act_obj.c:	SET_BIT( ch->act,	   PLR_BOUGHT_PET );
+act_obj.c:		pet->description, ch->name );
+act_obj.c:	char_to_room( pet, ch->in_room );
+act_obj.c:	    ch->reply = keeper;
+act_obj.c:	if ( ch->gold < ( cost * item_count ) )
+act_obj.c:		ch->reply = keeper;
+act_obj.c:		if ( ( ch->gold / cost ) > 0 )
+act_obj.c:			    ( ch->gold / cost ) );
+act_obj.c:		ch->reply = keeper;
+act_obj.c:	if ( obj->level > ch->level )
+act_obj.c:	    ch->reply = keeper;
+act_obj.c:	if ( ch->carry_number + ( item_count * get_obj_number( obj ) ) >
+act_obj.c:	if ( ch->carry_weight + ( item_count * get_obj_weight( obj ) ) >
+act_obj.c:	    ch->reply = keeper;
+act_obj.c:	ch->gold     -= cost * item_count;
+act_obj.c:    if ( IS_SET( ch->in_room->room_flags, ROOM_PET_SHOP ) )
+act_obj.c:	pRoomIndexNext = get_room_index( ch->in_room->vnum + 1 );
+act_obj.c:	    bug( "Do_list: bad pet shop at vnum %d.", ch->in_room->vnum );
+act_obj.c:	ch->reply = keeper;
+act_obj.c:	ch->reply = keeper;
+act_obj.c:	ch->reply = keeper;
+act_obj.c:    ch->gold	 += cost;
+act_obj.c:	ch->reply = keeper;
+act_obj.c:	ch->reply = keeper;
+act_obj.c:	ch->reply = keeper;
+act_obj.c:    ch->reply = keeper;
+act_obj.c:	    && ch->level
+act_obj.c:	    < skill_table[gsn_poison_weapon].skill_level[ch->class] ) )
+act_obj.c:    if ( ch->fighting )					      
+act_obj.c:    for ( pobj = ch->carrying; pobj; pobj = pobj->next_content )
+act_obj.c:    for ( wobj = ch->carrying; wobj; wobj = wobj->next_content )
+act_obj.c:	    || ch->pcdata->condition[COND_DRUNK] > 0 ) )
+act_obj.c:	&& number_percent( ) > ch->pcdata->learned[gsn_poison_weapon] )
+act_obj.c:	damage( ch, ch, ch->level, gsn_poison_weapon, WEAR_NONE );
+act_obj.c:    obj->cost *= ch->level;
+act_obj.c:    obj->timer = 10 + ch->level;
+act_obj.c:	for ( obj = ch->carrying; obj; obj = obj_next )
+act_obj.c:    int	       cost = ch->level * 1000;
+act_obj.c:    for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
+act_obj.c:    if ( ch->level < 16 )
+act_obj.c:    if ( ch->level >= LEVEL_HERO )
+act_obj.c:    if ( ch->gold < cost )
+act_obj.c:    ch->gold -= cost;
+act_obj.c:    SET_BIT( ch->act, PLR_REGISTER );
+act_wiz.c:	    if ( cmd_table[cmd].level < LEVEL_HERO || str_infix( cmd_table[cmd].name, rch->pcdata->immskll ) )
+act_wiz.c:	free_string( ch->pcdata->bamfin );
+act_wiz.c:	ch->pcdata->bamfin = str_dup( argument );
+act_wiz.c:	free_string( ch->pcdata->bamfout );
+act_wiz.c:	ch->pcdata->bamfout = str_dup( argument );
+act_wiz.c:	    && d->character->in_room == ch->in_room )
+act_wiz.c:	location = ch->in_room;
+act_wiz.c:    original = ch->in_room;
+act_wiz.c:    for ( wch = char_list; wch; wch = wch->next )
+act_wiz.c:    if ( ch->fighting )
+act_wiz.c:    if ( !IS_SET( ch->act, PLR_WIZINVIS ) )
+act_wiz.c:	    ( ch->pcdata && ch->pcdata->bamfout[0] != '\0' )
+act_wiz.c:	    ? ch->pcdata->bamfout : "leaves in a swirling mist",  TO_ROOM );
+act_wiz.c:    if ( !IS_SET( ch->act, PLR_WIZINVIS ) )
+act_wiz.c:	    ( ch->pcdata && ch->pcdata->bamfin[0] != '\0' )
+act_wiz.c:	    ? ch->pcdata->bamfin : "appears in a swirling mist", TO_ROOM );
+act_wiz.c:    location = ( arg[0] == '\0' ) ? ch->in_room : find_location( ch, arg );
+act_wiz.c:    if ( ch->in_room != location && room_is_private( location ) )
+act_wiz.c:    for ( rch = location->people; rch; rch = rch->next_in_room )
+act_wiz.c:	  one_argument( rch->name, buf );
+act_wiz.c:    	for( vch = victim->hunted; vch; vch = vch->next_in_hunt )
+act_wiz.c:    		sprintf( buf, " %s,", vch->name );
+act_wiz.c:	sprintf( buf, "Security: %d.\n\r", ch->pcdata->security );
+act_wiz.c:    sprintf( buf, "Reboot by %s.", ch->name );
+act_wiz.c:    sprintf( buf, "Shutdown by %s.", ch->name );
+act_wiz.c:	    if ( d->snoop_by == ch->desc )
+act_wiz.c:    if ( ch->desc )
+act_wiz.c:	for ( d = ch->desc->snoop_by; d; d = d->snoop_by )
+act_wiz.c:    victim->desc->snoop_by = ch->desc;
+act_wiz.c:    if ( !ch->desc )
+act_wiz.c:    if ( ch->desc->original )
+act_wiz.c:    ch->pcdata->switched  = TRUE;
+act_wiz.c:    ch->desc->character	  = victim;
+act_wiz.c:    ch->desc->original	  = ch;
+act_wiz.c:    victim->desc	  = ch->desc;
+act_wiz.c:    ch->desc		  = NULL;
+act_wiz.c:    if ( !ch->desc )
+act_wiz.c:    if ( !ch->desc->original )
+act_wiz.c:    ch->desc->original->pcdata->switched = FALSE;
+act_wiz.c:    ch->desc->character			 = ch->desc->original;
+act_wiz.c:    ch->desc->original			 = NULL;
+act_wiz.c:    ch->desc->character->desc		 = ch->desc; 
+act_wiz.c:    ch->desc				 = NULL;
+act_wiz.c:    char_to_room( victim, ch->in_room );
+act_wiz.c:	obj_to_room( obj, ch->in_room );
+act_wiz.c:	for ( victim = ch->in_room->people; victim; victim = vnext )
+act_wiz.c:	for ( obj = ch->in_room->contents; obj; obj = obj_next )
+act_wiz.c:	victim->exp	 = EXP_PER_LEVEL( ch->level );
+act_wiz.c:    victim->exp	  = EXP_PER_LEVEL( ch->level ) * UMAX( 1, victim->level );
+act_wiz.c:    for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+act_wiz.c:	if ( rch->fighting )
+act_wiz.c:    if ( ch->level <= victim->level && ch != victim )
+act_wiz.c:	if ( class_table[ch->class].attr_prime == APPLY_STR )
+act_wiz.c:	if ( class_table[ch->class].attr_prime == APPLY_INT )
+act_wiz.c:	if ( class_table[ch->class].attr_prime == APPLY_WIS )
+act_wiz.c:	if ( class_table[ch->class].attr_prime == APPLY_DEX )
+act_wiz.c:	if ( class_table[ch->class].attr_prime == APPLY_CON )
+act_wiz.c:	if ( value > ch->pcdata->security || value < 0 )
+act_wiz.c:	    if ( ch->pcdata->security != 0 )
+act_wiz.c:		    ch->pcdata->security );
+act_wiz.c:	if ( person != ch && person->level >= ch->level )
+act_wiz.c:	for ( vch = char_list; vch; vch = vch->next )
+act_wiz.c:	    if ( vch->deleted )
+act_wiz.c:    if ( IS_SET( ch->act, PLR_WIZINVIS ) )
+act_wiz.c:	REMOVE_BIT( ch->act, PLR_WIZINVIS );
+act_wiz.c:	SET_BIT(    ch->act, PLR_WIZINVIS );
+act_wiz.c:    if ( IS_SET( ch->act, PLR_HOLYLIGHT ) )
+act_wiz.c:	REMOVE_BIT( ch->act, PLR_HOLYLIGHT );
+act_wiz.c:	SET_BIT(    ch->act, PLR_HOLYLIGHT );
+act_wiz.c:    if ( rch->level <= victim->level && rch != victim )
+comm.c:	sprintf( log_buf, "Closing link to %s.", ch->name );
+comm.c:	    ch->desc = NULL;
+comm.c:	    if ( IS_SET( ch->act, PLR_BLANK	) )
+comm.c:	    if ( IS_SET( ch->act, PLR_PROMPT	) )
+comm.c:	    if ( IS_SET( ch->act, PLR_TELNET_GA ) )
+comm.c:   if( !ch->pcdata->prompt || ch->pcdata->prompt[0] == '\0' )
+comm.c:   str = ch->pcdata->prompt;
+comm.c:	    sprintf( buf2, "%d", ch->hit			       );
+comm.c:	    sprintf( buf2, "%d", ch->max_hit			       );
+comm.c:	    sprintf( buf2, "%d", ch->mana			       );
+comm.c:	    sprintf( buf2, "%d", ch->max_mana			       );
+comm.c:	    sprintf( buf2, "%d", ch->move			       ); 
+comm.c:	    sprintf( buf2, "%d", ch->max_move			       );
+comm.c:	    sprintf( buf2, "%d", ch->exp			       );
+comm.c:	    sprintf( buf2, "%d", ch->gold			       );
+comm.c:	    sprintf( buf2, "%d", ch->wait			       );
+comm.c:	    if( ch->level > 10 )
+comm.c:	       sprintf( buf2, "%d", ch->alignment		       );
+comm.c:	    if( ch->in_room )
+comm.c:	       sprintf( buf2, "%s", ch->in_room->name		       );
+comm.c:	    if( IS_IMMORTAL( ch ) && ch->in_room )
+comm.c:	       sprintf( buf2, "%d", ch->in_room->vnum		       );
+comm.c:	    if( IS_IMMORTAL( ch ) && ch->in_room )
+comm.c:	       sprintf( buf2, "%s", ch->in_room->area->name	       );
+comm.c:	       sprintf( buf2, "(wizinv: %s)", IS_SET( ch->act, PLR_WIZINVIS ) ?
+comm.c:	if ( IS_SET( ch->act, PLR_DENY ) )
+comm.c:		&& !IS_SET( ch->act, PLR_WIZBIT ) )
+comm.c:	    if ( ch->level <= numlock
+comm.c:		&& !IS_SET( ch->act, PLR_WIZBIT )
+comm.c:		if ( ch->level == 0 )
+comm.c:	if ( check_playing( d, ch->name ) )
+comm.c:	if ( strcmp( crypt( argument, ch->pcdata->pwd ), ch->pcdata->pwd ) )
+comm.c:	if ( check_reconnect( d, ch->name, TRUE ) )
+comm.c:	sprintf( log_buf, "%s, $U@$H has connected.", ch->name );
+comm.c:	lines = ch->pcdata->pagelen;
+comm.c:	ch->pcdata->pagelen = 20;
+comm.c:	ch->pcdata->pagelen = lines;
+comm.c:	    set_cname( ch, ch->name );
+comm.c:		    ch->name, echo_off_str );
+comm.c:	pwdnew = crypt( argument, ch->name );
+comm.c:	free_string( ch->pcdata->pwd );
+comm.c:	ch->pcdata->pwd	       = str_dup( pwdnew );
+comm.c:	if ( strcmp( crypt( argument, ch->pcdata->pwd ), ch->pcdata->pwd ) )
+comm.c:		ch->race = race_lookup( race_table[iRace].name );
+comm.c:	do_help( ch, race_table[ch->race].name );
+comm.c:	case 'm': case 'M': ch->sex = SEX_MALE;	   break;
+comm.c:	case 'f': case 'F': ch->sex = SEX_FEMALE;  break;
+comm.c:	case 'n': case 'N': ch->sex = SEX_NEUTRAL; break;
+comm.c:		ch->class = iClass;
+comm.c:	switch ( ch->class )
+comm.c:	    bug( "Nanny CON_GET_NEW_CLASS:  ch->class (%d) not valid",
+comm.c:		ch->class );
+comm.c:	sprintf( log_buf, "%s, $U@$H new player.", ch->name );
+comm.c:	ch->pcdata->pagelen = 20;
+comm.c:	ch->next	= char_list;
+comm.c:	if ( ch->level == 0 )
+comm.c:	    switch ( class_table[ch->class].attr_prime )
+comm.c:	    case APPLY_STR: ch->pcdata->perm_str = 16; break;
+comm.c:	    case APPLY_INT: ch->pcdata->perm_int = 16; break;
+comm.c:	    case APPLY_WIS: ch->pcdata->perm_wis = 16; break;
+comm.c:	    case APPLY_DEX: ch->pcdata->perm_dex = 16; break;
+comm.c:	    case APPLY_CON: ch->pcdata->perm_con = 16; break;
+comm.c:	    switch ( ch->class )
+comm.c:	    	case MAGE : 	ch->pcdata->prime_attr = APPLY_INT;
+comm.c:	    		    	ch->pcdata->snd_attr = APPLY_NONE;
+comm.c:	    	case CLERIC : 	ch->pcdata->prime_attr = APPLY_WIS;
+comm.c:	    		    	ch->pcdata->snd_attr = APPLY_NONE;
+comm.c:	    	case THIEF : 	ch->pcdata->prime_attr = APPLY_DEX;
+comm.c:	    		    	ch->pcdata->snd_attr = APPLY_NONE;
+comm.c:	    	case WARRIOR : 	ch->pcdata->prime_attr = APPLY_STR;
+comm.c:	    		    	ch->pcdata->snd_attr = APPLY_NONE;
+comm.c:	    	case BARBARIAN :ch->pcdata->prime_attr = APPLY_CON;
+comm.c:	    		    	ch->pcdata->snd_attr = APPLY_NONE;
+comm.c:	    ch->level	     = 1;
+comm.c:	    ch->exp	   = 1000;
+comm.c:	    ch->gold	= 5500 + number_fuzzy( 3 )
+comm.c:	    ch->hit	   = ch->max_hit;
+comm.c:	    ch->mana	    = ch->max_mana;
+comm.c:	    ch->move	    = ch->max_move;
+comm.c:		    title_table [ch->class] [ch->level]
+comm.c:		    [ch->sex == SEX_FEMALE ? 1 : 0] );
+comm.c:	    free_string( ch->pcdata->prompt );
+comm.c:	    ch->pcdata->prompt = str_dup( "[m<¥Í©R[31m%h[mÅ]ªk[1;34m%m[m²¾°Ê[35m%v[m> " );
+comm.c:				get_obj_index( class_table[ch->class].weapon ),
+comm.c:	else if ( ch->in_room )
+comm.c:	    char_to_room( ch, ch->in_room );
+comm.c:	if ( !IS_SET( ch->act, PLR_WIZINVIS )
+comm.c:	    if ( is_note_to( ch, pnote ) && str_cmp( ch->name, pnote->sender )
+comm.c:		&& pnote->date_stamp > ch->last_note )
+comm.c:    for ( ch = char_list; ch; ch = ch->next )
+comm.c:	if ( ch->deleted )
+comm.c:	    && ( !fConn || !ch->desc )
+comm.c:	    && !str_cmp( d->character->name, ch->name ) )
+comm.c:		d->character->pcdata->pwd = str_dup( ch->pcdata->pwd );
+comm.c:		ch->desc     = d;
+comm.c:		ch->timer    = 0;
+comm.c:		sprintf( log_buf, "%s, $U@$H reconnected.", ch->name );
+comm.c:	|| !ch->desc
+comm.c:	||  ch->desc->connected != CON_PLAYING
+comm.c:	|| !ch->was_in_room
+comm.c:	||  ch->in_room != get_room_index( ROOM_VNUM_LIMBO ) )
+comm.c:    ch->timer = 0;
+comm.c:    char_to_room( ch, ch->was_in_room );
+comm.c:    ch->was_in_room	   = NULL;
+comm.c:    if ( !txt || !ch->desc )
+comm.c:	write_to_buffer( ch->desc, txt, strlen( txt ) );
+comm.c:	free_string( ch->desc->showstr_head );
+comm.c:	ch->desc->showstr_head	= str_dup( txt );
+comm.c:	ch->desc->showstr_point = ch->desc->showstr_head;
+comm.c:	show_string( ch->desc, "" );
+comm.c:    to = ch->in_room->people;
+comm.c:	to = vch->in_room->people;
+db.c:	    for ( pch = char_list; pch; pch = pch->next )
+db.c:		    && pch->in_room
+db.c:		    && pch->in_room->area == pArea )
+db.c:	    for( lch = char_list; lch; lch = lch->next )
+db.c:	   	if ( lch->pIndexData == pMobIndex )
+db.c:	    for( vch = char_list; vch; vch = vch->next )
+db.c:	   	if ( vch->pIndexData == pMobIndex )
+db.c:	    if ( vch->master )
+db.c:	    vch->leader = lch;
+db.c:		for ( ch = pRoomIndex->people; ch; ch = ch->next_in_room )
+db.c:		    if ( IS_NPC( ch ) && ch->pIndexData == pMobIndex )
+db.c:	    for( lch = char_list; lch; lch = lch->next )
+db.c:	   	if ( lch->pIndexData == pMobIndex )
+db.c:	    for( vch = char_list; vch; vch = vch->next )
+db.c:	   	if ( vch->pIndexData == pMobIndex )
+db.c:	    if ( vch->master )
+db.c:	    vch->leader = lch;
+db.c:	    ch->pcdata	= alloc_perm( sizeof( *ch->pcdata ) );
+db.c:	    ch->pcdata	= pcdata_free;
+db.c:	*ch->pcdata = pcdata_zero;
+db.c:    ch->deleted = FALSE;
+db.c:    ch->name			= &str_empty[0];
+db.c:/*    ch->cname			= &str_empty[0];*/
+db.c:    ch->short_descr		= &str_empty[0];
+db.c:    ch->long_descr		= &str_empty[0];
+db.c:    ch->description		= &str_empty[0];
+db.c:    ch->last_note		= 0;
+db.c:    ch->logon			= current_time;
+db.c:    ch->armor			= 100;
+db.c:    ch->position		= POS_STANDING;
+db.c:    ch->level			= 0;
+db.c:    ch->race			= 0;
+db.c:    ch->practice		= 21;
+db.c:    ch->hit			= 20;
+db.c:    ch->max_hit			= 20;
+db.c:    ch->mana			= 100;
+db.c:    ch->max_mana		= 100;
+db.c:    ch->move			= 100;
+db.c:    ch->max_move		= 100;
+db.c:    ch->leader			= NULL;
+db.c:    ch->master			= NULL;
+db.c:    ch->deleted			= FALSE;
+db.c:    ch->in_room = get_room_index( ROOM_VNUM_LIMBO );
+db.c:    for ( obj = ch->carrying; obj; obj = obj_next )
+db.c:    for ( paf = ch->affected; paf; paf = paf->next )
+db.c:    free_string( ch->name		);
+db.c:    free_string( ch->short_descr	);
+db.c:/*    free_string( ch->cname		);*/
+db.c:    free_string( ch->long_descr		);
+db.c:    free_string( ch->description	);
+db.c:/*    free_string( ch->prompt             ); add by Corel */
+db.c:    if ( ch->pcdata )
+db.c:	free_string( ch->pcdata->pwd		);
+db.c:	free_string( ch->pcdata->bamfin		);
+db.c:	free_string( ch->pcdata->bamfout	);
+db.c:	free_string( ch->pcdata->immskll	);
+db.c:	free_string( ch->pcdata->title		);
+db.c:	free_string( ch->pcdata->prompt		);
+db.c:	ch->pcdata->next = pcdata_free;
+db.c:	pcdata_free	 = ch->pcdata;
+db.c:    ch->next	     = char_free;
+db.c:		ch->in_room ? ch->in_room->vnum : 0, ch->name, str );
+fight.c:    for ( ch = char_list; ch; ch = ch->next )
+fight.c:	if ( !ch->in_room || ch->deleted )
+fight.c:	if ( ( victim = ch->fighting ) )
+fight.c:	    if ( IS_AWAKE( ch ) && ch->in_room == victim->in_room
+fight.c:	    || ( IS_NPC( ch ) && ch->pIndexData->pShop ) )
+fight.c:	for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+fight.c:	    if ( rch->deleted
+fight.c:	        || !( victim = rch->fighting ) )
+fight.c:	    for ( vch = ch->in_room->people; vch; vch = vch->next_in_room )
+fight.c:	    if ( ( rch->pIndexData != ch->pIndexData && number_bits( 3 ) != 0 )
+fight.c:		|| abs( victim->level - ch->level ) > 3 )
+fight.c:	if ( !ch->fighting )
+fight.c:    if ( !IS_NPC( ch ) && ch->fighting )
+fight.c:    if ( ch->fighting != victim || dt == gsn_backstab || dt == gsn_circle )
+fight.c:    	chance1 = ch->level << 2;
+fight.c:    	chance2 = ch->class == 1 ? ch->level * 3 : ch->level << 1;
+fight.c:    	chance3 = ch->class == 1 ? ch->level : 0;
+fight.c:    	chance1 = ch->pcdata->learned[gsn_second_attack];
+fight.c:   	chance2 = ch->pcdata->learned[gsn_third_attack];
+fight.c:   	chance3 = ch->pcdata->learned[gsn_fourth_attack];
+fight.c:	if ( ch->fighting != victim )
+fight.c:	if ( ch->fighting != victim )
+fight.c:	if ( ch->fighting != victim )
+fight.c:        && ( ( IS_NPC( ch ) && IS_SET( ch->act, ACT_DUAL ) ) ||
+fight.c:    	( !IS_NPC( ch ) && number_percent() < ch->pcdata->learned[gsn_dual] ) ) )
+fight.c:		if ( ch->fighting != victim )
+fight.c:		if ( ch->fighting != victim )
+fight.c:		if ( ch->fighting != victim )
+fight.c:    if ( IS_SET( race_table[ ch->race ].race_abilities, RACE_REGENERACY ) 
+fight.c:      || ( IS_NPC( ch ) && IS_SET( ch->act, ACT_REGENERACY ) ) ||
+fight.c:    	 ( !IS_NPC( ch ) && ch->pcdata->learned[gsn_regeneracy] > 0 ) )
+fight.c:		ch->hit += ch->level * 10;
+fight.c:		if ( ch->hit > ch->max_hit )
+fight.c:			ch->hit = ch->max_hit;
+fight.c:		if ( ch->level < victim->level )
+fight.c:			ch->hit += UMAX( 0, ( get_curr_con( ch ) - 10 ) ) 
+fight.c:			* ch->pcdata->learned[gsn_regeneracy] / 
+fight.c:			( ( victim->level - ch->level > 5 ) ? 5 : 8) ;
+fight.c:			if ( ch->hit > ch->max_hit )
+fight.c:				ch->hit = ch->max_hit;
+fight.c:    int leveldiff = ch->level - victim->level;
+fight.c:    if ( victim->position == POS_DEAD || ch->in_room != victim->in_room )
+fight.c:		ch->name, victim->name );
+fight.c:		   - race_table[ch->race].size ) / 3;
+fight.c:	if ( ch->class == 1 )
+fight.c:	thac0_00 = class_table[ch->class].thac0_00;
+fight.c:	thac0_42 = class_table[ch->class].thac0_42;
+fight.c:    thac0     = interpolate( ch->level, thac0_00, thac0_42 )
+fight.c:		   - race_table[ch->race].size );
+fight.c:	if ( ch->class == 1 )
+fight.c:	thac0_00 = class_table[ch->class].thac0_00;
+fight.c:	thac0_42 = class_table[ch->class].thac0_42;
+fight.c:    thac0     = interpolate( ch->level, thac0_00, thac0_42 )
+fight.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_FIST_FIGHT ) &&
+fight.c:    	number_percent() < ch->pcdata->learned[gsn_fist_fight] )
+fight.c:	dam = number_range( ch->level / 2, ch->level * 3 / 2 );
+fight.c:	    dam = number_range( 1, 2 ) * race_table[ ch->race ].size;
+fight.c:    if ( !IS_NPC( ch ) && ch->level > skill_table[gsn_weapon_master].skill_level[ch->class] )
+fight.c:	dam += ( ( dam * ch->pcdata->learned[gsn_weapon_master] ) >> 7 );
+fight.c:    if ( !IS_NPC( ch ) && ch->pcdata->learned[gsn_enhanced_damage] > 0 &&
+fight.c:	dam += dam * ch->pcdata->learned[gsn_enhanced_damage] / 150;
+fight.c:    if ( IS_NPC( ch ) && ( ch->class == 1 ) )
+fight.c:        dam = dam * ch->pcdata->learned[gsn_frenzy] / 128;
+fight.c:	dam *= 2 + UMIN( ( ch->level / 4 ), 11 ) / 2;
+fight.c:	dam += dam  + ( dam * ch->level ) / 40;
+fight.c:    if ( ch->race == race_lookup( "Vampire" ) && !wield )
+fight.c:    if ( !IS_NPC( ch ) && ch->pcdata->learned[gsn_critical] > number_percent()
+fight.c:		      && ( chance =  ( ch->class == ASSASSIN ) ? 20 :
+fight.c:			 ( ch->class == MONK ) ? 15 :
+fight.c:		 	 ( ch->class == NINJA ) ? 15 :
+fight.c:		 	 ( ch->class == THIEF ) ? 10 : NULL ) )
+fight.c:    if ( victim->position != POS_DEAD && ch->in_room == victim->in_room )
+fight.c:		if ( ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_ARTIFACT ) && 
+fight.c:		ch->pcdata->learned[gsn_artifact] * wield->hp->percent * 
+fight.c:    int leveldiff = ch->level - victim->level;
+fight.c:	if ( IS_NPC( ch ) && ch->desc )
+fight.c:		    dam, ch->name, ch->desc->original->name, dt );
+fight.c:		    dam, ch->name, dt );
+fight.c:	    if ( !ch->fighting )
+fight.c:		&& victim->master->in_room == ch->in_room
+fight.c:	    REMOVE_BIT( ch->affected_by, AFF_INVISIBLE );
+fight.c:	    	number_percent( ) < ch->pcdata->learned[gsn_fool] / 4 +
+fight.c:		&& IS_SET( race_table[ ch->race ].race_abilities,
+fight.c:		&& number_percent() < UMIN( 25, UMAX( 10, ch->level ) )
+fight.c:	&& !saves_spell( ch->level, victim )
+fight.c:		    victim->short_descr, victim->name, ch->short_descr, ch->name,
+fight.c:		    ch->gold += gold;
+fight.c:	    if ( IS_SET( ch->act, PLR_AUTOGOLD ) )
+fight.c:	    if ( IS_SET( ch->act, PLR_AUTOLOOT ) )
+fight.c:	    if ( IS_SET( ch->act, PLR_AUTOSAC  ) )
+fight.c:    if ( ch->level < 16 && !ch->fighting )
+fight.c:    if ( ch->level >= LEVEL_HERO )
+fight.c:	|| ( IS_SET( ch->act, PLR_KILLER ) && ch->fighting ) )
+fight.c:	    && ch->level - victim->level < 6 )
+fight.c:    if ( ( ch->level - victim->level > 5 && victim->fighting != ch )
+fight.c:	sprintf( buf, "Help!  I'm being attacked by %s!", ch->name );
+fight.c:	SET_BIT( ch->act, PLR_KILLER );
+fight.c:	for ( obj = ch->carrying; obj; obj = obj_next )
+fight.c:    if ( ch->fighting )
+fight.c:		ch->short_descr, ch->name, victim->short_descr, victim->name,
+fight.c:    ch->fighting = victim;
+fight.c:    ch->position = POS_FIGHTING;
+fight.c:    for ( fch = char_list; fch; fch = fch->next )
+fight.c:	if ( fch == ch || ( fBoth && fch->fighting == ch ) )
+fight.c:	    fch->fighting	= NULL;
+fight.c:	    fch->position	= POS_STANDING;
+fight.c:    cname	  = ch->short_descr;
+fight.c:	name		  = ch->name;
+fight.c:	if ( ch->gold > 0 )
+fight.c:	    coins	  = create_money( ch->gold );
+fight.c:	    ch->gold = 0;
+fight.c:	name	      = ch->name;
+fight.c:    for ( obj = ch->carrying; obj; obj = obj_next )
+fight.c:	obj_to_room( corpse, ch->in_room );
+fight.c:	    obj_to_room( corpse, ch->in_room );
+fight.c:	name		= ch->name;
+fight.c:	cname		= ch->short_descr;
+fight.c:	obj_to_room( obj, ch->in_room );
+fight.c:    was_in_room = ch->in_room;
+fight.c:	    ch->in_room = pexit->to_room;
+fight.c:    ch->in_room = was_in_room;
+fight.c:        if ( vch->hunted == victim )
+fight.c:                vch->hunted = victim->next_in_hunt;
+fight.c:        for( rch = vch->hunted; rch; rch = rch->next_in_hunt )
+fight.c:                if ( rch->next_in_hunt == victim )
+fight.c:                        rch->next_in_hunt = victim->next_in_hunt;
+fight.c:		rch = vch->next_in_hunt;
+fight.c:		vch->hunting = NULL;
+fight.c:		vch->next_in_hunt = NULL;
+fight.c:        if ( vch->assassinated == victim )
+fight.c:                vch->assassinated = victim->next_in_ass;
+fight.c:        for( rch = vch->assassinated; rch; rch = rch->next_in_ass )
+fight.c:                if ( rch->next_in_ass == victim )
+fight.c:                        rch->next_in_ass = victim->next_in_ass;
+fight.c:		rch = vch->next_in_ass;
+fight.c:		vch->assassinating = NULL;
+fight.c:		vch->next_in_ass = NULL;
+fight.c:	vch->rembed = NULL;
+fight.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+fight.c:    lch = ( ch->leader ) ? ch->leader : ch;
+fight.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+fight.c:	if ( gch->level - lch->level >= 6 )
+fight.c:	if ( gch->level - lch->level <= -6 )
+fight.c:	if ( !str_infix( race_table[lch->race].name,
+fight.c:			race_table[gch->race].hate) && members > 1 )
+fight.c:	for ( obj = gch->carrying; obj; obj = obj_next )
+fight.c:		obj_to_room( obj, gch->in_room );
+fight.c:    xp	  = 105 - URANGE( -4, gch->level - victim->level, 6 ) * 25;
+fight.c:    align = gch->alignment - victim->alignment;
+fight.c:	gch->alignment	= UMIN( gch->alignment + ( align - 500 ) / 4,  1000 );
+fight.c:	gch->alignment	= UMAX( gch->alignment + ( align + 500 ) / 4, -1000 );
+fight.c:	gch->alignment -= gch->alignment / 4;
+fight.c:		    race_table[gch->race].hate ) )
+fight.c:    if ( victim->race == gch->race )
+fight.c:	if ( ch->race > MAX_RACE )
+fight.c:	    bug( "Dam_message:	%d invalid race", ch->race );
+fight.c:	    ch->race = 0;
+fight.c:	attack = race_table[ ch->race ].dmg_message;
+fight.c:		    ch->name );
+fight.c:    if ( ( race_table[ ch->race ].size - race_table[ victim->race ].size )
+fight.c:    if ( ch->position == POS_FIGHTING )
+fight.c:    if ( ch->position == POS_FIGHTING )
+fight.c:	&& ch->level < skill_table[gsn_backstab].skill_level[ch->class] )
+fight.c:	|| number_percent( ) < ch->pcdata->learned[gsn_backstab] )
+fight.c:	&& ch->level < skill_table[gsn_circle].skill_level[ch->class] )
+fight.c:    if ( !ch->fighting )
+fight.c:	victim = ch->fighting;
+fight.c:    if ( victim != ch->fighting )
+fight.c:    for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+fight.c:	if ( rch->fighting == ch )
+fight.c:	|| number_percent( ) < ch->pcdata->learned[gsn_circle] / 2 )
+fight.c:    if ( !( victim = ch->fighting ) )
+fight.c:	if ( ch->position == POS_FIGHTING )
+fight.c:	    ch->position = POS_STANDING;
+fight.c:    was_in = ch->in_room;
+fight.c:		    || ( IS_SET( ch->act, ACT_STAY_AREA )
+fight.c:			&& pexit->to_room->area != ch->in_room->area ) ) ) )
+fight.c:	if ( ( now_in = ch->in_room ) == was_in )
+fight.c:	ch->in_room = was_in;
+fight.c:	ch->in_room = now_in;
+fight.c:	    && ch->level < skill_table[gsn_berserk].skill_level[ch->class] ) )
+fight.c:    if ( !ch->fighting )					 
+fight.c:	|| number_percent( ) < ch->pcdata->learned[gsn_berserk] )
+fight.c:	af.modifier  = UMIN( ch->level / 4, 8 );
+fight.c:	af.modifier  = ch->level;
+fight.c:	    && ch->level < skill_table[gsn_rescue].skill_level[ch->class] ) )
+fight.c:    if ( ch->fighting == victim )
+fight.c:    for ( fch = victim->in_room->people; fch; fch = fch->next_in_room )
+fight.c:	    || fch->deleted )
+fight.c:	if ( fch->fighting == victim )
+fight.c:	    && number_percent( ) > ch->pcdata->learned[gsn_rescue] ) )
+fight.c:	    && number_percent() < ch->pcdata->learned[gsn_change_fighting] ) )
+fight.c:    if ( ch->fighting == victim )
+fight.c:    ch->fighting	= NULL;
+fight.c:    ch->position	= POS_STANDING;
+fight.c:	    && ch->level < skill_table[gsn_kick].skill_level[ch->class] ) )
+fight.c:    if ( !ch->fighting )
+fight.c:    victim = ch->fighting;
+fight.c:    if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_kick] )
+fight.c:	damage( ch, victim, number_range( 1, ch->level ), gsn_kick,
+fight.c:	ch->level < skill_table[gsn_hunt].skill_level[ch->class] )
+fight.c:    if ( !ch->fighting )
+fight.c:		if ( (victim = ch->hunting) )
+fight.c:			ch->hunting = NULL;
+fight.c:				victim->hunted = ch->next_in_hunt;
+fight.c:				ch->next_in_hunt = NULL;
+fight.c:			for( vch = victim->hunted; vch; vch = vch->next_in_hunt )
+fight.c:				if ( vch->next_in_hunt == ch )
+fight.c:					vch->next_in_hunt = ch->next_in_hunt;
+fight.c:					ch->next_in_hunt = NULL;
+fight.c:    	if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_hunt] )
+fight.c:		if ( ( vch = ch->hunting ) )
+fight.c:			if ( vch->hunted == ch )
+fight.c:				vch->hunted = ch->next_in_hunt;
+fight.c:				for( rch = vch->hunted; rch; rch = rch->next_in_hunt )
+fight.c:					if ( rch->next_in_hunt == ch )
+fight.c:						rch->next_in_hunt = ch->next_in_hunt;
+fight.c:		ch->hunting = victim;
+fight.c:		ch->next_in_hunt = victim->hunted;
+fight.c:    victim = ch->fighting;
+fight.c:	if ( ch->hunting == victim )
+fight.c:	if ( ( vch = ch->hunting ) )
+fight.c:		if ( vch->hunted == ch )
+fight.c:			vch->hunted = ch->next_in_hunt;
+fight.c:			for( rch = vch->hunted; rch; rch = rch->next_in_hunt )
+fight.c:				if ( rch->next_in_hunt == ch )
+fight.c:					rch->next_in_hunt = ch->next_in_hunt;
+fight.c:	ch->hunting = victim;
+fight.c:	ch->next_in_hunt = victim->hunted;
+fight.c:    if ( ch->hunting == victim )
+fight.c:    if ( ( vch = ch->hunting ) )
+fight.c:	if ( vch->hunted == ch )
+fight.c:		vch->hunted = ch->next_in_hunt;
+fight.c:		for( rch = vch->hunted; rch; rch = rch->next_in_hunt )
+fight.c:			if ( rch->next_in_hunt == ch )
+fight.c:				rch->next_in_hunt = ch->next_in_hunt;
+fight.c:    ch->hunting = victim;
+fight.c:    ch->next_in_hunt = victim->hunted;
+fight.c:	ch->level < skill_table[gsn_ass].skill_level[ch->class] )
+fight.c:    if ( !ch->fighting )
+fight.c:		if ( (victim = ch->assassinating) )
+fight.c:			ch->assassinating = NULL;
+fight.c:				victim->assassinated = ch->next_in_ass;
+fight.c:				ch->next_in_ass = NULL;
+fight.c:			for( vch = victim->assassinated; vch; vch = vch->next_in_ass )
+fight.c:				if ( vch->next_in_ass == ch )
+fight.c:					vch->next_in_ass = ch->next_in_ass;
+fight.c:					ch->next_in_ass = NULL;
+fight.c:    	if ( IS_NPC( ch ) || number_percent( ) < ch->pcdata->learned[gsn_ass] )
+fight.c:		if ( ( vch = ch->assassinating ) )
+fight.c:			if ( vch->assassinated == ch )
+fight.c:				vch->assassinated = ch->next_in_ass;
+fight.c:				for( rch = vch->assassinated; rch; rch = rch->next_in_ass )
+fight.c:					if ( rch->next_in_ass == ch )
+fight.c:						rch->next_in_ass = ch->next_in_ass;
+fight.c:		ch->assassinating = victim;
+fight.c:		ch->next_in_ass = victim->assassinated;
+fight.c:		number_percent( ) < ch->pcdata->learned[gsn_backstab] )
+fight.c:    victim = ch->fighting;
+fight.c:	if ( ch->assassinating == victim )
+fight.c:	if ( ( vch = ch->assassinating ) )
+fight.c:		if ( vch->assassinated == ch )
+fight.c:			vch->assassinated = ch->next_in_ass;
+fight.c:			for( rch = vch->assassinated; rch; rch = rch->next_in_ass )
+fight.c:				if ( rch->next_in_ass == ch )
+fight.c:					rch->next_in_ass = ch->next_in_ass;
+fight.c:	ch->assassinating = victim;
+fight.c:	ch->next_in_ass = victim->assassinated;
+fight.c:    if ( ch->assassinating == victim )
+fight.c:    if ( ( vch = ch->assassinating ) )
+fight.c:	if ( vch->assassinated == ch )
+fight.c:		vch->assassinated = ch->next_in_ass;
+fight.c:		for( rch = vch->assassinated; rch; rch = rch->next_in_ass )
+fight.c:			if ( rch->next_in_ass == ch )
+fight.c:				rch->next_in_ass = ch->next_in_ass;
+fight.c:    ch->assassinating = victim;
+fight.c:    ch->next_in_ass = victim->assassinated;
+fight.c:	ch->level < skill_table[gsn_frenzy].skill_level[ch->class] )
+fight.c:    if ( !ch->fighting )
+fight.c:    if ( ch->hit < ch->max_hit / 2 )
+fight.c:    if ( !IS_NPC( ch ) && number_percent( ) > ch->pcdata->learned[gsn_frenzy] )
+fight.c:    victim = ch->fighting;
+fight.c:    for( i = 0; i < 15 + race_table[ch->race].size; i ++ )
+fight.c:	if ( !( victim->in_room == ch->in_room )
+fight.c:	ch->hit -= 20;
+fight.c:	ch->level < skill_table[gsn_bashhead].skill_level[ch->class] )
+fight.c:    if ( !ch->fighting )
+fight.c:    if ( ch->move < 60 )
+fight.c:    if ( !IS_NPC( ch ) && number_percent( ) > ch->pcdata->learned[gsn_bashhead] )
+fight.c:    victim = ch->fighting;
+fight.c:    ch->move -= 20;
+fight.c:    ( race_table[ ch->race ].size - race_table[ victim->race ].size ) * 8
+fight.c:	    && ch->level < skill_table[gsn_disarm].skill_level[ch->class] ) )
+fight.c:    if ( !ch->fighting )
+fight.c:    victim = ch->fighting;
+fight.c:    if ( victim->fighting != ch && ch->fighting != victim )
+fight.c:    percent = number_percent( ) + victim->level - ch->level;
+fight.c:    if ( IS_NPC( ch ) || percent < ch->pcdata->learned[gsn_disarm] * 2 / 3 )
+fight.c:	    && ch->level < skill_table[gsn_barehand].skill_level[ch->class] ) )
+fight.c:    if ( !ch->fighting )
+fight.c:    victim = ch->fighting;
+fight.c:    if ( victim->fighting != ch && ch->fighting != victim )
+fight.c:    percent = number_percent( ) + victim->level - ch->level;
+fight.c:    if ( IS_NPC( ch ) || percent < ch->pcdata->learned[gsn_barehand] * 2 / 3 )
+fight.c:    if ( !IS_NPC( victim ) && victim->level >= ch->level )
+fight.c:    for ( victim = ch->in_room->people; victim; victim = victim_next )
+fight.c:	(*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+fight.c:    for ( victim = ch->in_room->people; victim; victim = victim_next )
+fight.c:	(*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+fight.c:    for ( victim = ch->in_room->people; victim; victim = victim_next )
+fight.c:	(*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+fight.c:	damage( ch, victim, number_range( 1, ch->level ),
+fight.c:    if ( ch->race == race_lookup( "Dragon" ) )
+fight.c:	if ( number_percent( ) < ch->level )
+fight.c:    if ( ch->race == race_lookup( "Harpy" ) )
+fight.c:	if ( number_percent( ) < ch->level )
+fight.c:    if ( ch->race == race_lookup( "Arachnid" )
+fight.c:	|| ch->race == race_lookup( "Snake" ) )
+fight.c:	if ( number_percent( ) < ch->level )
+fight.c:    if ( arg[0] == '\0' && !ch->fighting )
+fight.c:    if ( !( victim = ch->fighting ) )
+fight.c:    if ( ch->race != race_lookup( "Vampire" ) )
+fight.c:	if ( !ch->fighting )
+fight.c:    if ( ch->fighting )
+fight.c:	if ( number_percent() > ch->level )
+fight.c:    if ( !ch->fighting )
+fight.c:	if ( number_percent() > ( ch->level * 1.75 ) && IS_AWAKE( victim ) )
+fight.c:    dam = dice( 3, ch->level );
+fight.c:	&& number_percent( ) < ( 34 - victim->level + ch->level ) )
+fight.c:	if (   ch->pcdata->condition[COND_FULL	] > 40
+fight.c:	    && ch->pcdata->condition[COND_THIRST] > 40
+fight.c:	    && ( ch->hit * 100 / ch->max_hit > 75 ) )
+fight.c:	    ch->hit = UMIN( ch->max_hit, ch->hit + heal );
+fight.c:    if ( saves_spell( ch->level, victim )
+fight.c:	    && ch->level < 21 )
+fight.c:		if ( ch->level < 32 )
+fight.c:		    if ( victim->level > ch->level )
+fight.c:    af.duration	 = UMAX( 5, 30 - ch->level );
+fight.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+fight.c:    chance = ( IS_NPC( ch ) ? ch->level : ch->pcdata->learned[gsn_stake] );
+fight.c:    chance = chance - victim->level + ch->level;
+fight.c:	do_feed( victim, ch->name );
+fight.c:    if ( ch->race == race_lookup( "Vampire" ) )
+fight.c:    if ( !IS_SET( ch->act, PLR_REGISTER ) )
+fight.c:    if ( ch->fighting )
+fight.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+fight.c:    if ( ch->race == race_lookup( "Vampire" ) )
+fight.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+handler.c:    if ( ch->desc && ch->desc->original )
+handler.c:	ch = ch->desc->original;
+handler.c:    if ( ch->trust != 0 )
+handler.c:	return ch->trust;
+handler.c:    if ( IS_NPC( ch ) && ch->level >= LEVEL_HERO )
+handler.c:	return ch->level;
+handler.c:    return 8 + ( ch->played + (int) ( current_time - ch->logon ) ) / 428400;
+handler.c:    mod	  = race_table[ch->race].str_mod;
+handler.c:	return UMIN( MAX_STR, value + ch->level/5 );
+handler.c:    value += ( ch->pcdata->prime_attr == APPLY_STR ) ? 8 :
+handler.c:    	    ( ch->pcdata->snd_attr == APPLY_STR ) ? 5 :
+handler.c:    	    ( ch->class > 4 ) ? 2 : 0;
+handler.c:    return URANGE( 1, ch->pcdata->perm_str + ch->pcdata->mod_str, max );
+handler.c:    mod	  = race_table[ch->race].int_mod;
+handler.c:	return UMIN( MAX_INT, value + ch->level/5 );
+handler.c:    value += ( ch->pcdata->prime_attr == APPLY_INT ) ? 8 :
+handler.c:    	    ( ch->pcdata->snd_attr == APPLY_INT ) ? 5 :
+handler.c:    	    ( ch->class > 4 ) ? 2 : 0;
+handler.c:    return URANGE( 3, ch->pcdata->perm_int + ch->pcdata->mod_int, max );
+handler.c:    mod	  = race_table[ch->race].wis_mod;
+handler.c:	return UMIN( MAX_WIS, value + ch->level/5 );
+handler.c:    value += ( ch->pcdata->prime_attr == APPLY_WIS ) ? 8 :
+handler.c:    	    ( ch->pcdata->snd_attr == APPLY_WIS ) ? 5 :
+handler.c:    	    ( ch->class > 4 ) ? 2 : 0;
+handler.c:    return URANGE( 3, ch->pcdata->perm_wis + ch->pcdata->mod_wis, max );
+handler.c:    mod	  = race_table[ch->race].dex_mod;
+handler.c:	return UMIN( MAX_DEX, value + ch->level/5 );
+handler.c:    value += ( ch->pcdata->prime_attr == APPLY_DEX ) ? 8 :
+handler.c:    	    ( ch->pcdata->snd_attr == APPLY_DEX ) ? 5 :
+handler.c:    	    ( ch->class > 4 ) ? 2 : 0;
+handler.c:    return URANGE( 3, ch->pcdata->perm_dex + ch->pcdata->mod_dex, max );
+handler.c:    mod	  = race_table[ch->race].con_mod;
+handler.c:	return UMIN( MAX_CON, value + ch->level/5 );
+handler.c:    value += ( ch->pcdata->prime_attr == APPLY_CON ) ? 8 :
+handler.c:    	    ( ch->pcdata->snd_attr == APPLY_CON ) ? 5 :
+handler.c:    	    ( ch->class > 4 ) ? 2 : 0;
+handler.c:    return URANGE( 3, ch->pcdata->perm_con + ch->pcdata->mod_con, max );
+handler.c:		wpn, ch->name );
+handler.c:    hitroll = ch->hitroll + str_app[get_curr_str( ch )].tohit;
+handler.c:		wpn, ch->name );
+handler.c:    damroll = ch->damroll + str_app[get_curr_str( ch )].todam;
+handler.c:    if ( !IS_NPC( ch ) && ch->level >= LEVEL_IMMORTAL )
+handler.c:    if ( IS_NPC( ch ) && IS_SET( ch->act, ACT_PET ) )
+handler.c:    if ( !IS_NPC( ch ) && ch->level >= LEVEL_IMMORTAL )
+handler.c:    if ( IS_NPC( ch ) && IS_SET( ch->act, ACT_PET ) )
+handler.c:	SET_BIT	  ( ch->affected_by, paf->bitvector );
+handler.c:	REMOVE_BIT( ch->affected_by, paf->bitvector );
+handler.c:		paf->location, ch->name );
+handler.c:	    ch->pcdata->mod_str += mod;				break;
+handler.c:	    ch->pcdata->mod_dex += mod;				break;
+handler.c:	    ch->pcdata->mod_int += mod;				break;
+handler.c:	    ch->pcdata->mod_wis += mod;				break;
+handler.c:	    ch->pcdata->mod_con += mod;				break;
+handler.c:    case APPLY_SEX:	      ch->sex			+= mod; break;
+handler.c:    case APPLY_RACE:	      ch->race			+= mod; break;
+handler.c:    case APPLY_MANA:	      ch->max_mana		+= mod; break;
+handler.c:    case APPLY_HIT:	      ch->max_hit		+= mod; break;
+handler.c:    case APPLY_MOVE:	      ch->max_move		+= mod; break;
+handler.c:    case APPLY_AC:	      ch->armor			+= mod; break;
+handler.c:    case APPLY_HITROLL:	      ch->hitroll		+= mod; break;
+handler.c:    case APPLY_DAMROLL:	      ch->damroll		+= mod; break;
+handler.c:    case APPLY_SAVING_PARA:   ch->saving_throw		+= mod; break;
+handler.c:    case APPLY_SAVING_ROD:    ch->saving_throw		+= mod; break;
+handler.c:    case APPLY_SAVING_PETRI:  ch->saving_throw		+= mod; break;
+handler.c:    case APPLY_SAVING_BREATH: ch->saving_throw		+= mod; break;
+handler.c:    case APPLY_SAVING_SPELL:  ch->saving_throw		+= mod; break;
+handler.c:    case APPLY_DODGE:  	      ch->dodge			+= mod; break;
+handler.c:    ch->hit  = UMIN( ch->hit, ch->max_hit );
+handler.c:    ch->mana = UMIN( ch->mana, ch->max_mana );
+handler.c:    ch->move = UMIN( ch->move, ch->max_move );
+handler.c:		|| !IS_SET( race_table[ ch->race ].race_abilities,
+handler.c:		    obj_to_room( wield2, ch->in_room );
+handler.c:	    || !IS_SET( race_table[ ch->race ].race_abilities,
+handler.c:		obj_to_room( wield, ch->in_room );
+handler.c:		 || !IS_SET( race_table[ ch->race ].race_abilities,
+handler.c:	    obj_to_room( wield2, ch->in_room );
+handler.c:    paf_new->next	= ch->affected;
+handler.c:    ch->affected	= paf_new;
+handler.c:    if ( !ch->affected )
+handler.c:    for ( paf = ch->affected; paf; paf = paf->next )
+handler.c:    for ( paf = ch->affected; paf; paf = paf->next )
+handler.c:    for ( paf_old = ch->affected; paf_old; paf_old = paf_old->next )
+handler.c:    if ( !ch->in_room )
+handler.c:	--ch->in_room->area->nplayer;
+handler.c:	&& ch->in_room->light > 0 )
+handler.c:	--ch->in_room->light;
+handler.c:    if ( ch == ch->in_room->people )
+handler.c:	ch->in_room->people = ch->next_in_room;
+handler.c:	for ( prev = ch->in_room->people; prev; prev = prev->next_in_room )
+handler.c:		prev->next_in_room = ch->next_in_room;
+handler.c:    ch->in_room	     = NULL;
+handler.c:    ch->next_in_room = NULL;
+handler.c:    ch->in_room		= pRoomIndex;
+handler.c:    ch->next_in_room	= pRoomIndex->people;
+handler.c:	++ch->in_room->area->nplayer;
+handler.c:	++ch->in_room->light;
+handler.c:    obj->next_content	 = ch->carrying;
+handler.c:    ch->carrying	 = obj;
+handler.c:    ch->carry_number	+= get_obj_number( obj );
+handler.c:    ch->carry_weight	+= get_obj_weight( obj );
+handler.c:    if ( ch->carrying == obj )
+handler.c:	ch->carrying = obj->next_content;
+handler.c:	for ( prev = ch->carrying; prev; prev = prev->next_content )
+handler.c:    ch->carry_number	-= get_obj_number( obj );
+handler.c:    ch->carry_weight	-= get_obj_weight( obj );
+handler.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+handler.c:		ch->name, iWear );
+handler.c:	obj_to_room( obj, ch->in_room );
+handler.c:	   if ( ( IS_SET( obj->class, ALLOW_BIT ) && !IS_SET( obj->class, NUM_BIT( ch->class ) ) )
+handler.c:		|| ( IS_SET( obj->class, DENY_BIT ) && IS_SET( obj->class, NUM_BIT( ch->class ) ) ) )
+handler.c:	   if ( ( IS_SET( obj->race, ALLOW_BIT ) && !IS_SET( obj->race, NUM_BIT( ch->race ) ) )
+handler.c:		|| ( IS_SET( obj->race, DENY_BIT ) && IS_SET( obj->race, NUM_BIT( ch->race ) ) ) )
+handler.c:    ch->armor	-= apply_ac( obj, iWear );
+handler.c:	&& ch->in_room )
+handler.c:	++ch->in_room->light;
+handler.c:    if ( !IS_NPC( ch ) && ( ch->class == MONK ) &&
+handler.c:		SET_BIT( ch->act, PLR_FIST_FIGHT );
+handler.c:		ch->name, obj->pIndexData->vnum );
+handler.c:    ch->armor		+= apply_ac( obj, obj->wear_loc );
+handler.c:	&& ch->in_room
+handler.c:	&& ch->in_room->light > 0 )
+handler.c:	--ch->in_room->light;
+handler.c:    if ( !IS_NPC( ch ) && ( ch->class == MONK ) &&
+handler.c:		SET_BIT( ch->act, PLR_FIST_FIGHT );
+handler.c:    if ( !ch->in_room )
+handler.c:    if ( ch->fighting )
+handler.c:	    name = ch->short_descr;
+handler.c:	    name = ch->name;
+handler.c:	for ( obj = ch->carrying; obj; obj = obj_next )
+handler.c:	--ch->pIndexData->count;
+handler.c:    if ( ch->desc && ch->desc->original )
+handler.c:    for ( wch = char_list; wch; wch = wch->next )
+handler.c:	if ( wch->reply == ch )
+handler.c:	    wch->reply = NULL;
+handler.c:    ch->deleted = TRUE;
+handler.c:    if ( ch->desc )
+handler.c:	ch->desc->character = NULL;
+handler.c:    for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+handler.c:	if ( !can_see( ch, rch ) || !is_name( arg, rch->name ) )
+handler.c:    for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+handler.c:	if ( !can_see( ch, rch ) || !is_pfxname( arg, rch->name ) )
+handler.c:    for ( wch = char_list; wch ; wch = wch->next )
+handler.c:	if ( !can_see( ch, wch ) || !is_name( arg, wch->name ) )
+handler.c:    for ( wch = char_list; wch ; wch = wch->next )
+handler.c:	if ( !can_see( ch, wch ) || !is_pfxname( arg, wch->name ) )
+handler.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+handler.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+handler.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+handler.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+handler.c:    obj = get_obj_list( ch, argument, ch->in_room->contents );
+handler.c:    for ( rch = pRoomIndex->people; rch; rch = rch->next_in_room )
+handler.c:	if ( rch->deleted )
+handler.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_HOLYLIGHT ) )
+handler.c:    if ( room_is_dark( ch->in_room )
+handler.c:	&& !IS_SET( race_table[ ch->race ].race_abilities, RACE_INFRAVISION )
+handler.c:	&& !IS_SET( race_table[ ch->race ].race_abilities, RACE_DETECT_INVIS )
+handler.c:	&& !IS_SET( race_table[ ch->race ].race_abilities, RACE_DETECT_HIDDEN )
+handler.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_HOLYLIGHT ) )
+handler.c:    if ( room_is_dark( ch->in_room )
+handler.c:	&& !IS_SET( race_table[ ch->race ].race_abilities, RACE_INFRAVISION )
+handler.c:	&& !IS_SET( race_table[ ch->race ].race_abilities, RACE_DETECT_INVIS )
+handler.c:    if ( !IS_NPC( ch ) && ch->level >= LEVEL_IMMORTAL )
+handler.c:    if ( !ch->pcdata )
+handler.c:	return ch->desc->original;
+handler.c:    if ( ( !IS_NPC( ch ) && str_infix( skllnm, ch->pcdata->immskll ) )
+interp.c:    REMOVE_BIT( ch->affected_by, AFF_HIDE );
+interp.c:	REMOVE_BIT( ch->act, PLR_AFK );
+interp.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_FREEZE ) )
+interp.c:    if ( ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_LOG ) )
+interp.c:	sprintf( log_buf, "Log %s: %s", ch->name, logline );
+interp.c:    if ( ch->desc && ch->desc->snoop_by )
+interp.c:	write_to_buffer( ch->desc->snoop_by, "% ",    2 );
+interp.c:	write_to_buffer( ch->desc->snoop_by, logline, 0 );
+interp.c:	write_to_buffer( ch->desc->snoop_by, "\n\r",  2 );
+interp.c:    if ( !IS_NPC( ch ) && ch->position < cmd_table[cmd].position )
+interp.c:	switch( ch->position )
+interp.c:    if ( !IS_NPC( ch ) && IS_SET( ch->act, PLR_NO_EMOTE ) )
+interp.c:    switch ( ch->position )
+interp.c:	    original = ch->in_room;
+interp.c:		if ( ( victim->level < ch->level )
+magic.c:    for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+magic.c:	    act( ch->class==rch->class ? buf : buf2, ch, NULL, rch, TO_VICT );
+magic.c:    		( number_percent() > ch->pcdata->learned[gsn_multicasting]
+magic.c:	|| ch->level < skill_table[sn].skill_level[ch->class] )
+magic.c:    if ( ch->position < skill_table[sn].minimum_position )
+magic.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE ) )
+magic.c:    if ( IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+magic.c:		number_percent() < ch->pcdata->learned[gsn_spellmaster] )
+magic.c:	    if ( !( victim = ch->fighting ) )
+magic.c:	if ( IS_AFFECTED( ch, AFF_CHARM ) && ch->master == victim )
+magic.c:	if ( arg2[0] != '\0' && !is_name( arg2, ch->name ) )
+magic.c:    if ( ch->mana < mana )
+magic.c:    if ( number_percent( ) > ch->pcdata->learned[sn] )
+magic.c:	ch->mana -= mana / 2;
+magic.c:	ch->mana -= mana;
+magic.c:				      URANGE( 1, ch->level, LEVEL_HERO ),
+magic.c:	for ( vch = ch->in_room->people; vch; vch = vch->next_in_room )
+magic.c:	    if ( vch->deleted )
+magic.c:	    victim = ch->fighting;
+magic.c:	for ( vch = ch->in_room->people; vch; vch = vch->next_in_room )
+magic.c:	    if ( vch->deleted )
+magic.c:    for ( vch = char_list; vch; vch = vch->next )
+magic.c:	if ( vch->deleted || !vch->in_room )
+magic.c:	if ( vch->in_room == ch->in_room )
+magic.c:	if ( vch->in_room->area == ch->in_room->area
+magic.c:	sprintf( buf, "%s charming", ch->name );
+magic.c:    if ( !( pRoomIndex = ch->in_room ) )
+magic.c:    obj_to_room( light, ch->in_room );
+magic.c:    obj_to_room( mushroom, ch->in_room );
+magic.c:    obj_to_room( spring, ch->in_room );
+magic.c:	    	(paf->duration - ch->level - ( get_curr_wis( ch ) * 2 ) ) )
+magic.c:    for ( vch = char_list; vch; vch = vch->next )
+magic.c:	if ( vch->deleted || !vch->in_room )
+magic.c:	if ( vch->in_room == ch->in_room )
+magic.c:	if ( vch->in_room->area == ch->in_room->area )
+magic.c:    obj->level		= number_fuzzy( ch->level - 5 );
+magic.c:    ch->alignment = UMAX(-1000, ch->alignment - 40);
+magic.c:	dam		 = ch->hit + 1;
+magic.c:	ch->hit		+= dam;
+magic.c:    for( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+magic.c:		for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+magic.c:			if ( rch->deleted )
+magic.c:			if ( rch != victim && !( !IS_NPC( rch ) && rch->level < 30 )
+magic.c:    for ( ich = ch->in_room->people; ich; ich = ich->next_in_room )
+magic.c:	if ( !IS_NPC( ich ) && IS_SET( ich->act, PLR_WIZINVIS ) )
+magic.c:	REMOVE_BIT   ( ich->affected_by, AFF_HIDE	);
+magic.c:	REMOVE_BIT   ( ich->affected_by, AFF_INVISIBLE	);
+magic.c:	REMOVE_BIT   ( ich->affected_by, AFF_SNEAK	);
+magic.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+magic.c:		 ch->in_room );
+magic.c:    for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+magic.c:    if ( ch->level > L_APP - 4 )
+magic.c:	if ( ch->level > L_APP - 2 )
+magic.c:	if ( ch->mana < 50 )
+magic.c:		ch->mana -= 50;
+magic.c:	obj_to_room( obj, ch->in_room );
+magic.c:    for( i = 0; i < ch->level/5; i++ )
+magic.c:	ch->mana -= 2;
+magic.c:    for( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+magic.c:	gch->hit = UMIN( gch->hit + heal, gch->max_hit );
+magic.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+magic.c:	sprintf( buf, "Log %s: casting Polymorph other", ch->name );
+magic.c:	ch->pcdata->learned[sn] / 2 + 3 * ( ch->level - obj->value[0] )
+magic.c:	damage( ch, ch, ch->max_hit / 16, sn, WEAR_NONE );
+magic.c:    if ( number_percent( ) < ch->pcdata->learned[sn] *
+magic.c:	  ( 33 * ( ch->level - obj->level ) / (float)LEVEL_HERO ) ) / 100.0 )
+magic.c:     *	to remove a "Cone of Silence" from ch->in_room.
+magic.c:	pRoomIndex   = ch->in_room;
+magic.c:	|| victim->in_room->area != ch->in_room->area
+magic.c:    char_to_room( victim, ch->in_room );
+magic.c:    for ( vch = ch->in_room->people; vch; vch = vch->next_in_room )
+magic.c:	if ( !is_name( speaker, vch->name ) )
+magic.c:    hpch = UMAX( 10, ch->hit );
+magic.c:    hpch = UMAX( 10, ch->hit );
+magic.c:    hpch = UMAX( 10, ch->hit );
+magic.c:    for ( vch = ch->in_room->people; vch; vch = vch_next )
+magic.c:	vch_next = vch->next_in_room;
+magic.c:	if ( vch->deleted )
+magic.c:	    hpch = UMAX( 10, ch->hit );
+magic.c:    hpch = UMAX( 10, ch->hit );
+magic.c:    for( rch = ch->in_room->people; rch; rch = rch->next_in_room )
+magic.c:	if (rch->fighting == ch)
+magic.c:    for( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+magic.c:	gch->hit = gch->max_hit;
+magic.c:    for ( vch = ch->in_room->people; vch; vch = vch->next_in_room )
+magic.c:	if ( !is_name( speaker, vch->name ) )
+magic.c:    for ( vch = ch->in_room->people; vch; vch = vch_next )
+magic.c:	vch_next = vch->next_in_room;
+magic.c:	if ( vch->deleted )
+magic.c:	    hpch = URANGE( 10, ch->hit, 999 );
+magic.c:		&& (   level <= vch->level + 5
+magic.c:		    && level >= vch->level - 5 ) )
+magic.c:		vch->hit = 1;
+magic.c:    if ( number_percent() < ch->pcdata->learned[sn]/2
+magic.c:	+ 3 * ( ch->level - obj->level ) )
+magic.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+magic.c:    for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
+magic.c:    if ( ch->hit-hpch < 50 )
+magic.c:    ch->hit	-= hpch;
+magic.c:    af.duration	 = ch->level / 10;
+magic.c:    for ( vch = ch->in_room->people; vch; vch = vch_next )
+magic.c:	vch_next = vch->next_in_room;
+magic.c:	if ( vch->deleted )
+magic.c:	    hpch = UMAX( 10, ch->hit );
+magic.c:    ch->hit = UMIN( ch->max_hit, ch->hit + dam );
+magic.c:	    && ch->level < 21 )
+magic.c:		if ( ch->level < 32 )
+magic.c:		    if ( victim->level > ch->level )
+magic.c:    	if ( ch->level > L_APP - 4 )
+magic.c:    	if ( ch->level > L_APP - 3 )
+magic.c:    	if ( ch->level > L_APP - 2 )
+magic.c:    for( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+magic.c:               ( victim->fighting == ch ) || ( ch->fighting == victim ) )
+magic.c:    	number_percent() > ch->pcdata->learned[gsn_abstraction] ) )
+magic.c:    if ( ch->mana < 400 )
+magic.c:    ch->mana -= number_range( 300, 400 );    
+magic.c:    obj_to_room( gem, ch->in_room );
+magic.c:    	number_percent() > ch->pcdata->learned[gsn_abstraction] ) )
+magic.c:    if ( ch->mana + mana > ch->max_mana )
+magic.c:    	ch->mana = ch->max_mana;
+magic.c:    	ch->mana += mana;
+magic.c:    for ( obj = ch->carrying; obj; obj = obj->next_content )
+mob_commands.c:	bug( "Mpasound - No argument: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    was_in_room = ch->in_room;
+mob_commands.c:	ch->in_room = pexit->to_room;
+mob_commands.c:  ch->in_room = was_in_room;
+mob_commands.c:		ch->pIndexData->vnum );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:    if ( IS_AFFECTED( ch, AFF_CHARM ) && ch->master == target )
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:    if ( ch->position == POS_FIGHTING )
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpjunk - No argument: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:      for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+mob_commands.c:       bug( "Mpechoaround - No argument:  vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	   ch->pIndexData->vnum );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpmload - Bad vnum as arg: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpmload - Bad mob vnum: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    char_to_room( target, ch->in_room );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	    bug( "Mpoload - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	    bug( "Mpoload - Bad level: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpoload - Bad vnum arg: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	obj_to_room( obj, ch->in_room );
+mob_commands.c:	for ( target = ch->in_room->people; target != NULL; target = vnext )
+mob_commands.c:	for ( obj = ch->in_room->contents; obj != NULL; obj = obj_next )
+mob_commands.c:	    bug( "Mppurge - Bad argument: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mppurge - Purging a PC: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpgoto - No argument: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpgoto - No such location: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    if ( ch->fighting != NULL )
+mob_commands.c:	bug( "Mpat - Bad argument: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:		bug( "Mpat - No such location: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:		location = wch->in_room;
+mob_commands.c:		bug( "Rpat - No such location: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    original = ch->in_room;
+mob_commands.c:    for ( wch = char_list; wch != NULL; wch = wch->next )
+mob_commands.c:	if ( wch->deleted )
+mob_commands.c:	bug( "Mptransfer - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	location = ch->in_room;
+mob_commands.c:		ch->pIndexData->vnum );
+mob_commands.c:		ch->pIndexData->vnum );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	    ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpforce - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	    vch_next = vch->next;
+mob_commands.c:	    if ( !vch->in_room || vch->deleted )
+mob_commands.c:	    if ( vch->in_room == ch->in_room
+mob_commands.c:		ch->pIndexData->vnum );
+mob_commands.c:		ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpdef_rembch - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    	if ( ( vch = ch->rembch ) )
+mob_commands.c:    		vch->rembed = NULL;
+mob_commands.c:    	ch->rembch = NULL;
+mob_commands.c:    	vch->rembed = ch;
+mob_commands.c:    	ch->rembch = vch;
+mob_commands.c:	bug( "mpdis_magic - victim not in room: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    	if ( vch->affected )
+mob_commands.c:    		for ( paf = vch->affected; paf; paf = paf->next )
+mob_commands.c:	bug( "Mpgroup - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "Mpgroup - target not exist: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    if ( IS_AFFECTED( vch, AFF_CHARM ) && vch->master )
+mob_commands.c:	bug( "Mpgroup - target has been charmed: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:    if ( vch->master )
+mob_commands.c:    vch->leader = lch;
+mob_commands.c:	bug( "mpadd_qmark - no(can't see) target: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - no mark_name string: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - qmark exist already: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpadd_qmark - Bad syntax: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpdel_qmark - no(can't see) target: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpdel_qmark - no mark_name string: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:        	ch->pIndexData->vnum );
+mob_commands.c:    bug( "mpdel_qmark - target has no this qmark: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpmod_qmark - no(can't see) target: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:	bug( "mpmod_qmark - no mark_name string: vnum %d.", ch->pIndexData->vnum );
+mob_commands.c:        	ch->pIndexData->vnum );
+mob_commands.c:        	ch->pIndexData->vnum );
+mob_commands.c:        	ch->pIndexData->vnum );
+mob_commands.c:      	  	ch->pIndexData->vnum );
+mob_commands.c:    		sprintf( arg, "%s µ¹§A %d ª÷¹ô¡C\n\r", ch->name, value );
+mob_commands.c:    bug ( "Mob: %d 'mpgold' bad syntax", ch->pIndexData->vnum );
+mob_commands.c:    bug ( "Mob: %d 'mpexp' bad syntax", ch->pIndexData->vnum );
+mob_commands.c:  for ( vch = room->people; vch; vch = vch->next_in_room )
+mob_commands.c:  		if ( !is_name( arg, vch->name ) ||
+mob_commands.c:  			IS_SET( vch->act, PLR_WIZINVIS ) )
+mob_commands.c:  		case 3: dam = ( hmv == 0 ) ? dam = -vch->hit * num / 100 :
+mob_commands.c:  				( hmv == 1 ) ? -vch->mana * num / 100 :
+mob_commands.c:  						-vch->move * num / 100;
+mob_commands.c:  		case 4: dam = ( hmv == 0 ) ? dam = vch->hit * num / 100 :
+mob_commands.c:  				( hmv == 1 ) ? vch->mana * num / 100 :
+mob_commands.c:  						vch->move * num / 100;
+mob_commands.c:		case 0 : vch->hit += dam;
+mob_commands.c:    switch( vch->position )
+mob_commands.c:	if ( dam > vch->max_hit / 4 )
+mob_commands.c:	if ( vch->hit < vch->max_hit / 4 )
+mob_commands.c:		case 1 : vch->mana += dam; break;
+mob_commands.c:		case 2 : vch->move += dam; break;
+mob_commands.c:		for ( wch = char_list; wch; wch = wch->next )
+mob_commands.c:			if ( is_name( arg, wch->name ) &&
+mob_commands.c:				!IS_SET( wch->act, PLR_WIZINVIS ) )
+mob_commands.c:        location = wch->in_room;
+mob_commands.c:    		vch->rrembed = NULL;
+mob_commands.c:		vch->rrembed = room;
+mob_commands.c:	for ( vch = room->people; vch; vch = vch->next_in_room )
+mob_commands.c:	    if ( vch->deleted )
+mob_prog.bak.c:    		for(vch = mob->in_room->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:	for(vch = vroom->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:    		for(vch = mob->in_room->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:	for(vch = vroom->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:    		for(vch = mob->in_room->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:	for(vch = vroom->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:	for( vch = char_list; vch; vch = vch->next )
+mob_prog.bak.c:		if ( IS_NPC( vch ) && vch->pIndexData == vmob )
+mob_prog.bak.c:                                        return ( mob->in_room == vch->in_room );
+mob_prog.bak.c:        for( vch = mob->in_room->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:                if ( !str_infix( vnumptr, vch->name ) )
+mob_prog.bak.c:					for( vch = char_list, vch, vch = vch->next )
+mob_prog.bak.c:						if ( !vch->deleted &&
+mob_prog.bak.c:	     one_argument( bch->name, t );
+mob_prog.bak.c: for ( vch = mob->in_room->people; vch; vch = vch->next_in_room )
+mob_prog.bak.c:   if ( !vch->in_room || vch->deleted )
+mob_prog.bak.c:       &&  vch->level < MAX_LEVEL-3
+mob_prog.bak.c: for ( vmob = ch->in_room->people; vmob != NULL; vmob = vmob->next_in_room )
+mob_prog.c:    		for( ; vch; vch = vch->next_in_room )
+mob_prog.c:	for(vch = vroom->people; vch; vch = vch->next_in_room )
+mob_prog.c:    		for( ; vch; vch = vch->next_in_room )
+mob_prog.c:	for(vch = vroom->people; vch; vch = vch->next_in_room )
+mob_prog.c:    		for(vch = room->people; vch; vch = vch->next_in_room )
+mob_prog.c:	for(vch = vroom->people; vch; vch = vch->next_in_room )
+mob_prog.c:	for( vch = char_list; vch; vch = vch->next )
+mob_prog.c:		if ( IS_NPC( vch ) && vch->pIndexData == vmob )
+mob_prog.c:	    	if ( vch->fighting )
+mob_prog.c:	    		return mprog_seval( vch->fighting->name, opr, val );
+mob_prog.c:	lhsvl = vch->exp;
+mob_prog.c:	if ( ( qmark = vch->qmark ) )
+mob_prog.c:		for( qmark = vch->qmark; qmark != NULL; qmark = qmark->next )
+mob_prog.c:		return mprog_seval( race_table[vch->race].name, opr, val );
+mob_prog.c:	        case 'i': if ( mob->rembch && !str_cmp( mob->name, mob->rembch->name ) )
+mob_prog.c:	        		!str_cmp( actor->name, mob->rembch->name ) )
+mob_prog.c:	        		!str_cmp( vict->name, mob->rembch->name ) )
+mob_prog.c:	        		!str_cmp( rndm->name, mob->rembch->name ) )
+mob_prog.c:		if ( mob->rembch && !str_cmp( mob->rembch->name, vch->name ) )
+mob_prog.c:		if ( vch->in_room &&
+mob_prog.c:			mprog_seval( vch->in_room->area->identity, opr, val ) )
+mob_prog.c:	     one_argument( bch->name, t );
+mob_prog.c: for ( vch = mob->in_room->people; vch; vch = vch->next_in_room )
+mob_prog.c:   if ( !vch->in_room || vch->deleted )
+mob_prog.c://       &&  vch->level < MAX_LEVEL-3
+mob_prog.c: for ( vmob = ch->in_room->people; vmob != NULL; vmob = vmob->next_in_room )
+mob_prog.c:	 for ( vch = room->people; vch; vch = vch->next_in_room )
+mob_prog.c:	   if ( !vch->in_room || vch->deleted )
+mob_prog.c:	   if ( !IS_NPC( vch ) && !IS_SET( vch->act, PLR_WIZINVIS ) )
+mob_prog.c:	   if ( !IS_SET( bch->act, PLR_WIZINVIS ) )
+mob_prog.c:	     one_argument( bch->name, t );
+olc.c:    switch (ch->desc->editor)
+olc.c:    switch ( ch->desc->editor )
+olc.c:	pArea = (AREA_DATA *)ch->desc->pEdit;
+olc.c:	pRoom = ch->in_room;
+olc.c:	pObj = (OBJ_INDEX_DATA *)ch->desc->pEdit;
+olc.c:	pMob = (MOB_INDEX_DATA *)ch->desc->pEdit;
+olc.c:	pMob = (MOB_INDEX_DATA *)ch->desc->pEdit;
+olc.c:				ch->pcdata->mprog_edit + 1 );
+olc.c:    switch (ch->desc->editor)
+olc.c:    ch->desc->pEdit = NULL;
+olc.c:    ch->desc->editor = 0;
+olc.c:    pArea = ch->in_room->area;
+olc.c:	if ( ch->desc->editor == ED_AREA )
+olc.c:	    reset_area( (AREA_DATA *)ch->desc->pEdit );
+olc.c:	    ch->desc->editor = ED_AREA;
+olc.c:	    pArea = (AREA_DATA *)ch->desc->pEdit;
+olc.c:    ch->desc->pEdit = (void *)pArea;
+olc.c:    ch->desc->editor = ED_AREA;
+olc.c:    pRoom = ch->in_room;
+olc.c:	    char_to_room( ch, ch->desc->pEdit );
+olc.c:    ch->desc->editor = ED_ROOM;
+olc.c:	ch->desc->pEdit = (void *)pObj;
+olc.c:	ch->desc->editor = ED_OBJECT;
+olc.c:	    ch->desc->editor = ED_OBJECT;
+olc.c:	ch->desc->pEdit = (void *)pMob;
+olc.c:	ch->desc->editor = ED_MOBILE;
+olc.c:	    ch->desc->editor = ED_MOBILE;
+olc.c:    if ( ch->in_room && !IS_BUILDER( ch, ch->in_room->area ) )
+olc.c:	ch->desc->pEdit = (void *)pMob;
+olc.c:	ch->pcdata->mprog_edit = value - 1;
+olc.c:	ch->desc->editor = ED_MPROG;
+olc.c:		ch->desc->editor = ED_MPROG;
+olc.c:	if ( ch->in_room->reset_first )
+olc.c:    if ( !IS_BUILDER( ch, ch->in_room->area ) )
+olc.c:	ROOM_INDEX_DATA *pRoom = ch->in_room;
+olc.c:	    if ( !ch->in_room->reset_first )
+olc.c:		pReset->arg3	= ch->in_room->vnum;
+olc.c:		    pReset->arg3     = ch->in_room->vnum;
+olc.c:	    add_reset( ch->in_room, pReset, atoi( arg1 ) );
+olc_act.c:    pArea = ch->in_room->area;
+olc_act.c:    pArea = ch->in_room->area;
+olc_act.c:	ch->desc->pEdit = (void *)pMob;
+olc_act.c:    ch->desc->pEdit = (void *)ch->in_room;
+olc_act.c:	ch->desc->pEdit = (void *)pObj;
+olc_act.c:    ch->desc->pEdit = (void *)ch->in_room;
+olc_act.c:    ch->desc->pEdit	=   (void *)pArea;
+olc_act.c:    if ( value > ch->pcdata->security || value < 0 )
+olc_act.c:	if ( ch->pcdata->security != 0 )
+olc_act.c:	    sprintf( buf, "Security is 0-%d.\n\r", ch->pcdata->security );
+olc_act.c:    for ( rch = pRoom->people; rch; rch = rch->next_in_room )
+olc_act.c:	if ( rch->deleted )
+olc_act.c:	one_argument( rch->name, buf );
+olc_act.c:	pExit->to_room		= ch->in_room;	/* Assign data.		*/
+olc_act.c:	pExit->vnum		= ch->in_room->vnum;
+olc_act.c:    ch->desc->pEdit		= (void *)pRoom;
+olc_act.c:    ch->desc->pEdit		= (void *)pObj;
+olc_act.c:    ch->desc->pEdit		= (void *)pMob;
+olc_act.c:    ch->desc->pEdit = (void *)pMob;
+olc_act.c:    ch->pcdata->mprog_edit = 0;
+olc_act.c:    ch->pcdata->mprog_edit = count - 1;
+olc_act.c:	delete_mprog( ch, ch->pcdata->mprog_edit );
+olc_act.c:    if( ch->pcdata->mprog_edit >= count )
+olc_act.c:	ch->pcdata->mprog_edit = count - 1;
+olc_act.c:    ch->pcdata->mprog_edit = mprog_count( pMob ) - 1;
+olc_act.c:    mprog_num = ch->pcdata->mprog_edit;
+olc_save.c:	if ( !IS_BUILDER( ch, pArea ) && ch->level < MAX_LEVEL )
+olc_save.c:	switch (ch->desc->editor)
+olc_save.c:		pArea = (AREA_DATA *)ch->desc->pEdit;
+olc_save.c:		pArea = ch->in_room->area;
+olc_save.c:		pArea = ( (OBJ_INDEX_DATA *)ch->desc->pEdit )->area;
+olc_save.c:		pArea = ( (MOB_INDEX_DATA *)ch->desc->pEdit )->area;
+olc_save.c:		pArea = ch->in_room->area;
+save.c:    if ( IS_NPC( ch ) || ch->level < 1 )
+save.c:    if ( ch->desc && ch->desc->original )
+save.c:	ch = ch->desc->original;
+save.c:    ch->save_time = current_time;
+save.c:    sprintf( strsave, "%s%s%s%s", PLAYER_DIR, initial( ch->name ),
+save.c:	    "/", capitalize( ch->name ) );
+save.c:    sprintf( strsave, "%s%s", PLAYER_DIR, capitalize( ch->name ) );
+save.c:	sprintf( buf, "Save_char_obj: fopen %s: ", ch->name );
+save.c:	if ( ch->carrying )
+save.c:	    fwrite_obj( ch, ch->carrying, fp, 0 );
+save.c:    fprintf( fp, "Nm          %s~\n",	ch->name		);
+save.c:/*    fprintf( fp, "Cname	%s~\n",	ch->cname		);*/
+save.c:    fprintf( fp, "ShtDsc      %s~\n",	ch->short_descr		);
+save.c:    fprintf( fp, "LngDsc      %s~\n",	ch->long_descr		);
+save.c:    fprintf( fp, "Dscr        %s~\n",	ch->description		);
+save.c:    fprintf( fp, "Prmpt       %s~\n",	ch->pcdata->prompt	);
+save.c:    fprintf( fp, "Sx          %d\n",	ch->sex			);
+save.c:    fprintf( fp, "Cla         %d\n",	ch->class		);
+save.c:    fprintf( fp, "Race        %s~\n",	race_table[ ch->race ].name );
+save.c:    fprintf( fp, "Lvl         %d\n",	ch->level		);
+save.c:    fprintf( fp, "Trst        %d\n",	ch->trust		);
+save.c:    fprintf( fp, "Security    %d\n",	ch->pcdata->security	);  /* OLC */
+save.c:	ch->played + (int) ( current_time - ch->logon )		);
+save.c:    fprintf( fp, "Note        %ld\n",	(unsigned long)ch->last_note );
+save.c:	    (  ch->in_room == get_room_index( ROOM_VNUM_LIMBO )
+save.c:	     && ch->was_in_room )
+save.c:	    ? ch->was_in_room->vnum
+save.c:	    : ch->in_room->vnum );
+save.c:	ch->hit, ch->max_hit, ch->mana, ch->max_mana, ch->move, ch->max_move );
+save.c:    fprintf( fp, "Gold        %d\n",	ch->gold		);
+save.c:    fprintf( fp, "Exp         %d\n",	ch->exp			);
+save.c:    fprintf( fp, "Act         %d\n",	ch->act			);
+save.c:    fprintf( fp, "AffdBy      %d\n",	ch->affected_by		);
+save.c:	    ch->position == POS_FIGHTING ? POS_STANDING : ch->position );
+save.c:    fprintf( fp, "Prac        %d\n",	ch->practice		);
+save.c:    fprintf( fp, "SavThr      %d\n",	ch->saving_throw	);
+save.c:    fprintf( fp, "Align       %d\n",	ch->alignment		);
+save.c:    fprintf( fp, "Hit         %d\n",	ch->hitroll		);
+save.c:    fprintf( fp, "Dam         %d\n",	ch->damroll		);
+save.c:    fprintf( fp, "Armr        %d\n",	ch->armor		);
+save.c:    fprintf( fp, "Wimp        %d\n",	ch->wimpy		);
+save.c:    fprintf( fp, "Deaf        %d\n",	ch->deaf		);
+save.c:	fprintf( fp, "Vnum        %d\n",	ch->pIndexData->vnum	);
+save.c:	fprintf( fp, "Paswd       %s~\n",	ch->pcdata->pwd		);
+save.c:	fprintf( fp, "Bmfin       %s~\n",	ch->pcdata->bamfin	);
+save.c:	fprintf( fp, "Bmfout      %s~\n",	ch->pcdata->bamfout	);
+save.c:	fprintf( fp, "Immskll     %s~\n",	ch->pcdata->immskll	);
+save.c:	fprintf( fp, "Ttle        %s~\n",	ch->pcdata->title	);
+save.c:		ch->pcdata->perm_str,
+save.c:		ch->pcdata->perm_int,
+save.c:		ch->pcdata->perm_wis,
+save.c:		ch->pcdata->perm_dex,
+save.c:		ch->pcdata->perm_con );
+save.c:		ch->pcdata->mod_str, 
+save.c:		ch->pcdata->mod_int, 
+save.c:		ch->pcdata->mod_wis,
+save.c:		ch->pcdata->mod_dex, 
+save.c:		ch->pcdata->mod_con );
+save.c:		ch->pcdata->condition[0],
+save.c:		ch->pcdata->condition[1],
+save.c:		ch->pcdata->condition[2] );
+save.c:	fprintf( fp, "Pglen       %d\n",   ch->pcdata->pagelen	   );
+save.c:	    if ( skill_table[sn].name && ch->pcdata->learned[sn] > 0 )
+save.c:		    ch->pcdata->learned[sn], skill_table[sn].name );
+save.c:    for ( paf = ch->affected; paf; paf = paf->next )
+save.c:    if ( ch->qmark )
+save.c:    	for( qmark = ch->qmark; qmark; qmark = qmark->next )
+save.c:    if ( ch->level < obj->level
+save.c:    ch->desc				= d;
+save.c:    ch->name				= str_dup( name );
+save.c:    sprintf(pipe_buf, "|N %d %s \n", (int)d, ch->name);
+save.c:    ch->pcdata->prompt			= str_dup( daPrompt );
+save.c:    ch->last_note			= 0;
+save.c:    ch->act				= PLR_BLANK
+save.c:    ch->pcdata->pwd			= str_dup( "" );
+save.c:    ch->pcdata->bamfin			= str_dup( "" );
+save.c:    ch->pcdata->bamfout			= str_dup( "" );
+save.c:    ch->pcdata->immskll			= str_dup( "" );
+save.c:    ch->pcdata->title			= str_dup( "" );
+save.c:    ch->pcdata->perm_str		= 13;
+save.c:    ch->pcdata->perm_int		= 13; 
+save.c:    ch->pcdata->perm_wis		= 13;
+save.c:    ch->pcdata->perm_dex		= 13;
+save.c:    ch->pcdata->perm_con		= 13;
+save.c:    ch->pcdata->condition[COND_THIRST]	= 48;
+save.c:    ch->pcdata->condition[COND_FULL]	= 48;
+save.c:    ch->pcdata->pagelen			= 20;
+save.c:    ch->pcdata->security		= 0;	/* OLC */
+save.c:    ch->pcdata->switched		= FALSE;
+save.c:    sprintf( strsave, "%s%s%s%s%s", PLAYER_DIR, initial( ch->name ),
+save.c:    sprintf( strsave, "%s%s%s%s", PLAYER_DIR, initial( ch->name ),
+save.c:		    SET_BIT( ch->act, PLR_DENY );
+save.c:    char	*def_sdesc  /*[]*/ = ch->name;/*"Your short description was corrupted.";*/
+save.c:/*    char	*def_cname    = ch->name;*/
+save.c:/*	{ "Cname",  TRUE,  (int) &def_cname,	{ &ch->cname,	      NULL } },*/
+save.c:      { "ShtDsc", TRUE,	 (int) def_sdesc,	{ &ch->short_descr,   NULL } },
+save.c:      { "LngDsc", TRUE,	 (int) &def_ldesc,	{ &ch->long_descr,    NULL } },
+save.c:      { "Dscr",	  TRUE,	 (int) &def_desc,	{ &ch->description,   NULL } },
+save.c:      { "Prmpt",  TRUE,	 (int) &def_prompt,	{ &ch->pcdata->prompt,NULL } },
+save.c:      { "Sx",	  FALSE, SEX_MALE,		{ &ch->sex,	      NULL } },
+save.c:      { "Security",FALSE,0,			{ &ch->pcdata->security,NULL } },
+save.c:      { "Cla",	  FALSE, MAND,			{ &ch->class,	      NULL } },
+save.c:      { "Lvl",	  FALSE, MAND,			{ &ch->level,	      NULL } },
+save.c:      { "Trst",	  FALSE, 0,			{ &ch->trust,	      NULL } },
+save.c:      { "Playd",  FALSE, 0,			{ &ch->played,	      NULL } },
+save.c:      { "Note",	  FALSE, 0,			{ &ch->last_note,     NULL } },
+save.c:      { "HpMnMv", FALSE, MAND,			{ &ch->hit,
+save.c:						  &ch->max_hit,
+save.c:						  &ch->mana,
+save.c:						  &ch->max_mana,
+save.c:						  &ch->move,
+save.c:						  &ch->max_move,      NULL } },
+save.c:      { "Gold",	  FALSE, 0,			{ &ch->gold,	      NULL } },
+save.c:      { "Exp",	  FALSE, MAND,			{ &ch->exp,	      NULL } },
+save.c:      { "Act",	  FALSE, DEFLT,			{ &ch->act,	      NULL } },
+save.c:      { "AffdBy", FALSE, 0,			{ &ch->affected_by,   NULL } },
+save.c:      { "Pos",	  FALSE, POS_STANDING,		{ &ch->position,      NULL } },
+save.c:      { "Prac",	  FALSE, MAND,			{ &ch->practice,      NULL } },
+save.c:      { "SavThr", FALSE, MAND,			{ &ch->saving_throw,  NULL } },
+save.c:      { "Align",  FALSE, 0,			{ &ch->alignment,     NULL } },
+save.c:      { "Hit",	  FALSE, MAND,			{ &ch->hitroll,	      NULL } },
+save.c:      { "Dam",	  FALSE, MAND,			{ &ch->damroll,	      NULL } },
+save.c:      { "Armr",	  FALSE, MAND,			{ &ch->armor,	      NULL } },
+save.c:      { "Wimp",	  FALSE, 10,			{ &ch->wimpy,	      NULL } },
+save.c:      { "Deaf",	  FALSE, 0,			{ &ch->deaf,	      NULL } },
+save.c:      { "Paswd",  TRUE,	 MAND,			{ &ch->pcdata->pwd,   NULL } },
+save.c:      { "Bmfin",  TRUE,	 DEFLT,			{ &ch->pcdata->bamfin,
+save.c:      { "Bmfout", TRUE,	 DEFLT,			{ &ch->pcdata->bamfout,
+save.c:      { "Immskll",TRUE,	 DEFLT,			{ &ch->pcdata->immskll,
+save.c:      { "Ttle",	  TRUE,	 (int) &def_title,	{ &ch->pcdata->title, NULL } },
+save.c:      { "AtrPrm", FALSE, MAND,			{ &ch->pcdata->perm_str,
+save.c:						  &ch->pcdata->perm_int,
+save.c:						  &ch->pcdata->perm_wis,
+save.c:						  &ch->pcdata->perm_dex,
+save.c:						  &ch->pcdata->perm_con,
+save.c:      { "AtrMd",  FALSE, MAND,			{ &ch->pcdata->mod_str,
+save.c:						  &ch->pcdata->mod_int,
+save.c:						  &ch->pcdata->mod_wis,
+save.c:						  &ch->pcdata->mod_dex,
+save.c:						  &ch->pcdata->mod_con,
+save.c:      { "Cond",	  FALSE, DEFLT,			{ &ch->pcdata->condition [0],
+save.c:						  &ch->pcdata->condition [1],
+save.c:						  &ch->pcdata->condition [2],
+save.c:      { "Pglen",  FALSE, 20,			{ &ch->pcdata->pagelen,
+save.c:	      ch->in_room = get_room_index( fread_number( fp, &status ) );
+save.c:	      if ( !ch->in_room )
+save.c:		  ch->in_room = get_room_index( ROOM_VNUM_LIMBO );
+save.c:		  ch->race = i;
+save.c:		  ch->pcdata->learned[sn] = i;
+save.c:	      paf->next		  = ch->affected;
+save.c:	      ch->affected	  = paf;
+save.c:	  	qmark->next		= ch->qmark;
+save.c:		if ( ch->qmark )
+save.c:			ch->qmark->prev = qmark;
+save.c:	  	ch->qmark 	= qmark;
+save.c:    if ( ch->pcdata->title && isalnum ( *ch->pcdata->title ) )
+save.c:	sprintf( buf, " %s", ch->pcdata->title );
+save.c:	free_string( ch->pcdata->title );
+save.c:	ch->pcdata->title = str_dup( buf );
+save.c:	{ "Level",	 FALSE, ch->level,	  { &obj.level,	      NULL } },
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, NULL );
+special.c:    if ( !IS_AWAKE( ch ) || ch->fighting )
+special.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+special.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:	spell_armor( skill_lookup( "armor" ), ch->level, ch, victim );
+special.c:	spell_bless( skill_lookup( "bless" ), ch->level, ch, victim );
+special.c:			     ch->level, ch, victim );
+special.c:			 ch->level, ch, victim );
+special.c:			  ch->level, ch, victim );
+special.c:	spell_refresh( skill_lookup( "refresh" ), ch->level, ch, victim );
+special.c:	spell_combat_mind( skill_lookup( "combat mind" ), ch->level, ch,
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+special.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:	if ( ch->level >= min_level )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+special.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+special.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:	if ( ch->level >= min_level )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+special.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:	case 10: if ( ch->race == race_lookup( "Vampire" ) )
+special.c:	if ( ch->level >= min_level )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+special.c:    if ( !IS_AWAKE( ch ) || ch->fighting )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:		 ch->in_room );
+special.c:		 ch->in_room );
+special.c:    for ( corpse = ch->in_room->contents; corpse; corpse = corpse_next )
+special.c:	    obj_to_room( obj, ch->in_room );
+special.c:    if ( !IS_AWAKE( ch ) || ch->fighting )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:    for ( trash = ch->in_room->contents; trash; trash = trash_next )
+special.c:    if ( ch->fighting )
+special.c:    if ( !move || ch->position < POS_SLEEPING )
+special.c:	ch->position = POS_STANDING;
+special.c:	ch->position = POS_SLEEPING;
+special.c:    if ( ch->position != POS_FIGHTING
+special.c:	|| !( victim = ch->fighting )
+special.c:	|| number_percent( ) > 2 * ch->level )
+special.c:    spell_poison( gsn_poison, ch->level, ch, victim );
+special.c:    if ( ch->position != POS_STANDING )
+special.c:    for ( victim = ch->in_room->people; victim;
+special.c:	    && number_percent( ) + victim->level - ch->level >= 33 )
+special.c:	    ch->gold	 += 3 * gold / 4;
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+special.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:	if ( ch->level >= min_level )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+special.c:      if ( !ch->in_room )
+special.c:      if ( ch->fighting )
+special.c:    if ( ch->position != POS_FIGHTING )
+special.c:	|| IS_SET( race_table[ch->race].race_abilities, RACE_MUTE )
+special.c:	|| IS_SET( ch->in_room->room_flags, ROOM_CONE_OF_SILENCE ) )
+special.c:    for ( victim = ch->in_room->people; victim; victim = victim->next_in_room )
+special.c:	if ( ch->level >= min_level )
+special.c:    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim );
+special.c:    if ( !( pexit = ch->in_room->exit[door] ) )
+special.c:	    && pexit_rev->to_room == ch->in_room )
+special.c:	    for ( rch = to_room->people; rch; rch = rch->next_in_room )
+string.c:    ch->desc->pString = pString;
+string.c:    ch->desc->pString = pString;
+string.c:	    **ch->desc->pString = '\0';
+string.c:	    send_to_char( *ch->desc->pString, ch );
+string.c:	    *ch->desc->pString =
+string.c:		string_replace( *ch->desc->pString, arg2, arg3 );
+string.c:	    *ch->desc->pString = format_string( *ch->desc->pString );
+string.c:	ch->desc->pString = NULL;
+string.c:	ch->desc->pString = NULL;
+string.c:    strcpy( buf, *ch->desc->pString );
+string.c:    free_string( *ch->desc->pString );
+string.c:    *ch->desc->pString = str_dup( buf );
+update.c:	title_table [ch->class] [ch->level] [ch->sex == SEX_FEMALE ? 1 : 0] );
+update.c:		    class_table[ch->class].hp_min,
+update.c:		    class_table[ch->class].hp_max );
+update.c:    add_mana	= class_table[ch->class].fMana
+update.c:    ch->max_hit	+= add_hp;
+update.c:    ch->max_mana	+= add_mana;
+update.c:    ch->max_move	+= add_move;
+update.c:    ch->practice	+= add_prac;
+update.c:	REMOVE_BIT( ch->act, PLR_BOUGHT_PET );
+update.c:	    add_hp,	ch->max_hit,
+update.c:	    add_mana,	ch->max_mana,
+update.c:	    add_move,	ch->max_move,
+update.c:	    add_prac,	ch->practice );
+update.c:    if ( ch->level == 1 )
+update.c:	title_table [ch->class] [ch->level] [ch->sex == SEX_FEMALE ? 1 : 0] );
+update.c:		    class_table[ch->class].hp_min,
+update.c:		    class_table[ch->class].hp_max );
+update.c:    add_mana	= class_table[ch->class].fMana
+update.c:    ch->max_hit	-= add_hp;
+update.c:    ch->max_mana	-= add_mana;
+update.c:    ch->max_move	-= add_move;
+update.c:    ch->practice	-= add_prac;
+update.c:	REMOVE_BIT( ch->act, PLR_BOUGHT_PET );
+update.c:    ch->level -= 1;
+update.c:	    add_hp,	ch->max_hit,
+update.c:	    add_mana,	ch->max_mana,
+update.c:	    add_move,	ch->max_move,
+update.c:	    add_prac,	ch->practice );
+update.c:    if ( IS_NPC( ch ) || ch->level >= L_APP )
+update.c:    ch->exp = UMAX( EXP_PER_LEVEL( ch->level - 1 ) * ch->level, ch->exp + gain );
+update.c:    while ( ch->level < L_APP && ch->exp >= EXP_PER_LEVEL( ch->level )
+update.c:	   * ( ch->level + 1 ) )
+update.c:	ch->level += 1;
+update.c:    int racehpgainextra = ( ch->max_hit * race_table[ ch->race ].hp_gain )
+update.c:			    / ch->max_hit;
+update.c:	gain = ch->level * 3 / 2;
+update.c:	gain = UMIN( 5, ch->level );
+update.c:	switch ( ch->position )
+update.c:	if ( ch->pcdata->condition[COND_FULL  ] == 0 )
+update.c:	if ( ch->pcdata->condition[COND_THIRST] == 0 )
+update.c:    return UMIN( gain, ch->max_hit - ch->hit );
+update.c:    int racemanaextra = ( ch->max_mana * race_table[ ch->race ].mana_gain )
+update.c:			  / ch->max_mana;
+update.c:	gain = ch->level;
+update.c:	gain = UMIN( 5, ch->level / 2 );
+update.c:	switch ( ch->position )
+update.c:	if ( ch->pcdata->condition[COND_FULL  ] == 0 )
+update.c:	if ( ch->pcdata->condition[COND_THIRST] == 0 )
+update.c:    return UMIN( gain, ch->max_mana - ch->mana );
+update.c:    int racemoveextra = ( ch->max_move * race_table[ ch->race ].move_gain )
+update.c:			  / ch->max_move;
+update.c:	gain = ch->level;
+update.c:	gain = UMAX( 15, 2 * ch->level );
+update.c:	switch ( ch->position )
+update.c:	if ( ch->pcdata->condition[COND_FULL  ] == 0 )
+update.c:	if ( ch->pcdata->condition[COND_THIRST] == 0 )
+update.c:    return UMIN( gain, ch->max_move - ch->move );
+update.c:    if ( value == 0 || IS_NPC( ch ) || ch->level >= LEVEL_HERO )
+update.c:    condition				= ch->pcdata->condition[ iCond ];
+update.c:    ch->pcdata->condition[iCond]	= URANGE( 0, condition + value, 48 );
+update.c:    if ( ch->pcdata->condition[iCond] == 0 )
+update.c:    for ( ch = char_list; ch; ch = ch->next )
+update.c:	if ( ch->deleted )
+update.c:	    || !ch->in_room
+update.c:	if ( ch->spec_fun != 0 )
+update.c:	    if ( ( *ch->spec_fun ) ( ch ) )
+update.c:	if ( ch->position < POS_STANDING )
+update.c:	if ( ch->in_room->area->nplayer > 0 )
+update.c:	    if ( ch->position < POS_STANDING )
+update.c:	if ( IS_SET( ch->act, ACT_SCAVENGER )
+update.c:	    && ch->in_room->contents
+update.c:	    for ( obj = ch->in_room->contents; obj; obj = obj->next_content )
+update.c:	if ( ch->hit < ch->max_hit / 2 )
+update.c:	if ( !IS_SET( ch->act, ACT_SENTINEL )
+update.c:	    && ( pexit = ch->in_room->exit[door] )
+update.c:	    && ( !IS_SET( ch->act, ACT_STAY_AREA )
+update.c:		||   pexit->to_room->area == ch->in_room->area ) )
+update.c:	    if ( ch->position < POS_STANDING )
+update.c:		      rch  = rch->next_in_room )
+update.c:		    if ( rch->deleted )
+update.c:			    if ( ch->in_room->exit[direction]
+update.c:    for ( ch = char_list; ch; ch = ch->next )
+update.c:	if ( ch->deleted )
+update.c:	if ( ch->qmark )
+update.c:		for( qmark = ch->qmark; qmark; qmark = qmark->next )
+update.c:		while( qmark = ch->qmark )
+update.c:	                        ch->qmark = qmark->next;
+update.c:		if ( ch->qmark )
+update.c:			for( qmark = ch->qmark; qmark->next; qmark = qmark->next )
+update.c:	if ( IS_NPC( ch ) && ch->position > POS_FIGHTING )
+update.c:	    if ( ch->position < POS_STANDING )
+update.c:	    && ( !ch->desc || ch->desc->connected == CON_PLAYING )
+update.c:	    &&	 ch->level >= 2
+update.c:	    &&	 ch->save_time < save_time )
+update.c:	    save_time	= ch->save_time;
+update.c:	if ( ch->position >= POS_STUNNED )
+update.c:	    if ( ch->hit  < ch->max_hit	 )
+update.c:		ch->hit	 += hit_gain( ch );
+update.c:	    if ( ch->mana < ch->max_mana )
+update.c:		ch->mana += mana_gain( ch );
+update.c:	    if ( ch->move < ch->max_move )
+update.c:		ch->move += move_gain( ch );
+update.c:	if ( ch->position == POS_STUNNED )
+update.c:	if ( !IS_NPC( ch ) && ( ch->level < LEVEL_IMMORTAL
+update.c:			       || ( !ch->desc && !IS_SWITCHED( ch ) ) ) )
+update.c:		if ( --obj->value[2] == 0 && ch->in_room )
+update.c:		    --ch->in_room->light;
+update.c:	    if ( ++ch->timer >= 10 )
+update.c:		if ( !ch->was_in_room && ch->in_room )
+update.c:		    ch->was_in_room = ch->in_room;
+update.c:		    if ( ch->fighting )
+update.c:	    if ( ch->timer > 20 && !IS_SWITCHED( ch ) )
+update.c:			   ( -1 - race_table[ch->race].hunger_mod ) );
+update.c:			   ( -1 - race_table[ch->race].thirst_mod ) );
+update.c:	for ( paf = ch->affected; paf; paf = paf->next )
+update.c:		    ch->race = race_lookup( "Vampire" );
+update.c:	    && ch->race == race_lookup( "vampire" )
+update.c:	    && ch->in_room->room_flags != ROOM_UNDERGROUND )
+update.c:	    if ( ch->in_room->sector_type == SECT_INSIDE )
+update.c:		if ( ch->in_room->sector_type == SECT_FOREST )
+update.c:        else if ( (   ch->in_room->sector_type == SECT_UNDERWATER
+update.c:		      && !IS_SET( race_table[ ch->race ].race_abilities,
+update.c:		|| ( ch->in_room->sector_type != SECT_UNDERWATER
+update.c:		    && IS_SET( race_table[ ch->race ].race_abilities,
+update.c:/*		    && ( str_cmp( race_table[ ch->race ].name, "Object" )
+update.c:			&& str_cmp( race_table[ ch->race ].name, "God" ) )*/ ) )
+update.c:	else if ( ch->position == POS_INCAP )
+update.c:	else if ( ch->position == POS_MORTAL )
+update.c://bug("race = %d", ch->race);
+update.c:	for ( ch = char_list; ch; ch = ch->next )
+update.c:	    if ( ch->deleted )
+update.c:	    || ch->level >= LEVEL_IMMORTAL
+update.c:	    || !ch->in_room )
+update.c:	for ( mch = ch->in_room->people; mch; mch = mch->next_in_room )
+update.c:	if ( IS_NPC( mch ) && !mch->deleted && mch->mpactnum > 0
+update.c:	    && mch->in_room->area->nplayer > 0 )
+update.c:	    for ( tmp_act = mch->mpact; tmp_act != NULL;
+update.c:	    for ( tmp_act = mch->mpact; tmp_act != NULL; tmp_act = tmp2_act )
+update.c:	    mch->mpactnum = 0;
+update.c:	    mch->mpact	  = NULL;
+update.c:		|| mch->deleted
+update.c:		|| mch->fighting
+update.c:		|| ( IS_SET( mch->act, ACT_WIMPY ) && IS_AWAKE( ch ) )
+update.c:		|| ( !IS_SET( mch->act, ACT_AGGRESSIVE )
+update.c:		    && ( str_infix( race_table[ch->race].name,
+update.c:				   race_table[mch->race].hate )
+update.c:			|| ( !str_infix( race_table[ch->race].name,
+update.c:					race_table[mch->race].hate )
+update.c:			    && abs( mch->level - ch->level ) > 4 ) ) ) )
+update.c:	    if ( !str_infix( race_table[ch->race].name,
+update.c:			    race_table[mch->race].hate ) )
+update.c:	    for ( vch = mch->in_room->people; vch; vch = vch->next_in_room )
+update.c:		    || vch->deleted
+update.c:		    || vch->level >= LEVEL_IMMORTAL )
+update.c:		if ( ( !IS_SET( mch->act, ACT_WIMPY ) || !IS_AWAKE( vch ) )
+update.c:			    && !str_infix( race_table[vch->race].name,
+update.c:					  race_table[mch->race].hate ) ) )
+update.c:	    for ( paf = ch->affected; paf; paf = paf_next )
+update.c:		if ( paf->deleted || ch->deleted )
+update.c:		    if ( ch->affected == paf )
+update.c:			ch->affected = paf->next;
+update.c:			for ( prev = ch->affected; prev; prev = prev->next )
+update.c:	    ch_next = ch->next;
+update.c:	    if ( ch->deleted )
+update.c:		    char_list = ch->next;
+update.c:			    prev->next = ch->next;
+update.c:				ch->name );

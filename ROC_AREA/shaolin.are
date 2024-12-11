@@ -1,0 +1,2284 @@
+#AREADATA
+Name        少林寺~
+Identity    shaolin~
+Builders    Boom~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      20100 20199
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#20101
+monk child~
+小和尚(monk child)~
+一個小和尚(monk child)在這裡掃地.
+~
+他只是一個年輕孩子，當然身材不如你高大。
+~
+197 0 500 S
+7 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 8
+R human~
+>tick_prog 80~
+	mpecho $I嘀嘀咕咕的說著：那邊一定有什麼...那個地方(place)一定怪怪的。
+	curse
+~
+>talk_prog place~
+	if is_qmark($n) != shaolin_quest
+		mpadd_qmark $n shaolin_quest -1 0 0 0 0 1
+		say 啊？你說那個地方是哪裡？
+		ponder
+		say 還不是那個放有花瓶的地方。那個地方老是有奇怪的聲音傳出來。
+		say 雖然長老說沒什麼，我還是覺得怪怪的，改天一定要去搜一下。
+	else
+		say 我不是告訴過你了嗎？放花瓶的地方！
+		say 就是客房外面那個小佛堂！
+		anger $n
+	endif
+~
+>talk_prog prison~
+	if is_qmark($n) == shaolin_quest 100001
+		say 監獄？你在開玩笑吧？長老不會允許這種事的啦～不然你去問他～
+		shr
+	else
+		say 啥監獄？
+	endif
+~
+>talk_prog topic~
+	say 施主有什麼事嗎？
+~
+|	
+#20102
+nun female prisoner~
+被囚禁的尼姑(imprisoned nun)~
+一個被囚禁的尼姑(imprisoned nun)躲在牆角裏發抖.
+~
+從她的服裝看來，她好像是個尼姑，不過為什麼會
+被囚禁在這邊呢？
+~
+69 0 0 S
+21 0 0 0d0+0 0d0+0
+0 0
+0 8 2
+#20103
+disciple~
+首座弟子(disciple)~
+羅漢堂首座的嫡傳弟子(disciple)在這裡練習新的打鬥技巧.
+~
+他是少林寺許多習武弟子之一，看他的架式，你覺
+得他很有成功的希望。
+~
+135 0 100 S
+17 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+#20104
+monk~
+和尚(monk)~
+小心!一個和尚(monk)在這裡練習打鬥技巧.
+~
+為了避免被他誤傷，最好跟他保持一點距離。
+~
+7 0 201 S
+11 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+#20105
+monk guard~
+武鬥僧(monk guard)~
+武鬥僧(monk guard)在這裡用兇狠的目光看著你!
+~
+他看起來兇猛而孔武有力，你不會想跟他打吧？
+~
+39 552 -100 S
+13 200 0 0d0+0 0d-50+0
+0 0
+0 8 1
+C 1
+>greet_prog 100~
+	if is_qmark($n) == shaolin_quest 100000
+		say 你怎麼進來的？算了，那不重要，這個牢房(prison)不是你該來的。
+		mpmod_qmark $n shaolin_quest v0 = 1
+		mpecho $I 把你趕了出去...
+		mpechoat $n 你覺得事情不單純...少林寺有監獄？
+		mptransfer $n 20126
+		mpforcer 20126 force $n look
+	else
+		mpkill $n
+	endif
+~
+>death_prog 100~
+	say 劫獄啊！
+		if is_qmark($n) == shaolin_quest 100002
+		mpecho 從$I的身上掉出一串鑰匙(Keys)！
+		mpoload 20140 36 floor
+	else
+		mpecho 從$I的身上掉出一串鑰匙(Keys)！
+		mpoload 20131 36 floor
+	endif
+~
+|
+#20106
+demon~
+心魔(inner demon)~
+你的心魔(inner demon)在這裡顯現出來並向你攻擊!
+~
+這張臉孔看起來非常眼熟....啊！不就是你自己的
+臉嗎？這個怪物似乎變成了你的樣子，而且他似乎
+想取代原本的主人....
+~
+45 680 -201 S
+22 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 1
+#20107
+evil monk~
+惡僧(evil monk)~
+這個惡僧(evil monk)忽然在你面前跳了出來把你嚇了一跳!
+~
+他看起來跟這裡其他的和尚一樣，事實上，他似乎
+比其他人更不友善一點。而且他似乎不太喜歡你的
+長相...
+~
+101 552 -300 S
+17 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+#20108
+wood wooden monk man machine~
+初等木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。不過這具木人好像有一點破爛....
+~
+1|2|32|64 8|32 0 S
+30 0 0 0d-10+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+>fight_prog 10~
+	mpecho $I 一腳朝你踢來！
+	kick
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20138 mpmload 20119
+	mptransfer $n 20138
+	mpforcer 20138 force $n look
+	mppurge $i
+~
+|
+#20109
+monk warrior~
+資深武鬥僧(monk warrior)~
+這位資深的武鬥僧(monk warrior)在此昂首闊步的走著.
+~
+跟許多經驗老道的戰士討厭菜鳥一樣，他相當的看
+不起眼前的你。
+~
+197 8192 201 S
+25 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+#20110
+luohan Luohan bronze monk~
+羅漢(Luohan)~
+這位羅漢(Luohan)一動也不動的坐在這裡守著木人巷.
+~
+渾身古銅色的皮膚象徵著他已經習得少林寺部分最
+高深的武功，他正守著通往木人巷的路。
+~
+7 8320 500 S
+28 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Giant~
+C 1
+P 4|8|32768|65536
+>talk_prog topic~
+	say 施主要入木人巷嗎？(yes/no)
+~
+>talk_prog yes~
+	mpechoat $n $I將你送進了木人巷
+	mpat 20114 mpmload 20108
+	mptransfer $n 20114
+	mpforcer 20114 force $n look
+~
+>talk_prog no~
+	nod
+	mpecho $I又恢復沉默不語...
+~
+|
+#20111
+Wuhua wuhua monk~
+無花和尚(Wuhua)~
+一個面容凶惡的和尚(Monk)正惡狠狠的瞪著你！
+~
+像許多走火入魔的武僧，他迫不及待想襲擊你。
+~
+1|2|64 8|32 -1000 S
+45 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+P 8
+R human~
+>greet_prog 100~
+	if is_qmark($n) == shaolin_quest 100002
+		say 好久了...我終於又聞到活人的氣味了...
+		grin
+		mpechoat $n $I 忽然從你身邊跑走(escape)了！
+		mpmod_qmark $n shaolin_quest v0 = 3
+		mpechoat $n 這下該怎麼辦呢...先去告訴方丈好了？
+		mppurge self
+	else
+		say 滾滾滾！別打擾老子！
+		mpkill $n
+	endif
+~
+|
+#20112
+master librarian monk books~
+羅漢堂藏經閣長老(Master of Books)~
+羅漢堂藏經閣長老(Master of Books)在這裡閱讀閣內的經典.
+~
+他其中一隻手握著燭臺以便閱讀架上的經典，藉
+著燭光的反射，你可以看到他的眼神中充滿了智
+慧，當然還包括歲月的痕跡。
+~
+1|2|64 8320 500 S
+35 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 3
+P 8
+R human~
+>talk_prog prison~
+	if is_qmark($n) == shaolin_quest 100001
+		say 老納並不清楚。
+		avert $n
+	else
+		say 什麼監獄？
+	endif
+~
+|
+#20113
+master monk drunken~
+酒醉的長老(Drunken Master)~
+一位喝醉酒的長老(Drunken Master)睡在這裡.
+~
+唔，一個僧侶應該這樣做嗎？
+~
+197 8320 250 S
+37 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+R human~
+#20114
+master monk trainer~
+羅漢堂傳功長老(Master Trainer)~
+羅漢堂傳功長老(Master Trainer)在這裡研究著少林武功.
+~
+他身上散發出一股驚人的魄力，但又技巧性的控
+制住那股力量，不知道你要多久才能達到他的修
+為。
+~
+197 8322 500 S
+39 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+R human~
+P 8
+>talk_prog prison~
+	if is_qmark($n) == shaolin_quest 100001
+		say 老納並不清楚。
+		avert $n
+	else
+		say 什麼監獄？
+	endif
+~
+|
+#20115
+abbot Abbot monk~
+羅漢堂首座(Abbot of Luohan)~
+羅漢堂的方丈(Abbot of Luohan)向你微微點頭.
+~
+他有著與年齡完全不搭配的力量跟健康，帶給別
+人相當深刻的印像。
+~
+197 532608 800 S
+50 500 100 20d20+0 30d150+0
+0 0
+0 8 1
+C 1
+P 8|256|4194304|8388608|16777216
+>talk_prog prison~
+	if is_qmark($n) == shaolin_quest 100001
+		mpmod_qmark $n shaolin_quest v0 = 2
+		gasp $n
+		mpcallout 1 say 施主知道了？
+		mpcallout 2 say 那裡關著犯戒的僧尼，是以不願外人介入。
+		mpcallout 3 say 少林寺10年前的恥辱阿...
+		mpcallout 4 sigh
+		mpcallout 5 say 總之因為某個不能被釋放的人...唉，老納不能再多說了。
+		mpcallout 6 say 施主也請不要繼續過問...。
+	else
+		say 什麼監獄？
+	endif
+~
+>talk_prog escape~
+	if is_qmark($n) == shaolin_quest 100003
+		mpmod_qmark $n shaolin_quest v0 = 4
+		say 老納曾經告訴過施主，請施主不要多管的...
+		say 寺院的大門已經被我們封鎖了，無花唯一可能逃跑的地方...
+		say 只剩下木人巷了。
+		say 既然是施主所造成，老納希望可以讓施主來解決。
+		say 就麻煩施主入木人巷去追捕無花吧！
+		say 木人巷就在佛堂大廳往下的祕門裡，施主請保重。
+		say 要打開木人巷，只要跟那邊的守門羅漢交談就可以了。
+		wave $n
+	else
+		say 誰逃走了？
+	endif
+~
+>greet_prog 100~
+	if is_qmark($n) == shaolin_quest 200002
+		mpechoat $n $I一看到你身上被撕破的衣擺，深深的嘆了口氣。
+		say 我大概知道前因後果了，一切都是緣分，施主也請不要掛心。
+		say 這是給您的一份謝禮。
+		mpexp $n 10000
+		mpmod_qmark $n shaolin_quest v1 = 3
+	endif
+~
+>talk_prog report~
+	if is_qmark($n) == shaolin_quest 200001
+		say 老納替少林寺以及施主您自己說聲謝謝。
+		say 這是一點小小的謝禮。
+		mpskillexp $n 2000
+		mpmod_qmark $n shaolin_quest v1 = 3
+	else
+		say　你要跟我回報什麼？
+	endif
+~
+>talk_prog restart~
+	if is_qmark($n) == shaolin_quest
+		if is_qmark($n) <= shaolin_quest 100005
+			say 好吧，這也是緣分。
+			sigh
+			mpdel_qmark $n shaolin_quest
+		endif
+	else
+		say 重新什麼？
+	endif
+~
+|
+#20116
+Jinshen jinshen~
+金身羅漢(Jinshen)~
+一具金身羅漢(Jinshen)坐在這裡一動也不動.
+~
+從頭到腳被金色所包圍的身體，象徵著少林寺的
+武學巔峰。
+~
+1|2 8|32|128 1000 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+C 1
+P 4|8|32768|65536
+>fight_prog 30~
+	say 大力金剛腿！
+	mpecho $I 忽然連續朝你踢出幾腳！
+	kick
+	mpnowait
+	kick
+	mpnowait
+	kick
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	say ...過關！
+	mpecho $I 將你推往下一個房間！
+	mpecho $I的身影緩緩的消失在黑暗中...
+	mpat 20146 mpmload 20127
+	mptransfer $n 20146
+	mpforcer 20146 force $n look
+	mppurge $i
+~
+|
+#20117
+guest visitor~
+香客(visiting guest)~
+一位前來寺廟上香的香客(visitor)站在這裡.
+~
+從他的儀容跟衣著來看，他應該相當的富有。
+~
+197 0 50 S
+13 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+#20118
+old man~
+瘋癲的老人(crazy old man)~
+一個瘋癲的老人(crazy old man)坐在這裡對你傻笑.
+~
+他坐在空地上，傻笑著對你說：我看到你了，
+喀啦欣尼，你會死！我知道你的名子，喀啦欣
+尼，我會抓到你的！哈哈哈哈！
+他大概瘋了吧....
+~
+35 0 0 S
+12 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+#20119
+wood wooden-first1 monk man machine~
+初等木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。跟前面的木人比，這具看起來比較不
+破了....
+~
+1|2|32|64 8|32 0 S
+20 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 20~
+	mpecho $I 忽然朝你的頭打了過來！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20139 mpmload 20120
+	mptransfer $n 20139
+	mpforcer 20139 force $n look
+	mppurge $i
+~
+|
+#20120
+wood wooden-first2 monk man machine~
+初等木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。跟前面的木人比，這具看起來好很多
+了。
+~
+1|2|32|64 8|32 0 S
+20 0 0 5d5+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 30~
+	mpecho $I 忽然朝你展開猛攻！
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20140 mpmload 20121
+	mptransfer $n 20140
+	mpforcer 20140 force $n look
+	mppurge $i
+~
+|
+#20121
+wood wooden-second1 monk man machine~
+中階木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來製作相當精良，相對
+的威力也提升不少。
+~
+1|2|32|64 8|32 0 S
+25 0 0 0d-5+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 20~
+	mpecho $I 忽然朝你踢了過來！
+	kick
+	mpnowait
+	kick
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20141 mpmload 20122
+	mptransfer $n 20141
+	mpforcer 20141 force $n look
+	mppurge $i
+~
+|
+#20122
+wood wooden-second2 monk man machine~
+中階木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來製作相當精良，相對
+的威力也提升不少。這具看起來比前面那具更堅固
+一點。
+~
+1|2|32|64 8|32 0 S
+25 0 0 5d5+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 30~
+	mpecho $I 忽然朝你的頭打了過來！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20142 mpmload 20123
+	mptransfer $n 20142
+	mpforcer 20142 force $n look
+	mppurge $i
+~
+|
+#20123
+wood wooden-second3 monk man machine~
+中階木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來製作相當精良，相對
+的威力也提升不少。這具看起非常的堅固。
+~
+1|2|32|64 8|32 0 S
+25 0 0 5d5+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 40~
+	mpecho $I 忽然朝你展開猛攻！
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20143 mpmload 20124
+	mptransfer $n 20143
+	mpforcer 20143 force $n look
+	mppurge $i
+~
+|
+#20124
+wood wooden-high1 monk man machine~
+高級木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來非常的強悍。
+~
+1|2|32|64 8|32 0 S
+35 0 0 -5d-5+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 30~
+	mpecho $I 忽然朝你踢了過來！
+	kick
+	mpnowait
+	kick
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20144 mpmload 20125
+	mptransfer $n 20144
+	mpforcer 20144 force $n look
+	mppurge $i
+~
+|
+#20125
+wood wooden-high2 monk man machine~
+高級木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來非常的強悍，而且更
+加敏捷。
+~
+1|2|32|64 8|32 0 S
+35 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 40~
+	mpecho $I 忽然朝你的頭打了過來！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20145 mpmload 20126
+	mptransfer $n 20145
+	mpforcer 20145 force $n look
+	mppurge $i
+~
+|
+#20126
+wood wooden-high3 monk man machine~
+高級木人(wooden man)~
+機器操縱的木人(wooden man)忽然向你展開攻擊!
+~
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人的動作簡直跟真人一樣！
+~
+1|2|32|64 8|32 0 S
+35 0 0 5d5+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1
+P 4|8|32768|65536
+>fight_prog 50~
+	mpecho $I 忽然朝你展開猛攻！
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20115 mpmload 20116
+	mptransfer $n 20115
+	mpforcer 20115 force $n look
+	mppurge $i
+~
+|
+#20127
+Jinshen-1 jinshen~
+金身羅漢(Jinshen)~
+一具金身羅漢(Jinshen)坐在這裡一動也不動.
+~
+從頭到腳被金色所包圍的身體，象徵著少林寺的
+武學巔峰。
+~
+1|2 8|32|128 1000 S
+40 0 0 5d5+0 0d0+0
+0 0
+0 8 1
+C 1
+P 4|8|32768|65536
+R human~
+>fight_prog 30~
+	say 少林羅漢拳！
+	mpecho $I 忽然連續打了你幾拳！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	say ...過關！
+	mpecho $I 將你推往下一個房間！
+	mpecho $I的身影緩緩的消失在黑暗中...
+	mpat 20147 mpmload 20128
+	mptransfer $n 20147
+	mpforcer 20147 force $n look
+	mppurge $i
+~
+|
+#20128
+Jinshen-2 jinshen~
+金身羅漢(Jinshen)~
+一具金身羅漢(Jinshen)坐在這裡一動也不動.
+~
+從頭到腳被金色所包圍的身體，象徵著少林寺的
+武學巔峰。
+~
+1|2 8|32|128 1000 S
+40 0 0 5d5+0 0d0+0
+0 0
+0 8 1
+C 1
+P 4|8|32768|65536
+R human~
+>fight_prog 30~
+	say 少林必殺技！
+	mpecho $I 忽然從暗處掏出一把武器！
+	mpoload 20139
+	wear chair
+	mpecho $I 瘋狂的毆打你！
+	fre
+	mpnowait
+	mpat 5 remove chair
+	mpjunk chair
+~
+>death_prog 100~
+	mpdis_magic self blindness
+	mpat 5 c inf
+	say ...過關！
+	mpecho $I 將你推往下一個房間！
+	mpecho $I的身影緩緩的消失在黑暗中...
+	mpecho $I 臨走前往你身上塞了一把武器？
+	mpoload 20139 $n viclv target
+		if is_qmark($n) == shaolin_quest 100004
+			if mobcount(20129) == 0
+				mpat 20148 mpmload 20129
+				mptransfer $n 20148
+				mpforcer 20148 force $n look
+				mppurge $i
+			else
+				mptransfer $n 20148
+				mpforcer 20148 force $n look
+				mppurge $i
+			endif
+		else
+			mptransfer $n 20116
+			mpforcer 20116 force $n look
+		endif
+~
+|
+#20129
+wuhua-quest monk~
+無花和尚(Wuhua)~
+無花和尚(Wuhua)正惡狠狠的瞪著你！
+~
+看來他正打算從這邊逃走！
+~
+1|2|64 8|32 -1000 S
+45 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+P 4|8|32768|65536
+R human~
+>talk_prog topic~
+	if is_qmark($n) == shaolin_quest 100004
+		say 該死的追兵！
+		ponder
+		grin $n
+		say 不如我們打個商量吧。
+		say 我跟你無冤無仇，你放走我，我給你個寶物怎麼樣？(yes/no)
+	else
+		mpkill $n
+	endif
+~
+>talk_prog yes~
+	if is_qmark($n) == shaolin_quest 100004
+		say 成交！
+		mpmod_qmark $n shaolin_quest v0 = 6
+		mpmod_qmark $n shaolin_quest v1 = 2
+		mpecho $I 給了你一顆晶瑩的珠子...
+		mpoload 20105 $n viclv target
+		say 還有...
+		mpecho $I把你的衣服給扯破了一塊！
+		say 這樣方丈就不會說什麼了。
+		wave $n
+		mpecho $I領著你走出洞穴，之後消失在你的視線外...
+		mptransfer $n 20116
+		mppurge self
+	endif
+~
+>talk_prog no~
+	if is_qmark($n) == shaolin_quest 100004
+		say 那就沒得選了。
+		shrug
+		mpmod_qmark $n shaolin_quest v0 = 5
+		mpkill $n
+	endif
+~
+>fight_prog 100~
+	if is_qmark($n) != shaolin_quest 100005
+	say 你打我幹嘛？！
+	mpgoto self
+endif
+~
+>fight_prog 20~
+	say 大力金剛掌！
+	slap $n
+	slap $n
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+~
+>fight_prog 20~
+	say 大力金剛腿！
+	mpecho $I 忽然朝你踢了過來！
+	kick
+	mpnowait
+	kick
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == shaolin_quest 100005
+		yell 我不甘心啊！
+		mpmod_qmark $n shaolin_quest v1 = 1
+		mpecho $I 死的時候把你給撞出房間了！
+		mpecho 你覺得可以去回報(report)方丈了...
+		mptransfer $n 20116
+		mpforcer 20116 force $n look
+		mppurge self
+	else
+		yell 嗚啊！
+		mpecho $I 死的時候把你給撞出房間了！
+		mptransfer $n 20116
+	endif
+~
+|
+#0
+
+
+
+#OBJECTS
+#20101
+candle lighted~
+燭台(lighted candle)~
+一座燭台(lighted candle)放在此處用來照亮房間.~
+~
+12 128 1
+0~ 0~ 0~ 0~
+10 0 0
+#20102
+candle lighted~
+燭台(lighted candle)~
+一座燭台(lighted candle)放在此處用來照亮房間.~
+~
+12 0 0
+0~ 0~ 0~ 0~
+10 0 0
+E
+candle~
+一座燭臺，上面插著一根蠟燭．
+~
+E
+lighted~
+一座燭臺，上面插著一根蠟燭．
+~
+#20103
+candle lighted~
+燭台(lighted candle)~
+一座燭台(lighted candle)放在此處用來照亮房間.~
+~
+12 0 0
+0~ 0~ 0~ 0~
+10 0 0
+E
+candle~
+一座燭臺，上面的蠟燭被拔走了。
+~
+E
+lighted~
+一座燭臺，上面的蠟燭被拔走了。
+~
+#20104
+candle candle-shaolin~
+蠟燭(Candle)~
+一根蠟燭被擺在這邊~
+~
+1 1 1
+0~ 0~ 100~ 0~
+1 0 0
+E
+candle~
+這根蠟燭可以拿來插(insert)在空的燭臺(holder)上面。
+~
+>obj_command insert holder~
+	if is_inv_obj($n) == 26539
+		echoat $n 你把蠟燭插在燭臺的上面。
+		echoaround $n $n把蠟燭插在燭臺的上面。
+		oset holder-thoran v2 = 51
+		purge self
+	else
+		if is_equ_obj($n) == 26539
+			say 燭臺還在你手上阿，先脫下來吧？
+		else
+			say 你要把蠟燭塞到哪邊去？
+		endif
+	endif
+~
+|
+S
+#20105
+shelizi stone~
+舍利子(shelizi)~
+一顆晶瑩剔透的石頭(stone)被放置在這邊。~
+~
+08 3 1|16384
+0~ 0~ 0~ 0~
+20 0 0
+A
+4 1
+A
+2 -1
+#20106
+hot steaming bun~
+熱騰騰的饅頭(steaming hot bun)~
+一個熱騰騰的饅頭(hot bun)在這裡冒出熱騰騰的白煙.~
+~
+19 0 1
+24~ 0~ 0~ 0~
+1 0 0
+#20107
+treasure~
+大量的寶藏(huge treasure)~
+大量的寺廟寶藏(treasure)放在地上似乎在向你招手.~
+~
+20 0 1
+20100~ 0~ 0~ 0~
+100 0 0
+#20108
+flame mercy~
+慈悲之火(Flame of Mercy)~
+一團熊熊燃燒的火焰(flame)發出燦爛的七彩光芒.~
+~
+1 1859 16385
+0~ 0~ -1~ 0~
+0 0 35
+E
+sparks flame mercy light~
+一個來自慈悲之神的禮物。
+~
+A
+24 -5
+A
+23 -5
+A
+19 4
+A
+17 -10
+A
+13 20
+#20109
+manual book Jiuyangzhenjing jiuyangzhenjing~
+九陽真經殘本(Jiuyangzhenjing manual)~
+一本古老的經書(manual)被放在這裡.~
+~
+2 0 1
+27~ flamestrike~ fireball~ burning hands~
+10 0 0
+E
+book manual jiuyangzhenjing Jiuyangzhenjing~
+可惜這一本書已經殘缺不全，不知道完整的經文放在何處。據說如果能擁有九陽真經
+將能無敵於天下。
+~
+#20110
+manual book jiuyingzhenjing Jiuyingzhenjing~
+九陰真經殘本(Jiuyingzhenjing manual)~
+一本古老的經書(manual)被放在這裡.~
+~
+2 0 1
+27~ acid blast~ chill touch~ energy drain~
+10 0 0
+E
+manual book jiuyingzhenjing Jiuyingzhenjing~
+可惜這一本書已經殘缺不全，不知道完整的經文放在何處。據說如果能擁有九陰真經
+將能無敵於天下。
+~
+#20111
+manual book Yijinjing yijinjing~
+易筋經殘本(Yijinjing manual)~
+一本劃滿圖案的經書(manual)被放在地板上.~
+~
+2 0 1
+27~ cure critical~ giant strength~ heal~
+10 0 0
+E
+manual book Yijinjing yijinjing~
+據說易筋經可以改變人的體質，讓人身強體壯，可惜這本書是殘本。
+~
+#20112
+sabre dragon~
+屠龍刀(Dragon Sabre)~
+一把上頭刻著栩栩如生的龍(dragon)的巨刀(sabre)被丟棄在這裡.~
+~
+5 3303 8193
+1001100~ 0~ 0~ 1~
+50 0 0
+E
+sabre dragon~
+上面的龍刻的栩栩如生，似乎就要由刀上面飛出來似的。
+~
+A
+19 5
+A
+18 5
+#20113
+half moon knife~
+半月刀(half-moon knife)~
+一把笨重的半月刀(half-moon knife)被放在地板上.~
+~
+5 0 8193
+1001100~ 0~ 0~ 1~
+50 0 0
+E
+half moon knife~
+外表就像一輪半月一樣，相當鋒利但是笨重的刀子。
+~
+A
+18 5
+A
+19 2
+#20114
+chain whip~
+鍊鞭(chain whip)~
+一條由鐵鍊(chain)串成的鞭子(whip)放在地板上.~
+~
+5 66 8193
+1001100~ 0~ 0~ 4~
+50 0 0
+E
+chain whip~
+上面寫著：少林寺製造。
+~
+A
+19 3
+A
+18 3
+#20115
+bronze key~
+青銅鑰匙(bronze key)~
+一把青銅鑰匙(bronze key)放在地上.~
+~
+18 1 1
+0~ 0~ 0~ 0~
+5 0 0
+
+#20116
+horse spear~
+馬槍(horse spear)~
+一把馬槍(horse spear)吊在牆頭上.~
+~
+5 64 8193
+1001100~ 0~ 0~ 11~
+25 0 0
+E
+horse spear~
+一種古老的兵器，用來狩獵馬匹，不過對人也有不錯的效果。
+~
+A
+19 2
+A
+18 4
+#20117
+kamasutra sutra manual book~
+加楞經殘本(Kamasutra manual)~
+一本古老的經書(manual)被放在這裡..~
+~
+8 128 16385
+0~ 0~ 0~ 0~
+5 0 0
+E
+book sutra manual kamasutra~
+你確定你真的想讀這本書？
+~
+A
+2 1
+A
+1 1
+#20118
+garters~
+和尚綁腿(monk's garters)~
+和尚綁腿(monk's garters)被放在這裡.~
+~
+9 2 33
+0~ 0~ 1001100~ 0~
+10 0 0
+A
+14 50
+A
+2 1
+#20119
+robe~
+僧袍(monk's robe)~
+一襲老舊而且單薄的僧袍(robe)被丟棄在這裡.~
+~
+9 0 1025
+0~ 0~ 1001100~ 0~
+20 0 0
+A
+12 10
+A
+5 1
+#20120
+cane armor~
+籐甲(cane armor)~
+一套籐甲(cane armor)放在此處.~
+~
+9 64 9
+0~ 0~ 1001100~ 0~
+30 0 0
+A
+17 -5
+A
+39 -10
+#20121
+Jiasha jiasha robe~
+方丈袈裟(abbot's Jiasha)~
+一襲閃耀著金色與紅色的袈裟(Jiasha)被放在此處.~
+~
+9 65 1025
+0~ 0~ 1001100~ 0~
+25 50000 0
+E
+jiasha Jiasha robe~
+這件袈裟象徵著少林寺的方丈地位。
+~
+A
+24 -5
+A
+12 15
+A
+3 1
+C 50000
+#20122
+fozhu necklace~
+方丈佛珠(abbot's fozhu)~
+一條由黑色佛珠(fozhu)串成的項鍊被放在這裡.~
+~
+9 66 5
+0~ 0~ 1001100~ 0~
+10 20000 0
+E
+fozhu necklace~
+上面寫著︰方丈專用。
+~
+A
+23 -5
+A
+12 10
+A
+1 1
+C 20000
+#20123
+staff Abbot~
+方丈寶杖(Staff of Abbot)~
+一把由紫金製成的手杖(staff)放在這裡.~
+~
+9 66 16385
+0~ 0~ 1001100~ 208~
+0 50000 0
+E
+staff Abbot~
+上面寫著：少林寺方丈寶杖。
+~
+A
+19 2
+A
+18 2
+A
+17 10
+A
+13 20
+C 50000
+#20124
+hair lock~
+尼姑的髮飾(lock of nun's hair)~
+一個尼姑的髮飾(lock of nun's hair)被放在地板上.~
+~
+9 1|64 1|16
+0~ 0~ 20~ 0~
+5 0 0
+A
+2 1
+A
+5 -1
+#20125
+cane shield~
+籐盾(cane shield)~
+一面由堅硬木籐編織而成的盾(shield)平躺在地上.~
+~
+9 66 513
+0~ 0~ 1001100~ 0~
+35 0 0
+A
+2 1
+A
+4 2
+#20131
+chain keys key black~
+黑鑰匙圈(chain of black keys)~
+一把鑰匙圈(chain of keys)被吊在牆上.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+15 0 0
+#20136
+candle lighted~
+燭台(lighted candle)~
+一座燭台(lighted candle)放在此處用來照亮房間.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+10 0 0
+#20137
+shell boom Boom body~
+風中傳奇的肉身(mortal shell of Amenda)~
+風中傳奇的肉身(mortal shell of Amenda)被放置在這裡.~
+~
+15 35 0
+100~ 15~ 20105~ 0~
+100 0 0
+E
+boom shell body mortal Amenda~
+這是風中傳奇(Amenda)在生前的肉體(mortal shell)
+，現在放在這邊供人膜拜。
+~
+#20138
+vase~
+花瓶(Vase)~
+一個花瓶(Vase)被擺在這邊~
+~
+9 4096 1|16
+0~ 0~ 10~ 0~
+10 10 0
+E
+vase~
+一個大花瓶(Vase)。
+~
+#20139
+folding chair~
+折凳(Folding Chair)~
+一張折凳(Folding Chair)被擺在這裡~
+~
+5 1 1|32768
+50~ 5~ 10~ 00~
+20 0 0
+E
+floding~
+傳說中的好折凳(Folding Chair)？！
+~
+E
+chair~
+傳說中的好折凳(Folding Chair)？！
+~
+#20140
+chain keys key white~
+白鑰匙圈(chain of white keys)~
+一把鑰匙圈(chain of keys)被吊在牆上.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+15 0 0
+#20141
+go die Symbol~
+去死去死團團員證(Symbol of go die)~
+一個神秘的證件(symbol)掉落在這裡~
+~
+9 1|2|4|16|64 1|4
+0~ 0~ 10~ 0~
+5 0 0
+E
+Symbol~
+一個神秘的證件
+~
+A
+3 -10
+A
+4 -10
+#0
+
+
+
+#ROOMDATA
+#20101
+上山的階梯~
+彎曲的階梯沿著山勢往山上而去。你隱約的看到山頂上有一座廟。而往南可以
+回到剛剛登陸的沙灘。
+~
+0 0 5
+D2
+~
+~
+0 0 247
+D4
+~
+~
+0 -1 20102
+S
+#20102
+往少林寺的路~
+在辛苦的攀爬了許久，終於快到達了山頂。在你面前有一塊非常大的匾額，上頭寫
+著「少林寺羅漢堂」。有另外一條路通往西邊。
+~
+0 0 5
+D3
+~
+~
+0 -1 20103
+D4
+~
+~
+0 -1 20106
+D5
+~
+~
+0 -1 20101
+S
+#20103
+山旁的小徑~
+這條小徑幾乎被野草給淹沒了，在這裡小徑繼續往北而去，往東可以回到剛剛的路上。
+~
+0 1 5
+D0
+~
+~
+0 -1 20104
+D1
+~
+~
+0 -1 20102
+S
+#20104
+山頂上的廟~
+一座小廟座落在山腰上。這個地方似乎已經廢棄很久了。在你的西邊，有一塊大岩
+石嵌進山壁(stone boulder)當中。往南可以回到剛剛的小徑上。
+~
+0 1 3
+E
+stone boulder~
+上面寫著：你必須要面對你的心魔。
+~
+D2
+~
+~
+0 -1 20103
+D3
+~
+~
+35 -1 20105
+S
+#20105
+黑暗的洞穴~
+在小徑的盡頭是一個黑暗的洞穴，在洞穴裡頭有一面奇怪的鏡子。四處都有奇怪
+的黑影，似乎想要將你拉入鏡子當中。你看到鏡子中反射的人影，的確是你，但是面
+目猙獰，並不像現在的你。
+~
+0 9 0
+D1
+~
+~
+35 -1 20104
+S
+#20106
+少林羅漢堂的入口~
+你站在少林寺羅漢堂的入口，此地是少林寺總本寺的前院，許多想要接受少林寺
+武功訓練的和尚都必須在羅漢堂接受基本的武術訓練。往北可以進入少林寺，在你面
+前有一個巨大的匾額(plaque)。
+~
+0 0 1
+E
+plaque wall sign~
+|=========================================|
+|                                         |
+|          少 林 寺 羅 漢 堂              |
+|                                         |
+|=========================================|
+~
+D0
+~
+~
+0 -1 20107
+D5
+~
+~
+0 -1 20102
+S
+#20107
+羅漢堂的前庭~
+前庭上都是堅硬的石板，四周花草扶疏、鳥語花香，不禁讓你心曠神怡。
+~
+0 0 1
+D0
+~
+~
+0 -1 20119
+D1
+~
+~
+0 -1 20113
+D2
+~
+~
+0 -1 20106
+D3
+~
+~
+0 -1 20108
+S
+#20108
+前庭的一角~
+跟前庭一樣，這裡種滿了各式的花草。地上由堅硬的石板所覆蓋。往東可以回
+到前庭上。
+~
+0 0 1
+D0
+~
+~
+35 -1 20111
+D1
+~
+~
+0 -1 20107
+D2
+~
+~
+35 -1 20112
+D3
+~
+~
+35 -1 20109
+S
+#20109
+用膳房~
+這裡是羅漢堂和尚們用餐的地方。裡頭除了用餐的桌椅外什麼都沒有。你聽到南邊
+有一些奇怪的聲響。
+~
+0 8 0
+D1
+~
+~
+35 -1 20108
+D2
+~
+~
+0 -1 20110
+S
+#20110
+廚房~
+由於濃厚的饅頭香味讓你不由自主的進到廚房裡頭。廚房牆壁上掛滿了瓶瓶罐罐的
+東西。
+~
+0 8 0
+D0
+~
+~
+0 -1 20109
+S
+#20111
+和尚的臥鋪~
+這裡是和尚們休息睡覺的地方。這邊沒有什麼特別的，除非你現在想要休息。
+~
+0 8 0
+D2
+~
+~
+35 -1 20108
+S
+#20112
+和尚的臥鋪~
+這裡是提供剛剛進入羅漢堂年輕和尚的臥鋪。這邊沒有什麼特別的。
+
+~
+0 8 0
+D0
+~
+~
+35 -1 20108
+S
+#20113
+前庭的一角~
+跟前庭一樣，這裡種滿了各式的花草。地上由堅硬的石板所覆蓋。往西可以回
+到前庭上。南邊跟北邊傳來呼喊的聲音。
+~
+0 8 0
+D0
+~
+~
+0 -1 20118
+D2
+~
+~
+0 -1 20117
+D3
+~
+~
+0 -1 20107
+S
+#20114
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。
+~
+0 9 0
+S
+#20115
+羅漢房~
+這個房間裡站立著傳說中的少林羅漢，他們準備測驗欲離開少林的僧侶是否有
+足夠的武藝。在面對他們之前，最好做好心理準備。
+~
+0 9 0
+S
+#20116
+秘密的洞穴~
+你身後的門忽然關上，看來無法回頭了。唯一的通路指向南方。 
+~
+0 9 0
+D2
+~
+~
+0 -1 20101
+S
+#20117
+訓練房~
+這裡是武僧訓練精進自己武藝的地方。武器則陳列在訓練房的兩旁以供取用。
+~
+0 0 1
+D0
+~
+~
+0 -1 20113
+S
+#20118
+訓練房~
+這裡是武僧訓練精進自己武藝的地方。武器則陳列在訓練房的兩旁以供取用。
+~
+0 0 1
+D2
+A side court.
+~
+~
+0 -1 20113
+S
+#20119
+佛堂大廳~
+這是一間巨大的佛堂，上面供奉著臥佛像，四周的牆壁金碧輝煌，讓你目不暇
+給。正前方有一張巨大的石桌，上面擺滿了貢果。東邊跟西邊都可以到旁廳，
+南邊則離開大廳。
+~
+0 8 0
+D1
+A side hall.
+~
+~
+0 -1 20126
+D2
+~
+~
+0 -1 20107
+D3
+~
+~
+0 -1 20120
+D5
+~
+~
+35 -1 20136
+S
+#20120
+佛堂旁廳~
+這個旁廳同樣祭祀著一些佛像，四周都有通路通往別的地方。
+~
+0 8 0
+D0
+~
+~
+0 -1 20124
+D1
+~
+~
+0 -1 20119
+D2
+~
+~
+0 -1 20121
+D3
+~
+~
+0 -1 20122
+D4
+~
+~
+0 -1 20123
+S
+#20121
+長老的房間~
+這個房間除了桌椅跟床鋪之外，什麼也沒有，可以說是非常的樸素
+。大概也沒什麼可以拿的。不過最好不要讓長老知道你待在他的房
+間裡。
+~
+0 8 0
+D0
+A side hall.
+~
+~
+0 -1 20120
+>room_command pull candle~
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+~
+>room_time 100~
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+~
+|
+S
+#20122
+長老的房間~
+這個房間除了桌椅跟床鋪之外，什麼也沒有，可以說是非常的樸素
+。大概也沒什麼可以拿的。不過最好不要讓長老知道你待在他的房
+間裡。
+~
+0 8 0
+D1
+A side hall.
+~
+~
+0 -1 20120
+>room_command pull candle~
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+~
+>room_time 100~
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+~
+|
+S
+#20123
+方丈的房間~
+這個房間跟長老的房間一樣，除了桌椅跟床鋪之外，什麼也沒有，
+。大概也沒什麼可以拿的。不過最好不要讓方丈知道你待在他的房
+間裡。
+~
+0 8 0
+D5
+A side hall.
+~
+~
+0 -1 20120
+>room_command pull candle~
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+~
+>room_time 100~
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+~
+|
+S
+#20124
+藏經閣~
+這裡存放著少林寺所有的武功精要，據說沒有人能學完少林寺所有
+的功夫，但是這邊你也沒辦法拿到什麼，因為長老正在旁邊看著你
+。
+~
+0 8 0
+D1
+~
+bookshelf~
+3 0 20125
+D2
+A side hall.
+~
+~
+0 -1 20120
+S
+#20125
+秘密的房間~
+你發現了一間藏有寶藏的房間。這裡的寶藏不禁讓你搓著手盤算著
+，可以賣多少錢。
+~
+0 9 0
+D3
+The Library.
+~
+~
+3 0 20124
+S
+#20126
+佛堂旁廳~
+這個旁廳同樣祭祀著一些佛像，四周都有通路通往別的地方。
+~
+0 8 0
+D0
+~
+~
+0 -1 20129
+D1
+~
+~
+0 -1 20128
+D2
+~
+~
+0 -1 20127
+D3
+~
+~
+0 -1 20119
+D4
+~
+~
+0 -1 20130
+>room_command search around~
+	if is_qmark($n) == shaolin_quest
+		echoat $n 你不小心觸發機關，跌入一個密門中！
+		transfer $n 20149
+	endif
+~
+|
+S
+#20127
+客房~
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+~
+0 8 0
+D0
+~
+~
+0 -1 20126
+>room_command pull candle~
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+~
+>room_time 100~
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+~
+|
+S
+#20128
+客房~
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+~
+0 8 0
+D3
+~
+~
+0 -1 20126
+>room_command pull candle~
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+~
+>room_time 100~
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+~
+|
+S
+#20129
+客房~
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+~
+0 8 0
+D2
+~
+~
+0 -1 20126
+S
+#20130
+客房~
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+~
+0 8 0
+D5
+~
+~
+0 -1 20126
+>room_command pull candle~
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+~
+>room_time 100~
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+~
+|
+S
+#20131
+地牢~
+你進到一個地牢內部，四周都是黑色的鐵欄，地上還帶有一
+點腐臭的味道。
+~
+0 4|9|1048576 0
+D0
+~
+~
+1|2|4|16|32|64 20131 20135
+D1
+~
+~
+1|2|4|16|32|64 20131 20133
+D2
+~
+~
+1|2|4|16|32|64 20140 20134
+D3
+~
+~
+1|2|4|16|32|64 20131 20132
+D4
+~
+~
+35 -1 20149
+S
+#20132
+監牢~
+這邊看起來相當的黑暗陰沉，大概是這間寺廟裡最不乾淨的地方吧。 
+~
+0 9|1048576 0
+D1
+~
+~
+39 20131 20131
+S
+#20133
+囚牢~
+血腥和屍塊是你在這邊看到唯一的景象。就像其他的監獄一樣，你在
+期待什麼嗎?
+~
+0 9|1048576 0
+D3
+~
+~
+39 20131 20131
+S
+#20134
+無花的監牢~
+過去十年，這邊都是鎖著的，因為他對男人跟女人所犯下的罪行....
+無花，一個肉慾的墮落和尚。你無法想像十年之後他會怎麼對付你
+~
+0 9|1048576 0
+D0
+~
+~
+39 20131 20131
+S
+#20135
+女性監牢~
+女性監牢？在少林寺？到底有什麼用處呢？不過從地板上的血跡跟
+發臭的味道來判斷，還是不要多問的好。
+~
+0 9|1048576 0
+D2
+~
+~
+39 20131 20131
+S
+#20136
+神秘的房間~
+看起來你上面的門已經被封死了。這裡是資深的僧侶測試他們自己
+武藝的地方，那些金身羅漢將成為武僧的對手。
+~
+0 521|4 0
+D1
+~
+工作房~
+39 20136 20137
+S
+#20137
+工作坊~
+一張長長的工作桌在房間的中央，四處還有打鐵的痕跡。
+~
+0 521 0
+D3
+~
+~
+39 20136 20136
+S
+#20138
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。
+~
+0 9 0
+S
+#20139
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。
+~
+0 9 0
+S
+#20140
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人似乎比前面更為精良一些。
+~
+0 9 0
+S
+#20141
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人似乎比前面更為精良一些。
+~
+0 9 0
+S
+#20142
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人似乎比前面更為精良一些。
+~
+0 9 0
+S
+#20143
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人看起來非常強悍。
+~
+0 9 0
+S
+#20144
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人看起來非常強悍。
+~
+0 9 0
+S
+#20145
+木人巷~
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人看起來非常強悍。
+~
+0 9 0
+S
+#20146
+羅漢房~
+這個房間裡站立著傳說中的少林羅漢，他們準備測驗欲離開少林的僧侶是否有
+足夠的武藝。在面對他們之前，最好做好心理準備。這裡的羅漢似乎比之前的
+更強壯一點...
+~
+0 9 0
+S
+#20147
+羅漢房~
+這個房間裡站立著傳說中的少林羅漢，他們準備測驗欲離開少林的僧侶是否有
+足夠的武藝。在面對他們之前，最好做好心理準備。這裡的羅漢非常的強壯..
+~
+0 9 0
+S
+#20148
+隧道的盡頭~
+這裡是通過試練的武僧所休息的地方。南邊通往出口。
+~
+0 9 0
+S
+#20149
+幽暗的地道~
+這個地道不但潮濕，而且陰暗，往上或往下都有出口。
+~
+0 9 0
+D4
+~
+~
+0 0 20126
+D5
+~
+~
+0 0 20131
+S
+#0
+
+
+
+#SPECIALS
+M 20102 spec_cast_cleric
+M 20105 spec_cast_mage
+M 20106 spec_cast_mage
+M 20107 spec_poison
+M 20109 spec_cast_mage
+M 20110 spec_cast_mage
+M 20111 spec_poison
+M 20112 spec_cast_cleric
+M 20113 spec_cast_mage
+M 20114 spec_cast_mage
+M 20115 spec_breath_fire
+M 20116 spec_breath_any
+M 20117 spec_thief
+S
+
+
+
+#RESETS
+M 0 20106 1 20105
+M 0 20101 2 20109
+O 0 20106 0 20110
+M 0 20109 1 20111
+E 0 20120 0 5
+E 0 20118 0 8
+E 0 20119 0 12
+E 0 20125 0 11
+E 0 20114 0 16
+G 0 20106 0
+M 0 20110 1 20136
+G 0 20115 0
+M 0 20104 1 20117
+E 0 20116 0 16
+M 0 20104 1 20117
+E 0 20116 0 16
+M 0 20103 3 20118
+M 0 20113 1 20121
+G 0 20109 0
+E 0 20118 0 7
+E 0 20119 0 12
+O 0 20102 0 20121
+O 0 20102 0 20122
+O 0 20102 0 20123
+O 0 20102 0 20127
+O 0 20102 0 20128
+O 0 20102 0 20130
+M 0 20114 1 20122
+E 0 20118 0 7
+E 0 20119 0 12
+E 0 20125 0 11
+E 0 20114 0 16
+M 0 20115 1 20123
+E 0 20121 0 1024
+E 0 20122 0 4
+E 0 20123 0 16384
+M 0 20112 1 20124
+G 0 20101 0
+G 0 20111 0
+E 0 20118 0 7
+E 0 20119 0 12
+O 0 20107 0 20125
+O 0 20110 0 20125
+M 0 20117 2 20127
+G 0 20106 0
+M 0 20101 2 20128
+O 0 20136 0 20129
+M 0 20105 1 20131
+E 0 20120 0 5
+E 0 20125 0 11
+E 0 20113 0 16
+M 0 20105 1 20131
+E 0 20120 0 5
+E 0 20125 0 11
+E 0 20113 0 16
+G 0 20131 0
+M 0 20107 2 20132
+E 0 20119 0 12
+M 0 20111 1 20134
+E 0 20117 0 17
+M 0 20102 3 20135
+G 0 20124 0
+E 0 20112 0 16
+G 0 20115 0
+O 0 20137 0 20137
+P 0 20108 0 20137
+P 0 20107 0 20137
+O 0 20138 0 20126
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

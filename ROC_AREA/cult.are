@@ -1,0 +1,2141 @@
+#AREADATA
+Name        ¨¸Às²½¾Â~
+Identity    cult~
+Builders    Sandman~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      9800 9899
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#9800
+gatekeeper~
+¦uªù­û(gatekeeper)~
+¦uªù­û(gatekeeper)¦b¦¹¦uÅ@µÛ¨¸Às²½¾Âªº¤jªù¡C
+~
+³o­Ó¦uªù­û¬Ý°_¨Ó¼~¤ßÊÝÊÝªº¡C¤]³\§A¥i¥H­n¨D¥Lµ¹§AÆ_°Í¤]¤£¤@©w(ask for key)¡H
+~
+3 0 0 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 8
+>talk_prog p ask for key~
+	if is_qmark($i) == cult_gatekeeper_nokey
+		say ©êºp¡A§Ú¨­¤W¨S¦³Æ_°Í¤F
+		say ÁÙ­n¹L¤@¬q®É¶¡§Ú¤~¯à¦A¥´¤@§â
+	else
+		mpcallout 1 $IÅS¥XÅå³Yªºªí±¡
+		mpcallout 2 say §A...§A·Q¶i¥h¡H
+		mpcallout 3 say ³o...¦n§a...¤£¹L§A¤d¸U­n¤p¤ß¡A¾Ú»¡¸Ì­±ªº¯«¯µ²ÕÂ´¤£¬O¦n·Sªº
+		mpcallout 4 say ½Ð§A¥ý¥h§ä¸T©GªÌ - ³Í°Ç(Kellar the anti-caster)¡A¥LÀ³¸Ó·|»Ý­n§AªºÀ°§U(help)
+		mpcallout 5 mpoload 9825 $n viclv target
+		mpcallout 5 mpechoat $n $I§âÆ_°Íµ¹¤F§A
+		mpcallout 5 mpechoaround $n $I§âÆ_°Íµ¹¤F$n
+		mpcallout 5 mpadd_qmark $i cult_gatekeeper_nokey 25 0 0 0 0 1
+	endif
+~
+|
+#9801
+minor priest~
+¤p²½¥q(minor priest)~
+¤p²½¥q(minor priest)¦b²½¾Â¤º¨ì³B¹C¨«¡C
+~
+¥L¬Ý°_¨Ó¹³±M¤ß·Q¬Y¥ó¨Æ±¡¡C
+~
+193 8 -100 S
+5 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say §O·Ð§Ú¡A§Ú¦b·Q¨Æ±¡¡C
+~
+|
+#9802
+robed priest~
+µØ³T²½¥q(robed priest)~
+µØ³T²½¥q(robed priest)¨£¨ì§Aªº¥X²{ÀH§Y¶}©lÄµ§Ù¡C
+~
+³o¨ÇµØ³T²½¥q¥¿¦b¦£¤@¨Çº¾¨Æ¡C
+~
+65 56 -200 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#9803
+draconian-cult knight draconian~
+Às¤HÃM¤h(draconian knight)~
+Às¤HÃM¤h(draconian knight)¦b³o¸Ì´M§äµÛ¬Y¨ÇªF¦è¡C
+~
+³o­ÓÀs¤HÃM¤hÅ¥»D¨ì¨¸Às²½¾Â¦ü¥G¦³¬Y¨Ç­pµe¥¿¦b¶i¦æ¡A
+©Ò¥H¯S§O¹L¨Ó¤@±´¨s³º¡C
+~
+1|2|64 8|16|32|128 -500 S
+35 0 0 0d0+-500 0d0+-500
+-1 0
+0 8 1
+R Dragon~
+C 1|4|8
+P 4|8|128
+>talk_prog topic~
+	say §ÚÅ¥»¡¨¸Às²½¾Â¦³¤@­Ó­pµe¥¿¦b¶i¦æ...©Ò¥H¯S¦a¹L¨Ó¬d¬Ý
+	say «ç»ò¼Ë¡H¦³¨S¦³¿³½ì¨ó§U§Ú¡H(yes/no)
+~
+>talk_prog yes~
+	if is_qmark($n) >= cult_question 100001
+		say §A¦b»¡¤°»ò°Ú¡H¨SÀY¨S¸£ªº...
+	else
+		mpmod_qmark $n cult_question v0 = 1
+		good $n
+		say ¨º´N³Â·Ð§A¥h±´¬d¤@¤U¡A¾Ú§Ú©Òª¾¡A¨Æ±¡ªºÃöÁä¦b¤k²½¥qªº¨­¤W
+		say ¤]³\¥i¥H¦b¦o¨ºÃä§ä¨ì¤°»ò...
+	endif
+~
+>talk_prog no~
+	if is_qmark($n) >= cult_question 100001
+		say ³£¨ì³oÃä¤F§AÁÙ·Q°h¥X¡H
+	else
+		say ¤£­n©Ô­Ë--
+		shr
+	endif
+~
+>give_prog 9857~
+	if is_qmark($n) == cult_question 100002
+		mpjunk all.paper
+		mpcallout 1 mpecho $I¥J²Óªº¬ÝµÛ¯È¤ù¤Wªº¤º®e
+		mpcallout 2 say ­ì¨Ó¬O³o¼Ë°Ú...
+		mpcallout 3 say ¬Ý¨Ó³o­Ó­pµeªG¯u¤£°²...
+		mpcallout 3 mppurge all.paper
+		mpcallout 4 mpechoat $n $I¬Ý¤F¬Ý§A
+		mpcallout 4 mpechoaround $n $I¬Ý¤F¬Ý$n
+		mpcallout 5 say ©êºp¡A§Ú·Q§Ú­Ì¨S¿ìªk¦A¦X§@¤F
+		mpcallout 6 sorry $n
+		mpcallout 7 mpforce $n say §A...§A»¡¤°»ò¡H
+		mpcallout 8 say §Ú­Ì³£¦³¦U¦Ûªº¥¿¸q¡A¦Ó§Ú¥²¶·³e¹ý§Úªº¥¿¸q¡I
+		mpcallout 9 mpechoat $n §AÅåÄ±¨ì¨Æ±¡¨Ã¤£³æ¯Â¡I
+		mpcallout 9 modhmv $n 01.50 200 11314561
+		mpcallout 9 mpechoat $n $I©¿µM©â¥X¤P­º©¹§Aªº¯Ý¤fÑ¶¤F¤@¤M¡I
+		mpcallout 10 say ÁöµM¹ï§A«Ü©êºp...§Ú·|À°§A¦w¸®ªº...
+		mpcallout 10 mpmod_qmark $n cult_question v0 = 4
+		mpcallout 10 mpkill $n
+	else
+		say §Aµ¹§Ú³o­Ó·F¹À...
+		drop paper
+	endif
+~
+>fight_prog 40~
+	yell ¥h§a¡IÀsªº¤O¶q¡I
+	c fireball $n
+	mpnowait
+	c light $n
+	mpnowait
+	c chill $n
+	mpnowait
+	c whi
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 100004
+		mpecho $I¦ü¥G«Üµh­Wªº³ÝµÛ®ð
+		mpecho $I»¡µÛ¡G¥»¨Ó¡A´N¨S¦³µ´¹ïªº¥¿¸q...¤£ºÞ¬O§A©Î¬O§Ú...
+		mpecho $I»¡µÛ¡G¥¿¸q¤£¬O§A¥Î²´·ú´N¥i¥H½T»{ªº...¦ý¬O¤]¤£¬O§A¥i¥H»´©ö¬Û«Hªº...
+		mpecho ¤]³\§A¸Ó¥h§ä³Í°Ç(Kellar)½Í½Í...(report)
+		mpmod_qmark $n cult_question v0 = 8
+	endif
+~
+|
+#9804
+priestess-cult priestess~
+¤k²½¥q(Priestess)~
+¤k²½¥q(Priestess)¦b³o¸Ì«ä¦Ò¬Y¨Ç¨Æ±¡¡C
+~
+¦o´N¬O¨¸Às²½¾Âªº¤k²½¥q¡A¨­¤Wªº³z©úÁ¡¯½±N¥L¤õ»¶ªº¨­
+§÷¯M¦«ªº­YÁô­Y²{¡A´Nºâ¬OÀs±Ú·Q¥²¤]·|³Q¥L§l¤Þ§a¡I
+~
+1|64 2|8|16|32 -600 S
+45 0 0 0d0+-100 0d0+-200
+-1 0
+0 8 2
+C 2
+P 8
+R human~
+>greet_prog 100~
+	if is_qmark($n) == cult_question 100001
+		yell §A¬O½Ö¡I
+		mpkill $n
+	endif
+~
+>fight_prog 30~
+	c fireball $n
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 100001
+		yell ¤£¡I§Ú­Ìªº­pµe...
+		mpecho ±q$I¨­¤W±¼¥X¤@±i¯È¤ù¡I
+		mpmod_qmark $n cult_question v0 = 2
+		mpoload 9857 1 floor
+	else
+		mpecho ¤k²½¥q¦º«e±q¤º¦ç¸Ì±Ç¥X¤@²~ÃÄ¤ô¨Ã¥BÅx¦b¦Û¤v¨­¤W¡I
+		mppurge self
+	endif
+~
+|
+#9805
+girl Charlotte-m~
+®L¬¥¸¦(Charlotte)~
+³o­Ó¤k«Ä(girl)¬°¦o±N­nÄë¬¹¥Í©R¦Ó­úª_¡C
+~
+¦o¨­¤Wªº¦çªA³Q¼¹ªº¯}¯}ÄêÄê¡A¦çªA¤U­±°¸µMÅS¥Xªº³·¥Õ¦×Åé
+¥H¤Î¬Ý¨ì¦]¬°µo²{§Aª`¥ØµÛ¦o®É©Ò¯B²{ªº¬õ·w¡A³£¨Ï¦o¬Ý°_¨Ó
+«D±`°g¤H...
+~
+3 0 0 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 8
+>greet_prog 100~
+if ispc($n)
+	if is_qmark($n) == cult_question 200004
+		mpechoat $n $I©¿µM©ï°_ÀY¨Ó¬ÝµÛ§A
+		mpmod_qmark $n cult_question v1 = 5
+		mpcallout 1 mpechoat $n $I¶]¹L¨Ó¼³¨ì§Aªº¨­¤W¡I
+		mpcallout 1 mpechoaround $n $I¶]¹L¨Ó¼³¨ì$nªº¨­¤W¡I
+		mpcallout 2 say ½Ð§A...½Ð§A±a§Ú¥X¥h...
+		mpcallout 3 mpechoat $n $I¦b§AªºÃh¸Ì¶}©l¤£°±ªº±¼²´²\...
+		mpcallout 3 mpechoaround $n $I¦b$nªºÃh¸Ì¶}©l¤£°±ªº±¼²´²\...
+		mpcallout 4 mpechoat $n §AÄ±±oÀ³¸Ó¥ý§i¶D¦o¬O³Í°Ç(kellar)½Ð§A¹L¨Óªº
+	else
+		mpechoat $n §A¤@¶i¨Ó¡A¦ü¥GÄ²°Ê¤F¬Y­Ó¾÷Ãö¡I
+		mpechoaround $n $N¦ü¥G¤£·VÄ²°Ê¤F¬Y­Ó¾÷Ãö¡IÁV¤F¡I
+		mpecho $I©¿µM±¼¨ì¦aªO¤Uªº³´¨À¸Ì­±¡I
+		mpecho $I¦y¥sµÛ¡G¤£­n¡ã¡ã¡ã¡I
+		if is_qmark($n) == cult_question
+			mpmod_qmark $n cult_question v1 = 6
+			mpmod_qmark $n cult_question v2 = 1
+			mpechoat $n ÁöµM«Ü¿ò¾Ñ...§AÁÙ¬O±o¦^¥h§i¶D³Í°ÇÃö©ó®L¬¥¸¦(about Charlotte)ªº¨Æ±¡...
+		endif
+		mppurge self
+	endif
+endif
+~
+>talk_prog kellar~
+if is_qmark($n) == cult_question 200005
+	mpmod_qmark $n cult_question v1 = 6
+	mpcallout 1 say ¬O...¬O³Í°Ç¨û¨û½Ð§A¨Óªº¡H 
+	mpcallout 2 mpforce $n say ¬O°Ú...©Ò¥H¤£­n¦A­ú¤F³á¡I
+	mpcallout 3 mpforce $n say ©p­ú¡AÃö¤ß©pªº¤H¤]·|¸òµÛ­ú©O¡I
+	mpcallout 4 say ¦n...
+	mpcallout 5 mpecho $I³s¦£À¿¤FÀ¿Áy¤Wªº²´²\
+	mpcallout 6 say ¥i¤£¥i¥H½Ð§A...Âà§i³Í°Ç¨û¨û»¡¡A§Ú¤w¸g¦^¨ì®a¤F(Charlotte back home)¡A½Ð¥L©ñ¤ß
+	mpcallout 7 say ÁÙ¦³...
+	mpcallout 8 blush
+	mpcallout 9 kiss $n
+	mpcallout 10 say ÁÂÁÂ§A±Ï¤F§Ú
+	mpcallout 11 mpecho $I ®ø¥¢¦b¨«¹D¥~­±¤F...
+	mpcallout 12 mppurge self
+	mpmod_qmark $n cult_question v2 = 2
+endif
+~
+>death_prog 100~
+	mpecho $I¦y¥sµÛ¡G¤£­n¡ã¡ã¡ã¡I
+~
+|
+#9806
+black dragon wyrmling~
+¶Â¦â¨¸Às(Black Dragon)~
+¶Â¦â¨¸Às(Black Dragon Wyrmling)·Q­n¦Y±¼§A¡C
+~
+³o°¦¶Â¦â¨¸Às¦í¦b¾ã­Ó¨¸Às²½¾Âªº¤¤¥¡¡Aªøªº¤Q¤Àªºäú¤ß¨Ã¥B¦MÀI¡A¦]¦¹
+§A³Ì¦n¤p¤ß¤@ÂI¡I
+~
+100455 168 -1000 S
+30 2000 500 40d40+-500 40d100+-500
+-1 0
+0 8 1
+R Dragon~
+S 13 3000
+C 7
+P 8|128
+>fight_prog 10~
+	fre $n
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 200002
+		mpmod_qmark $n cult_question v1 = 4
+		mpecho $I¦º«e¤£Â_ªº±Ã¤ã
+		mpecho $I§â¦aªOµ¹¥´¸H¤F¡I
+		mpecho §AÄ±±o¦aªO¤U­±¦ü¥GÁÙ¦³¤@­ÓªÅ¶¡...
+		mpforcer here makedoor 5 ¶Â·t passway 0 0 9898
+	endif
+~
+|
+#9807
+minor priest~
+¤p²½¥q(minor priest)~
+¨¸Às²½¾Â¤p²½¥q(minor priest)¦b¯D«Ç¸ÌÀY²M¼ä¾ã²z¡C
+~
+³o­Ó¤p²½¥q²{¦b¬Ý°_¨Ó«Ü¦£¡A¨SªÅ²z§A¡C
+~
+1|2|64 8 -100 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#9808
+fanatic-m monk~
+¨g¼ö«H®{(fanatic monk)~
+¤@­Ó¨g¼ö«H®{(fanatic monk)¦b³oÃä´Á«ÝµÛ¥@¬É¥½¤éªº¨ì¨Ó¡I
+~
+³o­Ó«H®{¤Q¤Àªº°@¸Û¦Ó¥B¨g¼ö¡A¦b¥Lªº²´·ú¤¤¥i¥H¬Ý¥X¥L¹ï¨¸Às²½¾Âªº¬ÈÄß¡C
+~
+1 8 0 S
+8 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#9809
+anti caster kellar~
+³Í°Ç(Kellar)~
+¸T©GªÌ - ³Í°Ç(Kellar the anti-caster)¬Ý°_¨Ó¼~¤ßÊÝÊÝ¡C
+~
+³Í°Ç¬O¥v¥d©Ô¨©¥«ªø«ü¬£¨Ó¦¹¦a§í¤î¨¸Às²½¾Â¶Õ¤OªºÂX±i¡A¦ý¬O³Ìªñ
+¥Lµo²{¦¹¦a¦³¤@ªÑ²ö¦Wªº¨¸´c¤O¶q¥¿¦b¼Wªø¡C
+~
+1|2|64 8|32|128|8192 1000 S
+50 10000 1000 20d20+0 -50d-50+3
+-1 0
+0 8 1
+C 1|2|4
+P 1|4
+>greet_prog 20~
+	if is_qmark($n) == cult_question_end
+		say ¯u¬O·PÁÂ§A¤W¦¸ªºÀ°§U
+		bow $n
+	else
+		say ¯u¬OÁV¿|...½Ö¯àÀ°§Ú³o­Ó¦£(help)©O...
+	endif
+~
+>talk_prog help~
+	if is_qmark($n) == cult_question_end
+		say §A¤w¸gÀ°¹L§Ú¦£¤F¡C
+	else
+		if is_qmark($n) != cult_question
+			mpadd_qmark $n cult_question -1 0 0 0 0 1
+			mpcallout 1 say ÁöµM¤£¦n±Ò¾¦¡A¦ý¬O§Ú·Q³Â·Ð§A¤@¥ó¨Æ±¡¡C
+			mpcallout 2 say ³Ìªñ¦³­Ó¤@­Ó¤p¤k«Ä¥¢ÂÜ¤F¡A§ÚÃhºÃ¦o³Q§x¦b¨¸Às²½¾Â¸Ì­±¡C
+			mpcallout 3 say ¦ý¬OÃª©ó©R¥O¡A§Ú¤£¯àÂ÷¶}³o¸Ì¡A©Ò¥H·Q³Â·Ð§AÀ°§Ú§â¦o§ä¥X¨Ó¡C
+			mpcallout 4 say ´N«ô°U§A¤F¡I
+			mpcallout 5 bow $n
+		else
+			say ÁÙ¨S¦³¦oªº¤U¸¨¶Ü¡H
+		endif
+	endif
+~
+>talk_prog report~
+	if is_qmark($n) == cult_question 100008
+		mpmod_qmark $n cult_question v0 = 16
+		mpcallout 1 say Ãø¥H²z¸Ñ...³o¨Ç¨Æ±¡¯u¬OÃø¥H²z¸Ñ...
+		mpcallout 2 say §Úªº±À´ú¬O¡A¨º¦WÃM¤h¤j·§¬O¨ü½Öªº©e°U¹L¨Ó½Õ¬d³o¥ó¨Æ±¡¡C
+		mpcallout 3 say ¦ý¬O«o¤S¸ò§Aªº¥Ø¼Ð¤£¦P§a...¡C
+		mpcallout 4 say ¤£ºÞ«ç»ò»¡¡A¤j·§³£¸ò¥L­Ì¥´ºâ°ö¾iªº¨¸Às¦³Ãö...¡C
+		mpcallout 5 say «ô°U§A¤F¡A¥u­n¥i¥H¥´­Ë¨ºÀYÀs¡AÀ³¸Ó´N¥i¥H§ä¥Xµ²ªG¡C
+		mpcallout 6 say §Ú²{¦b¦b§Aªº¨­¤W¬I¥[¤@ÂIÅ]¤O¡A³o¥i¥H¤¤©M±¼²½¾Â¤U­±Å]ªk°}ªºÅ]ªk
+		mpcallout 7 mpecho $I½w½wªº©À°_¤F©G¤å
+		mpcallout 8 say ¦n¤F¡A§Ö¥h§a¡I
+		mpmod_qmark $n cult_question v1 = 1
+	else
+		say §A­n¸ò§Ú¦^³ø¤°»ò¡H
+	endif
+~
+>talk_prog p Charlotte back home~ 
+	if is_qmark($n) == cult_question 300002
+		mpcallout 1 say ¯u¬O¤Ó¦n¤F¡I
+		mpcallout 2 say ³o¬Oµ¹§AªºÁÂÂ§¡AÁÂÁÂ§AÀ°¤F§Ú¤@­Ó¤j¦£¡I
+		mpcallout 3 mpskillexp $n 5000
+		mpcallout 4 wave $n
+		mpdel_qmark $n cult_question
+		mpadd_qmark $n cult_question_end -1 1 0 0 0 1
+	else
+		say §A±q­þ¸ÌÅ¥¨Ó³oºØ®ø®§ªº¡H
+	endif
+~
+>talk_prog p about Charlotte~
+	if is_qmark($n) == cult_question 300001
+		mpcallout 1 mpforce $n say ¹ï¤£°_¡A¦]¬°§ÚªºµL¯à...
+		mpcallout 2 say ...³o¼Ë¶Ü...¨S¿ìªk...³o³£¬O©R...
+		mpcallout 3 say ³oºâ¬OÁÂÁÂ§AªºÀ°¦£...
+		mpcallout 4 say §Æ±æ¤Ñ¯«¯à«O¦ö¨º­Ó«Ä¤l
+		mpcallout 5 mpexp $n 10000
+		mpdel_qmark $n cult_question
+		mpadd_qmark $n cult_question_end -1 2 0 0 0 1
+	else
+		say §A«ç»òª¾¹D¦oªº¦W¦r¡H
+	endif
+~
+>talk_prog p earth stone~
+	mpcallout 1 say §A«ç»ò·|°Ý°_³o­Ó©O...
+	mpcallout 2 say §Ú°O±o¨º¬O»\º¸(Gale)¦b´M§äªº§÷®Æ°Ú...
+~
+>death_prog 100~
+if level($n) >= 36
+		say §A·|¬°±þ¤F§Ú·P¨ì«á®¬ªº....¡I
+		if is_qmark($n) != skarabrae_enemy
+			mpadd_qmark $n skarabrae_enemy 50 0 0 0 1 1
+		else
+			mpmod_qmark $n skarabrae_enemy timer + 10
+		endif
+	endif
+~
+|
+#9810
+maien maid~
+¤Ö¤k - ±ö¦](Maien the maid)~
+¤Ö¤k - ±ö¦](Maien the maid)¦b³o¸Ì¨ó§U³Í°Ç.
+~
+±ö¦]´X¥G§â¦Û¤vªº¦~»´·³¤ë³£©^Äm¦bºûÅ@¥v¥d©Ô¨©«°ªº¦w¦M¤W¤F¡C
+~
+67 8 200 S
+19 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 2
+P 8
+>talk_prog topic~
+say §Ú¦b¦¹¨Í©^³Í°Ç¤j¤H¤w¸g«Ü¤[¤F¡C
+~
+>greet_prog 80~
+say ­n¨Ó¤@ªM©@°Ø(coffee)¶Ü?
+smile $n
+~
+>talk_prog coffee~
+	if is_qmark($i) == cult_coffee
+		say ©êºp¡A§ÚÁÙ¦bµN³á¡I
+		say ½Ð$n§Aµyµ¥¤@¤U§a¡I
+	else
+		mpoload 9840 $n viclv target
+		mpecho $Iµ¹¤F§A¤@ªM©@°Ø
+		mpadd_qmark $i cult_coffee 10 0 0 0 0 1
+	endif
+~
+|
+#9811
+gale equilier~
+»\º¸(Gale)~
+¥­¿ÅªÌ-»\º¸(Gale the equilier)¥¿¦b¬ã¨s¤Ñ¦a¥­¿Åªº¶ø§®.
+~
+»\º¸¬ã¨s¤Ñ¦a¥­¿Åªº¶ø§®¤w¸g«Ü¤[¤F¡A¾Ú»¡¥L¥´Å¥¨ì¦³¤@Áû¥s°µ
+¥­¿Å¤§¥Û(Rock of Equilibrium) ªºÅ]¥Û¡A¸ÌÀY¦³¥i¥H¥­¿Å¤Ñ¦a¨â·¥
+ªº¥\¥Î¡C
+~
+67 0 -1000 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>greet_prog 100~
+	if is_qmark($n) == cult_rock_end
+		say §A¦n°Ú...
+		smile $n
+	else
+		say ¤j¦a¤§¥Û(earth stone)...
+	endif
+~
+>talk_prog p earth stone~
+if is_qmark($n) == cult_rock_end
+	say §Ú¹ï¥¦¨S¿³½ì¤F...
+	else
+	mpcallout 1 hmm
+	mpcallout 2 say Â²³æ¨Ó»¡¡A¨º¬O§Ú¥¿¦b´M§äªº§÷®Æ
+	mpcallout 3 say ¥­¿Å¤§¥Û(Rock of Equilibrium)·|¥Î¨ì¥¦...¤£¹L§ÚÁÙ¨S§ä¨ì...
+	endif
+~
+>give_prog 9860~
+	if is_qmark($n) == cult_rock_end
+		say ¤£...§Ú¤£»Ý­n¥¦¤F...
+		drop stone
+	else
+	mpcallout 1 say ³o¡I³o¬O¤j¦a¤§¥Û¡I ¤Ó¦n¤F¡I§Úªº¬ã¨s¥i¥H§¹¦¨¤F¡I
+	mpcallout 2 say ½Ð$n§A¸ò§Ú¶i¥h¬ã¨s«Ç§a¡A§ÚÀ³¸Ó«Ü§Ö¥i¥H§¹¦¨¬ã¨s
+	mpcallout 3 mpecho $I§â¬ã¨s«Çªºªù¥´¶}¡A¸ò§A¤@°_¨«¤F¶i¥h
+	mpcallout 4 mptransfer $n 9899
+	mpcallout 5 mpgoto 9899
+	mpcallout 6 mpecho $I¶}©lºëÁå¤j¦a¤§¥Û...
+	mpcallout 7 mpecho $I§âµ²´¹¥á¨ì¿NªM¤º¶}©lÅÍ©Õ...
+	mpcallout 8 mpecho $I§â²GÅé©ñ¤J¨­®Çªº¾÷±ñ¤¤...
+	mpcallout 9 mpecho ¾÷±ñµo¥X§nÂøªºÁn­µ...
+	mpcallout 10 mpecho ¾÷±ñµo¥X§nÂøªºÁn­µ...
+	mpcallout 11 say §¹¦¨¤F¡I
+	mpcallout 12 mpecho $I¥J²ÓªºÀË¬dµÛ¤â¤Wªº¥ÛÀY...
+	mpcallout 13 say ³o...³o¸ò§Ú·Q¹³¤¤®t¤Ó»·¤F¡I
+	mpcallout 14 mpecho $IÅS¥X¾_Ååªºªí±¡
+	mpcallout 15 mpforce $n say Ãø¹D...§Ú®³¿ù¥ÛÀY¤F¶Ü¡H
+	mpcallout 16 say ¤£...§A¨S¦³¿ù...¿ùªº¬O§Ú°Ú...
+	mpcallout 17 say ¬O§Ú¿ù¦ô¤F³oªÑ¤O¶q°Ú...³oªÑ­ì¥»³QÀ³¥Î¦b¾Ôª§ªº¤O¶q...¤£¬O§Ú©Ò°l¨Dªº...
+	mpcallout 18 glare
+	mpcallout 19 say ¥ÛÀY´Nµ¹§A§a...§Ú¤£»Ý­n¥¦¤F...
+	mpcallout 20 mpecho $I§â¥ÛÀYµ¹¤F§A
+	mpcallout 21 mpoload 9861 $n viclv target
+	mpcallout 22 say ½Ð§AÅý§Ú¦b³o¸Ì§NÀR¤@¤U...§Ú·Q§ÚÀ³¸Ó§ó¥[«ä¦Ò©Ò¿×ªº¥­¿Å...
+	mpcallout 23 mpadd_qmark $n cult_rock_end -1 0 0 0 0 1
+	mpcallout 24 mpecho $I§â§A±a¥X¤F¬ã¨s«Ç¡A¦Û¤v¤S¨«¤F¦^¥h
+	mpcallout 25 mptransfer $n 9875
+	endif
+~
+>death_prog 100~
+if level($n) >= 36
+		say §A·|¬°±þ¤F§Ú·P¨ì«á®¬ªº....¡I
+		if is_qmark($n) != skarabrae_enemy
+			mpadd_qmark $n skarabrae_enemy 50 0 0 0 1 1
+		else
+			mpmod_qmark $n skarabrae_enemy timer + 10
+		endif
+	endif
+~
+|
+#9812
+frey boffin~
+¬ã¨s­û - ¦ò·ç(Frey the boffin)~
+¬ã¨s­û - ¦ò·ç(Frey the boffin)¦b¦¹¦a¨ó§U»\º¸¸Ñ¶}¥­¿Å¤§Á¼.
+~
+¦ò·ç¬O­Ó»{¯uªº¾ÇªÌ¡A¥L¨ü¨ì»\º¸ªº¼vÅT¶}©l¹ï©ó¤Ñ¦a¥­¿Å¤§¯µ·P
+¨ì¿³½ì¡C
+~
+67 8 -1000 S
+40 17 6 1d4+30 1d4+3
+-1 0
+0 8 1
+>talk_prog topic~
+say ¶Ù¡I§A¦n¡A§Ú¬O¦ò·ç¡A¤@¦W¥v¥d©Ô¨©«°ªº¾ÇªÌ¡C
+~
+>death_prog 100~
+if level($n) >= 36
+		say §A·|¬°±þ¤F§Ú·P¨ì«á®¬ªº....¡I
+		if is_qmark($n) != skarabrae_enemy
+			mpadd_qmark $n skarabrae_enemy 50 0 0 0 1 1
+		else
+			mpmod_qmark $n skarabrae_enemy timer + 10
+		endif
+	endif
+~
+|
+#9813
+torturer~
+¾R°ÝªÌ(Torturer)~
+¾R°ÝªÌ(torturer)¤w¸g·Ç³Æ¦n­n¹ï§A¬I¥HÄY¦D¬r¥´.
+~
+«z!§AÂ²ª½¤£´±¬Û«H§A²´«e©Ò¨£¨ìªº¦aº»´º¶H!
+~
+67 8 -1000 S
+17 17 6 1d4+30 1d4+3
+-1 0
+0 8 1
+P 8
+#9814
+attendant~
+ÀH±q(attendant)~
+³o­ÓÀH±q(attendant)¦b¦¹¥´²z³Í°Ç¥Í¬¡¤Wªº¤@¤Á.
+~
+¥L¬Ý°_¨Ó¨S¤°»ò¯S§Oªº.
+~
+67 8 -1000 S
+20 17 6 1d4+30 1d4+3
+-1 0
+0 8 1
+>talk_prog topic~
+say §A¦n¡C
+~
+|
+#9815
+zombie-cult~
+»ø«Í(Zombie)~
+³o°¦»ø«Í(zombie)¼¨«ë¤@¤Á¦³¥Í©Rªº¬¡ª«, ¥]¬A§A¦b¤º.
+~
+³o¤@°¦»ø«Íµo¥X¤Q¤À¡u·sÂA¡vªº´c¯ä¡A¬Ý¼Ë¤l¥LÀ³¸Ó­è­è¦º¨S¦h¤[¡A¦]¦¹¨­¤W
+ÁÙ¦³¤£¤Ö¥¼»GÄêªº¦Ù¦×¡C.
+~
+67 8 -1000 S
+16 17 6 1d4+3 1d4+3
+-1 0
+0 8 1
+R Undead~
+>rand_prog 50~
+if ispc($r)
+		mpkill $r
+	endif
+~
+|
+#9816
+lich priest~
+§Å§¯²½¥q(Lich Priest)~
+§Å§¯²½¥q(Lich Priest)¥Î¥L¦º¨H¨S¦³¥Í®ðªº²´·ú¨nµÛ§A.
+~
+³o¤@°¦§Å§¯¥Í«e´¿¸g¬O¨¸Às²½¾Âªº°¶¤j²½¥q¡C¦b¥L¥Í«eÀò±o¤F¦p¦óÅý¥Íª«ÅÜ¦¨¤£
+¦º¥Íª«ªºÅ]ªk¡C¦Ó¥L¦Û¤v´N¬O¥L³Ì«á¹êÅçªº¹ï¶H¡C
+~
+67 184 -1000 S
+40 60 6 1d4+-200 1d4+100
+-1 0
+0 8 1
+R Undead~
+P 8
+>greet_prog 100~
+	if is_qmark($n) == cult_question 200001
+		say ·MÄø¡I¦Û¥H¬°¥¿¸qªº¤H­Ì...
+		say ¤S·Q¨Ó´M§ä¤j¦a¤§¥Û(Earth stone)¶Ü¡H
+		mpmod_qmark $n cult_question v1 = 2
+		mpkill $n
+	else
+		mpkill $n
+	endif
+~
+>fight_prog 30~
+	if rand(30)
+		c fireball $r
+		break
+	endif
+	if rand(30)
+		c flamestrike $r
+		break
+	endif
+	if rand(30)
+		c 'burning hand' $r
+	endif
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 200002
+		yell ¤£¡I¥Ã«íªº¡I¤£¦ºªº¥Í©R°Ú...
+		mpecho $Iªº¨­¤W±¼¥X¤F¤@§âÆ_°Í¡I
+		mpoload 9826 $n viclv floor
+		mppurge self
+	else
+		mppurge self
+	endif
+~
+|
+#9817
+monk old~
+¦Ñ«H®{(old monk)~
+¤@­Ó²½¾Âªº¦Ñ«H®{(old monk)¦b³oÃäµL©Ò¨Æ¨Æªº¨«¨Ó¨«¥h.
+~
+¥L¦³µÛ¤@°Æ´X¥G¤w¸g»GÄê±¼ªº¤ú¾¦.
+~
+67 8 -200 S
+15 62 6 1d4+30 1d4+3
+-1 0
+0 8 1
+
+#0
+
+
+
+#OBJECTS
+#9825
+black key~
+¶Â¦âÆ_°Í(black key)~
+¤@§â¬Ý¨Ó«D±`­«­nªº¶Â¦âÆ_°Í(black key)ÀRÀR¦a½ö¦b¦a¤W~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X iron~
+
+#9826
+primitive key~
+¦ÑÂÂÆ_°Í(primitive key)~
+¤@§â¦ÑÂÂªºÆ_°Í(primitive key)ÀRÀR¦a½ö¦b¦a¤W~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X iron~
+
+#9827
+skull key~
+¾uÅ\Æ_°Í(skull key)~
+¤@§â¥Î¾uÅ\»s¦¨ªºÆ_°Í(skull key)©ñ¦b¦a¤W~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X bone~
+
+#9828
+bone sword~
+¥Õ°©¼C(bone sword)~
+¤@§â¬Ý°_¨Ó«Ü¾W§Qªº¥Õ°©¼C(bone sword)©ñ¦b³oÃä.~
+~
+5 576 8193
+100~ 0~ 0~ 1~
+5 4000 0
+A
+1 1
+A
+2 1
+A
+3 -1
+A
+18 3
+A
+19 4
+L 1
+C 4000
+X bone~
+
+#9829
+skull helm dragon~
+Às°©ÀY²¯(skull helm of dragon)~
+¤@­Ó¥ÑÀs°©(skull bone)»s¦¨ªºÀY²¯(helm)³Q©ñ¦b³oÃä.~
+~
+9 1 17
+0~ 0~ 100~ 0~
+15 4000 0
+A
+3 -1
+A
+5 2
+L 1
+C 4000
+X dragon bone~
+
+#9830
+robes~
+îî¶ÂÅ@³T(dark robes)~
+¤@¥ó¶Â¦âªºÅ@³T(robe)³Q¥á¦b¦a¤W.~
+~
+9 0 9
+0~ 0~ 100~ 0~
+5 1000 0
+A
+12 30
+L 1
+C 1000
+X fiber~
+
+#9831
+black pen~
+¶Âµ§(black pen)~
+¤@°¦¶Â¦âªºµ§(black pen)§l¤Þ¤F§Aªºª`·N¤O.~
+~
+5 0 8193
+100~ 0~ 0~ 11~
+8 300 0
+L 1
+C 300
+X feather~
+
+#9832
+evil black dagger~
+îî¶Â¤P­º(black evil dagger)~
+¤@§â¶Â¦âªº¤P­º(black dagger)¦b¦a¤W´²µo¨¸´cªº®ð®§.~
+~
+5 16 8193
+100~ 0~ 0~ 11~
+10 300 0
+A
+19 3
+L 1
+C 300
+X iron~
+
+#9833
+black staff~
+¶Â¦âÏ^§ú(black staff)~
+¤@§â¶Â¦âªºÏ^§ú(black staff)³Q¥á¦b¦a¤W.~
+~
+5 16 8193
+100~ 0~ 0~ 7~
+10 300 0
+A
+18 3
+L 1
+C 300
+X wooden~
+
+#9834
+heap scales black dragonscale robes~
+¨¸ÀsÅ@³T(dragonscale robes)~
+§A¬Ý¨ì¤@¥ó±aµÛÀsÅì(scales)°{Ä£µÛ¥ú¨~ªº³T¤l(robes).~
+~
+9 2640 9
+0~ 0~ 100~ 0~
+20 5000 0
+A
+12 15
+A
+13 15
+A
+3 1
+A
+4 1
+L 1
+C 5000
+X dragon scale~
+
+#9835
+ornate robes~
+µØÄRÅ@³T(ornate robes)~
+§A¬Ý¨ì¤@¥ó½è¦a¤Q¤À°ª¯Åªº³T¤l(robe).~
+~
+9 0 9
+0~ 0~ 100~ 0~
+20 5000 0
+A
+3 1
+A
+4 1
+L 1
+C 5000
+X fiber~
+
+#9836
+white dress torn~
+³Q¼¹¸Hªº¦çªA(torn white dress)~
+¤@¥ó³Q¼¹¸Hªº¦çªA(torn dress)©ñ¦b³oÃä.~
+~
+9 0 9
+0~ 0~ 100~ 0~
+5 10 0
+L 1
+C 10
+X cloth~
+
+#9837
+rusty key~
+¥ÍÄÃªºÆ_°Í(rusty key)~
+¤@¶ô¥¨¤j¥ÍÄÃ(rusty)ªºÅK¶ô³Q©ñ¦b¦aªO¤W.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X iron~
+
+#9838
+cheap plaid pants pair~
+ªá®æ¤l¿Ç(pair of cheap plaid pants)~
+¤@¥ó¬Ý°_¨Ó¤£¤Ó¦n¬Ýªº¿Ç¤l(pants)³Q©ñ¦b¦aªO¤W.~
+~
+9 0 33
+0~ 0~ 100~ 0~
+5 1000 0
+L 1
+C 1000
+X cloth~
+
+#9839
+donut~
+°íªG(donut)~
+´X­Ó¤W­±¶îº¡¤FªGÂæªº°íªG(donut)³Q©ñ¦b³oÃä.~
+~
+19 0 1
+15~ 0~ 0~ 0~
+1 0 0
+L 1
+X food~
+
+#9840
+coffee~
+¤@ªM©@°Ø(cup of coffee)~
+¤@ªM­»¿@ªº©@°Ø(cup of coffee)¥¿´²µoµÛ­»¨ý.~
+~
+17 0 1
+15~ 15~ 12~ 0~
+1 0 0
+L 1
+X liquid~
+
+#9841
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+1~ blindness~ harm~ harm~
+1 0 0
+L 1
+X food~
+
+#9842
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+3~ bless~ cause light~  ~
+1 0 0
+L 1
+X food~
+
+#9843
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+5~ teleport~ ~  ~
+1 0 0
+L 1
+X food~
+
+#9844
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+9~ detect hidden~ detect invis~ detect magic~
+1 0 0
+L 1
+X food~
+
+#9845
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+20~ blindness~ refresh~ ~
+1 0 0
+L 1
+X food~
+
+#9846
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+22~ curse~ harm~ poison~
+1 0 0
+L 1
+X food~
+
+#9847
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+14~ refresh~ cure blindness~ cure poison~
+1 0 0
+L 1
+X food~
+
+#9848
+dragon candy~
+Às¿}(dragon Candy)~
+¤@¶ôÀs¿}(Dragon Candy)~
+~
+26 0 1
+23~ blindness~ poison~ weaken~
+1 0 0
+L 1
+X food~
+
+#9850
+brochure~
+¤p¥U¤l(brochure)~
+¤@¥»¬Ý°_¨ÓÁ¡Á¡ªº¤p¥U¤l(brochure)³Q©ñ¦b³oÃä.~
+~
+8 4224 16385
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X paper~
+
+#9851
+head~
+Às¤HÃM¤hªºÀYÆ`(draconian's head)~
+Às¤HÃM¤hªºÀYÆ`(draconian's head)³Q©ñ¦b¦a¤W.~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X flesh~
+
+#9852
+evil bracelet~
+¨¸¥úÅ@¨y(evil bracelet)~
+¤@°Æµo¥X¥Õ¦â¥ú¨~ªºÅ@¨y(bracelet)³Q¥á±ó¦b¦a¤W.~
+~
+9 597 4097
+0~ 0~ 100~ 0~
+5 50000 0
+A
+1 1
+A
+19 1
+A
+39 5
+L 1
+C 50000
+X tin~
+
+#9853
+dragon armor~
+Às°©¾Ô¥Ò(dragon armor)~
+¤@®M¥ÑÀs(dragon)ªº°©ÀY©Ò»s¦¨ªºÅ@¥Ò(armor)©ñ¦b³o¸Ì.~
+~
+9 2119 9
+0~ 0~ 100~ 0~
+20 70000 0
+A
+5 1
+A
+17 -5
+A
+39 10
+A
+19 3
+L 1
+C 70000
+X dragon bone~
+
+#9854
+cult sash~
+¨¸Às§ô¸y(cult sash)~
+¤@±ø¤WÀYµeº¡¦U¦¡Às¨v¹³ªº§ô¸y(sash)³Q¥á¦b¦a¤W.~
+~
+9 592 2049
+0~ 0~ 100~ 0~
+20 50000 0
+A
+17 5
+A
+19 4
+A
+39 20
+L 1
+C 50000
+X fiber~
+
+#9855
+black sword dark slasher~
+¶Â¼C - îî¯[¤Ñ¯}(black sword - Dark Slasher)~
+¤@§âµo´²µÛîî¶Â¦â¥ú¨~ªº¶Â¼C(black sword)¯B¦b¥bªÅ¤§¤¤.~
+~
+5 2647 8193
+200~ 0~ 0~ 3~
+20 200000 0
+A
+18 5
+A
+19 7
+H blindness~ 30 20 4
+L 1
+C 200000
+X obsidian~
+
+#9856
+light sword sunshine breaker~
+¥ú¼C - ¯}´P¸U¤V(light sword - Sunshine Breaker)~
+¤@§âµo´²µÛ¸U¤V¥ú¨~(light)ªº¼C(sword)¯B¦b¥bªÅ¤§¤¤.~
+~
+5 3395 8193
+200~ 0~ 0~ 1~
+20 300000 0
+A
+18 2
+A
+19 2
+H lightning bolt~ 40 40 4
+L 1
+C 300000
+X platinum~
+
+#9857
+paper~
+¤@±i¯È(paper)~
+¤@±i¼o¯È(paper)¥µ¦b¦a¤W¨S¦³¤H²z·|.~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+paper~
+§A¬ÝµÛ³o±i¼o¯Èªº¤º®e¡A¸Ì­±¸Ô²Ó¼g©ú¤F©Ò¦³¨¸Às²½¾Â²½¨åªº®É¶¡¡B¦aÂI»P²½«~¡C
+§A»®µMµo²{¡A¤W­±°O¸üªº²½«~¡A³ºµM³£¬O¥v¥d©Ô¨©«°¥«¥Áªº¦W¦r¡C
+
+¤]³\§A¥i¥H±N³o±i¨¸Às²½¾Â¶i¦æ¨¸´c²½¨åªºÃÒ¾Ú¡A¥æµ¹Às¤HÃM¤h...
+~
+L 1
+T 20
+X paper~
+
+#9858
+staff holy dragon~
+¥úÀs¤§§ú(staff of holy dragon)~
+¤@®Ú¤WÀYÀJ¦³ºû§®ºû¨vÀs(dragon)ÀJ¹³ªº¤ì§ú(staff)©ñ¦b³o¸Ì.~
+~
+5 257 8193
+200~ 0~ 0~ 7~
+15 100000 0
+A
+3 1
+A
+4 1
+A
+18 2
+A
+19 2
+L 1
+C 100000
+X wooden~
+
+#9859
+vertebra dragon~
+¶Â¦â¨¸Àsªº¯á´Õ°©(dragon vertebra)~
+¤@±ø´²µoªº¨¸´c¤§®ðªº¯á´Õ°©(vertebra)©ñ¦b¦a¤W.~
+~
+13 0 1
+0~ 0~ 0~ 0~
+50 0 0
+L 1
+X dragon bone~
+
+#9860
+earth stone~
+¤j¦a¤§¥Û(Earth stone)~
+¤@¶ô´¹¼üªº¥ÛÀY(stone)½Ý¥ß¦b³oÃä~
+~
+8 1 1|16384
+0~ 0~ 0~ 0~
+70 0 0
+E
+stone~
+¤j¦a¤§¥Û¡I¤]³\§AÀ³¸Ó¸ß°Ý³Í°Ç(kellar)Ãö©ó
+³o¶ô¥ÛÀYªº¨Æ±¡...
+~
+X obsidian~
+A
+17 -10
+A
+13 70
+
+#9861
+Rock Equilibrium~
+¥­¿Å¤§¥Û(Rock of Equilibrium)~
+¤@¶ô¦Ç¦âªº¥ÛÀY(rock)º}¯B¦bªÅ¤¤~
+~
+8 1 1|16384
+0~ 0~ 0~ 0~
+70 0 0
+X chaos matter~
+A
+40 4
+A
+3 -3
+
+#9862
+letter~
+«H(letter)~
+¤@«ÊÀ£¦³Äú¦Lªº«H(letter)±¼¦b¦a¤W¡C~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X paper~
+
+#9898
+Alchemist fob~
+»È¦âÃh¿ö(Alchemist fob)~
+¤@­Ó°ê®aÁåª÷³N¤h±M¥ÎªºÃh¿ö¼W´T¾¹³Q©ñ¦b³oÃä~
+~
+15 1|2|64|4194304 1|2048
+500~ 1~ 0~ 0~
+1 0 0
+X silver~
+A
+39 -500
+
+#9899
+emperor king grosspolonia sword~
+¼C¬Ó¡Ð¸¯¬¥´µ¬Á§Q¨º(Sword Emperor Grosspolonia)~
+¤@§â¥Rº¡¯à¶qªº¼C(sword)³Q´¡¦b¦a¤W~
+~
+5 1|2|64|256|1024|32768|65536|4194304 1|8192
+90~ 1~ 2~ 3~
+1 0 0
+E
+emperor king grosspolonia sword~
+³o§â¼C¨ã¦³·¥¬°±j¤jªºÅ]¤O¥H¤Î¯à¶q¡A¤@¯ë¤H¬OµLªk¾r¶¿¥¦ªº¡C
+~
+X chaos matter~
+
+#0
+
+
+
+#ROOMDATA
+#9850
+±µ«Ý«Ç~
+³o¶¡©Ð¶¡§G¸m¤Q¤ÀªºÂ²³æ¡C¦b©Ð¶¡ªº¤¤¥¡¦³¤@±i¥u¯à¥Î¨Ó¼g¦rªº®à¤l¡C¦bÀð¤W±¾
+µÛ¤@´Tµe¡A¦ý¬O§A¤£¤Ó¯à¿ëÃÑ¥X¨Ó¥¦¦bµe¨Ç¤°»ò¡A¦]¬°¥¦¹ê¦bµe±o¤Ó©â¶H¤F¡C¦b®à¤l
+®ÇÃä¦³¤@­±©ÛµP(sign)¡C
+~
+0 8 0
+E
+painting~
+You think it looks a bit like a dragon.
+~
+E
+sign~
+************************  ª`·N  *************************
+³o­Ó°Ï°ì¬O­ì¥»Envy¨t²Îªº°Ï°ì¡A§Ú±N°Ï°ì¤¤¤å¤Æ«á²¾´Ó¤F
+¹L¨Ó¨Ã¥[¥H§ï½s¡C³o­Ó°Ï°ì¥D­n¶}©ñµ¹µ¥¯Å 15 ¥H¤Wªºª±®a
+¡Aµ¥¯Å¶W¹L 20 ¥H¤W±N·|¤ñ¸û¦w¥þ¡A¦ý¬O¤´¦³¨ä¥L¤Q¤À¦MÀI
+ªº¦a¤è¡C¦]¦¹¶i¤J³o­Ó°Ï°ìªºª±®a½Ð¤p¤ß¡A³o­Ó°Ï°ì¥i¬O¨B
+¨B¦M¾÷¡C
+			       - îî¤§­ß¤ý¬P´¶¾|¦h(Pluto)
+*********************************************************
+¤U­±ÁÙ¦³¤H¬G·N´c§@¼@¶î¾~(scribble)...
+~
+E
+scribble~
+³o­Ó°Ï°ì¥ÑKention·s¼W¬ÛÃöquest¥H¤Î¬ÛÃö¹D¨ã¡A§Æ±æ¦U¦ì¦n¦n¨É¨ü¡I
+~
+D0
+A door leads into the temple.
+~
+door~
+1|2|4|16|32|64 9825 9851
+D2
+You see a road.
+~
+~
+0 -1 3104
+S
+#9851
+©ü·tªº¨«´Y~
+³o­Ó¦a¤è¨Ã¨S¦³¤Ó¦hªº¥ú·½¡A¦]¦¹³o­Ó¨«´Y¤Q¤Àªº©ü·t¡C¦b«nÃä¬O±µ«Ý«Çªº®à¤l¡A¦Ó¨«
+´Y¦V¥_Ãä©µ¦ù¤U¥h¡C
+~
+0 8 0
+D0
+The Corridor continues North.
+~
+~
+0 -1 9852
+D2
+A door leads into the Reception Area.
+~
+door~
+7 9825 9850
+S
+#9852
+Às¤§¤jÆU~
+³o¶¡©Ð¶¡ªºÀð¤W(wall)±¾º¡¤F¦³ÃöÀs±Ú»P¥v¥d©Ô¨©«°­^¶¯¾Ôª§¥vªºµe¡C¥Ñµe¤¤Åã
+¥Ü¥v¥d©Ô¨©«°ºØ±Ú¤j³¡¤À¬O³B©ó¸¨±Ñªº§½­±¡C¦b¥_Ãä¬O¤@¶¡©Ð¶¡¡A¦Ó«nÃä«h¬O©ü
+·tªº¨«´Y¡C
+~
+0 12 0
+E
+walls~
+Àð¤Wªºµe´y¼gµÛ¨¸Às¥¨¤jªº¯à¤O¥H¤Î«I¥e¥@¬Éªº³¥¤ß¡Aµe¸Ì­±ªºÀs¤j³¡¤À³£¹³¬O
+¤­ÀYÀs(tiamat)¤§Ãþªº¥¨¤j¨¸Às¡A¦ü¥G¨S¦³µ½¨}ªºÀs±Ú...
+~
+D0
+~
+~
+0 -1 9893
+D2
+~
+~
+0 -1 9851
+S
+#9853
+Å]ªk¬ã¨s«Ç~
+³o¸Ì©ñ¸mµÛ³\¦hÅ]ªkªº¾¹§÷»P¥Íª«¡C©¹«n§A¥i¥H³q©¹¼Ó±èªº³»ºÝ¡A¦b©Ð¶¡
+ªº¦èÃä»PªFÃä¦U¦³¤@¶¡©Ð¶¡¡C§A¥i¥H¬Ý¨ì³oÃä¥ßµÛ¤@­±©ÛµP¡]plaque)¡C
+~
+0 8 0
+E
+plaque~
+¨¸Às²½¾Âªº­ì§@ªÌ¬O Sandman ©ó12/13/1993ªº³Ä±ß§¹¦¨¡C
+¨Ã¥Ñ Spring Break ©ó1994±N¨¸Às²½¾Â§ï½s¶}©ñ©óEnvy¨t²Î
+¤W¡C¦b03/02/2001¥Ñ Pluto ±N¨¸Às²½¾Â§ï½s¨Ã¼W¥[ quest
+¶}©ñ©ó ²V¨P¤Û¥@(ROC) ¤§¤¤¡C©ó07/13/2004¥ÑKention·s¼W
+quest
+~
+D1
+There is a door to the east.
+~
+~
+3 0 9880
+D2
+You see Dragon Hall.
+~
+~
+0 0 9893
+D3
+You see the waiting room.
+~
+~
+0 0 9871
+S
+#9854
+¤­¤e¸ô¥æ¶°³B~
+³o¤@­Ó¦a¤è¨S¤°»ò¦n»¡ªº¡C¥X¤fªº¤è¦V³q©¹ªF¡B«n¡B¦è¡B¥_¤è¡C«n¤è
+¦³«G¥ú¶Ç¨Ó¡C
+~
+0 12 0
+D0
+There is an exit.
+~
+~
+0 -1 9856
+D1
+A hallway leads east.
+~
+~
+0 -1 9857
+D2
+You see a bright light.
+~
+~
+0 -1 9855
+D3
+You see a hallway.
+~
+~
+0 -1 9859
+S
+#9855
+²½¾Â~
+³o¸Ì´N¬O­è­è«G¥úµo¥X¨Óªº¦a¤è¡C³o¸Ì¨ì³B³£¬OÀë¥x¡C¦b©Ð¶¡ªº¤¤¥¡¦³¤@®y
+¤W­±¨èµÛÀs±ÚÀJ¹³ªº²½¾Â¡CºØºØ¸ñ¶HÅã¥Ü³o­Ó²½¾Â´¿¸g¨ü¨ì½¤«ô¡A¦ý¬O³o­Ó
+²½¾Âªº¤UºÝ«o·N¥~ªº°®²b...¡C³o¸Ì°ß¤@¯à¬Ý¨ìªº¥X¤f³q©¹¥_Ãä¡C
+~
+0 8 0
+D0
+You see the intersection.
+~
+~
+0 -1 9854
+D5
+After searching you find a trapdoor.
+~
+trapdoor~
+3 -1 9862
+S
+#9856
+ÀJ¹¢ªº©Ð¶¡~
+³o¤@¶¡©Ð¶¡©ñº¡¤F³\¦hªºÀJ¹¢«~¡A¤j³¡¤À³£¬OÀs±ÚªºÀJ¹¢¡C§A¾aªñ¨ä¤¤¤@­ÓÀJ¹¢
+«~¬Ý¡A§Aµo²{ÀJ¹¢¥¿¦b²¾°Ê¡C§A·PÄ±°}°}ªº¤£¾A´é¤W¤ßÀY¡A§A³Ì¦n¬O»°ºòÂ÷¶}¡C³o¸Ì
+°ß¤@ªº¥X¤f³q©¹«nÃä¡C¦Ó¦b§AªFÃäªºÀð¾À¦ü¥G¤£¤Ó¹ï«l¡C
+~
+0 8 0
+D1
+~
+±Kªù~
+3 -1 9886
+D2
+You see the intersection.
+~
+~
+0 -1 9854
+S
+#9857
+´¶³qªºªùÆU~
+³o­Ó©Ð¶¡¨S¦³¤°»ò¯S§Oªº¦a¤è¡A¥X¤f³q©¹¦èÃä¡A¦ÓªFÃä¦³¤@¹Dªù¡C
+~
+0 8 0
+D0
+You see a small store.
+~
+~
+0 -1 9892
+D1
+You see a door.
+~
+door~
+3 -1 9858
+D3
+You see the intersection.
+~
+~
+0 -1 9854
+S
+#9858
+¯D«Ç~
+³oÃäÂ²ª½¬O²½¾Âªº©U§£¦¬¶°³õ¡I¥Ñ´Z©Ò¤¤¶Ç¥X¤F«D±`Ãø¥H§Ô¨üªº´c¯ä¡A§A
+¬Æ¦ÜµLªk·Q¹³²½¾Â¤ºªº¤H¦p¦ó¦b³oºØ´c¯ä¤U¶i­¹¡C°ß¤@ªº¥X¤f«ü¦V¦èÃä¡C
+~
+0 8 0
+D3
+You see a door.
+~
+door~
+3 -1 9857
+S
+#9859
+ªùÆU~
+³o­ÓªùÆUªº¥Ñ¤@¹D¤ÑªáªO¤Wªº¥úµ¹·Ó«G¤F¡C§AÄ~Äòªº¨«¤U¥h¡Aµo²{³oÃä¨Ã¤£¬O
+¤Ó¼ö¡A·PÄ±¤WÁÙÆZ²D²nªº¡CªùÆUªº¥X¤f³q©¹ªFÃä»P¦èÃä¡C
+~
+0 8 0
+D1
+You see the intersection.
+~
+~
+0 -1 9854
+D3
+You see a bend in the hallway.
+~
+~
+0 -1 9860
+S
+#9860
+ªùÆUÂàÅs³B~
+ªùÆU¦b³o¸ÌÂàÅs¦Ó³q©¹¥_Ãä¡C§A¥i¥H±¼ÀY¦VªFÃä¦^¥h¡C
+~
+0 8 0
+D0
+Its too far to make out.
+~
+~
+0 -1 9861
+D1
+You see a hallway.
+~
+~
+0 -1 9859
+S
+#9861
+²½ªÁªº¦a¤è~
+³o¸Ì¤@©w¬O¨¸Às±Ð±Ð®{²½ªÁªº¦a¤è¡C§A¬O²Ä¤@¦¸¶i¤J¨ì³oÃä¡A©Ð¶¡¤¤¥¡ªº¦aªO
+¦³µÛ¥Î¯»µ§¼gªº¡uÅwªï¥[¤J¡vªº¦r²´¡C³o¸Ì¬Ý°_¨Ó¬O¨¸Às±Ð¤¤¤ß²½ªÁ³õ¡A¨Ã¦b³oÃä
+Á|¿ì±Ð®{¥[¤Jªº»ö¦¡¡C
+~
+0 8 0
+D0
+You see a staircase.
+~
+~
+0 -1 9894
+D2
+You still can run back to the hallway.
+~
+~
+0 -1 9860
+S
+#9862
+¶Â·tªº©Ð¶¡~
+³o¤@¶¡©Ð¶¡«D±`ªº·t¡C¦³¤@¹D§ß±è³q©¹¤W¤è¡A¦Ó¥X¤f³q©¹«n¤è¡C
+~
+0 1037 0
+D2
+It's too dark to see anything.
+~
+~
+0 -1 9863
+D4
+You see a trapdoor.
+~
+trapdoor~
+3 -1 9855
+S
+#9863
+¦bÅ]¤OÀô¸ÌÀY~
+³o­ÓÅ]¤OÀô¬O¥Ñ¨¸Às²½¾Âªº«H®{°µ¦¨ªº¡C¥u¦³°ª¯Å²½¥q¯à°÷¶i¤J³o¸Ì¡A....©Î
+¬OÂô¤J³oÃäªº¤H¡C³o¸Ìªº¥X¤f³q©¹¥_Ãä¡B¦èÃä»PªFÃä¡C
+~
+0 8 0
+D0
+It's very dark.
+~
+~
+0 -1 9862
+D1
+You see a room.
+~
+~
+0 -1 9864
+D3
+You see a corridor.
+~
+~
+0 -1 9865
+S
+#9864
+²½¥qªº¹ì«Ç~
+¨¸Às²½¾Âªº²½¥q­Ì³£ºÎ¦b³oÃä¡C³o­Ó©Ð¶¡¤Q¤Àªº¾ã»ô¡B²M¼ä¡A¥u¦³¤ÑªáªO¤WªºÀë¥x¦³
+¤@ÂI¦Ç¹Ð¡C¦aªO¤W¦³¤@­Ó©_©Çªº©Ôªù¡A¦ü¥G¥i¥H³q©¹­þ¸Ì...
+~
+0 8 0
+D3
+You see the inner circle.
+~
+~
+0 -1 9863
+D5
+~
+~
+1|2 0 9885
+S
+#9865
+¹w¨¥¨«´Y~
+³o­Ó¦a¤èµ¹§A¤Q¤À¤£¦wªº·PÄ±¡C¥X¤f³q©¹ªFÃä»P¦èÃä¡A¦Ó¥_Ãä¦³¤@®yºÊ¨c¡C§AÁô¬ù
+ªºÅ¥¨ìºÊ¨c¤º¶Ç¨Ó°ãª_ªºÁn­µ¡C
+~
+0 9 0
+D0
+There is a cell door here.
+~
+cell~
+1|2|4|16|32|64 9826 9866
+D1
+You see the inner circle.
+~
+~
+0 -1 9863
+D3
+It's not a safe place to go.
+~
+~
+0 -1 9867
+S
+#9866
+ºÊ¨c~
+³o¤@¶¡¼éÀã¤S³±·tªººÊ¨cÃöµÛ¤@­Ó³Q§ì¨ÓÄë¬¹ªº©^Äm¤§¤k¡C¦b¨cªù«á¥X¤f
+³q©¹«nÃäªº¹w¨¥¨«´Y¡C
+~
+0 1|4|8|16|65536|524288|1048576 0
+D2
+You see a cell door.
+~
+cell~
+1|2 0 9865
+S
+#9867
+¹w¨¥¨«´Y~
+§A¤w¸g¤£ª¾¹D§A¦b­þ¸Ì¤F¡C§A¥u¯à°÷½T©w³oÃäªº®ðª^Åý§Aªº­G¤Q¤Àªº¤£µÎªA¡C¥X¤f
+³q©¹ªFÃä¡A¦pªG§AÁÙ·QÄ~Äò¨«¤U¥h¡A½Ð©¹¦èÃä¨«¡C
+~
+0 8 0
+D1
+It's the hallway you just came from.
+~
+~
+0 -1 9865
+D3
+Better not go that way.
+~
+door~
+3 -1 9868
+S
+#9868
+³q¹DªºÂà¨¤~
+³o¸Ì¥u¬O³æ¯Â´£¨Ñ¹L¸ôªº©Ð¶¡¡C¤£¹L¦èÃäªºªù¦ü¥G¬°¤Fªï¦X¤°»ò¤H
+¦Ó§@¤F¯S§Oªº¸Ë¹¢...
+~
+0 8 0
+D0
+That way smells REALLY bad.
+~
+~
+0 -1 9869
+D1
+The forboding hallway isn't NEARLY as forboding as what lies beyond
+it.
+~
+door~
+3 -1 9867
+D3
+~
+~
+0 -1 9896
+S
+#9869
+¦ÃÂ©ªºªùÆU~
+³o¸Ìªº´c¯ä¬O¨ºÃä¶Ç¹L¨Óªº¡H«ç»ò·|¦³³o»ò¯äªº¯ä¨ý©O¡H
+§A¤£²M·¡¡A¦ý¬O§A¥i¥H½T©w¯ä¨ý¬O¥Ñ¤@°¦¥¨¤jªº¥Íª«¨­¤W´²µo¥X¨Ó¡C
+¨â¹Dªù³q©¹¥_Ãä»P«nÃä¡A¤£¹L§A³Ì¦n¬O©¹«nÃä¨«¡C
+~
+0 8 0
+D0
+~
+~
+0 -1 9870
+D2
+You see the room in which the High Priestess resides.
+~
+~
+0 -1 9868
+S
+#9870
+©_²§ªºÅ]ªk°}~
+³o¸Ì¦³¤@­Ó©_²§ªºÅ]ªk°}¡A¦ü¥G¬O¦b¥l³ê¬Y¤@ºØ¥Íª«¡C§A·PÄ±¨ì¤Q¤À
+¥¨¤jªº¨¸´c¯à¶q´N­n¥X²{...¡C
+~
+0 8 0
+D2
+You see a BIG STEEL DOOR, probably meant to keep the Wyrmling IN.
+~
+~
+0 -1 9869
+>room_time 100~
+if hasdoor(5)
+	if roomtimer($0) == 0
+		echo ¤@¹DÅ]ªk«Ì»ÙÅ¢¸n¦í¾ã­Ó©Ð¶¡¡C
+		deldoor 5
+	endif
+endif
+~
+>room_enter 4 100~
+if roomtimer($0) > 0
+	break
+endif
+if is_qmark($n) == cult_question 200001
+	modrvt t0 = 5
+	callout 1 echo §A¨­¤WªºÅ]¤O©è¾P¤FÅ]ªk«Ì»Ù¡I
+	callout 2 echo ¦aªO¤W½w½wªº¥X²{¤@±ø³q¹D¡I
+	callout 2 makedoor 5 ©³¤U¤@¤ùº£¶Â... passway 0 0 9887
+endif
+~
+|
+S
+#9871
+µ¥­Ô«Ç~
+³o¶¡©Ð¶¡©ñº¡¤F³Í°Ç¥Î¨Ó°µÅ]ªk¹êÅçªºÃÄ§÷¡C§A¥i¥H§¤¦b³oÃä¥ð®§¬ÝµÛ³Í°Ç°µ
+¹êÅç¡C©¹ªF¬O¥ð®§«Ç¡A¦Ó¥_Ãä¬O¤u§@«Ç¡C
+~
+0 8 0
+D0
+The main office.
+~
+~
+0 -1 9872
+D1
+You see the tourist office.
+~
+~
+0 -1 9853
+D3
+You see an evil glow.
+~
+door~
+3 -1 9873
+S
+#9872
+¤u§@«Çªº¤J¤f~
+·í§A¶i¨ì³o¤@¶¡¤u§@«Ç®É¡A§AÄ±±o³o¸ÌªºÅ]ªkª««~§A´X¥G³£¨S¦³¨£¹L¡C
+·íµM¡A³Í°Ç¨º»ò°¶¤jªºÅ]ªk®v©Ò¹êÅçªºÅ]ªk§A«ç»ò¥i¯à¨£¹L¡C
+~
+0 8 0
+D0
+You see a hallway in the office.
+~
+~
+0 -1 9874
+D1
+You see the middle of the office.
+~
+~
+0 -1 9878
+D2
+You see the waiting room.
+~
+~
+0 -1 9871
+D3
+You see a sales booth.
+~
+~
+0 -1 9879
+S
+#9873
+©_©Çªº©Ð¶¡~
+·í§A¶i¤J³o¶¡©Ð¶¡®É¡Aªù©¿µM¦Û°Ê¥B¤j¤OªºÃö¤W¤F¡C³o¸Ì¦ü¥G¨S¦³¥ô¦óªº¥X¤f¡A
+§A¦ü¥G»~Âô³Í°Ç©Ò¹êÅçªºÅ]ªk©Ð¶¡¤F¡C
+~
+0 8200 0
+S
+#9874
+ªùÆU~
+³o¸Ì¬O¤@­Ó´¶³qªº©Ð¶¡¡C¦ý¬O³o¸Ì¨ì³B³£¥R¥¸µÛ¥i©ÈªºÅ]ªk¯à¶q¡C¦bÀð¤W¦³¤@´T
+¬Û·íºë½oªº¹Ïµe¡C«nÃä¥i¥H¦^¨ì¤u§@«Ç¡A¦èÃä¬O¦³¤@¹D¬Á¼þªù¡C
+~
+0 8 0
+D2
+You see the main office.
+~
+~
+0 -1 9872
+D3
+You see Gale's office.
+~
+~
+0 -1 9875
+S
+#9875
+»\º¸ªº¤u§@«Ç~
+»\º¸ªº¤u§@«ÇÅã±o¤Q¤Àªº·Å·x¥BµÎªA¡C¸ÌÀY¨ì³BÂ\º¡¤F¦³Ãö¤Ñ¦a³±¶§¥­¿Åªº®ÑÄy¡C
+»\º¸¦b¦¹¤u§@¤F¬Û·íªøªº¤@¬q®É¶¡¡A¦]¬°Àð¤WÂ\¤F¦n´X¥»ªº¤é°O¥»¡C°ß¤@ªº¥X¤f«ü¦V
+ªFÃä¡C
+~
+0 8|1024 0
+D1
+You see a hallway in the office.
+~
+~
+0 -1 9874
+S
+#9876
+¦ò·çªº¤u§@«Ç~
+³o¸Ì¬O¦ò·çªº¤u§@«Ç¡A¸ÌÀY¥u¦³´X­ÓÂ²³æªº´È¤l»P®à¤l¡C¨ì³B³£¬O´²¶Ãªº¯È±i¡A¤W­±
+°O¸üµÛ¦ò·ç¤u§@ªº¤º®e»P¶i«×¡C°ß¤@ªº¥X¤f«ü¦V«nÃä¡C
+~
+0 8 0
+D2
+You see the middle of the office.
+~
+~
+0 -1 9878
+S
+#9877
+¥ÎÀ\«Ç~
+³o¸Ì¬O¨º¨Ç¨¯­Wªº¬ã¨s­û»PÅ]ªk®v¥ÎÀ\ªº¦a¤è¡A¨Í¤k - ±ö¦]¦b¦¹¬°¥L­Ì²i¶¹¥Xºë½o
+ªº¨ÎÀa¡C°ß¤@ªº¥X¤f«ü¦V«nÃä¡C
+~
+0 8 0
+D2
+You see the copy room.
+~
+~
+0 -1 9882
+S
+#9878
+¤u§@«Çªº¤¤¥¡~
+³o¸Ì¬O´£¨Ñªk®v­Ì©ñ¸mÅ]ªkª««~ªº¦a¤è¡A¨ì³B³£¬OÅã±oÂø¶Ã¤£³ô¡C¥_Ãä¬O¦ò·ç
+ªº¤u§@«Ç¡A¤J¤f«ü¦V¦èÃä¦ÓªFÃä¬OÆ[¹î«Ç¡C
+
+~
+0 8 0
+D0
+You see Fred's office
+~
+~
+0 -1 9876
+D1
+You see the copy room.
+~
+~
+0 -1 9882
+D3
+The entranceway to the office.
+~
+~
+0 -1 9872
+S
+#9879
+ª×«Ç~
+³o¸Ì¬O¥i¥H¥Î¨Ó¥ð®§ªº©Ð¶¡¡A°ß¤@ªº¥X¤f«ü¦VªFÃä¡C
+~
+0 8 0
+D1
+You see the entranceway to the office.
+~
+~
+0 -1 9872
+S
+#9880
+ªùÆU«áªº°Q½×«Ç~
+³o¸Ì¬OªùÆU«áªº°Q½×«Ç¡A¦ò·ç»P»\º¸¸g±`¦b¦¹³B°Q½×¦³Ãö¥­¿Å¤è­±ªº¾Ç»¡¡C¦Ó³Í°Ç»P
+±ö¦]¤]¸g±`¨Ó¦¹³B¬ã¨s¦³ÃöÅ]ªkªº¾Ç°Ý¡C³o¸Ì¨ì³B³£Â\º¡¤F®ÑÄy¡C
+~
+0 8 0
+D0
+The hallway ends.
+~
+~
+0 -1 9881
+D3
+You see a door.
+~
+door~
+3 -1 9853
+S
+#9881
+ªùÆUªººÉÀY~
+³o¸Ì¬O¾ã­ÓªùÆUªººÉÀY¡A¦ÓªùÆU©¹«nÄ~Äò©µ¦ù¤U¥h¡C
+~
+0 8 0
+D2
+You see the beginning of the hallway where Fred and Marie are....
+~
+~
+0 0 9880
+D3
+You see a door.
+~
+door~
+3 0 9882
+S
+#9882
+Æ[¹î«Ç~
+¦¹³B¬O»\º¸¥Î¨Ó¹êÅçÅ]ªk®ÄªGªºÅ]ªkÆ[¹î«Ç¡A¥|©P¨èº¡¤F§í¨îÅ]ªk¤O¶q¹L©ó±j¤jªº
+©G¤å¡C¦¹³Bªº¥_Ãä¬O¥ÎÀ\«Ç¡A¦èÃä¬O¥D­n¤u§@«Ç¡A¦ÓªFÃä«h¦³¤@¹Dªù¡C
+~
+0 8 0
+D0
+You see the break room.
+~
+~
+0 -1 9877
+D1
+You see a door.
+~
+door~
+3 -1 9881
+D3
+You see the middle of the office.
+~
+~
+0 -1 9878
+S
+#9883
+¦a¤U«°~
+³o¸Ì¬O®ðª^³±¨Hªº¦a¤U¨cÅ¢¡C³o¸Ì°ß¤@ªº¥X¤f¦ü¥G´N¬O¦èÃä¨º¤@¹DÂê¤Wªº
+ªù¡C¦ÓÀY¤Wªº¥X¤f¶ZÂ÷§A¬ù15­^¤Ø¡A¦ü¥G¤£¤Ó¥i¯à¥i¥HÃkª¦¥X¥h¡C
+~
+0 8200 0
+D3
+You see a big rusty iron door.
+~
+door~
+7 9837 9884
+S
+#9884
+¾R°Ý«Ç~
+³o­Ó©Ð¶¡¦³³\¦h¥i©Èªº¾R°Ý¤u¨ã¡A·í§A¨ì¹F³o¶¡©Ð¶¡¤£¸T·P¨ì¨­¤W¦ü¥G¦³µh·¡
+¶Ç¨Ó¡C¦b©Ð¶¡¸ÌÀY¦³¤@¨ã¾uÅ\¡C°ß¤@¥i¥H¨£¨ìªº¥X¤f³q©¹ªFÃä¡A¦ý¬O¨cªùªºÆ_°Í¦b
+º»¨ò¨­¤W¡C
+~
+0 8 0
+D0
+~
+±Kªù~
+3 -1 9886
+D1
+You see a big rusty iron door.
+~
+door~
+7 9837 9883
+S
+#9885
+¤£Â_ªº©¹¤U·Æ~
+°Ú¡I§A¥¿¦b¤£Â_ªº©¹¤U·Æ¡A§A§Æ±æ§A¥i¥H±±¨î¦í§Aªº³t«×¦ý¬O«o¿ì¤£¨ì¡C©¹¤W
+¤w¸g¤£¥i¯à¤F¡A§A¥u¦nÄ~Äò©¹¤U·Æ¤U¥h¡A©Î¬O§¤¦b³o¸Ìµo§b¡C
+~
+0 8200 0
+D5
+Well you wish you knew.
+~
+~
+0 -1 9883
+S
+#9886
+¯µ±K³q¹D~
+³o¤@±ø¶Â·t¤S¼éÀãªº¯µ±K³q¹D¨ì³B§Gº¡¤F»jµïºô»P»jµï¡C¤£¹L­n³q¹L³o¸Ì¥u¦n
+µwµÛÀY¥Ö±N©Ò¦³ªº»jµïºôµ¹¼·¶}¡C«nÃä»P¦èÃä¦U¦³¤@¹Dªù¡C
+~
+0 8 0
+D2
+You see the inside of a secret door.
+~
+±Kªù~
+3 -1 9884
+D3
+You see the inside of a secret door.
+~
+±Kªù~
+3 -1 9856
+S
+#9887
+¦V¤UªºÀG¹D~
+³o¸Ì¦ü¥G¤£¤Ó¹ï«l¡C¦bÄ~Äò©¹¤U¨«¤U¥h¦ü¥G·|¦³·¥¤jªº¦MÀI¡A¬Æ¦Ü¬O¦º¤`ªº«Â¯Ù¡C
+³o¸Ì¨ì³B³£¬O¤HÃþ¾¹©xªº¨ë»ó¨ý¹D¡AÅý§A·P¨ì¤Q¤Àªº¤£µÎªA¡C§A¥i¥H©¹¤W©Î©¹¤UÄ~Äò¨«
+¡A¦ý¬OÁo©úªº³Ì¦n§OÄ~Äò©¹¤U¡C
+~
+0 1|4|8|16|524288|1048576 0
+D4
+You see a dim light through the opening.
+~
+tile~
+3 -1 9870
+D5
+It is too dark to see.
+~
+~
+0 -1 9888
+S
+#9888
+²`§|ªº©³³¡~
+¥Ñ¦a­±¶Ç¨Ó¤Q¤À¥¨¤jªº¨¸´c¤O¶q¡C³o¸Ì¤Q¤Àªº³±·t¡A¦Ó¥B¤Q¤À¤£´M±`ªº¶Â·t¡C
+¦^ÀY©¹¤W¨«¦^¥hÁÙ¨Ó±o¤Î¡C
+~
+0 1|4|8|16|524288|1048576 0
+D4
+It is too dark to see.
+~
+~
+0 -1 9887
+D5
+It is too dark to see.
+~
+~
+0 -1 9889
+S
+#9889
+¦bîî¶Â¦º¤`¹i¤f¤§«e~
+³o¬O§A¦b­±¹ï¨¸´c¤O¶q«e³Ì«áÁÙ¯à°÷¤Ï®¬ªº¾÷·|¡C¦b³oºØ¦MÀI«e­±¦^ÀY¨S¦³¤H·|Ä±±o
+§A³o¬OÀ¶¤Òªº¦æ¬°¡C©¹¦^¨«§a¡IÁÙ¦³¾÷·|«O¦³§Aªº¥Í©R¡C
+~
+0 1|4|8|16|524288|1048576 0
+D1
+It is too dark to see.
+~
+mud~
+3 0 9890
+D4
+It is too dark to see.
+~
+~
+0 -1 9888
+D5
+It is too dark to see.
+~
+~
+0 0 9891
+S
+#9890
+ÁôÂÃªº«F¤l~
+³o­ÓÁôÂÃªº¦a¤è¤@©w¬O¥H«e©~¦í¦¹³Bªº¥Íª«©Ò«Ø³y¥X¨Ó¡C¦ý¬O³o¸Ì¦ü¥G¤w¸g³Q©ß±ó«Ü¤[
+¤@¬q®É¶¡¤F¡C
+~
+0 9 0
+D3
+It is too dark to see.
+~
+mud~
+3 -1 9889
+S
+#9891
+²`§|ªººÉÀY~
+¨ì³B³£¬O¦UºØ¥Íª«ªº°©ÀY¡C¤@ªÑ¼éÀã´H§Nªº·PÄ±´é¤W§Aªº¤ßÀY¡A¦]¬°§AÁA¸Ñ¨ìµ¥¤@
+¤U§A±N­n­±¹ïªº¨¸´c¤O¶qªº¥i©È¡C³o¸Ì¬O§Å§¯ªº¦í©Ò¡A¦Ó¥B¬O±j§§ªº§Å§¯¡C
+~
+0 1|4|8|16|524288|1048576 0
+D0
+You see A BIG STEEL DOOR.
+~
+door~
+1|2 0 9895
+D4
+It is too dark to see.
+~
+~
+0 -1 9889
+S
+#9892
+¿}ªG©±~
+³o¸Ì¬O²½¾Â¤º³c½æ¿}ªGªº¦a¤è¡C§A³Ì¦n¸Õ¸Õ³o¨Ç¿}ªG¡A¦ý¬O­n¤p¤ß³o¨Ç¥ÑÀs
+¤§³è²G»s¦¨ªº¿}ªG©¹©¹·|¦³Åå¤H¦ý¬O¤£·íªº®ÄªG¡C
+~
+0 8 0
+D2
+You see the hallway.
+~
+~
+0 -1 9857
+>room_enter 4 105~
+if is_qmark($n) == hobbit_peter_travel
+	mod_qmark $n hobbit_peter_travel v0 | 4
+	echoat $n [1;30m¬Ý¨Ó¥i¥H¨ì¤U¤@­Ó¦aÂI¤F¡C[0m
+endif
+~
+|
+S
+#9893
+¼Ó±èªº³»ºÝ~
+³o¸Ì¬O¼Ó±èªº³»ºÝ¡A¼Ó±è©¹¤U©µ¦ù¨ì²½¾Âªº¨ä¥L³¡¤À¡C¥»¨Ó¦b¤u§@«Ç¥Õ´·ªºÀð¾À¨ì¦¹
+³B¶}©lº¥º¥ÅÜ¦¨¶Â¦â¡A©Î³\¤U­±¦³¤@ºØ¤£ª¾¦Wªº¤O¶q¼vÅT¤F³o¨ÇÀð¾À¡C¦¹¦aªº¥X¤f³q
+©¹¥_Ãä»P¤U­±¡C
+~
+0 12 0
+D0
+You see a hallway in the office.
+~
+~
+0 -1 9853
+D5
+You see the bottom of the staircase.
+~
+~
+0 -1 9894
+D2
+~
+~
+0 0 9852
+S
+#9894
+¼Ó±èªº©³ºÝ~
+¼Ó±è©µ¦ù¨ì³o¸Ìµ²§ô¤F¡C³o¸Ì¤Q¤Àªº¦wÀR¡B³±¨H¡A¦Ó¥B³o¸Ì¦³©_©ÇªºÁnÅT¡AÁn­µÀ³¸Ó
+¬O¨Ó¦Û«nÃä¡C³o¸Ì°ß¤@¥i¥H¬Ý¨£ªº¥X¤f³q©¹¤W¤è¡C
+~
+0 12 0
+D2
+It is too blurred to see anything of note.
+~
+~
+0 -1 9861
+D4
+You see the top of the staircase.
+~
+~
+0 -1 9893
+S
+#9895
+¶ÂÀs¤§·µ~
+§A²×©ó§ä¨ì¤F¨¸Às²½¾Â¸Ì­±ªº¯µ±K²½ªÁ¤§·µ¡A´Nºâ§A¤£¥Î¹J¨ì¸ÌÀYªº¶ÂÀs¡A§A¤]
+¥i¥H¥Ñ¨ì³B´²§Gªº°©ÀY»PÀs±ÚªºÅì¤ùª¾¹D¸Ì­±¦³Às±Ú¦s¦b¡C¨º°¦Às¥¿¦b¨É¨üµÛ­è­è°e
+¶i¨Óªº³B¤k¤jÀ\¡C§A¤ß·QµÛ³o¤@°¦Às¥i¤£¯àÅý¥¦¦b¥v¥d©Ô¨©«°¤¤¦¨ªø¡C°ß¤@ªº¥X¤f«ü
+¦V«nÃä¡C
+~
+0 1|4|8|16|524288|1048576 0
+D2
+You see a BIG STEEL DOOR, probably meant to keep the Wyrmling IN.
+~
+door~
+1|2 0 9891
+S
+#9896
+µØÄRªº³q¹D~
+«e¤è¦ü¥G³q©¹¬Y­Ó­«­n¤Hª«ªº©Ð¶¡¡C
+~
+0 8 0
+D1
+~
+~
+0 -1 9868
+D3
+~
+~
+1|2 0 9897
+S
+#9897
+°ª¯Å¤k²½¥q¤§·µ~
+§A¶i¤J¤F°ª¯Å¤k²½¥qªº¹ì®c¡C²{¦b§A¦³³Â·Ð¤F¡C³\¦h¶Ç¨¥ÁÁ¶Ç¨¸Às²½¾Â¤k²½¥q»P
+Às±Ú³q«Á¡A§ó¦³¤H»¡¤k²½¥q¥»¨­´N¬OÀs¤H¡C¦ý¬O¦b¥v¥d©Ô¨©«°¤º²{¦b·|¦³Às¤H»P
+Às±Ú¶Ü¡HÀ³¸Ó¤£¥i¯à§a¡C
+~
+0 8 0
+D1
+~
+~
+0 0 9896
+S
+#9898
+¬}¥Þ~
+§A¶i¨ì¨¸Às¥´¸H¦aªO¦Ó³Ð³y¥Xªº¬}¥Þ¸Ì¡A¬}¥Þ¦]¬°¦aªO¤Wªº¤@¶ô¥ÛÀY¦Ó²§±`¥ú«G...
+~
+0 1|4|8|16|524288|1048576 0
+D4
+~
+~
+0 0 9895
+S
+#9899
+»\º¸ªº¬ã¨s«Ç~
+³o¸ÌÂ\©ñµÛ¥¨¤jªº¾÷±ñ¥H¤Î³\³\¦h¦hªº®ÑÄy¡A¤j·§¬O»\º¸¬ã¨sªº¦a¤è§a
+~
+0 1|4|8|16|524288|1048576 0
+S
+#0
+
+
+
+#SPECIALS
+M 9804 spec_cast_mage
+M 9806 spec_breath_acid
+M 9814 spec_cast_undead
+M 9816 spec_fido
+S
+
+
+
+#RESETS
+M 0 9800 1 9850
+M 0 9808 1 9850
+E 0 9850 0 17
+M 0 9809 1 9853
+E 0 9831 0 16
+O 0 9850 0 9853
+O 0 9860 0 9898
+M 0 9801 7 9855
+E 0 9830 0 5
+E 0 9833 0 16
+M 0 9810 0 9877
+M 0 9807 1 9858
+M 0 9801 7 9860
+E 0 9830 0 5
+E 0 9833 0 16
+M 0 9801 7 9861
+E 0 9830 0 5
+M 0 9801 7 9861
+E 0 9830 0 5
+M 0 9802 4 9861
+E 0 9832 0 16
+E 0 9835 0 5
+M 0 9802 4 9863
+E 0 9832 0 16
+E 0 9835 0 5
+M 0 9802 4 9863
+E 0 9835 0 5
+M 0 9803 1 9865
+E 0 9828 0 16
+E 0 9829 0 6
+M 0 9805 1 9866
+E 0 9836 0 5
+M 0 9804 1 9897
+E 0 9834 0 5
+M 0 9811 1 9875
+M 0 9812 1 9876
+O 0 9839 0 9877
+O 0 9840 0 9877
+M 0 9814 1 9879
+M 0 9815 1 9883
+M 0 9813 1 9884
+G 0 9837 0
+M 0 9816 1 9891
+M 0 9817 1 9892
+G 0 9841 0
+G 0 9842 0
+G 0 9843 0
+G 0 9844 0
+G 0 9845 0
+G 0 9846 0
+G 0 9847 0
+G 0 9848 0
+M 0 9806 1 9895
+S
+
+
+
+#SHOPS
+9817 0 0 0 0 0 150 30 0 23
+0
+
+
+
+#$

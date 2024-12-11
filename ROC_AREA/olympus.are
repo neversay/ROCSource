@@ -1,0 +1,2681 @@
+#AREADATA
+Name        ¶øªL©¬´µ¤s~
+Identity    olympus~
+Builders    Generic~
+Translator  Pluto~
+Modifier    Amushi~
+VNUMs         900 993
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#901
+zeus-olympus god~
+©z´µ(Zeus)~
+©z´µ(Zeus)¥¿§¤¦bÍ¢ªº¤ý®y¤W.
+~
+¦b§A­±«e©Ò¨£¨ìªº¬O¶øªL©¬´µ¤s½Ñ¯«¤¤³Ì°¶¤jªº¤@¦ì. Í¢¦ü¥G¥u­n¥Î¤@­Ó©ÀÀY´N
+¨¬¥H§â§A±þ¦º. Í¢¹ï§Aªº¨C¤@¿h³£²`²`¦a¨ë¤J§AªºÆF»î. §A²×©óª¾¹D¤°»ò¬O§A©Ò
+¸Ó¬ÈÄßªº. ¥L¤â¤Wªº°{¹q§s§s§@ÅT, ¥Nªí¤F¥L·Ð´oµÛ¤°»ò. §AÀ³¸Ó¹Á¸Õ°Ý°Ý.
+(What worries you?)
+~
+65539 532650 1000 S
+51 300 0 0d0+0 0d0+0
+8000 0
+0 8 1
+R God~
+P 8
+C 2
+>talk_prog restart~
+if is_qmark($n) <= olympus_weapon_quest 100007
+   mpdel_qmark $n olympus_weapon_quest
+   say ¥ô°È­«·s¶}©l.
+endif
+~
+>talk_prog p what worries you?~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) != olympus_weapon_quest
+                mpadd_qmark $i olympus_talking 1 0 0 0 0 1
+                mpadd_qmark $n olympus_weapon_quest -1 1 0 0 0 1
+                say ¸Ó¦ºªº¡A¨«¶}¨«¶}¡A§C½âªº¤Z¤H¨S¦³¸ê®æ¸ò§ÚÁ¿¸Ü¡I
+                mpcallout 2 mpechoat $n §A·QµÛ¡AÀ³¸Ó¦³¤°»ò¨Æµo¥Í¤F¡A»¡¤£©w§A¥i¥H°Ý°Ý³o«°¸Ì³ÌºÍ´¼ªº¤H©O¡I(ask about zeus)
+                mpcallout 2 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>give_prog 932~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100008
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                mpjunk all.corpse
+                mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpechoat $n §A²Ó¤ßªº¸ò©z´µÁ¿µÛ­ì¥Ñ¡C
+                mpcallout 2 say ­ì¨Ó¬O³o¼Ë§r¡ã
+                mpcallout 10 mpecho ©z´µ¨I«ä¤F¤@·|¨à¡C
+                mpcallout 12 say ±q¤µ¥H«á¡A¤Ñ¬É±N·|¦h¥[¤p¤ßªº¡A·PÁÂ±zªºÀ°§U¡A±zªº¦WÁn±N¦A«×´£°ª¡I
+                mpcallout 12 mpresp $n 1
+                mpcallout 13 say ¥t¥~¡A§Æ©Ôªº¨Æ±¡¡A¹L¬q®É¤é¡A§Ú±N´_¬¡¦o¡C
+                mpcallout 14 say ³o¥óÂ§ª«´Nµ¹§A§a¡I
+                mpcallout 14 mpoload 934 $n 1 target
+		mpcallout 14 mplog give quest eq vnum 934 to $n.
+                mpcallout 15 rumor ¤Ñ¬É¦M¾÷¸Ñ°£¡A$nªº¦WÁn§ó¥[§§¤j¤F¡I
+                mpcallout 15 mpdel_qmark $i olympus_talking
+        else
+                drop corpse
+        endif
+endif
+~
+>give_prog 930~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100006
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say ³á³á³á³á¡ã¡ã¡I§Ú¹Ú´K¥H¨DªºÄ_¼C¡I
+                mpjunk all
+                mpcallout 1 say ¦n§a¡I§A»¡ªº§Ú³£µªÀ³°Õ¡I
+                mpat prometheus-olympus mppurge prometheus-olympus
+                mpcallout 2 rumor ¤Ñ¬Éµo¥X¯S³j¥O¡C
+                mpcallout 3 mpechoat $n ´¶Ã¹¦Ì¥ð´µ¥Î¤ß¹q·PÀ³¹ï§A»¡¡G¯u¬O¤Ó·PÁÂ§A¤F¡I½Ð§äªüªiÃ¹»â½à§a¡I(Award)
+                mpcallout 3 mpdel_qmark $i olympus_talking
+                mpcallout 3 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+>talk_prog p release prometheus please~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100017
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                say ¶â ..
+                mpechoat $n ©z´µ«ä¦Ò¤F¤@¤U¡C
+                mpcallout 6 say ¦n§a¡I¬Ý¦b§Aªº¥÷¤W¡A§Ú´N©ñ¹L¥L¡I
+                mpcallout 6 rumor ¤Ñ¬Éµo¥X¯S³j¥O¡C
+                mpcallout 6 mpat prometheus-olympus mppurge prometheus-olympus
+                mpcallout 7 mpechoat $n ´¶Ã¹¦Ì¥ð´µ¥Î¤ß¹q·PÀ³¹ï§A»¡¡G¯u¬O¤Ó·PÁÂ§A¤F¡I½Ð§äªüªiÃ¹»â½à§a¡I(Reward)
+                mpcallout 7 mpdel_qmark $i olympus_talking
+                mpcallout 7 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+|
+#902
+prometheus-olympus~
+´¶Ã¹¦Ì¥ð´µ(Prometheus)~
+´¶Ã¹¦Ì¥ð´µ(Prometheus)¥¿¦b³o¸Ìª±§ËµÛ¤õ®ã.
+~
+³o¦ì¤Z¤H«_µÛ¹H­I©z´µ¯«¦®ªº¦MÀI, µs¨ú¤õºØµ¹¤HÃþ. ¥L¥¿¬ÝµÛ§A¨Ã¹ï§A·L¯º.
+©Î³\§A¥i¥HÀ°§U¥L¡H(Help!)
+~
+7 532650 1000 S
+47 0 0 0d0+0 0d0+0
+2500 0
+0 8 1
+R God~
+P 8
+>talk_prog p ask about jail~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100001
+                mpadd_qmark $i olympus_talking 20 0 0 0 0 1
+                say ³o¥i»¡¨Ó¸Üªø¤F§r¡ã
+                mpcallout 2 mpechoat $n ¥L±q¥L¦p¦ó¦¨¬°¯«¬éÁ¿°_¡C
+                mpcallout 12 mpechoat $n Á¿°_¨º¬õ·¥¤@®Éªº¡u¤õ¡v¨Æ¥ó¡C
+                mpcallout 32 mpechoat $n §í©Î¬O»P©z´µªºª§½×¡C
+                mpcallout 52 mpechoat $n ¸Ü¾W¤@Âà¡A¤SÁ¿¦^»PªüªiÃ¹¦¨¬°¦nªB¤Íªº¸g¹L¡C
+                mpcallout 62 mpechoat $n ¥Lªº»y®ð¤Ó¥­²H¤F¡A¦n¹³¤ñ¤ôÁÙ²H¤@¯ë¡A¤@¤U´N®ø´²¤F¡C
+                mpcallout 62 glare
+                mpcallout 63 say ¨Æ±¡¤w¹L¦h¦~¡A²{¦b¡A¤]¨S¦³¤°»ò¦n«è«ëªº¤F¡C
+                mpcallout 65 say ²{¦b§Ú¥u§Æ±æ¯à¦­ÂI¥X¥h³o¸Ì¡A¦A©I§l©I§l·sÂAªºªÅ®ð½}¤F¡C
+                mpcallout 67 sigh
+                mpcallout 68 mpechoat $n ¬ÝµÛ¥L³o¼Ë¥i¼¦¤¼¤¼ªº¼Ë¤l¡A§A·Q¥X¤âÀ°¥L¶Ü¡H(I can help you)
+                mpcallout 68 mpdel_qmark $i olympus_talking
+                mpcallout 68 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+>talk_prog p i can help you~
+if is_qmark($n) == olympus_jail_quest 100002
+        mpmod_qmark $n olympus_jail_quest v0 + 1
+        say ¯uªº¶Ü¡H
+        mpcallout 1 say ¨º´N³Â·Ð±zÀ°§Ú¥h§äªüªiÃ¹»¡§Ú²{¦bªº±¡ªp(Prometheus' situation)
+endif
+~
+>talk_prog p help!~
+if is_qmark($n) != olympus_jail_quest
+        if is_qmark($n) == olympus_weapon_quest 200009
+        or is_qmark($n) == olympus_weapon_quest 100009
+                mpadd_qmark $n olympus_jail_quest -1 1 0 0 0 1
+                say ­ì¨Ó¬O³Ìªñ¦WÁnÅT¹M¤Ñ»Úªº$N§r¡C
+                say §A§ä§Ú¤S¦³¤°»ò¨Æ©O¡H
+                mpechoat $n §A¥i¥H¹Á¸Õ°Ý°Ý¥L¬°¦ó·|³QÃö¡C(Ask about jail)
+        endif
+endif
+~
+|
+#903
+hermes-olympus~
+¶P±K´µ(Hermes)~
+¶P±K´µ(Hermes)¥¿¦£µÛ¶Ç»¼¯«¦®.
+~
+Í¢¬O²³¯«ªº¨ÏªÌ. Í¢¬ïµÛ¦³¯Í»Hªº´U¤l¥H¤Î¾c¤l, ¦b¤@³B»P¥t¤@³B¤§¶¡­¸©bµÛ.
+Í¢«D±`ªº¦£¸L¥H¦Ü©ó¥L¦ü¥G¨S¦³¨S¦³ª`·N¨ì§Aªº¦s¦b.
+~
+5 565418 1000 S
+43 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R God~
+#904
+poseidon-olympus~
+ªiÁÉ¹y(Poseidon)~
+ªiÁÉ¹y(Poseidon)¥¿¦b³o¸Ì¥ÎÀ\.
+~
+Í¢´N¬O©z´µªº§Ì§Ì, ³Q«ü¬£²Î±sµÛ¤j®ü. Í¢À³¸Ó¬O¨üÁÜ«e¨Óªº. Í¢¹ï§AÂIÀY¨Ã¥´
+¤F­Ó¤â¶Õ½Ð§A¶i¨Ó§¤§¤.
+~
+7 532650 1000 S
+50 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+R God~
+C 2
+#905
+apollo-olympus~
+ªüªiÃ¹(Apollo)~
+ªüªiÃ¹(Apollo)¥¿¦b³o¼u«µµÛÀu¬üªº±Û«ß.
+~
+³o¦ì§Ö¼Öªº¯«¥¿¼u«µµÛÍ¢ªº¤C©¶µ^, Í¢¹ï§A·L¯º¨Ã½Ð§A¥[¤JÍ¢. §Aª`·N¨ìÍ¢¨­®Ç
+Â\µÛ¤@§â¬Ý°_¨Ó»á¦MÀIªº¤}, 'Í¢©ÒÀ´±o¤£¥u¦³­µ¼Ö'§A³o¼Ë·QµÛ.
+~
+7 532650 1000 S
+49 0 0 0d0+0 0d0+0
+2500 0
+0 8 1
+R God~
+C 19
+P 8
+>tick_prog 50~
+if area($i) != olympus
+        if ischarmed($i)
+                break
+        else
+                say §Ú¸Ó¦^¨ì¶øªL©¬¥q¤s¥h¤F....¡C
+                mpcallout 1 mppurge self
+        endif
+endif
+~
+>talk_prog p ask about zeus~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100004
+                mpadd_qmark $i olympus_talking 10 0 0 0 0 1
+                mpcallout 2 say ³o­Ó§r¡ã
+                mpcallout 4 glare
+                mpcallout 6 say Ãø©Ç§Ú³Ìªñ¶å¨ì¼É©Ñ¤§®ð¦b¶øªL©¬´µ»E¶° ..
+                mpcallout 10 say §Ú¬Ý¡A¬OÅ]¼C¡u¤Á³ÎªÌ¡v¤S¦^¨Ó¤F¡C
+                mpcallout 14 say ¨º§âÅ]¼C¦b¨â¦Ê¦~«e´N¦b¶øªL©¬´µ¸Ì±È°_¸{­·¦å«B¡C
+                mpcallout 18 say ½Ñ¯«ªº¶À©ü¥L¤]¦³°Ñ»P¡A´X­Ó¥_¼Ú¯«¬é³£¬O³Ìªñ¤~ÂÇ¯«¤O´_¬¡ªº¡C
+                mpcallout 20 say ¯u¬O¸Ó¦º¡I¥¦¥i¥HÁôÂÃ¦Û¤vªºÅ]¤O¡C
+                mpcallout 22 say ¤@¯ëªºªk³N¬O§ä¤£¨ìªº¡A§A¥i¥H¹Á¸Õ¦b¦U¯«¬é¤§¶¡·j´M¡A©Î³\·|¦³¨Ç±ÙÀò¡C
+                mpcallout 24 say ¤@¤Á¡I³£¾a§A¤F¡I
+                mpcallout 24 mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpcallout 24 mpdel_qmark $i olympus_talking
+        else
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say ©z´µ¡H´N¬O¶øªL©¬´µ½Ñ¯«²Î»â§r¡I
+                mpcallout 2 say ³s¥L³£¤£»{ÃÑ¡A§A¤]¥¼§K¤Ó©t­®¹è»D¤F§a¡I
+                mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>talk_prog p prometheus' situation~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100003
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say ³o­Ó¹À¡A¨ä¹ê§Ú¤]·QÀ°¥L«Ü¤[¤F¡A¦ý¬O ...
+                mpcallout 2 say ©z´µ¥L§r¡A³ß«ãµL±`ªº¡C
+                mpcallout 4 mpechoat $n ªüªiÃ¹¦ü¥G¦³¤°»òÃø¨¥¤§Áô¡C(troubles)
+                mpcallout 4 mpmod_qmark $n olympus_jail_quest v0 + 1
+                mpcallout 4 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>talk_prog troubles~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100004
+                if is_qmark($n) == olympus_weapon_quest 200009
+                        mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                        say ³o­Ó¹À¡A§A¥i¥H¸Õ¸Õ§â§AÅ±³yªº¸t¼Cµ¹©z´µ¬Ý¬Ý¡A»¡¤£©w¥L·|µo¯S³j¥O¡C
+                        mpcallout 2 say ¤£¹L¡A§JµÜ¥±¨ºÃä´N­n¾a§A¥æ¯A¤F.(please give me the sword)
+                        mpcallout 2 mpdel_qmark $i olympus_talking
+                        mpcallout 2 mpmod_qmark $n olympus_jail_quest v0 + 1
+                else
+                        mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                        say §A¥i¥H¸ÕµÛ¥h§ä§ä¬Ý¸t¼C´¶¾|¦«¡A§â¥L§eÄmµ¹©z´µ¡A»¡¤£©w¥L·|µo¯S³j¥O¡C
+                        mpcallout 2 say §A¥i¥H¥h§JµÜ¥±¨º¸Ì°Ý°Ý¡A»¡¤£©w¥L·|¦³¨Ç®ø®§.(ask about sword)
+                        mpcallout 2 mpdel_qmark $i olympus_talking
+                        mpcallout 2 mpmod_qmark $n olympus_jail_quest v0 + 1
+                endif
+        endif
+endif
+~
+>talk_prog award~
+if is_qmark($n) == olympus_jail_quest 100007
+        mpmod_qmark $n olympus_jail_quest v0 + 14
+        say §A¯uªº¸Ñ©ñ¥L¤F¶Ü¡H
+        say ¯u¬O¤Ó¤Ó¤Ó·PÁÂ§A¤F¡I
+        if rand(45)
+                say ³o§â§Ú·R¥Îªº¤}´N°eµ¹§A§a¡I
+                mpoload 938 $n 40 target
+		mplog give quest eq vnum 938 to $n
+        else
+                say ³o¥ó³T¤l´N°eµ¹§A§a¡I
+                mpoload 935 $n viclv target
+		mplog give quest eq vnum 935 to $n
+        endif
+endif
+~
+>talk_prog reward~
+if is_qmark($n) == olympus_jail_quest 100018
+        mpmod_qmark $n olympus_jail_quest v0 + 3
+        say §A¯uªº¸Ñ©ñ¥L¤F¶Ü¡H
+        say ¯u¬O¤Ó¤Ó¤Ó·PÁÂ§A¤F¡I
+        if rand(45)
+                say ³o¥ó§Ú·R¥ÎªºÅ@µÃ´N°eµ¹§A§a¡I
+                mpoload 936 $n 40 target
+		mplog give quest eq vnum 936 to $n
+        else
+                say ³o¥ó³T¤l´N°eµ¹§A§a¡I
+                mpoload 935 $n viclv target
+		mplog give quest eq vnum 935 to $n
+        endif
+endif
+~
+>talk_prog p ask apollo another way~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100016
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say ³o¼Ë§r¡A¨º´N¥u¦n·Q·Q§Oªº¤èªk¤F¡C
+                say ºâ¤F¡A§Aª½±µ½Ð¨D©z´µ«ç¼Ë¡H¨Ì§Aªº¦W®ð¡A©z´µÀ³¸Ó¬O·|µªÀ³ªº¡C(release Prometheus please)
+                mpcallout 2 mpechoat $n §A·Q¤F¤@·Q¡A¦n§a¡I
+                mpcallout 3 say ¥[ªo¡I
+                mpcallout 3 mpdel_qmark $i olympus_talking
+                mpcallout 3 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+|
+#906
+ares-olympus~
+¨È¹p¥q(Ares)~
+¨È¹p¥q(Ares)¥¿¦b¼J§ËµÛ§A.
+~
+¾Ô¯«¨È¹p¥q¥¿¦b³o¬ã¨sµÛ¦a¹Ï. ·í§A¨«¶i³o¸Ì®É, Í¢½K¤F½K¬ÜÀY¨Ã¹ï§A»¡:§Ú«Ü
+¦£, §A·Q­n°µ¤°»ò?'
+~
+29 524458 -1000 S
+50 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R God~
+C 1
+P 8
+>talk_prog ask about zeus~
+if is_qmark($n) == olympus_weapon_quest 100003
+        mpmod_qmark $n olympus_weapon_quest v0 + 1
+        say ¸Ó¦ºªº¡I¥h·ÐªüªiÃ¹¡I
+        say ¸ò§Ú³oªZ¤HÁ¿¦³¤°»ò§¾¥Î¡I
+endif
+~
+|
+#907
+athena-olympus~
+¶®¨å®R(Athena)~
+¶®¨å®R(Athena)¥¿¦b³o¸Ì¥ð¾ÍµÛ.
+~
+³o¦ì©z´µ³ÌÃd·Rªº¤k¨à¥¿§¤¦bªø¨Fµo¤W¦YµÛ¸²µå, Í¢¹ï§A·L¯º¨ÃÁÜ½Ð§A¤@°_¦Y.
+~
+7 532650 1000 S
+48 0 0 0d0+0 0d0+0
+3000 0
+0 8 2
+R God~
+C 3
+P 8
+>tick_prog 50~
+if area($i) != olympus
+        if ischarmed($i)
+                break
+        else
+                say §Ú¸Ó¦^¨ì¶øªL©¬¥q¤s¥h¤F....¡C
+                mpcallout 1 mppurge self
+        endif
+endif
+~
+>talk_prog p ask about zeus~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100001
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                mpcallout 2 mpechoat $n ¶®¨å®R¨I«ä¤F¤@¤U¡C
+                mpcallout 6 say ³Ìªñ¤@°ï¤£©ú´¼ªº¯«¬é¡A³º¬°¤F½ÖªºªZ¾¹³Ì±j¦Óª§½×¤£¥ð¡C
+                mpcallout 8 say ¦Ó§Ú¨º´¿¸g­^©úªº¤÷¿Ë¡A³Ìªñ¤]³B¤ß¿n¼{¤F¬°¤FÃÒ©ú¦Û¤vªº¬O³Ì±j¡A¦Ó­pµeµÛºØºØ³±¿Ñ¡C
+                mpcallout 10 say ­ü¡ã
+                mpcallout 12 mpechoat $n §A¥i¥H¹Á¸Õ¨ú®®¶®¨å®R¬Ý¬Ý¡I(½Ð¹Á¸Õ¦UºØ¸Þ²§©_¯Sªº°Ê§@)
+                mpcallout 12 mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpcallout 12 mpdel_qmark $i olympus_talking
+        else
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say ©z´µ¡H´N¬O¶øªL©¬´µ½Ñ¯«²Î»â§r¡I
+                mpcallout 2 say ³s¥L³£¤£»{ÃÑ¡A§A¤]¥¼§K¤Ó©t­®¹è»D¤F§a¡I
+                mpcallout 2 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>act_prog candle~
+mpcall olympus_athena_actprog $n
+~
+>act_prog fondle~
+mpcall olympus_athena_actprog $n
+~
+>act_prog sm!~
+mpcall olympus_athena_actprog $n
+~
+>defun_prog olympus_athena_actprog~
+if sex($n) != 1
+        break
+endif
+if is_qmark($n) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100002
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                mpechoat $n ¤@°}°}²]Â©ªº«ä·Q¦b§A¸£¤¤¬y¹L¡I
+                mpcallout 2 say ³á¡ã¤£­n¡ã¡I
+                mpcallout 5 mpecho $n ·í§AÁÙ¨I®û¦A¨ºµL¤ñ¬üÄRªº¤Û·Q®É...
+                mpcallout 7 mpecho $n §A³Q¶®¨å®R³ê¦^²{¹ê¡AÁöµM§AÁÙ·QÄ~Äò..
+                mpcallout 10 say ³o¨Æ§Ú³B²z¤£¤F¡A³Â·Ð§A¥h§äªZÂ_¤@ÂIªº¤H§a¡C(Ä~Äò´M§ä)
+                mpcallout 10 mpdel_qmark $i olympus_talking
+                mpcallout 10 mpmod_qmark $n olympus_weapon_quest v0 + 1
+        else
+                say ¸Ó¦ºªº¤H¡I¡I¡I¡I³º´±§@¥X³oºØ¨Æ±¡¡I
+                mpkill $n
+        endif
+endif
+~
+>act_prog lick~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100002
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                say ¶â¡AÁÂÁÂ§Aªº¦w¼¢¡A§Ú·PÄ±µÎªA¦h¤F¡C
+                kiss $n
+                mpcallout 2 say ­n¥­®§³o³õª§ºÝ¡A¥²¶·§ä¨ì¤@§â¥i¥H²Î¶¿³o²³¦h¯«¾¹ªº¦Ü°ª¯«¾¹¡C
+                mpcallout 4 say ¡u¸t¼C¡@´¶¾|¦«¡v
+                mpcallout 6 say ¬Û«H§A¦³Å¥¹L³o­Ó¦W¦r¡AÅ¥»¡¥LÁÙ¦s©ñ¦b¶øªL©¬´µ¤sªº¬Y¤@­Ó¨¤¸¨¡C
+                mpcallout 8 say ¦ý¦Ü¤µµL¤H´MÀò¡C
+                mpcallout 10 say §A¥i¥H¥h°Ý°Ý¬Ý§Æ¶O´µ¯S´µ¡C
+                mpcallout 12 say ¬Û«H§A·|¦³¨Ç±ÙÀòªº¡C(Ask about holy sword)
+                mpcallout 12 mpdel_qmark $i olympus_talking
+                mpcallout 12 mpmod_qmark $n olympus_weapon_quest v1 + 1
+        endif
+endif
+~
+|
+#908
+hephaestus-olympus smith-olympus~
+§Æ¶O´µ¯S´µ(Hephaestus)~
+§Æ¶O´µ¯S´µ(Hephaestus)¥¿¦b³o¥´³yµÛ¤@§âºë¨}ªºªZ¾¹.
+~
+³o¬O¦b²³¯«¤¤°ß¤@¤@¦ì¦b¦×Åé¤W¤£§¹¬üªº¯«¬é. Í¢¬O¤@­Ó¿a¤l¦Ó¥B¤Q¤ÀªºÁà­®.
+µM¦Ó§A¹ïÍ¢ªº¤Íµ½¥H¤Î¼Ö©ó§U¤H«o¬O¦L¶H²`¨è. Í¢¥Ñ¤T¦ìª÷¦âªº³B¤k¨Í©^µÛ.
+~
+7 532618 1000 S
+48 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R God~
+P 8
+>talk_prog p ask about holy sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200001
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                say ¸t¼C¦­¤w¥¢¸¨¡A¥¢¸¨©ó¬É­±Á_»Ø¤§¶¡¡C
+                mpcallout 2 say ©Î³\¥i¥H§ä¨ì¤èªk­«Å±§a¡A¤£¹L¡C
+                mpcallout 4 say ¤ÓÃø¤F¡AÄU§AÁÙ¬O§ä§O±ø¸ô§a¡C
+                mpcallout 6 say ©Î³\§A¥i¥H°Ý°ÝªüªiÃ¹¦³¨S¦³¤èªk¸Ñ¨M¡C(Ask about zeus)
+                mpcallout 6 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 6 mpmod_qmark $n olympus_weapon_quest v0 + 2
+                mpcallout 6 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+|
+#909
+handmaid-olympus golden~
+ª÷¦â¨Í¤k(golden maiden)~
+¤@¦ì¯Âª÷ªº¨Í¤k(golden maiden)¥¿¦b³o¨ó§UµÛÅK¦K§Æ¶O´µ¯S´µ.
+~
+·í§A¾®µøµÛ¦o®É, §Aµo²{¦o¬O¥Ñ¯Âª÷¥´³yªº. ·í¦o¨ó§UÅK¦K®É¬Ý°_¨Ó¬O¨º»ò¼Ëªº
+®Ý®Ý¦p¥Í.
+~
+7 532618 0 S
+40 0 0 0d0+0 0d0+0
+1000 0
+0 8 2
+R Angel~
+#910
+soldier~
+¤h§L(soldier)~
+¤@¦ì¤h§L(soldier)¥¿¦b³o¸Ì¨ó§UµÛªü¹p´µ.
+~
+³o­Ó¤H¦ø­ÔµÛªü¹p´µ, ÁöµM¥L¬Ý°_¨Ó¨Ã«D¤Q¤À±j§§. ¦ý¬O§Aª¾¹Dªü¹p´µ±q¨Ó¤£¥Î
+¥ô¦óªºÀ¶®zªÌ¬°¥L¤u§@.
+~
+39 524458 0 S
+40 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R Angel~
+C 1
+#911
+musician apprentice~
+­µ¼Ö¾Ç®{(apprentice musician)~
+¤@¦ì­µ¼Ö¾Ç®{(apprentice musician)¥¿¸òÀHµÛªüªiÃ¹¾Ç²ß.
+~
+³o­Ó¤H¤w¸g¹ï©ó¥Lªº²Ä¤@­ÓÂ¾·~¤Q¤À±Mºë¤F. ¥L²{¦b¥¿°lÀHµÛªüªiÃ¹¯«¾Ç²ß­µ¼Ö.
+~
+1031 524458 1000 S
+12 0 0 0d0+0 0d0+0
+2500 0
+0 8 1
+#912
+boy serving servant~
+¯«¹²(serving boy)~
+¤@¦ì¹²¤H(serving boy)¥¿¦b¥Î¸²µåÁýµÛ¶®¨å®R.
+~
+³o­Ó¨k«Ä¯u¬O°÷©¯¹Bªº¤F, ¯à°÷¨Í©^¶®¨å®R.
+~
+7 524458 1000 S
+27 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Angel~
+#913
+hound dog war~
+¾Ô¤ü(war hound)~
+¤@°¦¥¨¤jªºÂy¤ü(hound)¥¿¦b³o¹ï§A©H­ý.
+~
+³o°¦¥¨¤jªº³¥Ã~¶È¯à«j±j¦a³QºÙ¬°¤@±øª¯. ¨e¦ü¥G¬O³Q°V½m¨Ó¦b¾Ô³õ¤W»s³y®£Äß
+ªº. ¦Ó¥B§A¹ï¨e¯à§_³Ó¥ô¦Û¤vªº¤u§@¤@ÂI¤]¤£·P¨ìÃhºÃ.
+~
+45 524458 -600 S
+13 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+#914
+odin-olympus~
+¼Ú¤B(Odin)~
+¼Ú¤B(Odin)¥¿¦b³o¥ð®§µÛ.
+~
+·í§Aª`µøµÛ¼Ú¤B, §A¤~¤F¸Ñ¨ì¦Û¤v¬O¦h»òªºµL¨¬»´­«. Í¢¹³¤@®y°ª¶ð¯ëÅ÷¥ßµÛ.
+Í¢«D±`±Mª`©óÍ¢ªº¨Æ±¡, ¦Ó¥B´X¥G¨S¦³¹îÄ±¨ì§Aªº¦s¦b.
+~
+7 532650 1000 S
+51 0 0 0d0+0 0d7+0
+5000 0
+0 8 1
+R God~
+C 2
+#915
+grocer greengrocer julius-olympus~
+¦¶§Qº¸´µ(Julius)~
+µæ³c¢w¦¶§Qº¸´µ(greengrocer Julius)¥¿¯¸¦b³o¸Ì.
+~
+³o¦ì§Ö¼Öªº¤H°^Äm¤F¥Lªº¤@¥Í¦b³c½æ¤ôªG¤Î¨ä¥L­¹ª«µ¹³o­Ó«°¥«ªº©~¥Á­Ì. ÁöµM
+¥L¬Ý°_¨Ó¬O¨º»ò¼Ëªº½G®z, ¦ý¬O³Ì¦n§O¤p¬Ý¥L. ¥L·Å©M¦a¹ï§A·L¯º¨Ã®i¥ÜµÛ¬Ý°_
+¨Ó¤Q¤À¥i¤fªººë¿ï­¹«~.
+~
+7 532650 1000 S
+39 0 0 0d0+0 0d7+0
+1000 0
+0 8 1
+R Angel~
+#916
+alchemist~
+·Òª÷®v(alchemist)~
+¤@¦ì°ªÄÖ¦Ó¥B½G¤Ú¤Úªº·Òª÷®v(alchemist)¥¿¯¸¦b³o¸Ì.
+~
+¥Lºë³q©ó¥]¬A·Òª÷³Nªº¦UºØÅ]ªk¨ÃÀH®É·Ç³Æ¦n´£¨Ñ³o¸Ìªº©~¥Á(¤£¥]¬A§A)¦U¦¡¦U
+¼Ë¯«©_ªº¨ó§U.
+~
+7 532650 1000 S
+42 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Angel~
+#917
+clive-olympus~
+§JµÜ¥±(Clive)~
+ªZ¾¹»s³yªÌ¢w§JµÜ¥±(Clive)¥¿¦b³o¸ÌÁë³yµÛ¤}©M©òÀY.
+~
+¥L¬Ý°_¨Ó¤Q¤À¦a¥¨¤j¦Ó±j§§, ·Q¥²¬Oªø¦~«Ý¦b­x¤¤ªºµ²ªG, ¥Ø«e°ß¤@ª¾¾å¯«¾¹»s
+§@¤è¦¡ªº¤H.
+~
+7 532650 1000 S
+46 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R Angel~
+C 16
+P 8
+>talk_prog p please give me the sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100005
+                if is_qmark($n) == olympus_weapon_quest 200009
+                        mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                        say ³o­Ó¹À¡A§A­n¸ò©z´µ¥æ¯A¡H
+                        say Åý§Ú·Q·Q ..
+                        mpcallout 12 say ¦n§a¡I¤Ï¥¿³o§â¼C¯d¦b§Ú³o¤]¨S¥Î¡C
+                        mpcallout 13 say ´Nµ¹§A§a¡I
+                        mpcallout 13 mpoload 930 $n 42 target
+                        mpcallout 13 mpmod_qmark $n olympus_jail_quest v0 + 1
+                        mpcallout 13 mpdel_qmark $i olympus_talking
+                endif
+        endif
+endif
+~
+>talk_prog p ask about sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100005
+                if is_qmark($n) == olympus_weapon_quest 100009
+                        mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                        say ³o­Ó¹À¡A§A­n¸ò©z´µ¥æ¯A¡H
+                        say Åý§Ú·Q·Q ..
+                        mpcallout 12 say ¤£¦æ¡I¯«¾¹¤@¨ì¤F©z´µ¤â¤W·|µLªkµL¤Ñ¡I
+                        mpcallout 13 say ½Ð§A¥h§ä§Oªº¤èªk§a¡I(ask apollo another way)
+                        mpcallout 13 mpmod_qmark $n olympus_jail_quest v0 + 11
+                        mpcallout 13 mpdel_qmark $i olympus_talking
+                endif
+        endif
+endif
+~
+>talk_prog p ask about holy sword~
+if is_qmark($n) == olympus_weapon_quest 100008
+        break
+endif
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200002
+                mpadd_qmark $i olympus_talking 10 0 0 0 0 1
+                say ³o­Ó¹À¡A§A»¡¸t¼C¡H
+                mpcallout 2 mpecho §JµÜ¥±«ä¦Ò¤F¤@¤U¡C
+                mpcallout 12 say ³o­Ó¹À¡AÁöµM§Ú¬O·|»s§@¯«¾¹°Õ¡C
+                mpcallout 14 say ¦ý¬O¨S¦³§÷®Æ©M»s§@¤è¦¡§Ú¤]«ÜÃø¤U¤â§a¡C
+                mpcallout 16 say ¶â.. §A¥i¥H¥h¡uÅ]ªk°ª¶ð¡A³Ð¥@¬ö¡AÃ¹­J«°³ù¡v§ä§ä¬Ý¡C
+                mpcallout 18 say §Ú¥uª¾¹D³o¤T­Ó¦a¤è¦³ÂÃ®Ñ¡A§AÀ³¸Ó¥i¥H§ä¨ì¤£¤Öªº¸ê®Æ¡I
+                mpcallout 20 say »¡¤£©w¡A§A¥i¥H¨Ï¸t¼C­«Å±¡I¦^¨Óªº®É­Ô½Ð§i¶D§Ú§A»`¶°ªº¸ê°T¡I(Information)
+                mpcallout 22 mpecho §JµÜ¥±Ä~Äò¥Lªº¥´ÅK¤u§@¡A¤£¹LÁy¤W¦h¤F¤@¤À§Æ±æ¡C
+                mpcallout 22 mpmod_qmark $n olympus_weapon_quest v0 + 4
+                mpcallout 22 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 22 mpdel_qmark $i olympus_talking
+        else
+                say ¸t¼C´¶¾|¦«¡H
+                say ¦­¤w¥¢¶Ç°Õ¡I
+        endif
+endif
+~
+>talk_prog information~
+if is_qmark($n) == olympus_weapon_quest 200007
+        mpmod_qmark $n olympus_weapon_quest v1 + 1
+        say ¡I¡I§A¯uªº§ä¨ì¤F¡I
+        say  ¨º´N½Ð§A§â§÷®Æ³£¥æµ¹§Ú§a¡I
+        say §A¥i¥H°Ý§ÚªF¦è»ô¥þ¤F¨S(Things)¡Aµ¹§¹½Ð¸ò§ÚÁ¿§¹¦¨¤F(Finish).
+endif
+~
+>give_prog 13077~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300001
+                mpmod_qmark $n olympus_weapon_quest v2 | 1
+                say §Ú¦¬¨ì¾í¸­ºñ¾ðªk§ú¤F.
+                mpjunk all.green
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§Ú¾í¸­ºñ¾ðªk§ú¤F¡C
+                drop green
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop green
+endif
+~
+>give_prog 32166~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300002
+                mpmod_qmark $n olympus_weapon_quest v2 | 2
+                say §Ú¦¬¨ì¯«Às¤§»î¤F.
+                mpjunk all.soul
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§Ú¯«Às¤§»î¤F¡C
+                drop soul
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop soul
+endif
+~
+>give_prog 32133~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300002
+                mpmod_qmark $n olympus_weapon_quest v2 | 2
+                say §Ú¦¬¨ì¯«Às¤§»î¤F.
+                mpjunk all.soul
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§Ú¯«Às¤§»î¤F¡C
+                drop soul
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop soul
+endif
+~
+>give_prog 663~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300004
+                mpmod_qmark $n olympus_weapon_quest v2 | 4
+                say §Ú¦¬¨ìª÷Às¯]¤F.
+                mpjunk all.orb
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§Úª÷Às¯]¤F¡C
+                drop orb
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop orb
+endif
+~
+>give_prog 37040~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300008
+                mpmod_qmark $n olympus_weapon_quest v2 | 8
+                say §Ú¦¬¨ì¦òº¸¥ì´µ¯Sªº¾Ö©ê¤F.
+                mpjunk all.bosom
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§Ú¦òº¸¥ì´µªº¾Ö©ê¤F¡C
+                drop bosom
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop bosom
+endif
+~
+>give_prog 401~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300016
+                mpmod_qmark $n olympus_weapon_quest v2 | 16
+                say §Ú¦¬¨ìºëÆF¤§²\¤F.
+                mpjunk all.tear
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§ÚºëÆF¤§²\¤F¡C
+                drop tear
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop tear
+endif
+~
+>give_prog 26516~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300032
+                mpmod_qmark $n olympus_weapon_quest v2 | 32
+                say §Ú¦¬¨ì¥[¤Ä¥Hº¸¤§Ál¤F.
+                mpjunk all.wings
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§Ú¥[¤c¥Hº¸¤§Ál¤F¡C
+                drop wings
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop wings
+endif
+~
+>give_prog 32089~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300064
+                mpmod_qmark $n olympus_weapon_quest v2 | 64
+                say §Ú¦¬¨ì¬õÀs¤§«ã¤F.
+                mpjunk all.dragon
+                mpcall weaponthing_judge $n
+        else
+                say §A¤w¸gµ¹¹L§Ú¬õÀs¤§«ã¤F¡C
+                drop dragon
+        endif
+else
+        say ·F¹Àµ¹§Ú³o¼ËªF¦è©O?
+        drop dragon
+endif
+~
+>talk_prog finish~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) == olympus_weapon_quest 300127
+                mpadd_qmark $i olympus_talking 20 0 0 0 0 1
+                say ¯u¬O¤Ó¦n¤F¡I§Ú°¨¤W´N°Ê¤â¥´³y§a¡I
+                mpcallout 2 mpechoat $n §A¬Ý¨£¬õÀs¤§«ã³Q®³¥hÂèÄl¸Ì¥´¦¨¤@§â¼Cªº§Îª¬¡C
+                mpcallout 12 mpechoat $n ·í¼C¥¿¼ö®É¡A§A¬Ý¨ìºëÆF¤§²\¤@ºwºw¥[¨ì¼C¸Ì¡A¤ô»]®ðÄjº©¥|©P¡C
+                mpcallout 22 mpechoat $n ¦Ó¤@®Çµo«Gªº¯«Às»î¦Û°Êªº­¸¨ì¯«¼C¤W¤è¡A¤@°}Ä£²´ªº¥ú¨~¥X²{¡A¤@§âª÷¦âªº¼C¦¨§Î¤F¡C
+                mpcallout 32 mpechoat $n ¦bÅ±³yªÌªº¯«¤O¤§¤U¡A¦òº¸¥ì´µ¯SªºÃh©êºCºCªºÁY¤p¦¨¼C¬`§Îª¬¡C
+                mpcallout 42 mpechoat $n §JµÜ¥±±Nª÷Às¯]Æ^´O¨ì¼C¬`¸Ì¡A¦Ó¼C¬`©M¼C¨­³£½w½wÄÆ°_¡C
+                mpcallout 52 mpechoat $n ¥[¤Ä¥Hº¸¤§ÁlÀþ¶¡­¸°_¡A±N¼C¬`»P¼C¨­¥]ÂÐ¦b¤@°_¡A¤@¹Dª÷¥ú¤§«á¡C
+                mpcallout 54 say ¸t¼C - ´¶¾|¦«­«²{©ó¥@¤W°Õ¡I«¢«¢«¢«¢«¢«¢¡I¡I
+                mpcallout 54 rumor ¦Ü°ª¯«¾¹­«²{©ó¥@¤W¡A¥@¤HµL¤£¾_Äà¡I
+                mpcallout 55 say ²{¦b¡A¯«¾¹­«²{¡A¤Ñ¬Éªº¯Éª§¤]±N¥­®§¡C
+                mpcallout 56 say ¤£¹L¨Ì§Aªº¯à¤O¤]À³¸ÓµLªk¾r¶¿¦¹¼C¡A¨Ì§Ú¬Ý¡A¤£¦p´N¼È®É±H©ó§Ú³o§a¡C
+                mpcallout 58 say ¦ý¬O¡A§Aªº¥\³Ò¨ÌµM¤£¥i©Ù·À¡A¦b¦¹¡A§Ú±N§Ú²¦¥Í³Ç§@½ç»P§A°µ¤Ñ¬É¹ï§Aªº·PÁÂ¡I
+                mpcallout 59 mpechoat $n ¤@§â²H¾í¦âªº¼CºCºCªº¦b§A«e­±¦¨§Î¡C
+                mpcallout 59 mpoload 993 $n 36 target
+		mpcallout 59 mplog give quest eq vnum 937 to $n
+                mpcallout 60 say ÁöµMµ¥¯Å»·»·¤£¤Î¸t¼C¡A¦ý§Ú¥i¥H¦Û»¨ªº»¡¡A¥Lµ´¹ï¬O²Ä¤G¡I
+                mpcallout 62 say ¦n¦n¬Ã±¤¥L§a¡A§Aªº¦W¦r¡A±N·|¦b¾ú¥v¤W¯d¤U¤@µ§¡I
+                mpcallout 62 mpresp $n 3
+                mpcallout 62 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 62 mpdel_qmark $i olympus_talking
+        endif
+        endif
+endif
+~
+>talk_prog things~
+mpcall weaponthing_judge $n
+~
+>defun_prog weaponthing_judge~
+mpechoat $n §AÁÙ¨Sµ¹ªºªF¦è¦³¡G
+if is_qmark($n) !& olympus_weapon_quest 300001
+   mpechoat $n .   ¾í¸­ºñ¾ðªk§ú
+endif
+if is_qmark($n) !& olympus_weapon_quest 300002
+   mpechoat $n .   ¯«Às¤§»î
+endif
+if is_qmark($n) !& olympus_weapon_quest 300004
+   mpechoat $n .   ª÷Às¯]
+endif
+if is_qmark($n) !& olympus_weapon_quest 300008
+   mpechoat $n .   ¦òº¸¥ì´µ¯Sªº¾Ö©ê
+endif
+if is_qmark($n) !& olympus_weapon_quest 300016
+   mpechoat $n .   ºëÆF¤§²\
+endif
+if is_qmark($n) !& olympus_weapon_quest 300032
+   mpechoat $n .   ¥[¤Ä¥Hº¸¤§Ál
+endif
+if is_qmark($n) !& olympus_weapon_quest 300064
+   mpechoat $n .   ¬õÀs¤§«ã
+endif
+~
+|
+#918
+armourer samuel-olympus~
+¼»©iº¸(Samuel)~
+­H¥Ò»s³yªÌ¢w¼»©iº¸(armourer Samuel)¥¿«ã¥Øª`µøµÛ§A.
+~
+¥¿¦pªZ¾¹»s³y°Ó§JµÜ¥±¤@¼Ë, ¥L¬Ý°_¨Ó¤]¬O¤Q¤À¦a¥¨¤j¤Î±j§§. ¥L¨Ã¤£³ßÅw§A¦b
+³o­Ó«°¥«¤¤©Ò°µªº¤@¤Á.
+~
+1|2|4|32 532650 1000 S
+21 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Angel~
+#919
+ra sun god~
+¤Ó¶§¯«(Sun God)~
+¥j®J¤Îªº¤Ó¶§¯«¢w¹p(Sun God Ra)¦b³o¸Ì´²µo¥XÄ£²´ªº¥ú¨~.
+~
+Í¢¬Ý°_¨Ó¤Q¤Àªº«G! ¥Ñ©óª½µøÍ¢±N¶Ë®`§Aªº²´·ú, §A«ÜÃø¬Ý²M·¡Í¢ªº­±»ª. µM¦Ó
+´N§A©Ò¯à¿h¨£ªº¨º¤@¤p³¡¥÷´N¨¬¥HÅý§A¬Û«HÍ¢¬O¤£®e³Q¤pòóªº.
+~
+7 532650 1000 S
+51 0 0 0d0+0 0d0+0
+6000 0
+0 8 1
+R God~
+C 3
+#920
+chimera~
+¼Q¤õÃ~(chimera)~
+¤@°¦¼Q¤õÃ~(chimera)¥¿¦b¨c©Ð®Ç¥|³B±r«Þ.
+~
+³o°¦©_¯Sªº¥Íª«¦³¤T­ÓÀY¢w¤@­Ó¬O¤s¦Ï, ¤@­Ó¬O·à¤l, ¤@­Ó«h¬OÀs. ·í§A¶i¤J¨c
+©Ð®É, ¨e¹ï§A©H­ýµM«á¬ðµMµo°Ê§ðÀ».
+~
+7 524458 -1000 S
+18 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Drake~
+#921
+hera-olympus~
+§Æ©Ô(Hera)~
+§Æ©Ô(Hera)¥¿¯¸¦b³o.
+~
+©z´µªº©d¤l¢w§Æ©Ô¥¿¦b³o. ·í§A¨«¶i³o¸Ì®É, Í¢¹ïµÛ§A·L¯º¨ÃÁÜ½Ð§A§¤¤U¥ð®§¤@
+·|¨à. §Aµo²{¥¦®à¤l®ÇÃä©ñ¤F¤@§â°{µÛ¬õ¦â¥ú¨~ªº¼C, ¨ä¤W¦³­Ó´cÅ]ÀJ¹¢¡I
+~
+7 532650 1000 S
+50 0 0 0d0+0 0d7+0
+7000 0
+0 8 2
+R God~
+C 2
+P 8
+>all_greet_prog 100~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100005
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                mpcallout 2 say ±z¦n¡A¦³¤°»ò¨Æ¶Ü¡H
+                mpcallout 2 mpechoat $n §Aµo²{§Æ©Ôªºªí±¡¶}©l§á¦±¡C
+                mpcallout 4 say ¨S¨Æ¶Ü¡H¨º´N½Ð±z¥X¥h§a¡I
+                mpcallout 6 mpcall olympus_hera_mload $n
+        endif
+endif
+~
+>defun_prog olympus_hera_mload~
+mpechoat $n §Æ©Ôªº¨­Åé¯S¼x¶}©lÅÜ§Î ..
+mpechoat $n §Æ©Ô¾ã­Ó¨­Åé¶}©lÅÜ§Î¡I¦¨¬°¤@°¦Áà­®ªº¤Ú¬¥Å]¡I
+mpmod_qmark $n olympus_weapon_quest v0 = 6
+mpmload 929
+mpgoto 5
+mpdel_qmark $i olympus_talking
+~
+|
+#922
+roc~
+¥¨³¾(roc)~
+¤@°¦¥¨³¾(roc)¥¿¦b³o¿¬µ¾µÛ.
+~
+³o¬O¤@°¦¥¨¤jªº³¾. ¨eºÃ´b¦a¬ÝµÛ§A, ¥s¤F¤@ÁnµM«á´­ªø¦Ó¥h.
+~
+5 532650 0 S
+37 0 0 0d0+0 0d0+0
+500 0
+0 8 0
+R Angel~
+#923
+citizen resident~
+©~¥Á(citizen)~
+¶øªL©¬´µ¤sªº©~¥Á(citizen)¥¿¦b³o±øµó¤W·È¹F.
+~
+¥L¬Ý°_¨Ó¤Q¤À¦a§Ö¼Ö¦Ó¥BµL¼~µL¼{. ¥L¹ï§A·L¯º¨Ã·L·LÁ|°_¥Lªº´U¤l¦V§A¥´©Û©I.
+~
+5 532650 1000 S
+21 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Angel~
+#924
+pegasus horse~
+©¬®æÂÄ´µ(pegasus)~
+¤@°¦ªøµÛ¯Í»Hªº¥¨¤j¥Õ°¨(horse)¥¿¦b³o¸Ì¶¢®Ì.
+~
+³o¬O¤@ÀY³·¥Õ¦Ó¥Bªø¦³¤@¹ï¤j¯Í»Hªº°¨. ÁöµM¨e¬Ý°_¨Ó¨Ã¤£¤Q¤À¨ã¦³«Â¯Ù©Ê, ¦ý
+¬O¹ï¨e¬DÆ]¤´¬O¤Q¤À¦MÀIªº.
+~
+5 532650 0 S
+31 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+#925
+cook~
+¼p®v(cook)~
+¤@¦ì¼p®v(cook)¥¿¦b³o§V¤O¦a°µµÛ¥Lªº¤u§@.
+~
+³o­Ó¤H¬Ý°_¨Ó´N¦n¹³¤w¸gªá¤F'¤Ó¦h'ªº®É¶¡«Ý¦b¼p©Ð¸Ì.
+~
+7 532650 1000 S
+1 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Angel~
+#926
+jailer~
+º»¨ò(jailer)~
+³o¦ìº»¨ò(jailer)¥¿¦b´£¨¾¦³¤H§Tº».
+~
+¥L¬Ý°_¨Ó´N¦n¹³¤w¸gªá¤F³\¦hªº®É¶¡¦b¦a©³¤U¬Ý¦uµÛ¥}¥Ç.
+~
+7 532650 0 S
+32 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Angel~
+C 1
+#927
+hades king~
+¶Â«Ò´µ(Hades)~
+­ß©²¤§¤ý¢w¶Â«Ò´µ(Hades)ÁôÂÃ¦b¤@¤ù¶Â·t¤§¤¤.
+~
+Í¢¨Ó³o¸Ì«ô³X¨ä¥Lªº¯«¬é. Í¢¨Ã¤£³ßÅw§A, §A³Ì¦n¸òÍ¢«O«ù¶ZÂ÷.
+~
+229 623274 -300 S
+51 1000 0 5d0+0 -5d7+0
+10000 0
+0 8 1
+R God~
+C 3
+P 4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>rand_prog 50~
+if area($i) != olympus
+        mpgoto 955
+endif
+~
+>greet_prog 95~
+if isnpc($n)
+        break
+else
+        if isimmort($n)
+                say §A¦n¡A§Ú¦P¬O¯«±ÚªºªB¤Í¡C
+        else
+                if level($n) <= 35
+                        break
+                else
+                        say Åý§Ú­Ì¦aº»¨£§a¡I
+                        c 3 powerball $n
+                endif
+        endif
+endif
+~
+>fight_prog 20~
+cast powerball
+~
+>fight_prog 15~
+cast 'seal magic'
+~
+>fight_prog 15~
+frenzy
+~
+>fight_prog 10~
+cast 'full heal'
+~
+>fight_prog 80~
+if isaffected($i) & 1
+        cast 'cure blindness'
+endif
+if hitprcnt($i) < 60
+        mpat 5 cast heal
+endif
+if rand(30)
+        mpmload 910
+        mpgroup self soldier 1 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpmod_all_qmark $n adv_book_1_main v1 | 128
+mplog killed by $n
+~
+|
+#928
+soldier~
+¤h§L(soldier)~
+¤@¦ì¤h§L(soldier)¥¿¦b³o¸Ì¨ó§UµÛ¶Â«Ò´µ.
+~
+~
+39 524458 0 S
+39 0 0 0d0+0 0d0+0
+300 0
+0 8 1
+R Angel~
+C 1
+#929
+Balor Ihsuma~
+¤Ú¬¥Å]¥ì­×º¿(Balor Ihsuma)~
+¤Ú¬¥Å]¥ì­×º¿(Balor Ihsuma)¥¿¬ÝµÛ§A²uÀñªº¯º¡C
+~
+¤@°¦§C¼h¬Éªº±j¤j¥Íª«¥¿¬ÝµÛ§A²uÀñªº¯º¡A¥i¬O§A«o·PÄ±¤£¨ì¨e¨­¤W¦³¥ô¦ó
+ªºÅ]¤Oµo¥X¡A·Q¥²¬O¦³·¥¬°±j¤jªº¯«¬é¦b­I«á¼µ¸y¡A¥L¬ÝµÛ§A¯º¡A«o¤£µo°Ê
+§ðÀ»¡A§A©Î³\¥i¥H°Ý°Ý¥L¡C(Ask about Hera and sword)
+~
+1|2|2048|4096|262144 4|8|16|32|128 -1000 S
+55 0 0 50d20+0 10d-200+0
+0 0
+0 8 1
+R Demon~
+P 1|4|8|128|4194304|32767|65536
+W mute~ 2000 0
+C 1|2
+S
+13 10000
+>talk_prog p ask about hera and sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100006
+                mpadd_qmark $i olympus_weapon_quest 10 0 0 0 0 1
+                say ­ü§r§r¡ã
+                mpcallout 2 say ­n¦b³o¯«¸tªº»â¦a¸ÌÅÜ´«¼Ò¼ËÁÙ¯u§xÃø§r¡ã
+                mpcallout 4 mpecho ¥ì­×º¿¤@°}¨g¯º¡I¡I¡I
+                mpcallout 6 say ¯u¥i±¤¡A®tÂI´N¦¨¥\¤F¡A®tÂI´N¯à¨Ï¨â¦Ê¦~«eªº¤Ñ¬É¤j¾Ô­«²{°Õ¡C
+                mpcallout 8 mpecho ¥ì­×º¿¤S¬O¤@°}¨g¯º¡I¡I¡I
+                mpcallout 14 say ¤£¹L©O¡A§A·Q§äªº§Æ©Ô¥i¯à¦­´N¦º¤F¡A»¡¤£©wÁÙ¬¡µÛ°Õ¡C
+                mpcallout 16 say ­n¬O¦o¯à¼µ¹L¦b¨SÅ]ªk¤U³Q¤À«Íªº±¡ªp¡I
+                mpcallout 17 say ¬ü¨ýªº¤k¤H¡C
+                mpcallout 18 mpecho ¥ì­×º¿»Q¤F»Q¼L®B¡C
+		mpcallout 19 mpmod_qmark $n olympus_weapon_quest v0 + 1
+ ¡@             mpcallout 20 say ³ºµM³Q§A¬Ý¨ì¤F§Úªº¯u¹ê­±¥Ø¡A¨º´N¡A¤@°_³­§Æ©Ô§a:)
+		mpcallout 20 mpdel_qmark $i olympus_talking
+		mpcallout 20 mpkill $n
+        else
+                mpkill $n
+        endif
+endif
+~
+>fight_prog 70~
+mpecho [1;31m§A¬Ý¨£´cÅ]§l¦¬µÛ©P³ò¨ºµLºÉªºÆF®ð¡I[0m
+c 2 'double heal'
+mpnowait
+~
+>fight_prog 10~
+yell [0;33mîî¡D¤§¡D»R¡D¦±[0m
+c 3 whirlwind
+mpnowait
+~
+>hitprcnt_prog 50~
+if rand(50)
+   c 'full heal'
+   mpnowait
+endif
+~
+>fight_prog 50~
+yell [1;31m©]¤§««¹õ²Ä¤@³¹¡ã¦å¤§²±®b¡I[0m
+c 5 'fire ball' $r
+mpnowait
+c 3 'lighting bolt' $r
+mpnowait
+~
+>fight_prog 30~
+yell [1;31m©]¤§««¹õ²Ä¤G³¹¡ãÄm²½ªº®É¨è¡I[0m
+c 4 'angry fire storm' $r
+mpnowait
+~
+>fight_prog 20~
+yell [1;36m©]¤§««¹õ²×³¹¡ã¥½¤é¤§¦B®§¡ã[0m
+c 6 'ice breath'
+mpnowait
+~
+>death_prog 100~
+if is_qmark($n) == olympus_weapon_quest 100007
+	mpmod_qmark $n olympus_weapon_quest v0 + 1
+	mpecho [1;37m§A¬Ý¨£¥ì­×º¿¨­¤Wªº¶Ë²ª¶}©lµLªkÂ¡¦X¡A¶i¦Ó¶}©l±Y¸Ñ¡C[0m
+	yell ¤£¡I¤£¥i¯àªº¡I¤@¦Ê¦~¤§«á¡A§ÚÁÙ·|¦A¦^¨Óªº¡I¡I
+	mpoload 932 floor
+	if rand(40)
+        	mpoload 933 40 floor
+		mplog give quest eq vnum 933 to $n
+        	mpecho ¤Á³ÎªÌ½w½w¾®µ²¦bªÅ®ð¤¤ ....
+	endif
+	mpecho [1;37mÀHµÛ¥ì­×º¿ªº®ø³u¡A§Æ©Ôªº³¡¤À«ÍÀb¯d¤F¤U¨Ó¡C©Î³\§A¸Ó®³¥hµ¹©z´µ¬Ý¬Ý¡C[0m
+	if rand(3)
+		if rand(50)
+	        	mpoload 992 40 floor
+			mplog give quest eq vnum 992 to $n
+        		mpecho ¤@¹D´¹¼üªº¤ô´¹¹õº¥º¥Åã²{¥X¨Ó¡C
+        	endif
+	endif
+	mpoload 401 1 floor
+	mpecho ¤@Åøºë¬üªºÃÄ¤ô±q¤Ú¬¥Å]¨­¤W±¼¥X¡C
+endif
+mpat hera-olympus mppurge hera-olympus
+~
+|
+
+#0
+
+
+
+#OBJECTS
+#900
+aegis plate~
+©z´µ¯Ý¥Ò(Aegis)~
+¤@°Æ¯à±aµ¹§A¤O¶qªº¯Ý¥Ò(plate)³Q¯d¦b³oÃä.~
+~
+9 1120 9
+0~ 0~ 2751275~ 0~
+40 0 0
+A
+1 1
+A
+17 -3
+X gold~
+
+#901
+hammer bolt thunderbolt~
+©b¹p¤§Âñ(thunder bolt)~
+¤@§â¥¨¤jªºÂñ¤l(hammer)³Q²Ê¤ß¦a¥á¦b³o.~
+~
+5 1120 8193
+2751275~ 0~ 0~ 8~
+24 0 0
+A
+18 5
+A
+19 5
+H lightning bolt~ 50 35 4
+X gold~
+
+#902
+helmet winged~
+µ¾¶³¤§´U(winged helmet)~
+¤@³»¦³¯Í»Hªº´U¤l(helmet)½ö¦b³oÃä.~
+~
+9 1120 17
+0~ 0~ 2751275~ 0~
+5 0 0
+A
+2 2
+X feather~
+
+#903
+spear ares~
+ªü¹p´µ¾Ô¥Ù(Ares spear)~
+¤@§â¦³ÂI·lÃaªº¥Ù(spear)³Q©ñ¦b¦a¤W.~
+~
+5 608 8193
+2751275~ 0~ 0~ 2~
+18 0 0
+A
+18 2
+A
+19 2
+X silver~
+
+#904
+sandals winged~
+µ¾¶³¤§¾c(winged sandals)~
+¤@Âù¤â¤uºë²Óªº²D¾c(sandals)½ö¦b³oÃä.~
+~
+9 1120 65
+0~ 0~ 2751275~ 0~
+5 0 0
+A
+2 1
+X feather~
+H fly~ 25 30 4
+
+#905
+staff ivory~
+¶H¤úÅv§ú(ivory staff)~
+¤@§â¶H¤ú½èªº¤â§ú(staff).~
+~
+4 1120 16385
+15~ 3~ 3~ sanctuary~
+8 0 0
+X ivory~
+
+#906
+trident poseidon~
+®ü¯«¤T¤e´u(Poseidon trident)~
+¤@§â¥¨¤jªº¤T¤e´u(trident)½ö¦b³oÃä.~
+~
+5 1120 8193
+2751275~ 0~ 0~ 12~
+16 0 0
+A
+1 1
+A
+4 1
+A
+18 2
+A
+19 3
+X steel~
+
+#907
+bow silver~
+»È¤}(silver bow)~
+¤@§â¦³»È¦âÀJ¹¢ªº¤}(bow).~
+~
+5 1120 32769
+2751275~ 0~ 0~ 14~
+15 0 0
+A
+18 2
+A
+19 2
+X silver~
+
+#908
+gauntlets flaming~
+¤õµK¤â®M(flaming gauntlets)~
+¤@Âù¤õµK¤â®M(flaming gauntlets)³Q¯d¦b³oÃä.~
+~
+9 1120 129
+0~ 0~ 2751275~ 0~
+6 0 0
+A
+13 25
+X aura~
+H burning hands~ 25 30 4
+
+#909
+vail potion ambrosia~
+Ã£¼ß¥É²G(ambrosia)~
+¤@­Ó´²µo¥X²¢¬ü»¤¤H®ð®§ªº®e¾¹(vail), ¸Ì­±¬Ý¨Ó§eº¡¤F²¢¬üªº²GÅé.~
+~
+10 17504 1
+30~ sanctuary~ cure critical~  ~
+1 20000 0
+C 20000
+X liquid~
+
+#910
+necklace glowing~
+¥ú½÷¶µÁå(glowing necklace)~
+¤@¦ê´²µoµÛ©_²§¥ú¨~ªº¶µÁå(necklace)½ö¦b³oÃä.~
+~
+9 1120 5
+0~ 0~ 2751275~ 0~
+2 0 0
+A
+12 25
+X jade~
+
+#911
+ring sapphire~
+ÂÅÄ_¥Û§Ù«ü(sapphire ring)~
+¤@¥u¤W­±Æ^¦³¤@Áû²`ÂÅ¦âÄ_¥Ûªº§Ù«ü(ring).~
+~
+9 1120 3
+0~ 0~ 2751275~ 0~
+1 6000 0
+A
+4 2
+A
+19 2
+C 6000
+X sapphire~
+
+#912
+shield glowing~
+ÆF¥ú¬Þ(glowing shield)~
+¤@­±¨Ï«Ç¤º¥Rº¡¤FÆF®ðªº¬Þ(shield)½ö¦b¦a¤W.~
+~
+9 1120 513
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+3 1
+A
+4 1
+X aura~
+
+#913
+axe notched~
+¨è²ª©òÀY(notched axe)~
+¤@§â¦³¨è²ªªº©òÀY(axe).~
+~
+5 1120 8193
+2751275~ 0~ 0~ 1~
+12 0 0
+X steel~
+
+#914
+grapes~
+¸²µå(grapes)~
+¤@¦ê¸²µå(grapes).~
+~
+19 0 1
+24~ 0~ 0~ 0~
+1 100 0
+C 100
+X food~
+
+#915
+fan~
+¤Õ³¶¦Ð®°(fan)~
+¤@§â¥Ñ¤Õ³¶¦Ð¤ò½s¦¨ªº®°¤l(fan).~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X feather~
+
+#916
+lute~
+¾|¯Sµ^(lute)~
+¤@§â¾|¯Sµ^(lute).~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X wooden~
+
+#917
+nugget-olympus nugget gold~
+ª÷¶ô(gold nugget)~
+¤@¶ôª÷¶ô(nugget)¦b³o¸Ìµo¥ú.~
+~
+8 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X gold~
+
+#918
+apple~
+Ä«ªG(apple)~
+¤@ÁûÄ«ªG(apple).~
+~
+26 0 1
+2~ cure light~  ~  ~
+1 0 0
+L 5
+X food~
+
+#919
+pear~
+±ù¤l(pear)~
+¤@Áû±ù¤l(pear).~
+~
+26 0 1
+2~ cure poison~  ~  ~
+1 0 0
+X food~
+
+#920
+orange~
+¬h¤B(orange)~
+¤@Áû¬h¤B(orange).~
+~
+26 0 1
+2~ armor~  ~  ~
+1 0 0
+X food~
+
+#921
+kiwi~
+©_²§ªG(kiwi)~
+¤@Áû©_²§ªG(kiwi).~
+~
+26 0 1
+3~ cure poison~  ~  ~
+1 0 0
+X food~
+
+#922
+sun amulet~
+¤Ó¶§¯«Å@¨­²Å(sun amulet)~
+¤@­Ó¤Ó¶§§Îª¬ªºÅ@¨­²Å(amulet)½ö¦b³oÃä.~
+~
+9 1120 5
+0~ 0~ 2751275~ 0~
+1 3000 0
+A
+12 40
+C 3000
+X gold~
+
+#923
+sun sword~
+¤Ó¶§¯«¤§¼C(sun sword)~
+¤@§â¦b¼C¬`³¡¤À¨èµÛ¦°¤éªFª@¹Ïªº¬üÄRªø¼C(sword)½ö¦b³oÃä.~
+~
+5 1120 8193
+2751275~ 0~ 0~ 3~
+20 0 0
+A
+18 1
+A
+19 2
+H sun flash~ 50 27 4
+X gold~
+
+#924
+robe blue~
+ÂÅ¦âªø³T(blue robe)~
+¤@¥ó²`ÂÅ¦âªºªø³T(robe)³Q¥á¦b¦a¤W.~
+~
+9 1120 1025
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+13 15
+X fiber~
+
+#925
+hat brimmed~
+¦³Ãä¼e´U(brimmed hat)~
+¤@³»´U¤l(hat)½ö¦b³oÃä.~
+~
+9 1120 17
+0~ 0~ 2751275~ 0~
+5 0 0
+X fiber~
+
+#926
+nectar~
+¯«¤§°s(nectar)~
+¤@²~­»®ð¥|¶h, »D°_¨Ó¤Q¤À»¤¤Hªº¬ü°s(nectar).~
+~
+10 16384 1
+12~ sanctuary~ giant strength~  ~
+2 0 0
+X liquid~
+
+#927
+key cell~
+¨c©ÐÆ_°Í(cell key)~
+¤@§â¨c©ÐÆ_°Í(key)³Q¯d¦b³o.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X iron~
+
+#928
+sword hades~
+­ß¤ý¼C(Hades sword)~
+­ß¤ý¶Â«Ò´µ(Hades)©Ò¨Ï¥Îªº¨I­«¥¨¼C(sword).~
+~
+5 16484 8193
+2751275~ 0~ 67~ 3~
+51 300000 0
+E
+sword hades~
+­Y¦³¦üµL¤¤, §A©w¯«¤@¬Ý, ¤~¹îÄ±¨ì¥¦ªº¦s¦b,
+³o¬O¤@§â¨I­«ªº¶Â¦â¥¨¼C(sword), §AÁôÁô·P¨ì¥¦ªº±j¤j¶Â·t¤O¶q.
+~
+A
+18 15
+A
+19 15
+H fireball~ 25 50 4
+T 100
+C 300000
+X black matter~
+
+#929
+fire abyss~
+¦aº»¤§¤õ(Abyss fire)~
+¤@§â­ß¬É¤§¤õ(fire)¥¿¦b³o¸Ì¯«¯¦¦a¿U¿NµÛ.~
+~
+1 512 1
+0~ 0~ 60~ 0~
+10 20000 0
+A
+13 50
+A
+19 2
+
+C 20000
+X black matter~
+
+#930
+holy sword pluto~
+¸t¼C - ´¶¾|¦h(Holy Sword - Pluto)~
+¤j¯«­ß¤ý¬P´¶¾|¦h(Pluto)´¿¸g¨Ï¥Î¹Lªº°t¼C.~
+~
+5 343 1
+-1~ 0~ 0~ 3~
+1 0 0
+E
+sword pluto~
+§A¥i¥H·P¨ü¨ì³o§â¼C¤§¤¤µL½aªº«Â¤O.
+~
+A
+1 8
+A
+2 8
+A
+3 8
+A
+4 8
+A
+5 8
+A
+17 -500
+A
+18 100
+A
+19 100
+H star fire~ 50 99 4
+X perfect matter~
+
+#931
+silver arrow~
+»ÈÀJ½b(silver arrow)~
+¤@§ô¦³»È¦âÀJ¹¢ªº½b(arrow).~
+~
+27 96 65537
+300~ 0~ 0~ 0~
+10 0 0
+X silver~
+
+#932
+Hera's corpse~
+»®©Ôªº«ÍÀe(Hera's corpse)~
+»®©Ô´Ý¯Ê¤£¥þªº«ÍÀe¸¨¦b³o¸Ì(Hera's corpse).~
+~
+23 2|16384 1
+0~ 0~ 0~ 0~
+100 0 0
+X Flesh~
+
+#933
+Cutter GrimDance~
+¤Á³ÎªÌ¡D¸Þ²§¤§»R(Cutter - GrimDance)~
+¤@§âº}¯BµÛªº¼C(Cutter)±¼¦b³o°{Ä£µÛ¬õ¥ú.~
+~
+5 2|4|8|16|64|256|512|16777216 1|8192
+-1~ 0~ 0~ 3~
+30 200000 0
+A
+1 2
+A
+5 -3
+A
+19 15
+A
+18 7
+A
+43 5
+H soulsteal~ 25 35 4
+X obsidian~
+
+#934
+Create Spring Staff~
+¬u´é¤§¤â§ú(Create-Spring Staff)~
+¤@§âÂÅ¤ô´¹»sªº¤â§ú±¼¦b³o¸Ì~
+~
+5 1|2|64 1|8192
+-1~ 0~ 0~ 7~
+5 250000 0
+H create spring~ 100 36 1
+X Crystal~
+
+#937
+Dancer dream wind~
+»´»RªÌ¡D°j­·°l¹Ú(Dancer - Dream in wind)~
+¤@§âº}¯BµÛªº¤M(Cutter)¡A©P³ò³òÂ¶¤FÁø¼v¡C~
+~
+5 1|2|64|256|1024|65536|131072|16777216 1|8192
+-1~ 0~ 0~ 13~
+5 400000 0
+Z 1
+A
+39 -15
+A
+3 2
+A
+18 15
+H refresh~ 20 10 2|4
+X perfect matter~
+V Fairy~ 10 130 0 120
+V Pixie~ 7 125 5 105
+V Beholder~ 8 115 15 105
+V Elf~ 10 120 0 110
+V Human~ 5 120 0 90
+V Dragon~ 0 120 0 90
+V Angel~ 0 120 0 90
+V God~ 5 120 0 90
+V Vampire~ 5 105 0 70
+V Ghost~ 0 60 0 50
+V Ogre~ 0 100 0 60
+V Demon~ 0 80 0 65
+V Statue~ 0 100 0 30
+
+#938
+Bury Cloud Long sky bow~
+´ó¶³ªøªÅ(Bury cloud)~
+¤@§â¥Î¶³Â´¦¨ªº¤}(bow)¡A»´»´ªºÄÆ¦b³o¡C~
+~
+5 1|32|64|256|1024|65536 1|32768
+-1~ 0~ 0~ 14~
+50 250000 0
+A
+17 -5
+A
+2 1
+A
+4 1
+A
+18 5
+A
+19 5
+A
+40 2
+H detect invis~ 10 10 1
+X glass~
+
+#935
+detect invis robe~
+°»´úÁô§Î¤§³T(Detect invis Robe)~
+¤@¥ó³z©úªº³T¤l(robe)¸¨¦b³o¸Ì¡C~
+~
+9 1|2|64|256 1|1024
+0~ 0~ 2000200~ 0~
+2 10000 0
+H detect invis~ 10 10 1
+X wool~
+
+#936
+Wind hunting bracer~
+®Ò¤§­·¬¼(Wind Hunting)~
+¤@¥ó¥Ñ²H²H´P­·©Ò²Õ¦¨ªºÅ@µÃ(Bracers)±¼¦b³o¡C~
+~
+9 1|2|64|256|65536|16777216 1|4096
+0~ 0~ 2001200~ 0~
+1 200000 0
+A
+4 1
+A
+18 2
+A
+43 13
+H refresh~ 10 10 2|4
+X wind aura~
+P 2048|524288|2097152
+
+#991
+Tears barrier~
+[1;36m²\ºwªº¦B¹õ[0m(Tears' barrier)~
+¤@¥ó¥Ñ¤Ñ¨Ï²´²\Â´¦¨ªº³·¤§±c¹õ(Tears)¡ã~
+~
+9 1|64|256 1|512
+0~ 0~ 2001200~ 0~
+5 1000000 0
+Z 1
+A
+39 -12
+A
+41 10
+A
+42 10
+H
+prot. from fire~ 20 40 1
+H
+chill touch~ 40 40 1
+F 2
+F 524288
+F 1048576
+F 34359738368
+F 1024
+X sapphire~
+#992
+Tears barrier~
+[1;36m²\ºwªº¦B¹õ[0m(Tears' barrier)~
+¤@¥ó¥Ñ¤Ñ¨Ï²´²\Â´¦¨ªº³·¤§±c¹õ(Tears)¡ã~
+~
+9 1|64|256|1024 1|512
+0~ 0~ 2001200~ 0~
+5 1000000 0
+Z 4
+A
+39 -12
+A
+41 5
+A
+42 15
+H prot. from fire~ 20 40 1
+H chill touch~ 40 50 1
+F 2|1024|524288|1048576|34359738368
+X sapphire~
+
+#993
+Dancer dream wind~
+»´»RªÌ¡D°j­·°l¹Ú(Dancer - Dream in wind)~
+¤@§âº}¯BµÛªº¤M(Cutter)¡A©P³ò³òÂ¶¤FÁø¼v¡C~
+~
+5 1|2|64|256|1024|65536|131072|16777216 1|8192
+-1~ 30~ 36~ 13~
+5 400000 0
+Z 4
+A
+39 -15
+A
+3 2
+A
+18 15
+F 2048|16384
+H refresh~ 30 20 2|4
+X perfect matter~
+V Elf~ 10 120 10 110
+V Fairy~ 10 130 10 120
+V Pixie~ 10 125 10 115
+V Beholder~ 10 115 20 110
+V Human~ 10 120 10 90
+V Dragon~ 10 120 10 90
+V Wyvern~ 10 120 10 90
+V Wyrm~ 10 120 10 90
+V Drake~ 10 120 10 90
+V Angel~ 10 120 10 90
+V God~ 10 120 10 90
+V Bachi~ 10 120 10 90
+V Vampire~ 5 105 0 70
+V Statue~ 0 100 0 30
+V Ghost~ 0 60 0 50
+V Ogre~ 0 100 0 60
+V Demon~ 0 80 0 65
+
+#0
+#ROOMDATA
+#901
+²`¤s¸Ì~
+§A¥¿µn¤W¤@®y¤ñ¶ø¤Ò¥d«°ÁÙ°ªÁq³\¦hªº°ª¤s. ¨B¹DÄ~Äò¦V¤s¸Ì©µ¦ù, ¦ý³¡¤À
+ªº¹D¸ô¤w¸g®ø¥¢¤F. §A¨S¦³¿ìªk¥Ñ³°¸ôÄ~Äò«e¶i.
+~
+0 0 5
+D2
+~
+~
+0 -1 324
+D4
+~
+~
+0 -1 902
+S
+#902
+²`¤s¸Ì~
+§A¤@¸ô©Ü¯ð±Ù´Æ, ÅP¥X¤@±ø³q©¹¤s¸Ìªº¤p®|. Ãkª¦ªºÁ}¨¯¨Ï§A·P¨ì¯h­Â, ¦Ó
+§A¥¿·Ç³Æ¥ð®§¤@·|¨à.
+~
+0 0 9
+D4
+~
+~
+0 -1 903
+D5
+~
+~
+0 -1 901
+S
+#903
+²`¤s¸Ì~
+§A²×©ó¨ì¹F¤F¤s³». ³o¸ÌªºªÅ®ð¤Q¤Àµ}Á¡, ¨Ï§A³Ý®§¤£¤î. ¦b¥_¤è§A¬Ý¨ì¤@
+­Ó¦ü¥G¬O«°¥«ªº¤J¤f.
+~
+0 0 9
+D0
+~
+~
+0 -1 904
+D5
+~
+~
+0 -1 902
+S
+#904
+«°¥«¤J¤f~
+§A¨­³B©ó¤@®y¤j«°¥«ªº¤J¤f. ·í§AÀôÅU¥|¶g®É, §A»{¬°³o­Ó«°¥«ªº©~¥Á¥²©w
+¬O«D±`ªº´I¦³. §A±q¨Ó¨S¨£¹L¦³µÛ³o»ò¦h¬üÄR«Ø¿vª«ªº«°¥«.
+~
+0 0 1
+D0
+~
+~
+0 -1 905
+D2
+~
+~
+0 -1 903
+S
+#905
+©z´µ¤§¸ô~
+§A¥¿¨«¦b¤@±ø¼e¼sªº¹D¸ô¤W. §Aª`·N¨ì³o­Ó«°¥«ªº©~¥Á¨Ã¤£¦h. §A¬Ý¨ì¤@¶ô
+¥ß©óµó¨¤ªºµP¤l¤W¼gµÛ'©z´µ¤§¸ô'.
+~
+0 0 1
+D0
+³o±øµóÄ~Äò©µ¦ù¤U¥h.
+~
+~
+0 -1 906
+D2
+~
+~
+0 -1 904
+D3
+~
+~
+0 -1 924
+S
+#906
+©z´µ¤§¸ô~
+§A¥¿¨«¦b¤@±ø¦ü¥G¬O³o­Ó«°¥«¥D­nªºµó¹D¤W. §A¬Ý¨ìªF¦è¨â°¼±Æ¦CµÛ³\¦hªº
+¥Á©Ð. ³o±ø¸ô¦V«n¥_©µ¦ù.
+~
+0 0 1
+D0
+~
+~
+0 -1 907
+D1
+~
+~
+0 -1 925
+D2
+³o±øµóÄ~Äò©µ¦ù¤U¥h.
+~
+~
+0 -1 905
+D3
+~
+~
+0 -1 926
+S
+#907
+©z´µ¤§¸ô~
+§A¥¿¨«¦b¦W¬° '©z´µ¤§¸ô' ªº«°¥«¥D­nµó¹D¤W.
+~
+0 0 1
+D0
+~
+~
+0 -1 908
+D2
+~
+~
+0 -1 906
+D3
+~
+~
+0 -1 927
+S
+#908
+©z´µ¤§¸ô~
+§A¤´¨«¦b³o­Ó«°¥«ªº¥D­nµó¹D¤W. ¦b¥_¤è§A¬Ý¨ì¤@®y¶¯°¶ªº«°³ù. ¦bªFÃä¦³
+¤@±ø¸û¤pªºµó¹D. ¦èÃä«h¦³´X¶¡¤£¦Pªº°Ó©±.
+~
+0 0 1
+D0
+~
+~
+0 -1 909
+D1
+~
+~
+0 -1 928
+D2
+~
+~
+0 -1 907
+S
+#909
+«°³ù¤J¤f³q¹D~
+§A¥¿¨­³B©ó¤@®y¤j«°³ùªº¤J¤f. ³o¸Ì¦³¥¨´Tªºªoµe©M¬üÄRªº¦a´à, ¬Ý°_¨Ó¤Q
+¤Àº}«G. §AÅ¥¨ì¤F¤@¨Ç©ó´r§Öªº¯ºÁn¥Ñ¥_Ãä¶Ç¨Ó. ¤@±ø¸û¯¶ªº¨«´Y¦b¦¹¤À¦VªFÃä
+©M¦èÃä.
+~
+0 8 1
+D0
+~
+~
+0 -1 910
+D1
+~
+~
+0 -1 915
+D2
+~
+~
+0 -1 908
+D3
+~
+~
+0 -1 911
+S
+#910
+¤ý®yªº©Ð¶¡~
+¨«ªñ³o©Ð¶¡ªº«b¨º, §Aªº¸}¨B»ø¦í¤F. ¦b§A­±«eªº¬O½÷·×ÀéÄê, ºÝ§¤¦b¤@¥¨
+¤jª÷¦â¤ý®y¤W(throne)ªº©z´µ. ¥H«e§AÁÙ¥H¬°Í¢¥u¬O¤@¦ì¯«¸Ü¤¤ªº¤Hª«, µM¦ÓÍ¢
+²{¦b«o¬¡¥Í¥Í¦a¦b§A­±«e. §A¤ß¤¤·t«ä³o®y«°³ù¤¤ÁÙ¦íµÛ¤°»ò¼Ëªº¤H.
+~
+0 8 1
+E
+throne~
+³o­Ó¥¨¤jªºª÷¶À¦â¤ý®y¬Ý°_¨Ó¦n¹³¤w¸gÂ\¦b³o¸Ì³\¦h¦~¤F. ·í§A¥J²Ó¦aÆ[¹î
+¥¦®É, §Aª`·N¨ì¥¦¨Ã¤£¬Oºò±K¦a¶K¦b¦a­±¤W, ¤]³\§A¥i¥H²¾¶}¥¦?
+~
+D0
+~
+~
+0 -1 923
+D2
+~
+~
+0 -1 909
+>room_command move throne~
+if is_qmark($n) == olympus_weapon_quest 200009
+or is_qmark($n) == olympus_weapon_quest 100009
+	echoat $n §A¨Ï¤Oªº²¾¶}¤F¤ý®y¡Aµo²{¤F©³¤U¦³­Ó±K¹D¡I
+	callout 1 makedoor 5 ³oÃä¥X²{¤F¤@¹D¼Ó±è stair 0 0 918
+else
+	echoat $n §A¦A«ç»ò¨Ï¤O¤]·h¤£¶}³o¼Ë¤@­Ó­«ª«¡C
+endif
+~
+|
+S
+#911
+«°³ù¦èÁl~
+§A¥¿¨­³B©ó«°³ùªº¦èÁl. ¦bªFÃä§A¥i¥H¬Ý¨ì«°³ùªº¤J¤f. ³o±ø¨«´Y¦V¦èÃä©µ¦ù.
+~
+0 8 1
+D1
+~
+~
+0 -1 909
+D3
+~
+~
+0 -1 912
+S
+#912
+«°³ù¦èÁl~
+§A¥¿¨­³B©ó«°³ùªº¦èÁl. ³o±ø¨«´Y¦V¥_Ãä©µ¦ù. ¦b¦èÃä¤Î«nÃä¦³¨Ç¨p¤Hªº©Ð¶¡.
+~
+0 8 1
+D0
+~
+~
+0 -1 913
+D1
+~
+~
+0 -1 911
+D2
+~
+~
+0 -1 930
+D3
+~
+~
+0 -1 929
+S
+#913
+«°³ù¦èÁl~
+§A¥¿¨­³B©ó«°³ùªº¦èÁl. ³o±ø¨«´Y¦V«nÃä©µ¦ù. §A¦b¥_ÃäÅ¥¨ì¤@¨Ç¥ÑÁç¸J¿]
+¬Ö©Òµo¥Xªº¹Ç¹ÇÁn.
+~
+0 8 1
+D0
+~
+~
+0 -1 914
+D2
+~
+~
+0 -1 912
+S
+#914
+¼p©Ð~
+§A¨«¶i¤F³o®y«°³ùªº¼p©Ð. ³o¸Ì¥R¥¸¤F§nÂøªºÁnÅT¤ÎÁc¦£ªº®ð®§, ¹²¤H­Ì¥¿
+¦£¸L¦a·Ç³Æ¨Ñ¯«¬é­Ì¨É¥Îªº¬ü­¹.
+~
+0 8 1
+D2
+~
+~
+0 -1 913
+S
+#915
+«°³ùªFÁl~
+§A¥¿¨­³B©ó«°³ùªºªFÁl. ³o±ø¨«´Y¦VªFÃä©µ¦ù, ¦Ó¤J¤f¦b¤Ï¤è¦Vªº¦èÃä.
+~
+0 8 1
+D1
+~
+~
+0 -1 916
+D3
+~
+~
+0 -1 909
+S
+#916
+«°³ùªFÁl~
+§A¥¿¨­³B©ó«°³ùªºªFÁl. ¨«´Y¦b³o¸ÌÂà¦V¥_Ãä. ¦bªFÃä¤Î«nÃä¦³¨Ç¨p¤Hªº©Ð¶¡.
+~
+0 8 1
+D0
+~
+~
+0 -1 917
+D1
+~
+~
+0 -1 931
+D2
+~
+~
+0 -1 932
+D3
+~
+~
+0 -1 915
+S
+#917
+«°³ùªFÁl~
+§A¥¿¨­³B©ó«°³ùªºªFÁl. §AÅ¥¨ì¤@¨Ç°Êª«ªº¥sÁn¥Ñ¥_Ãä¶Ç¨Ó. ¨«´YÄ~Äò¦V«n
+Ãä©µ¦ù.
+~
+0 8 1
+D0
+~
+~
+0 -1 933
+D2
+~
+~
+0 -1 916
+S
+#918
+¤g¨c~
+§A¥¿¨­³B©ó©z´µªº¤g¨c¤¤. §A¹ï©ó³oºØ¯àÅýÅv¤OµL¤Wªº©z´µ¯«¤]®`©È¨ì­n
+±N¨e¸TÀD°_¨Óªº¥Íª«·P¨ì¤Q¤À¦n©_.
+~
+0 9 1
+D0
+~
+~
+0 -1 919
+D4
+~
+trapdoor throne~
+1 -1 910
+S
+#919
+¤g¨c~
+§A¥¿¨­³B©ó©z´µªº¤g¨c¤¤. ¦b¥_Ãä, ¦èÃä¥H¤ÎªFÃä¦U¦³¶¡¨c©Ð. §A±qªFÃä¤Î
+¦èÃäªº¨c©Ð¤¤Å¥¨ì¤F¨F°×ªºÁn­µ, ¥_Ãä«h¬O¤°»ò¤]¨S¦³...
+~
+0 9 1
+D0
+~
+~
+39 927 920
+D1
+~
+~
+39 927 922
+D2
+~
+~
+0 -1 918
+D3
+~
+~
+39 927 921
+S
+#920
+¨c©Ð~
+§A¥¿¨­³B©ó¯U¤p, »êÅ¼ªº¨c©Ð¤¤. ³o¬O­Ó¥O¤H·P¨ì®£©Æªº¦a¤è.
+~
+0 9 1
+D2
+~
+~
+39 927 919
+S
+#921
+¨c©Ð~
+§A¥¿¨­³B©ó¯U¤p, »êÅ¼ªº¨c©Ð¤¤. ³o¬O­Ó¥O¤H·P¨ì®£©Æªº¦a¤è.
+~
+0 9 1
+D1
+~
+~
+39 927 919
+S
+#922
+¨c©Ð~
+§A¥¿¨­³B©ó¯U¤p, »êÅ¼ªº¨c©Ð¤¤. ³o¬O­Ó¥O¤H·P¨ì®£©Æªº¦a¤è.
+~
+0 9 1
+D3
+~
+~
+39 927 919
+S
+#923
+¼Ó±è~
+§A¥¿¯¸¦b¤@®y½L±Û¦Ó¤Wªº¼Ó±è¤¤. ¦b«nÃä§A¬Ý¨ì¤F©z´µªº¤ý®y«Ç.
+~
+0 8 1
+D2
+~
+~
+0 -1 910
+D4
+~
+~
+0 -1 939
+S
+#924
+ÄÑ¥]©±~
+§A¥¿¨­³B©ó¤@¶¡¯U¤pªº°Ó©±¤¤, ³o®a°Ó©±´£¨Ñ­¹ª«µ¹³o®y«°¥«ªº©~¥Á­Ì. ³o
+¸Ì»D°_¨Ó¬Û·í¤£¿ù!
+~
+0 8 1
+D1
+~
+~
+0 -1 905
+S
+#925
+¥Á©Ð~
+§A¥¿¨­³B©ó¤@¦ì©~¥Áªº©Ð¤l¸Ì. ¦o¬Ý°_¨Ó¦ü¥G«Ü­±¼ô, ¦ý¬O§A´N¬OµLªk°O°_
+¦oªº¦W¦r.
+~
+0 8 1
+D3
+~
+~
+0 -1 906
+S
+#926
+¥Á©Ð~
+§A¥¿¨­³B©ó¤@¦ì©~¥Áªº©Ð¤l¸Ì. ¥L¬Ý°_¨Ó¦ü¥G«Ü­±¼ô, ¦ý¬O§A´N¬OµLªk°O°_
+¥Lªº¦W¦r.
+~
+0 8 1
+D1
+~
+~
+0 -1 906
+S
+#927
+¯«¯µªº°Ó©±~
+§A©Ò¨­³Bªº³o®a°Ó©±¦³¦UºØ¯«¯µªº°Ó«~¥H¨Ñ³o­Ó«°¥«ªº©~¥Á©Ò»Ý.
+~
+0 8 1
+D1
+~
+~
+0 -1 907
+S
+#928
+ªü¹p´µ¤§¸ô~
+§A¥¿¨«¦b¤@±ø¥Ñ¥D­n¹D¸ô¤À¤ä¥X¨Óªº¸û¤pµó¹D¤W. §A¥Ñ¤@¶ôµP¤l¤W±oª¾³o±ø
+µóªºµó¦W¢wªü¹p´µ¤§¸ô.
+~
+0 8 1
+D1
+~
+~
+0 -1 934
+D3
+~
+~
+0 -1 908
+S
+#929
+«È©Ð~
+§A¨«¶i¤F¤@¶¡¥Î¨Ó©Û«Ý«°³ù«È¤H©Ò¥Îªº¨p¤H©Ð¶¡. ·í§Aµo²{¦b³o¶¡©Ð¶¡¤¤°µ
+«Èªº´N¬O¼Ú¤B¢w¹Ð¥@¦uÅ@¯«¢wÍ¢¥»¤H®É, §A´X¥G©ü­Ë¤F. Í¢À³¸Ó¬O¨Ó«ô³X©z´µªº.
+~
+0 8 1
+D1
+~
+~
+0 -1 912
+S
+#930
+­Ü®w~
+§A¥¿¦b«°³ùªº­Ü®w¸Ì. ³o¸ÌªºªF¦è¨Ã¤£¦h, ¥u¦³´X­Ó¸Ëº¡ÂÂ©U§£ªº½c¤l.
+~
+0 8 1
+D0
+~
+~
+0 -1 912
+S
+#931
+«È©Ð~
+§A¨«¶i¤F¤@¶¡¥Î¨Ó©Û«Ý«°³ù«È¤H©Ò¥Îªº¨p¤H©Ð¶¡. ·í§Aµo²{©Ð¶¡¤¤ªº«È¤H´N
+¬O¥j®J¤Î¤Ó¶§¯«¢w¹p¢w®É, §A·P¨ì¤Q¤À¦YÅå. Í¢À³¸Ó¬O¨Ó«ô³X©z´µªº.
+~
+0 8 1
+D3
+~
+~
+0 -1 916
+S
+#932
+­Ü®w~
+§A¥¿¦b«°³ùªº­Ü®w¤¤. ³o¸ÌªºªF¦è¨Ã¤£¦h, ¥u¦³«p«pªº¦Ç¹Ð.
+~
+0 8 1
+D0
+~
+~
+0 -1 916
+S
+#933
+°¨´\~
+§A¥¿¨­³B©ó«°³ùªº°¨´\¤¤, µM¦Ó§Aµo²{ªº¨Ã¤£¬O¹w®Æ¤¤ªº°¨¤Ç, ¥R¥¸¨ä¤¤ªº
+¤Ï¦Ó¬O¦UºØ§A»{¬°À³¥uÄÝ©ó¯«¸Ü¤¤ªº¥Íª«. ©úÅã¦a, §A¿ù¤F!
+~
+0 8 1
+D2
+~
+~
+0 -1 917
+S
+#934
+ªü¹p´µ¤§¸ô~
+§A¨«¨ì¤Fªü¹p´µ¤§¸ôªººÉÀY. ¦b«nÃä§A¬Ý¨ì¤@¶¡­H¥Ò©±, ªFÃä«h¬O¤@¶¡ªZ¾¹
+©±. ¦b¥_Ãä§AÅ¥¨ì¤@¨Ç¥´ÅKªºÁn­µ.
+~
+0 8 1
+D0
+~
+~
+0 -1 937
+D1
+~
+~
+0 -1 936
+D2
+~
+~
+0 -1 935
+D3
+~
+~
+0 -1 928
+S
+#935
+­H¥Ò©±~
+³o¶¡¤p©±´X¥G¬OªÅªº, ´N¦n¹³¨S¤°»òªF¦è¤@¼Ë. ©±¦ÑÁó¨Ã¤£·Q©M§A°µ¥Í·N.
+~
+0 8 1
+D0
+~
+~
+0 -1 934
+S
+#936
+ªZ¾¹©±~
+§A¨«¶i¤F¤@¶¡³c½æ¹ê¥Îºë½oªZ¾¹ªº¤p©±. §AÄ±±o³o¸Ìªº°Ó«~¨Ã¨S¦³«Ü¦hªº¿ï
+¾Ü, µM¦Ó©±¦ÑÁó¨Ã¤£·Q©M§A°µ¥Í·N.
+~
+0 8 1
+D3
+~
+~
+0 -1 934
+S
+#937
+¥´ÅKçE~
+³o¶¡¤j«o«Ü§nªº©Ð¶¡¨Ï§A´X¥GÅ¥¤£¨ì§A¦b·Q¤°»ò. ³o¸Ì©Ò¦³ªº¤H³£§V¤OÁë³y
+µÛ°ª¯ÅªºªZ¾¹¤Î­H¥Ò. ÁöµM§A¤£¤Ó¯à§Î®e, ¦ý§A·PÄ±¦èÃäªºÀð¦³¨Ç²§¼Ë.
+~
+0 8 1
+D2
+~
+~
+0 -1 934
+D3
+§A¬Ý¨ì¤F¤@¹D±Kªù!
+~
+door concealed~
+3 -1 938
+S
+#938
+¾Ô²¤¬ã¨s«Ç~
+§A¶i¤J¤F¤@¶¡³Q¤@±i¤W­±©ñ¦³¤j¦a¹Ïªº®à¤l©Ò¦û¾Úªº©Ð¶¡. ³\¦h¤H¥¿³òµÛ®à
+¤l¤p¤ß¦a¬ã¨s³o±i¤j¦a¹Ï. §AÅ¥¨ì¤@°}¤ü§p¥Ñ¥_Ãä¶Ç¨Ó.
+~
+0 9 1
+D0
+~
+~
+0 -1 954
+D1
+~
+~
+0 -1 937
+D3
+~
+Hell Gate~
+3 -1 955
+S
+#939
+«°³ù¤G¼Ó~
+§A¥¿¨­³B©ó³o®y«°³ùªº¤G¼Ó. §A³Q§A¦b¤@¼Ó©Òµo²{ªºªF¦èµ¹À~§b¤F, §A¤]¹ï
+¤G¼Ó©ÒÁôÂÃªº¯µ±K·P¨ìºÃ´b. ³oÃä¥|­±¤K¤è³£¦³¥X¤f. §A¬Ý¨ì§AÀY¤W¦³¤@¹DÃöµÛ
+ªº¯U¤p¹hªù.
+~
+0 8 1
+D0
+~
+~
+0 -1 940
+D1
+~
+~
+0 -1 943
+D2
+~
+~
+0 -1 941
+D3
+~
+~
+0 -1 942
+D4
+§A¦b¤p¹hªù¤W¬Ý¨ì¤F¤@­±µP¤l, ¤W­±¼gµÛ'¨p¤H°]²£¢w¤Å¤J!'
+~
+hatch~
+3 -1 951
+D5
+~
+~
+0 -1 923
+S
+#940
+¥_¦Vªº¨«´Y~
+§A¥¿¯¸¦b¤@±ø¦V¥_ªº¨«´Y. ¥_Ãä¦³¤@¶¡¨p¤Hªº©Ð¶¡, «nÃä«h¦³¤@®y¦V¤Uªº¼Ó±è.
+~
+0 8 1
+D0
+~
+~
+0 -1 947
+D2
+~
+~
+0 -1 939
+S
+#941
+«n¦Vªº¨«´Y~
+§A¥¿¯¸¦b¤@±ø¦V«nªº¨«´Y. «nÃä¦³¤@¶¡¨p¤Hªº©Ð¶¡, ¥_Ãä«h¬O¤@®y¦V¤Uªº¼Ó±è.
+~
+0 8 1
+D0
+~
+~
+0 -1 939
+D2
+~
+~
+0 -1 944
+S
+#942
+¦è¦Vªº¨«´Y~
+§A¥¿¯¸¦b¤@±ø¦V¦èªº¨«´Y. ¦èÃä¦³¤@¶¡¨p¤Hªº©Ð¶¡, ªFÃä«h¬O¤@®y¦V¤Uªº¼Ó±è.
+~
+0 8 1
+D1
+~
+~
+0 -1 939
+D3
+~
+~
+0 -1 945
+S
+#943
+ªF¦Vªº¨«´Y~
+§A¥¿¯¸¦b¤@±ø¦VªFªº¨«´Y. ªFÃä¦³¤@¶¡¨p¤Hªº©Ð¶¡, ¦èÃä«h¬O¤@®y¦V¤Uªº¼Ó±è.
+~
+0 8 1
+D1
+~
+~
+0 -1 946
+D3
+~
+~
+0 -1 939
+S
+#944
+¹ì«Ç~
+§A¥¿¨­³B©ó¯«ªº¹ì«Ç! µM¦Ó³o¶¡©Ð¶¡¦ü¥G¬OªÅªº.
+~
+0 8 1
+D0
+~
+~
+0 -1 941
+S
+#945
+¹ì«Ç~
+§A¥¿¨­³B©ó¯«ªº¹ì«Ç!
+~
+0 8 1
+D1
+~
+~
+0 -1 942
+S
+#946
+¹ì«Ç~
+§A¥¿¨­³B©ó¯«ªº¹ì«Ç!
+~
+0 8 1
+D3
+~
+~
+0 -1 943
+S
+#947
+¹ì«Ç~
+§A¥¿¨­³B©ó¯«ªº¹ì«Ç!
+~
+0 8 1
+D2
+~
+~
+0 -1 940
+S
+#948
+¯«¤§Â§°ó~
+§A¨«¶i¤F¤@­Ó¯«¸t¤£¥i«I¥Çªº¦a¤è¢w¯«¤§Â§°ó. ¦pªG§A¥u¬O¤@­Ó¤Z¤H, ³Ì¦n
+»°§ÖÂ÷¶}!
+~
+0 8 1
+D2
+~
+~
+0 -1 951
+S
+#951
+¤J¤f³B~
+¤@¶ôµP¤l¤W¼gµÛ '·í¤ß·N¥~, §O´Á±æ¤Ó°ª.'
+~
+0 8 1
+D0
+~
+~
+0 -1 948
+D5
+~
+hatch~
+3 -1 939
+S
+#954
+«H®{½e¨¥~
+¤@°}Án­µ¦b§A¦Õ®Ç§C»y '¦b®É¥ú¬y³u¤§«e, §â´¤§Aªº¤H¥Í.'
+~
+0 8 1
+D2
+~
+~
+0 -1 938
+S
+#955
+¦aº»¤§ªù~
+!!!!!¥|©PÅT°_¤@°}°}­ú¸¹Án, ´H®ðªï­±¦Ó¨Ó, §AÄ±±o³Ì¦n»°§Ö¦^ÀY¬°§®!!!!!
+~
+0 8193 9
+D1
+~
+~
+0 -1 938
+D5
+~
+~
+0 -1 956
+S
+#956
+¦aº»~
+...........
+
+~
+0 8193 9
+D4
+~
+~
+0 -1 955
+S
+#0
+
+
+
+#SPECIALS
+M 901 spec_cast_cleric
+M 902 spec_breath_fire
+M 903 spec_thief
+M 904 spec_cast_mage
+M 905 spec_cast_adept
+M 907 spec_cast_adept
+M 908 spec_breath_lightning
+M 909 spec_guard
+M 914 spec_breath_any
+M 916 spec_cast_mage
+M 919 spec_breath_any
+M 920 spec_breath_fire
+M 921 spec_cast_cleric
+M 922 spec_poison
+M 923 spec_thief
+M 926 spec_cast_mage
+M 929 spec_cast_mage
+M 929 spec_breath_any
+M 929 spec_cast_cleric
+S
+
+
+
+#RESETS
+M 0 923 10 904
+M 0 923 10 905
+M 0 923 10 906
+M 0 923 10 907
+M 0 923 10 908
+M 0 901 1 910
+E 0 900 0 5
+E 0 901 0 16
+G 0 926 0
+G 0 909 0
+M 0 925 4 914
+M 0 925 4 914
+M 0 926 1 918
+G 0 927 0
+M 0 902 1 920
+E 0 908 0 9
+M 0 920 2 921
+M 0 920 2 922
+M 0 915 1 924
+G 0 914 0
+G 0 918 0
+G 0 919 0
+G 0 920 0
+G 0 921 0
+M 0 907 1 925
+E 0 910 0 3
+E 0 905 0 17
+G 0 926 0
+G 0 909 0
+M 0 912 4 925
+E 0 915 0 17
+G 0 914 0
+M 0 912 4 925
+E 0 915 0 17
+G 0 914 0
+M 0 905 1 926
+E 0 907 0 19
+E 0 931 0 20
+G 0 926 0
+G 0 909 0
+M 0 911 4 926
+E 0 916 0 17
+G 0 921 0
+M 0 911 4 926
+E 0 916 0 17
+G 0 921 0
+M 0 916 1 927
+G 0 905 0
+G 0 909 0
+G 0 910 0
+G 0 926 0
+M 0 923 10 928
+M 0 914 1 929
+E 0 924 0 12
+E 0 925 0 6
+M 0 919 1 931
+E 0 922 0 3
+E 0 923 0 16
+M 0 922 3 933
+M 0 922 3 933
+M 0 924 3 933
+M 0 924 3 933
+M 0 923 10 934
+M 0 918 1 935
+G 0 904 0
+G 0 908 0
+G 0 911 0
+M 0 917 1 936
+E 0 907 0 19
+E 0 931 0 20
+G 0 913 0
+M 0 908 1 937
+E 0 912 0 11
+G 0 926 0
+G 0 909 0
+M 0 909 4 937
+G 0 917 0
+M 0 909 4 937
+G 0 917 0
+M 0 906 1 938
+E 0 903 0 16
+G 0 926 0
+G 0 909 0
+M 0 910 4 938
+E 0 913 0 16
+G 0 919 0
+M 0 910 4 938
+E 0 913 0 16
+G 0 919 0
+M 0 921 1 945
+E 0 911 0 1
+G 0 926 0
+G 0 909 0
+M 0 904 1 946
+E 0 906 0 16
+G 0 926 0
+G 0 909 0
+M 0 903 1 947
+E 0 904 0 8
+E 0 902 0 6
+G 0 926 0
+G 0 909 0
+M 0 913 5 954
+M 0 913 5 954
+M 0 913 5 954
+M 0 927 1 956
+E 0 928 0 16
+E 0 929 0 0
+S
+
+
+
+#SHOPS
+915 1 8 17 19 0 130 80 0 23
+0
+
+
+
+#$

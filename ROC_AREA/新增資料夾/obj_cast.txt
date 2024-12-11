@@ -1,0 +1,104 @@
+void obj_cast_spell( int sn, int level, CHAR_DATA *ch, CHAR_DATA *victim,
+        OBJ_DATA *obj )
+{
+    void *vo;
+
+    if ( sn <= 0 )
+  return;
+    if( ch->deleted ) return;
+
+    if ( sn >= MAX_SKILL || skill_table[sn].spell_fun == 0 )
+    {
+  bug( "Obj_cast_spell: bad sn %d.", sn );
+  return;
+    }
+    if( IS_AFFECTED( ch, AFF_SEAL_MAGIC ) ) {
+        send_to_char("你周圍的力場阻絕了你的魔法！\n\r", ch);
+        return;
+    }
+
+    switch ( skill_table[sn].target )
+    {
+    default:
+  bug( "Obj_cast_spell: bad target for sn %d.", sn );
+  return;
+
+  case TAR_ARG:
+    vo = NULL;
+    break;
+
+    case TAR_IGNORE:
+  vo = NULL;
+  break;
+
+    case TAR_CHAR_OFFENSIVE:
+  if ( !victim )
+      victim = ch->fighting;
+  if ( !victim )
+  {
+      send_to_char( "你不能這麼做.\n\r", ch );
+      return;
+  }
+
+  if ( is_safe( ch, victim ) )
+      return;
+
+  check_killer( ch, victim );
+  level = level * level / 40;
+  level = URANGE( 1, level, 90);
+
+  vo = (void *) victim;
+  break;
+
+    case TAR_CHAR_DEFENSIVE:
+  if ( !victim )
+      victim = ch;
+  vo = (void *) victim;
+  break;
+
+    case TAR_CHAR_SELF:
+    if ( sn == skill_lookup( "teleport" ) ||
+       sn == skill_lookup( "word of recall" ) || 
+       sn == skill_lookup( "dispel magic" ) )
+       return;
+    vo = (void *) ch;
+  break;
+
+    case TAR_OBJ_INV:
+  if ( !obj )
+  {
+      send_to_char( "你不能這麼做.\n\r", ch );
+      return;
+  }
+  vo = (void *) obj;
+  break;
+    }
+                if ( sn == skill_lookup( "teleport" ) ||
+      sn == skill_lookup( "word of recall" ) )
+      return;
+    
+
+    target_name = "";
+    (*skill_table[sn].spell_fun) ( sn, level*1000, ch, vo );
+	//(*skill_table[sn].spell_fun) ( sn, level, ch, vo );
+
+    if ( skill_table[sn].target == TAR_CHAR_OFFENSIVE
+  && victim->master != ch && ch != victim )
+    {
+  CHAR_DATA *vch = NULL;
+
+  if( ch->deleted ) return;
+  for ( vch = ch->in_room->people; vch; vch = vch->next_in_room )
+  {
+      if ( vch->deleted )
+    continue;
+      if ( victim == vch && !victim->fighting )
+      {
+    multi_hit( victim, ch, TYPE_UNDEFINED );
+    break;
+      }
+  }
+    }
+
+    return;
+}
