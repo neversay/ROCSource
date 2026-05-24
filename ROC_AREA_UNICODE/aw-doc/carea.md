@@ -1,0 +1,1424 @@
+# carea.txt 1.1 edition (2002/May/02)
+**Merc Release 2.2**
+*Wednesday 24 November 1993*
+
+Kahn, Hatchet
+
+*ROC edition, some changes by Neversay@ROC*
+
+## 感謝
+
+這一份文件包含了一部份 Diku mud 的說明檔，如 "database.doc", "dbsup.doc" 和 "values.doc"。所有的版權都是屬於 Diku 系列，你可以參考它們的 "license.doc"
+
+## 區域檔的全觀
+
+一個區域是整個世界的一部份。每一個區域都定義在一個獨立的檔案中，所有我們的區域都是用相同的副檔名(extension) ".are"來定義。但是你可以隨你的好來叫你的檔案名稱。
+(完成的檔案要在area/AREA.LST下加入自己的區域檔案名稱，這樣系統才能讀到你的檔案。請記住，區域檔案要依照虛擬編號"vnum"的順序插入AREA.LST的內文裡，不可以隨意不依照順序寫入，否則會造成無法查明的開啟失敗訊息。)
+
+因為每一個檔案都是獨立定義在一個檔案中，因此你可以很容易的將一個區域納入 Merc 的系列中。或是將 Merc 的區域檔放在其它版的 mud 中來使用。
+(在ROC中，為了讓任務更複雜化，所以很多區域都有複雜的關係網以及程式碼。因此貿然將ROC的區域放置於其他Envy系統的mud下會出現一堆錯誤。)
+
+所有我們的區域都可以自由的散布，但是只要內部的一些公告(notices)如扁額，牌子，塗鴨和墓碑等都能保留著就可以。若是你寫了新的區域，而且你想要將它們貢獻給 Merc，只要將你的區域寄給上面所提到住址中的任何一個都可以。你可以在遊戲中使用 "areas" 這個命令來看那一個區域是由誰來完成的，若是我們找的到原作者我們一定使用原作者的名字。
+
+雖然 Merc 的區域檔格式和其它 Diku 系列的 mud 幾乎都可以相容。但是 Merc 忽略了很多的部份，通常可以由 mobile 或是 object 的等級來決定這些數值。我們之所以會這麼做是為了平衡不同作者，在寫區域時所造成的不平衡。
+(由於ROC檔案格式功能強大，所以幾乎每個Merc沒有用到的地方我們都用到了，因此在移植區域時請小心編排數值。)
+
+## 一個區域檔的部份
+
+一個區域檔包含下列的幾個部份：
+
+```plaintext
+#AREA
+#HELPS
+#MATERIAL
+#MOBILES
+#MOBPROGS
+#OBJECTS
+#ROOMS
+#ROOMPROGS
+#SPECIALS
+#RESETS
+#SHOPS
+#$
+```
+
+每一個區域都是由一段以 `#AREA` 開頭到另一個 `#AREA` 開頭的部份所組成。所有我們的區域檔在最開頭都只有在檔案的最開頭包含一個 `#AREA` 的部份。而 "limbo.are" 這個檔案則是包含了一個發展區域的最原始模型。
+
+每一個部份都有它自己的格式。 `#MOBILES`, `#OBJECTS`, `#ROOMS`, 和 `#RESETS`, 都和原本的 Diku 中的 tynyworld.mob, tinyworld.obj, tinyworld.wld 和 tinyworld.zon 是相容的。而 `#HELPS`, `#SHOPS`, 和 `#SPECIALS` 的部份則是 Merc 新的部份。
+(`#MOBPROGS`, `#ROOMPROGS`則是Envy & ROC新增的格式。)
+
+## 資料型態( Data Types)
+
+所有在區域檔中的資料(包括區塊(section)檔頭)都是一連串的數值(value)。每一個數值都有它特殊的格式(type)。而 server 會在讀入檔案的時候，依照它的型態將它解釋成它所要的資料型態。
+
+所有在資料開頭的空白字元(blank character)都會被省略掉，如 spaces, tabs, new lines, carriage returns 等的。因此，你可以依照你的喜好將區域檔寫成你要的格式。
+
+這些特有的型態有："letter", "word", "string", "number", 和 "to_eol"
+
+- **letter**：是一個單一的非空白字元
+- **word**：是一連串的非空白的字元，最後以一個空白的字元做結束
+- **string**：是一連串的非 tilde 的字元，最後以 tilde 做結束的字。 tilde 是這個符號 "~"。因此，字串(string)可以包含空白，或者是好幾行的空白。在串的長度並沒有任何的限制，但是在遊戲中的所有字串都是被放在同一塊固定大小的記憶體中，因此還是有些限制的。
+- **number**：是一些包含了 "-" 和 "+" 的數字。而 "|" 這個符號則是可以用在任何的數字上。 "1|64+1048576" 的結果是 1048641。所有被 "|" 分隔的數值都會被加在一起，所以 "5|6" 的結果是 11 而不是 7。而這個用在定義 bit vettor 上是非常有用的。像是用在 "ACT+*" 和 "AFF_*" 這些用在 mobs 上的 bit vector 上是非常方便的。而且是所有的數字都可以用 "|" 這個符號。
+  (另外，在一些地方可接受字串型態的格式，例如房間中的地形，你可以用 0 表示室內，也可以用SECT_INSIDE表示，複數的影響必須用|隔開，例如 32|64 與 ACT_AGGRESSIVE|ACT_STAY_AREA 等效，可以用字串表示的參數會在內文中特別提醒。)
+- **number as string**: 本質是 number，但是必須要加上 ~，同時也可以接受字串。
+
+Mobiles, objects 和 room 都是由虛擬號碼(virtual number)來編號。 Vnum 的範圍是從 1 到 1000000。 Vnum 必須要是唯一的，而且 vnum 並不需要按照順序來排列。
+
+傳統上，一個區域在房間，物品，怪物都是用相同範圍的 vnum。都是從 100 的倍數開始，如此可以很輕易的將一個新的區域加入原本已經存在的區域。一般來說，一個 area 中房間的 vnum 所佔的範圍最大，其次是 Mob，再來是 objects。以史卡拉貝為例，房間 vnum 自3001 - 3232 共 233，而 mob vnum 自3001 - 3167 共 168。
+
+
+## #AREA 部份
+
+這個部份的格式，以史卡拉貝為例：
+
+```plaintext
+#AREADATA
+Name          { ALL } 史卡拉貝城~
+Identity    skarabrae~
+Builders    Diku~
+Translator  Zcecil~
+Modifier    Amenda~
+VNUMs         3000 3399
+Security    1
+Recall      3001
+Death       3001
+F_toggle    0
+End
+```
+
+- **Name** 
+區域的適合等級與名稱
+當冒險者輸入 area 這個指令時。這段文字會原封不動地出現。
+適合等級請小心斟酌，尤其是你這個區域裡有主動攻擊的怪獸時。
+
+- **Identity**
+區域的識別名稱，使用在 mob_prog 裡。
+譬如，mob_prog 中的 `if area($i) == skarabrae` 可以讓你知道 mob 目前是否身處在史卡拉貝城之中。
+
+- **Builders**
+區域的原始撰寫人
+當冒險者輸入 area 這個指令時。這段文字會原封不動地出現。
+
+- **Translator**
+區域的翻譯者
+當冒險者輸入 area 這個指令時。這段文字會原封不動地出現。
+
+- **Modifier**
+區域的改編者
+改編的定義範圍很廣，也許整個改頭換面，也許只是增加幾個 quest。
+目前這個屬性沒有用到，也許以後改編的 area 很多後會使用到。
+
+- **Vnums**
+區域所佔據的 vnum 範圍
+這項屬性在 OLC(On Line Coding)理會使用到。
+
+- **Security**
+區域更改權限
+這項屬性在 OLC(On Line Coding)理會使用到。
+
+- **Recall**
+recall 點的 vnum
+大部分區域的 recall 點是史卡拉貝山頂聖殿，即 vnum 3001。
+若你的區域想要有自己的 recall 點，請先確定你的區域大到可以自給自足，所有冒險者可能會需要的生活機能都已齊備。史卡拉貝山頂聖殿 recall 點有終結者與執法者，你自己的 recall 也該有類似的執法人員。ppl 在該 area 被殺後會被傳送到 recall 點。
+
+- **Death**
+死亡點的 vnum
+這個參數可有可無，除非有特殊必要否則通常是不寫亦可，這個參數代表著玩家死亡後重生的地點，預設值是此區域的Recall點。ROC的迷霧之島很多區域都有設這個點，讓玩家死亡後進入煉獄等待重生。
+
+- **F_toggle**
+Room flags 的 toggle  bit
+當 F_toggle 為 1，這個 area 裡所有的房間的 room flag 都會被反向。譬如原本可以 summon 的 room 會變 no summon，原本可以 save 的房間會變 no save。當 F_toggle 為 0 則一切照原來設定。請參照room flag 的說明。F_toggle 可以省略。
+
+## #HELPS 部份
+
+這個部份的格式：
+
+```plaintext
+#HELPS
+{
+    <level:number> <keywords:string>
+    <help-text:string>
+}
+0 $~
+```
+
+- **level**：是能夠閱讀這個部份的最低等級。這樣可以用來製做一些只有 Immortal 才能夠閱讀的文件， 0 級是所有人都能讀。
+- **keywords**：是一堆有關這份文件的關鍵字(keyword)
+- **help-text**：是這份文件的主體
+
+在正常的情況下，當一個玩家使用 "help" 這個指令，或將關鍵字和文件都顯示出來。若是 "level" 是寫成負的，則這個關鍵字則是有特殊的用途。這樣可以使得這一份文件可以用在特殊的用途上，如一剛開始的 "greetings" 這一份文件。
+
+以下是個例子，出自ROC的help.are(作者zcecil)：
+
+```plaintext
+0 TOP10~
+指令名稱：ROC前十大排行榜
+指令格式：top10 <種類>
+使用時機：任何時候
+
+    查詢全Mud中某種類的前十大排行。
+
+    種類目前共有：
+    mudage : 上線時間
+    exp    : 經驗值
+    gold   : 現金加存款
+    hp     : 生命力
+    mana   : 魔力
+    move   : 體力
+
+在上線和quit的時候才會更新。
+~
+```
+
+## #MATERIAL 部份
+
+這個部份的格式：
+
+```plaintext
+#MATERIAL
+{
+    #<vnum:number>
+    <name:string>
+    <cname:string>
+    <unused:string>
+    <unused:string>
+    <clan-lv:number> <extra-flags:number> <clan-cost:number>
+    <hr_mod_p:number as string> <dr_mod_p:number as string> \
+    <ac_mod_p:number as string> <durability:number as string>
+    <weight_mod_p:number> <cost_mod_p:number> <cost-per-day:number>
+    {
+        A
+        <apply-type:number> <apply-value:number>
+    }
+    {
+        H
+        <spell-slot:number> <percent:number> <level:number> <time:number>
+    }
+    {
+        L <obj-level:number>
+    }
+    {
+        P <obj-permit:number>    
+    }
+    {
+        R <race->permit:number>
+    }
+    {
+        V <race:string> <hr_mod_q:number> <hr_mod_p:number> <dr_mod_q:number> <dr_mod_p:number>
+    }
+}
+#0
+```
+
+- **vnum**：是這個材質的虛擬編號，但是沒有實質作用。
+- **name**：材質的名字，請注意大小寫。
+- **cname**：材質的中文名字。
+- **clan-lv**：幫派等級必須到達此數目才能使用此材質， -1 是只允許工作人員使用，30 以上幫派無法使用。
+- **extra-flags**：材質對物品的 extra-flags 的影響(種類請參照#OBJECT的Extra一節)。
+- **clan-cost**：幫派將材質貼在物品上所需的花費。
+
+接下來的四個數值，表示材質對物品的 hr/dr/ac 影響（只對武器或護具有效），或是耐用度，前三個數值能不用盡量不用。
+
+- **weight_mod_p**：材質對物品重量的加成。
+- **cost_mod_p**: 材質對物品價格的加成。 
+
+- **'A' 欄位**表示材質的附加效應，包含兩組數字，前面的是附加效應的類別，後面的則是影響的值。當物品被使用者所裝備的時候，附加效應就會發生作用，影響該裝備者的屬性(數字種類請參照cnumber.txt中的#OBJECT的APPLY一節)。
+
+- **'H' 欄位**表示材質的隱藏能力，包含了四組數字，依序為：魔法編號、觸發百分率、法術等級，以及發生時機。發生時間的種類如下： 1 表示當裝備時觸發， 2 表示當戰鬥時觸發（目前對武器使用）， 4 表示是武器的隱藏能力（當用它來作戰的時候一定會觸發），8 表示當用來阻擋（block）時（所以這個物品一定要是盾），16表示用此箭矢擊中敵人時。可以用 '|' 來設定多種的觸發時機。
+
+- **'L' 欄位**用來將該材質的等級限制在指定的值（或上下一級）。會和物品的等級限制取最大值。
+
+- **'P' 欄位**用來設定材質的職業限制，詳細的列表請參考 Number的"職業參數與判斷用二進位參數"一節，舉個例子，例如要作一項只有法師與巫師才能穿的材質，就要查表找出法師，巫師，「是」參數的值，然後實際寫出來的就會是：
+  `P 1|32|1048576`
+
+- **'R' 欄位**用來設定材質的種族限制，詳細的列表請參考 Number的"種族二進位參數"一節，例如要寫出一件人類和半獸人不能穿的材質，必須查表找出人類、半獸人和「非」參數的值，然後實際寫出來就會是：
+  `R 1|8|2097152`
+
+- **'V' 欄位**用以設定材質的種族的hr/dr加成，只對武器有用。mod_q 表示是「實際數值」上的調整。mob_p 表示是「百分比」的調整，因此，無調整時的 mob_q是 0，而 mob_p 則是 100。
+
+- **'F'欄位**讓使用者穿上由此材質做成的裝備後會附加法術在身上，直到裝備被脫下為止。
+  譬如 `F 524288` 就可以讓擁有此材質的物品在穿上的時候讓使用者 fly，脫下的時候會消掉 fly
+  也可以用 `F AFF_FLYING` 來代替唷 :D
+  (法術的參數請參照cnumber.txt的AFF_ flags區)
+
+一件材質可以有不限數目的 'A'、'V' 、'F' 和 'H' 欄位。但是最多只能有一個 'L'、'P'，和 'R' 欄位。
+
+要注意的是，材質區塊一定要放在 #OBJECTS 之前，才能確保這個區域裡的物品都能正確的被設定材質。
+
+以下是出自limbo.are(作者neversay)的範例：
+
+```plaintext
+#112
+scale~
+鱗片材質(scale)~
+~
+~
+99 0 200000
+0~ 0~ 0~ 10~
+100 100 0
+A
+17 -2
+A
+41 1
+```
+
+## #MOBILES 部份
+
+這個部份的格式：
+
+```plaintext
+#MOBILES
+{
+    #<vnum:number>
+    <keywords:string>
+    <short-description:string>
+    <long-description:string>
+    <description:string>
+    <act-flags:number> <affected-flags:number> <alignment:number> S
+    <level:number> <mod_hitplus:number> <mod_mana:number>       \
+    <mod_hitroll:number> d <mod_damroll:number> + <mod_ac:number>   \
+    <mod_svs:number> d <dodge:number> + <unused:number>
+    <gold:number> <unused:number>
+    <unused:number> <position:number> <sex:number>
+    {
+        R <mob_race:string>
+    }
+    {
+        C <mob_class:number>
+    }
+    {
+        P <mob_spell_spec:number>
+    }
+    {
+        W <skill-name:string>~ <percent:number> <damage:number>
+    }
+    {
+        S <apply-type:number> <degree:number>
+    }
+    {
+        K <skill-name1:string> <skill-name2:string> <skill-name3:string>
+         ...... <skill-nameN:string>~
+    }
+    {
+        J <join-class-type1:string> <join-class-type2:string>
+         ...... <join-class-typeN:string>~
+    }
+}
+#0
+```
+
+- **vnum**：是 mobile 的虛擬號碼(或是叫做絕對編號)
+- **keywords**：是用來可以讓指令(command)辨別 mobiles 用的字(word)
+- **short-description**：是給 "act" 這個函數和其它函數用來辨別 mobiles 用的
+- **long-description**：是用在當一個人物走入一個房間中，而且在房間中的那一個 mobile 可以讓這個人物看到時所顯示的
+- **description**：是最長的一段敘述。是用在當一個人物很清楚的看著這個 mobile 時所顯示的，通常是用 "look" 這個指令在看的時候所顯示的
+- **act-flags**：是定義這個 mobile 的動作。而 "affected-flags" 則是定義這個 mobile 更多的屬性
+- **alignment**：是表示這個 mobile 的陣營，可以從 -1000 到 +1000。你必須要勞記在心中有一些法術(如 "protection" 和 "dispel evil")都在可以在戰鬥中給人物更多的好處(advantage)。而且經驗值的獲取也和陣營有關
+
+這個字母 "S" 必須要出現在陣營的後面。在原版的 Diku mud 中，"S" 代表的是 "simple"的意思。 Merc 只有支援 "Simple mobs"所以在 Merc 中 "S"是多餘的。這個不僅只是為了和 Diku 的區域檔做相容，也可以幫助 server 更正確的將錯誤顯示出來。
+
+- **level**：mob 的等級。程式會依照 mob 的等級給予這個 mob 的基本能力，包括各項基本屬性，ac, dodge, hr, dr, gold.....等。mob 的能力成長曲線在 34-36 級以後會變得比較陡，亦即 mob 能力會成長得比較快。一般的魔王大概是 5x 級，超級大魔王才會有 60 級以上。目前除了終結者，沒有 65 級以上的 mob。
+- **mod_hitplus**, **mod_mana**, **mod_hitroll**, **mod_damroll**, **mod_ac**, **mod_svs**, 以及 **dodge**：將會修正 mob 原先由系統產生的值，不過除非有特殊需求，不建議加入這些修正值，尤其是MOB等級在 40 以下的。
+  (請注意屬性的正負，例如你要加強ac100點而不是削弱100點的話，記得寫成 `0d0+-100 0d0+0` 的樣子，其他屬性以此類推。)
+- **gold**：是系統產生此mob時，此mob身上攜帶的金錢， 0 的話代表沒有錢， -1 代表由系統依照種族決定(總不可能野豬身上會有錢吧？)，而其他的正整數則是絕對的金錢數，你寫 1 系統就只產生一塊錢。
+- **unused**, **position** 等欄位目前並沒有作用，只是為了保持和原先 Diku mud 的相容性。在寫作區域的時候，請記得將這些值設為 0 8。
+- **sex**: 表示 mob 的性別， 0 表示中性， 1 是男性，而 2 是女性。
+
+- **'R' 開頭的一行**：用來設定 mob 的種族。而詳細的種族列表請見 race.txt 。（別忘了這是一個字串，要加上 '~'，而且，請記得大小寫要正確，Dragon跟dragon是不一樣的。)
+
+- **'C' 開頭的一行**：用來設定 mob 的職業，不過這裡的設定和 ppl 的職業不同：
+  - `NORMAL 0` 一般的 mob。
+  - `WARRIER 1` 戰士類型的 mob，會 enhance damage，而且每回合攻擊次數較多，parry 和 dodge 的成功率比較高。
+  - `MAGE 2` 目前無作用。
+  - `THIEF 4` dodge 會再隱藏性地增加 50%，而且會 critical hit。
+  - `SWORD 8` 會破盾術，間隙反擊，swordmaster 等。
+  - `SHOT ARROW 16` mob使用弓箭時能造成更大傷害
+  - `BLOODY 32` mob會擁有嗜血能力
+  mob 可以擁有多重職業，可以用 '|' or 起來。
+
+- **'K' 開頭的一行**：用來設定 mob 可以教授的技能。若技能前面有 * 號，則 ppl 身上必須帶有和技能同名的 qmark 才可以學習。注意 mob act_flag 中的 practice 必須設起來。例如玩家要學magic missile這個法術時，如果mob身上K參數放的是 `*'magic missile'` ，那玩家身上要帶有 'magic missile' 的qmark才能學習。
+
+- **'S' 開頭的一行**：用來加強此mob的能力，例如 `S 40 5` 可以幫此mob增加5點的魔法潛力。
+
+- **'J' 開頭的一行**：用來讓 mob 可以接受 ppl 的轉職。可轉的職業寫在 J 之後。
+
+- **'W' 開頭的一行**：則是讓 mob 對某些技能或法術特別沒有抵抗力。
+  (zcecil加註)
+  可以一個以上。
+  要一項項加進技能/法術裡。
+  percent 是 命中率加成
+  damage 是 傷害加成
+  例：
+  `W magic missile~ 200 300`
+  就是命中率是 200%， 傷害則是 300%
+  當這個 mob 被 magic missile 擊中時，傷害是 3 倍。
+  （mm 沒有命中率檢定，所以無影響。）
+  可以用來做 mob 的弱點/抗性。
+  (至於W和技能的對應，請參照cnumber.txt中的說明)
+  (請注意兩個字以上的技能 W要寫成 `W xxxxx xxxxx~` ，而非 `W 'xxxxx xxxxx'~`)
+
+- **'P' 開頭的一行**：用來設定 mob 對法術的特別反應，譬如 quest mob 或者商店老闆可能會設 `P 8 (No charm)` 以免被 charm 走。其他特殊能力請見 cnumber.txt。並不是每一隻 mob都需要這項設定。你可以用 | 把各項數字 or 起來。
+
+- **'A' 開始**是用來設定 mob 的日常作息，譬如執法者、終結者、大主教 Dynia 這種會隨著時間做某些特定事情的 mob。
+  A 後面緊接的數字是動作開始時間，其後每一個 pules 都會執行一行，一直到碰到 ~ 為止。每一行裡你都可以用 + 把數個動作連起來。~ 後面你可以接另外一個 A，或者接 | 表示全部的動作設定都結束。這項設定比較複雜，我們用一個例子說明：
+  譬如，你希望一個 mob 在早上 8 點起來，伸懶腰，說聲早安，下個 pulse 向西走兩步，再下個 pulse mpgoto 到 terminator 面前踢他一腳，吐口口水，結束第一段作息。等到下午四點又說聲肚子好餓，recall，下個 pulse 走路到咕嚕野豬酒吧，在下個 pulse 點菜，然後結束整個作息，寫法如下：
+  ```plaintext
+  A8
+  stand+stretch+say 早安
+  w+w
+  mpgoto term+kick term+spit
+  ~
+  A16
+  say 肚子好餓+recall
+  s+s+w+n
+  say 希坦，給我一隻烤雞和麥酒。
+  ~
+  |
+  ```
+  幾乎所有指令都可以寫在裡面，包括 mpgoto, mpecho, mpxxxx 等 mob 指令。
+  建議你最好在路徑裡加個 recall 或 mpgoto 讓 mob 定位，因為有時 ppl 會 K mob，讓他無法在該 pulse 做他該做的事。
+
+  (zcecil新增)
+  那些 xxx flag 現在可以用字串來表示了，這樣會比較容易看/查/用。
+  另一個好處是如果coder有更動內部的常數實際值..可以比較不需改一大堆。
+  凡是本來可以用 | 隔開的那些數字都可以用一個字串來代替，例如：
+  ```plaintext
+  #MOBILES
+  #11000
+  mob fighter~
+  戰士型Mob(Mob fighter)~
+  一個戰士型Mob(Mob fighter)正站在這裡，等你用他來做實驗。
+  ~
+  實驗用的Mob，等級8，無裝備，不會逃跑。看不見隱形和藏匿的人物。
+  ~
+  ACT_SENTINEL|2097152|ACT_HUNT 2097152 0 S
+  ```
+
+以下是mob史卡拉貝執法者的範例，由skarabrae.are(作者amenda)提供：
+
+```plaintext
+#3011
+executioner~
+執法者(Executioner)~
+執法者(Executioner)站在這裡守護聖殿的安全和和平.
+~
+雖然他臉上帶著面具，但你仍能看到他那炯炯有神的雙眼，正仔細的打量著
+每個進入聖殿的人，審查他們是否有不法的舉動。
+~
+9189443 684 1000 S
+65 5000 0 15d20+150 -10d50+0
+0 0
+0 8 1
+C 5
+P 98324|8388608
+A12
+bow ter+say 不知不覺已經中午了，我去吃個飯，這裡就麻煩你了。
+wave ter+s+s+w+n
+say 嘿嘿，老闆，來盤泡菜！
+mpgoto 3001
+~
+|
+```
+
+## #MOBPROGS 部份
+
+這個部份的格式：
+
+```plaintext
+#MOBPROGS
+{
+    M <mob-vnum:number> <program-file-name:string>
+}
+S
+```
+
+這個部分主要是將通用的mob_prog獨立寫成一個檔案，副檔名為 `.prg`，然後將檔案放在 `area/MOBProgs/` 底下，再利用 M 參數讓系統讀取。
+這樣的用意除了節省系統資源外，對於區域的維護也比較方便。當你將程式一個一個慢慢貼在一百個mob身上時，以及修正這些程式的錯誤時，你會強烈地發覺他的好處。
+
+'M'的功能主要是讀取 `area/MOBProgs/` 底下的檔案，讓系統依照mob的vnum貼上檔案中的mob_prog在指定的mob身上。
+
+以下的例子節錄自taboo.are(作者blaz)：
+
+```plaintext
+#MOBPROGS
+M 32043 taboo_skeleton.prg
+M 32044 taboo_skeleton.prg
+M 32045 taboo_skeleton.prg
+M 32046 taboo_skeleton.prg
+M 32047 taboo_skeleton.prg
+M 32067 taboo_skeleton.prg
+S    
+```
+
+## #OBJECTS 部份
+
+這個部份的格式：
+
+```plaintext
+#OBJECTS
+{
+    #<vnum:number>
+    <keywords:string>
+    <short-description:string>
+    <long-description:string>
+    <action-description:string>
+    <item-type:number> <extra-flags:number> <wear-flags:number>
+    <value-0:number as string> <value-1:number as string> \
+    <value-2:number as string> <value-3:number as string>
+    <weight:number> <cost:number> <level-limited:number>
+    {
+        E
+        <keyword:string>
+        <description:string>
+    }
+    {
+        A
+        <apply-type:number> <apply-value:number>
+    }
+    {
+        H
+        <spell-slot:number> <percent:number> <level:number> <time:number>
+    }
+    {
+        L <obj-level:number>
+    }
+    {
+        T <obj-timer:number>
+    }
+    {
+        C <obj-cost:number>
+    }    
+    {
+        P <obj-permit:number>    
+    }
+    {
+        R <race->permit:number>
+    }
+    {
+        M <trigger event:number> <message : string>~
+    }
+    {
+        V <race:string> <hr_mod_q:number> <hr_mod_p:number> <dr_mod_q:number>\
+         <dr_mod_p:number>
+    }
+    {
+        X <material:string>
+    }
+    {
+        F <spell:number>
+    }
+    {
+        U <replica:number>
+    }
+}
+#0
+```
+
+- **vnum**：是這個物品的虛擬編號
+- **keywords**：這個是用來讓命令可以辦別這個物品的字(word)
+- **short-description**：這個是讓 "act" 和其它的函數用來辦別這個物品用的字串。這個字串的第一個字最好是用小寫，因為這一段敘述通常都用用在句子的中間
+- **long-description**：這是用在當一個人物進入一個房間的時候，若是這個物品對這個人物來說是可以看的見的，那麼就會顯示這段訊息
+- **action-description**：在這裏沒有用到
+- **item-type**：是表示這個物的種類(如武器，護具，藥水等的)
+- **extra-flags**：這個物品更詳細的屬性設定。 "wear-flags" 描述這個物品應該是要被拿著，或是要被穿在什麼地方
+
+接下來的四個數值，就要按照這個物品的種類來設定，所有的值的功用都寫在 cnumber.txt的#OBJECT一節裡面。
+
+- **weight**：是這個物品的重量
+- **cost**：是這個物品的價值。記住，實際產生出來的價值還會因為材質的關係而改變。
+- **level-limited**：是這個物品的裝備等級上限，玩家等級超過了這個數目後就無法穿上此裝備，這個是專門寫給新手玩家的保護裝備，避免等級高強的玩家濫用。
+
+- **'E' 和 'A'** 都是可有可無的欄位。 'E' 欄位表示額外敘述，包含了一組關鍵字列表，和一段描述這組關鍵字的文字。當 'look <keyword>'的時候，就會顯示這一段描述。
+
+- **'A' 欄位**表示物品的附加效應，包含兩組數字，前面的是附加效應的類別，後面的則是影響的值。當物品被使用者所裝備的時候，附加效應就會發生作用，影響該裝備者的屬性(詳細的影響種類請參考cnumber.txt的#OBJECT APPLY一節)。
+
+- **'H' 欄位**表示物品的隱藏能力，包含了四組數字，依序為：魔法編號、觸發百分率、法術等級，以及發生時機。發生時間的種類如下： 1 表示當裝備時觸發， 2 表示當戰鬥時觸發（包含任何裝備在身上的物品）， 4 表示是武器的隱藏能力（當用它來作戰的時候一定會觸發）， 8 表示當用來阻擋（block）時（所以這個物品一定要是盾）。可以用 '|' 來設定多種的觸發時機。
+  wear時的無論攻擊性/防禦性都會施到自己身上之外。
+  fight, weapon, block 時的攻擊性法術一律會打到對方身上，其他會以自己為目標。
+
+- **'L' 欄位**用來將該物品的等級限制在指定的值（或上下一級）。
+
+- **'T' 欄位**設定物品的有效時間，超過指定的 tick 數之後，該物品就會消失。有些物品種類，像是照明用具和食物，有自己設定有效時間的方式，不過，還是可以另外設定一個'T'欄位。不過要注意的是，有 'T' 設定的照明用具，即使玩者不裝備，時間一到還是會自己消失的。
+
+- **'C' 欄位**用來設定物品的價錢，最好與上面的cost欄位設下一樣的數值。
+
+- **'P' 欄位**用來設定物品的職業限制，詳細的列表請參考 cnumber.txt。
+  舉個例子，例如要作一項只有法師與巫師才能穿的裝備，就要查表找出法師，巫師，「是」參數的值，然後實際寫出來的就會是：
+  `P 1|32|1048576`
+
+- **'R' 欄位**用來設定物品的種族限制，詳細的列表請參考 cnumber.txt。
+  例如要寫出一件人類和半獸人不能穿的材質，必須查表找出人類、半獸人和「非」參數的值，然後實際寫出來就會是：
+  `R 1|8|2097152`
+
+- **'M' 欄位**用來設定物品穿上或脫下時的 message。0 是穿上，1 是脫下。
+
+- **'X' 欄位**用以設定物品的材質，請注意大小寫。
+
+(zcecil新增參數)
+- **'V' 欄位**用以設定物品的種族的hr/dr加成，只對武器有用。mod_q 表示是「實際數值」上的調整。mob_p 表示是「百分比」的調整，因此，無調整時的 mob_q是 0，而 mob_p 則是 100(==100%)。
+  譬如這樣：
+  `V Dragon~ 2 300 1 150`
+  屠龍劍 :p
+  假定原來武器經過計算後的（包含enchant weapon等等） hr 是 a， dr 是 b
+  那麼修正是：
+  hr = (a*300/100) + 2
+  dr = (b*150/100) + 1
+
+- **'F'欄位**讓使用者穿上此裝備後會附加法術在身上，直到裝備被脫下為止。
+  譬如 `F 524288` 就可以讓這個物品在穿上的時候讓使用者 fly，脫下的時候會消掉 fly。
+  也可以用 `F AFF_FLYING` 來代替唷 :D
+  (法術的參數請參照cnumber.txt的AFF_ flags區)
+
+- **'U'欄位**為獨一無二物品(unique object)，線上同時只會有一個存在。
+  會自動設上 nosave, 建議加上 timer。
+  用法：在obj加上 `U <replica:number>` 來指定這個unique eq的代用品。
+  例如#11020的物品中寫下：
+  `U 11018`
+  當 create_object 的時候，如果線上沒有 vnum 是 11020 的物品存在，就會創造一個，否則就會 建出 vnum 是 11018 的 obj 來代替。
+  可以做一些神兵..線上只有一把然後又有timer..讓大家去搶 :p
+
+一件物品可以有不限數目的 'E'、'A'、'V'、'F'、'V'和 'H' 欄位。但是最多只能有一個'L'、'T'、'P'、'X'、'R'、'U'，和 'C' 欄位，和最多兩個 'M' 欄位。
+
+以下範例是從forest.are(作者pluto)中選錄出來的：
+
+```plaintext
+#4232
+cobbrax oimyra~
+歐米拉的頭蓋骨(Oimyra cobbra)~
+歐米拉的頭蓋骨(Oimyra cobbra)在這邊發出奇異的魔法光芒。~
+~
+9 1|2|64 17
+0~ 0~ 1001100~ 0~
+3 0 0
+E
+cobbra~
+當你注視著這個頭蓋骨的時候，似乎耳邊傳來一陣聲音：把我戴上吧！
+~
+E
+oimyra~
+當你注視著這個頭蓋骨的時候，似乎耳邊傳來一陣聲音：把我戴上吧！
+~
+A
+3 2
+H 0~ 100 0 1
+
+M 0 你耳邊傳來一陣聲音：我是歐米拉....，快帶我去我的房間....先去找巫師....。~
+X bone~
+```
+
+## #ROOMS 部份
+
+這個部份的格式：
+
+```plaintext
+#ROOMS
+{
+    #<vnum:number>
+    <name:string>
+    <description:string>
+    <area:number> <room-flags:number> <sector-type:number>
+    {
+        D <door:number>
+        <description:string>
+        <keywords:string>
+        <locks:number> <key:number> <to_room:number>
+    }
+    {
+        E
+        <keywords:string>
+        <description:string>
+    }
+    {
+        R <recall:number>
+    }
+    {
+        T <savetovnum:number>
+    }
+    S
+}
+#0
+```
+
+- **vnum**：是這個房間的虛擬編號
+- **name**：是這個房間的名字
+- **description**：是這個房間一行以上的描述
+- **area**：是被省略而且都沒有用到的。一個房間是屬於那一個區域通常都是定義在 #AREA 中
+- **room-flags**：是描述這個房間更詳細的屬性，參見 cnumber.txt
+- **sector-type**：是定義這個房間是位在什麼地方，這個會影響移動力的耗損，有一些的 sector 需要一些特別的能力才能夠進入(如 air 或是 boat)
+
+不像 mobiles 和 objects 一樣， rooms 並沒有任何的關鍵字和它相關。所以一個人無法像操控一個物品或是操控一個人物一樣來操控一個房間。
+
+"D" 和 "E" 這個部份接在主要資料(main data)的後面。一個 "D" 包含了一個門(door) 的部份，這個部份的數值從 0 到 5 ：
+- `0` north
+- `1` east
+- `2` south
+- `3` west
+- `4` up
+- `5` down
+
+而 "D" 這個部份也包含了 "一個方向的敘述"，和和這個門有關的一個關鍵字。 "Doors"包含的不只是真正的門，所有這個房間的出口都必須寫在這裏。
+而 "locks" 這裏的數值所代表的意義如下：
+- `ISDOOR 1`
+- `CLOSED 2`
+- `LOCKED 4`
+- `BASHED 8`
+- `BASHPROOF 16`
+- `PICKPROOF 32`
+- `PASSPROOF 64`
+如果你想造一個上了鎖又無法 pick，但能 pass 的門，就必須設成 1|2|4|32
+
+"key" 這個數值是一個 object 的 vnum，是用來開啟和鎖上這個門的鑰匙。最後的 "to_room" 是表示這個門所通往的房間號碼。
+
+你必須對每一個出口的每一個方向都寫好 "D" 這個部份。若是你對一個出的一邊寫了 "D" 這個部份，那麼你會得到一個只有單一方向的出口(one-way exit)。
+
+"E" 這個部份(extended description)包含了一個關鍵字(keyword)和一段描述。就像你所猜的一樣，當一個人物看了這個關鍵字，那麼所有的文字就會顯示出來。
+
+"S" 代表的是一個房間的結束
+
+"R"和"T"在ROC目前無用。
+
+以下的例子出自於skarabrae.are(作者amenda)：
+
+```plaintext
+#3001
+史卡拉貝城聖殿~
+這裡是史卡拉貝(Skara Brae)城聖殿入口廣場，入口兩邊是整排高聳的大理石柱，
+石柱支撐的希臘式屋頂離地約有三十公尺，模模糊糊看得到上面好像還有建築。你前方
+深處是莊嚴的聖殿，身後則是長長的一整排石階，通到山底下繁華的史卡拉貝城。左右
+兩側青山環繞，點綴著幾朵浮雲，陣陣強風從四面吹來。
+    你身旁立著一塊大理石地圖(map)及青銅碑(sign)，你可以 look map 查看地圖。
+~
+0 4 0
+E
+map~
+-
+                祭壇
+                 |
+                大廳                北
+                 |               西    東
+              山頂聖殿              南
+藍色小精靈村         |
+     |          你目前位於->聖殿->往下走是混沌幻世的入口
+     |               |
+    小路 裝備銀行 鐵鋪  更衣室   |  石階
+     |      ^      |      | 
+    小路   銀行   防具   酒吧    |  殯儀館  旅館 牧師公會
+     |      |      |      |      |    |      |  |
+---西門---大街---大街---大街---十字路---大街---大街---大街---東門---
+     |      |      |      |      |    |      |  |         ∣
+     |  法師公會 武器    麵包    |   醫院   雜貨  珠寶店  往馬戲團
+     |         |      |      |       |
+   城牆路  客棧  捲軸    寵物    |     戰士公會 背包 妙賊公會
+     |       |     |      |      |    |      |   |
+   城牆路--大街--大街---大街---十字路----大街---大街----大街---貧民區
+     |       |     |      |      |    |      |   |
+   城牆路 皮件   蠻俠   賭場    碼頭     法杖   垃圾   倉庫
+     |           公會            |               |
+     |               |           密登尼森林
+    小橋        ----河流----河流----河流----
+                        史卡拉貝(Skara Brae)城 地圖
+                                     made by Amenda
+~
+E
+sign~
+1992 December 17
+此地原為冥駕城(Midgaard), 曾由 Zcecil 擔任第一階段翻譯.
+1998 November 3
+後由 Amenda 改編為史卡拉貝城(Skara brae). (註：Skara Brae為冰城傳奇之名城)
+2001 April 12
+目前由原作者將區域移至 混沌幻世(Reality of Chaos World) 並由 Pluto 進行小部
+分之修改，讓整座城更加生活化與趣味化.
+~
+D0
+你的北方是莊嚴的聖殿，提供免費的醫療服務。
+~
+~
+0 -1 3054
+D2
+南方是通到市區的石階。
+~
+~
+0 -1 3005
+D5
+一條通往 mud 教室的階梯。
+~
+~
+0 0 3700
+S
+```
+
+## #ROOMPROGS 部份
+
+這個部分的格式：
+
+```plaintext
+#ROOMPROGS
+{
+    R <room-vnum:number> <roomprog-file-name:string>
+}
+S
+```
+
+大概的功能同#MOBPROGS的介紹，在此不贅述。
+
+下面的例子節錄自mist.are(作者pluto)：
+
+```plaintext
+#ROOMPROGS
+R 4601 mist_ocean.prg
+R 4602 mist_ocean.prg
+R 4605 mist_ocean.prg
+R 4606 mist_ocean.prg
+R 4610 mist_ocean.prg
+R 4611 mist_ocean.prg
+R 4615 mist_ocean.prg
+R 4616 mist_ocean.prg
+R 4523 mist_downtown.prg
+R 4525 mist_downtown.prg
+R 4527 mist_downtown.prg
+R 4528 mist_downtown.prg
+R 4529 mist_downtown.prg
+R 4537 mist_downtown.prg
+R 4539 mist_downtown.prg
+S
+```
+
+## #RESETS 部份
+
+這個部份的格式：
+
+```plaintext
+#RESETS
+{
+    * <comment:to_eol>
+}
+{
+    M <:number> <mob-vnum:number> <limit:number> <room-vnum:number> \
+    <comment:to_eol>
+}
+{
+    O <:number> <obj-vnum:number> <:number> <room-vnum:number>      \
+    <comment:to_eol>
+}
+{
+    P <:number> <obj-vnum:number> <:number> <obj-vnum:number>       \
+    <comment:to_eol>
+}
+{
+    G <:number> <obj-vnum:number> <:number>                         \
+    <comment:to_eol>
+}
+{
+    E <:number> <obj-vnum:number> <:number> <wear_loc:number>       \
+    <comment:to_eol>
+}
+{
+    D <:number> <room-vnum:number> <door:number> <state:number>     \
+    <comment:to_eol>
+}
+{
+    R <:number> <room-vnum:number> <last-door:number>               \
+    <comment:to_eol>
+}
+{
+    F <follower:number> <room-vnum:number> <protect:number> <leader:number> \
+    <comment:to_eol>
+}
+S
+```
+
+在重置一個區域的時候， server 會將所有在 reset 中的命令一行一行的執行過一次。所有的區域會在 server 一開始的時候全部重置過一次，接著則是每經過一段固定的時間 server 會再全部重置過一次。若是一個區域中都沒有玩家，則在每 3 個區域時間(area-minutes)中會重置一次，否則會再每 15 個區域時間中重置一次。在第 14 個區域時間的時候，所有醒著的玩家都會接到一段訊息，表示說這個區域已經重置過了。這些東西都是寫在 "db.c" 中的 "reset_area" 的這個函數中。
+
+一個區域時間(area-minute)通常在真實時間大概是 30 到 90 秒之間，通常是在 60 秒左右。這個變化都是由系統來決定的。
+
+"resets" 這個部份包含了一連串的單行指令。而反斜線 "/" 所分開的部份只是為了閱讀的方便，它們都不是格式的一部份。因為有了行尾的註解，所以這個部份的格式沒有像其它部份那麼的自由。
+
+RESET 的命令有以下這些：
+- `*`   註解   
+- `M`   讀入一個 mobile
+- `O`   讀入一個 object
+- `P`   將一個物品放入另一個物品中
+- `G`   將一個物品給一個 mobile
+- `E`   將一個物品將備到一個 mobile 身上 
+- `D`   設定一個門的狀態 
+- `R`   亂數設定一個房間的出口
+- `F`   將 mobile group 起來
+- `S`   這個部分的結束    
+
+以 "*" 開頭的都視為註解。而 "S" 這一行則是這個部份的最後一行。
+
+其它的命令都包含有 4 個數字( "G" 這個命令只有 3 個)。第 1 個數字都沒有用。後面的第 2 個和第 3 個詳細說明如下：
+
+- **對 "M" 來說**，第 2 個數字是代表著所要 load 的 mobile 的 vnum。第 3 個數字則是限制在這個世界上，有多少隻這樣 mob 可以存在。第 4 個數字則是這個 mob 將要被放在那一個房間的房間號碼(vnum)。
+
+- **對 "O", "P", "G", 和 "E", 這些令命來說**，第 2 個數字代表的是將要 load 的物品的 vnum。第 3 個數字沒有用。
+
+- **對 "O" 來說**，第 4 個數字是那個物品所要放置的房間的號碼(vnum)。若是在那個房間中已經有了這個號碼的物品，那麼這個物品就不會再 load 出來。若是在那個區域中有玩家在，則這個物品也不會被 load 出來。
+
+- **對 "P" 來說**，第 4 個數字是代表這個物品將要放置的容器的編號(vnum)。而這個被用來放置的容器是最近被 load 出來的那個物品。最好的結果是在這個世界上只有一個這樣的物品。如果所指定的容器並不存在，那麼這個物品不會被 load 出來。若是這個容器中已經有這個物品或是這個容器被某個人拿著，那麼這個東西都不會被 load。
+
+- **對 "G" 來說**，並沒有第 4 個數字。若是最近的 "M" 這個命令有成功的執行，那麼這個物品就被給了這個 mobile。若是前面的 "M" 都失敗，那麼這個物品就不會被 load。
+
+- **對 "E" 來說**，第 4 個數字是代表裝備的位置。若是最近的 "M" 這個命令有成功的執行，那麼這個物品將會裝備給這個 mobile。若是最近的這個 "M" 執行失敗，那麼這個物品就不會被 load 出來。
+
+身上的裝備位置：
+Equipment wear locations:
+- `NONE -1` 純攜帶
+- `LIGHT 0` 光源位置
+- `FINGER_L 1` 左手手指位置
+- `FINGER_R 2` 右手手指位置
+- `NECK_1 3` 一號脖子位置
+- `NECK_2 4` 二號脖子位置
+- `BODY 5` 身體位置
+- `HEAD 6` 頭部位置
+- `LEGS 7` 腿部位置
+- `FEET 8` 腳部位置
+- `HANDS 9` 雙手位置
+- `ARMS 10` 手臂位置
+- `SHIELD 11` 盾牌位置
+- `ABOUT 12` 披掛位置
+- `WAIST 13` 腰部位置
+- `WRIST_L 14` 左手腕位置
+- `WRIST_R 15` 右手腕位置
+- `WIELD 16` 主要武器位置
+- `HOLD 17` 手持位置
+- `WIELD_2 18` 次要武器位置
+- `TWO_HAND 19` 雙手握武器位置
+- `ARROW 20` 弓箭位置
+- `FINGER_3 22` 第三手指位置(眼魔)
+- `FINGER_4 23` 第四手指位置(眼魔)
+
+所有的物品都有等級的限制，它是按照最近的一個 "M" 所 load 出來的 mob 的等級來計算，你可以參考在 "db.c" 中的 "area_update" 這個函數中所寫的。物品的等是 mob 的等級減掉 "2"，它的範圍在 0 到 35 之間。
+
+- **對 "D" 來說**，第 2 個數字是一個房間的號碼。第 3 個數字是這個房間的門，數字從 0 到 5 。第 4 個數字表示是如何設定這個門： 0 表示是一個開啟且未鎖上的門；1 表示是關上但是沒有鎖上的門，而 2 表示關上且鎖上的門，另外，你無法將D用在"單向門"上。
+
+一個房間的出口必須要前後連貫一致：若是房間 1 有一個出口到房間 2 ，而且房間在相反的方向也有一個出口，那麼這個出口就必須也是通往房間 1。這樣是無法必避免種單一方向的出口，也就是說在房間 2 並不一定要有出口通往房間 1 。
+
+- **對 "R" 來說**，第 2 個數字是一個房間的號碼。第 3 個數字是一個門的號碼(如前面所述)。當這個命令一被執行，那麼從 0 到所指定的數字的這些方向都會被錯雜在一起。這個房間還是會保留通往其它房間的出口，但是所有的方向都會不一樣。因此如果設定為 4 則會產生一個 2 度空間的迷宮，若是設定成 6 則會性生一個三度空間的迷宮。
+
+如果你同時用了 "D" 和 "R" 在同一個房間，那麼會產生意想不到的結果。
+
+- **"F"** 是用來將兩個 mob group 在一起。第二個數字是跟隨者的 vnum，第四個數字是leader 的 vnum。第三個數字如果不是 0，那麼 follower 就會在戰鬥中保護 leader。
+
+任何的命令(除了 "S" 之外) 都可以在行未有一段註解。
+
+另外，在mob的reset部分，你也可以用repop_prog的mob_prog來撰寫mob讀出裝備，穿上的動作，這樣除了簡單統一明瞭外，也便於除錯與維修，詳細的使用方法請參照cmobprog2.txt。
+
+以下的範例節錄自maple.are(作者zeel)：
+
+```plaintext
+#RESETS
+M 0 16001 1 16041 Lord Anka-m
+E 1 16012 0 16  Equipt with maple sword 
+E 1 16011 0 10  Equipt with maple bracer
+E 1 16043 0 5   Equipt with Armor maple
+*
+M 0 16029 1 16059 phantom of dance
+E 1 3022 0 16 Equipt with longsword
+*
+M 0 16002 1 16023 Cleric Cloud-m
+E 1 16011 0 14  Equipt with maple bracer
+*
+M 0 16005 1 16022 grocer-m
+G 0 16025 0
+G 0 16026 0
+G 0 16027 0
+*
+M 0 16006 1 16026 tavern boss-m
+G 0 16033 0
+G 0 16028 0
+G 0 16029 0
+G 0 16030 0
+*
+M 0 16007 1 16029 multi cooker-m
+G 0 16031 0
+G 0 16032 0
+G 0 16034 0
+*
+M 0 16009 1 16011 young villager-m
+*
+M 0 16009 1 16012 young villager-m
+*
+P 0 16037 1 16023
+*
+
+D 0 16051 0 2 close & lock 試煉之道之門
+D 0 16052 2 2 close & lock 試煉之道之門
+D 0 16053 3 2 close & lock 試煉之道之門
+D 0 16054 1 2 close & lock 試煉之道之門
+D 0 16056 3 2 close & lock 試煉之道之門
+D 0 16057 1 2 close & lock 試煉之道之門
+S
+```
+
+## #SHOPS 部份
+
+這個部份的格式：
+
+```plaintext
+#SHOPS
+{
+    <keeper:number>                                         \
+    <trade-0:number> <trade-1:number> <trade-2:number>      \
+    <trade-3:number> <trade-4:number>                       \
+    <profit-buy:number> <profit-sell:number>                \
+    <open-hour:number> <close-hour:number>                  \
+    <comment:to_eol>
+}
+0
+```
+
+就像 #RESETS 部份一樣，#SHOPS 這個部份也是一行一個命令。
+
+- **keeper**：是那個要當成老闆的 mob 號碼，所有的 mob 都可以拿來當成老闆。
+- **trade-0 到 trade-5** 是這個老闆將要賣的物品種類(item type)。若是不用的地方就把它填 0。舉個例子來說，若是一個老闆什麼都不賣，那麼就 5 個都設成 0。
+- **profit-buy**：是當一個玩家要買東西的時候所要加成的價格，這個部份是用百分比來算的，100 是正常的價格，150 則是加成 50 % 其它的以此類推。
+- **profit-sell** 則是當一個玩家要賣東西時，所要扣除的價格，這個部份也是用百分比的形式，100 是正常的價格，75 則是會扣除 25 % 的價格，其它的以此類推。買的價格最低只能到100賣的價格最高不要超過 100 (總不能做賠本的生意吧！)
+- **open-hour 和 close-hour**：是定義商店老闆會做生意的時間。若是要設定成一間 24 小時開放的商店那麼就寫成 0 和 23 。
+
+任可在 "close-hour" 後面的都被視為註解(comment)。
+
+要注意的一點，並沒有一個號碼是用來設定為商店的。只要你將你要的 mob load 在一個指定的房間中，再將它(mob)設定為 sentinel( 參考 merc.h 中的設定)，這樣就可以有一家商店了，如果是要一個流浪商人，就不要設定為 sentinel。
+
+在一個商店中賣的物品都是經由 "G" 這個指令所 load 出來給商店老闆的。這些物品會自動的補集。若是一個玩家賣了一個物品給商店老闆，那麼老闆會將這個物品一直保留到被賣掉為止，這些物品都不會自動補集。
+
+下面的例子節錄自skarabrae.are(作者amenda)：
+
+```plaintext
+#SHOPS
+3000 2 3 4 10 0 110 60 0 23
+3001 0 0 0 0 0 110 100 0 23
+3002 1 8 13 15 19 140 60 0 23
+3003 5 6 7 27 0 130 50 0 23
+3004 9 0 0 0 0 105 50 0 23
+3006 22 0 0 0 0 120 90 6 22
+3009 8 0 0 0 0 140 60 9 17
+0
+```
+
+## #SPECIALS 部份
+
+這個部份的格式：
+
+```plaintext
+#SPECIALS
+{
+    * <comment_to_eol>
+}
+{
+    M <mob-vnum:number> <spec-fun:word> <comment:to_eol>
+}
+S
+```
+
+就像 # RESETS 和 #SPECIALS 部份一樣，這個部份也是一行一個指令。
+
+這個部份定義了一些對 MOB 的特殊函數(spec-fun)。每一個特殊函數都是一個C 語言的函數，這些函數可以給這些我們指定的 mob 加上一些特殊的動作。像是一些施法者或是信徒都可以在戰鬥中使用法術。你可以參考 "special.c" 這個檔案其中有所有的特殊函數。
+
+"M" 這個指令指定那一個特殊函數給那一個 mob。所有的特殊函數都是以名字來指定的。每一個 "M" 在行未都可以有註解。
+
+每 3 秒鐘，"mobile_update" 這個函數會檢察遊戲中的每一個 mob。若是這個 mob 有特殊函數，那麼 "mobile_update" 這個函數就會去呼叫這些函數，若是這個 mob 真的做了什麼事，那麼會傳回一個 TRUE 的值回來，若是傳回 TRUE 那麼下面的一些動作就會接著做下去。
+
+
+如何增加一個特殊函數：
+
+1. 在 "special.c" 的最前面部份增加一個 "DECLARE_SPEC_FUN"。
+2. 在 "special.c" 中的 "spec_lookup" 這個函數中加上一行可以用來翻譯這段 ascii 名字的 code。
+3. 在 "special.c" 中加入這個特殊函數。要注意一點在 Merc 的特殊函數中只有使用一個參數，而不是像 Diku 中用了 3 個參數。若是你是用 Ansi C 的 compiler 那麼你就不會遇到什麼因難。
+4. 在 區域檔中的 #SPECIALS 部份，在適當位置寫下你所需要特殊函數名稱和所要使用的 MOB 號碼。
+
+以下的範例節錄自skarabrae.are(作者amenda)：
+
+```plaintext
+#SPECIALS
+M 3000 spec_cast_mage
+M 3005 spec_thief
+M 3009 spec_cast_cleric
+M 3011 spec_executioner
+M 3012 spec_cast_adept
+M 3060 spec_guard
+M 3061 spec_janitor
+M 3066 spec_fido
+M 3086 spec_executioner
+S
+```
+
+注意；#SKILLS 這個功能混沌幻世並不支援！！！
+您可以直接跳過。
+## #SKILLS 部分
+
+SKILL 可以讓你自訂一些技能或法術，不過此一功能目前還未發展完全，建議不要使用過多，以免造成日後修改上的困擾。
+
+這個部分的格式：
+
+```plaintext
+#SKILLS
+{
+    #<vnum:number>
+    <name:string>
+    <cname:string>
+    <dam_word:string>
+    <to_char1:string>
+    <to_vict1:string>
+    <to_other1:string>
+    <attrib:number> <target:number> <percent:number> <min_position:number>
+    <cost_hit:number> <cost_mana:number> <cost_move:number>
+    <is_spell_or_not:0or1> <hr_app:number> <dr_app:number> <beats:number>
+    <process_list:string>
+    {
+        A
+        <spell0-slot:number>
+        <spell0-lv:number>
+        <spell0-time:number>
+    }
+    {
+        B
+        <spell1-slot:number>
+        <spell1-lv:number>
+        <spell1-time:number>
+    }
+    {
+        C
+        <spell2-slot:number>
+        <spell2-lv:number>
+        <spell2-time:number>
+    }
+    {
+        D
+        <spell3-slot:number>
+        <spell3-lv:number>
+        <spell3-time:number>
+    }
+    {
+        E
+        <spell4-slot:number>
+        <spell4-lv:number>
+        <spell4-time:number>
+    }
+    {
+        O
+        <obj_vnum0:number>
+        <obj_vnum1:number>
+        <obj_vnum2:number>
+        <obj_vnum3:number>
+        <obj_vnum4:number>
+    }
+    {
+        M
+        <to_char2:string>
+        <to_vict2:string>
+        <to_other2:string>
+    }
+}
+```
+
+**hr_app: 123456789**
+- (1) 限制為 1 或 0，如果設定為 1，則一定命中目標。
+- (2) 限制為 1 或 0，如果設定為 1，則本技能的命中率根據 number_percent 欄位決定。如果為 0，則根據 hitroll 和 ac。
+- (345) 限制為 000 到 999 的三位數字，表示技能的 hitroll 附加值（ -100 ~ 899 ）
+- (67) 限制為 00 到 99 的兩位數字，表示技能的 hitroll 附加值 （ 使用者等級 * ( 0.0 ~ 9.9 ) ）
+- (89) 限制為 00 到 99 的兩位數字，表示技能的 hitroll 附加值 （ 使用者hr * ( 0.0 ~ 9.8 ) ）
+
+**dr_app: 123456789**
+- (12) 限制為 00 到 99 的兩位數字，傷害力附加 UMIN( 0, 目標ac ) / ( 0 ~ 99 )
+- (345) 限制為 000 到 999 的三位數字，表示技能的傷害力附加值 （ -200 ~ 799 ）
+- (67) 限制為 00 到 99 的兩位數字，表示技能的傷害力附加值 （ 使用者等級 * ( 0.0 ~ 9.9 ) ）
+- (89) 限制為 00 到 99 的兩位數字，表示技能的傷害力附加值 （ 使用者dr * ( 0.0 ~ 9.8 ) ）
+
+**process_list: cvoCVO01234TFEGASj**
+- 'c' 觸發時顯示給 char1 的字串
+- 'v' 觸發時顯示給 vict1 的字串
+- 'o' 觸發時顯示給 other1 的字串
+- 'C' 觸發時顯示給 char2 的字串
+- 'V' 觸發時顯示給 vict2 的字串
+- 'O' 觸發時顯示給 other2 的字串
+- '0' 外加法術0
+- '1' 外加法術1
+- '2' 外加法術2
+- '3' 外加法術3
+- '4' 外加法術4
+- 'T' 指定目標
+- 'F' 限戰鬥中使用
+- 'E' 所有和使用者戰鬥中的生物
+- 'G' 所有和使用者或使用者的隊伍成員戰鬥的生物
+- 'A' 玩者攻擊所有非玩者（或反之），會考慮 fBROADCAST
+- 'S' 所有昏迷不醒的目標，玩者攻擊所有非玩者（或反之）
+- 'j' 剝除物品
+- 'k' 只擊中一發
+- 'm' 一次多發
+ 
+## #$ 部分 
+ 
+這個部份的格式：
+ 
+```plaintext
+#$
+```
+ 
+這個部份是用來標示一個區域檔的結束的。若是你將許多的區域放在同一個檔案，那麼記得要把多餘的 #$ 拿掉；相反的若是你要將一個區域檔割成二個以上，那麼要記得加上 #$ 在每一個檔案的結尾。
+ 
+## 武器種類的數值表
+ 
+**01 物品：光源**
+`01 ITEM_LIGHT`
+- `value[0]`    目前沒用
+- `value[1]`    目前沒用
+- `value[2]`    光源持續的時間，0的話就熄滅了，-1 代表時間無限            
+- `value[3]`    目前沒用
+
+**02 物品：捲軸**
+`02 ITEM_SCROLL`
+- `value[0]`    法術等級
+- `value[1]`    封印法術一
+- `value[2]`    封印法術二
+- `value[3]`    封印法術三
+
+**03 物品：魔杖**
+`03 ITEM_WAND`
+- `value[0]`    法術等級 
+- `value[1]`    最大施展次數
+- `value[2]`    剩餘施展次數
+- `value[3]`    法術名 
+
+**04 物品：法杖**
+`04 ITEM_STAFF`
+- `value[0]`    法術等級 
+- `value[1]`    最大施展次數
+- `value[2]`    剩餘施展次數
+- `value[3]`    法術名 
+
+**05 物品：武器**
+`05 ITEM_WEAPON`
+- `value[0]`    耐久度
+  (Amenda：耐久度的設法是 xxx1yyy，xxx 是目前值，yyy是最大值。)
+  Zcecil：提醒一件事，這是在設 目前 和 最大 不等的時候。
+  如果要設物品一生出來就是 100/100。就直接寫 100。
+  不需要 1001100 了。
+  這是用在諸如一生出來是 10/500 之類的，才要 101500
+  （存疑，好像有不同的設法？明天找找看舊文章）
+  如果設 -1，則物品不會損壞。
+- `value[1]`    最小傷害力
+- `value[2]`    最大傷害力
+- `value[3]`    武器攻擊方式:	中文攻擊描述：                            
+  - 00     hit                   00           "奮力擊打"
+  - 01     slice                 01           "銳利切割"
+  - 02     stab                  02           "偷偷一戳"
+  - 03     slash                 03           "揮舞劈砍"
+  - 04     whip                  04           "灼熱一鞭"
+  - 05     claw                  05           "用力一抓"
+  - 06     blast                 06           "爆發噴擊"
+  - 07     pound                 07           "萬鈞力搥"
+  - 08     crush                 08           "狠狠碾壓"
+  - 09     grep                  09           "犀利一剁"
+  - 10     bite                  10           "張口猛咬"
+  - 11     pierce                11           "尖銳刺擊"
+  - 12     suction               12           "猛烈吸吮"
+  - 13     chop                  13           "剁菜連斬"
+  - 14     shot                  14           "射出箭矢"
+                                
+**08 物品：財寶**
+`08 ITEM_TREASURE`
+- `value[0]`    額外金錢價值
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用 
+- `value[3]`    目前沒用
+
+**09 物品：護甲**
+`09 ITEM_ARMOR`
+- `value[0]`    護甲AC(0的話系統自動設置)
+- `value[1]`    目前被噴酸次數
+- `value[2]`    耐久度    (設置法同武器)
+- `value[3]`    目前沒用
+
+**10 物品：藥水**
+`10 ITEM_POTION`
+- `value[0]`    法術等級
+- `value[1]`    封印法術一
+- `value[2]`    封印法術二
+- `value[3]`    封印法術三
+
+**12 物品：家具**
+`12 ITEM_FURNITURE`
+- `value[0]`    目前沒用
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用
+- `value[3]`    目前沒用
+
+**13 物品：垃圾**
+`13 ITEM_TRASH`
+- `value[0]`    目前沒用
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用
+- `value[3]`    目前沒用
+  (Zcecil:trash 是 donate/sell 就會消失的物品)
+
+**15 物品：容器**
+`15 ITEM_CONTAINER`
+- `value[0]`    可裝入的總重量
+- `value[1]`    參數： 1 可關上, 2 無法撬開, 4 關上的, 8 鎖住的            
+- `value[2]`    鑰匙的虛擬編號(vnum)
+- `value[3]`    減重袋功能
+  zcecil補充：
+  > 0 表示 這個 bag 可以 減重，但是不能減物品數量，值是 100%
+  就是說放進去的東西重量會變成原來的百分之多少（最少是1，當然
+  設超過100就變成增重袋了，以後可以做祝福的增重袋讓玩家買）
+  < 0 表示 減物品數量
+  譬如 -5 的 bag 可以放到 5 件東西進去都不計物品數
+
+**17 物品：裝液體的容器**
+`17 ITEM_DRINK_CON`
+- `value[0]`    液體容量
+- `value[1]`    目前盛裝量
+  (Zcecil:這兩項都設為 -1 可以做出喝不完的飲料。)
+- `value[2]`    液體種類
+- `value[3]`    如果此參數不為零, 此液體有毒
+  液體種類：
+  編號 種類    顏色          酒醉值 	消除飢餓值 	消除口渴值
+  0   水    清澈透明     	0  	  0  	  	10
+  1  啤酒    澄黃色      	3  	  2  	   	5
+  2  葡萄酒  玫瑰色      	5  	  2  	   	5
+  3  麥酒	褐色       	2  	  2  	   	5
+  4  黑麥酒  黑褐色      	1  	  2  	   	5
+  5  威士忌  金黃色      	6  	  1  	   	4
+  6  檸檬水 透明微黃     	0  	  1  	   	8
+  7  firebreather boiling 	10 	  0  	   	0
+  8  "local specialty" everclear 3 	  3	   	3
+  9  爛泥狀液體 綠色     	0  	  4  	  	-8
+  10  牛奶     白色       	0  	  3  	   	6
+  11   茶     澄褐色      	0  	  1   	   	6
+  12  咖啡    咖啡色      	0  	  1   	   	6
+  13   血      紅色	   	0  	  2  	  	-1
+  14  鹽水   清徹透明     	0  	  1   	  	-2
+  15  可樂   有氣泡的     	0  	  1  	   	5
+  /*目前酒醉值、飢餓值和口渴值都是 0 - 48，		*/
+  /*0 的話就會有你餓了渴了的訊息，			*/
+  /*48 的話就吃不下東西。					*/
+  /*和 mp/hp/mv 回復速度有關。				*/
+  /*酒醉值越高，說的話就會加進越多虛字....		*/
+
+**18 物品：鑰匙**
+`18 ITEM_KEY`
+- `value[0]`    目前沒用 (通常是要開的門的虛擬編號)
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用
+- `value[3]`    目前沒用
+
+**19 物品：食物**
+`19 ITEM_FOOD`
+- `value[0]`    食物狀態
+- `value[1]`    目前沒用
+- `value[2]`    食物存在時間
+- `value[3]`    如果此參數不為零，則有毒
+
+**20 物品：金錢**
+`20 ITEM_MONEY`
+- `value[0]`    此堆金錢的數量
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用
+- `value[3]`    目前沒用
+
+**22 物品：船隻**
+`22 ITEM_BOAT`
+- `value[0]`    目前沒用
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用
+- `value[3]`    目前沒用
+
+**23 物品：mob屍體**
+`23 ITEM_CORPSE_NPC`
+- `value[0]`    目前沒用
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用
+- `value[3]`    目前沒用
+
+**24 物品：玩家屍體**
+`24 ITEM_CORPSE_PC`
+- `value[0]`    目前沒用
+- `value[1]`    目前沒用
+- `value[2]`    目前沒用
+- `value[3]`    目前沒用
+
+**25 物品：泉水**
+`25 ITEM_FOUNTAIN`
+- `value[0]`    目前沒用
+- `value[1]`    目前沒用
+- `value[2]`    液體種類(請參考之前的列表)/*目前沒用*/
+- `value[3]`    如果此參數不為零，此泉水有毒/*目前沒用*/
+
+**26 物品：藥丸**
+`26 ITEM_PILL`
+- `value[0]`    藥丸等級
+- `value[1]`    封印法術一
+- `value[2]`    封印法術二
+- `value[3]`    封印法術三
+
+**27 物品：箭矢**
+`27 ITEM_ARROW`
+- `value[0]`    一袋箭矢的數量
+- `value[1]`    最小傷害修正 (如果沒設，系統自動設置)
+- `value[2]`    最大傷害修正 (如果沒設，系統自動設置)
+- `value[3]`    額外傷害
+
+**28 物品：暗器**
+`28 ITEM_DART`  /* 目前沒有此項物品存在 */
+- `value[0]`    一次丟出的最大擊中百分率
+- `value[1]`    最小傷害
+- `value[2]`    最大傷害
+- `value[3]`    一堆暗器的數量
+
+ 
+ 
+ 
+## 啟動和測試區域
+ 
+當一個 Merc 的 server 啟動的時候，它會讀入目前的目錄下的 "AREA.LST" 這個檔案。這個檔案包含了所要將要被讀入的檔案名字(file name)。因此要增加會是刪除只要編輯這個檔案就好了。
+ 
+Server 會在一啟動就讀入所有的區域到記憶體中，然後就不再讀入。因此你可以 在 serve 在跑的時候編輯區域檔，當下次重新啟動時你所修改的才會生效。因為 serve 全部都是以記憶體為主，這樣區域的重置才會很快。(這種做法可以使得記憶體的使用達到最佳化，而且和 Merc 1.9 比較起來可以節省 50 % 的記憶體使用)
+ 
+你可以在不同的目錄下使用不同的 "AREA.LST"來測試新區域。如何設定一個好的目錄結構對一個學生來是一個很好的練習。(你要跑一個 mud 不是要學著如何管理一個系統嗎？)所以你可以在不同的目錄下來跑一個 server ，只要使用正確的全名：舉個例子： `../src/merc` 。
+ 
+這個 server 將會顯示格式的錯誤，包括區域檔的名字和行數(都顯示於 envy/log/的xxxx.log中)。但是你不要盡信所列出的行數，因為有些錯誤會使得 server 再跑了很長一段才顯示出來，這個時候的行數就不準了。
+  
+server 也會顯示出一些邏輯上的錯誤，如一些沒有參考到的出口或是物品，房間和 MOb 之類的。
+ 
+錯誤的除去並不是太難，因此我們設計當 server 讀到錯誤時就會顯示錯誤所在，然後就離開。 Merc 在啟動上只需要花很少的時間，因此 server 通常被我們拿來當做格式錯誤的檢察員。
+ 
+## 壓縮區域檔
+ 
+你可以使用一個經過壓縮的檔案來跑一個 Mud，下面是在 Unix 系統下的方法：
+ 
+(1) 將 area.lst 中的 $ 那一行刪掉
+ 
+(2) 執行下面的命令：
+ 
+```bash
+cat `cat area.lst` | compress > all_area.Z
+```
+ 
+(3) 再去編輯 "area.lst" 這個檔案。在每一行前面都加上一個 "-"，在檔名和 "-" 不要有空白。最後再加上 '$' 在最後一行。
+ 
+(4) 修改 "starup" 
+ 
+```bash
+../src/merc 4000 >&! $logfile
+```
+ 
+為
+ 
+```bash
+zcat all_area.Z | ../src/merc 4000 >&! $logfile
+```
+ 
+(5) 測試以上的改法。 Merc 應該會很正常的跑，只是要多花一點時間去解壓縮
+ 
+現在你可以砍掉所有  *.are  的檔案
+ 
+要注意的是所有的壓縮和解縮壓都在 Merc server 外的環境下。因此，你可以加入或是刪除任何的檔案，只要你喜歡就好，而且只要從標準的輸出和輸入寫入就好了。
+ 
+你可以恢復所有原始的檔案，只要打 "uncompress all_area.Z" ，這樣字你 就可公從 all_area 中拿回所有的檔案。
+ 
+從 server 的觀點來看，當一個檔案的名稱的開頭是以 "-" 來開頭，表示是從簡單的輸入裝置來輸入一個檔案，最後以 "#$" 來結尾，但是它並沒有關閉輸入的管道。
+ 
+你也可以和從原始的輸入裝置來輸入一個檔案，因此，你可以將所有 Merc 的原始檔案都壓在一個叫 "merc_are.Z" 的檔案中，並在 'area.lst " 中加上 "-"。然後你可以加上你自己的區域(在中間或是最後面都可以)，但是這些你加的這些檔案你不可以加上 "-" 在那些檔案的前面。
+ 
+如此系統將會花較多的時間來解壓縮，因為 "zcat" 必須要花一些時間來跑。但是這樣可以減少一些磁碟空間的使用，但是要花較長的時間來 load 。但是一但 load 完畢，所有的資料都放在記憶體中，所以不會影響執行的速度。
