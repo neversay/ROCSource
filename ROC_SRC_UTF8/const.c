@@ -4853,13 +4853,13 @@ const struct skill_type skill_table [MAX_SKILL] =
 
     // this skill is for war-kni
     {
-        "defensive", "護身罡\氣", { SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP,
+        "defensive", "護身罡氣", { SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP,
             SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP,
             SKILL_APP, SKILL_LIMIT(36,99,6), SKILL_APP, SKILL_APP, SKILL_APP,
             SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP, SKILL_APP },
             spell_null,  TAR_IGNORE, POS_FIGHTING,
             &gsn_defensive,   150, 12,
-            "護身罡\氣",   "你的護身罡\氣消失了。", ATTR_ALL, {6,7,8,6,5}
+            "護身罡氣",   "你的護身罡氣消失了。", ATTR_ALL, {6,7,8,6,5}
 
     },
 

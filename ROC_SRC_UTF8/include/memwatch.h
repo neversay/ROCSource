@@ -339,7 +339,6 @@
 extern "C" {
 #endif
 
-
 /*
 ** Constants used
 **  All MEMWATCH constants start with the prefix MW_, followed by
@@ -347,38 +346,38 @@ extern "C" {
 **  followed by a descriptive text about it.
 */
 
-#define MW_ARI_NULLREAD 0x10    /* Null read (to start debugger) */
-#define MW_ARI_ABORT    0x04    /* ARI handler says: abort program! */
-#define MW_ARI_RETRY    0x02    /* ARI handler says: retry action! */
-#define MW_ARI_IGNORE   0x01    /* ARI handler says: ignore error! */
+#define MW_ARI_NULLREAD 0x10 /* Null read (to start debugger) */
+#define MW_ARI_ABORT    0x04 /* ARI handler says: abort program! */
+#define MW_ARI_RETRY    0x02 /* ARI handler says: retry action! */
+#define MW_ARI_IGNORE   0x01 /* ARI handler says: ignore error! */
 
-#define MW_VAL_NEW      0xFE    /* value in newly allocated memory */
-#define MW_VAL_DEL      0xFD    /* value in newly deleted memory */
-#define MW_VAL_NML      0xFC    /* value in no-mans-land */
-#define MW_VAL_GRB      0xFB    /* value in grabbed memory */
+#define MW_VAL_NEW 0xFE /* value in newly allocated memory */
+#define MW_VAL_DEL 0xFD /* value in newly deleted memory */
+#define MW_VAL_NML 0xFC /* value in no-mans-land */
+#define MW_VAL_GRB 0xFB /* value in grabbed memory */
 
-#define MW_TEST_ALL     0xFFFF  /* perform all tests */
-#define MW_TEST_CHAIN   0x0001  /* walk the heap chain */
-#define MW_TEST_ALLOC   0x0002  /* test allocations & NML guards */
-#define MW_TEST_NML     0x0004  /* test all-NML areas for modifications */
+#define MW_TEST_ALL   0xFFFF /* perform all tests */
+#define MW_TEST_CHAIN 0x0001 /* walk the heap chain */
+#define MW_TEST_ALLOC 0x0002 /* test allocations & NML guards */
+#define MW_TEST_NML   0x0004 /* test all-NML areas for modifications */
 
-#define MW_NML_NONE     0       /* no NML */
-#define MW_NML_FREE     1       /* turn FREE'd memory into NML */
-#define MW_NML_ALL      2       /* all unused memory is NML */
-#define MW_NML_DEFAULT  0       /* the default NML setting */
+#define MW_NML_NONE    0 /* no NML */
+#define MW_NML_FREE    1 /* turn FREE'd memory into NML */
+#define MW_NML_ALL     2 /* all unused memory is NML */
+#define MW_NML_DEFAULT 0 /* the default NML setting */
 
-#define MW_STAT_GLOBAL  0       /* only global statistics collected */
-#define MW_STAT_MODULE  1       /* collect statistics on a module basis */
-#define MW_STAT_LINE    2       /* collect statistics on a line basis */
-#define MW_STAT_DEFAULT 0       /* the default statistics setting */
+#define MW_STAT_GLOBAL  0 /* only global statistics collected */
+#define MW_STAT_MODULE  1 /* collect statistics on a module basis */
+#define MW_STAT_LINE    2 /* collect statistics on a line basis */
+#define MW_STAT_DEFAULT 0 /* the default statistics setting */
 
 /*
 ** MemWatch internal constants
 **  You may change these and recompile MemWatch to change the limits
 **  of some parameters. Respect the recommended minimums!
 */
-#define MW_TRACE_BUFFER 2048    /* (min 160) size of TRACE()'s output buffer */
-#define MW_FREE_LIST    64      /* (min 4) number of free()'s to track */
+#define MW_TRACE_BUFFER 2048 /* (min 160) size of TRACE()'s output buffer */
+#define MW_FREE_LIST    64   /* (min 4) number of free()'s to track */
 
 /*
 ** Exported variables
@@ -408,9 +407,9 @@ extern const unsigned long mwCounter;
 **      mwInit() call.
 **  - mwAbort() cleans up after MEMWATCH, reports unfreed buffers, etc.
 */
-void  mwInit( void );
-void  mwTerm( void );
-void  mwAbort( void );
+void mwInit(void);
+void mwTerm(void);
+void mwAbort(void);
 
 /*
 ** Setup functions
@@ -443,19 +442,19 @@ void  mwAbort( void );
 **      markers are still in existence, these will be reported as leakage.
 **      returns the pointer given.
 */
-void        mwFlushNow( void );
-void        mwDoFlush( int onoff );
-void        mwLimit( long bytes );
-unsigned    mwGrab( unsigned kilobytes );
-unsigned    mwDrop( unsigned kilobytes );
-void        mwNoMansLand( int mw_nml_level );
-void        mwStatistics( int level );
-void        mwFreeBufferInfo( int onoff );
-void        mwAutoCheck( int onoff );
-void        mwCalcCheck( void );
-void        mwDumpCheck( void );
-void *      mwMark( void *p, const char *description, const char *file, unsigned line );
-void *      mwUnmark( void *p, const char *file, unsigned line );
+void     mwFlushNow(void);
+void     mwDoFlush(int onoff);
+void     mwLimit(long bytes);
+unsigned mwGrab(unsigned kilobytes);
+unsigned mwDrop(unsigned kilobytes);
+void     mwNoMansLand(int mw_nml_level);
+void     mwStatistics(int level);
+void     mwFreeBufferInfo(int onoff);
+void     mwAutoCheck(int onoff);
+void     mwCalcCheck(void);
+void     mwDumpCheck(void);
+void    *mwMark(void *p, const char *description, const char *file, unsigned line);
+void    *mwUnmark(void *p, const char *file, unsigned line);
 
 /*
 ** Testing/verification/tracing
@@ -479,12 +478,12 @@ void *      mwUnmark( void *p, const char *file, unsigned line );
 **  - mwTRACE() or TRACE() writes some text and data to the log. Use like printf().
 **      TRACE() can be disabled by defining MW_NOTRACE.
 */
-int   mwIsReadAddr( const void *p, unsigned len );
-int   mwIsSafeAddr( void *p, unsigned len );
-int   mwTest( const char *file, int line, int mw_test_flags );
-int   mwTestBuffer( const char *file, int line, void *p );
-int   mwAssert( int, const char*, const char*, int );
-int   mwVerify( int, const char*, const char*, int );
+int mwIsReadAddr(const void *p, unsigned len);
+int mwIsSafeAddr(void *p, unsigned len);
+int mwTest(const char *file, int line, int mw_test_flags);
+int mwTestBuffer(const char *file, int line, void *p);
+int mwAssert(int, const char *, const char *, int);
+int mwVerify(int, const char *, const char *, int);
 
 /*
 ** User I/O functions
@@ -509,13 +508,13 @@ int   mwVerify( int, const char*, const char*, int );
 **      be nice to break into a debugger. If you feel like MEMWATCH, place
 **      an execution breakpoint on this function.
 */
-void  mwTrace( const char* format_string, ... );
-void  mwPuts( const char* text );
-void  mwSetOutFunc( void (*func)(int) );
-void  mwSetAriFunc( int (*func)(const char*) );
-void  mwSetAriAction( int mw_ari_value );
-int   mwAriHandler( const char* cause );
-void  mwBreakOut( const char* cause );
+void mwTrace(const char *format_string, ...);
+void mwPuts(const char *text);
+void mwSetOutFunc(void (*func)(int));
+void mwSetAriFunc(int (*func)(const char *));
+void mwSetAriAction(int mw_ari_value);
+int  mwAriHandler(const char *cause);
+void mwBreakOut(const char *cause);
 
 /*
 ** Allocation/deallocation functions
@@ -533,15 +532,15 @@ void  mwBreakOut( const char* cause );
 **      Can free memory allocated by MEMWATCH and malloc() both.
 **      Does not generate any runtime errors.
 */
-void* mwMalloc( size_t, const char*, int );
-void* mwMalloc_( size_t );
-void* mwRealloc( void *, size_t, const char*, int );
-void* mwRealloc_( void *, size_t );
-void* mwCalloc( size_t, size_t, const char*, int );
-void* mwCalloc_( size_t, size_t );
-void  mwFree( void*, const char*, int );
-void  mwFree_( void* );
-char* mwStrdup( const char *, const char*, int );
+void *mwMalloc(size_t, const char *, int);
+void *mwMalloc_(size_t);
+void *mwRealloc(void *, size_t, const char *, int);
+void *mwRealloc_(void *, size_t);
+void *mwCalloc(size_t, size_t, const char *, int);
+void *mwCalloc_(size_t, size_t);
+void  mwFree(void *, const char *, int);
+void  mwFree_(void *);
+char *mwStrdup(const char *, const char *, int);
 
 /*
 ** Enable/disable precompiler block
@@ -552,22 +551,22 @@ char* mwStrdup( const char *, const char*, int );
 #ifndef __MEMWATCH_C
 #ifdef MEMWATCH
 
-#define mwASSERT(exp)   while(mwAssert((int)(exp),#exp,__FILE__,__LINE__))
+#define mwASSERT(exp) while (mwAssert((int)(exp), #exp, __FILE__, __LINE__))
 #ifndef MW_NOASSERT
 #ifndef ASSERT
-#define ASSERT          mwASSERT
+#define ASSERT mwASSERT
 #endif /* !ASSERT */
 #endif /* !MW_NOASSERT */
-#define mwVERIFY(exp)   while(mwVerify((int)(exp),#exp,__FILE__,__LINE__))
+#define mwVERIFY(exp) while (mwVerify((int)(exp), #exp, __FILE__, __LINE__))
 #ifndef MW_NOVERIFY
 #ifndef VERIFY
-#define VERIFY          mwVERIFY
+#define VERIFY mwVERIFY
 #endif /* !VERIFY */
 #endif /* !MW_NOVERIFY */
-#define mwTRACE         mwTrace
+#define mwTRACE mwTrace
 #ifndef MW_NOTRACE
 #ifndef TRACE
-#define TRACE           mwTRACE
+#define TRACE mwTRACE
 #endif /* !TRACE */
 #endif /* !MW_NOTRACE */
 
@@ -577,43 +576,43 @@ char* mwStrdup( const char *, const char*, int );
 #undef strdup
 #endif
 
-#define malloc(n)       mwMalloc(n,__FILE__,__LINE__)
-#define strdup(p)       mwStrdup(p,__FILE__,__LINE__)
-#define realloc(p,n)    mwRealloc(p,n,__FILE__,__LINE__)
-#define calloc(n,m)     mwCalloc(n,m,__FILE__,__LINE__)
-#define free(p)         mwFree(p,__FILE__,__LINE__)
-#define CHECK()         mwTest(__FILE__,__LINE__,MW_TEST_ALL)
-#define CHECK_THIS(n)   mwTest(__FILE__,__LINE__,n)
-#define CHECK_BUFFER(b) mwTestBuffer(__FILE__,__LINE__,b)
-#define MARK(p)         mwMark(p,#p,__FILE__,__LINE__)
-#define UNMARK(p)       mwUnmark(p,__FILE__,__LINE__)
+#define malloc(n)       mwMalloc(n, __FILE__, __LINE__)
+#define strdup(p)       mwStrdup(p, __FILE__, __LINE__)
+#define realloc(p, n)   mwRealloc(p, n, __FILE__, __LINE__)
+#define calloc(n, m)    mwCalloc(n, m, __FILE__, __LINE__)
+#define free(p)         mwFree(p, __FILE__, __LINE__)
+#define CHECK()         mwTest(__FILE__, __LINE__, MW_TEST_ALL)
+#define CHECK_THIS(n)   mwTest(__FILE__, __LINE__, n)
+#define CHECK_BUFFER(b) mwTestBuffer(__FILE__, __LINE__, b)
+#define MARK(p)         mwMark(p, #p, __FILE__, __LINE__)
+#define UNMARK(p)       mwUnmark(p, __FILE__, __LINE__)
 
 #else /* MEMWATCH */
 
 #define mwASSERT(exp)
 #ifndef MW_NOASSERT
 #ifndef ASSERT
-#define ASSERT          mwASSERT
+#define ASSERT mwASSERT
 #endif /* !ASSERT */
 #endif /* !MW_NOASSERT */
 
-#define mwVERIFY(exp)    exp
+#define mwVERIFY(exp) exp
 #ifndef MW_NOVERIFY
 #ifndef VERIFY
-#define VERIFY          mwVERIFY
-#endif /* !VERIFY */
-#endif /* !MW_NOVERIFY */
+#define VERIFY mwVERIFY
+#endif                                                                   /* !VERIFY */
+#endif                                                                   /* !MW_NOVERIFY */
 
 /*lint -esym(773,mwTRACE) */
-#define mwTRACE         /*lint -save -e506 */ 1?(void)0:mwDummyTraceFunction /*lint -restore */
+#define mwTRACE /*lint -save -e506 */ 1 ? (void)0 : mwDummyTraceFunction /*lint -restore */
 #ifndef MW_NOTRACE
 #ifndef TRACE
 /*lint -esym(773,TRACE) */
-#define TRACE           mwTRACE
+#define TRACE mwTRACE
 #endif /* !TRACE */
 #endif /* !MW_NOTRACE */
 
-extern void mwDummyTraceFunction(const char *,...);
+extern void mwDummyTraceFunction(const char *, ...);
 /*lint -save -e652 */
 #define mwDoFlush(n)
 #define mwPuts(s)
@@ -621,39 +620,39 @@ extern void mwDummyTraceFunction(const char *,...);
 #define mwGrab(n)
 #define mwDrop(n)
 #define mwLimit(n)
-#define mwTest(f,l)
+#define mwTest(f, l)
 #define mwSetOutFunc(f)
 #define mwSetAriFunc(f)
 #define mwDefaultAri()
 #define mwNomansland()
 #define mwStatistics(f)
-#define mwMark(p,t,f,n)     (p)
-#define mwUnmark(p,f,n)     (p)
-#define mwMalloc(n,f,l)     malloc(n)
-#define mwStrdup(p,f,l)     strdup(p)
-#define mwRealloc(p,n,f,l)  realloc(p,n)
-#define mwCalloc(n,m,f,l)   calloc(n,m)
-#define mwFree(p)           free(p)
-#define mwMalloc_(n)        malloc(n)
-#define mwRealloc_(p,n)     realloc(p,n)
-#define mwCalloc_(n,m)      calloc(n,m)
-#define mwFree_(p)          free(p)
-#define mwAssert(e,es,f,l)
-#define mwVerify(e,es,f,l)  (e)
-#define mwTrace             mwDummyTrace
-#define mwTestBuffer(f,l,b) (0)
+#define mwMark(p, t, f, n)    (p)
+#define mwUnmark(p, f, n)     (p)
+#define mwMalloc(n, f, l)     malloc(n)
+#define mwStrdup(p, f, l)     strdup(p)
+#define mwRealloc(p, n, f, l) realloc(p, n)
+#define mwCalloc(n, m, f, l)  calloc(n, m)
+#define mwFree(p)             free(p)
+#define mwMalloc_(n)          malloc(n)
+#define mwRealloc_(p, n)      realloc(p, n)
+#define mwCalloc_(n, m)       calloc(n, m)
+#define mwFree_(p)            free(p)
+#define mwAssert(e, es, f, l)
+#define mwVerify(e, es, f, l) (e)
+#define mwTrace               mwDummyTrace
+#define mwTestBuffer(f, l, b) (0)
 #define CHECK()
 #define CHECK_THIS(n)
 #define CHECK_BUFFER(b)
-#define MARK(p)             (p)
-#define UNMARK(p)           (p)
+#define MARK(p)   (p)
+#define UNMARK(p) (p)
 /*lint -restore */
 
 #endif /* MEMWATCH */
 #endif /* !__MEMWATCH_C */
 
 #ifdef __cplusplus
-    }
+}
 #endif
 
 #if 0 /* 980317: disabled C++ */
@@ -694,8 +693,8 @@ public:
 void * operator new(size_t);
 void * operator new(size_t,const char *,int);
 void operator delete(void *);
-#define mwNew new(__FILE__,__LINE__)
-#define mwDelete (mwNCur=1,mwNFile=__FILE__,mwNLine=__LINE__),delete
+#define mwNew    new (__FILE__, __LINE__)
+#define mwDelete (mwNCur = 1, mwNFile = __FILE__, mwNLine = __LINE__), delete
 #endif /* MEMWATCH_NOCPP */
 #endif /* MEMWATCH */
 #endif /* !__MEMWATCH_C */

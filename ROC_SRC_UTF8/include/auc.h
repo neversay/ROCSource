@@ -1,6 +1,7 @@
-typedef struct          auction_data            AUCTION_DATA;
+#include "merc.h"
+typedef struct auction_data AUCTION_DATA;
 
-#define ROOM_AUCTION            32768
+#define ROOM_AUCTION 32768
 /*
  *  * Auction data
  *   *
@@ -8,12 +9,10 @@ typedef struct          auction_data            AUCTION_DATA;
  *     *
  *      */
 
-struct auction_data
-{
-	CHAR_DATA *owner;
-	CHAR_DATA *buyer;
-	OBJ_DATA *obj;
-	int price;
-	int time;
+struct auction_data {
+    CHAR_DATA *owner;
+    CHAR_DATA *buyer;
+    OBJ_DATA  *obj;
+    int        price;
+    int        time;
 };
-
