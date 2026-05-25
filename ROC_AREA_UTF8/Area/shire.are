@@ -1,0 +1,4519 @@
+#AREADATA
+Name        囤墾區~
+Identity    shire~
+Builders    Anon~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      1100 1199
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#1100
+elven wizard~
+精靈巫師(Elven Wizard)~
+精靈巫師(Elven Wizard)正在這邊製作節慶要用的慶祝煙火。
+~
+精靈巫師向你看過來，你發覺他的表情相當嚴肅。他的眼神似乎能夠穿透你的心防
+直達你的心靈深處。他身上穿著一件銀色的袍子同時拿著一把七彩的法杖。雖然他
+看起來甚至比人類最老的人還要老，但是卻似乎擁有比人類的年輕勇士更強的力量。
+~
+1|2|64 8 500 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Elf~
+C 1|2
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 別為了這點小事來打擾我！
+	say 打聽事情也要看對象！去找常在街上走動的人吧！
+	say 他們或許可以幫上你的忙！
+endif
+~
+>death_prog 50~
+mpdis_magic self blindness
+mpat 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1101
+ring keeper~
+寶藏管理員(Keeper of the Ring)~
+這個管理員(keeper)正小心的在此看管他自己的寶藏。
+~
+這個管理員的身材比平常的賀比特還矮一點。他的矮胖身材以及蒜頭鼻讓別人覺得他
+不太像賀比特。一把閃閃發亮的精靈短劍掛在他的腰間，而他手指上則帶著一只戒指
+。雖然賀比特愛好和平，但是如果你意圖搶走他的寶藏，他還是會跟你拼命。
+~
+1|2|64 2|8 0 S
+24 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Hobbit~
+C 1
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 我沒看到喔！
+	say 每天都待在這裡看守寶藏！
+	say 我可不敢摸魚去逛大街！
+endif
+~
+>death_prog 50~
+mpdis_magic self blindness
+mpat 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1102
+farmer gamgee~
+農夫甘吉(Farmer Gamgee)~
+農夫甘吉(Farmer Gamgee)聞著空氣的氣味藉以盤算收成的適當時刻。
+~
+農夫甘吉是個矮矮胖胖年約 30 歲的賀比特。他的皮膚由於夜以繼日的工作已經
+被曬成黃褐色。他也是個相當的古道熱腸，經常治療一些在他田裡面發現的受傷
+小動物。
+~
+1|2|128 0 350 S
+18 0 0 0d0+0 0d0+0
+50 0
+0 8 1
+R Hobbit~
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken 100002
+	say 去問問山恩指揮官吧！最近收成，我都在忙田裡的事！
+	say 抱歉這次沒幫上你，下次有困難記得來找我幫忙喔！
+	pat $n
+endif
+~
+|
+#1103
+toddler~
+小嬰兒(toddler)~
+這個小嬰兒(toddler)到處爬來爬去，嘗試要學走路。
+~
+這個小嬰兒身上沒有穿任何的衣物，只有一件小圍兜。他現在移動只能用爬的，因為
+他還不會走路。他看到你竟然對你發出你聽不太清楚的一些聲音：「爸...爸...？」
+~
+1|2|128 0 100 S
+5 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+#1104
+nursemaid~
+保母(nursemaid)~
+保母(nursemaid)到處追著嬰兒跑，希望能夠抓到他。
+~
+這個保母看起來真的是很累的樣子。同時要照顧一堆調皮的嬰兒真的讓她得不償失。
+隨著你的到來，她注視著你，從她的現況你感到你似乎比她幸福多了。
+~
+3 0 0 S
+18 0 0 0d0+0 0d0+0
+300 0
+0 8 2
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 這麼小孩要我照顧！我可沒時間注意這麼多事情！
+	mpecho $I 轉過身去....
+	if rmobcount(1103) > 0
+		say 啊！小寶，你又尿床了！
+	endif
+endif
+~
+|
+#1105
+cow~
+母牛(cow)~
+一隻母牛(cow)在此正咀嚼著青草。
+~
+這隻母牛看起來已經老的不能在擠出奶了。雖然看起來這隻母牛應該沒有多久可以活
+了，但是如果被她後腳的蹄子直接踢中，還是有可能直接去見閻王。
+~
+1|64 0 0 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+#1106
+pig~
+豬(pig)~
+這隻豬(pig)正滿足的在泥巴中打滾翻轉。
+~
+這隻豬看起來好像很愉快。它根本不在意你的出現而只關心它是否能夠自由的享受他
+的「泥巴生活」。不過這隻豬肥到它不太能靈活的移動。
+~
+1|64 0 0 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+#1107
+chicken~
+小雞(chicken)~
+一隻小雞(chicken)在巢穴中休息。
+~
+這隻小雞長得相當健康。她全身的武器就只有她那個沒什麼用途的啄子。
+~
+1|64 0 0 S
+6 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+#1108
+bull~
+公牛(bull)~
+一隻公牛(bull)正用它的犄角在地上磨蹭。
+~
+這個公牛正處於最佳狀態。他強壯的有如人類的菁英戰士一般。他有著如同人類刀劍
+一般的強力武器 - 犄角與蹄子。
+~
+1|2|32 0 0 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+C 1
+#1109
+horse~
+馬(horse)~
+這隻馬(horse)由於你的到來而開始感到不安。
+~
+這隻馬隨著你的到來立刻轉身背對著你。你猜測這隻馬相當的怕生。
+~
+1|2|64 0 0 S
+19 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+#1110
+shiriff~
+警長(shiriff)~
+囤墾區的警長(shiriff)正在到處巡邏是否有事故發生。
+~
+這個警長大約比你的腰部高一點而已，但是已經比賀比特的平均身高還要高了。他的
+眼睛到處瀏覽隨時提防類似像你這種可能製造麻煩的人。他腰上繫著一把薄匕首，同
+時穿著一套皮製護甲。這個人是你進到囤墾區目前為止最不想跟他打交道的人。
+~
+1|4|64 0 500 S
+28 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Hobbit~
+C 1
+>talk_prog topic~
+if isevil($n)
+	say 你在囤墾區做壞事最好不要被我給逮到！
+else
+	say 不要隨便在囤墾區鬧事！
+endif
+~
+|
+#1111
+shiriff~
+警探(shiriff)~
+囤墾區的警探(shiriff)正在到處巡邏是否有事故發生。
+~
+這個警探大約比你的腰部高一點而已，但是已經比賀比特的平均身高還要高了。他的
+眼睛到處瀏覽隨時提防類似像你這種可能製造麻煩的人。他腰上繫著一把薄匕首，同
+時穿著一套皮製護甲。這個人是你進到囤墾區目前為止最不想跟他打交道的人。
+~
+1|4|64 0 500 S
+23 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Hobbit~
+C 1
+>talk_prog topic~
+if isevil($n)
+	say 你在囤墾區做壞事最好不要被我給逮到！
+else
+	say 不要隨便在囤墾區鬧事！
+endif
+~
+|
+#1112
+thain~
+山恩(Thain)~
+深受囤墾區子民愛戴的山恩(Thain)指揮官站在這邊。
+~
+這個風度翩翩的賀比特見到你的來訪立刻對你說了一聲：「嗨！」，之後隨即繼續
+沈醉在他的書香世界之中，完全感覺不到他是整個囤墾區的第一保安指揮官。
+~
+1|64 8|32|512 800 S
+15 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Hobbit~
+C 1
+P 8
+>talk_prog topic~
+say 歡迎來到新囤墾區(shire)，這裡的居民多半由史卡拉貝遷徙過來的，
+say 我們很歡迎您的參觀覽，但是記得不要惹麻煩(trouble)。
+~
+>talk_prog shire~
+say 囤墾區屬於布爾什維克領主的領地，大部分居民是人類、
+say 賀比特與精靈。在此由於有十分明確、嚴格的律法，因此
+say 治安非常良好。
+~
+>talk_prog trouble~
+say 最好不要嘗試在囤墾區中做壞事，尤其是濫殺無辜。
+say 不然我們這邊的菁英警長群會讓你為此付出代價的。
+~
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 你說海頓媽媽的母雞啊！平常都看他四處亂跑，不過今天還沒見到。
+	say 但倒是看到了一個沒見過的流浪漢，不知道是那兒跑來的？
+	say 不知道「藏」到那去了？希望他不要惹出麻煩來。
+	if mobcount(1140) == 0
+		if rand(25)
+    			mpat 1122 mpmload 1140
+    		else
+			if rand(33)
+         			mpat 1126 mpmload 1140
+    			else
+				if rand(50)
+       					mpat 1132 mpmload 1140
+   				else
+   					mpat 1104 mpmload 1140
+				endif
+			endif
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+yell $N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1113
+innkeeper~
+旅館老闆(Innkeeper)~
+旅館老闆(Innkeeper)站在這邊正等待著你的訂房。
+~
+這個旅館老闆是個非常年長的賀比特，幾乎都在旅館中聽著進進出出人的流言。不過
+在他以前年輕的時候，是個相當老練的冒險者。
+~
+1|2|64 0 200 S
+28 0 0 0d0+0 0d0+0
+700 0
+0 8 1
+R Hobbit~
+C 1
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 我要照顧生意！沒時間注意這些事！
+	say 我們這大事小事都歸山恩指揮官處理！你去找他商量看看吧！
+endif
+~
+>talk_prog topic~
+say 歡迎歡迎！請問您要過夜嗎？
+~
+>death_prog 50~
+mpdis_magic self blindness
+mapt 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1114
+miller~
+磨坊主人(Miller)~
+磨坊主人(Miller)在這邊間試著他的手下是否在認真工作。
+~
+這個磨坊主人看起來是個性格急躁的年輕賀比特，總是想要讓每個磨坊的工人能夠尊
+敬他並聽從他的號令。他的做事態度就像人類所說的：「欲速則不達」一樣，雖然做
+事很快，但是事情總是做不好。
+~
+1|4|64|128 0 50 S
+24 0 0 0d0+0 0d0+0
+200 0
+0 8 1
+R Hobbit~
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 剛剛有看到喔！不過一轉眼又不見了！
+	mpecho $I 喃喃自語....
+	say 奇怪！怎麼那麼多人在找雞，山恩指揮官也在找。
+endif
+~
+|
+#1115
+mill worker~
+磨坊工人(mill worker)~
+磨坊工人(mill worker)正在依序不斷的推動磨坊中間的機器。
+~
+這個磨坊工人由於夜以繼日的在磨坊辛勤工作而練就了一身健美的身材。他並沒有注
+意到你的到來，但是可以確定的是他絕對有能力將你一拳打到這個磨坊外。
+~
+1|2 0 0 S
+20 0 0 0d0+0 0d0+0
+50 0
+0 8 1
+R Hobbit~
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 工作！工作！請不要妨害我們的進度！
+endif
+~
+|
+#1116
+elven warrior~
+精靈戰士(elven warrior)~
+精靈戰士(elven warrier)正嚴肅的看著你。
+~
+這個高大的精靈戰士外表相當的潔白。他的表情看起來既嚴肅又哀傷。他好似已經不
+關心跟他有關的世界中的任何一件事物了。
+~
+1|2 0 600 S
+28 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Elf~
+C 1|2
+#1117
+dwarven prince~
+矮人族王子(dwarven prince)~
+矮人族王子(dwarven prince)正耐心的在此等待矮人族國王的到來。
+~
+冷靜、成著的矮人族王子看起來相當的強壯與精幹，甚至是你看過的所有矮人族中讓
+你印象最深刻的。他閃爍的眼睛正瞪視著你，似乎看穿了你的來意。
+~
+1|2 0 200 S
+27 0 0 0d0+0 0d0+0
+2700 0
+0 8 1
+R Dwarf~
+C 1|2
+>death_prog 50~
+mpdis_magic self blindness
+mapt 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1118
+shopkeeper~
+商店老闆(shopkeeper)~
+商店老闆(shopkeeper)對著你微笑，並等著你像他購買一些東西。
+~
+這個商店老闆如果遇到類似像你這種外來者向他搶東西的話，他絕對會像瘋子一般不
+顧性命的保護他的財產。
+~
+1|2 0 600 S
+27 0 0 0d0+0 0d0+0
+300 0
+0 8 1
+R Hobbit~
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 這種事情去問山恩指揮官吧！
+	say 你要不要順便帶點什麼啊？
+endif
+~
+>talk_prog topic~
+say 請問你要買些什麼呢？
+~
+>death_prog 50~
+mpdis_magic self blindness
+mapt 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1119
+grocer~
+雜貨店老闆(grocer)~
+這個雜貨店老闆(grocer)提供了整個大陸最好吃的食物。
+~
+這個雜貨店老闆是個體型碩大、個性樂天、知道如何享受生活情趣的賀比特。而且他
+也熟知如何應付你這種外來者來偷取他的財物。
+~
+1|2 0 300 S
+24 0 0 0d0+0 0d0+0
+1500 0
+0 8 1
+R Hobbit~
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 這種事情去問山恩指揮官吧！
+	say 順便買點東西吧？我們可是屯墾區的模範商店喔！
+endif
+~
+>death_prog 50~
+mpdis_magic self blindness
+mapt 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1120
+blacksmith~
+鐵匠(blacksmith)~
+這個鐵匠(blacksmith)正極力召喚你進入他簡陋的店中購物。
+~
+這個鐵匠看起來過去一定精通於戰鬥之術。他對於戰鬥的豐富經驗以及店中的各式武
+器與裝甲足夠讓他應付類似像你們這種可能搶奪他財物的外來者。
+~
+1|2|64 8|32|512 800 S
+27 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Hobbit~
+C 1
+P 8
+>talk_prog things~
+say 我需要的金銀材料必須要是整條未被鍛融過的魔法加持原金銀，
+say 還有作為外框的鋼條，以及作為守墓家族家徽的秘銀條，
+say 這些材料我想應該是沒有出產了吧，但我曾聽過一位矮人商人向我說過，
+say 矮人帝國曾經在很久以前賣了一些稀有的金屬條給當時的精靈首席魔法師作為研究材料，
+say 後來這位魔法師在精靈帝國衰弱時隱居到南方迷霧森林的高塔中了，
+say 那些數量不多的原料便一起帶進去塔中了，我想你可以到那裡找找看。
+mpcall ornament_material $n
+~
+>defun_prog ornament_material~
+mpechoat $n 你還欠缺的原料
+if is_qmark($n) !& shire_ornament_quest 200001
+	mpechoat $n [0;30m.[m		銀條(bar of silver)
+endif
+if is_qmark($n) !& shire_ornament_quest 200002
+	mpechoat $n [0;30m.[m		金條(bar of gold)
+endif
+if is_qmark($n) !& shire_ornament_quest 200004
+	mpechoat $n [0;30m.[m		秘銀條(bar of mithril)
+endif
+if is_qmark($n) !& shire_ornament_quest 200008
+	mpechoat $n [0;30m.[m		鋼條(bar of adamantite)
+endif
+~
+>give_prog 1310~
+mpjunk bar
+if is_qmark($n) == skarabrae_joe_quest 100002
+	if is_qmark($n) == shire_ornament_quest
+		say 我收到銀條了。
+		mpmod_qmark $n shire_ornament_quest v1 | 1
+		if is_qmark($n) == shire_ornament_quest 200015
+			mpcall ornament_complete $n
+		else
+			mpcall ornament_material $n
+		endif
+	endif
+endif
+~
+>give_prog 1311~
+mpjunk bar
+if is_qmark($n) == skarabrae_joe_quest 100002
+	if is_qmark($n) == shire_ornament_quest
+		say 我收到金條了。
+		mpmod_qmark $n shire_ornament_quest v1 | 2
+		if is_qmark($n) == shire_ornament_quest 200015
+			mpcall ornament_complete $n
+		else
+			mpcall ornament_material $n
+		endif
+	endif
+endif
+~
+>give_prog 1312~
+mpjunk bar
+if is_qmark($n) == skarabrae_joe_quest 100002
+	if is_qmark($n) == shire_ornament_quest
+		say 我收到秘銀條了。
+		mpmod_qmark $n shire_ornament_quest v1 | 4
+		if is_qmark($n) == shire_ornament_quest 200015
+			mpcall ornament_complete $n
+		else
+			mpcall ornament_material $n
+		endif
+	endif
+endif
+~
+>give_prog 1313~
+mpjunk bar
+if is_qmark($n) == skarabrae_joe_quest 100002
+	if is_qmark($n) == shire_ornament_quest
+		say 我收到鋼條了。
+		mpmod_qmark $n shire_ornament_quest v1 | 8
+		if is_qmark($n) == shire_ornament_quest 200015
+			mpcall ornament_complete $n
+		else
+			mpcall ornament_material $n
+		endif
+	endif
+endif
+~
+>defun_prog ornament_complete~
+nod
+mpoload 1123 10
+mpdel_qmark $n shire_ornament_quest
+mpmod_qmark $n skarabrae_joe_quest v2 | 4
+say 材料已經蒐集完畢了，我馬上把成品打造出來。
+mpcallout 1 mpecho [1;37m$I 將鋼條投進鎔爐裡溶解......[0m
+mpcallout 2 mpecho [1;37m$I 拿鐵鎚開始槌擊金條，將金條打成一個奇特的形狀。[0m
+mpcallout 3 mpecho [1;37m$I 將銀條也投進鎔爐裡，跟先前的鋼條混和在一起。[0m
+mpcallout 4 mpecho [1;37m$I 拿起秘銀條，用特殊的魔法工具槌打秘銀原礦。[0m
+mpcallout 5 mpecho [1;37m秘銀條開始變形，被大力擊打成一個更古怪的形狀。[0m
+mpcallout 6 mpecho [1;37m$I 將變形的秘銀條與金條接合在一起，組合成一隻條紋橫佈的金銀蜘蛛。[0m
+mpcallout 7 mpecho [1;37m$I 將做好的蜘蛛鑲進熾熱的金鐵框架中，然後放進水裡......[0m
+mpcallout 8 mpecho [1;37m玆..........[0m
+mpcallout 9 say 做好了！
+mpcallout 10 give ornament $n
+mpcallout 11 say 請交給她吧。
+~
+>greet_prog 100~
+if is_qmark($n) != shire_quest
+	mpadd_qmark $n shire_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) == skarabrae_joe_quest 100002
+	if is_qmark($n) != shire_ornament_quest
+		if is_qmark($n) == skarabrae_joe_quest 300004
+			break
+		endif
+		mpadd_qmark $n shire_ornament_quest -1 1 0 0 0 1
+		mpechoat $n 你將永恆之塔學徒的要求向$I詳細地說了一遍....
+		mpechoaround $n $N將永恆之塔學徒的要求向$I詳細地說了一遍....
+		hmm
+		mpcallout 1 say 既然是守墓家族的要求，我當然會義不容辭幫到底。
+		mpcallout 2 say 但是我手上還欠缺一些原料(things)，請你幫我蒐齊吧。
+		break
+	endif
+endif
+if level($n) >= 36
+	if is_inv_obj($n) == 14046
+	or is_equ_obj($n) == 14046
+		if is_qmark($n) !& shire_quest 100001
+			if is_qmark($n) != shire_blacksmith_mars
+				say 咦？你身上的那件東西不就是賀比特城著名的「鬥神護符」嗎？
+				if sex($n) <= 1
+					say 唉呀，小兄弟，借我看看吧。
+				else
+					say 唉呀，小姑娘，借我看看吧。
+				endif
+				mpadd_qmark $n shire_blacksmith_mars -1 1 0 0 0 1
+				break
+			endif
+		endif
+	endif
+endif
+~
+>give_prog 14046~
+if is_qmark($n) == shire_blacksmith_mars 100001
+	mpmod_qmark $n shire_blacksmith_mars v0 = 2
+	hmm
+	mpcallout 1 say 這項裝備做得是不錯，但是結構太差，在劇烈的作戰下很容易損毀。
+	mpcallout 2 say 太過強大的戰士還不宜穿著這件裝備旅行勒！
+	mpcallout 3 hmm
+	mpcallout 4 say 看著這件好東西被賀比特人的手藝糟蹋了，身為鐵匠的我真是心疼。
+	mpcallout 5 say 怎麼樣，讓我幫你加強這件裝備吧(agree/disagree)？
+else
+	drop mars
+endif
+~
+>talk_prog disagree~
+if is_qmark($n) == shire_blacksmith_mars 100002
+	say 不要就算了，你等著在戰鬥時看著它被破壞吧！
+	mpdel_qmark $n shire_blacksmith_mars
+	drop mars
+endif
+~
+>talk_prog agree~
+if is_qmark($n) == shire_blacksmith_mars 100002
+	mpmod_qmark $n shire_blacksmith_mars v0 = 3
+	mpjunk all.mars
+	good $n
+	mpcallout 1 say 很好！我欣賞你這種冒險者！
+	mpcallout 2 say 不過醜話說在前頭，我只負責加強這件裝備，加強所需的原料請自備。
+	mpcallout 3 mpcall material_1 $n
+	mpcallout 4 say 拿到其中任何一樣東西都可以拿來給我。
+	mpcallout 5 say 如果你忘了還有哪些東西要給，就直接問(talk)我吧。
+	mpcallout 6 就這樣，祝你好運啦！
+endif
+~
+>defun_prog material_1~
+mpechoat $n 我需要的原料有：
+if is_qmark($n) !& shire_blacksmith_mars 200001
+	mpechoat $n [0;30m.[m		[1;32m森林巨鷹的羽毛(eagle feather)[0m
+endif
+if is_qmark($n) !& shire_blacksmith_mars 200002
+	mpechoat $n [0;30m.[m		[1;30m地底之下石牛之皮(skin of gorgon)[0m
+endif
+if is_qmark($n) !& shire_blacksmith_mars 200004
+	mpechoat $n [0;30m.[m		[1;35m萬色返空龍的喉鱗(scale of tiamat)[0m
+endif
+if is_qmark($n) !& shire_blacksmith_mars 200008
+	mpechoat $n [0;30m.[m		[1;36m南極永不融化的雪水(eversnow)[0m
+endif
+mpechoat $n 如果對材料有任何疑問就直接問[1;37m(talk blacksmith <物品英文全名>)[0m吧。
+~
+>talk_prog p eagle feather~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	say 我必須要用老鷹羽毛其中蘊含的「勇猛」意象來調和其他原料，
+	mpcallout 1 say 而現在大陸上能捕捉到老鷹的地方，只剩下傳說中綠洲蠻荒森林
+	mpcallout 2 say 其他地方的老鷹都被補殺一空了。
+endif
+~
+>talk_prog p skin of gorgon~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	say 石牛的皮是鍛造承受「勇猛」元素最好的平台，不過石牛只生存於遠離地表的
+	say 深土之內，要取得這種皮的確十分困難。
+endif
+~
+>talk_prog p scale of tiamat~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	say 萬色返空龍是一條五頭龍，又稱緹雅瑪特，能噴發出各種恐怖的龍息，而
+	say 她的喉鱗蘊含著無限的狂躁氣息，是加強鬥神護符最好的素材。
+	say 五頭龍的下落不明，老頭子我也不知道這件東西要怎麼拿到。
+endif
+~
+>talk_prog eversnow~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	say 永凍雪只存在於更南方的冰封大地，除了是滋養名貴花木最好的活水之外，
+	say 也是最佳的冷卻水，這種冰雪聚集了寒氣的精華，很容易化成強大的魔法生物，
+	say 甚至是次級的神靈，例如傳說中的白雪之后(Snow Queen)就是一例。
+	mpcallout 1 say 將她打回原形後就能得到純淨的永凍雪了。
+endif
+~
+>talk_prog restart~
+if is_qmark($n) == shire_blacksmith_mars 100004
+	mpdel_qmark $n shire_blacksmith_mars
+	if is_qmark($n) != shire_quest
+		mpadd_qmark $n shire_quest -1 1 0 0 0 1
+	else
+		if is_qmark($n) !& shire_quest 100001
+			mpmod_qmark $n shire_quest v0 | 1
+		endif
+	endif
+	say 你已經完成「製作狂龍護符」的任務，我已將完成的標記轉換為新的格式。
+	say 因此你無法重新開始「製作狂龍護符」的任務。
+endif
+if is_qmark($n) !& shire_quest 100001
+	if is_qmark($n) < shire_blacksmith_mars 100004
+		mpdel_qmark $n shire_blacksmith_mars
+		mpechoat $n 遠方傳來一陣聲響「製作狂龍護符的任務已經可以重解了。」
+		break
+	endif
+endif
+if is_qmark($n) !& astral_quest 100004
+	if is_qmark($n) == shire_scale_quest
+		mpdel_qmark $n shire_scale_quest
+		mpechoat $n 遠方傳來一陣聲響「製作戰龍脛甲的任務已經可以重解了。」
+	endif
+endif
+~
+>give_prog 4203~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	if is_qmark($n) & shire_blacksmith_mars 200001
+		say 你不是給過了嗎？
+		give feather $n
+	else
+		mpjunk all.feather
+		mpmod_qmark $n shire_blacksmith_mars v1 | 1
+		mpcall shire_complete_1 $n
+	endif
+endif
+~
+>give_prog 15087~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	if is_qmark($n) & shire_blacksmith_mars 200002
+		say 你不是給過了嗎？
+		give skin $n
+	else
+		mpjunk all.skin
+		mpmod_qmark $n shire_blacksmith_mars v1 | 2
+		mpcall shire_complete_1 $n
+	endif
+endif
+~
+>give_prog 2293~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	if is_qmark($n) & shire_blacksmith_mars 200004
+		say 你不是給過了嗎？
+		give scale $n
+	else
+		mpjunk all.scale
+		mpmod_qmark $n shire_blacksmith_mars v1 | 4
+		mpcall shire_complete_1 $n
+	endif
+endif
+~
+>give_prog 1808~
+if is_qmark($n) == shire_blacksmith_mars 100003
+	if is_qmark($n) & shire_blacksmith_mars 200008
+		say 你不是給過了嗎？
+		give eversnow $n
+	else
+		mpjunk all.eversnow
+		mpmod_qmark $n shire_blacksmith_mars v1 | 8
+		mpcall shire_complete_1 $n
+	endif
+endif
+~
+>defun_prog shire_complete_1~
+good $n
+if is_qmark($n) == shire_blacksmith_mars 200015
+	mpmod_qmark $n shire_blacksmith_mars v0 = 4
+	say 終於蒐集完成了！
+	if class($n) < 5
+		mpexp $n 5400
+	else
+		mpexp $n 3600
+	endif
+	mpcallout 1 mpecho [1;37m$I 快速地將萬色返空鱗投進爐子裡。[0m
+	mpcallout 2 mpecho [1;37m$I 將石牛皮放在鐵砧上，包住鬥神護符與老鷹的羽毛。[0m
+	mpcallout 3 mpecho [1;37m$I 將燒紅的萬色返空鱗拿上來，放在鐵砧上敲打出一個形狀。[0m
+	mpcallout 4 mpecho [1;37m$I 把石牛皮放進火爐裡，在皮開始融化時拿上來鑲進鱗片裡。[0m
+	mpcallout 5 mpecho [1;37m$I 拿起鐵鎚一陣猛敲......[0m
+	mpcallout 6 mpecho [1;33m叮叮噹噹......[0m
+	mpcallout 7 mpecho [1;33m叮叮噹噹......[0m
+	mpcallout 8 mpecho [1;33m叮叮噹噹......[0m
+	mpcallout 9 mpecho [1;33m叮叮噹噹......[0m
+	mpcallout 9 mpoload 1122 37
+	mpcallout 10 mpecho [1;37m最後，這片龍鱗被 $I 打成了狂龍飛舞的形狀！[0m
+	mpcallout 11 give dragon $n
+	mpcallout 12 say 拿去吧，記得好好善用它。
+	mpcallout 12 mpdel_qmark $n shire_blacksmith_mars
+	mpcallout 12 mpmod_qmark $n shire_quest v0 | 1
+else
+	mpcall material_1 $n
+	say 加油，繼續蒐集吧！
+endif
+~
+>talk_prog chicken melody~
+if is_qmark($n) == shire_haton_chicken
+	say 去問山恩指揮官吧！
+	say 不要打擾我練製裝備！
+	sigh
+	say 何時才可以完成我的夢想啊！我心目中的裝備！
+endif
+~
+>defun_prog shire_scale_eqmake~
+if is_qmark($i) == shire_eqmake
+	if being($b)
+		if rembch($n)
+			mpecho $I正在努力的鍊製裝備....
+		else
+			say 對不起，我現在在忙，請待會再來。
+		endif
+		break
+	else
+		mpdel_qmark self shire_eqmake
+	endif
+endif
+~
+>talk_prog topic~
+mpcall shire_scale_eqmake $n
+if is_qmark($n) == shire_blacksmith_mars 100003
+	mpcall material_1 $n
+	break
+endif
+if is_qmark($n) & astral_quest 100004
+	break
+endif
+if is_qmark($n) & astral_quest 100002
+	if is_qmark($n) == shire_scale_quest
+		if is_qmark($n) == shire_scale_quest 100001
+			say 你已經找齊我所需要的物品了嗎？
+		endif
+	else
+		if is_inv_obj($n) == 1928
+		or is_equ_obj($n) == 1928
+			say 你身上的不就是 龍族的鱗片(dragon scale) 嗎？
+			say 我找這個東西很久了，因為我一直想要完成一項裝備(equipment)。
+			mpadd_qmark $n shire_scale_quest -1 0 0 0 0 1
+		endif
+	endif
+endif
+~
+>talk_prog equipment~
+mpcall shire_scale_eqmake $n
+if is_qmark($n) == shire_scale_quest 100000
+	if is_inv_obj($n) == 1928
+	or is_equ_obj($n) == 1928
+		say 我一直想要利用 龍族的鱗片(dragon scale) 來製作一項特殊的裝備，
+		say 可以提供年輕冒險者相當大的力量，
+		say 不知道您是否願意幫助我完成這個心願(yes/no)？
+	endif
+endif
+~
+>talk_prog no~
+mpcall shire_scale_eqmake $n
+if is_qmark($n) == shire_scale_quest 100000
+	say 是嗎？那就算了，我另尋高明了。
+	wave $n
+	mpdel_qmark $n shire_scale_quest
+endif
+~
+>talk_prog yes~
+mpcall shire_scale_eqmake $n
+if is_qmark($n) == shire_scale_quest 100000
+	say 實在太感謝您了，
+	say 除了龍族的鱗片，我還需要兩件龍族的東西，
+	say 一件是史卡拉貝城下水道裡的 紅龍腳爪(red dragon greaves) ，
+	say 一件是龍塔附近山上的 黑龍的頭顱(black dragon's head) ，
+	say 如果又有這兩件物品，我就可以完成我的裝備。
+	wave $n
+	addoil $n
+	mpmod_qmark $n shire_scale_quest v0 = 1
+endif
+~
+>defun_prog shire_scale_quest~
+if is_qmark($n) == shire_scale_quest 200007
+	mpdef_rembch $n
+	mpecho 你看到$I開始著手煉製裝備....
+	mpadd_qmark self shire_eqmake 20 0 0 0 1 0
+	mpcallout 5 mpecho $I 忽然皺起眉頭，似乎在製作上發生一些困難....
+	mpcallout 10 mpecho $I 坐下來想了一想，又繼續站起來製作裝備....
+	mpcallout 15 mpecho $I 擦了擦他的汗....
+	mpcallout 16 say 總算裝備製作比較順利了....，
+	mpcallout 20 mpecho $I 臉上漸漸露出微笑，似乎裝備已經快要完成....
+	mpcallout 25 hop
+	mpcallout 26 mpecho $I 拿起了製作好的裝備，看樣子已經完成了。
+	mpcallout 27 say 我終於完成了我心目中的裝備了....！
+	mpcallout 28 thank $b
+	mpcallout 29 say 沒有你，我沒辦法完成我心目中這個心願....，
+	mpcallout 30 say 因此我把這個裝備送給你，希望你好好的使用它。
+	mpcallout 30 mpoload 1929 5
+	mpcallout 31 give leggings $b
+	mpcallout 31 mpdel_qmark self shire_eqmake
+	mpcallout 31 mpdel_qmark $b shire_scale_quest
+	mpcallout 31 mpmod_qmark $b astral_quest v0 | 4
+	mpcallout 32 mpdef_rembch null-tar
+endif
+~
+>give_prog 1928~
+if is_qmark($i) == shire_eqmake
+	drop scale
+	say 對不起，我現在在忙，請待會再來。
+	break
+endif
+if is_qmark($n) & astral_quest 100004
+or is_qmark($n) != shire_scale_quest
+	drop scale
+	say 你給我這個東西做什麼？
+	break
+endif
+if is_qmark($n) !& shire_scale_quest 200001
+	nod $n
+	say 我已經收到 龍族的鱗片(dragon scale) 了。
+	mpmod_qmark $n shire_scale_quest v1 | 1
+	mpjunk scale
+	mpcall shire_scale_quest $n
+else
+	say 你已經給過我龍族的鱗片了。
+	drop scale
+endif
+~
+>give_prog 7309~
+if is_qmark($i) == shire_eqmake
+	drop greaves
+	say 對不起，我現在在忙，請待會再來。
+	break
+endif
+if is_qmark($n) & astral_quest 100004
+or is_qmark($n) != shire_scale_quest
+	drop greaves
+	say 你給我這個東西做什麼？
+	break
+endif
+if is_qmark($n) !& shire_scale_quest 200002
+	nod $n
+	say 我已經收到 紅龍腳爪(red dragon greaves) 了。
+	mpmod_qmark $n shire_scale_quest v1 | 2
+	mpjunk greaves
+	mpcall shire_scale_quest $n
+else
+	say 你已經給過我紅龍腳爪了
+	drop greaves
+endif
+~
+>give_prog 1115~
+if is_qmark($i) == shire_eqmake
+	drop head
+	say 對不起，我現在在忙，請待會再來。
+	break
+endif
+if is_qmark($n) & astral_quest 100004
+or is_qmark($n) != shire_scale_quest
+	drop head
+	say 你給我這個東西做什麼？
+	break
+endif
+if is_qmark($n) !& shire_scale_quest 200004
+	nod $n
+	say 我已經收到 黑龍的頭顱(black dragon head) 了。
+	mpmod_qmark $n shire_scale_quest v1 | 4
+	mpjunk head
+	mpcall shire_scale_quest $n
+else
+	say 你已經給過我黑龍的頭顱了
+	drop head
+endif
+~
+|
+#1121
+battle master~
+戰鬥教練(battle master)~
+戰鬥教練(battle master)正在教授許多學徒戰鬥技巧與知識。
+~
+這個戰鬥教練已經相當的蒼老了，身上有許多創傷可以想知他過去的輝煌戰史。
+~
+1|2 0 350 S
+29 0 0 0d0+0 0d0+0
+1500 0
+0 8 1
+R Hobbit~
+C 1
+>rand_prog 30~
+if rand(50)
+	if rand(50)
+		mpecho $I 大喝一聲：所有學員注意，向敵手腹部要害攻擊！
+	else
+		mpecho $I 大喝一聲：所有學員注意，向對方頭部要害攻擊！
+	endif
+else
+	if rand(50)
+		mpecho $I 大聲罵著：一點力氣也沒有！重來！！
+	else
+		mpecho $I 點頭稱是：打得不錯，要持續下去。
+	endif
+endif
+~
+|
+#1122
+Hobbit youth~
+年輕的賀比特(Hobbit youth)~
+這個年輕的賀比特(Hobbit youth)站在這邊不知道在幹什麼。
+~
+這個年輕的賀比特正處於黃金的年少時期。他趾高氣昂的用下巴看著你使你很想要一
+腳踏到他的臉上去。
+~
+1|64|128 0 0 S
+19 0 0 0d0+0 0d0+0
+20 0
+0 8 1
+R Hobbit~
+#1123
+seasoned adventurer~
+老練的冒險者(seasoned adventurer)~
+老練的冒險者(seasoned adventurer)坐在這邊正訴說著他過去的英雄傳奇與事蹟。
+~
+這個老練的冒險者過去似乎有著非常輝煌的歲月。雖然他已經年華不再，但是他對於
+戰術的老練經驗與技巧，是許多年輕戰士所比不上的。
+~
+1|2 0 100 S
+14 0 0 0d0+0 0d0+0
+170 0
+0 8 1
+R Hobbit~
+C 1|4|8
+#1124
+local gossip~
+多話的居民(local gossip)~
+這個多話的居民(local gossip)問著你：「最近有沒有新消息啊？」
+~
+這個多話的居民幾乎都在說話，很少在做其他的事情。你跟他說話簡直只能呆在那邊
+乖乖的聽他大談謬論。
+~
+1|2|128 0 0 S
+19 0 0 0d0+0 0d0+0
+25 0
+0 8 2
+R Hobbit~
+#1125
+Hobbit beauty~
+賀比特美女(Hobbit beauty)~
+這個美麗的賀比特美女(Hobbit beauty)讓你不得不目不轉睛的注意著她。
+~
+她幾乎可以說是最近你看過最美麗的生物了。當你一旦開始看她，你幾乎就沒有辦法
+移開你的視線。你幾乎有想要直接拜倒在她石榴裙下的衝動，只希望她能夠正面的瞧
+上你一眼。一陣強風吹來，你幾乎不忍心看到她美麗的臉龐被那陣強風給傷害了。
+~
+1|2 0 1000 S
+5 0 0 0d0+0 0d0+0
+75 0
+0 8 2
+R Hobbit~
+#1126
+trainee~
+練習生(trainee)~
+練習生(trainee)在一拳搥向假人的同時發出一陣吆喝聲。
+~
+這個練習生見到你正在看著他練習後對你露出淺淺的微笑。他雖然還很年輕，但是他
+對於在戰技上的認真程度讓你覺得他未來絕對大有可為。
+~
+1|2 0 0 S
+15 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Hobbit~
+#1127
+chic urbanite~
+行頭時髦的城市人(chic urbanite)~
+這個全身行頭新穎的城市人(urbanite)正在享受他工作的樂趣。
+~
+這個城市人的家中看起來的富裕。他的衣服全部都是最新穎的款式而且似乎有著有錢
+人獨特的雍容氣質。如果你願意陪他解悶喝杯咖啡他將會賞給你一些金錢。
+~
+1|2|128 0 0 S
+1 0 0 0d0+0 0d0+0
+800 0
+0 8 1
+R Hobbit~
+#1128
+country bumpkin~
+鄉下土包子(country bumpkin)~
+這個鄉下土包子(country bumpkin)來到這邊希望能一展長才。
+~
+這個鄉下土包子渾身十分的骯髒，你想可能就是那種睡覺打呼很大聲的蠢人吧！
+~
+1|2 0 0 S
+18 0 0 0d0+0 0d0+0
+70 0
+0 8 1
+R Hobbit~
+#1130
+innkeeper~
+旅館老闆(Innkeeper)~
+旅館老闆(Innkeeper)站在這邊正等待著你的訂房。
+~
+這個旅館老闆是個非常年長的賀比特，幾乎都在旅館中聽著進進出出人的流言。不過
+在他以前年輕的時候，是個相當老練的冒險者。
+~
+1|2 0 200 S
+28 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Hobbit~
+>death_prog 50~
+mpdis_magic self blindness
+mapt 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1131
+receptionist~
+接待員(receptionist)~
+這個接待員(receptionist)在這邊正在書寫一些文件。
+~
+他看起來就是那種職業工作狂。
+~
+3 0 200 S
+22 0 0 0d0+0 0d0+0
+70 0
+0 8 1
+R Hobbit~
+>death_prog 50~
+mpdis_magic self blindness
+mapt 5 c inf
+yell 指揮官，$N在囤墾區濫殺無辜啊！
+if mobcount(1132) < 15
+	mpecho 一位幹練的警探聽到$I的呼救後匆匆趕到！
+	mpmload 1132
+	mpforce shiriff mpkill $n
+endif
+~
+|
+#1132
+shiriff~
+警探(shiriff)~
+一位警探(shiriff)正在執行公務。
+~
+他看起來十分精明幹練，你想被他盯上了可不會有什麼好下場。
+~
+1|2|32 8|32 150 S
+23 0 0 0d0+0 0d0+0
+50 0
+0 8 1
+R Hobbit~
+C 1
+#1133
+guardsman guard~
+警衛(guardsman)~
+一名警衛(guardsman)在這裡守衛門戶的安全.
+~
+~
+1|2|64|8192 8|32|128|512 200 S
+25 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|4
+P 1|8
+>talk_prog topic~
+say 小子，沒事別在這閒晃，小心我叫警長把你關起來！
+~
+>greet_prog 100~
+if name($n) == qingyin-s
+	say 站住！沒有主人的允許，任何人不許進入。
+	mpecho 清音(Qingyin)見狀，隨即壓低聲音說道：「據說這位守衛貪財，試著賄賂他看看......」
+endif
+~
+>bribe_prog 60000~
+if is_qmark($n) >= thief_quest_list 202049
+	mpjunk coins
+	sm $n
+	say 你好，勇士們，你們是想見偉大的布爾什維克領主吧？
+	think
+	say 我可以幫你們這次，不過領主他吩咐過，所有想見
+	say 他的人都不許帶裝備進去，你願意嗎？(yes/no)
+	mpmod_qmark $n thief_quest_list v1 = 2050
+endif
+~
+>talk_prog yes~
+if is_qmark($n) == thief_quest_list 202050
+	mpmod_qmark $n thief_quest_list v1 = 2051
+	nod $n
+	say 請把裝備脫下來吧...
+	mpforce $n remove all
+	mpforce $n drop all
+	mpecho $I 開門讓你們進去，又趕緊把門鎖了起來。
+	mptransfer $n 1158
+	if insameroom(qingyin-s)
+		mpforce qingyin-s remove all
+		mpforce qingyin-s drop all
+		mpoload 3143 qingyin-s 35 target
+		mpforce qingyin-s mpat 5 wear all
+		mptransfer qingyin-s 1158
+	endif
+	if insameroom(meixin-s)
+		mpforce meixin-s remove all
+		mpforce meixin-s drop all
+		mpoload 3144 meixin-s 35 target
+		mpforce meixin-s mpat 5 wear all
+		mptransfer meixin-s 1158
+	endif
+endif
+~
+>talk_prog no~
+if is_qmark($n) == thief_quest_list 202050
+	shrug
+	say 那你就別想進去見領主了.
+endif
+~
+|
+#1134
+bullsen walk lord~
+布爾什維克(Bullsen Walk)~
+布爾什維克領主(Bullsen Walk the Lord)坐在這裡吸煙。
+~
+布爾什維克領主(Bullsen Walk the Lord)坐在這裡吸煙。
+~
+1|2|64|8192 8|32|512 -600 S
+32 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 1|8|256|4194304
+C 1|8
+>fight_prog 100~
+if rand(25)
+	kick
+	mpnowait
+endif
+if rand(25)
+	bashhead
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == thief_quest_list 202051
+or name($n) == qingyin-s
+or name($n) == meixin-s
+or name($n) == bullsen walk lord
+	yell 哇啊....竟被手無寸鐵的人殺了！
+	if being(qingyin-s)
+		mpat qingyin-s mpmod_qmark qingyin-s clarified_voice_timer timer = 30
+		mpat qingyin-s mpadd_qmark qingyin-s clarified_voice_reward 25 0 0 0 1 0
+	endif
+endif
+~
+|
+#1135
+storm pixiee-m~
+暴風門主匹克斯(storm pixiee)~
+風火海 暴風門主匹克斯(storm pixiee)受了很重的傷，僅能勉強走路。
+~
+在你眼前的是一位身材壯碩，文質彬彬的青年人。雖然他的外表看來只有三十歲
+左右，但頭髮卻已經斑白了，看來是長年用腦過度、日夜憂煩的後遺症。他穿著
+一身黑色的勁裝，結實的胸膛上卻有一大灘血跡。從他抿緊的嘴角旁也流出一絲
+鮮血，看來受的傷不輕。
+~
+1|2|8192 8|32|256|512 0 S
+46 -2500 0 -30d-30+150 0d150+0
+1000 0
+0 8 1
+P 1|4|8|256
+>talk_prog topic~
+say 咳 - 咳 - 咳 - ...請你...去問...流風..
+~
+>tick_prog 100~
+if is_qmark($i) != pixiee_envoy_quest
+or notbeing($b)
+	yell 哇啊～
+	mpecho $I 緊握著流風韻事(windsophisticated)的雙手大喊：
+	yell 且樂生前一杯酒，何須身後千載名？
+	mpecho $I 傷重而亡了！
+	rumor 風火海 $I 英年早逝，風火海的中興從此無望！
+	mppurge self
+endif
+~
+>rand_prog 40~
+if is_qmark($i) != pixiee_envoy_quest 200001
+or isfight($b)
+or area($b) == skarabrae
+	break
+endif
+mpmod_qmark $i pixiee_envoy_quest v0 + 1
+if insameroom($b)
+	if is_qmark($i) < pixiee_envoy_quest 100002
+		mpmload 14089
+		mpforce assassin-h mpdef_rembch $b
+		mpmload 14090
+		mpforce ninja-h mpdef_rembch $b
+		mpforce ninja-h mpgroup assassin-h self 1 0
+		mpmload 14090
+		mpforce ninja-h mpdef_rembch $b
+		mpforce ninja-h mpgroup assassin-h self 1 0
+		mpecho [1;33m風之城又展開一波新的攻勢！！[0m
+		mpforce assassin-h yell 小子匹克斯，還不納命來！
+		mpforce assassin-h back $b
+		break
+	endif
+	if is_qmark($i) < pixiee_envoy_quest 100003
+		mpmload 14093
+		mpforce savant-h mpdef_rembch $b
+		mpmload 14091
+		mpforce sorcerer-h mpdef_rembch $b
+		mpforce sorcerer-h mpgroup savant-h self 1 0
+		mpmload 14092
+		mpforce alchemist-h mpdef_rembch $b
+		mpforce alchemist-h mpgroup savant-h self 1 0
+		mpecho [1;33m風之城又展開一波新的攻勢！！[0m
+		mpforce sorcerer-h yell 暴風門的匹克斯，明年的今日就是你的祭辰啦！
+		mpforce alchemist-h mpkill $b
+		mpforce alchemist-h c sun
+		break
+	endif
+	mpmload 14093
+	mpforce savant-h mpdef_rembch $b
+	mpmload 1137
+	mpforce warlord-m mpdef_rembch $b
+	mpforce warlord-m mpgroup savant-h self 1 0
+	mpmload 1138
+	mpforce martialman-m mpdef_rembch $b
+	mpforce martialman-m mpgroup savant-h self 1 0
+	mpecho [1;33m風之城又展開一波新的攻勢！！[0m
+	mpforce warlord-m yell 我們今天要幫風火海送終，匹克斯你乖乖歸西吧！
+	mpforce warlord-m mpkill $b
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+yell 哇啊～
+mpecho $I 緊握著流風韻事(windsophisticated)的雙手大喊：
+yell 且樂生前一杯酒，何須身後千載名？
+rumor 風火海 $I英年早逝，風火海的中興從此無望！
+~
+|
+#1136
+windsophisticated windlady~
+流風韻事(windsophisticated)~
+風火海暴風門 流風韻事(windsophisticated)正在整理自己的頭髮。
+~
+在你眼前的是一位年輕的少女，披肩的長髮用紫色鍛帶紮起來，身上穿著一件若
+隱若現的白紗，很巧妙地烘托了她魔鬼般的惹火身材。雖然她的長相非常清純，
+但眼角的媚意與舉手投足間的風韻卻連青樓的名妓也要自嘆不如。如果她向你輕
+聲地哀求，你大概連褲子也願意當給她。
+~
+1|2|8192 8|32|128|512|8192 0 S
+46 0 0 0d0+0 -5d0+0
+1000 0
+0 0 2
+C 1|2
+P 1|4|8
+>talk_prog topic~
+say 我們的門主受了重傷，一定要趕快護送他到安全的地方。
+sigh
+~
+>entry_prog 100~
+if inroom($i) == 6024
+	if is_qmark(pixiee-m) < pixiee_envoy_quest 100001
+		mpmload 14089
+		mpforce assassin-h mpdef_rembch $b
+		mpmload 14090
+		mpforce ninja-h mpdef_rembch $b
+		mpforce ninja-h mpgroup assassin-h self 1 0
+		mpmload 14090
+		mpforce ninja-h mpdef_rembch $b
+		mpforce ninja-h mpgroup assassin-h self 1 0
+		mpforce assassin-h back $b
+	endif
+	if is_qmark(pixiee-m) < pixiee_envoy_quest 100003
+		mpmload 14093
+		mpforce savant-h mpdef_rembch $b
+		mpmload 14091
+		mpforce sorcerer-h mpdef_rembch $b
+		mpforce sorcerer-h mpgroup savant-h self 1 0
+		mpmload 14092
+		mpforce alchemist-h mpdef_rembch $b
+		mpforce alchemist-h mpgroup savant-h self 1 0
+		mpforce alchemist-h mpkill $b
+	endif
+	mpmload 14093
+	mpforce savant-h mpdef_rembch $b
+	mpmload 1137
+	mpforce martialman-m mpdef_rembch $b
+	mpforce martialman-m mpgroup savant-h self 1 0
+	mpmload 1138
+	mpforce warlord-m mpdef_rembch $b
+	mpforce warlord-m mpgroup savant-h self 1 0
+	mpecho [1;33m風之城又展開一波新的攻勢！！[0m
+	mpforce warlord-m yell 我們今天要幫風火海送終，匹克斯你乖乖歸西吧！
+	mpforce warlord-m mpkill $b
+	break
+endif
+if inroom($i) == 3013
+	if is_qmark(pixiee-m) < pixiee_envoy_quest 100006
+	or is_qmark($b) < mage_envoy_quest 300014
+		shake $b
+		say 對不起，我感覺得到風之城還沒放棄，
+		say 所以可以請你再保護我們一陣子嗎？謝謝。
+		bow $b
+		break
+	endif
+	mpdis_magic self blindness
+	tell $b 謝謝你，護送我們到這裡就可以了，我現在要和
+	tell $b 門主去療傷，等你有空記得到總舵找我們。
+	wave $b
+	mpgreward exp $b -42 10000
+	mpgreward skexp $b +36 1000
+	mpgreward merit $b +36 30
+	log $b complete the quest "光榮密使"
+	rumor $B完成艱巨任務，將暴風門主匹克斯(storm pixiee)護送到史卡拉貝！
+	mpmod_qmark $b mage_envoy_quest v0 = 22
+	mpat pixiee-m mppurge pixiee-m
+	mppurge self
+endif
+~
+>fight_prog 30~
+yell 我不會讓你們傷害門主的！
+c 'gfull heal'
+mpnowait
+~
+>tick_prog 100~
+if area($n) != shire
+	if area($n) != haon
+		if area($n) != skarabrae
+			say 對不起，我一定要先護送門主到史卡拉貝療傷！
+			wave
+			mpat pixiee-m mppurge pixiee-m
+			mppurge self
+		endif
+	endif
+endif
+if mobcount(1135) > 0
+	if insameroom(pixiee-m)
+	else
+		say 門主需要我的保護！我得去找他。
+		mpecho $I 匆匆離開了！
+		mpgoto pixiee-m
+	endif
+else
+	say 在天願做比翼鳥，在地願做連理枝。
+	sigh
+	say 門主死了，我也不想活...
+	mppurge self
+endif
+~
+|
+#1137
+mercenary warlord-m~
+傭兵戰王(mercenary warlord)~
+一位高大魁梧的傭兵戰王(mercenary warlord)正在做他最愛做的工作。
+~
+一位高大魁梧的傭兵戰王(mercenary warlord)正在做他最愛做的工作。
+~
+1|4|2|64|128|4096|8192|16384|524288 8|128|512|8192 -900 S
+40 4000 0 10d30+0 0d200+0
+500 0
+0 8 1
+R Lizardman~
+C 1|8|32
+P 4|8|128|4194304|8388608|16777216
+>tick_prog 100~
+if being($b)
+	if insameroom($b)
+	else
+		if area($b) == skarabrae
+		or area($b) == school
+			break
+		endif
+		mpgoto $b
+		yell 風火海的人統統都得死！
+		mpkill $b
+	endif
+else
+	say 任務達成，多留無益。
+	mppurge self
+endif
+~
+>repop_prog 100~
+mpoload 1912 36
+mpoload 1912 36
+mpat 5 wear all
+~
+>fight_prog 100~
+berserk
+mpnowait
+if rand(50)
+	wear all
+	disarm
+	mpnowait
+	take all
+	skilldrv heavyhit $n
+else
+	wear all
+	circular
+	mpnowait
+	skilldrv speedhit $n
+	mpnowait
+endif
+~
+>fight_prog 100~
+if fightwith($i) / assassin-h
+or fightwith($i) / ninja-h
+or fightwith($i) / savant-h
+or fightwith($i) / alchemist-h
+or fightwith($i) / sorcerer-h
+or fightwith($i) / warlord-m
+or fightwith($i) / martialman-m
+	mpgoto self
+	if pcnum($) > 0
+		mpkill $r
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if being($b)
+	if insameroom($b)
+		if insameroom(pixiee-m)
+			if is_qmark($b) == mage_envoy_quest 100021
+				mpat $b mpmod_qmark $b mage_envoy_quest v2 + 1
+			endif
+			mpecho $I 在死前將全身裝備奉獻給天神！
+			mppurge all
+		endif
+	endif
+endif
+~
+|
+#1138
+mercenary martialman-m~
+傭兵狂戰士(mercenary martialman)~
+一位青筋暴露的傭兵狂戰士(mercenary martialman)奮力砍殺。
+~
+一位青筋暴露的傭兵狂戰士(mercenary martialman)奮力砍殺。
+~
+1|4|2|64|128|4096|8192|16384|524288 8|128|512|8192 -900 S
+40 4000 0 10d15+0 0d200+0
+500 0
+0 8 1
+R Vampire~
+C 1|8|32
+P 4|8|128|4194304|8388608|16777216
+>tick_prog 100~
+if being($b)
+	if insameroom($b)
+	else
+		if area($b) == skarabrae
+		or area($b) == school
+			break
+		endif
+		mpgoto $b
+		yell 風火海的人統統都得死！
+		mpkill $b
+	endif
+else
+	say 任務達成，多留無益。
+	mppurge self
+endif
+~
+>repop_prog 100~
+mpoload 1912 36
+mpoload 1912 36
+mpat 5 wear all
+~
+>fight_prog 100~
+berserk
+mpnowait
+if rand(50)
+	wear all
+	disarm
+	mpnowait
+	take all
+	skilldrv multihit $n
+else
+	wear all
+	fren
+	mpnowait
+endif
+~
+>fight_prog 100~
+if fightwith($i) / assassin-h
+or fightwith($i) / ninja-h
+or fightwith($i) / savant-h
+or fightwith($i) / alchemist-h
+or fightwith($i) / sorcerer-h
+or fightwith($i) / warlord-m
+or fightwith($i) / martialman-m
+	mpgoto self
+	if pcnum($) > 0
+		mpkill $r
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if being($b)
+	if insameroom($b)
+		if insameroom(pixiee-m)
+			if is_qmark($b) == mage_envoy_quest 100021
+				mpat $b mpmod_qmark $b mage_envoy_quest v2 + 1
+			endif
+			mpecho $I在死前將全身裝備奉獻給天神！
+			mppurge all
+		endif
+	endif
+endif
+~
+|
+#1139
+haton mama~
+海頓媽媽(Haton mama)~
+海頓媽媽(Haton mama)臉上掛著一副焦急的神情。
+~
+海頓媽媽年約四十多歲，並沒有小孩。喜歡養養動物來消解寂寞，從小狗小貓到兔子
+等動物，都被海頓媽媽當作自己的小孩般疼愛，但是最得海頓媽媽歡心的是一隻名叫
+美樂蒂的母雞。不過話說回來，怎麼沒看到它跟在海頓媽媽的身邊勒？
+~
+1|64|128 8|32|512 850 S
+16 0 0 0d0+0 0d0+0
+0 0
+0 8 2
+R Hobbit~
+P 1|8
+>rand_prog 40~
+if rand(30)
+	mpecho $I 四處東張西望....
+	say 心肝寶貝！你在哪啊？快出來啊！
+else
+	if ispc($r)
+		if is_qmark($r) !& shire_quest 100002
+			say $R你有看到我的母雞(chicken)嗎？
+		endif
+	endif
+endif
+~
+>talk_prog chicken~
+if is_qmark($n) & shire_quest 100002
+	break
+endif
+if is_qmark($n) != shire_quest
+	mpadd_qmark $n shire_quest -1 0 0 0 0 1
+endif
+say 它是我最寶貝的寵物，除了陪我散步外還會生蛋給我吃。
+say 現在它不見了，真不知道怎麼辦才好？
+if is_qmark($i) != shire_haton_chicken
+	mpecho $I 露出一股傷心欲絕的表情，任誰看了都會想安慰(comfort)她。
+endif
+~
+>act_prog comfort~
+if is_qmark($n) != shire_haton_chicken
+	if being($b)
+  		say 我已經找到人幫忙了，多謝你的好意！下次再找你幫忙。
+  		bow $n
+	else
+  		gasp
+  		say 你真是一個好心人啊，你願意幫我找找嘛(talk mama yes/no)？
+	endif
+endif
+~
+>rand_prog 50~
+if being($b)
+	if is_qmark($i) == shire_haton_chicken
+	else
+		tell $b 你的任務拖太久了，請你重新開始。
+		mpdef_rembch null-tar
+	endif
+else
+	if is_qmark($i) == shire_haton_chicken
+		sigh
+		say 又是一個沒解完任務就離開的傢伙。
+		mpdel_qmark self shire_haton_chicken
+	endif
+endif
+~
+>talk_prog yes~
+if being($b)
+or is_qmark($n) == shire_haton_chicken
+or is_qmark($n) & shire_quest 100002
+	break
+endif
+mpadd_qmark $n shire_haton_chicken -1 0 0 0 0 1
+say 那麻煩你替我四處打聽打聽，我在這附近找找。
+mpdef_rembch $n
+mpadd_qmark self shire_haton_chicken 48 0 0 0 1 0
+mpalign $n 50
+bow $n
+~
+>talk_prog no~
+if being($b)
+or is_qmark($n) == shire_haton_chicken
+or is_qmark($n) & shire_quest 100002
+	break
+endif
+sigh
+say 那算了。
+~
+>talk_prog topic~
+if is_qmark($n) & shire_quest 100002
+	say 謝謝你的幫忙，善良的$N。
+	bow $n
+	break
+endif
+if rembch($n)
+	if is_qmark($n) == shire_haton_chicken
+		if is_inv_obj($n) == 1120
+			say 啊！你找到它啦！
+       			mpechoat $n 美樂蒂從你懷中掙脫，跳向海頓媽媽的懷裡！
+       			mpechoaround $n 美樂蒂從$N懷中掙脫，跳向海頓媽媽的懷裡！
+       			mppurge $n chicken-shire
+       			say 美樂蒂，我可想死妳了！
+       			say 謝謝你把美樂蒂帶回來了，年輕的冒險者！
+       			say 如果有我可以幫得上忙的地方！我一定會幫你的。
+       			mpgreward exp $n -20 600
+       			mpalign $n 75
+       			mpdel_qmark $n shire_haton_chicken
+       			mpdel_qmark self shire_haton_chicken
+       			mpmod_qmark $n shire_quest v0 | 2
+       			mpdef_rembch null-tar
+       			bow $n
+       		else
+       			say 請快點找到它！
+       			say 她對我而言就像親生女兒一般！
+       		endif
+       	endif
+endif
+~
+>talk_prog restart~
+if is_qmark($n) !& shire_quest 100002
+or is_qmark($n) != shire_quest
+	if is_qmark($n) == shire_haton_chicken
+		mpdel_qmark $n shire_haton_chicken
+		mpechoat $n 遠方傳來一陣聲響「本項任務已經可以重新開始！」
+	endif
+endif
+~
+>talk_prog p golden egg~
+if is_qmark($n) & shire_quest 200016
+	if is_qmark($n) !& shire_quest 100004
+     		say 喔！是這麼回事啊！吃了那種玉米粒(magical corn)可以下金雞蛋！？
+     		mpecho $I 認真地想了一會兒....
+     		say 看在你曾經幫過我的忙的份上，我就試試看。
+     		say 把神奇玉米粒給我吧！
+     	endif
+endif
+~
+>give_prog 1121~
+if is_qmark($n) & shire_quest 200016
+	if is_qmark($n) !& shire_quest 100004
+		mpjunk corn
+        	mpecho $I 哄著美樂蒂....
+        	mpecho 美樂蒂吃下了玉米粒....
+        	mpecho 美樂蒂開始胡亂拍著翅膀....
+        	mpecho 美樂蒂突然下起了金雞蛋....
+        	mpoload 1119 20 floor
+        	mpoload 1119 20 floor
+        	mpoload 1119 20 floor
+        	mpoload 1119 20 floor
+        	mpoload 1119 20 floor
+        	mpoload 1119 20 floor
+        	say 還真的耶！這些就給你吧！
+        	mpmod_qmark $n shire_quest v0 | 4
+        	mpgreward exp $n -15 400
+        	say 以後我就靠賣蛋維生好啦！
+		say 要常來光顧喔！要來買蛋(buy egg)喔！
+        	wave $n
+        	break
+        endif
+endif
+say 你給我這個做什麼？
+drop corn
+~
+>talk_prog p buy egg~
+if is_qmark($n) & shire_quest 100004
+	if is_qmark($n) !& shire_quest 200064
+		say 你來買金雞蛋啦！強身健體不錯吧！
+		say 一顆算你便宜！三千就好！如何夠便宜了吧！
+	else
+		say 你已經過買過金雞蛋了吧？
+	endif
+else
+	say 金雞蛋很稀有的！所以我只賣熟人！
+endif
+~
+>bribe_prog 3000~
+mpjunk all.coin
+if is_qmark($n) & shire_quest 100004
+	if is_qmark($n) !& shire_quest 200064
+        	say 來，這是你的金雞蛋！請小心收下！
+        	mpecho $I 小心翼翼地從籃子裡拿出一顆金雞蛋....
+        	mpechoat $n $I把蛋給了你....
+        	mpechoaround $n $I 把蛋給了$N ....
+        	mpoload 1119 $n 20 target
+        	mpmod_qmark $n shire_quest v1 | 64
+        else
+        	say 你已經買過金雞蛋了。
+        	mpgold $n 3000
+        endif
+else
+	say 為什麼沒事給我錢？
+	mpgold $n 3000
+endif
+~
+|
+#1140
+hungry vagabond~
+飢餓的流浪漢(hungry vagabond)~
+飢餓的流浪漢(hungry vagabond)看起來好像隨時都會昏倒。
+~
+流浪漢渾身散發出一股令人作噁的臭味，看起來像是餓了很久，走起路來搖搖晃晃的，
+看來昏倒只是早晚的問題而已。不過他實在太髒了，你實在不想再打量下去。
+~
+1|64|128 8|32|512|65536 0 S
+19 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 1|8
+C 1|2
+>repop_prog 100~
+mpoload 1117
+mpoload 1118
+mpat 5 wear all
+~
+>talk_prog chicken~
+roll
+if is_qmark($n) == shire_haton_chicken
+	say 你說這隻雞啊！我看它四處亂跑便把它抓起來了。
+	say 正想帶回去給我妻小嚐嚐！景氣不好窮人就更苦啦！
+	say 你就行行好！讓我走(let me go)吧，我們一家好幾天沒東西吃了，
+	say 還是你願意給我些錢(money)就當你把它買回去好了。
+endif
+~
+>talk_prog money~
+if is_qmark($n) == shire_haton_chicken
+	say 你要出多少啊？太少可養不起我那一家子人喔。
+endif
+~
+>talk_prog p let me go~
+if is_qmark($n) == shire_haton_chicken
+	say 謝謝你的大恩大德，那我就先走一步了！
+	say 那這件東西就給你吧，當作我的謝禮！
+	mpoload 1116 $n 25 target
+	mpechoat $n $I 給了你一件透明的飾品....
+	mpechoaround $n $I 給了$N一件透明的物品....
+	mpdel_qmark $n shire_haton_chicken
+	mpmod_qmak $n shire_quest v0 | 2
+   	mpalign $n -25
+	wave $n
+	mpecho 飢餓的流浪漢(hungry vagabond)一溜煙地跑掉了。
+	mppurge self
+endif
+~
+>bribe_prog 10000~
+mpjunk coin
+if is_qmark($n) == shire_haton_chicken
+	say $n 你真是太大方了啊！這樣讓我太不好意思了。
+      	mpgreward exp $n -15 200
+     	mpechoat $n $I 給你了一隻肥嘟嘟的母雞....
+      	mpoload 1120 $n viclv target
+      	mpalign $n 75
+	if isgood($n)
+		if resp($n) >= 3
+			if is_qmark($n) !& shire_quest 200001
+      				say 這樣好了！連我這身家當也都給你好了。
+      				remove all
+      				mpjunk cape
+      				mpjunk sash
+     				mpechoat $n $I 把身上的衣物都給了你....
+      				mpoload 1117 $n viclv target
+      				mpoload 1118 $n viclv target
+      				mpmod_qmark $n shire_quest v2 | 1
+      				say 雖不是什麼好東西，但是畢竟是我一番心意。你就收下吧！
+      			endif
+      		endif
+      	endif
+      	say 我回到家鄉也會宣揚你的事蹟的！
+      	mpecho $I 轉身離開了你的視線....
+      	mppurge self
+endif
+~
+>bribe_prog 5000~
+if is_qmark($n) == shire_haton_chicken
+	say 多出點吧！我家裡還有八十歲的老母啊！
+ 	mpjunk coin
+endif
+~
+>bribe_prog 1~
+if is_qmark($n) == shire_haton_chicken
+	say 多出點吧！我一群孩子正等著我帶食物回去！
+	mpjunk coin
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == shire_haton_chicken
+	shout $n 為了一隻母雞而殺人啊！
+	mpecho 一隻母雞從$I的懷中跳出來，馬上就不見了。
+endif
+~
+|
+#1141
+exotic traveler~
+外地來的旅者(exotic traveler)~
+外地來的旅者(exotic traveler)對什麼東西都感到興趣，正四處打量不停。
+~
+從他的打扮看來，就能發現他去過很多的地方。從他的口中應該可以聽到不少動人
+的故事，他眼神散發著異國的氣息，或許跟他聊聊是不錯的選擇。
+~
+1|2 8|32|512 0 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 1|8
+>talk_prog topic~
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) == shire_quest 200000
+			say 不過在我旅行的路途中有聽過不少母雞與金蛋的故事喔。
+   			say 願意的話我可以說給你聽(talk traveler golden egg)。
+   		endif
+   	endif
+else
+	if is_qmark($n) == shire_haton_chicken
+		if is_inv_obj($n) == 1120
+           		say 先把美樂蒂帶給海頓媽媽吧！她應該很焦急吧！
+        	else
+   			say 我是沒看到什麼母雞啦。
+   		endif
+   	endif
+endif
+~
+>talk_prog p golden egg~
+if is_qmark($n) == shire_haton_chicken
+    	say 你先趕緊幫海頓媽媽找到母雞再說吧！
+    	break
+endif
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) == shire_quest 200000
+			mpechoat $n $I 偷偷地開始跟你說起耳語....
+        		mpechoaround $n $I偷偷地開始與$N說起耳語....
+        		tell $n 是這樣的，
+        		tell $n 我從光明鎮旅遊至此，在旅途中得到了一些神奇玉米。
+       			tell $n 聽說給母雞吃了，可以下去金雞蛋喔！
+       			tell $n 本來我是要自己用的！無奈光明鎮不能養家畜家禽。
+       			tell $n 那樣會把恐龍引來。
+       			gig
+       			tell $n 如何？我可以給你喔！不過有條件(trade/not trade)。
+       		endif
+       	endif
+endif
+~
+>talk_prog p not trade~
+if is_qmark($n) == shire_haton_chicken
+    	say 你先趕緊幫海頓媽媽找到金雞蛋再說吧！
+    	break
+endif
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+        	shrug
+        	say 那就算了，可惜啊！你不知道這東西的價值！
+        	idiot $n
+        	say 趁著還有一點時間，我去別的地方試試好了。
+        	emtoe 動手整理自己的行曩....
+        	emtoe 提起行曩，匆匆地向外走去....
+        	mppurge self
+	endif
+endif
+~
+>talk_prog trade~
+if is_qmark($n) == shire_haton_chicken
+    	say 你先趕緊幫海頓媽媽找到金雞蛋再說吧！
+    	break
+endif
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) == shire_quest 200000
+       			gig
+       			mpcallout 1 say 是這樣的....，
+       			mpcallout 2 say 我已經用盡了我的旅費，但又想為家人買點禮物....，
+       			mpcallout 3 emote 不好意思地笑了笑....
+       			mpcallout 4 emote 從行囊裡拿出了一張紙....
+       			mpcallout 5 say 首先，是給我母親的養肝丸，你也知道嘛老人家身體總是比較差....，
+       			mpcallout 6 say 再來，是給小孩的，這東西我不知道是啥？小孩說是光明鎮沒有的....，
+       			mpcallout 7 say 所以要麻煩你去找了，聽小朋友說是一種看起來像雲朵....，
+       			mpcallout 8 say 嚐起來甜甜的，而且有許多不同的顏色....，
+       			mpcallout 9 emote 清了清喉嚨....
+       			mpcallout 10 say 再來，是給隔壁鄰居的禮物，聽說是這西方黑森林的特產....，
+       			mpcallout 11 say 而且德魯伊都愛吃的，好像是....，等等我想想....，
+       			mpcallout 12 emote 歪著頭想了想....
+       			mpcallout 13 say 是那個....那個「綠莓」吧！
+       			mpcallout 14 say 最後，是我自己要用的，可是....，
+       			mpcallout 15 emote 的臉都紅了起來....
+       			mpcallout 16 say 那我就直說了，你知道的，我是個有老婆的人....，
+       			mpcallout 17 say 夫妻嘛！總是會那個的！但是又不想再有小孩了，養個小孩要很多錢....，
+       			mpcallout 18 say 不過那是題外話了....，
+       			mpcallout 19 mpechoat $n $I 偷偷地在你耳邊說起耳語....
+       			mpcallout 19 mpechoaround $n $I 偷偷地在$N耳邊說起耳語....
+       			mpcallout 20 tell $n 我已經在史卡拉貝的醫生那問過了，不過醫生說避孕丸缺貨....，
+       			mpcallout 21 tell $n 所以你換個地方找找吧....，
+       			mpcallout 22 tell $n 我就在這附近繞繞，你找到後就給我吧....，
+       			mpcallout 23 say 我都收到後便給你神奇玉米(magical corn)....，
+       			mpcallout 24 say 忘記要蒐集什麼的話也可以回來問我(again)。
+       		endif
+ 	endif
+endif
+~
+>talk_prog again~
+if is_qmark($n) == shire_haton_chicken
+    	say 你先趕緊幫海頓媽媽找到金雞蛋再說吧！
+    	break
+endif
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) !& shire_quest 200001
+			say 給我母親的養肝丸。
+		endif
+		if is_qmark($n) !& shire_quest 200002
+			say 給小孩一種看起來像雲朵，嚐起來甜甜的，有許多不同的顏色的東西。
+		endif
+		if is_qmark($n) !& shire_quest 200004
+			say 西方黑森林的特產，德魯伊都愛吃的綠莓。
+		endif
+		if is_qmark($n) !& shire_quest 200008
+			say 還有我們夫妻要用的避孕丸。
+		endif
+	endif
+endif
+~
+>defun_prog shire_corn_give~
+if is_qmark($n) == shire_quest 200015
+	mpmod_qmark $n shire_quest v1 | 16
+	hop
+        say 這樣就可以把我在霸王賭坊那輸的補回來了，
+        say 我現在就把東西給你！
+        mpechoat $n $I 給了你一袋神奇玉米....
+        mpechoaround $n $I 給了$N一袋玉米....
+	mpechoat $n [1;36m「或許該去和海頓媽媽提提關於金雞蛋(golden egg)的事」[0m
+        mpoload 1121 $n viclv target
+        say 那我該走了，謝謝你幫了我個大忙！
+        emtoe 動手整理自己的行曩，提起行曩，快步向外走去....
+	mppurge self
+endif
+~
+>give_prog 13023~
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) !& shire_quest 200001
+			mpmod_qmark $n shire_quest v1 | 1
+        		mpcall shire_corn_give $n
+        		mpjunk pill
+			say 養肝丸我收下了，拿回去孝敬母親！
+        		break
+        	endif
+        endif
+endif
+say 拿這個東西給我做什麼？
+drop pill
+~
+>give_prog 4401~
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) !& shire_quest 200002
+			mpmod_qmark $n shire_quest v1 | 2
+   			say 原來這就是彩色的雲朵啊！
+   			soga
+   			mpjunk candy
+      			mpcall shire_corn_give $n
+      			break
+   		endif
+   	endif
+endif
+say 拿這個東西給我做什麼？
+drop candy
+~
+>give_prog 6016~
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) !& shire_quest 200004
+			mpmod_qmark $n shire_quest v1 | 4
+  			mpecho $I 對著藍莓仔細打量....
+			say 不是說是「綠莓」嘛！怎麼是藍色的。
+  			say 怪怪！不過你是本地人，你說是就是吧！
+  			mpjunk druid
+    			mpcall shire_corn_give $n
+    			break
+  		endif
+  	endif
+endif
+say 拿這個東西給我做什麼？
+drop druid
+~
+>give_prog 6519~
+if is_qmark($n) & shire_quest 100002
+	if is_qmark($n) !& shire_quest 100004
+		if is_qmark($n) !& shire_quest 200008
+			mpmod_qmark $n shire_quest v1 | 8
+   			mpechoat $n $I的臉紅了起來....
+   			say 謝謝你啦，有了這個，就不用擔心了！
+   			mpjunk pills
+     			mpcall shire_corn_give $n
+			break
+		endif
+   	endif
+endif
+say 拿這個東西給我做什麼？
+drop pills
+~
+|
+#1142
+young gentleman-Melufatis~
+年輕紳士(young gentleman)~
+一位披著黑袍的年輕紳士(gentleman)站在這裡小心的打量著你。
+~
+雖然身上的衣物附著在外活動時的泥濘、髒汙，但上頭多餘的華麗裝飾品仍舊能
+展現出他顯赫的身世。從肩上掛著的深色及地長袍則能推論他的職業。
+~
+1|2 8|32|64 350 S
+50 500000 0 0d0+0 0d0+0
+500000 0
+0 8 1
+C 2|4
+P 1|2|4|8|16|128|1048576|2097152|8388608|67108864
+S 17 -5000
+S 23 -50
+S 24 -100
+S 32 -100
+S 33 -100
+S 35 -100
+S 40 30
+>repop_prog 100~
+mpforcer here mload 1143
+mpgroup gentleman-Melufatis girl-Liliandus 0
+mpadd_qmark self talking_timer -1 0 0 0 0 1
+~
+>tick_prog 100~
+if isfight($i)
+	break
+endif
+if is_qmark($i) >= talking_timer 100010
+or is_qmark($i) >= leaving_timer 100010
+	mpecho $I離開了這裡。
+	mppurge girl-Liliandus
+	mppurge self
+endif
+if area($i) == shire
+	if rnplayer($) == 0
+		mppurge self
+	endif
+endif
+if is_qmark($i) == leaving_timer
+	mpmod_qmark self leaving_timer v0 + 1
+endif
+~
+>talk_prog topic~
+if isfight($i)
+	break
+endif
+if is_qmark($i) == talking
+	break
+endif
+if rembch($n)
+	if is_qmark($n) == ianua_bothynus_emeny
+		say 是敵人！
+		mpkill $n
+		break
+	endif
+	if is_qmark($i) >= talking_timer 100001
+		if pcnum($) > 1
+			say 你們最好給我個滿意的理由，否則就快出去。
+			mpmod_qmark self talking_timer v0 + 1
+		else
+			say 你最好給我個滿意的理由，否則就快出去。
+			mpmod_qmark self talking_timer v0 + 1
+		endif
+	endif
+	if is_qmark($i) == talking_timer 100000
+		if pcnum($) > 1
+			say 你們擅自跑進別人家想幹什麼？
+			mpmod_qmark self talking_timer v0 + 1
+		else
+			say 你擅自跑進別人家想幹什麼？
+			mpmod_qmark self talking_timer v0 + 1
+		endif
+	endif
+endif
+~
+>rand_prog 50~
+if inroom($i) == 1163
+else
+	break
+endif
+if is_qmark($i) == leaving_timer
+	break
+endif
+if is_qmark($i) == talking_timer 100007
+	if pcnum($) > 1
+		say 不說是嗎？那只有靠武力驅逐你們了！
+		mpkill $b
+	else
+		say 不說是嗎？那只有靠武力驅逐你了！
+		mpkill $b
+	endif
+endif
+if is_qmark($i) == talking_timer 100003
+	if pcnum($) > 1
+		say 如果沒事請離開我的房子，我可以不跟你們計較。
+	else
+		say 如果沒事請離開我的房子，我可以不跟你計較。
+	endif
+endif
+if is_qmark($i) == talking_timer 100000
+	if pcnum($) > 1
+		say 你們擅自跑進別人家想幹什麼？
+	else
+		say 你擅自跑進別人家想幹什麼？
+	endif
+endif
+mpmod_qmark self talking_timer v0 + 1
+~
+>talk_prog p the group~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if rembch($n)
+	if is_qmark($i) == talking_timer
+		wow $n
+		tell $n 原來你知道我們的事呀？
+		tell $n 那你也是對星之碎片感興趣的同好囉？(yes/no)
+		mpdel_qmark self talking_timer
+		mpadd_qmark self leaving_timer
+	endif
+endif
+~
+>talk_prog p yes~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+or is_qmark($n) == ianua_bothynus_member
+	break
+endif
+if rembch($n)
+	if is_qmark($i) == leaving_timer 200000
+		mpadd_qmark self talking
+		mpmod_qmark self leaving_timer v1 = 1
+		tell $n 哈，果然是這樣！
+		tell $n 世界上最有名的追星團非我們莫屬。
+		tell $n 只要是喜歡星之碎片的人沒有一個不清楚我們的厲害！
+		mpcallout 1 ponder
+		mpcallout 2 tell $n 我猜你一定是個崇拜者，跑來這裡是想加入我們對吧？(join/no)
+		mpcallout 2 mpdel_qmark self talking
+	endif
+endif
+~
+>talk_prog p no~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+or is_qmark($n) == ianua_bothynus_member
+	break
+endif
+if rembch($n)
+	mpadd_qmark $n ianua_bothynus_friend -1 0 0 0 0 1
+	mpmod_qmark $n ianua_bothynus_friend v0 | 1
+	mpadd_qmark self talking
+	gasp $n
+	tell $n 真是讓人驚訝，那你跑到這來是要幹啥....
+	mpcallout 1 ponder
+	mpcallout 2 tell $n 人說相見就是有緣。
+	mpcallout 2 tell $n 嘛...這些都無所謂。
+	mpcallout 3 hand $n
+	mpcallout 3 tell $n 從今往後你就是我的朋友了！
+	mpcallout 4 mpoload 1126 $n viclv target
+	mpcallout 4 mpechoat $n $I給了你一把法杖。
+	mpcallout 4 tell $n 朋友呀，慶祝我們的相識，就以這把法杖作為友誼的象徵吧！
+	mpcallout 5 tell $n 那麼我還有點事要先離開，期待未來能再與你相見。
+	mpcallout 6 mppurge self
+	mpcallout 6 mppurge girl-Liliandus
+	mpcallout 6 mpecho $I跟黑袍少女(young girl)離開了這裡。
+endif
+~
+>talk_prog p join~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+or is_qmark($n) == ianua_bothynus_member
+	break
+endif
+if rembch($n)
+	if is_qmark($i) == leaving_timer 200001
+		mpadd_qmark $n ianua_bothynus_member -1 0 0 0 0 1
+		mpadd_qmark $n ianua_bothynus_1 -1 0 0 0 0 1
+		mpmod_qmark self leaving_timer v1 = 2
+		mpadd_qmark self talking
+		good $n
+		tell $n 聰明的選擇！
+		tell $n 我以團長的身份授予你成為夜霄追星團(Bothynus Chaser)一員的資格！
+		mpcallout 1 mpechoat $n $I在你的衣領別上一枚閃亮的星型徽章。
+		mpcallout 1 mpechoaround $n $I在$N的衣領別上一枚恥力十足的徽章，$N看起來一臉得意。
+		mpcallout 1 mpoload 1127 $n viclv target
+		mpcallout 2 addoil $n
+		mpcallout 2 tell $n 請努力進行社團活動(events)，以獲得更多的閃耀星徽(evening-star)。
+		mpcallout 2 tell $n 從現在開始你正式成為我們的第九位團員了！
+		mpcallout 2 mpdel_qmark self talking
+	endif
+endif
+~
+>talk_prog p evening-star~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+	break
+endif
+if is_qmark($n) == ianua_bothynus_member
+	tell $n 閃耀星徽是團員們榮譽度的象徵。
+	tell $n 持有數量的多寡，直接顯示出團內地位高低。
+	tell $n 順道一提，我個人就持有五十個星徽呢！
+endif
+~
+>talk_prog p Bothynus Chaser~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+	break
+endif
+if is_qmark($n) == ianua_bothynus_member
+	tell $n 這個酷炫的名字就是我們的團名！
+	tell $n 別看我們名聲響亮就以為我們一直過著光鮮亮麗的生活。
+	tell $n 其實在前陣子都還過著貧乏的生活呢。
+	tell $n 也是靠著人窮志不窮的精神，努力不懈的進行社團活動。
+	tell $n 才終於感動上蒼獲得美好的成果，脫離艱苦的日子。
+endif
+~
+>talk_prog p events~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+	break
+endif
+if is_qmark($n) & ianua_bothynus_member 100001
+	break
+endif
+if is_qmark($n) == ianua_bothynus_1 100000
+	mpmod_qmark $n ianua_bothynus_1 v0 = 1
+	mpadd_qmark self talking
+	tell $n 只要遵守團員間不互鬥的宗旨，不管你以什麼方法、手段去追尋星之碎片。
+	tell $n 都可以被認定成在進行社團活動，也能隨自己喜好到世界各地尋找碎片。
+	tell $n 自由度可說是相當的高呢。
+	mpcallout 2 tell $n 這些特殊的時日被我們稱為星雨節，就是會發生大量星之碎片掉落的時間。
+	mpcallout 2 tell $n 在特定時間內，團員會漸漸的回到指定的社團隱匿之家(places)聚在一起。
+	mpcallout 2 tell $n 成員們平常都各別分頭進行活動，只有在特定的日子才會全員集合。
+	mpcallout 3 tell $n 每到那個時候，就是團員集結之時。
+	mpcallout 3 mpdel_qmark self talking
+endif
+~
+>talk_prog p places~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+	break
+endif
+if is_qmark($n) & ianua_bothynus_member 100001
+	break
+endif
+if is_qmark($n) == ianua_bothynus_1 100001
+	mpmod_qmark $n ianua_bothynus_1 v0 = 2
+	mpadd_qmark self talking
+	tell $n 最早的隱匿之家就只有這個地方。
+	tell $n 但怎麼說我們也算當今最火紅的團體，難免會有些妒嫉我們的人來找碴呢。
+	shrug
+	mpcallout 1 tell $n 現在風之大陸上的幾座大城市都有我們的據點呢。
+	mpcallout 1 tell $n 好在前些日子社團活動有成，得到一比不錯的報酬。
+	mpcallout 2 tell $n 避免產生不必要的麻煩，現在集合地點都會不時變換(change)。
+	mpcallout 2 mpdel_qmark self talking
+endif
+~
+>talk_prog p change~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_bothynus_emeny
+	say 是敵人！
+	mpkill $n
+	break
+endif
+if is_qmark($n) == ianua_bothynus_friend
+	break
+endif
+if is_qmark($n) & ianua_bothynus_member 100001
+	tell $n 等時候到了，你就會明白了。
+	break
+endif
+if is_qmark($n) == ianua_bothynus_1 100002
+	mpmod_qmark $n ianua_bothynus_member v0 | 1
+	mpdel_qmark $n ianua_bothynus_1
+	mpadd_qmark self talking
+	tell $n 團員間通常會使用一些公用的看板來傳遞訊息。
+	tell $n 如果沒有意外，時候到了你自然也一定會知道。
+	mpcallout 1 mpoload 1125 $n viclv target
+	mpcallout 1 mpechoat $n $I給了你一把法杖。
+	mpcallout 1 tell $n 慶祝你成為我們的一員，這把法杖就送給你吧。
+	mpcallout 2 tell $n 那麼我還有事要先離開，等時機到了自然會再見面。
+	mpcallout 3 mppurge self
+	mpcallout 3 mppurge girl-Liliandus
+	mpcallout 3 mpecho $I跟黑袍少女(young girl)離開了這裡。
+endif
+~
+>hitprcnt_prog 70~
+if is_qmark($i) == sun_escape
+	break
+endif
+mpadd_qmark self sun_escape
+mpadd_qmark girl-Liliandus sun_escape
+mpadd_all_qmark $n ianua_bothynus_emeny
+mpmod_all_qmark $n ianua_bothynus_emeny v0 | 1
+mpdel_all_qmark $n ianua_bothynus_friend
+mpdel_all_qmark $n ianua_bothynus_member
+if pcnum($) > 1
+	say 可惡，這群人好像有點難纏。
+else
+	say 這傢伙是怪物嗎？也太強了吧....
+endif
+mpcallout 1 say 瑪格用老方...
+mpcallout 2 say 莉莉安用老方法。
+mpcallout 2 shake
+mpcallout 3 mpforce girl-Liliandus say 了解。
+mpcallout 4 mppurge self
+mpcallout 4 mpecho 年輕紳士(young gentleman)從這裡逃離了。
+mpcallout 4 say 記得匯合地點在M市，我先走一步囉！
+~
+>fight_prog 100~
+if is_qmark($i) != agg_attack
+	mpmodify act | 32
+	mpadd_qmark self agg_attack
+endif
+~
+>fight_prog 25~
+c 'mass heal'
+~
+>fight_prog 25~
+c salvation
+~
+>fight_prog 30~
+change $r
+c burning
+~
+>fight_prog 30~
+change $r
+c 2 burning
+~
+|
+#1143
+young girl-Liliandus~
+黑袍少女(young girl)~
+一位披著黑袍的年輕女孩(young girl)冷靜的看著你。
+~
+她是一位目測年齡約16、17歲的妙齡少女。厚重的長袍是法師的標準裝備，搭配
+一頭黑長直髮及深色眼鏡，看起來像個標準的學校乖乖牌。不過讓人感到違和的
+是，在長袍之下居然穿著一條短到不行的褶裙。
+~
+1|2 8|32|64 -150 S
+55 500000 0 0d0+0 0d0+0
+1000 0
+0 8 2
+C 2|4
+P 1|2|4|8|128|1048576|2097152|8388608|67108864
+S 19 -20
+S 23 -50
+S 24 -50
+S 32 -50
+S 33 -50
+S 35 -50
+S 39 -3000
+S 40 30
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+~
+>tick_prog 100~
+if isfight($i)
+	break
+endif
+if is_qmark($i) == sun_escape
+	break
+endif
+if rmobcount(1142) == 0
+	mpecho $I離開了這裡。
+	mppurge self
+endif
+if area($i) == shire
+	if rnplayer($) == 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog topic~
+if isfight($i)
+	break
+endif
+if is_qmark($i) == talking
+	say 他心眼很小很愛記仇，不要隨便惹腦他。
+	say 如果沒其他事最好快點離開。
+	break
+else
+	say 有事跟他說。
+	mpadd_qmark self talking
+endif
+~
+>hitprcnt_prog 70~
+if is_qmark($i) == sun_escape
+	break
+endif
+mpadd_qmark self sun_escape
+mpadd_qmark gentleman-Melufatis sun_escape
+mpadd_all_qmark $n ianua_bothynus_emeny
+mpmod_all_qmark $n ianua_bothynus_emeny v0 | 1
+mpdel_all_qmark $n ianua_bothynus_friend
+mpdel_all_qmark $n ianua_bothynus_member
+if pcnum($) > 1
+	say 法提茲，看來我們打不贏他們。
+else
+	say 法提茲，這傢伙似乎有點不妙....
+endif
+say 你先離開，我自己再找機會逃脫。
+mpcallout 1 mpforce gentleman-Melufatis say 好，記得匯合地點在M市，我先走一步了。
+mpcallout 2 say 了解...
+mpcallout 3 mppurge gentleman-Melufatis
+mpcallout 3 mpecho 年輕紳士(young gentleman)從這裡逃離了。
+~
+>fight_prog 100~
+if is_qmark($i) == sun_spelling
+	break
+endif
+if is_qmark($i) == sun_escape
+	if rmobcount(1142) == 0
+		mpadd_qmark self sun_spelling
+		mpecho $I開始唱起一段讓你有些熟悉的咒文。
+		mpcallout 1 talk self spelling
+		mpcallout 2 talk self spelling
+		mpcallout 3 talk self checkrem
+	endif
+endif
+~
+>talk_prog p spelling~
+if is_qmark($n) == sun_escape
+	mpecho $I持續唸著咒文。
+endif
+~
+>talk_prog p checkrem~
+if is_qmark($n) == sun_escape
+	if insameroom($b)
+		if rand(50)
+			mpoload 1125 $b viclv target
+		else
+			mpoload 1126 $b viclv target
+		endif
+		mpforcer here modhmv $b 03.30 30 0
+		mpechoat $b $I眼神突然露出凶光，從背後抓出一根法杖朝你砸了過來！
+		mpechoaround $b $I突然從背後抓出一根法杖狠狠地朝$B的臉上丟過去！看起來好痛....
+		mpechoat $b 好痛....
+		mpcallout 1 talk self sunescape
+		mpcallout 1 mpecho 你的注意力放在$I突如其來的舉動時，最後一段咒文已經唱完了。
+	else
+		talk self spelling
+		mpcallout 1 mpecho $I唱完最後一段咒文時，你在心中大喊道：
+		mpcallout 2 talk self sunescape
+	endif
+endif
+~
+>talk_prog p sunescape~
+if is_qmark($n) == sun_escape
+	mpecho 糟了，是豔陽光爆！
+	c 'sun flash'
+	c 'sun flash'
+	c 'sun flash'
+	c 'sun flash'
+	c 'sun flash'
+	mpecho 一陣閃光後，已經不見$I的身影。
+	mppurge self
+endif
+~
+>fight_prog 100~
+if is_qmark($i) != agg_attack
+	mpmodify act | 32
+	mpadd_qmark self agg_attack
+endif
+~
+>fight_prog 25~
+if is_qmark($i) == sun_escape
+	if rmobcount(1142) == 0
+		break
+	endif
+endif
+change $r
+c fireball
+c fireball
+~
+>fight_prog 25~
+if is_qmark($i) == sun_escape
+	if rmobcount(1142) == 0
+		break
+	endif
+endif
+change $r
+c colour
+c colour
+~
+>fight_prog 25~
+if is_qmark($i) == sun_escape
+	if rmobcount(1142) == 0
+		break
+	endif
+endif
+change $r
+c 'lightning bolt'
+c 'lightning bolt'
+~
+|
+#0
+
+#OBJECTS
+#1100
+rainbow staff~
+彩虹之杖(rainbow staff)~
+彩虹之杖(rainbow staff)~
+~
+1 64 1
+0~ 0~ -1~ 0~
+8 0 0
+A
+4 1
+X wooden~
+
+#1101
+sting dagger~
+刺針(sting)~
+一把閃亮的精靈匕首(dagger)掉在這裡.~
+~
+5 1027 8193
+225~ 0~ 0~ 11~
+1 0 0
+A
+2 2
+X steel~
+
+#1102
+sign~
+招牌(sign)~
+這面招牌(sign)吸引了你的目光。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+0 0 0
+E
+sign~
+歡迎來到囤墾區。至於您的到來您必須瞭解到這邊的治安與一切事務是由山恩(Thain)
+保安指揮官在處理。因此你進到這邊就必須要遵守我們所定下的律法。如果你觸犯了這
+些法條，你將會被處罰。我們不歡迎無故鬧市的外來者來這邊搗亂。
+
+                                        -  山恩(Thain)
+                                        囤墾區之保安指揮官
+
+~
+X wooden~
+
+#1103
+pipeweed bread~
+長型麵包(pipeweed bread)~
+一條長型麵包(pipeweed bread)在此勾起了你的食慾。~
+~
+19 0 1
+24~ 0~ 0~ 0~
+1 0 0
+X food~
+
+#1104
+silvery cloak~
+銀色護袍(silvery cloak)~
+銀色護袍(silvery cloak)~
+~
+9 65 1025
+0~ 0~ 1251125~ 0~
+3 0 0
+A
+24 -2
+X silver~
+
+#1105
+one ring~
+至尊戒(One Ring)~
+一顆看起來相當普通的金戒指(ring)掉在這裡。~
+~
+9 64 16387
+0~ 0~ 1251125~ 0~
+3 0 0
+A
+12 20
+A
+17 10
+F 2
+X gold~
+
+#1106
+elven bow~
+精靈之弓(elven bow)~
+精靈之弓(elven bow)被放在這邊。~
+~
+5 1090 32769
+1251125~ 0~ 0~ 14~
+10 0 0
+A
+18 2
+X ebony~
+
+#1107
+mithril axe~
+密蘇里斧(mithril axe)~
+密蘇里斧(mithril axe)~
+~
+5 66 8193
+1251125~ 0~ 0~ 5~
+12 0 0
+A
+19 2
+X mithril~
+
+#1108
+thain girth~
+山恩的腰帶(thain girth)~
+山恩的腰帶(thain girth)~
+~
+9 0 2049
+0~ 0~ 1251125~ 0~
+4 0 0
+A
+4 2
+X fiber~
+
+#1109
+tiny dagger~
+迷你匕首(tiny dagger)~
+一把迷你匕首(tiny dagger)被放在這邊。~
+~
+5 0 8193
+1251125~ 0~ 0~ 11~
+3 0 0
+X tin~
+
+#1110
+egg~
+蛋(egg)~
+一顆蛋(egg)被放在這邊。~
+~
+19 0 1
+12~ 0~ 0~ 0~
+1 0 0
+X food~
+
+#1111
+bag~
+袋子(bag)~
+一個袋子(bag)被放在這邊。~
+~
+15 0 1
+50~ 0~ 0~ 0~
+5 10 0
+X cloth~
+
+#1112
+lantern~
+燈籠(lantern)~
+一個燈籠(lantern)被放在這邊。~
+~
+1 0 1
+0~ 0~ 20~ 0~
+4 10 0
+X paper~
+
+#1113
+bardiche~
+長戈(bardiche)~
+一把刀刃鋒利的長戈(bardiche)被放在地板上。~
+~
+5 0 8193
+1251125~ 0~ 0~ 3~
+10 0 0
+A
+18 4
+X iron~
+
+#1114
+flail~
+連枷(flail)~
+連枷(flail)被丟在地上。~
+~
+5 0 8193
+1251125~ 0~ 0~ 6~
+8 0 0
+X iron~
+
+#1115
+black draon head~
+黑龍的頭顱(black dragon head)~
+一顆血淋淋黑龍的頭(black dragon head)~
+~
+19 16384 1
+15~ 0~ 0~ 1~
+15 0 0
+X flesh~
+
+#1116
+glass arm circlet~
+琉璃臂環(glass arm circlet)~
+琉璃臂環(glass arm circlet)吸引了你的目光。~
+~
+9 321 257
+0~ 0~ 1001100~ 0~
+2 30000 0
+E
+glass arm circlet~
+晶瑩剔透的琉璃環狀雕花，看起來應是女子的飾品。
+~
+A
+3 2
+A
+1 -1
+A
+19 -2
+A
+12 10
+L 25
+C 30000
+X glass~
+
+#1117
+vagabond sash~
+流浪者束腰(vagabond sash)~
+流浪者束腰(vagabond sash)擺在這裡.~
+~
+9 1536 2049
+0~ 0~ 1001100~ 0~
+10 12000 0
+E
+vagabond sash~
+看起來像是用不知名動物死後的皮作成的腰帶。
+~
+A
+3 1
+A
+4 1
+A
+19 2
+L 18
+C 12000
+X leather~
+
+#1118
+smelly cape~
+發臭披風(smelly cape)~
+一件飄散著異味的披風(smelly cape).~
+~
+9 192 1025
+0~ 0~ 1001100~ 0~
+10 5000 0
+E
+smelly cape~
+散發著臭味的披風，聞起來像是腐敗的屍體。
+~
+A
+1 1
+A
+18 1
+A
+19 1
+A
+13 10
+H poison~ 25 10 3
+L 18
+C 5000
+X wool~
+
+#1119
+golden egg~
+金雞蛋(golden egg)~
+一顆閃爍著金光的雞蛋(egg).~
+~
+26 1 1
+20~ cure poison~ refresh~ refresh~
+1 0 0
+C 3000
+X flesh~
+
+#1120
+chicken-shire chicken~
+老母雞(chicken)~
+一隻有著漂亮金羽毛的母雞(chicken).~
+~
+12 2 1
+0~ 0~ 0~ 0~
+15 0 0
+E
+chicken-melody~
+這就是海頓媽媽的母雞─美樂蒂，活蹦亂跳的不肯安靜下來。
+~
+X flesh~
+
+#1121
+magical corn~
+神奇玉米(magical corn)~
+一些金黃色的玉米粒(magical corn).~
+~
+12 2 1
+0~ 0~ 0~ 0~
+15 0 0
+X food~
+
+#1122
+dragon amulet~
+狂龍護符(dragon amulet)~
+一面狂龍形狀的護符(amulet)被放在這裡。~
+~
+9 1|2|64|256|16777216 1|4
+0~ 0~ 600~ 0~
+8 300000 0
+A
+18 3
+A
+19 1
+L 37
+C 300000
+X dragon scale~
+
+#1123
+golden ornament~
+墓葬金飾(golden ornament)~
+一條蜘蛛型的金飾(ornament)被丟棄在這裡。~
+~
+8 64|256 1
+0~ 0~ 0~ 0~
+6 400000 0
+X mithril~
+
+#1124
+bullroarer's club~
+吼牛木棒(bullroarer's club)~
+一根棒頭反曲的木棍(club)被丟在地上。~
+~
+5 256|16777216 1|8192
+150~ 30~ 40~ 7~
+30 0 0
+A 18 15
+A 43 150
+R 16|1048576
+V Orc~ 20 100 0 150
+V Goblin~ 20 100 0 150
+V Hobgoblin~ 20 100 0 150
+X wooden~
+
+#1125
+war-howling staff~
+戰嚎法杖(war-howling staff)~
+一根揮一揮能讓人充滿戰意的法杖(staff)掉在地上。~
+~
+4 128 16385
+35~ 5~ 5~ combat mind~
+2 0 0
+Z 4
+X wooden~
+
+#1126
+water-bubble staff~
+水泡泡法杖(water-bubble staff)~
+一根能射出泡泡的水藍色法杖(staff)掉在地上。~
+~
+4 128 16385
+35~ 5~ 5~ breathe water~
+2 0 0
+Z 4
+X wooden~
+
+#1127
+shining shining evening-star badge~
+閃耀星徽(shining shining evening-star)~
+一個詭異的徽章(badge)掉在地上。~
+~
+13 128 1
+0~ 0~ 0~ 0~
+1 0 0
+Z 4
+X star dust~
+E
+shining evening-star~
+這是一枚有著奇怪刻痕的星型徽章，不知道有什麼用....
+
+　      ／＼
+　    ／    ＼
+　  ／        ＼
+　 ／   ′＞、 ＼
+　 ＼   ～╯   ／
+　   ＼      ／
+　    ＼／＼／
+~
+#0
+
+
+
+#ROOMDATA
+#1100
+朦朧的小徑~
+你走在朦朧的小徑上，通過了這個陰森森的森林。在你前方不遠處傳來了一
+陣陣微弱的聲音。
+~
+0 0 3
+D0
+朦朧的小徑向北穿過一片濃密的樹林。
+~
+~
+0 -1 1101
+D2
+朦朧的小徑向南穿過一片稀疏的樹林。
+~
+~
+0 -1 6000
+S
+#1101
+朦朧的小徑~
+你走在朦朧的小徑上，通過了這個陰森森的森林。在你前方不遠處傳來了一
+陣陣微弱的聲音。
+~
+0 0 3
+D0
+朦朧的小徑向北穿過一片濃密的樹林。
+~
+~
+0 -1 1102
+D2
+朦朧的小徑向南穿過一片濃密的樹林。
+~
+~
+0 -1 1100
+S
+#1102
+朦朧的小徑~
+你走在朦朧的小徑上，通過了這個陰森森的森林。在你前方不遠處傳來了一
+陣陣微弱的聲音。在你北邊你隱隱約約看到了一個村落。
+~
+0 0 3
+D0
+朦朧的小徑向著村落而去。
+~
+~
+0 -1 1103
+D2
+朦朧的小徑向南穿過一片濃密的樹林。
+~
+~
+0 -1 1101
+S
+#1103
+囤墾區的入口~
+你站在囤墾區的入口。你看到許多幾乎沒有正常人類一半高度的賀比特。
+你同時看到一條由東往西的小徑。
+~
+0 0 1
+D1
+在你的東邊橫過的是水源路。
+~
+~
+0 -1 1104
+D2
+在南邊，你看到朦朧的小徑朝濃密的樹林而去。
+~
+~
+0 -1 1102
+D3
+在你的西邊橫過的是水源路。
+~
+~
+0 -1 1118
+S
+#1104
+水源路~
+你站在整個囤墾區最繁忙的水源路上。這條路繼續的往東與往西延伸，在你
+北邊的則是一間日常用品店。
+~
+0 0 1
+D0
+一家日常用品店開在北邊。
+~
+~
+0 -1 1105
+D1
+在你的東邊橫過的是水源路。
+~
+~
+0 -1 1106
+D3
+屯墾區的入口如你所見的就在西邊。
+~
+~
+0 -1 1103
+S
+#1105
+日常用品店~
+你正在一間小商店的裡面。全部的商品都被成群的堆放的架子上。這個商店
+的老闆正有耐心的對你微笑著，等待著你選購他的商品。唯一的出口在你的南方。
+~
+0 8 0
+D2
+唯一的出口在南方。
+~
+~
+0 -1 1104
+S
+#1106
+水源路~
+你站在整個囤墾區最繁忙的水源路上。這條路繼續的往東與往西延伸，在你
+北邊的則是一間打鐵舖，南方則是通往一間托兒所。
+~
+0 0 1
+D0
+腳印朝向一家看起來不賴的打鐵舖。
+~
+~
+0 -1 1107
+D1
+在你的東邊橫過的是水源路。
+~
+~
+0 -1 1109
+D2
+在南邊的是一家當地的托兒所。
+~
+~
+0 -1 1108
+D3
+在你的西邊橫過的是水源路。
+~
+~
+0 -1 1104
+S
+#1107
+打鐵舖~
+你正在全囤墾區最好的打鐵舖裡頭。裡頭的老闆正驕傲的展示他辛勤製作出
+來的護具與武器。
+~
+0 8 0
+D2
+唯一的出口在南方。
+~
+~
+0 -1 1106
+S
+#1108
+托兒所~
+你正在一間托兒所裡面，裡頭的保母正忙著照顧幾乎快要失控的囤墾區居民
+的小孩。裡頭的嬰兒到處亂跑，使得保母的脾氣快要失控了。這裡唯一個出口指
+向北方。
+~
+0 8 0
+D0
+唯一的出口在北方。
+~
+~
+0 -1 1106
+S
+#1109
+道路的交口處~
+水源路在這裡由西轉南，東邊與北邊各有一座巨大而顯眼的房子。向南望去，
+你隱約可以看到類似客棧之類的建築。
+~
+0 0 1
+D1
+一座巨大而顯眼的房子在你的東方。上面的招牌寫著「屯墾區警備所」。
+~
+~
+0 -1 1110
+D2
+在你的南邊橫過的是水源路。
+~
+~
+0 -1 1112
+D3
+在你的西邊橫過的是水源路。
+~
+~
+0 -1 1106
+S
+#1110
+東囤墾區的警局~
+這正在東部囤墾區保安系統的中心-東囤墾區的警局裡面。如果你被囤墾區
+中的任何警長判定有罪，你將會立即遭受所有警長的逮捕。因此你瞭解到為何囤
+墾區的治安是如此十分的良好。這裡唯一個出口指向東邊。
+~
+0 8 0
+D1
+一扇門通往山恩指揮官的辦公室。
+~
+door~
+1 0 1111
+D3
+你可以看到水源路在你的西邊。
+~
+~
+0 -1 1109
+S
+#1111
+山恩指揮官的辦公室~
+你正在整個大囤墾區保安系統的中心人物-山恩(Thain)的辦公室中。山恩在
+過去就職時曾經發誓一定要保護整個囤墾區遠離盜賊與殺人犯的侵害。在西邊的
+門通往囤墾區的警局。
+~
+0 8 0
+D3
+一扇門通往屯墾區警備所。
+~
+door~
+1 0 1110
+S
+#1112
+水源路~
+你站在整個囤墾區最繁忙的水源路上。這條路繼續的往北與往南延伸，在你
+東邊你窺視到一個在囤墾區用來訓練年輕警探的訓練場。
+~
+0 0 1
+D0
+在你的北邊橫過的是水源路。
+~
+~
+0 -1 1109
+D1
+屯墾區警備所訓練場在你的東方。
+~
+~
+0 -1 1117
+D2
+在你的南邊橫過的是水源路。
+~
+~
+0 -1 1113
+S
+#1113
+水源路~
+你站在整個囤墾區最繁忙的水源路上。這條路繼續的往北延伸。在你東邊與
+西邊分別是囤墾區居民的私人住宅。南邊則是遠近馳名、在囤墾區最受歡迎的的
+艾維旅店(比起不受歡迎的銀龍酒店可差多了)。
+~
+0 0 1
+D0
+在你的北邊橫過的是水源路。
+~
+~
+0 -1 1112
+D1
+你窺探到一間屯墾區居民的私人住所在你的東邊。
+~
+~
+0 -1 1115
+D2
+在南方你看到得是艾維旅店，一個廣受屯墾區居民級冒險者喜愛的地方。
+~
+~
+0 -1 1116
+D3
+你窺探到一間屯墾區居民的私人住所在你的西邊。
+~
+~
+0 -1 1114
+S
+#1114
+私人住宅~
+你正在一棟私人的住宅之中，這間尺寸迷你的住宅提供了囤墾區賀比特一個
+容身之所。你很快的瀏覽了裡頭的裝飾，不過最好盡快出來，否則將會觸犯囤墾
+區的法律-私闖民宅！唯一的出口指向東邊。
+~
+0 8 0
+D1
+唯一的出口在東方。
+~
+~
+0 -1 1113
+>room_rand 50~
+if pcnum($) == 0
+or mobcount(1132) > 5
+or roomtimer($0) > 0
+	break
+endif
+if roomvalue($0) == 0
+	modrvt v0 = 3
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+	modrvt t0 = 15
+	mload 1132
+	echo 突然間警報大作！
+	echo 你在心中想著：糟糕，我不該私闖民宅
+	force shiriff say 大膽小賊，竟敢私闖民宅！
+else
+	modrvt v0 - 1
+endif
+~
+|
+S
+#1115
+私人住宅~
+你正在一棟私人的住宅之中，這間尺寸迷你的住宅提供了囤墾區賀比特一個
+容身之所。你很快的瀏覽了裡頭的裝飾，不過最好盡快出來，否則將會觸犯囤墾
+區的法律-私闖民宅！唯一的出口指向西邊。
+~
+0 8 0
+D3
+唯一的出口在西方。
+~
+~
+0 -1 1113
+>room_rand 50~
+if pcnum($) == 0
+or mobcount(1132) > 5
+or roomtimer($0) > 0
+	break
+endif
+if roomvalue($0) == 0
+	modrvt v0 = 3
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+	modrvt t0 = 15
+	mload 1132
+	echo 突然間警報大作！
+	echo 你在心中想著：糟糕，我不該私闖民宅
+	force shiriff say 大膽小賊，竟敢私闖民宅！
+else
+	modrvt v0 - 1
+endif
+~
+|
+S
+#1116
+艾維旅店~
+你現在正在整個囤墾區最受歡迎的艾維酒店之中。許多囤墾區的冒險者以及
+裝備時髦的居民都在此開懷暢飲或是談天說地。裡頭的老闆察覺你的到來停止了
+他所有的手邊工作。他正等著你說出你的需求。唯一的出口指向北邊。
+~
+0 262152 0
+D0
+唯一的出口在北方。
+~
+~
+0 -1 1113
+S
+#1117
+囤墾區警備所訓練場~
+許多戰鬥以及兵器交接的聲音鑽進你的耳裡。到處都可以看到囤墾區賀比特
+種族的年輕人在此為踏上警長之路而努力。裡頭的一位訓練師看到你就向你詢問
+是否有他能夠協助的地方。此處唯一的出口指向西邊。
+~
+0 0 0
+D3
+唯一的出口在西方。
+~
+~
+0 -1 1112
+S
+#1118
+水源路~
+你站在整個囤墾區最繁忙的水源路上。這條路繼續的往東與往北延伸。在你
+南邊是一棟十分雄偉的建築物。你可以沿著白蘭地河繼續往北走去。
+~
+0 0 1
+D1
+屯墾區的入口如你所見的就在東邊。
+~
+~
+0 -1 1103
+D2
+一座巨大而顯眼的房子在你的南方。上面的招牌寫著「屯墾區警備所」。
+~
+~
+0 -1 1119
+D3
+在你的西邊橫過的是水源路。
+~
+~
+0 -1 1120
+S
+#1119
+巨橋區警局~
+這正在囤墾區巨橋區保安系統的中心-巨橋區的警局裡面。如果你被囤墾區
+中的任何警長判定有罪，你將會立即遭受所有警長的逮捕。因此你瞭解到為何囤
+墾區的治安是如此十分的良好。這裡唯一個出口指向北邊。
+~
+0 8 0
+D0
+唯一的出口在北方。
+~
+~
+0 -1 1118
+S
+#1120
+水源路~
+你站在整個囤墾區最繁忙的水源路上。這條路繼續的往東與往西延伸。在你
+南邊這個區域中唯一的一家「歡愉」雜貨店。在你北邊則是一條橫跨河流的白蘭
+地橋。
+~
+0 0 1
+D0
+白蘭地橋提供一條安全的路來使你越過底下湍急的河水。
+~
+~
+0 -1 1131
+D1
+在你的東邊橫過的是水源路。
+~
+~
+0 -1 1118
+D2
+你看到了一家雜貨店「歡愉」在你的南邊。
+~
+~
+0 -1 1121
+D3
+在你的西邊橫過的是水源路。
+~
+~
+0 -1 1122
+S
+#1121
+歡愉雜貨店~
+一進到這邊就因為裡頭傳來的陣陣麵包香味而神清氣爽。聽說吃了這裡賣的
+可口麵包可以回復你相當的精力。你四處瀏覽卻沒有見到有任何的服務生在裡頭
+。直到你把頭伸過櫃臺才看的身高超矮的雜貨店老闆。唯一的出口在北邊。
+~
+0 8 0
+D0
+唯一的出口在北方。
+~
+~
+0 -1 1120
+S
+#1122
+水源路~
+你站在整個囤墾區最繁忙的水源路上。這條路繼續的往東延伸。在你西邊的
+是一座小山丘而南邊的遠處則是一座磨坊。你也撇見白蘭地河由此流向北邊。
+~
+0 0 1
+D1
+在你的東邊橫過的是水源路。
+~
+~
+0 -1 1120
+D2
+磨坊的入口在你的南方。
+~
+~
+0 -1 1123
+D3
+一座小山丘擋住了你往西邊的視線。
+~
+~
+0 -1 1126
+S
+#1123
+磨坊的入口~
+你站在磨坊的入口前。你聽到裡頭工人做工發出來的吆喝聲與磨坊機器發出
+來的運作聲。水源路繼續往北延伸，往南則可進入磨坊之內。
+~
+0 0 0
+D0
+你看到水源路在你的北邊。
+~
+~
+0 -1 1122
+D2
+一座磨坊抓住了你的視線。
+~
+~
+0 -1 1124
+S
+#1124
+磨坊之中~
+賀比特的工人們散佈在磨坊的各處辛勤的工作。在西邊你見到一個巨大的機
+器的運作，整個動力的來源是由人稱「白蘭地河」的巨大衝力在提供。磨坊的入
+口在北邊，往南邊可以繼續參觀磨坊。
+~
+0 8 0
+D0
+你看了入口。
+~
+~
+0 -1 1123
+D2
+一座木門朝向磨坊的後部。
+~
+door~
+1 0 1125
+S
+#1125
+磨坊的後面~
+你站在一個潮濕、陰暗的房間之中。根據牆上到處長滿發黴霉菌的跡象看來
+你可能是最近一段期間唯一進入此處的人。你見到地上有一個明顯的密門。
+~
+0 8 0
+D0
+一座磨坊抓住了你的視線。
+~
+~
+0 -1 1124
+D5
+一個隱閉的暗門透露出朝下的出口。
+~
+~
+0 -1 1146
+S
+#1126
+登上杜克山丘~
+你站在整個杜克山丘的頂端，這個山丘是由囤墾區的傳奇人物-邦朵拉‧杜克
+所命名。你感到能夠站在一個你十分景仰的英雄的成名地上感到十分的榮幸。由此
+處你可以眺望整個囤墾區。你似乎可以感到以前那些欺負你的人，現在都被你踐踏
+在腳下的快感。在遠遠的東方，你隱隱約約的看到史卡拉貝城的輪廓。一陣陣歡愉
+慶祝的聲音由西邊傳來。你似乎可以聞到附近有白蘭地的香味。
+~
+0 0 4
+D1
+在你的東邊橫過的是水源路。
+~
+~
+0 -1 1122
+D2
+往南邊有一條下坡的通道。
+~
+~
+0 -1 1161
+D3
+你看了一片綠色的田地在你的西邊。
+~
+~
+0 -1 1128
+S
+#1127
+大草原的北方盡頭~
+你站在一個草原上-不過這邊並沒有什麼值得你注意的地方。這個區域往南
+方與西方延伸。而東邊則是杜克山丘。
+~
+0 0 2
+D2
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1128
+S
+#1128
+大草原上~
+你站在大草原的中央地區。在這邊似乎正在舉行一場生日派對。桌子上擺滿
+了十分美味的食物，在旁的賀比特美女也邀請你一同參加。你被她的誠懇與美貌
+給吸引，一同參加了他們的派對。
+~
+0 0 2
+D0
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1127
+D1
+一座小山丘擋住了你往東邊的視線。
+~
+~
+0 -1 1126
+D2
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1129
+D3
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1130
+S
+#1129
+大草原的南方盡頭~
+你站在一個草原上-不過這邊並沒有什麼值得你注意的地方。這個區域往北
+方與西方延伸。而東邊則是杜克山丘。
+~
+0 0 2
+D0
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1128
+S
+#1130
+大草原的西方盡頭~
+你站在一個草原上-不過這邊並沒有什麼值得你注意的地方。這個區域除了
+西邊之外可以通往任何其他方向。
+~
+0 0 2
+D1
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1128
+S
+#1131
+白蘭地橋~
+你站在一座由質地堅硬的岩石蓋成的橋上面。當你往下一看，發現白蘭地河
+中游著許多色彩繽紛的魚。這涼爽的河水看起來十分的清爽，令人不禁有想要卸
+下衣物往裡頭一跳得衝動，但是你聽到不遠處傳來一陣女孩的笑聲，阻止了你往
+河裡跳的衝動。此處戴福路往北延伸，而南邊則是白蘭地路。
+~
+0 0 1
+D0
+你看到戴福路。
+~
+~
+0 -1 1132
+D2
+在你的南邊橫過的是水源路。
+~
+~
+0 -1 1120
+S
+#1132
+戴福路~
+戴福路在囤墾區中是南北向的路。在戴福路南邊的盡頭是白蘭地橋。在東邊
+你看到囤墾西區唯一的旅店-銀龍旅館。你聽到西邊傳來一陣馬的叫聲。
+~
+0 0 1
+D0
+你看到戴福路。
+~
+~
+0 -1 1133
+D1
+銀龍旅館以低廉的價錢提供美食、美酒及熱情的服務。
+~
+~
+0 -1 1144
+D2
+白蘭地橋提供一條安全的路來使你越過底下湍急的河水。
+~
+~
+0 -1 1131
+>room_enter 15 100~
+if is_qmark($n) == mage_envoy_quest 100020
+	echo [1;33m你看到流風韻事(windsophiticated)摻扶著一位受傷很重的青年男子慢慢走來。[0m
+	at 13389 purge windsophisticated
+	mload 1136
+	mload 1135
+	mod_qmark $n mage_envoy_quest v0 = 21
+	add_qmark pixiee-m pixiee_envoy_quest 300 0 0 0 0 1
+	force windsophisticated mpdef_rembch $n
+	force pixiee-m mpdef_rembch $n
+	force windsophisticated say 呃！太好了，剛好在這裡遇到你....
+	force windsophisticated smile $n
+	force windsophisticated say 不知為什麼，我們的行蹤完全被風之城掌握，剛剛
+	force windsophisticated say 便遭到猛烈的突襲，不但隨行的人都被殺了，門主
+	force windsophisticated say 還受了很重的傷..
+	force windsophisticated cry pixiee-m
+	force windsophisticated say 我們必須趕快保護門主到史卡拉貝去，一來可以找
+	force windsophisticated say 醫者療傷，而且在史卡拉貝有終結者與執法者，風
+	force windsophisticated say 之城的人也不敢那麼囂張，繼續追殺...
+	force windsophisticated say 拜託你幫我們開道了，我是賢者，戰鬥力真的不強。
+	force windsophisticated bow $n
+	force windsophisticated mpgroup $n windsophisticated
+	force pixiee-m mpgroup $n pixiee-m
+	force pixiee-m mpmod_qmark pixiee-m pixiee_envoy_quest v1 = 1
+endif
+~
+|
+S
+#1133
+戴福路~
+戴福路在囤墾區中是南北向的路。一棟巨大的建築物在路的東邊。你聽到西
+邊傳來一陣馬的叫聲。
+~
+0 0 1
+D0
+你看到戴福路。
+~
+~
+0 -1 1134
+D1
+一座巨大而顯眼的房子在你的東方。上面的招牌寫著「屯墾區警備所」。
+~
+~
+0 -1 1145
+D2
+你看到戴福路。
+~
+~
+0 -1 1132
+D3
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1138
+S
+#1134
+戴福路~
+戴福路在囤墾區中是南北向的路。在路的西邊有一棟小房子，東邊則沒有東
+西，而往前一看，一棟雄偉的建築物給了你十分深刻的印象。
+~
+0 0 1
+D0
+一匹高大俊美的馬兒深深地吸引了你的注意。在圓形拱門上的旗子寫著「甜蜜的家」。
+~
+~
+1 -1 1135
+D2
+你看到戴福路。
+~
+~
+0 -1 1133
+S
+#1135
+寬敞的家中~
+你站在一間裝潢華麗的房子裡面，裡面寬敞的程度幾乎可以當作賀比特的聚
+會廣場了。在牆上你看到一條旗子上面寫著「甜蜜的家」。一扇堅硬的橡木門引
+導你進入東邊餐廳，在你西邊的則是一間臥室。
+~
+0 8 0
+D1
+透過鑰匙孔，你看到了一間好像上了鎖的食物儲藏室。
+~
+door~
+1 -1 1137
+D2
+你看到戴福路。
+~
+~
+0 -1 1134
+D3
+你看見一間臥室。床上看起來有些凌亂，好像剛剛才被睡過。
+~
+~
+0 -1 1136
+S
+#1136
+臥室~
+你站在這間豪宅的私人臥室之中。在一邊有兩個同一種樣式的床鋪。在牆上
+掛著一幅賀比特的畫像，你猜測這幅畫像內的人物、同時也是這棟豪宅的主人一
+定是在此區的賀比特中十分卓越的人物。火爐中燃燒的火將整個房間的溫度調整
+的剛剛好。
+~
+0 8 0
+D1
+透過門的方向你看到了「甜蜜的家」的大廳。
+~
+~
+0 -1 1135
+S
+#1137
+餐廳~
+你正在餐廳裡頭。四周的架子上擺滿了各式的食物與飲料。你開始思考為什
+麼賀比特會需要吃那麼多的東西。似乎隱隱有些事情不太對勁。在地板上你看到
+一個密門。
+~
+0 8 0
+D3
+在門的後面是「甜蜜的家」的大廳。
+~
+door~
+1 -1 1135
+D5
+任何人都可以輕易的看出這扇暗門在哪。
+~
+~
+0 -1 1156
+S
+#1138
+大草原~
+你站在大草原上。一頭公牛在不遠處低頭吃著它的草。由北邊傳來了動物的
+體味。在南邊你看到一個豬圈。
+~
+0 0 2
+D0
+你看到一座巨大的穀倉。
+~
+~
+0 -1 1142
+D1
+你看到戴福路。
+~
+~
+0 -1 1133
+D2
+一座相當大的豬圈在你的南邊。
+~
+~
+0 -1 1139
+S
+#1139
+豬圈~
+你感到你的鞋子陷進了泥濘裡頭。一大堆豬在裡頭亂叫，完全無視與你的存
+在。往北是回到大草原，而你看到西邊有一條小徑。
+~
+0 0 1
+D0
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1138
+D3
+一條小徑蜿蜒著朝東方而去。
+~
+~
+0 -1 1140
+S
+#1140
+石頭小徑~
+你走在通往北邊一棟建築物的石頭小徑上。在你東邊可聽到那些豬的吵雜聲。
+~
+0 0 1
+D0
+在北邊，你看到了一間樸實的房子。
+~
+~
+0 -1 1141
+D1
+一座相當大的豬圈在你的東邊。
+~
+~
+0 -1 1139
+S
+#1141
+甘吉的住處~
+你站在一棟十分樸素的房子裡頭。你推測這棟房子的主人曾經擁有過四周的
+土地。空氣中有一些發霉不太好聞的味道，這些味道讓你想起了馬廄。你到處看
+了一看，其實有時候住在簡單樸素的房子中比住在豪宅中更好。
+~
+0 8 0
+D2
+你看到一條小徑蜿蜒著朝南方而去。
+~
+~
+0 -1 1140
+S
+#1142
+穀倉~
+這裡堆滿了各式各樣的雜物。在裡頭充滿了馬與牛的氣味，讓你十分需要新
+鮮的空氣來呼吸。除了這個以外，你不會覺得其他有什麼不安的，因為這邊似乎
+你要待多久就可以待多久。
+~
+0 8 0
+D0
+你看到一隻雞被關在北邊。
+~
+~
+0 -1 1143
+D2
+你看到了一片綠色的田野風光。真舒服啊！
+~
+~
+0 -1 1138
+S
+#1143
+小雞的窩~
+你站在一個十分擁擠的小雞的窩中。小雞向你要食物的叫聲吵的你不能安寧
+。唯一的出口指向南邊。
+~
+0 8 0
+D2
+你看到一座巨大的穀倉。
+~
+~
+0 -1 1142
+S
+#1144
+銀龍旅店~
+歡迎來到在囤墾區中最享受、最高級的銀龍旅店。一位非常迷人、友善的女
+服務生正準備給你送上食物與飲水。整個場合的顧客，幾乎都是賀比特，只有一
+兩位人類。當你細聽著整場的流言，你有聽到一兩個有趣的英雄傳奇。在這邊你
+可以感到這邊給你有家的感覺。不遠處有個樓梯通往上面。
+~
+0 262152 0
+D3
+你看到戴福路。
+~
+~
+0 -1 1132
+D4
+You see the reception.
+你看到了一場生日派對。
+~
+~
+0 -1 1157
+S
+#1145
+戴福路警局~
+這正在囤墾區戴福路保安系統的中心-戴福路的警局裡面。如果你被囤墾區
+中的任何警長判定有罪，你將會立即遭受所有警長的逮捕。因此你瞭解到為何囤
+墾區的治安是如此十分的良好。這裡唯一個出口指向西邊。
+~
+0 8 0
+D3
+你看到戴福路。
+~
+~
+0 -1 1133
+S
+#1146
+黑暗的地道~
+你站在一個地底下的地道中。地道中的天花板十分的低，你必須彎曲你的身
+子前進才能夠避免與天花板碰撞。你見到頭頂上有一些亮光照射進來，而在你的
+東邊你什麼都看不到。
+~
+0 9 0
+D1
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1147
+D4
+你看到一個通往小房間的入口。
+~
+~
+0 -1 1125
+S
+#1147
+黑暗的地道~
+你站在一個地底下的地道中。地道中的天花板十分的低，你必須彎曲你的身
+子前進才能夠避免與天花板碰撞。地道繼續往東邊與西邊延伸。整個地道仍然十
+分的黑暗。
+~
+0 9 0
+D1
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1148
+D3
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1146
+S
+#1148
+黑暗的地道~
+你站在一個地底下的地道中。地道中的天花板十分的低，你必須彎曲你的身
+子前進才能夠避免與天花板碰撞。你見到頭頂上有一些亮光照射進來，而在你的
+東邊你什麼都看不到。
+~
+0 9 0
+D1
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1149
+D3
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1147
+S
+#1149
+三叉路口~
+你站在一個交叉路口上。整個地道繼續的往東與往西延伸，但是在北邊你勉
+強可以辨識出一個模糊的小路。
+~
+0 9 0
+D0
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1151
+D1
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1150
+D3
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1148
+S
+#1150
+黑暗地道的盡頭~
+你站在黑暗地道的盡頭。這個地底下的地道繼續往西延伸。在頭頂上你發現
+一扇密門，密門外傳來陣陣冒險者的喧囂聲。
+~
+0 9 0
+D3
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1149
+D4
+你聽到一陣陣冒險者的喧鬧聲。
+~
+~
+0 -1 3001
+>room_enter 8 100~
+if is_qmark($n) == mage_envoy_quest 100021
+	echo $n觸動了傳送陷阱！
+	transfer $n 1131
+	transfer windsophisticated 1131
+	transfer pixiee-m 1131
+endif
+~
+|
+S
+#1151
+黑暗的地道~
+你站在一個地底下的地道中。地道中的天花板十分的低，你必須彎曲你的身
+子前進才能夠避免與天花板碰撞。地道繼續往北邊與南邊延伸。西邊你可以看到
+一間警局而東邊則是一間小型建築物。整個地道仍然十分的黑暗。
+~
+0 9 0
+D0
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1152
+D1
+你看到了賀比特洞穴。
+~
+~
+0 -1 1154
+D2
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1149
+D3
+你看到了一面由屯墾區警探所公告的告示牌在巨大的橡木門上。
+~
+~
+0 -1 1153
+S
+#1152
+黑暗的地道~
+你站在一個地底下的地道中。地道中的天花板十分的低，你必須彎曲你的身
+子前進才能夠避免與天花板碰撞。地道繼續往北邊與南邊延伸。西邊可以看到一
+間小型建築物。整個地道仍然十分的黑暗。
+~
+0 9 0
+D0
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1156
+D2
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1151
+D3
+你看到了一個賀比特洞穴。
+~
+~
+0 -1 1155
+S
+#1153
+貧民區警局~
+這正在囤墾區貧民區保安系統的中心-貧民區的警局裡面。如果你被囤墾區
+中的任何警長判定有罪，你將會立即遭受所有警長的逮捕。因此你瞭解到為何囤
+墾區的治安是如此十分的良好。這裡唯一個出口指向東邊。
+~
+0 9 0
+D1
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1151
+S
+#1154
+賀比特洞穴~
+你站在一個由賀比特所建造的洞穴之中。洞穴中四通八達的複雜網路路線讓
+你覺得你在裡頭就像是一隻老鼠一般。在裡頭空氣十分的潮濕並有霉味。你只希
+望能夠呼吸到新鮮的空氣。
+~
+0 9 0
+D3
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1151
+S
+#1155
+賀比特洞穴~
+你站在一個由賀比特所建造的洞穴之中。洞穴中四通八達的複雜網路路線讓
+你覺得你在裡頭就像是一隻老鼠一般。在裡頭空氣十分的潮濕並有霉味。你只希
+望能夠呼吸到新鮮的空氣。
+~
+0 9 0
+D1
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1152
+S
+#1156
+黑暗地道的盡頭~
+你站在黑暗地道的盡頭。這個地底下的地道繼續往南延伸。在頭頂上你發現
+一扇密門。
+~
+0 9 0
+D2
+你看到黑漆漆的隧道。
+~
+~
+0 -1 1152
+D4
+一道天花板上的暗門隱約透露著出口的位置。
+~
+~
+0 -1 1137
+S
+#1157
+銀龍旅店~
+你站在銀龍旅店的裡頭。許多賀比特的塑像與畫像正被要一群賀比特工人掛
+到牆上當裝飾用。沿著牆都是舒服的椅子與沙發。一個樓梯通往下面。
+~
+0 262168 0
+D5
+~
+~
+0 -1 1144
+S
+#1158
+華麗的大宅子~
+這是一棟華麗大宅子的前廳，牆上掛了許多油畫，櫃子裡全是一罐罐
+主人精心收集的名酒。廳堂中央是一組皮沙發和茶几，地上鋪了一塊紅色
+編織地氈。看得出來這裡的主人很懂得享受。
+~
+0 24 0
+D0
+~
+~
+0 -1 1159
+D4
+~
+~
+0 -1 1160
+S
+#1159
+廚房~
+堆滿各式食品與廚具的廚房，就像一般的大戶人家那樣。
+~
+0 8 0
+D2
+~
+~
+0 0 1158
+S
+#1160
+臥室~
+一個舒適的臥室，牆上的窗簾已經拉下所以顯得有點昏暗。
+~
+0 8 0
+D5
+~
+~
+0 0 1158
+S
+#1161
+杜克山丘南坡~
+你站在杜克山丘的南面坡地上，南邊是陡峭的懸崖，往北走能登上山峰。這裡
+的高度足夠讓你眺望整座西方黑森林，在遙遠的東方，甚至能隱約看見史卡拉貝城
+的輪廓。你發現西邊有條往下坡的通道。
+~
+0 0 0
+D0
+北邊可以爬上杜克山丘的頂端。
+~
+~
+0 0 1126
+D3
+西邊下坡不遠處有個天然平台。
+~
+~
+0 0 1162
+S
+#1162
+山坡平台~
+一個位於山腰上的平台，雖然地基穩固但平台邊緣都是斷崖，一不小心失足就
+要準備投胎了。你看到山壁旁有一棟簡陋的小木屋。
+~
+0 4 0
+D0
+一棟簡陋的木屋。
+~
+~
+1|2 -1 1163
+D1
+從這裡可以往山丘上爬去。
+~
+~
+0 0 1161
+S
+#1163
+簡陋木屋~
+這間木屋內裝相當簡陋，但生活必需品一樣也沒少。你發現地板散落著五、六
+條毛毯且房內的璧爐還殘存未熄的餘火，看來不久前屋內還有人在活動。另外比較
+引起你注意的是，屋內角落整齊放置著十幾台的單筒望遠鏡，不知道房內的住戶是
+從事怎樣的行業，會需要用到這麼多的望遠鏡。
+~
+0 4|8 0
+D2
+門外是一個寬敞的山腰平台。
+~
+~
+1|2 -1 1162
+>room_enter 127 100~
+if is_qmark($n) & ianua_info 100001
+	if is_qmark($n) != ianua_bothynus_info
+		add_qmark $n ianua_bothynus_info -1 0 0 0 0 1
+	endif
+endif
+~
+>room_command search around~
+stun $n 30
+echoat $n 你四處翻找....
+echoaround $n $N四處摸東摸西的，不知道在找些什麼。
+if is_qmark($n) & ianua_info 100001
+	if is_qmark($n) == ianua_bothynus_info 100000
+		if mobcount(1142) > 0
+		or mobcount(1143) > 0
+			callout 1 echoat $n 但什麼也沒找到。
+		else
+			if is_qmark($n) == ianua_bothynus_emeny
+				mod_qmark $n ianua_bothynus_info v0 | 1
+				at 13200 mload 1142
+				callout 1 echoat $n 但什麼也沒找到。
+				callout 2 force gentleman-Melufatis mpkill $n
+				callout 2 echo 從門外傳來聲響，你發現一對男女走進木屋內，不由分說的朝你砍來。
+				callout 2 force gentleman-Melufatis mpdef_rembch $n
+				callout 2 force girl-Liliandus mpdef_rembch $n
+				callout 2 at 13200 transfer gentleman-Melufatis 1163
+				callout 2 at 13200 transfer girl-Liliandus 1163
+			else
+				mod_qmark $n ianua_bothynus_info v0 | 1
+				at 13200 mload 1142
+				callout 1 echoat $n 但什麼也沒找到。
+				callout 2 echo 從門外傳來聲響，你發現一對男女走進木屋內。
+				callout 2 force gentleman-Melufatis mpdef_rembch $n
+				callout 2 force girl-Liliandus mpdef_rembch $n
+				callout 2 at 13200 transfer gentleman-Melufatis 1163
+				callout 2 at 13200 transfer girl-Liliandus 1163
+			endif
+		endif
+	else
+		callout 1 echoat $n 但什麼也沒找到。
+	endif
+else
+	callout 1 echoat $n 但什麼也沒找到。
+endif
+~
+|
+S
+#0
+
+#ROOMPROGS
+R 1108 shire_search.prg
+R 1109 shire_search.prg
+R 1113 shire_search.prg
+R 1118 shire_search.prg
+R 1124 shire_search.prg
+R 1128 shire_search.prg
+R 1130 shire_search.prg
+R 1131 shire_search.prg
+R 1135 shire_search.prg
+R 1142 shire_search.prg
+R 1145 shire_search.prg
+S
+
+
+#SPECIALS
+M 1100 spec_cast_mage
+M 1101 spec_poison
+M 1110 spec_guard
+M 1111 spec_guard
+M 1112 spec_guard
+M 1116 spec_cast_mage
+M 1117 spec_cast_mage
+M 1121 spec_guard
+M 1122 spec_thief
+S
+
+
+
+#RESETS
+M 0 1141 1 1116
+O 0 1102 0 1103
+M 0 1118 1 1105
+G 0 1111 0
+G 0 1112 0
+M 0 1120 1 1107
+M 0 1139 1 1126
+M 0 1104 2 1108
+M 0 1104 2 1108
+M 0 1103 6 1108
+M 0 1103 6 1108
+M 0 1103 6 1108
+M 0 1103 6 1108
+M 0 1103 6 1108
+M 0 1103 6 1108
+M 0 1133 1 1109
+E 0 1109 0 16
+E 0 616 0 5
+M 0 1110 8 1110
+E 0 1109 0 16
+E 0 616 0 5
+M 0 1110 8 1110
+E 0 616 0 5
+M 0 1111 4 1110
+E 0 616 0 5
+M 0 1112 1 1111
+E 0 1113 0 16
+E 0 616 0 5
+E 0 1108 0 13
+M 0 1128 4 1114
+G 0 1103 0
+M 0 1128 4 1115
+G 0 1103 0
+M 0 1113 1 1116
+G 0 1110 0
+G 0 648 0
+G 0 649 0
+G 0 650 0
+M 0 1123 4 1116
+M 0 1123 4 1116
+M 0 1124 2 1116
+M 0 1124 2 1116
+M 0 1127 7 1116
+M 0 1127 7 1116
+M 0 1127 7 1116
+M 0 1121 1 1117
+E 0 1113 0 16
+M 0 1126 3 1117
+E 0 1113 0 16
+M 0 1126 3 1117
+E 0 1113 0 16
+M 0 1126 3 1117
+E 0 1113 0 16
+M 0 1110 8 1119
+E 0 1109 0 16
+E 0 616 0 5
+M 0 1110 8 1119
+E 0 616 0 5
+M 0 1111 4 1119
+E 0 616 0 5
+M 0 1119 1 1121
+G 0 1103 0
+M 0 1115 6 1123
+M 0 1115 6 1123
+M 0 1115 6 1124
+M 0 1115 6 1124
+M 0 1115 6 1124
+M 0 1114 1 1124
+M 0 1115 6 1125
+M 0 1122 9 1127
+M 0 1122 9 1127
+M 0 1122 9 1127
+M 0 1125 1 1128
+M 0 1100 1 1128
+E 0 1104 0 12
+E 0 1100 0 0
+M 0 1122 9 1129
+M 0 1122 9 1129
+M 0 1122 9 1129
+M 0 1122 9 1130
+M 0 1122 9 1130
+M 0 1122 9 1130
+M 0 1116 1 1136
+E 0 1106 0 18
+E 0 622 0 6
+M 0 1117 1 1136
+E 0 1107 0 16
+E 0 621 0 5
+M 0 1101 1 1137
+E 0 1101 0 16
+E 0 1105 0 1
+E 0 623 0 7
+M 0 1108 1 1138
+M 0 1106 5 1139
+M 0 1106 5 1139
+M 0 1106 5 1139
+M 0 1106 5 1139
+M 0 1106 5 1139
+M 0 1102 1 1141
+M 0 1105 3 1142
+M 0 1105 3 1142
+M 0 1105 3 1142
+M 0 1109 4 1142
+M 0 1109 4 1142
+M 0 1109 4 1142
+M 0 1109 4 1142
+M 0 1107 6 1143
+G 0 1110 0
+M 0 1107 6 1143
+G 0 1110 0
+M 0 1107 6 1143
+G 0 1110 0
+M 0 1107 6 1143
+G 0 1110 0
+M 0 1107 6 1143
+G 0 1110 0
+M 0 1107 6 1143
+G 0 1110 0
+M 0 1130 1 1144
+G 0 1110 0
+G 0 648 0
+G 0 649 0
+G 0 650 0
+M 0 1123 6 1144
+M 0 1123 6 1144
+M 0 1123 6 1144
+M 0 1127 7 1144
+M 0 1127 7 1144
+M 0 1127 7 1144
+M 0 1127 7 1144
+M 0 1110 8 1145
+E 0 1109 0 16
+E 0 616 0 5
+M 0 1110 8 1145
+E 0 616 0 5
+M 0 1111 4 1145
+E 0 616 0 5
+M 0 1110 8 1153
+E 0 1109 0 16
+E 0 616 0 5
+M 0 1110 8 1153
+E 0 616 0 5
+M 0 1111 4 1153
+E 0 616 0 5
+M 0 1128 4 1154
+M 0 1128 4 1155
+M 0 1131 1 1157
+M 0 1134 1 1158
+E 0 1107 0 16
+S
+
+
+
+#SHOPS
+1113 17 0 0 0 0 150 50 0 23
+1118 13 5 15 1 17 150 50 0 23
+1119 13 5 15 1 17 150 50 0 23
+1130 17 0 0 0 0 150 50 0 23
+0
+
+
+
+#$

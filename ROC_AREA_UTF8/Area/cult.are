@@ -1,0 +1,2141 @@
+#AREADATA
+Name        邪龍祭壇~
+Identity    cult~
+Builders    Sandman~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      9800 9899
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#9800
+gatekeeper~
+守門員(gatekeeper)~
+守門員(gatekeeper)在此守護著邪龍祭壇的大門。
+~
+這個守門員看起來憂心忡忡的。也許你可以要求他給你鑰匙也不一定(ask for key)？
+~
+3 0 0 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 8
+>talk_prog p ask for key~
+	if is_qmark($i) == cult_gatekeeper_nokey
+		say 抱歉，我身上沒有鑰匙了
+		say 還要過一段時間我才能再打一把
+	else
+		mpcallout 1 $I露出驚訝的表情
+		mpcallout 2 say 你...你想進去？
+		mpcallout 3 say 這...好吧...不過你千萬要小心，據說裡面的神秘組織不是好惹的
+		mpcallout 4 say 請你先去找禁咒者 - 凱勒(Kellar the anti-caster)，他應該會需要你的幫助(help)
+		mpcallout 5 mpoload 9825 $n viclv target
+		mpcallout 5 mpechoat $n $I把鑰匙給了你
+		mpcallout 5 mpechoaround $n $I把鑰匙給了$n
+		mpcallout 5 mpadd_qmark $i cult_gatekeeper_nokey 25 0 0 0 0 1
+	endif
+~
+|
+#9801
+minor priest~
+小祭司(minor priest)~
+小祭司(minor priest)在祭壇內到處遊走。
+~
+他看起來像專心想某件事情。
+~
+193 8 -100 S
+5 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say 別煩我，我在想事情。
+~
+|
+#9802
+robed priest~
+華袍祭司(robed priest)~
+華袍祭司(robed priest)見到你的出現隨即開始警戒。
+~
+這些華袍祭司正在忙一些瑣事。
+~
+65 56 -200 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#9803
+draconian-cult knight draconian~
+龍人騎士(draconian knight)~
+龍人騎士(draconian knight)在這裡尋找著某些東西。
+~
+這個龍人騎士聽聞到邪龍祭壇似乎有某些計畫正在進行，
+所以特別過來一探究竟。
+~
+1|2|64 8|16|32|128 -500 S
+35 0 0 0d0+-500 0d0+-500
+-1 0
+0 8 1
+R Dragon~
+C 1|4|8
+P 4|8|128
+>talk_prog topic~
+	say 我聽說邪龍祭壇有一個計畫正在進行...所以特地過來查看
+	say 怎麼樣？有沒有興趣協助我？(yes/no)
+~
+>talk_prog yes~
+	if is_qmark($n) >= cult_question 100001
+		say 你在說什麼啊？沒頭沒腦的...
+	else
+		mpmod_qmark $n cult_question v0 = 1
+		good $n
+		say 那就麻煩你去探查一下，據我所知，事情的關鍵在女祭司的身上
+		say 也許可以在她那邊找到什麼...
+	endif
+~
+>talk_prog no~
+	if is_qmark($n) >= cult_question 100001
+		say 都到這邊了你還想退出？
+	else
+		say 不要拉倒--
+		shr
+	endif
+~
+>give_prog 9857~
+	if is_qmark($n) == cult_question 100002
+		mpjunk all.paper
+		mpcallout 1 mpecho $I仔細的看著紙片上的內容
+		mpcallout 2 say 原來是這樣啊...
+		mpcallout 3 say 看來這個計畫果真不假...
+		mpcallout 3 mppurge all.paper
+		mpcallout 4 mpechoat $n $I看了看你
+		mpcallout 4 mpechoaround $n $I看了看$n
+		mpcallout 5 say 抱歉，我想我們沒辦法再合作了
+		mpcallout 6 sorry $n
+		mpcallout 7 mpforce $n say 你...你說什麼？
+		mpcallout 8 say 我們都有各自的正義，而我必須貫徹我的正義！
+		mpcallout 9 mpechoat $n 你驚覺到事情並不單純！
+		mpcallout 9 modhmv $n 01.50 200 11314561
+		mpcallout 9 mpechoat $n $I忽然抽出匕首往你的胸口捅了一刀！
+		mpcallout 10 say 雖然對你很抱歉...我會幫你安葬的...
+		mpcallout 10 mpmod_qmark $n cult_question v0 = 4
+		mpcallout 10 mpkill $n
+	else
+		say 你給我這個幹嘛...
+		drop paper
+	endif
+~
+>fight_prog 40~
+	yell 去吧！龍的力量！
+	c fireball $n
+	mpnowait
+	c light $n
+	mpnowait
+	c chill $n
+	mpnowait
+	c whi
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 100004
+		mpecho $I似乎很痛苦的喘著氣
+		mpecho $I說著：本來，就沒有絕對的正義...不管是你或是我...
+		mpecho $I說著：正義不是你用眼睛就可以確認的...但是也不是你可以輕易相信的...
+		mpecho 也許你該去找凱勒(Kellar)談談...(report)
+		mpmod_qmark $n cult_question v0 = 8
+	endif
+~
+|
+#9804
+priestess-cult priestess~
+女祭司(Priestess)~
+女祭司(Priestess)在這裡思考某些事情。
+~
+她就是邪龍祭壇的女祭司，身上的透明薄紗將他火辣的身
+材烘托的若隱若現，就算是龍族想必也會被他吸引吧！
+~
+1|64 2|8|16|32 -600 S
+45 0 0 0d0+-100 0d0+-200
+-1 0
+0 8 2
+C 2
+P 8
+R human~
+>greet_prog 100~
+	if is_qmark($n) == cult_question 100001
+		yell 你是誰！
+		mpkill $n
+	endif
+~
+>fight_prog 30~
+	c fireball $n
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 100001
+		yell 不！我們的計畫...
+		mpecho 從$I身上掉出一張紙片！
+		mpmod_qmark $n cult_question v0 = 2
+		mpoload 9857 1 floor
+	else
+		mpecho 女祭司死前從內衣裡掏出一瓶藥水並且灑在自己身上！
+		mppurge self
+	endif
+~
+|
+#9805
+girl Charlotte-m~
+夏洛蒂(Charlotte)~
+這個女孩(girl)為她將要犧牲生命而哭泣。
+~
+她身上的衣服被撕的破破爛爛，衣服下面偶然露出的雪白肉體
+以及看到因為發現你注目著她時所浮現的紅暈，都使她看起來
+非常迷人...
+~
+3 0 0 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 8
+>greet_prog 100~
+if ispc($n)
+	if is_qmark($n) == cult_question 200004
+		mpechoat $n $I忽然抬起頭來看著你
+		mpmod_qmark $n cult_question v1 = 5
+		mpcallout 1 mpechoat $n $I跑過來撲到你的身上！
+		mpcallout 1 mpechoaround $n $I跑過來撲到$n的身上！
+		mpcallout 2 say 請你...請你帶我出去...
+		mpcallout 3 mpechoat $n $I在你的懷裡開始不停的掉眼淚...
+		mpcallout 3 mpechoaround $n $I在$n的懷裡開始不停的掉眼淚...
+		mpcallout 4 mpechoat $n 你覺得應該先告訴她是凱勒(kellar)請你過來的
+	else
+		mpechoat $n 你一進來，似乎觸動了某個機關！
+		mpechoaround $n $N似乎不慎觸動了某個機關！糟了！
+		mpecho $I忽然掉到地板下的陷阱裡面！
+		mpecho $I尖叫著：不要～～～！
+		if is_qmark($n) == cult_question
+			mpmod_qmark $n cult_question v1 = 6
+			mpmod_qmark $n cult_question v2 = 1
+			mpechoat $n 雖然很遺憾...你還是得回去告訴凱勒關於夏洛蒂(about Charlotte)的事情...
+		endif
+		mppurge self
+	endif
+endif
+~
+>talk_prog kellar~
+if is_qmark($n) == cult_question 200005
+	mpmod_qmark $n cult_question v1 = 6
+	mpcallout 1 say 是...是凱勒叔叔請你來的？ 
+	mpcallout 2 mpforce $n say 是啊...所以不要再哭了喔！
+	mpcallout 3 mpforce $n say 妳哭，關心妳的人也會跟著哭呢！
+	mpcallout 4 say 好...
+	mpcallout 5 mpecho $I連忙擦了擦臉上的眼淚
+	mpcallout 6 say 可不可以請你...轉告凱勒叔叔說，我已經回到家了(Charlotte back home)，請他放心
+	mpcallout 7 say 還有...
+	mpcallout 8 blush
+	mpcallout 9 kiss $n
+	mpcallout 10 say 謝謝你救了我
+	mpcallout 11 mpecho $I 消失在走道外面了...
+	mpcallout 12 mppurge self
+	mpmod_qmark $n cult_question v2 = 2
+endif
+~
+>death_prog 100~
+	mpecho $I尖叫著：不要～～～！
+~
+|
+#9806
+black dragon wyrmling~
+黑色邪龍(Black Dragon)~
+黑色邪龍(Black Dragon Wyrmling)想要吃掉你。
+~
+這隻黑色邪龍住在整個邪龍祭壇的中央，長的十分的噁心並且危險，因此
+你最好小心一點！
+~
+100455 168 -1000 S
+30 2000 500 40d40+-500 40d100+-500
+-1 0
+0 8 1
+R Dragon~
+S 13 3000
+C 7
+P 8|128
+>fight_prog 10~
+	fre $n
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 200002
+		mpmod_qmark $n cult_question v1 = 4
+		mpecho $I死前不斷的掙扎
+		mpecho $I把地板給打碎了！
+		mpecho 你覺得地板下面似乎還有一個空間...
+		mpforcer here makedoor 5 黑暗 passway 0 0 9898
+	endif
+~
+|
+#9807
+minor priest~
+小祭司(minor priest)~
+邪龍祭壇小祭司(minor priest)在浴室裡頭清潔整理。
+~
+這個小祭司現在看起來很忙，沒空理你。
+~
+1|2|64 8 -100 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#9808
+fanatic-m monk~
+狂熱信徒(fanatic monk)~
+一個狂熱信徒(fanatic monk)在這邊期待著世界末日的到來！
+~
+這個信徒十分的虔誠而且狂熱，在他的眼睛中可以看出他對邪龍祭壇的畏懼。
+~
+1 8 0 S
+8 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#9809
+anti caster kellar~
+凱勒(Kellar)~
+禁咒者 - 凱勒(Kellar the anti-caster)看起來憂心忡忡。
+~
+凱勒是史卡拉貝市長指派來此地抑止邪龍祭壇勢力的擴張，但是最近
+他發現此地有一股莫名的邪惡力量正在增長。
+~
+1|2|64 8|32|128|8192 1000 S
+50 10000 1000 20d20+0 -50d-50+3
+-1 0
+0 8 1
+C 1|2|4
+P 1|4
+>greet_prog 20~
+	if is_qmark($n) == cult_question_end
+		say 真是感謝你上次的幫助
+		bow $n
+	else
+		say 真是糟糕...誰能幫我這個忙(help)呢...
+	endif
+~
+>talk_prog help~
+	if is_qmark($n) == cult_question_end
+		say 你已經幫過我忙了。
+	else
+		if is_qmark($n) != cult_question
+			mpadd_qmark $n cult_question -1 0 0 0 0 1
+			mpcallout 1 say 雖然不好啟齒，但是我想麻煩你一件事情。
+			mpcallout 2 say 最近有個一個小女孩失蹤了，我懷疑她被困在邪龍祭壇裡面。
+			mpcallout 3 say 但是礙於命令，我不能離開這裡，所以想麻煩你幫我把她找出來。
+			mpcallout 4 say 就拜託你了！
+			mpcallout 5 bow $n
+		else
+			say 還沒有她的下落嗎？
+		endif
+	endif
+~
+>talk_prog report~
+	if is_qmark($n) == cult_question 100008
+		mpmod_qmark $n cult_question v0 = 16
+		mpcallout 1 say 難以理解...這些事情真是難以理解...
+		mpcallout 2 say 我的推測是，那名騎士大概是受誰的委託過來調查這件事情。
+		mpcallout 3 say 但是卻又跟你的目標不同吧...。
+		mpcallout 4 say 不管怎麼說，大概都跟他們打算培養的邪龍有關...。
+		mpcallout 5 say 拜託你了，只要可以打倒那頭龍，應該就可以找出結果。
+		mpcallout 6 say 我現在在你的身上施加一點魔力，這可以中和掉祭壇下面魔法陣的魔法
+		mpcallout 7 mpecho $I緩緩的念起了咒文
+		mpcallout 8 say 好了，快去吧！
+		mpmod_qmark $n cult_question v1 = 1
+	else
+		say 你要跟我回報什麼？
+	endif
+~
+>talk_prog p Charlotte back home~ 
+	if is_qmark($n) == cult_question 300002
+		mpcallout 1 say 真是太好了！
+		mpcallout 2 say 這是給你的謝禮，謝謝你幫了我一個大忙！
+		mpcallout 3 mpskillexp $n 5000
+		mpcallout 4 wave $n
+		mpdel_qmark $n cult_question
+		mpadd_qmark $n cult_question_end -1 1 0 0 0 1
+	else
+		say 你從哪裡聽來這種消息的？
+	endif
+~
+>talk_prog p about Charlotte~
+	if is_qmark($n) == cult_question 300001
+		mpcallout 1 mpforce $n say 對不起，因為我的無能...
+		mpcallout 2 say ...這樣嗎...沒辦法...這都是命...
+		mpcallout 3 say 這算是謝謝你的幫忙...
+		mpcallout 4 say 希望天神能保佑那個孩子
+		mpcallout 5 mpexp $n 10000
+		mpdel_qmark $n cult_question
+		mpadd_qmark $n cult_question_end -1 2 0 0 0 1
+	else
+		say 你怎麼知道她的名字？
+	endif
+~
+>talk_prog p earth stone~
+	mpcallout 1 say 你怎麼會問起這個呢...
+	mpcallout 2 say 我記得那是蓋爾(Gale)在尋找的材料啊...
+~
+>death_prog 100~
+if level($n) >= 36
+		say 你會為殺了我感到後悔的....！
+		if is_qmark($n) != skarabrae_enemy
+			mpadd_qmark $n skarabrae_enemy 50 0 0 0 1 1
+		else
+			mpmod_qmark $n skarabrae_enemy timer + 10
+		endif
+	endif
+~
+|
+#9810
+maien maid~
+少女 - 梅因(Maien the maid)~
+少女 - 梅因(Maien the maid)在這裡協助凱勒.
+~
+梅因幾乎把自己的年輕歲月都奉獻在維護史卡拉貝城的安危上了。
+~
+67 8 200 S
+19 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 2
+P 8
+>talk_prog topic~
+say 我在此侍奉凱勒大人已經很久了。
+~
+>greet_prog 80~
+say 要來一杯咖啡(coffee)嗎?
+smile $n
+~
+>talk_prog coffee~
+	if is_qmark($i) == cult_coffee
+		say 抱歉，我還在煮喔！
+		say 請$n你稍等一下吧！
+	else
+		mpoload 9840 $n viclv target
+		mpecho $I給了你一杯咖啡
+		mpadd_qmark $i cult_coffee 10 0 0 0 0 1
+	endif
+~
+|
+#9811
+gale equilier~
+蓋爾(Gale)~
+平衡者-蓋爾(Gale the equilier)正在研究天地平衡的奧妙.
+~
+蓋爾研究天地平衡的奧妙已經很久了，據說他打聽到有一顆叫做
+平衡之石(Rock of Equilibrium) 的魔石，裡頭有可以平衡天地兩極
+的功用。
+~
+67 0 -1000 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>greet_prog 100~
+	if is_qmark($n) == cult_rock_end
+		say 你好啊...
+		smile $n
+	else
+		say 大地之石(earth stone)...
+	endif
+~
+>talk_prog p earth stone~
+if is_qmark($n) == cult_rock_end
+	say 我對它沒興趣了...
+	else
+	mpcallout 1 hmm
+	mpcallout 2 say 簡單來說，那是我正在尋找的材料
+	mpcallout 3 say 平衡之石(Rock of Equilibrium)會用到它...不過我還沒找到...
+	endif
+~
+>give_prog 9860~
+	if is_qmark($n) == cult_rock_end
+		say 不...我不需要它了...
+		drop stone
+	else
+	mpcallout 1 say 這！這是大地之石！ 太好了！我的研究可以完成了！
+	mpcallout 2 say 請$n你跟我進去研究室吧，我應該很快可以完成研究
+	mpcallout 3 mpecho $I把研究室的門打開，跟你一起走了進去
+	mpcallout 4 mptransfer $n 9899
+	mpcallout 5 mpgoto 9899
+	mpcallout 6 mpecho $I開始精鍊大地之石...
+	mpcallout 7 mpecho $I把結晶丟到燒杯內開始攪拌...
+	mpcallout 8 mpecho $I把液體放入身旁的機械中...
+	mpcallout 9 mpecho 機械發出吵雜的聲音...
+	mpcallout 10 mpecho 機械發出吵雜的聲音...
+	mpcallout 11 say 完成了！
+	mpcallout 12 mpecho $I仔細的檢查著手上的石頭...
+	mpcallout 13 say 這...這跟我想像中差太遠了！
+	mpcallout 14 mpecho $I露出震驚的表情
+	mpcallout 15 mpforce $n say 難道...我拿錯石頭了嗎？
+	mpcallout 16 say 不...你沒有錯...錯的是我啊...
+	mpcallout 17 say 是我錯估了這股力量啊...這股原本被應用在戰爭的力量...不是我所追求的...
+	mpcallout 18 glare
+	mpcallout 19 say 石頭就給你吧...我不需要它了...
+	mpcallout 20 mpecho $I把石頭給了你
+	mpcallout 21 mpoload 9861 $n viclv target
+	mpcallout 22 say 請你讓我在這裡冷靜一下...我想我應該更加思考所謂的平衡...
+	mpcallout 23 mpadd_qmark $n cult_rock_end -1 0 0 0 0 1
+	mpcallout 24 mpecho $I把你帶出了研究室，自己又走了回去
+	mpcallout 25 mptransfer $n 9875
+	endif
+~
+>death_prog 100~
+if level($n) >= 36
+		say 你會為殺了我感到後悔的....！
+		if is_qmark($n) != skarabrae_enemy
+			mpadd_qmark $n skarabrae_enemy 50 0 0 0 1 1
+		else
+			mpmod_qmark $n skarabrae_enemy timer + 10
+		endif
+	endif
+~
+|
+#9812
+frey boffin~
+研究員 - 佛瑞(Frey the boffin)~
+研究員 - 佛瑞(Frey the boffin)在此地協助蓋爾解開平衡之謎.
+~
+佛瑞是個認真的學者，他受到蓋爾的影響開始對於天地平衡之秘感
+到興趣。
+~
+67 8 -1000 S
+40 17 6 1d4+30 1d4+3
+-1 0
+0 8 1
+>talk_prog topic~
+say 嗨！你好，我是佛瑞，一名史卡拉貝城的學者。
+~
+>death_prog 100~
+if level($n) >= 36
+		say 你會為殺了我感到後悔的....！
+		if is_qmark($n) != skarabrae_enemy
+			mpadd_qmark $n skarabrae_enemy 50 0 0 0 1 1
+		else
+			mpmod_qmark $n skarabrae_enemy timer + 10
+		endif
+	endif
+~
+|
+#9813
+torturer~
+銬問者(Torturer)~
+銬問者(torturer)已經準備好要對你施以嚴刑毒打.
+~
+哇!你簡直不敢相信你眼前所見到的地獄景象!
+~
+67 8 -1000 S
+17 17 6 1d4+30 1d4+3
+-1 0
+0 8 1
+P 8
+#9814
+attendant~
+隨從(attendant)~
+這個隨從(attendant)在此打理凱勒生活上的一切.
+~
+他看起來沒什麼特別的.
+~
+67 8 -1000 S
+20 17 6 1d4+30 1d4+3
+-1 0
+0 8 1
+>talk_prog topic~
+say 你好。
+~
+|
+#9815
+zombie-cult~
+僵屍(Zombie)~
+這隻僵屍(zombie)憎恨一切有生命的活物, 包括你在內.
+~
+這一隻僵屍發出十分「新鮮」的惡臭，看樣子他應該剛剛死沒多久，因此身上
+還有不少未腐爛的肌肉。.
+~
+67 8 -1000 S
+16 17 6 1d4+3 1d4+3
+-1 0
+0 8 1
+R Undead~
+>rand_prog 50~
+if ispc($r)
+		mpkill $r
+	endif
+~
+|
+#9816
+lich priest~
+巫妖祭司(Lich Priest)~
+巫妖祭司(Lich Priest)用他死沈沒有生氣的眼睛盯著你.
+~
+這一隻巫妖生前曾經是邪龍祭壇的偉大祭司。在他生前獲得了如何讓生物變成不
+死生物的魔法。而他自己就是他最後實驗的對象。
+~
+67 184 -1000 S
+40 60 6 1d4+-200 1d4+100
+-1 0
+0 8 1
+R Undead~
+P 8
+>greet_prog 100~
+	if is_qmark($n) == cult_question 200001
+		say 愚蠢！自以為正義的人們...
+		say 又想來尋找大地之石(Earth stone)嗎？
+		mpmod_qmark $n cult_question v1 = 2
+		mpkill $n
+	else
+		mpkill $n
+	endif
+~
+>fight_prog 30~
+	if rand(30)
+		c fireball $r
+		break
+	endif
+	if rand(30)
+		c flamestrike $r
+		break
+	endif
+	if rand(30)
+		c 'burning hand' $r
+	endif
+~
+>death_prog 100~
+	if is_qmark($n) == cult_question 200002
+		yell 不！永恆的！不死的生命啊...
+		mpecho $I的身上掉出了一把鑰匙！
+		mpoload 9826 $n viclv floor
+		mppurge self
+	else
+		mppurge self
+	endif
+~
+|
+#9817
+monk old~
+老信徒(old monk)~
+一個祭壇的老信徒(old monk)在這邊無所事事的走來走去.
+~
+他有著一副幾乎已經腐爛掉的牙齒.
+~
+67 8 -200 S
+15 62 6 1d4+30 1d4+3
+-1 0
+0 8 1
+
+#0
+
+
+
+#OBJECTS
+#9825
+black key~
+黑色鑰匙(black key)~
+一把看來非常重要的黑色鑰匙(black key)靜靜地躺在地上~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X iron~
+
+#9826
+primitive key~
+老舊鑰匙(primitive key)~
+一把老舊的鑰匙(primitive key)靜靜地躺在地上~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X iron~
+
+#9827
+skull key~
+骷髏鑰匙(skull key)~
+一把用骷髏製成的鑰匙(skull key)放在地上~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X bone~
+
+#9828
+bone sword~
+白骨劍(bone sword)~
+一把看起來很鋒利的白骨劍(bone sword)放在這邊.~
+~
+5 576 8193
+100~ 0~ 0~ 1~
+5 4000 0
+A
+1 1
+A
+2 1
+A
+3 -1
+A
+18 3
+A
+19 4
+L 1
+C 4000
+X bone~
+
+#9829
+skull helm dragon~
+龍骨頭盔(skull helm of dragon)~
+一個由龍骨(skull bone)製成的頭盔(helm)被放在這邊.~
+~
+9 1 17
+0~ 0~ 100~ 0~
+15 4000 0
+A
+3 -1
+A
+5 2
+L 1
+C 4000
+X dragon bone~
+
+#9830
+robes~
+闇黑護袍(dark robes)~
+一件黑色的護袍(robe)被丟在地上.~
+~
+9 0 9
+0~ 0~ 100~ 0~
+5 1000 0
+A
+12 30
+L 1
+C 1000
+X fiber~
+
+#9831
+black pen~
+黑筆(black pen)~
+一隻黑色的筆(black pen)吸引了你的注意力.~
+~
+5 0 8193
+100~ 0~ 0~ 11~
+8 300 0
+L 1
+C 300
+X feather~
+
+#9832
+evil black dagger~
+闇黑匕首(black evil dagger)~
+一把黑色的匕首(black dagger)在地上散發邪惡的氣息.~
+~
+5 16 8193
+100~ 0~ 0~ 11~
+10 300 0
+A
+19 3
+L 1
+C 300
+X iron~
+
+#9833
+black staff~
+黑色柺杖(black staff)~
+一把黑色的柺杖(black staff)被丟在地上.~
+~
+5 16 8193
+100~ 0~ 0~ 7~
+10 300 0
+A
+18 3
+L 1
+C 300
+X wooden~
+
+#9834
+heap scales black dragonscale robes~
+邪龍護袍(dragonscale robes)~
+你看到一件帶著龍鱗(scales)閃耀著光芒的袍子(robes).~
+~
+9 2640 9
+0~ 0~ 100~ 0~
+20 5000 0
+A
+12 15
+A
+13 15
+A
+3 1
+A
+4 1
+L 1
+C 5000
+X dragon scale~
+
+#9835
+ornate robes~
+華麗護袍(ornate robes)~
+你看到一件質地十分高級的袍子(robe).~
+~
+9 0 9
+0~ 0~ 100~ 0~
+20 5000 0
+A
+3 1
+A
+4 1
+L 1
+C 5000
+X fiber~
+
+#9836
+white dress torn~
+被撕碎的衣服(torn white dress)~
+一件被撕碎的衣服(torn dress)放在這邊.~
+~
+9 0 9
+0~ 0~ 100~ 0~
+5 10 0
+L 1
+C 10
+X cloth~
+
+#9837
+rusty key~
+生鏽的鑰匙(rusty key)~
+一塊巨大生鏽(rusty)的鐵塊被放在地板上.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X iron~
+
+#9838
+cheap plaid pants pair~
+花格子褲(pair of cheap plaid pants)~
+一件看起來不太好看的褲子(pants)被放在地板上.~
+~
+9 0 33
+0~ 0~ 100~ 0~
+5 1000 0
+L 1
+C 1000
+X cloth~
+
+#9839
+donut~
+堅果(donut)~
+幾個上面塗滿了果醬的堅果(donut)被放在這邊.~
+~
+19 0 1
+15~ 0~ 0~ 0~
+1 0 0
+L 1
+X food~
+
+#9840
+coffee~
+一杯咖啡(cup of coffee)~
+一杯香濃的咖啡(cup of coffee)正散發著香味.~
+~
+17 0 1
+15~ 15~ 12~ 0~
+1 0 0
+L 1
+X liquid~
+
+#9841
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+1~ blindness~ harm~ harm~
+1 0 0
+L 1
+X food~
+
+#9842
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+3~ bless~ cause light~  ~
+1 0 0
+L 1
+X food~
+
+#9843
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+5~ teleport~ ~  ~
+1 0 0
+L 1
+X food~
+
+#9844
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+9~ detect hidden~ detect invis~ detect magic~
+1 0 0
+L 1
+X food~
+
+#9845
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+20~ blindness~ refresh~ ~
+1 0 0
+L 1
+X food~
+
+#9846
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+22~ curse~ harm~ poison~
+1 0 0
+L 1
+X food~
+
+#9847
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+14~ refresh~ cure blindness~ cure poison~
+1 0 0
+L 1
+X food~
+
+#9848
+dragon candy~
+龍糖(dragon Candy)~
+一塊龍糖(Dragon Candy)~
+~
+26 0 1
+23~ blindness~ poison~ weaken~
+1 0 0
+L 1
+X food~
+
+#9850
+brochure~
+小冊子(brochure)~
+一本看起來薄薄的小冊子(brochure)被放在這邊.~
+~
+8 4224 16385
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X paper~
+
+#9851
+head~
+龍人騎士的頭顱(draconian's head)~
+龍人騎士的頭顱(draconian's head)被放在地上.~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+X flesh~
+
+#9852
+evil bracelet~
+邪光護肘(evil bracelet)~
+一副發出白色光芒的護肘(bracelet)被丟棄在地上.~
+~
+9 597 4097
+0~ 0~ 100~ 0~
+5 50000 0
+A
+1 1
+A
+19 1
+A
+39 5
+L 1
+C 50000
+X tin~
+
+#9853
+dragon armor~
+龍骨戰甲(dragon armor)~
+一套由龍(dragon)的骨頭所製成的護甲(armor)放在這裡.~
+~
+9 2119 9
+0~ 0~ 100~ 0~
+20 70000 0
+A
+5 1
+A
+17 -5
+A
+39 10
+A
+19 3
+L 1
+C 70000
+X dragon bone~
+
+#9854
+cult sash~
+邪龍束腰(cult sash)~
+一條上頭畫滿各式龍肖像的束腰(sash)被丟在地上.~
+~
+9 592 2049
+0~ 0~ 100~ 0~
+20 50000 0
+A
+17 5
+A
+19 4
+A
+39 20
+L 1
+C 50000
+X fiber~
+
+#9855
+black sword dark slasher~
+黑劍 - 闇琉天破(black sword - Dark Slasher)~
+一把發散著闇黑色光芒的黑劍(black sword)浮在半空之中.~
+~
+5 2647 8193
+200~ 0~ 0~ 3~
+20 200000 0
+A
+18 5
+A
+19 7
+H blindness~ 30 20 4
+L 1
+C 200000
+X obsidian~
+
+#9856
+light sword sunshine breaker~
+光劍 - 破嵐萬丈(light sword - Sunshine Breaker)~
+一把發散著萬丈光芒(light)的劍(sword)浮在半空之中.~
+~
+5 3395 8193
+200~ 0~ 0~ 1~
+20 300000 0
+A
+18 2
+A
+19 2
+H lightning bolt~ 40 40 4
+L 1
+C 300000
+X platinum~
+
+#9857
+paper~
+一張紙(paper)~
+一張廢紙(paper)扔在地上沒有人理會.~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+paper~
+你看著這張廢紙的內容，裡面詳細寫明了所有邪龍祭壇祭典的時間、地點與祭品。
+你赫然發現，上面記載的祭品，竟然都是史卡拉貝城市民的名字。
+
+也許你可以將這張邪龍祭壇進行邪惡祭典的證據，交給龍人騎士...
+~
+L 1
+T 20
+X paper~
+
+#9858
+staff holy dragon~
+光龍之杖(staff of holy dragon)~
+一根上頭雕有維妙維肖龍(dragon)雕像的木杖(staff)放在這裡.~
+~
+5 257 8193
+200~ 0~ 0~ 7~
+15 100000 0
+A
+3 1
+A
+4 1
+A
+18 2
+A
+19 2
+L 1
+C 100000
+X wooden~
+
+#9859
+vertebra dragon~
+黑色邪龍的脊椎骨(dragon vertebra)~
+一條散發的邪惡之氣的脊椎骨(vertebra)放在地上.~
+~
+13 0 1
+0~ 0~ 0~ 0~
+50 0 0
+L 1
+X dragon bone~
+
+#9860
+earth stone~
+大地之石(Earth stone)~
+一塊晶瑩的石頭(stone)豎立在這邊~
+~
+8 1 1|16384
+0~ 0~ 0~ 0~
+70 0 0
+E
+stone~
+大地之石！也許你應該詢問凱勒(kellar)關於
+這塊石頭的事情...
+~
+X obsidian~
+A
+17 -10
+A
+13 70
+
+#9861
+Rock Equilibrium~
+平衡之石(Rock of Equilibrium)~
+一塊灰色的石頭(rock)漂浮在空中~
+~
+8 1 1|16384
+0~ 0~ 0~ 0~
+70 0 0
+X chaos matter~
+A
+40 4
+A
+3 -3
+
+#9862
+letter~
+信(letter)~
+一封壓有蠟印的信(letter)掉在地上。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X paper~
+
+#9898
+Alchemist fob~
+銀色懷錶(Alchemist fob)~
+一個國家鍊金術士專用的懷錶增幅器被放在這邊~
+~
+15 1|2|64|4194304 1|2048
+500~ 1~ 0~ 0~
+1 0 0
+X silver~
+A
+39 -500
+
+#9899
+emperor king grosspolonia sword~
+劍皇－葛洛斯玻利那(Sword Emperor Grosspolonia)~
+一把充滿能量的劍(sword)被插在地上~
+~
+5 1|2|64|256|1024|32768|65536|4194304 1|8192
+90~ 1~ 2~ 3~
+1 0 0
+E
+emperor king grosspolonia sword~
+這把劍具有極為強大的魔力以及能量，一般人是無法駕馭它的。
+~
+X chaos matter~
+
+#0
+
+
+
+#ROOMDATA
+#9850
+接待室~
+這間房間佈置十分的簡單。在房間的中央有一張只能用來寫字的桌子。在牆上掛
+著一幅畫，但是你不太能辨識出來它在畫些什麼，因為它實在畫得太抽象了。在桌子
+旁邊有一面招牌(sign)。
+~
+0 8 0
+E
+painting~
+You think it looks a bit like a dragon.
+~
+E
+sign~
+************************  注意  *************************
+這個區域是原本Envy系統的區域，我將區域中文化後移植了
+過來並加以改編。這個區域主要開放給等級 15 以上的玩家
+，等級超過 20 以上將會比較安全，但是仍有其他十分危險
+的地方。因此進入這個區域的玩家請小心，這個區域可是步
+步危機。
+			       - 闇之冥王星普魯多(Pluto)
+*********************************************************
+下面還有人故意惡作劇塗鴉(scribble)...
+~
+E
+scribble~
+這個區域由Kention新增相關quest以及相關道具，希望各位好好享受！
+~
+D0
+A door leads into the temple.
+~
+door~
+1|2|4|16|32|64 9825 9851
+D2
+You see a road.
+~
+~
+0 -1 3104
+S
+#9851
+昏暗的走廊~
+這個地方並沒有太多的光源，因此這個走廊十分的昏暗。在南邊是接待室的桌子，而走
+廊向北邊延伸下去。
+~
+0 8 0
+D0
+The Corridor continues North.
+~
+~
+0 -1 9852
+D2
+A door leads into the Reception Area.
+~
+door~
+7 9825 9850
+S
+#9852
+龍之大廳~
+這間房間的牆上(wall)掛滿了有關龍族與史卡拉貝城英雄戰爭史的畫。由畫中顯
+示史卡拉貝城種族大部分是處於落敗的局面。在北邊是一間房間，而南邊則是昏
+暗的走廊。
+~
+0 12 0
+E
+walls~
+牆上的畫描寫著邪龍巨大的能力以及侵占世界的野心，畫裡面的龍大部分都像是
+五頭龍(tiamat)之類的巨大邪龍，似乎沒有善良的龍族...
+~
+D0
+~
+~
+0 -1 9893
+D2
+~
+~
+0 -1 9851
+S
+#9853
+魔法研究室~
+這裡放置著許多魔法的器材與生物。往南你可以通往樓梯的頂端，在房間
+的西邊與東邊各有一間房間。你可以看到這邊立著一面招牌（plaque)。
+~
+0 8 0
+E
+plaque~
+邪龍祭壇的原作者是 Sandman 於12/13/1993的傍晚完成。
+並由 Spring Break 於1994將邪龍祭壇改編開放於Envy系統
+上。在03/02/2001由 Pluto 將邪龍祭壇改編並增加 quest
+開放於 混沌幻世(ROC) 之中。於07/13/2004由Kention新增
+quest
+~
+D1
+There is a door to the east.
+~
+~
+3 0 9880
+D2
+You see Dragon Hall.
+~
+~
+0 0 9893
+D3
+You see the waiting room.
+~
+~
+0 0 9871
+S
+#9854
+五叉路交集處~
+這一個地方沒什麼好說的。出口的方向通往東、南、西、北方。南方
+有亮光傳來。
+~
+0 12 0
+D0
+There is an exit.
+~
+~
+0 -1 9856
+D1
+A hallway leads east.
+~
+~
+0 -1 9857
+D2
+You see a bright light.
+~
+~
+0 -1 9855
+D3
+You see a hallway.
+~
+~
+0 -1 9859
+S
+#9855
+祭壇~
+這裡就是剛剛亮光發出來的地方。這裡到處都是燭台。在房間的中央有一座
+上面刻著龍族雕像的祭壇。種種跡象顯示這個祭壇曾經受到膜拜，但是這個
+祭壇的下端卻意外的乾淨...。這裡唯一能看到的出口通往北邊。
+~
+0 8 0
+D0
+You see the intersection.
+~
+~
+0 -1 9854
+D5
+After searching you find a trapdoor.
+~
+trapdoor~
+3 -1 9862
+S
+#9856
+雕飾的房間~
+這一間房間放滿了許多的雕飾品，大部分都是龍族的雕飾。你靠近其中一個雕飾
+品看，你發現雕飾正在移動。你感覺陣陣的不適湧上心頭，你最好是趕緊離開。這裡
+唯一的出口通往南邊。而在你東邊的牆壁似乎不太對勁。
+~
+0 8 0
+D1
+~
+密門~
+3 -1 9886
+D2
+You see the intersection.
+~
+~
+0 -1 9854
+S
+#9857
+普通的門廳~
+這個房間沒有什麼特別的地方，出口通往西邊，而東邊有一道門。
+~
+0 8 0
+D0
+You see a small store.
+~
+~
+0 -1 9892
+D1
+You see a door.
+~
+door~
+3 -1 9858
+D3
+You see the intersection.
+~
+~
+0 -1 9854
+S
+#9858
+浴室~
+這邊簡直是祭壇的垃圾收集場！由廁所中傳出了非常難以忍受的惡臭，你
+甚至無法想像祭壇內的人如何在這種惡臭下進食。唯一的出口指向西邊。
+~
+0 8 0
+D3
+You see a door.
+~
+door~
+3 -1 9857
+S
+#9859
+門廳~
+這個門廳的由一道天花板上的光給照亮了。你繼續的走下去，發現這邊並不是
+太熱，感覺上還蠻涼爽的。門廳的出口通往東邊與西邊。
+~
+0 8 0
+D1
+You see the intersection.
+~
+~
+0 -1 9854
+D3
+You see a bend in the hallway.
+~
+~
+0 -1 9860
+S
+#9860
+門廳轉彎處~
+門廳在這裡轉彎而通往北邊。你可以掉頭向東邊回去。
+~
+0 8 0
+D0
+Its too far to make out.
+~
+~
+0 -1 9861
+D1
+You see a hallway.
+~
+~
+0 -1 9859
+S
+#9861
+祭祀的地方~
+這裡一定是邪龍教教徒祭祀的地方。你是第一次進入到這邊，房間中央的地板
+有著用粉筆寫的「歡迎加入」的字眼。這裡看起來是邪龍教中心祭祀場，並在這邊
+舉辦教徒加入的儀式。
+~
+0 8 0
+D0
+You see a staircase.
+~
+~
+0 -1 9894
+D2
+You still can run back to the hallway.
+~
+~
+0 -1 9860
+S
+#9862
+黑暗的房間~
+這一間房間非常的暗。有一道扶梯通往上方，而出口通往南方。
+~
+0 1037 0
+D2
+It's too dark to see anything.
+~
+~
+0 -1 9863
+D4
+You see a trapdoor.
+~
+trapdoor~
+3 -1 9855
+S
+#9863
+在魔力環裡頭~
+這個魔力環是由邪龍祭壇的信徒做成的。只有高級祭司能夠進入這裡，....或
+是闖入這邊的人。這裡的出口通往北邊、西邊與東邊。
+~
+0 8 0
+D0
+It's very dark.
+~
+~
+0 -1 9862
+D1
+You see a room.
+~
+~
+0 -1 9864
+D3
+You see a corridor.
+~
+~
+0 -1 9865
+S
+#9864
+祭司的寢室~
+邪龍祭壇的祭司們都睡在這邊。這個房間十分的整齊、清潔，只有天花板上的燭台有
+一點灰塵。地板上有一個奇怪的拉門，似乎可以通往哪裡...
+~
+0 8 0
+D3
+You see the inner circle.
+~
+~
+0 -1 9863
+D5
+~
+~
+1|2 0 9885
+S
+#9865
+預言走廊~
+這個地方給你十分不安的感覺。出口通往東邊與西邊，而北邊有一座監牢。你隱約
+的聽到監牢內傳來啜泣的聲音。
+~
+0 9 0
+D0
+There is a cell door here.
+~
+cell~
+1|2|4|16|32|64 9826 9866
+D1
+You see the inner circle.
+~
+~
+0 -1 9863
+D3
+It's not a safe place to go.
+~
+~
+0 -1 9867
+S
+#9866
+監牢~
+這一間潮濕又陰暗的監牢關著一個被抓來犧牲的奉獻之女。在牢門後出口
+通往南邊的預言走廊。
+~
+0 1|4|8|16|65536|524288|1048576 0
+D2
+You see a cell door.
+~
+cell~
+1|2 0 9865
+S
+#9867
+預言走廊~
+你已經不知道你在哪裡了。你只能夠確定這邊的氣氛讓你的胃十分的不舒服。出口
+通往東邊，如果你還想繼續走下去，請往西邊走。
+~
+0 8 0
+D1
+It's the hallway you just came from.
+~
+~
+0 -1 9865
+D3
+Better not go that way.
+~
+door~
+3 -1 9868
+S
+#9868
+通道的轉角~
+這裡只是單純提供過路的房間。不過西邊的門似乎為了迎合什麼人
+而作了特別的裝飾...
+~
+0 8 0
+D0
+That way smells REALLY bad.
+~
+~
+0 -1 9869
+D1
+The forboding hallway isn't NEARLY as forboding as what lies beyond
+it.
+~
+door~
+3 -1 9867
+D3
+~
+~
+0 -1 9896
+S
+#9869
+污穢的門廳~
+這裡的惡臭是那邊傳過來的？怎麼會有這麼臭的臭味呢？
+你不清楚，但是你可以確定臭味是由一隻巨大的生物身上散發出來。
+兩道門通往北邊與南邊，不過你最好是往南邊走。
+~
+0 8 0
+D0
+~
+~
+0 -1 9870
+D2
+You see the room in which the High Priestess resides.
+~
+~
+0 -1 9868
+S
+#9870
+奇異的魔法陣~
+這裡有一個奇異的魔法陣，似乎是在召喚某一種生物。你感覺到十分
+巨大的邪惡能量就要出現...。
+~
+0 8 0
+D2
+You see a BIG STEEL DOOR, probably meant to keep the Wyrmling IN.
+~
+~
+0 -1 9869
+>room_time 100~
+if hasdoor(5)
+	if roomtimer($0) == 0
+		echo 一道魔法屏障籠罩住整個房間。
+		deldoor 5
+	endif
+endif
+~
+>room_enter 4 100~
+if roomtimer($0) > 0
+	break
+endif
+if is_qmark($n) == cult_question 200001
+	modrvt t0 = 5
+	callout 1 echo 你身上的魔力抵銷了魔法屏障！
+	callout 2 echo 地板上緩緩的出現一條通道！
+	callout 2 makedoor 5 底下一片漆黑... passway 0 0 9887
+endif
+~
+|
+S
+#9871
+等候室~
+這間房間放滿了凱勒用來做魔法實驗的藥材。你可以坐在這邊休息看著凱勒做
+實驗。往東是休息室，而北邊是工作室。
+~
+0 8 0
+D0
+The main office.
+~
+~
+0 -1 9872
+D1
+You see the tourist office.
+~
+~
+0 -1 9853
+D3
+You see an evil glow.
+~
+door~
+3 -1 9873
+S
+#9872
+工作室的入口~
+當你進到這一間工作室時，你覺得這裡的魔法物品你幾乎都沒有見過。
+當然，凱勒那麼偉大的魔法師所實驗的魔法你怎麼可能見過。
+~
+0 8 0
+D0
+You see a hallway in the office.
+~
+~
+0 -1 9874
+D1
+You see the middle of the office.
+~
+~
+0 -1 9878
+D2
+You see the waiting room.
+~
+~
+0 -1 9871
+D3
+You see a sales booth.
+~
+~
+0 -1 9879
+S
+#9873
+奇怪的房間~
+當你進入這間房間時，門忽然自動且大力的關上了。這裡似乎沒有任何的出口，
+你似乎誤闖凱勒所實驗的魔法房間了。
+~
+0 8200 0
+S
+#9874
+門廳~
+這裡是一個普通的房間。但是這裡到處都充斥著可怕的魔法能量。在牆上有一幅
+相當精緻的圖畫。南邊可以回到工作室，西邊是有一道玻璃門。
+~
+0 8 0
+D2
+You see the main office.
+~
+~
+0 -1 9872
+D3
+You see Gale's office.
+~
+~
+0 -1 9875
+S
+#9875
+蓋爾的工作室~
+蓋爾的工作室顯得十分的溫暖且舒服。裡頭到處擺滿了有關天地陰陽平衡的書籍。
+蓋爾在此工作了相當長的一段時間，因為牆上擺了好幾本的日記本。唯一的出口指向
+東邊。
+~
+0 8|1024 0
+D1
+You see a hallway in the office.
+~
+~
+0 -1 9874
+S
+#9876
+佛瑞的工作室~
+這裡是佛瑞的工作室，裡頭只有幾個簡單的椅子與桌子。到處都是散亂的紙張，上面
+記載著佛瑞工作的內容與進度。唯一的出口指向南邊。
+~
+0 8 0
+D2
+You see the middle of the office.
+~
+~
+0 -1 9878
+S
+#9877
+用餐室~
+這裡是那些辛苦的研究員與魔法師用餐的地方，侍女 - 梅因在此為他們烹飪出精緻
+的佳餚。唯一的出口指向南邊。
+~
+0 8 0
+D2
+You see the copy room.
+~
+~
+0 -1 9882
+S
+#9878
+工作室的中央~
+這裡是提供法師們放置魔法物品的地方，到處都是顯得雜亂不堪。北邊是佛瑞
+的工作室，入口指向西邊而東邊是觀察室。
+
+~
+0 8 0
+D0
+You see Fred's office
+~
+~
+0 -1 9876
+D1
+You see the copy room.
+~
+~
+0 -1 9882
+D3
+The entranceway to the office.
+~
+~
+0 -1 9872
+S
+#9879
+臥室~
+這裡是可以用來休息的房間，唯一的出口指向東邊。
+~
+0 8 0
+D1
+You see the entranceway to the office.
+~
+~
+0 -1 9872
+S
+#9880
+門廳後的討論室~
+這裡是門廳後的討論室，佛瑞與蓋爾經常在此處討論有關平衡方面的學說。而凱勒與
+梅因也經常來此處研究有關魔法的學問。這裡到處都擺滿了書籍。
+~
+0 8 0
+D0
+The hallway ends.
+~
+~
+0 -1 9881
+D3
+You see a door.
+~
+door~
+3 -1 9853
+S
+#9881
+門廳的盡頭~
+這裡是整個門廳的盡頭，而門廳往南繼續延伸下去。
+~
+0 8 0
+D2
+You see the beginning of the hallway where Fred and Marie are....
+~
+~
+0 0 9880
+D3
+You see a door.
+~
+door~
+3 0 9882
+S
+#9882
+觀察室~
+此處是蓋爾用來實驗魔法效果的魔法觀察室，四周刻滿了抑制魔法力量過於強大的
+咒文。此處的北邊是用餐室，西邊是主要工作室，而東邊則有一道門。
+~
+0 8 0
+D0
+You see the break room.
+~
+~
+0 -1 9877
+D1
+You see a door.
+~
+door~
+3 -1 9881
+D3
+You see the middle of the office.
+~
+~
+0 -1 9878
+S
+#9883
+地下城~
+這裡是氣氛陰沈的地下牢籠。這裡唯一的出口似乎就是西邊那一道鎖上的
+門。而頭上的出口距離你約15英尺，似乎不太可能可以攀爬出去。
+~
+0 8200 0
+D3
+You see a big rusty iron door.
+~
+door~
+7 9837 9884
+S
+#9884
+銬問室~
+這個房間有許多可怕的銬問工具，當你到達這間房間不禁感到身上似乎有痛楚
+傳來。在房間裡頭有一具骷髏。唯一可以見到的出口通往東邊，但是牢門的鑰匙在
+獄卒身上。
+~
+0 8 0
+D0
+~
+密門~
+3 -1 9886
+D1
+You see a big rusty iron door.
+~
+door~
+7 9837 9883
+S
+#9885
+不斷的往下滑~
+啊！你正在不斷的往下滑，你希望你可以控制住你的速度但是卻辦不到。往上
+已經不可能了，你只好繼續往下滑下去，或是坐在這裡發呆。
+~
+0 8200 0
+D5
+Well you wish you knew.
+~
+~
+0 -1 9883
+S
+#9886
+秘密通道~
+這一條黑暗又潮濕的秘密通道到處佈滿了蜘蛛網與蜘蛛。不過要通過這裡只好
+硬著頭皮將所有的蜘蛛網給撥開。南邊與西邊各有一道門。
+~
+0 8 0
+D2
+You see the inside of a secret door.
+~
+密門~
+3 -1 9884
+D3
+You see the inside of a secret door.
+~
+密門~
+3 -1 9856
+S
+#9887
+向下的隧道~
+這裡似乎不太對勁。在繼續往下走下去似乎會有極大的危險，甚至是死亡的威脅。
+這裡到處都是人類器官的刺鼻味道，讓你感到十分的不舒服。你可以往上或往下繼續走
+，但是聰明的最好別繼續往下。
+~
+0 1|4|8|16|524288|1048576 0
+D4
+You see a dim light through the opening.
+~
+tile~
+3 -1 9870
+D5
+It is too dark to see.
+~
+~
+0 -1 9888
+S
+#9888
+深坑的底部~
+由地面傳來十分巨大的邪惡力量。這裡十分的陰暗，而且十分不尋常的黑暗。
+回頭往上走回去還來得及。
+~
+0 1|4|8|16|524288|1048576 0
+D4
+It is too dark to see.
+~
+~
+0 -1 9887
+D5
+It is too dark to see.
+~
+~
+0 -1 9889
+S
+#9889
+在闇黑死亡隘口之前~
+這是你在面對邪惡力量前最後還能夠反悔的機會。在這種危險前面回頭沒有人會覺得
+你這是懦夫的行為。往回走吧！還有機會保有你的生命。
+~
+0 1|4|8|16|524288|1048576 0
+D1
+It is too dark to see.
+~
+mud~
+3 0 9890
+D4
+It is too dark to see.
+~
+~
+0 -1 9888
+D5
+It is too dark to see.
+~
+~
+0 0 9891
+S
+#9890
+隱藏的亭子~
+這個隱藏的地方一定是以前居住此處的生物所建造出來。但是這裡似乎已經被拋棄很久
+一段時間了。
+~
+0 9 0
+D3
+It is too dark to see.
+~
+mud~
+3 -1 9889
+S
+#9891
+深坑的盡頭~
+到處都是各種生物的骨頭。一股潮濕寒冷的感覺湧上你的心頭，因為你瞭解到等一
+下你將要面對的邪惡力量的可怕。這裡是巫妖的住所，而且是強壯的巫妖。
+~
+0 1|4|8|16|524288|1048576 0
+D0
+You see A BIG STEEL DOOR.
+~
+door~
+1|2 0 9895
+D4
+It is too dark to see.
+~
+~
+0 -1 9889
+S
+#9892
+糖果店~
+這裡是祭壇內販賣糖果的地方。你最好試試這些糖果，但是要小心這些由龍
+之唾液製成的糖果往往會有驚人但是不當的效果。
+~
+0 8 0
+D2
+You see the hallway.
+~
+~
+0 -1 9857
+>room_enter 4 105~
+if is_qmark($n) == hobbit_peter_travel
+	mod_qmark $n hobbit_peter_travel v0 | 4
+	echoat $n [1;30m看來可以到下一個地點了。[0m
+endif
+~
+|
+S
+#9893
+樓梯的頂端~
+這裡是樓梯的頂端，樓梯往下延伸到祭壇的其他部分。本來在工作室白晰的牆壁到此
+處開始漸漸變成黑色，或許下面有一種不知名的力量影響了這些牆壁。此地的出口通
+往北邊與下面。
+~
+0 12 0
+D0
+You see a hallway in the office.
+~
+~
+0 -1 9853
+D5
+You see the bottom of the staircase.
+~
+~
+0 -1 9894
+D2
+~
+~
+0 0 9852
+S
+#9894
+樓梯的底端~
+樓梯延伸到這裡結束了。這裡十分的安靜、陰沈，而且這裡有奇怪的聲響，聲音應該
+是來自南邊。這裡唯一可以看見的出口通往上方。
+~
+0 12 0
+D2
+It is too blurred to see anything of note.
+~
+~
+0 -1 9861
+D4
+You see the top of the staircase.
+~
+~
+0 -1 9893
+S
+#9895
+黑龍之殿~
+你終於找到了邪龍祭壇裡面的秘密祭祀之殿，就算你不用遇到裡頭的黑龍，你也
+可以由到處散佈的骨頭與龍族的鱗片知道裡面有龍族存在。那隻龍正在享受著剛剛送
+進來的處女大餐。你心想著這一隻龍可不能讓它在史卡拉貝城中成長。唯一的出口指
+向南邊。
+~
+0 1|4|8|16|524288|1048576 0
+D2
+You see a BIG STEEL DOOR, probably meant to keep the Wyrmling IN.
+~
+door~
+1|2 0 9891
+S
+#9896
+華麗的通道~
+前方似乎通往某個重要人物的房間。
+~
+0 8 0
+D1
+~
+~
+0 -1 9868
+D3
+~
+~
+1|2 0 9897
+S
+#9897
+高級女祭司之殿~
+你進入了高級女祭司的寢宮。現在你有麻煩了。許多傳言謠傳邪龍祭壇女祭司與
+龍族通姦，更有人說女祭司本身就是龍人。但是在史卡拉貝城內現在會有龍人與
+龍族嗎？應該不可能吧。
+~
+0 8 0
+D1
+~
+~
+0 0 9896
+S
+#9898
+洞穴~
+你進到邪龍打碎地板而創造出的洞穴裡，洞穴因為地板上的一塊石頭而異常光亮...
+~
+0 1|4|8|16|524288|1048576 0
+D4
+~
+~
+0 0 9895
+S
+#9899
+蓋爾的研究室~
+這裡擺放著巨大的機械以及許許多多的書籍，大概是蓋爾研究的地方吧
+~
+0 1|4|8|16|524288|1048576 0
+S
+#0
+
+
+
+#SPECIALS
+M 9804 spec_cast_mage
+M 9806 spec_breath_acid
+M 9814 spec_cast_undead
+M 9816 spec_fido
+S
+
+
+
+#RESETS
+M 0 9800 1 9850
+M 0 9808 1 9850
+E 0 9850 0 17
+M 0 9809 1 9853
+E 0 9831 0 16
+O 0 9850 0 9853
+O 0 9860 0 9898
+M 0 9801 7 9855
+E 0 9830 0 5
+E 0 9833 0 16
+M 0 9810 0 9877
+M 0 9807 1 9858
+M 0 9801 7 9860
+E 0 9830 0 5
+E 0 9833 0 16
+M 0 9801 7 9861
+E 0 9830 0 5
+M 0 9801 7 9861
+E 0 9830 0 5
+M 0 9802 4 9861
+E 0 9832 0 16
+E 0 9835 0 5
+M 0 9802 4 9863
+E 0 9832 0 16
+E 0 9835 0 5
+M 0 9802 4 9863
+E 0 9835 0 5
+M 0 9803 1 9865
+E 0 9828 0 16
+E 0 9829 0 6
+M 0 9805 1 9866
+E 0 9836 0 5
+M 0 9804 1 9897
+E 0 9834 0 5
+M 0 9811 1 9875
+M 0 9812 1 9876
+O 0 9839 0 9877
+O 0 9840 0 9877
+M 0 9814 1 9879
+M 0 9815 1 9883
+M 0 9813 1 9884
+G 0 9837 0
+M 0 9816 1 9891
+M 0 9817 1 9892
+G 0 9841 0
+G 0 9842 0
+G 0 9843 0
+G 0 9844 0
+G 0 9845 0
+G 0 9846 0
+G 0 9847 0
+G 0 9848 0
+M 0 9806 1 9895
+S
+
+
+
+#SHOPS
+9817 0 0 0 0 0 150 30 0 23
+0
+
+
+
+#$

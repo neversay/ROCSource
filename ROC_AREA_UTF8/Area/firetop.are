@@ -1,0 +1,8553 @@
+#AREADATA
+Name        烽火峽谷~
+Identity    firetop~
+Builders    Yaegar~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs         5700 5999
+Security    1
+Recall      4580
+Death       401
+F_toggle    1|8192|65536|524288|1048576|2097152
+End
+
+
+
+#MOBILES
+#5700
+adventurer busy~
+忙碌的冒險者(busy adventurer)~
+一位忙碌的冒險者(busy adventurer)在這個谷地中走來走去。
+~
+他剛來到這邊不久，主要聽說這裡有些新玩意兒(event)，因此來這邊湊個熱鬧。
+~
+1|64|8192 8|32|512 0 S
+45 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+P 8|256|4194304
+>repop_prog 100~
+mpoload 9909
+mpoload 10644
+mpoload 11148
+mpoload 16023
+mpat 5 wear all
+~
+>talk_prog event~
+if is_qmark($i) == firetop_talking
+        break
+endif
+mpadd_qmark self firetop_talking 5 0 0 0 1 0
+gasp $n
+say 你不知道最近光明之鎮的大事嗎....？
+mpcallout 1 say 就是這附近發現了前往魔刀村的捷徑(shortcut)啊....，
+mpcallout 2 say 聽說魔刀村附近有許多危險的挑戰....，
+mpcallout 3 say 這正是我們冒險者一夕成名的機會啊！
+mpcallout 3 mpdel_qmark self firetop_talking
+~
+>talk_prog shortcut~
+if is_qmark($i) == firetop_talking
+        break
+endif
+say 其實這一條捷徑我還沒去過....，
+mpcallout 1 say 不過聽說曾經前往魔刀村回來的前輩說....，
+mpcallout 2 say 途中雖然安全很多....，
+mpcallout 3 say 但是卻需要動用到不少工具....，
+mpcallout 4 say 諸如鉤子(hook)、繩索(rope)或圓鍬(shovel)....等一類的工具....，
+mpcallout 5 say 聽說光明之鎮有賣一些....，
+mpcallout 6 say 但是詳細的情形我就不太清楚了。
+~
+|
+#5701
+robust warrior~
+精壯的武士(robust warrior)~
+一位身材精壯的武士(robust warrior)在這裡四處遊蕩，尋找刺激。
+~
+他的存在不為了什麼，僅是為了冒險與刺激(exciting)。如果你能夠提供他這些元素，那
+麼他為你赴湯蹈火，在所不辭。
+~
+1|2|64|128|4096|8192|262144|67108864 8|32|512|8192 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8|32
+P 8|256|4194304
+>repop_prog 100~
+mpoload 5710
+mpoload 5711
+mpoload 5712
+mpoload 14206
+mpat 5 wear all
+~
+>entry_prog 100~
+if insameroom($b)
+        if insameroom(elite-firetop)
+                if is_qmark($b) !& firetop_robust_quest 200001
+                        mpmod_qmark firetop_robust_quest v1 | 1
+                        yell 好個食人妖菁英戰士，看我如何對付你！
+                endif
+        endif
+        if insameroom(cyclops-firetop)
+                if is_qmark($b) !& firetop_robust_quest 200004
+                        mpmod_qmark firetop_robust_quest v1 | 4
+                        yell 獨眼巨人！太棒了，讓我來會會你！
+                endif
+        endif
+        if insameroom(chieftain-firetop)
+                if is_qmark($b) !& firetop_robust_quest 200016
+                        mpmod_qmark firetop_robust_quest v1 | 16
+                        yell 食人妖隊長？！名過其實，看我如何對付你！
+                endif
+        endif
+endif
+~
+>kill_prog 100~
+if vnum($n) == 5715
+        if is_qmark($b) & firetop_robust_quest 200001
+                if is_qmark($b) !& firetop_robust_quest 200002
+                        yell 夠刺激！我可幹掉食人妖菁英戰士了！
+                        mpmod_qmark $b firetop_robust_quest v1 | 2
+                endif
+        endif
+endif
+if vnum($n) == 5744
+        if is_qmark($b) & firetop_robust_quest 200004
+                if is_qmark($b) !& firetop_robust_quest 200008
+                        yell 什麼獨眼巨人，在我看來根本不值一晒。
+                        mpmod_qmark $b firetop_robust_quest v1 | 8
+                endif
+        endif
+endif
+if vnum($n) == 5739
+        if is_qmark($b) & firetop_robust_quest 200016
+                if is_qmark($b) !& firetop_robust_quest 200032
+                        yell 砍死這個隊長比踩死一隻螞蟻還要簡單啊！
+                        mpmod_qmark $b firetop_robust_quest v1 | 32
+                endif
+        endif
+endif
+~
+>talk_prog exciting~
+gig
+say 如果你可以承諾(promise)讓我經歷真正具有冒險與刺激的旅程，
+say 我就加入你的行列來體驗你所謂的冒險之旅，
+say 同時讓我全心全意來幫助你。
+~
+>talk_prog promise~
+if is_qmark($n) & firetop_quest 100001
+or is_qmark($n) == firetop_robust_quest
+or being($b)
+        break
+endif
+say 很好，我給你 5 天的時間，
+say 希望這 5 天內能夠讓我知道，
+say 何謂刺激與冒險。
+mpdef_rembch $n
+mpgroup $n self 1 0
+mpadd_qmark $n firetop_robust_quest -1 1 0 0 0 1
+mpadd_qmark self firetop_robust_quest 120 0 0 0 1 0
+~
+>rand_prog 50~
+if being($b)
+        if is_qmark($i) == firetop_robust_quest
+                if insameroom($b)
+                        if is_equ_obj($i) != 5710
+                                wear halberd
+                        endif
+                else
+                        if is_qmark($i) > firetop_robust_quest 1005
+                                mpmod_qmark self firetop_robust_quest timer - 5
+                        endif
+                endif
+        else
+                if is_qmark($b) > firetop_robust_quest 200000
+                        say 在我們短短的五天之中，
+                        if is_qmark($b) & firetop_robust_quest 200001
+                                if is_qmark($b) & firetop_robust_quest 200002
+                                        say 你帶領我擊敗了「食人妖菁英戰士」，
+                                        mpskillexp $b 300
+                                        mpexp $b 1000
+                                else
+                                        say 你帶領我遇到了「食人妖菁英戰士」，
+                                        mpskillexp $b 100
+                                        mpexp $b 300
+                                endif
+                        endif
+                        if is_qmark($b) & firetop_robust_quest 200004
+                                if is_qmark($b) & firetop_robust_quest 200008
+                                        say 你帶領我擊敗了「鐵獨眼巨人」，
+                                        mpskillexp $b 400
+                                        mpexp $b 1200
+                                else
+                                        say 你帶領我遇到了「鐵獨眼巨人」，
+                                        mpskillexp $b 100
+                                        mpexp $b 300
+                                endif
+                        endif
+                        if is_qmark($b) & firetop_robust_quest 200016
+                                if is_qmark($b) & firetop_robust_quest 200032
+                                        say 你帶領我擊敗了「食人妖酋長」，
+                                        mpskillexp $b 600
+                                        mpexp $b 2000
+                                else
+                                        say 你帶領我遇到了「食人妖酋長」，
+                                        mpskillexp $b 100
+                                        mpexp $b 300
+                                endif
+                        endif
+                else
+                        shake $b
+                        tell $b 你這樣不行喔！
+                        tell $b 到了現在我還是沒有刺激的感覺。
+                        tell $b 我想我們下次再合作吧。
+                        mpecho $I 離開了你的視線....
+                        mppurge self
+                endif
+        endif
+else
+        if is_qmark($i) == firetop_robust_quest
+                sigh
+                say 又一位沒有完成任務就放棄的傢伙。
+                mpecho $I 離開了你的視線....
+                mppurge self
+        else
+                if rand(50)
+                        if rand(50)
+                                say 我希望能夠有真正刺激(exciting)的冒險之旅啊！
+                        else
+                                say 什麼時候才能有人滿足我的需求呢？
+                        endif
+                endif
+        endif
+endif
+~
+>fight_prog 100~
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+if rand(50)
+        if is_equ_obj($i) != 5710
+                wear halberd
+        endif
+        if rand(50)
+                disarm
+                mpnowait
+        endif
+endif
+if rand(50)
+        bashhead
+        mpnowait
+        bashhead
+        mpnowait
+        bashhead
+        mpnowait
+else
+        kick
+        mpnowait
+        kick
+        mpnowait
+        kick
+        mpnowait
+endif
+~
+>talk_prog restart~
+if is_qmark($n) & firetop_quest 100001
+or being($b)
+        break
+endif
+mpechoat $n 遠方傳來一陣聲響「本項任務你已經可以重新開始了。」
+mpdel_qmark $n firetop_robust_quest
+~
+|
+#5702
+warrior-firetop warrior orc~
+獸人戰士(orc warrior)~
+一位身體長滿絨毛的獸人戰士(orc warrior)正在四處遊蕩。
+~
+他與他的伙伴在這邊四處尋找有利的價碼，一方面希望能夠出人頭地，一方面也希望能增
+加戰鬥經驗。
+~
+1|2|64|4096|8192|262144 8|32|512 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+P 8|256|4194304
+R Orc~
+>repop_prog 100~
+mpoload 5707
+mpoload 5708
+mpoload 20125
+mpat 5 wear all
+if insameroom(cleric-firetop)
+        mpgroup self cleric-firetop 1 0
+        mpforce cleric-firetop mpdef_rembch warrior-firetop
+endif
+~
+>talk_prog topic~
+if being($b)
+        say 我正與 $b 一同組隊。
+else
+        say 自從發現了這一條能夠通往魔刀村的捷徑(shortcut)後，
+        say 每一位光明之鎮的冒險者個個趨之若鶩，
+        say 總希望能夠由這些地方撈點名聲(fame)或財富。
+endif
+~
+>talk_prog shortcut~
+if being($b)
+else
+        say 是的，捷徑的發現代表冒險者不再需要經過遠古森林深處，
+        say 也就是說能夠躲過那些危險的遠古巨獸(behemoth)與獅鷲獸(griffin)，
+        say 即可到達(arrive)魔刀村裡頭。
+endif
+~
+>talk_prog fame~
+if being($b)
+else
+        say 其實我一直想要在光明之鎮冒險者間出人頭地....，
+        mpcallout 1 say 我這一位同伴也是....，
+        mpcallout 1 point cleric-firetop
+        mpcallout 2 say 但是我們之間雖有尚稱強大的戰鬥力....，
+        mpcallout 3 say 我與我的同伴每 5 天僅要 100 萬元....，
+        mpcallout 4 say 就能夠幫助你的旅程更加順遂....，
+        mpcallout 5 say 同時也將幫助你擊敗任何在你旅途中擋路的敵手。
+endif
+~
+>talk_prog behemoth~
+if being($b)
+else
+        say 遠古巨獸是遠古森林三大魔物之一，
+        say 沒有任何施展魔法或特殊技能的能力，
+        say 但是光是他那連續攻擊的能力與強大的傷害力，
+        say 死在牠手下的冒險者不計其數。
+endif
+~
+>talk_prog grinffin~
+if being($b)
+else
+        say 獅鷲獸是一種鳥頭獅身的怪物，
+        say 尾巴能夠射出劇毒的毒針，
+        say 同時兼具飛翔的能力，經常集體出動，
+        say 其危險性不愧為遠古森林三大魔物之列。
+endif
+~
+>bribe_prog 1000000~
+mpjunk all.coins
+if being($b)
+        if rembch($n)
+                say 好的，我們延長契約的時間 5 天。
+                mpmod_qmark self firetop_warrior_group timer + 60
+        else
+                say 抱歉，我被 $b 雇用了。
+                mpgold $n 1000000
+        endif
+else
+        say 好，那麼我們成交，我將幫助你 5 天的時間。
+        mpdef_rembch $n
+        mptransfer cleric-firetop
+        mpgroup $n self 1 0
+        mpgroup $n cleric-firetop 1 0
+        mpadd_qmark self firetop_warrior_group 60 0 0 0 1 1
+endif
+~
+>rand_prog 50~
+if being($b)
+	if is_qmark($i) == firetop_warrior_group
+		if insameroom($b)
+			if is_equ_obj($i) != 5707
+				wear axe
+			endif
+			if is_equ_obj($i) != 20125
+				wear shield
+			endif
+		else
+			if is_qmark($i) > firetop_warrior_group 1005
+				mpmod_qmark self firetop_warrior_group timer - 5
+			endif
+		endif
+	else
+		tell $b 抱歉，您的契約已經到期了。
+		tell $b 希望未來我們還有機會合作。
+		wave $b
+		mpecho $I 與 地精牧師(gnome cleric) 離開了這個地方....
+		if being(cleric-firetop)
+				mpat cleric-firetop mppurge cleric-firetop
+		endif
+		mppurge self
+	endif
+else
+	if is_qmark($i) == firetop_warrior_group
+		say 契約還沒完成就離線？
+		shrug
+		mpecho $I 與 地精牧師(gnome cleric) 離開了這個地方....
+		if being(cleric-firetop)
+				mpat cleric-firetop mppurge cleric-firetop
+		endif
+		mppurge self
+	endif
+endif
+~
+>fight_prog 100~
+if rand(20)
+        berserk
+endif
+if rand(50)
+        if is_equ_obj($i) != 5707
+                wear axe
+        endif
+        if is_equ_obj($i) != 20125
+                wear shield
+        endif
+        if rand(50)
+                disarm
+                mpnowait
+        endif
+endif
+if rand(50)
+        if rand(33)
+                circular
+                mpnowait
+        else
+                if rand(50)
+                        flaming
+                        mpnowait
+                else
+                        earth
+                        mpnowait
+                endif
+        endif
+endif
+if rand(50)
+        if rand(50)
+                bashhead
+                mpnowait
+        else
+                kick
+                mpnowait
+        endif
+endif
+~
+>death_prog 100~
+if insameroom(cleric-firetop)
+        yell 伙伴，替我報仇！
+        mpforce cleric-firetop say 沒問題，你安心的去吧！
+        mpforce cleric-firetop c 3 harm
+        mpforce cleric-firetop c 'gfull heal'
+endif
+~
+|
+#5703
+cleric-firetop cleric gnome~
+地精牧師(gnome cleric)~
+一名矮小的地精牧師(gnome cleric)站在這邊四處張望。
+~
+他與他的伙伴在這邊四處尋找有利的價碼，一方面希望能夠出人頭地，一方面也希望能增
+加戰鬥經驗。
+~
+1|2|64|8388608 8|32|512|8192 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 2
+P 8|256|4194304
+R Gnome~
+>repop_prog 100~
+mpoload 4214
+mpoload 4223
+mpoload 5709
+mpat 5 wear all
+if insameroom(warrior-firetop)
+        mpgroup warrior-firetop self 1 0
+        mpdef_rembch warrior-firetop
+endif
+~
+>rand_prog 50~
+if being($b)
+        if insameroom($b)
+                if hitprcnt($b) < 30
+                        say 伙伴，你受傷嚴重，讓我來幫幫你。
+                        c 'full heal' $b
+                        mpnowait
+                        break
+                endif
+                if hitprcnt($b) < 50
+                        say 伙伴，你受傷不輕，需要我的幫忙。
+                        c 2 'double heal' $b
+                        mpnowait
+                        break
+                endif
+                if hitprcnt($b) < 70
+                        say 伙伴，你需要我的幫助。
+                        c 'double heal' $b
+                        mpnowait
+                endif
+        else
+                say 我的伙伴，你跑到那邊去了？
+                mpecho $I 離開了此處....
+                mpgoto $b
+        endif
+else
+        sob
+        say 我失去了我的伙伴，我無法繼續作戰。
+        mpecho $I 離開了此處....
+        mppurge self
+endif
+~
+>fight_prog 100~
+if rand(50)
+        if is_equ_obj($i) != 5709
+                wear mace
+        endif
+        if rand(50)
+                disarm
+                mpnowait
+        endif
+endif
+if rand(50)
+        if hitprcnt($b) < 30
+                say 伙伴，你受傷嚴重，讓我來幫幫你。
+                c 'full heal' $b
+                mpnowait
+                break
+        endif
+        if hitprcnt($b) < 50
+                say 伙伴，你受傷不輕，需要我的幫忙。
+                c 2 'double heal' $b
+                mpnowait
+                break
+        endif
+        if hitprcnt($b) < 70
+                say 伙伴，你需要我的幫助。
+                c 'double heal' $b
+                mpnowait
+        endif
+endif
+~
+>death_prog 100~
+if insameroom(warrior-firetop)
+        yell 伙伴，替我報仇！
+        mpforce warrior-firetop say 沒問題，你安心的去吧！
+        mpforce warrior-firetop invoke
+        mpforce warrior-firetop frenzy
+endif
+~
+|
+#5704
+lizardman3-firetop lizardman knight~
+蜥蜴人騎士(lizardman knight)~
+一名蜥蜴人騎士(lizardman knight)牽著牠的坐騎在這邊走著。
+~
+~
+1|64|4096|8192|262144 8|32|8192 0 S
+45 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+P 8|256|4194304
+R Lizardman~
+>repop_prog 100~
+mpadd_qmark self firetop_lizardman_riding 12 0 0 0 1 0
+if being(horse-firetop)
+        mptransfer horse-firetop
+else
+        mpmload 5705
+endif
+mpgroup self horse-firetop 0 1
+protect horse-firetop
+mpoload 35012
+mpoload 35023
+mpoload 9315
+mpoload 9320
+mpat 5 wear all
+~
+>rand_prog 50~
+if inroom($i) == 5
+        break
+endif
+if is_qmark($i) != firetop_lizardman_riding
+        if being(horse-firetop)
+                if insameroom(horse-firetop)
+                else
+                        mptransfer horse-firetop
+                endif
+                mpecho $I一縱身便跳上蜥蜴人的坐騎(lizardman's horse)
+                mptransfer horse-firetop 5
+                mpmload 5706
+                mpgoto 5
+        endif
+endif
+~
+>fight_prog 100~
+if hitprcnt($i) <= 40
+        if is_qmark($i) != firetop_lizardman_death
+                if being(horse-firetop)
+                        if insameroom(horse-firetop)
+                        else
+                                mptransfer horse-firetop
+                        endif
+                        yell 讓我騎上馬來對付你！
+                        mpecho $I一縱身便跳上蜥蜴人的坐騎(lizardman's horse)
+                        mptransfer horse-firetop 5
+                        mpmload 5706
+                        mpforce lizardman4-firetop hunt $n
+                        mpforce lizardman4-firetop mpkill $n
+                        mpgoto 5
+                endif
+        endif
+        break
+endif
+if rand(50)
+        if is_equ_obj($i) != 35012
+                wear lance
+        endif
+        disarm
+        mpnowait
+endif
+if rand(33)
+        circular
+        mpnowait
+else
+        if rand(50)
+                flaming
+                mpnowait
+        else
+                storm
+                mpnowait
+        endif
+endif
+if rand(50)
+        if rand(50)
+                kick
+                mpnowait
+        else
+                bashhead
+                mpnowait
+        endif
+endif
+~
+>death_prog 100~
+	mppurge dinosaur
+	mppurge lance
+~
+|
+#5705
+horse-firetop lizardman horse~
+蜥蜴人的坐騎(lizardman's horse)~
+一匹蜥蜴人騎士的坐騎(lizardman's horse)在這邊站著。
+~
+~
+1|2|64 8|32 0 S
+45 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+P 8|256|4194304
+R Horse~
+#5706
+lizardman4-firetop lizardman horse~
+坐在坐騎上的蜥蜴人(lizardman riding on horse)~
+一個坐在坐騎上的蜥蜴人(lizardman riding on horse)威風凜凜地在這邊散步。
+~
+~
+1|2|64|4096|8192|262144|8388608 8|32|128|512|8192 0 S
+55 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8|32
+P 8|256|4194304|16777216
+R Lizardman~
+>repop_prog 100~
+mpadd_qmark self firetop_lizardman_riding 12 0 0 0 1 0
+mpoload 35012
+mpoload 35023
+mpoload 9315
+mpoload 9320
+mpat 5 wear all
+~
+>rand_prog 50~
+if is_qmark($i) != firetop_lizardman_riding
+        mpecho 蜥蜴人騎士(lizardman knight)瀟灑地翻身跳下蜥蜴人的坐騎(lizardman's horse)。
+        if being(lizardman3-firetop)
+                mptransfer lizardman3-firetop
+                mpadd_qmark lizardman3-firetop firetop_lizardman_riding 12 0 0 0 1 0
+                mptransfer horse-firetop
+        else
+                mpmload 5704
+        endif
+        mppurge self
+endif
+~
+>fight_prog 100~
+if hitprcnt($i) <= 20
+        mpecho $I 馬上的攻勢被擊潰，被擊下馬來....
+        if being(lizardman3-firetop)
+                mptransfer lizardman3-firetop
+                mptransfer horse-firetop
+        else
+                mpmload 5704
+        endif
+        mpadd_qmark lizardman3-firetop firetop_lizardman_death 12 0 0 0 1 0
+        mpadd_qmark lizardman3-firetop firetop_lizardman_riding 12 0 0 0 1 0
+        mpforce lizardman3-firetop hunt $n
+        mpforce lizardman3-firetop mpkill $n
+        mppurge self
+        break
+endif
+if rand(50)
+        if is_equ_obj($i) != 35012
+                wear lance
+        endif
+        disarm
+        mpnowait
+endif
+if rand(33)
+        circular
+        mpnowait
+        circular
+        mpnowait
+else
+        if rand(50)
+                flaming
+                mpnowait
+                flaming
+                mpnowait
+        else
+                storm
+                mpnowait
+                storm
+                mpnowait
+        endif
+endif
+if rand(33)
+        yell 衝刺！衝刺！
+        mpechoat $n [1;33m$I 騎著馬向你衝了過來....[m
+        mpechoaround $n [1;33m$I 騎著馬向 $n 衝了過去....[m
+        mpcallout 1 mpechoat $n [1;31m對你造成了相當嚴重的傷害！[m
+        mpcallout 1 mpechoaround $n [1;31m$n 因此受了相當嚴重的傷！[m
+        mpcallout 1 modhmv $n 01.200 300 0
+endif
+~
+>death_prog 100~
+	mppurge dinosaur
+	mppurge lance
+~
+|
+#5707
+tired dwarf~
+疲憊的矮人(tired dwarf)~
+一個疲憊的矮人(tired dwarf)坐在這邊休息。
+~
+連日來的冒險(adventure)讓他累得攤在這邊，矮人是一種耐力很強的種族，但是能夠讓他
+如此疲憊的冒險，一定是相當有趣的過程。
+~
+1|64|4096|8192 8|32|512 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+P 8|256|4194304
+R Dwarf~
+>repop_prog 100~
+mpoload 2365
+mpoload 2365
+mpoload 8215
+mpoload 13641
+mpat 5 wear all
+~
+>talk_prog topic~
+faint
+say 真是累死(tired)了，
+say 沒想到一趟魔刀村來回，
+say 竟然需要要耗費那麼多力氣。
+~
+>talk_prog tired~
+say 前往魔刀村的捷徑，
+say 雖然不甚危險，
+say 但是上上下下，又爬又跳，
+say 簡直折騰死人了。
+~
+>talk_prog adventur~
+say 也不算是什麼冒險，
+say 只不過又需要跳上跳下，
+say 又需要爬上爬下，
+say 對我這種矮矮胖胖的矮人來說，
+say 實在是一個大負擔(load)。
+~
+>talk_prog load~
+say 如果在旅程中，
+say 多帶幾條繩索、鉤子等工具，
+say 那麼會比較輕鬆，
+say 否則有些地方並不是超凡的彈性就可以解決問題的。
+~
+|
+#5708
+busy vendor~
+忙碌的小販(busy vendor)~
+一個忙碌的小販(busy vendor)正在到處叫賣。
+~
+他身上賣了不少附近旅途必備用品，有需要的話可以跟他選購。
+~
+1|64 8|32|512 0 S
+30 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 8|256
+>repop_prog 100~
+mpadd_qmark self firetop_vendor_waiting 12 0 0 0 1 0
+mpoload 5703
+mpoload 5713
+mpoload 5717
+mpoload 5718
+if rand(50)
+        mpoload 4701
+else
+        mpoload 6518
+endif
+mpoload 15435
+mpoload 15452
+~
+>talk_prog item~
+say 我這邊買有不少旅行必備的物品，
+say 不過並不是所有的貨源都是非常充足的，
+say 有些東西如果被買走了，
+say 大概需要半天的時間才能補足。
+~
+>tick_prog 100~
+if is_qmark($i) != firetop_vendor_waiting
+        mpadd_qmark self firetop_vendor_waiting 12 0 0 0 1 0
+        if is_inv_obj($i) != 5703
+                mpoload 5703
+        endif
+        if is_inv_obj($i) != 5713
+                mpoload 5713
+        endif
+        if is_inv_obj($i) != 5717
+                mpoload 5717
+        endif
+        if is_inv_obj($i) != 5718
+                mpoload 5718
+        endif
+        if is_inv_obj($i) != 4701
+                if is_inv_obj($i) != 6518
+                        if rand(50)
+                                mpoload 4701
+                        else
+                                mpoload 6518
+                        endif
+                endif
+        endif
+        if is_inv_obj($i) != 15435
+                mpoload 15435
+        endif
+        if is_inv_obj($i) != 15452
+                mpoload 15594
+        endif
+endif
+~
+>rand_prog 20~
+if rand(50)
+        say 來啊！這邊有許多冒險必備的物品(item)，
+        say 趕快來看看啊！
+else
+        say 需要冒險的物品找我吧！
+endif
+~
+|
+#5709
+shaman-firetop adventurer shaman~
+冒險者巫醫(adventurer shaman)~
+一位冒險者巫醫(adventurer shaman)在這裡探索著未知的領域。
+~
+他是一位有著巫醫能力的冒險者，但是不知道從那邊來的。
+~
+1|2|64|4096|8192|262144|1048576|8388608 8|32|128|512|8192 0 S
+50 0 0 -20d-40+0 0d200+0
+0 0
+0 8 1
+C 1|32
+P 8|256|4194304|8388608|16777216|33554432|268435456
+S 41 300
+S 42 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 3511
+mpat 5 wear hammer
+mpoload 1200
+mpat 5 wear shield
+~
+>fight_prog 100~
+if is_equ_obj($i) != 3511
+        wear hammer
+endif
+if is_equ_obj($i) != 1200
+        wear shield
+endif
+disarm
+mpnowait
+if hitprcnt($i) < 70
+        if rand(30)
+                berserk
+                mpnowait
+                frenzy
+                mpnowait
+        endif
+endif
+if hitprcnt($i) < 50
+        invoke
+        mpnowait
+        if rand(50)
+                frenzy
+                mpnowait
+        endif
+endif
+if hitprcnt($i) < 30
+        if rand(70)
+                frenzy
+                mpnowait
+        endif
+endif
+if insameroom(savant-firetop)
+        if isaffected($i) & 1
+                yell 賢者請讓我重見光明吧！
+                mpforce savant-firetop c 'cure blindness' shaman-firetop
+                break
+        endif
+        if isaffected($i) !& 128
+                yell 賢者請賦予我更多抵禦傷害的防護罩！
+                mpforce savant-firetop c sanc shaman-firetop
+                break
+        endif
+        if isaffected($i) & 1024
+                yell 賢者請解除我身上的詛咒吧！
+                mpforce savant-firetop c 'remove curse' shaman-firetop
+                break
+        endif
+        if isaffected($i) & 4096
+                yell 賢者請去除我體內的毒素吧！
+                mpforce savant-firetop c 'cure poison' shaman-firetop
+                break
+        endif
+        if isaffected($i) & 268435456
+                yell 賢者請給予我肌肉再次活動的動力吧！
+                mpforce savant-firetop c vivi shaman-firetop
+                break
+        endif
+        if isaffected($i) & 536870912
+                yell 賢者請讓我瘋狂的意志再度冷靜下來吧！
+                mpforce savant-firetop c calm shaman-firetop
+        endif
+endif
+~
+|
+#5710
+swordsman-firetop adventurer swordsman~
+冒險者劍士(adventurer swordsman)~
+一位冒險者劍士(adventurer swordsman)在這裡探索著未知的領域。
+~
+他是一位有著劍士能力的冒險者，但是不知道從那邊來的。
+~
+1|2|64|4096|8192|262144|8388608 8|32|128|512|8192 0 S
+50 0 0 30d0+600 0d100+0
+0 0
+0 8 1
+C 1|8|32
+P 8|256|4194304|8388608|16777216|33554432
+S 41 300
+S 42 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 3022
+mpat 5 wield sword twohand
+~
+>fight_prog 100~
+if insameroom(shaman-firetop)
+        mpforce shaman-firetop rescue swordsman-firetop
+endif
+if is_equ_obj($i) != 3022
+        wield sword twohand
+endif
+if rand(50)
+        disarm
+        mpnowait
+endif
+if rand(25)
+        perform empslash
+        mpnowait
+else
+        if rand(50)
+                flaming
+                mpnowait
+                earth
+                mpnowait
+        else
+                storm
+                mpnowait
+        endif
+endif
+if insameroom(savant-firetop)
+        if isaffected($i) & 1
+                yell 賢者請讓我重見光明吧！
+                mpforce savant-firetop c 'cure blindness' swordsman-firetop
+                break
+        endif
+        if isaffected($i) !& 128
+                yell 賢者請賦予我更多抵禦傷害的防護罩！
+                mpforce savant-firetop c sanc swordsman-firetop
+                break
+        endif
+        if isaffected($i) & 1024
+                yell 賢者請解除我身上的詛咒吧！
+                mpforce savant-firetop c 'remove curse' swordsman-firetop
+                break
+        endif
+        if isaffected($i) & 4096
+                yell 賢者請去除我體內的毒素吧！
+                mpforce savant-firetop c 'cure poison' swordsman-firetop
+                break
+        endif
+        if isaffected($i) & 268435456
+                yell 賢者請給予我肌肉再次活動的動力吧！
+                mpforce savant-firetop c vivi swordsman-firetop
+                break
+        endif
+        if isaffected($i) & 536870912
+                yell 賢者請讓我瘋狂的意志再度冷靜下來吧！
+                mpforce savant-firetop c calm swordsman-firetop
+        endif
+endif
+~
+|
+#5711
+alchemist-firetop adventurer alchemist~
+冒險者鍊金師(adventurer alchemist)~
+一位冒險者鍊金師(adventurer alchemist)在這裡探索著未知的領域。
+~
+他是一位有著鍊金師能力的冒險者，但是不知道從那邊來的。
+~
+1|2|64|4096|8192|262144|8388608 8|32|128|512|8192 0 S
+50 0 0 100d-80+600 0d0+50
+0 0
+0 8 1
+C 2
+P 8|256|1048576|2097152|4194304|8388608|16777216|33554432|268435456
+S 41 300
+S 42 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if insameroom(shaman-firetop)
+        mpforce shaman-firetop rescue alchemist-firetop
+else
+        if insameroom(swordsman-firetop)
+                mpforce swordsman-firetop rescue alchemist-firetop
+        else
+                if insameroom(savant-firetop)
+                        mpforce savant-firetop rescue alchemist-firetop
+                endif
+        endif
+endif
+if ispc($r)
+        if rand(50)
+                if rand(25)
+                        c 2 'magic missile' $r
+                endif
+                if rand(25)
+                        c 2 'burning hand' $r
+                endif
+                if rand(25)
+                        c 2 'lightning bolt' $r
+                endif
+                if rand(25)
+                        c 2 'energy drain' $r
+                endif
+                if rand(25)
+                        c 2 flamestrike $r
+                endif
+        else
+                if rand(25)
+                        c 2 weaken $r
+                endif
+                if rand(25)
+                        c 2 curese $r
+                endif
+                if rand(25)
+                        c 2 'sun flash' $r
+                endif
+                if rand(25)
+                        c 2 'crushing hand' $r
+                endif
+                if rand(25)
+                        c 2 mute $r
+                endif
+        endif
+endif
+if insameroom(savant-firetop)
+        if isaffected($i) & 1
+                yell 賢者請讓我重見光明吧！
+                mpforce savant-firetop c 'cure blindness' alchemist-firetop
+                break
+        endif
+        if isaffected($i) !& 128
+                yell 賢者請賦予我更多抵禦傷害的防護罩！
+                mpforce savant-firetop c sanc alchemist-firetop
+                break
+        endif
+        if isaffected($i) & 1024
+                yell 賢者請解除我身上的詛咒吧！
+                mpforce savant-firetop c 'remove curse' alchemist-firetop
+                break
+        endif
+        if isaffected($i) & 4096
+                yell 賢者請去除我體內的毒素吧！
+                mpforce savant-firetop c 'cure poison' alchemist-firetop
+                break
+        endif
+        if isaffected($i) & 268435456
+                yell 賢者請給予我肌肉再次活動的動力吧！
+                mpforce savant-firetop c vivi alchemist-firetop
+                break
+        endif
+        if isaffected($i) & 536870912
+                yell 賢者請讓我瘋狂的意志再度冷靜下來吧！
+                mpforce savant-firetop c calm alchemist-firetop
+        endif
+endif
+~
+|
+#5712
+savant-firetop adventurer savant~
+冒險者賢者(adventurer savant)~
+一位冒險者賢者(adventurer savant)在這裡探索著未知的領域。
+~
+他是一位有著賢者能力的冒險者，但是不知道從那邊來的。
+~
+1|64|4096|8192|262144|8388608 8|32|128|512|8192 0 S
+50 0 0 0d-70+300 0d300+50
+0 0
+0 8 1
+C 2
+P 8|256|4194304|8388608|16777216|33554432|268435456
+S 41 200
+S 42 200
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self firetop_savant_mana -1 20 20 20 1 1
+mpmload 5709
+mpgroup self shaman-firetop 1 0
+mpforce shaman-firetop protect savant-firetop
+mpmload 5710
+mpgroup self swordsman-firetop 1 1
+mpmload 5711
+mpgroup self alchemist-firetop 1 1
+~
+>fight_prog 100~
+if insameroom(shaman-firetop)
+        mpforce shaman-firetop rescue savant-firetop
+else
+        if insameroom(swordsman-firetop)
+                mpforce swordsman-firetop rescue savant-firetop
+        endif
+endif
+if insameroom(shaman-firetop)
+        if hitprcnt(shaman-firetop) < 30
+                if is_qmark($i) > firetop_savant_mana 300000
+                        c 3 'gdouble heal'
+                        mpnowait
+                        mpmod_qmark self firetop_savant_mana v2 - 1
+                else
+                        yell 糟糕，我沒有足夠的法力施展高級治療法術了！
+                endif
+        endif
+        if hitprcnt(shaman-firetop) < 50
+                if is_qmark($i) > firetop_savant_mana 200000
+                        c 2 'gdouble heal'
+                        mpnowait
+                        mpmod_qmark self firetop_savant_mana v1 - 1
+                else
+                        yell 糟糕，我沒有足夠的法力施展中級治療法術了！
+                endif
+                break
+        endif
+        if hitprcnt(shaman-firetop) < 70
+                if is_qmark($i) > firetop_savant_mana 100000
+                        c 'gdouble heal'
+                        mpnowait
+                        mpmod_qmark self firetop_savant_mana v0 - 1
+                else
+                        yell 糟糕，我沒有足夠的法力施展初級治療法術了！
+                endif
+        endif
+endif
+if isaffected($i) & 1
+        c 'cure blindness'
+        mpnowait
+        break
+endif
+if isaffected($i) !& 128
+        c sanc
+        mpnowait
+        break
+endif
+if isaffected($i) & 1024
+        c 'remove curse'
+        mpnowait
+        break
+endif
+if isaffected($i) & 4096
+        c 'cure poison'
+        mpnowait
+        break
+endif
+if isaffected($i) & 536870912
+        c calm
+        mpnowait
+endif
+~
+|
+#5713
+troll warrior~
+食人妖戰士(troll warrior)~
+身軀龐大的食人妖戰士(troll warrior)在這邊隨時準備擊敗侵入者。
+~
+這隻比剛剛任何一隻食人妖都來的大，比最大型的史卡拉貝最大型的還要大。
+~
+1|32|64|8192|262144|1048576 8|32|512|8192 -1000 S
+45 1000 0 -15d30+-200 0d200+0
+0 0
+0 8 1
+R Troll~
+C 1|8
+P 8|256|4194304
+>repop_prog 100~
+mpoload 4228
+mpoload 4228
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+        skilldrv multihit $n
+endif
+~
+>fight_prog 100~
+if rand(50)
+        if is_equ_obj($i) != 4228
+                wear club
+                wear club
+        endif
+        if rand(50)
+                disarm
+                mpnowait
+        endif
+endif
+if rand(50)
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+endif
+~
+|
+#5714
+prisoner2-firetop prisoner~
+冷靜下來的犯人(calm prisoner)~
+一個眼神渙散的犯人(prisoner)靜靜地站在這邊看著你！
+~
+心情已經平靜的他，或許能夠提供你一些有用的訊息(messages)。
+~
+1|2|67108864 8|32|512 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+P 8
+>repop_prog 100~
+mpadd_qmark self firetop_prisoner_return 24 0 0 0 1 0
+mpoload 5751
+mpat 5 wear all
+~
+>entry_prog 100~
+if insameroom($b)
+        if insameroom(dwarf1-firetop)
+                if is_qmark($i) & firetop_prisoner_quest 100001
+                else
+                        mpmod_qmark self firetop_prisoner_quest v0 | 1
+                        mpforce dwarf1-firetop mpdef_rembch $b
+                        gasp dwarf1-firetop
+                        say 這是我的朋友啊！他看起來就快要死了。
+                        say $b 你趕緊想辦法救救他吧！
+                endif
+        endif
+        if insameroom(lizardman1-firetop)
+                if is_qmark($i) & firetop_prisoner_quest 100002
+                else
+                        mpmod_qmark self firetop_prisoner_quest v0 | 2
+                        mpforcer here del_affect lizardman1-firetop all
+                        mpforce lizardman1-firetop mpdef_rembch $b
+                        mpforcer here add_affect lizardman1-firetop 'blindness' 0 -1 18 -4 1
+                        faint lizardman1-firetop
+                        say 我的朋友你怎麼了？你的眼睛怎麼看不見？
+                        say $b 你看看怎麼幫他治療失明吧。
+                endif
+        endif
+        if insameroom(gnome1-firetop)
+                if is_qmark($i) & firetop_prisoner_quest 100004
+                else
+                        mpmod_qmark self firetop_prisoner_quest v0 | 4
+                        mpforce gnome1-firetop mpdef_rembch $b
+                        look gnome1-firetop
+                        say 我的朋友你中毒了嗎？還好吧？
+                        say $b 你看看怎麼幫他解開身上的毒吧。
+                endif
+        endif
+        if inroom($i) == 5748
+                mpcall firetop_prisoner_quest $b
+        endif
+        if inroom($i) == 5742
+                mpcall firetop_prisoner_quest $b
+        endif
+        if inroom($i) == 5736
+                mpcall firetop_prisoner_quest $b
+        endif
+        if inroom($i) == 4594
+                hop $b
+                say 我終於脫離了險境，謝謝 $b 你的幫忙。
+                mpskillexp $b 1000
+                mpexp $b 3000
+                if is_qmark($b) & firetop_prisoner_quest 200001
+                        if being(dwarf2-firetop)
+                                say 你也救了我的朋友 - 矮人！
+                                mpskillexp $b 500
+                                mpexp $b 1000
+                                mpat dwarf2-firetop mppurge dwarf2-firetop
+                                if being(dwarf1-firetop)
+                                        mpat dwarf1-firetop mppurge dwarf1-firetop
+                                endif
+                        endif
+                endif
+                if is_qmark($b) & firetop_prisoner_quest 200002
+                        if being(lizardman2-firetop)
+                                say 你也救了我的戰友 - 蜥蜴人！
+                                mpskillexp $b 500
+                                mpexp $b 1000
+                                mpat lizardman2-firetop mppurge lizardman2-firetop
+                                if being(lizardman1-firetop)
+                                        mpat lizardman1-firetop mppurge lizardman1-firetop
+                                endif
+                        endif
+                endif
+                if is_qmark($b) & firetop_prisoner_quest 200004
+                        if being(gnome2-firetop)
+                                say 你也救了我的長輩 - 地精！
+                                mpskillexp $b 500
+                                mpexp $b 1000
+                                mpat gnome2-firetop mppurge gnome2-firetop
+                                if being(gnome1-firetop)
+                                        mpat gnome1-firetop mppurge gnome1-firetop
+                                endif
+                        endif
+                endif
+                thank $b
+                wave $b
+                mpecho $I 往光明之鎮鎮內走去....
+                mpdel_qmark $b firetop_prisoner_quest
+                mpmod_qmark $b firetop_quest v0 | 2
+                if being(prisoner1-firetop)
+                        mpat prisoner1-firetop mppurge prisoner1-firetop
+                endif
+                mppurge self
+        endif
+endif
+~
+>defun_prog firetop_prisoner_quest~
+mpecho 忽然出現了幾個 食人妖(troll warrior) 向你攻擊！
+mpmload 5713
+mpforce warrior mpkill $b
+mpmload 5713
+mpforce warrior mpkill $b
+~
+>talk_prog messages~
+if is_qmark($i) == firetop_talking
+or being($b)
+or is_qmark($n) & firetop_quest 100002
+or is_qmark($n) == firetop_prisoner_quest
+        break
+endif
+mpadd_qmark self firetop_talking 5 0 0 0 1 0
+fear
+say 我被抓到這邊已經有一段時間了....，
+mpcallout 1 say 我是跟一位由光明之鎮的大法師....，
+mpcallout 2 say 還有三位伙伴....，
+mpcallout 3 say 一起被抓來這邊的....，
+mpcallout 4 say 不過那一位大法師被送往裡面去了....，
+mpcallout 5 say 而我被留在這邊凌虐....，
+mpcallout 6 say 你願意幫我送到光明之鎮嗎(yes/no)？
+mpcallout 6 mpdel_qmark self firetop_talking
+~
+>talk_prog yes~
+if being($b)
+or is_qmark($n) & firetop_quest 100002
+or is_qmark($n) == firetop_prisoner_quest
+or is_qmark($i) == firetop_talking
+else
+        thank $n
+        say 那麼請你儘快帶領我離開這邊吧！
+        say 如果能夠找到我那三位伙伴當然更好。
+        mpgroup $n self 0 0
+        mpdef_rembch $n
+        mpadd_qmark self firetop_prisoner_quest 48 0 0 0 1 0
+        mpadd_qmark $n firetop_prisoner_quest -1 0 0 0 0 1
+endif
+~
+>talk_prog no~
+if being($b)
+or is_qmark($n) & firetop_quest 100002
+or is_qmark($n) == firetop_prisoner_quest
+or is_qmark($i) == firetop_talking
+else
+        sigh
+        yell 那麼我只好自殺，以免受那無窮無盡的痛苦。
+        mpforcer here c 10 angry prisoner2-firetop 50
+endif
+~
+>rand_prog 50~
+if being($b)
+        if is_qmark($i) == firetop_prisoner_quest
+                if insameroom($b)
+                else
+                        if rand(20)
+                                tell $b 你現在在那邊？趕快來救我，我好怕！
+                        endif
+                        if is_qmark($i) > firetop_prisoner_quest 1005
+                                mpmod_qmark self firetop_prisoner_quest timer - 5
+                        endif
+                endif
+        else
+                tell $b 你的速度實在太慢了！我自己走去光明之鎮吧！
+                mpecho $I 轉身離開了此處....
+                mppurge self
+        endif
+else
+        if is_qmark($i) == firetop_prisoner_quest
+                shrug
+                say 又是一位不完成任務就離線的玩家。
+                mpecho $I 轉身離開了此處....
+                mppurge self
+        else
+                if is_qmark($i) != firetop_prisoner_return
+                        if being(prisoner1-firetop)
+                                mptransfer personer1-firetop
+                        else
+                                mpmload 5742
+                        endif
+                        mpforcer here add_affect prisoner1-firetop 'demon tremor' 0 -1 0 0 536870912
+                        mppurge self
+                endif
+        endif
+endif
+~
+>talk_prog restart~
+if is_qmark($n) == firetop_prisoner_quest
+        mpechoat $n 遠方傳來一陣聲響「本項任務已經可以重新開始！」
+        mpdel_qmark $n firetop_prisoner_quest
+endif
+~
+|
+#5715
+elite-firetop elite troll warrior~
+食人妖菁英戰士(elite troll warrior)~
+身軀龐大的食人妖菁英戰士(elite troll warrior)在這邊隨時準備擊敗侵入者。
+~
+身為食人妖戰士的菁英，戰鬥力比起一般食人妖更是不可同日而語，冒險者們要小心了。
+~
+1|4|32|64|8192|262144|1048576|8388608 8|32|512|8192 -1000 S
+50 3000 0 -15d30+-200 0d200+0
+0 0
+0 8 1
+R Troll~
+C 1|8|32
+P 4|8|256|4194304|16777216|67108864
+>repop_prog 100~
+mpmload 5713
+mpgroup self warrior 1 0
+mpmload 5713
+mpgroup self warrior 1 0
+mpoload 2802
+mpoload 4037
+mpoload 15016
+mpoload 15016
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+        skilldrv multihit $n
+endif
+~
+>fight_prog 100~
+if is_equ_obj($i) != 15016
+        wear club
+        wear club
+endif
+if rand(50)
+        disarm
+        mpnowait
+endif
+if rand(50)
+        frenzy
+        mpnowait
+endif
+~
+|
+#5716
+dwarf1-firetop seriously injured dwarf~
+受傷嚴重的矮人(seriously injured dwarf)~
+一個受傷嚴重、幾乎快死去的矮人(seriously injured dwarf)躺在這邊呻吟。
+~
+這個可憐的矮人無故被抓來此處，他已經快要被虐待而死了，趕快救救他吧！
+~
+1|2|64 8|32|512 -600 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Dwarf~
+C 1
+P 8|256
+>repop_prog 100~
+mpforcer here modhmv dwarf1-firetop 03.90 90 0
+~
+>talk_prog topic~
+mpecho $I 幾乎無法回答你什麼，眼看著就要死去。
+~
+>rand_prog 100~
+if hitprcnt($i) > 90
+        mpecho 藉著恢復法術， $I 恢復了生氣。
+        mpmload 5717
+        if insameroom($b)
+                mpforce dwarf2-firetop mpdef_rembch $b
+                mpgroup $b dwarf2-firetop 0 0
+                mpforce dwarf2-firetop say 請 $b 將我救離此地吧！
+                mpmod_qmark $b firetop_prisoner_quest v1 | 1
+                mpadd_qmark dwarf2-firetop firetop_prisoner_quest 48 0 0 0 1 0
+        endif
+        mpgoto 5
+else
+        mpforcer here modhmv dwarf1-firetop 04.100 100 0
+        mpforcer here modhmv dwarf1-firetop 03.90 90 0
+endif
+~
+|
+#5717
+dwarf2-firetop healthy dwarf~
+神采奕奕的矮人(healthy dwarf)~
+一個神采奕奕的矮人(healthy dwarf)站在這邊。
+~
+經過治療後，這個矮人變得更加的有精神了。
+~
+1|2|64|67108864 8|32|512 -600 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Dwarf~
+C 1
+P 8|256
+>rand_prog 50~
+if being($b)
+        if is_qmark($i) == firetop_prisoner_quest
+                if insameroom($b)
+                else
+                        if is_qmark($i) firetop_prisoner_quest > 1005
+                                mpmod_qmark self firetop_prisoner_quest timer - 5
+                        endif
+                endif
+        else
+                tell $b 你的速度實在太慢了！我自己走去光明之鎮吧！
+                mpecho $I 轉身離開了此處....
+                mppurge self
+        endif
+else
+        if is_qmark($i) == firetop_prisoner_quest
+                shrug
+                say 又是一位不完成任務就離線的玩家。
+        else
+                say 謝謝在場的各位拯救了我，
+                say 不過我仍有朋友在這裡，
+                say 我得去救他們。
+                wave
+                if being(dwarf1-firetop)
+                        mpat dwarf1-firetop mppurge dwarf1-firetop
+                endif
+        endif
+        mpecho $I 轉身離開了此處....
+        mppurge self
+endif
+~
+|
+#5718
+lizardman2-firetop lizardman~
+重見光明的蜥蜴人(clear lizardman)~
+重見光明的蜥蜴人(clear lizardman)靜靜地站在這邊。
+~
+經過醫治，蜥蜴人的眼睛再度重見光明。
+~
+1|2|64|8192|262144|67108864 8|32|512|8192 0 S
+45 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Lizardman~
+C 1|8
+P 8|256|4194304
+>rand_prog 50~
+if being($b)
+        if is_qmark($i) == firetop_prisoner_quest
+                if insameroom($b)
+                else
+                        if is_qmark($i) firetop_prisoner_quest > 1005
+                                mpmod_qmark self firetop_prisoner_quest timer - 5
+                        endif
+                endif
+        else
+                tell $b 你的速度實在太慢了！我自己走去光明之鎮吧！
+                mpecho $I 轉身離開了此處....
+                mppurge self
+        endif
+else
+        if is_qmark($i) == firetop_prisoner_quest
+                shrug
+                say 又是一位不完成任務就離線的玩家。
+        else
+                say 謝謝你們治癒了我的眼睛，
+                say 不過我得去拯救我的朋友們，
+                say 他們還在這邊受難！
+                wave
+                if being(lizardman1-firetop)
+                        mpat lizardman1-firetop mppurge lizardman1-firetop
+                endif
+        endif
+        mpecho $I 轉身離開了此處....
+        mppurge self
+endif
+~
+|
+#5719
+gnome2-firetop normal gnome~
+正常的地精(poisoned gnome)~
+一個已經解了毒的的地精(normal gnome)站在這邊。
+~
+經過解毒的程序，這個地精目前行動自如。
+~
+1|2|64|67108864 8|32|512|8192 400 S
+45 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+P 8|256|4194304
+C 1
+>rand_prog 50~
+if being($b)
+        if is_qmark($i) == firetop_prisoner_quest
+                if insameroom($b)
+                else
+                        if is_qmark($i) firetop_prisoner_quest > 1005
+                                mpmod_qmark self firetop_prisoner_quest timer - 5
+                        endif
+                endif
+        else
+                tell $b 你的速度實在太慢了！我自己走去光明之鎮吧！
+                mpecho $I 轉身離開了此處....
+                mppurge self
+        endif
+else
+        if is_qmark($i) == firetop_prisoner_quest
+                shrug
+                say 又是一位不完成任務就離線的玩家。
+        else
+                say 謝謝你們解除了我身上的毒，
+                say 但是我的朋友還在這邊某處被關著，
+                say 我必須要去救他們。
+                wave
+                if being(gnome1-firetop)
+                        mpat gnome1-firetop mppurge gnome1-firetop
+                endif
+        endif
+        mpecho $I 轉身離開了此處....
+        mppurge self
+endif
+~
+|
+#5720
+adventurer guildmaster~
+冒險者分會會長(adventurer guildmaster)~
+遠古森林冒險者分會會長(adventurer guildmaster)站在這邊等著服務您。
+~
+他是遠古森林冒險公會分部的會長，許多想要前往魔刀村或在遠古森林中冒險的人們都可
+以由他身上獲知不少有用的資訊。
+~
+1|2|64|8192|262144|8388608|16777216 8|32|128|512|8192 1000 S
+60 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|4|8|32
+P 4|8|256|4194304|8388608|16777216|33554432|67108864
+S 41 300
+S 42 300
+>repop_prog 100~
+mpoload 2463
+mpoload 2463
+mpoload 10300
+mpoload 14090
+mpat 5 wear all
+mpadd_qmark self firetop_hunter_quest -1 0 0 0 1 0
+mpadd_qmark self firetop_assignment_quest -1 0 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == skarabrae_enemy
+or is_qmark($n) == mist_enemy
+        say 我們的敵人 $n ，你不夠資格進入此處。
+        slap $n
+        mptransfer $n 5717
+        break
+endif
+if is_qmark($i) != firetop_guildmaster_meeting
+        say 歡迎光臨遠古森林冒險者公會，
+        say 有什麼需要我幫忙(assistant)的嗎？
+        mpadd_qmark self firetop_guildmaster_meeting 1 0 0 0 1 0
+endif
+~
+>talk_prog topic~
+say 歡迎光臨遠古森林冒險者公會，
+say 有什麼需要我幫忙(assistant)的嗎？
+~
+>tick_prog 5~
+if rand(20)
+        if is_qmark($i) !& firetop_hunter_quest 100001
+                mpmod_qmark self firetop_hunter_quest v0 | 1
+        endif
+else
+        if rand(25)
+                if is_qmark($i) !& firetop_hunter_quest 100002
+                        mpmod_qmark self firetop_hunter_quest v0 | 2
+                endif
+        else
+                if rand(33)
+                        if is_qmark($i) !& firetop_hunter_quest 100004
+                                mpmod_qmark self firetop_hunter_quest v0 | 4
+                        endif
+                else
+                        if rand(50)
+                                if is_qmark($i) !& firetop_hunter_quest 100008
+                                        mpmod_qmark self firetop_hunter_quest v0 | 8
+                                endif
+                        else
+                                if is_qmark($i) !& firetop_hunter_quest 100016
+                                        mpmod_qmark self firetop_hunter_quest v0 | 16
+                                endif
+                        endif
+                endif
+        endif
+endif
+if rand(20)
+        if is_qmark($i) !& firetop_hunter_quest 100001
+                mpmod_qmark self firetop_hunter_quest v0 | 1
+        endif
+else
+        if rand(25)
+                if is_qmark($i) !& firetop_hunter_quest 100002
+                        mpmod_qmark self firetop_hunter_quest v0 | 2
+                endif
+        else
+                if rand(33)
+                        if is_qmark($i) !& firetop_hunter_quest 100004
+                                mpmod_qmark self firetop_hunter_quest v0 | 4
+                        endif
+                else
+                        if rand(50)
+                                if is_qmark($i) !& firetop_hunter_quest 100008
+                                        mpmod_qmark self firetop_hunter_quest v0 | 8
+                                endif
+                        else
+                                if is_qmark($i) !& firetop_hunter_quest 100016
+                                        mpmod_qmark self firetop_hunter_quest v0 | 16
+                                endif
+                        endif
+                endif
+        endif
+endif
+~
+>talk_prog assistant~
+say 我們冒險者隨機提供冒險者一些服務，
+say 我們冒險者公會能夠提供的服務有以下幾種：
+say 1. 我們提供獎金獵人(hunter)的服務，提供懸賞請冒險者帶回我們需要的東西。
+say 2. 我們提供冒險者任務(assignment)，這些任務不一定需要殺戮。
+say 3. 我們提供冒險者進入遠古森林一些額外服務(service)，當然你的名聲夠的話。
+say 想要中途終止(cancel)任務的話，請直接跟我說，但是押金可拿不回去。
+~
+>talk_prog cancel~
+if is_qmark($n) == firetop_hunter_quest
+or is_qmark($n) == firetop_assignment_quest
+or is_qmark($n) == firetop_service_quest
+        if is_qmark($n) & firetop_hunter_quest 100001
+                nod $n
+                say $n 終止了「千年蜘蛛膽」的任務。
+                say $n 同時我們也沒收您置於本會的押金。
+                mpat firetop-hunter-quest1 mppurge firetop-hunter-quest1
+                mpdel_qmark $n firetop_hunter_quest
+        endif
+        if is_qmark($n) & firetop_hunter_quest 100002
+                nod $n
+                say $n 終止了「獅鷲獸膽」的任務。
+                say $n 同時我們也沒收您置於本會的押金。
+                mpat firetop-hunter-quest2 mppurge firetop-hunter-quest2
+                mpdel_qmark $n firetop_hunter_quest
+        endif
+        if is_qmark($n) & firetop_hunter_quest 100004
+                nod $n
+                say $n 終止了「遠古巨獸肝」的任務。
+                say $n 同時我們也沒收您置於本會的押金。
+                mpat firetop-hunter-quest3 mppurge firetop-hunter-quest3
+                mpdel_qmark $n firetop_hunter_quest
+        endif
+        if is_qmark($n) & firetop_hunter_quest 100008
+                nod $n
+                say $n 終止了「鐵獨眼巨人之眼」的任務。
+                say $n 同時我們也沒收您置於本會的押金。
+                mpat firetop-hunter-quest4 mppurge firetop-hunter-quest4
+                mpdel_qmark $n firetop_hunter_quest
+        endif
+else
+        say 你並沒有接下任何遠古森林冒險者公會的任務。
+endif
+~
+>talk_prog hunter~
+if is_qmark($i) == firetop_hunter_quest 100000
+        say 抱歉，目前並無任何獎金獵人的懸賞。
+else
+        say 我們現在需要以下這些東西....
+        if is_qmark($i) & firetop_hunter_quest 100001
+                say ----------------------------------------------------------
+                say ‧我們現在急需一顆千年蜘蛛的膽(gall of spider)。
+                say ‧懸賞內容： 50 萬金幣， 15000 點經驗值， 500 點技能經驗值。
+                say ‧懸賞期限： 10 天內。
+                say ‧懸賞押金： 10 萬金幣， 7000 點經驗值。
+                if being(firetop-hunter-quest1)
+                        say ‧任務狀態： 已接。
+                else
+                        say ‧任務狀態： 未接。
+                endif
+                say ----------------------------------------------------------
+        endif
+        if is_qmark($i) & firetop_hunter_quest 100002
+                say ----------------------------------------------------------
+                say ‧我們現在急需一顆獅鷲獸的膽(gall of griffins)。
+                say ‧懸賞內容： 200 萬金幣， 50000 點經驗值， 2000 點技能經驗值。
+                say ‧懸賞期限： 7 天內。
+                say ‧懸賞押金： 50 萬金幣，  50000 點經驗值。
+                if being(firetop-hunter-quest2)
+                        say ‧任務狀態： 已接。
+                else
+                        say ‧任務狀態： 未接。
+                endif
+                say ----------------------------------------------------------
+        endif
+        if is_qmark($i) & firetop_hunter_quest 100004
+                say ----------------------------------------------------------
+                say ‧我們現在急需一顆遠古巨獸的肝(liver of behemoth)。
+                say ‧懸賞內容： 600 萬金幣， 70000 點經驗值， 2500 點技能經驗值。
+                say ‧懸賞期限： 7 天內。
+                say ‧懸賞押金： 150 萬金幣， 70000 點經驗值。
+                if being(firetop-hunter-quest3)
+                        say ‧任務狀態： 已接。
+                else
+                        say ‧任務狀態： 未接。
+                endif
+                say ----------------------------------------------------------
+        endif
+        if is_qmark($i) & firetop_hunter_quest 100008
+                say ----------------------------------------------------------
+                say ‧我們現在急需一顆鐵獨眼巨人的寶石眼睛(gem of iron cyclops)。
+                say ‧懸賞內容： 150 萬金幣， 20000 點經驗值， 1000 點技能經驗值。
+                say ‧懸賞期限： 5 天內。
+                say ‧懸賞押金： 30 萬金幣，  20000 點經驗值。
+                if being(firetop-hunter-quest4)
+                        say ‧任務狀態： 已接。
+                else
+                        say ‧任務狀態： 未接。
+                endif
+                say ----------------------------------------------------------
+        endif
+        if is_qmark($i) & firetop_hunter_quest 100016
+                tell $i Here serve for Ogre zone.
+        endif
+endif
+~
+>talk_prog p gall of spider~
+if is_qmark($n) == firetop_hunter_quest
+or is_qmark($n) == firetop_assignment_quest
+        say 很抱歉，您身上已經有任務在身了。
+        break
+endif
+if exp($n) < 7000
+or goldamt($n) <= 100000
+        say 很抱歉，您身上的金錢或經驗值不足，無法接受此任務。
+        break
+endif
+if being(firetop-hunter-quest1)
+        say 抱歉，這項任務已經有人接了。
+        say 若此人失蹤、離線或時限內未完成任務，
+        say 你仍有機會接下這項任務。
+else
+        mpgold $n -100000
+        mpexp $n -7000
+        mpadd_qmark $n firetop_hunter_quest 240 1 0 0 0 1
+        say 聽說在食人妖洞窟裡頭有一隻千年蜘蛛，
+        say 或許你可以到那邊找找看。
+        mpmload 5721
+        mpforce firetop-hunter-quest1 mpdef_rembch $n
+        mpadd_qmark firetop-hunter-quest1 firetop_hunter_quest 240 0 0 0 1 0
+        mptransfer firetop-hunter-quest1 5
+endif
+~
+>give_prog 5767~
+if being(firetop-hunter-quest1)
+        if is_qmark($n) == firetop_hunter_quest 100001
+                mpjunk all.gall
+                clap $n
+                say 幹的好！請取回你壓在這邊的代價！
+                mpgold $n 100000
+                mpexp $n 7000
+                say 並獲得你應得的獎賞吧。
+                mpgold $n 500000
+                mpexp $n 15000
+                mpskillexp $n 500
+                mpmod_qmark self firetop_hunter_quest v0 r 1
+                mpat firetop-hunter-quest1 mppurge firetop-hunter-quest1
+                mpdel_qmark $n firetop_hunter_quest
+        else
+                say 你並非接下這份任務的冒險者喔。
+                drop gall
+        endif
+else
+        say 你拿這個東西給我做什麼？
+        drop gall
+endif
+~
+>talk_prog p gall of griffins~
+if exp($n) < 50000
+or goldamt($n) <= 500000
+        say 很抱歉，您身上的金錢或經驗值不足，無法接受此任務。
+        break
+endif
+if is_qmark($n) == firetop_hunter_quest
+or is_qmark($n) == firetop_assignment_quest
+        say 很抱歉，您身上已經有任務在身了。
+        break
+endif
+if being(firetop-hunter-quest2)
+        say 抱歉，這項任務已經有人接了。
+        say 若此人失蹤、離線或時限內未完成任務，
+        say 你仍有機會接下這項任務。
+else
+        mpgold $n -500000
+        mpexp $n -50000
+        mpadd_qmark $n firetop_hunter_quest 144 2 0 0 0 1
+        say 聽說獅鷲獸深處遠古森林的深處，那裡極度的危險，
+        say 雖然賞金相當豐富，你可別因此而送命了。
+        mpmload 5722
+        mpforce firetop-hunter-quest2 mpdef_rembch $n
+        mpadd_qmark firetop-hunter-quest2 firetop_hunter_quest 144 0 0 0 1 0
+        mptransfer firetop-hunter-quest2 5
+endif
+~
+>give_prog 15487~
+if being(firetop-hunter-quest2)
+        if is_qmark($n) == firetop_hunter_quest 100002
+                mpjunk all.gall
+                clap $n
+                say 幹的好！請取回你壓在這邊的代價！
+                mpgold $n 500000
+                mpexp $n 50000
+                say 並獲得你應得的獎賞吧。
+                mpgold $n 2000000
+                mpexp $n 50000
+                mpskillexp $n 2000
+                mpmod_qmark self firetop_hunter_quest v0 r 2
+                mpat firetop-hunter-quest2 mppurge firetop-hunter-quest2
+                mpdel_qmark $n firetop_hunter_quest
+        else
+                say 你並非接下這份任務的冒險者喔。
+                drop gall
+        endif
+else
+        say 你拿這個東西給我做什麼？
+        drop gall
+endif
+~
+>talk_prog p liver of behemoth~
+if exp($n) < 70000
+or goldamt($n) <= 1500000
+        say 很抱歉，您身上的金錢或經驗值不足，無法接受此任務。
+        break
+endif
+if is_qmark($n) == firetop_hunter_quest
+or is_qmark($n) == firetop_assignment_quest
+        say 很抱歉，您身上已經有任務在身了。
+        break
+endif
+if being(firetop-hunter-quest3)
+        say 抱歉，這項任務已經有人接了。
+        say 若此人失蹤、離線或時限內未完成任務，
+        say 你仍有機會接下這項任務。
+else
+        mpgold $n -1500000
+        mpexp $n -70000
+        mpadd_qmark $n firetop_hunter_quest 144 4 0 0 0 1
+        say 遠古巨獸可不是三兩下就可以打敗的敵手，
+        say 如果你沒有三兩下子，最好不要去送死。
+        mpmload 5723
+        mpforce firetop-hunter-quest3 mpdef_rembch $n
+        mpadd_qmark firetop-hunter-quest3 firetop_hunter_quest 144 0 0 0 1 0
+        mptransfer firetop-hunter-quest3 5
+endif
+~
+>give_prog 15486~
+if being(firetop-hunter-quest3)
+        if is_qmark($n) == firetop_hunter_quest 100004
+                mpjunk all.liver
+                clap $n
+                say 幹的好！請取回你壓在這邊的代價！
+                mpgold $n 1500000
+                mpexp $n 70000
+                say 並獲得你應得的獎賞吧。
+                mpgold $n 6000000
+                mpexp $n 70000
+                mpskillexp $n 2500
+                mpmod_qmark self firetop_hunter_quest v0 r 4
+                mpat firetop-hunter-quest3 mppurge firetop-hunter-quest3
+                mpdel_qmark $n firetop_hunter_quest
+        else
+                say 你並非接下這份任務的冒險者喔。
+                drop liver
+        endif
+else
+        say 你拿這個東西給我做什麼？
+        drop liver
+endif
+~
+>talk_prog p gem of iron cyclops~
+if exp($n) < 20000
+or goldamt($n) <= 300000
+        say 很抱歉，您身上的金錢或經驗值不足，無法接受此任務。
+        break
+endif
+if is_qmark($n) == firetop_hunter_quest
+or is_qmark($n) == firetop_assignment_quest
+        say 很抱歉，您身上已經有任務在身了。
+        break
+endif
+if being(firetop-hunter-quest4)
+        say 抱歉，這項任務已經有人接了。
+        say 若此人失蹤、離線或時限內未完成任務，
+        say 你仍有機會接下這項任務。
+else
+        mpgold $n -300000
+        mpexp $n -20000
+        mpadd_qmark $n firetop_hunter_quest 120 8 0 0 0 1
+        say 據說鐵獨眼巨人的眼睛是由寶石做成，
+        say 聽說價值連城，請你把他拿來給我。
+        mpmload 5724
+        mpforce firetop-hunter-quest4 mpdef_rembch $n
+        mpadd_qmark firetop-hunter-quest4 firetop_hunter_quest 120 0 0 0 1 0
+        mptransfer firetop-hunter-quest4 5
+endif
+~
+>give_prog 5714~
+if being(firetop-hunter-quest4)
+        if is_qmark($n) == firetop_hunter_quest 100008
+                mpjunk all.gem
+                clap $n
+                say 幹的好！請取回你壓在這邊的代價！
+                mpgold $n 300000
+                mpexp $n 20000
+                say 並獲得你應得的獎賞吧。
+                mpgold $n 1500000
+                mpexp $n 20000
+                mpskillexp $n 1000
+                mpmod_qmark self firetop_hunter_quest v0 r 8
+                mpat firetop-hunter-quest4 mppurge firetop-hunter-quest4
+                mpdel_qmark $n firetop_hunter_quest
+        else
+                say 你並非接下這份任務的冒險者喔。
+                drop gem
+        endif
+else
+        say 你拿這個東西給我做什麼？
+        drop gem
+endif
+~
+>death_prog 100~
+tell $n 史卡拉貝與光明之鎮將視同擬為敵人！你會受到報應的！
+if is_qmark($n) == skarabrae_enemy
+        mpmod_qmark $n skarabrae_enemy timer + 500
+else
+        mpadd_qmark $n skarabrae_enemy 500 0 0 0 1 1
+endif
+if is_qmark($n) == mist_enemy
+        mpmod_qmark $n mist_enemy timer + 500
+else
+        mpadd_qmark $n mist_enemy 500 0 0 0 1 1
+endif
+~
+|
+#5721
+firetop-hunter-quest1 dummy mob1~
+Dummy Mob1(Dummy Mob1)~
+This is Dummy Mob1 for firetop.are
+~
+If this mob exists, it means there is a ppl receive hunter_quest 1.
+~
+1|2|64 8|32|512 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 4|8
+>tick_prog 100~
+if being($b)
+        if is_qmark($i) == firetop_hunter_quest
+        else
+                mpat $b mpechoat $b 遠方傳來一陣聲響「你未能在期限內完成本項任務！」
+                mpat $b mpechoat $b 遠方傳來一陣聲響「公會將扣除您壓在本會的代價！」
+                mppurge self
+        endif
+else
+        mppurge self
+endif
+~
+|
+#5722
+firetop-hunter-quest2 dummy mob2~
+Dummy Mob2(Dummy Mob2)~
+This is Dummy Mob2 for firetop.are
+~
+If this mob exists, it means there is a ppl receive hunter_quest 2.
+~
+1|2|64 8|32|512 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 4|8
+>tick_prog 100~
+if being($b)
+        if is_qmark($i) == firetop_hunter_quest
+        else
+                mpat $b mpechoat $b 遠方傳來一陣聲響「你未能在期限內完成本項任務！」
+                mpat $b mpechoat $b 遠方傳來一陣聲響「公會將扣除您壓在本會的代價！」
+                mppurge self
+        endif
+else
+        mppurge self
+endif
+~
+|
+#5723
+firetop-hunter-quest3 dummy mob3~
+Dummy Mob3(Dummy Mob3)~
+This is Dummy Mob3 for firetop.are
+~
+If this mob exists, it means there is a ppl receive hunter_quest 3.
+~
+1|2|64 8|32|512 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 4|8
+>tick_prog 100~
+if being($b)
+        if is_qmark($i) == firetop_hunter_quest
+        else
+                mpat $b mpechoat $b 遠方傳來一陣聲響「你未能在期限內完成本項任務！」
+                mpat $b mpechoat $b 遠方傳來一陣聲響「公會將扣除您壓在本會的代價！」
+                mppurge self
+        endif
+else
+        mppurge self
+endif
+~
+|
+#5724
+firetop-hunter-quest4 dummy mob4~
+Dummy Mob4(Dummy Mob4)~
+This is Dummy Mob4 for firetop.are
+~
+If this mob exists, it means there is a ppl receive hunter_quest 4.
+~
+1|2|64 8|32|512 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 4|8
+>tick_prog 100~
+if being($b)
+        if is_qmark($i) == firetop_hunter_quest
+        else
+                mpat $b mpechoat $b 遠方傳來一陣聲響「你未能在期限內完成本項任務！」
+                mpat $b mpechoat $b 遠方傳來一陣聲響「公會將扣除您壓在本會的代價！」
+                mppurge self
+        endif
+else
+        mppurge self
+endif
+~
+|
+#5731
+troll3-firetop fire troll~
+火焰食人妖(fire troll)~
+一頭身軀巨大、全身燃燒著火焰的食人妖(fire troll)向你攻擊過來。
+~
+食人妖有著橡膠般的外皮，能夠適應各種生存環境的肉食動物。牠們使用粗大的雙手及尖
+牙當作武器攻擊敵人。食人妖擁有十分強大的再生能力，要殺死牠們變得非常的困難，即
+使已經死亡，除非在屍體上頭施以火系的法術予以焚燒，否則即使將身體支解仍然會重新
+恢復原狀。
+~
+1|4|32|64|4096|8192|262144|1048576|8388608 8|32|512|8192|134217728|549755813888 0 S
+60 5000 0 999d0+0 0d500+0
+0 0
+0 8 1
+C 1|8|32
+P 4|8|64|256|4194304|8388608|16777216|67108864
+S 16 -9999
+S 23 -99
+S 27 50
+S 28 -99
+S 29 -99
+S 30 -99
+S 31 -99
+S 41 400
+S 42 300
+R Troll~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 15016
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+        hunt $n
+        mpnowait
+        mpkill $n
+endif
+~
+>entry_greet_prog 100~
+if ispc($r)
+	hunt $r
+	mpnowait
+	mpkill $r
+endif
+~
+>fight_prog 100~
+if is_equ_obj($i) != 15016
+        wear club
+endif
+disarm
+mpnowait
+berserk
+mpnowait
+invoke
+mpnowait
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+if rand(50)
+        kick
+        mpnowait
+else
+        bashhead
+        mpnowait
+endif
+~
+>rand_prog 100~
+if ispc($r)
+        hunt $r
+        mpnowait
+        mpkill $r
+endif
+~
+>defun_prog firetop_troll_attack~
+if rand(50)
+        mpechoat $n $I的狠狠碾壓打得你[1;32m*** 鮮血直流 ***[m
+        mpechoaround $n $I的狠狠碾壓打得$N[1;32m*** 鮮血直流 ***[m
+        mpforcer here modhmv $n 01.280 330 0
+else
+        skilldrv heavyhit $n
+endif
+~
+>death_prog 100~
+mpmload 5734
+mppurge self
+~
+|
+#5732
+troll4-firetop fire troll corpse~
+火焰食人妖的屍體(fire troll)~
+燃燒的食人妖(fire troll)的屍體在這邊等待著復活。
+~
+食人妖有著橡膠般的外皮，能夠適應各種生存環境的肉食動物。牠們使用粗大的雙手及尖
+牙當作武器攻擊敵人。食人妖擁有十分強大的再生能力，要殺死牠們變得非常的困難，即
+使已經死亡，除非在屍體上頭施以火系的法術予以焚燒，否則即使將身體支解仍然會重新
+恢復原狀。
+~
+1|2|4|32|64|4096|8192|262144|1048576|8388608 8|32|512|8192|134217728|549755813888 0 S
+60 0 0 -9999d-9999+0 0d0+0
+0 0
+0 8 1
+C 1|8|32
+P 4|8|64|256|4194304|8388608|16777216|67108864
+S 16 -9999
+S 41 9999
+S 42 9999
+R Troll~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self firetop_troll_resurrection 3 0 0 0 1 0
+~
+>rand_prog 50~
+mpcall firetop_troll_resurrection
+if rand(50)
+        mpecho $I [1;32m的狀態正在慢慢恢復中....[m
+endif
+~
+>hurt_prog 90~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 43~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 45~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 7~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 46~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 185~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 165~
+mpcall firetop_troll_death $n
+~
+>defun_prog firetop_troll_death~
+if is_qmark($i) != firetop_troll_death
+        mpadd_qmark self firetop_troll_death -1 1 0 0 1 0
+else
+        mpmod_qmark self firetop_troll_death v0 + 1
+        if is_qmark($i) >= firetop_troll_death 100010
+                mpecho $I 倒在地上，吐出最後一口氣...死了.
+                mpgreward exp $n 31 1000
+                mpoload 5702 floor
+                mppurge self
+        else
+                if is_qmark($i) >= firetop_troll_death 100008
+                        mpecho $I [1;31m已經瀕臨死亡！[m
+                else
+                        if is_qmark($i) >= firetop_troll_death 100006
+                                mpecho $I [1;31m已經開始嚴重失血！[m
+                        else
+                                if is_qmark($i) <= firetop_troll_death 100004
+                                        mpecho $I [1;33m已經開始失血！[m
+                                else
+                                        if is_qmark($i) >= firetop_troll_death
+                                                                        100002
+                                                mpecho $I [1;33m受了小傷！[m
+                                        else
+                                                mpecho $I [1;32m健康狀況良好！[m
+                                        endif
+                                endif
+                        endif
+                endif
+        endif
+endif
+~
+>fight_prog 100~
+mpcall firetop_troll_resurrection
+mpgoto self
+~
+>defun_prog firetop_troll_resurrection~
+if is_qmark($i) != firetop_troll_resurrection
+        mpecho [1;36m頻死的 $I 再度地復活了....[m
+        mpmload 5733
+        if ispc($r)
+                mpforce troll1-firetop hunt $r
+        endif
+        mppurge self
+endif
+~
+|
+#5733
+troll1-firetop ice troll~
+冰食人妖(ice troll)~
+一頭身軀巨大、全身覆蓋冰雪的食人妖(ice troll)等著吸食冒險者的血肉。
+~
+食人妖有著橡膠般的外皮，能夠適應各種生存環境的肉食動物。牠們使用粗大的雙手及尖
+牙當作武器攻擊敵人。食人妖擁有十分強大的再生能力，要殺死牠們變得非常的困難，即
+使已經死亡，除非在屍體上頭施以火系的法術予以焚燒，否則即使將身體支解仍然會重新
+恢復原狀。
+~
+1|4|32|64|4096|8192|262144|1048576|8388608 8|32|512|8192|134217728|549755813888 0 S
+60 5000 0 999d0+0 0d500+0
+0 0
+0 8 1
+C 1|8|32
+P 4|8|64|256|4194304|8388608|16777216|67108864
+S 16 -9999
+S 23 -99
+S 27 50
+S 28 -99
+S 29 -99
+S 30 -99
+S 31 -99
+S 41 400
+S 42 300
+R Troll~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 15016
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+        hunt $n
+        mpnowait
+        mpkill $n
+endif
+~
+>entry_greet_prog 100~
+if ispc($r)
+	hunt $r
+	mpnowait
+	mpkill $r
+endif
+~
+>fight_prog 100~
+if is_equ_obj($i) != 15016
+        wear club
+endif
+disarm
+mpnowait
+berserk
+mpnowait
+invoke
+mpnowait
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+mpcall firetop_troll_attack $n
+if rand(50)
+        kick
+        mpnowait
+else
+        bashhead
+        mpnowait
+endif
+~
+>rand_prog 100~
+if ispc($r)
+        hunt $r
+        mpnowait
+        mpkill $r
+endif
+~
+>defun_prog firetop_troll_attack~
+if rand(50)
+        mpechoat $n $I的狠狠碾壓打得你[1;32m*** 鮮血直流 ***[m
+        mpechoaround $n $I的狠狠碾壓打得$N[1;32m*** 鮮血直流 ***[m
+        mpforcer here modhmv $n 01.280 330 0
+else
+        skilldrv heavyhit $n
+endif
+~
+>death_prog 100~
+mpmload 5734
+mppurge self
+~
+|
+#5734
+troll2-firetop ice troll corpse~
+冰食人妖的屍體(ice troll)~
+冰雪的食人妖(ice troll)的屍體在這邊等待著復活。
+~
+食人妖有著橡膠般的外皮，能夠適應各種生存環境的肉食動物。牠們使用粗大的雙手及尖
+牙當作武器攻擊敵人。食人妖擁有十分強大的再生能力，要殺死牠們變得非常的困難，即
+使已經死亡，除非在屍體上頭施以火系的法術予以焚燒，否則即使將身體支解仍然會重新
+恢復原狀。
+~
+1|2|4|32|64|4096|8192|262144|1048576|8388608 8|32|512|8192|549755813888 0 S
+60 0 0 -9999d-9999+0 0d0+0
+0 0
+0 8 1
+C 1|8|32
+P 4|8|64|256|4194304|8388608|16777216|67108864
+S 16 -9999
+S 41 9999
+S 42 9999
+R Troll~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self firetop_troll_resurrection 3 0 0 0 1 0
+~
+>rand_prog 50~
+mpcall firetop_troll_resurrection
+if rand(50)
+        mpecho $I [1;32m的狀態正在慢慢恢復中....[m
+endif
+~
+>hurt_prog 90~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 43~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 45~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 7~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 46~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 185~
+mpcall firetop_troll_death $n
+~
+>hurt_prog 165~
+mpcall firetop_troll_death $n
+~
+>defun_prog firetop_troll_death~
+if is_qmark($i) != firetop_troll_death
+        mpadd_qmark self firetop_troll_death -1 1 0 0 1 0
+else
+        mpmod_qmark self firetop_troll_death v0 + 1
+        if is_qmark($i) >= firetop_troll_death 100010
+                mpecho $I 倒在地上，吐出最後一口氣...死了.
+                mpgreward exp $n 31 1000
+                mpoload 5702 floor
+                mppurge self
+        else
+                if is_qmark($i) >= firetop_troll_death 100008
+                        mpecho $I [1;31m已經瀕臨死亡！[m
+                else
+                        if is_qmark($i) >= firetop_troll_death 100006
+                                mpecho $I [1;31m已經開始嚴重失血！[m
+                        else
+                                if is_qmark($i) <= firetop_troll_death 100004
+                                        mpecho $I [1;33m已經開始失血！[m
+                                else
+                                        if is_qmark($i) >= firetop_troll_death
+                                                                        100002
+                                                mpecho $I [1;33m受了小傷！[m
+                                        else
+                                                mpecho $I [1;32m健康狀況良好！[m
+                                        endif
+                                endif
+                        endif
+                endif
+        endif
+endif
+~
+>fight_prog 100~
+mpcall firetop_troll_resurrection
+mpgoto self
+~
+>defun_prog firetop_troll_resurrection~
+if is_qmark($i) != firetop_troll_resurrection
+        mpecho [1;36m頻死的 $I 再度地復活了....[m
+        mpmload 5733
+        if ispc($r)
+                mpforce troll1-firetop hunt $r
+        endif
+        mppurge self
+endif
+~
+|
+#5735
+sentry troll~
+食人妖哨兵(troll sentry)~
+一個食人妖哨兵(troll sentry)守在這邊幾乎已經快睡著了。
+~
+這個半人半獸的生物被指定守在這邊避免一些不受歡迎的訪客闖入，但是長時間枯燥且機
+械式的固定動作讓這個哨兵精神已經不堪負荷了。
+~
+1|2|4|32|64|1048576 8|32|512|131072 -400 S
+45 1000 0 0d-30+-100 0d0+0
+0 0
+0 8 1
+R Troll~
+C 1|8
+P 256|4194304
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+        berserk
+endif
+~
+>death_prog 100~
+mpecho 忽然出現了幾個 食人妖戰士(troll warrior) 向你攻擊過來！
+mpmload 5713
+mpforce warrior mpkill $n
+mpmload 5713
+mpforce warrior mpkill $n
+~
+|
+#5736
+sleeping troll~
+打瞌睡的食人妖(sleeping troll)~
+一個因為疲累而正在打瞌睡的食人妖(sleeping troll)在這邊。
+~
+這個生物被指派的任務就是避免不受歡迎的不速之客進入，但是一連串疲累地服勤的過程
+使得他在服勤的時候打了瞌睡。
+~
+1|2|4|32|64|1048576 8|32|131072 -400 S
+45 1000 0 10d10+0 0d0+0
+0 0
+0 0 1
+C 1|32
+P 256|4194304
+R Troll~
+#5737
+snake-firetop snake~
+小蛇(small snake)~
+一條小蛇(small snake)嘴巴咬著一支小鑰匙。
+~
+這條蛇由原先居住此處的人放置於此來保護他那珍貴的寶箱，雖然箱子的體積不大，但是
+外表鑲嵌的金屬讓人覺得裡頭的東西一定是珍貴非凡。
+~
+1|2|32|64 32|512 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+C 1
+P 8|256|4194304
+R Animal~
+>greet_prog 80~
+if ispc($n)
+        mpecho $I 看到你的出現連忙往其他房間溜走了....
+        n
+        e
+        s
+        w
+endif
+~
+>fight_prog 100~
+flee
+flee
+flee
+~
+|
+#5738
+troll drunken~
+酒醉的食人妖(drunken troll)~
+酒醉的食人妖(drunken troll)看到你立即中斷唱歌向你衝了過來！
+~
+這個笨拙而且酒醉的人可能是你這輩子遇過最爛的歌手。但是牠身上的味道比牠所唱的歌
+還糟糕。幸好喝過酒的牠感覺並不靈敏，因此打起架來可能不太行。
+~
+1|2|4|32|64|1048576 8|32|512|8192 -400 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+C 1|8
+P 256|4194304
+R Troll~
+>repop_prog 100~
+mpoload 4018
+mpat 5 wield club twohand
+~
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+        mpnowait
+endif
+~
+>fight_prog 50~
+frenzy
+mpnowait
+~
+|
+#5739
+chieftain-firetop troll chieftain~
+食人妖隊長(trollish chieftain)~
+食人妖的隊長(trollish chieftain)憤怒地揮動他手上的鞭子向你攻擊！
+~
+當你進入時，邪惡的首領正忙著鞭打牠那倒楣的樸人們。當然牠更樂於有著你們這些更高
+難度的挑戰。牠是這個地方食人妖的首領。
+~
+1|2|4|32|64|8192|262144|1048576|8388608 8|32|128|512|8192 -400 S
+50 1000 0 10d-20+100 0d200+0
+0 0
+112 112 1
+R Troll~
+C 1|8|32
+P 4|8|256|4194304|16777216
+>greet_prog 100~
+if ispc($n)
+        mpecho $I 立刻張開大嘴，揮舞鞭子，向你攻擊過來！
+        mpkill $n
+        skilldrv multihit $n
+endif
+~
+>rand_prog 20~
+if insameroom(servant-firetop)
+        mpecho $I 揮舞著手上的鞭子，向食人妖奴僕(trollish servant)鞭打過去....
+        mpkill servant-firetop
+        mpforce servant-firetop mpat 5 c 'full heal'
+        mpgoto self
+endif
+~
+>fight_prog 100~
+if rand(30)
+        berserk
+        mpnowait
+        if rand(50)
+                invoke
+                mpnowait
+        endif
+endif
+if rand(50)
+        bashhead
+        mpnowait
+else
+        kick
+        mpnowait
+endif
+if rand(50)
+        if is_equ_obj($i) != 5800
+                wear whip
+        endif
+        if rand(50)
+                disarm
+                mpnowait
+        else
+                mpecho [1;33m$I 忽然拿起手上的鞭子狂命揮舞！[m
+                if ispc($r)
+                        mpechoat $r [1;33m$I 手上的鞭子向你急抽過來！[m
+                        mpechoaround $n [1;33m$I 手上的鞭子向 $r 急抽過去！[m
+                        mpforcer here modhmv $r 01.150 200 0
+                endif
+        endif
+endif
+if hitprcnt($i) < 30
+        if is_qmark($i) != firetop_chieftain_assistance1
+                mpecho [1;33m$I 忽然張開大嘴大吼幾聲，身旁忽然出現了幾位菁英戰士....[m
+                mpmload 5715
+                mpgroup self warrior 1 0
+                mpmload 5715
+                mpgroup self warrior 1 0
+                mpadd_qmark self firetop_chieftain_assistance1 5 0 0 0 1 0
+                mpat 5 c 'full heal'
+                mpnowait
+        endif
+        break
+endif
+if hitprcnt($i) < 70
+        if is_qmark($i) != firetop_chieftain_assistance2
+                mpecho [1;33m$I 忽然張開大嘴大吼幾聲，身旁忽然出現了幾位戰士....[m
+                mpmload 5713
+                mpgroup self warrior 1 0
+                mpmload 5713
+                mpgroup self warrior 1 0
+                mpadd_qmark self firetop_chieftain_assistance2 5 0 0 0 1 0
+                mpat 5 c 'full heal'
+                mpnowait
+        endif
+endif
+~
+|
+#5740
+servant-firetop troll servant~
+食人妖奴僕(trollish servant)~
+一個食人妖奴僕(trollish servant)因為要被主人吃掉而淒厲哀嚎！
+~
+當你進入時，這頭可憐的動物才剛被主人給鞭打過。儘管如此，牠還是跳了過來保衛牠的
+主人。我想你最好殺了這個不幸的可憐人。
+~
+1|2|32|128 0 0 S
+30 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+#5741
+troll eating~
+進食的食人妖(eating troll)~
+一個食人妖(troll)正在享受他的「老鼠大餐」！
+~
+這頭食人妖正忙著吃東西以致於沒有注意到你進入。你們能夠輕易地躍入牠們之中給牠
+們重重的一擊。不過你要確定能夠一次解決牠們全部的伙伴。
+~
+1|2|4|64|8192|1048576 8|32|512 -400 S
+41 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Troll~
+C 1|8
+P 256|4194304
+>rand_prog 10~
+mpoload 5740
+eat mouse
+~
+|
+#5742
+prisoner1-firetop prisoner~
+狂亂的犯人(deranged prisoner)~
+一個眼神渙散的犯人(prisoner)瘋狂地攻擊你！
+~
+由於被長期的虐待，使他已經進入了瘋狂的狀況。或許能夠有些方式能夠讓他平靜(calm)
+下來，由他身上或許能夠獲得一些有用的訊息(messages)。
+~
+1|2|4|128 8|32|512 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+P 8
+>repop_prog 100~
+mpforcer here add_affect prisoner1-firetop 'demon tremor' 0 -1 0 0 536870912
+mpoload 5751
+mpat 5 wear all
+~
+>rand_prog 30~
+if ispc($r)
+        if isaffected($i) & 536870912
+                yell 不！不要殺我啊！
+                mpkill $r
+        endif
+endif
+~
+>rand_prog 100~
+if inroom($i) == 5
+        break
+endif
+if isaffected($i) !& 536870912
+        mpecho $I 的心情漸漸地平靜了下來！
+        mpmload 5714
+        mpgoto 5
+endif
+~
+|
+#5743
+goblin torturer~
+小惡鬼拷問者(goblin torturer)~
+這個哥布林拷問者(goblin torturer)由於犯人忽然暴斃而感到十分生氣。
+~
+這個殘酷成性的生物正忙著拷打一個可憐的矮人俘虜。這個矮人幾乎快要死去了，但是這
+個生物卻仍不斷一鞭又一鞭地鞭打著可憐的矮人。
+~
+1|2|4|32|64 8|512 -600 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Goblin~
+C 1|8
+>repop_prog 100~
+mpoload 3818
+mpat 5 wear whip
+~
+>greet_prog 100~
+if ispc($n)
+        yell 別妄想奪走我的寵物！
+        mpkill $n
+endif
+~
+|
+#5744
+cyclops-firetop cyclops iron~
+鐵獨眼巨人(iron cyclops)~
+一個身軀巨大、並以一顆巨大寶石當作眼睛的鐵獨眼巨人(iron cyclops)向你攻擊過來！
+~
+這頭以寶石當作眼睛的獨眼巨人，精力非常旺盛。經你猜測這頭巨人的能量，應該來自頭
+上的那顆寶石。
+~
+1|2|64|4096|8192|262144 8|128|8192 0 S
+45 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Giant~
+C 1|8|32
+P 8|256|4194304|16777216
+>repop_prog 100~
+mpmload 5713
+mpgroup self troll 1 0
+mpmload 5713
+mpgroup self troll 1 0
+mpmload 5713
+mpgroup self troll 1 0
+mpoload 2387
+mpoload 2387
+mpoload 2802
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+        invoke
+        mpnowait
+        mpkill $n
+endif
+~
+>fight_prog 50~
+if rand(50)
+        berserk
+        mpnowait
+endif
+if is_equ_obj($i) != 2387
+        wear club
+        wear club
+endif
+disarm
+mpnowait
+~
+>death_prog 100~
+mpoload 5714
+~
+|
+#5745
+lizardman1-firetop blinded lizardman~
+瞎眼的蜥蜴人(blinded lizardman)~
+一個瞎了眼睛的蜥蜴人(blinded lizardman)靜靜地站在這邊。
+~
+這個蜥蜴人的眼睛似乎看不到東西，不過從外表卻看不出任何傷害。他的眼盲或許是由法
+術所造成的吧！那麼也許還有救。
+~
+1|2|64|8192|262144 8|32|512|8192 0 S
+45 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Lizardman~
+C 1|8
+P 8|256|4194304
+>repop_prog 100~
+mpforcer here add_affect lizardman1-firetop 'blindness' 0 -1 18 -4 1
+~
+>rand_prog 100~
+if inroom($i) == 5
+        break
+endif
+if isaffected($i) !& 1
+        mpecho $I 的眼睛重見光明了！
+        mpmload 5718
+        if insameroom($b)
+                mpforce lizardman2-firetop mpdef_rembch $b
+                mpgroup $b lizardman2-firetop 0 0
+                mpforce lizardman2-firetop say 我的眼睛又能看見啦！
+                mpforce lizardman2-firetop say 戰友們！讓我們一起脫離這邊吧！
+                mpmod_qmark $b firetop_prisoner_quest v1 | 2
+                mpadd_qmark lizardman2-firetop firetop_prisoner_quest 48 0 0 0 1 0
+        endif
+        mpgoto 5
+endif
+~
+|
+#5746
+gnome1-firetop poisoned gnome~
+中毒的地精(poisoned gnome)~
+一個中了劇毒的地精(poisoned gnome)整個人攤在這邊。
+~
+這個中了劇毒的地精整個人攤在這邊，看他的狀況就快要不行了。看他的樣子又似乎中了
+特殊的劇毒，沒有問個詳細是無法幫他解毒的。
+~
+1|2|64|67108864 8|32|512|8192 400 S
+45 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+P 8|256|4194304
+C 1
+>repop_prog 100~
+mpforcer here add_affect gnome1-firetop 'poison' 0 -1 1 -5 8192
+~
+>talk_prog topic~
+if isaffected($i) & 8192
+        say 我被一頭大蜘蛛咬過，
+        say 身上中了奇怪的毒，
+        say 一般的解毒術無法解除，
+        say 除非先吃下那隻蜘蛛的膽(gall)，
+        say 否則沒辦法解我身上的毒。
+endif
+~
+>give_prog 5767~
+if isaffected($i) & 8192
+        mpecho $I 連忙將 蜘蛛膽(spider's gall) 吞下....
+        nod
+        say 那麼現在解毒術能夠作用了。
+        mpadd_qmark self firetop_gnome_curepoison 48 0 0 0 1 0
+else
+        say 我現在不需要這項東西。
+        drop gall
+endif
+~
+>rand_prog 100~
+if inroom($i) == 5
+        break
+endif
+if isaffected($i) !& 8192
+        if is_qmark($i) == firetop_gnome_curepoison
+                mpecho $I 身上的毒解了！
+                mpmload 5719
+                if insameroom($b)
+                        mpforce gnome2-firetop mpdef_rembch $b
+                        mpgroup $b gnome2-firetop 0 0
+                        mpforce gnome2-firetop say 我身上的毒終於解了！
+                        mpforce gnome2-firetop say 那麼我們離開這裡吧。
+                        mpmod_qmark $b firetop_prisoner_quest v1 | 4
+                        mpadd_qmark gnome2-firetop firetop_prisoner_quest 48 0 0 0 1 0
+                endif
+                mpgoto 5
+        else
+                mpforcer here add_affect gnome1-firetop 'poison' 0 -1 1 -5 8192
+                shake
+                say 不行，沒有先吃下蜘蛛膽(spider gall)沒辦法解開我身上的毒。
+        endif
+endif
+~
+|
+#5747
+old man wererat~
+鼠人老人(wererate old man)~
+這個老人(old man)的外型漸漸變成鼠人(wererat)！
+~
+This seemingly harmless old coot is actually a powerful lycanthrope, who
+will not hesitate to kill you if you threaten him.
+~
+1|2|4|8|64|8192|262144 4|8|16|32|128|512 0 S
+43 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Rat~
+C 1
+#5748
+neanderthal caveman man~
+正在挖洞的尼安德塔人(lumbering Neanderthal)~
+一個原始的尼安德塔人(Neanderthal)揮動他手上的石棒往你的頭招呼過來！(This one needs some interesting setting)
+~
+這個穴居的種族竟然能與食人妖和平相處，想是他們喜愛挖洞構築的天性，與食人妖更能
+享受雙贏。食人妖為他們爭取安全的環境，而他們為食人妖構築居住的處所。
+~
+1|2|4|32|64|4096|8192|262144 8|32|512|8192 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+C 1|8|32
+P 8|256|4194304
+>rand_prog 25~
+mpecho 挖挖挖...挖挖挖...！
+~
+>fight_prog 50~
+if is_equ_obj($i) != 5763
+        wear club
+endif
+disarm
+mpnowait
+if rand(50)
+        bashhead
+        mpnowait
+        bashhead
+        mpnowait
+        bashhead
+        mpnowait
+else
+        kick
+        mpnowait
+        kick
+        mpnowait
+        kick
+        mpnowait
+endif
+if rand(50)
+        frenzy
+        mpnowait
+endif
+~
+|
+#5749
+bat giant~
+巨型蝙蝠(giant bat)~
+一頭巨型蝙蝠(giant bat)飛了下來向你攻擊！
+~
+這隻巨型蝙蝠幾乎跟你的身軀一樣大，而且牠那黑色的尖牙(fang)，在黑暗中閃閃發光，
+更令你感到不寒而慄。那尖牙中的毒液(venom)，定是非常的致命。
+~
+1|2|4|32|64 8|32|512 -400 S
+41 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Bat~
+C 1
+#5750
+spider giant~
+巨型蜘蛛(giant spider)~
+一隻身軀巨大、令人厭惡的巨型蜘蛛(giant spider)向你衝了過來！
+~
+這隻巨大的蜘蛛，連毒牙也是一般蜘蛛的數倍大，讓你不禁不寒而慄。
+~
+1|2|4|32|64|262144|8388608 8|32|512|8192 -400 S
+52 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Arachnid~
+P 8|256|4194304|16777216
+C 1|8|32
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+endif
+~
+>fight_prog 50~
+if ispc($r)
+        mpgoto $r
+        mpechoat $r $I 向你猛烈撕咬！
+        mpechoaround $r $I 向 $r 猛烈撕咬！
+        skilldrv multihit $r
+        skilldrv multihit $r
+endif
+~
+>death_prog 100~
+mpoload 5767
+~
+|
+#5751
+ogre1-firetop injured ogre~
+受傷的食人魔(ogre)~
+一隻受傷的食人魔(ogre)躺在這邊。
+~
+你訝異於食人魔竟然會出現在食人妖的領域，不過這隻食人魔看起來似乎奄奄一息。你無
+法確定是否該救助牠，因為即使恢復了牠的健康，也不過是增加一場戰鬥而已。
+~
+1|2|64|4096|8192|262144 8|32|512|8192 0 S
+47 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+P 8|256|4194304
+R Ogre~
+C 1|32
+>repop_prog 100~
+mpforcer here modhmv ogre1-firetop 03.95 95 0
+mpoload 3056
+mpoload 3730
+mpoload 20123
+mpat 5 wear all
+~
+>rand_prog 50~
+if hitprcnt($i) >90
+        if ispc($r)
+                mpkill $r
+        endif
+        break
+endif
+if hitprcnt($i) > 50
+        mpforcer here modhmv ogre1-firetop 03.90 90 0
+endif
+~
+>fight_prog 50~
+if is_equ_obj($i) != 3056
+        wear sword
+        circular
+        mpnowait
+endif
+if is_equ_obj($i) != 3730
+        wear shield
+endif
+if rand(50)
+        if ispc($r)
+                if class($r) == 7
+                or class($r) == 8
+                        mpgoto self
+                        mpkill $r
+                        berserk
+                        frenzy
+                        mpnowait
+                endif
+        endif
+endif
+~
+|
+#5752
+troll~
+食人妖(troll)~
+一個有著長而強壯雙臂的食人妖(troll)往你的方向慢跑過來。
+~
+This ugly monster is only 5 feet tall, but its arms are also nearly five
+feet long, and end with wicked, sharp claws that could cut stone. Yellow
+mucous drips from the fevered beast's slavering maw, and you shudder to
+think fo the germs you could be infecte dwith by this grotesque.
+~
+1|2|4|32|64|1048576 8192 -500 S
+43 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Troll~
+C 1|8
+#5753
+rat giant~
+巨鼠(giant Rat)~
+一頭體積巨大的老鼠(giant rat)往你跳了過來！
+~
+這頭巨鼠非但體積龐大，而且牙齒上閃爍著青色的光芒。看來這些巨鼠都含有劇毒。
+~
+1|2|32|64|128|8192|262144 32|512|8192 -400 S
+45 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Rat~
+C 1|32
+P 8|256|4194304
+#5754
+burly troll~
+魁武的食人妖(burly troll)~
+一個魁武的食人妖(burly troll)在攻擊你前向你投擲一些東西！
+~
+這個巨人看起來不甚高興。
+~
+1|2|32|64|4096|8192|262144 8|32|512|8192 0 S
+50 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+C 1|8|32
+P 8|256|4194304
+R Troll~
+>repop_prog 100~
+mpoload 1381
+mpoload 1381
+mpoload 1118
+mpat 5 wear all
+~
+|
+#5755
+piranha~
+凶猛的虎魚(vicious piranha)~
+一隻凶猛的虎魚(vicious piranha)露出尖銳的牙齒咬向你的大腿！
+~
+You scream in pain as this savage little fish tears out a chunk of flesh.
+It moves almsot too fast for you to catch it in the water, but eventually
+returns for another bite, which gives you a chance to attack it.
+~
+1|2|32|64 32 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+C 1
+R Fish~
+#5756
+sandworm giant~
+巨型沙蟲(giant sandworm)~
+一隻巨型沙蟲(giant sandworm)忽然由後方沙中出現向你咬了過來！
+~
+This big fellow makes sea serpents of old look tiny. His circular maw is
+lined with rows and rows of teeth, all ready to bite into you!.
+~
+1|2|32|64 8|8192 0 S
+36 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Worm~
+C 1
+#5757
+skeleton~
+骷髏工人(skeleton worker)~
+一個骷髏工人(skeleton worker)正忙著組裝一艘船。
+~
+This undead servant of the Warlock is far too busy engaging in its set tasks
+to pay any mind to you. It will, however, act to defend itself if assaulted,
+as will its many comrades.
+~
+1|2|4|64 8|8192 0 S
+32 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Undead~
+C 1
+#5758
+wight~
+浮游靈(wight)~
+不死大法師的僕人 - 浮游靈(wight)向你抱以邪惡的微笑。
+~
+This foul creature is not exceptionally strong or tough, but it has many
+special abilities which make it more than a match for the average adventurer,
+including its long, sharp, poisoned fangs and claws, its resistance to
+physical blows, and its nauseating stench.
+~
+1|2|4|32|64|4096 8|32|128|512|8192 -1000 S
+44 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Undead~
+C 1
+#5759
+zombie~
+殭屍(zombie)~
+一個由冒險者屍體蛻變的殭屍(zombie)站在這邊。
+~
+This poor fellow was once an eager young treasure-and-glory-seeker like
+yourself, who fell foul of the Warlock's minions, and has been damned to a
+perpetual undead existence.
+~
+1|2|32|64|1048576 512 0 S
+41 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Undead~
+C 1
+#5760
+dog~
+看門狗(guard dog)~
+看門狗(guard dog)因你的闖入而大聲嚎叫以向主人示警。
+~
+Despite appearances, this Dog will not attack unless provoked. If it does,
+you may find that it is not like msot other Dogs, in that it is very tough
+and has certain abilities that may catch you by surprise...
+~
+1|2|64 8|32|8192 0 S
+32 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Animal~
+C 1
+#5761
+werewolf man~
+狼人(werewolf)~
+一頭狼人(werewolf)站在這邊向你怒目而視。
+~
+This dour old man is the chief ship-builder for the Warlock, and despite his
+unfortunate curse (Lycanthropy), he is not a bad guy, and will only attack if
+you initiate hostilities by attacking him or his dog.
+~
+1|2|64 8|32|128|512|8192 0 S
+43 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Beast~
+C 1|8
+#5762
+ghoul~
+食屍鬼(ghoul)~
+一頭食屍鬼(ghoul)藏匿在屍體之中。
+~
+This decaying corpse-like undead slashes at you with its filthy fingernails,
+attempting to slay and devour you!
+~
+1|2|32|64|1048576 8|8192 -500 S
+43 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Undead~
+C 1
+#5763
+vampire~
+邪惡吸血鬼(evil vampire)~
+邪惡的吸血鬼(evil vampire)渴望飲用你的鮮血！
+~
+Rising from its coffin like Bela Lugosi in Dracula, the Vampire floats
+towards you, attempting to make eye contact with you, so that it can charm
+you and then feat upon you at its leisure.
+~
+1|2|32|64|4096|8192|262144|1048576 8|32|128|512|8192|524288 -1000 S
+47 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Vampire~
+C 1|8
+#5764
+gambler dwarf~
+矮人(gambler dwarf)~
+一個矮人賭鬼(dwarven gambler)希望你能夠加入他的賭局。
+~
+This amiable fellow is leaning back in his chair at a table with three other
+Dwarfs playing Five Card Stud. He draws deeply on a long pipe, exhaling some
+noxious smoke, and invites you to join in.
+~
+1|2|8|64 8|32|512 400 S
+42 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+C 1
+R Dwarf~
+P 8|4194304
+>greet_prog 100~
+if being($b)
+else
+        if ispc($n)
+                if is_qmark($i) != firetop_talking
+                        mpadd_qmark self firetop_talking 1 0 0 0 1 0
+                        hello $n
+                        say 想要玩一場「十點半」嗎(gambling)？
+                endif
+        endif
+endif
+~
+>talk_prog topic~
+if being($b)
+else
+        hello $n
+        say 想要玩一場「十點半」嗎(gambling)？
+        say 規則(rule)既簡單又好玩喔。
+endif
+~
+>talk_prog rule~
+if being($b)
+        say 抱歉，現在 $b 正在玩呢！
+        if insameroom($b)
+        else
+                say 但是他不知道跑到那邊去了？
+                say 再等一下就好了。
+        endif
+else
+        say 十點半的規則嗎？
+        say 牌 A - 9 分別代表 1 - 9 點，牌 J Q K 都是半點，
+        say 將你的牌所有的點數加起來若比我大你就贏了，
+        say 如果你的牌剛好是 10 點半，
+        say 或是總共 5 張牌還沒有超過 10 點半就可以得到雙倍報酬，
+        say 但是如果你的點數跟我一樣，或是點數超過了 10 點半，
+        say 那麼你就輸了這一場比賽。
+endif
+~
+>talk_prog gambling~
+if being($b)
+        say 抱歉，現在 $b 正在玩呢！
+        if insameroom($b)
+        else
+                say 但是他不知道跑到那邊去了？
+                say 再等一下就好了。
+        endif
+else
+        nod $n
+        say 好，那麼我們就開始吧。
+        say 籌碼有 20 萬、 50 萬與 100 萬三種。
+        mpdef_rembch $n
+        mpadd_qmark self firetop_dwarf_gambling 10 0 0 0 1 0
+        if is_qmark($n) == firetop_dwarf_gambling
+                mpmod_qmark $n firetop_dwarf_gambling timer = 10
+        else
+                mpadd_qmark $n firetop_dwarf_gambling 10 0 0 0 1 0
+        endif
+endif
+~
+>rand_prog 50~
+if being($b)
+        if is_qmark($i) == firetop_dwarf_gambling
+                if insameroom($b)
+                else
+                        tell $b 不想玩就快回來中斷遊戲吧(talk dwarf cancel)！
+                        tell $b 我要將機會讓給其他人了。
+                endif
+        else
+                sorry $b
+                say 抱歉，您的時間到了卻尚未完成本遊戲。
+                say 只好將機會換給其他人了。
+                mpat $b mpdel_qmark $b firetop_dwarf_gambling
+                mpdef_rembch null-tar
+        endif
+else
+        if is_qmark($i) == firetop_dwarf_gambling
+                curse
+                say 又是一個沒有完成遊戲就離線的玩家。
+                mpdel_qmark self firetop_dwarf_gambling
+        else
+                if inroom($i) != 4670
+                        ponder
+                        say 這裡不是我該來的地方。
+                        mpgoto 4670
+                endif
+        endif
+endif
+~
+>talk_prog cancel~
+if rembch($n)
+        if is_qmark($i) == firetop_dwarf_gambling
+                nod $n
+                say 那麼 $n 已經中斷了遊戲，
+                say 將機會讓給其他人了。
+                mpdel_qmark self firetop_dwarf_gambling
+                mpdef_rembch null-tar
+        endif
+endif
+~
+>bribe_prog 1000000~
+if rembch($n)
+        if is_qmark($i) == firetop_dwarf_gambling
+                mpjunk all.coins
+                nod $n
+                say 我收到你的 100 萬元了。
+                mpmod_qmark self firetop_dwarf_gambling v2 | 4
+                mpecho $I 發了一張牌給自己....
+                mpcall firetop_dwarf_gambling01 $b
+                say $b 你還需要更多的牌嗎(yes/no)？
+        else
+                ? $n
+                mpgold $n 1000000
+        endif
+else
+        ? $n
+        mpgold $n 1000000
+endif
+~
+>bribe_prog 500000~
+if rembch($n)
+        if is_qmark($i) == firetop_dwarf_gambling
+                mpjunk all.coins
+                nod $n
+                say 我收到你的 50 萬元了。
+                mpmod_qmark self firetop_dwarf_gambling v2 | 2
+                mpecho $I 發了一張牌給自己....
+                mpcall firetop_dwarf_gambling01 $b
+                say $b 你還需要更多的牌嗎(yes/no)？
+        else
+                ? $n
+                mpgold $n 500000
+        endif
+else
+        ? $n
+        mpgold $n 500000
+endif
+~
+>bribe_prog 200000~
+if rembch($n)
+        if is_qmark($i) == firetop_dwarf_gambling
+                mpjunk all.coins
+                nod $n
+                say 我收到你的 20 萬元了。
+                mpmod_qmark self firetop_dwarf_gambling v2 | 1
+                mpcall firetop_dwarf_gambling01 $b
+                mpecho $I 發了一張牌給自己....
+                say $b 你還需要更多的牌嗎(yes/no)？
+        else
+                ? $n
+                mpgold $n 200000
+        endif
+else
+        ? $n
+        mpgold $n 200000
+endif
+~
+>talk_prog yes~
+if rembch($n)
+        if is_qmark($b) >= firetop_dwarf_gambling 200001
+                mpcall firetop_dwarf_gambling01 $b
+                if is_qmark($b) > firetop_dwarf_gambling 100021
+                        say 哇！你的點數因為超過而爆掉了！
+                        mpcall firetop_dwarf_gambling_over $b
+                else
+                        if is_qmark($b) == firetop_dwarf_gambling 100021
+                                if is_qmark($b) >= firetop_dwarf_gambling 200005
+                                        say 哇！你的點數剛好「十點半」，又「過五關」，必須給你四倍的獎金。
+                                        if is_qmark($i) & firetop_dwarf_gambling 300001
+                                                mpgold $b 1000000
+                                        endif
+                                        if is_qmark($i) & firetop_dwarf_gambling 300002
+                                                mpgold $b 2500000
+                                        endif
+                                        if is_qmark($i) & firetop_dwarf_gambling 300004
+                                                mpgold $b 4800000
+                                        endif
+                                else
+                                        say 哇！你的點數剛好「十點半」，必須加倍給你獎金。
+                                        if is_qmark($i) & firetop_dwarf_gambling 300001
+                                                mpgold $b 600000
+                                        endif
+                                        if is_qmark($i) & firetop_dwarf_gambling 300002
+                                                mpgold $b 1500000
+                                        endif
+                                        if is_qmark($i) & firetop_dwarf_gambling 300004
+                                                mpgold $b 3000000
+                                        endif
+                                endif
+                                mpcall firetop_dwarf_gambling_over $b
+                        else
+                                if is_qmark($b) >= firetop_dwarf_gambling 200005
+                                        say 哇！你「過五關」，必須加倍給你獎金。
+                                        if is_qmark($i) & firetop_dwarf_gambling 300001
+                                                mpgold $b 600000
+                                        endif
+                                        if is_qmark($i) & firetop_dwarf_gambling 300002
+                                                mpgold $b 1500000
+                                        endif
+                                        if is_qmark($i) & firetop_dwarf_gambling 300004
+                                                mpgold $b 3000000
+                                        endif
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        mpcall firetop_dwarf_gambling04 $b
+                                        say 你還需要更多的牌嗎(yes/no)？
+                                endif
+                        endif
+                endif
+        endif
+endif
+~
+>talk_prog no~
+if rembch($n)
+        if is_qmark($b) >= firetop_dwarf_gambling 200001
+                mpecho $I 翻開自己桌上的牌....
+                mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+        endif
+endif
+~
+>defun_prog firetop_dwarf_gambling_over~
+say 遊戲已經結束了！
+mpat $b mpdel_qmark $b firetop_dwarf_gambling
+mpdef_rembch null-tar
+mpdel_qmark self firetop_dwarf_gambling
+~
+>defun_prog firetop_dwarf_gambling04~
+if is_qmark($b) == firetop_dwarf_gambling 100021
+        mpecho $b 現在的點數是 10 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100020
+        mpecho $b 現在的點數是 10 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100019
+        mpecho $b 現在的點數是 9 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100018
+        mpecho $b 現在的點數是 9 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100017
+        mpecho $b 現在的點數是 8 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100016
+        mpecho $b 現在的點數是 8 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100015
+        mpecho $b 現在的點數是 7 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100014
+        mpecho $b 現在的點數是 7 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100013
+        mpecho $b 現在的點數是 6 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100012
+        mpecho $b 現在的點數是 6 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100011
+        mpecho $b 現在的點數是 5 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100010
+        mpecho $b 現在的點數是 5 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100009
+        mpecho $b 現在的點數是 4 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100008
+        mpecho $b 現在的點數是 4 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100007
+        mpecho $b 現在的點數是 3 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100006
+        mpecho $b 現在的點數是 3 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100005
+        mpecho $b 現在的點數是 2 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100004
+        mpecho $b 現在的點數是 2 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100003
+        mpecho $b 現在的點數是 1 點半
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100002
+        mpecho $b 現在的點數是 1 點
+endif
+if is_qmark($b) == firetop_dwarf_gambling 100001
+        mpecho $b 現在的點數是半點
+endif
+~
+>defun_prog firetop_dwarf_gambling03~
+if is_qmark($i) > firetop_dwarf_gambling 100021
+        say 哇！我超過 10 點半了而爆掉了！
+        say 你可以獲得你該得的獎金。
+        if is_qmark($i) & firetop_dwarf_gambling 300001
+                mpgold $b 400000
+        endif
+        if is_qmark($i) & firetop_dwarf_gambling 300002
+                mpgold $b 1000000
+        endif
+        if is_qmark($i) & firetop_dwarf_gambling 300004
+                mpgold $b 2000000
+        endif
+        mpcall firetop_dwarf_gambling_over $b
+else
+        if is_qmark($i) == firetop_dwarf_gambling 100021
+                if is_qmark($i) >= firetop_dwarf_gambling 200005
+                        say 哇！我是 10 點半又過五關， $b 你輸了。
+                else
+                        say 哇！我是 10 點半， $b 你輸了。
+                endif
+                mpcall firetop_dwarf_gambling_over $b
+        else
+                if is_qmark($i) >= firetop_dwarf_gambling 200005
+                        say 哇！我過五關， $b 你輸了。
+                        mpcall firetop_dwarf_gambling_over $b
+                else
+                        if is_qmark($i) == firetop_dwarf_gambling 100020
+                                if is_qmark($b) <= firetop_dwarf_gambling 100020
+                                        say 哇！我 10 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100019
+                                if is_qmark($b) <= firetop_dwarf_gambling 100019
+                                        say 哇！我 9 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100018
+                                if is_qmark($b) <= firetop_dwarf_gambling 100018
+                                        say 哇！我 9 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100017
+                                if is_qmark($b) <= firetop_dwarf_gambling 100017
+                                        say 哇！我 8 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100016
+                                if is_qmark($b) <= firetop_dwarf_gambling 100016
+                                        say 哇！我 8 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100015
+                                if is_qmark($b) <= firetop_dwarf_gambling 100015
+                                        say 哇！我 7 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100014
+                                if is_qmark($b) <= firetop_dwarf_gambling 100014
+                                        say 哇！我 7 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100013
+                                if is_qmark($b) <= firetop_dwarf_gambling 100013
+                                        say 哇！我 6 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100012
+                                if is_qmark($b) <= firetop_dwarf_gambling 100012
+                                        say 哇！我 6 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100011
+                                if is_qmark($b) <= firetop_dwarf_gambling 100011
+                                        say 哇！我 5 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100010
+                                if is_qmark($b) <= firetop_dwarf_gambling 100010
+                                        say 哇！我 5 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100009
+                                if is_qmark($b) <= firetop_dwarf_gambling 100009
+                                        say 哇！我 4 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100008
+                                if is_qmark($b) <= firetop_dwarf_gambling 100008
+                                        say 哇！我 4 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100007
+                                if is_qmark($b) <= firetop_dwarf_gambling 100007
+                                        say 哇！我 3 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100006
+                                if is_qmark($b) <= firetop_dwarf_gambling 100006
+                                        say 哇！我 3 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100005
+                                if is_qmark($b) <= firetop_dwarf_gambling 100005
+                                        say 哇！我 2 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100004
+                                if is_qmark($b) <= firetop_dwarf_gambling 100004
+                                        say 哇！我 2 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100003
+                                if is_qmark($b) <= firetop_dwarf_gambling 100003
+                                        say 哇！我 1 點半， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100002
+                                if is_qmark($b) <= firetop_dwarf_gambling 100002
+                                        say 哇！我 1 點， $b 你輸了。
+                                        mpcall firetop_dwarf_gambling_over $b
+                                else
+                                        say 不行，還不夠，還得再來！
+                                        mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                                endif
+                        endif
+                        if is_qmark($i) == firetop_dwarf_gambling 100001
+                                say 不行，還不夠，還得再來！
+                                mpcallout 1 mpcall firetop_dwarf_gambling02 $b
+                        endif
+                endif
+        endif
+endif
+~
+>defun_prog firetop_dwarf_gambling02~
+mpmod_qmark self firetop_dwarf_gambling v1 + 1
+if rand(6)
+        mpecho $I 發給自己一張 A ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 2
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(8)
+        mpecho $I 發給自己一張 2 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 4
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(9)
+        mpecho $I 發給自己一張 3 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 6
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(10)
+        mpecho $I 發給自己一張 4 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 8
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(11)
+        mpecho $I 發給自己一張 5 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 10
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(13)
+        mpecho $I 發給自己一張 6 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 12
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(14)
+        mpecho $I 發給自己一張 7 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 14
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(17)
+        mpecho $I 發給自己一張 8 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 16
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(20)
+        mpecho $I 發給自己一張 9 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 18
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(25)
+        mpecho $I 發給自己一張 10 ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 20
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(33)
+        mpecho $I 發給自己一張 J ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 1
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+        break
+endif
+if rand(50)
+        mpecho $I 發給自己一張 Q ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 1
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+else
+        mpecho $I 發給自己一張 K ....
+        mpmod_qmark self firetop_dwarf_gambling v0 + 1
+        mpcallout 1 mpcall firetop_dwarf_gambling03 $b
+endif
+~
+>defun_prog firetop_dwarf_gambling01~
+mpmod_qmark $b firetop_dwarf_gambling v1 + 1
+if rand(6)
+        mpechoat $b $I 將一張 A 發給了你....
+        mpechoaround $b $I 將一張 A 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 2
+        break
+endif
+if rand(8)
+        mpechoat $b $I 將一張 2 發給了你....
+        mpechoaround $b $I 將一張 2 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 4
+        break
+endif
+if rand(9)
+        mpechoat $b $I 將一張 3 發給了你....
+        mpechoaround $b $I 將一張 3 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 6
+        break
+endif
+if rand(10)
+        mpechoat $b $I 將一張 4 發給了你....
+        mpechoaround $b $I 將一張 4 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 8
+        break
+endif
+if rand(11)
+        mpechoat $b $I 將一張 5 發給了你....
+        mpechoaround $b $I 將一張 5 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 10
+        break
+endif
+if rand(13)
+        mpechoat $b $I 將一張 6 發給了你....
+        mpechoaround $b $I 將一張 6 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 12
+        break
+endif
+if rand(14)
+        mpechoat $b $I 將一張 7 發給了你....
+        mpechoaround $b $I 將一張 7 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 14
+        break
+endif
+if rand(17)
+        mpechoat $b $I 將一張 8 發給了你....
+        mpechoaround $b $I 將一張 8 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 16
+        break
+endif
+if rand(20)
+        mpechoat $b $I 將一張 9 發給了你....
+        mpechoaround $b $I 將一張 9 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 18
+        break
+endif
+if rand(25)
+        mpechoat $b $I 將一張 10 發給了你....
+        mpechoaround $b $I 將一張 10 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 20
+        break
+endif
+if rand(33)
+        mpechoat $b $I 將一張 J 發給了你....
+        mpechoaround $b $I 將一張 J 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 1
+        break
+endif
+if rand(50)
+        mpechoat $b $I 將一張 Q 發給了你....
+        mpechoaround $b $I 將一張 Q 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 1
+else
+        mpechoat $b $I 將一張 K 發給了你....
+        mpechoaround $b $I 將一張 K 發給了 $b ....
+        mpmod_qmark $b firetop_dwarf_gambling v0 + 1
+endif
+~
+|
+#5765
+minotaur~
+有力的牛頭人(mighty minotaur)~
+這個有力的牛頭人(mighty minotaur)向你揮舞著能夠將你撕成數塊的強壯手臂！
+~
+This Minotaur is quite insane and, lost in his delirium, he provokes all who
+enter into battling with him. Although unarmed and unarmored, he is still a
+potentially dangerous foe.
+~
+1|2|32|64 512 -400 S
+44 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+R Minotaur~
+C 1|8|32
+#5766
+enormous red dragon~
+巨大的紅龍(enormous red dragon)~
+這隻巨型紅龍(enormous red dragon)向你射出火焰！
+~
+You are Dead. This Dragon can tear apart whole armies of trolls, and eats
+adventurers like you for breakfast. His huge, yellow, heavy-lidded eyes
+glare balefully at you as he swings his massive claws at your head!
+
+
+an enormous Red Dragon's blast *** JOLTS *** you!
+Ouch! That attack hurt your Silver Bracer!
+That sure did HURT!
+You sure are BLEEDING!
+You have been KILLED!!!
+
+
+BATTLE UPDATE : adventurer killed by an enormous red dragon.
+~
+1|2|4|32|64 8|32|128|512|524288 -1000 S
+50 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+C 1|8
+P 8|256|4194304
+R Dragon~
+#5767
+warlock~
+烽火峽谷大術師(Warlock)~
+這個烽火峽谷的大術師(Warlock)自傲地站在你面前。
+~
+The Warlock has taken the form of a well-built young man, clad in robes of
+Velvet and Gold. Sparks fly from his gloved hands as he stares grimly at you,
+waiting for you to move. Already, you know you are in for a heck of a fight...
+~
+1|2|4|64|8388608 8|32|128|512|8192|524288|1048576|134217728 -1000 S
+53 0 0 0d0+0 0d0+0
+0 0
+112 112 1
+C 2
+P 256|4194304|16777216
+#5768
+hand~
+手臂(hand)~
+一隻揮動的手臂(hand)忽然像你疾衝過來。
+~
+這個會動的手臂似乎被上了魔法，竟然可以自行揮動。
+~
+1|2|4|32|64 0 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Object~
+C 1
+P 256|4194304
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+endif
+~
+>fight_prog 50~
+if ispc($r)
+        mpgoto $r
+        slap $r
+        mpkill $r
+endif
+~
+|
+#5769
+crocodile~
+鱷魚(crocodile)~
+一頭憤怒的鱷魚(crocodile)忽然撞上你的船隻！
+~
+This huge reptile is hideous and mean, and it looks eager to bury its many
+pointed teeth in your body!
+~
+1|2|32|64 32|512 0 S
+42 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Beast~
+C 1|32
+#5770
+gas-firetop gas beast~
+毒氣獸(gas beast)~
+一頭毒氣獸(gas beast)不斷噴出毒氣讓你幾乎窒息！
+~
+這頭毒氣獸非但身軀巨大，而且能夠由口鼻中噴出可怕的致命毒氣。
+~
+1|2|32|64|262144|1048576|8388608 8|32|512|8192|524288 -1000 S
+55 0 0 0d0+0 0d0+0
+0 0
+112 112 0
+R Beast~
+C 1|32
+P 8|256|4194304|16777216
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 0 1 0
+~
+>greet_prog 100~
+if ispc($n)
+        if rand(50)
+                mpechoat $n [1;36m$I 忽然向你噴出了大量毒氣....[m
+                mpechoaround $n [1;36m$I 忽然向 $n 噴出了大量毒氣....[m
+                c 'gas breath'
+                mpnowait
+                mpgoto self
+        endif
+        mpkill $n
+endif
+~
+>fight_prog 50~
+if ispc($r)
+        if rand(50)
+                mpecho [1;36m$I 忽然噴出大量毒氣，你看不見牠了....！[m
+                mpdef_rembch $r
+                mpgoto 5
+                mpcallout 5 mpdef_rembch null-tar
+                mpcallout 5 mpkill $b
+                mpcallout 5 mpecho $I 忽然出現了....
+                mpcallout 5 mpgoto $b
+        else
+                mpechoat $r [1;33m$I 忽然張口向你咬來！[m
+                mpechoaround $r [1;33m$I 忽然張口向 $r 咬去！[m
+                if dex($r) > 18
+                        mpechoat $r 不過被你閃了過去....
+                        mpechoaround $r 不過被 $r 閃了過去....
+                else
+                        mpechoat $r [1;33m你被咬中了，覺得全身無力....[m
+                        mpechoaround $r [1;33m$r 被 $I 咬中了！[m
+                        mpforcer here add_affect $r poison 0 24 1 -9 8192
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpforcer here modhmv gas-firetop 04.100 100 0
+mpecho [1;36m$I 死前噴出大量毒氣！[m
+c 'gas breath'
+mpnowait
+~
+|
+#0
+
+
+#OBJECTS
+#5700
+hole1-firetop hole~
+地板上的破洞(hole on the floor)~
+地板上頭破了一個大洞(hole)。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+99999 0 0
+E
+hole~
+你注視著這個破洞，裡頭陰森森的吹來陣陣的冷風。這邊沒有任何的地方能夠讓你下去，
+你必須找些工具，如繩索(rope)等類似的東西，把繩索放下去(laydown)。
+~
+#5701
+hole2-firetop hole~
+天花板上的破洞(hole upon the ceiling)~
+天花板上頭破了一個大洞(hole)。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+99999 0 0
+E
+hole~
+你注視著這個破洞，裡頭陰森森的吹來陣陣的冷風。這邊沒有任何的地方能夠讓你上去，
+若沒有人由上方放下(laydown)繩索，你是沒有辦法上去的。
+~
+#5702
+corpse~
+冰食人妖(ice troll)的屍體(corpse)~
+冰食人妖(ice troll) 的屍體/corpse~
+~
+23 0 1
+0~ 0~ 0~ 1~
+100 0 0
+L 60
+X Flesh~
+>obj_repop 100~
+oforcer here oload 15016 36 floor
+~
+|
+#5703
+hook1-firetop iron hook~
+鐵鉤(iron hook)~
+一把鐵鉤(iron hook)被丟棄在這邊。~
+~
+12 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+C 10000
+E
+iron hook~
+這把鐵鉤可以用來鉤住東西，後面的金屬圈可以綁住繩子(rope)，鐵鉤與繩索(rope)的結
+合(compose)將是登山攀岩的利器。
+~
+>obj_command compose rope~
+if is_inv_obj($n) == 15435
+        echoat $n 你將 鐵鉤(iron hook) 與 繩索(rope) 結合為 繩鉤(rope hook) 了！
+        echoaround $n $n 將 鐵鉤(iron hook) 與 繩索(rope) 結合為 繩鉤(rope hook)。
+        oforcer here oload 5704 1 $n target
+        oforcer here purge $n rope1-prehist
+        purge self
+else
+        echoat $n 你身上並沒有 繩索(rope) 這一項東西。
+endif
+~
+|
+#5704
+hook2-firetop rope hook~
+繩鉤(rope hook)~
+一條繩鉤(rope hook)被丟棄在這邊。~
+~
+12 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+C 100000
+E
+rope hook~
+這條繩鉤能夠讓你丟到(throwup)高處，利用繩鉤鉤住東西，然後拉住繩子讓你攀爬(climb)
+登上山壁。你可以將繩鉤分解(decompose)為原來組成的組件。
+~
+>obj_command decompose default~
+echoat $n 你將 繩鉤(rope hook) 分解為 鐵鉤(iron hook) 與 繩索(rope) 了。
+echoaround $n $n 將 繩鉤(rope hook) 分解為 鐵鉤(iron hook) 與 繩索(rope)。
+oforcer here oload 5703 1 $n target
+oforcer here oload 15435 1 $n target
+purge self
+~
+|
+#5705
+hook3-firetop rope hook~
+掛在山壁上的繩鉤(rope hook on the wall)~
+一條繩鉤(rope hook)掛在山壁上，你可以由此攀爬(climb)上去。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+E
+rope hook~
+一條繩索由高處垂放到這邊，你能夠由此將它收回(retrieve)。
+~
+#5706
+hook4-firetop rope hook~
+掛在山壁上的繩鉤(rope hook on the wall)~
+一條繩鉤(rope hook)掛在山壁上，你可以由此攀爬(climb)下去。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+E
+rope hook~
+一條繩鉤在這邊鉤住了石頭垂放到下面，你能夠由此將它收回(retrieve)。
+~
+#5707
+double edged axe~
+雙面斧(double-edged axe)~
+一副雙面斧(double-edged axe)被放在這邊。~
+~
+5 64 1|8192
+500~ 0~ 0~ 1~
+35 0 0
+A
+18 -5
+A
+19 18
+A
+43 5
+E
+double edged axe~
+這一把斧頭雙面都是刀鋒，如此一來將可以大幅度增加殺傷力及殺傷範圍。
+斧頭上刻了一排字「為我祈禱(pray)，我將施放閃電為你擊退敵人。」
+~
+>obj_command pray default~
+if is_qmark($n) == firetop_axe_unique-skill
+	echoat $n 你對著$O祈禱，但什麼事也沒發生....
+else
+	if is_equip($o)
+		if isfight($n)
+			echoat $n 你依著 雙面斧(double-edged axe) 開始祈禱....
+			echoaround $n $n 依著 雙面斧(double-edged axe) 開始祈禱....
+			oforcer here add_qmark $n firetop_axe_unique-skill 6 0 0 0 1 1
+			echo 天空降下一道閃電到 $V 身上....
+			oforcer here c 'lightning bolt' $v 50
+		else
+			echoat $n 你現在不是在戰鬥中。
+		endif
+	else
+		echoat $n 你必須裝備著$O。
+	endif
+endif
+~
+|
+#5708
+canes armor~
+籐甲(canes armor)~
+一套籐甲(canes armor)被放置在這邊。~
+~
+9 0 1|8
+0~ 0~ 350~ 0~
+5 0 0
+A
+2 2
+A
+17 -5
+A
+40 -5
+#5709
+steel mace~
+鋼釘頭錘(steel mace)~
+一把鋼製的釘頭錘(steel mace)被遺忘在這邊。~
+~
+5 0 1|8192
+200~ 0~ 0~ 7~
+15 0 0
+A
+1 1
+A
+5 1
+A
+19 1
+#5710
+diamond halberd~
+鑽石長戟(diamond halberd)~
+一把鑽石長戟(diamond halberd)被丟棄在這邊。~
+~
+5 1|64|256 1|32768
+999~ 0~ 0~ 9~
+80 0 0
+A
+17 -20
+A
+19 10
+A
+41 20
+#5711
+diamond helmet~
+鑽石頭盔(diamond helmet)~
+一頂鑽石頭盔(diamond helmet)被放置在這邊。~
+~
+9 1|64|256 1|16
+0~ 0~ 999~ 0~
+20 0 0
+A
+17 -10
+A
+41 5
+#5712
+diamond boots~
+鑽石靴子(diamond boots)~
+一頂鑽石靴子(diamond boots)被放置在這邊。~
+~
+9 1|64|256 1|64
+0~ 0~ 999~ 0~
+20 0 0
+A
+17 -10
+A
+41 5
+#5713
+lamp oil~
+燈油(lamp oil)~
+一罐燈油(lamp oil)被放在這邊。~
+~
+12 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+C 5000
+E
+lamp oil~
+這罐燈油的用途多多，除了能夠當作燃料，還能夠將燈油滴入(drip)機械中當作潤滑劑。
+~
+#5714
+big gem~
+巨大寶石(big gem)~
+一顆用來當作獨眼巨人眼睛的巨大寶石(big gem)被丟在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+C 500000
+#5715
+pedestal~
+巨大台座(pedestal)~
+一個巨大的台座(pedestal)放在山洞的中央。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+#5716
+iron statue~
+惡魔鐵雕像(iron statue)~
+一座鐵雕像(iron statue)放在台座的上面。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+#5717
+explosive1-firetop explosive powder~
+炸藥粉(explosive powder)~
+地上灑了一片黑色的粉末(powder)。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+C 5000
+E
+explosive powder~
+這個炸藥粉的火力十分強大，與炸藥筒(explosive tube)結合(compose)將成為威力強大
+的炸藥。
+~
+>obj_command compose tube~
+if is_inv_obj($n) == 5718
+        echoat $n 你將 炸藥粉(explosive powder) 倒進了 炸藥筒(explosive tube) 中，並將它封好。
+        echoaround $n $n 將 炸藥粉(explosive powder) 倒進了 炸藥筒(explosive tube) 中，並將它封好。
+        oforcer here purge $n explosive2-firetop
+        oforcer here oload 5719 1 $n target
+        purge self
+else
+        echoat $n 這裡並沒有 炸藥筒(explosive tube) 這項東西。
+endif
+~
+|
+#5718
+explosive2-firetop explosive tube~
+炸藥筒(explosive tube)~
+一個炸藥筒(explosive tube)被丟棄在這邊。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+C 10000
+E
+explosive tube~
+這個炸藥筒裡面沒有裝任何的炸藥粉，因此還算安全。當它結合(compose)了炸藥粉後將
+成為威力強大的武器。
+~
+>obj_command compose powder~
+if is_inv_obj($n) == 5717
+        echoat $n 你將 炸藥粉(explosive powder) 倒進了 炸藥筒(explosive tube) 中，並將它封好。
+        echoaround $n $n 將 炸藥粉(explosive powder) 倒進了 炸藥筒(explosive tube) 中，並將它封好。
+        oforcer here purge $n explosive1-firetop
+        oforcer here oload 5719 1 $n target
+        purge self
+else
+        echoat $n 這裡並沒有 炸藥粉(explosive powder) 這項東西。
+endif
+~
+|
+#5719
+explosive3-firetop tnt~
+黃色炸藥(TNT)~
+一根黃色炸藥(TNT)被放置在這邊。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+L 1
+E
+tnt~
+這是威力強大的武器，你只要將它丟擲出去(toss tnt)，那麼附近的人都會受到相當的傷
+害，只不過由於傷害力太強，也有一定的可能會傷害到自己的隊友，必須小心使用。你也
+可以將裡頭的炸藥給倒出來(pour tnt)。
+~
+>obj_command toss default~
+echoat $n 你將 黃色炸藥(TNT) 給丟了出去....
+echoaround $n $n 將 黃色炸藥(TNT) 給丟了出去....
+echo ------- [1;31m「轟」！ [m-------
+echo [1;33m黃色炸藥(TNT)產生爆炸，對敵人與隊友都產生了傷害！[m
+oforcer here modhmv pc 01.300 300 0
+if roomflag($) !& 1024
+	oforcer here modhmv npc 01.300 300 0
+endif
+purge self
+~
+>obj_command pour default~
+echoat $n 你將 黃色炸藥(TNT) 中的炸藥粉倒了出來....
+echoaround $n $n 將 黃色炸藥(TNT) 中的炸藥粉倒了出來....
+oforcer here oload 5717 1 $n target
+oforcer here oload 5718 1 $n target
+purge self
+~
+|
+#5720
+rock1-firetop rock~
+巨大岩石(giant rock)~
+一顆巨大的岩石(giant rock)在這邊擋住了往東邊洞穴的路。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+1 0 0
+E
+rock~
+這顆岩石十分巨大，如果不是力量超強的種族將無法隨便移動(move)這顆岩石。這顆岩石
+上頭坑坑洞洞，如果能夠塞(insert)一些炸藥然後引爆的話，也許也能夠移開岩石。
+~
+#5721
+rock2-firetop rock~
+巨大岩石(giant rock)~
+一顆被移開的巨大岩石(giant rock)放在這邊。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+1 0 0
+#5722
+rock3-firetop rock gravel~
+岩石碎片(rock gravel)~
+一大堆岩石碎片(rock gravel)擺放在角落。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+1 0 0
+#5723
+fang1-firetop fang with venom~
+毒液尖牙(venom fang)~
+一顆尖銳的毒液尖牙(venom fang)被丟棄在這邊。~
+~
+5 16|131072 1|8192
+100~ 0~ 0~ 10~
+1 0 0
+A
+18 2
+A
+43 -15
+#5724
+corpse~
+冰食人妖(fire troll)的屍體(corpse)~
+冰食人妖(fire troll) 的屍體/corpse~
+~
+23 0 1
+0~ 0~ 0~ 1~
+100 0 0
+L 60
+X Flesh~
+>obj_repop 100~
+oforcer here oload 15016 36 floor
+~
+|
+#5725
+rock4-firetop rock~
+一堆落石(rock)~
+一堆落石(rock)擋住了東邊的出口。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+99999 0 0
+E
+rock~
+這一堆落石擋住了你的出口，每塊落石又大又硬，沒有類似十字鎬(pick)這種工具，是無
+法挖開(dig)這些落石的。
+~
+#5726
+rock5-firetop rock~
+一堆落石(rock)~
+一堆被挖開的落石(rock)。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+99999 0 0
+#5727
+rock6-firetop rock~
+一堆落石(rock)~
+一堆落石(rock)擋住了西邊的出口。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+99999 0 0
+E
+rock~
+這一堆落石擋住了你的出口，每塊落石又大又硬，沒有類似十字鎬(pick)這種工具，是無
+法挖開(dig)這些落石的。
+~
+#5728
+rusty key~
+生鏽的鑰匙(rusty key)~
+一把生鏽的鑰匙(rusty key)被丟在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+#5735
+armor leather~
+皮甲(leather armor)~
+一套骯髒的食人妖用皮甲(armor leather)被丟棄在這邊。~
+~
+9 0 1
+0~ 0~ 100~ 0~
+5 0 0
+A
+17 -3
+A
+41 10
+#5736
+polearm~
+長矛(polearm)~
+一根扁長的食人妖用長矛(polearm)放在這邊。~
+~
+5 0 1
+150~ 0~ 0~ 3~
+30 0 0
+A
+18 -2
+A
+19 2
+#5737
+grog bottle~
+食人妖烈酒(troll grog)~
+一桶食人妖烈酒(troll grog)放在這邊。~
+~
+17 0 1
+55~ 55~ 7~ 0~
+5 250 25
+#5738
+trool's box~
+巨人的箱子(troll's box)~
+這個箱子(box)提供食人妖放置東西。~
+~
+15 0 1
+10~ 1~ 0~ 0~
+10 100 10
+#5739
+piece gold~
+一塊金塊(single gold piece)~
+一塊金塊(gold piece)被放置在這邊。~
+~
+20 0 1
+1~ 0~ 0~ 0~
+1 0 0
+#5740
+dead mouse~
+死老鼠(dead mouse)~
+一頭死老鼠(dead mouse)的屍體躺在這邊。~
+~
+19 0 1
+5~ 0~ 0~ 1~
+1 0 0
+#5741
+bronze-coloured key~
+彩色青銅鑰匙(bronze-coloured key)~
+一支彩色青銅鑰匙(bronze-coloured key)放在這裡。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+#5742
+wooden box~
+小木頭盒子(small wooden box)~
+一個上頭有絞鍊的小木頭盒子(small wooden box)被放在這邊。~
+~
+15 0 1
+50~ 15~ 5741~ 0~
+10 100 10
+E
+box~
+這個箱子上頭有片黃銅的平板，上面刻著「法利歐‧狄馬喬」
+~
+#5743
+leather-bound book tome~
+皮革綑綁的書本(leather-bound book)~
+一本教你如何製造並施展龍火的書(book)被放在這邊。~
+~
+2 64 1|16384
+50~ flamestrike~ fireball~ fire breath~
+10 0 0
+A
+3 1
+A
+12 30
+#5744
+sturdy chest~
+堅固的箱子(sturdy chest)~
+一個由橡木及鐵製成的堅固箱子(sturdy chest)被放在這邊。~
+~
+15 0 0
+500~ 8~ 2006~ 0~
+1 0 0
+#5745
+gold~
+幾塊金塊(gold pieces)~
+一些金塊(gold pieces)散落在這邊。~
+~
+20 0 1
+25~ 0~ 0~ 0~
+1 0 0
+#5746
+potion vial~
+一小罐藥水(potion vial)~
+一小罐藥水(potion vial)被放在這邊，瓶口已經用木塞封住了。~
+~
+10 0 1
+8~ invis~  ~  ~
+1 200 20
+#5747
+black velvet glove~
+黑天鵝手套(black velvet glove)~
+一套黑天鵝手套(black velvet glove)在這邊。~
+~
+9 4 1|128
+0~ 0~ 250~ 0~
+1 0 0
+A
+2 2
+#5748
+mattress~
+床墊(mattress)~
+一襲用著特殊物質編織的高級床墊(mattress)放在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+1 0 0
+#5749
+case leather~
+破爛皮甲(tattered leather case)~
+一套破爛的皮甲(tattered leather)看來被丟在這邊很久了。~
+~
+9 0 1
+0~ 0~ 100~ 0~
+10 0 0
+#5750
+bow~
+弓(bow)~
+一把簡單的弓(bow)放在這邊。~
+~
+5 1 0
+100~ 0~ 0~ 14~
+18 0 0
+#5751
+leg chair~
+椅腳(chair leg)~
+這根椅腳(chair leg)可以用來當作棍棒之用。~
+~
+5 0 1
+150~ 0~ 0~ 7~
+10 0 0
+A
+18 -1
+A
+19 -1
+#5752
+torture rack~
+拷問架(torture rack)~
+一副拷問架(torture rack)上面綁著一副矮人的屍體(corpse)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+1 0 0
+E
+corpse~
+可憐的矮人被凌虐而死，雖不能夠救他逃出生天，但是至少能夠讓他入土為安也是一項功
+德了，先解開(release)他，然後找個地方埋葬(bury)他吧。
+~
+#5753
+wicked-looking knife~
+損壞的匕首(wicked-looking knife)~
+一把損壞的匕首(wicked-looking knife)放在這邊。~
+~
+5 0 1
+100~ 0~ 0~ 11~
+13 0 0
+A
+19 4
+#5754
+cheese~
+起司(cheese)~
+一塊可口的起司(cheese)被放在這邊。~
+~
+19 0 1
+10~ 13~ 150~ 0~
+1 0 0
+#5755
+shield~
+盾牌(shield)~
+一面上面鑲有半月圖案的青銅盾牌(shield)被丟在這邊。~
+~
+9 1 1
+0~ 0~ 350~ 0~
+5 1000 100
+A
+2 -1
+A
+13 5
+A
+17 -10
+A
+19 1
+X bronze~
+#5756
+gem jewel~
+昂貴的珠寶(expensive-looking jewel)~
+這些珠寶(jewel)看起來非常有價值。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+1 0 0
+C 150000
+#5757
+small key~
+小鑰匙(small key)~
+一把小鑰匙(small key)放在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+key~
+這把鑰匙上面刻著號碼「111」。
+~
+#5758
+old box~
+老舊的盒子(old box)~
+一個老舊的盒子(old box)被丟棄在這邊。~
+~
+15 0 1
+50~ 1~ 0~ 0~
+5 100 10
+#5759
+wooden mallet~
+木頭鎚(wooden mallet)~
+一根木頭鎚(wooden mallet)放在這邊。~
+~
+5 0 1
+50~ 0~ 0~ 7~
+25 0 0
+#5760
+wooden stake~
+木樁(wooden stake)~
+一根砍伐下來的木樁(wooden stake)被放在這邊。~
+~
+5 0 1
+50~ 0~ 0~ 11~
+15 0 0
+#5761
+warlock painting~
+大法師的肖像(painting of the Warlock)~
+一幅大法師的肖像(painting of the Warlock)被掛在這邊的牆上。~
+~
+12 2 0
+0~ 0~ 0~ 0~
+25 0 0
+E
+painting~
+看著這幅肖像，你覺得裡頭的大法師似乎病奄奄而且不太自在。
+~
+A
+1 -1
+A
+5 -1
+A
+13 -10
+#5762
+candle~
+燭台(candle)~
+一座藍色的燭台(candle)被放在這邊。~
+~
+1 1 1
+0~ 0~ 24~ 0~
+1 0 0
+#5763
+club stone~
+巨石棒(stone club)~
+一根巨石棒(stone club)放在這邊。~
+~
+5 0 1
+250~ 0~ 0~ 8~
+30 0 0
+A
+18 -4
+A
+19 6
+#5764
+y-shaped wood~
+Ｙ型木頭(y-shaped wood)~
+適合用來製作彈弓的Ｙ型木頭(y-shaped wood)被放這邊。~
+~
+5 0 14
+0~ 0~ 0~ 0~
+5 0 0
+A
+18 -1
+#5765
+piece rope~
+繩索(piece of rope)~
+這條繩索(piece of rope)看起來似乎有點怪怪的。~
+~
+13 16 0
+0~ 0~ 0~ 0~
+5 0 0
+E
+rope~
+這條繩索已經被詛咒了！
+~
+A
+12 -50
+A
+13 -25
+#5766
+magnificent-looking sword~
+華麗的劍(magnificent-looking sword)~
+一把裝飾華麗的劍(magnificent-looking sword)被放在這邊，趕緊拿起它吧。~
+~
+5 1 0
+99~ 0~ 0~ 1~
+25 0 0
+A
+1 1
+A
+17 -5
+A
+18 4
+A
+19 4
+#5767
+spider gall~
+蜘蛛的膽(spider's gall)~
+一顆蜘蛛的膽(spider's gall)被放在這邊。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+#5768
+silver chisel~
+銀色鑿子(silver chisel)~
+一根銀色的鑿子(silver chisel)被放在這邊。~
+~
+5 1 0
+150~ 0~ 0~ 2~
+13 0 0
+A
+18 2
+#5769
+bronze helmet~
+青銅頭盔(bronze helmet)~
+一頂青銅頭盔(bronze helmet)被放在這邊。~
+~
+9 16 0
+0~ 0~ 250~ 0~
+5 1000 100
+A
+3 -2
+A
+18 -2
+#5770
+iron helmet~
+鐵頭盔(iron helmet)~
+一頂鐵頭盔(iron helmet)被放在這邊。~
+~
+9 1024 1
+0~ 0~ 150~ 0~
+5 1000 100
+A
+18 2
+#5771
+oak table~
+橡木桌(oak table)~
+一張橡木桌(oak table)被放在這邊。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+10 0 0
+#5772
+suit armor leather~
+皮甲(suit of leather armor)~
+一套皮甲(suit of leather armor)被丟在這邊。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+5 0 0
+#5773
+wooden shield~
+木盾(wooden shield)~
+一面造型簡單的木盾(wooden shield)被遺棄在這邊。~
+~
+9 0 1
+0~ 0~ 50~ 0~
+5 100 10
+#5774
+steel sword~
+鋼劍(steel sword)~
+這把鋼劍(steel sword)似乎沒有比你手上的武器好多少。~
+~
+5 0 1
+500~ 0~ 0~ 1~
+15 0 0
+#5775
+silver crucifix~
+銀十字架(silver crucifix)~
+一個有個聖者像的銀十字架(silver crucifix)被丟在地上。~
+~
+8 1 1|4
+0~ 0~ 0~ 0~
+1 2000 0
+A
+17 -15
+A
+33 -20
+X silver~
+
+#5776
+decaying corpse~
+腐爛的屍體(decaying corpse)~
+一具冒險者的腐爛屍體(decaying corpse)放置在這邊。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+70 0 0
+#5777
+gold~
+黃金(gold)~
+哇！這邊有一堆黃金(gold)！~
+~
+20 0 1
+8~ 0~ 0~ 0~
+1 0 0
+#5778
+barrel rum~
+一桶蘭姆酒(barrel of rum)~
+這邊有一桶蘭姆酒(barrel of rum)。~
+~
+17 0 1
+8~ 8~ 24~ 0~
+20 0 0
+#5779
+key keys bunch~
+一串鑰匙(bunch of keys)~
+一串鑰匙(bunch of keys)被丟在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+2 0 0
+#5780
+unlaced boots~
+無拘之靴(unlaced boots)~
+某人似乎遺忘了他的靴子(boots)。~
+~
+9 0 1
+0~ 0~ 300~ 0~
+5 0 0
+A
+2 2
+A
+14 300
+#5781
+pickled eggs~
+醃製的蛋(pickled eggs)~
+一些醃製的蛋(pickled eggs)被放在這邊。~
+~
+19 0 1
+10~ 12~ 150~ 0~
+1 0 0
+#5782
+jar~
+一個罈子(jar)~
+這個罈子(jar)似乎可以放置不少蛋或其他可以保存的食物。~
+~
+15 0 1
+2~ 1~ 0~ 0~
+2 0 0
+#5783
+cheep pair earrings~
+便宜的耳環(pair of cheap earrings)~
+某人的便宜耳環(chep earrings)被丟在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+#5784
+vial liquid~
+一罐液體(vial of liquid)~
+一罐裝著奇異液體(vial of liquid)的罐子被放在這邊。~
+~
+10 1 1
+30~ bless~ cure serious~ cure poison~
+1 0 0
+#5785
+sheet badly-damaged parchment~
+損壞的羊皮紙(badly-damaged sheet of parchment)~
+一張幾乎已經損壞的羊皮紙(扡摬y-damaged sheet of parchment)被放在這邊。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+parchment~
+這張羊皮紙已經損壞的差不多了，不過你仍然能夠辨別出上面是某個區域的地圖，這個區
+域的北邊被命名為「 ZAGOR 迷宮」，其中兩間房間分別有著「..GER」與「SM...P..LE」
+的記號。
+~
+#5786
+warlock's spellbook book~
+大法師之書(Warlock's spellbook)~
+這本大法師之書(Warlock's spellbook)被守衛遺忘在這邊。~
+~
+2 16 1
+60~ dispel magic~ fly~ charm person~
+10 0 0
+E
+book~
+大法師將這本大法師之書委託給他的吸血鬼守衛。
+~
+A
+12 50
+#5787
+deck cards~
+一副卡片(deck of cards)~
+一副已經摺角的卡片(cards)被丟棄在這邊。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+#5788
+dwarven pipe~
+矮人水管(Dwarven pipe)~
+一條矮人水管(dwarven pipe)被丟棄在這邊。~
+~
+3 64 1
+8~ 4~ 4~ faerie fog~
+1 0 0
+#5789
+full liquid vase~
+裝滿水的花瓶(vase full of liquid)~
+一個裡頭裝滿水的花瓶(vase)被放在這邊。~
+~
+17 0 1
+10~ 6~ 0~ 0~
+10 0 0
+#5790
+red clay bowl~
+紅色泥碗(red clay bowl)~
+一個紅色的泥碗(clay bowl)被放在這邊。~
+~
+15 0 1
+5~ 0~ 0~ 0~
+5 0 0
+#5791
+coins~
+一些金幣(some coins)~
+一些金幣(some coins)散佈在這邊。~
+~
+20 0 1
+1980~ 0~ 0~ 0~
+1 0 0
+#5792
+fountain~
+水池(fountain)~
+水池(fountain)有著一池清澈的水，這個水池的水看起來是可以喝的。~
+~
+25 0 0
+0~ 0~ 0~ 0~
+10 0 0
+#5793
+magical cards~
+魔力卡片(magical cards)~
+這些魔力卡片(magical cards)上頭都是奇怪的古文與圖像。~
+~
+2 64 1|16384
+20~ curse~ blindness~ cause critical~
+1 0 0
+E
+cards~
+這些卡片掌握著大法師的魔力。
+~
+A
+3 2
+A
+4 1
+A
+12 50
+#5794
+warlock robes~
+大法師斗蓬(Warlock's robes)~
+一襲大法師斗蓬(Warlock's robes)離開了主人的身體。~
+~
+9 64 1|1024
+0~ 0~ 100~ 0~
+5 0 0
+A
+3 1
+A
+4 1
+A
+12 25
+A
+17 -5
+#5795
+warlock sword~
+大法師之劍(Warlock's sword)~
+一把大法師之劍(Warlock's sword)被丟棄在這邊。~
+~
+5 64 1|8192
+150~ 0~ 0~ 11~
+18 0 0
+A
+5 2
+A
+12 10
+A
+13 10
+A
+17 -5
+#5796
+solid iron-bound oak chest~
+鐵橡木箱子(solid iron-bound oak chest)~
+一個堅硬的鐵框橡木製的箱子(chest)被放置在角落。~
+~
+15 0 0
+100~ 15~ 2064~ 0~
+1 0 0
+#5797
+sacrifice offers~
+祭品(sacrifice offers)~
+祭祀大法師的祭品(sacrifice offers)~
+~
+8 1 1
+0~ 0~ 0~ 0~
+50 0 0
+#5798
+gold~
+黃金(gold)~
+一塊大法師(gold)的黃金。~
+~
+20 0 1
+50345~ 0~ 0~ 0~
+50 0 0
+#5799
+red key~
+紅色鑰匙(red key)~
+一把紅色鑰匙(red key)被放置在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+key~
+這把鑰匙似乎用來開啟一個重要的鎖。
+~
+#5800
+bullwhip whip~
+牛皮鞭(bullwhip)~
+一條大約十英尺長的皮鞭(bullwhip)被捲在這邊。~
+~
+5 0 1|8192
+200~ 0~ 0~ 4~
+15 0 0
+E
+bullwhip whip~
+這條牛皮鞭原屬於烽火峽谷的食人妖酋長。
+~
+A
+18 -2
+#5801
+trollish cloak~
+食人妖披風(trollish cloak)~
+一襲食人妖酋長的披風(cloak)被摺成一團球放在這邊。~
+~
+9 0 1|1024
+0~ 0~ 150~ 0~
+5 0 0
+E
+cloak~
+除了這襲披風的主人外，這件東西真的是不錯。
+~
+A
+1 2
+A
+5 1
+#5802
+belt pouch~
+腰袋(pouch belt)~
+一件腰袋(pouch belt)放在這邊。~
+~
+15 0 1
+25~ 1~ 0~ 0~
+5 0 0
+#5803
+wooden bench~
+木凳子(wooden bench)~
+一張木製凳子(wooden bench)放在這邊。上面有些刻著一些銘文。~
+~
+12 1 0
+0~ 0~ 0~ 0~
+1 0 0
+E
+inscription bench~
+這些銘文刻著 -
+
+     「舒服的在這邊休息吧！疲累的冒險者。」
+~
+#5804
+boat punt~
+平底船(punt)~
+一艘小平底船(punt)在這邊停泊。~
+~
+15 262144 0
+1000~ 0~ 0~ 1~
+100 0 0
+E
+punt boat~
+這艘平底船提供一般船隻載送的服務。
+~
+#5805
+ale jack~
+一罐啤酒(jack of ale)~
+一罐巨大的啤酒(jack of ale)放在這邊。~
+~
+17 0 1
+10~ 10~ 3~ 0~
+25 0 0
+E
+jack ale~
+這罐啤酒體積大，可以容納很多的酒。
+~
+#5806
+gold key~
+黃金鑰匙(gold key)~
+一把黃金鑰匙(gold key)被掛在這邊。~
+~
+18 1 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+key~
+這把鑰匙上面刻有「125」這個數字。
+~
+#5807
+copper key~
+紅銅鑰匙(copper key)~
+一把紅銅鑰匙(copper key)被掛在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+key~
+這把鑰匙上面刻有「66」這個數字。
+~
+#5808
+red key~
+紅色鑰匙(red key)~
+一把紅色的鑰匙(red key)被遺忘在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+key~
+這把鑰匙上面刻有「66」這個數字。
+~
+#5809
+cabinet glass~
+玻璃櫃(glass cabinet)~
+玻璃櫃(glass cabinet)放滿了各式各樣的古董。~
+~
+15 0 0
+10000~ 1~ 0~ 0~
+1 0 0
+E
+cabinet~
+這個玻璃櫃收藏著大法師回憶的收藏品。
+~
+#5810
+mementoes curios curio~
+大法師的古董(Warlock's curios)~
+你看到一件大法師的古董(Warlock's curios)被放在這邊。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+5 0 0
+E
+curio~
+這是你來到烽火峽谷後見過最值錢的東西，這應該是屬於此處某個重要的人。
+~
+#5811
+book~
+書(book)~
+一本書(book)被放在這邊。~
+~
+2 1 1
+20~ armor~ shield~ stone skin~
+15 0 0
+E
+book~
+這本頗為沈重的書似乎擁有著一些魔力。
+~
+#5812
+massive desk~
+沈重的桌子(massive desk)~
+這張桌子(dest)看起來沈重而且難以移動(move)。~
+~
+12 1 0
+0~ 0~ 0~ 0~
+1 0 0
+E
+desk~
+這張桌子上頭雕刻著十分講究的花紋，內容不知在說些什麼。
+~
+#5813
+comfortable-looking chair~
+舒服的椅子(comfortable-looking chair)~
+這張椅子(chair)看起來十分的舒適。~
+~
+12 1 1
+0~ 0~ 0~ 0~
+50 0 0
+E
+chair~
+這張椅子對於脊椎有問題的人坐起來一定相當不錯。
+~
+#0
+
+
+#ROOMDATA
+#5700
+崎嶇的峽谷地形~
+你往下走了幾步，發覺峽谷的海平面遠比迷霧平原低得許多。由於四面環山，使得這個峽
+谷地形不被四周海洋所灌入成為沼澤或內陸湖。峽谷中的霧比起迷霧平原來得更大，你有霧氣
+中嗅出一股腐敗的味道。往上走可以回到遠古森林，你也可以繼續往下進入這個峽谷之中。你
+看見在枯萎的樹附近釘著一塊小招牌(sign)。
+~
+0 4 5
+D4
+~
+~
+0 -1 15407
+D5
+~
+~
+0 -1 5701
+E
+sign~
+招牌上面寫著 -
+
+「歡迎來到烽火峽谷，一座由『Mad Elf』撰寫有趣且充滿著刺激的地方將呈獻給你。」
+
+接著寫著 -
+
+「烽火峽谷在 1995 年 11 月由 Yaegar 為 Anony 這個 Mud 使用 Dos 編輯器撰寫出來
+，任何 Merc 2.2 版的 Mud 都可以（而且歡迎）載入。」
+
+後面又跟著寫著 -
+「這個區域於 2004 年 2 月由 Pluto 翻譯、改編並依據需求增加部分景點，作為混沌幻
+世（Realm Of Chaos）這個 Mud 的新增區域，主要劇情為食人妖(Troll)與食人魔(Ogre)
+之間的一些問題。」
+
+「原區域要作為 ROC 之用，其劇情與內容仍不足，因此由 Pluto 自創約 50％ Mob/Obj/
+room 等串連整個區域，並增加 Quest 提升本區域深度，方可成為 ROC 的區域。」
+
+「這個區域的難度之於 ROC 第二大陸來說，難度並不高。可作為剛進入 ROC 第二大陸英
+雄們的緩衝與練習。」
+~
+>room_enter 48 100~
+if is_qmark($n) == firetop_quest
+else
+        add_qmark $n firetop_quest -1 0 0 0 0 1
+endif
+~
+|
+S
+#5701
+崎嶇的峽谷地形~
+峽谷的地形漸漸地由迷霧中展現在眼前，此處的土壤貧瘠，幾乎無一處能夠供作物生長。
+與遠古森林中動、植物欣欣向榮的景象比起來，此處就好似生物的地獄一般，毫無生氣。
+~
+0 4 5
+D4
+~
+~
+0 -1 5700
+D5
+~
+~
+0 -1 5702
+S
+#5702
+崎嶇的峽谷地形~
+峽谷的地形漸漸地由迷霧中展現在眼前，此處的土壤貧瘠，幾乎無一處能夠供作物生長。
+與遠古森林中動、植物欣欣向榮的景象比起來，此處就好似生物的地獄一般，毫無生氣。峽谷
+的地形漸漸地顯露在眼前。
+~
+0 4 5
+D4
+~
+~
+0 -1 5701
+D5
+~
+~
+0 -1 5703
+S
+#5703
+烽火峽谷~
+依據這裡四處寸草不生的景象，以烽火來形容這裡的槁木死灰是相當恰當的。在你的眼前
+四處皆是一片死寂。你嘗試由眼前的景象找出一絲生氣，但是除了偶爾天空傳來禿鷹的叫聲外
+，你幾乎可以確定這裡沒有什麼生物居住。
+~
+0 4 5
+D3
+~
+~
+0 -1 5704
+D4
+~
+~
+0 -1 5702
+S
+#5704
+峽谷地形~
+在你前進方向的兩邊都是高聳的山脈，你在這個峽谷中行走。遠方傳來禿鷹的叫聲，在峽
+谷兩邊山脈間環繞，來來回回的聲音讓你感覺不甚舒服。空氣中那股腐臭的味道越來越明顯。
+~
+0 4 5
+D1
+~
+~
+0 -1 5703
+D3
+~
+~
+0 -1 5705
+S
+#5705
+峽谷地形~
+在你前進方向的兩邊都是高聳的山脈，你在這個峽谷中行走。遠方傳來禿鷹的叫聲，在峽
+谷兩邊山脈間環繞，來來回回的聲音讓你感覺不甚舒服。兩邊的地形陡峭且寸草不生，在這邊
+休息不是個好想法，因為兩邊由高往下的視野，將你暴露在危險之中。
+~
+0 4 5
+D1
+~
+~
+0 -1 5704
+D3
+~
+~
+0 -1 5706
+S
+#5706
+峽谷地形~
+在你前進方向的兩邊都是高聳的山脈，你在這個峽谷中行走。兩邊的地形陡峭且寸草不生
+，在這邊休息不是個好想法，因為兩邊由高往下的視野，將你暴露在危險之中。空氣中那股腐
+臭的味道越來越明顯。這裡谷風強勁，使用飛行術似乎不是一件好主意。
+~
+0 4 5
+D1
+~
+~
+0 -1 5705
+D3
+~
+~
+0 -1 5707
+S
+#5707
+較為開闊的地形~
+狹窄的峽谷地形，在這邊變得較為開闊。這裡有幾處山岩由峭壁伸出，山岩下的陰影成為
+一個相當好的屏障。你看到開闊地遠方某個山岩下的陰影有著一些帳棚。
+~
+0 0 5
+D0
+~
+~
+0 -1 5709
+D1
+~
+~
+0 -1 5706
+D2
+~
+~
+0 -1 5710
+D3
+~
+~
+0 -1 5708
+S
+#5708
+較為開闊的地形~
+你站在開闊地形的中央，峽谷的谷風由四周峭壁上吹來，新鮮的空氣讓你心曠神怡。這裡
+有幾處山岩由峭壁伸出，山岩下的陰影成為一個相當好的屏障。你看到開闊地角落某個山岩下
+的陰影有著一些帳棚。這裡谷風強勁，使用飛行術似乎不是一件好主意。
+~
+0 0 5
+D0
+~
+~
+0 -1 5711
+D1
+~
+~
+0 -1 5707
+D2
+~
+~
+0 -1 5712
+D3
+~
+~
+0 -1 5714
+S
+#5709
+開闊地形的東北角~
+這裡是開闊地形的東北角。這裡跟其他的地方沒有什麼不一樣。不過你看到了北邊山壁上
+約 20 英尺高的地方似乎有個洞穴(hole)，不過山壁陡峭滑溜，你不知道如何攀爬上去。這裡
+的谷風強勁，嘗試用飛行術似乎不是一個好主意。
+~
+0 0 5
+D2
+~
+~
+0 -1 5707
+D3
+~
+~
+0 -1 5711
+E
+hole~
+大約 20 英尺高處有個山洞，不過因為太高你無法攀爬上去。山洞旁有塊突出的石頭，或
+許可以由那邊掛著繩索，然後藉著繩索爬上去。問題在於如何將繩索拋上去(throwup)，然
+後繫在 20 公尺的高處？
+~
+>room_command throwup hook~
+rcall firetop_throwup $n
+~
+>room_command throwup rope~
+rcall firetop_throwup $n
+~
+>room_defun firetop_throwup~
+if is_inv_obj($n) == 5704
+        echoat $n 你將 繩鉤(rope hook) 拋向高處....
+        echoaround $n $n 將 繩鉤(rope hook) 拋向高處....
+        if int($n) >= 22
+                callout 1 rcall firetop_throw_succed $n
+        else
+                if int($n) >= 18
+                        if rand(75)
+                                callout 1 rcall firetop_throw_succed $n
+                        else
+                                callout 1 echo 不過失敗了。
+                        endif
+                else
+                        if int($n) >= 14
+                                if rand(50)
+                                        callout 1 rcall firetop_throw_succed $n
+                                else
+                                        callout 1 echo 不過失敗了。
+                                endif
+                        else
+                                if rand(25)
+                                        callout 1 rcall firetop_throw_succed $n
+                                else
+                                        callout 1 echo 不過失敗了。
+                                endif
+                        endif
+                endif
+        endif
+else
+        echoat $n 你身上沒有這項東西。
+endif
+~
+>room_defun firetop_throw_succed~
+echoat $n 你成功地將 繩鉤(rope hook) 鉤住了高處的石頭。
+echoaround $n $n 成功地將 繩鉤(rope hook) 鉤住了高處的石頭。
+oload 5705 1 floor
+at 5716 oload 5706 1 floor
+purge $n hook2-firetop
+~
+>room_command climb rope~
+if robjcount(5705) > 0
+        echoat $n 你藉著繩索爬了上去....
+        echoaround $n $n 藉著繩索爬了上去....
+        at 5716 echoaround $n $n 藉著繩索爬了上來....
+        transfer $n 5716
+else
+        echoat $n 這裡沒有任何繩索可以提供你攀爬。
+endif
+~
+>room_command retrieve rope~
+if robjcount(5705) > 0
+        echoat $n 你將 繩鉤(rope hook) 給收了回來....
+        echoaround $n $n 將 繩鉤(rope hook) 給收了回去....
+        at 5716 echo 繩鉤(rope hook) 被收回去了....
+        oload 5704 1 $n target
+        purge hook3-firetop
+        force 5716 purge hook4-firetop
+else
+        echoat $n 這裡沒有繩索能夠讓你收回。
+endif
+~
+|
+S
+#5710
+開闊地形的東南角~
+這裡鳥不生蛋，狗不拉屎。在你的東面與南邊都是高聳入雲的峭壁，山壁上寸草不生。這
+裡似乎沒有什麼能夠讓你流連的。西邊遠處一些山岩的陰影下似乎有些帳棚。這裡谷風強勁，
+使用飛行術似乎不是一件好主意。
+~
+0 0 5
+D0
+~
+~
+0 -1 5707
+D3
+~
+~
+0 -1 5712
+S
+#5711
+開闊地形的北角~
+你站在開闊地形的北邊，這裡跟其他的地方沒有什麼不一樣。山壁陡峭滑溜，根本無法攀
+爬上去。這裡的谷風強勁，嘗試用飛行術似乎不是一個好主意。
+~
+0 0 5
+D1
+~
+~
+0 -1 5709
+D2
+~
+~
+0 -1 5708
+D3
+~
+~
+0 -1 5713
+S
+#5712
+開闊地形的南角~
+你站在開闊地形的南邊，這裡鳥不生蛋，狗不拉屎。在你的南面是高聳入雲的峭壁，山壁
+上寸草不生。西邊山岩的陰影下似乎有些帳棚。這裡谷風強勁，嘗試使用飛行術似乎不是一個
+好主意。
+~
+0 0 5
+D0
+~
+~
+0 -1 5708
+D1
+~
+~
+0 -1 5710
+D3
+~
+~
+0 -1 5715
+S
+#5713
+開闊地形的西北角~
+你站在開闊地形的西北邊，這裡跟其他地方沒有什麼不一樣。山壁陡峭滑溜，根本無法攀
+爬上去。南邊不遠處的山岩陰影下似乎有些帳棚。這裡谷風強勁，嘗試使用飛行術似乎不是一
+個好主意。
+~
+0 0 5
+D1
+~
+~
+0 -1 5711
+D2
+~
+~
+0 -1 5714
+S
+#5714
+開闊地形的西角~
+你站在開闊地形的西邊，南邊的山岩陰影下有些帳棚。這裡谷風強勁，嘗試使用飛行術似
+乎不是一個好主意。往西能夠離開這個開闊地，又重新進入峽谷地形。
+~
+0 0 5
+D0
+~
+~
+0 -1 5713
+D1
+~
+~
+0 -1 5708
+D2
+~
+~
+0 -1 5715
+D3
+~
+~
+0 -1 5720
+S
+#5715
+紮營地~
+這邊搭有幾個帳棚，似乎是由光明之鎮而來的冒險者搭建而成。有不少冒險者聚集此處，
+自從傳出峽谷內有通往魔刀村的捷徑後，這附近漸漸變得門庭若市。這邊提供一些基本的物品
+補給，同時你能夠安全地在這邊休息。往南能夠進入一個大型的帳棚。
+~
+0 262144 5
+D0
+~
+~
+0 -1 5714
+D1
+~
+~
+0 -1 5712
+D2
+~
+~
+3 0 5717
+S
+#5716
+山壁的洞口~
+這裡大約是山壁上的洞口，高度大約是 20 英尺。這裡的谷風大得嚇人，站在這裡你必須
+極度小心，以免被風捲到谷底。這裡沒有任何地方能夠下到谷底，除非你能夠攀爬繩索下去。
+北邊有個山洞，往北將進入一個未知的旅程。
+~
+0 4 5
+>room_command climb rope~
+if robjcount(5706) > 0
+        echoat $n 你藉著繩索爬了下去....
+        echoaround $n $n 藉著繩索爬了下去....
+        at 5709 echoaround $n $n 藉著繩索爬了下來....
+        transfer $n 5709
+else
+        echoat $n 這裡沒有任何繩索可以提供你攀爬。
+endif
+~
+>room_command retrieve rope~
+if robjcount(5706) > 0
+        echoat $n 你將 繩鉤(rope hook) 給收了回來....
+        echoaround $n $n 將 繩鉤(rope hook) 給收了回去....
+        at 5709 echo 繩鉤(rope hook) 被收回去了....
+        oload 5704 1 $n target
+        purge hook4-firetop
+        force 5709 purge hook3-firetop
+else
+        echoat $n 這裡沒有繩索能夠讓你收回。
+endif
+~
+|
+S
+#5717
+帳棚之內~
+你進入了帳棚之內，裡頭的冒險者來來去去，四周也頗為吵雜。這邊有好幾張桌子，桌子
+旁都坐滿了冒險者，或許由此處你能夠打聽到一些有用的訊息，南邊與東邊各有一道門。
+~
+0 262144 5
+D0
+~
+~
+3 0 5715
+D1
+~
+~
+3 0 5719
+D2
+~
+~
+3 0 5718
+D3
+~
+~
+3 0 5835
+S
+#5718
+遠古冒險者公會~
+這裡是遠古森林冒險者的公會，提供許多前往遠古森林周邊區域冒險者有用的訊息或服務
+，這個帳棚的中央擺了一張桌子，坐在椅子上的就是公會的會長。有什麼需要的服務或協助，
+你都可以跟他協調看看。
+~
+0 4|1024|262144 5
+D0
+~
+~
+3 0 5717
+S
+#5719
+休息處~
+這邊放著幾張桌椅沙發，是免費提供冒險者休息的場所。一旁的柴火壁爐被施加魔法，讓
+你恢復的狀況能更佳快速。
+~
+0 4|8|16|128|1024|262144|2097152 5
+D3
+~
+~
+3 0 5717
+>room_time 100~
+modhmv pc 04.4 6 0
+modhmv pc 14.4 6 0
+modhmv pc 24.4 6 0
+~
+|
+S
+#5720
+開闊地出口~
+這裡是開闊地出口，由此處你將更加深入烽火峽谷之中。谷風到此漸漸地和緩了下來，你
+不再有質輕頭盔將被捲走的憂慮。西邊遠處有個交叉路口，往東可以回到開闊地上。
+~
+0 4 5
+D1
+~
+~
+0 -1 5714
+D3
+~
+~
+0 -1 5721
+S
+#5721
+峽谷之中~
+兩旁再度出現了高聳的山脈，你走在峽谷之中，覺得自己如同滄海一粟般的渺小。谷風到
+此漸漸地和緩了下來，你不再有質輕頭盔將被捲走的憂慮。西邊不遠處有個交叉路口，往東可
+以往開闊地而去。
+~
+0 0 5
+D1
+~
+~
+0 -1 5720
+D3
+~
+~
+0 -1 5722
+S
+#5722
+峽谷之中~
+兩旁再度出現了高聳的山脈，你走在峽谷之中，覺得自己如同滄海一束般的渺小。谷風到
+此漸漸地和緩了下來，你不再有質輕頭盔將被捲走的憂慮。西邊有個交叉路口，開闊地已經漸
+漸遠離，變得不太清楚。
+~
+0 0 5
+D1
+~
+~
+0 -1 5721
+D3
+~
+~
+0 -1 5723
+S
+#5723
+交叉路口~
+這邊出現一個交叉路口，分別轉往北邊與南邊。北邊的路途看來較為平坦，但是隱約傳來
+陣陣的屍臭味。而南邊則是承襲峽谷貧瘠光禿的地形。這邊有一塊牌子(plaque)立在這邊。
+~
+0 0 5
+D0
+~
+~
+0 -1 5724
+D1
+~
+~
+0 -1 5722
+D2
+~
+~
+0 -1 5726
+E
+plaque~
+往北 - 前往高地、奈圖城堡、鬼鎮、死亡谷
+往南 - 食人魔與食人妖棲息地
+
+「
+        食人魔與食人妖性喜食肉，尤其人肉，往南的路程，
+        危險性將會大增，建議多多攜伴進入。
+                                                        」
+~
+S
+#5724
+死亡之氣~
+你由交叉路口往北到達了此處，前方開始傳來一股難耐的屍臭味。這股味道與一般腐爛的
+味道不甚相同，反而更加接近不死怪物身上的味道。你不禁開始懷疑自己此時的決定，是否應
+該繼續往前邁進。
+~
+0 0 5
+D0
+~
+~
+0 -1 5725
+D2
+~
+~
+0 -1 5723
+S
+#5725
+谷地地形~
+整個屍臭味越來越重，同時四週也開始捲起濃霧。你似乎感覺到前方的旅程將不是想像中
+的那麼簡單。你可以往難回到剛剛清新自在的開闊地，或是往北進入那可佈的旅程。
+~
+0 0 5
+D0
+~
+~
+0 -1 4643
+D2
+~
+~
+0 -1 5724
+S
+#5726
+貧瘠的山谷~
+這裡四周土壤貧瘠，寸草不生，幾乎沒有什麼作物在生長。
+~
+0 0 5
+D0
+~
+~
+0 -1 5723
+D2
+~
+~
+0 -1 5727
+S
+#5727
+貧瘠的山谷~
+這裡四周土壤貧瘠，寸草不生，幾乎沒有什麼作物在生長，四周貧瘠的情況比起烽火峽谷
+入口附近還要來得嚴重。
+~
+0 0 5
+D0
+~
+~
+0 -1 5726
+D2
+~
+~
+0 -1 5728
+S
+#5728
+貧瘠的山谷~
+這裡四周土壤貧瘠，寸草不生，幾乎沒有什麼作物在生長，四周貧瘠的情況比起烽火峽谷
+入口附近還要來得嚴重。南邊不遠處你看到一處交叉路口。
+~
+0 0 5
+D0
+~
+~
+0 -1 5727
+D2
+~
+~
+0 -1 5729
+S
+#5729
+交叉路口~
+這裡是一處交叉路口，在這的南北道路分別連往幽暗密林與烽火峽谷。而兩條小徑
+分別往東邊與西邊而去。這裡四處散佈著骨頭(bone)，由骨頭的體型看來絕大部分都是
+類人種族。
+~
+0 0 5
+D0
+~
+~
+0 -1 5728
+D1
+~
+To the Troll Place~
+0 -1 5730
+D2
+~
+~
+0 -1 80054
+D3
+~
+To the Ogre Place~
+0 -1 5729
+E
+bone~
+這些骨頭上佈滿了齒痕，顯示這些骨頭生前死亡後還遭受到生物的啃食。你無法確定是怎
+麼樣的生物，但是可以確定的是，這些生物一定喜歡吃人。
+~
+S
+#5730
+濕滑的小徑~
+到了這裡，空氣漸漸變得有點潮濕。這股潮濕中帶著腐爛味道的空氣，讓你覺得全身不舒
+暢。腳下的小徑也因潮濕的空氣變得濕滑，你必須小心行走，以免跌到小徑旁的樹叢中。
+~
+0 0 5
+D1
+~
+~
+0 -1 5731
+D3
+~
+~
+0 -1 5729
+S
+#5731
+濕滑的小徑~
+到了這裡，空氣漸漸變得有點潮濕。這股潮濕中帶著腐爛味道的空氣，讓你覺得全身不舒
+暢。腳下的小徑也因潮濕的空氣變得濕滑，你必須小心行走，以免跌到小徑旁的樹叢中。
+~
+0 0 5
+D1
+~
+~
+0 -1 5732
+D3
+~
+~
+0 -1 5730
+S
+#5732
+濕滑的小徑~
+到了這裡，空氣漸漸變得有點潮濕。這股潮濕中帶著腐爛味道的空氣，讓你覺得全身不舒
+暢。腳下的小徑也因潮濕的空氣變得濕滑，你必須小心行走，以免跌到小徑旁的樹叢中。在這
+裡的山壁上，有人使用武器刻出了幾行字(words)。
+~
+0 0 5
+D1
+~
+~
+0 -1 5733
+D3
+~
+~
+0 -1 5731
+E
+words~
+小心，這邊有食人妖！
+要有火....火....！
+~
+S
+#5733
+充滿奇特液體的小徑~
+非但潮濕的空氣讓你感覺不適，你發覺小徑四周開始有一些奇怪的分泌物。你仔細一看，
+似乎是某種生物的唾液或是排泄物。
+~
+0 0 5
+D1
+~
+~
+0 -1 5734
+D3
+~
+~
+0 -1 5732
+S
+#5734
+充滿奇特液體的小徑~
+四周的分泌物越來越多，間接地讓你知道你已經接近了食人妖的棲息地。由於史卡拉貝大
+陸上食人妖族的惡名昭彰，加之迷霧之島上生物的未知性，使得你不禁握緊了手上的武器，開
+始戰戰兢兢，如履薄冰。
+~
+0 0 5
+D1
+~
+~
+0 -1 5735
+D3
+~
+~
+0 -1 5733
+S
+#5735
+通往食人妖棲息地的小徑~
+你達到了進入食人妖棲息地的入口。裡頭的地形陡峭而且土壤十分貧瘠。奇怪的紅色植物
+在這座峽谷的山頂生長，烽火峽谷的名字或許因此而來。
+~
+0 4 5
+D0
+~
+~
+0 -1 5736
+D3
+~
+~
+0 -1 5734
+S
+#5736
+在峽谷裡頭~
+你沿著顏色陰暗的石頭往北方而去。你的腳步聲在寂靜中傳來陣陣的回音，不一會兒就被
+遠方傳來的流水聲給打破。接著你們到達道路交叉口，由此可以往東方或西方而去。
+~
+0 1 0
+D1
+a door~
+~
+0 -1 5737
+D2
+the entrance~
+~
+0 -1 5735
+D3
+a guard post~
+~
+0 -1 5739
+S
+#5737
+一堵高牆~
+你站在一堵高牆前，牆上面有一顆石頭(stone)鑲嵌在門上。這堵牆不知有什麼用途。
+~
+0 1 0
+D3
+inside the mountain~
+~
+0 -1 5736
+E
+stone~
+你看著這顆鑲嵌在門上的小石頭，上頭有一些花紋。你看不太懂這些花紋所代表的意義，
+唯一可以確定的就是似乎訴說的兩個種族間的仇恨。這顆小石頭似乎可以....
+~
+>room_command push stone~
+echoat $n 你伸手按下門上的小石頭....
+echoaround $n $n 伸手按下門上的小石頭....
+if robjcount(5700) > 0
+        callout 1 echo 不過似乎沒有發生什麼事情....
+else
+        if roomvalue($0) == 0
+                echo 「轟隆！轟隆！」
+                echo 地板忽然打開了一個洞....
+                oload 5700 1 floor
+                at 5738 oload 5701 1 floor
+                modrvt v0 = 1
+                modrvt t0 = 24
+                if ispc($r)
+                        if dex($r) > 20
+                                callout 1 transfer $r 5738
+                                callout 1 echoat $r 你因為不慎而掉落坑內....
+                                callout 1 echoaround $r $r 因為閃躲不及而摔落坑內....
+                        else
+                                callout 1 echoat $r 你以高超敏捷的速度跳了開來....
+                                callout 1 echoaround $r $r 敏捷地跳到旁邊，免除落入陷阱的厄運....
+                        endif
+                endif
+        endif
+endif
+~
+>room_command laydown rope~
+if is_inv_obj($n) == 15435
+        if robjcount(5700) > 0
+                if robjcount(15437) > 0
+                        echoat $n 這裡已經有一條繩索了....
+                else
+                        echoat $n 你將身上的繩索垂放到深坑裡頭....
+                        echoaround $n $n 將身上的繩索垂放到深坑裡頭....
+                        purge $n rope1-prehist
+                        oload 15436 1 floor
+                        at 5738 oload 15437 1 floor
+                endif
+        else
+                echoat $n 你要將繩索放到那邊去？
+        endif
+else
+        echoat $n 你身上並沒有任何繩索(rope)....
+endif
+~
+>room_command pulldown rope~
+if robjcount(15436) > 0
+        if robjcount(5700) > 0
+                echoat $n 你攀住繩索慢慢地往下爬到深坑中....
+                echoaround $n $n 攀住繩索慢慢地爬到深坑之中....
+                at 5738 echoaround $n 攀住繩索慢慢地爬了下來....
+                transfer $n 5738
+        else
+                echoat $n 你沒有辦法往下爬。
+        endif
+else
+        echoat $n 這裡沒有任何繩索可供你攀爬。
+endif
+~
+>room_command retrieve rope~
+if robjcount(15436) > 0
+        echoat $n 你將 繩索(rope) 給收了起來....
+        echoaround $n $n 將 繩索(rope) 給收了起來....
+        at 5738 echo 擺在洞旁的 繩索(rope) 忽然被收了回去....
+        purge rope2-prehist
+        force 5738 purge rope3-prehist
+        oload 15435 1 $n target
+else
+        echoat $n 這裡沒有你要收的東西。
+endif
+~
+>room_rand 50~
+if roomvalue($0) == 0
+        if robjcount(5700) > 0
+                echo 忽然間，地板忽然關了起來....
+                at 5738 echo 忽然間，天花板忽然關了起來....
+                purge all hole1-firetop
+                force 5738 purge hole2-firetop
+                purge rope2-prehist
+                force 5738 purge rope3-prehist
+        endif
+endif
+~
+|
+S
+#5738
+深坑~
+哇！當你打開門進入的同時，你陷入了一座深坑！四周都是滑不溜手，基於某些原因，這
+裡也無法使用魔法。除非有人由上方放下(laydown)繩索救你，否則你可能必須得使用「召回
+(recall)」的指令了。
+~
+0 1|8|16|16384 0
+>room_command pullup rope~
+if robjcount(15437) > 0
+        if robjcount(5701) > 0
+                echoat $n 你攀住繩索慢慢地往上爬出了深坑....
+                echoaround $n $n 攀住繩索慢慢地爬出深坑之外....
+                at 5737 echoaround $n 攀住繩索慢慢地爬了上來....
+                transfer $n 5737
+        else
+                echoat $n 你沒有辦法往上爬。
+        endif
+else
+        echoat $n 這裡沒有任何繩索可供你攀爬。
+endif
+~
+>room_command retrieve rope~
+if robjcount(15437) > 0
+        echoat $n 你將 繩索(rope) 給收了起來....
+        echoaround $n $n 將 繩索(rope) 給收了起來....
+        at 5737 echo 擺在洞旁的 繩索(rope) 忽然被收了回去....
+        purge rope3-prehist
+        force 5737 purge rope3-prehist
+        oload 15435 1 $n target
+else
+        echoat $n 這裡沒有你要收的東西。
+endif
+~
+|
+S
+#5739
+崗哨~
+往西方的道路由此轉而向北分而去。在轉彎的地方有一堵牆有個壁龕(niche)，大小剛好
+可以將一個人類給放進去。一張石頭凳子放在凹槽之中，裡面有一些瓶瓶罐罐，裡頭還裝著
+一些不知名的酒精，你認為這個地方應該是作為崗哨之用。或許剛剛在這邊喝酒的人還在附
+近，你必須保持高度警戒。
+~
+0 1|4 0
+D0
+a corridor~
+~
+0 -1 5740
+D1
+inside the mountain~
+~
+0 -1 5736
+E
+niche~
+壁龕中放滿了許多酒瓶，酒瓶下也不知道還壓著什麼。
+~
+>room_command search niche~
+if roomvalue($0) & 1024
+        echoat $n 現在你無法在這裡做這項動作。
+        break
+endif
+if roomvalue($0) & 1
+        echoat $n 這裡似乎已經被搜索過了。
+        break
+endif
+modrvt v0 | 1024
+echoat $n 你開始搜索 壁龕(niche)....
+echoaround $n $n 開始搜索 壁龕(niche)....
+callout 1 echoat $n 你發現了一瓶酒(grog)。
+callout 1 echoaround $n $n 發現了一瓶酒(grog)。
+callout 1 oload 5737 1 $n target
+callout 1 modrvt v0 | 1
+callout 1 modrvt t0 = 480
+callout 1 modrvt v0 r 1024
+~
+|
+S
+#5740
+走廊~
+你往下繼續沿著南北向的長廊行走，長廊西側有一道木門。這個走廊因為鮮少有使用者而
+沒有任何亮光。你聽到門後面有如雷的打鼾聲。
+~
+0 1 0
+D0
+a corridor~
+~
+0 -1 5742
+D2
+a guard post~
+~
+0 -1 5739
+D3
+a door~
+~
+3 0 5741
+S
+#5741
+食人魔休息室~
+這個房間明顯是充當一些骯髒食人妖的休息處所。房間中的鼾聲如雷，聲音來自一頭食人
+妖，在牠蜷曲手臂下的盒子(box)吸引了你的目光。
+~
+0 1 0
+D1
+a corridor~
+~
+3 0 5740
+>room_command search mattress~
+if roomvalue($1) & 1024
+        echoat $n 目前你無法做這個動作。
+        break
+endif
+modrvt v1 | 1024
+echoat $n 你開始搜尋 床墊(mattress) ....
+echoaround $n $n 開始搜尋 床墊(mattress) ....
+if roomvalue($0) == 0
+        modrvt v0 | 1
+        modrvt t0 = 150
+        callout 1 echoat $n 你搜到一顆藥丸！
+        callout 1 echoaround $n $n 搜到一顆藥丸！
+        callout 1 oload 15458 1 $n target
+else
+        callout 1 echo 不過並沒有搜到什麼東西。
+endif
+callout 2 modrvt v1 r 1024
+~
+|
+S
+#5742
+走廊~
+你繼續沿著南北向的長廊行走，長廊西側有一扇木門。這個走廊因為鮮少有使用者而沒有
+任何亮光。這扇門後面並未傳來任何的聲響。
+~
+0 1 0
+D0
+a corridor~
+~
+0 -1 5744
+D2
+a corridor~
+~
+0 -1 5740
+D3
+a door~
+~
+3 0 5743
+S
+#5743
+守衛室~
+這地方的作用看來是作為食人妖士兵守衛入口的守衛室。由這重兵守衛的地方看來，要深
+入這個區域並不太容易。
+~
+0 1 0
+D1
+a corridor~
+~
+3 0 5742
+>room_command search mattress~
+echoat $n 你開始搜尋 床墊(mattress) ....
+echoaround $n $n 開始搜尋 床墊(mattress) ....
+callout 1 echo 不過並沒有搜到什麼東西。
+~
+|
+S
+#5744
+走廊~
+你繼續沿著南北向的長廊行走，長廊西側有一扇木門。這個走廊因為鮮少有使用者而沒有
+任何亮光。你聽到門後傳來吵雜喝醉酒者的歌聲。這邊長廊仍繼續往北邊延伸。
+~
+0 1 0
+D0
+a corridor~
+~
+0 -1 5746
+D2
+a corridor~
+~
+0 -1 5742
+D3
+a door~
+~
+3 0 5745
+S
+#5745
+吵雜的房間~
+當你進入時就被到處吵雜的歌聲、汗臭、尿與血給重擊。在噁心的環境下你僅能匆匆地推
+測這個骯髒的地方應該是充當食人妖士兵娛樂的場所。如果你夠幸運，那麼忙著歡樂的食人妖
+將不會發現你的存在。
+~
+0 1 0
+D1
+a corridor~
+~
+3 0 5744
+>room_command search mattress~
+if roomvalue($1) & 1024
+        echoat $n 目前你無法做這個動作。
+        break
+endif
+modrvt v1 | 1024
+echoat $n 你開始搜尋 床墊(mattress) ....
+echoaround $n $n 開始搜尋 床墊(mattress) ....
+if roomvalue($0) == 0
+        modrvt v0 | 1
+        modrvt t0 = 480
+        callout 1 echoat $n 你搜到一罐藥水！
+        callout 1 echoaround $n $n 搜到一罐藥水！
+        callout 1 oload 1523 1 $n target
+else
+        callout 1 echo 不過並沒有搜到什麼東西。
+endif
+callout 2 modrvt v1 r 1024
+~
+|
+S
+#5746
+交叉路口~
+你到達了一個丁字形的交叉路口，通道通往西邊、東邊與南邊。你由西方可以聽到尖叫聲
+以及似乎像是鞭子揮動的聲音。而東邊傳來許多食人妖士兵大快朵頤的進食聲。
+~
+0 1 0
+D1
+another junction~
+~
+0 -1 5748
+D2
+a corridor~
+~
+0 -1 5744
+D3
+a westward corridor~
+~
+0 -1 5747
+S
+#5747
+西邊的走廊~
+你繼續在這個東西向的長廊中前進。長廊東邊盡頭為一個交叉路口，西邊則有一個橡木門
+。在橡木門的後面傳來陣陣的尖叫聲，不過在一連串的揮鞭聲之後就會更加的慘烈。
+~
+0 1 0
+D1
+a junction~
+~
+0 -1 5746
+D3
+a door~
+~
+3 0 5799
+S
+#5748
+另一個交叉路口~
+你到達了另一個交叉路口。往北、往西道路都由此開始轉彎後往南而去，東邊不遠處你聽
+到一些晚盤摔破的聲音，聽起來應該是由廚房發出的聲音。
+~
+0 1 0
+D0
+a corridor~
+~
+0 -1 5750
+D1
+a door~
+~
+3 -1 5749
+D3
+a junction~
+~
+0 -1 5746
+S
+#5749
+在廚房外頭~
+由廚房中傳來吵雜的聲音。在這扇門的背後進食的狀況一定非常的慘烈，如果你所聞到的
+腥臭味與進食的聲音沒有錯的話。
+~
+0 1 0
+D1
+the kitchen~
+~
+3 0 5800
+D3
+another junction~
+~
+0 -1 5748
+S
+#5750
+走廊~
+你繼續沿著南北向的長廊行走，長廊東側有一扇木門。這個走廊因為鮮少有使用者而沒有
+任何亮光。你聽到恐怖的叫聲由東邊的門後傳來。而北邊與南邊都通往交叉路口。
+~
+0 1 0
+D0
+a corridor~
+~
+0 -1 5752
+D1
+a door~
+~
+3 0 5751
+D2
+another junction~
+~
+0 -1 5748
+S
+#5751
+監牢之中~
+噁！這個骯髒的地方明顯地作為一個置放廢物與廢人的監獄，牆上這些被手銬銬住的人類
+骷髏是最好的證明。他們生前應該經歷了食人妖殘酷的虐待。僅僅眼前的狀況就讓你噁心的想
+吐，這讓你不禁為這些可憐的人類感到憐憫。
+~
+0 1 0
+D3
+a corridor~
+~
+3 0 5750
+S
+#5752
+走廊~
+你繼續沿著南北向的長廊行走，長廊東側有一扇木門。這個走廊因為鮮少有使用者而沒有
+任何亮光。這邊是條交叉路口分別往北邊與南邊而去。
+~
+0 1 0
+D0
+a corridor~
+~
+0 -1 5754
+D1
+a door~
+~
+3 0 5753
+D2
+another junction~
+~
+0 -1 5750
+S
+#5753
+儲藏室~
+你進入了一處儲藏室。這邊放置了不少武器，大部分都是食人妖所製造，粗枝濫造且沒有
+任何品質可言。然而裡頭你找到幾件似乎是人類或精靈所製造的武器，或許在這邊仔細搜尋可
+以找到你們想要的東西。
+~
+0 1 0
+D3
+a corridor~
+~
+3 0 5752
+S
+#5754
+走廊~
+你繼續沿著南北向的長廊行走，長廊東側有一扇木門。這個走廊因為鮮少有使用者而沒有
+任何亮光。你聽到劇痛且悲慘的哭喊聲，跟隨著瘋狂的狂叫聲而來，這些聲音來自你身旁的門
+後。北邊有一道柵門(portcullis)，旁邊有根拉桿(lever)。
+~
+0 1|4 0
+D0
+a junction~
+柵門(portcullis)~
+119 -1 5756
+D1
+a door~
+~
+3 0 5755
+D2
+another junction~
+~
+0 -1 5752
+>room_command pull lever~
+echoat $n 你嘗試拉下拉桿(lever)....
+echoaround $n $n 嘗試拉下拉桿(lever)....
+if roomvalue($0) == 0
+        if roomvalue($1) == 0
+                callout 1 echo 你必須想辦法讓拉桿動起來才行。
+                callout 1 echo 你聽到「喀」的一聲，拉桿卡住了。
+        else
+                callout 1 echoat $n 你拉下了拉桿(lever)....
+                callout 1 echoaround $n $n 拉下了拉桿(lever)....
+                callout 2 echo 「喀拉」....
+                callout 3 echo 「喀拉」....
+                callout 4 echo 北邊的柵門升起來了！
+                callout 4 modrvt d0 r 6
+                callout 4 force 5756 modrvt d2 r 6
+                callout 4 modrvt v0 = 1
+                callout 4 modrvt t0 = 12
+        endif
+else
+        callout 1 echo 不過並沒有發生什麼事情。
+endif
+~
+>room_command drip lever~
+if is_inv_obj($n) == 5713
+        echoat $n 你將 燈油(lamp oil) 滴入拉桿(lever)之中....
+        echoaround $n $n 將 燈油(lamp oil) 滴入拉桿(lever)之中....
+        if roomvalue($1) == 0
+                modrvt v1 = 1
+        endif
+else
+        echoat $n 你身上並沒有這項東西。
+endif
+~
+>room_rand 50~
+if roomvalue($0) == 0
+        if exitinfo($0) !& 4
+                echo 北邊的柵門忽然關了起來！
+                modrvt d0 | 6
+                force 5756 modrvt d2 | 6
+        endif
+endif
+~
+|
+S
+#5755
+拷問室~
+你進入了拷問室，這裡由大法師的小惡鬼拷問者所管轄，為的就是由入侵者或背叛者的口
+中獲得一些有利的訊息。不過牠並不確定你是否知道些什麼，反正先拷問了再說。
+~
+0 1 0
+D3
+a corridor~
+~
+3 0 5754
+S
+#5756
+交叉路口~
+到達了一處丁字形的交叉路口，此處可以往東、往西繼續延伸下去。而往東與往西的路則
+都經過一處轉彎後，盡頭消失在黑暗之中。你這邊隱約可以聽到由遠處傳來的流水聲。南邊有
+到柵門，旁邊有根拉桿(lever)。
+~
+0 1 0
+D1
+a bend in the corridor~
+~
+0 -1 5757
+D2
+a corridor~
+柵門(portcullis)~
+119 -1 5754
+D3
+a long passageway~
+~
+0 -1 5779
+>room_command pull lever~
+echoat $n 你嘗試拉下拉桿(lever)....
+echoaround $n $n 嘗試拉下拉桿(lever)....
+if roomvalue($n5754v0) == 0
+        callout 1 echoat $n 你拉下了拉桿(lever)....
+        callout 1 echoaround $n $n 拉下了拉桿(lever)....
+        callout 2 echo 「喀拉」....
+        callout 3 echo 「喀拉」....
+        callout 4 echo 南邊的柵門升起來了！
+        callout 4 modrvt d2 r 6
+        callout 4 force 5754 modrvt d0 r 6
+        callout 4 force 5754 modrvt v0 = 1
+        callout 4 force 5754 modrvt t0 = 12
+else
+        callout 1 echo 不過並沒有發生什麼事情。
+endif
+~
+>room_rand 50~
+if roomvalue($n5754v0) == 0
+        if exitinfo($2) !& 4
+                echo 南邊的柵門忽然關了起來！
+                modrvt d2 | 6
+                force 5754 modrvt d0 | 6
+        endif
+endif
+~
+|
+S
+#5757
+長廊的轉彎處~
+你到達了轉彎的地方，這邊可以很清楚地聽到由遠處傳來流水奔騰的聲音。
+~
+0 1 0
+D0
+a junction ~
+~
+0 0 5758
+D3
+a junction~
+~
+0 -1 5756
+S
+#5758
+交叉路口~
+你到達了另一處交叉路口，這邊你可以往東、往西走。東邊遠方盡頭有一個洞穴，但是這
+個方向你卻聽不到什麼奇怪的聲音。
+~
+0 1 0
+D1
+a junction~
+~
+0 -1 5759
+D2
+a bench~
+~
+0 -1 5757
+D3
+a bend~
+~
+0 -1 5761
+S
+#5759
+交叉路口~
+到了此處，又長又黑的通道終於結束了。在你的北邊是一整間牢房，東邊則有一個洞穴，
+你感到洞穴中傳來沈重的呼吸聲，除此之外其他什麼都聽不到了。牢房內似乎關著生物。
+~
+0 1 0
+D0
+a door~
+~
+119 5757 5765
+D1
+~
+~
+0 0 5760
+D3
+a junction~
+~
+0 -1 5758
+S
+#5760
+華麗的洞穴**(Here needs some interesting setting)**~
+你進入了一處有華麗的石雕、精細的壁飾以及極盡矯飾之美著巨大洞穴。你從未看到何處
+有這種華麗風格的工藝與顏色，讓人進入深受其中超自然美所感動。有一座台座(pedestal)
+放在這間房間的中間，看起來像是一顆眼睛的惡魔鐵雕像(iron statue)。
+~
+0 1 0
+D3
+a junction~
+~
+0 0 5759
+S
+#5761
+轉彎處~
+由此你可以往北邊繼續走去，東邊不遠處有一個洞穴。這邊十分漆黑，幸好手上的照明用
+具還有用。
+~
+0 1 0
+D0
+outside three doors~
+~
+0 -1 5762
+D1
+a junction~
+~
+0 -1 5758
+S
+#5762
+四通八達的通道~
+洞穴到了這裡四通八達通往各處，西邊的洞穴傳來奇怪的味道，東邊的洞穴被一個柵門擋
+住，你隱約看到裡頭似乎有生物。北邊的洞穴則通往未知的黑暗。
+~
+0 1 0
+D0
+a pitch-black portal~
+~
+0 0 5766
+D1
+a shop~
+柵門(porcullis)~
+119 5757 5764
+D2
+a bend~
+~
+0 -1 5761
+D3
+a door~
+~
+0 0 5763
+S
+#5763
+洞穴~
+你進入了這邊，發覺裡頭是一處粗糙的洞穴，裡頭黑暗而且沈悶。裡頭到處都是蜘蛛絲，
+住在裡頭的東西興趣似乎是收藏食人妖、矮人或人類的骨頭。你們進入要謹慎小心，因為你意
+識到這裡可能是一頭巨大蜘蛛的巢穴。
+~
+0 1 0
+D1
+outside three doors~
+~
+0 0 5762
+S
+#5764
+牢房~
+原來這裡間牢房，裡頭關著食人妖擄獲來的俘虜。這些俘虜通常最後的下場都是成為被消
+化的食物。
+~
+0 8 0
+D3
+outside three doors~
+柵門(porcullis)~
+119 5757 5762
+S
+#5765
+牢房~
+你進入了一處牢房，這裡是食人妖們關俘虜的地方。裡頭到處都是曾經被關在這邊，而無
+法逃出冒險者的遺骸。此處非但髒亂不堪，而且臭氣沖天。
+~
+0 1 0
+D2
+a door~
+~
+119 5757 5759
+S
+#5766
+漆黑的甬道~
+當你進入這個讓你感覺不詳的地方，你的光源忽然開始變得微弱，隨時都可能熄滅。你嘗
+試理解在壁飾上那些傷害、折磨與拷問人類的圖像內容，你發覺那些圖像其實都是在動的，一
+陣驚恐的感覺由你的心中湧起。
+~
+0 1 0
+D0
+a fountain room~
+~
+0 0 5768
+D2
+outside three doors~
+~
+0 0 5762
+S
+#5767
+畫廊~
+你進入了一處看起來向是藝廊的地方。各式老人或貴婦的圖畫在牆上排上一列，內容既枯
+燥又乏味，讓你一眼往去忍不住想要打呵欠。然而，一幅畫吸引了你的目光....。
+往北或往南的門能夠讓你離開這個地方。
+~
+0 8 0
+D0
+a short corridor~
+~
+3 0 5802
+D2
+a short corridor~
+~
+3 0 5801
+S
+#5768
+一座噴泉~
+你們進入了一個小洞穴，這邊僅比僅僅比通道還要稍微寬一點而已。洞穴中央有一座噴泉
+。通道往北延伸，往南的通道則通往未知的黑暗。
+~
+0 1 0
+D0
+a corridor~
+~
+0 -1 5770
+D2
+a pitch-black portal~
+~
+0 0 5766
+S
+#5769
+珠光寶玉的房間房間~
+你進入了一處珠光寶玉的房間，南邊的入口通往一處寬敞的地方。而往北的出口則可到達 fruit shape 。
+一些看起來還不錯的裝備散佈在地上。在此流水的聲音越來越強。這個聲音直接來自北邊
+的門後。
+~
+0 1 0
+D0
+a door~
+~
+3 0 5773
+D2
+a short corridor~
+~
+0 -1 5802
+S
+#5770
+甬道~
+你繼續沿著南北走向的通道前進，南邊不遠處有一座噴泉，北邊與東邊各有一道門。
+~
+0 1 0
+D0
+a door~
+~
+3 0 5803
+D1
+a door~
+~
+3 0 5771
+D2
+a fountain~
+~
+0 -1 5768
+S
+#5771
+儲藏室~
+你進入一處儲藏室，裡頭除了一些爛裝備與家具外，什麼都沒有。
+~
+0 1 0
+D3
+a corridor~
+~
+3 0 5770
+S
+#5772
+交叉路口~
+你到達了一處交叉路口，這邊你可通往東、西或南邊。流水的聲音在這邊已經相當明顯，
+似乎就來自西邊的走廊盡頭。而一些近似野獸的呼喊聲卻來自東邊，但是東邊卻是一顆巨大的
+岩石(rock)，你不知如何通過此處。
+~
+0 1 0
+D2
+a door~
+~
+3 0 5803
+D3
+a bend~
+~
+0 -1 5774
+>room_time 100~
+if roomvalue($0) == 0
+        if hasdoor(1)
+                echo 你眼前忽然一閃，一切似乎恢復了原狀....
+                deldoor 1
+                force 5775 deldoor 3
+                if robjcount(5720) == 0
+                        oload 5720 1 floor
+                endif
+                if robjcount(5721) > 0
+                        purge rock2-firetop
+                endif
+                if robjcount(5722) > 0
+                        purge rock3-firetop
+                endif
+                break
+        endif
+        if robjcount(5720) == 0
+                oload 5720 1 floor
+        endif
+	if npcnum($) > 0
+	        purge all.rock2-firetop
+	        purge all.rock3-firetop
+	endif
+endif
+if roomvalue($0) == 1
+        if robjcount(5721) == 0
+                oload 5721 1 floor
+        endif
+	if npcnum($) > 0
+	        purge all.rock1-firetop
+	        purge all.rock3-firetop
+	endif
+endif
+if roomvalue($0) == 2
+        if robjcount(5722) == 0
+                oload 5722 1 floor
+        endif
+	if npcnum($) > 0
+	        purge all.rock1-firetop
+	        purge all.rock2-firetop
+	endif
+endif
+~
+>room_command move rock~
+if robjcount(5720) > 0
+        if roomvalue($1) & 1024
+                echoat $n 目前你無法作這個動作。
+                break
+        endif
+        modrvt v1 | 1024
+        echoat $n 你嘗試移動這塊大岩石....
+        echoaround $n $n 嘗試移動這塊大岩石....
+        if str($n) >= 25
+                callout 1 echoat $n 你移開了這塊大岩石....
+                callout 1 echoaround $n 移開了這塊大岩石....
+               callout 1 purge rock1-firetop
+                callout 1 oload 5721 1 floor
+                callout 1 makedoor 1 通往洞穴(exit) exit 0 0 5775
+                callout 1 force 5775 makedoor 3 通往外面(exit) exit 0 0 5772
+                callout 1 modrvt v0 = 1
+                callout 1 modrvt t0 = 36
+        else
+                callout 1 echoat $n 但是你完全推不動。
+                callout 1 echoaround $n 但是 $n 完全無法推動。
+        endif
+        callout 2 modrvt v1 r 1024
+endif
+if robjcount(5721) > 0
+        if roomvalue($1) & 1024
+                echoat $n 目前你無法作這個動作。
+                break
+        endif
+        modrvt v1 | 1024
+        echoat $n 你嘗試移動這塊大岩石....
+        echoaround $n $n 嘗試移動這塊大岩石....
+        if str($n) >= 25
+                callout 1 echoat $n 你移回了這塊大岩石....
+                callout 1 echoaround $n 移回了這塊大岩石....
+                callout 1 purge rock2-firetop
+                callout 1 oload 5720 1 floor
+                callout 1 deldoor 1
+                callout 1 force 5775 deldoor 3
+                callout 1 modrvt v0 = 0
+                callout 1 modrvt t0 = 0
+        else
+                callout 1 echoat $n 但是你完全推不動。
+                callout 1 echoaround $n 但是 $n 完全無法推動。
+        endif
+        callout 2 modrvt v1 r 1024
+endif
+if robjcount(5722) > 0
+        echoat $n 你移動一堆碎石作什麼？
+endif
+~
+>room_command insert tnt~
+if is_inv_obj($n) == 5719
+        if robjcount(5720) > 0
+        or robjcount(5721) > 0
+                if roomvalue($1) & 1024
+                        echoat $n 目前你無法做這個動作。
+                        break
+                endif
+                modrvt v1 | 1024
+                if is_qmark($n) !& firetop_quest 100004
+                        mpmod_qmark $n firetop_quest v0 | 4
+                        mpskillexp $n 100
+                        mpexp $n 1500
+                endif
+                echoat $n 你將炸藥放入岩石之中....
+                echoaround $n $n 將炸藥放入岩石之中....
+                callout 1 echo 轟然一聲巨響！炸藥爆炸了！
+                callout 2 echo 擋住通道的石頭被炸成碎片！
+                callout 2 purge rock1-firetop
+                callout 2 purge rock2-firetop
+                callout 2 oload 5722 1 floor
+                callout 2 makedoor 1 通往洞穴(exit) exit 0 0 5775
+                callout 2 force 5775 makedoor 3 通往外面(exit) exit 0 0 5772
+                callout 2 modrvt v0 = 2
+                callout 2 modrvt t0 = 36
+                callout 2 modrvt v1 r 1024
+        endif
+        if robjcount(5722) > 0
+                echoat $n 沒有地方可以讓你塞入炸藥。
+        endif
+else
+        echoat $n 你身上並沒有這項東西。
+endif
+~
+|
+S
+#5773
+船夫與橋~
+你終於到達了那流水聲的源頭 - 一條穿切了烽火峽谷與遠古森林的寬廣地下伏流。你往
+伏流中望去，冰寒、冷冽的水流，讓你無法看清裡頭的狀況，但是無疑地這條河可能流往某
+個遠方的神秘地下城中。這邊有一座吊橋讓你能夠通過伏流，如果不敢走吊橋的話，你可以
+嘗試坐船。這邊立有一塊招牌(sign)。
+~
+0 1 0
+D0
+the other side~
+~
+0 -1 5798
+D1
+river~
+~
+0 -1 5778
+D2
+pear room~
+~
+3 0 5769
+D3
+river~
+~
+0 -1 5777
+E
+sign~
+「請不要隨便付錢給船夫，除非你已經到達了對岸。」
+「但也請不要到了對岸不付錢。」
+~
+S
+#5774
+詭異的氣氛~
+你到了這邊，開始覺得四周似乎有點寒冷。與以往地底下潮濕溫暖的感覺比起來，現在的
+寒冷讓你覺得不甚尋常。你嘗試找出地底空氣變得寒冷的原因，但是卻找不出來。不知道是接
+近了什麼生物還是地方所造成的。北邊有一條澎湃的地下伏流，沒有船隻或飛行術是無法通過
+的。
+~
+0 1 0
+D0
+the river~
+~
+0 -1 5777
+D1
+a junction~
+~
+0 -1 5772
+S
+#5775
+洞穴~
+你進入了一處巨大洞穴，屏障這座洞穴的是一顆從哪來的大石頭。洞穴中燃燒著一把營火
+，洞穴中到處散佈著骨頭與吃到一半的血肉。
+~
+0 1 0
+S
+#5776
+伏流上~
+你正航行在烽火峽谷地下的強力伏流上。往西望去你可以看到岩岸，而往東你僅能見到無
+盡的黑暗。
+~
+0 1 7
+D1
+river~
+~
+0 -1 5777
+D3
+a rocky beach~
+~
+0 -1 5797
+S
+#5777
+伏流上~
+你正航行在烽火峽谷地下的強力伏流上。往西望去你可以看到岩岸，而往東你似乎可以看
+到一座橋。南邊似乎有個地方能夠讓你的船隻靠岸。
+~
+0 1 7
+D1
+bridge~
+~
+0 -1 5773
+D2
+alcove~
+~
+0 -1 5774
+D3
+river~
+~
+0 -1 5776
+S
+#5778
+伏流上~
+你正航行在烽火峽谷地下的強力伏流上。往西望去你可以看到岩岸，而東邊因為太過狹窄
+，船隻無法通過。
+~
+0 1 7
+D3
+bridge~
+~
+0 -1 5773
+S
+#5779
+長長的通道~
+你繼續在東西向的通道中前進，直到遇到一處交叉路口。此處能夠繼續往東或往西而去。
+~
+0 1 0
+D1
+a junction~
+~
+0 -1 5756
+D3
+entrance to a cave~
+~
+0 -1 5780
+S
+#5780
+洞穴的入口~
+你進入了這條東西通道中北邊某處的小洞穴。一股噁心的味道由這個地方散發出來，而且
+你似乎聽到北邊有野獸般的吼叫聲。
+~
+0 1 0
+D0
+cave~
+~
+0 -1 5781
+D1
+a passage~
+~
+0 -1 5779
+D3
+a passage~
+~
+0 -1 5782
+S
+#5781
+奇大的洞穴~
+哇！真噁心的味道。這個洞穴到處散佈著垃圾、廢棄物與吃到一半的屍體。看來就是住在
+裡頭的生物所為！而且更糟糕的是這個生物對你的來訪感到十分的不耐，牠趁著你正忙著噁心
+與嘔吐時，立即向你攻擊過來。
+~
+0 1 0
+D2
+entrance to a cave~
+~
+0 -1 5780
+S
+#5782
+轉彎處~
+你到達了通道轉彎的地方，這裡你能夠往北或往東繼續走下去。由北邊你聽到一陣奇怪的
+大笑聲
+~
+0 1 0
+D0
+a junction~
+~
+0 -1 5783
+D1
+entrance to a cave~
+~
+0 -1 5780
+S
+#5783
+交叉路口~
+你到達了一處交叉路口，這邊你能夠繼續往北或南走，或是轉而向西邊走向一條非常狹窄
+的小路。
+~
+0 1 0
+D0
+a t-junction~
+~
+0 -1 5785
+D2
+a bend~
+~
+0 -1 5782
+>room_command dig rock~
+if is_inv_obj($n) == 4701
+or is_inv_obj($n) == 6518
+        if hasdoor(1)
+                echoat $n 你要挖什麼？
+        else
+                echoat $n 你開始使用手上的十字鎬(pick)在巨石上挖起洞來....
+                echoaround $n $n 開始使用手上的十字鎬(pick)在巨石上挖起洞來....
+                callout 1 echoat $n 你將西邊的出口挖開了....
+                callout 1 echoaround $n $n 將西邊的出口挖開了....
+                callout 1 at 5784 echo 東邊的出口被挖開了....
+                callout 1 makedoor 3 通往小空地(exit) exit 0 0 5784
+                callout 1 force 5784 makedoor 1 交叉路口(intersection) intersection 0 0 5783
+                callout 1 purge rock6-firetop
+                callout 1 force 5784 purge rock4-firetop
+                callout 1 oload 5726 1 floor
+                callout 1 at 5784 oload 5726 1 floor
+        endif
+else
+        echoat 你身上並沒有這項工具。
+endif
+~
+|
+S
+#5784
+通道後的小空地(Here can set some interesting events)~
+這條狹窄的通道後竟然是一塊小空地，但是這裡四面陡壁，不知有何用處。唯一的出口只
+有那狹窄的通道，倘若那通道被落石給擋住了，後果可真是不堪設想。
+~
+0 1 0
+>room_time 100~
+if hasdoor(1)
+	break
+endif
+if roomvalue($0) == 0
+	if robjcount(5725) > 0
+		purge rock4-firetop
+	endif
+	if robjcount(5726) > 0
+		purge rock5-fireotp
+	endif
+	if objcount(5727) > 0
+		force 5783 purge rock6-firetop
+	endif
+	if objcount(5726) > 0
+		force 5783 purge rock5-firetop
+	endif
+	makedoor 1 通往交叉路口(intersection) intersection 0 0 5783
+	force 5783 makedoor 3 通往小空地(exit) exit 0 0 5784
+endif
+~
+>room_command dig rock~
+if is_inv_obj($n) == 4701
+or is_inv_obj($n) == 6518
+        if hasdoor(1)
+                echoat $n 你要挖什麼？
+        else
+                echoat $n 你開始使用手上的十字鎬(pick)在巨石上挖起洞來....
+                echoaround $n $n 開始使用手上的十字鎬(pick)在巨石上挖起洞來....
+                callout 1 echoat $n 你將東邊的出口挖開了....
+                callout 1 echoaround $n $n 將東邊的出口挖開了....
+                callout 1 at 5783 echo 西邊的出口被挖開了....
+                callout 1 makedoor 1 通往交叉路口(intersection) intersection 0 0 5783
+                callout 1 force 5783 makedoor 3 通往小空地(exit) exit 0 0 5784
+                callout 1 purge rock4-firetop
+                callout 1 force 5783 purge rock6-firetop
+                callout 1 oload 5726 1 floor
+                callout 1 at 5783 oload 5726 1 floor
+        endif
+else
+        echoat $n 你身上並沒有這項工具。
+endif
+~
+>room_enter 2 100~
+if hasdoor(1)
+        if roomvalue($0) == 0
+                echoat $n 當你進到此處，你忽然覺得地面似乎有些震動....
+                modrvt v0 = 1
+                modrvt v1 = 10
+        endif
+endif
+~
+>room_rand 33~
+if roomvalue($0) == 1
+        if roomvalue($1) > 0
+                modrvt v1 - 1
+                if rand(25)
+                        echo 你聽到遠方山丘上似乎有石頭滾動的聲音....
+                else
+                        if rand(33)
+                                echo 地面似乎有些震動....
+                        else
+                                if rand(50)
+                                        echo 四周的氣氛似乎讓你感到不太安穩....
+                                else
+                                        echo 你似乎覺得有什麼事情就要發生....
+                                endif
+                        endif
+                endif
+        else
+                echo 忽然天崩地裂！一堆落石落下擋住了此處唯一的出口！
+                force 5783 echo 忽然天崩地裂！一堆落石落下擋住了西邊的出口！
+                oload 5725 1 floor
+                force 5783 oload 5727 1 floor
+                deldoor 1
+                force 5783 deldoor 3
+                modrvt v0 = 2
+                modrvt t0 = 72
+        endif
+endif
+~
+|
+S
+#5785
+丁字路口~
+你達到了一處丁字路口，南北向的路在此處停止，轉而變為東西向的通道。你看到一處能
+夠提供休息的小空地，那邊是一個紮營休息的好地方。
+~
+0 1 0
+D1
+a bend~
+~
+0 -1 5786
+D2
+a side passage~
+~
+0 -1 5783
+D3
+a bend~
+~
+0 -1 5788
+S
+#5786
+轉彎處~
+這條長廊到此忽然急速地轉彎，你可以選擇往西或往北，看你是由哪一個方向過來的。北
+邊的長廊看起來既陰暗又空洞，而西邊則通往一處交叉路口。
+~
+0 1 0
+D0
+a long passageway~
+~
+0 -1 5787
+D3
+a junction~
+~
+0 -1 5785
+S
+#5787
+長廊~
+你走在這長廊之中，牆壁四周都是奇怪的塗鴉，內容盡是描寫一些噁心的內臟或是其他不
+堪入目的畫面。
+~
+0 1 0
+D0
+a bend~
+~
+0 -1 5794
+D2
+a bend~
+~
+0 -1 5786
+S
+#5788
+轉彎處~
+由走廊轉彎到達此處後，你注意到此處的地板已經塌陷，地板上破了一個大洞。往洞裡頭
+注視，你發覺洞裡頭有另一條往北的通道。洞口因為太大而無法跳過去，而後頭的通道因為塌
+陷也無法過去了，你唯一的選擇就是往下爬(climb down)到洞口裡頭。一陣陣陰風由洞口吹向
+你的眼睛，讓你眼睛幾乎無法睜開。
+~
+0 1 0
+D1
+a junction~
+~
+0 -1 5785
+>room_command climb down~
+echoat $n 你沿著洞口爬了下去....
+echoaround $n $n 沿著洞口爬了下去....
+at 5789 echoaround $n $n 由洞口爬了下來....
+transfer $n 5789
+~
+|
+S
+#5789
+某生物的巢穴~
+當你爬了下來，你發覺你判斷錯誤，而且開始往下翻滾。因為這個洞口比你想像還來深得
+許多。一陣劇烈的衝擊，你翻滾到了洞穴的底部，眼睛一片空白。待得你眼睛適應黑暗後，赫
+然發現身旁是一具被吃剩一半的屍體！你連忙往後一跳，又跌入一堆白骨之中。藉著這些狀況
+以及你所嗅到的味道，你判定你到達了某種生物的巢穴。你可以嘗試攀爬(climb up)回去。
+~
+0 1 0
+D0
+a rough cavern~
+~
+0 -1 5790
+>room_command climb up~
+if isaffected($n) & 524288
+        echoat $n 你沿著洞口爬了上去....
+        echoaround $n $n 沿著洞口爬了上去....
+        at 5788 echoaround $n $n 由洞口爬了上來....
+        transfer $n 5788
+else
+        echoat $n 你嘗試攀爬上去，但除非身輕如燕，否則....
+        echoaround $n $n 嘗試攀爬上去，但是失敗了。
+endif
+~
+|
+S
+#5790
+崎嶇不平的洞穴~
+在這個洞穴中繼續前進，你進入了一處寬闊且崎嶇不平的山洞之中。到處散佈著殘缺不全
+的屍體以及損壞的骨頭與武器。謹記著過去面對相同場景的經驗，你開始緊握你手上的武器，
+並開始為可能的戰鬥準備。忽然遠處傳來一陣巨大的吼叫聲，你的神經開始緊繃，呼吸開始急
+促。
+~
+0 1 0
+D2
+~
+~
+0 0 5792
+S
+#5791
+老鼠的房間~
+你小心地通過這道門，進入一處骨頭塞滿約有膝蓋深的房間。一些黑影在這些骨頭中穿梭
+，待你看清後，你明白你進入了巨鼠的洞穴。但是回去的門這時候卻卡住了，看樣子在此你不得
+不進行一場戰鬥。
+~
+0 1 0
+D0
+a giant's room~
+~
+0 0 5792
+D1
+a junction~
+~
+3 5728 5793
+D2
+the cave~
+~
+3 5728 5790
+>room_enter 2 50~
+if roomvalue($0) == 0
+        echoat $n 當你進入這個房間，身後的門忽然「喀」的一聲....
+        echoaround $n 當 $n 進入這個房間，東邊的門忽然「喀」的一聲....
+        at 5793 echo 西邊的門忽然「喀」的一聲....
+        modrvt d1 | 6
+        force 5793 modrvt d3 | 6
+        modrvt v0 = 1
+        modrvt t0 = 24
+endif
+~
+>room_rand 50~
+if roomvalue($0) == 0
+        if exitinfo($1) & 4
+                echo 東邊的門忽然「喀」的一聲....
+                at 5793 echo 西邊的門忽然「喀」的一聲....
+                modrvt d1 r 4
+                force 5793 modrvt d3 r 4
+        endif
+endif
+~
+|
+S
+#5792
+食人妖的洞穴~
+你進入了一處食人妖的洞穴，但是讓你感到不寒而慄的是來自於這個洞穴深處的一種奇特
+的感覺。你可以感受到那應該是更加巨大的一種生物，可能是另外一種變形的食人妖。不管如
+何，身為冒險者中菁英的你，目前唯一的路就是往前邁進。
+~
+0 1 0
+D0
+~
+~
+0 0 5790
+D2
+rat room~
+~
+0 0 5791
+S
+#5793
+交叉路口~
+在這個交叉路口，你可以往北向水流聲的源頭而去，或往東朝向另外一處交叉路口。西邊
+又有一個小洞穴，裡頭不斷傳出「支、支」的奇怪聲響。
+~
+0 1 0
+D0
+a passageway~
+~
+0 -1 5796
+D1
+a bend~
+~
+0 -1 5794
+D3
+a door~
+~
+0 0 5791
+S
+#5794
+彎曲處~
+你進入了這條通道的彎曲處，這邊你可以往西回到交叉路口，或往南走入黑暗的長廊。北
+邊有一處洞穴，裡頭傳出一些奇怪的味道。
+~
+0 1 0
+D0
+gas room~
+~
+0 -1 5795
+D2
+a long passageway~
+~
+0 -1 5787
+D3
+a junction~
+~
+0 -1 5793
+S
+#5795
+毒氣獸巢穴~
+這個洞穴原來是毒氣獸的巢穴，當你剛進入此處，你就幾乎被裡頭瀰漫的毒氣給弄暈。趁
+著你神智還尚清醒的時候，趕緊離開這邊吧。
+~
+0 1 0
+D2
+a bend~
+~
+0 -1 5794
+S
+#5796
+長廊~
+這條長廊往南通往一處交叉路扣，往北則朝向流水聲而去。你可以嗅到空氣中水氣的味道
+，似乎由北邊遠處而來。
+~
+0 1 0
+D0
+a rocky beach~
+~
+0 -1 5797
+D2
+a junction~
+~
+0 -1 5793
+S
+#5797
+岩石灘~
+你到達了一處岩石灘，位於南邊牆壁的凹陷處。看著四周散佈的骨頭，你可以瞭解你並非
+來到此處的第一人。
+~
+0 1 0
+D1
+the river~
+~
+0 -1 5776
+D2
+a passageway~
+~
+0 -1 5796
+S
+#5798
+另外一邊~
+你到達了地下伏流的另外一側。由此處你可往東通往一道安全門，或往西通往其他地方。
+~
+0 1 0
+D0
+a door~
+~
+3 0 5807
+D1
+towards a door~
+~
+0 -1 5815
+D2
+a bridge to the south bank~
+~
+0 -1 5773
+D3
+towards living quarters~
+~
+0 -1 5804
+S
+#5799
+刑求室~
+你到達了烽火峽谷食人妖的刑求室。有隻大型食人妖站在這邊並揮動著手上的牛皮鞭，牠
+正要吃掉其他體型較小的食人妖，那些應該是牠的奴隸或手下。遠方有一個珠光寶氣的箱子吸
+引了你的目光，你不禁開始期望假設能夠生還，那麼理頭的寶物都將是你的。
+~
+0 1 0
+D1
+a westward corridor~
+~
+3 0 5747
+>room_command search mattress~
+if roomvalue($1) & 1024
+        echoat $n 目前你無法做這個動作。
+        break
+endif
+modrvt v1 | 1024
+echoat $n 你開始搜尋 床墊(mattress) ....
+echoaround $n $n 開始搜尋 床墊(mattress) ....
+if roomvalue($0) == 0
+        modrvt v0 | 1
+        modrvt t0 = 480
+        callout 1 echoat $n 你搜到一罐藥水！
+        callout 1 echoaround $n $n 搜到一罐藥水！
+        callout 1 oload 24212 1 $n target
+else
+        callout 1 echo 不過並沒有搜到什麼東西。
+endif
+callout 2 modrvt v1 r 1024
+~
+|
+S
+#5800
+食人妖進食場~
+這邊是食人妖進食的地方。到處都是食人妖吃過亂丟的骨頭與碎肉。你睜開眼睛仔細一瞧
+，發覺絕大部分都是人類的骨骸，混雜著少數矮人與地精的殘骸。你不禁開始擔心自己的處境
+，是否會像這些可憐的生物一樣，成為其他種族的盤中飧。
+~
+0 1 0
+D3
+outside the kitchen~
+~
+3 -1 5749
+S
+#5801
+通道~
+一條不長的通道，在北邊不遠處就到了盡頭。北邊有個橡木門，往北可回到一間小房間。
+~
+0 1 0
+D0
+a gallery~
+~
+3 0 5767
+S
+#5802
+通道~
+一條不長的通道，在北邊不遠處就到了盡頭。南邊有到橡木門，往南可回到一間小房間。
+~
+0 1 0
+D0
+a pear-shaped room~
+~
+3 0 5769
+D2
+a gallery~
+~
+3 0 5767
+S
+#5803
+星手之穴**Here can get some interesting setting**~
+你到達了一處四周上下都裝飾著閃耀金光寶石的洞穴。可惜這些寶石緊緊地鑲嵌在牆壁裡
+頭，要拿下來恐怕不太容易。這個洞穴裡頭瀰漫著奇異的氣氛。這裡有些奇怪的物體在蠕動，
+你不知道那些東西是怎麼來的。
+~
+0 1 0
+D0
+a junction~
+~
+3 0 5772
+D2
+a corridor~
+~
+3 0 5770
+S
+#5804
+在門外~
+你身處一處東西走向的通道，北邊有一扇鑲嵌在牆壁理頭得門。你可以打開這道門或是往
+東回到剛剛的地方。這邊你能看到一座橋橫越了地下伏流。
+~
+0 1 0
+D0
+a door~
+~
+3 0 5805
+D1
+a junction on the north bank near a bridge~
+~
+0 -1 5798
+S
+#5805
+造船者之間~
+這個房間屬於造船者以及他寵物的房間。到處散佈著木頭以及相關的造船工具。西邊有一
+扇門，往南則回到剛剛的地方。
+~
+0 1 0
+D2
+outside a door~
+~
+3 0 5804
+D3
+a pantry~
+~
+3 0 5806
+S
+#5806
+儲藏室~
+這個儲貨量充裕的儲藏室擠滿了各式各樣的飲料與食品，但對你來說大部分都是不能吃的
+。有許多罐子裡頭也裝著東西，但是食人妖吃的東西你能夠放心吃嗎？
+~
+0 1 0
+D1
+the shipbuilder's quarters~
+~
+3 0 5805
+S
+#5807
+黑暗的走道~
+你沿著黑暗的走道行走，隱約看見前方有一道門。
+~
+0 1 0
+D0
+a zombie room~
+~
+3 0 5808
+D2
+a junction on the north bank near a bridge~
+~
+3 0 5798
+S
+#5808
+殭屍之間~
+你誤闖了烽火峽谷大法師的寵物堆放之處 - 殭屍之間。不少殭屍駐足在此，似乎在守護
+著什麼東西。四周都是冒險者的屍骨，看樣子那樣東西應該頗為珍貴。北邊牆上有一扇門。
+~
+0 1 0
+D0
+a crypt~
+~
+3 0 5809
+D2
+a short dark corridor~
+~
+3 0 5807
+S
+#5809
+地窖~
+你進入了一處哥德式構架的地窖，聳立的尖拱造型，以美麗的尖角將結構力傳承的地基。
+你注意到這個美麗的工程，同時代表了此區擁有者的品味。
+~
+0 1 0
+D2
+a zombie room~
+~
+3 0 5808
+D3
+a junction~
+~
+3 0 5810
+S
+#5810
+交叉路口~
+你到達一處交叉路口，這次是一處十字路口。東邊通往一道門，而由西邊你聽到一些「鏗
+鏘」的敲打聲。北邊與南邊沒有什麼異樣的聲音傳來。
+~
+0 1 0
+D0
+a bend~
+~
+0 -1 5813
+D1
+a door~
+~
+3 0 5809
+D2
+dead end~
+~
+0 -1 5811
+D3
+construction~
+~
+0 -1 5812
+S
+#5811
+死路~
+你到達道路的盡頭，這邊完全沒有任何有趣的東西，我看你回頭吧。
+~
+0 1 0
+D0
+a junction~
+~
+0 -1 5810
+S
+#5812
+建築基地~
+你不小心闖入了一處建築基地，這個工程是要讓整個地下甬道結構能夠安定。不過整個工
+地最怪誕的是，每一項工具即使沒有生物操縱也會自己工作，十字鎬、圓鍬、鏟子都能夠自己
+工作！甚至少數幾件工具正因你的闖入而開始竊竊私語。不過它們看似沒有敵意，因此你可以
+在此休息。然後你卻不能夠攻擊它們，因為那些工具對你的物理攻擊免疫。
+~
+0 1 0
+D1
+a junction~
+~
+0 -1 5810
+S
+#5813
+通道著轉彎處~
+你到達了道路的轉彎處，這邊你能夠往南通往一處交叉路口，或往東走。南邊傳來一陣陣
+像是挖掘的聲音。
+~
+0 1 0
+D1
+a hole~
+~
+0 -1 5814
+D2
+a junction~
+~
+0 -1 5810
+S
+#5814
+牆壁上的洞~
+你通過北面牆壁上的洞到了這個東西走向的走道。你居然感覺到一股不可思議的和風吹拂
+在你的臉上。如果你願意，你可以繼續待在這邊，或往東邊或西邊而去。往東是一處交叉路口
+，往西的路則是急速轉往南邊。
+~
+0 1 0
+D1
+a junction~
+~
+0 -1 5820
+D3
+a bend~
+~
+0 -1 5813
+D5
+a creepy room~
+~
+0 -1 5823
+S
+#5815
+一扇門~
+你到達了一扇被嚴密保護的門前。由門縫中能夠看到成群的骷髏兵正在建造一艘巨大的船
+隻，那些骷髏以熟練的技巧揮動著手上的捶子，迅速地將船隻打造完成。
+~
+0 1 0
+D1
+a shipbuilding room~
+~
+7 5779 5816
+D3
+a junction on the north bank near a bridge~
+~
+0 -1 5798
+S
+#5816
+造船工廠~
+這裡四處散落著工具、木條、鐵釘、鉚釘與帆布。你看到這裡有書桌、工作桌與甲板四處
+散落。這些東西顯示烽火峽谷大法師可能是曾經是為船員。不過這個地方四處依然散佈著骷髏
+，不過這些骷髏正建造著船隻。往北與往西各有一扇門可以離開這邊。
+~
+0 8 0
+D0
+a door~
+~
+3 0 5817
+D3
+a door~
+~
+7 5779 5815
+S
+#5817
+通道~
+你進入了一處通道，串連南邊的船屋以及北邊的造船工廠。
+~
+0 1 0
+D0
+a room~
+~
+3 0 5818
+D2
+a boathouse~
+~
+3 0 5816
+S
+#5818
+小房間~
+這邊是某種生物的休息室。依據房間瀰漫的味道，這邊應該是某種不死怪物的棲息地。北
+邊有一扇門可以離開此處。
+~
+0 1 0
+D0
+a corridor~
+~
+3 0 5819
+D2
+a corridor~
+~
+3 0 5817
+S
+#5819
+一處長廊~
+你進入了一處長廊，往北可以到達交叉路口，而往南則是一扇結實的橡木門。你聽到門後
+傳來陣陣粗魯的呼吸聲。
+~
+0 1 0
+D0
+junction~
+~
+0 -1 5820
+D2
+a room~
+~
+3 0 5818
+S
+#5820
+交叉路口~
+這邊是一處交叉路口，你可以往西、往東或往南而去。
+~
+0 1 0
+D1
+a door~
+~
+0 -1 5821
+D2
+a corridor~
+~
+0 -1 5819
+D3
+a long passageway and a hole~
+~
+0 -1 5814
+S
+#5821
+一扇門~
+你站在南面牆壁上一扇金屬門前面。上頭有個黃金的鑰匙孔。看著整扇既巨大又沈重的門
+，你瞭解到如果沒有正確的鑰匙，那麼是無法開啟這扇門的。
+~
+0 1 0
+D2
+loot room~
+~
+119 5806 5822
+D3
+a junction~
+~
+0 -1 5820
+S
+#5822
+戰利室~
+你找到了大法師的戰利室！恭喜！現在，趕緊檢起地上的金錢，填滿你的荷包，然後在他
+發覺之前，趕緊離開這邊吧。
+~
+0 8 0
+D0
+outside the loot room~
+~
+3 5806 5821
+S
+#5823
+可怕的房間~
+你進入了一處可怕的房間，四處散佈著屍體與各式各樣的武器。由於空氣的不穩定，使得
+你的照明工具開始明滅閃爍，你感受到這邊有個邪惡力量的立場。你要不往北繼續下去，否則
+建議回頭往安全的地方走吧。
+~
+0 1 0
+D0
+a bend~
+~
+0 -1 5824
+D4
+a passage~
+~
+0 -1 5814
+S
+#5824
+道路轉彎處~
+你到達了通道轉彎的地方，這邊你可以往東走向一處更寬闊的地方，或是往南通往一處可
+怕的場所。
+~
+0 1 0
+D1
+a widening of the passage~
+~
+0 -1 5825
+D2
+a creepy room~
+~
+0 -1 5823
+S
+#5825
+小徑較寬處~
+***「鏗鏘」！當你進到這邊，一扇巨大沈重閘門忽然在你身後關了下來，讓你無法回到
+剛剛的地方。這扇沈重的門似乎有什麼機關控制著，只不過不知道控制門的機關在那邊。
+在此處你無可選擇地僅能往東更深入烽火峽谷地下城了。
+~
+0 1 0
+D1
+junction~
+~
+0 -1 5826
+D3
+a bend~
+~
+119 5808 5824
+S
+#5826
+交叉口~
+你到達了一處交叉路口。由此處你能夠往東或往南離開此處，在你的北邊有一道門。
+~
+0 1 0
+D0
+dwarf room~
+~
+3 0 5827
+D1
+another door~
+~
+0 -1 5828
+D2
+a bend~
+~
+0 -1 5830
+D3
+portcullis~
+~
+0 -1 5825
+S
+#5827
+矮人之間~
+***當你打開了這扇門，呈現在你面前的是一副非常古老的影像。幾位矮人圍著一張桌子
+抽著煙管，同時一起玩著撲克牌。桌子上放滿了牌，而發牌的人剛好將最後一張牌給發了
+出去。當他們看到你時，都給了你一張淺淺的微笑。當然！如果你能夠加入他們，讓他們
+享受點勝利的歡愉，他們一定會更加高興。
+~
+0 8 0
+D2
+a junction~
+~
+3 0 5826
+S
+#5828
+另一扇門~
+你站在另外一扇門的外頭。在這扇門的後頭你似乎隱約聽到東西被摔破以及棍棒交擊
+的聲音，另外還有一些牛的低鳴聲。
+~
+0 1 0
+D0
+a minotaur room~
+~
+3 0 5829
+D2
+a junction~
+~
+0 -1 5831
+D3
+a junction~
+~
+0 -1 5826
+S
+#5829
+牛頭人之間~
+你踏進了一處牛頭人的洞穴！而且這裡的生物看起來似乎都十分討厭你的闖入。因此
+你最好在牠們尚未發動牛角攻擊前儘速地離開這邊。在你離開之前環顧四周，你發覺房間
+到處散佈著破碎的家具與碗盤，看樣子此處的牛頭人的脾氣真的不太好。
+~
+0 1 0
+D2
+another door~
+~
+3 0 5828
+S
+#5830
+轉彎處~
+你站在長廊的轉彎處，此處能夠讓你往北到達交叉口或是往東通往另外一個交叉口。
+在這邊你似乎能夠聞到硫磺的味道。
+~
+0 1 0
+D0
+a junction~
+~
+0 -1 5826
+D1
+a junction~
+~
+0 -1 5831
+S
+#5831
+交叉路口~
+你站在一處交叉路口上，北邊可通往一道門，往西則通往一處長廊，或是往下進入更
+深的地道之中。這裡四處都散發著惱人的高熱以及硫磺味。
+~
+0 1 0
+D0
+another door~
+~
+3 -1 5828
+D3
+a bend~
+~
+0 -1 5830
+D5
+dragon cave~
+~
+0 -1 5832
+S
+#5832
+龍穴~
+喔，天啊！當你越前進，你就越能感受由頭到腳到不安。四周牆上留有巨大的爪痕。
+當你到達了洞穴的底部，你才驚覺你竟然身處一處龍穴之中。南邊的牆上有一扇鎖住的鐵
+門能夠提供此洞穴主人迅速地逃離此處。
+~
+0 1 0
+D2
+a locked steel door~
+~
+7 -1 5833
+D4
+a junction~
+~
+0 -1 5831
+S
+#5833
+鎖住的鐵門~
+這扇門能讓任何無身懷骷髏鑰匙的不速之客嚐到痛苦的滋味。
+~
+0 1 0
+D0
+dragon cave~
+~
+7 -1 5832
+D1
+the warlock's chambers~
+chamber door~
+119 5807 5834
+>room_enter 1 100~
+if ispc($n)
+        if is_inv_obj($n) != 5807
+                echoat $n 你忽然感受自己的生命力似乎漸漸離自己而去....
+                modhmv $n 03.10 15 1
+        endif
+endif
+~
+>room_rand 30~
+if ispc($r)
+        if is_inv_obj($r) != 5807
+                echoat $r 你忽然感受自己的生命力似乎漸漸離自己而去....
+                modhmv $r 03.10 15 1
+        endif
+endif
+~
+|
+S
+#5834
+大法師大殿~
+你終於找到烽火峽谷的大法師大殿。這座大殿到處都是放滿書的書櫃、玻璃櫃與書桌，大
+殿的盡頭放著一張有底座的寶座。如果大法師碰巧人不在這邊，對你來說堪稱今天最幸運的事
+情了。
+~
+0 8 0
+D3
+a door~
+door~
+3 5807 5833
+S
+
+#5835
+傳送之間~
+這是一間空曠的隔間，除了房間中央的石製平台(plane)外，就只有幾張椅子放著在周圍。
+平台閃爍著黯淡的藍色光芒，使整個房間充滿神秘的氣氛。
+~
+0 1|8|256|8192|2097152 0
+D1
+~
+~
+1|2 0 5717
+>room_command step p plane~
+if is_qmark($n) == ianua_teleporter
+	if is_inv_obj($n) == 13204
+		purge $n vnum 13204
+		echoat $n 你踏上了石製平台，傳送者之石化成粉末散落在平台上。
+		at 35051 echo 平台發出刺眼的光芒。
+		transfergroup $n 35051
+		echo $N踏上了石製平台，平台發出強烈的光芒籠罩著$N的隊伍。
+	else
+		stun $n 20
+		echoat $n 你踏上了石製平台。
+		echoaround $n $N把石製平台當作舞台，在上面瘋狂的跳起舞來。
+		callout 1 echoat $n 但什麼事也沒發生。
+	endif
+else
+	stun $n 20
+	echoat $n 你踏上了石製平台。
+	echoaround $n $N把石製平台當作舞台，在上面瘋狂的跳起舞來。
+	callout 1 echoat $n 但什麼事也沒發生。
+endif
+~
+>room_enter 64 100~
+stun $n 30
+echoat $n 平台突然發出強烈的光芒籠罩著你。
+callout 2 echoat $n 你覺得有些頭暈。
+callout 2 force $n look
+~
+|
+S
+#0
+
+
+#ROOMPROGS
+R 5705 firetop_windblow.prg
+R 5706 firetop_windblow.prg
+R 5707 firetop_windblow.prg
+R 5708 firetop_windblow.prg
+R 5709 firetop_windblow.prg
+R 5710 firetop_windblow.prg
+R 5711 firetop_windblow.prg
+R 5712 firetop_windblow.prg
+R 5713 firetop_windblow.prg
+R 5714 firetop_windblow.prg
+R 5715 firetop_windblow.prg
+R 5716 firetop_windblow.prg
+R 5720 firetop_windblow.prg
+S
+
+
+#RESETS
+M 1 5700 1 5708
+M 1 5701 1 5717
+M 1 5702 1 5717
+M 1 5703 1 5717
+M 1 5704 1 5711
+M 1 5707 1 5712
+M 1 5708 1 5708
+G 1 3093 0
+G 1 3096 0
+G 1 4575 0
+G 1 3103 0
+G 1 3041 0
+G 1 3043 0
+G 1 4574 0
+O 1 3808 1 5717
+O 1 5771 1 5717
+O 1 4034 1 5717
+M 1 5713 6 5740
+M 1 5713 6 5740
+M 1 5713 6 5748
+M 1 5713 6 5748
+M 1 5713 6 5754
+M 1 5713 6 5754
+M 1 5715 1 5759
+O 1 5715 1 5760
+O 1 5716 1 5760
+M 1 5720 1 5718
+M 1 5735 1 5739
+E 1 5735 0 8
+E 1 5736 0 16
+G 1 5737 0
+M 1 5736 1 5741
+O 1 5738 0 5741
+O 1 5748 0 5741
+M 1 5737 1 5743
+G 1 5741 0
+O 1 5748 0 5743
+M 1 5738 3 5745
+E 1 5735 0 8
+G 1 5737 0
+O 1 5742 0 5743
+P 1 5743 0 5742
+O 1 5748 0 5745
+M 1 5742 1 5751
+O 1 645 0 5753
+O 1 915 0 5753
+O 1 2202 0 5753
+O 1 2346 0 5753
+O 1 4215 0 5753
+O 1 4256 0 5753
+O 1 5207 0 5753
+O 1 5755 0 5753
+M 1 5716 1 5755
+M 1 5743 1 5755
+G 1 5754 0
+O 1 5752 0 5755
+M 1 5744 1 5760
+G 1 5756 0
+G 1 5757 0
+M 1 5750 1 5763
+M 1 5746 1 5764
+G 1 5762 0
+M 1 5745 1 5765
+O 1 5758 0 5765
+P 1 5759 0 5758
+P 1 5760 0 5758
+O 1 5761 1 5767
+O 1 5792 0 5768
+O 1 5764 0 5769
+O 1 5765 0 5769
+O 1 5771 0 5771
+O 1 5769 0 5771
+O 1 5770 0 5771
+M 1 5747 1 5773
+O 1 5804 0 5773
+M 1 5749 2 5774
+E 1 5723 0 16
+M 1 5749 2 5774
+E 1 5723 0 16
+M 1 5748 2 5775
+E 1 5763 0 16
+M 1 5748 2 5775
+E 1 5763 0 16
+M 1 5769 1 5776
+M 1 5755 3 5778
+M 1 5755 3 5778
+M 1 5755 3 5778
+M 1 5751 1 5781
+M 1 5752 1 5789
+M 1 5753 3 5791
+G 1 5728 0
+M 1 5753 3 5791
+M 1 5753 3 5791
+M 1 5754 1 5792
+G 1 5805 0
+M 1 5770 1 5795
+G 1 5806 0
+M 1 5756 1 5797
+M 1 5739 1 5799
+E 1 5800 0 16
+E 1 5801 0 3
+E 1 5802 0 13
+M 1 5740 1 5799
+O 1 5744 0 5799
+P 1 5745 0 5744
+P 1 5746 0 5744
+P 1 5747 0 5744
+O 1 5748 0 5799
+M 1 5741 4 5800
+M 1 5741 4 5800
+M 1 5741 4 5800
+M 1 5741 4 5800
+O 1 5749 0 5800
+P 1 5750 0 5749
+M 1 5768 5 5803
+M 1 5768 5 5803
+M 1 5768 5 5803
+M 1 5768 5 5803
+M 1 5768 5 5803
+M 1 5760 1 5805
+M 1 5761 1 5805
+E 1 5760 0 8
+G 1 5779 0
+O 1 5782 0 5806
+P 1 5781 0 5782
+M 1 5759 4 5808
+E 1 5772 0 5
+E 1 5773 0 11
+E 1 5774 0 16
+O 1 5775 0 5808
+O 1 5776 0 5808
+O 1 5777 0 5808
+O 1 5778 0 5808
+M 1 5763 1 5809
+G 1 5786 0
+M 1 5757 5 5816
+O 1 5768 0 5816
+O 1 5759 0 5816
+O 1 5807 0 5816
+M 1 5758 1 5818
+O 1 5748 0 5818
+O 1 5796 0 5822
+P 1 5797 0 5796
+P 1 5798 0 5796
+M 1 5762 1 5823
+E 1 5783 0 6
+G 1 5784 0
+G 1 5785 0
+M 1 5764 1 5827
+G 1 5788 0
+O 1 5771 0 5827
+O 1 5793 0 5827
+M 1 5765 1 5829
+G 1 5808 0
+O 1 5789 0 5829
+O 1 5790 0 5829
+P 1 5791 0 5790
+M 1 5766 1 5832
+M 1 5767 1 5834
+E 1 5794 0 12
+E 1 5795 0 16
+G 1 5799 0
+O 1 5809 0 5834
+P 1 5810 0 5809
+O 1 5811 0 5834
+O 1 5812 0 5834
+O 1 5813 0 5834
+S
+
+
+#SHOPS
+5708    1 10 12 13 26 150 80 0 23
+0
+
+
+#SPECIALS
+M  5737 spec_poison
+M  5742 spec_fido
+M  5744 spec_cast_judge
+M  5746 spec_cast_mage
+M  5747 spec_poison
+M  5749 spec_poison
+M  5750 spec_poison
+M  5752 spec_poison
+M  5753 spec_poison
+M  5758 spec_cast_undead
+M  5760 spec_breath_fire
+M  5761 spec_executioner
+M  5762 spec_poison
+M  5763 spec_cast_undead
+M  5766 spec_breath_any
+M  5767 spec_cast_mage
+M  5768 spec_thief
+M  5770 spec_breath_gas
+S
+
+
+#$

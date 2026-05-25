@@ -1,0 +1,3016 @@
+#AREADATA
+Name        北方平原~
+Identity    plains~
+Builders    Copper~
+Translator  Marbas~
+Modifier    Amenda~
+VNUMs	      300 350
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#300
+druid~
+德魯伊教團員(druid)~
+德魯伊教團員(druid)正在這平原附近行走，搜索著藥草。
+~
+這個德魯伊人身材高大，他的臉上的皮膚畫著德魯伊信仰裏所特有的圖案。
+信奉大自然的他的神態十分和平。
+~
+193 8 -500 S
+6 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say 不要破壞自然，植物是生命之源。
+~
+|
+#301
+sorbus~
+隱士蘇巴斯(Sorbus)~
+隱士蘇巴斯(Sorbus)正在這裡坐著烤免子。
+~
+他穿著簡單的衣服，並在這孤獨且難以生活的環境中過著樸素的生活。
+~
+3 0 0 S
+4 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>greet_prog 30~
+mpecho $I 轉了一下掛著兔子的樹枝，好讓兔肉烤勻。
+~
+>talk_prog topic~
+say 要來點美味的烤兔肉嗎？
+~
+|
+#305
+Shudde-M'ell~
+蠕動的大蟲(Shudde-M'ell)~
+龐大的蟲(Shudde-M'ell)正在保衛他的寶物(G'harne)。
+~
+Shudde-M'ell 是大約 15  呎長且身上被邪惡的惡臭包圍者，他是 G'harne 寶物
+的保護者，牠的特徵是牠的身長和惡臭。
+~
+35 8 -1000 S
+18 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Worm~
+#309
+rabbit~
+可愛的兔子(rabbit)~
+可愛的兔子(rabbit)在這裡。
+~
+它是小的，有著毛絨絨的毛皮和長耳朵以及大大的腳。
+~
+65 0 0 S
+9 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+>death_prog 80~
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下$I的皮......
+	mpoload 35002 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下$I的皮......
+	mpoload 35002 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+~
+|
+#310
+slaver~
+奴隸商人(slaver)~
+一個奴隸商人(slaver)正無精打采地在這裡休息。
+~
+他看起來已經很久找不到生意上門了，也許是因為受史卡拉貝反奴隸政策的影響。
+~
+3 168 -500 S
+50 1000 500 10d10+-20 0d-30+50
+-1 0
+0 8 1
+R Human~
+C 1
+P 1|8|128
+>fight_prog 40~
+if rand(30)
+	c 3 'dispel magic' $n
+else
+	c 3 fireball $n
+endif
+~
+>rand_prog 5~
+if pcnum($) > 0
+	if rand(50)
+		sigh
+		say 近來一個妖精(fairy)都沒抓到，真難生活。
+	else
+		say 最近這一帶的長官(chief)抓的正緊，妖精(fairy)的買賣越來越難做了…
+	endif
+endif
+~
+>talk_prog topic~
+	? $n
+	say 要買妖精(fairy)別找我唷，最近沒抓到半個。
+~
+>talk_prog p greenwood kingdom~
+say 綠樹王國在史卡拉貝城西不遠處。
+say 你可以藉著 <help map> 來得知前往綠樹王國的路線。
+~
+>talk_prog fairy~
+if is_qmark($i) == plains_slaver_waiting
+	mpechoat $n $I 忙著自己的事，根本沒空理你。
+	break
+endif
+if is_qmark($n) == plains_slaver_quest 200004
+	break
+endif
+if is_qmark($n) >= plains_slaver_quest 200001
+	say 要找妖精(fairy)的話，可能得到
+	say 綠樹王國(Greenwoods)，那邊有不少。
+	break
+endif
+if is_qmark($n) >= plains_slaver_quest 200002
+	mpechoat $n $I 說「加油！」
+else
+	mpechoat $n $I 說「你不知道嗎？」
+	mpechoat $n $I 說「妖精奴隸可是在這一帶最搶手的商品呢！」
+	mpechoat $n $I 說「只是近來因為綠樹王國民族意識高漲，史卡拉貝又下」
+	mpechoat $n $I 說「禁令，妖精奴隸就越來越難抓了。」
+	if level($n) >= 15
+		mpechoat $n $I 說「你似乎是個經驗挺豐富的冒險者。」
+		mpechoat $n $I 說「我這裡有件不錯的東西，但是你必須幫忙我(yes/no)。」
+		mpadd_qmark $n plains_slaver_quest -1 1 0 0 0 1
+		break
+	endif
+endif
+~
+>talk_prog no~
+if is_qmark($i) == plains_slaver_waiting
+	mpechoat $n $I 忙著自己的事，根本沒空理你。
+	break
+endif
+if is_qmark($n) == plains_slaver_quest 200004
+	break
+endif
+if is_qmark($n) == plains_slaver_quest 100001
+	mpechoat $n $I 長長的嘆了一口氣，「唉～～」
+	mpechoat $n $I 說「那就算了。」
+	mpdel_qmark $n plains_slaver_quest
+endif
+~
+>talk_prog chief~
+say 長官(chief)就住在這附近，經常會在附近走來走去。
+~
+>talk_prog yes~
+if is_qmark($i) == plains_slaver_waiting
+	mpechoat $n $I 忙著自己的事，根本沒空理你。
+	break
+endif
+if is_qmark($n) == plains_slaver_quest 100004
+	break
+endif
+if is_qmark($n) == plains_slaver_quest 100001
+	mpechoat $n $I 說「其實很簡單，你去幫我說服長官(chief)不再插手這事。」
+	mpechoat $n $I 說「至於怎麼說服，就看你囉！」
+	mpmod_qmark $n plains_slaver_quest v0 = 2
+endif
+~
+>talk_prog inform~
+if is_qmark($i) == plains_slaver_waiting
+	mpechoat $n $I 忙著自己的事，根本沒空理你。
+	break
+endif
+if is_qmark($n) == plains_slaver_quest 100004
+	break
+else
+	if is_qmark($n) == plains_slaver_quest 100005
+		mpechoat $n 你把之前發生的事通知商人。
+		mpechoat $n $I 說「錢？我哪有錢付他…」
+		mpechoat $n $I 說「不過至少你成功的完成任務了。」
+		mpechoat $n $I 說「別跑遠了，晚點我還會找你的。」
+		mpechoat $n 因為你完成任務，經驗值增加了！
+		mpexp $n 500
+		mpadd_qmark self plains_slaver_waiting 20 1 0 0 1 1
+		mpmod_qmark $n plains_slaver_quest v0 = 0
+		mpmod_qmark $n plains_slaver_quest v1 = 1
+		break
+	endif
+	if is_qmark($n) == plains_slaver_quest 100006
+		mpechoat $n 你把之前發生的事通知商人。
+		mpechoat $n $I 說「幹的好，這樣我什麼都不用做了…」
+		mpechoat $n $I 說「你成功的完成任務了。」
+		mpechoat $n $I 說「別跑遠了，晚點我還會找你的。」
+		mpechoat $n 因為你成功的完成任務，經驗值增加了！
+		mpexp $n 1000
+		mpadd_qmark self plains_slaver_waiting 20 1 0 0 1 1
+		mpmod_qmark $n plains_slaver_quest v0 = 0
+		mpmod_qmark $n plains_slaver_quest v1 = 2
+		break
+	endif
+	if is_qmark($n) == plains_slaver_quest 100007
+		mpechoat $n 你把之前發生的事通知商人。
+		mpechoat $n $I 說「你殺了他！？你不知道這樣做對我們很不利嗎！？」
+		mpechoat $n $I 說「不過至少你成功的完成任務了。」
+		mpechoat $n 因為你的急燥，導致經驗減少了！
+		mpexp $n -500
+		mpechoat $n $I 說「別跑遠了，晚點我還會找你的。」
+		mpadd_qmark self plains_slaver_waiting 20 1 0 0 1 1
+		mpmod_qmark $n plains_slaver_quest v0 = 0
+		mpmod_qmark $n plains_slaver_quest v1 = 3
+		break
+	endif
+endif
+~
+>talk_prog restart~
+if is_qmark($n) == plains_slaver_quest 200000
+	if is_qmark($n) <= plains_slaver_quest 100003
+		mpechoat $n 你聽到一道聲音說：「任務成功的重設！」
+		mpdel_qmark $n plains_slaver_quest
+	endif
+	break
+endif
+if is_qmark($n) >= plains_slaver_quest 200001
+	if is_qmark($n) <= plains_slaver_quest 200003
+		if is_qmark($n) < plains_slaver_quest 300008
+			mpechoat $n 你聽到一道聲音說：「本任務第二階段已經成功的重設！」
+			mpmod_qmark $n plains_slaver_quest v2 = 0
+			break
+		endif
+		break
+	endif
+	if is_qmark($n) == plains_slaver_quest 200004
+		mpechoat $n 你聽到一道聲音說：「任務已經解完，不需重解。」
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($i) <= plains_slaver_quest 200003
+	if isnpc($n)
+		if race($n) == Fairy
+			if isaffected($n) & 262144
+				if insameroom($b)
+					mpechoat $b $I 說「幹的好！」
+					mpecho $I 連忙把 $N 抓起來帶走。
+					mppurge $n
+					if is_qmark($b) < plains_slaver_quest 300005
+						mpmod_qmark $b plains_slaver_quest v2 + 1
+					else
+						if is_qmark($b) >= plains_slaver_quest 300005
+							mpechoat $b $I 說「幹的好！」
+							mpechoat $b $I 說「等等，我找件好東西送你。」
+							mpadd_qmark self plains_slaver_speech 20 1 0 0 0 1
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+	break
+endif
+if is_qmark($i) == plains_slaver_waiting
+	if is_qmark($n) >= plains_slaver_quest 200001
+		mpechoat $n $I 說「晚一點再來找我吧。」
+		break
+	endif
+endif
+if is_qmark($n) >= plains_slaver_quest 200001
+	if is_qmark($n) <= plains_slaver_quest 200003
+		if notbeing($b)
+			mpechoat $n $I 說「啊！你來了！」
+			mpechoat $n $I 說「我有個任務找你....」
+			mpechoat $n $I 說「你去幫我抓五隻妖精來吧！」
+			mpechoat $n $I 說「記得，是妖精(fairy)，不是小妖精(pixie)。」
+			mpmod_qmark $n plains_slaver_quest v2 = 1
+			mpadd_qmark self plains_slaver_quest 70 0 0 1 0 1
+			mpdef_rembch $n
+		else
+			if is_qmark($n) == plains_slaver_quest 300001
+				break
+			else
+				mpechoat $n $I 說「啊！你來了！」
+				mpechoat $n $I 說「不過已經有人在幫我的忙了。」
+				mpechoat $n $I 說「你晚一點再來吧！」
+			endif
+		endif
+	endif
+endif
+~
+>tick_prog 100~
+if is_qmark($i) == plains_slaver_speech
+	if insameroom($b)
+		if is_qmark($b) == plains_slaver_quest 200001
+			mpechoat $b $I 說「這個送你吧！」
+			mpoload 313 20
+			give ofcol $b
+			bye $b
+			mpmod_qmark $b plains_slaver_quest v0 = 0
+			mpmod_qmark $b plains_slaver_quest v1 = 4
+			mpmod_qmark $b plains_slaver_quest v2 = 0
+			mpdel_qmark self plains_slaver_speech
+			mpdel_qmark self plains_slaver_quest
+			mpdef_rembch null-tar
+			break
+		endif
+		if is_qmark($b) == plains_slaver_quest 200002
+			mpechoat $b $I 說「這個送你吧！」
+			mpoload 314 20
+			give ofcol $b
+			bye $b
+			mpmod_qmark $b plains_slaver_quest v0 = 0
+			mpmod_qmark $b plains_slaver_quest v1 = 4
+			mpmod_qmark $b plains_slaver_quest v2 = 0
+			mpdel_qmark self plains_slaver_speech
+			mpdel_qmark self plains_slaver_quest
+			mpdef_rembch null-tar
+			break
+		endif
+		if is_qmark($b) == plains_slaver_quest 200003
+			mpechoat $b $I 說「這個送你吧！」
+			mpoload 315 20
+			give ofcol $b
+			bye $b
+			mpmod_qmark $b plains_slaver_quest v0 = 0
+			mpmod_qmark $b plains_slaver_quest v1 = 4
+			mpmod_qmark $b plains_slaver_quest v2 = 0
+			mpdel_qmark self plains_slaver_speech
+			mpdel_qmark self plains_slaver_quest
+			mpdef_rembch null-tar
+			break
+		endif
+	endif
+	break
+endif
+if is_qmark($i) != plains_slaver_quest
+	if being($b)
+		tell $b 你動作真慢！
+		tell $b 我去找別人好了！
+		mpat $b mpechoat $b 你因為動作太慢，導致任務失敗了！
+		mpat $b mpechoat $b 任務失敗，被扣除經驗點數！
+		mpexp $b -2000
+		mpdel_qmark $b plains_slaver_quest
+		mpdef_rembch null-tar
+	endif
+endif
+~
+|
+#311
+chief northern plains~
+長官(chief)~
+北方平原的長官(Chief of the Northern Plains)在這裡巡邏。
+~
+他是奧夫卡的一個小貴族，受史卡拉貝市議會秘令阻止奴隸買賣。
+~
+8195 168 1000 S
+39 500 0 -10d-10+10 20d0+0
+-1 0
+0 8 1
+P 137
+>greet_prog 100~
+if is_qmark($n) == plains_slaver_quest 100002
+	mpechoat $n --- 你找到北方平原的長官了！ ---
+endif
+~
+>talk_prog topic~
+if is_qmark($n) == plains_slaver_quest 100002
+	mpechoat $n -- 你要怎麼做？
+	mpechoat $n -- 你是殺了他(kill)，還是試著說服(persuade)他？
+	mpmod_qmark $n plains_slaver_quest v0 = 3
+else
+	mpechoat $n $I 說「奴隸制度(slavery)是邪惡的行為。」
+	mpechoat $n $I 說「一定要阻止這些傢伙的惡行。」
+endif
+~
+>talk_prog slavery~
+mpechoat $n $I 說「只可惜我抓不到那個奴隸商犯罪的證據。」
+mpechoat $n $I 說「他總是利用幫兇幫忙製造不在場證據(alibi)。」
+~
+>talk_prog alibi~
+mpechoat $n $I 說「我遲早抓出他的犯罪證據！」
+~
+>talk_prog persuade~
+if is_qmark($n) == plains_slaver_quest 100003
+	mpechoat $n 你試著說服長官。
+	mpechoat $n $I 說「什麼！？叫我跟奴隸商同流合汙！？」
+	mpechoat $n $I 說「我想不出什麼理由可以讓我這麼做！」
+	mpechoat $n 這時，你要怎麼回答他呢？
+	mpechoat $n 是錢財(treasure)，還是更高的地位(class)？
+	mpmod_qmark $n plains_slaver_quest v0 = 4
+endif
+~
+>talk_prog treasure~
+if is_qmark($n) == plains_slaver_quest 100004
+	mpechoat $n 你對長官(chief)解釋了一番。
+	mpechoat $n $I 說「的確，奴隸買賣利益相當的高。」
+	mpechoat $n $I 說「好，你回去通知(inform)他我答應了。」
+	mpmod_qmark $n plains_slaver_quest v0 = 5
+endif
+~
+>talk_prog class~
+if is_qmark($n) == plains_slaver_quest 100004
+	mpechoat $n 你對長官(chief)解釋了一番。
+	mpechoat $n 說「的確，奧夫卡高等貴族普遍支持奴隸制度。」
+	mpechoat $n 說「這麼做，也許可以得到他們的支持。」
+	mpechoat $n $I 說「好，你回去通知(inform)他我答應了。」
+	mpmod_qmark $n plains_slaver_quest v0 = 6
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == plains_slaver_quest 100003
+	mpechoat $n 說「史卡拉貝不會放過你的，卑鄙的奴隸商人！」
+	mpechoat $n 你成功的殺了長官(chief)，趕快回去通知(inform)商人吧！
+	mpmod_qmark $n plains_slaver_quest v0 = 7
+endif
+~
+|
+#312
+centaur-plains marauder-plains~
+人馬掠奪者(centaur marauder)~
+一隻拿槍斧的人馬(centaur)在這裡警戒著。
+~
+這是一隻人身馬腳的生物，他拿著槍斧正在警戒著周圍。
+~
+1|4|64|4096|8192|33554432 524288 -200 S
+37 8000 0 -15d150+-500 -10d+200+0
+5000 0
+0 8 1
+R Centaur~
+C 1|32
+P 8|128|2147483648
+S 1 5
+S 5 5
+S 18 -10
+S 41 30
+S 43 60
+W colour spray~ 100 200
+W chill touch~ 100 200
+W sprinkle slash~ 100 300
+W icecore slash~ 100 200
+W ice comet~ 100 400
+W earth slash~ 100 300
+W earthquake~ 100 150
+W meteor shower~ 100 400
+W whirlwind~ 100 50
+W sun flash~ 100 50
+W sun slash~ 100 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 316
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>entry_greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>tick_prog 100~
+if mobcount(317) == 0
+	mpecho 失去領袖後，$I嚇得逃離這裡了...
+	mppurge self
+else
+	break
+endif
+~
+>fight_prog 30~
+if rand(50)
+	wear axe
+	mpecho $I 揮舞著手中的武器。
+	circular
+	mpnowait
+	circular
+	mpnowait
+else
+	wear axe
+	mpechoat $n $I 朝你亂揮武器。
+	skilldrv heavyhit $n
+	skilldrv heavyhit $n
+	skilldrv heavyhit $n
+endif
+~
+>death_prog 100~
+if race($n) == centaur
+	mpadd_qmark $n centaur_camp_enemy 300 0 0 0 0 1
+	mpgreward exp $n -38 2000
+else
+	mpgreward exp $n -38 2000
+endif
+~
+|
+#313
+centaur-plains archer-plains~
+人馬弓手(centaur archer)~
+一隻拿弓箭的人馬(centaur)在這裡警戒著。
+~
+這是一隻人身馬腳的生物，他拿著弓箭正在警戒著周圍。
+~
+1|4|64|2048|4096|33554432 32 -200 S
+37 3000 0 30d20+200 -20d-200+0
+5000 0
+0 8 1
+R Centaur~
+C 4|16
+P 8|128
+S 1 2
+S 2 5
+S 3 1
+S 4 1
+S 43 100
+W colour spray~ 100 200
+W chill touch~ 100 200
+W sprinkle slash~ 100 300
+W icecore slash~ 100 200
+W ice comet~ 100 400
+W earth slash~ 100 300
+W earthquake~ 100 150
+W meteor shower~ 100 400
+W whirlwind~ 100 50
+W sun flash~ 100 50
+W sun slash~ 100 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 317
+mpat 5 mpoload 3366
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>entry_greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>tick_prog 100~
+if mobcount(317) == 0
+	mpecho 失去領袖後，$I嚇得逃離這裡了...
+	mppurge self
+else
+	break
+endif
+~
+>fight_prog 10~
+mpechoat $n $I 朝你射出一堆箭。
+skilldrv monehit $n
+skilldrv monehit $n
+skilldrv monehit $n
+skilldrv monehit $n
+skilldrv monehit $n
+mpnowait
+~
+>death_prog 100~
+if race($n) == centaur
+	mpadd_qmark $n centaur_camp_enemy 300 0 0 0 0 1
+	mpgreward exp $n -38 2000
+else
+	mpgreward exp $n -38 2000
+endif
+~
+|
+#314
+centaur-plains caster-plains~
+人馬術師(centaur caster)~
+一隻拿法杖的人馬(centaur)在這裡警戒著。
+~
+這是一隻人身馬腳的生物，他拿著法杖正在警戒著周圍。
+~
+1|4|64|33554432 8 -200 S
+37 2000 5000 -20d-50+500 -50d+500+0
+5000 0
+0 8 1
+R Centaur~
+C 2
+P 8|128|268435456
+S 3 5
+S 4 3
+S 40 45
+W colour spray~ 100 150
+W chill touch~ 100 150
+W sprinkle slash~ 100 300
+W icecore slash~ 100 200
+W ice comet~ 100 400
+W earth slash~ 100 200
+W earthquake~ 100 150
+W meteor shower~ 100 400
+W whirlwind~ 100 50
+W sun flash~ 100 50
+W sun slash~ 100 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 318
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>entry_greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>tick_prog 100~
+if mobcount(317) == 0
+	mpecho 失去領袖後，$I嚇得逃離這裡了...
+	mppurge self
+else
+	break
+endif
+~
+>fight_prog 20~
+mpechoat $n $I 對你施展連續的火球術。
+cast fireball $n
+mpnowait
+cast fireball $n
+mpnowait
+cast fireball $n
+mpnowait
+~
+>death_prog 100~
+if race($n) == centaur
+	mpadd_qmark $n centaur_camp_enemy 300 0 0 0 0 1
+	mpgreward exp $n -38 2000
+else
+	mpgreward exp $n -38 2000
+endif
+~
+|
+#315
+centaur-plains elitec-plains guard-plains~
+人馬菁英衛士(centaur elite guard)~
+一隻拿長槍的人馬(centaur)在這裡保護著首領的安全。
+~
+這是隻強大的人馬，他拿著長槍正在警戒著周圍。
+~
+1|2|4|64|4096|8192|262144|8388608|33554432 8|32|128|65536 -200 S
+38 8000 0 30d60+-500 -30d-100+0
+15000 0
+0 8 1
+R Centaur~
+C 1|8|32
+P 8|128|256|2048|1048576|2097152|8388608|67108864|2147483648
+S 1 4
+S 2 4
+S 5 4
+S 41 25
+S 42 25
+S 43 50
+S 45 150
+S 46 150
+W colour spray~ 100 200
+W chill touch~ 100 200
+W sprinkle slash~ 100 300
+W icecore slash~ 100 200
+W ice comet~ 100 400
+W earth slash~ 100 200
+W earthquake~ 100 150
+W meteor shower~ 100 400
+W whirlwind~ 100 50
+W sun flash~ 100 50
+W sun slash~ 100 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 319
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>entry_greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>tick_prog 100~
+if mobcount(317) == 0
+	mpecho 失去領袖後，$I嚇得逃離這裡了...
+	mppurge self
+else
+	break
+endif
+~
+>fight_prog 40~
+mpechoat $n $I 對你展開快速的突刺。
+skilldrv speedhit $n
+skilldrv monehit $n
+skilldrv heavyhit $n
+~
+>death_prog 100~
+if race($n) == centaur
+	mpadd_qmark $n centaur_camp_enemy 300 0 0 0 0 1
+	mpgreward exp $n -38 3000
+else
+	mpgreward exp $n -38 3000
+endif
+~
+|
+#316
+centaur-plains shaman-plains~
+人馬巫醫(centaur shaman)~
+一隻人馬(centaur)在這裡幫同伴療傷。
+~
+這是一隻人身馬腳的生物，他正在幫同伴療傷。
+~
+1|2|4|64|1048576|33554432 8|32|128 -200 S
+38 4000 5000 -30d-70+0 -50d-100+0
+15000 0
+0 8 1
+R Centaur~
+C 2
+P 8|256|2048|1048576|2097152|8388608|67108864|2147483648
+S 3 5
+S 4 5
+S 40 35
+W colour spray~ 100 150
+W chill touch~ 100 150
+W sprinkle slash~ 100 300
+W icecore slash~ 100 200
+W ice comet~ 100 400
+W earth slash~ 100 200
+W earthquake~ 100 150
+W meteor shower~ 100 400
+W whirlwind~ 100 50
+W sun flash~ 100 50
+W sun slash~ 100 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>entry_greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>tick_prog 100~
+if mobcount(317) == 0
+	mpecho 失去領袖後，$I嚇得逃離這裡了...
+	mppurge self
+else
+	break
+endif
+~
+>fight_prog 35~
+if rand(70)
+	mpecho $I 在幫同伴療傷。
+	cast 'gdouble heal'
+	mpnowait
+else
+	mpechoat $n $I 對你施展連續的巫術。
+	cast poison $n
+	mpnowait
+	cast poison $n
+	mpnowait
+	cast poison $n
+	mpnowait
+endif
+~
+>death_prog 100~
+if rand(15)
+	mpoload 320 36
+endif
+if race($n) == centaur
+	mpadd_qmark $n centaur_camp_enemy 300 0 0 0 0 1
+else
+	mpgreward exp $n -38 3000
+endif
+~
+|
+#317
+centaur-plains leader-plains~
+人馬首領(centaur leader)~
+一隻巨大的人馬(centaur)對於你的闖入感到憤怒。
+~
+這是隻身體比其他都大上一倍的人馬，他對於你無禮的闖入感到憤怒。
+~
+1|2|4|64|2048|4096|8192|262144|1048576|8388608|33554432 8|32|128 -300 S
+50 55000 5000 70d+100+-500 -40d-100+0
+50000 0
+0 8 1
+R Centaur~
+C 1|8|32
+P 8|128|256|2048|32768|65536|131072|8388608|16777216|67108864|536870912|2147483648
+S 1 8
+S 2 8
+S 3 8
+S 4 8
+S 5 8
+S 41 50
+S 42 50
+S 43 100
+S 45 500
+S 46 500
+W colour spray~ 100 250
+W chill touch~ 100 250
+W sprinkle slash~ 100 350
+W icecore slash~ 100 200
+W ice comet~ 100 400
+W earth slash~ 100 250
+W earthquake~ 100 150
+W whirlwind~ 100 50
+W sun flash~ 100 50
+W sun slash~ 100 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 321
+mpat 5 wear all
+mpat 339 mpmload 312
+mpat 339 mpgroup self marauder-plains 0 0
+mpat 339 mpmload 313
+mpat 339 mpgroup self archer-plains 0 0
+mpat 339 mpmload 314
+mpat 339 mpgroup self caster-plains 0 0
+mpat 340 mpmload 312
+mpat 340 mpgroup self marauder-plains 0 0
+mpat 340 mpmload 313
+mpat 340 mpgroup self archer-plains 0 0
+mpat 340 mpmload 314
+mpat 340 mpgroup self caster-plains 0 0
+mpat 341 mpmload 312
+mpat 341 mpgroup self marauder-plains 0 0
+mpat 341 mpmload 313
+mpat 341 mpgroup self archer-plains 0 0
+mpat 341 mpmload 314
+mpat 341 mpgroup self caster-plains 0 0
+mpat 343 mpmload 312
+mpat 343 mpgroup self marauder-plains 0 0
+mpat 343 mpmload 313
+mpat 343 mpgroup self archer-plains 0 0
+mpat 343 mpmload 314
+mpat 343 mpgroup self caster-plains 0 0
+mpat 344 mpmload 315
+mpat 344 mpmload 315
+mpat 344 mpgroup self elitec-plains 0 0
+mpat 344 mpgroup self 2.elitec-plains 0 0
+mpat 344 mpmload 316
+mpat 344 mpgroup self shaman-plains 0 0
+mpmload 315
+mpmload 315
+mpgroup self elitec-plains 0 0
+mpgroup self 2.elitec-plains 0 0
+mpmload 316
+mpgroup self shaman-plains 0 0
+~
+>greet_prog 100~
+if is_qmark($n) == centaur_camp_enemy
+	mpkill $n
+else
+	if race($n) != centaur
+		mpkill $n
+	else
+		break
+	endif
+endif
+~
+>fight_prog 25~
+if rand(50)
+	if ispc($r)
+		wear crescent
+		mpechoat $r $I 朝你連續攻擊！
+		skilldrv monehit $r
+		skilldrv monehit $r
+		skilldrv monehit $r
+		skilldrv monehit $r
+		skilldrv monehit $r
+		skilldrv monehit $r
+	endif
+else
+	wear crescent
+	mpecho $I 揮舞著手中的武器！
+	circular
+	mpnowait
+	circular
+	mpnowait
+	circular
+	mpnowait
+endif
+~
+>fight_prog 30~
+if hitprcnt($i) < 20
+berserk
+	if rand(20)
+		wear crescent
+		echoat $n $I 對你作出毀滅性的連續攻擊！
+		frenzy
+	else
+		wear crescent
+		echoat $n $I 用腳朝你狂蹬！
+		kick
+		mpnowait
+		kick
+		mpnowait
+		kick
+		mpnowait
+	endif
+else
+	break
+endif
+~
+>death_prog 100~
+mpforcer here modrvt t0 = 24
+mpmod_qmark scar-commerce scar_adv_crazy v0 = 1
+mpmod_all_qmark $n scar_adv_helping v0 = 5
+mpdel_all_qmark $n scar_adv_helping_start
+mpforce scar-commerce mpechoat $b 傷疤的冒險者(scar adventurer)表情冷靜許多，或許能跟他溝通了。
+if race($n) == centaur
+	mpadd_qmark $n centaur_camp_enemy 300 0 0 0 0 1
+	mpgreward exp $n -38 7000
+else
+	mpgreward exp $n -38 7000
+endif
+~
+|
+#318
+ofcol sentry-plains~
+奧夫卡哨衛(Ofcol sentry)~
+奧夫卡哨衛(Ofcol sentry)四處巡視著，確保哨站的安全.
+~
+每個奧夫卡的守衛都是經過嚴格訓練，尤其是被挑選來看守哨站的，更是精英中的
+精英；配上良好的裝備，以及一流的戰技，將會是你可怕的對手。不過，別擔心，
+他們只會為了保護奧夫卡的人民而對你出手。
+~
+1|2|64 8192 1000 S
+40 10000 0 100d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+S 18 50
+S 19 60
+>repop_prog 100~
+mpat 5 mpoload 620
+mpat 5 mpoload 621
+mpat 5 mpoload 627
+mpat 5 mpoload 630
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == ofcol_cen_talking
+	break
+endif
+if rand(30)
+	if isgood($n)
+		salute $n
+		mpechoat $n $I [1;12m說著「您好，歡迎來到奧夫卡。」[0m
+	else
+		mpechoat $n $I仔細打量著你。
+		mpechoat $n $I [1;12m說著「希望你在奧夫卡不要惹事生非。」[0m
+	endif
+endif
+~
+>tick_prog 100~
+if isfight($i)
+	break
+endif
+if mobcount(319) == 0
+	if is_qmark($i) == sentry_fighting
+		mpdel_qmark self sentry_fighting
+	endif
+endif
+~
+>rand_prog 10~
+if rand(50)
+	mpecho $I查看著南邊的峽谷，以防峽谷中的人馬闖入。
+else
+	mpecho $I查看著周邊的山道，防止不肖之徒進入。
+endif
+~
+>talk_prog topic~
+if is_qmark($n) == ofcol_cen_talking
+	mpechoat $n 他正在忙。
+	break
+endif
+say 最近南方的峽谷中出現了一群人馬(centaur)，他們會掠奪附近的農舍，造成我國不小的損害...
+say 不知道有沒有方法趕走他們。
+~
+>talk_prog centaur~
+if is_qmark($n) == ofcol_cen_talking
+	mpechoat $n 他正在忙。
+	break
+endif
+if is_qmark($n) == cen_clear_timer
+	tell $n 人馬在峽谷中建立起小型的營地作為據點，不時會出來騷擾周邊的農家。
+	tell $n 但前些日子，國內招集一群人去打擊過他們的勢力，讓他們安份許多。
+	break
+endif
+if is_qmark($n) != ofcol_cen_clear
+	if level($n) >= 36
+		mpadd_qmark $n ofcol_cen_talking 2 0 0 0 0 1
+		tell $n 人馬在峽谷中建立起小型的營地作為據點，不時會出來騷擾周邊的農家。
+		tell $n 國內的高官們也為此事感到頭痛，因此正在募集有能之士去趕走人馬。
+		mpcallout 1 look $n
+		mpcallout 3 tell $n 請你去找守衛隊長德瑞克(Derrick)報到吧。
+		mpcallout 3 tell $n 他們就是要找像你一樣有能力的冒險者，
+		mpcallout 3 mpadd_qmark $n ofcol_cen_clear -1 0 0 0 0 0
+		mpcallout 3 mpdel_qmark $n ofcol_cen_talking
+	else
+		tell $n 人馬在峽谷中建立起小型的營地作為據點，不時會出來騷擾周邊的農家。
+	endif
+else
+	tell $n 人馬在峽谷中建立起小型的營地作為據點，不時會出來騷擾周邊的農家。
+endif
+~
+>fight_prog 100~
+if is_qmark($i) != sentry_fighting
+	if mobcount(319) == 0
+		mpadd_qmark self sentry_fighting
+		mpecho 從哨站內衝出幾名哨兵加入戰鬥。
+		mpmload 319
+		mpgroup sentry-plains sentry-post 1
+		mpmload 319
+		mpgroup sentry-plains sentry-post 1
+		mpmload 319
+		mpgroup sentry-plains sentry-post 1
+	endif
+endif
+~
+>fight_prog 100~
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+~
+|
+
+#319
+ofcol sentry-post~
+奧夫卡哨兵(Ofcol sentry)~
+奧夫卡哨兵(Ofcol sentry)正在保護哨站的安全.
+~
+每個奧夫卡的守衛都是經過嚴格訓練，尤其是被挑選來看守哨站的，更是精英中的
+精英；配上良好的裝備，以及一流的戰技，將會是你可怕的對手。不過，別擔心，
+他們只會為了保護奧夫卡的人民而對你出手。
+~
+1|2|64 8192 1000 S
+40 5000 0 100d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+S 16 0
+S 18 50
+S 19 60
+>repop_prog 100~
+mpat 5 mpoload 620
+mpat 5 mpoload 621
+mpat 5 mpoload 627
+mpat 5 mpoload 630
+mpat 5 wear all
+mpadd_qmark self sentry_timer
+~
+>tick_prog 100~
+if isfight($i)
+	break
+endif
+if is_qmark($i) != sentry_timer
+	mpecho $I往哨站內的方向走去。
+	mppurge self
+endif
+if is_qmark($i) == sentry_timer
+	mpdel_qmark self sentry_timer
+endif
+~
+>fight_prog 100~
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+~
+>death_prog 100~
+mpechoat $n $I死前引爆火藥，想跟你同歸於盡。
+mpechoaround $n $I死前引爆火藥，想跟$N同歸於盡。
+mpforcer here modhmv $n 03.25 25 0
+mppurge self
+~
+|
+
+#350
+pet dragon Ravan~
+寵物龍(pet dragon)~
+寵物龍(Ravan)正在這裡周圍跳躍的著並拍打她那可愛的翅膀。
+~
+寵物龍(Ravan) 大約 3 呎。有高的身驅與小而利的牙齒。
+寵物龍(Ravan)正在從地上試著使用她小的翅膀舉起她﹐但是到現在為止還沒有
+成功過。
+~
+131 524424 1000 S
+12 0 0 0d0+0 0d0+0
+0 0
+0 8 2
+R Dragon~
+>greet_prog 20~
+mpecho $I一邊跳躍，一邊揮動著和它身材不成比例的小翅膀
+mpecho 想要飛起來。
+~
+|
+#351
+kahrruh~
+卡拉獸(Kahrruh)~
+卡拉獸(Kahrruh)正在這裡爬行著。
+~
+卡拉獸是北方一種常見的生物，牠的皮膚就如同高山上的雪那般白，而生
+性十分溫馴，在文明本土中是一種神聖的動物。牠的身高站立起來大概兩
+個成年人類男子高，但動作相當緩慢，因此並沒有什麼危險性。
+~
+65 0 200 S
+16 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+#0
+
+
+
+#OBJECTS
+#300
+timian~
+小提米安藥草(timian)~
+提米安藥草(timian)橫躺在這群小綠色的樹葉和粉紅的花中。~
+~
+19 0 1
+1~ 0~ 0~ 0~
+1 5 0
+E
+timian~
+這個藥草有個獨特的香味，也許你應該試吃看看？
+~
+L 1
+C 5
+X herb~
+
+#301
+herbs gyvel herb-plains~
+小珍伯藥草(gyvel)~
+黑色的珍伯藥草(gyvel)橫躺在暗綠色與黑色的樹葉和幾片血紅的花之中。~
+~
+19 0 1
+1~ 0~ 0~ 0~
+1 50 0
+E
+gyvel~
+這藥草聞起來較為特別，可能有毒性。
+~
+L 1
+C 50
+X herb~
+ 
+#302
+ivy~
+小毒常春籐(ivy)~
+常春籐(ivy)橫躺在這裡。~
+~
+19 0 1
+1~ 0~ 0~ 1~
+1 5 0
+E
+ivy~
+你在上面注意到一些小白色的刺。~
+L 1
+C 5
+X herb~
+ 
+#303
+bloody beaker~
+一黑暗的紅色廣口瓶(bloody beaker)~
+一個小廣口瓶(beaker)被放在這裡，有著暗紅的顏色。~
+~
+17 0 1
+2~ 2~ 13~ 0~
+2 50 0
+E
+bloody beaker~
+這廣口瓶是用乾泥土做成的，你隱約可在瓶上看到一個神祕的印記。~
+L 1
+C 50
+X mud~
+
+#304
+wild flowers~
+野生花(wild flowers)~
+一束漂亮的野生花(wild flowers)被丟在這裡。~
+~
+13 1024 16401
+0~ 0~ 0~ 0~
+1 0 0
+E
+wild flowers~
+這些野花很漂亮。
+~
+L 1
+X herb~
+ 
+#307
+amulet~
+奇異的護身符(amulet)~
+一個奇異的護身符(amulet)橫躺在一堆灰塵中。~
+~
+9 192 5
+2~ 0~ 300~ 0~
+1 500 0
+E
+amulet~
+由刻在護身符裡面的那些符號，你得知它屬於一個德魯伊人。它的符號是如此奇異，
+象徵著大自然的神奇。
+~
+A
+21 5
+L 1
+C 500
+X ebony~
+
+#308
+druidic rod~
+德魯伊棍子(druidic rod)~
+棍身上有個德魯伊標誌的長棍(druidic rod)被放在這裡。~
+~
+12 0 16385
+0~ 0~ 0~ 0~
+4 15 0
+E
+druidic rod~
+大約 5 呎長，上面刻有一些奇怪的符號和圖形。
+~
+L 1
+C 15
+X ebony~
+
+#309
+roast rabbit~
+兔子烤肉(roast rabbit)~
+你看見一頓美味的兔子烘烤(roast rabbit)。~
+~
+19 0 1
+24~ 0~ 0~ 0~
+5 40 0
+L 1
+C 40
+X food~
+
+#310
+strange scroll~
+奇異捲軸(strange scroll)~
+一個綠色金屬所製的奇怪捲軸(scroll)放置在這。~
+~
+2 64 16385
+15~ sleep~ blindness~ fireball~
+1 15000 0
+L 1
+C 15000
+X metal~
+
+#311
+clear potion~
+清澈的藥劑(clear potion)~
+清澈的藥劑(clear potion)被放在這裡，包在一堆皮革(leather)中。~
+~
+10 64 1
+20~ detect evil~ detect invis~ detect magic~
+2 2500 0
+E
+clear potion~
+當你仔細檢查藥劑的時候，你注意這個藥劑有許多奇異的地方。
+你感覺這個藥劑應該不是這個物質世界的東西。
+~
+E
+leather~
+在藥劑周圍包裝的皮革開始有退色脫落的現象。
+~
+L 1
+C 2500
+X liquid~
+
+#312
+scroll jhyfrdow~
+刻有"jhyfrdow"標誌的捲軸~
+一個捲軸(scroll)在這裡。~
+~
+2 0 1
+0~  ~  ~  ~
+1 500 0
+E
+jhyfrdow~
+刻有"jhyfrdow"標誌的捲軸看起來非常古老。
+當你檢查之時它你注意到它用很原始的筆法畫出一個正在進行某種儀式的男人。
+~
+E
+scroll~
+圖畫中的人們聚集在一起，如同石巨人群一般，敬拜著龐大的蟲像人。
+圖畫中，他們正在犧牲一些他們自己的物品。
+~
+L 1
+C 500
+X wool~
+
+#313
+ofcol flag~
+奧夫卡旗幟(Flag of Ofcol)~
+一面奧夫卡的旗幟(flag)被丟在這裡。~
+~
+1 256 1
+0~ 0~ -1~ 0~
+5 50000 0
+E
+ofcol flag~
+這個旗幟上的圖案象徵著奧夫卡的商人。
+~
+A
+1 -1
+A
+5 2
+A
+13 150
+X fiber~
+
+#314
+ofcol flag~
+奧夫卡旗幟(Flag of Ofcol)~
+一面奧夫卡的旗幟(flag)被丟在這裡。~
+~
+1 256 1
+0~ 0~ -1~ 0~
+5 50000 0
+E
+ofcol flag~
+這個旗幟上的圖案象徵著奧夫卡的貴族。
+~
+A
+2 -1
+A
+1 2
+A
+18 2
+A
+13 60
+X fiber~
+ 
+#315
+ofcol flag~
+奧夫卡旗幟(Flag of Ofcol)~
+一面奧夫卡的旗幟(flag)被丟在這裡。~
+~
+1 256 1
+0~ 0~ -1~ 0~
+5 50000 0
+E
+ofcol flag~
+這個旗幟上的圖案象徵著奧夫卡的敵對勢力。
+~
+A
+4 -2
+A
+2 1
+A
+14 70
+A
+39 -10
+X fiber~
+
+#316
+voulge~
+槍斧(voulge)~
+槍斧(voulge)靜靜的躺在地上。~
+~
+5 64 1|8192
+200~ 20~ 20~ 9~
+25 20000 0
+L 30
+A 18 10
+A 19 8
+X iron~
+
+#317
+centaur shortbow~
+人馬短弓(centaur shortbow)~
+人馬短弓(centaur shortbow)靜靜的躺在地上。~
+~
+5 64 1|32768
+-1~ 30~ 40~ 14~
+25 1000 0
+L 30
+A 18 2
+A 19 2
+A 43 17
+X wooden~
+
+#318
+fraxinus staff~
+白臘手杖(fraxinus staff)~
+白臘手杖(fraxinus staff)靜靜的躺在地上。~
+~
+5 64 1|8192
+200~ 0~ 0~ 7~
+3 10000 0
+L 30
+A 3 1
+A 44 18
+X wooden~
+
+#319
+breach pike~
+破甲長槍(breach pike)~
+一把破甲長槍(breach pike)靜靜的躺在地上。~
+~
+5 64 1|8192
+200~ 20~ 25~ 2~
+30 1000 0
+L 30
+A 19 10
+A 43 15
+X iron~
+
+#320
+emblematic healer drop~
+治癒師之証(emblematic of healer)~
+一個水藍色的吊飾(drop)掉落在地上。~
+~
+9 1|2|32|256|16777216|134217728 1|4
+0~ 0~ 200~ 0~
+1 10000 0
+L 30
+E
+emblematic healer drop~
+一條項鍊掛著水藍色的寶石所形成的吊飾，平時戴在身上能將一小部分魔力
+蘊藏(reserve)至寶石中；在急需使用時就可以從中取出(restore)。
+~
+A 12 200
+A 40 2
+P 128|256|65536|1048576
+X sapphire~
+>obj_command reserve default~
+if is_inv_obj($n) == 320
+	if is_equ_obj($n) == 320
+		if objval3($o) == 200
+			echoat $n 你將部分魔力儲入，$O散發出淡淡的[1;13m魔力[m之光。
+			oset self extra | 64
+			oset self value3 = 201
+			modhmv $n 11.500 500 0
+		else
+			echoat $n $O內已經存有魔力了。
+		endif
+	else
+		echoat $n 你要將$O戴在身上才能保存魔力。
+	endif
+else
+	break
+endif
+~
+>obj_command restore default~
+if is_inv_obj($n) == 320
+	if is_equ_obj($n) == 320
+		if objval3($o) == 201
+			echoat $n 儲存在$O中的魔力，瞬間轉移到你身上。
+			oset self extra r 64
+			oset self value3 = 200
+			modhmv $n 12.300 300 0
+		else
+			echoat $n $O內已經沒有魔力了。
+		endif
+	else
+		echoat $n 你要將$O戴在身上才能提取魔力。
+	endif
+else
+	break
+endif
+~
+|
+
+#321
+crescent ax~
+新月戰斧(crescent ax)~
+一把新月戰斧(crescent ax)靜靜的躺在地上。~
+~
+5 64 1|32768
+500~ 40~ 44~ 9~
+55 20000 0
+L 30
+A 17 -40
+A 19 12
+A 43 20
+P 8|16|2048|262144|524288|1048576
+X iron~
+
+#322
+junks-plains~
+一堆廢物(junk)~
+一堆廢棄物(junk)堆在地面上.~
+~
+13 0 0
+0~ 0~ 0~ 0~
+100 20000 0
+L 30
+E
+junks-plains~
+這堆廢物是人馬掠奪後所清出不要的東西。在裡面你可以看見
+廢木頭、廢石塊、廢金屬，甚至是廢武器；也許認真的找，從
+中能發現(search)些好東西也不一定呢。
+~
+X wooden~
+
+#323
+searched-plains junk-plains~
+一堆被翻過的廢物(searched junk)~
+一堆剛被人翻過的廢棄物(junk)堆在地面上.~
+~
+13 0 0
+0~ 0~ 0~ 0~
+100 20000 0
+L 30
+E
+searched-plains junk-plains~
+這堆廢物是人馬掠奪後所清出不要的東西。在裡面你可以看見
+廢木頭、廢石塊、廢金屬，甚至是廢武器。看起來好像才剛被
+人翻找過。
+~
+X wooden~
+
+#324
+emerald-plains bracelet-plains~
+輝玉手鐲(emerald bracelet)~
+一個斷裂的寶石手鐲(bracelet)被放在這裡.~
+~
+9 0 1
+0~ 0~ 0001100~ 0~
+1 2000 0
+L 30
+A 40 5
+A 44 50
+E
+emerald bracelet~
+這是一個用綠寶石作成的手鐲。雖然斷裂了，但你還是發現
+鐲內刻著一排看不清楚的字，或許可以拿給冒險者看看？
+~
+X emerald~
+
+#325
+mage boots~
+魔導師之靴(mage boots)~
+一雙靴子(boots)被放在這裡.~
+~
+9 64|256 1|64
+0~ 0~ 200~ 0~
+15 15000 0
+L 30
+A 3 1
+A 40 1
+E
+mage boots~
+這是一雙穿起來不錯的靴子。
+~
+X leather~
+
+#0
+
+
+
+#ROOMDATA
+#300
+平原上的小徑~
+當你站在這片美麗而廣大的平原上，你感到陣陣強烈的風拂過你的頭髮。你
+可以沿著平原繼續朝東方，北方和西方走，另外往南望去可以看見史卡拉貝周圍
+的小路。
+~
+0 0 2
+D0
+你看見綠草如茵的平原。
+~
+~
+0 -1 315
+D1
+你毫無戒心，繼續走在平原上的小路。
+~
+~
+0 -1 301
+D2
+向南方你看見史卡拉貝的城牆。
+~
+~
+0 -1 3904
+D3
+你看見野草茂盛的平原。
+~
+~
+0 -1 316
+S
+#301
+平原上的小徑~
+你正走在粗糙的平原小徑上。你感覺當你在這裡美麗的廣大無邊平原時，有
+陣強烈的風吹穿過你的頭髮。你可沿著平原繼續東方和西方走。
+~
+0 0 2
+D1
+你毫無戒心，繼續走在平原上的小路。
+~
+~
+0 -1 302
+D3
+你毫無戒心，繼續走在平原上的小路。
+~
+~
+0 -1 300
+S
+#302
+平原上的小徑~
+你正走在粗糙的平原小徑上。
+你感覺當你在這裡美麗的廣大無邊平原，有個強烈的風吹穿過你的頭髮。
+你可沿著平原繼續北方和西方走，而且你往南方可看見史卡拉貝周圍的小路。
+~
+0 0 2
+D0
+你毫無戒心，繼續走在平原上的小路。
+~
+~
+0 -1 303
+D3
+你毫無戒心，繼續走在平原上的小路。
+~
+~
+0 -1 301
+S
+#303
+平原上的小徑~
+你正走在粗糙的平原小徑上。
+你感覺當你在這裡美麗的廣大無邊平原，有個強烈的風吹穿過你的頭髮。
+小徑引導北方和南方。到東方的和西方的你可看到那些茂盛的平原。
+~
+0 0 2
+D0
+你毫無戒心，繼續走在平原上的小路。
+~
+~
+0 -1 304
+D1
+到那東方的你注意到那些茂盛的平原。
+~
+~
+0 -1 317
+D2
+你毫無戒心，繼續走在平原上的小路。
+~
+~
+0 -1 302
+D3
+到那西方的你注意到比剛剛更茂盛的平原。
+~
+~
+0 -1 315
+S
+#304
+平原上的小徑~
+你正走在粗糙的平原小徑上。
+小徑引導你要往北方和南方。
+~
+0 0 2
+D0
+小徑繼續北方開始有一些小的山坡地出現。
+~
+~
+0 -1 305
+D2
+小徑引導你要往城鎮的南方。
+~
+~
+0 -1 303
+S
+#305
+平原上的小徑~
+你正走在粗糙的平原小徑上。
+你感覺當你在這裡美麗的廣大無邊平原，有個強烈的風吹穿過你的頭髮。
+往東方你注意到那些茂盛的平原。
+小徑往北方延伸進入小的山坡地之內和也可繼續往南方。
+
+~
+0 0 2
+D0
+小徑繼續往那些山坡地之內進去。
+~
+~
+0 -1 306
+D1
+你看見在這裡茂盛的平原。
+~
+~
+0 -1 321
+D2
+T小徑繼續向 史卡拉貝方向 。
+~
+~
+0 -1 304
+D3
+你看見在這裡茂盛的平原。
+~
+~
+0 -1 320
+S
+#306
+山坡地裡面的小徑~
+你正在快速穿過那些山坡地的小徑上。
+你感覺當你在這裡美麗的廣大無邊平原，有個強烈的風吹穿過你的頭髮。
+從北方你感覺有一個新世界的樣子，小徑繼續往東方和南方。
+~
+0 0 2
+D0
+你看見在這裡茂盛的平原和如水晶清澈般的水。
+~
+~
+0 -1 326
+D1
+小徑在這裡向東方繼續延伸。
+~
+~
+0 -1 307
+D2
+你沿著平原裡面的小徑上穿過了那些山坡地。
+~
+~
+0 -1 305
+S
+#307
+山坡地裡面的小徑~
+你正在那些山坡地的小徑上步行。
+你感覺這裡的風比較一般的更美好。
+你可隨著小徑的東方或西方走去。
+~
+0 0 2
+D1
+小徑繼續山坡地延伸
+~
+~
+0 -1 308
+D3
+往西部小徑有一彎路往南方。
+~
+~
+0 -1 306
+S
+#308
+山坡地裡面的小徑~
+你正在狹窄的山坡地小徑上步行。
+當你在這裡美麗的廣大無邊平原行走時，有個強烈的風吹穿過你的頭髮。
+小徑去北方和西方。
+~
+0 0 2
+D0
+藉著山坡地狹窄的路徑離開在這裡。
+~
+~
+0 -1 309
+D3
+往西方的你能看見小徑的延伸。
+~
+~
+0 -1 307
+S
+#309
+山坡地裡面的小徑~
+你正在狹窄的山坡地小徑上步行。
+從西方你感覺有一個新世界的樣子，小徑繼續往東方和南方。
+~
+0 0 2
+D1
+你看見小徑在山坡地延伸著。
+~
+~
+0 -1 310
+D2
+你看見小徑在山坡地延伸著。
+~
+~
+0 -1 308
+D3
+你看見在這裡茂盛的平原和如水晶清澈般的水。
+~
+~
+0 -1 326
+S
+#310
+山坡地裡面的小徑~
+你正在東西向的長徑上步行。
+這裡是綠意茂盛的山坡地。
+一些密集的植物強迫你到北方。
+~
+0 0 2
+D0
+你在山坡地上你看到如此多的植物。
+~
+~
+0 -1 327
+D1
+往東方的你注意小徑是成 T 型的方向。
+~
+~
+0 -1 311
+D3
+你剛剛藉著那些山坡地看見小徑。
+~
+~
+0 -1 309
+S
+#311
+山坡地裡面的小徑~
+你正在沿著變窄山坡地長徑上步行。
+往東方你看見如T型的小徑，另外還和可沿著西方到遠方的小徑。
+
+~
+0 0 2
+D1
+你可以往T型的小徑去。
+~
+~
+0 -1 312
+D3
+你能沿著平原看見較長的小徑。
+~
+~
+0 -1 310
+S
+#312
+小徑樞紐~
+你站在三條小徑之間的路口上。
+往西方你能沿著長且已經變窄的山坡地小徑步行。
+往北方是到奧夫卡的村莊，而向南方則是古老的寬廣的小徑。
+~
+0 0 2
+D0
+這條寬道路是通往奧夫卡的快速道路。
+~
+~
+0 -1 313
+D2
+在這裡隱約地有一個古老小徑。
+~
+~
+0 -1 332
+D3
+你能看見那長且已經變窄的山坡地小徑。
+~
+~
+0 -1 311
+S
+#313
+山道的交匯處~
+這裡是北方平原山道的交會處。就地勢上而言還算是相對較高。你往北
+邊眺望，在不遠處你看見一座小型的檢哨站，再往更北邊看去，有一座小村
+莊。而在你的東北方，則是一座非常雄偉的城市，而這座輝煌的都市正是充
+滿榮光與驕傲的奧夫卡！南方為北方平原的山道，向西為山坡地道路，東方
+的山坡地則過於險峻不能攀登，往北方的路則可以進入奧夫卡。
+~
+0 0 2
+D0
+道路向奧夫卡延伸。
+~
+~
+0 -1 314
+D2
+你能往南方向看見 T 型道路。
+~
+~
+0 -1 312
+D3
+你認為你能攀登這些山坡地。
+~
+~
+0 -1 327
+S
+#314
+奧夫卡外~
+在你的眼前有一座小型的檢哨站，外面站著一個衛兵。一旦通過檢哨站
+後，就正式進入奧夫卡的領土了。在奧夫卡境內犯法的刑責比起自由的史卡
+拉貝城來得更重，偷條麵包都可能面臨死刑。雖然法律上有失人性，但不可
+否認，現今奧夫卡的輝煌也是靠這些鐵血的律法所建立起來的。
+~
+0 0 2
+D0
+哨所外的招牌：
+　　陌生人，我們歡迎你來到和平的奧夫卡。
+~
+~
+0 -1 5550
+D2
+在這裡你可看見交錯的道路。
+~
+~
+0 -1 313
+S
+#315
+賈蘿山丘~
+你看見在這裡茂盛的平原。  
+在這小山丘你能看見二個賈蘿人，與懸掛著薄紗織品且寬鬆長袍的腐爛人類。
+且在這裡也有一標誌(sign)。
+~
+0 0 4
+E
+sign~
+標誌寫著:
+  忠誠的史卡拉貝市民，在這世界上有二個異教保持這個世界的光明和黑暗的平衡， 有時他們自己對不朽的神他們呼叫著訴說他們的忿怒.......。
+                                    -- 史密斯
+~
+D0
+平原向北方延伸。
+~
+~
+0 -1 320
+D1
+往東方你能在平原看見一個小徑。
+~
+~
+0 -1 303
+D2
+往南方你能在平原看見一個小徑。
+~
+~
+0 -1 300
+D3
+平原向西方延伸。
+~
+~
+0 -1 318
+D4
+你看見奇怪的月之門在這裡！
+~
+月之門~
+1 -1 2400
+S
+#316
+茂盛的平原。~
+你走在這種滿茂盛的藥草平原之中。
+強烈的風呼呼地吹，從山峰巔上往北方你能看見那些遠遠的山坡地和其他地方。
+~
+0 0 4
+D0
+平原向北方延伸。
+~
+~
+0 -1 318
+D1
+當你在往東方的小徑的注意看的時候。
+~
+~
+0 -1 300
+S
+#317
+長滿青草的草原~
+你走在這種滿茂盛的藥草平原之中。強烈的風呼呼吹著。從山峰巔上往北
+方你能看見那些山坡地和其他地方。史卡拉貝城市是在南方，但路途是如此險峻
+傾斜。
+~
+0 0 4
+D1
+平原向東方延伸。
+~
+~
+0 -1 338
+D2
+這非常險峻的傾斜使你不能下去，它可能讓你受傷或死亡。
+~
+~
+0 -1 345
+D3
+小徑穿過了這些平原。
+~
+~
+0 -1 303
+S
+#318
+長滿青草的草原~
+你走在這種滿茂盛的平原之中。有陣強烈的風吹拂。
+從山峰巔上往遠北方你能看見那些山坡地和其他地方。
+~
+0 0 4
+D0
+平原向北方延伸。
+~
+~
+0 -1 319
+D1
+平原向東方延伸。
+~
+~
+0 -1 315
+D2
+平原向南方延伸。
+~
+~
+0 -1 316
+S
+#319
+滿茂盛的平原~
+你走在這種滿茂盛的藥草平原之中。有陣強烈的風吹拂著。從山峰巔上往遠北
+方你能看見那些山坡地和其他地方。
+~
+0 0 4
+D0
+從山峰巔上往遠北方你能看見那些山坡地和其他地方。
+~
+~
+0 -1 330
+D1
+平原向東方延伸。
+~
+~
+0 -1 320
+D2
+平原向南方延伸。
+~
+~
+0 -1 318
+S
+#320
+滿茂盛的平原~
+你走在這種滿茂盛的藥草平原之中。有陣強烈的風吹拂著。從山峰巔上往遠北
+方你能看見那些山坡地和其他地方。
+~
+0 0 4
+D0
+平原延伸進入小的山坡地之內，
+~
+~
+0 -1 322
+D1
+從在這裡平原看見東方的蜿蜒的小徑。
+~
+~
+0 -1 305
+D2
+平原向南方延伸。
+~
+~
+0 -1 315
+D3
+平原向西方延伸。
+~
+~
+0 -1 319
+S
+#321
+茂盛的平原~
+你走入滿茂盛的平原之中。風非常強烈。
+~
+0 0 4
+D2
+平原向南方延伸。
+~
+~
+0 -1 338
+D3
+小徑穿過了這些平原。
+~
+~
+0 -1 305
+S
+#322
+茂盛山丘~
+你走入茂盛山丘山麓的平原北方。強烈的風刮著。
+從山峰巔上往遠北方你能看見那些山坡地和其他地方。
+~
+0 0 4
+D0
+整個山坡地沿著北方延伸形成一個大的山坡地。
+~
+~
+0 -1 324
+D2
+整個山坡地沿著南方延伸則是進入平原之內。
+~
+~
+0 -1 320
+D3
+整個山坡地沿著西方延伸。
+~
+~
+0 -1 330
+S
+#323
+險峻的山坡地~
+你走在險峻的山坡地。 在這裡移動是較為難。
+往北方你能看見綠意茂盛的山谷。
+~
+0 0 4
+D0
+你看見向山谷的小徑。
+~
+~
+0 0 7800
+D1
+整個山坡地沿著東方延伸。
+~
+~
+0 -1 324
+D2
+在地平線之上﹐你能看見 史卡拉貝 的城市。
+~
+~
+0 -1 330
+S
+#324
+險峻的山坡地~
+你正在走在險峻的山坡地。 在這裡移動是較為難。
+往北的遠方看你能發現那些比你所站的位置的山還高的山谷。
+在這種植滿松樹。
+~
+0 0 4
+E
+山脈~
+這些山脈感覺像是黑暗且活著的山，和天空成為對比的色調。
+~
+E
+松樹林~
+漫遊這些松樹所成的森林，一路感覺無比的安靜。
+~
+D0
+小徑呈向上的路往山上去。
+~
+~
+0 -1 901
+D1
+整個山坡地沿著東方延伸。
+~
+~
+0 -1 325
+D2
+向下則是往南方延伸的山坡地。在地平線上﹐你能看見 史卡拉貝 的城市。
+~
+~
+0 -1 322
+D3
+整個山坡地沿著西方延伸。
+~
+~
+0 -1 323
+S
+#325
+險峻的山坡地~
+你正在走在險峻的山坡地。 在這裡移動是較為難。
+往北的遠方看你能發現那些比你所站的位置的山還高的山谷。
+這裡有一些松樹。
+~
+0 0 4
+D1
+整個山坡地沿著東方延伸進入小山之內。
+~
+~
+0 -1 326
+D3
+整個山坡地沿著西方延伸。
+~
+~
+0 -1 324
+S
+#326
+一個湖泊~
+你正站在山坡地所形成的湖旁邊。 這湖水清澈且寒冷。
+險峻的傾斜往北方愈來愈傾斜且進入山坡地之內。在他們之後是一座山脈。
+~
+0 0 4
+E
+pool~
+這池水如水晶清澈 但是當你注意看湖水的內部你不能看見底部...
+心想它一定是很深的不得了。
+~
+D1
+往東方的你看見進入山坡地裡面的小徑。
+~
+~
+0 -1 309
+D2
+往南方蜿蜒的小徑上可進入平原之內。
+~
+~
+0 -1 306
+D3
+整個山坡地沿著西方延伸。
+~
+~
+0 -1 325
+S
+#327
+山坡地~
+你正在山坡地步行。在這裡移動是較為難。
+往北的遠方看你能發現那些比你所站的位置的山還高的山谷。
+這裡種了一些松樹。
+~
+0 0 4
+D1
+沿著東方是一個延伸至整個山坡地的小路徑。
+~
+~
+0 -1 313
+D2
+向下則是往南方延伸的山坡地。
+~
+~
+0 -1 310
+S
+#330
+山坡地的小屋之前~
+你正在山坡地站立。在西方，你看見藏著在小山坡地的松樹之中的小屋。
+到北方你能看見一些山坡地, 和一些針葉林。更遠你看得見山的峰巔。
+~
+0 0 4
+D0
+險峻的山坡地看似不容易攀登
+~
+~
+0 -1 323
+D1
+整個山坡地沿著西方延伸。
+~
+~
+0 -1 322
+D2
+往南方山坡地延伸進入平原之內且更往南方伸去。
+~
+~
+0 -1 319
+D3
+在這裡你看見小的破舊小屋，在這裡一定是正住著一位隱士。
+~
+門~
+1 -1 331
+S
+#331
+隱士的小屋~
+你在隱士的小屋之內。小屋雖很老，但是卻讓人覺得很整齊。
+來自平原的強風陣陣灌入，門外的山坡地中且有危險的畜牲居住。
+在這裡有個小的壁爐。
+~
+0 8 0
+E
+壁爐~
+隱士在這裡烹調。
+~
+D1
+透過門﹐你能看見那些山坡地。
+~
+門~
+1 -1 330
+S
+#332
+古老小徑~
+你正在向古老的小徑上行走著。被依希的樹葉和枯枝隱蔽著的小徑。
+往北方你能看見 T 型道路，而且小徑繼續向南方延伸。
+~
+0 0 3
+D0
+當你往北方你看見T 型道路之時。
+~
+~
+0 -1 312
+D2
+古老小徑穿過那些平原繼續延伸。
+~
+~
+0 -1 333
+S
+#333
+古老小徑~
+你站在通往北方和南方的古老小徑上，東邊有條似乎是最近
+才剛開闢出來的小路。
+~
+0 0 3
+D0
+你看見了古老小徑.
+~
+~
+0 -1 332
+D1
+新開闢的小徑.
+~
+~
+0 -1 346
+D2
+你小心地順著小徑而且查看有沒有立即的危險。
+~
+~
+0 -1 334
+S
+#334
+小徑的岔口~
+你眼前的是一片荒蕪的大峽谷，小徑的道路順著峭壁邊緣往
+西邊延伸。南面的景色被漫天飛揚的黃土遮蔽，你只能看見險峻
+的大地裂縫。在這裡你可以從垂直的峭壁上攀登進入，如果你夠
+有勇氣的話....
+~
+0 4 2
+D0
+你看見古老小徑.
+~
+~
+0 -1 333
+D3
+你看見古老小徑.
+~
+~
+0 -1 350
+D5
+較為平緩的峭壁，你似乎可以爬下去.
+~
+~
+0 -1 335
+S
+#335
+古老的峽谷~
+你從道路末端的峭壁進入峽谷中，周圍的環境除了黃土跟砂
+石外，就只剩下抬頭所見的灰矇天空。你開始懷疑，如果貿然的
+走進峽谷中，還能不能安然的走出來。
+~
+0 65536 2
+D1
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 336
+D4
+較為平緩的峭壁，你似乎可以爬上去.
+~
+~
+0 -1 334
+S
+#336
+古老的峽谷~
+你正在峽谷中，周圍的環境除了黃土跟砂石外，只有抬頭所
+見的灰矇天空。在一成不變的景物裡，你開始迷失了方向....
+~
+0 65536 2
+D1
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 339
+D2
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 337
+D3
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 335
+S
+#337
+古老的峽谷~
+你正在峽谷中，周圍的環境除了黃土跟砂石外，只有抬頭所
+見的灰矇天空。在一成不變的景物裡，你開始迷失了方向....
+~
+0 65536 2
+D0
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 336
+D1
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 339
+D2
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 340
+S
+#338
+茂盛的平原。~
+你走在這種滿茂盛的藥草平原之中。強烈的風吹拂著。
+從山峰巔上往遠北方你能看見那些山坡地和其他地方。
+~
+0 0 4
+D0
+平原向北方延伸。
+~
+~
+0 -1 321
+D3
+平原向東方延伸。
+~
+~
+0 -1 317
+S
+#339
+古老的峽谷~
+你正在峽谷中，周圍的環境除了黃土跟砂石外，只有抬頭所
+見的灰矇天空。在一成不變的景物裡，你開始迷失了方向....
+~
+0 65536 2
+D0
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 336
+D2
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 337
+D3
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 340
+S
+#340
+古老的峽谷~
+你正在峽谷中，周圍的環境除了黃土跟砂石外，只有抬頭所
+見的灰矇天空。在一成不變的景物裡，你開始迷失了方向....
+~
+0 65536 2
+D0
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 337
+D1
+峽谷中，除了峭壁還是峭壁.
+~
+~
+0 -1 339
+D3
+峽谷中，除了峭壁還是...疑？似乎在不遠處有火光.
+~
+~
+0 -1 341
+S
+#341
+營地~
+這裡是屬於人馬的營地，在隨地你都可以看見大小的帳篷跟
+升起的營火，木頭燃燒的黑煙，讓你想起在峽谷上依稀看見的黑
+煙，就是從這裡冒出來的。但先不管這些，你該考慮的是，如果
+你不是人馬族的話，那就要小心點了。
+~
+0 65536 2
+D0
+你看到一些小帳蓬跟許多營火.
+~
+~
+0 -1 342
+D1
+跟迷宮一樣的峽谷.
+~
+~
+0 -1 340
+D2
+你看到一些小帳蓬跟許多營火.
+~
+~
+0 -1 343
+D3
+你看到遠方有一個巨大的帳篷.
+~
+~
+0 -1 344
+>room_command search junk~
+if robjcount(322) > 0
+	if rand(10)
+		echoat $n 你開始翻找這堆廢物....
+		echoaround $n 你看到$N在翻著一旁的廢棄物。
+		purge junks-plains
+		callout 2 echoat $n 你找到了一雙靴子。
+		callout 2 echoaround $n $N好像發現了什麼！
+		callout 2 oload 325 36 $n target
+		callout 2 oload 323 1 floor
+		callout 2 modrvt timer = 24
+	else
+		echoat $n 你開始翻找這堆廢物....
+		echoaround $n 你看到$N在翻著一旁的廢棄物。
+		purge junks-plains
+		callout 2 echoat $n 你什麼也沒發現....
+		callout 2 echoaround $n $N露出一臉失望的樣子...
+		callout 2 oload 323 1 floor
+		callout 2 modrvt timer = 24
+	endif
+else
+	echoat $n 這堆東西已經被翻過了。
+endif
+~
+>room_time 100~
+if roomtimer($0) == 0
+	if robjcount(322) == 0
+		purge searched-plains
+		oload 322 1 floor
+	else
+		break
+	endif
+else
+	break
+endif
+~
+>room_enter 127 100~
+if is_qmark($n) == scar_adv_helping 100001
+	force scar-commerce hmm
+	force scar-commerce tell $n 看來這裡就是人馬營地了，搜索看看有沒有冒險者們的下落。
+	mod_qmark $n scar_adv_helping v0 = 2
+	break
+endif
+if is_qmark($n) == scar_adv_helping 100002
+	if robjcount(322) > 0
+		force scar-commerce tell $n 搜尋(search)地上的廢棄物，也許能發現什麼線索...
+	endif
+endif
+~
+|
+S
+#342
+營地~
+這裡是屬於人馬的營地，在隨地你都可以看見大小的帳篷跟
+升起的營火，木頭燃燒的黑煙，讓你想起在峽谷上依稀看見的黑
+煙，就是從這裡冒出來的。但先不管這些，你該考慮的是，如果
+你不是人馬族的話，那就要小心點了。
+~
+0 65536|1048576 2
+D2
+你看到一些小帳蓬跟許多營火.
+~
+~
+0 -1 341
+>room_command search junk~
+if robjcount(322) > 0
+	if is_qmark($n) == scar_adv_helping 100002
+		echoat $n 你開始翻找這堆廢物....
+		purge junks-plains
+		echoaround $n 你看到$N在翻著一旁的廢棄物。
+		callout 2 echoat $n 你找到了一只刻有名子的手鐲。
+		callout 2 echoaround $n $N好像發現了什麼！
+		callout 2 mod_qmark $n scar_adv_helping v0 = 3
+		callout 2 oload 324 36 $n target
+		callout 2 oload 323 1 floor
+		callout 2 modrvt timer = 24
+	else
+		echoat $n 你沒事翻一堆垃圾幹嘛？
+	endif
+else
+	echoat $n 這堆東西已經被翻過了。
+endif
+~
+>room_time 100~
+if roomtimer($0) == 0
+	if robjcount(322) == 0
+		if robjcount(323) != 0
+			purge searched-plains
+		endif
+		oload 322 1 floor
+	else
+		break
+	endif
+else
+	break
+endif
+~
+>room_enter 127 100~
+if is_qmark($n) == scar_adv_helping 100002
+	if robjcount(322) > 0
+		force scar-commerce tell $n 搜尋(search)地上的廢棄物，也許能發現什麼線索...
+	endif
+endif
+~
+|
+S
+#343
+營地~
+這裡是屬於人馬的營地，在隨地你都可以看見大小的帳篷跟
+升起的營火，木頭燃燒的黑煙，讓你想起在峽谷上依稀看見的黑
+煙，就是從這裡冒出來的。但先不管這些，你該考慮的是，如果
+你不是人馬族的話，那就要小心點了。
+~
+0 65536 2
+D0
+你看到一些小帳蓬跟許多營火.
+~
+~
+0 -1 341
+>room_command search junk~
+if robjcount(322) > 0
+	if rand(10)
+		echoat $n 你開始翻找這堆廢物....
+		purge junks-plains
+		echoaround $n 你看到$N在翻著一旁的廢棄物。
+		callout 2 echoat $n 你找到了一雙靴子。
+		callout 2 echoaround $n $N好像發現了什麼！
+		callout 2 oload 325 36 $n target
+		callout 2 oload 323 1 floor
+		callout 2 modrvt timer = 24
+	else
+		echoat $n 你開始翻找這堆廢物....
+		purge junks-plains
+		echoaround $n 你看到$N在翻著一旁的廢棄物。
+		callout 2 echoat $n 你什麼也沒發現....
+		callout 2 echoaround $n $N露出一臉失望的樣子...
+		callout 2 oload 323 1 floor
+		callout 2 modrvt timer = 24
+	endif
+else
+	echoat $n 這堆東西已經被翻過了。
+endif
+~
+>room_time 100~
+if roomtimer($0) == 0
+	if robjcount(322) == 0
+		purge searched-plains
+		oload 322 1 floor
+	else
+		break
+	endif
+else
+	break
+endif
+~
+>room_enter 127 100~
+if is_qmark($n) == scar_adv_helping 100002
+	if robjcount(322) > 0
+		force scar-commerce tell $n 搜尋(search)地上的廢棄物，也許能發現什麼線索...
+	endif
+endif
+~
+|
+S
+#344
+大帳篷前~
+這裡是屬於人馬的營地，在隨地你都可以看見大小的帳篷跟
+升起的營火，木頭燃燒的黑煙，讓你想起在峽谷上依稀看見的黑
+煙，就是從這裡冒出來的。但先不管這些，你該考慮的是，如果
+你不是人馬族的話，那就要小心點了。在西邊你看到一個不同於
+其他營帳的大型帳篷，在裡面的可能是地位較高的人馬。
+~
+0 4|65536|1048576 2
+D1
+你看到一些小帳蓬跟許多營火.
+~
+~
+0 -1 341
+D3
+你看到一個巨大的帳篷，裡面充滿危險的氣息.
+~
+~
+1|2 -1 349
+>room_enter 127 100~
+if mobcount(317) == 1
+	echoat $n 你感受到一股強大的壓迫感....
+	if is_qmark($n) == scar_adv_helping 100002
+	or is_qmark($n) == scar_adv_helping 100003
+		force scar-commerce tell $n 前方有點危險，還是暫時先搜索營地比較好。
+		break
+	else
+		break
+	endif
+else
+	break
+endif
+~
+|
+S
+#345
+傾斜~
+哇哇哇啊啊！！！！！你一個失足就滑倒了！！！！
+　
+哇哇哇.......你從山丘上不斷的往下滑落！！
+啊啊啊啊！！！完全煞不住自己的身體呀！！！
+　
+你的身體不受控制！
+只能不斷的往下滑落！！
+　
+　
+　
+　
+　
+你終於停止滑落
+　
+但也到達谷底了，這裡完全沒有出口。
+看來只能祈求天神讓你平安回家了。
+~
+0 4 2
+S
+#346
+新開闢的小徑~
+這是一條最近才剛被開闢出來的小徑，道路兩旁盡是一片荒煙蔓草。
+~
+0 0 3
+D1
+古老小徑.
+~
+~
+0 -1 347
+D3
+新開闢的小徑.
+~
+~
+0 -1 333
+S
+#347
+新開闢的小徑~
+這是一條最近才剛被開闢出來的小徑，道路兩旁盡是一片荒煙蔓草。
+~
+0 0 3
+D1
+新開闢的小徑.
+~
+~
+0 -1 348
+D3
+新開闢的小徑.
+~
+~
+0 -1 346
+S
+#348
+新開闢的小徑~
+這是一條最近才剛被開闢出來的小徑，道路兩旁盡是一片荒煙蔓草。
+~
+0 4 3
+D1
+營地.
+~
+~
+0 -1 348
+D3
+新開闢的小徑.
+~
+~
+0 -1 347
+>room_mask east default~
+if ispc($n)
+        if is_qmark($n) > rebel_questmark 100004
+                transfer $n 64168
+                at 64168 force $n look
+        else
+                transfer $n 64101
+                at 64101 force $n look
+        endif
+endif
+~
+|
+S
+#349
+大帳篷~
+待在這個巨大帳篷內的是營地首領；比起其它的人馬，他看
+起更加的巨大，當然腿腳也更有力！相信能夠成為營地首領
+的他，應該不會只是個裝飾；如果你不是人馬族的話，對於
+冒失闖進帳篷中的你，今天還真是走八輩子的霉運了。
+~
+0 4|65536|1048576 0
+D1
+你看到一些小帳蓬跟許多營火.
+~
+~
+1|2 -1 344
+>room_time 100~
+if roomtimer($0) == 0
+	if rnplayer($) == 0
+		if mobcount(317) == 0
+			mload 317
+		else
+			break
+		endif
+	else
+		modrvt t0 + 2
+	endif
+else
+	break
+endif
+~
+>room_enter 2 100~
+if mobcount(317) == 1
+	if is_qmark($n) == scar_adv_pullback
+		echoat $n 傷疤的冒險者(scar adventurer)快速的把你拉了出帳篷。
+		force scar-commerce say 不是跟你說很危險了嗎？這樣冒然闖進去只是找死！
+		transfer $n 344
+		transfer scar-commerce 344
+	else
+		break
+	endif
+else
+	break
+endif
+~
+|
+S
+
+#350
+古老山道~
+你踏穩步伐走在一條通來東、西方的古老山道上。南側是陡
+峭的山崖，失足摔落可不是鬧著玩的。
+~
+0 0 3
+D1
+你看見了古老小徑.
+~
+~
+0 -1 334
+D3
+你看見了古老山道.
+~
+~
+0 -1 351
+S
+
+#351
+古老山道~
+你踏穩步伐走在一條通來東、西方的古老山道上。南側是陡
+峭的山崖，失足摔落可不是鬧著玩的。
+~
+0 0 3
+D1
+你看見了古老山道.
+~
+~
+0 -1 350
+D3
+你看見了古老山道.
+~
+~
+0 -1 352
+S
+
+#352
+古老山道~
+你踏穩步伐走在一條通來東、西方的古老山道上。西邊的地
+形有稍微向下的趨勢，繼續向前走也許就能下山了。
+~
+0 0 3
+D1
+你看見了古老山道.
+~
+~
+0 -1 351
+D3
+西邊有一個平台.
+~
+~
+0 -1 353
+S
+
+#353
+山道平台~
+這裡是一個位於山半腰的平台，可以在此稍作休息。南邊有
+一條向低處的路徑，往東則是通往山上的險峻的道路。
+~
+0 0 3
+D1
+你看見了古老山道.
+~
+~
+0 -1 352
+D2
+你看見了古老山道.
+~
+~
+0 -1 354
+S
+
+#354
+古老山道~
+這是一條古老的山間小道，往北的道路通往山上，東邊的通
+道則連接著一片茂密的樹林，在林間你依稀看到一塊空地，這讓
+你感到一絲違和。
+~
+0 0 3
+D0
+你看見了古老山道.
+~
+~
+0 -1 353
+D1
+東邊有塊被密林圍繞的空地.
+~
+~
+0 -1 3947
+S
+
+
+#0
+
+
+
+#SPECIALS
+S
+
+#MOBPROGS
+M 312 mob_enhanced.prg
+M 313 mob_enhanced.prg
+M 314 mob_enhanced.prg
+M 315 mob_enhanced.prg
+M 316 mob_enhanced.prg
+M 317 mob_enhanced.prg
+S
+
+
+
+#RESETS
+R 0 336 4
+R 0 337 4
+R 0 339 4
+R 0 340 4
+M 0 310 1 309
+M 0 311 1 312
+O 0 304 0 316
+M 0 309 10 318
+O 0 301 0 319
+O 0 304 0 323
+M 0 300 1 323
+E 0 308 0 17
+E 0 307 0 3
+G 0 312 0
+G 0 302 0
+M 0 309 10 324
+O 0 300 0 327
+M 0 301 1 331
+G 0 303 0
+G 0 310 0
+G 0 311 0
+O 0 309 0 331
+M 0 309 10 334
+O 0 304 0 338
+M 0 351 2 323
+M 0 351 2 317
+M 0 351 1 302
+M 0 318 1 314
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

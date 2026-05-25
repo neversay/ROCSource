@@ -1,0 +1,2681 @@
+#AREADATA
+Name        奧林帕斯山~
+Identity    olympus~
+Builders    Generic~
+Translator  Pluto~
+Modifier    Amushi~
+VNUMs         900 993
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#901
+zeus-olympus god~
+宙斯(Zeus)~
+宙斯(Zeus)正坐在祂的王座上.
+~
+在你面前所見到的是奧林帕斯山諸神中最偉大的一位. 祂似乎只要用一個念頭就
+足以把你殺死. 祂對你的每一瞥都深深地刺入你的靈魂. 你終於知道什麼是你所
+該畏懼的. 他手上的閃電吱吱作響, 代表了他煩惱著什麼. 你應該嘗試問問.
+(What worries you?)
+~
+65539 532650 1000 S
+51 300 0 0d0+0 0d0+0
+8000 0
+0 8 1
+R God~
+P 8
+C 2
+>talk_prog restart~
+if is_qmark($n) <= olympus_weapon_quest 100007
+   mpdel_qmark $n olympus_weapon_quest
+   say 任務重新開始.
+endif
+~
+>talk_prog p what worries you?~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) != olympus_weapon_quest
+                mpadd_qmark $i olympus_talking 1 0 0 0 0 1
+                mpadd_qmark $n olympus_weapon_quest -1 1 0 0 0 1
+                say 該死的，走開走開，低賤的凡人沒有資格跟我講話！
+                mpcallout 2 mpechoat $n 你想著，應該有什麼事發生了，說不定你可以問問這城裡最睿智的人呢！(ask about zeus)
+                mpcallout 2 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>give_prog 932~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100008
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                mpjunk all.corpse
+                mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpechoat $n 你細心的跟宙斯講著原由。
+                mpcallout 2 say 原來是這樣呀～
+                mpcallout 10 mpecho 宙斯沉思了一會兒。
+                mpcallout 12 say 從今以後，天界將會多加小心的，感謝您的幫助，您的名聲將再度提高！
+                mpcallout 12 mpresp $n 1
+                mpcallout 13 say 另外，希拉的事情，過段時日，我將復活她。
+                mpcallout 14 say 這件禮物就給你吧！
+                mpcallout 14 mpoload 934 $n 1 target
+		mpcallout 14 mplog give quest eq vnum 934 to $n.
+                mpcallout 15 rumor 天界危機解除，$n的名聲更加壯大了！
+                mpcallout 15 mpdel_qmark $i olympus_talking
+        else
+                drop corpse
+        endif
+endif
+~
+>give_prog 930~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100006
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 喔喔喔喔～～！我夢寐以求的寶劍！
+                mpjunk all
+                mpcallout 1 say 好吧！你說的我都答應啦！
+                mpat prometheus-olympus mppurge prometheus-olympus
+                mpcallout 2 rumor 天界發出特赦令。
+                mpcallout 3 mpechoat $n 普羅米休斯用心電感應對你說：真是太感謝你了！請找阿波羅領賞吧！(Award)
+                mpcallout 3 mpdel_qmark $i olympus_talking
+                mpcallout 3 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+>talk_prog p release prometheus please~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100017
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                say 嗯 ..
+                mpechoat $n 宙斯思考了一下。
+                mpcallout 6 say 好吧！看在你的份上，我就放過他！
+                mpcallout 6 rumor 天界發出特赦令。
+                mpcallout 6 mpat prometheus-olympus mppurge prometheus-olympus
+                mpcallout 7 mpechoat $n 普羅米休斯用心電感應對你說：真是太感謝你了！請找阿波羅領賞吧！(Reward)
+                mpcallout 7 mpdel_qmark $i olympus_talking
+                mpcallout 7 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+|
+#902
+prometheus-olympus~
+普羅米休斯(Prometheus)~
+普羅米休斯(Prometheus)正在這裡玩弄著火柴.
+~
+這位凡人冒著違背宙斯神旨的危險, 盜取火種給人類. 他正看著你並對你微笑.
+或許你可以幫助他？(Help!)
+~
+7 532650 1000 S
+47 0 0 0d0+0 0d0+0
+2500 0
+0 8 1
+R God~
+P 8
+>talk_prog p ask about jail~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100001
+                mpadd_qmark $i olympus_talking 20 0 0 0 0 1
+                say 這可說來話長了呀～
+                mpcallout 2 mpechoat $n 他從他如何成為神祇講起。
+                mpcallout 12 mpechoat $n 講起那紅極一時的「火」事件。
+                mpcallout 32 mpechoat $n 抑或是與宙斯的爭論。
+                mpcallout 52 mpechoat $n 話鋒一轉，又講回與阿波羅成為好朋友的經過。
+                mpcallout 62 mpechoat $n 他的語氣太平淡了，好像比水還淡一般，一下就消散了。
+                mpcallout 62 glare
+                mpcallout 63 say 事情已過多年，現在，也沒有什麼好怨恨的了。
+                mpcallout 65 say 現在我只希望能早點出去這裡，再呼吸呼吸新鮮的空氣罷了。
+                mpcallout 67 sigh
+                mpcallout 68 mpechoat $n 看著他這樣可憐兮兮的樣子，你想出手幫他嗎？(I can help you)
+                mpcallout 68 mpdel_qmark $i olympus_talking
+                mpcallout 68 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+>talk_prog p i can help you~
+if is_qmark($n) == olympus_jail_quest 100002
+        mpmod_qmark $n olympus_jail_quest v0 + 1
+        say 真的嗎？
+        mpcallout 1 say 那就麻煩您幫我去找阿波羅說我現在的情況(Prometheus' situation)
+endif
+~
+>talk_prog p help!~
+if is_qmark($n) != olympus_jail_quest
+        if is_qmark($n) == olympus_weapon_quest 200009
+        or is_qmark($n) == olympus_weapon_quest 100009
+                mpadd_qmark $n olympus_jail_quest -1 1 0 0 0 1
+                say 原來是最近名聲響遍天際的$N呀。
+                say 你找我又有什麼事呢？
+                mpechoat $n 你可以嘗試問問他為何會被關。(Ask about jail)
+        endif
+endif
+~
+|
+#903
+hermes-olympus~
+賀密斯(Hermes)~
+賀密斯(Hermes)正忙著傳遞神旨.
+~
+祂是眾神的使者. 祂穿著有翅膀的帽子以及鞋子, 在一處與另一處之間飛奔著.
+祂非常的忙碌以至於他似乎沒有沒有注意到你的存在.
+~
+5 565418 1000 S
+43 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R God~
+#904
+poseidon-olympus~
+波賽頓(Poseidon)~
+波賽頓(Poseidon)正在這裡用餐.
+~
+祂就是宙斯的弟弟, 被指派統御著大海. 祂應該是受邀前來的. 祂對你點頭並打
+了個手勢請你進來坐坐.
+~
+7 532650 1000 S
+50 0 0 0d0+0 0d0+0
+5000 0
+0 8 1
+R God~
+C 2
+#905
+apollo-olympus~
+阿波羅(Apollo)~
+阿波羅(Apollo)正在這彈奏著優美的旋律.
+~
+這位快樂的神正彈奏著祂的七弦琴, 祂對你微笑並請你加入祂. 你注意到祂身旁
+擺著一把看起來頗危險的弓, '祂所懂得不只有音樂'你這樣想著.
+~
+7 532650 1000 S
+49 0 0 0d0+0 0d0+0
+2500 0
+0 8 1
+R God~
+C 19
+P 8
+>tick_prog 50~
+if area($i) != olympus
+        if ischarmed($i)
+                break
+        else
+                say 我該回到奧林帕司山去了....。
+                mpcallout 1 mppurge self
+        endif
+endif
+~
+>talk_prog p ask about zeus~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100004
+                mpadd_qmark $i olympus_talking 10 0 0 0 0 1
+                mpcallout 2 say 這個呀～
+                mpcallout 4 glare
+                mpcallout 6 say 難怪我最近嗅到暴戾之氣在奧林帕斯聚集 ..
+                mpcallout 10 say 我看，是魔劍「切割者」又回來了。
+                mpcallout 14 say 那把魔劍在兩百年前就在奧林帕斯裡掀起腥風血雨。
+                mpcallout 18 say 諸神的黃昏他也有參與，幾個北歐神祇都是最近才藉神力復活的。
+                mpcallout 20 say 真是該死！它可以隱藏自己的魔力。
+                mpcallout 22 say 一般的法術是找不到的，你可以嘗試在各神祇之間搜尋，或許會有些斬獲。
+                mpcallout 24 say 一切！都靠你了！
+                mpcallout 24 mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpcallout 24 mpdel_qmark $i olympus_talking
+        else
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 宙斯？就是奧林帕斯諸神統領呀！
+                mpcallout 2 say 連他都不認識，你也未免太孤陋寡聞了吧！
+                mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>talk_prog p prometheus' situation~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100003
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 這個嘛，其實我也想幫他很久了，但是 ...
+                mpcallout 2 say 宙斯他呀，喜怒無常的。
+                mpcallout 4 mpechoat $n 阿波羅似乎有什麼難言之隱。(troubles)
+                mpcallout 4 mpmod_qmark $n olympus_jail_quest v0 + 1
+                mpcallout 4 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>talk_prog troubles~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100004
+                if is_qmark($n) == olympus_weapon_quest 200009
+                        mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                        say 這個嘛，你可以試試把你鑄造的聖劍給宙斯看看，說不定他會發特赦令。
+                        mpcallout 2 say 不過，克萊弗那邊就要靠你交涉了.(please give me the sword)
+                        mpcallout 2 mpdel_qmark $i olympus_talking
+                        mpcallout 2 mpmod_qmark $n olympus_jail_quest v0 + 1
+                else
+                        mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                        say 你可以試著去找找看聖劍普魯托，把他呈獻給宙斯，說不定他會發特赦令。
+                        mpcallout 2 say 你可以去克萊弗那裡問問，說不定他會有些消息.(ask about sword)
+                        mpcallout 2 mpdel_qmark $i olympus_talking
+                        mpcallout 2 mpmod_qmark $n olympus_jail_quest v0 + 1
+                endif
+        endif
+endif
+~
+>talk_prog award~
+if is_qmark($n) == olympus_jail_quest 100007
+        mpmod_qmark $n olympus_jail_quest v0 + 14
+        say 你真的解放他了嗎？
+        say 真是太太太感謝你了！
+        if rand(45)
+                say 這把我愛用的弓就送給你吧！
+                mpoload 938 $n 40 target
+		mplog give quest eq vnum 938 to $n
+        else
+                say 這件袍子就送給你吧！
+                mpoload 935 $n viclv target
+		mplog give quest eq vnum 935 to $n
+        endif
+endif
+~
+>talk_prog reward~
+if is_qmark($n) == olympus_jail_quest 100018
+        mpmod_qmark $n olympus_jail_quest v0 + 3
+        say 你真的解放他了嗎？
+        say 真是太太太感謝你了！
+        if rand(45)
+                say 這件我愛用的護腕就送給你吧！
+                mpoload 936 $n 40 target
+		mplog give quest eq vnum 936 to $n
+        else
+                say 這件袍子就送給你吧！
+                mpoload 935 $n viclv target
+		mplog give quest eq vnum 935 to $n
+        endif
+endif
+~
+>talk_prog p ask apollo another way~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100016
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 這樣呀，那就只好想想別的方法了。
+                say 算了，你直接請求宙斯怎樣？依你的名氣，宙斯應該是會答應的。(release Prometheus please)
+                mpcallout 2 mpechoat $n 你想了一想，好吧！
+                mpcallout 3 say 加油！
+                mpcallout 3 mpdel_qmark $i olympus_talking
+                mpcallout 3 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+~
+|
+#906
+ares-olympus~
+亞雷司(Ares)~
+亞雷司(Ares)正在嘲弄著你.
+~
+戰神亞雷司正在這研究著地圖. 當你走進這裡時, 祂皺了皺眉頭並對你說:我很
+忙, 你想要做什麼?'
+~
+29 524458 -1000 S
+50 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R God~
+C 1
+P 8
+>talk_prog ask about zeus~
+if is_qmark($n) == olympus_weapon_quest 100003
+        mpmod_qmark $n olympus_weapon_quest v0 + 1
+        say 該死的！去煩阿波羅！
+        say 跟我這武人講有什麼屁用！
+endif
+~
+|
+#907
+athena-olympus~
+雅典娜(Athena)~
+雅典娜(Athena)正在這裡休憩著.
+~
+這位宙斯最寵愛的女兒正坐在長沙發上吃著葡萄, 祂對你微笑並邀請你一起吃.
+~
+7 532650 1000 S
+48 0 0 0d0+0 0d0+0
+3000 0
+0 8 2
+R God~
+C 3
+P 8
+>tick_prog 50~
+if area($i) != olympus
+        if ischarmed($i)
+                break
+        else
+                say 我該回到奧林帕司山去了....。
+                mpcallout 1 mppurge self
+        endif
+endif
+~
+>talk_prog p ask about zeus~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100001
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                mpcallout 2 mpechoat $n 雅典娜沉思了一下。
+                mpcallout 6 say 最近一堆不明智的神祇，竟為了誰的武器最強而爭論不休。
+                mpcallout 8 say 而我那曾經英明的父親，最近也處心積慮了為了證明自己的是最強，而計畫著種種陰謀。
+                mpcallout 10 say 唉～
+                mpcallout 12 mpechoat $n 你可以嘗試取悅雅典娜看看！(請嘗試各種詭異奇特的動作)
+                mpcallout 12 mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpcallout 12 mpdel_qmark $i olympus_talking
+        else
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 宙斯？就是奧林帕斯諸神統領呀！
+                mpcallout 2 say 連他都不認識，你也未免太孤陋寡聞了吧！
+                mpcallout 2 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+>act_prog candle~
+mpcall olympus_athena_actprog $n
+~
+>act_prog fondle~
+mpcall olympus_athena_actprog $n
+~
+>act_prog sm!~
+mpcall olympus_athena_actprog $n
+~
+>defun_prog olympus_athena_actprog~
+if sex($n) != 1
+        break
+endif
+if is_qmark($n) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100002
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                mpechoat $n 一陣陣淫穢的思想在你腦中流過！
+                mpcallout 2 say 喔～不要～！
+                mpcallout 5 mpecho $n 當你還沉浸再那無比美麗的幻想時...
+                mpcallout 7 mpecho $n 你被雅典娜喚回現實，雖然你還想繼續..
+                mpcallout 10 say 這事我處理不了，麻煩你去找武斷一點的人吧。(繼續尋找)
+                mpcallout 10 mpdel_qmark $i olympus_talking
+                mpcallout 10 mpmod_qmark $n olympus_weapon_quest v0 + 1
+        else
+                say 該死的人！！！！竟敢作出這種事情！
+                mpkill $n
+        endif
+endif
+~
+>act_prog lick~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100002
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                say 嗯，謝謝你的安慰，我感覺舒服多了。
+                kiss $n
+                mpcallout 2 say 要平息這場爭端，必須找到一把可以統馭這眾多神器的至高神器。
+                mpcallout 4 say 「聖劍　普魯托」
+                mpcallout 6 say 相信你有聽過這個名字，聽說他還存放在奧林帕斯山的某一個角落。
+                mpcallout 8 say 但至今無人尋獲。
+                mpcallout 10 say 你可以去問問看希費斯特斯。
+                mpcallout 12 say 相信你會有些斬獲的。(Ask about holy sword)
+                mpcallout 12 mpdel_qmark $i olympus_talking
+                mpcallout 12 mpmod_qmark $n olympus_weapon_quest v1 + 1
+        endif
+endif
+~
+|
+#908
+hephaestus-olympus smith-olympus~
+希費斯特斯(Hephaestus)~
+希費斯特斯(Hephaestus)正在這打造著一把精良的武器.
+~
+這是在眾神中唯一一位在肉體上不完美的神祇. 祂是一個瘸子而且十分的醜陋.
+然而你對祂的友善以及樂於助人卻是印象深刻. 祂由三位金色的處女侍奉著.
+~
+7 532618 1000 S
+48 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R God~
+P 8
+>talk_prog p ask about holy sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200001
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                say 聖劍早已失落，失落於界面縫隙之間。
+                mpcallout 2 say 或許可以找到方法重鑄吧，不過。
+                mpcallout 4 say 太難了，勸你還是找別條路吧。
+                mpcallout 6 say 或許你可以問問阿波羅有沒有方法解決。(Ask about zeus)
+                mpcallout 6 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 6 mpmod_qmark $n olympus_weapon_quest v0 + 2
+                mpcallout 6 mpdel_qmark $i olympus_talking
+        endif
+endif
+~
+|
+#909
+handmaid-olympus golden~
+金色侍女(golden maiden)~
+一位純金的侍女(golden maiden)正在這協助著鐵匠希費斯特斯.
+~
+當你凝視著她時, 你發現她是由純金打造的. 當她協助鐵匠時看起來是那麼樣的
+栩栩如生.
+~
+7 532618 0 S
+40 0 0 0d0+0 0d0+0
+1000 0
+0 8 2
+R Angel~
+#910
+soldier~
+士兵(soldier)~
+一位士兵(soldier)正在這裡協助著阿雷斯.
+~
+這個人伺候著阿雷斯, 雖然他看起來並非十分強壯. 但是你知道阿雷斯從來不用
+任何的懦弱者為他工作.
+~
+39 524458 0 S
+40 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R Angel~
+C 1
+#911
+musician apprentice~
+音樂學徒(apprentice musician)~
+一位音樂學徒(apprentice musician)正跟隨著阿波羅學習.
+~
+這個人已經對於他的第一個職業十分專精了. 他現在正追隨著阿波羅神學習音樂.
+~
+1031 524458 1000 S
+12 0 0 0d0+0 0d0+0
+2500 0
+0 8 1
+#912
+boy serving servant~
+神僕(serving boy)~
+一位僕人(serving boy)正在用葡萄餵著雅典娜.
+~
+這個男孩真是夠幸運的了, 能夠侍奉雅典娜.
+~
+7 524458 1000 S
+27 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Angel~
+#913
+hound dog war~
+戰犬(war hound)~
+一隻巨大的獵犬(hound)正在這對你咆哮.
+~
+這隻巨大的野獸僅能勉強地被稱為一條狗. 牠似乎是被訓練來在戰場上製造恐懼
+的. 而且你對牠能否勝任自己的工作一點也不感到懷疑.
+~
+45 524458 -600 S
+13 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+#914
+odin-olympus~
+歐丁(Odin)~
+歐丁(Odin)正在這休息著.
+~
+當你注視著歐丁, 你才了解到自己是多麼的無足輕重. 祂像一座高塔般矗立著.
+祂非常專注於祂的事情, 而且幾乎沒有察覺到你的存在.
+~
+7 532650 1000 S
+51 0 0 0d0+0 0d7+0
+5000 0
+0 8 1
+R God~
+C 2
+#915
+grocer greengrocer julius-olympus~
+朱利爾斯(Julius)~
+菜販─朱利爾斯(greengrocer Julius)正站在這裡.
+~
+這位快樂的人貢獻了他的一生在販賣水果及其他食物給這個城市的居民們. 雖然
+他看起來是那麼樣的瘦弱, 但是最好別小看他. 他溫和地對你微笑並展示著看起
+來十分可口的精選食品.
+~
+7 532650 1000 S
+39 0 0 0d0+0 0d7+0
+1000 0
+0 8 1
+R Angel~
+#916
+alchemist~
+煉金師(alchemist)~
+一位高齡而且瘦巴巴的煉金師(alchemist)正站在這裡.
+~
+他精通於包括煉金術的各種魔法並隨時準備好提供這裡的居民(不包括你)各式各
+樣神奇的協助.
+~
+7 532650 1000 S
+42 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Angel~
+#917
+clive-olympus~
+克萊弗(Clive)~
+武器製造者─克萊弗(Clive)正在這裡鍛造著弓和斧頭.
+~
+他看起來十分地巨大而強壯, 想必是長年待在軍中的結果, 目前唯一知曉神器製
+作方式的人.
+~
+7 532650 1000 S
+46 0 0 0d0+0 0d0+0
+3000 0
+0 8 1
+R Angel~
+C 16
+P 8
+>talk_prog p please give me the sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100005
+                if is_qmark($n) == olympus_weapon_quest 200009
+                        mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                        say 這個嘛，你要跟宙斯交涉？
+                        say 讓我想想 ..
+                        mpcallout 12 say 好吧！反正這把劍留在我這也沒用。
+                        mpcallout 13 say 就給你吧！
+                        mpcallout 13 mpoload 930 $n 42 target
+                        mpcallout 13 mpmod_qmark $n olympus_jail_quest v0 + 1
+                        mpcallout 13 mpdel_qmark $i olympus_talking
+                endif
+        endif
+endif
+~
+>talk_prog p ask about sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100005
+                if is_qmark($n) == olympus_weapon_quest 100009
+                        mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                        say 這個嘛，你要跟宙斯交涉？
+                        say 讓我想想 ..
+                        mpcallout 12 say 不行！神器一到了宙斯手上會無法無天！
+                        mpcallout 13 say 請你去找別的方法吧！(ask apollo another way)
+                        mpcallout 13 mpmod_qmark $n olympus_jail_quest v0 + 11
+                        mpcallout 13 mpdel_qmark $i olympus_talking
+                endif
+        endif
+endif
+~
+>talk_prog p ask about holy sword~
+if is_qmark($n) == olympus_weapon_quest 100008
+        break
+endif
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200002
+                mpadd_qmark $i olympus_talking 10 0 0 0 0 1
+                say 這個嘛，你說聖劍？
+                mpcallout 2 mpecho 克萊弗思考了一下。
+                mpcallout 12 say 這個嘛，雖然我是會製作神器啦。
+                mpcallout 14 say 但是沒有材料和製作方式我也很難下手吧。
+                mpcallout 16 say 嗯.. 你可以去「魔法高塔，創世紀，羅胡城堡」找找看。
+                mpcallout 18 say 我只知道這三個地方有藏書，你應該可以找到不少的資料！
+                mpcallout 20 say 說不定，你可以使聖劍重鑄！回來的時候請告訴我你蒐集的資訊！(Information)
+                mpcallout 22 mpecho 克萊弗繼續他的打鐵工作，不過臉上多了一分希望。
+                mpcallout 22 mpmod_qmark $n olympus_weapon_quest v0 + 4
+                mpcallout 22 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 22 mpdel_qmark $i olympus_talking
+        else
+                say 聖劍普魯托？
+                say 早已失傳啦！
+        endif
+endif
+~
+>talk_prog information~
+if is_qmark($n) == olympus_weapon_quest 200007
+        mpmod_qmark $n olympus_weapon_quest v1 + 1
+        say ！！你真的找到了！
+        say  那就請你把材料都交給我吧！
+        say 你可以問我東西齊全了沒(Things)，給完請跟我講完成了(Finish).
+endif
+~
+>give_prog 13077~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300001
+                mpmod_qmark $n olympus_weapon_quest v2 | 1
+                say 我收到橙葉綠樹法杖了.
+                mpjunk all.green
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我橙葉綠樹法杖了。
+                drop green
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop green
+endif
+~
+>give_prog 32166~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300002
+                mpmod_qmark $n olympus_weapon_quest v2 | 2
+                say 我收到神龍之魂了.
+                mpjunk all.soul
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我神龍之魂了。
+                drop soul
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop soul
+endif
+~
+>give_prog 32133~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300002
+                mpmod_qmark $n olympus_weapon_quest v2 | 2
+                say 我收到神龍之魂了.
+                mpjunk all.soul
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我神龍之魂了。
+                drop soul
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop soul
+endif
+~
+>give_prog 663~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300004
+                mpmod_qmark $n olympus_weapon_quest v2 | 4
+                say 我收到金龍珠了.
+                mpjunk all.orb
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我金龍珠了。
+                drop orb
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop orb
+endif
+~
+>give_prog 37040~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300008
+                mpmod_qmark $n olympus_weapon_quest v2 | 8
+                say 我收到佛爾伊斯特的擁抱了.
+                mpjunk all.bosom
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我佛爾伊斯的擁抱了。
+                drop bosom
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop bosom
+endif
+~
+>give_prog 401~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300016
+                mpmod_qmark $n olympus_weapon_quest v2 | 16
+                say 我收到精靈之淚了.
+                mpjunk all.tear
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我精靈之淚了。
+                drop tear
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop tear
+endif
+~
+>give_prog 26516~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300032
+                mpmod_qmark $n olympus_weapon_quest v2 | 32
+                say 我收到加勾以爾之翼了.
+                mpjunk all.wings
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我加勺以爾之翼了。
+                drop wings
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop wings
+endif
+~
+>give_prog 32089~
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300064
+                mpmod_qmark $n olympus_weapon_quest v2 | 64
+                say 我收到紅龍之怒了.
+                mpjunk all.dragon
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我紅龍之怒了。
+                drop dragon
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop dragon
+endif
+~
+>talk_prog finish~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) == olympus_weapon_quest 300127
+                mpadd_qmark $i olympus_talking 20 0 0 0 0 1
+                say 真是太好了！我馬上就動手打造吧！
+                mpcallout 2 mpechoat $n 你看見紅龍之怒被拿去鎔爐裡打成一把劍的形狀。
+                mpcallout 12 mpechoat $n 當劍正熱時，你看到精靈之淚一滴滴加到劍裡，水蒸氣瀰漫四周。
+                mpcallout 22 mpechoat $n 而一旁發亮的神龍魂自動的飛到神劍上方，一陣耀眼的光芒出現，一把金色的劍成形了。
+                mpcallout 32 mpechoat $n 在鑄造者的神力之下，佛爾伊斯特的懷抱慢慢的縮小成劍柄形狀。
+                mpcallout 42 mpechoat $n 克萊弗將金龍珠鑲嵌到劍柄裡，而劍柄和劍身都緩緩飄起。
+                mpcallout 52 mpechoat $n 加勾以爾之翼瞬間飛起，將劍柄與劍身包覆在一起，一道金光之後。
+                mpcallout 54 say 聖劍 - 普魯托重現於世上啦！哈哈哈哈哈哈！！
+                mpcallout 54 rumor 至高神器重現於世上，世人無不震懾！
+                mpcallout 55 say 現在，神器重現，天界的紛爭也將平息。
+                mpcallout 56 say 不過依你的能力也應該無法駕馭此劍，依我看，不如就暫時寄於我這吧。
+                mpcallout 58 say 但是，你的功勞依然不可抹滅，在此，我將我畢生傑作賜與你做天界對你的感謝！
+                mpcallout 59 mpechoat $n 一把淡橙色的劍慢慢的在你前面成形。
+                mpcallout 59 mpoload 993 $n 36 target
+		mpcallout 59 mplog give quest eq vnum 937 to $n
+                mpcallout 60 say 雖然等級遠遠不及聖劍，但我可以自豪的說，他絕對是第二！
+                mpcallout 62 say 好好珍惜他吧，你的名字，將會在歷史上留下一筆！
+                mpcallout 62 mpresp $n 3
+                mpcallout 62 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 62 mpdel_qmark $i olympus_talking
+        endif
+        endif
+endif
+~
+>talk_prog things~
+mpcall weaponthing_judge $n
+~
+>defun_prog weaponthing_judge~
+mpechoat $n 你還沒給的東西有：
+if is_qmark($n) !& olympus_weapon_quest 300001
+   mpechoat $n .   橙葉綠樹法杖
+endif
+if is_qmark($n) !& olympus_weapon_quest 300002
+   mpechoat $n .   神龍之魂
+endif
+if is_qmark($n) !& olympus_weapon_quest 300004
+   mpechoat $n .   金龍珠
+endif
+if is_qmark($n) !& olympus_weapon_quest 300008
+   mpechoat $n .   佛爾伊斯特的擁抱
+endif
+if is_qmark($n) !& olympus_weapon_quest 300016
+   mpechoat $n .   精靈之淚
+endif
+if is_qmark($n) !& olympus_weapon_quest 300032
+   mpechoat $n .   加勾以爾之翼
+endif
+if is_qmark($n) !& olympus_weapon_quest 300064
+   mpechoat $n .   紅龍之怒
+endif
+~
+|
+#918
+armourer samuel-olympus~
+撒姆爾(Samuel)~
+胄甲製造者─撒姆爾(armourer Samuel)正怒目注視著你.
+~
+正如武器製造商克萊弗一樣, 他看起來也是十分地巨大及強壯. 他並不喜歡你在
+這個城市中所做的一切.
+~
+1|2|4|32 532650 1000 S
+21 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Angel~
+#919
+ra sun god~
+太陽神(Sun God)~
+古埃及的太陽神─雷(Sun God Ra)在這裡散發出耀眼的光芒.
+~
+祂看起來十分的亮! 由於直視祂將傷害你的眼睛, 你很難看清楚祂的面貌. 然而
+就你所能瞥見的那一小部份就足以讓你相信祂是不容被小覷的.
+~
+7 532650 1000 S
+51 0 0 0d0+0 0d0+0
+6000 0
+0 8 1
+R God~
+C 3
+#920
+chimera~
+噴火獸(chimera)~
+一隻噴火獸(chimera)正在牢房旁四處徘徊.
+~
+這隻奇特的生物有三個頭─一個是山羊, 一個是獅子, 一個則是龍. 當你進入牢
+房時, 牠對你咆哮然後突然發動攻擊.
+~
+7 524458 -1000 S
+18 0 0 0d0+0 0d0+0
+1000 0
+0 8 1
+R Drake~
+#921
+hera-olympus~
+希拉(Hera)~
+希拉(Hera)正站在這.
+~
+宙斯的妻子─希拉正在這. 當你走進這裡時, 祂對著你微笑並邀請你坐下休息一
+會兒. 你發現它桌子旁邊放了一把閃著紅色光芒的劍, 其上有個惡魔雕飾！
+~
+7 532650 1000 S
+50 0 0 0d0+0 0d7+0
+7000 0
+0 8 2
+R God~
+C 2
+P 8
+>all_greet_prog 100~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100005
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                mpcallout 2 say 您好，有什麼事嗎？
+                mpcallout 2 mpechoat $n 你發現希拉的表情開始扭曲。
+                mpcallout 4 say 沒事嗎？那就請您出去吧！
+                mpcallout 6 mpcall olympus_hera_mload $n
+        endif
+endif
+~
+>defun_prog olympus_hera_mload~
+mpechoat $n 希拉的身體特徵開始變形 ..
+mpechoat $n 希拉整個身體開始變形！成為一隻醜陋的巴洛魔！
+mpmod_qmark $n olympus_weapon_quest v0 = 6
+mpmload 929
+mpgoto 5
+mpdel_qmark $i olympus_talking
+~
+|
+#922
+roc~
+巨鳥(roc)~
+一隻巨鳥(roc)正在這翱翔著.
+~
+這是一隻巨大的鳥. 牠疑惑地看著你, 叫了一聲然後揚長而去.
+~
+5 532650 0 S
+37 0 0 0d0+0 0d0+0
+500 0
+0 8 0
+R Angel~
+#923
+citizen resident~
+居民(citizen)~
+奧林帕斯山的居民(citizen)正在這條街上溜達.
+~
+他看起來十分地快樂而且無憂無慮. 他對你微笑並微微舉起他的帽子向你打招呼.
+~
+5 532650 1000 S
+21 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Angel~
+#924
+pegasus horse~
+帕格薩斯(pegasus)~
+一隻長著翅膀的巨大白馬(horse)正在這裡閒晃.
+~
+這是一頭雪白而且長有一對大翅膀的馬. 雖然牠看起來並不十分具有威脅性, 但
+是對牠挑釁仍是十分危險的.
+~
+5 532650 0 S
+31 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+#925
+cook~
+廚師(cook)~
+一位廚師(cook)正在這努力地做著他的工作.
+~
+這個人看起來就好像已經花了'太多'的時間待在廚房裡.
+~
+7 532650 1000 S
+1 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Angel~
+#926
+jailer~
+獄卒(jailer)~
+這位獄卒(jailer)正在提防有人劫獄.
+~
+他看起來就好像已經花了許多的時間在地底下看守著囚犯.
+~
+7 532650 0 S
+32 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Angel~
+C 1
+#927
+hades king~
+黑帝斯(Hades)~
+冥府之王─黑帝斯(Hades)隱藏在一片黑暗之中.
+~
+祂來這裡拜訪其他的神祇. 祂並不喜歡你, 你最好跟祂保持距離.
+~
+229 623274 -300 S
+51 1000 0 5d0+0 -5d7+0
+10000 0
+0 8 1
+R God~
+C 3
+P 4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>rand_prog 50~
+if area($i) != olympus
+        mpgoto 955
+endif
+~
+>greet_prog 95~
+if isnpc($n)
+        break
+else
+        if isimmort($n)
+                say 你好，我同是神族的朋友。
+        else
+                if level($n) <= 35
+                        break
+                else
+                        say 讓我們地獄見吧！
+                        c 3 powerball $n
+                endif
+        endif
+endif
+~
+>fight_prog 20~
+cast powerball
+~
+>fight_prog 15~
+cast 'seal magic'
+~
+>fight_prog 15~
+frenzy
+~
+>fight_prog 10~
+cast 'full heal'
+~
+>fight_prog 80~
+if isaffected($i) & 1
+        cast 'cure blindness'
+endif
+if hitprcnt($i) < 60
+        mpat 5 cast heal
+endif
+if rand(30)
+        mpmload 910
+        mpgroup self soldier 1 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpmod_all_qmark $n adv_book_1_main v1 | 128
+mplog killed by $n
+~
+|
+#928
+soldier~
+士兵(soldier)~
+一位士兵(soldier)正在這裡協助著黑帝斯.
+~
+~
+39 524458 0 S
+39 0 0 0d0+0 0d0+0
+300 0
+0 8 1
+R Angel~
+C 1
+#929
+Balor Ihsuma~
+巴洛魔伊修瑪(Balor Ihsuma)~
+巴洛魔伊修瑪(Balor Ihsuma)正看著你猙獰的笑。
+~
+一隻低層界的強大生物正看著你猙獰的笑，可是你卻感覺不到牠身上有任何
+的魔力發出，想必是有極為強大的神祇在背後撐腰，他看著你笑，卻不發動
+攻擊，你或許可以問問他。(Ask about Hera and sword)
+~
+1|2|2048|4096|262144 4|8|16|32|128 -1000 S
+55 0 0 50d20+0 10d-200+0
+0 0
+0 8 1
+R Demon~
+P 1|4|8|128|4194304|32767|65536
+W mute~ 2000 0
+C 1|2
+S
+13 10000
+>talk_prog p ask about hera and sword~
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100006
+                mpadd_qmark $i olympus_weapon_quest 10 0 0 0 0 1
+                say 唉呀呀～
+                mpcallout 2 say 要在這神聖的領地裡變換模樣還真困難呀～
+                mpcallout 4 mpecho 伊修瑪一陣狂笑！！！
+                mpcallout 6 say 真可惜，差點就成功了，差點就能使兩百年前的天界大戰重現啦。
+                mpcallout 8 mpecho 伊修瑪又是一陣狂笑！！！
+                mpcallout 14 say 不過呢，你想找的希拉可能早就死了，說不定還活著啦。
+                mpcallout 16 say 要是她能撐過在沒魔法下被分屍的情況！
+                mpcallout 17 say 美味的女人。
+                mpcallout 18 mpecho 伊修瑪舔了舔嘴唇。
+		mpcallout 19 mpmod_qmark $n olympus_weapon_quest v0 + 1
+ 　             mpcallout 20 say 竟然被你看到了我的真實面目，那就，一起陪希拉吧:)
+		mpcallout 20 mpdel_qmark $i olympus_talking
+		mpcallout 20 mpkill $n
+        else
+                mpkill $n
+        endif
+endif
+~
+>fight_prog 70~
+mpecho [1;31m你看見惡魔吸收著周圍那無盡的靈氣！[0m
+c 2 'double heal'
+mpnowait
+~
+>fight_prog 10~
+yell [0;33m闇．之．舞．曲[0m
+c 3 whirlwind
+mpnowait
+~
+>hitprcnt_prog 50~
+if rand(50)
+   c 'full heal'
+   mpnowait
+endif
+~
+>fight_prog 50~
+yell [1;31m夜之垂幕第一章～血之盛宴！[0m
+c 5 'fire ball' $r
+mpnowait
+c 3 'lighting bolt' $r
+mpnowait
+~
+>fight_prog 30~
+yell [1;31m夜之垂幕第二章～獻祭的時刻！[0m
+c 4 'angry fire storm' $r
+mpnowait
+~
+>fight_prog 20~
+yell [1;36m夜之垂幕終章～末日之冰息～[0m
+c 6 'ice breath'
+mpnowait
+~
+>death_prog 100~
+if is_qmark($n) == olympus_weapon_quest 100007
+	mpmod_qmark $n olympus_weapon_quest v0 + 1
+	mpecho [1;37m你看見伊修瑪身上的傷痕開始無法癒合，進而開始崩解。[0m
+	yell 不！不可能的！一百年之後，我還會再回來的！！
+	mpoload 932 floor
+	if rand(40)
+        	mpoload 933 40 floor
+		mplog give quest eq vnum 933 to $n
+        	mpecho 切割者緩緩凝結在空氣中 ....
+	endif
+	mpecho [1;37m隨著伊修瑪的消逝，希拉的部分屍駭留了下來。或許你該拿去給宙斯看看。[0m
+	if rand(3)
+		if rand(50)
+	        	mpoload 992 40 floor
+			mplog give quest eq vnum 992 to $n
+        		mpecho 一道晶瑩的水晶幕漸漸顯現出來。
+        	endif
+	endif
+	mpoload 401 1 floor
+	mpecho 一罐精美的藥水從巴洛魔身上掉出。
+endif
+mpat hera-olympus mppurge hera-olympus
+~
+|
+
+#0
+
+
+
+#OBJECTS
+#900
+aegis plate~
+宙斯胸甲(Aegis)~
+一副能帶給你力量的胸甲(plate)被留在這邊.~
+~
+9 1120 9
+0~ 0~ 2751275~ 0~
+40 0 0
+A
+1 1
+A
+17 -3
+X gold~
+
+#901
+hammer bolt thunderbolt~
+奔雷之鎚(thunder bolt)~
+一把巨大的鎚子(hammer)被粗心地丟在這.~
+~
+5 1120 8193
+2751275~ 0~ 0~ 8~
+24 0 0
+A
+18 5
+A
+19 5
+H lightning bolt~ 50 35 4
+X gold~
+
+#902
+helmet winged~
+翔雲之帽(winged helmet)~
+一頂有翅膀的帽子(helmet)躺在這邊.~
+~
+9 1120 17
+0~ 0~ 2751275~ 0~
+5 0 0
+A
+2 2
+X feather~
+
+#903
+spear ares~
+阿雷斯戰矛(Ares spear)~
+一把有點損壞的矛(spear)被放在地上.~
+~
+5 608 8193
+2751275~ 0~ 0~ 2~
+18 0 0
+A
+18 2
+A
+19 2
+X silver~
+
+#904
+sandals winged~
+翔雲之鞋(winged sandals)~
+一雙手工精細的涼鞋(sandals)躺在這邊.~
+~
+9 1120 65
+0~ 0~ 2751275~ 0~
+5 0 0
+A
+2 1
+X feather~
+H fly~ 25 30 4
+
+#905
+staff ivory~
+象牙權杖(ivory staff)~
+一把象牙質的手杖(staff).~
+~
+4 1120 16385
+15~ 3~ 3~ sanctuary~
+8 0 0
+X ivory~
+
+#906
+trident poseidon~
+海神三叉戟(Poseidon trident)~
+一把巨大的三叉戟(trident)躺在這邊.~
+~
+5 1120 8193
+2751275~ 0~ 0~ 12~
+16 0 0
+A
+1 1
+A
+4 1
+A
+18 2
+A
+19 3
+X steel~
+
+#907
+bow silver~
+銀弓(silver bow)~
+一把有銀色雕飾的弓(bow).~
+~
+5 1120 32769
+2751275~ 0~ 0~ 14~
+15 0 0
+A
+18 2
+A
+19 2
+X silver~
+
+#908
+gauntlets flaming~
+火焰手套(flaming gauntlets)~
+一雙火焰手套(flaming gauntlets)被留在這邊.~
+~
+9 1120 129
+0~ 0~ 2751275~ 0~
+6 0 0
+A
+13 25
+X aura~
+H burning hands~ 25 30 4
+
+#909
+vail potion ambrosia~
+瓊漿玉液(ambrosia)~
+一個散發出甜美誘人氣息的容器(vail), 裡面看來呈滿了甜美的液體.~
+~
+10 17504 1
+30~ sanctuary~ cure critical~  ~
+1 20000 0
+C 20000
+X liquid~
+
+#910
+necklace glowing~
+光輝項鍊(glowing necklace)~
+一串散發著奇異光芒的項鍊(necklace)躺在這邊.~
+~
+9 1120 5
+0~ 0~ 2751275~ 0~
+2 0 0
+A
+12 25
+X jade~
+
+#911
+ring sapphire~
+藍寶石戒指(sapphire ring)~
+一只上面鑲有一顆深藍色寶石的戒指(ring).~
+~
+9 1120 3
+0~ 0~ 2751275~ 0~
+1 6000 0
+A
+4 2
+A
+19 2
+C 6000
+X sapphire~
+
+#912
+shield glowing~
+靈光盾(glowing shield)~
+一面使室內充滿了靈氣的盾(shield)躺在地上.~
+~
+9 1120 513
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+3 1
+A
+4 1
+X aura~
+
+#913
+axe notched~
+刻痕斧頭(notched axe)~
+一把有刻痕的斧頭(axe).~
+~
+5 1120 8193
+2751275~ 0~ 0~ 1~
+12 0 0
+X steel~
+
+#914
+grapes~
+葡萄(grapes)~
+一串葡萄(grapes).~
+~
+19 0 1
+24~ 0~ 0~ 0~
+1 100 0
+C 100
+X food~
+
+#915
+fan~
+孔雀羽扇(fan)~
+一把由孔雀羽毛編成的扇子(fan).~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X feather~
+
+#916
+lute~
+魯特琴(lute)~
+一把魯特琴(lute).~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X wooden~
+
+#917
+nugget-olympus nugget gold~
+金塊(gold nugget)~
+一塊金塊(nugget)在這裡發光.~
+~
+8 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X gold~
+
+#918
+apple~
+蘋果(apple)~
+一顆蘋果(apple).~
+~
+26 0 1
+2~ cure light~  ~  ~
+1 0 0
+L 5
+X food~
+
+#919
+pear~
+梨子(pear)~
+一顆梨子(pear).~
+~
+26 0 1
+2~ cure poison~  ~  ~
+1 0 0
+X food~
+
+#920
+orange~
+柳丁(orange)~
+一顆柳丁(orange).~
+~
+26 0 1
+2~ armor~  ~  ~
+1 0 0
+X food~
+
+#921
+kiwi~
+奇異果(kiwi)~
+一顆奇異果(kiwi).~
+~
+26 0 1
+3~ cure poison~  ~  ~
+1 0 0
+X food~
+
+#922
+sun amulet~
+太陽神護身符(sun amulet)~
+一個太陽形狀的護身符(amulet)躺在這邊.~
+~
+9 1120 5
+0~ 0~ 2751275~ 0~
+1 3000 0
+A
+12 40
+C 3000
+X gold~
+
+#923
+sun sword~
+太陽神之劍(sun sword)~
+一把在劍柄部分刻著旭日東昇圖的美麗長劍(sword)躺在這邊.~
+~
+5 1120 8193
+2751275~ 0~ 0~ 3~
+20 0 0
+A
+18 1
+A
+19 2
+H sun flash~ 50 27 4
+X gold~
+
+#924
+robe blue~
+藍色長袍(blue robe)~
+一件深藍色的長袍(robe)被丟在地上.~
+~
+9 1120 1025
+0~ 0~ 2751275~ 0~
+10 0 0
+A
+13 15
+X fiber~
+
+#925
+hat brimmed~
+有邊寬帽(brimmed hat)~
+一頂帽子(hat)躺在這邊.~
+~
+9 1120 17
+0~ 0~ 2751275~ 0~
+5 0 0
+X fiber~
+
+#926
+nectar~
+神之酒(nectar)~
+一瓶香氣四逸, 聞起來十分誘人的美酒(nectar).~
+~
+10 16384 1
+12~ sanctuary~ giant strength~  ~
+2 0 0
+X liquid~
+
+#927
+key cell~
+牢房鑰匙(cell key)~
+一把牢房鑰匙(key)被留在這.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X iron~
+
+#928
+sword hades~
+冥王劍(Hades sword)~
+冥王黑帝斯(Hades)所使用的沉重巨劍(sword).~
+~
+5 16484 8193
+2751275~ 0~ 67~ 3~
+51 300000 0
+E
+sword hades~
+若有似無中, 你定神一看, 才察覺到它的存在,
+這是一把沉重的黑色巨劍(sword), 你隱隱感到它的強大黑暗力量.
+~
+A
+18 15
+A
+19 15
+H fireball~ 25 50 4
+T 100
+C 300000
+X black matter~
+
+#929
+fire abyss~
+地獄之火(Abyss fire)~
+一把冥界之火(fire)正在這裡神祕地燃燒著.~
+~
+1 512 1
+0~ 0~ 60~ 0~
+10 20000 0
+A
+13 50
+A
+19 2
+
+C 20000
+X black matter~
+
+#930
+holy sword pluto~
+聖劍 - 普魯多(Holy Sword - Pluto)~
+大神冥王星普魯多(Pluto)曾經使用過的配劍.~
+~
+5 343 1
+-1~ 0~ 0~ 3~
+1 0 0
+E
+sword pluto~
+你可以感受到這把劍之中無窮的威力.
+~
+A
+1 8
+A
+2 8
+A
+3 8
+A
+4 8
+A
+5 8
+A
+17 -500
+A
+18 100
+A
+19 100
+H star fire~ 50 99 4
+X perfect matter~
+
+#931
+silver arrow~
+銀雕箭(silver arrow)~
+一束有銀色雕飾的箭(arrow).~
+~
+27 96 65537
+300~ 0~ 0~ 0~
+10 0 0
+X silver~
+
+#932
+Hera's corpse~
+赫拉的屍骸(Hera's corpse)~
+赫拉殘缺不全的屍骸落在這裡(Hera's corpse).~
+~
+23 2|16384 1
+0~ 0~ 0~ 0~
+100 0 0
+X Flesh~
+
+#933
+Cutter GrimDance~
+切割者．詭異之舞(Cutter - GrimDance)~
+一把漂浮著的劍(Cutter)掉在這閃耀著紅光.~
+~
+5 2|4|8|16|64|256|512|16777216 1|8192
+-1~ 0~ 0~ 3~
+30 200000 0
+A
+1 2
+A
+5 -3
+A
+19 15
+A
+18 7
+A
+43 5
+H soulsteal~ 25 35 4
+X obsidian~
+
+#934
+Create Spring Staff~
+泉湧之手杖(Create-Spring Staff)~
+一把藍水晶製的手杖掉在這裡~
+~
+5 1|2|64 1|8192
+-1~ 0~ 0~ 7~
+5 250000 0
+H create spring~ 100 36 1
+X Crystal~
+
+#937
+Dancer dream wind~
+輕舞者．迴風追夢(Dancer - Dream in wind)~
+一把漂浮著的刀(Cutter)，周圍圍繞了霞影。~
+~
+5 1|2|64|256|1024|65536|131072|16777216 1|8192
+-1~ 0~ 0~ 13~
+5 400000 0
+Z 1
+A
+39 -15
+A
+3 2
+A
+18 15
+H refresh~ 20 10 2|4
+X perfect matter~
+V Fairy~ 10 130 0 120
+V Pixie~ 7 125 5 105
+V Beholder~ 8 115 15 105
+V Elf~ 10 120 0 110
+V Human~ 5 120 0 90
+V Dragon~ 0 120 0 90
+V Angel~ 0 120 0 90
+V God~ 5 120 0 90
+V Vampire~ 5 105 0 70
+V Ghost~ 0 60 0 50
+V Ogre~ 0 100 0 60
+V Demon~ 0 80 0 65
+V Statue~ 0 100 0 30
+
+#938
+Bury Cloud Long sky bow~
+湮雲長空(Bury cloud)~
+一把用雲織成的弓(bow)，輕輕的飄在這。~
+~
+5 1|32|64|256|1024|65536 1|32768
+-1~ 0~ 0~ 14~
+50 250000 0
+A
+17 -5
+A
+2 1
+A
+4 1
+A
+18 5
+A
+19 5
+A
+40 2
+H detect invis~ 10 10 1
+X glass~
+
+#935
+detect invis robe~
+偵測隱形之袍(Detect invis Robe)~
+一件透明的袍子(robe)落在這裡。~
+~
+9 1|2|64|256 1|1024
+0~ 0~ 2000200~ 0~
+2 10000 0
+H detect invis~ 10 10 1
+X wool~
+
+#936
+Wind hunting bracer~
+朔之風狩(Wind Hunting)~
+一件由淡淡嵐風所組成的護腕(Bracers)掉在這。~
+~
+9 1|2|64|256|65536|16777216 1|4096
+0~ 0~ 2001200~ 0~
+1 200000 0
+A
+4 1
+A
+18 2
+A
+43 13
+H refresh~ 10 10 2|4
+X wind aura~
+P 2048|524288|2097152
+
+#991
+Tears barrier~
+[1;36m淚滴的冰幕[0m(Tears' barrier)~
+一件由天使眼淚織成的雪之帷幕(Tears)～~
+~
+9 1|64|256 1|512
+0~ 0~ 2001200~ 0~
+5 1000000 0
+Z 1
+A
+39 -12
+A
+41 10
+A
+42 10
+H
+prot. from fire~ 20 40 1
+H
+chill touch~ 40 40 1
+F 2
+F 524288
+F 1048576
+F 34359738368
+F 1024
+X sapphire~
+#992
+Tears barrier~
+[1;36m淚滴的冰幕[0m(Tears' barrier)~
+一件由天使眼淚織成的雪之帷幕(Tears)～~
+~
+9 1|64|256|1024 1|512
+0~ 0~ 2001200~ 0~
+5 1000000 0
+Z 4
+A
+39 -12
+A
+41 5
+A
+42 15
+H prot. from fire~ 20 40 1
+H chill touch~ 40 50 1
+F 2|1024|524288|1048576|34359738368
+X sapphire~
+
+#993
+Dancer dream wind~
+輕舞者．迴風追夢(Dancer - Dream in wind)~
+一把漂浮著的刀(Cutter)，周圍圍繞了霞影。~
+~
+5 1|2|64|256|1024|65536|131072|16777216 1|8192
+-1~ 30~ 36~ 13~
+5 400000 0
+Z 4
+A
+39 -15
+A
+3 2
+A
+18 15
+F 2048|16384
+H refresh~ 30 20 2|4
+X perfect matter~
+V Elf~ 10 120 10 110
+V Fairy~ 10 130 10 120
+V Pixie~ 10 125 10 115
+V Beholder~ 10 115 20 110
+V Human~ 10 120 10 90
+V Dragon~ 10 120 10 90
+V Wyvern~ 10 120 10 90
+V Wyrm~ 10 120 10 90
+V Drake~ 10 120 10 90
+V Angel~ 10 120 10 90
+V God~ 10 120 10 90
+V Bachi~ 10 120 10 90
+V Vampire~ 5 105 0 70
+V Statue~ 0 100 0 30
+V Ghost~ 0 60 0 50
+V Ogre~ 0 100 0 60
+V Demon~ 0 80 0 65
+
+#0
+#ROOMDATA
+#901
+深山裡~
+你正登上一座比奧夫卡城還高聳許多的高山. 步道繼續向山裡延伸, 但部分
+的道路已經消失了. 你沒有辦法由陸路繼續前進.
+~
+0 0 5
+D2
+~
+~
+0 -1 324
+D4
+~
+~
+0 -1 902
+S
+#902
+深山裡~
+你一路披荊斬棘, 闢出一條通往山裡的小徑. 攀爬的艱辛使你感到疲倦, 而
+你正準備休息一會兒.
+~
+0 0 9
+D4
+~
+~
+0 -1 903
+D5
+~
+~
+0 -1 901
+S
+#903
+深山裡~
+你終於到達了山頂. 這裡的空氣十分稀薄, 使你喘息不止. 在北方你看到一
+個似乎是城市的入口.
+~
+0 0 9
+D0
+~
+~
+0 -1 904
+D5
+~
+~
+0 -1 902
+S
+#904
+城市入口~
+你身處於一座大城市的入口. 當你環顧四週時, 你認為這個城市的居民必定
+是非常的富有. 你從來沒見過有著這麼多美麗建築物的城市.
+~
+0 0 1
+D0
+~
+~
+0 -1 905
+D2
+~
+~
+0 -1 903
+S
+#905
+宙斯之路~
+你正走在一條寬廣的道路上. 你注意到這個城市的居民並不多. 你看到一塊
+立於街角的牌子上寫著'宙斯之路'.
+~
+0 0 1
+D0
+這條街繼續延伸下去.
+~
+~
+0 -1 906
+D2
+~
+~
+0 -1 904
+D3
+~
+~
+0 -1 924
+S
+#906
+宙斯之路~
+你正走在一條似乎是這個城市主要的街道上. 你看到東西兩側排列著許多的
+民房. 這條路向南北延伸.
+~
+0 0 1
+D0
+~
+~
+0 -1 907
+D1
+~
+~
+0 -1 925
+D2
+這條街繼續延伸下去.
+~
+~
+0 -1 905
+D3
+~
+~
+0 -1 926
+S
+#907
+宙斯之路~
+你正走在名為 '宙斯之路' 的城市主要街道上.
+~
+0 0 1
+D0
+~
+~
+0 -1 908
+D2
+~
+~
+0 -1 906
+D3
+~
+~
+0 -1 927
+S
+#908
+宙斯之路~
+你仍走在這個城市的主要街道上. 在北方你看到一座雄偉的城堡. 在東邊有
+一條較小的街道. 西邊則有幾間不同的商店.
+~
+0 0 1
+D0
+~
+~
+0 -1 909
+D1
+~
+~
+0 -1 928
+D2
+~
+~
+0 -1 907
+S
+#909
+城堡入口通道~
+你正身處於一座大城堡的入口. 這裡有巨幅的油畫和美麗的地毯, 看起來十
+分漂亮. 你聽到了一些於愉快的笑聲由北邊傳來. 一條較窄的走廊在此分向東邊
+和西邊.
+~
+0 8 1
+D0
+~
+~
+0 -1 910
+D1
+~
+~
+0 -1 915
+D2
+~
+~
+0 -1 908
+D3
+~
+~
+0 -1 911
+S
+#910
+王座的房間~
+走近這房間的剎那, 你的腳步僵住了. 在你面前的是輝煌燦爛, 端坐在一巨
+大金色王座上(throne)的宙斯. 以前你還以為祂只是一位神話中的人物, 然而祂
+現在卻活生生地在你面前. 你心中暗思這座城堡中還住著什麼樣的人.
+~
+0 8 1
+E
+throne~
+這個巨大的金黃色王座看起來好像已經擺在這裡許多年了. 當你仔細地觀察
+它時, 你注意到它並不是緊密地貼在地面上, 也許你可以移開它?
+~
+D0
+~
+~
+0 -1 923
+D2
+~
+~
+0 -1 909
+>room_command move throne~
+if is_qmark($n) == olympus_weapon_quest 200009
+or is_qmark($n) == olympus_weapon_quest 100009
+	echoat $n 你使力的移開了王座，發現了底下有個密道！
+	callout 1 makedoor 5 這邊出現了一道樓梯 stair 0 0 918
+else
+	echoat $n 你再怎麼使力也搬不開這樣一個重物。
+endif
+~
+|
+S
+#911
+城堡西翼~
+你正身處於城堡的西翼. 在東邊你可以看到城堡的入口. 這條走廊向西邊延伸.
+~
+0 8 1
+D1
+~
+~
+0 -1 909
+D3
+~
+~
+0 -1 912
+S
+#912
+城堡西翼~
+你正身處於城堡的西翼. 這條走廊向北邊延伸. 在西邊及南邊有些私人的房間.
+~
+0 8 1
+D0
+~
+~
+0 -1 913
+D1
+~
+~
+0 -1 911
+D2
+~
+~
+0 -1 930
+D3
+~
+~
+0 -1 929
+S
+#913
+城堡西翼~
+你正身處於城堡的西翼. 這條走廊向南邊延伸. 你在北邊聽到一些由鍋碗瓢
+盆所發出的嘎嘎聲.
+~
+0 8 1
+D0
+~
+~
+0 -1 914
+D2
+~
+~
+0 -1 912
+S
+#914
+廚房~
+你走進了這座城堡的廚房. 這裡充斥了吵雜的聲響及繁忙的氣息, 僕人們正
+忙碌地準備供神祇們享用的美食.
+~
+0 8 1
+D2
+~
+~
+0 -1 913
+S
+#915
+城堡東翼~
+你正身處於城堡的東翼. 這條走廊向東邊延伸, 而入口在反方向的西邊.
+~
+0 8 1
+D1
+~
+~
+0 -1 916
+D3
+~
+~
+0 -1 909
+S
+#916
+城堡東翼~
+你正身處於城堡的東翼. 走廊在這裡轉向北邊. 在東邊及南邊有些私人的房間.
+~
+0 8 1
+D0
+~
+~
+0 -1 917
+D1
+~
+~
+0 -1 931
+D2
+~
+~
+0 -1 932
+D3
+~
+~
+0 -1 915
+S
+#917
+城堡東翼~
+你正身處於城堡的東翼. 你聽到一些動物的叫聲由北邊傳來. 走廊繼續向南
+邊延伸.
+~
+0 8 1
+D0
+~
+~
+0 -1 933
+D2
+~
+~
+0 -1 916
+S
+#918
+土牢~
+你正身處於宙斯的土牢中. 你對於這種能讓權力無上的宙斯神也害怕到要
+將牠禁錮起來的生物感到十分好奇.
+~
+0 9 1
+D0
+~
+~
+0 -1 919
+D4
+~
+trapdoor throne~
+1 -1 910
+S
+#919
+土牢~
+你正身處於宙斯的土牢中. 在北邊, 西邊以及東邊各有間牢房. 你從東邊及
+西邊的牢房中聽到了沙啞的聲音, 北邊則是什麼也沒有...
+~
+0 9 1
+D0
+~
+~
+39 927 920
+D1
+~
+~
+39 927 922
+D2
+~
+~
+0 -1 918
+D3
+~
+~
+39 927 921
+S
+#920
+牢房~
+你正身處於狹小, 骯髒的牢房中. 這是個令人感到恐怖的地方.
+~
+0 9 1
+D2
+~
+~
+39 927 919
+S
+#921
+牢房~
+你正身處於狹小, 骯髒的牢房中. 這是個令人感到恐怖的地方.
+~
+0 9 1
+D1
+~
+~
+39 927 919
+S
+#922
+牢房~
+你正身處於狹小, 骯髒的牢房中. 這是個令人感到恐怖的地方.
+~
+0 9 1
+D3
+~
+~
+39 927 919
+S
+#923
+樓梯~
+你正站在一座盤旋而上的樓梯中. 在南邊你看到了宙斯的王座室.
+~
+0 8 1
+D2
+~
+~
+0 -1 910
+D4
+~
+~
+0 -1 939
+S
+#924
+麵包店~
+你正身處於一間狹小的商店中, 這家商店提供食物給這座城市的居民們. 這
+裡聞起來相當不錯!
+~
+0 8 1
+D1
+~
+~
+0 -1 905
+S
+#925
+民房~
+你正身處於一位居民的房子裡. 她看起來似乎很面熟, 但是你就是無法記起
+她的名字.
+~
+0 8 1
+D3
+~
+~
+0 -1 906
+S
+#926
+民房~
+你正身處於一位居民的房子裡. 他看起來似乎很面熟, 但是你就是無法記起
+他的名字.
+~
+0 8 1
+D1
+~
+~
+0 -1 906
+S
+#927
+神秘的商店~
+你所身處的這家商店有各種神秘的商品以供這個城市的居民所需.
+~
+0 8 1
+D1
+~
+~
+0 -1 907
+S
+#928
+阿雷斯之路~
+你正走在一條由主要道路分支出來的較小街道上. 你由一塊牌子上得知這條
+街的街名─阿雷斯之路.
+~
+0 8 1
+D1
+~
+~
+0 -1 934
+D3
+~
+~
+0 -1 908
+S
+#929
+客房~
+你走進了一間用來招待城堡客人所用的私人房間. 當你發現在這間房間中做
+客的就是歐丁─塵世守護神─祂本人時, 你幾乎昏倒了. 祂應該是來拜訪宙斯的.
+~
+0 8 1
+D1
+~
+~
+0 -1 912
+S
+#930
+倉庫~
+你正在城堡的倉庫裡. 這裡的東西並不多, 只有幾個裝滿舊垃圾的箱子.
+~
+0 8 1
+D0
+~
+~
+0 -1 912
+S
+#931
+客房~
+你走進了一間用來招待城堡客人所用的私人房間. 當你發現房間中的客人就
+是古埃及太陽神─雷─時, 你感到十分吃驚. 祂應該是來拜訪宙斯的.
+~
+0 8 1
+D3
+~
+~
+0 -1 916
+S
+#932
+倉庫~
+你正在城堡的倉庫中. 這裡的東西並不多, 只有厚厚的灰塵.
+~
+0 8 1
+D0
+~
+~
+0 -1 916
+S
+#933
+馬廄~
+你正身處於城堡的馬廄中, 然而你發現的並不是預料中的馬匹, 充斥其中的
+反而是各種你認為應只屬於神話中的生物. 明顯地, 你錯了!
+~
+0 8 1
+D2
+~
+~
+0 -1 917
+S
+#934
+阿雷斯之路~
+你走到了阿雷斯之路的盡頭. 在南邊你看到一間胄甲店, 東邊則是一間武器
+店. 在北邊你聽到一些打鐵的聲音.
+~
+0 8 1
+D0
+~
+~
+0 -1 937
+D1
+~
+~
+0 -1 936
+D2
+~
+~
+0 -1 935
+D3
+~
+~
+0 -1 928
+S
+#935
+胄甲店~
+這間小店幾乎是空的, 就好像沒什麼東西一樣. 店老闆並不想和你做生意.
+~
+0 8 1
+D0
+~
+~
+0 -1 934
+S
+#936
+武器店~
+你走進了一間販賣實用精緻武器的小店. 你覺得這裡的商品並沒有很多的選
+擇, 然而店老闆並不想和你做生意.
+~
+0 8 1
+D3
+~
+~
+0 -1 934
+S
+#937
+打鐵舖~
+這間大卻很吵的房間使你幾乎聽不到你在想什麼. 這裡所有的人都努力鍛造
+著高級的武器及胄甲. 雖然你不太能形容, 但你感覺西邊的牆有些異樣.
+~
+0 8 1
+D2
+~
+~
+0 -1 934
+D3
+你看到了一道密門!
+~
+door concealed~
+3 -1 938
+S
+#938
+戰略研究室~
+你進入了一間被一張上面放有大地圖的桌子所佔據的房間. 許多人正圍著桌
+子小心地研究這張大地圖. 你聽到一陣犬吠由北邊傳來.
+~
+0 9 1
+D0
+~
+~
+0 -1 954
+D1
+~
+~
+0 -1 937
+D3
+~
+Hell Gate~
+3 -1 955
+S
+#939
+城堡二樓~
+你正身處於這座城堡的二樓. 你被你在一樓所發現的東西給嚇呆了, 你也對
+二樓所隱藏的秘密感到疑惑. 這邊四面八方都有出口. 你看到你頭上有一道關著
+的狹小閘門.
+~
+0 8 1
+D0
+~
+~
+0 -1 940
+D1
+~
+~
+0 -1 943
+D2
+~
+~
+0 -1 941
+D3
+~
+~
+0 -1 942
+D4
+你在小閘門上看到了一面牌子, 上面寫著'私人財產─勿入!'
+~
+hatch~
+3 -1 951
+D5
+~
+~
+0 -1 923
+S
+#940
+北向的走廊~
+你正站在一條向北的走廊. 北邊有一間私人的房間, 南邊則有一座向下的樓梯.
+~
+0 8 1
+D0
+~
+~
+0 -1 947
+D2
+~
+~
+0 -1 939
+S
+#941
+南向的走廊~
+你正站在一條向南的走廊. 南邊有一間私人的房間, 北邊則是一座向下的樓梯.
+~
+0 8 1
+D0
+~
+~
+0 -1 939
+D2
+~
+~
+0 -1 944
+S
+#942
+西向的走廊~
+你正站在一條向西的走廊. 西邊有一間私人的房間, 東邊則是一座向下的樓梯.
+~
+0 8 1
+D1
+~
+~
+0 -1 939
+D3
+~
+~
+0 -1 945
+S
+#943
+東向的走廊~
+你正站在一條向東的走廊. 東邊有一間私人的房間, 西邊則是一座向下的樓梯.
+~
+0 8 1
+D1
+~
+~
+0 -1 946
+D3
+~
+~
+0 -1 939
+S
+#944
+寢室~
+你正身處於神的寢室! 然而這間房間似乎是空的.
+~
+0 8 1
+D0
+~
+~
+0 -1 941
+S
+#945
+寢室~
+你正身處於神的寢室!
+~
+0 8 1
+D1
+~
+~
+0 -1 942
+S
+#946
+寢室~
+你正身處於神的寢室!
+~
+0 8 1
+D3
+~
+~
+0 -1 943
+S
+#947
+寢室~
+你正身處於神的寢室!
+~
+0 8 1
+D2
+~
+~
+0 -1 940
+S
+#948
+神之禮堂~
+你走進了一個神聖不可侵犯的地方─神之禮堂. 如果你只是一個凡人, 最好
+趕快離開!
+~
+0 8 1
+D2
+~
+~
+0 -1 951
+S
+#951
+入口處~
+一塊牌子上寫著 '當心意外, 別期望太高.'
+~
+0 8 1
+D0
+~
+~
+0 -1 948
+D5
+~
+hatch~
+3 -1 939
+S
+#954
+信徒箴言~
+一陣聲音在你耳旁低語 '在時光流逝之前, 把握你的人生.'
+~
+0 8 1
+D2
+~
+~
+0 -1 938
+S
+#955
+地獄之門~
+!!!!!四周響起一陣陣哭號聲, 寒氣迎面而來, 你覺得最好趕快回頭為妙!!!!!
+~
+0 8193 9
+D1
+~
+~
+0 -1 938
+D5
+~
+~
+0 -1 956
+S
+#956
+地獄~
+...........
+
+~
+0 8193 9
+D4
+~
+~
+0 -1 955
+S
+#0
+
+
+
+#SPECIALS
+M 901 spec_cast_cleric
+M 902 spec_breath_fire
+M 903 spec_thief
+M 904 spec_cast_mage
+M 905 spec_cast_adept
+M 907 spec_cast_adept
+M 908 spec_breath_lightning
+M 909 spec_guard
+M 914 spec_breath_any
+M 916 spec_cast_mage
+M 919 spec_breath_any
+M 920 spec_breath_fire
+M 921 spec_cast_cleric
+M 922 spec_poison
+M 923 spec_thief
+M 926 spec_cast_mage
+M 929 spec_cast_mage
+M 929 spec_breath_any
+M 929 spec_cast_cleric
+S
+
+
+
+#RESETS
+M 0 923 10 904
+M 0 923 10 905
+M 0 923 10 906
+M 0 923 10 907
+M 0 923 10 908
+M 0 901 1 910
+E 0 900 0 5
+E 0 901 0 16
+G 0 926 0
+G 0 909 0
+M 0 925 4 914
+M 0 925 4 914
+M 0 926 1 918
+G 0 927 0
+M 0 902 1 920
+E 0 908 0 9
+M 0 920 2 921
+M 0 920 2 922
+M 0 915 1 924
+G 0 914 0
+G 0 918 0
+G 0 919 0
+G 0 920 0
+G 0 921 0
+M 0 907 1 925
+E 0 910 0 3
+E 0 905 0 17
+G 0 926 0
+G 0 909 0
+M 0 912 4 925
+E 0 915 0 17
+G 0 914 0
+M 0 912 4 925
+E 0 915 0 17
+G 0 914 0
+M 0 905 1 926
+E 0 907 0 19
+E 0 931 0 20
+G 0 926 0
+G 0 909 0
+M 0 911 4 926
+E 0 916 0 17
+G 0 921 0
+M 0 911 4 926
+E 0 916 0 17
+G 0 921 0
+M 0 916 1 927
+G 0 905 0
+G 0 909 0
+G 0 910 0
+G 0 926 0
+M 0 923 10 928
+M 0 914 1 929
+E 0 924 0 12
+E 0 925 0 6
+M 0 919 1 931
+E 0 922 0 3
+E 0 923 0 16
+M 0 922 3 933
+M 0 922 3 933
+M 0 924 3 933
+M 0 924 3 933
+M 0 923 10 934
+M 0 918 1 935
+G 0 904 0
+G 0 908 0
+G 0 911 0
+M 0 917 1 936
+E 0 907 0 19
+E 0 931 0 20
+G 0 913 0
+M 0 908 1 937
+E 0 912 0 11
+G 0 926 0
+G 0 909 0
+M 0 909 4 937
+G 0 917 0
+M 0 909 4 937
+G 0 917 0
+M 0 906 1 938
+E 0 903 0 16
+G 0 926 0
+G 0 909 0
+M 0 910 4 938
+E 0 913 0 16
+G 0 919 0
+M 0 910 4 938
+E 0 913 0 16
+G 0 919 0
+M 0 921 1 945
+E 0 911 0 1
+G 0 926 0
+G 0 909 0
+M 0 904 1 946
+E 0 906 0 16
+G 0 926 0
+G 0 909 0
+M 0 903 1 947
+E 0 904 0 8
+E 0 902 0 6
+G 0 926 0
+G 0 909 0
+M 0 913 5 954
+M 0 913 5 954
+M 0 913 5 954
+M 0 927 1 956
+E 0 928 0 16
+E 0 929 0 0
+S
+
+
+
+#SHOPS
+915 1 8 17 19 0 130 80 0 23
+0
+
+
+
+#$

@@ -1,0 +1,3217 @@
+#AREADATA
+Name        死亡谷~
+Identity    dead~
+Builders    Rex~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs	      8930 9099
+Security    1
+Recall      4580
+Death	    401
+End
+
+
+
+#MOBILES
+#9000
+ephraim lord dead~
+死亡之王 - 艾佛瑞(Ephraim - Lord of Death)~
+艾佛瑞(Ephraim) - 死亡谷的主宰，是人們心中的夢魘。
+~
+他是人人懼怕的死亡之王，控制著人們的懼怕與驚恐。
+~
+11267 33563176 -1000 S
+60 0 0 30d-50+700 -50d-1000+0
+-1 0
+0 8 1
+R Undead~
+C 1|2|4|32
+P 4|256|4194304|8388608|16777216|268435456|536870912
+S 23 -100
+S 30 -50
+S 31 -50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if is_qmark($n) == dead_enemy
+	say 曾經擊敗過我的 $n ，竟然又來送死了！
+	grin $n
+	c sleep $n
+	mpnowait
+	c 3 whirlwind
+	mpnowait
+	break
+endif
+if ispc($n)
+	tell $n 歡迎來到你的人生最終路途，只是我很驚訝你能夠到達這邊。
+	tell $n 或許我應該要高興，或許你可以加入我們死亡谷的行列。
+	tell $n 或是....享受死亡的歡愉！
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != dead_enemy
+	mpadd_all_qmark $n dead_enemy 500 0 0 0 1 1
+endif
+if hitprcnt($i) < 70
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+if hitprcnt($i) < 50
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+if hitprcnt($i) < 30
+	mpat 5 c 3 'double heal'
+	mpnowait
+endif
+say 死吧！你必須迎接死亡之路....！
+if rand(40)
+	c 'demon tremor'
+	mpnowait
+endif
+if ispc($r)
+	if rand(20)
+		c curse $r
+		mpnowait
+		c curse $r
+		mpnowait
+	endif
+	if rand(20)
+		c poison $r
+		mpnowait
+		c blindness $r
+		mpnowait
+	endif
+	if rand(40)
+		if rand(50)
+			c lifesteal $r
+			mpnowait
+			c lifesteal $r
+			mpnowait
+		else
+			c soulsteal $r
+			mpnowait
+			c soulsteal $r
+			mpnowait
+		endif
+	endif
+	if rand(50)
+		c 'energy drain' $r
+		mpnowait
+		c 'energy drain' $r
+		mpnowait
+	else
+		c powerball $r
+		mpnowait
+	endif
+endif
+if rand(30)
+	if mobcount(9021) > 0
+		if insameroom(guardian-dead)
+			if is_qmark($i) != dead_ephraim_groupfight
+				mpadd_qmark self dead_ephraim_groupfight -1 0 0 0 1 0
+				yell 我的死亡守衛，請過來幫助我啊！
+				mpgroup self guardian-dead 1 0
+				mpforce guardian-dead rescue ephraim
+			endif
+		else
+			yell 我的死亡守衛，請過來幫助我啊！
+			mptransfer guardian-dead
+			mpgroup self guardian-dead 1 0
+			mpforce guardian-dead rescue ephraim
+		endif
+	endif
+endif
+if isaffected($i) & 16777216
+	mpdis_magic self 'seal magic'
+	yell 封鎖魔法對我來說是沒有用的！哈....哈....！
+	c 'seal magic' $r
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	if hitprcnt($i) < 30
+		c sanctuary
+		mpnowait
+	endif
+endif
+if isaffected($i) & 268435456
+	mpdis_magic self paralyze
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+shout 死亡是永恆的，就憑你 $n 是沒有辦法殺死我的....！
+tell $n 我會再去找你，你永遠不能擺脫死亡的....！
+if is_qmark($n) != dead_enemy
+	mpadd_all_qmark $n dead_enemy 500 0 0 0 1 1
+endif
+if is_qmark($n) == dead_echo
+	mpecho $I 的身體緩緩的消失了....。
+	mpecho 一把光芒萬丈的劍漸漸的浮現出來....！
+	mpdel_qmark $n dead_echo
+	mpoload 9011 38 floor
+	mppurge self
+endif
+if pcnum($) > 20
+	mpgreward exp $n 30 5000
+else
+	if pcnum($) > 15
+		mpgreward exp $n 30 5500
+	else
+		if pcnum($) > 10
+			mpgreward exp $n 30 6000
+		else
+			if pcnum($) > 5
+				mpgreward exp $n 30 6500
+			else
+				mpgreward exp $n 30 7000
+			endif
+		endif
+	endif
+endif
+~
+|
+
+#9001
+ghost~
+浮游靈(wandering ghost)~
+浮游靈(wandering ghost)飄浮在這邊到處找替身。
+~
+他已經是快要死亡的精靈了。
+~
+33 0 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Ghost~
+P 8|4194308
+S
+16 100
+>fight_prog 30~
+c 'magic missile'
+mpnowait
+~
+|
+
+#9002
+vampire~
+吸血鬼(vampire)~
+萬人皆懼的吸血鬼(vampire)正朝向你飛過來。
+~
+他看起來好像很餓，會不會是把你當作晚餐了？
+~
+4129 0 -700 S
+42 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Vampire~
+C 1
+P 8|4194308
+S
+16 110
+>fight_prog 20~
+c 'lightning bolt'
+mpnowait
+~
+|
+
+#9003
+skeleton~
+骷髏(skeleton)~
+這具可憐的骷髏(skeleton)正在找尋替身再生。
+~
+他的外型看起來生前應該是人類，但是他已經死了。
+~
+33 0 -700 S
+41 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 1
+P 8|4194308
+S
+16 50
+
+#9004
+necri-dead~
+耐克瑞(Necri)~
+耐克瑞(Necri)，死亡之王的身邊忠僕。
+~
+他是一隻全身雪白，你從未見過的古怪生物。
+~
+274467 552 -900 S
+51 1500 0 20d-10+250 -3d-256+0
+0 0
+0 8 0
+R Demon~
+C 3
+P 8|4194304
+S 16 -500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if inroom($i) == 9059
+	if insameroom(shore-dead)
+		mpadd_qmark self dead_shore_relife 30 0 0 0 1 1
+		mpgroup shore-dead self 0 1
+	endif
+endif
+~
+>fight_prog 10~
+if isaffected($i) & 16777216
+	mpdis_magic self all
+	c 'seal magic' $r
+	mpnowait
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	if hitprcnt($i) < 30
+		c sanctuary
+		mpnowait
+	endif
+endif
+if isaffected($i) & 268435456
+	mpdis_magic self paralyze
+endif
+~
+>fight_prog 30~
+if rand(50)
+	c powerball
+	mpnowait
+else
+	c 'demon tremor'
+	mpnowait
+endif
+~
+>hitprcnt_prog 30~
+if rand(50)
+	c 3 powerball $r
+	mpnowait
+else
+	c 3 fireball
+	mpnowait
+endif
+~
+>death_prog 100~
+if is_qmark($i) != dead_shore_relife
+	if pcnum($) > 15
+		mpgreward exp $n 30 1000
+	else
+		if pcnum($) > 10
+			mpgreward exp $n 30 1200
+		else
+			if pcnum($) > 5
+				mpgreward exp $n 30 1400
+			else
+				mpgreward exp $n 30 1600
+			endif
+		endif
+	endif
+endif
+~
+|
+
+#9005
+undead warrior~
+不死戰士(undead warrior)~
+一隻身軀殘缺不全的不死戰士(undead warrior)在這邊。
+~
+他是死亡谷的居民。
+~
+33 0 -200 S
+46 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 1
+P 8|4194308
+S
+16 60
+
+#9006
+undead magi~
+不死法師(undead magi)~
+不死法師(undead magi)四周環繞著闇黑的魔力。
+~
+他是不死族的其中一份子。
+~
+33 0 -410 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 2
+P 8|4194308
+S
+16 80
+>fight_prog 30~
+c colour
+mpnowait
+~
+|
+
+#9007
+undead priest~
+不死牧師(undead priest)~
+不死牧師(undead priest)正在尋找可以超渡的對象。
+~
+不死牧師的力量來源來自於死亡之王。
+~
+33 0 -420 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Undead~
+C 2
+P 8|4194308
+S
+16 85
+>fight_prog 30~
+c harm
+mpnowait
+~
+|
+
+#9008
+shore-dead guardian~
+索爾(Shore)~
+索爾(Shore) - 死亡谷的守衛。
+~
+他身體的一部份是人類，但是他看起來更像是鬼魂。索爾為死亡之王看守死亡谷的入口。
+~
+35 552 -800 S
+50 1500 0 10d-10+300 0d-50+0
+0 0
+0 8 0
+R Ghost~
+C 1|2|4|32
+P 4194304
+S 16 -500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>all_greet_prog 100~
+if isnpc($n)
+or isimmort($n)
+	break
+endif
+hunt $n
+mpnowait
+c fireball $n
+mpnowait
+~
+>fight_prog 50~
+c 'demon tremor'
+mpnowait
+c heal
+mpnowait
+if rand(50)
+	if insameroom(necri)
+		mpgroup necri self 0 1
+		mpforce necry protect shore
+	else
+		if is_qmark($i) == dead_Summon_Necri
+			if is_qmark($i) < dead_Summon_Necri 100005
+  				say 耐克瑞(Necri)，前來幫助我吧！
+  				mptransfer necri
+  				mpgroup necry self 0 1
+  				mpforce necri protect shore
+   				mpforce necri mpkill $n
+   				mpmod_qmark self dead_Summon_Necri v0 + 1
+   			else
+   				say 耐克瑞(Necri)，前來幫助我吧！
+   				mpecho 雖然$I這麼喊叫著，卻不見耐克瑞(Necri)前來幫忙...
+   			endif
+   		else
+   			mpadd_qmark self dead_Summon_Necri -1 0 0 0 1 1
+   		  	say 耐克瑞(Necri)，前來幫助我吧！
+  			mptransfer necri
+  			mpgroup necry self 0 1
+  			mpforce necri protect shore
+   			mpforce necri mpkill $n
+   		endif
+   	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+yell 你能夠擊敗我，但是永遠無法擊敗「死亡」！
+yell 因為那是所有生物的命運，哈哈哈哈！
+mpforcer 9059 modrvt t0 = 30
+if is_qmark($i) != dead_shore_relife
+	if pcnum($) > 15
+        	mpgreward exp $n 30 1200
+	else
+        	if pcnum($) > 10
+                	mpgreward exp $n 30 1500
+        	else
+                	if pcnum($) > 5
+                        	mpgreward exp $n 30 1800
+                	else
+                        	mpgreward exp $n 30 2000
+			endif
+                endif
+        endif
+endif
+~
+|
+
+#9009
+skeleton drake~
+骷髏龍(Skeleton Drake)~
+死亡谷中最可怕的生物 - 骷髏龍(Skeleton Drake)站在這邊。
+~
+雖然這只是一具骷髏，但是這隻龍生前似乎有著許多可怕的魔法技巧。
+~
+4129 40 -1000 S
+54 1500 0 10d20+100 -3d-105+15
+-1 0
+0 8 0
+R Undead~
+C 1|2|32
+P 4194304
+>fight_prog 100~
+skilldrv multihit $n
+~
+>death_prog 100~
+if pcnum($) > 15
+	mpgreward exp $n 30 300
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 400
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 500
+		else
+			mpgreward exp $n 30 600
+		endif
+	endif
+endif
+~
+|
+
+#9010
+spirit~
+靈魂(spirit)~
+一具可憐的靈魂(spirit)在這邊飄游。
+~
+你幾乎不能看出這具靈魂的外型。
+~
+33 0 0 S
+40 5 0 0d0+0 1d3+7
+0 0
+0 8 0
+R Ghost~
+P 8|4194308
+S
+16 80
+>fight_prog 30~
+c 'lightning bolt'
+mpnowait
+~
+|
+
+#9011
+servant undead~
+不死奴僕(undead servant)~
+不死奴僕(undead servant)忽然向你伸出他的舌頭。
+~
+不死奴僕當死亡之王有需要的時候，就必須立刻為其服務。
+~
+35 0 -700 S
+47 1000 0 0d-20+150 -3d-204+15
+0 0
+0 8 0
+R Undead~
+C 3
+P 8|4194304
+S
+16 100
+>fight_prog 30~
+c flamestrike
+mpnowait
+c 'lightning bolt'
+mpnowait
+~
+|
+#9012
+dark dweller~
+黑暗居民(dark dweller)~
+黑暗居民(dark dweller)口中喃喃唸著你聽不懂的語言。
+~
+當你看到他們，忽然他們就變成了一團煙霧，然後包圍著你。
+~
+129 0 0 S
+47 0 0 10d0+0 -10d-205+0
+0 0
+0 8 0
+R Ghost~
+P 8|4194308
+
+#9013
+~
+艾佛瑞魔音(Echo of Ephraim)~
+你聽到死亡之王艾佛瑞在黑暗中的魔音(Echo of Ephraim)。
+~
+你完全不知到艾佛瑞在哪裡，你只能夠被這些魔音給吸引，往死亡大地更黑暗、更可怕的
+內地而去。在黑暗中你似乎可以看到巨大的身軀就在你眼前，那是死亡之王嗎？
+~
+3 8454698 -1000 S
+55 1000 -1000 0d0+0 0d0+0
+0 0
+0 8 0
+R Element~
+C 1|2|32
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>rand_prog 20~
+if pcnum($) > 0
+	if rand(50)
+		mpkill $r
+	else
+		c powerball $r
+		mpnowait
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == dead_echo
+else
+	mpadd_qmark $n dead_echo -1 0 0 0 0 1
+endif
+if pcnum($) > 15
+	mpgreward exp $n 30 500
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 600
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 700
+		else
+			mpgreward exp $n 30 800
+		endif
+	endif
+endif
+mpechoat $n 圍繞在你身邊討厭的魔音終於消失了。
+mppurge self
+~
+|
+#9014
+undead mercenary~
+不死傭兵(undead mercenary)~
+不死傭兵(undead mercenary)可以說是不死家族中最具戰鬥性的。
+~
+他看起來十分的好戰。
+~
+33 544 -200 S
+48 0 0 0d10+0 -10d-200+0
+0 0
+0 8 0
+R Undead~
+C 1|8|32
+P 8|4194308
+S
+16 60
+#9015
+black flame~
+黑火(black flame)~
+有一把有生命且發出黑色光芒的火焰(flame)在這邊飄浮著。
+~
+他發出了黑色的光芒。
+~
+33 0 0 S
+51 500 0 0d10+100 -3d-250+0
+0 0
+0 8 0
+R Element~
+C 2
+P 8|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+if rand(30)
+	c 3 fireball
+	mpnowait
+endif
+if rand(30)
+	c 3 flamestrike
+	mpnowait
+else
+	c 3 'burning hands'
+	mpnowait
+endif
+~
+>death_prog 100~
+if pcnum($) > 15
+        mpgreward exp $n 30 300
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 350
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9016
+undead necromancer~
+不死咒術師(undead necromancer)~
+不死咒術師(undead necromancer)對你使用了他的黑暗法術。
+~
+他擁有所有與死亡相關法術的力量。
+~
+33 520 -520 S
+48 0 0 0d0+0 -10d-200+23
+0 0
+0 8 0
+R Undead~
+C 2
+P 8|4194308
+S
+16 50
+#9017
+tyr~
+泰爾(Tyr)~
+泰爾(Tyr) - 曾經是龍族大王之一，已經在過去的戰爭中死去。
+~
+你最好不要攻擊他....！
+~
+129 552 1000 S
+55 3000 0 10d10+100 5d400+0
+-1 0
+0 8 1
+C 2
+P 8|256|4194304
+R Dragon~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+if rand(50)
+	c paralyze
+	mpnowait
+else
+	c 'lighning bolt'
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9018) != 0
+or mobcount(9019) != 0
+	mpecho $I 身上的龍骨戰甲(dragon armor)忽然消失了....！
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9018
+yalak~
+雅拉克(Yalak)~
+雅拉克(Yalak) - 曾經是龍族大王之一，正在這邊孵蛋。
+~
+雅拉克曾經也是龍族大王之一。
+~
+129 552 1000 S
+56 2500 0 20d10+-100 3d180+0
+-1 0
+0 8 1
+R Dragon~
+C 1|2|32
+P 8|256|4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+if rand(20)
+	c parylyze
+	mpnowait
+endif
+if rand(30)
+	c heal
+	mpnowait
+endif
+if rand(40)
+	c fireball
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9017) != 0
+or mobcount(9019) != 0
+	mpecho $I 身上的龍骨戰甲(dragon armor)忽然消失了....！
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9019
+illian~
+伊立安(Illian)~
+伊立安(Illian) - 曾經是龍族大王之一，有著特殊的自然魔法。
+~
+他擁有最純正的自然魔法，你應該可以感受得到。
+~
+129 552 1000 S
+56 2000 0 10d10+-100 3d100+0
+-1 0
+0 8 1
+R Dragon~
+C 1|2|8|23
+P 8|256|4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+if rand(20)
+	c paralyze
+	mpnowait
+endif
+if rand(30)
+	c fireball
+	mpnowait
+endif
+if rand(40)
+	c 'double heal'
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9018) != 0
+or mobcount(9017) != 0
+	mpecho $I 身上的龍骨戰甲(dragon armor)忽然消失了....！
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+~
+|
+#9020
+dracos king lich~
+巫妖之王 - 卓克(Dracos the Lich King)~
+巫妖之王 - 卓克(Dracos the Lich King)正靜靜的看著你的到來。
+~
+他真的非常可怕！想要試試看嗎？
+~
+1027 552 -1000 S
+60 0 2000 10d0+300 -10d0+0
+0 0
+0 8 1
+R Undead~
+C 3
+P 8|256|4194304|8388608
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 50~
+if rand(50)
+	grin
+	c powerball
+	mpnowait
+	c 'demon tremor'
+	mpnowait
+else
+	c 'double heal'
+	mpnowait
+	c heal
+	mpnowait
+endif
+if rand(50)
+	grin
+	if ispc($r)
+		c 3 'energy drain' $r
+		mpnowait
+	endif
+		if rand(50)
+			c soulsteal $r
+			mpnowait
+		else
+			c lifesteal $r
+			mpnowait
+		endif
+	endif
+endif
+~
+>fight_prog 40~
+if hitprcnt($i) < 30
+	mpecho $I 的身體忽然開始扭曲，似乎開始變形了。
+	mpecho $I 你感到他對你的攻勢越來越猛烈。
+	skilldrv multihit $n
+	skilldrv multihit $n
+	skilldrv heavyhit $n
+	if rand(30)
+		say 死亡谷的死氣，幫助我恢復戰鬥力吧！
+		mpat 5 c 2 'double heal'
+		mpnowait
+	endif
+	if hitprcnt($i) < 50
+		c 'double heal'
+		mpnowait
+		c powerball
+		mpnowait
+		c fireball
+		mpnowait
+	endif
+endif
+~
+>fight_prog 30~
+if rand(50)
+	c fireball
+	mpnowait
+endif
+if rand(50)
+	c flamestrike
+	mpnowait
+endif
+if rand(50)
+	c 3 'burning hands'
+	mpnowait
+endif
+~
+>death_prog 100~
+if pcnum($) > 15
+        mpgreward exp $n 30 1000
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 1500
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 2000
+                else
+                        mpgreward exp $n 30 3000
+                endif
+        endif
+endif
+~
+|
+#9021
+guardian-dead guardian death~
+死亡守衛(Guardian of Death)~
+死亡之王最器重的幽靈 - 死亡守衛(Guardian of Death)。
+~
+他幾乎擁有每一種職業的技能。
+~
+18626691 8872 -1000 S
+50 5000 0 30d10+200 -3d-150+0
+0 0
+0 8 1
+R Undead~
+C 63
+P 4|256|4194304|8388608|16777216|268435456|536870912
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+if rand(20)
+	mpoload 2436
+	wear sword
+	flaming
+	mpnowait
+	flaming
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(25)
+	mpoload 2436
+	wear sword
+	earth
+	mpnowait
+	earth
+	mpnowait
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(33)
+	mpoload 2436
+	wear sword
+	circular
+	mpnowait
+	circular
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(40)
+	mpoload 3020
+	wear dagger
+	mpdef_rembch $n
+	mpgoto $n
+	bs $n
+	mpnowait
+	remove dagger
+	mpjunk dagger
+	mpdef_rembch null-tar
+	wear slasher
+else
+	mpoload 1705
+	mpoload 1702
+	rem slasher
+	wear bow
+	wear arrow
+	met
+	mpnowait
+	met
+	mpnowait
+	remove bow
+	mpjunk bow
+	remove arrow
+	mpjunk arrow
+	wear slasher
+endif
+~
+>fight_prog 100~
+skilldrv multihit $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) <= dead_guardian 100005
+	mpecho 你看到 $I 手上的那把劍飛到空中，然後忽然消失了....。
+	mpjunk all.slasher
+	if is_qmark($n) == dead_guardian
+		mpmod_qmark $n dead_guardian v0 + 1
+	else
+		mpadd_qmark $n dead_guardian -1 1 0 0 0 1
+	endif
+else
+	mpecho 你看到 $I 手上的那把劍飛到空中，卻又掉了下來....。
+	mpdel_qmark $n dead_guardian v0 - 5
+endif
+if pcnum($) > 15
+	mpgreward exp $n 30 1000
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 1500
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 2000
+		else
+			mpgreward exp $n 30 3000
+		endif
+	endif
+endif
+~
+|
+#9022
+unfortunate soul poorsoul~
+不幸之靈(unfortunate soul)~
+~
+~
+3 0 0 S
+46 -10 0 0d0+0 1d1+1
+0 0
+0 8 1
+R Ghost~
+P 8|4194308
+S
+16 50
+#9023
+skeleton fighter~
+骷髏戰士(skeleton fighter)~
+一個骷髏戰士(skeleton fighter)站在這邊。
+~
+他生前是第一流的戰士，死了之後戰技卻繼續保持了下來。
+~
+262145 0 -500 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+C 1
+P 8|4194308
+S
+16 50
+#9024
+zombie~
+僵屍(zombie)~
+一具僵屍(zombie)站在這邊。
+~
+你看到一隻不死生物。
+~
+262145 0 -600 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194308
+S
+16 50
+#9025
+ghoul~
+餓鬼(ghoul)~
+一隻餓鬼(ghoul)站在這邊。
+~
+你看到一隻不死生物。
+~
+262145 0 -600 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194308
+S
+16 50
+#9026
+wight~
+人形鬼(wight)~
+一隻人形鬼(wight)站在這邊。
+~
+你看到一隻不死生物。
+~
+262145 0 -600 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194308
+S
+16 50
+#9027
+wraith~
+幽靈(wraith)~
+一具幽靈(wraith)在這邊飄浮。
+~
+你看到一隻不死生物。
+~
+262145 0 -700 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Ghost~
+P 8|4194308
+S
+16 50
+#9028
+mummy~
+木乃伊(mummy)~
+一具木乃伊(mummy)在這邊站在。
+~
+你看到一隻不死生物。
+~
+262145 0 -700 S
+47 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Mummy~
+P 8|4194308
+S
+16 50
+#9029
+spectre~
+游靈(spectre)~
+一具游靈(spectre)在這邊飄浮。
+~
+你看到一隻不死生物。
+~
+262145 0 -700 S
+49 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+C 2
+P 8|4194308
+S
+16 80
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+c flamestrike
+mpnowait
+~
+|
+#9030
+vampire~
+吸血鬼(vampire)~
+一隻人人懼怕的吸血鬼(vampire)站在這邊。
+~
+你看到一隻巨大的不死生物。
+~
+262145 0 -800 S
+51 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8|256|4194308
+R Vampire~
+S
+16 130
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+feed
+feed
+feed
+if rand(40)
+	c 'energy drain'
+	mpnowait
+endif
+~
+|
+#9031
+phantom-dead~
+幻影(phantom)~
+一陣幻影(phantom)在這邊飄游。
+~
+你看到一隻巨大的不死生物。
+~
+262145 0 -800 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Phantom~
+P 8|4194308
+S
+16 60
+#9032
+haunt~
+生息(haunt)~
+可怕的生物生息(haunt)在這邊飄游。
+~
+你看到一隻巨大的不死生物。
+~
+262145 0 -800 S
+47 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+C 1
+P 8|4194308
+S
+16 100
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+c 'lightning bolt'
+mpnowait
+~
+|
+#9033
+spirit~
+靈魂(Spirit)~
+可怕的靈魂(spirit)在這邊飄游。
+~
+你看到一隻巨大的不死生物。
+~
+262145 0 -900 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Ghost~
+C 2
+P 8|4194308
+S
+16 70
+>fight_prog 20~
+c ice
+~
+|
+#9034
+nightshade~
+夢魘(Nightshade)~
+夢魘(Nightshade)在這邊影響你的神智。
+~
+你看到一隻可怕的不死生物。
+~
+262145 0 -900 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Phantom~
+C 3
+P 8|4194308
+S
+16 80
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+c fireball
+mpnowait
+~
+|
+#9035
+lich~
+巫妖(Lich)~
+一隻巫妖(lich)在這邊。
+~
+你看到一隻可怕的不死生物。
+~
+262145 0 -900 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Undead~
+P 8|4194304
+S
+16 120
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if ispc($r)
+	grin
+	c 'energy drain' $r
+	mpnowait
+endif
+~
+|
+#9036
+sharissa~
+撒麗莎(Sharissa)~
+撒麗莎(Sharissa)在這邊站著。
+~
+撒麗莎，死亡谷人類之母在這邊等待著她可以幫助的對象。或許你可以向她請求一些協助。
+~
+1310723 134783656 1000 S
+60 0 0 20d-20+900 -10d0+0
+0 0
+0 8 2
+C 1|2|8|32
+P 1|8|256|4194304|8388608
+W magic missile~ 1000 300
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 40~
+if rand(30)
+	say 太陽啊！發生明亮的光芒來幫助我作戰吧！
+	c 'sun flash'
+	mpnowait
+endif
+if rand(50)
+	say 火啊！燃燒起萬丈的火焰，將敵人的屍骨焚燬吧！
+	c 'angry fire storm'
+	mpnowait
+endif
+if rand(30)
+	say 水啊！請鎮靜敵人的心智，讓他們無法作戰吧！
+	c calm
+	mpnowait
+	c calm
+	mpnowait
+endif
+~
+>hitprcnt_prog 50~
+if rand(70)
+	c 'double heal'
+	mpnowait
+else
+	c 3 'double heal'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	c sanctuary
+	mpnowait
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+~
+>talk_prog help~
+if being($b)
+	if insameroom($b)
+		break
+	endif
+endif
+ponder
+say 好的，我還有一些力量可以幫助你....。
+say 請你稍等一下....。
+mpdef_rembch $n
+mpadd_qmark self dead_quest -1 0 0 0 0 1
+~
+>rand_prog 35~
+if insameroom($b)
+	if is_qmark($b) == dead_quest 100000
+		say 試著去存在吧....！試著去拯救我的子民吧....！
+		say 試著去擊敗無盡的邪惡....！
+		mpmod_qmark self dead_quest v0 = 1
+		break
+	endif
+	if is_qmark($b) == dead_quest 100001
+		mpecho $I 緩緩的升起她的右手....。
+		mpecho 當 $I 舉起她的右手時，似乎這個空間已經完全沒有了聲音....。
+		mpmod_qmark self dead_quest v0 = 2
+		break
+	endif
+	if is_qmark($b) == dead_quest 100002
+		mpechoat $b 忽然有一道白光將你帶離了死亡谷....。
+		mpechoaround $b 忽然有一道白光將 $b 帶離了這裡。
+		mptransfer $b 4580
+		mpdel_qmark self dead_quest
+		mpdef_rembch null-tar
+	endif
+endif
+~
+>death_prog 100~
+if pcnum($) > 15
+        mpgreward exp $n 30 500
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 900
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 1200
+                else
+                        mpgreward exp $n 30 1500
+                endif
+        endif
+endif
+~
+|
+#0
+
+
+
+#OBJECTS
+#9000
+fountain oath~
+詛咒之泉(Fountain of Oath)~
+詛咒之泉(Fountain of Oath)在這邊。~
+~
+25 64 0
+0~ 0~ 0~ 1~
+10000 0 0
+X stone~
+
+#9001
+dark sphere~
+闇黑天球(dark sphere)~
+闇黑天球(dark sphere)飄浮在這邊。~
+~
+15 0 0
+10000~ 0~ 0~ 0~
+0 0 0
+E
+dark sphere~
+闇黑天球擁有無盡的魔力可以儲藏你身上的所有金錢與裝備。
+~
+X black matter~
+
+#9002
+ankh life~
+生命之符(Ankh of Life)~
+一個小型護符(ankh)激射出強勁的生命力(life)。~
+~
+1 50594113 1
+0~ 0~ 168~ 0~
+1 0 0
+A
+13 50
+H sanctuary~ 30 10 1
+X paper~
+
+#9003
+fountain water~
+聖泉(holy fountain)~
+聖泉(holy fountain)裏的水，散發出水晶般的光芒。~
+~
+25 0 0
+0~ 0~ 0~ 0~
+500 3000 0
+C 3000
+X stone~
+
+#9004
+death scythe~
+死神鐮刀(Scythe of Death)~
+一把巨大黑色的鐮刀(scythe)在地上發出嗡嗡的聲響。~
+~
+5 86 8193
+300~ 0~ 0~ 1~
+30 500000 0
+Z 1
+A
+19 9
+A
+18 9
+A
+5 -5
+A
+43 20
+H curse~ 5 40 1
+V Human~ 20 100 20 100
+V Gnome~ 30 100 30 100
+V Dwarf~ 10 100 10 100
+V Elf~ 10 100 10 100
+V Orc~ 10 100 10 100
+V Lizardman~ 10 100 10 100
+V Demon~ 0 50 0 30
+V Undead~ 0 50 0 30
+V Ghost~ 0 50 0 30
+C 500000
+X steel~
+
+#9005
+judgement book~
+審判之書(Book of Judgement)~
+一本發出巨大能量的書本(book)被放在這邊。~
+~
+13 321 16385
+0~ 0~ 0~ 0~
+20 300000 0
+A
+39 -10
+A
+12 50
+C 300000
+X paper~
+
+#9006
+death ring~
+死亡之戒(Ring of Death)~
+一只散發著可怕能量的戒指(ring)被丟棄在這邊。~
+~
+9 2581 3
+0~ 0~ 100~ 0~
+5 300000 0
+A
+19 4
+A
+43 4
+C 300000
+X bone~
+
+#9007
+evil bracelet~
+邪光護肘(evil bracelet)~
+一副發出白色光芒的護肘(bracelet)被丟棄在地上.~
+~
+9 597 4097
+0~ 0~ 100~ 0~
+5 50000 0
+A
+1 1
+A
+19 2
+A
+39 5
+C 50000
+X bone~
+
+#9008
+dragon armor~
+龍骨戰甲(dragon armor)~
+一套由龍(dragon)的骨頭所製成的護甲(armor)放在這裡.~
+~
+9 2119 9
+0~ 0~ 100~ 0~
+20 70000 0
+A
+5 1
+A
+17 -20
+A
+39 10
+A
+19 3
+C 70000
+X dragon bone~
+
+#9009
+cult sash~
+邪龍束腰(cult sash)~
+一條上頭畫滿各式龍肖像的束腰(sash)被丟在地上.~
+~
+9 592 2049
+0~ 0~ 100~ 0~
+20 50000 0
+A
+17 5
+A
+19 4
+A
+39 20
+C 50000
+X fiber~
+
+#9010
+black sword dark slasher~
+黑劍 - 闇琉天破(black sword - Dark Slasher)~
+一把發散著闇黑色光芒的黑劍(black sword)浮在半空之中.~
+~
+5 2647 8193
+400~ 0~ 0~ 3~
+20 200000 0
+A
+43 10
+A
+42 10
+A
+41 10
+A
+18 5
+A
+19 7
+A
+57 200
+H curse~ 20 50 4
+C 200000
+X steel~
+
+#9011
+light sword sunshine breaker~
+光劍 - 破嵐萬丈(light sword - Sunshine Breaker)~
+一把發散著萬丈光芒(light)的劍(sword)浮在半空之中.~
+~
+5 3395 8193
+500~ 0~ 0~ 1~
+20 300000 0
+A
+18 2
+A
+19 2
+A
+43 20
+A
+56 200
+H sun flash~ 30 30 4
+V Undead~ 40 100 30 100
+V Ghost~ 30 100 40 100
+V Demon~ 30 100 15 100
+V Human~ 0 20 0 20
+V Orc~ 0 30 0 30
+V Lizardman~ 0 30 0 30
+C 300000
+X mithril~
+
+#9012
+staff holy dragon~
+光龍之杖(staff of holy dragon)~
+一根上頭雕有維妙維肖龍(dragon)雕像的木杖(staff)放在這裡.~
+~
+5 257 8193
+400~ 0~ 0~ 7~
+15 100000 0
+A
+3 1
+A
+4 1
+A
+18 2
+A
+19 2
+H lightning bolt~ 40 40 4
+V Undead~ 30 100 30 100
+V Ghost~ 20 100 20 100
+V Demon~ 40 100 15 100
+V Human~ 0 20 0 20
+V Orc~ 0 30 0 30
+V Lizardman~ 0 30 0 30
+C 100000
+X ebony~
+
+#9013
+dodging cape~
+閃躲披風(dodging cape)~
+一襲亮紅色的披風(cape)被放置在這邊.~
+~
+9 321 1025
+0~ 0~ 300~ 0~
+5 10000 0
+A
+39 -20
+C 10000
+X fiber~
+
+#9014
+rusty sword~
+鏽蝕的劍(rusty sword)~
+一把已經生了鏽的長劍(sword).~
+~
+5 4224 8193
+200~ 0~ 0~ 1~
+9 0 0
+A
+18 -2
+A
+9 3
+X iron~
+
+#9015
+rusty shield~
+鏽蝕的盾(rusty shield)~
+一個生鏽的鐵盾(shield), 上面還有著尖刺.~
+~
+9 4224 513
+0~ 0~ 200~ 0~
+15 0 0
+A
+19 1
+A
+18 -2
+X iron~
+
+#9016
+magical belt~
+魔力腰帶(magical belt)~
+一條具有魔力的腰帶(belt)被放置在這邊.~
+~
+9 580 2049
+0~ 0~ 170~ 0~
+5 0 0
+A
+12 5
+A
+3 2
+X cloth~
+
+#9017
+magical coif~
+魔力頭巾(magical coif)~
+一條具有魔力的頭巾(coif)被放置在這邊.~
+~
+9 580 17
+0~ 0~ 150~ 0~
+5 0 0
+A
+12 5
+A
+4 2
+X cloth~
+
+#9018
+magical robe~
+魔力長袍(magical robe)~
+一襲具有魔力的長袍(robe)被放置在這邊.~
+~
+9 580 9
+0~ 0~ 170~ 0~
+5 0 0
+A
+4 2
+A
+3 1
+X fiber~
+
+#9019
+death scythe~
+死神鐮刀(Scythe of Death)~
+一把巨大黑色的鐮刀(scythe)在地上發出嗡嗡的聲響。~
+~
+5 86 8193
+300~ 35~ 40~ 1~
+30 500000 0
+A
+17 100
+A
+18 15
+A
+19 15
+A
+43 25
+H curse~ 10 45 1
+V Human~ 20 120 20 120
+V Gnome~ 30 120 30 120
+V Dwarf~ 20 120 20 120
+V Elf~ 20 120 20 120
+V Orc~ 20 120 20 120
+V Lizardman~ 10 120 10 120
+V Demon~ 0 50 0 30
+V Undead~ 0 50 0 30
+V Ghost~ 0 50 0 30
+C 500000
+X steel~
+
+#0
+
+
+
+#ROOMDATA
+#9000
+死亡谷的入口~
+.
+                              死  亡  谷
+    你現在正在死亡的大地上, 這是死亡之王(Lords of Death)的領域。即使你認為你可以獨
+自找到離開的路，耐克瑞(Necri) 還是會將你的靈魂撕裂。如果你想在這裡生存，那麼加入死
+亡之王的行列，作為死亡之王忠誠的僕人，或許可以倖免於難。當然，你也必需要証明你的確
+有足夠的資格，可以接受死亡之王的幫助....。
+有些文字(word)虛無飄渺的浮在這裡....。
+~
+0 860165 5
+E
+word~
+如果你的等級低於 36，奉勸你不要接近這邊。
+一旦進入死亡谷，將沒有可以回頭的地方。
+或許你可以找到能夠回到人間的出口。
+~
+D0
+~
+~
+0 -1 9006
+D2
+~
+~
+0 -1 4659
+>room_enter 4 100~
+if ispc($n)
+	if level($n) < 36
+		echoat $n 前頭一團包含強大力量的死氣，將你推了回來....。
+		transfer $n 4659
+	else
+		echoat $n 前頭的死氣，讓你感到不甚舒服....。
+		if rand(10)
+			echoat $n 你覺得你似乎被詛咒了....。
+			add_affect $n curse 0 30 18 -10 1024
+			break
+		endif
+		if rand(10)
+			if race($n) == vampire
+				break
+			else
+				echoat $n 你覺得你似乎中毒了....。
+				add_affect $n poison 0 30 1 -3 4096
+			endif
+			break
+		endif
+		if rand(10)
+			echoat $n 你覺得你似乎不甚安穩了....。
+			if rand(50)
+				add_affect $n 'faerie fire' 0 30 17 50 256
+			endif
+			break
+		endif
+		if rand(5)
+			echoat $n 你覺得你似乎全身麻痺了....。
+			add_affect $n  paralyze 0 3 17 -100 268435456
+		endif
+	endif
+endif
+~
+|
+S
+#9001
+詛咒之泉~
+這裡，就是被譽為世界四大魔泉之一的「詛咒之泉」。在遠古的時候，死亡之王對其所注
+入的魔力讓這裡成為各式各樣冒險者最喜歡前來冒險的地方之一。
+~
+0 860161 0
+D0
+~
+~
+0 0 9002
+D1
+~
+~
+0 0 9003
+D2
+~
+~
+0 0 9004
+D3
+~
+~
+0 0 9005
+S
+#9002
+吸血鬼的暗夜之殿~
+這裡就是吸血鬼的暗夜之殿。這裡自遠古以來就被吸血鬼當作祭祀的地方。你看到此處到
+處飄浮著可怕的不死生物。
+~
+0 74753 0
+D2
+~
+~
+0 0 9001
+S
+#9003
+巫妖的闇黑之殿~
+這裡就是巫妖的闇黑之殿。這裡自遠古以來就被巫妖當作研究可怕魔法的地方。你看到此
+處到處飄浮著可怕的不死生物。
+~
+0 13444097 0
+D3
+~
+~
+0 0 9001
+S
+#9004
+鬼魂的闇黑之殿~
+這裡就是鬼魂的闇黑之殿。這裡自遠古以來就被鬼魂當作研究可怕魔法的地方。你看到此
+處到處飄浮著可怕的不死生物。
+~
+0 51192833 0
+D0
+~
+~
+0 0 9001
+S
+#9005
+索命者的幽暗之殿~
+這裡就是索命者的幽暗之殿。這裡自遠古以來就被索命者當作研究可怕魔法的地方。你看到此
+處到處飄浮著可怕的不死生物。
+~
+0 4006913 0
+D1
+~
+~
+0 0 9001
+S
+#9006
+死亡之路~
+你看到此處到處飄浮著可怕的不死生物。
+~
+0 860169 5
+D0
+~
+~
+0 -1 9007
+>room_enter 4 100~
+if ispc($n)
+	echoat $n 當你進入這裡的時候，你發現南邊的出口已經消失。
+	echoat $n 你只能夠自求多福，因為你將無法回到你的世界中。
+endif
+~
+|
+S
+#9007
+死亡大地~
+此地不死生物所發出的死亡梵音在你的耳際圍繞著。。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9009
+D2
+~
+~
+0 -1 9006
+S
+#9008
+死亡大地~
+你看到此處到處飄浮著可怕的不死生物。有一些正在忙著自己的工作，但是大部分都是漫
+無目的到處飄游。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9011
+D1
+~
+~
+0 -1 9009
+S
+#9009
+亡者之門入口~
+你是不是死了？不然你怎麼會在這邊？
+~
+0 860161 3
+D0
+~
+~
+0 -1 9012
+D1
+~
+~
+0 -1 9010
+D2
+~
+~
+0 -1 9007
+D3
+~
+~
+0 -1 9008
+S
+#9010
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9013
+D1
+~
+~
+0 -1 9020
+D3
+~
+~
+0 -1 9009
+S
+#9011
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9014
+D1
+~
+~
+0 -1 9012
+D2
+~
+~
+0 -1 9008
+S
+#9012
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9015
+D1
+~
+~
+0 -1 9013
+D2
+~
+~
+0 -1 9009
+D3
+~
+~
+0 -1 9011
+S
+#9013
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9016
+D1
+~
+~
+0 -1 9028
+D2
+~
+~
+0 -1 9010
+D3
+~
+~
+0 -1 9012
+S
+#9014
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9017
+D1
+~
+~
+0 -1 9015
+D2
+~
+~
+0 -1 9011
+D3
+~
+~
+0 -1 9037
+S
+#9015
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9018
+D1
+~
+~
+0 -1 9016
+D2
+~
+~
+0 -1 9012
+D3
+~
+~
+0 -1 9014
+S
+#9016
+死亡大地~
+你看到此處到處飄浮著可怕的不死生物。有一些正在忙著自己的工作，但是大部分都是漫
+無目的到處飄游。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9019
+D2
+~
+~
+0 -1 9013
+D3
+~
+~
+0 -1 9015
+S
+#9017
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9053
+D1
+~
+~
+0 -1 9018
+D2
+~
+~
+0 -1 9014
+S
+#9018
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D1
+~
+~
+0 -1 9019
+D2
+~
+~
+0 -1 9015
+D3
+~
+~
+0 -1 9017
+S
+#9019
+死亡大地~
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9054
+D2
+~
+~
+0 -1 9016
+D3
+~
+~
+0 -1 9018
+S
+#9020
+小徑~
+你注意到有一條小徑沒入東邊被黑雲所籠罩的黑暗當中。你可以感受到由東邊所傳來的巨
+大能量來源。
+~
+0 860168 3
+D1
+~
+~
+0 -1 9021
+D3
+~
+~
+0 -1 9010
+S
+#9021
+闇黑之路~
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑比黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+~
+0 860168 3
+D1
+~
+~
+0 -1 9022
+D2
+~
+~
+0 -1 9023
+D3
+~
+~
+0 -1 9020
+S
+#9022
+闇黑之路~
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑被黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+~
+0 860168 3
+D2
+~
+~
+0 -1 9024
+D3
+~
+~
+0 -1 9021
+S
+#9023
+闇黑之路~
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑被黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+~
+0 860168 3
+D0
+~
+~
+0 -1 9021
+D1
+~
+~
+0 -1 9024
+D2
+~
+~
+0 -1 9025
+S
+#9024
+闇黑之路~
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑被黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+~
+0 860168 3
+D0
+~
+~
+0 -1 9022
+D2
+~
+~
+0 -1 9026
+D3
+~
+~
+0 -1 9023
+S
+#9025
+最闇之路~
+你的光源在這裡完全沒有用了。只有經過魔法加持的光源才能夠照亮你身邊的一小部分。
+你感覺到這裡已經荒廢很久了，但是由於之前的黑暗，因此你直到現在才發現。你感覺到東邊
+有著巨大的能量。
+~
+0 860168 3
+D0
+~
+~
+0 -1 9023
+D1
+~
+~
+0 -1 9026
+S
+#9026
+最闇之路~
+你的光源在這裡完全沒有用了。只有經過魔法加持的光源才能夠照亮你身邊的一小部分。
+你感覺到這裡已經荒廢很久了，但是由於之前的黑暗，因此你直到現在才發現。你感覺到東邊
+有著巨大的能量。
+~
+0 860168 3
+D0
+~
+~
+0 -1 9024
+D1
+~
+~
+0 -1 9027
+D3
+~
+~
+0 -1 9025
+S
+#9027
+遺忘之殿~
+這裡就是遺忘之殿。龍族之王、命運騎士等偉大的靈魂都飄浮在這邊。
+~
+0 860168 3
+D3
+~
+~
+0 -1 9026
+S
+#9028
+小徑~
+這條小徑十分的黑暗，你無法辨識任何東西。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9029
+D3
+~
+~
+0 -1 9013
+S
+#9029
+小徑~
+這裡還是一樣的黑暗。
+~
+0 860161 6
+D0
+~
+~
+0 -1 9030
+D2
+~
+~
+0 -1 9028
+S
+#9030
+小徑~
+在黑暗中你無法看到任何的東西。
+~
+0 860161 6
+D0
+~
+~
+0 -1 9033
+D1
+~
+~
+0 -1 9031
+D2
+~
+~
+0 -1 9029
+S
+#9031
+小徑~
+在黑暗中你無法看到任何的東西。
+~
+0 860161 6
+D0
+~
+~
+0 -1 9034
+D1
+~
+~
+0 -1 9032
+D3
+~
+~
+0 -1 9030
+S
+#9032
+小徑~
+在黑暗中你無法看到任何的東西。
+~
+0 860161 6
+D0
+~
+~
+0 -1 9035
+D3
+~
+~
+0 -1 9031
+S
+#9033
+小徑~
+在黑暗中你無法看到任何的東西。
+~
+0 860161 6
+D1
+~
+~
+0 -1 9034
+D2
+~
+~
+0 -1 9030
+S
+#9034
+小徑~
+除了黑暗還是黑暗，沒有其他東西。
+~
+0 860161 6
+D1
+~
+~
+0 -1 9035
+D2
+~
+~
+0 -1 9031
+D3
+~
+~
+0 -1 9033
+S
+#9035
+小徑~
+你似乎可以感覺到一些超自然的東西。
+~
+0 860161 6
+D2
+~
+~
+0 -1 9032
+D3
+~
+~
+0 -1 9034
+D5
+~
+~
+0 -1 9036
+S
+#9036
+死亡之井~
+這口井散發出十分奇怪的味道。
+~
+0 860169 6
+D4
+~
+~
+0 -1 9035
+>room_enter 16 50~
+if rand(50)
+	echoat $n 進入了這口井中，你感到不是很舒服....。
+	modhmv pc 03.7 18 0
+else
+	echoat $n 進入了這口井中，你似乎感到死氣侵襲了你的身體....。
+	if rand(50)
+		add_affect $n poison 0 30 1 -2 4096
+	else
+		add_affect $n curse 0 45 18 -5 1024
+	endif
+endif
+~
+|
+S
+#9037
+爬行小徑~
+你感受到強大的魔力已經漸漸接近。你開始感到害怕。
+~
+0 860161 5
+D1
+~
+~
+0 -1 9014
+D2
+~
+~
+0 -1 9038
+S
+#9038
+爬行小徑~
+你感受到強大的魔力已經漸漸接近。你開始感到害怕。
+~
+0 860161 5
+D0
+~
+~
+0 -1 9037
+D3
+~
+~
+0 -1 9042
+S
+#9039
+逃出生天~
+有可能嗎？你竟然可以看到陽光？
+~
+0 860173 6
+E
+living path1~
+~
+D1
+~
+~
+0 -1 9040
+D3
+~
+~
+0 -1 9059
+S
+#9040
+逃出生天~
+有可能嗎？你竟然可以看到陽光？
+~
+0 860169 6
+E
+living path2~
+~
+D1
+~
+~
+0 -1 9041
+D3
+~
+~
+0 -1 9059
+S
+#9041
+逃出生天~
+有可能嗎？你竟然可以看到陽光？
+~
+0 860169 6
+E
+living path3~
+~
+D1
+~
+~
+0 -1 9043
+D3
+~
+~
+0 -1 9059
+S
+#9042
+燃燒地獄~
+到處都是燃燒的烈火！你幾乎無法忍受這裡的熱度。
+~
+0 860161 5
+D1
+~
+~
+0 -1 9038
+D3
+~
+~
+0 -1 9045
+>room_enter 15 100~
+if ispc($n)
+	if level($n) < 36
+		break
+	else
+		echoat $n 前頭的死氣，讓你感到不甚舒服....。
+		if rand(10)
+			echoat $n 你覺得你似乎被詛咒了....。
+			add_affect $n curse 0 30 18 -10 1024
+			break
+		endif
+		if rand(10)
+			echoat $n 你覺得你似乎中毒了....。
+			add_affect $n poison 0 30 1 -3 4096
+			break
+		endif
+		if rand(10)
+			echoat $n 你覺得你似乎不甚安穩了....。
+			if rand(50)
+				add_affect $n 'faerie fire' 0 30 17 50 256
+			endif
+			break
+		endif
+		if rand(5)
+			echoat $n 你覺得你似乎全身麻痺了....。
+			add_affect $n paralyze 0 3 17 -100 268435456
+		endif
+	endif
+endif
+~
+|
+S
+#9043
+逃出生天~
+有可能嗎？你竟然可以看到陽光？
+~
+0 860169 6
+E
+living path4~
+~
+D1
+~
+~
+0 -1 9044
+D3
+~
+~
+0 -1 9059
+S
+#9044
+逃出生天~
+有可能嗎？你竟然可以看到陽光？
+~
+0 860169 6
+E
+living path5~
+~
+D1
+~
+~
+0 -1 9060
+D3
+~
+~
+0 -1 9059
+S
+#9045
+巫妖之王~
+他生前曾經是最偉大的咒術師，但是現在則是死亡之王的伙伴，巫妖之王 - 卓克。
+~
+0 860161 3
+D1
+~
+~
+0 -1 9042
+S
+#9046
+根據地的入口~
+你現在站在死亡之王根據地的入口之前。小心，他們對你是絕對不會客氣的。
+~
+0 860161 3
+D0
+~
+~
+0 -1 9048
+D1
+~
+~
+0 -1 9053
+S
+#9047
+在根據地之中~
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+~
+0 860161 4
+D0
+~
+~
+0 -1 9049
+D1
+~
+~
+0 -1 9048
+S
+#9048
+在根據地之中~
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+~
+0 860161 4
+D0
+~
+~
+0 -1 9050
+D2
+~
+~
+0 -1 9046
+D3
+~
+~
+0 -1 9047
+S
+#9049
+在根據地之中~
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+~
+0 860161 4
+D1
+~
+~
+0 -1 9050
+D2
+~
+~
+0 -1 9047
+S
+#9050
+在根據地之中~
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+~
+0 860161 4
+D1
+~
+~
+0 -1 9051
+D2
+~
+~
+0 -1 9048
+D3
+~
+~
+0 -1 9049
+S
+#9051
+最終之路~
+走上樓梯之後，小徑開始轉彎而進入黑暗之爭，你可以感受到在黑暗之後隱藏的可怕的邪
+惡魔法。
+~
+0 860161 4
+D3
+~
+~
+0 -1 9050
+D4
+~
+~
+0 -1 9052
+S
+#9052
+死亡之王~
+呈現在你面前的，就是死亡大殿。
+~
+0 860173 6
+D5
+~
+~
+0 -1 9051
+S
+#9053
+黑暗小徑的深處~
+在你的西邊是一個巨大的根據地，或許你可以進入觀察一番。
+~
+0 860161 4
+D1
+~
+~
+0 -1 9054
+D2
+~
+~
+0 -1 9017
+D3
+~
+~
+0 -1 9046
+S
+#9054
+黑暗小徑~
+你無法分辨任何東西，
+~
+0 860161 4
+D0
+~
+~
+0 -1 9055
+D2
+~
+~
+0 -1 9019
+D3
+~
+~
+0 -1 9053
+S
+#9055
+在死亡中行走~
+你正行走在死亡軍團的道路上。
+~
+0 860161 4
+D0
+~
+~
+0 -1 9057
+D1
+~
+~
+0 -1 9056
+D2
+~
+~
+0 -1 9054
+S
+#9056
+在死亡中行走~
+你正行走在死亡軍團的道路上。
+~
+0 860161 4
+D0
+~
+~
+0 -1 9058
+D3
+~
+~
+0 -1 9055
+S
+#9057
+在死亡中行走~
+你正行走在死亡軍團的道路上。
+~
+0 860161 4
+D1
+~
+~
+0 -1 9058
+D2
+~
+~
+0 -1 9055
+S
+#9058
+在死亡中行走~
+你正行走在死亡軍團的道路上。
+~
+0 860161 4
+D1
+~
+~
+0 -1 9059
+D2
+~
+~
+0 -1 9056
+D3
+~
+~
+0 -1 9057
+S
+#9059
+黑暗甬道~
+這條甬道通往東邊，而且越來越亮！你可以感覺到往東可以通往生天。
+~
+0 860161 4
+D3
+~
+~
+0 -1 9058
+>room_enter 8 100~
+if is_qmark($n) != mage_envoy_quest 100016
+	break
+endif
+if insameroom(shore-dead)
+	force shore-dead yell 沒用的！血債血還，無論誰來，我都要他嚐嚐我們所受的冤屈！
+	mod_qmark $n mage_envoy_quest v0 = 17
+endif
+~
+>room_time 100~
+if pcnum($) > 0
+	if mobcount(9008) == 0
+		if roomvalue($0) == 0
+			echo 當 死亡谷守衛 - 索爾(Shore) 消失之後，
+			echo 忽然東邊出現了一個出口，而且遠遠的可以看到人間的亮光。
+			echo 遠方傳來一陣聲響「快啊！不然出口就要消失了....！」
+			makedoor 1 東邊一片漆黑 door 1 0 9039
+			modrvt v0 = 1
+			break
+		endif
+		if roomvalue($0) == 1
+			echo 由於死亡谷與人間打開了一個出口，
+			echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9039 echo 由於死亡谷與人間打開了一個出口，
+			force 9039 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9040 echo 由於死亡谷與人間打開了一個出口，
+			force 9040 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9041 echo 由於死亡谷與人間打開了一個出口，
+			force 9041 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9043 echo 由於死亡谷與人間打開了一個出口，
+			force 9043 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9044 echo 由於死亡谷與人間打開了一個出口，
+			force 9044 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			modrvt v0 = 2
+			break
+		endif
+		if roomvalue($0) == 2
+			echo 索爾(Shore) 接受死亡谷的死氣後，再度復活了。
+			echo 索爾(Shore) 關閉了死亡谷前往人間的通道。
+			if roomtimer($0) > 0
+				mload 9008
+				add_qmark shore-dead dead_shore_relife 30 0 0 0 1 1
+			else
+				mload 9008
+			endif
+			mload 9004
+			mload 9004
+			deldoor 1
+			modrvt v0 = 0
+		endif
+	else
+		if roomvalue($0) == 0
+			break
+		else
+			modrvt v0 = 0
+		endif
+	endif
+endif
+if roomtimer($0) == 0
+if mobcount(9008) == 0
+	mload 9008
+endif
+endif
+~
+|
+S
+#9060
+逃出生天~
+有可能嗎？你竟然可以看到陽光？這裡有一口井，偶爾會發出奇怪的光線。
+~
+0 860169 0
+D3
+~
+~
+0 -1 9059
+>room_rand 30~
+if hasdoor(5)
+	if roomvalue($0) == 0
+		echo 通往陰間的通道消失了....
+		deldoor 5
+		force 9001 echo 通往人世的通道消失了....
+		force 9001 deldoor 4
+	endif
+endif
+if pcnum($) > 0
+	if rand(50)
+		echo 這口井忽然發出一陣強烈的光線....。
+		echo 瞬間你不知道你已經到了何處？
+		transfer all 9070
+	else
+		echo 忽然一陣劇烈的震動....
+		echo 下方忽然出現了一個通道....
+		makedoor 5 通往陰間的通道 passage 0 0 9001
+		force 9001 makedoor 4 通往人世的通道 passage 0 0 9006
+		modrvt v0 = 1
+		modrvt timer = 24
+	endif
+endif
+~
+|
+S
+#9070
+死亡之井~
+這口井是通往死亡大地的井，你知道嗎？
+~
+0 860173 6
+D4
+~
+~
+0 -1 9071
+S
+#9071
+被召喚了~
+你似乎被死亡之氣給召喚了！你漸漸的失去你自己的意識。你的靈魂在空間與時間的狹縫
+中被拋擲。在你的腦中只有死亡之氣給你的唯一訊息。那就是「殺！殺！殺！」。
+~
+0 860173 6
+D4
+~
+~
+0 -1 9072
+S
+#9072
+聖泉之殿~
+這裡是傳說中的「聖泉之殿」。相傳生命終了的主教會被天神呵護至
+此，藉著聖泉的神秘力量，浸洗心靈而獲得重生。你看到石柱上刻著一些
+古老字句(carvings)。
+~
+0 861197 1
+E
+carvings~
+你看不懂這古老的語言，但不知為何，卻能理解字句的意義：
+　
+「主啊！我要[1;37m洗手表明無辜[0m，才來繞著你的祭壇行走；
+  好使我發出稱謝的聲音，述說你一切奇妙的作為。 」
+                                  -- 詩篇 26:6-
+　
+ "I[1;37m wash 'my hands'[0m in innocence, and go about your alter, O LORD,
+  proclaiming aloud your praise and telling of all your wonderful deeds."
+                                                    --Psalm 26:6-7
+~
+>room_enter 32 100~
+if rand(90)
+	echoat $n 忽然一股十分強大的力量將你推了回來....。
+	transfer $n 9071
+endif
+~
+>room_command wash p my hands~
+if ispc($n)
+	echoat $n 遠方傳來一陣奇怪的聲響「我已經聽見你對我的呼喚！」
+	echoat $n 遠方傳來一陣奇怪的聲響「我來領你離開這死亡世界吧！」
+	echoaround $n 一陣閃光之後， $n 忽然不見了....。
+	echoat $n 你被傳送回到光明之鎮的聖殿了....。
+	transfer $n 4580
+endif
+~
+|
+S
+#0
+
+
+#ROOMPROGS
+R 9001 dead_curse.prg
+R 9007 dead_curse.prg
+R 9008 dead_curse.prg
+R 9009 dead_curse.prg
+R 9010 dead_curse.prg
+R 9011 dead_curse.prg
+R 9012 dead_curse.prg
+R 9013 dead_curse.prg
+R 9014 dead_curse.prg
+R 9015 dead_curse.prg
+R 9016 dead_curse.prg
+R 9017 dead_curse.prg
+R 9018 dead_curse.prg
+R 9019 dead_curse.prg
+S
+
+
+#SPECIALS
+M 9006 spec_cast_mage
+M 9007 spec_cast_cleric
+M 9009 spec_breath_frost
+M 9011 spec_cast_mage
+M 9012 spec_cast_mage
+M 9013 spec_cast_adept
+M 9014 spec_cast_mage
+M 9015 spec_breath_fire
+M 9016 spec_cast_mage
+S
+
+
+
+#RESETS
+M 0 9036 1 9000
+E 0 9012 0 16
+E 0 9002 0 0
+O 0 3135 0 9000
+M 0 9013 1 9001
+O 0 9000 0 9001
+O 0 9001 0 9001
+M 0 9001 16 9006
+M 0 9003 20 9006
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9003 20 9006
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9007
+M 0 9003 20 9007
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9003 20 9007
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9008
+M 0 9003 20 9008
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9003 20 9008
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9009
+M 0 9003 20 9009
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9010
+M 0 9003 20 9010
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9011
+M 0 9003 20 9011
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9012
+M 0 9003 20 9012
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9013
+M 0 9003 20 9013
+E 0 9014 0 16
+E 0 9015 0 11
+M 0 9001 16 9014
+M 0 9012 15 9014
+M 0 9001 16 9015
+M 0 9012 15 9015
+M 0 9012 15 9015
+M 0 9001 16 9016
+M 0 9001 16 9017
+M 0 9001 16 9018
+M 0 9001 16 9019
+M 0 9001 16 9020
+M 0 9001 16 9022
+M 0 9005 10 9024
+M 0 9006 10 9024
+M 0 9007 10 9024
+M 0 9010 15 9024
+M 0 9005 10 9025
+M 0 9006 10 9025
+M 0 9007 10 9025
+M 0 9010 15 9025
+M 0 9010 15 9025
+M 0 9005 10 9027
+M 0 9006 10 9027
+M 0 9007 10 9027
+M 0 9012 15 9027
+M 0 9017 1 9027
+E 0 9008 0 5
+M 0 9018 1 9027
+E 0 9008 0 5
+M 0 9019 1 9027
+E 0 9008 0 5
+M 0 9005 10 9029
+M 0 9006 10 9029
+M 0 9007 10 9029
+M 0 9014 10 9029
+M 0 9014 10 9029
+M 0 9014 10 9029
+M 0 9014 10 9029
+M 0 9016 10 9029
+M 0 9016 10 9029
+M 0 9016 10 9029
+M 0 9016 10 9029
+M 0 9010 15 9034
+M 0 9010 15 9034
+M 0 9010 15 9035
+M 0 9010 15 9035
+M 0 9009 4 9036
+M 0 9010 15 9036
+M 0 9012 15 9037
+M 0 9002 10 9042
+M 0 9002 10 9045
+M 0 9002 10 9045
+M 0 9002 10 9045
+M 0 9002 10 9045
+M 0 9020 1 9045
+E 0 9007 0 14
+E 0 9009 0 13
+M 0 9011 8 9046
+M 0 9011 8 9046
+M 0 9011 8 9046
+M 0 9004 8 9048
+E 0 9016 0 12
+M 0 9004 8 9048
+E 0 9017 0 6
+M 0 9011 8 9048
+M 0 9011 8 9048
+M 0 9004 8 9049
+E 0 9018 0 5
+M 0 9004 8 9049
+E 0 9017 0 6
+M 0 9004 8 9050
+E 0 9016 0 12
+M 0 9004 8 9050
+E 0 9018 0 5
+M 0 9015 10 9050
+M 0 9015 10 9050
+M 0 9015 10 9051
+M 0 9015 10 9051
+M 0 9021 1 9051
+E 0 9013 0 12
+E 0 9010 0 18
+M 0 9000 1 9052
+E 0 9019 0 16
+E 0 9005 0 17
+E 0 9006 0 2
+M 0 9004 8 9052
+E 0 9018 0 5
+E 0 9016 0 12
+E 0 9017 0 6
+M 0 9004 8 9052
+E 0 9018 0 5
+E 0 9016 0 12
+E 0 9017 0 6
+M 0 9010 15 9055
+M 0 9010 15 9055
+M 0 9005 10 9056
+M 0 9006 10 9056
+M 0 9007 10 9056
+M 0 9011 8 9057
+M 0 9011 8 9057
+M 0 9005 10 9058
+M 0 9006 10 9058
+M 0 9007 10 9058
+M 0 9012 15 9058
+*M 0 9008 1 9059
+O 0 9003 0 9072
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

@@ -1,0 +1,9117 @@
+#AREADATA
+Name        失落之森~
+Identity    lostforest~
+Builders    Blaz~
+Translator  ----~
+Modifier    ----~
+VNUMs       60501 60799
+Security    1
+Recall      4580
+Death       401
+F_toggle    16|65536
+End
+
+
+
+#MOBILES
+#60501
+zombie~
+殭屍(zombie)~
+一個腐爛的殭屍(zombie)正伸長了雙手，步履蹣跚的向你走來！
+~
+它全身一片慘白，而且已經有不少地方開始腐敗了。
+每個僵屍看起來都不一樣，原因很簡單，因為它們都曾經是活人。
+~
+1|32 1024 0 S
+35 0 0 0d0+0 0d0+0
+50 0
+0 8 0
+R Undead~
+C 1
+P 4|8|64|128|512|8388608|1048576|2097152|4194304
+S 41 400
+S 46 1000
+#60502
+great zombie~
+巨型殭屍(great zombie)~
+一個身軀龐大的殭屍(zombie)正伸長了雙手，步履蹣跚的向你走來！
+~
+它幾乎有兩百五十公分高，但是容貌已經潰爛無法分辨。
+~
+1|32 1024 0 S
+40 5000 0 -20d+200+0 -500d+200+0
+100 0
+0 8 0
+R Undead~
+C 1
+P 4|8|64|128|512|8388608|1048576|2097152|4194304
+S 41 700
+S 46 1000
+>fight_prog 35~
+mpecho 它腐爛的傷口正慢慢地癒合！
+mpforcer here modhmv $i 04.5 5 0
+~
+|
+#60503
+poison zombie~
+猛毒殭屍(poison zombie)~
+一個渾身發青的殭屍(zombie)伸長了潰爛起泡的雙手朝你走來！
+~
+它全身發出惡臭，整隻手都充滿了詭異的膿泡！
+~
+1|32 1024 0 S
+45 0 0 -20d-50+0 0d+200+0
+60 0
+0 8 0
+R Undead~
+C 1
+P 4|8|64|128|512|8388608|1048576|2097152|4194304
+S 41 400
+S 46 1000
+>fight_prog 50~
+mpecho $I 身上的膿泡爆開炸出毒霧！
+mpechoat $n 你被 $I 炸開的毒霧給噴到了！
+mpechoaround $n $N 被 $I 炸開的毒霧給噴了一身！
+mpforcer here modhmv pc 03.5 10 0
+mpforcer here add_affect $n weaken 0 5 1 -5 4096
+~
+|
+#60504
+ghoul~
+食屍鬼(ghoul)~
+一隻披頭散髮的食屍鬼(ghoul)朝你攻了過來！
+~
+它雖然曾經是人類，但現在已經完全看不出它本來的面貌，它揮動著
+雙手的利爪就朝你抓了過來！
+~
+1|32|2048 1024 -500 S
+45 0 0 0d-50+0 +200d-200+0
+1500 0
+0 8 0
+R Undead~
+C 32
+P 4|8|64|128|512|8388608|1048576|2097152|4194304
+S 41 700
+S 46 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 35~
+mpechoat $n $I 忽然兇性大發！銳利的尖爪在你眼前飛掠而過！
+fre
+mpnowait
+mpforcer here modhmv $n 03.10 15 0
+mpechoaround $n $I 伸出銳利的尖爪往 $N 身上猛力刨抓著！
+~
+|
+#60505
+poison ghoul~
+猛毒食屍鬼(poison ghoul)~
+一隻全身鐵青色的食屍鬼(ghoul)朝你攻了過來！
+~
+它整個身體發出了強烈的惡臭，口中呼出有毒的霧氣，它似乎早已沒
+了理智，只是瘋狂地破壞看到的東西！
+~
+1|32|2048 1024 -1000 S
+50 0 0 0d-70+0 +400d-400+0
+1500 0
+0 8 0
+R Undead~
+C 32
+P 4|8|64|128|512|8388608|1048576|2097152|4194304
+S 41 700
+S 46 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 50~
+        mpechoat $n $I 雙頰一鼓朝你噴出了劇毒的毒霧！
+        mpforcer here modhmv $n 03.10 15 0
+        mpforcer here add_affect $n poison 1150 5 2 -5 4096
+        mpechoaround $n $I 鼓著臉頰朝著 $N 噴出了黑色的毒霧！
+if rand(75)
+        mpechoat $n $I 忽然兇性大發！銳利的尖爪在你眼前飛掠而過！
+        fre
+        mpnowait
+        mpforcer here modhmv $n 03.13 15 0
+        mpechoaround $n $I 伸出銳利的尖爪往 $N 身上猛力刨抓著！
+endif
+~
+|
+#60506
+blood bat mage~
+血蝠(blood bat)~
+一個穿著血紅法袍的法師(mage)站在這裡看著你。
+~
+他看來高瘦有著貴族的氣息，身穿著一襲血紅的法袍，袍上繡著一個
+黑色的蝙蝠，蝙蝠中央還繡著一個中空的劍形紋路，如同一把血紅的
+長劍穿透蝙蝠一般，一股強烈熾熱的魔力正從他身上散發出來！
+~
+1|2|64|2048|1048576|16777216 8|32|134217728 -1000 S
+55 1000 1000 10d10+-100 10d-50+0
+10000 0
+0 8 1
+R Vampire~
+P 2|4|8|256|512|4194304|8388608|67108864
+C 10
+S 41 1500
+S 42 1500
+>greet_prog 100~
+if isnpc($n)
+or isimmort($n)
+        break
+endif
+mpdis_magic $n 'polymorph other'
+if race($n) == vampire
+        say 歡迎歸來，年輕的血族！
+        say 可惜目前地下的血族之國還在建構中，blaz何時才會寫完呢...
+        glare
+        smoking $n
+        else
+        if pcnum($) > 0
+        or isfight($i)
+                break
+        else
+                yell 該死的外來者！膽敢闖入血族聖地，死在烈火之中吧！
+                mpkill $n
+                c 'fire breath' $n
+                mpnowait
+        endif
+endif
+~
+>fight_prog 50~
+if rand(25)
+        mpat 5 c heal
+else
+        mpat 5 c 'double heal'
+endif
+~
+>hitprcnt_prog 30~
+mpdis_magic self mute
+if isfight($i)
+        if rand(20)
+                if rand(50)
+                        mpat 5 c 'double heal'
+                else
+                        mpat 5 c heal
+                endif
+        endif
+else
+        if rand(50)
+                mpat 5 c 'double heal'
+        else
+                mpat 5 c heal
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+yell 我的失敗只是一時！你是沒辦法逃過的！
+mpecho 一團濃密的腥紅霧氣將你們籠罩了起來！
+mptransfer all 60558
+mpat 5 purge self
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60507
+bodyguard golem~
+守護魔像(Golem)~
+一個巨像守衛(Golem of bodyguard)站在原地瞪著你。
+~
+它看來約有三公尺高，一公尺寬，全身由黑曜石雕刻而成，漆黑的軀
+體上刻著白色的咒印，雙手交握著青銅大砍刀而立，一股強大的壓迫
+感侵襲你的心靈，令你不寒而慄，對付他最好的方式就是不要動他！
+~
+1|2|64|4096|262144|16777216 64 0 S
+50 2000 0 0d0+-1000 -100d-200+0
+0 0
+0 8 0
+R Statue~
+C 12
+P 2|4|8|256|4194304|8388608|67108864
+S 41 2000
+S 42 2000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 60502
+mpat 5 wear all
+mpecho $I 的眼瞳處發出了紅色的光芒！
+mpechoat $n $I 的壓迫感使你幾乎喘不過氣來！
+~
+>fight_prog 50~
+mpecho $I 忽然高舉手中的青銅大砍刀，重重朝地上打去！
+earth
+mpnowait
+earth
+mpnowait
+earth
+mpnowait
+~
+|
+#60508
+defasir-lf~
+迪法瑟(Defasir)~
+鐵匠迪法瑟(Defasir)在這裡敲打出他構思的各種刀或器具。
+~
+他是一個外表三十幾歲，髮色黑中帶灰的中年男子，精瘦的軀體一點
+都不像是一般的鐵匠，若不是因為他在這個村子中享有盛名，你甚至
+會懷疑他是否真的是一名鐵匠。
+~
+1|2|64|4096|8192|16384|65536|262144|8388608|268435456 8|32|64|128 0 S
+45 0 0 0d50+0 0d0+0
+0 0
+0 8 1
+R vampire~
+C 9
+P 512|16777216
+S 16 -10000
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60509
+keeper sumdoweir-lf~
+桑多維兒(Sumdoweir)~
+漂亮的酒店老闆(keeper)靜靜地坐在吧台之後看著店內的客人。
+~
+她有著銀紫色的長髮與黑色的眼瞳，潔白無瑕的肌膚簡直如同研磨過
+的大理石，粉紅的嘴唇似乎在誘惑著你。此般的造型令你不禁聯想到
+一些古代傳說中所出現的魔族，然而她天使般的面孔卻使你忘卻了這
+些忽然飄上的古怪念頭。
+~
+1|2|64|2048|8192|16384|8388608|16777216 8|32|64|128|8589934592 0 S
+40 0 0 50d0+0 0d0+0
+0 0
+0 8 2
+R vampire~
+C 5
+P 512|16777216
+S 16 -10000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60510
+cirdes-lf~
+克瑞狄斯(Cirdes)~
+製弓師克瑞狄斯(Cirdes)在工作檯上彎著一條用來製弓的黑檀木。
+~
+他是一個高大的壯漢，如同所有的血族般，他的壯是一種高瘦精實的
+健壯，從他的眼中你可以看到只有戰士才有的堅強意志，他熟練地將
+手中的黑檀木過火溫熱著，一邊施力彎曲。
+~
+1|2|64|2048|8102|8388608 8|32|64|128 0 S
+45 0 0 50d0+0 0d0+0
+0 0
+0 8 1
+R vampire~
+C 17
+P 512|16777216
+S 16 -10000
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60511
+sanloia-lf~
+珊洛雅(Sanloia)~
+製箭師珊洛雅(Sanloia)在工作檯上沾粘著弓箭的尾羽。
+~
+她是克瑞狄斯的妻子，同時也是這個村子中最高明的製箭師，雖然村
+中的每個人都會製箭，但是村人還是都愛用珊洛雅製的箭矢，因為珊
+洛雅所製的箭矢在平衡度與準度上都高人一等。她目前正小心翼翼的
+將尾羽黏附在弓箭上。
+~
+1|2|64|2048|8102|8388608 8|32|64|128 0 S
+40 0 0 50d0+0 0d0+0
+0 0
+0 8 2
+R vampire~
+C 17
+P 512|16777216
+S 16 -10000
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60512
+pardorlet-lf~
+帕爾多雷特(Pardorlet)~
+護林者之長帕爾多雷特(Pardorlet)正用著那閱人無數的慧眼仔細地打量著你。
+~
+眼前的男子不同於其他的護林者高大，他的外表甚至還比某些人看來
+更為年輕，然而他眼神中閃爍的智慧卻令你深深地感到恐懼，那是種
+彷彿可以透視人心的銳利眼神，你覺得自己在他的眼前似乎隱瞞不住
+任何的謊言。
+~
+1|2|64|2048|8102|8388608 8|32|64|128 0 S
+50 0 0 0d0+0 -100d-100+0
+0 0
+0 8 1
+R vampire~
+C 9
+P 512|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60513
+guard1 bamo-lf~
+巴摩(Bamo)~
+一名護林者之村的守衛(guard)站在這裡。
+~
+他有著一頭灰髮與棕色的眼瞳，身穿著簡易的護胸甲，手中緊握著弓
+箭，身為村子守衛的他必須隨時保持警戒，他以他的工作為傲，有著
+不惜犧牲以捍衛村子的覺悟。
+~
+1|2|64|2048|8102|8388608 8|32|64|128 0 S
+38 0 0 50d0+0 0d0+0
+0 0
+0 8 1
+R vampire~
+C 17
+P 512|16777216
+S 41 700
+S 42 1500
+>talk_prog gate~
+if is_qmark($n) > lf_hunter 300001
+        tell $n 好的，請稍等
+        mpcallout 1 mpechoat $n 守衛(guard)大聲的朝著村內喊了些話，北方的木閘開始緩緩拉起...
+        mpcallout 2 mpechoat $n [0;33m嘰咂...嘰咂...[m
+        mpcallout 3 tell $n 好了，快進去吧！
+        mpcallout 3 mpforcer here modrvt v0 = 1
+else
+        tell $n 你不該出現在這的！
+        mpechoat $n 你感覺一股神秘的力量將你拋出了這！
+        transfer $n 4580
+endif
+~
+>talk_prog topic~
+if is_qmark($n) > lf_hunter 300001
+        tell $n 有什麼事嗎？
+        mpechoat $n --．我要進村，請幫我開門(gate)
+else
+        tell $n 你不該出現在這的！
+        mpechoat $n 你感覺一股神秘的力量將你拋出了這！
+        mpechoaround $n 你看到 $N 被拋出了這！
+        mpforcer 4580 echo 你看到 $N 被拋到了這裡！
+        transfer $n 4580
+endif
+~
+>defun_prog lf_guard~
+if is_qmark($n) > lf_hunter 300001
+else
+        if is_qmark($n) == lf_hunter 200006
+                if is_qmark($n) == lf_hunter 100013
+                        mpechoat $n 守衛(guard)緊張的看著你，似乎很久沒有人來到此處
+                        if is_affacted($n) & 16384
+                                mpechoat $n 他輕彈了拇指跟食指，你全身的偽裝都褪去了！
+                                mpdis_magic $n all
+                        endif
+                        if race($n) == vampire
+                                tell $n 久違的血族子弟，近百年來你是少數來到這的血族啊
+                                tell $n 在這村內你不需要擔心莫名的襲擊，我們將會保障你的安全
+                                tell $n 那些膽敢鬧事的傢伙都會永永遠遠的消失在這世界上
+                                smile $n
+                        else
+                                tell $n 非血族的外來者啊，你能到這裡表示你已經贏得森林之主的承認
+                                tell $n 但是我依然要提醒你，別在村子裡面鬧事，不然你將會永遠生不如死
+                        endif
+                        mpcallout 1 mpechoat $n $I 講完這些話後回頭朝著村內喊了些話，北方的木閘開始緩緩拉起...
+                        mpcallout 2 mpmod_qmark $n lf_hunter v2 = 2
+                        mpcallout 2 mpechoat $n [0;33m嘰咂...嘰咂...[m
+                        mpcallout 3 tell $n 好了，快進去吧！
+                        mpcallout 3 forcer here modrvt t0 = 1
+                endif
+        else
+                tell $n 你不該來這的！
+                mpechoat $n 你被一股神秘的力量給拋了出去！
+                transfer $n 4580
+        endif
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if insameroom(arst-lf)
+mpgroup self art-lf 1 0
+endif
+~
+|
+#60514
+guard2 arst-lf~
+阿斯特(Arst)~
+一名護林者之村的守衛(guard)站在這裡。
+~
+他有著一頭金髮與藍色的眼瞳，身穿著簡易的護胸甲，手中緊握著弓
+箭，身為村子守衛的他必須隨時保持警戒，他以他的工作為傲，有著
+不惜犧牲以捍衛村子的覺悟。
+~
+1|2|64|2048|8102|8388608 8|32|64|128 0 S
+38 0 0 50d0+0 0d0+0
+0 0
+0 8 1
+R vampire~
+C 17
+P 512|16777216
+S 41 700
+S 42 1500
+>talk_prog gate~
+if is_qmark($n) > lf_hunter 300001
+        tell $n 請等一下，門很快就開好了
+        mpcallout 1 mpechoat $n 守衛(guard)操作起一旁的拉桿，南方的木閘開始緩緩拉起...
+        mpcallout 2 mpechoat $n [0;33m嘰咂...嘰咂...[m
+        mpcallout 3 tell $n 好了，快走吧！
+        mpcallout 3 mpforcer here modrvt v0 = 1
+else
+        tell $n 你怎麼進來的，快出去！
+        mpechoat $n 你感覺一股神秘的力量將你拋出了這！
+        transfer $n 4580
+endif
+~
+>talk_prog topic~
+if is_qmark($n) > lf_hunter 300001
+        tell $n 有什麼事嗎？
+        mpechoat $n --．我要出村，請幫我開門(gate)
+else
+        tell $n 你不該出現在這的！
+        mpechoat $n 你感覺一股神秘的力量將你拋出了這！
+        transfer $n 4580
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if insameroom(bamo-lf)
+mpgroup bamo-lf self 1 0
+endif
+~
+|
+#60515
+gladiator gersica-lf~
+嘉西卡(Gersica)~
+一名負責護村的女劍鬥士(gladiator)站在這裡。
+~
+她是一名有著紅色長髮的高大女性，身穿貼身的護胸甲，右手持彎刀
+，左手穿戴圓盾，她的任務是驅逐擅闖此地的外族還有一切妄想破壞
+此地的事物。
+~
+1|64|128|4096|8192|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+38 0 0 25d25+0 0d-50+0
+0 0
+0 8 2
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60516
+gladiator laysla-lf~
+雷絲菈(Laysla)~
+一名負責護村的女劍鬥士(gladiator)站在這裡。
+~
+她是一名有著藍色短髮的女性，身穿貼身的護胸甲，右手持彎刀，左
+手穿戴圓盾，她的任務是驅逐擅闖此地的外族還有一切妄想破壞此地
+的事物。
+~
+1|64|128|4096|8192|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+38 0 0 25d25+0 0d-50+0
+0 0
+0 8 2
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60517
+gladiator reidea-lf~
+芮蒂亞(Reidea)~
+一名負責護村的女劍鬥士(gladiator)站在這裡。
+~
+她是一名有著紫色長髮的女性，身穿貼身的護胸甲，右手持彎刀，左
+手穿戴圓盾，她的任務是驅逐擅闖此地的外族還有一切妄想破壞此地
+的事物。
+~
+1|64|128|4096|8192|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+38 0 0 25d25+0 0d-50+0
+0 0
+0 8 2
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60518
+mocai-lf villager~
+莫凱(Mocai)~
+一名護林者村的村民(villager)站在這裡。
+~
+比起一般常見的村民而言，護林者村的村民實在凶悍多了，他全副武
+裝地到處走著，眼神更不比一般的冒險者差勁，全身散發出一股自信
+與身為護林者一員的自傲。
+~
+1|64|128|4096|8192|16384|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+37 0 0 25d25+0 0d-50+0
+0 0
+0 8 1
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60519
+tandar-lf villager~
+坦達(Tandar)~
+一名護林者村的村民(villager)站在這裡。
+~
+比起一般常見的村民而言，護林者村的村民實在凶悍多了，他全副武
+裝地到處走著，眼神更不比一般的冒險者差勁，全身散發出一股自信
+與身為護林者一員的自傲。
+~
+1|64|128|4096|8192|16384|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+37 0 0 25d25+0 0d-50+0
+0 0
+0 8 1
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60520
+nagers-lf villager~
+納葛司(Nagers)~
+一名護林者村的村民(villager)站在這裡。
+~
+比起一般常見的村民而言，護林者村的村民實在凶悍多了，他全副武
+裝地到處走著，眼神更不比一般的冒險者差勁，全身散發出一股自信
+與身為護林者一員的自傲。
+~
+1|64|128|4096|8192|16384|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+37 0 0 25d25+0 0d-50+0
+0 0
+0 8 1
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60521
+Jeer-lf frow~
+潔兒(Jeer)~
+一名護林者村的婦女(frow)站在這裡。
+~
+你簡直不敢相信你所看到的，她的打扮跟一般的女性冒險者幾乎沒兩
+樣，看起來一點都不像是村婦、村姑，她俐落的身手更是令你驚訝得
+合不攏嘴，若是有可能，你絕對不想和她打起來。
+~
+1|64|128|4096|8192|16384|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+36 0 0 25d25+0 0d-50+0
+0 0
+0 8 2
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60522
+Nerwewris-lf frow~
+妮爾維絲(Nerwewris)~
+一名護林者村的婦女(frow)站在這裡。
+~
+你簡直不敢相信你所看到的，她的打扮跟一般的女性冒險者幾乎沒兩
+樣，看起來一點都不像是村婦、村姑，她俐落的身手更是令你驚訝得
+合不攏嘴，若是有可能，你絕對不想和她打起來。
+~
+1|64|128|4096|8192|16384|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+36 0 0 25d25+0 0d-50+0
+0 0
+0 8 2
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60523
+gefo-lf frow~
+吉芙(Gefo)~
+一名護林者村的婦女(frow)站在這裡。
+~
+你簡直不敢相信你所看到的，她的打扮跟一般的女性冒險者幾乎沒兩
+樣，看起來一點都不像是村婦、村姑，她俐落的身手更是令你驚訝得
+合不攏嘴，若是有可能，你絕對不想和她打起來。
+~
+1|64|128|4096|8192|16384|262144|524288|8388608 8|32|64|32768|8589934592 0 S
+36 0 0 25d25+0 0d-50+0
+0 0
+0 8 2
+R vampire~
+C 9
+P 512|12384|16777216
+S 41 700
+S 42 1500
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60524
+hunter-lf~
+獵戶(hunter)~
+一名在森林中久居的獵戶(hunter)站在這裡打量著你。
+~
+他看起來就像是其他迷霧之島的居民一樣平凡，他在這片森林中已經
+居住了很久，或許你可以跟他討教一些問題。
+~
+67|2097152 32768|65536 0 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 17
+P 8
+>bribe_prog 300000~
+if is_inv_obj($n) == 60521
+or is_equ_obj($n) == 60521
+        tell $n 你已經有一束強化獵箭了，別這麼貪心吧！
+        mpcallout 1 tell $n 這筆錢就當作你貪心的教訓！
+        break
+endif
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        if is_qmark($i) > lf_hunter_sell 200000
+        tell $n 這是你的一束強化獵箭
+        mpoload 60521 $n viclv target
+        mpechoat $n $I 將一束強化獵箭交給了你
+        mpmod_qmark self lf_hunter_sell v1 - 1
+        mpforcer here modrvt v1 - 1
+        endif
+else
+        tell $n 喔，謝謝你的錢啊
+        hehe $n
+endif
+~
+>bribe_prog 100000~
+cackle
+tell $n 好！好！孺子可教也！
+mpadd_qmark $n lf_hunter -1 0 1 0 0 1
+mpechoat $n 把金幣妥善收藏起來。
+mpjunk all.coins
+tell $n 這個訓練是急不來的，我會依照你的資質跟能力慢慢教。
+mpechoat $n $I 上下打量著你。
+mpechoaround $n $I 上下打量著 $n 似乎在思考什麼。
+if class($n) == 9
+or class($n) == 17
+        tell $n 不錯嘛，雖然我不知道為什麼你似乎受過追蹤(track)基礎訓練了。
+        tell $n 但在這森林中你還是必須要學會如何看不見敵人就先追上敵人。
+        tell $n 這是狩獵技巧中環節很高的一門技巧，但是練成後受用無窮。
+else
+        tell $n 看來你一點狩獵的法門都不懂，那我們從頭開始說吧。
+        tell $n 首先呢，你所要學習的是如何去追蹤(track)你的獵物。
+        tell $n 這不是簡單的技巧，但是練成後你就可以橫行這個森林啦。
+endif
+~
+>bribe_prog 5000~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        if is_qmark($i) > lf_hunter_sell 200000
+        tell $n 這是你的獵弓
+        mpoload 60516 $n viclv target
+        mpechoat $n $I 將獵弓交給了你
+        mpmod_qmark self lf_hunter_sell v1 - 1
+        mpforcer here modrvt v1 - 1
+        endif
+else
+        tell $n 喔，謝謝你的錢啊
+        hehe $n
+endif
+~
+>bribe_prog 2000~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        if is_qmark($i) > lf_hunter_sell 100000
+        tell $n 這是你的一束木桿箭
+        mpoload 60517 $n viclv target
+        mpechoat $n $I 將一束木桿箭交給了你
+        mpmod_qmark self lf_hunter_sell v0 - 1
+        mpforcer here modrvt v0 - 1
+        endif
+else
+        tell $n 喔，謝謝你的錢啊
+        hehe $n
+endif
+~
+>bribe_prog 600~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        tell $n 這是你的橙色藥水
+        mpoload 32035 $n viclv target
+        mpechoat $n $I 將橙色藥水交給了你
+else
+        tell $n 喔，謝謝你的錢啊
+        hehe $n
+endif
+~
+>bribe_prog 100~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        tell $n 這是你的一份日常飲食
+        mpoload 32036 $n viclv target
+        mpoload 32037 $n viclv target
+        mpechoat $n $I 將一份日常飲食交給了你
+else
+        tell $n 喔，謝謝你的錢啊
+        hehe $n
+endif
+~
+>defun_prog lf_hunter_sell~
+tell $n 我手上沒有存貨啊！你沒仔細看列表(list)啊？
+mpcallout 1 tell $n 真是讓人生氣...等我氣消前別妄想跟我買！
+mpadd_qmark $n lf_hate 6 0 0 0 0 1
+~
+>talk_prog p buy food~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        tell 日常飲食一份需要一百枚史卡拉貝幣
+else
+        tell $n 你在說什麼？
+endif
+~
+>talk_prog p buy orange potion~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        tell $n 一瓶橙色藥水需要六百枚金幣
+else
+        tell $n 啥？
+endif
+~
+>talk_prog p buy wooden arrow~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        if is_qmark($i) > lf_hunter_sell 100000
+                tell $n 一束木桿箭需要兩千枚史卡拉貝幣
+        else
+                mpcall lf_hunter_sell $n
+        endif
+else
+        tell $n 你說啥？
+endif
+~
+>talk_prog p buy arrow~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        if is_qmark($i) > lf_hunter_sell 200000
+                tell $n 強化獵箭需要三十萬枚史卡拉貝幣
+        else
+                mpcall lf_hunter_sell $n
+        endif
+else
+        tell $n 你說什麼？
+endif
+~
+>talk_prog p buy bow~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300001
+        if is_qmark($i) > lf_hunter_sell 200000
+                tell $n 獵弓需要五千枚史卡拉貝幣
+        else
+                mpcall lf_hunter_sell $n
+        endif
+else
+        tell $n 我不懂你的意思...
+endif
+~
+>defun_prog hunter_mark~
+mpdef_rembch null-tar
+~
+>give_prog 60567~
+if is_qmark($n) == lf_hunter_leather
+        if is_qmark($n) > lf_hunter_leather 100000
+                tell $n 很好，我收到兔皮了
+                mpjunk all.pelt
+                mpmod_qmark $n lf_hunter_leather v0 - 1
+        else
+                tell $n 兔皮已經足夠了！
+                tell $n 看看其他的毛皮有沒有缺吧！
+        endif
+else
+        say 我不需要這種東西
+        drop pelt
+endif
+~
+>give_prog 60566~
+if is_qmark($n) == lf_hunter_leather
+        if is_qmark($n) > lf_hunter_leather 200000
+                tell $n 很好，我收到狐狸皮了
+                mpjunk all.pelt
+                mpmod_qmark $n lf_hunter_leather v1 - 1
+        else
+                tell $n 狐狸皮已經足夠了！
+                tell $n 看看其他的毛皮有沒有缺吧！
+        endif
+else
+        say 我不需要這種東西
+        drop pelt
+endif
+~
+>give_prog 60564~
+if is_qmark($n) == lf_hunter_leather
+        if is_qmark($n) > lf_hunter_leather 300000
+                tell $n 很好，我收到熊皮了
+                mpjunk all.pelt
+                mpmod_qmark $n lf_hunter_leather v2 - 1
+        else
+                tell $n 熊皮已經足夠了！
+                tell $n 看看其他的毛皮有沒有缺吧！
+        endif
+else
+        say 我不需要這種東西
+        drop pelt
+endif
+~
+>give_prog 60522~
+if is_qmark($n) == lf_hunter_horn
+        if is_qmark($n) != lf_hunter_horn 100000
+                tell $n 很好，我收到你給的石龍角了！
+                mpmod_qmark $n lf_hunter_horn v0 = 0
+                mpjunk horn-lf
+        else
+                tell $n 你已經給過我石龍角了！
+                drop horn-lf
+                mpcallout 1 tell $n 看看其他材料有沒有少吧！
+        endif
+endif
+~
+>give_prog 32137~
+if is_qmark($n) == lf_hunter_horn
+        if is_qmark($n) != lf_hunter_horn 200000
+                tell $n 很好，我收到你給的骨之碎片了！
+                mpmod_qmark $n lf_hunter_horn v1 = 0
+                mpjunk cantle
+        else
+                tell $n 你已經給過我骨之碎片了！
+                drop cantle
+                mpcallout 1 tell $n 看看其他材料有沒有少吧！
+        endif
+endif
+~
+>give_prog 32146~
+if is_qmark($n) == lf_hunter_horn
+        if is_qmark($n) != lf_hunter_horn 300000
+                tell $n 很好，我收到你給的火界獸之瞳了！
+                mpmod_qmark $n lf_hunter_horn v2 = 0
+                mpjunk eye
+        else
+                tell $n 你已經給過我火界獸之瞳了！
+                drop eye
+                mpcallout 1 tell $n 看看其他材料有沒有少吧！
+        endif
+endif
+~
+>give_prog 32143~
+if is_qmark($n) == lf_hunter_horn
+                tell $n 很好，我收到你給的駝獸牙刃了！
+                mpcallout 1 tell $n 看看其他材料有沒有少吧！
+endif
+~
+>talk_prog finish~
+if is_qmark($n) != lf_hunter_horn 100000
+or is_qmark($n) != lf_hunter_horn 200000
+or is_qmark($n) != lf_hunter_horn 300000
+else
+        if is_inv_obj($i) == 32143
+                nod $n
+                tell $n 那我就開始幫你趕製石龍號角吧！
+                mpcallout 1 tell $n 從現在起大概十天後再來找我
+                mpcallout 2 mpechoat $n $I 開始忙碌的製作著石龍號角...
+                mpcallout 2 mpmod_qmark $n lf_hunter_horn timer = 240
+                mpcallout 2 mpadd_qmark $n lf_hunter_horn2 -1 0 0 0 0 1
+        else
+                tell $n 你還沒給我駝獸牙刃當鑿子啊！
+        endif
+endif
+if is_qmark($n) != lf_hunter_leather 100000
+or is_qmark($n) != lf_hunter_leather 200000
+or is_qmark($n) != lf_hunter_leather 300000
+else
+        nod $n
+        tell $n 那我就開始幫你趕製護身具吧！
+        mpcallout 1 tell $n 從現在起大概十天後再來找我
+        mpcallout 2 mpechoat $n $I 開始忙碌的製作著皮件...
+        mpcallout 2 mpmod_qmark $n lf_hunter_leather timer = 240
+        mpcallout 2 mpmod_qmark $n lf_hunter v0 = 4
+endif
+mpjunk all
+~
+>talk_prog horn~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) >= lf_hunter 300002
+        if is_inv_obj($n) == 60523
+        or is_equ_obj($n) == 60523
+                tell $n 一個人一次只能持有一個石龍號角，不然會招來厄運！
+                tell $n 想害我也不是這樣吧，去去去
+                mpechoat $n $I 看來十分生氣，短時間內大概不會氣消的...
+                mpadd_qmark $n lf_hate 72 0 0 0 0 1
+        else
+                tell $n 我當然可以幫你製造石龍號角，我的祖先曾以製造石龍號角而聞名
+                mpcallout 1 tell $n 首先你必須要有一根石龍角，這大概是整個步驟中最難的
+                mpcallout 2 tell $n 接下來比較容易，你還需要一片不死生物的碎骨以及火界獸的眼珠
+                mpcallout 3 tell $n 最後還要一根猛齒駝獸的利齒給我充當鑿子
+                mpcallout 4 tell $n 只要你湊滿了這些東西，隨時我都能幫你製造出石龍號角！
+                mpcallout 5 mpcall lf_hornX
+                endif
+        endif
+endif
+~
+>defun_prog lf_hornX~
+if is_qmark($n) != lf_hunter_horn
+        tell $n 想要的話就快點去找材料吧！
+        mpadd_qmark $n lf_hunter_horn -1 1 1 1 0 1
+endif
+~
+>talk_prog topic~
+if being($b)
+        mpechoat $n $I 現在看起來很忙
+        break
+endif
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) != lf_hunter
+        if is_qmark($n) == lf_search 200001
+        tell $n 喔，難得有人來到這座森林，你有什麼事？
+        mpechoat $n --．為什麼森林中沒有動物？(animal)
+        mpechoat $n --．老子沒事走走礙到你啦？(nothing)
+        endif
+else
+        tell $n 這回又有什麼事？
+if is_qmark($n) >= lf_hunter 300001
+        mpechoat $n --．買東西用 list 先查看物品量
+        if is_qmark($n) == lf_hunter 200004
+        or is_qmark($n) == lf_hunter 200005
+                mpechoat $n --．森林可能還有地方沒搜尋過，或是你的能力還不足
+                mpechoat $n 　　想確定自己的能力可以找獵戶檢定(check)
+        endif
+endif
+if is_qmark($n) >= lf_hunter 300002
+  if is_qmark($n) != lf_hunter_horn2
+        if is_qmark($n) != lf_hunter_horn
+                mpechoat $n --．製造石龍號角(horn)
+        else
+                if is_qmark($n) != lf_hunter_horn 100000
+                or is_qmark($n) != lf_hunter_horn 200000
+                or is_qmark($n) != lf_hunter_horn 300000
+                  if is_qmark($n) == lf_hunter_horn 100000
+                        mpechoat $n --．石龍角已經收到
+                  else
+                        mpechoat $n --．石龍角還沒收到
+                  endif
+                  if is_qmark($n) == lf_hunter_horn 200000
+                        mpechoat $n --．骨之碎片已經收到
+                  else
+                        mpechoat $n --．骨之碎片還沒收到
+                  endif
+                  if is_qmark($n) == lf_hunter_horn 300000
+                        mpechoat $n --．火界獸之瞳已經收到
+                  else
+                        mpechoat $n --．火界獸之瞳還沒收到
+                  endif
+                  if is_inv_obj($i) == 32143
+                        mpechoat $n --．駝獸牙刃已經收到
+                  else
+                        mpechoat $n --．駝獸牙刃還沒收到
+                  endif
+                else
+                  if is_inv_obj($i) == 32143
+                        mpechoat $n --．石龍號角的原料收集完成了(finish)
+                  else
+                        mpechoat $n --．只剩下駝獸牙刃還沒收到
+                  endif
+                endif
+        endif
+  else
+        if is_qmark($n) != lf_hunter_horn
+                tell $n 喔！我已經完工了！
+                tell $n 這就是你要的石龍號角！
+                mpcallout 1 tell $n 但交給你之前我必須要警告你
+                mpcallout 2 tell $n 石龍號角使用時除了本人免疫外，極可能會傷及無辜
+                mpcallout 3 tell $n 非有必要絕對不要輕易使用，此外使用也會耗損號角'
+                mpcallout 4 tell $n 最重要的一點就是，一個人一次只能持有一個石龍號角
+                mpcallout 5 tell $n 這東西太邪門了，持有超過一個就會開始給主人帶來強烈的厄運
+                mpcallout 6 tell $n 只要你還持有一個，我就不會幫你做第二個，這千萬要記住
+                mpcallout 7 mpechoat $n $I 將完工的石龍號角交給了你
+                mpcallout 7 tell $n 大概就這些了，那號角就交給你吧！
+                mpcallout 7 mpoload 60523 $n viclv target
+                mpcallout 7 mpdel_qmark $n lf_hunter_horn2
+        else
+                tell $n 石龍號角還沒製好，有點耐心吧
+                mpechoat $n $I 回完你的話又繼續手頭上正在趕工的石龍號角...
+        endif
+  endif
+endif
+if is_qmark($n) == lf_hunter 200001
+        mpechoat $n 我打到獵物了，你檢查看看吧！(check)
+endif
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) >= lf_hunter 100008
+                if is_qmark($n) <= lf_hunter 100014
+                sigh $n
+                tell $n 原來是你啊...竟然在別人說話的時候跑掉...
+                tell $n 我暫時不想教你...等我氣消了再來吧...
+                mpadd_qmark $n lf_hate 72 0 0 0 0 1
+                mpmod_qmark $n lf_hunter v0 = 7
+                endif
+        endif
+        if is_qmark($n) == lf_hunter 100007
+          mpechoat $n --．我準備好進行最後階段了。(final training)
+        endif
+        if is_qmark($n) <= lf_hunter 100003
+        if is_qmark($n) == lf_hunter_lord
+          mpechoat $n --．我想再聽一次森林之主的消息(Forest Lord)。
+        else
+          mpechoat $n --．我考慮看看(thinking)
+          mpechoat $n --．我做(do)
+        endif
+        endif
+        if is_qmark($n) == lf_hunter 100004
+          mpechoat $n --．我取得了遇見森林之主的證物了！(thing)
+        endif
+        if is_qmark($n) == lf_hunter 100005
+          tell $n 喔，我知道啦，那傢伙把你的屍體扔在我眼前。
+          tell $n 看在你這麼“拼命”的份上，我就破例指導你吧！
+          tell $n 當你準備好的話我們就進入最後課程(final training)。
+          mpmod_qmark $n lf_hunter v0 = 7
+        endif
+        if is_qmark($n) == lf_hunter 100006
+          mpechoat $n --．給獵戶物證(give object hunter)
+        endif
+endif
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100000
+                mpechoat $n --．我發現有座詭異的黑色石塔！(blacktower)
+        endif
+        if is_qmark($n) == lf_hunter 100002
+                mpechoat $n --．我想問怎麼打倒石龍(Dragon of Stone)
+        endif
+        if is_qmark($n) == lf_hunter 100003
+                if is_qmark($n) == lf_hunter_leather
+                        if is_qmark($n) != lf_hunter_leather 100000
+                        or is_qmark($n) != lf_hunter_leather 200000
+                        or is_qmark($n) != lf_hunter_leather 300000
+                          if is_qmark($n) != lf_hunter_leather 100000
+                                mpechoat $n --兔皮還沒收集齊全
+                          else
+                                mpechoat $n --兔皮已經收集齊全
+                          endif
+                          if is_qmark($n) != lf_hunter_leather 200000
+                                mpechoat $n --狐皮還沒收集齊全
+                          else
+                                mpechoat $n --狐皮已經收集齊全
+                          endif
+                          if is_qmark($n) != lf_hunter_leather 300000
+                                mpechoat $n --熊皮還沒收集齊全
+                          else
+                                mpechoat $n --熊皮已經收集齊全
+                          endif
+                        else
+                                mpechoat $n --防護皮件的材料收集完成了(finish)
+                        endif
+                endif
+        endif
+        if is_qmark($n) == lf_hunter 100004
+                if is_qmark($n) != lf_hunter_leather
+                        tell $n 喔！我已經完工了！
+                        tell $n 這就是你所需要的皮件啦，記得戰鬥中絕對不要脫下來！
+                        mpcallout 1 tell $n 不然萬一被石龍傷到可不是好玩的！
+                        mpcallout 2 tell $n 好啦，這就將皮件交給你...
+                        mpcallout 3 mpmod_qmark $n lf_hunter v0 = 5
+                        mpcallout 3 mpoload 60568 $n viclv target
+                        mpcallout 3 mpoload 60569 $n viclv target
+                        mpcallout 3 mpechoat $n $I 將完工的絨盾和覆面盔交給了你
+                else
+                        tell $n 皮件還沒製好，有點耐心吧
+                        mpechoat $n $I 回完你的話又繼續手頭上正在趕工的皮件...
+                endif
+        endif
+        if is_qmark($n) == lf_hunter 100006
+                if is_inv_obj($n) == 60522
+                        tsk $n
+                        mpcallout 1 good $n
+                        mpcallout 2 tell $n 沒想到你竟然真的打倒了石龍取得了石龍角...
+                        mpcallout 4 tell $n 這東西可是獵人一生夢寐以求的至寶啊！
+                        mpcallout 6 tell $n 你一定很懷疑這東西為啥稱得上獵人至寶吧？
+                        mpcallout 8 tell $n 其實光是角還不行的，但只要稍微加工一下
+                        mpcallout 10 tell $n 把這石龍角製成號角的話，一吹響起來，只要是動物沒有不屈服的！
+                        mpcallout 12 tell $n 甚至連森林之主那傢伙都很懼怕這號角的音色呢！
+                        mpcallout 14 tell $n 喔，對了，你應該還有事情要去問森林之主吧？
+                        mpcallout 15 tell $n 等你把這件事情解決之後，有空我們再來談石龍號角吧！
+                        mpcallout 16 wave $n
+                        mpcallout 16 mpmod_qmark $n lf_hunter v0 = 7
+                endif
+        endif
+endif
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100000
+                tell $n 沒事就多花點時間去探索這森林吧！
+        break
+        endif
+        if is_qmark($n) == lf_hunter 100002
+        if is_inv_obj($n) == 60518
+                mpechoat $n --．我發現森林中有座石塔！(tower)
+        endif
+        endif
+        if is_qmark($n) == lf_hunter 100003
+                tell $n 沒事就快去找森林之主吧！
+        endif
+        if is_qmark($n) == lf_hunter 100004
+                mpechoat $n 你跟 $I 講述著森林之主說給你聽的故事...
+                mpcallout 1 think $n
+                mpcallout 2 tell $n 那你有去過石塔仔細檢查過了嗎？
+                mpcallout 3 tell $n 或許你會有什麼發現也不一定呢。
+        endif
+        if is_qmark($n) == lf_hunter 100005
+                mpdef_rembch $n
+                mpechoat $n 你跟 $I 講述著石塔搜尋後的結果...
+                mpcallout 1 nod $n
+                mpcallout 2 tell $n 雖然你什麼也沒發現，但你也長了一分知識啊。
+                mpcallout 4 tell $n 好好努力下去，或許這森林還有更多秘密等你發掘啊。
+                mpcallout 6 tell $n 喔，對了。
+                mpcallout 7 tell $n 沒想到你能做得如此出色，真不愧是我教出來的。
+                                mpcallout 8 mpcall search_arrowX
+                mpcallout 12 mpcall hunter_mark
+                mpcallout 11 mpechoat $n --．取得獵戶住所的購物權(list/buy)
+                mpcallout 11 tell $n 以後有需要的話可以來找我啊！
+                mpcallout 10 mpmod_qmark $n lf_hunter v1 = 4
+                mpcallout 10 mpmod_qmark $n lf_hunter v0 = 0
+                mpcallout 10 mpmod_qmark $n lf_hunter v2 = 1
+        endif
+endif
+endif
+~
+>defun_prog search_arrowX~
+if class($n) == 17
+        if is_qmark($n) == lf_beast 100001
+                        mpcallout 1 tell $n 我這邊有一些自製的弓箭，就送給你當禮物吧！
+                        mpcallout 2 mpoload 60516 $n viclv target
+                        mpcallout 2 mpoload 60517 $n viclv target
+                        mpcallout 2 mpechoaround $n $I 將獵弓與一袋箭交給了 $N。
+                        mpcallout 2 mpechoat $n $I 將獵弓與一袋箭交給了你。
+        else
+                if is_qmark($n) == lf_beast 100002
+                        tell $n 但勉強算是合格了。
+                        tell $n 雖然你在森林之主那邊表現得不是很有勇氣
+                        mpcallout 1 tell $n 只要我還有剩下的話我會便宜的賣給你的！
+                        mpcallout 2 tell $n 要是你有需要什麼日常用品的話，自己看下列表(list)
+                        mpcallout 2 mpexp $n 100
+                        mpcallout 2 mpgold $n 25000
+                else
+                        mpcallout 1 tell $n 我這邊有一些自製的弓箭，就送給你當禮物吧！
+                        mpcallout 2 mpoload 60520 $n viclv target
+                        mpcallout 2 mpoload 60521 $n viclv target
+                        mpcallout 2 mpechoaround $n $I 將獵弓與一袋箭交給了 $N 。
+                        mpcallout 2 mpechoat $n $I 將獵弓與一袋箭交給了你。
+                endif
+        endif
+else
+        tell $n 要是你有需要什麼日常用品的話，自己看下列表(list)
+        mpcallout 1 tell $n 只要我還有剩下的話我會便宜的賣給你的！
+        mpcallout 2 mpexp $n 2000
+        mpcallout 2 mpgold $n 500000
+endif
+~
+>talk_prog p dragon of stone~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100002
+                mpechoat $n 你迫不及待的跟獵戶講述著森林之主交代的事情
+                mpcallout 2 cackle
+                mpcallout 4 tell $n 後生可畏啊，即使我最強壯的時候都不敢挑戰的石龍你竟要打倒牠！
+                mpcallout 6 tell $n 其實石龍之所以難以對付是來自於他可怕的天賦
+                mpcallout 8 tell $n 石龍頭上生有巨大的尖角，從哪角中會發出令人震攝的恐怖低鳴
+                mpcallout 10 tell $n 沒有準備的人往往在剛開始的時候就已經注定敗給石龍了
+                mpcallout 12 tell $n 這樣吧，其實只要找齊了材料我就能幫你製造可以幫你的器具
+                mpcallout 14 tell $n 首先，你需要可以阻擋石龍攝人低鳴的耳罩
+                mpcallout 15 tell $n 耳罩和面罩我會幫你組合成一頂覆面盔
+                mpcallout 15 tell $n 接著，你需要一頂可以抵抗石龍致命毒氣的面罩
+                mpcallout 16 tell $n 最後，你需要一面可以抵禦石龍毒爪的絨皮盾
+                mpcallout 17 tell $n 這些東西需要大量的毛皮，而這森林出產的是最適合的
+                mpcallout 18 tell $n 這些東西總共需要25張兔皮，15張狐狸皮，還有10張熊皮
+                mpcallout 20 tell $n 沒問題的話你就快點去獵回來吧！
+                mpcallout 20 mpmod_qmark $n lf_hunter v0 = 3
+                mpcallout 20 mpadd_qmark $n lf_hunter_leather -1 25 15 10 0 1
+        endif
+endif
+~
+>talk_prog blacktower~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100000
+        hmm $n
+        mpcallout 1 good $n
+        mpcallout 2 tell $n 你還記得你之前說過森林之主告訴你的故事嗎？
+        mpcallout 3 mpechoat $n 你想起來當初所聽到...一間堆放物品...
+        mpcallout 4 mpechoat $n 另一間...通向血族的住所！
+        mpcallout 5 nod $n
+        mpcallout 6 tell $n 看來你是想起來了，沒錯，或許你已經步入了史上最大的謎團之中
+        mpcallout 8 tell $n 但是呢，關於什麼魔法啊有的沒的我一點都不熟
+        mpcallout 10 tell $n 這點或許你該去問森林之主看看，他應該會懂的
+        mpcallout 10 mpmod_qmark $n lf_hunter v0 = 1
+        endif
+endif
+~
+>give_prog 60518~
+if is_qmark($n) == lf_hunter 200003
+  if is_qmark($n) == lf_hunter 100002
+        mpjunk stone
+        mpechoat $n 臉上充滿了驚訝的神情！
+        mpcallout 1 tell $n 看來你的能力確實已經超過我了，或許你真的發現了什麼吧
+        mpcallout 1 good $n
+        mpcallout 2 mpechoat $n 你忽然覺得背脊有一股涼意...
+        mpcallout 2 tell $n 這樣的話...你需要的是最精通這森林的傢伙的幫忙啊...
+        mpcallout 3 tell $n 是的，就是森林之主啦，畢竟這是牠的森林啊！
+        mpcallout 3 grin $n
+        mpcallout 3 tell $n 當然，要說到這森林的傳說，應該沒人比那傢伙更熟悉了
+        mpcallout 4 tell $n 你就去跟森林之主談談看吧，牠應該會幫忙的。
+        mpcallout 4 mpmod_qmark $n lf_hunter v0 = 3
+  endif
+else
+  hmm
+  tell $n 隨便拿塊石頭也想耍我啊？
+  sigh $n
+  mpadd_qmark $n lf_hate 24 0 0 0 0 1
+endif
+~
+>talk_prog tower~
+if is_inv_obj($n) == 60518
+        mpechoat $n 你很高興地跟獵戶講述著發現石塔的經過！
+        mpechoat $n 但獵戶看起來半信半疑的...
+        mpcallout 1 tell $n 這種聽起來荒謬的事情，還真讓人難以相信啊...
+        mpcallout 2 mpechoat $n --．你想起來應該把塔石交給獵戶！
+endif
+~
+>defun_prog lf_hunter_break~
+if pcnum($) == 0
+        break
+endif
+~
+>talk_prog p final training~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100007
+                nod $n
+                mpcallout 2 tell $n 那我們就展開這段訓練的最後階段吧。
+                mpcallout 3 tell $n 最後的部分或許有點冗長無趣，但你可要聽到最後啊！
+                mpcallout 4 mpechoat $n $I 開始滔滔不絕的傳授你森林中討生活的手段...
+                mpcallout 4 mpmod_qmark $n lf_hunter v0 = 8
+        endif
+        mpcallout 5 if is_qmark($n) == lf_hunter 100008
+        mpcallout 5 mpcall lf_hunter_break
+                mpcallout 10 mpechoat $n $I 似乎還沒有停下來的打算，仍然滔滔不絕的講著...
+                mpcallout 10 mpmod_qmark $n lf_hunter v0 = 9
+        endif
+        mpcallout 11 if is_qmark($n) == lf_hunter 100009
+        mpcallout 11 mpcall lf_hunter_break
+                mpcallout 16 mpechoat $n $I 似乎還沒有停下來的打算，仍然滔滔不絕的講著...
+                mpcallout 16 mpmod_qmark $n lf_hunter v0 = 10
+        endif
+        mpcallout 17 if is_qmark($n) == lf_hunter 100010
+        mpcallout 17 mpcall lf_hunter_break
+                mpcallout 26 mpechoat $n $I 似乎還沒有停下來的打算，仍然滔滔不絕的講著...
+                mpcallout 26 mpmod_qmark $n lf_hunter v0 = 11
+        endif
+        mpcallout 27 if is_qmark($n) == lf_hunter 100011
+        mpcallout 27 mpcall lf_hunter_break
+                mpcallout 42 mpechoat $n $I 似乎還沒有停下來的打算，仍然滔滔不絕的講著...
+                mpcallout 42 mpmod_qmark $n lf_hunter v0 = 12
+        endif
+        mpcallout 43 if is_qmark($n) == lf_hunter 100012
+        mpcallout 43 mpcall lf_hunter_break
+                mpcallout 64 mpechoat $n $I 講得興起，彷彿已入無人之境...
+                mpcallout 64 mpmod_qmark $n lf_hunter v0 = 13
+        endif
+        mpcallout 65 if is_qmark($n) == lf_hunter 100013
+        mpcallout 65 mpcall lf_hunter_break
+                mpcallout 92 mpechoat $n $I 終於講完了一串長似阿婆裹腳步的陳年故事...
+                mpcallout 92 mpmod_qmark $n lf_hunter v0 = 14
+        endif
+        mpcallout 93 if is_qmark($n) == lf_hunter 100014
+        mpcallout 93 mpcall lf_hunter_break
+                mpcallout 94 tell $n 嗯，那整個課程就到這邊結束了。
+                mpcallout 94 mpmod_qmark $n lf_hunter v0 = 15
+        endif
+        mpcallout 95 if is_qmark($n) == lf_hunter 100015
+        mpcallout 95 mpcall lf_hunter_break
+                mpcallout 96 tell $n 其實狩獵的訣竅就是如此而已，就是多多練習多多搜尋
+                mpcallout 97 tell $n 只要你每到新的地方都用心搜尋，相信會發掘到更多的東西
+                mpcallout 98 mpecho $I 稍微吞了下口水
+                mpcallout 99 tell $n 這片森林中還有很多地方是未曾有人踏入的
+                mpcallout 100 tell $n 甚至連我都只探索了這森林的極小部分而已
+                mpcallout 101 tell $n 或許你的發現將會在我之上也不一定。
+                mpcallout 102 tell $n 最後還是提醒你，坐而言不如起而行
+                mpcallout 103 tell $n 聽我說了這麼多，最後你還是必須身體力行
+                mpcallout 104 tell $n 只要你別忘了這些基本規則
+                mpcallout 105 tell $n 最後，祝你好運，若你遇到什麼問題還是能來找我
+                mpcallout 106 wave $n
+                mpcallout 106 bless $n
+                mpcallout 106 mpmod_qmark $n lf_hunter v0 = 0
+                mpcallout 106 mpmod_qmark $n lf_hunter v1 = 3
+        endif
+endif
+~
+>talk_prog thing~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100004
+                tsk
+                tell $n 是嗎？快把東西拿來我看看！
+                mpmod_qmark $n lf_hunter v0 = 6
+        endif
+endif
+~
+>give_prog 60519~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100006
+                mpjunk object
+                hmm
+                mpcallout 2 mpechoat $n $I 仔細打量著你給的物品。
+                mpcallout 3 tell $n 好！有前途！
+                mpcallout 4 tell $n 這樣我們可以開始進入最後階段(final training)了
+                mpcallout 5 tell $n 準備好之後就告訴我吧！
+                mpcallout 5 mpmod_qmark $n lf_hunter v0 = 7
+        endif
+endif
+~
+>talk_prog p Forest Lord~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter_lord 300004
+                tell $n 森林之主會在一個月的某幾天出沒
+                mpcallout 2 tell $n 但我只知道他可能會出現在北面小徑盡頭的泉水處
+                mpcallout 3 tell $n 【在月光的導引下，在子夜時分之時，道路將顯現】
+                mpcallout 4 tell $n 或許這一小段傳說能幫你找到路
+                mpcallout 5 tell $n 好啦，快點出發吧，我等你好消息啊！
+        else
+                if is_qmark($n) == lf_hunter_lord 300003
+                        tell $n 還找不到？
+                        mpcallout 2 hmm
+                        mpcallout 3 tell $n 會不會我忘了什麼沒告訴你呢...
+                        mpcallout 4 think
+                        mpcallout 5 duh
+                        mpcallout 6 tell $n 我想起來了！
+                        mpcallout 7 tell $n 抱歉、抱歉，我竟然忘了這麼重要的事情
+                        mpcallout 8 tell $n 其實呢，有個關於森林之主的傳說
+                        mpcallout 9 tell $n 【在月光的導引下，在子夜時分之時，道路將顯現】
+                        mpcallout 10 tell $n 或許這一小段傳說能幫你找到路
+                        mpcallout 11 tell $n 快去吧！
+                        mpmod_qmark $n lf_hunter_lord v2 + 1
+                else
+                        tell $n 這簡單
+                        tell $n 這個森林之主會在一個月的某幾天出沒
+                        tell $n 但我只知道他可能會出現在北面小徑盡頭的泉水處
+                        tell $n 好啦，快點出發吧，我等你好消息啊！
+                        mpmod_qmark $n lf_hunter_lord v2 + 1
+                endif
+        endif
+endif
+~
+>talk_prog animal~
+if is_qmark($n) == lf_hate
+        angry
+        tell $n 滾滾滾，別礙到老子做事。
+        mpechoat $n 看來 $I 對你之前不敬的態度還耿耿於懷。
+break
+endif
+if is_qmark($n) != lf_hunter
+        if is_qmark($n) == lf_search 200001
+        tell $n 動物？你沒發現到嗎？
+        cackle $n
+        tell $n 小子，這就表示你太嫩啦，你們這些城市仔當然找不到。
+        tell $n 當然，後天的努力還是來得及的。
+        tell $n 你願意的話，只要十萬枚金幣我就可以當你的老師。
+        tell $n 教你一些在這座森林需要的生存技巧。
+        mpechoat $n --．給獵戶學費(give 100000 coins hunter)
+        mpechoat $n --．我去你的！(talk hunter curse you)
+        endif
+endif
+~
+>talk_prog track~
+if is_qmark($n) == lf_hunter 200001
+        if class($n) == 9
+        or class($n) == 17
+                nod
+                mpcallout 2 tell $n 因為你曉得追蹤的基礎了，那我也省得廢話了。
+                mpcallout 3 tell $n 只是你們以前學習的應該是看到獵物才能追蹤的技巧。
+                mpcallout 4 tell $n 我現在要教授的的是追蹤獵物足跡的方法。
+                mpcallout 5 tell $n 簡單來說就是，搜尋(search)，還有慢行(sneak)。
+                mpcallout 6 tell $n 記得，森林中往往有許多不注意就找不到的線索。
+                mpcallout 7 tell $n 而慢行是因為你是要當獵人不是要當獵物。
+                mpcallout 8 tell $n 謹記這兩點原則，那你就能夠輕易的獵捕到獵物。
+                mpcallout 9 tell $n 好啦，坐而言不如起而行，接著你就去抓獵物吧。
+                mpcallout 10 tell $n 到時候我會依照你獵捕回來的獵物決定你的程度。
+                mpcallout 11 tell $n 等你程度夠的時候，我就會教授你下一步。
+        else
+                sigh
+                mpcallout 2 tell $n 啊......門外漢門外漢......
+                mpcallout 3 tell $n 好啦，既然我收了你的錢，我自然會教你該怎麼做。
+                mpcallout 4 tell $n 追蹤的技巧只有一個，就是不放過你所發現的每個線索。
+                mpcallout 5 tell $n 在感覺到不知道該怎麼走的時候，搜尋(search)一下。
+                mpcallout 6 tell $n 別小看這個動作，往往在你平時未留意的地方有著小小的線索。
+                mpcallout 7 tell $n 而這點小線索就能成為你成功獵捕的關鍵！
+                mpcallout 8 tell $n 接下來呢，我出給你的課題是到這森林中去狩獵。
+                mpcallout 9 tell $n 根據你帶回來的戰利品，會決定我對你的看法。
+                mpcallout 10 tell $n 只要我覺得你程度夠了，我自然就會教授你下一步。
+        endif
+endif
+~
+>talk_prog check~
+if is_qmark($n) >= lf_hunter 200005
+        tell $n 你已盡得我真傳
+        tell $n 我沒有東西能夠教你了
+break
+endif
+if is_qmark($n) == lf_hunter 200004
+        if is_qmark($n) < lf_hunter 100030
+                look $n
+                mpcallout 1 shake
+                mpcallout 2 tell $n 你還需要多多磨練才是
+        break
+        endif
+        if is_qmark($n) < lf_hunter 100060
+                look $n
+                mpcallout 1 hmm $n
+                mpcallout 2 tell $n 你比之前更進步了些
+        break
+        endif
+        if is_qmark($n) < lf_hunter 100090
+                look $n
+                mpcallout 1 think $n
+                mpcallout 2 tell $n 你在搜尋方面的能力已經比一般獵人更強了
+        break
+        endif
+        if is_qmark($n) < lf_hunter 100120
+                look $n
+                mpcallout 1 think $n
+                mpcallout 2 tell $n 你幾乎快要到達我所不及的地方了
+        break
+        endif
+        if is_qmark($n) < lf_hunter 100150
+                look $n
+                mpcllout 1 good $n
+                mpcallout 2 tell $n 你已經出類拔萃了，似乎離巔峰只差那麼一點！
+        break
+        endif
+        if is_qmark($n) >= lf_hunter 100151
+                look $n
+                mpcallout 1 good $n
+                mpcallout 2 tell $n 你已經青出於藍而勝於藍了！
+                mpcallout 3 tell $n 這個森林應該沒有什麼你找不到的了！
+                mpcallout 4 tell $n 搜尋這森林中你覺得可疑之處吧，或許曾經沒發現之處會有意外發現。
+        endif
+break
+endif
+if is_qmark($n) == lf_hunter 200001
+        nod
+        mpcallout 2 tell $n 我們這就來看看你到底獵了啥。
+        mpcallout 3 look $n
+        mpcallout 4 mpcall lf_huntingX
+else
+        if is_qmark($n) >= lf_hunter 200004
+                hmm
+                mpcallout 2 tell $n 你已經盡得我真傳了
+                mpcallout 3 tell $n 我沒什麼能夠教你的了
+        else
+                tell $n 啥？檢查啥？你的腦子嘛？
+                cackle $n
+        endif
+endif
+~
+>defun_prog lf_huntingX~
+if is_qmark($n) >= lf_hunter 100030
+        good $n
+        mpcallout 1 tell $n 嗯嗯嗯，以業餘的來說，你的表現已經很好了。
+        mpcallout 2 tell $n 那我們就來進入下一階段(advance training)吧！
+        mpcallout 2 mpmod_qmark $n lf_hunter v1 = 2
+        mpcallout 2 mpmod_qmark $n lf_hunter v0 = 0
+else
+        shake
+        mpcallout 1 tell $n 你還需要再努力一些，多獵點再回來找我吧。
+endif
+~
+>talk_prog p advance training~
+if is_qmark($n) == lf_hunter 200002
+        tell $n 那我們現在就開始展開進階訓練課程
+        mpcallout 2 tell $n 這次不只是叫你去獵捕森林裡的小動物而已
+        mpcallout 3 tell $n 整個過程有一定的危險性，你要有所覺悟
+        mpcallout 4 tell $n 這是個古老的森林，其中棲息著上古的神獸，森林的主人
+        mpcallout 5 tell $n 統馭萬獸的獸王，這就是你的下一個課題。
+        mpcallout 6 tell $n 我要你去打倒這個森林之主並且取得證據，證明你打倒牠了。
+        mpcallout 7 tell $n 別露出那種怪表情，這並非不可能的任務，只是比較艱難罷了。
+        mpcallout 8 hehe $n
+        mpcallout 9 tell $n 當然，你可以不要做，那我就沒有必要教導你。
+        mpcallout 10 tell $n 你連這點試練都過不了，是沒辦法成為一個成功的冒險者的！
+        mpcallout 11 mpechoat $n --．我做(do)
+        mpcallout 11 mpechoat $n --．我考慮一下(thinking)
+endif
+~
+>talk_prog do~
+if is_qmark($n) == lf_hunter 200002
+        nod $n
+        tell $n 很好，聽說森林之主平時只在某些日子裡會出沒
+        tell $n 但我沒在調查這個，只是我大概知道牠會在哪裡出沒
+        tell $n 只要你沿著北面的小徑直走，會通到一個泉水
+        tell $n 傳說中那就是牠的聖泉，快去吧，我等你好消息
+        mpadd_qmark $n lf_hunter_lord -1 0 0 0 0 1
+endif
+~
+>talk_prog thinking~
+if is_qmark($n) == lf_hunter 200002
+        tell $n 慢慢考慮，我一點都不急啊
+        whistle
+endif
+~
+>talk_prog nothing~
+smoking
+tell $n 是啊、是啊，是不干我事，在森林中被襲擊或迷路就別喊救命啊。
+mpechoat $n $I 一臉不屑的繼續做著自己的事。
+mpadd_qmark $n lf_hate 24 0 0 0 0 1
+~
+>talk_prog p curse you~
+angry $n
+tell $n 不爽學就別學啊！
+tell $n 就去追在兔子的尾椎後面跑吧你！
+mpechoat $n $I 一臉不屑的繼續做著自己的事。
+mpadd_qmark $n lf_hate 48 0 0 0 0 1
+~
+>repop_prog 100~
+mpforcer here modrvt v0 = 50
+mpforcer here modrvt v1 = 10
+mpadd_qmark self lf_hunter_sell -1 50 10 0 1 0
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+|
+#60525
+bear~
+熊(bear)~
+一頭兇猛的棕熊(bear)朝你衝了過來！
+~
+它看來很不高興你侵犯了牠的地盤！
+~
+33|64|128|2048|8192|524288|1048576 549755813888 0 S
+36 2000 0 0d100+0 0d0+0
+0 0
+0 8 0
+R Bear~
+C 1
+P 8
+>all_greet_prog 100~
+if is_qmark($n) != lf_hunter
+        mpecho $I 跑進樹林之中消失了！
+        mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) == lf_hunter 200001
+or is_qmark($n) == lf_hunter 200004
+        if class($n) == 9
+        or class($n) == 17
+                mpmod_qmark $n lf_hunter v0 + 1
+        endif
+        mpmod_qmark $n lf_hunter v0 + 5
+endif
+if is_qmark($n) == lf_hunter
+        if rand(10)
+                mpechoat $n 你一刀一刀把 $I 的皮給割了下來...
+                mpechoaround $n $n 不知從哪拿出刀子把 $I 的皮慢慢割了下來！
+                mpoload 60564 standard floor
+        else
+                mpechoat $n 你割著 $I 的皮，但一個手拙把皮給割壞了...
+                mpechoaround $n $n 試圖割下 $I 的皮，但卻弄得到處鮮血四濺，割壞了皮。
+        endif
+endif
+~
+>tick_prog 100~
+if isfight($i)
+        break
+else
+        if is_qmark($i) != lf_animal
+                mpecho $I 忽然跑進樹林之中消失了！
+                mppurge self
+        endif
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self lf_animal 6 0 0 0 1 0
+~
+|
+#60526
+deer~
+鹿(deer)~
+一頭靈巧的鹿(deer)正跳躍著離開你。
+~
+牠靈巧的跳離開你，使得你難以追上牠。
+~
+65|128 2199023255552 0 S
+30 0 0 100d-20+0 0d-500+0
+0 0
+0 8 0
+R Animal~
+P 8
+>all_greet_prog 100~
+if is_qmark($n) != lf_hunter
+        mpecho $I 跑進樹林之中消失了！
+        mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) == lf_hunter 200001
+or is_qmark($n) == lf_hunter 200004
+        if class($n) == 9
+        or class($n) == 17
+                mpmod_qmark $n lf_hunter v0 + 1
+        endif
+        mpmod_qmark $n lf_hunter v0 + 2
+endif
+if is_qmark($n) == lf_hunter
+        if rand(30)
+                mpechoat $n 你一刀一刀把 $I 的皮給割了下來...
+                mpechoaround $n $n 不知從哪拿出刀子把 $I 的皮慢慢割了下來！
+                mpoload 60565 standard floor
+        else
+                mpechoat $n 你割著 $I 的皮，但一個手拙把皮給割壞了...
+                mpechoaround $n $n 試圖割下 $I 的皮，但卻弄得到處鮮血四濺，割壞了皮。
+        endif
+endif
+~
+>tick_prog 100~
+if isfight($i)
+        break
+else
+        if is_qmark($i) != lf_animal
+                mpecho $I 忽然跑進樹林之中消失了！
+                mppurge self
+        endif
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self lf_animal 4 0 0 0 1 0
+~
+|
+#60527
+fox~
+狐狸(fox)~
+一頭優雅的火紅狐狸(fox)正悄悄的遊走在你四周。
+~
+牠在你的四周圍繞著走動，似乎在等待著什麼。
+~
+65|128|2048|8192|524288 32768|65536|134217728 0 S
+25 0 0 25d25+0 0d-250+0
+0 0
+0 8 0
+R Animal~
+C 1
+P 8
+>all_greet_prog 100~
+if is_qmark($n) != lf_hunter
+        mpecho $I 跑進樹林之中消失了！
+        mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) == lf_hunter 200001
+or is_qmark($n) == lf_hunter 200004
+        if class($n) == 9
+        or class($n) == 17
+                mpmod_qmark $n lf_hunter v0 + 1
+        endif
+        mpmod_qmark $n lf_hunter v0 + 3
+endif
+if is_qmark($n) == lf_hunter
+        if rand(20)
+                mpechoat $n 你一刀一刀把 $I 的皮給割了下來...
+                mpechoaround $n $n 不知從哪拿出刀子把 $I 的皮慢慢割了下來！
+                mpoload 60566 standard floor
+        else
+                mpechoat $n 你割著 $I 的皮，但一個手拙把皮給割壞了...
+                mpechoaround $n $n 試圖割下 $I 的皮，但卻弄得到處鮮血四濺，割壞了皮。
+        endif
+endif
+~
+>tick_prog 100~
+if isfight($i)
+        break
+else
+        if is_qmark($i) != lf_animal
+                mpecho $I 忽然跑進樹林之中消失了！
+                mppurge self
+        endif
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self lf_animal 6 0 0 0 1 0
+~
+|
+#60528
+rabbit~
+小兔(rabbit)~
+一隻可愛的小兔兔(rabbit)正驚恐著你的到來而逃竄著。
+~
+牠看來充滿了恐懼，只是不斷的逃離開你的視線。
+~
+65|128 549755813888|2199023255552 0 S
+20 0 0 0d0+0 0d-500+0
+0 0
+0 8 0
+R Animal~
+P 8
+>all_greet_prog 100~
+if is_qmark($n) != lf_hunter
+        mpecho $I 跑進樹林之中消失了！
+        mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) == lf_hunter 200001
+or is_qmark($n) == lf_hunter 200004
+        if class($n) == 9
+        or class($n) == 17
+                mpmod_qmark $n lf_hunter v0 + 1
+        endif
+endif
+if is_qmark($n) == lf_hunter
+        if rand(50)
+                mpechoat $n 你一刀一刀把 $I 的皮給割了下來...
+                mpechoaround $n $n 不知從哪拿出刀子把 $I 的皮慢慢割了下來！
+                mpoload 60567 standard floor
+        else
+                mpechoat $n 你割著 $I 的皮，但一個手拙把皮給割壞了...
+                mpechoaround $n $n 試圖割下 $I 的皮，但卻弄得到處鮮血四濺，割壞了皮。
+        endif
+endif
+~
+>tick_prog 100~
+if isfight($i)
+        break
+else
+        if is_qmark($i) != lf_animal
+                mpecho $I 忽然跑進樹林之中消失了！
+                mppurge self
+        endif
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self lf_animal 6 0 0 0 1 0
+~
+|
+#60529
+lord of forest king beast lord-lf~
+森林之主(Lord of Forest)~
+傳說中掌管了失落之森的獸王(King of Beast)漫步在此。
+~
+牠擁有著公羚羊的頭部，虎斑的皮毛，如同野牛的身軀，與粗壯的羊
+蹄足部，以及鹿尾；牠深邃的祖母綠眼瞳中閃爍著蘊含一切生機的光
+芒，威猛莊嚴的氣息在牠到來的時候也同時瀰漫在你的四周。
+~
+1|2|64|128|2048|4096|8192|16384|262144|1048576|8388608 8|32|128|512|8192|32768|8589934592|137438953472|549755813888 0 S
+40 2000 0 20d20+-300 -50d-300+0
+0 0
+0 8 0
+R God~
+P 1|2|4|8|128|256|32768|65536|1048576|2097152|4194304|8388608|67108864|268435456
+C 1
+>defun_prog lf_beast~
+        mpdis_magic self mute
+        mpdis_magic self 'seal magic'
+        shout $N 小子不知好歹！膽敢犯吾-森林之主-！
+        mpecho $I 召喚了森林的聖力！
+        yell 接下森林之怒吧！
+        yell 綠之牙！
+        mpecho 無數的綠色枝脈自四周穿出，貫穿了你的身體！
+        mpforcer here modhmv pc 03.200 200 0
+        combat howling
+        mpnowait
+        cast 'earthquake'
+        mpnowait
+        mpcallout 2 cast 'wind screaming'
+        mpnowait
+        mpcallout 3 cast 'angry fire storm'
+        mpnowait
+~
+>fight_prog 100~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) != lf_hunter 100003
+        mpcall lf_beast $n
+        else
+if rand(25)
+        cast 'fireball'
+        mpnowait
+else
+        if rand(33)
+                cast 'flamestrike'
+                mpnowait
+        else
+                if rand(50)
+                        cast 'star fire'
+                        mpnowait
+                else
+                        cast 'high explosive'
+                        mpnowait
+                endif
+        endif
+endif
+        endif
+else
+        mpcall lf_beast $n
+endif
+~
+>talk_prog question~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100003
+                mpechoat $n 你小心翼翼的問著 $I 關於石塔的問題
+                think $n
+                mpmod_qmark $i lf_beast_time timer + 2
+                mpcallout 1 tell $n 先讓我問問你...
+                mpcallout 1 tell $n 小心你的問題，你正在涉入這個森林最大的秘密
+                mpcallout 2 tell $n 即使可能死亡也不能使你退卻嗎？(Yes/No)
+        endif
+endif
+~
+>talk_prog inside~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100003
+                mpmod_qmark $i lf_beast_time timer + 1
+                mpechoat $n 你問著 $I 到底石塔內有什麼呢？
+                mpcallout 1 tnink $n
+                mpcallout 2 tell $n 這告訴你也沒什麼關係
+                mpcallout 4 tell $n 石塔有兩個，一個堆放物品，一個通往最後的血族村落
+                mpcallout 6 tell $n 血族在當年遷城後曾經又派人回到地面上建立了村落
+                mpcallout 8 tell $n 為的是指引那些迷途的血族可以回到故鄉
+                mpcallout 10 tell $n 但是經過這麼長久的歲月，血族是否還在我就不知道了
+                mpcallout 12 tell $n 我勸你不要跟血族扯上關係，血的聯繫是比你所能想像得更為可怕...
+                mpcallout 12 mpmod_qmark $n lf_hunter v0 = 4
+                mpcallout 13 mppurge self
+                mpcallout 13 mpechoat $n $I 慢慢消失在泉影中...
+                mpcallout 13 mpechoat $n $I 的這席話讓你更激起入石塔冒險的念頭，你是否要再探石塔呢？
+        endif
+endif
+~
+>talk_prog yes~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100003
+                nod $n
+                tell $n 我沒有辦法拒絕求知的慾望
+                mpcallout 1 tell $n 如你所願的我將告訴你想知道的事情
+                mpcallout 1 mpmod_qmark $i lf_beast_time timer + 1
+                mpcallout 2 tell $n 當然，你必須小心的聆聽與利用你的知識
+                mpcallout 4 tell $n 石塔是這個森林最古老的秘密，也是這座森林為何存在的原因
+                mpcallout 6 tell $n 在失落的年代，這個森林曾經是血族的王城所在
+                mpcallout 8 tell $n 血族，也就是現代被你們稱為吸血鬼(Vampire)的生物
+                mpcallout 10 tell $n 在那個古老的年代裡，他們可比現在威風得多
+                mpcallout 12 tell $n 而這些輝煌的歷史在失落的年代的最後之戰被迫畫下了句點
+                mpcallout 14 tell $n 各種族的聯軍踐踏了血族們的城鎮，血族也因此分裂成兩支
+                mpcallout 16 tell $n 主戰的血族留在地上，主和的血族連同王城一起沉入了地底
+                mpcallout 18 tell $n 不過還有些旅居世界他處的血族也被迫留在地上
+                mpcallout 20 tell $n 畢竟這場戰役來得太突然，來不及回城的都被留在地上
+                mpcallout 22 tell $n 取代原本高聳的王城的就是你現在所處的這片森林
+                mpcallout 24 tell $n 而那些石塔，則是血族在地面上最後光耀的遺跡
+                mpcallout 26 mpechoat $n --．你想到或許牠會知道塔內有什麼(inside)
+                mpcallout 26 tell $n 這就是你所想要知道的
+                mpcallout 26 mpmod_qmark $i lf_beast_time timer + 1
+        endif
+endif
+~
+>talk_prog no~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100002
+                nod $n
+                tell $n 很好，珍惜你的生命，或許等你哪天不要命的時候
+                tell $n 你也可以回到這裡來，屆時，我會告訴你的
+                mpechoat $n $I 的身影慢慢消失在泉影間...
+                mppurge self
+        endif
+endif
+~
+>talk_prog blacktower~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100001
+                sigh $n
+                mpcallout 1 tell $n 果然你還是步入了不可預知的境地了
+                mpcallout 2 tell $n 那個魔法封印其實是我下的，為血族們掌守通路
+                mpcallout 4 tell $n 解開的方法只有一個，你將會需要石龍的角，這也是唯一的解咒法
+                mpcallout 6 tell $n 石龍喜歡出沒在古老的石製遺跡中
+                mpcallout 8 tell $n 或許在之前的石塔你可以發現他的蹤跡吧
+                mpcallout 10 tell $n 但是我並非獵人，而且石龍可以說是我的天敵
+                mpcallout 12 tell $n 所以要如何打倒牠可能就不是我能幫你的了
+                mpcallout 14 tell $n 但我的老鄰居，也就是你的師傅應該知道怎麼殺石龍吧
+                mpcallout 16 tell $n 祝你幸運吧！
+                mpcallout 16 mpmod_qmark $n lf_hunter v0 = 2
+                mpcallout 17 mppurge self
+                mpcallout 17 mpecho $I 的身影漸漸消失在泉影之中...
+        endif
+endif
+~
+>talk_prog horn~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100007
+                if is_inv_obj($n) == 60522
+                        look $n
+                        mpcallout 1 nod $n
+                        mpcallout 2 tell $n 正如我們之前約定好的
+                        mpcallout 3 tell $n 我將告訴你解開封印的方法
+                        mpcallout 5 tell $n 首先你回到高塔的門前，徹底的搜尋一番
+                        mpcallout 7 tell $n 在石雕上你可以找到一個凹槽
+                        mpcallout 9 tell $n 只要將石龍角插入(insert)凹槽就可以了
+                        mpcallout 11 tell $n 屆時，無論你願意與否，你都將步入陌生的血族世界
+                        mpcallout 13 tell $n 保重吧，小子...
+                        mpcallout 14 mppurge self
+                        mpcallout 14 mpmod_qmark $n lf_hunter v0 = 8
+                        mpcallout 14 mpecho $I 慢慢消失在泉影之中......
+                endif
+        endif
+endif
+~
+>talk_prog topic~
+if is_qmark($n) == lf_hunter 200006
+        tell $n 汝復前來，所為何事？
+        if is_qmark($n) == lf_hunter 100001
+                mpechoat $n --．其實我發現了黑塔(blacktower)
+        endif
+        if is_qmark($n) == lf_hunter 100007
+                mpechoat $n --．我已經取得了石龍角(horn)
+        endif
+endif
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100003
+                tell $n 汝復前來，所為何事？
+                mpechoat $n --．其實我是來請教您一些問題(question)
+        endif
+endif
+if is_qmark($n) == lf_hunter 200002
+        ? $n
+        tell $n 來此所為何事？
+        if is_qmark($n) == lf_hunter 100000
+          mpechoat $n --．我是來打倒你的！(fight)
+          mpmod_qmark $n lf_hunter v0 = 1
+        endif
+        if is_qmark($n) == lf_hunter 100002
+          mpechoat $n --．強者生來就是要戰啊！(fight)
+          mpechoat $n --．其實我是奉獵戶之命而來的(hunter)...
+          mpechoat $n --．磕頭求饒不知道有沒有用...
+        endif
+endif
+if is_qmark($n) < lf_hunter 200002
+or is_qmark($n) != lf_hunter
+        mpechoat $n $I 的聲音出現在你的腦海中
+        mpechoat $n 【心靈】 $I ：「迷惘的生命啊，快點離開此地吧」
+        mpechoat $n $I 的身影慢慢消失了...
+        mpforcer here modrvt t0 = 60
+        mppurge self
+endif
+~
+>act_prog kowtow~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100002
+                cackle
+                mpcallout 2 tell $n 孺子可教！
+                mpcallout 3 tell $n 此物拿回去吧！
+                mpcallout 4 mppurge self
+                mpcallout 4 mpechoat $n $I 的身影漸漸消失在泉水間...
+                mpcallout 4 mpoload 60519 floor
+                mpcallout 4 mpechoat $n $I 從身上抖落了一樣物品！
+                mpmod_qmark $n lf_hunter v0 = 4
+                mpadd_qmark $n lf_beast -1 2 0 0 0 1
+                mpdel_qmark $n lf_hunter_lord
+                mpforcer here modrvt t0 = 120
+        endif
+endif
+~
+>talk_prog hunter~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100002
+          chuckle
+          mpcallout 2 grin $n
+          mpcallout 2 tell $n 又是此事......
+          mpcallout 3 tell $n 年復一年，日復一日，今夕何夕。
+          mpcallout 4 mpoload 60519 floor
+          mpcallout 4 mpechoat $n $I 從身上抖落了某件東西。
+          mpcallout 4 tell $n 此物就交給你吧......
+          mpcallout 5 mppurge self
+          mpcallout 5 mpechoat $n $I 的身影漸漸消失在泉水間...
+          mpcallout 5 tell $n 快快離去！
+          mpmod_qmark $n lf_hunter v0 = 4
+          mpadd_qmark $n lf_beast -1 1 0 0 0 1
+          mpdel_qmark $n lf_hunter_lord
+          mpforcer here modrvt t0 = 120
+        endif
+endif
+~
+>talk_prog fight~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100002
+                cackle
+                mpcallout 2 tell $n 就讓你領教神威！
+                mpcallout 2 tell $n 初生之犢不畏虎！
+                mpcallout 3 mpkill $n
+                mpmod_qmark $i lf_beast_time timer = -1
+                mpmod_qmark $n lf_hunter v0 = 3
+                mpdel_qmark $n lf_hunter_lord
+        endif
+        if is_qmark($n) == lf_hunter 100001
+                chuckle
+                mpcallout 2 tell $n 你知道你要挑戰的是怎樣的存在嗎？
+                mpcallout 3 mpecho $I 看來閃爍著神光，天生的皇者霸氣難以抵擋。
+                mpcallout 3 tell $n 吾乃森林之主、野獸之王！
+                mpcallout 4 tell $n 即使如此你還是執意要挑戰我嗎？
+                mpmod_qmark $n lf_hunter v0 = 2
+        endif
+endif
+~
+>kill_prog 100~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100003
+                mpmod_qmark $n lf_hunter v0 = 5
+                mpadd_qmark $n lf_beast -1 2 0 0 0 1
+                mpcallout 2 mpat $n mpechoat $n 你想或許該去找獵戶談談才是...
+                mpcallout 1 mpat $n mpechoat $n $I 將你的屍體扔到了獵戶(hunter)家
+                mptransfer $n hunter-lf
+        endif
+endif
+~
+>tick_prog 100~
+if is_qmark($i) != lf_beast_time
+or pcnum($) == 0
+        mpecho $I 的身影漸漸消失在泉水的光影之中
+        mppurge self
+endif
+~
+>death_prog 100~
+if is_qmark($n) == lf_hunter 200002
+        if is_qmark($n) == lf_hunter 100003
+                mpechoat $n $I 半跪在地，口邊流著血沫說著：「後生可畏...」
+                mpechoat $n $I 慢慢化成點點星光消散了...
+                mpmod_qmark $n lf_hunter v0 = 4
+                mpoload 60519 floor
+                mpechoat $n $I 原本站立的地方似乎有著什麼閃閃發光著。
+                mppurge self
+        endif
+endif
+mpforcer here modrvt t0 = 120
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self lf_beast_time 4 0 0 0 1 0
+~
+|
+#60530
+Dragon Stone-lf~
+石龍(Dragon of Stone)~
+一頭有著石灰色鱗甲的巨龍(Dragon)正潛伏在黑暗之中。
+~
+牠跟你一般所知道知道的龍不同，牠的身體是細長的蛇形，有點像是
+某些異國傳說中的生物，在異國中，這種生物被稱為神龍，擁有神格
+與特異的能力，牠們能夠無翅而飛，盤雲而上，但眼前這個生物似乎
+並沒有飛行的能力，牠只是不斷地壓碎身體下的巨石並往碎石下鑽。
+~
+67|2048|4096|8192|16384|262144|1048576|8388608 8|32|128|512|8192|32768|8589934592|137438953472|549755813888 0 S
+45 2000 0 -10d50+-500 -100d0+0
+0 0
+0 8 0
+R Dragon~
+P 1|2|4|8|128|256|32768|65536|1048576|2097152|4194304|8388608|67108864|268435456
+C 3
+>fight_prog 100~
+if rand(25)
+        mpcallout 1 skilldrv multihit $n
+        mpcallout 1 skilldrv multihit $n
+        mpcallout 1 skilldrv multihit $n
+        mpcallout 1 skilldrv multihit $n
+        mpcallout 1 mpchoat $n $I 直立盤起，四對龍爪朝你猛烈刨抓！
+else
+        if rand(33)
+                mpecho $I 張口猛咬了一口四周的碎石！
+                mpcallout 1 mpecho $I 咀嚼間似乎慢慢補充了體力！
+                mpcallout 1 mpforcer here modhmv $i 02.500 1000 0
+        else
+                if rand(50)
+                        c 'acid breath'
+                        mpnowait
+                        c 'gas breath'
+                        mpnowait
+                else
+                        mpechoat $n $I 捲曲後如彈簧般撞向你！
+                        mpcallout 1 mpechoat $n $I 的衝撞打得你[1;33m猛噴鮮血，齒牙迸裂[m！
+                        mpcallout 1 mpforcer here modhmv $n 01.601 700 0
+                endif
+        endif
+endif
+if is_equ_obj($n) != 60568
+        if rand(50)
+                mpechoat $n $I 狂暴的在狹小的房間中四處竄動！
+                mpechoat $n 轉眼間你身上竟然多了許多傷痕！
+                mpforcer here add_affect $n 'disease' 0 5 1 -1 1099511627776
+                mpforcer here add_affect $n 'disease' 0 5 2 -1 1099511627776
+                mpforcer here add_affect $n 'disease' 0 5 5 -1 1099511627776
+        endif
+else
+        mpechoat $n $I 狂暴的在狹小的房間中四處竄動！
+        mpechoat $n 在揚起的沙塵中你只覺得手中提起的盾被頻頻重擊！
+endif
+if is_equ_obj($n) != 60569
+        if hitprcn($i) < 50
+                mpechoat $n $I 忽然高舉起龐大的身軀，斗大的頭顱上聳立著黑色的巨角！
+                mpechoat $n $I 頭上的黑色巨角忽然發出了一陣恐怖的低鳴聲！
+                mpcallout 1 mpforcer here add_affect $n 'stone skin' 0 24 -10 268435456
+                mpcallout 1 mpechoat $n 震攝人心的恐怖低鳴竟從四面八方湧入了你的腦海！
+                mpcallout 2 mpechoat $n 你被石化低鳴震攝了！
+                mpcallout 3 mpechoat $n $I 趁著你石化的同時潛入地底下消失了...
+                mpcallout 3 mppurge self
+        else
+                mpecho $I 巨嘴一張噴出了致命的疫病毒霧！
+                mpechoat $n 你首當其衝，吸入毒霧的你全身感覺不舒服...
+                mpechoarund $n $I 朝著 $n 噴出了黑色的毒霧，毒霧噴出時的風壓衝擊了你！
+                mpforcer here add_affect $n 'disease' 0 24 1 -2 1099511627776
+                mpforcer here add_affect $n 'disease' 0 24 2 -2 1099511627776
+                mpforcer here add_affect $n 'disease' 0 24 5 -2 1099511627776
+                mpforcer here modhmv pc 03.10 20 0
+        endif
+else
+        if rand(80)
+                mpecho $I 巨嘴一張吐出了致命的疫病毒霧！
+                mpechoat $n 你所幸有覆面盔將毒氣給濾去才沒有中毒，但噴吐的風壓衝擊了你...
+                mpechoaround $n $I 朝著 $n 噴出了黑色的毒霧，毒霧噴出時的風壓衝擊了你！
+                mpforcer here modhmv pc 03.10 20 0
+        else
+                mpechoat $n $I 忽然高舉起龐大的身軀，斗大的頭顱上聳立著黑色的巨角！
+                mpechoat $n 四周似乎以石龍頭上的黑角為中心產生了一股極大的共鳴震動！
+                mpcallout 1 mpechoat $n 你戴著的覆面盔將石龍的石化低鳴給阻絕了！
+        endif
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>death_prog 100~
+if is_qmark($n) > lf_hunter 200006
+        mpcallout 1 mpoload 60522 1 floor
+        mpcallout 1 mpechoat $n $I 頭上的巨大黑角脫落掉在一旁地上！
+        mpcallout 1 mpechoat $n $I 死時掉進了原本牠鑽出的洞穴......
+endif
+if is_equ_obj($n) != 60568
+        mpechoat $n $I 死前忽然發狂亂刨，你身上遍佈沾染疫病毒的傷口！
+        mpforcer here add_affect $n 'disease' 0 30 1 -10 1099511627776
+        mpforcer here add_affect $n 'disease' 0 30 2 -10 1099511627776
+        mpforcer here add_affect $n 'disease' 0 30 5 -10 1099511627776
+else
+        mpechoat $n $I 死前忽然發狂亂刨，所幸你有絨盾將其毒爪全數擋下！
+endif
+if is_equ_obj($n) != 60569
+        mpechoat $n $I 死前爆散出劇毒的疫病雲，你不慎吸入了許多！
+        mpforcer here add_affect $n 'disease' 0 30 1 -10 1099511627776
+        mpforcer here add_affect $n 'disease' 0 30 2 -10 1099511627776
+        mpforcer here add_affect $n 'disease' 0 30 5 -10 1099511627776
+else
+        mpechoat $n $I 死前忽然爆散出劇毒的疫病雲，所幸你的覆面盔將毒氣濾去！
+endif
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100005
+                mpechoat $n $I 死時掉進了原本牠鑽出的洞穴......
+                mpechoat $n $I 頭上的巨大黑角脫落掉在一旁地上！
+                mpoload 60522 1 floor
+                mpmod_qmark $n lf_hunter v0 = 6
+                mpcallout 1 mpechoat $n 你看到地上的石龍角，直覺想到應該先回去跟獵戶報個喜才是
+                mppurge self
+        endif
+endif
+~
+|
+#0
+
+
+
+#OBJECTS
+#60501
+rapier of blood~
+血之細劍(Rapier Of Blood)~
+一把有著緋紅劍身的雙刃細劍(Rapier)~
+~
+5 2|4|16|64|512|2048 1|8192
+250~ 0~ 0~ 9~
+25 100000 0
+C 100000
+A
+2 2
+A
+18 10
+A
+19 1
+R 256|1048576
+H energy drain~ 25 40 4
+H lifesteal~ 25 40 4
+L 42
+X chaos matter~
+#60502
+great claymore~
+巨型青銅大砍刀(great claymore)~
+一把十分巨大約有三公尺長的青銅大砍刀(claymore)聳立在地上！~
+~
+5 1|2|64|16384 1|32768
+250~ 0~ 0~ 13~
+150 1000000 0
+C 1000000
+A
+18 -10
+A
+19 20
+H shocking grasp~ 100 50 4
+L 45
+X bronze~
+#60503
+ebony longbow~
+黑檀木長弓(ebony longbow)~
+一把由上好黑檀木與其他不知名材質製成的複合長弓(longbow)放在這裡~
+~
+5 2|4|64 1|32768
+300~ 0~ 0~ 14~
+9 50000 0
+C 50000
+A
+18 10
+P 131072|1048576
+L 38
+X ebony~
+#60504
+steel arrow~
+鋼箭(steel arrow)~
+一束樸實的鋼製箭矢(arrow)放在這裡~
+~
+27 1 1|65536
+200~ 0~ 0~ 350~
+50 0 0
+C 0
+A
+18 -2
+P 131072|1048576
+L 38
+X steel~
+#60505
+cornelian~
+血玉髓(cornelian)~
+一顆紅色的寶石(stone)正閃著紅色光芒！~
+~
+8 1|2|64|512 1|16384
+0~ 0~ 0~ 0~
+3 0 0
+C 0
+L 1
+X onyx~
+#60506
+curtal ax~
+古代彎刀(curtal ax)~
+一把樣式古老的鬥技彎刀(curtal ax)擺放在這裡~
+~
+5 2|4|16|64 1|8192
+1~ 0~ 0~ 9~
+70 10000 0
+C 10000
+R 256|1048576
+P 4096|262144|1048576
+A
+18 5
+A
+19 10
+A
+39 25
+L 38
+X bronze~
+#60507
+targe~
+小圓盾(targe)~
+一面小巧的戰技用圓盾(targe)擺在這裡~
+~
+9 1|2 1|512
+0~ 0~ 50~ 0~
+10 5000 0
+C 5000
+R 256|1048576
+P 4096|262144|1048576
+A
+39 -50
+A
+17 25
+A
+18 1
+L 38
+X bronze~
+#60508
+claymore Aresenc~
+魔刀-阿瑟肯(Aresenc)~
+一柄巨大的寬刃砍刀(claymore)橫立在地上！~
+~
+5 2|4|16|64|512|2048|4096 1|32768
+-1~ 0~ 0~ 6~
+90 0 0
+C 0
+R 256|1048576
+P 524288|1048576
+A
+19 25
+A
+39 100
+H tardy~ 50 40 4
+L 50
+X chaos matter~
+#60509
+breast mail~
+胸甲(breast mail)~
+一件半罩式的胸甲(breast mail)放在這裡~
+~
+9 2|512 1|256
+0~ 0~ 100~ 0~
+60 4500 0
+C 4500
+R 1|256|1048576
+P 8|4096|131072|262144|1048576
+A
+17 -50
+A
+5 2
+X steel~
+#60510
+break mail~
+壞掉的鎧甲(break mail)~
+一件破破爛爛被酸液消溶大半的鎧甲(mail)遺落在這~
+~
+9 2|512 1|256
+0~ 10~ 1~ 0~
+5 10 0
+C 10
+R 256|1048576
+P 8|4096|131072|262144|1048576
+E
+break mail~
+你發現這件鎧甲比你想像中來的輕很多，在沒有磨損的地方明顯可見
+閃閃發亮的配件，似乎是以一種十分好的材質製作而成的，不知道有
+沒有修復的可能？
+~
+L 1
+A
+17 50
+X metal~
+#60511
+black mineral~
+黑礦(black mineral)~
+一塊如球般大小的黑色鐵礦石(mineral)被擺在這~
+~
+13 1|2 1
+0~ 0~ 0~ 0~
+200 0 0
+C 0
+X black matter~
+#60512
+defasir full plate~
+迪法瑟之鎧(Defasir's full plate)~
+出自名匠迪法瑟之手的黑金全身鎧(full plate)閃耀著魔性的光輝！~
+~
+9 2|16|64|512|2048|4096 1|8
+0~ 0~ 250~ 0~
+50 0 0
+C 0
+R 1|256|1048576
+P 8|2048|262144|1048576
+A
+5 1
+A
+13 -50
+A
+18 2
+A
+39 100
+A
+41 5
+A
+42 5
+E
+defasir's full plate~
+這套迪法瑟精心設計出來的鎧甲由具有深闇魔力的黑金製作，黑色的
+水晶石雕刻成的眼瞳在胸部護甲的中央發出攝人的光芒，凱米特金鍛
+成的鏈網為關節處提供了最佳的防護。最後在鎧甲鑄造時，由工匠所
+注入的吸血鬼之血引出了最強韌的暗夜魔力！
+
+若說這世界上有什麼比這一套鎧甲更迷人的東西，那只有闇黑女神迷
+人的臉龐與她手中那把揮舞起來可以瞬間毀滅一座巨山的破壞之刃。
+~
+L 42
+M 0 你穿上這套鎧甲時只覺得被一股深厚的闇黑魔力所包覆，讓你感到無比的舒坦。
+M 1 你脫下鎧甲的同時也覺得體內被抽走了某些東西。
+X chaos matter~
+#60513
+Vampire totem~
+血族圖騰(vampire totem)~
+一個刻有巨大黑色的蝙蝠與劍型紋路的圖騰(totem)~
+~
+8 2 1
+0~ 0~ 0~ 0~
+1 0 0
+C 0
+X chaos matter~
+#60514
+Sanloia arrow~
+珊洛雅之箭(arrow of Sanloia)~
+一束出自珊洛雅之手的精製木桿箭矢(arrow)放在這裡。~
+~
+27 1 1|65536
+200~ 0~ 0~ 150~
+10 0 0
+C 0
+A
+18 2
+P 131072|1048576
+L 36
+X ebony~
+#60515
+battle pierce~
+戰鬥短劍(battle pierce)~
+一把特製用以雙持戰鬥的短劍(battle pierce)~
+~
+5 2|64 1|8192
+200~ 0~ 0~ 11~
+5 0 0
+C 0
+A
+18 5
+A
+43 20
+L 38
+X metal~
+#60516
+hunter bow~
+獵人之弓(hunter's bow)~
+一把山野獵戶用的打獵長弓(bow)~
+~
+5 2 1|32768
+100~ 0~ 0~ 14~
+9 1000 0
+C 1000
+A
+18 2
+P 131072|1048576
+L 36
+X wooden~
+#60517
+wooden arrow~
+木桿箭(wooden arrow)~
+一束獵戶自己以木桿製成的箭矢(arrow)~
+~
+27 1 1|65536
+100~ 0~ 0~ 50~
+10 0 0
+C 50
+A
+18 1
+A
+19 1
+P 131072|1048576
+L 36
+X wooden~
+#60518
+tower stone~
+塔石(tower stone)~
+古代高塔碎裂的一片石塊(stone)~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X stone~
+#60519
+object~
+謎樣物品(object)~
+森林之主掉落下的謎樣物品(object)~
+~
+8 2 1
+0~ 0~ 0~ 0~
+1 0 0
+#60520
+enchant hunter longbow~
+強化的獵弓(enchant hunter's longbow)~
+一把強化過的狩獵長弓(longbow)~
+~
+5 2|64|4194304 1|32768
+100~ 30~ 32~ 14~
+9 0 0
+C 0
+A
+18 15
+A
+19 5
+P 131072|1048576
+L 36
+X mithril~
+#60521
+enchant arrow~
+強化獵箭(enchant arrow)~
+一束強化的狩獵箭矢(arrow)~
+~
+27 1||4194304 1|65536
+100~ 40~ 42~ 200~
+10 0 0
+C 50
+P 131072|1048576
+L 36
+X ebony~
+#60522
+horn horn-lf~
+石龍角(horn)~
+石龍所擁有的巨大利角(horn)~
+~
+8 2 1
+0~ 0~ 0~ 0~
+10 0 0
+X dragon bone~
+#60523
+horn horn2-lf~
+石龍號角(horn)~
+一只由石龍角研製而成的巨大號角(Horn)閃現著奇特的光澤~
+~
+4 1|2|4194304 16385
+99~ 15~ 15~ disease~
+15 0 0
+F 8388608
+X dragon bone~
+#60524
+scale~
+石龍鱗(scale)~
+一小片石龍細鱗(scale)的聚合體~
+~
+8 3 1
+0~ 0~ 0~ 0~
+10 0 0
+X dragon scale~
+#60525
+ring-g~
+天火之戒(Ring)~
+迪法瑟所製作的三戒之一，代表善良的天火之戒(Ring)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 3
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+4 2
+A
+44 5
+#60526
+ring-n~
+綠光之戒(Ring)~
+迪法瑟所製作的三戒之一，代表中立的綠光之戒(Ring)~
+~
+9 16|256|512|1024|4194304|16777216 3
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+18 5
+A
+19 -6
+A
+2 1
+#60527
+ring-e~
+血戰之戒(Ring)~
+迪法瑟所製作的三戒之一，代表邪惡的血戰之戒(Ring)~
+~
+9 2|256|512|2048|4194304|16777216 3
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+1 2
+A
+43 5
+#60528
+necklace-g~
+蒼天之鏈(necklace)~
+由名匠迪法瑟所製作的三項鍊之一，代表善良的蒼天之鏈(necklace)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 5
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+5 1
+A
+17 -50
+#60529
+necklace-n~
+銀月之鏈(necklace)~
+由名匠迪法瑟所製作的三項鍊之一，代表中立的銀月之鏈(necklace)~
+~
+9 16|256|512|1024|4194304|16777216 5
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+4 1
+A
+2 1
+A
+44 5
+#60530
+necklace-e~
+黑翼之鏈(necklace)~
+由名匠迪法瑟所製作的三項鍊之一，代表邪惡的黑翼之鏈(necklace)~
+~
+9 2|256|512|2048|4194304|16777216 5
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+2 2
+A
+39 -50
+#60531
+armour-g~
+金翼戰甲(armour)~
+由名匠迪法瑟所製作的三鎧甲之一，代表善良的金翼戰甲(armour)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 9
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+5 2
+A
+41 10
+A
+42 -5
+#60532
+armour-n~
+長生木甲(armour)~
+由名匠迪法瑟所製作的三鎧甲之一，代表中立的長生木甲(armour)~
+~
+9 16|256|512|1024|4194304|16777216 9
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+13 100
+A
+12 -50
+A
+41 10
+#60533
+armour-e~
+邪靈骸甲(armour)~
+由名匠迪法瑟所製作的三鎧甲之一，代表邪惡的邪靈骸甲(armour)~
+~
+9 2|256|512|2048|4194304|16777216 9
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+43 10
+A
+42 -10
+A
+27 -10
+A
+28 10
+#60534
+helm-g~
+紅玉怒面盔(helm)~
+由名匠迪法瑟所製作的三頭盔之一，代表善良的紅玉怒面盔(helm)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 17
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+1 1
+A
+41 5
+A
+17 -20
+A
+39 50
+#60535
+helm-n~
+穹木頭環~
+由名匠迪法瑟所製作的三頭盔之一，代表中立的穹木頭環(helm)~
+~
+9 16|256|512|1024|4194304|16777216 17
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+3 1
+A
+18 2
+A
+43 10
+A
+27 10
+A
+31 -5
+#60536
+helm-e~
+錦蛇面甲(helm)~
+由名匠迪法瑟所製作的三頭盔之一，代表邪惡的錦蛇面甲(helm)~
+~
+9 2|256|512|2048|4194304|16777216 17
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+1 1
+A
+43 10
+A
+17 50
+#60537
+leggings-g~
+龍鱗玉鑲脛(leggings)~
+由名匠迪法瑟所製作的三脛甲之一，代表善良的龍鱗玉鑲脛(leggings)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 33
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+4 1
+A
+39 -50
+A
+18 1
+#60538
+leggings-n~
+靛海足繫(leggings)~
+由名匠迪法瑟所製作的三脛甲之一，代表中立的靛海足繫(leggings)~
+~
+9 16|256|512|1024|4194304|16777216 33
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+18 3
+A
+19 -2
+A
+2 1
+A
+17 20
+#60539
+leggings-e~
+骸面黑甲脛(leggings)~
+由名匠迪法瑟所製作的三脛甲之一，代表邪惡的骸面黑甲脛(leggings)~
+~
+9 2|256|512|2048|4194304|16777216 33
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+2 1
+A
+19 5
+A
+41 -5
+#60540
+boots-g~
+彩鑲銀靴(boots)~
+由名匠迪法瑟所製作的三長靴之一，代表善良彩鑲銀靴(boots)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 65
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+2 1
+A
+14 50
+A
+39 -10
+#60541
+boots-n~
+綠蔭環足(boots)~
+由名匠迪法瑟所製作的三長靴之一，代表中立的綠蔭環足(boots)~
+~
+9 16|256|512|1024|4194304|16777216 65
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+2 1
+A
+18 2
+A
+19 -50
+A
+41 -10
+#60542
+boots-e~
+闇影隱步靴(boots)~
+由名匠迪法瑟所製作的三長靴之一，代表邪惡的闇影隱步靴(boots)~
+~
+9 2|256|512|2048|4194304|16777216 65
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+1 1
+A
+39 -50
+A
+17 25
+#60543
+gloves-g~
+青鋼鐵手套(gloves)~
+由名匠迪法瑟所製作的三掌套之一，代表善良的青鋼鐵手套(gloves)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 129
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+1 2
+A
+19 2
+A
+40 -5
+#60544
+gloves-n~
+古木纏手(gloves)~
+由名匠迪法瑟所製作的三掌套之一，代表中立的古木纏手(gloves)~
+~
+9 16|256|512|1024|4194304|16777216 129
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+3 2
+A
+18 2
+A
+44 -10
+#60545
+gloves-e~
+黑骸齒掌套(gloves)~
+由名匠迪法瑟所製作的三掌套之一，代表邪惡的黑骸齒掌套(gloves)~
+~
+9 2|256|512|2048|4194304|16777216 129
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+4 2
+A
+42 -5
+A
+44 5
+#60546
+sleeves-g~
+日昇之臂(sleeves)~
+由名匠迪法瑟所製作的三護臂之一，代表善良的日昇之臂(sleeves)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 257
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+3 1
+A
+40 5
+A
+42 -10
+#60547
+sleeves-n~
+銀月之臂(sleeves)~
+由名匠迪法瑟所製作的三護臂之一，代表中立的銀月之臂(sleeves)~
+~
+9 16|256|512|1024|4194304|16777216 257
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+2 2
+A
+18 2
+A
+44 -10
+#60548
+sleeves-e~
+夜影之臂(sleeves)~
+由名匠迪法瑟所製作的三護臂之一，代表邪惡的夜影之臂(sleeves)~
+~
+9 2|256|512|2048|4194304|16777216 257
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+4 1
+A
+19 2
+A
+42 -6
+#60549
+shield-g~
+日翼金輪盾(shield)~
+由名匠迪法瑟所製作的三盾之一，代表善良的日翼金輪盾(shield)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 513
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+5 1
+A
+17 -50
+A
+39 25
+#60550
+shield-n~
+淨月盾(shield)~
+由名匠迪法瑟所製作的三盾之一，代表中立的淨月盾(shield)~
+~
+9 16|256|512|1024|4194304|16777216 513
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+3 1
+A
+41 10
+A
+42 -10
+#60551
+shield-e~
+龍骸鯨骨盾(shield)~
+由名匠迪法瑟所製作的三盾之一，代表邪惡的龍骸鯨骨盾(shield)~
+~
+9 2|256|512|2048|4194304|16777216 513
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+5 1
+A
+39 -50
+A
+17 25
+#60552
+cape-g~
+赤焰披風(cape)~
+由名匠迪法瑟所製作的三披風之一，代表善良的赤焰披風(cape)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 1025
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+27 10
+A
+28 -10
+A
+40 1
+#60553
+cape-n~
+青鱗披風(cape)~
+由名匠迪法瑟所製作的三披風之一，代表中立的青鱗披風(cape)~
+~
+9 16|256|512|1024|4194304|16777216 1025
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+30 10
+A
+31 -10
+A
+24 -5
+#60554
+cape-e~
+闇翼之篷(cape)~
+由名匠迪法瑟所製作的三披風之一，代表邪惡的闇翼之篷(cape)~
+~
+9 2|256|512|2048|4194304|16777216 1025
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+31 10
+A
+27 -5
+A
+28 -5
+A
+44 10
+#60555
+belt-g~
+獅吼腰帶(belt)~
+由名匠迪法瑟所製作的三腰帶之一，代表中立的獅吼腰帶(belt)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 2049
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+1 1
+A
+19 3
+#60556
+belt-n~
+古玉纏腰(belt)~
+由名匠迪法瑟所製作的三腰帶一，代表中立的古玉纏腰(belt)~
+~
+9 16|256|512|1024|4194304|16777216 2049
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+3 2
+A
+39 -10
+A
+17 10
+#60557
+belt-e~
+骸面腰帶(belt)~
+由名匠迪法瑟所製作的三腰帶之一，代表邪惡的骸面腰帶(belt)~
+~
+9 2|256|512|2048|4194304|16777216 2049
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+44 5
+A
+43 -5
+A
+40 2
+#60558
+bracer-g~
+神力鐵腕(bracer)~
+由名匠迪法瑟所製作的三護腕之一，代表善的神力鐵腕(bracer)~
+~
+9 1|256|1024|2048|65536|4194304|16777216 4097
+0~ 0~ 200~ 0~
+1 0 0
+X law matter~
+A
+1 3
+A
+19 3
+A
+17 100
+#60559
+bracer-n~
+空靈護腕(bracer)~
+由名匠迪法瑟所製作的三護腕之一，代表中立的空靈護腕(bracer)~
+~
+9 16|256|512|1024|4194304|16777216 4097
+0~ 0~ 200~ 0~
+1 0 0
+X perfect matter~
+A
+3 3
+A
+19 -3
+A
+17 50
+#60560
+bracer-e~
+仇恨爪腕(bracer)~
+由名匠迪法瑟所製作的三護腕之一，代表邪惡的仇恨爪腕(bracer)~
+~
+9 2|256|512|2048|4194304|16777216 4097
+0~ 0~ 200~ 0~
+1 0 0
+X chaos matter~
+A
+43 5
+A
+42 -5
+#60561
+cloud sword~
+雲紋錯金劍(Cloud Sword)~
+由名匠迪法瑟所製作的三武器之一，代表善良的雲紋錯金劍(Sword)~
+~
+5 1|256|1024|2048|65536|4194304|16777216 32769
+400~ 0~ 0~ 3~
+40 0 0
+X law matter~
+A
+18 5
+A
+19 5
+#60562
+green tooth~
+綠之牙(Green Tooth)~
+由名匠迪法瑟所製作的三武器之一，代表中立的綠之牙(Tooth)~
+~
+5 16|256|512|1024|4194304|16777216 32769
+500~ 35~ 35~ 2~
+1 0 0
+X perfect matter~
+A
+18 10
+A
+19 2
+A
+30 10
+#60563
+shadow blade~
+邪骸蝕影刃(Shaodw Blade)~
+由名匠迪法瑟所製作的三武器之一，代表邪惡的邪骸蝕影劍(Blade)~
+~
+5 2|256|512|2048|4194304|16777216 32769
+350~ 0~ 0~ 11~
+10 0 0
+X chaos matter~
+A
+43 50
+A
+44 -50
+A
+17 20
+A
+18 5
+#60564
+bear pelt~
+熊皮(bear pelt)~
+一張血淋淋的熊皮(bear pelt)丟在這裡~
+~
+13 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X wool~
+#60565
+deer pelt~
+鹿皮(deer pelt)~
+一張血淋淋的鹿皮(deer pelt)丟在這裡~
+~
+13 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X wool~
+#60566
+fox pelt~
+狐皮(fox pelt)~
+一張血淋淋的狐皮(fox pelt)丟在這裡~
+~
+13 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X wool~
+#60567
+rabbit pelt~
+小兔皮(rabbit pelt)~
+一張血淋淋的小兔皮(rabbit pelt)丟在這裡~
+~
+13 0 1
+0~ 0~ 0~ 0~
+5 0 0
+X wool~
+#60568
+shield~
+絨盾(shield)~
+一面抵擋毒爪的絨盾(shield)~
+~
+9 4194304 513
+0~ 0~ 100~ 0~
+5 0 0
+X leather~
+#60569
+armet~
+覆面盔(armet)~
+一頂可以隔絕石龍低鳴聲及過濾石龍毒氣的覆面盔(armet)~
+~
+9 4194304 17
+0~ 0~ 100~ 0~
+5 0 0
+X leather~
+#0
+
+
+
+#ROOMDATA
+#60501
+迷失森林入口~
+前方的森林被濃烈的迷霧所籠罩，在濃霧之中你似乎可以聽到
+一些怪異的叫聲，淒厲綿長的嘶吼，猶如地底深處冥府之國住民們
+的哀嚎，但當你想注意傾聽時卻又靜得可怕，似乎一切只是你的錯
+覺。四周平靜無風卻又異常的寒冷，似乎就連夏日的艷陽都無法穿
+透此處的濃霧一般，你只覺得不該再往前走了。
+~
+0 20|8192|1048576 3
+D0
+~
+~
+0 0 60502
+D2
+一道黑色鋼鐵打造的鐵閘門~
+鐵閘門(gate)~
+3 0 60750
+S
+#60502
+迷失森林外圍~
+茂密的杉木與霧氣讓你分不清處方向，朦朧中你只覺得四周到
+處都有奇怪的視線盯著你看，但是當你環顧四周卻又靜得可怕，靜
+得連你自己的心跳聲都是那麼的清楚，你只能微微看到地上有一條
+遍佈雜草的小路通往南北。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60503
+D 2
+~
+~
+0 0 60501
+S
+#60503
+迷失森林外圍~
+茂密的杉木與霧氣讓你分不清處方向，朦朧中你只覺得四周到
+處都有奇怪的視線盯著你看，但是當你環顧四周卻又靜得可怕，靜
+得連你自己的心跳聲都是那麼的清楚，你眼前的小路已經完全淹沒
+在叢生的雜草之中！但雜草中勉強可看到一個刻了Ｓ的石盤深埋在
+地上，並且散發著微弱的魔法能量，這裡也是你唯一可以感受到外
+界神力的地方！
+~
+0 1048576 3
+D1
+~
+~
+0 0 60507
+D2
+~
+~
+0 0 60502
+D3
+~
+~
+0 0 60504
+S
+#60504
+迷失森林外圍~
+茂密的杉木與霧氣讓你分不清處方向，朦朧中你只覺得四周到
+處都有奇怪的視線盯著你看，但是當你環顧四周卻又靜得可怕，靜
+得連你自己的心跳聲都是那麼的清楚，你的心情壞到的極點，這陣
+該死的霧更是讓你心煩。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60505
+D1
+~
+~
+0 0 60503
+S
+#60505
+迷失森林外圍~
+茂密的杉木與霧氣讓你分不清處方向，朦朧中你只覺得四周到
+處都有奇怪的視線盯著你看，但是當你環顧四周卻又靜得可怕，靜
+得連你自己的心跳聲都是那麼的清楚，你的心情壞到的極點，這陣
+該死的霧更是讓你心煩。
+~
+0 8192|1048576 3
+D2
+~
+~
+0 0 60504
+D3
+~
+~
+0 0 60506
+S
+#60506
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D1
+~
+~
+0 0 60505
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+跟隨我，你將發現通往地獄的路！                         tnt
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己已經不在原地了！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60510
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60507
+迷失森林外圍~
+茂密的杉木與霧氣讓你分不清處方向，朦朧中你只覺得四周到處都
+有奇怪的視線盯著你看，但是當你環顧四周卻又靜得可怕，靜得連你自
+己的心跳聲都是那麼的清楚，你的心情壞到的極點，這陣該死的霧更是
+讓你心煩。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60508
+D3
+~
+~
+0 0 60503
+S
+#60508
+迷失森林外圍~
+茂密的杉木與霧氣讓你分不清處方向，朦朧中你只覺得四周到處都
+有奇怪的視線盯著你看，但是當你環顧四周卻又靜得可怕，靜得連你自
+己的心跳聲都是那麼的清楚，你的心情壞到的極點，這陣該死的霧更是
+讓你心煩。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60509
+D2
+~
+~
+0 0 60507
+S
+#60509
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D3
+~
+~
+0 0 60508
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+朋友，回到你來的地方吧。                               ccm
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己回到了森林入口處的石板處！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60503
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60510
+迷失森林北側傳送陣~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，地上有著一個被刻
+意排列成六芒星的圓石陣，魔法的光芒自石陣中散逸出來，石陣中央有
+一個刻印著Ａ的圓形石盤，不遠處傳來重物拖曳的聲響，整個森林都散
+發著濃烈的死亡氣息。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60511
+D3
+~
+~
+0 0 60515
+S
+#60511
+迷失森林外圍北側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60512
+D3
+~
+~
+0 0 60510
+S
+#60512
+迷失森林外圍北側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D2
+~
+~
+0 0 60513
+D3
+~
+~
+0 0 60511
+S
+#60513
+迷失森林外圍北側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60512
+D1
+~
+~
+0 0 60514
+S
+#60514
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D3
+~
+~
+0 0 60513
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+你站在地獄的入口，與我一同。                           tnt
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己已經不在原地了！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60519
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60515
+迷失森林外圍北側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60510
+D3
+~
+~
+0 0 60516
+S
+#60516
+迷失森林外圍北側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60515
+D2
+~
+~
+0 0 60517
+S
+#60517
+迷失森林外圍北側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60516
+D3
+~
+~
+0 0 60518
+S
+#60518
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D1
+~
+~
+0 0 60517
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+願你選擇回去的道路，若你還不想死的話。                 ccm
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己回到了森林入口處的石板處！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60503
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60519
+迷失森林西側傳送陣~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，地上有著一個被刻
+意排列成六芒星的圓石陣，魔法的光芒自石陣中散逸出來，石陣中央有
+一個刻印著Ｂ的圓形石盤，不遠處傳來重物拖曳的聲響，整個森林都散
+發著濃烈的死亡氣息。
+~
+0 20|8192|1048576 3
+D0
+~
+~
+0 0 60524
+D2
+~
+~
+0 0 60520
+S
+#60520
+迷失森林外圍西側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60519
+D2
+~
+~
+0 0 60521
+S
+#60521
+迷失森林外圍西側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60520
+D1
+~
+~
+0 0 60522
+S
+#60522
+迷失森林外圍西側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D2
+~
+~
+0 0 60523
+D3
+~
+~
+0 0 60521
+S
+#60523
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D0
+~
+~
+0 0 60522
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+地獄附近的景色怎樣，你是否還有勇氣走下去？             tnt
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己已經不在原地了！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60528
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60524
+迷失森林外圍西側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60525
+D2
+~
+~
+0 0 60519
+S
+#60525
+迷失森林外圍西側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60526
+D2
+~
+~
+0 0 60524
+S
+#60526
+迷失森林外圍西側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些白骨，你只覺得世上沒什麼地方會比
+這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60527
+D3
+~
+~
+0 0 60525
+S
+#60527
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D2
+~
+~
+0 0 60526
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+回去的道路永遠為你敞開，只要你想回去的話。             ccm
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己回到了森林入口處的石板處！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60503
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60528
+迷失森林北側傳送陣~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，地上有著一個被刻
+意排列成六芒星的圓石陣，魔法的光芒自石陣中散逸出來，石陣中央有
+一個刻印著Ａ的圓形石盤，不遠處傳來重物拖曳的聲響，整個森林都散
+發著濃烈的死亡氣息。
+~
+0 20|8192|1048576 3
+D0
+~
+~
+0 0 60529
+D2
+~
+~
+0 0 60533
+S
+#60529
+迷失森林外圍東側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些黑色的骨骸與惡臭，你只覺得世上沒
+什麼地方會比這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60530
+D2
+~
+~
+0 0 60528
+S
+#60530
+迷失森林外圍東側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些黑色的骨骸與惡臭，你只覺得世上沒
+什麼地方會比這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D2
+~
+~
+0 0 60529
+D3
+~
+~
+0 0 60531
+S
+#60531
+迷失森林外圍東側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些黑色的骨骸與惡臭，你只覺得世上沒
+什麼地方會比這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60532
+D1
+~
+~
+0 0 60530
+S
+#60532
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D0
+~
+~
+0 0 60535
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+你還在這裡，這裡只通往地獄！                           ccm
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己已經不在原地了！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60537
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60533
+迷失森林外圍東側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些黑色的骨骸與惡臭，你只覺得世上沒
+什麼地方會比這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60528
+D2
+~
+~
+0 0 60534
+S
+#60534
+迷失森林外圍東側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些黑色的骨骸與惡臭，你只覺得世上沒
+什麼地方會比這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60534
+D3
+~
+~
+0 0 60535
+S
+#60535
+迷失森林外圍東側~
+你處在森林的外圍，濃霧依舊籠罩著這個森林，森林中沒有蟲鳴，
+更沒有鳥叫，只有不遠處傳來重物拖曳而行的聲響，整個森林都散發著
+濃烈的死亡氣息，四周散落著一些黑色的骨骸與惡臭，你只覺得世上沒
+什麼地方會比這裡更糟的了，特別是當你身處其中時。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60534
+D2
+~
+~
+0 0 60536
+S
+#60536
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D0
+~
+~
+0 0 60535
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+我覺得我並不想下地獄，你呢？                           tnt
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己回到了森林入口處的石板處！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60503
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60537
+迷失森林傳送陣~
+整個森林猶如泡在一團濃稠的白色迷霧之中，高大參天的杉樹林令
+你迷失自己的所在，濃霧引導你步入危險的陷阱之中，但這裡似乎有著
+一面無形之牆隔開了你與濃霧，地上有著一個被刻意排列成六芒星的圓
+石陣，魔法的光芒自石陣中散逸出來，石陣中央有一個刻印著Ｄ的圓形
+石盤，石盤下方刻了一排小字(words)。
+~
+0 20|8192|1048576 3
+D1
+~
+~
+0 0 60538
+D3
+~
+~
+0 0 60542
+E
+words~
+==========================================================
+這裡既可以是起點也可以是終點，越是明顯的出口就不是真的出口
+==========================================================
+~
+S
+#60538
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60539
+D3
+~
+~
+0 0 60537
+S
+#60539
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D2
+~
+~
+0 0 60540
+D3
+~
+~
+0 0 60538
+S
+#60540
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60539
+D1
+~
+~
+0 0 60541
+S
+#60541
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D3
+~
+~
+0 0 60540
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+好吧，我想我還是只能去地獄了，你呢？                   tnt
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己已經不在原地了！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60546
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60542
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60537
+D3
+~
+~
+0 0 60543
+S
+#60543
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60542
+D2
+~
+~
+0 0 60544
+S
+#60544
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60543
+D3
+~
+~
+0 0 60545
+S
+#60545
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D1
+~
+~
+0 0 60544
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+你會死在這的，快滾回你的老家去！                       ccm
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己回到了森林入口處的石板處！
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60503
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60546
+迷失森林傳送陣~
+整個森林猶如泡在一團濃稠的白色迷霧之中，高大參天的杉樹林令
+你迷失自己的所在，濃霧引導你步入危險的陷阱之中，但這裡似乎有著
+一面無形之牆隔開了你與濃霧，地上有著一個被刻意排列成六芒星的圓
+石陣，魔法的光芒自石陣中散逸出來，石陣中央有一個刻印著Ｅ的圓形
+石盤，石盤下方刻了一排小字(words)。
+~
+0 20|8192|1048576 3
+D1
+~
+~
+0 0 60551
+D3
+~
+~
+0 0 60547
+E
+words~
+==========================================================
+    高聲祈禱(pray)至高真理之言，真正的道路將為你而開啟
+==========================================================
+~
+>room_command pray default~
+echoat $n 你高聲的祈禱....
+echoaround $n $n 高聲的祈禱....
+callout 2 echo 但是什麼事情都沒有發生....
+callout 4 echoat $n 遠方傳來一陣聲音「你要祈禱什麼？」
+callout 5 echoat $n 遠方傳來一陣聲音「什麼是『至高真理之言』？」
+callout 6 echoat $n 遠方傳來一陣聲音「一路上是否有東西是很特別你卻沒注意到的？」
+~
+>room_command pray sabade~
+echoat $n 你高聲的祈禱....
+echoaround $n $n 高聲的祈禱....
+callout 2 echoat $n 當你唸完那陌生音節的一瞬間，你覺得頭為之一昏......
+callout 3 echoat $n 一個陌生的聲音在你腦中響起：Sabade Tu Nai Da！
+callout 4 echoat $n 你週遭的景物慢慢地模糊掉，取而代之的是一個新的景色。
+callout 4 echoaround $n $n 祈禱結束之後，就忽然消失了....
+callout 4 transfer $n 60555
+~
+|
+S
+#60547
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60546
+D3
+~
+~
+0 0 60548
+S
+#60548
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60549
+D1
+~
+~
+0 0 60547
+S
+#60549
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D2
+~
+~
+0 0 60548
+D3
+~
+~
+0 0 60550
+S
+#60550
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D1
+~
+~
+0 0 60549
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+你將會發現地獄，並且死在那裡。                         ccm
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己置身於一個無邊無際的奇特空間裡......
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60558
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60551
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60552
+D3
+~
+~
+0 0 60546
+S
+#60552
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D0
+~
+~
+0 0 60553
+D3
+~
+~
+0 0 60551
+S
+#60553
+迷失森林深處~
+迷霧在這裡顯得更為濃厚了些，你簡直已經伸手不見五指，唯一的
+光來自你手中的照明工具，漆黑的樹林中有著許多紅色的亮點快速移動
+著，地上到處丟著被啃食乾淨的白骨與破損的護甲，殘缺的鏽蝕刀刃立
+在地上，無言地直指著永遠看不見的天空。
+~
+0 8192|1048576 3
+D1
+~
+~
+0 0 60554
+D2
+~
+~
+0 0 60552
+S
+#60554
+迷失森林－巨石像~
+你走到森林小徑的一個盡頭，眼前是一個巨石鋪設的圓形祭壇，年
+代久遠的祭壇上佈滿了藤蔓與蕨類植物，祭壇的中心豎立了一尊十呎高
+的巨石像(Statue)，石像前的石桌上有一片污黑的血跡。
+~
+0 20|8192|1048576 3
+D3
+~
+~
+0 0 60553
+E
+statue~
+整個石像是以大理石雕刻而成，高大的巨石像在四周的杉木下也顯
+得渺小起來，石樣的外觀是一個高大英挺的男性，背後有著怒張的
+蝠翼，整尊石像栩栩如生，你在石像的底座上看到一段銘文。
+==========================================================
+我們快到地獄了，快走吧。                               tnt
+==========================================================
+~
+>room_rand 40~
+if roomvalue($0) == 0
+        break
+else
+        echo 微風吹過，石像底座上的綠色手印慢慢冒出鮮血，將手印染成了深暗的血紅....
+        modrvt v0 = 0
+endif
+~
+>room_command search default~
+echoat $n 你試著在石像周圍搜索有無可疑之處....
+echoaround $n $n 仔細地在石像四周搜索著....
+if roomvalue($0) == 0
+        callout 2 echoaround $n $n 發現了石像底座上有一個血手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+else
+        callout 2 echoaround $n $n 發現了石像底座上有一個綠色手印！
+        callout 2 echoat $n 你發現石像底座上有一個血手印，或許該把手壓上去(press handprint)？
+endif
+~
+>room_command press handprint~
+if roomvalue($0) == 0
+        echoat $n 你感覺整個人被吸入了血手印之中！
+        echoat $n 當你清醒時發現自己置身於一個古代鬥技場之中......
+        echoaround $n $n 整個人忽然被吸入了血手印之中！
+        echoaround $n 原本的血手印忽然變成了綠色！
+        transfer $n 60559
+        modrvt v0 = 1
+else
+        echoaround $n $n 將手壓在綠色手印上，但什麼事都沒發生。
+        echoat $n 你將手壓在綠色手印上，等著接下來可能發生的任何事。
+        callout 2 echo 但是似乎什麼事都沒有，四周依然幽暗嚇人。
+endif
+~
+|
+S
+#60555
+迷失森林中央~
+你處在森林中心點的位置，腳底上是一個巨型石盤，石盤上用詭異
+的黑色金屬鍍滿了怪異的符文，拼湊成一個特大的十三芒法陣，極其強
+烈的魔力流竄其中，形成黑色咒雷閃耀著。在法陣的北方有一座黑曜石
+蓋成的神殿。
+~
+0 20|1048576 3
+D0
+~
+~
+0 0 60556
+>room_time 50~
+if ispc($r)
+        echoat $r 強烈的魔力挾雜著邪氣與血腥味撲鼻而來！
+        echoaround $r $r 身上似乎被下了詛咒....！
+        cast weaken $r 20
+        echoat $r 你覺得頭為之一昏只差點沒癱倒在地......
+endif
+~
+|
+S
+#60556
+古代神殿外~
+在黑曜石的外表下是一個古代的神殿，這種形式的建築是你從未看
+過的，即使在古老的圖書館典籍也難以尋見這樣詭異的建築物，平滑的
+黑曜石構成一個梯形的建築物，寬面以四十五度角銜接地面，窄面則是
+筆直的往上建築，整個神殿只有正寬面上有三個細長的窗口，主殿外的
+左右各有一個較小的同類型建築，神殿的門口就在你的面前！
+~
+0 4|8|1048576 0
+D0
+~
+~
+0 0 60557
+D2
+~
+~
+0 0 60555
+S
+#60557
+古代神殿內部~
+如同你在外面所看到的一般，神殿的內部並不大，只有一個小小的
+祭壇，祭壇由血玉髓砌成，暗紅色的血玉髓上有一個已經變黑乾涸的血
+字魔法陣，一把黑曜石製的石刀擺在祭壇(altar)上。
+~
+0 4|8|1048576 0
+D2
+~
+~
+0 0 60556
+E
+altar~
+斑駁的血跡點點滴滴潑灑在祭壇的每個角落，你隱約可看見在祭壇的
+四個角落都刻有同樣的一段銘文：
+
+                ...Vampire City 建構中...
+~
+S
+#60558
+血魔煉獄~
+在你頭上是一片血紅的天空，大地如被火焰燒烤過一般冒著蒸氣，
+這裡沒有任何生命的跡象，地上遍佈的是白的陰森的枯骨，若你再不逃
+開這裡的話，你也會是下一個犧牲者！
+~
+0 20|8192|1048576 3
+>room_rand 50~
+if pcnum($) > 0
+        echoat $r 一陣高熱夾雜著漫天紅土襲來！
+        cast 'high explosive' $r 30
+endif
+~
+|
+S
+#60559
+古代鬥技場~
+這裡是一處古老的圓形鬥技場，四周被濃密的森林與迷霧所掩蓋，
+在圓形的石盤鬥技場四周豎立著許多你剛才見到的巨石像，抓握著巨大
+的青銅劍與巨盾看似頂天立地，地上也有不少碎裂的石像肢體破片，不
+知怎地，你似乎有著不好的預感......
+~
+512 21|8192|1048576 3
+>room_time 100~
+if pcnum($) > 1
+        echo 就當你看到又有人出現而感到高興時，鬥技場上忽然冒出一個血紅色旋渦！
+        echo 你被吸了進去！
+        transfer pc 60558
+        purge allmob
+endif
+if pcnum($) > 0
+        if mobcount(60507) > 0
+                break
+        else
+                if roomtimer($0) == 0
+                        modrvt t0 = 36
+                endif
+                if roomtimer($0) > 25
+                        echo 你聽到四周傳來微弱的嗡嗡聲，似乎是周圍的巨石像所發出的！
+                        break
+                endif
+                if roomtimer($0) > 15
+                        echo 你聽到嗡嗡聲越來越響亮了，四周的氣氛變得詭異起來......
+                        break
+                endif
+                if roomtimer($0) > 5
+                        echo 嗡嗡聲響像是從你心底冒出的一樣，你無法抵擋那聲音傳入你的腦海！
+                        break
+                endif
+                if roomtimer($0) > 1
+                        echo 四周忽地寂靜了下來，靜得像是暴風雨的前兆，寂靜肅殺的感覺在空氣中蔓延。
+                endif
+                if roomtimer($0) == 1
+                        echo 在萬籟無聲中忽地一聲巨響自你的後方傳來！
+                        callout 2 echo 你錯愕的發現，竟有一具巨石像自己動了起來！
+                        callout 3 echo 巨石像的外表龜裂後，露出了黑色閃亮的軀體！
+                        callout 4 echo 一具漆黑光亮的高大魔像就這樣站在你的面前！
+                        mload 60507
+                endif
+        endif
+endif
+~
+|
+S
+#60560
+巨石雙子柱~
+一對高聳的巨大石柱兀自豎立在這充滿霧氣的森林之外，兩個石
+柱中間是一條荒煙漫草的小徑，除了野獸的足跡外似乎已經很久未有
+人涉足其中，整個森林充滿著詭異的野獸叫聲，令人不寒而慄。
+~
+0 4|262144 3
+D2
+~
+~
+0 0 -1
+D3
+~
+~
+0 0 60561
+S
+#60561
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D0
+~
+~
+0 0 60562
+D1
+~
+~
+0 0 60560
+S
+#60562
+失落森林~
+你眼前是一條分岔的岔路，一條向北而去，一條向西而去，一棵
+蔘天大樹將這條路給分成了兩邊，你無助的看了看兩條路，不知該往
+哪走，曾有人說：只要有人走過的地方就會留有記號，只是你看了看
+四周卻不知道到底哪會有這鬼記號，你開始想試著找找看(search)。
+~
+0 0 3
+D0
+~
+~
+0 0 60563
+D2
+~
+~
+0 0 60561
+D3
+~
+~
+0 0 60577
+E
+blazed~
+你發現樹皮上被用利器戳出了幾個深淺不同的箭型紋。
+　                       ＜
+　　　　　　　　　　　　＜＜
+~
+>room_command search default~
+if is_qmark($n) != lf_hunter
+if roomtimer($0) == 0
+        echoat $n 你環顧四週找了半天，終於在發現樹皮上的刻痕(blazed)
+        if is_qmark($n) == lf_search 100002
+                mod_qmark $n lf_search v0 = 4
+                mod_qmark $n lf_search timer + 6
+        else
+                add_qmark $n lf_search 12 1 0 0 1 0
+        endif
+        modrvt t0 = 6
+else
+        echoat $n 四周一片凌亂，看來才有人走過。
+endif
+else
+        echoat $n 你環顧四週找了半天，終於在發現樹皮上的刻痕(blazed)
+endif
+~
+|
+S
+#60563
+失落森林~
+森林中漸漸起了薄霧，在迷霧之島上的這片古老森林中充滿了神
+密未知的事物，傳聞這森林中有著各種外界未曾見過的野生動物，只
+是這個傳聞不知是真是假。
+~
+0 0 3
+D1
+~
+~
+0 0 60564
+D2
+~
+~
+0 0 60562
+S
+#60564
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D0
+~
+~
+0 0 60565
+D3
+~
+~
+0 0 60563
+S
+#60565
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D0
+~
+~
+0 0 60566
+D2
+~
+~
+0 0 60564
+S
+#60566
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D2
+~
+~
+0 0 60565
+D3
+~
+~
+0 0 60567
+S
+#60567
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D0
+~
+~
+0 0 60568
+D1
+~
+~
+0 0 60566
+S
+#60568
+失落森林~
+你眼前是一條岔路，岔路看來顯得空空曠曠的，這條岔路倒是出
+奇的到處佈滿了碎石，你無助的看了看兩條路，不知該往哪走，曾有
+人說：只要有人走過的地方就會留有記號，只是你看了看四周卻不知
+道到底哪會有這鬼記號，你開始想試著找找看(search)。
+~
+0 0 3
+D1
+~
+~
+0 0 60569
+D2
+~
+~
+0 0 60567
+D3
+~
+~
+0 0 60591
+E
+mark~
+你發現地上的碎石中有一個地方特別不一樣，似乎有人用深淺兩
+色的圓石頭排出了特別的圖案......
+　　　　　　　　　　○
+　　　　　　　　　○●●●
+　　　　　　　　　　○
+~
+>room_command search default~
+if is_qmark($n) != lf_hunter
+if roomtimer($0) == 0
+        echoat $n 你環顧四週，發現了在碎石中的記號(mark)！
+        if is_qmark($n) == lf_search 100001
+                mod_qmark $n lf_search v0 = 3
+                mod_qmark $n lf_search timer + 6
+        else
+                add_qmark $n lf_search 12 2 0 0 1 0
+        endif
+        modrvt t0 = 6
+else
+        echoat $n 四周一片凌亂，看來才有人走過。
+endif
+else
+        echoat $n 你環顧四週，發現了在碎石中的記號(mark)！
+endif
+~
+|
+S
+#60569
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D0
+~
+~
+0 0 60570
+D3
+~
+~
+0 0 60568
+S
+#60570
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D1
+~
+~
+0 0 60571
+D2
+~
+~
+0 0 60569
+S
+#60571
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D0
+~
+~
+0 0 60572
+D3
+~
+~
+0 0 60570
+S
+#60572
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D1
+~
+~
+0 0 60573
+D2
+~
+~
+0 0 60571
+S
+#60573
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D0
+~
+~
+0 0 60574
+D3
+~
+~
+0 0 60572
+S
+#60574
+失落森林~
+你腳下的小徑依然是時有時無的出現又消失，有時你甚至不確定
+自己是不是還在小徑上，直到小徑的一段又出現在前方的道路上，四
+周開始傳來詭異的怪物吼聲，你開始有點懷疑自己是否不該闖入這個
+人跡罕至的鬼地方。
+~
+0 0 3
+D0
+~
+~
+0 0 60575
+D2
+~
+~
+0 0 60573
+S
+#60575
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D1
+~
+~
+0 0 60576
+D2
+~
+~
+0 0 60574
+S
+#60576
+巨石雙子柱~
+一對高聳的巨大石柱兀自豎立在這充滿霧氣的森林之外，兩個石
+柱中間是一條荒煙漫草的小徑，除了野獸的足跡外似乎已經很久未有
+人涉足其中，整個森林充滿著詭異的野獸叫聲，令人不寒而慄。
+~
+0 4 3
+D1
+~
+~
+0 0 60753
+D3
+~
+~
+0 0 60575
+S
+#60577
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D1
+~
+~
+0 0 60562
+D3
+~
+~
+0 0 60578
+S
+#60578
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D1
+~
+~
+0 0 60577
+D3
+~
+~
+0 0 60579
+S
+#60579
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步，一棵特別高大的樹生長在此，樹身不
+知怎地看來有點詭異。
+~
+0 0 3
+D1
+~
+~
+0 0 60578
+D2
+~
+~
+0 0 60580
+>room_command search default~
+if is_qmark($n) != lf_hunter
+  if is_qmark($n) >= lf_search 10003
+        if roomtimer($0) == 0
+                echoat $n 你發現樹身上有攀爬(climb)的痕跡，或許爬上樹會找到些什麼。
+                mod_qmark $n lf_search v1 = 1
+                mod_qmark $n lf_search timer = -1
+                mod_qmark $n lf_search death = 0
+                mod_qmark $n lf_search save = 1
+                modrvt t0 = 6
+        else
+                echoat $n 四周一片凌亂，看來才有人走過。
+        endif
+  else
+        echoat $n 你發現這裡有棵特別高大粗壯的樹，顯得格外突出！
+  endif
+else
+        echoat $n 你發現樹身上有攀爬(climb)的痕跡，或許爬上樹會找到些什麼。
+endif
+~
+>room_command climb tree~
+if is_qmark($n) != lf_hunter
+  if is_qmark($n) == lf_search 200001
+        if roomvalue($0) == 0
+                echoat $n 你費力往上爬入了樹屋之中。
+                echoaround $n $n 忽然往樹上爬去！他想當熊嗎？
+                transfer $n 60751
+                modrvt v0 = 1
+                modrvt t0 = 6
+        else
+                echoat $n 你想爬上樹卻滑了下來...不知道哪個人先把立足點踩滑了
+                echoaround $n $n 七手八腳往樹上爬，然後又滑了下來。
+        endif
+  endif
+else
+        echoat $n 你手腳俐落的往上爬入了樹屋之中。
+        echoaround $n $n 忽然手腳俐落的爬上樹去！他是熊投胎的嗎？！
+        transfer $n 60751
+endif
+~
+|
+S
+#60580
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D0
+~
+~
+0 0 60579
+D3
+~
+~
+0 0 60581
+S
+#60581
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D1
+~
+~
+0 0 60580
+D2
+~
+~
+0 0 60582
+S
+#60582
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D0
+~
+~
+0 0 60581
+D3
+~
+~
+0 0 60583
+S
+#60583
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D1
+~
+~
+0 0 60582
+D2
+~
+~
+0 0 60584
+S
+#60584
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D0
+~
+~
+0 0 60583
+D3
+~
+~
+0 0 60585
+S
+#60585
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D1
+~
+~
+0 0 60584
+D2
+~
+~
+0 0 60586
+S
+#60586
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D0
+~
+~
+0 0 60585
+D2
+~
+~
+0 0 60587
+S
+#60587
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D0
+~
+~
+0 0 60586
+D3
+~
+~
+0 0 60588
+S
+#60588
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D1
+~
+~
+0 0 60587
+D2
+~
+~
+0 0 60589
+S
+#60589
+失落森林~
+這裡還只是森林外圍的部分，但是林木分布卻異常的密集，除了
+腳下不太明顯的小路外，幾乎沒有空地可以置足，灌木叢中又充滿了
+各種天然陷阱，實在令人卻步。
+~
+0 0 3
+D0
+~
+~
+0 0 60588
+D2
+~
+~
+0 0 60590
+S
+#60590
+巨石雙子柱~
+一對高聳的巨大石柱兀自豎立在這充滿霧氣的森林之外，兩個石
+柱中間是一條荒煙漫草的小徑，除了野獸的足跡外似乎已經很久未有
+人涉足其中，整個森林充滿著詭異的野獸叫聲，令人不寒而慄。
+~
+0 4 3
+D0
+~
+~
+0 0 60589
+D2
+~
+~
+0 0 60754
+S
+#60591
+失落森林~
+當你踏入這邊，霧又更濃了起來，四周簡直可以用伸手不見五指
+來形容，各種光源在這片濃霧中幾乎起不了作用，高聳的古木與茂密
+的枝葉和濃霧阻絕了陽光的照射，你甚至覺得有點寒冷。
+~
+0 0 3
+D1
+~
+~
+0 0 60568
+D3
+~
+~
+0 0 60592
+S
+#60592
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D1
+~
+~
+0 0 60591
+D2
+~
+~
+0 0 60593
+S
+#60593
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60592
+D3
+~
+~
+0 0 60594
+S
+#60594
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D1
+~
+~
+0 0 60593
+D2
+~
+~
+0 0 60595
+S
+#60595
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60594
+D2
+~
+~
+0 0 60596
+S
+#60596
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 2
+D0
+~
+~
+0 0 60595
+D3
+~
+~
+0 0 60597
+S
+#60597
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D1
+~
+~
+0 0 60596
+D3
+~
+~
+0 0 60598
+S
+#60598
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60599
+D1
+~
+~
+0 0 60597
+S
+#60599
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60600
+D2
+~
+~
+0 0 60598
+S
+#60600
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60601
+D2
+~
+~
+0 0 60599
+S
+#60601
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60602
+D2
+~
+~
+0 0 60600
+S
+#60602
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60603
+D2
+~
+~
+0 0 60601
+S
+#60603
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D1
+~
+~
+0 0 60604
+D2
+~
+~
+0 0 60602
+>room_enter 6 50~
+if is_qmark($n) >= lf_hunter 200005
+        echoat $n 西方有條模模糊糊的獸徑！
+endif
+~
+>room_command search default~
+echoat $n 你小心翼翼的搜索著四周的動靜。
+if is_qmark($n) == lf_hunter 200004
+        if is_qmark($n) >= lf_hunter 100151
+                callout 1 echoat $n 你在西方發現了一條嶄新的獸徑！
+                mod_qmark $n lf_hunter v1 = 5
+                mod_qmark $n lf_hunter v0 = 0
+                break
+        else
+                echoat $n 你什麼都沒發現
+        endif
+break
+endif
+if is_qmark($n) >= lf_hunter 200005
+        callout 1 echoat $n 你在西方發現了一條嶄新的獸徑！
+break
+endif
+	echoat $n 你什麼都沒發現
+~
+>room_mask west default~
+if is_qmark($n) >= lf_hunter 200005
+        echoat $n 你小心的隨著獸徑上模糊的足跡走入了樹叢之中...
+        echoaround $n $N 忽然走進了樹叢之中消失了身影！
+        transfer $n 60656
+else
+        echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+|
+S
+#60604
+失落森林~
+這裡應該已經算是森林內部的地方了，你如此安慰著自己已經走
+了大半，沿途不時有怪異的生物吼聲或是稀疏的草木晃動聲，你總覺
+得在這黑暗森林小徑的霧中有東西看著你，但你卻找不出這些不知名
+的視線來自何方。
+~
+0 0 3
+D0
+~
+~
+0 0 60605
+D3
+~
+~
+0 0 60603
+S
+#60605
+失落森林~
+你又再次碰上了岔路，在濃霧中你驚訝的發現西北方有一個巨大
+高聳的黑影，比樹林更黑暗，這條小徑往西而去幾乎是埋沒在一大片
+及人腰身的雜草堆之中，往東而去的路上傳來詭異的野獸嘶吼，而往
+南則是通往森林外圍的小徑。
+~
+0 4 3
+D1
+~
+~
+0 0 60618
+D2
+~
+~
+0 0 60604
+D3
+~
+~
+0 0 60606
+S
+#60606
+迷失草叢~
+這真的是一條路嗎？你才走沒兩步就快要走不下去了，草叢與濃
+霧完全阻礙了你的視線，眼前似乎一點路都沒有，沒有受過特殊訓練
+的你根本無法找出正確的路徑，除了走來的地方，放眼望去就是無止
+境的迷霧與草叢而已。
+~
+0 0 3
+D1
+~
+~
+0 0 60605
+>room_command search default~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100000
+          echoat $n 你細心的搜查下，發現北邊有條隱密的小路！
+          mod_qmark $n lf_hunter v0 = 1
+        else
+          if is_qmark($n) >= lf_hunter 100001
+          echoat $n 你細心的搜查下，發現北邊有條隱密的小路！
+          endif
+        endif
+endif
+if is_qmark($n) >= lf_hunter 200004
+        echoat $n 你細心的搜查下，發現北邊有條隱密的小路！
+endif
+if is_qmark($n) != lf_hunter
+or is_qmark($n) < lf_hunter 200003
+        echoat $n 你找了半天卻什麼也找不到......
+endif
+~
+>room_mask north default~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100000
+                echoat $n [0;33m哎呀，此路不通。[m
+        else
+          if is_qmark($n) >= lf_hunter 100001
+                echoat $n 你小心地穿越草叢往北走去！
+                transfer $n 60607
+          endif
+        endif
+endif
+if is_qmark($n) >= lf_hunter 200004
+        echoat $n 你小心地穿越草叢往北走去！
+        transfer $n 60607
+endif
+if is_qmark($n) != lf_hunter
+or is_qmark($n) < lf_hunter 200003
+        echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+|
+S
+#60607
+迷失草叢~
+這真的是一條路嗎？你才走沒兩步就快要走不下去了，草叢與濃
+霧完全阻礙了你的視線，眼前似乎一點路都沒有，沒有受過特殊訓練
+的你根本無法找出正確的路徑，除了走來的地方，放眼望去就是無止
+境的迷霧與草叢而已。
+~
+0 0 3
+D2
+~
+~
+0 0 60606
+>room_leave 511 100~
+        modrvt v1 = 0
+~
+>room_command search default~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) >= lf_hunter 100001
+if roomtimer($0) == 0
+  if rand(50)
+        echoat $n 草叢實在太大，你一時之間還找不到什麼...
+  else
+        if rand(33)
+          echoat $n 你在北邊找到了一條隱密的小路！
+          modrvt v1 = 1
+          modrvt t0 = 5
+        else
+          if rand(50)
+                echoat $n 你在東邊找到了一條隱密的小路！
+                modrvt v1 = 2
+                modrvt t0 = 5
+          else
+                echoat $n 你在西邊找到了一條隱密的小路！
+                modrvt v1 = 3
+                modrvt t0 = 5
+          endif
+        endif
+  endif
+else
+        echoat $n 這裡似乎剛被踐踏過，四周一片凌亂...
+endif
+        else
+          echoat $n 你找了半天卻什麼也找不到......
+        endif
+endif
+if is_qmark($n) >= lf_hunter 200004
+        echoat $n 你在北邊找到了之前走過的小路！
+        modrvt v1 = 1
+        modrvt t0 = 5
+endif
+if is_qmark($n) != lf_hunter
+or is_qmark($n) < lf_hunter 200003
+        echoat $n 你找了半天卻什麼也找不到......
+endif
+~
+>room_mask north default~
+if roomvalue($1) == 1
+                echoat $n 你小心地穿越草叢往北走去！
+                transfer $n 60608
+else
+                echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+>room_mask east default~
+if roomvalue($1) == 2
+                echoat $n 你小心地穿越草叢往東走去！
+                transfer $n 60608
+else
+                echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+>room_mask west default~
+if roomvalue($1) == 3
+                echoat $n 你小心地穿越草叢往西走去！
+                transfer $n 60608
+else
+                echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+|
+S
+#60608
+迷失草叢~
+這真的是一條路嗎？你才走沒兩步就快要走不下去了，草叢與濃
+霧完全阻礙了你的視線，眼前似乎一點路都沒有，沒有受過特殊訓練
+的你根本無法找出正確的路徑，除了走來的地方，放眼望去就是無止
+境的迷霧與草叢而已。
+~
+0 0 3
+D2
+~
+~
+0 0 60607
+>room_leave 511 100~
+        modrvt v1 = 0
+~
+>room_command search default~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) >= lf_hunter 100001
+if roomtimer($0) == 0
+  if rand(50)
+        echoat $n 草叢實在太大，你一時之間還找不到什麼...
+  else
+        if rand(33)
+          echoat $n 你在北邊找到了一條隱密的小路！
+          modrvt v1 = 1
+          modrvt t0 = 5
+        else
+          if rand(50)
+                echoat $n 你在東邊找到了一條隱密的小路！
+                modrvt v1 = 2
+                modrvt t0 = 5
+          else
+                echoat $n 你在西邊找到了一條隱密的小路！
+                modrvt v1 = 3
+                modrvt t0 = 5
+          endif
+        endif
+  endif
+else
+        echoat $n 這裡似乎剛被踐踏過，四周一片凌亂...
+endif
+        else
+          echoat $n 你找了半天卻什麼也找不到......
+        endif
+endif
+if is_qmark($n) >= lf_hunter 200004
+        echoat $n 你在北邊找到了之前走過的小路！
+        modrvt v1 = 1
+        modrvt t0 = 5
+endif
+if is_qmark($n) != lf_hunter
+or is_qmark($n) < lf_hunter 200003
+        echoat $n 你找了半天卻什麼也找不到......
+endif
+~
+>room_mask north default~
+if roomvalue($1) == 1
+                echoat $n 你小心地穿越草叢往北走去！
+                transfer $n 60609
+else
+                echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+>room_mask east default~
+if roomvalue($1) == 2
+                echoat $n 你小心地穿越草叢往東走去！
+                transfer $n 60609
+else
+                echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+>room_mask west default~
+if roomvalue($1) == 3
+                echoat $n 你小心地穿越草叢往西走去！
+                transfer $n 60609
+else
+                echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+|
+S
+#60609
+古塔周圍~
+費盡千辛萬苦走出了草叢與迷霧構成的自然迷宮，出現在你眼前
+的是一座半塌毀的古代高塔，或許在古老不知名的年代中，這塔曾經
+高聳過，然而目前在你眼前的只有莫約一層樓高的斷垣殘壁。
+~
+0 4 4
+D0
+~
+~
+0 0 60616
+D2
+~
+~
+0 0 60610
+D3
+~
+~
+0 0 60608
+S
+#60610
+古塔周圍~
+你走在古塔的周圍，出入口似乎不在這邊，你沿著最後僅存的一
+段堅實塔壁走著，你很難想像這到底是哪個種族建構起來的，磚與磚
+間接合的完美無暇，猶如是矮人的鬼斧神工，卻又比普通的工藝更上
+一層樓，根本像是高塔自地上長出來的一樣。
+~
+0 0 4
+D0
+~
+~
+0 0 60609
+D1
+~
+~
+0 0 60611
+S
+#60611
+古塔周圍~
+你眼前是一個坍塌的磚堆，由殘存的部分看來似乎是一個巨大的
+拱門，然而落下的磚石卻早已將這個拱門的入口給堵死了，除非有辦
+法移開這堆重得要死的磚石，或是這些磚石間有一些破綻可尋，不然
+你根本無法進入這座古塔。
+~
+0 0 4
+D1
+~
+~
+0 0 60612
+D3
+~
+~
+0 0 60610
+>room_rand 50~
+if mobcount(60530) < 1
+        if rand(33)
+                echo 微風攪動著薄霧令古塔看起來更添幾分神秘感...
+                break
+        endif
+        if rand(33)
+                echo 風呼嘯穿過古塔上的穴孔發出詭異的淒厲聲......
+                break
+        endif
+        if rand(33)
+                echo 古塔內偶爾發出碎石滾動的聲響，令人毛骨悚然...
+        endif
+else
+        if rand(10)
+                echo 你看到崩潰的石塔中心竟然冒出了巨大的石龍！
+        else
+                if rand(50)
+                        echo 石塔中心崩落的部分揚起了大量的塵煙，似乎有什麼東西在裡面！
+                else
+                        echo 你感到四周地面傳來一陣劇烈的震動......
+                endif
+        endif
+endif
+~
+>room_command search default~
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100001
+                callout 2 echoat $n 你在地上撿起一塊碎裂的塔石
+                callout 3 echoat $n 你心想著「或許可以拿回去請教獵戶吧？」
+                callout 2 oload 60518 viclv $n target
+                callout 2 mod_qmark $n lf_hunter v0 = 2
+        endif
+        if is_qmark($n) == lf_hunter 100004
+                callout 2 echoat $n 你比上次更細心的搜尋了四周看似可疑的地方
+                callout 3 echoat $n 皇天不負苦心人！你發現在石堆中發現一處看似可推動的石壁(putoff wall)！
+        endif
+endif
+echoat $n 這裡除了石頭還是石頭...
+~
+>room_command putoff wall~
+if mobcount(60530) < 1
+        if is_qmark($n) == lf_hunter 200003
+                if is_qmark($n) >= lf_hunter 100004
+                        echoat $n 你用力的推了一推，石壁依然動也不動...
+                        callout 2 echoat $n 你又更用力的推了一下...石壁終於慢慢有點鬆動的感覺
+                        callout 4 transfer $n 60617
+                        callout 4 echoat $n 你使盡吃奶的力氣終於將石壁給推開走進了石塔內！
+                endif
+        endif
+        if is_qmark($n) > lf_hunter 200004
+                echoat $n 你推動了石壁往內走去...
+                transfer $n 60617
+        endif
+else
+        echoat $n 你全然推不動石壁，石壁後似乎有什麼東西頂住了！
+endif
+~
+|
+S
+#60612
+古塔周圍~
+你走在古塔的周圍，出入口似乎不在這邊，你沿著最後僅存的一
+段堅實塔壁走著，你很難想像這到底是哪個種族建構起來的，磚與磚
+間接合的完美無暇，猶如是矮人的鬼斧神工，卻又比普通的工藝更上
+一層樓，根本像是高塔自地上長出來的一樣。
+~
+0 0 4
+D0
+~
+~
+0 0 60613
+D3
+~
+~
+0 0 60611
+S
+#60613
+古塔周圍~
+你走在古塔的周圍，出入口似乎不在這邊，你沿著最後僅存的一
+段堅實塔壁走著，你很難想像這到底是哪個種族建構起來的，磚與磚
+間接合的完美無暇，猶如是矮人的鬼斧神工，卻又比普通的工藝更上
+一層樓，根本像是高塔自地上長出來的一樣。
+~
+0 0 4
+D0
+~
+~
+0 0 60614
+D2
+~
+~
+0 0 60612
+S
+#60614
+古塔周圍~
+你走在古塔的周圍，出入口似乎不在這邊，你沿著最後僅存的一
+段堅實塔壁走著，你很難想像這到底是哪個種族建構起來的，磚與磚
+間接合的完美無暇，猶如是矮人的鬼斧神工，卻又比普通的工藝更上
+一層樓，根本像是高塔自地上長出來的一樣。
+~
+0 0 4
+D2
+~
+~
+0 0 60613
+D3
+~
+~
+0 0 60615
+S
+#60615
+古塔周圍~
+你走在古塔的周圍，出入口似乎不在這邊，你沿著最後僅存的一
+段堅實塔壁走著，你很難想像這到底是哪個種族建構起來的，磚與磚
+間接合的完美無暇，猶如是矮人的鬼斧神工，卻又比普通的工藝更上
+一層樓，根本像是高塔自地上長出來的一樣。
+~
+0 0 4
+D1
+~
+~
+0 0 60614
+D3
+~
+~
+0 0 60616
+S
+#60616
+古塔周圍~
+你走在古塔的周圍，出入口似乎不在這邊，你沿著最後僅存的一
+段堅實塔壁走著，你很難想像這到底是哪個種族建構起來的，磚與磚
+間接合的完美無暇，猶如是矮人的鬼斧神工，卻又比普通的工藝更上
+一層樓，根本像是高塔自地上長出來的一樣。
+~
+0 0 4
+D1
+~
+~
+0 0 60615
+D2
+~
+~
+0 0 60609
+S
+#60617
+古塔內部~
+只見四周到處都是零散的碎石，塔內原本似乎是有一座螺旋的石
+梯，但現今也只剩下零碎的石磚而已，一塊巨石落在往下的一個狹口
+上，沉重得你根本無法抬起這片巨石，零碎的磚石更散落在這片巨石
+上堆成了小山，天空就在你的上頭，一望無際。
+~
+0 0 4
+>room_command search default~
+if day($) == 1
+or day($) == 7
+or day($) == 13
+or day($) == 19
+or day($) == 25
+or day($) == 31
+if roomtimer($0) == 0
+  if mobcount(60530) < 1
+        if is_qmark($n) == lf_hunter 300002
+                echoat $n 你簡直不敢相信！
+                callout 1 echoat $n 正當你試圖搜索地板上碎石的時候
+                callout 2 echoat $n 閃耀著血紅光芒的銅鑼大眼自碎石中猛然睜開盯著你！
+                callout 3 force stone-lf mpkill $n
+                callout 3 echoat $n 傳說中的石龍出現在你眼前啊！
+                callout 3 mload 60530
+                modrvt t0 = 720
+        endif
+        if is_qmark($n) == lf_hunter 300001
+                echoat $n 你發現碎石似乎曾經有什麼龐然巨物輾壓過的痕跡...
+                callout 1 echoat $n 你不禁想著不知道是怎樣的怪物能夠造成這損傷...
+        endif
+  endif
+endif
+endif
+if is_qmark($n) == lf_hunter 200003
+        if is_qmark($n) == lf_hunter 100004
+          echoat $n 這裡看來除了碎石外什麼也沒有...
+          echoat $n 沒有發現血族的蹤跡似乎讓你有些安心但也有些遺憾...
+          mod_qmark $n lf_hunter v0 = 5
+        else
+          if mobcount(60530) < 1
+                echoat $n 碎裂的石板地在觸目所及的所有地方...
+                echoat $n 在南方有光從石壁間的空洞透了進來，看來是出口！
+                modrvt v1 = 1
+          else
+                echoat $n 石龍龐大的身軀幾乎佔滿了整個房間！
+                echoat $n 你也看不到任何的出口！
+                modrvt v1 = 0
+          endif
+        endif
+else
+        if mobcount(60530) < 1
+                echoat $n 碎裂的石板地在觸目所及的所有地方...
+                echoat $n 在南方有光從石壁間的空洞透了進來，看來是出口！
+                modrvt v1 = 1
+        else
+                echoat $n 石龍龐大的身軀幾乎佔滿了整個房間！
+                echoat $n 你也看不到任何的出口！
+                modrvt v1 = 0
+        endif
+endif
+~
+>room_mask south default~
+if roomvalue($1) == 1
+        echoat $n 你穿過南方狹窄的洞穴走到了石塔之外
+        transfer $n 60611
+        modrvt v1 = 0
+else
+        echoat $n [1;33m哎呀，此路不通。[m
+endif
+~
+|
+S
+#60618
+失落森林~
+往東而走，森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，
+樹梢間、樹叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深
+處傳出來，這趟旅途似乎也更加危險了。
+~
+0 0 3
+D1
+~
+~
+0 0 60619
+D3
+~
+~
+0 0 60605
+S
+#60619
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60620
+D3
+~
+~
+0 0 60618
+S
+#60620
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60621
+D3
+~
+~
+0 0 60619
+S
+#60621
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60622
+D2
+~
+~
+0 0 60620
+S
+#60622
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60623
+D3
+~
+~
+0 0 60621
+S
+#60623
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60624
+D2
+~
+~
+0 0 60622
+S
+#60624
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60625
+D3
+~
+~
+0 0 60623
+S
+#60625
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 2
+D0
+~
+~
+0 0 60626
+D2
+~
+~
+0 0 60624
+S
+#60626
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60627
+D2
+~
+~
+0 0 60625
+S
+#60627
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60628
+D2
+~
+~
+0 0 60626
+S
+#60628
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D2
+~
+~
+0 0 60627
+D3
+~
+~
+0 0 60629
+S
+#60629
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60630
+D1
+~
+~
+0 0 60628
+S
+#60630
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60631
+D2
+~
+~
+0 0 60629
+S
+#60631
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D2
+~
+~
+0 0 60630
+D3
+~
+~
+0 0 60632
+S
+#60632
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 2
+D1
+~
+~
+0 0 60631
+D3
+~
+~
+0 0 60633
+S
+#60633
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60632
+D3
+~
+~
+0 0 60634
+S
+#60634
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D0
+~
+~
+0 0 60635
+D1
+~
+~
+0 0 60633
+S
+#60635
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D2
+~
+~
+0 0 60634
+D3
+~
+~
+0 0 60636
+S
+#60636
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60635
+D3
+~
+~
+0 0 60637
+S
+#60637
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60636
+D3
+~
+~
+0 0 60638
+S
+#60638
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60637
+D3
+~
+~
+0 0 60639
+S
+#60639
+失落森林~
+森林看起來變得黑暗陰沉，四周佈滿了薄薄的霧氣，樹梢間、樹
+叢後隱隱有種詭異的視線，不時有低沉的吼聲從森林的深處傳出來，
+這趟旅途似乎也更加危險，樹林在黑暗的影響下看來也像是長出了爪
+牙一般的恐怖。
+~
+0 0 3
+D1
+~
+~
+0 0 60638
+D3
+~
+~
+0 0 60640
+S
+#60640
+失落森林~
+森林的小徑在這裡拐了個大彎向著南去，不遠處似乎傳來了水流
+的聲音，眼前是一大片的樹叢，只有小小的獸徑往深處走去，其中不
+乏有巨大的熊掌印，你忽然覺得再走下去有點危險。
+~
+0 0 3
+D1
+~
+~
+0 0 60639
+D2
+~
+~
+0 0 60641
+S
+#60641
+北面小徑盡頭~
+小徑在這裡完全失去了蹤跡，不遠處似乎傳來了水流的聲音，眼
+前是一大片濃密的樹叢，水聲依然不絕於耳，只是你一點都找不到繼
+續深入的路徑，再走下去有可能就無法找到正確的路途回來。
+~
+0 0 3
+D0
+~
+~
+0 0 60640
+>room_rand 100~
+if hour($) == 0
+or hour($) == 1
+or hour($) == 2
+        if pcnum($) == 1
+        echo 草叢南方散發著微光...
+        endif
+endif
+~
+>room_mask south default~
+if is_qmark($n) >= lf_hunter 200003
+        echoat $n 你快步穿過了那天發現的小徑到達了密境之池。
+        echoaround $n $n 轉身衝進草叢之中不見了！
+        transfer $n 60642
+        modrvt t0 = 0
+else
+        if is_qmark($n) == lf_hunter 200002
+                if roomtimer($0) > 0
+                        echoat $n 你小心翼翼的沿著發光的小徑走到了一個水池邊！
+                        echoaround $n 轉身衝進草叢之中不見了！
+                        transfer $n 60642
+                        modrvt t0 = 0
+                else
+                        echoat $n [0;33m哎呀，此路不通。[m
+                endif
+        else
+                echoat $n [0;33m哎呀，此路不通。[m
+        endif
+endif
+~
+>room_command search default~
+if pcnum($) > 1
+        echoat $n 旁邊的人走來走去，害你無法專心搜尋。
+else
+    if is_qmark($n) == lf_hunter 200002
+        if roomtimer($0) == 0
+                if hour($) == 0
+                or hour($) == 1
+                or hour($) == 2
+                  echoat $n 你細心搜尋下，發現草叢南方有一條發光的小徑。
+                  modrvt t0 = 2
+                else
+                  if is_qmark($n) == lf_hunter_lord 300004
+                        echoat $n 你想到了獵戶跟你提到的那段傳說...
+                        callout 2 echoat $n 【在月光的導引下，在子夜時分之時，道路將顯現】
+                        callout 3 echoat $n 或許應該等到午夜月亮高掛天際時再來找看看吧。
+                  else
+                        echoat $n 你找來找去，就是沒發現什麼小徑。
+                  endif
+                endif
+        else
+                echoat $n 四周實在太凌亂了，你什麼都找不到。
+        endif
+    endif
+    if is_qmark($n) >= lf_hunter 200003
+        echoat $n 你很快就發現南邊草叢中有條不明顯的小徑。
+    endif
+endif
+~
+|
+S
+#60642
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D0
+~
+~
+0 0 60641
+D1
+~
+~
+0 0 60644
+D2
+~
+~
+0 0 60646
+D3
+~
+~
+0 0 60643
+S
+#60643
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D1
+~
+~
+0 0 60642
+D2
+~
+~
+0 0 60645
+S
+#60644
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D2
+~
+~
+0 0 60647
+D3
+~
+~
+0 0 60642
+S
+#60645
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D0
+~
+~
+0 0 60643
+D1
+~
+~
+0 0 60646
+D2
+~
+~
+0 0 60648
+S
+#60646
+密境之池~
+水池的中央看似有湧泉自下冒起而高起了一塊，而在陽光的照耀
+下更顯得金光閃閃的，在這裡你可以感受到一股祥和，彷彿有股神力
+保護著此地，超脫於俗世的強大存在。
+~
+0 1048576 6
+D0
+~
+~
+0 0 60642
+D1
+~
+~
+0 0 60647
+D2
+~
+~
+0 0 60649
+D3
+~
+~
+0 0 60645
+>room_enter 127 100~
+if is_qmark($n) >= lf_hunter 200002
+modrvt v1 = 1
+endif
+~
+>room_leave 511 100~
+modrvt v1 = 0
+~
+>room_rand 50~
+if pcnum($) > 0
+ if roomvalue($1) == 1
+if roomtimer($0) != 0
+        echo 水池看來冷冷清清...似乎守護這的力量消失了一般...
+        break
+endif
+  if day($) == 1
+  or day($) == 7
+  or day($) == 13
+  or day($) == 19
+  or day($) == 25
+  or day($) == 31
+        if hour($) == 22
+        or hour($) == 23
+        or hour($) == 0
+        or hour($) == 1
+        or hour($) == 2
+                if rand(25)
+                        echo 四周忽然捲起了一絲旋風
+                        callout 2 echo 一個龐然巨物緩緩出現在泉水中間
+                  if mobcount(60529) == 0
+                        callout 2 mload 60529
+                  else
+                        transfer lord-lf
+                  endif
+                endif
+        endif
+  endif
+ endif
+endif
+~
+|
+S
+#60647
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D0
+~
+~
+0 0 60644
+D2
+~
+~
+0 0 60650
+D3
+~
+~
+0 0 60646
+S
+#60648
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D0
+~
+~
+0 0 60645
+D1
+~
+~
+0 0 60649
+S
+#60649
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D0
+~
+~
+0 0 60646
+D1
+~
+~
+0 0 60650
+D3
+~
+~
+0 0 60648
+S
+#60650
+密境之池~
+你完全沒想到在這種森林深處還會有如此潔淨的水池，水池上空
+完全沒有被樹蔭給遮蔽，在這個水池周圍一點霧氣都沒有，陽光恣意
+的揮灑在水池上反射出耀眼的光芒，在水池的周圍有著不少的野獸足
+跡，看來這裡還是森林群獸的水源地呢。
+~
+0 1048576 6
+D0
+~
+~
+0 0 60647
+D3
+~
+~
+0 0 60649
+S
+#60651
+地下水脈~
+你潛入了密境之池中，洶湧的地下水流無情的撞擊著你，詭異的
+地下水脈完全看不見清楚的方向，你只能摸索著向前，或者是選擇往
+上回到充滿陽光的水面上。
+~
+0 1048576 8
+D4
+~
+~
+0 0 60646
+S
+#60652
+地下水脈~
+你憑著毅力往地下水脈的深處潛入，強大的水流讓你難以前進，
+唯一在如此強勁的水流下行動的方法只有足夠的體力，或者是藉由重
+物讓自己不至於被強勁的水流推走。
+~
+0 1048576 8
+S
+#60653
+地下水脈~
+你憑著毅力往地下水脈的深處潛入，強大的水流讓你難以前進，
+唯一在如此強勁的水流下行動的方法只有足夠的體力，或者是藉由重
+物讓自己不至於被強勁的水流推走。
+~
+0 1048576 8
+S
+#60654
+地下水脈~
+你憑著毅力往地下水脈的深處潛入，強大的水流讓你難以前進，
+唯一在如此強勁的水流下行動的方法只有足夠的體力，或者是藉由重
+物讓自己不至於被強勁的水流推走。
+~
+0 1048576 8
+S
+#60655
+地下水脈~
+你憑著毅力往地下水脈的深處潛入，強大的水流讓你難以前進，
+唯一在如此強勁的水流下行動的方法只有足夠的體力，或者是藉由重
+物讓自己不至於被強勁的水流推走，在這漆黑的地下水脈，本應沒有
+亮光的，但你覺得上方的似乎有著波光在閃爍。
+~
+0 1048576 8
+D4
+~
+~
+0 0 60735
+S
+#60656
+獸跡的祕徑~
+精於狩獵的你終於探索到野獸間的秘密通道，這條藏於灌木叢間
+的小徑完全斷絕陽光，整條通道發出噁心的野獸臭味，腳下踏著的可
+能是爛泥或是野獸的排泄物，其中也包含了一些不知為何物形成的黑
+色腐土，也不知這條獸徑通往何處。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60603
+D3
+~
+~
+0 0 60657
+S
+#60657
+獸跡的祕徑~
+精於狩獵的你終於探索到野獸間的秘密通道，這條藏於灌木叢間
+的小徑完全斷絕陽光，整條通道發出噁心的野獸臭味，腳下踏著的可
+能是爛泥或是野獸的排泄物，其中也包含了一些不知為何物形成的黑
+色腐土，也不知這條獸徑通往何處。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60656
+D2
+~
+~
+0 0 60658
+S
+#60658
+獸跡的祕徑~
+精於狩獵的你終於探索到野獸間的秘密通道，這條藏於灌木叢間
+的小徑完全斷絕陽光，整條通道發出噁心的野獸臭味，腳下踏著的可
+能是爛泥或是野獸的排泄物，其中也包含了一些不知為何物形成的黑
+色腐土，也不知這條獸徑通往何處。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60657
+D3
+~
+~
+0 0 60659
+S
+#60659
+獸跡的祕徑~
+精於狩獵的你終於探索到野獸間的秘密通道，這條藏於灌木叢間
+的小徑完全斷絕陽光，整條通道發出噁心的野獸臭味，腳下踏著的可
+能是爛泥或是野獸的排泄物，其中也包含了一些不知為何物形成的黑
+色腐土，也不知這條獸徑通往何處。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60658
+D2
+~
+~
+0 0 60660
+S
+#60660
+獸跡的祕徑~
+精於狩獵的你終於探索到野獸間的秘密通道，這條藏於灌木叢間
+的小徑完全斷絕陽光，整條通道發出噁心的野獸臭味，腳下踏著的可
+能是爛泥或是野獸的排泄物，其中也包含了一些不知為何物形成的黑
+色腐土，也不知這條獸徑通往何處。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60659
+D3
+~
+~
+0 0 60661
+S
+#60661
+獸跡的祕徑~
+精於狩獵的你終於探索到野獸間的秘密通道，這條藏於灌木叢間
+的小徑完全斷絕陽光，整條通道發出噁心的野獸臭味，腳下踏著的可
+能是爛泥或是野獸的排泄物，其中也包含了一些不知為何物形成的黑
+色腐土，也不知這條獸徑通往何處。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60660
+D3
+~
+~
+0 0 60662
+S
+#60662
+失落森林深處~
+獸徑的出口不是野獸的洞窟，而是更通往失落森林的深處，這裡
+的森林更為濃密，薄霧依舊籠罩著這片森林，各種生物的嚎叫聲在這
+裡更為明顯，腳下的小徑充滿了荒煙漫草，若不是你的狩獵技巧有成
+，你也無法追著隱藏於草叢中的足跡找到此地。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60661
+D2
+~
+~
+0 0 60663
+D3
+~
+~
+0 0 60679
+S
+#60663
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60662
+D1
+~
+~
+0 0 60664
+S
+#60664
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60665
+D3
+~
+~
+0 0 60663
+S
+#60665
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D2
+~
+~
+0 0 60666
+D3
+~
+~
+0 0 60664
+S
+#60666
+失落森林深處密徑~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60665
+D2
+~
+~
+0 0 60667
+S
+#60667
+失落森林深處密徑~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60666
+D2
+~
+~
+0 0 60668
+S
+#60668
+失落森林深處密徑~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60667
+D3
+~
+~
+0 0 60669
+S
+#60669
+失落森林深處密徑~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60668
+D3
+~
+~
+0 0 60670
+S
+#60670
+失落森林深處的古塔~
+你在隱密小徑的最深處看到了之前類似的事物，那座石製的高塔
+，一模一樣的高塔，只是更為完整，而且整座塔是黑色的堅石所製，
+雖然隨著長遠的時間過去爬滿了蔓藤，看上去猶如森林的手指自地上
+伸出來一般。
+~
+0 1048576 4
+D1
+~
+~
+0 0 60669
+D2
+~
+~
+0 0 60671
+D3
+~
+~
+0 0 60677
+S
+#60671
+失落森林深處的古塔~
+你走在石塔的周圍，你看到在藤蔓下的黑色古塔有著許多石像鬼
+的雕飾，怒張的蝠翼與詭異的嘴臉看起來煞是嚇人，你也注意到，這
+座塔並沒有任何的窗口，說是塔，卻更像某種巨大的紀念碑。
+~
+0 1048576 4
+D0
+~
+~
+0 0 60670
+D2
+~
+~
+0 0 60672
+S
+#60672
+失落森林深處的古塔~
+你走在石塔的周圍，你看到在藤蔓下的黑色古塔有著許多石像鬼
+的雕飾，怒張的蝠翼與詭異的嘴臉看起來煞是嚇人，你也注意到，這
+座塔並沒有任何的窗口，說是塔，卻更像某種巨大的紀念碑。
+~
+0 1048576 4
+D0
+~
+~
+0 0 60671
+D3
+~
+~
+0 0 60673
+S
+#60673
+失落森林深處的古塔~
+你站在石塔的前方，說是塔，卻更像某種巨大的紀念碑，在這裡
+你看到眼前有一扇座落在石塔基座上的門，像是通往古塔地下一般，
+然而門上有著強烈的封印與獨特的文字，你完全無法開啟這門。
+~
+0 1048576 4
+D1
+~
+~
+0 0 60672
+D3
+~
+~
+0 0 60674
+>room_enter 6 50~
+echoat $n 映入你眼簾的是座低矮的古塔，與其說是古塔更像是某種陵墓
+~
+>room_mask look board~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100010
+        echoat $n 石板上清楚描繪著如何將石龍角正確的插入凹槽的方式
+        echoat $n 你了解如何插入石龍角了(insert 'the horn in the fillister')
+        endif
+endif
+~
+>room_mask north default~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) >= lf_hunter 100011
+                echoat $n 你穿過北面開啟的石門進到古塔之中...
+                transfer $n 60678
+        else
+                echoat $n [0;33m哎呀，此路不通。[m
+        endif
+break
+endif
+if is_qmark($n) > lf_hunter 300001
+        echoat $n 你穿過北面開啟的石門進到古塔之中...
+        transfer $n 60678
+else
+        echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+>room_command insert p the horn in the fillister~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100010
+                is_inv_obj($n) == 60522
+                        purge $n horn-lf
+                        echoat $n 你將石龍角按照石板上的方式插入了石雕的凹槽中...
+                        callout 2 echoat $n 一時之間似乎什麼事情都沒有發生......
+                        callout 4 echoat $n 但是慢慢的...慢慢的...一種莫名的嗡嗡聲慢慢大了起來...
+                        callout 5 echo 嗡嗡～～～嗡～～～嗡～～～
+                        callout 6 echoat $n 這聲音讓你有種不舒服的感覺...
+                        callout 7 echo 嗡嗡～～～嗡～～～嗡～～～
+                        callout 8 echoat $n 忽然！四周安靜了下來！就像什麼要發生了一般！
+                        callout 10 echoat $n 你聽到一種像是空氣忽然被劃破的尖銳聲響！
+                        callout 11 echoat $n 原本北面那兩扇沉重無法移動的巨大石門忽然在你眼前打開了！
+                        callout 11 mod_qmark $n lf_hunter v0 = 11
+                else
+                        echoat $n 你需要一根石龍角，不然你是打算插什麼東西？
+                endif
+        endif
+endif
+~
+>room_command search fillister~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100009
+                echoat $n 你仔細的搜索著凹槽四周，你發現在凹槽旁有一塊平滑的小石板(board)
+                echoat $n 石板上似乎刻了一些奇特的圖樣...
+                mod_qmark $n lf_hunter v0 = 10
+        endif
+endif
+~
+>room_command search default~
+echoat $n 你搜尋了一下四周
+if is_qmark($n) > lf_hunter 300001
+        echoat $n 這是座巨大的古塔，北邊是解開封印後半敞著的石門...
+        break
+endif
+if is_qmark($n) == lf_hunter 200005
+        echoat $n 你發現在古塔整體是座巨大的石雕
+        callout 1 echoat $n 就在石雕的臺座上你發現了一個雕工精細的石門
+        callout 2 echoat $n 你試圖推開石門但卻徒勞無功，門上有著未見過的魔封法陣
+        callout 3 echoat $n 或許獵戶知道關於這方面的傳說也不一定？
+        callout 3 mod_qmark $n lf_hunter v1 = 6
+endif
+if is_qmark($n) == lf_hunter 200006
+        callout 1 echoat $n 你發現在古塔整體是座巨大的石雕
+        callout 2 echoat $n 你試圖推開石門但卻徒勞無功，門上有著未見過的魔封法陣
+        callout 2 echoat $n 就在石雕的臺座上你發現了一個雕工精細的石門
+        callout 3 rcall lf_greatgateX
+endif
+~
+>room_defun lf_greatgateX~
+if is_qmark($n) == lf_hunter 100000
+        echoat $n 或許獵戶知道關於這方面的傳說也不一定？
+endif
+if is_qmark($n) == lf_hunter 100008
+        echoat $n 你不死心的在四周更仔細的搜尋著...
+        callout 1 echoat $n 你想著森林之主所告訴你的......雕像上的凹槽
+        callout 3 echoat $n 終於！你在雕像高舉的右手發現了一個不尋常的凹槽(fillister)
+        callout 5 echoat $n 或許這就是要插入石龍角的地方？
+        callout 5 mod_qmark $n lf_hunter v0 = 9
+endif
+if is_qmark($n) >= lf_hunter 100009
+        echoat $n 你已經在一旁的石雕上發現了凹槽(fillister)
+        callout 1 echoat $n 這個可疑的凹槽似乎需要好好的搜索看看
+endif
+~
+|
+S
+#60674
+失落森林深處的古塔~
+你走在石塔的周圍，你看到在藤蔓下的黑色古塔有著許多石像鬼
+的雕飾，怒張的蝠翼與詭異的嘴臉看起來煞是嚇人，你也注意到，這
+座塔並沒有任何的窗口，說是塔，卻更像某種巨大的紀念碑。
+~
+0 1048576 4
+D0
+~
+~
+0 0 60675
+D1
+~
+~
+0 0 60673
+S
+#60675
+失落森林深處的古塔~
+你走在石塔的周圍，你看到在藤蔓下的黑色古塔有著許多石像鬼
+的雕飾，怒張的蝠翼與詭異的嘴臉看起來煞是嚇人，你也注意到，這
+座塔並沒有任何的窗口，說是塔，卻更像某種巨大的紀念碑。
+~
+0 1048576 4
+D0
+~
+~
+0 0 60676
+D2
+~
+~
+0 0 60674
+S
+#60676
+失落森林深處的古塔~
+你走在石塔的周圍，你看到在藤蔓下的黑色古塔有著許多石像鬼
+的雕飾，怒張的蝠翼與詭異的嘴臉看起來煞是嚇人，你也注意到，這
+座塔並沒有任何的窗口，說是塔，卻更像某種巨大的紀念碑。
+~
+0 1048576 4
+D1
+~
+~
+0 0 60677
+D2
+~
+~
+0 0 60675
+S
+#60677
+失落森林深處的古塔~
+你走在石塔的周圍，你看到在藤蔓下的黑色古塔有著許多石像鬼
+的雕飾，怒張的蝠翼與詭異的嘴臉看起來煞是嚇人，你也注意到，這
+座塔並沒有任何的窗口，說是塔，卻更像某種巨大的紀念碑。
+~
+0 1048576 4
+D1
+~
+~
+0 0 60670
+D3
+~
+~
+0 0 60676
+S
+#60678
+失落森林深處的古塔~
+古塔的門被你打開之後，你腳下是古老的魔法陣，十三個點構築
+成帶有強大的力量的十三芒星紋，直接蝕刻在黑色的堅石上，你發現
+古塔中央有個高聳的祭壇，祭壇上有尖銳的十三芒星構成的尖角，角
+上有特殊的凹槽，凹槽延伸到周旁魔法陣的十三個點上，看來要啟動
+這個魔法陣似乎需要某種儀式。
+~
+0 8|1048576 4
+>room_command devote blood~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100012
+                echoat $n 你忍著痛將自己的手如同祭壇石雕上那般狠狠穿刺！
+                callout 1 echoat $n 雖然你是這麼想的，但實際上你竟然一點痛覺都沒有！
+                callout 2 echoat $n 但是祭壇上的十三芒星角確實刺穿了你的手心，血也毫不留情的流著！
+                callout 3 echoat $n 很快的你的手幾乎喪失了血色，而四周也慢慢泛起奇特的血光......
+                callout 4 echoat $n 就在血的十三芒星陣完成的瞬間，你感覺有股力量將你的手推離了祭壇的星角！
+                callout 6 echoat $n 你簡直不敢相信，你的手依然完好如初，只是蒼白了些...
+                callout 8 transfer $n 60697
+                callout 8 mod_qmark $n lf_hunter v0 = 13
+                callout 8 echoat $n 等你睜開眼睛...你已經來到了一處陌生的地方...
+                callout 8 echoat $n 你腳下的十三芒星陣發出了令人無法逼視的強烈紅光！
+        endif
+break
+endif
+if is_qmark($n) > lf_hunter 300001
+~
+>room_command search altar~
+if is_qmark($n) == lf_hunter 200006
+        if is_qmark($n) == lf_hunter 100011
+                echoat $n 你小心的搜索著祭壇，接著你看到祭壇四周刻劃著一些東西
+                callout 1 echoat $n 上面刻劃著一個人將自己的手掌刺過祭壇上的尖角
+                callout 2 echoat $n 血透過祭壇快速的往十三個角落流去，最後組成血的十三芒星陣
+                callout 3 echoat $n 似乎這就是進入血族世界的方式，貢獻你的血(devote blood)
+                callout 3 mod_qmark $n lf_hunter v0 = 12
+        endif
+endif
+~
+>room_command search default~
+        echoat $n 你環顧四週...腳下是個巨大的魔法陣
+        callout 1 echoat $n 地上是罕見的十三芒星陣，即使在古代文獻也鮮少出現
+        callout 2 echoat $n 因為十三被認為是不吉祥的數字，但卻是血族認為榮耀的數字
+        callout 3 echoat $n 你觀看著四周，最顯眼的還是古塔中央那座高聳的祭壇(altar)
+~
+|
+S
+#60679
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60662
+D3
+~
+~
+0 0 60680
+S
+#60680
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60679
+D3
+~
+~
+0 0 60681
+S
+#60681
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60680
+D3
+~
+~
+0 0 60682
+S
+#60682
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60681
+D3
+~
+~
+0 0 60683
+S
+#60683
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60682
+D3
+~
+~
+0 0 60684
+S
+#60684
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60683
+D2
+~
+~
+0 0 60685
+S
+#60685
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60684
+D2
+~
+~
+0 0 60686
+S
+#60686
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60685
+D3
+~
+~
+0 0 60687
+S
+#60687
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60686
+D2
+~
+~
+0 0 60688
+S
+#60688
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60687
+D3
+~
+~
+0 0 60689
+S
+#60689
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60688
+D3
+~
+~
+0 0 60690
+S
+#60690
+失落森林深處~
+森林的深處沒有明顯的路徑，你完全只能靠著追尋野獸的腳印來
+推測路徑往哪邊接續下去，有時你也會碰到無法繼續追蹤的路徑，這
+只能靠著你的狩獵技巧更加進步才有辦法克服。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60691
+D1
+~
+~
+0 0 60689
+S
+#60691
+失落森林深處~
+森林的小徑在這裡忽然敞開起來，地上的雜草也越來越少，眼前
+的樹林也越來越稀疏，似乎前面有著什麼一般，而霧也在這裡慢慢飄
+散開來，似乎連野獸的嚎叫也在此停息了一般。
+~
+0 1048576 3
+D2
+~
+~
+0 0 60690
+D3
+~
+~
+0 0 60692
+S
+#60692
+失落森林深處~
+森林的小徑在這裡忽然敞開起來，地上的雜草也越來越少，眼前
+的樹林也越來越稀疏，似乎前面有著什麼一般，而霧也在這裡慢慢飄
+散開來，似乎連野獸的嚎叫也在此停息了一般。
+~
+0 4|1048576 3
+D0
+~
+~
+0 0 60693
+D1
+~
+~
+0 0 60691
+S
+#60693
+失落森林深處的空地~
+你來到森林中的一處空地，這裡看來有種詭異的感覺，空曠的地
+上乾淨而有著薄薄的草皮，像是有人長期整理般的整齊長著，一股無
+法言喻的靜肅感圍繞著這片空地，似乎有什麼神聖之物在此一般。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60694
+D2
+~
+~
+0 0 60692
+D3
+~
+~
+0 0 60696
+S
+#60694
+失落森林深處的空地~
+你來到森林中的一處空地，這裡看來有種詭異的感覺，空曠的地
+上乾淨而有著薄薄的草皮，像是有人長期整理般的整齊長著，一股無
+法言喻的靜肅感圍繞著這片空地，似乎有什麼神聖之物在此一般。
+~
+0 1048576 3
+D2
+~
+~
+0 0 60693
+D3
+~
+~
+0 0 60695
+S
+#60695
+失落森林深處的空地~
+你來到森林中的一處空地，這裡看來有種詭異的感覺，空曠的地
+上乾淨而有著薄薄的草皮，像是有人長期整理般的整齊長著，一股無
+法言喻的靜肅感圍繞著這片空地，似乎有什麼神聖之物在此一般。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60694
+D2
+~
+~
+0 0 60696
+>room_rand 50~
+if pcnum($) > 0
+        if roomtimer($0) != 0
+                echo 空地看來冷冷清清...似乎守護這的力量消失了一般...
+                break
+        endif
+  if day($) != 1
+  or day($) != 7
+  or day($) != 13
+  or day($) != 19
+  or day($) != 25
+  or day($) != 31
+        if mobcount(60529) == 0
+        echo 森林之主緩緩的降臨此地...
+        mload 60529
+        endif
+  endif
+endif
+~
+|
+S
+#60696
+失落森林深處的空地~
+你來到森林中的一處空地，這裡看來有種詭異的感覺，空曠的地
+上乾淨而有著薄薄的草皮，像是有人長期整理般的整齊長著，一股無
+法言喻的靜肅感圍繞著這片空地，似乎有什麼神聖之物在此一般。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60695
+D1
+~
+~
+0 0 60693
+S
+#60697
+空地上的魔法陣~
+穿越了黑色古塔下的魔法陣，你被帶到了詭異的地方，四周被古
+老的森林所包圍，除了北方之外完全沒有通道，你甚至不知道自己是
+否仍處在森林裡，唯一可以確定的是，你闖入了不該踏入的領域。
+~
+0 1048576 4
+D0
+~
+~
+0 0 60698
+S
+#60698
+古老的木拱門~
+眼前是一道古老的木製拱門，拱門的形式你完全沒有看過類似的
+，而在拱門旁有兩個小小的哨站，拱門兩邊是高聳的樹牆圍籬，每隔
+一段距離還可以看到高聳的箭塔樹立在圍籬內的四周，看起來猶如一
+個隱密的森林要塞一般。
+~
+0 1048576 1
+D2
+~
+~
+0 0 60697
+>room_rand 100~
+if pcnum($) == 0
+if roomvalue($0) != 0
+        modrvt v0 = 0
+endif
+endif
+~
+>room_mask north default~
+if roomvalue($0) != 1
+        echoat $n [0;33m木閘門是關閉的，或許你該先詢問門口的守衛[m
+break
+endif
+if is_qmark($n) > lf_hunter 300001
+        echoat $n [0;36m木閘門開啟到一定高度後在你眼前慢慢停住了.....[m
+        echoat $n [0;36m在守衛的注視下你走進了護林者村。[m
+        callout 1 at $n echoat $n [0;33m嘰咂...嘰咂...[m
+        callout 2 at $n echoat $n [0;36m木閘門嘰咂嘰咂地在你身後緩緩落下...[m
+        callout 2 transfer $n 60699
+        callout 2 at $n force $n look
+        callout 2 modrvt v0 = 0
+else
+        echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+>room_enter 4 100~
+if insameroom(bamo-lf)
+        force bamo-lf mpcall lf_guard $n
+else
+        if mobcount(60513) > 0
+          transfer bamo-lf
+          force bamo-lf mpcall lf_guard $n
+        else
+          mload 60513
+          forcer bamot-lf mpcall lf_guard $n
+        endif
+endif
+~
+|
+S
+#60699
+護林者之村~
+這裡是古老的護林者之村，村內的道路是碎石所鋪成的，小小的
+渠道圍繞在每個房子四周，導引著每個住屋的污水流向不知名的地方
+，村內的道路上鮮少有居民在行走，或許是因為人口不多吧。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60700
+>room_rand 100~
+if pcnum($) == 0
+if roomvalue($0) != 0
+        modrvt v0 = 0
+endif
+endif
+~
+>room_mask south default~
+if roomvalue($0) != 1
+        echoat $n [0;33m木閘門是關閉的，或許你該先詢問門口的守衛[m
+break
+endif
+if is_qmark($n) > lf_hunter 300001
+        echoat $n [0;36m木閘門開啟到一定高度後在你眼前慢慢停住了.....[m
+        echoat $n [0;36m在守衛的注視下你走出了護林者村。[m
+        callout 1 at $n echoat $n [0;33m嘰咂...嘰咂...[m
+        callout 2 at $n echoat $n [0;36m木閘門嘰咂嘰咂地在你身後緩緩落下...[m
+        callout 2 transfer $n 60698
+        callout 2 at $n force $n look
+        callout 2 modrvt v0 = 0
+else
+        echoat $n [0;33m哎呀，此路不通。[m
+endif
+~
+|
+S
+#60700
+村頭路~
+這是通往村內與村外的第一條路，因次也被稱為村頭路，在道路
+右方有間民宅，護林者村的房舍形式看起來十分的詭異，木製的房舍
+頂端普遍都有著尖銳的蝠翼狀的雕飾，順著道路往北看去還有著一間
+巨大的十三角狀大房屋，看起來十分壯觀。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60701
+D1
+~
+~
+0 0 60752
+D2
+~
+~
+0 0 60699
+D3
+~
+~
+0 0 60725
+S
+#60701
+村頭路~
+村頭路在這裡到了底，北邊就是護林者村的祖屋，任何大事都將
+在這間祖屋裡議決，所以這間祖屋也就理所當然的成了護林者村的精
+神象徵，而由於護林者村成員都是血族的一份子，這間祖屋還負有一
+個特別的任務，只是從來不能外傳給外族知道。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60729
+D1
+~
+~
+0 0 60702
+D2
+~
+~
+0 0 60700
+S
+#60702
+村內道路~
+護林者村有名字的路也就僅有一條，其他的路則全然沒有名字，
+原因不明，但是也有可能當初這裡只是當作暫時的據點而沒有仔細規
+劃，顯而易見的是這裡的建設並沒有全盤的規劃，道路像是隨性的開
+拓而成，而房屋似乎也是近幾十年才重新建成的。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60703
+D3
+~
+~
+0 0 60701
+S
+#60703
+村內道路~
+你來到一段三叉路上，往東而去通往一個高聳的箭塔，往北是通
+往護林者村內部的通道，往遙遠的北面看去，你似乎看到一個石頭砌
+成的水井在道路的盡頭。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60705
+D1
+~
+~
+0 0 60704
+D3
+~
+~
+0 0 60702
+S
+#60704
+村內道路~
+這是通往箭塔的道路，箭塔看來非常的高，但是也才只比一旁的
+樹牆圍籬高出一點而已，隱沒在樹葉中的箭塔若不仔細看，根本無法
+察知，東西向的道路北面有一間房屋，從窗內看去似乎是間民宅。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60740
+D3
+~
+~
+0 0 60703
+S
+#60705
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，在道路的東邊
+是一間民宅，有時還有剛要上崗的護林者從房內走出來。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60706
+D1
+~
+~
+0 0 60734
+D2
+~
+~
+0 0 60703
+S
+#60706
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往西的路是通
+往護林者村的祖屋，往北則更深入護林者村的內部。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60708
+D2
+~
+~
+0 0 60705
+D3
+~
+~
+0 0 60707
+S
+#60707
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往西就是祖屋
+了，平時這邊的門是不關的，只有緊急的時候才會深鎖大門，祖屋平
+時除了處理重大事情之外，也被當作交誼廳來使用。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60706
+D3
+~
+~
+0 0 60727
+S
+#60708
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往北就是護林
+者村賴以維生的水井，雖然血族是以血維生，但是水源依然是十分重
+要的資源，武器的鍛造過程與洗滌還是缺不了水。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60735
+D2
+~
+~
+0 0 60706
+D3
+~
+~
+0 0 60709
+S
+#60709
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往北的路看來
+有點荒涼，那也是通往最北邊的箭塔的唯一道路，往西則通往村中唯
+一的酒館。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60710
+D1
+~
+~
+0 0 60708
+D3
+~
+~
+0 0 60714
+S
+#60710
+村內道路~
+通往最北面箭塔的道路兩側長滿了雜草，位在這最遠離村中央的
+箭塔的唯一要道上，這條道路仍舊被維持的十分良好，只是除了上崗
+的人之外大概不會有其他人走到這路上吧？
+~
+0 1048576 1
+D0
+~
+~
+0 0 60711
+D2
+~
+~
+0 0 60709
+S
+#60711
+村內道路~
+通往最北面箭塔的道路兩側長滿了雜草，位在這最遠離村中央的
+箭塔的唯一要道上，這條道路仍舊被維持的十分良好，只是除了上崗
+的人之外大概不會有其他人走到這路上吧？
+~
+0 1048576 1
+D0
+~
+~
+0 0 60712
+D2
+~
+~
+0 0 60710
+S
+#60712
+村內道路~
+通往最北面箭塔的道路兩側長滿了雜草，位在這最遠離村中央的
+箭塔的唯一要道上，這條道路仍舊被維持的十分良好，只是除了上崗
+的人之外大概不會有其他人走到這路上吧？
+~
+0 1048576 1
+D2
+~
+~
+0 0 60711
+D3
+~
+~
+0 0 60713
+S
+#60713
+村內道路~
+通往最北面箭塔的道路兩側長滿了雜草，位在這最遠離村中央的
+箭塔的唯一要道上，這條道路仍舊被維持的十分良好，只是除了上崗
+的人之外大概不會有其他人走到這路上吧？
+~
+0 1048576 1
+D1
+~
+~
+0 0 60712
+D3
+~
+~
+0 0 60736
+S
+#60714
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，北邊就是村內
+唯一的酒館～血輪之月～，店門前的這條路鋪了平整的石板，也是整
+個村內唯一的一條石板路。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60733
+D1
+~
+~
+0 0 60709
+D3
+~
+~
+0 0 60715
+S
+#60715
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往南是通往祖
+屋的路，往東可以通向村內唯一的酒館。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60714
+D2
+~
+~
+0 0 60726
+D3
+~
+~
+0 0 60716
+S
+#60716
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往北可通往護
+村的箭塔，往西則有一間房屋，看起來應該是間民宅，往南則是一條
+南北向的大道通往村子外圍。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60737
+D1
+~
+~
+0 0 60715
+D2
+~
+~
+0 0 60717
+D3
+~
+~
+0 0 60732
+S
+#60717
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，在道路東邊可
+以看到護林者村祖屋的西側，在祖屋的屋簷下垂掛著一些串在一起的
+獸牙，還有標有狩獵者姓名的野獸頭骨，顯現護林者村的武勇精神。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60716
+D2
+~
+~
+0 0 60718
+S
+#60718
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，這是條十字路
+，往東可以通往祖屋的西門，而往西可以通往村內最好的製弓舖。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60717
+D1
+~
+~
+0 0 60728
+D2
+~
+~
+0 0 60722
+D3
+~
+~
+0 0 60719
+S
+#60719
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往南就可以走
+入製弓舖內，這是由村內最好的弓箭製造者所開設的，往西可以通往
+護村的箭塔。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60718
+D2
+~
+~
+0 0 60731
+D3
+~
+~
+0 0 60720
+S
+#60720
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往南通往護村
+的箭塔，在西南邊還可以看到製弓舖的煙囪正冒著煙。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60719
+D2
+~
+~
+0 0 60721
+S
+#60721
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，西邊就是箭塔
+的繩梯，被群樹圍繞的護林者村由於隱密在綠色之中。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60720
+D3
+~
+~
+0 0 60738
+S
+#60722
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，在西邊可以看
+到製弓舖的東側，在不遠處的東北方可以看到護林者村的祖屋聳立在
+村子的中央，往南市通往護村的箭塔的通路。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60718
+D2
+~
+~
+0 0 60723
+S
+#60723
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，這是條三叉路
+，往南通往箭塔，往東則通到鐵匠舖的店門口以及村子的出口，在這
+邊不時可以聽到東南邊的鐵匠舖傳來的打鐵聲。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60722
+D1
+~
+~
+0 0 60725
+D2
+~
+~
+0 0 60724
+S
+#60724
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往西通往緊靠
+樹牆圍籬的箭塔，就在距離道路幾步的距離你可以看到南面的樹木緊
+密生長，形成了天然的阻礙。
+~
+0 1048576 1
+D0
+~
+~
+0 0 60723
+D3
+~
+~
+0 0 60739
+S
+#60725
+村內道路~
+護林者村的村內像是一個戰地的前線基地，偶爾擦身而過的路人
+都是武裝的，男男女女看來都是一幅老練戰士的模樣，往南是村內唯
+一的鐵匠舖，熱烘烘的蒸氣與打鐵的聲音自南邊的鐵匠舖不斷傳出。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60700
+D2
+~
+~
+0 0 60730
+D3
+~
+~
+0 0 60723
+S
+#60726
+護林者村的祖屋~
+這就是護林者村的祖屋，北邊的出口通往村內道路，祖屋的內部
+比外面的地面還高了一呎多，整個祖屋的地板用的是紅檜木所鋪設的
+，天然的木紋與檜木香味在祖屋內飄散著，整間祖屋完全不用釘子，
+而是靠榫頭與榫孔來連接。
+~
+0 8|1024|1048576 0
+D0
+~
+~
+0 0 60715
+D1
+~
+~
+0 0 60727
+D2
+~
+~
+0 0 60728
+S
+#60727
+護林者村的祖屋~
+這就是護林者村的祖屋，東邊的出口通往村內道路，祖屋的內部
+比外面的地面還高了一呎多，整個祖屋的地板用的是紅檜木所鋪設的
+，天然的木紋與檜木香味在祖屋內飄散著，整間祖屋完全不用釘子，
+而是靠榫頭與榫孔來連接。
+~
+0 8|1024|1048576 0
+D1
+~
+~
+0 0 60707
+D2
+~
+~
+0 0 60729
+D3
+~
+~
+0 0 60726
+S
+#60728
+護林者村的祖屋~
+這就是護林者村的祖屋，西邊的出口通往村內道路，祖屋的內部
+比外面的地面還高了一呎多，整個祖屋的地板用的是紅檜木所鋪設的
+，天然的木紋與檜木香味在祖屋內飄散著，整間祖屋完全不用釘子，
+而是靠榫頭與榫孔來連接。
+~
+0 8|1024|1048576 0
+D0
+~
+~
+0 0 60726
+D1
+~
+~
+0 0 60729
+D3
+~
+~
+0 0 60718
+S
+#60729
+護林者村的祖屋~
+這就是護林者村的祖屋，南邊的出口直通村外，祖屋的內部比外
+面的地面還高了一呎多，整個祖屋的地板用的是紅檜木所鋪設的，天
+然的木紋與檜木香味在祖屋內飄散著，整間祖屋完全不用釘子，而是
+靠榫頭與榫孔來連接。
+~
+0 8|1024|1048576 0
+D0
+~
+~
+0 0 60727
+D2
+~
+~
+0 0 60701
+D3
+~
+~
+0 0 60728
+S
+#60730
+鐵匠舖~
+這裡是護林者村唯一的鐵匠舖，護林者村內的鐵器都是經由這裡
+來製造或是修理的，在過去的年代裡，也曾斷斷續續有人來過這裡請
+求鐵匠舖的主人幫忙製作一把神兵利器，或許你也能在此獲得一件專
+屬於自己的武器也不一定。
+~
+0 8|1024|1048576 0
+D0
+~
+~
+0 0 60725
+S
+#60731
+製弓舖~
+這裡是護林者村唯一的製弓舖，但這在一個全村人都會製造弓與
+箭的情況下是很弔詭的，然而這裡所製造出來的弓與箭是全村最良好
+的卻是大家都認同的。
+~
+0 8|1024|1048576 0
+D0
+~
+~
+0 0 60719
+S
+#60732
+酒館～血輪之月～~
+血輪之月，在這個小村內的唯一一間酒館，也是唯一不事戰鬥的
+村民所在處，酒館內的燈光是種黯淡的昏黃，茉莉花香的氣息在酒館
+內慢慢的飄散，酒館的主人正在櫃檯後撐著手看著你。
+~
+0 8|1024|131072|1048576 0
+D2
+~
+~
+0 0 60714
+S
+#60733
+民宅~
+這裡是護林者村的民宅內，房子內有一個大通舖，屋內普遍的架
+高離地，一來是防溼氣，二來可以保持通風，在屋子的牆上掛有備用
+的弓與箭袋，屋子的一角還有不少箭的半成品。
+~
+0 8|1048576 0
+D1
+~
+~
+0 0 60716
+S
+#60734
+民宅~
+這裡是護林者村的民宅內，房子內有一個大通舖，屋內普遍的架
+高離地，一來是防溼氣，二來可以保持通風，在屋子的牆上掛有備用
+的弓與箭袋，屋子的一角還有不少箭的半成品。
+~
+0 8|1048576 0
+D3
+~
+~
+0 0 60705
+S
+#60735
+水井~
+這裡是護林者村賴以維生的水井，雖說是水井，其實是一個有系
+統的自動給水系統，水井上有一個半圓的石製蓋子，而水則透過村內
+的上層渠道送到每個宅中，藉由高低差使水自動流出，而污水在最後
+會流入下層渠道送入周邊的樹牆圍籬中成為肥料。
+~
+0 1048576 1
+D2
+~
+~
+0 0 60708
+S
+#60736
+北邊箭塔底部~
+高聳的箭塔是由一根巨大的紅檜所支撐，一體成形而難以推倒，
+而紅檜跟周邊的圍籬巧妙的融為一體，在紅檜枝葉中的箭塔更是難以
+辨視，而通往箭塔的方法除了爬樹外就是攀爬箭塔上垂下的繩梯。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60713
+>room_command search default~
+echoat $n 你四處找了找，發現在樹幹背後隱匿處有一束繩梯(ropeladder)可以攀爬。
+echoaround $n $n 張目四望，不知道在找什麼。
+~
+>room_command climb ropeladder~
+echoat $n 你攀著繩梯緩緩的往上爬。
+transfer $n 60741
+echoaround $n 你看到 $n 不知道從哪找到了繩梯往上攀去。
+~
+|
+S
+#60737
+西北邊箭塔底部~
+高聳的箭塔是由一根巨大的紅檜所支撐，一體成形而難以推倒，
+而紅檜跟周邊的圍籬巧妙的融為一體，在紅檜枝葉中的箭塔更是難以
+辨視，而通往箭塔的方法除了爬樹外就是攀爬箭塔上垂下的繩梯。
+~
+0 1048576 1
+D2
+~
+~
+0 0 60716
+>room_command search default~
+echoat $n 你四處找了找，發現在樹幹背後隱匿處有一束繩梯(ropeladder)可以攀爬。
+echoaround $n $n 張目四望，不知道在找什麼。
+~
+>room_command climb ropeladder~
+echoat $n 你攀著繩梯緩緩的往上爬。
+transfer $n 60742
+echoaround $n 你看到 $n 不知道從哪找到了繩梯往上攀去。
+~
+|
+S
+#60738
+西邊箭塔底部~
+高聳的箭塔是由一根巨大的紅檜所支撐，一體成形而難以推倒，
+而紅檜跟周邊的圍籬巧妙的融為一體，在紅檜枝葉中的箭塔更是難以
+辨視，而通往箭塔的方法除了爬樹外就是攀爬箭塔上垂下的繩梯。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60721
+>room_command search default~
+echoat $n 你四處找了找，發現在樹幹背後隱匿處有一束繩梯(ropeladder)可以攀爬。
+echoaround $n $n 張目四望，不知道在找什麼。
+~
+>room_command climb ropeladder~
+echoat $n 你攀著繩梯緩緩的往上爬。
+transfer $n 60743
+echoaround $n 你看到 $n 不知道從哪找到了繩梯往上攀去。
+~
+|
+S
+#60739
+南邊箭塔底部~
+高聳的箭塔是由一根巨大的紅檜所支撐，一體成形而難以推倒，
+而紅檜跟周邊的圍籬巧妙的融為一體，在紅檜枝葉中的箭塔更是難以
+辨視，而通往箭塔的方法除了爬樹外就是攀爬箭塔上垂下的繩梯。
+~
+0 1048576 1
+D1
+~
+~
+0 0 60724
+>room_command search default~
+echoat $n 你四處找了找，發現在樹幹背後隱匿處有一束繩梯(ropeladder)可以攀爬。
+echoaround $n $n 張目四望，不知道在找什麼。
+~
+>room_command climb ropeladder~
+echoat $n 你攀著繩梯緩緩的往上爬。
+transfer $n 60744
+echoaround $n 你看到 $n 不知道從哪找到了繩梯往上攀去。
+~
+|
+S
+#60740
+東邊箭塔底部~
+高聳的箭塔是由一根巨大的紅檜所支撐，一體成形而難以推倒，
+而紅檜跟周邊的圍籬巧妙的融為一體，在紅檜枝葉中的箭塔更是難以
+辨視，而通往箭塔的方法除了爬樹外就是攀爬箭塔上垂下的繩梯。
+~
+0 1048576 1
+D3
+~
+~
+0 0 60704
+>room_command search default~
+echoat $n 你四處找了找，發現在樹幹背後隱匿處有一束繩梯(ropeladder)可以攀爬。
+echoaround $n $n 張目四望，不知道在找什麼。
+~
+>room_command climb ropeladder~
+echoat $n 你攀著繩梯緩緩的往上爬。
+transfer $n 60745
+echoaround $n 你看到 $n 不知道從哪找到了繩梯往上攀去。
+~
+|
+S
+#60741
+北邊箭塔~
+箭塔整體沿著樹枝而建造，狹小的空間只能容許三人並肩而站，
+而箭塔後方則是豎立著成堆的弓箭，箭塔的視野能夠環顧四周，就算
+敵人處於箭塔底下也能夠藉由垛孔加以射擊，唯一的出口是自塔上垂
+往下方的繩梯。
+~
+0 8|1048576 0
+>room_command climb ropeladder~
+echoat $n 你爬著繩梯往下而去。
+transfer $n 60736
+echoaround $n 你看到 $n 順著繩梯而下。
+~
+|
+S
+#60742
+西北邊箭塔~
+箭塔整體沿著樹枝而建造，狹小的空間只能容許三人並肩而站，
+而箭塔後方則是豎立著成堆的弓箭，箭塔的視野能夠環顧四周，就算
+敵人處於箭塔底下也能夠藉由垛孔加以射擊，唯一的出口是自塔上垂
+往下方的繩梯。
+~
+0 8|1048576 0
+>room_command climb ropeladder~
+echoat $n 你爬著繩梯往下而去。
+transfer $n 60737
+echoaround $n 你看到 $n 順著繩梯而下。
+~
+|
+S
+#60743
+西邊箭塔~
+箭塔整體沿著樹枝而建造，狹小的空間只能容許三人並肩而站，
+而箭塔後方則是豎立著成堆的弓箭，箭塔的視野能夠環顧四周，就算
+敵人處於箭塔底下也能夠藉由垛孔加以射擊，唯一的出口是自塔上垂
+往下方的繩梯。
+~
+0 8|1048576 0
+>room_command climb ropeladder~
+echoat $n 你爬著繩梯往下而去。
+transfer $n 60738
+echoaround $n 你看到 $n 順著繩梯而下。
+~
+|
+S
+#60744
+南邊箭塔~
+箭塔整體沿著樹枝而建造，狹小的空間只能容許三人並肩而站，
+而箭塔後方則是豎立著成堆的弓箭，箭塔的視野能夠環顧四周，就算
+敵人處於箭塔底下也能夠藉由垛孔加以射擊，唯一的出口是自塔上垂
+往下方的繩梯。
+~
+0 8|1048576 0
+>room_command climb ropeladder~
+echoat $n 你爬著繩梯往下而去。
+transfer $n 60739
+echoaround $n 你看到 $n 順著繩梯而下。
+~
+|
+S
+#60745
+東邊箭塔~
+箭塔整體沿著樹枝而建造，狹小的空間只能容許三人並肩而站，
+而箭塔後方則是豎立著成堆的弓箭，箭塔的視野能夠環顧四周，就算
+敵人處於箭塔底下也能夠藉由垛孔加以射擊，唯一的出口是自塔上垂
+往下方的繩梯。
+~
+0 8|1048576 0
+>room_command climb ropeladder~
+echoat $n 你爬著繩梯往下而去。
+transfer $n 60740
+echoaround $n 你看到 $n 順著繩梯而下。
+~
+|
+S
+#60746
+通往禁忌之地~
+你從祖屋中被傳送到了森林的最深處，你腳下是一個巨大的圓形
+石板，石板上是熟悉的十三芒星紋，而石板中央也是一個高起的祭壇
+，若是你想回去大概只要跟來時一樣就可以回到來處，在你眼前展開
+的是一條黑暗充滿腐臭氣味的道路，考驗著你的勇氣。
+~
+0 1048576 3
+D3
+~
+~
+0 0 60747
+S
+#60747
+通往禁忌之地~
+這條路看起來已經十分久沒有人走過了，根據長老的話，這裡最
+後有外人走入已經是一兩百年前的事了，每個進入此地的人都再也沒
+有出來過，也包括了一些村子裡的年輕人，但這確實是通往帝國的唯
+一通路，你能否找到傳說中的血族之國呢？
+~
+0 1048576 3
+D1
+~
+~
+0 0 60746
+D3
+~
+~
+0 0 60748
+S
+#60748
+通往禁忌之地~
+一路上還算平靜，雖然道路兩側偶有白骨與破舊的裝備散落，還
+有不少詭異的足跡，但是直到現在你還沒真正進入禁忌之地，道路兩
+側每五步就有一個破碎的石像，在昔日或許這裡還不是這樣子。
+~
+0 1048576 3
+D1
+~
+~
+0 0 60747
+D3
+~
+~
+0 0 60749
+S
+#60749
+通往禁忌之地~
+一路上還算平靜，雖然道路兩側偶有白骨與破舊的裝備散落，還
+有不少詭異的足跡，但是直到現在你還沒真正進入禁忌之地，道路兩
+側每五步就有一個破碎的石像，在昔日或許這裡還不是這樣子。
+~
+0 1048576 3
+D0
+~
+~
+0 0 60750
+D1
+~
+~
+0 0 60747
+S
+#60750
+通往禁忌之地~
+你只要再往前一步就是禁忌之地了，兩個高大聳立的血族石像猶
+如守衛著此處，一個老舊的鐵閘門隔開了這條道路與眼前充滿詭異氣
+息的森林，看不穿的迷霧在森林的四周緩緩的移動著，就像是有生命
+般的環繞著鐵閘門之後的森林而不往外擴散。
+~
+0 4|1048576 3
+D0
+一道黑色鋼鐵打造的鐵閘門~
+鐵閘門(gate)~
+3 0 60501
+D2
+~
+~
+0 0 60749
+S
+#60751
+獵戶的樹屋~
+你爬上了這個大樹上的隱密居所，這是獵戶的秘密住所，整間木
+屋牢靠的釘在大樹的枝幹上，一旁還有許多的日常用品與床，看來這
+裡也可以當作臨時的據點。
+~
+0 1024|1048576 0
+>room_mask list default~
+if insameroom(hunter-lf)
+  if is_qmark($n) >= lf_hunter 300001
+        force hunter-lf mpechoat $n 獵戶將東西攤在你面前，你看到了...
+        callout 1 echoat $n 一些飲食還有酒(food)
+        callout 1 echoat $n 一些橙色藥水(orange potion)
+        if roomvalue($0) > 0
+                callout 1 echoat $n 一些普通的木桿箭(wooden arrow)
+        endif
+        if roomvalue($1) > 0
+                if is_qmark($n) != lf_beast
+                        if class($n) == 17
+                                if is_inv_obj($n) != 60521
+                                if is_equ_obj($n) != 60521
+                                        callout 1 echoat $n 幾束強化獵箭(arrow)
+                                endif
+                                endif
+                        endif
+                else
+                        callout 1 echoat $n 幾把剛做好的獵弓(bow)
+                endif
+        endif
+        callout 2 force hunter-lf tell $n 要買什麼就跟我說吧(talk hunter buy 物品英文)
+  else
+        echoat $n 你無法這麼做 .
+  endif
+else
+  echoat 什麼？
+endif
+~
+>room_command search default~
+        echoat $n 你找了一下發現有一個往下(down)的出口可攀爬。
+        echoaround $n $n 環顧四週，不知在找什麼。
+~
+>room_command climb down~
+        echoat $n 你小心地踏在樹幹上往下爬去。
+        echoaround $n $n 的身影忽然往下一沉就不見蹤影了。
+        transfer $n 60579
+~
+|
+S
+#60752
+民宅~
+這裡是護林者村的民宅內，房子內有一個大通舖，屋內普遍的架
+高離地，一來是防溼氣，二來可以保持通風，在屋子的牆上掛有備用
+的弓與箭袋，屋子的一角還有不少箭的半成品。
+~
+0 8|1048576 0
+D3
+~
+~
+0 0 60700
+S
+#60753
+森林邊緣~
+在你西邊的是兩座巨大的石柱，石柱中間是條草木稀疏的小徑，
+蒼鬱的蔓藤攀在石柱上看似這森林天然的門戶，你現在走在森林邊緣
+與大草原的連接點上，往北就是蠻荒平原，長及腰身的野草正隨風飄
+動著，似乎在對你招手等你進入。
+~
+0 4 3
+D0
+~
+~
+0 0 80051
+D3
+~
+~
+0 0 60576
+S
+#60754
+森林邊緣~
+你循著小徑走到一座古老森林的邊緣，在你北邊是兩根巨大古老
+的石柱，森林中充滿了一層看不透的霧氣，將古老的森林給籠罩在一
+層神秘的面紗中，整個森林給你一股莫名的壓迫感，讓你有些卻步。
+~
+0 4 3
+D0
+~
+~
+0 0 60590
+D2
+~
+~
+0 0 -1
+S
+#0
+
+
+
+
+#ROOMPROGS
+R 60560 lf_animal_reborn2.prg
+R 60561 lf_animal_reborn2.prg
+R 60562 lf_animal_reborn2.prg
+R 60563 lf_animal_reborn2.prg
+R 60564 lf_animal_reborn2.prg
+R 60565 lf_animal_reborn2.prg
+R 60566 lf_animal_reborn2.prg
+R 60567 lf_animal_reborn2.prg
+R 60568 lf_animal_reborn2.prg
+R 60569 lf_animal_reborn2.prg
+R 60570 lf_animal_reborn2.prg
+R 60571 lf_animal_reborn2.prg
+R 60572 lf_animal_reborn2.prg
+R 60573 lf_animal_reborn2.prg
+R 60574 lf_animal_reborn2.prg
+R 60575 lf_animal_reborn2.prg
+R 60576 lf_animal_reborn2.prg
+R 60577 lf_animal_reborn2.prg
+R 60578 lf_animal_reborn2.prg
+R 60579 lf_animal_reborn2.prg
+R 60580 lf_animal_reborn2.prg
+R 60581 lf_animal_reborn2.prg
+R 60582 lf_animal_reborn2.prg
+R 60583 lf_animal_reborn2.prg
+R 60584 lf_animal_reborn2.prg
+R 60585 lf_animal_reborn2.prg
+R 60586 lf_animal_reborn2.prg
+R 60587 lf_animal_reborn2.prg
+R 60588 lf_animal_reborn2.prg
+R 60589 lf_animal_reborn2.prg
+R 60590 lf_animal_reborn2.prg
+R 60591 lf_animal_reborn2.prg
+R 60592 lf_animal_reborn2.prg
+R 60593 lf_animal_reborn2.prg
+R 60594 lf_animal_reborn2.prg
+R 60595 lf_animal_reborn2.prg
+R 60596 lf_animal_reborn2.prg
+R 60597 lf_animal_reborn2.prg
+R 60598 lf_animal_reborn2.prg
+R 60599 lf_animal_reborn2.prg
+R 60600 lf_animal_reborn2.prg
+R 60601 lf_animal_reborn2.prg
+R 60602 lf_animal_reborn2.prg
+R 60604 lf_animal_reborn2.prg
+R 60605 lf_animal_reborn2.prg
+R 60618 lf_animal_reborn.prg
+R 60619 lf_animal_reborn.prg
+R 60620 lf_animal_reborn.prg
+R 60621 lf_animal_reborn.prg
+R 60622 lf_animal_reborn.prg
+R 60623 lf_animal_reborn.prg
+R 60624 lf_animal_reborn.prg
+R 60625 lf_animal_reborn.prg
+R 60626 lf_animal_reborn.prg
+R 60627 lf_animal_reborn.prg
+R 60628 lf_animal_reborn.prg
+R 60629 lf_animal_reborn.prg
+R 60630 lf_animal_reborn.prg
+R 60631 lf_animal_reborn.prg
+R 60632 lf_animal_reborn.prg
+R 60633 lf_animal_reborn.prg
+R 60634 lf_animal_reborn.prg
+R 60635 lf_animal_reborn.prg
+R 60636 lf_animal_reborn.prg
+R 60637 lf_animal_reborn.prg
+R 60638 lf_animal_reborn.prg
+R 60639 lf_animal_reborn.prg
+R 60640 lf_animal_reborn.prg
+R 60665 lf_animal_reborn.prg
+R 60666 lf_animal_reborn.prg
+R 60667 lf_animal_reborn.prg
+R 60679 lf_animal_reborn.prg
+R 60680 lf_animal_reborn.prg
+R 60681 lf_animal_reborn.prg
+R 60682 lf_animal_reborn.prg
+R 60683 lf_animal_reborn.prg
+R 60684 lf_animal_reborn.prg
+R 60685 lf_animal_reborn.prg
+R 60686 lf_animal_reborn.prg
+R 60687 lf_animal_reborn.prg
+R 60688 lf_animal_reborn.prg
+R 60689 lf_animal_reborn.prg
+R 60690 lf_animal_reborn.prg
+S
+
+
+
+#MOBPROGS
+S
+
+
+
+#SPECIALS
+M 60506 spec_breath_fire
+M 60507 spec_cast_judge
+M 60529 spec_cast_earth
+S
+
+
+
+#RESETS
+M 0 60501 2 60512
+M 0 60501 2 60516
+M 0 60502 2 60521
+M 0 60502 2 60525
+M 0 60503 2 60530
+M 0 60503 2 60534
+M 0 60504 2 60539
+M 0 60504 2 60543
+M 0 60505 2 60548
+M 0 60505 2 60552
+M 0 60506 1 60556
+E 0 60501 0 16
+M 0 60508 1 60730
+E 0 60508 0 19
+E 0 60509 0 5
+M 0 60509 1 60732
+E 0 60505 0 0
+M 0 60510 1 60731
+E 0 60509 0 5
+E 0 60503 0 19
+E 0 60514 0 20
+M 0 60511 1 60731
+E 0 60509 0 5
+E 0 60503 0 19
+E 0 60514 0 20
+M 0 60512 1 60729
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60506 0 16
+M 0 60513 1 60698
+E 0 60509 0 5
+E 0 60503 0 19
+E 0 60504 0 20
+M 0 60514 1 60699
+E 0 60509 0 5
+E 0 60503 0 19
+E 0 60504 0 20
+M 0 60515 1 60734
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60506 0 18
+E 0 60515 0 16
+M 0 60516 1 60734
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60506 0 18
+E 0 60515 0 16
+M 0 60517 1 60734
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60506 0 18
+E 0 60515 0 16
+M 0 60518 1 60733
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60506 0 16
+M 0 60519 1 60714
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60506 0 16
+M 0 60520 1 60706
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60506 0 16
+M 0 60521 1 60723
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60515 0 16
+M 0 60522 1 60701
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60515 0 16
+M 0 60523 1 60706
+E 0 60509 0 5
+E 0 60507 0 11
+E 0 60515 0 16
+M 0 60524 1 60751
+E 0 60516 0 19
+E 0 60517 0 20
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

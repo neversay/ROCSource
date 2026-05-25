@@ -1,0 +1,4677 @@
+#AREADATA
+Name        魔界入口~
+Identity    daemonworldentrance~
+Builders    Bigmouth~
+Translator  Bigmouth~
+Modifier    Bigmouth~
+VNUMs	      500 599
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#554
+dark cluster~
+黑暗聚集體(Dark Cluster)~
+一團巨大的黑色物體(dark)在這裡吞噬著靠近它的一切！
+~
+　　這團黑色的霧狀物體毫無節制地吞噬周遭的一切物質、光線甚至空間，並且因此而
+越來越大！如果你不能在它成長到無法收拾前解決掉它，整個空間可能都會被它破壞！
+~
+98 40 -1000 S
+36 8000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 4
+P 4194304
+S 16 -5000
+S 17 -800
+S 18 35
+S 19 35
+S 24 -15
+S 35 -15
+S 39 -100
+S 41 200
+S 42 200
+S 43 50
+>repop_prog 100~
+		mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+		mpteleport vnum 533 548
+~
+>death_prog 100~
+		mpforcer here echo $I爆炸成許多黑光往四周逸散而去！
+		mpmload 555
+		mppurge self
+~
+|
+#555
+dark fragment~
+黑暗碎片(Dark Fragment)~
+一小團晦暗不明的黑色物體(dark)在這裡蠕動著。
+~
+　　這團黑色霧狀物體在這裡吸收靠近它的光線，似乎有越來越膨脹的趨勢。
+~
+98 100 -1000 S
+1 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+>tick_prog 100~
+		if is_qmark($i) != wererat_mob
+				mpforcer here echo $I溶入了周遭的黑暗之中！
+				mpmload 554
+				mppurge self
+		else
+				mpforcer here echo $I的體型越來越大了....
+		endif
+~
+>repop_prog 100~
+		mpadd_qmark $i wererat_mob 3 0 0 0 1 0
+		mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+		mpteleport vnum 533 548
+		mpforcer here echo 四處散落的黑暗聚集了起來！
+~
+>death_prog 100~
+		if is_qmark($n) < wererat_save 300020
+				mpechoat $n [0m[33;1m你身上來自界域封印的神聖力量將黑暗碎片溶解了！[0m
+				mpechoaround $n $N[0m[33;1m身上來自界域封印的神聖力量將黑暗碎片溶解了！[0m
+				mpmod_qmark $n wererat_save v2 + 1
+				if is_qmark($n) == wererat_save 300020
+						mpechoat $n [0m[35m附著在你身上的神聖力量已經完全耗盡了...[0m
+				endif
+				mpgreward exp $n 36 500
+				mpgreward exp $n basic 500
+				mpgreward skexp $n 36 10
+				if mobcount(555) != 1
+				or mobcount(554) != 0
+						mpoload 560 $n viclv floor
+						if rand(50)
+							mpoload 560 $n viclv floor
+						endif
+						if rand(25)
+							mpoload 560 $n viclv floor
+						endif
+				else
+						mpforcer here echotoarea 當瀰漫空間的黑暗全都消散的時候，整個空間忽然劇烈地震動起來！
+						mpoload 560 $n viclv floor
+						if rand(50)
+							mpoload 560 $n viclv floor
+						endif
+						if rand(25)
+							mpoload 560 $n viclv floor
+						endif
+						mpmload 556
+						mpforcer here modrvt 533 v0 = 1
+						mpforcer here modrvt 534 v0 = 1
+						mpforcer here modrvt 535 v0 = 1
+						mpforcer here modrvt 536 v0 = 1
+						mpforcer here modrvt 537 v0 = 1
+						mpforcer here modrvt 538 v0 = 1
+						mpforcer here modrvt 539 v0 = 1
+						mpforcer here modrvt 540 v0 = 1
+						mpforcer here modrvt 541 v0 = 1
+						mpforcer here modrvt 542 v0 = 1
+						mpforcer here modrvt 543 v0 = 1
+						mpforcer here modrvt 544 v0 = 1
+						mpforcer here modrvt 545 v0 = 1
+						mpforcer here modrvt 546 v0 = 1
+						mpforcer here modrvt 547 v0 = 1
+						mpforcer here modrvt 548 v0 = 1
+				endif
+				mppurge self
+		else
+				mpforcer here echo $I爆炸成許多黑光往四周逸散而去！
+				mpmload 555
+				mppurge self
+		endif
+~
+|
+#556
+chaos cluster~
+混沌聚集體(Chaos Cluster)~
+扭曲的空間整個動了起來！
+~
+　　這個空間的扭曲似乎已經到達了極致，所有的光線、色塊與黑色空缺都彷彿活物似
+地聚集起來，破壞周圍的一切！你敏銳的感覺到裡面似乎傳來了一股邪氣，似乎有某種
+邪惡的生物正藏身其中、操控一切，難不成....之前那些吞噬體所做的都只不過是召喚
+它的前置工作而已！？
+~
+98 168 -1000 S
+51 30000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|4|32
+P 4194304
+S 17 -1200
+S 18 60
+S 19 50
+S 24 -50
+S 35 -10
+S 39 -300
+S 40 40
+S 41 300
+S 42 50
+S 45 50
+S 46 50
+>repop_prog 100~
+		mpforcer 500 echo 一陣劇烈的空間波動讓集中在一起的彩光散開了！
+		mpforcer 500 purge plane
+		mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+		mpteleport vnum 533 548
+~
+>fight_prog 100~
+		skilldrv multihit $r
+		skilldrv speedhit $r
+		skilldrv heavyhit $r
+		skilldrv multihit $r
+		if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										cast acid $r
+								else
+										cast blindness $r
+								endif
+						else
+								if rand(50)
+										cast paralyze $r
+								else
+										cast chill $r
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										cast earthquake
+								else
+										cast energy $r
+								endif
+						else
+								if rand(50)
+										cast gas
+								else
+										cast whirlwind
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										cast crushing $r
+								else
+										cast seal $r
+								endif
+						else
+								if rand(50)
+										cast lifesteal $r
+								else
+										cast chain
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										cast powerball $r
+								else
+										cast fear $r
+								endif
+						else
+								if rand(50)
+										cast mute $r
+								else
+										cast star $r
+								endif
+						endif
+				endif
+		endif
+~
+>death_prog 100~
+mpforcer here echo [0m[35m潛藏在空間夾縫裡的邪惡力量往四面八方逃逸而去！[0m
+mpat 500 mpforcer here modrvt v0 = 0
+mpoload 553 standard floor
+mpgreward exp $n 36 8000
+mpgreward exp $n basic 8000
+mpgreward skexp $n 36 160
+mpat 3840 mpmod_qmark overlord-rcall transfertime timer = 12
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpforcer 549 purge allmob
+mpat 549 mpmload 558
+mpat 5 mppurge self
+~
+|
+#557
+chaos-reqwf fragment~
+混沌碎片(Chaos Fragment)~
+一小團混沌(chaos)在這裡飄移著。
+~
+　　這團混沌碎片正在這裡飄移扭曲著，為免後患，你還是盡快把它清除掉吧！
+~
+98 40 -1000 S
+1 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+S 39 +1000
+S 41 -3000
+S 42 -3000
+>repop_prog 100~
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpteleport vnum 533 548
+~
+>death_prog 100~
+mpmload 557
+mpexp $n 500
+if rand(15)
+	mpoload 560 $n viclv floor
+endif
+if class($n) < 5
+	mpexp $n 1000
+else
+	mpexp $n 500
+	mpskillexp $n 10
+endif
+mpat 5 mppurge self
+~
+|
+#558
+Marraenoloth Yugoloth Skeleton~
+渡引幽妖(Marraenoloth)~
+披著朽袍壽衣的骷髏怪(Skeleton)在這裡划著一艘小船。
+~
+　　這具骷髏全身都罩在一件破爛的黃色壽衣裡，除了兩個眼窩裡發出的深紅色光芒
+以外，沒有任何地方可以看出他具有生命跡象。然而，他卻提著一根長篙，撐著一艘
+小舟在這裡搖搖晃晃地飄來飄去，或許你可以向他詢問離開這裡的方法？
+~
+3 0 0 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+>defun_prog quest_end~
+mpforcer here modrvt 533 v0 = 0
+mpforcer here modrvt 534 v0 = 0
+mpforcer here modrvt 535 v0 = 0
+mpforcer here modrvt 536 v0 = 0
+mpforcer here modrvt 537 v0 = 0
+mpforcer here modrvt 538 v0 = 0
+mpforcer here modrvt 539 v0 = 0
+mpforcer here modrvt 540 v0 = 0
+mpforcer here modrvt 541 v0 = 0
+mpforcer here modrvt 542 v0 = 0
+mpforcer here modrvt 543 v0 = 0
+mpforcer here modrvt 544 v0 = 0
+mpforcer here modrvt 545 v0 = 0
+mpforcer here modrvt 546 v0 = 0
+mpforcer here modrvt 547 v0 = 0
+mpforcer here modrvt 548 v0 = 0
+mpat 533 mpforcer here transfer pc 549
+mpat 534 mpforcer here transfer pc 549
+mpat 535 mpforcer here transfer pc 549
+mpat 536 mpforcer here transfer pc 549
+mpat 537 mpforcer here transfer pc 549
+mpat 538 mpforcer here transfer pc 549
+mpat 539 mpforcer here transfer pc 549
+mpat 540 mpforcer here transfer pc 549
+mpat 541 mpforcer here transfer pc 549
+mpat 542 mpforcer here transfer pc 549
+mpat 543 mpforcer here transfer pc 549
+mpat 544 mpforcer here transfer pc 549
+mpat 545 mpforcer here transfer pc 549
+mpat 546 mpforcer here transfer pc 549
+mpat 547 mpforcer here transfer pc 549
+mpat 548 mpforcer here transfer pc 549
+~
+>repop_prog 100~
+mpgoto 549
+mpforcer 561 purge allmob
+mpforcer 562 purge allmob
+mpforcer 563 purge allmob
+mpforcer 564 purge allmob
+mpforcer 565 purge allmob
+mpforcer 566 purge allmob
+mpforcer 567 purge allmob
+mpforcer 568 purge allmob
+mpforcer 569 purge allmob
+mpforcer 570 purge allmob
+mpforcer 571 purge allmob
+mpforcer 572 purge allmob
+mpforcer 573 purge allmob
+mpforcer 574 purge allmob
+mpforcer 575 purge allmob
+mpforcer 576 purge allmob
+mpforcer 577 purge allmob
+mpmload 579
+mpmload 579
+mpmload 579
+mpmload 579
+mpmload 581
+mpmload 583
+mpmload 585
+mpmload 587
+mpmload 589
+mpmload 591
+mpmload 593
+mpmload 595
+mpmload 597
+mpcallout 60 mpcall quest_end $i
+~
+>talk_prog topic~
+		if is_qmark($i) != is_talk
+				mpadd_qmark $i is_talk 3 0 0 0 1 0
+				grin
+				mpcallout 1 say 看來又有生意上門了...
+				mpcallout 2 say 你也是前來這裡調查的冒險者嗎？
+				mpcallout 3 glare $n
+				mpcallout 4 chuckle
+				mpcallout 5 say 最近自不量力的冒險者還真多啊...
+				mpcallout 6 say 別誤會，派遣那些怪物來破壞封印的人不是我。
+				mpcallout 6 echoat $n $I看你神色不善的樣子，連忙搖了搖手...
+				mpcallout 7 say 我只是一個小小的商人而已。
+				mpcallout 8 glare $n
+				mpcallout 9 say 相信你正在尋找離開這裡的辦法吧？
+				mpcallout 10 say 只需要付出小小的代價，我就可以送你返回史卡拉貝城。
+				mpcallout 11 say 一點點的靈魂能量就可以了，如何？(yes/no)
+				mpcallout 12 mpdel_qmark $i is_talk
+		endif
+~
+>talk_prog yes~
+		mpechoat $n $I點了點頭，示意你坐上他的小船。
+		mpechoaround $n $I點了點頭，示意$N坐上他的小船。
+		mpforcer here echo $I揮一揮手中的長篙，小船便悠悠地向著遠方航去。
+		mpechoat $n 你覺得靈魂的一部份被抽走了...
+		mpexp $n -5000
+		mpteleport vnum 7001 7445
+		mptransfer $n
+		mpechoat $n 小船忽然消失了，你重重地摔在地上！
+		mpechoaround $n $N忽然從空中出現，重重地摔在地上！
+		mpgoto 549
+		mpforcer here echo $I划著小船，悠悠地從遠方航來。
+~
+>talk_prog no~
+		if is_qmark($i) != is_talk
+				mpadd_qmark $i is_talk 3 0 0 0 1 0
+				tsk $n
+				mpcallout 1 say 你就這麼想完成任務嗎？
+				mpcallout 2 ponder $n
+				mpcallout 3 say 好吧！我想我可以帶你到魔界去...
+				mpcallout 4 say 不用我說，你也應該知道，那裡可是很危險的。
+				mpcallout 5 say 而且我也不保證那幕後黑手是不是還待在那裡。
+				mpcallout 6 say 當然，這個代價就又要更昂貴一點了。
+				mpcallout 7 grin
+				mpcallout 8 say 如何？(sure)
+				mpcallout 9 mpdel_qmark $i is_talk
+		endif
+~
+>talk_prog sure~
+		mpechoat $n $I點了點頭，示意你坐上他的小船。
+		mpechoaround $n $I點了點頭，示意$N坐上他的小船。
+		mpforcer here echo $I揮一揮手中的長篙，小船便悠悠地向著遠方航去。
+		mpechoat $n 你覺得靈魂的一部份被抽走了...
+		mpexp $n -10000
+		mptransfer $n 561
+		mpgoto 561
+		mpechoat $n 小船忽然消失了，你重重地摔在地上！
+		mpechoaround $n $N忽然從空中出現，重重地摔在地上！
+		mpgoto 549
+		mpforcer here echo $I划著小船，悠悠地從遠方航來。
+~
+|
+#559
+rpqew-fqwere~
+系統調整用MOB~
+系統調整用MOB(System MOB)
+~
+系統調整用MOB(System MOB)
+~
+129 8|32|512|2147483648 -100 S
+51 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R God~
+#578
+planeshock-wave~
+空間震盪~
+空間震盪
+~
+空間震盪
+~
+129 8|32|512 -100 S
+51 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R God~
+>repop_prog 100~
+if pcnum($) > 0
+	mpforcer here cast shocking $r 45
+	mppurge self
+endif
+~
+|
+#579
+jelly lemure-m~
+劣魔(Lemure)~
+一團長著扭曲人臉的果凍(Jelly)在這裡蠕動著。
+~
+　　這團怪異的生命體就如一沱爛泥似的在這裡蠕動著。在它那泛青泛黃的半透明身
+體上，竟長著一副像是被象群來回踐踏過後的扭曲五官，令你感到噁心無比。這種生
+物是魔界裡應邪氣而生的最低等魔族，沒有心智與意識，也沒有任何戰鬥力可言，只
+能充作其他高等魔族的奴僕與能量供給之用。
+~
+1|128 549755813888 -1000 S
+1 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+P 4|8|128|2097152|8388608|67108864|536870912
+W meteoric arrow~ 80 80
+W snare~ 300 100
+W track~ 300 100
+W hunt~ 300 100
+S 13 500000
+>repop_prog 100~
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+~
+>death_prog 100~
+		if mobcount(579) == 1
+				if rand(50)
+						mpoload 580 38 floor
+				endif
+				mpforcer here modrvt 577 v0 = 0
+				mpgreward exp $n 36 10000
+				mpgreward skexp $n 36 100
+		endif
+		mpforcer here echo $I如同一團被砸爛的果凍般爆散四濺！
+		mppurge self
+~
+>tick_prog 15~
+		if mobcount(579) < 8
+				mpmload 579
+		endif
+~
+>fight_prog 100~
+		mpforcer here modhmv $i 02.30000 30000 0
+~
+|
+#581
+demon malebranche-m~
+瑪煉魔(Malebranche)~
+一隻長著巨大翅翼的惡魔(Demon)向你衝刺而來！
+~
+　　這隻龐大的惡魔有著與其體型相稱的力量，同時牠還擁有閃電般的速度。當牠拍
+打起牠那同樣巨大的翅翼開始衝鋒時，沒有任何事物能夠阻擋在牠的前方！
+~
+1|32|2048|4096|8192|65536|524288|8388608 8|32|128 -1000 S
+51 120000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|8|32
+P 4194304
+W meteoric arrow~ 50 50
+W backstab~ 300 300
+W circle~ 200 300
+W dispel evil~ 200 300
+W reflexion~ 150 300
+W throwing~ 200 600
+S 17 -1000
+S 18 40
+S 19 120
+S 24 -30
+S 29 -80
+S 35 -10
+S 39 -1000
+S 41 300
+S 42 50
+S 44 -50
+S 45 50
+S 46 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 583 38
+wear all
+~
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpjunk all
+		endif
+~
+>fight_prog 100~
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if isaffected($i) == seal magic
+				if rand(50)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+		if rand(40)
+				cast 'fulgurant dance'
+				cast 'chain lightning'
+				cast 'chain lightning'
+		else
+				mpechoaround $n $I朝著$N兇猛的衝撞過去！
+				mpechoat $n $I朝著你兇猛的衝撞過來！
+				skilldrv heavyhit $n
+				skilldrv heavyhit $n
+				skilldrv heavyhit $n
+				mptrip $n
+				if rand(33)
+						if isaffected($n) == pass door
+								mpechoaround $n $I的重重撞擊穿透過了$N半透明的身軀！
+								mpechoat $n $I的重重撞擊穿透了你半透明的身軀！
+						else
+								mpechoaround $n $N被撞飛了！
+								mpechoat $n 你被撞飛了！
+								if rand(50)
+										if rand(50)
+												if rand(50)
+														mpat 563 mptransfer $n
+												else
+														mpat 565 mptransfer $n
+												endif
+										else
+												if rand(50)
+														mpat 567 mptransfer $n
+												else
+														mpat 569 mptransfer $n
+												endif
+										endif
+								else
+										if rand(50)
+												if rand(50)
+														mpat 571 mptransfer $n
+												else
+														mpat 573 mptransfer $n
+												endif
+										else
+												if rand(50)
+														mpat 575 mptransfer $n
+												else
+														mpat 562 mptransfer $n
+												endif
+										endif
+								endif
+						endif
+				endif
+		endif
+~
+|
+#583
+demon palrethee-m~
+霸襲魔(Palrethee)~
+一隻環繞熾燄的焦黑惡魔(Demon)迅速地朝你襲來！
+~
+　　這隻惡魔全身環繞著高熱的熾炎，全身也彷彿被燒烤過般的焦黑一片。牠一看到
+你就迅速地朝你奔來，身上的火燄也彷彿看見食物的猛獸，高漲地燃燒起來！
+~
+1|32|8388608 8|32|128|134217728 -1000 S
+51 100000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|2
+P 4194304|268435456
+W meteoric arrow~ 50 50
+W icecore slash~ 150 300
+W chill touch~ 100 300
+W colour spray~ 100 300
+W ice comet~ 100 300
+W dispel evil~ 100 300
+S 17 -600
+S 18 20
+S 24 -30
+S 27 -300
+S 28 40
+S 35 -10
+S 40 20
+S 41 300
+S 42 50
+S 44 1000
+S 45 50
+S 46 50
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+				mpoload 585 38
+		endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 585 38
+mpoload 9349 38
+wear all
+~
+>fight_prog 100~
+		mpmodify amdr - 800
+		if isaffected($i) & 134217728
+		else
+				mpforcer here add_affect $i 'flaming armor' 0 -1 0 0 0
+		endif
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(15)
+				cast 'song of firestorm' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'fireball' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'fire breath' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'star fire' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'burning hands' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'high explosive' $n
+				mpnowait
+		endif
+		if rand(15)
+				flaming
+				mpnowait
+		endif
+		if rand(15)
+				cast 'angry fire storm' $n
+				mpnowait
+		endif
+		mpmodify amdr + 800
+		if isaffected($i) == seal magic
+				if rand(50)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+~
+|
+#585
+chain devil-mchain~
+鍊魔(Chain Devil)~
+一隻全身纏滿鎖鍊(Chain)的怪物朝你蹣跚地走來。
+~
+　　這隻惡魔全身包覆著漆黑的鐵鍊，若不是它那對閃爍著邪惡光芒的眼睛，你幾乎
+就要以為它是構裝生物了。這些纏身鐵鍊的另一端連著各種不同的利器，看起來殺傷
+力驚人，你得小心應付了。
+~
+1|32|2048|4096|8192|262144|8388608 8|32|128 -1000 S
+51 120000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|4|8
+P 4194304
+W meteoric arrow~ 50 50
+W disarm~ -300 100
+W barehand~ -300 100
+W dispel evil~ 100 300
+W fulgurant slash~ 150 300
+W thunder strike~ 100 300
+W lightning bolt~ 100 300
+W lightning breath~ 100 300
+W chain lightning~ 100 300
+S 17 -1500
+S 18 80
+S 19 -30
+S 24 -30
+S 29 60
+S 35 -10
+S 39 500
+S 41 700
+S 45 300
+S 46 300
+>defun_prog summongolem~
+		if insameroom(golem-mqwe)
+				mpforce golem-mqwe resc devil-mchain
+		else
+				mpforcer here echo $I喃喃唸道：應我而生黑暗之魂，為我而戰不滅之軀....歸來吧！
+				mpforcer here echo 鎖鍊魔像(Chain Golem)伴隨一道黑煙而出現！
+				mptransfer golem-mqwe
+				mpgroup devil-mchain golem-mqwe 1
+		endif
+~
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpjunk all
+		endif
+~
+>repop_prog 100~
+		mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpteleport vnum 563 576
+		mpoload 587 38
+		wear all
+~
+>fight_prog 100~
+		mpat 5 wear all
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		mpcall summongolem $i
+		if rand(33)
+				mpforcer here echo $I忽然不停旋轉，化成了鎖鍊的暴風朝眾人捲來！
+				circular
+				disarm
+				mptrip all
+		else
+				skilldrv speedhit $r
+				skilldrv speedhit $r
+		endif
+~
+|
+#587
+chain golem-mqwe~
+鎖鍊魔像(Chain Golem)~
+一隻全身纏滿鎖鍊(Chain)的怪物朝你蹣跚地走來。
+~
+　　這隻鋼鐵所構成的人形雕像全身包覆著漆黑的鐵鍊，這些纏身鐵鍊的另一端連著
+各種不同的利器，看起來殺傷力驚人，你得小心應付了。
+~
+1|32|2048|4096|8192|262144 8|32|128 0 S
+51 120000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Statue~
+C 1|4|8
+P 512|4194304
+W meteoric arrow~ 50 50
+W disarm~ -300 100
+W barehand~ -300 100
+W fulgurant slash~ 150 300
+W thunder strike~ 100 300
+W lightning bolt~ 100 300
+W lightning breath~ 100 300
+W chain lightning~ 100 300
+S 17 -1000
+S 18 80
+S 19 30
+S 29 50
+S 39 500
+S 41 300
+S 43 100
+S 45 50
+S 46 50
+>repop_prog 100~
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 587 38
+wear all
+~
+>death_prog 100~
+		if insameroom(devil-mchain)
+				mpforcer here echo $I化作一道黑煙消失了....
+				mpmload 587
+		else
+				mpgreward exp $n 36 10000
+				mpgreward skexp $n 36 100
+				mpforcer here echo $I被瓦解為一堆碎片。
+				if rand(50)
+						mpoload 588 38 floor
+				endif
+		endif
+		mppurge self
+~
+>fight_prog 100~
+		mpat 5 wear all
+		if rand(50)
+				mpforcer here echo $I忽然不停旋轉，化成了鎖鍊的暴風朝眾人捲來！
+				circular
+				circular
+				circular
+				circular
+				disarm
+				disarm
+				disarm
+				mptrip all
+		endif
+~
+|
+#589
+lion hellcat-m~
+地獄貓(Hellcat)~
+一隻朦朧不清的雪白獅子(Lion)靜靜地佇立在這裡。
+~
+　　這隻巨大的白色獅子其實是魔界裡特有的貓類。雖然牠的身軀與力量遠遠超乎其
+在地上世界的同類，但牠潛形匿蹤的本事卻一點也沒有比那些遠親差，甚至尤有過之
+。生於魔界長於魔界的牠對於鮮血有著特殊的渴望與追蹤本領，也因此讓牠成為了魔
+界裡頂尖的追獵手，是惡魔們樂意豢養的種物之一。
+~
+1|2048|8192|524288|262144|8388608 2|8|32|128|32768|65536|2147483648 0 S
+51 80000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+C 1|4|32
+P 4194304
+W meteoric arrow~ 50 50
+W dispel evil~ 100 300
+W frenzy~ 100 300
+W powerball~ 100 300
+S 17 -1000
+S 18 60
+S 19 50
+S 24 -30
+S 35 50
+S 39 -1200
+S 40 50
+S 41 100
+S 42 100
+S 43 300
+S 45 50
+S 46 50
+>tick_prog 100~
+if area($i) != daemonworldentrance
+	mpteleport vnum 562 576
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+~
+>rand_prog 100~
+		if area($i) != daemonworldentrance
+				mpgoto 5
+				mpteleport vnum 562 576
+		endif
+		if isaffected($i) & 2
+		or isaffected($i) & 32768
+		or isaffected($i) & 65536
+		or isaffected($i) & 2147483648
+		else
+				hide
+				sneak
+				mpforcer here cast 'invis' $i 50
+				nightstalk
+		endif
+		if pcnum($) > 0
+				hunt $r
+				mpkill $r
+		endif
+~
+>entry_prog 100~
+		if isfight($i)
+		else
+				hunt $r
+				mpkill $r
+		endif
+~
+>greet_prog 100~
+		if isfight($i)
+		or isnpc($n)
+		else
+				hunt $n
+				mpkill $n
+		endif
+~
+>fight_prog 100~
+		if area($i) != daemonworldentrance
+				mpgoto 5
+				mpteleport vnum 562 576
+		endif
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(90)
+				mpechoat $n $I惡狠狠地朝你撲了過來！
+				mpechoaround $n $I惡狠狠地朝$N撲了過去！
+				combat howling
+				if rand(20)
+						mpforcer here cast 'fear' $n 50
+				endif
+				frenzy
+				frenzy
+				frenzy
+		else
+				mpforcer here echo $I的身影突然消失了！
+				mpgoto 5
+				hide
+				sneak
+				mpforcer here cast 'invis' $i 50
+				nightstalk
+				mpcallout 2 mpkill $n
+				mpcallout 2 mpgoto $n
+		endif
+~
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpforcer here echo $I的心臟被挖了出來！
+				mpoload 591 38 floor
+		endif
+~
+|
+#591
+ice devil-m~
+冰魔(Ice Devil)~
+一隻散發陣陣寒風的巨大惡魔(Devil)正在這裡巡邏著。
+~
+　　這隻惡魔長著一對如昆蟲般的複眼與觸鬚，粗大的雙腿後跟著一根巨大的長尾。
+牠那同樣像是昆蟲的利爪與全身皆散發著極冷的溫度，將靠近的水氣都凍結成片片寒
+霜，若是太靠近的話，小心被凍結成冰雕！
+~
+1|32|4096|16384|65536|262144|8388608 8|32|128|8589934592 -1000 S
+51 100000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|2|8
+P 4194304|268435456
+W dispel evil~ 100 300
+W burning hands~ 100 300
+W flaming slash~ 150 300
+W flamestrike~ 100 500
+W flaming armor~ 100 300
+W fireball~ 100 300
+W star fire~ 100 300
+W disarm~ -300 100
+W barehand~ -300 100
+S 17 -1000
+S 18 10
+S 19 30
+S 24 -50
+S 28 -100
+S 35 -30
+S 39 200
+S 40 20
+S 41 300
+S 42 50
+S 43 100
+S 44 50
+S 45 50
+S 46 50
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+			mpoload 593 38
+		endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 593 38
+mpoload 593 38
+wear all
+~
+>fight_prog 100~
+		mpat 5 wear all
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(15)
+			cast 'agglomerate descant'
+			break
+		endif
+		if rand(50)
+				cast 'chill touch' $r
+				cast 'chill touch' $r
+				icecore $r
+				cast 'lore of frost'
+		else
+				if rand(50)
+						if isaffected($i) != seal magic
+								mpechoaround $n $I的身上忽然冒出一股寒氣將$N包圍，將$N凍結成冰！
+								mpechoat $n $I的身上忽然冒出一股寒氣將你包圍，將你凍結成冰！
+								mpforcer here modhmv $n 01.1200 1200 00012501
+								mpforcer here modhmv $n 23.100 100 0
+								mpforcer here add_affect $n 'paralyze' 1151 0 28 10 0
+						endif
+				else
+						if isaffected($i) != seal magic
+								mpforcer here echo 一陣強烈寒風忽然從$I身上吹出，將你手足凍得發麻！
+								mpforcer here modhmvgroup $n 01.500 500 00012501
+								mpforcer here modhmvgroup $n 21.500 500 0
+								cast 'wind screaming' $n
+								mpnowait
+						endif
+				endif
+		endif
+		if isaffected($i) == seal magic
+				if rand(20)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+~
+|
+#593
+kelvezu-m demon~
+凱詛魔(Kelvezu)~
+一隻惡魔(demon)在這裡微笑地向你展示牠銳利的匕首。
+~
+　　這種惡魔是魔界裡最狡詐的生物之一。雖然不具備其他同類般強大的力量與魔法
+能力，但牠卻對偷襲與陷阱的藝術學有專精，往往能在牠的敵人莫名其妙的情形下就
+將匕首送入他人的喉中。此外，牠「轉進」的能力也是惡魔當中數一數二的，但在追
+擊牠的同時請千萬要小心－－別踏入牠的陷阱！
+~
+1|128|2048|262144|1048576|8388608|16777216 2|8|32|128|32768|65536|2147483648 0 S
+51 80000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|4|8
+P 4194304|16777216
+W empslash~ 50 50
+W meteoric arrow~ 50 50
+W dispel evil~ 100 600
+W magic missile~ 100 1500
+W circular chop~ 200 300
+W charge~ 150 300
+S 17 -500
+S 18 20
+S 24 50
+S 35 50
+S 39 -1200
+S 41 150
+S 42 100
+S 43 300
+S 45 50
+S 46 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 9832 38
+wear all
+~
+>tick_prog 100~
+if area($i) != daemonworldentrance
+	mpteleport vnum 562 576
+endif
+~
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+				mpforcer here echo 一團霧氣從$I身上流洩而出！
+				mpoload 595 38 floor
+		endif
+~
+>rand_prog 100~
+		if isaffected($i) & 2
+		or isaffected($i) & 32768
+		or isaffected($i) & 65536
+		or isaffected($i) & 2147483648
+		else
+				hide
+				sneak
+				cast 'invis'
+				nightstalk
+		endif
+		if pcnum($) > 0
+				backstab $r
+		endif
+~
+>entry_prog 100~
+		if isfight($i)
+		else
+				backstab $r
+		endif
+~
+>greet_prog 100~
+		if isfight($i)
+		or isnpc($n)
+		else
+				backstab $n
+		endif
+~
+>fight_prog 100~
+		if area($i) != daemonworldentrance
+				mpgoto 5
+				mpteleport vnum 562 576
+		endif
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(33)
+				untangle $i
+		endif
+		if rand(50)
+				flee
+				flee
+				flee
+				hide
+				sneak
+				cast 'invis'
+				nightstalk
+				mpcallout 5 backstab $r
+				mpcallout 5 mpgoto $n
+		else
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $r
+				skilldrv speedhit $r
+				skilldrv speedhit $r
+				kick
+				kick
+				kick
+				kick
+				kick
+				snare $r
+		endif
+~
+|
+#595
+demon zovvut-m~
+碩脯魔(Zovvut)~
+一隻長有三隻眼睛的巨爪惡魔(Demon)惡狠狠地向你撲來！
+~
+　　這隻臃腫不堪的惡魔像是健康不良似地渾身慘白，就連翅膀都與其他惡魔的黑色
+不同。牠肥胖的身軀讓牠在行走時總是帶起巨大的聲響，真是不知道牠是怎麼吃的？
+但千萬不要因此而小看牠，這種惡魔的第三隻眼可是具有放射邪光、吸取他人精力的
+可怕能力的！
+~
+1|32|2048|8192|1048576|8388608 8|32|128 -1000 S
+51 120000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|8|32
+P 256|4194304
+W backstab~ 300 500
+W circle~ 200 500
+W turn undead~ 200 500
+W mass turn~ 200 500
+W dispel evil~ 200 500
+S 17 -2000
+S 18 30
+S 19 100
+S 24 -30
+S 35 -10
+S 39 1000
+S 40 10
+S 41 500
+S 42 100
+S 45 200
+S 46 200
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+~
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpforcer here echo $I忽然像是被掏空似的整個乾癟枯萎了！
+				mpoload 597 38 floor
+				mppurge self
+		endif
+~
+>fight_prog 100~
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(15)
+			cast 'earth bind'
+			break
+		endif
+		if rand(33)
+				mpforcer here echo $I用力踩踏著地面，造成了劇烈地震動！
+				cast 'earthquake'
+				cast 'earthquake'
+				cast 'earthquake'
+				mptrip all
+		else
+				mpforcer here echo $I的第三隻眼睛忽然放射出邪異的紅色光芒！
+				mpforcer here del_affect $n all
+				mpforcer here modhmvgroup $n 01.500 500 00000000
+				mpforcer here modhmv $i 02.3000 3000 00000000
+		endif
+		skilldrv heavyhit $n
+		skilldrv heavyhit $n
+		if isaffected($i) == seal magic
+				if rand(20)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+~
+|
+#597
+lady succubus-m~
+魅魔(Succubus)~
+一位全身赤裸的美豔女子(Lady)在這裡讓你臉紅心跳！
+~
+　　當你終於從她的美麗中回過神來後，你才驚愕地發現這位美麗女人的背後竟然生
+著一對大大的蝙蝠翅膀！看來這就是被稱為魅魔的可怕魔物了。這種惡魔擅長各種幻
+惑的法術，冒險者一個不留神就會被她勾引去攻擊自己的伙伴，除此之外牠還能夠隨
+意地穿梭空間移動，可以說是最麻煩的一種惡魔也不為過。
+~
+1|32|2048|4096|8192|262144|1048576|8388608 8|32|128 -1000 S
+51 100000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Demon~
+C 1|2|8|16
+P 256|4194304|16777216|268435456
+W meteoric arrow~ 50 50
+W dispel evil~ 100 600
+W disarm~ 200 100
+W barehand~ 200 100
+W frenzy~ 150 200
+S 17 -600
+S 18 10
+S 24 -50
+S 35 -30
+S 39 -600
+S 41 100
+S 42 50
+S 45 50
+S 46 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 13618 38
+mpoload 561 38
+mpoload 562 38
+wear all
+~
+>death_prog 100~
+		mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+				mpoload 561 38
+		endif
+		if rand(50)
+				mpoload 562 38
+		endif
+~
+>fight_prog 100~
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(50)
+				mpforcer here echo $I朝你嫣然一笑，你覺得你的抵抗意志開始土崩瓦解...
+				cast 'crushing hand' $n
+				if rand(33)
+						cast 'charm person' $n
+						mpgroup $i $n 1
+						change $r
+				endif
+				cast 'succubus kiss' $r
+				mpnowait
+				cast 'demon tremor' $r
+				mpnowait
+				cast 'seal magic' $r
+				mpnowait
+		else
+				meteoric $n
+				meteoric $r
+				if rand(33)
+						mpforcer here echo $I的身體忽然越來越模糊...越來越模糊...
+						mpgoto 5
+						mpteleport vnum 562 576
+				endif
+		endif
+		if isaffected($i) == seal magic
+				if rand(33)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+		if isaffected($i) == mute
+				if rand(50)
+						mpforcer here del_affect $i 'mute'
+				endif
+		endif
+~
+|
+#0
+
+#MOBPROGS
+S
+
+#OBJECTS
+#550
+seal fragment-obj light~
+封印碎片(seal fragment)~
+一團變幻不定的金黃色光團(light)在這裡飄浮著。~
+~
+1 4260865 1
+0~ 0~ -1~ 0~
+0 0 0
+E
+seal fragment light~
+這團不停變化的光芒正散發出純淨的神聖力量，或許它與界域的封印有關？~
+>obj_repop 100~
+		oteleport vnum 501 532
+		if rand(50)
+				if rand(50)
+						oset self timer = 6
+				else
+						oset self timer = 7
+				endif
+		else
+				if rand(50)
+						oset self timer = 8
+				else
+						oset self timer = 9
+				endif
+		endif
+~
+|
+
+#551
+plane seal-obj light~
+不穩定的界域封印(Plane Seal)~
+一團閃爍不定的巨大光雲(light plane)飄浮在這裡。~
+~
+1 33554435 0
+0~ 0~ -1~ 0~
+0 0 0
+X light matter~
+E
+plane seal light~
+　　這團金黃色的光雲散發出神聖的氣息。但是你在仔細地觀察( check)之後，卻可
+以在光雲的後方發現許多黑色的區塊，使得光雲看起來支離破碎地，顯得十分黯淡。
+你發現這些黑色的區塊還在不斷地蠕動、擴張，使光雲的密度越來越疏離！
+　　或許你該進入(enter)到封印的另一端去看看是怎麼回事？
+~
+
+#552
+plane seal light~
+界域封印(Plane Seal)~
+一團巨大的光繭(light plane)在這裡穩定地律動著。~
+~
+1 33554435 0
+0~ 0~ -1~ 0~
+0 0 0
+X light matter~
+E
+plane seal light~
+　　這團金黃色的光繭由四面八方集結過來的各色光線組成，在某種奇特的頻率下有
+如心臟般地律動著，並隨之散發強大的神聖氣息。由光繭上飄浮的符文來看，這大概
+就是守護史卡拉貝與魔界間通道的封印了。只要進入( enter)這個光繭，你就能夠到
+達封印的另一端，但能不能找出封印被破壞的真相、返回史卡拉貝，這又是另一回事
+了。
+~
+
+#553
+chaos crystal~
+混沌結晶(Chaos Crystal)~
+一顆五彩斑斕的不規則結晶(crystal)被丟在這裡。~
+~
+5 1|2 8193
+100~ 10~ 20~ 0~
+25 100000 0
+X chaos matter~
+E
+chaos crystal~
+		這塊五彩斑斕的不規則結晶看起來堅硬無比，或許可以試著當成武器用看看？
+~
+>obj_repop 100~
+		if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self value3 = 00
+								else
+										oset self value3 = 01
+								endif
+						else
+								if rand(50)
+										oset self value3 = 02
+								else
+										oset self value3 = 03
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self value3 = 04
+								else
+										oset self value3 = 05
+								endif
+						else
+								if rand(50)
+										oset self value3 = 06
+								else
+										oset self value3 = 07
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self value3 = 08
+								else
+										oset self value3 = 09
+								endif
+						else
+								if rand(50)
+										oset self value3 = 10
+								else
+										oset self value3 = 11
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self value3 = 12
+								else
+										oset self value3 = 13
+								endif
+						else
+								oset self value3 = 14
+						endif
+				endif
+		endif
+		if rand(33)
+				oset self extra + 512
+				oset self extra + 1024
+		else
+				if rand(50)
+						oset self extra + 1024
+						oset self extra + 2048
+				else
+						oset self extra + 2048
+						oset self extra + 512
+				endif
+		endif
+		if rand(50)
+				oset self extra + 64
+		endif
+		if rand(20)
+				oset self extra + 131072
+		endif
+		if rand(20)
+				oset self extra + 65536
+		endif
+		if rand(20)
+				oset self extra + 128
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						oset self weight + 20
+						oset self value1 + 7
+						oset self value2 + 11
+				else
+						oset self weight + 30
+						oset self value1 + 12
+						oset self value2 + 16
+				endif
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						oset self weight + 20
+						oset self value1 + 7
+						oset self value2 + 11
+				else
+						oset self weight + 30
+						oset self value1 + 12
+						oset self value2 + 16
+				endif
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						opset_obj_affect self -1 42 -25
+						opset_obj_affect self -1 43 25
+				else
+						oset self weight + 30
+						oset self value1 + 10
+						oset self value2 + 19
+				endif
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						opset_obj_affect self -1 42 -25
+						opset_obj_affect self -1 43 25
+				else
+						oset self weight + 30
+						oset self value1 + 10
+						oset self value2 + 19
+				endif
+		endif
+~
+|
+
+#560
+dark crystal-obj~
+黑暗結晶(Dark Crystal)~
+一顆晦暗的不規則結晶(crystal)被丟在這裡。~
+~
+9 276 1
+0~ 0~ 100~ 0~
+5 100000 0
+A
+12 -15
+A
+13 -15
+A
+14 -15
+A
+24 5
+A
+35 5
+A
+40 -2
+A
+42 -5
+A
+44 -5
+X black matter~
+E
+chaos crystal~
+		這塊晦暗的不規則結晶散發著暗沉的色澤，似乎帶有某種魔力。如果你恰好可以
+穿戴得下它的話，不妨試一試。
+~
+>obj_repop 10~
+		if rand(40)
+				oset self extra + 512
+		endif
+		if rand(40)
+				oset self extra + 1024
+		endif
+		if rand(40)
+				oset self extra + 2048
+		endif
+		if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 2
+								else
+										oset self wear + 4
+								endif
+						else
+								if rand(50)
+										oset self wear + 16
+								else
+										oset self wear + 32
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 64
+								else
+										oset self wear + 128
+								endif
+						else
+								if rand(50)
+										oset self wear + 256
+								else
+										oset self wear + 512
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 1024
+								else
+										oset self wear + 2048
+								endif
+						else
+								if rand(50)
+										oset self wear + 4096
+								else
+										oset self wear + 16384
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 65536
+								else
+										oset self wear + 512
+								endif
+						else
+								oset self wear + 8
+						endif
+				endif
+		endif
+~
+|
+
+#561
+succubus wing~
+魅魔之翼(Succubus Wing)~
+一對充滿魔力的翅翼(Wing)被擺在這裡。~
+~
+9 2|4|16|64|256|512|134217728 1025
+10~ 0~ 100~ 0~
+3 500 0
+Z 4
+A 12 50
+A 33 -10
+A 40 5
+A 44 10
+P 1|1048576
+X flesh~
+
+#562
+evil enchantment arrow~
+邪魅之箭(Evil Enchantment Arrow)~
+一綑朦朧不定的暗紅色箭矢(Arrow)被擺在這裡。~
+~
+27 4|16|64|256|512 65537
+800~ 100~ 130~ 200~
+3 50000 0
+Z 4
+A 40 3
+A 18 2
+A 19 3
+X mirage~
+H harm~ 33 60 16
+H harm~ 33 60 16
+H vampiric bite~ 33 50 16
+>obj_rand 100~
+if is_equ_obj($n) == 562
+	if objval0($o) < 800
+		if hpnum($n) > 1000
+			echoat $n $O吸取你的生命，分裂出更多的暗紅色箭矢。
+			oforcer here modhmv $n 03.10 10 0
+			oset self v0 + 100
+		else
+			echoat $n $O吸取你的生命，分裂出更多的暗紅色箭矢。
+			oforcer here modhmv $n 01.100 100 0
+			oset self v0 + 100
+		endif
+	endif
+endif
+~
+>obj_repop 100~
+oset self v3 = 200
+~
+>obj_act wear~
+if objval3($o) != 200
+	oforcer here oload 562 38 $n target
+	echoat $n 裝備更新完成。
+	purge self
+endif
+~
+|
+
+#580
+semiopaque theca~
+半透明肉膜(Semiopaque Theca)~
+一沱半透明的膠狀物體(Theca)被丟在這裡。~
+~
+9 16|4096|16777216 1
+5~ 0~ 50~ 0~
+3 0 0
+E
+semiopaque theca~
+這團噁心的肉膜是劣魔死後的殘餘物，也許可以試著套在身上看看？
+~
+A 24 2
+A 35 2
+A 41 -3
+A 42 -3
+A 17 20
+A 39 20
+M 0 你套上這層半透明肉膜後，一股令你作嘔的力量開始不斷湧進你的體內。~
+X flesh~
+>obj_repop 100~
+		if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 2
+								else
+										oset self wear + 4
+								endif
+						else
+								if rand(50)
+										oset self wear + 16
+								else
+										oset self wear + 32
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 64
+								else
+										oset self wear + 128
+								endif
+						else
+								if rand(50)
+										oset self wear + 256
+								else
+										oset self wear + 512
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 1024
+								else
+										oset self wear + 2048
+								endif
+						else
+								if rand(50)
+										oset self wear + 4096
+								else
+										oset self wear + 16384
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 65536
+								else
+										oset self wear + 512
+								endif
+						else
+								oset self wear + 8
+						endif
+				endif
+		endif
+~
+>obj_rand 100~
+if is_equ_obj($n) == 580
+	modhmv $n 01.30 30 00000000
+	modhmv $n 21.30 30 00000000
+	modhmv $n 12.30 30 00000000
+endif
+~
+|
+
+#582
+thunder trident~
+雷戟(Thunder Trident)~
+一把充滿雷電之力的三叉戟(Trident)被擺在這裡。~
+~
+5 1|2|64|256 8193
+300~ 50~ 60~ 02~
+50 1000000 0
+Z 1
+A 29 -11
+A 19 10
+A 18 10
+H chain lightning~ 30 50 4
+X gold~
+
+#583
+thunder trident~
+雷戟(Thunder Trident)~
+一把充滿雷電之力的三叉戟(Trident)被擺在這裡。~
+~
+5 1|2|64|256 8193
+300~ 50~ 60~ 02~
+50 1000000 0
+Z 4
+A 29 -13
+A 19 10
+A 18 10
+H lightning bolt~ 50 60 4
+H chain lightning~ 40 50 4
+X gold~
+>obj_repop 100~
+oset self v1 = 50
+oset self v2 = 60
+~
+>obj_act wear~
+if objval1($o) != 50
+	oforcer here oload 583 38 $n target
+	echoat $n 裝備更新完成。
+	purge self
+endif
+~
+|
+
+#584
+palrethee flaming body~
+霸襲魔炎軀(Palrethee Flaming Body)~
+一團環繞著熾燄的軀殼(Body)被擺在這裡。~
+~
+9 1|2|16|64|4096 9
+13~ 0~ 150~ 0~
+5 100000 0
+Z 1
+A 27 -2
+A 28 2
+A 41 10
+A 44 10
+H burning hands~ 100 40 1
+X fire aura~
+>obj_act wear~
+		if is_qmark($n) != flamingbody
+				echoat $n [0m[35;1m你被一圈熊熊燃燒的火焰包圍！[0m
+				echoaround $n [0m[35;1m$N被一圈熊熊燃燒的紫色火焰包圍！[0m
+				del_affect $n 'flaming armor'
+				add_affect $n 'flaming armor' 1141 8 0 0 134217728
+				oforcer here add_qmark $n flamingbody -1 0 0 0 0 0
+		endif
+~
+>obj_act remove~
+		del_affect $n 'flaming armor'
+~
+|
+
+#585
+palrethee flaming body~
+霸襲魔炎軀(Palrethee Flaming Body)~
+一團環繞著熾燄的軀殼(Body)被擺在這裡。~
+~
+9 1|2|16|64|4096 9
+20~ 0~ 150~ 0~
+5 100000 0
+Z 4
+A 27 -10
+A 28 3
+A 41 10
+A 44 10
+H burning hands~ 100 40 1
+X fire aura~
+>obj_act wear~
+if is_qmark($n) != flamingbody
+	echoat $n [0m[35;1m你被一圈熊熊燃燒的火焰包圍！[0m
+	echoaround $n [0m[35;1m$N被一圈熊熊燃燒的紫色火焰包圍！[0m
+	del_affect $n 'flaming armor'
+	add_affect $n 'flaming armor' 1141 8 0 0 134217728
+	oforcer here add_qmark $n flamingbody 12 0 0 0 0 0
+endif
+~
+>obj_act remove~
+del_affect $n 'flaming armor'
+~
+|
+
+#586
+death chain~
+死亡鎖鏈(Death Chain)~
+一條散發出死亡氣息的鎖鍊(Chain)被擺在這裡~
+~
+5 4|64|256|512|131072 32769
+150~ 72~ 80~ 04~
+80 500000 0
+Z 1
+A 29 10
+A 42 -20
+A 39 20
+A 43 50
+V Human~ 0 120 0 140
+V Elf~ 0 120 0 140
+V Dwarf~ 0 120 0 140
+V Hobbit~ 0 120 0 140
+V Fairy~ 0 120 0 140
+V Gnome~ 0 120 0 140
+V Lizardman~ 0 120 0 140
+V Angel~ 0 120 0 140
+V God~ 0 120 0 140
+V Demon~ 0 1 0 1
+X black matter~
+
+#587
+death chain~
+死亡鎖鏈(Death Chain)~
+一條散發出死亡氣息的鎖鍊(Chain)被擺在這裡~
+~
+5 4|64|256|512|131072 32769
+150~ 72~ 75~ 04~
+80 500000 0
+Z 4
+A 29 4
+A 42 -15
+A 39 100
+A 43 50
+V Human~ 0 120 0 160
+V Elf~ 0 120 0 160
+V Dwarf~ 0 120 0 160
+V Hobbit~ 0 120 0 160
+V Fairy~ 0 120 0 160
+V Gnome~ 0 120 0 160
+V Lizardman~ 0 120 0 160
+V Angel~ 0 120 0 160
+V God~ 0 120 0 160
+V Demon~ 0 1 0 1
+X black matter~
+
+#588
+anti-magic metal fragment~
+抗魔金屬碎片(anti-magic metal fragment)~
+一小塊魔像的碎片(Fragment)被擺在這裡。~
+~
+9 2|4|64|16777216 5
+15~ 0~ 50~ 0~
+5 50000 0
+E
+anti-magic-obn metal fragment~
+		這塊金屬是鎖鍊魔像毀壞後的產物，也許它還存留一點免疫魔法的特性在上面？
+~
+A 40 -3
+X steel~
+>obj_repop 100~
+		if rand(33)
+				opset_obj_affect self -1 24 -3
+		endif
+		if rand(33)
+				opset_obj_affect self -1 27 -2
+		endif
+		if rand(33)
+				opset_obj_affect self -1 28 -2
+		endif
+		if rand(33)
+				opset_obj_affect self -1 30 -2
+		endif
+		if rand(33)
+				opset_obj_affect self -1 31 -2
+		endif
+~
+>obj_act wear~
+		if rand(50)
+				if rand(50)
+						add_affect $n 'prot. from fire' 0 -1 0 0 0
+				else
+						add_affect $n 'prot. from cold' 0 -1 0 0 0
+				endif
+		else
+				if rand(50)
+						add_affect $n 'prot. from wind' 0 -1 0 0 0
+				else
+						add_affect $n 'prot. from earth' 0 -1 0 0 0
+				endif
+		endif
+~
+>obj_act remove~
+		del_affect $n 'prot. from fire'
+		del_affect $n 'prot. from cold'
+		del_affect $n 'prot. from wind'
+		del_affect $n 'prot. from earth'
+~
+|
+
+#590
+blood-seeking heart~
+嗜血之心(blood-seeking heart)~
+一顆地獄貓的心臟(Heart)被擺在這裡。~
+~
+17 4|256|512 16385
+200~ 1~ 13~ 503~
+5 500 0
+Z 1
+A 1 1
+A 18 2
+A 19 5
+A 41 -10
+P 262144|2097152
+M 0 你一握住這顆心臟，無盡的殘暴意識與能量就湧入了你的身體。~
+M 1 無盡的殘暴意識與能量離開了你的身體。~
+X flesh~
+F 536870912
+>obj_act wear~
+		modhmv $n 01.1000 1000 00000000
+~
+|
+
+#591
+blood-seeking heart~
+嗜血之心(blood-seeking heart)~
+一顆地獄貓的心臟(Heart)被擺在這裡。~
+~
+17 4|256|512 16385
+200~ 1~ 13~ 503~
+5 500 0
+Z 4
+A 1 1
+A 18 2
+A 19 5
+A 41 -10
+P 262144|2097152
+M 0 你一握住這顆心臟，無盡的殘暴意識與能量就湧入了你的身體。~
+M 1 無盡的殘暴意識與能量離開了你的身體。~
+X flesh~
+F 536870912
+>obj_act wear~
+modhmv $n 01.1000 1000 00000000
+~
+|
+
+#592
+ice claw~
+寒冰爪(Ice Claw)~
+一把散發著寒冰氣息的利爪(Claw)被擺在這裡。~
+~
+5 2|4|64|128|512|4096 8193
+100~ 5~ 15~ 05~
+10 1000000 0
+Z 1
+A 27 7
+A 28 -13
+A 18 15
+A 40 1
+H chill touch~ 100 41 1
+H frost breath~ 20 40 4
+H frost breath~ 33 50 4
+P 64|2097152
+X ice~
+
+#593
+ice claw~
+寒冰爪(Ice Claw)~
+一把散發著寒冰氣息的利爪(Claw)被擺在這裡。~
+~
+5 2|4|64|128|512|4096 8193
+100~ 5~ 15~ 05~
+10 1000000 0
+Z 4
+A 27 10
+A 28 -13
+A 18 15
+H frost breath~ 50 50 4
+X ice~
+>obj_repop 100~
+oset self v1 = 22
+oset self v2 = 33
+~
+>obj_act wear~
+if objval1($o) != 22
+	oforcer here oload 593 38 $n target
+	echoat $n 裝備更新完成。
+	purge self
+endif
+add_affect $n 'chill touch' 0 10 43 -60 0
+add_affect $n 'chill touch' 0 10 1 -3 0
+~
+>obj_act remove~
+del_affect $n 'chill touch'
+~
+|
+
+#594
+night mist soul~
+[0m[30;1m夜之魂[0m(Night Soul)~
+一團晦暗不明的霧氣(Mist)聚集在這裡。~
+~
+8 2|4|16777216 2077
+0~ 12~ 0~ 0~
+1 100000 0
+Z 1
+E
+night-owq mist soul~
+		這團霧氣似乎是黑夜能量集中具現化成的，也許你能想個方法去利用看看？
+~
+R 8|128|256|2048|1048576
+X black matter~
+>obj_repop 100~
+if rand(33)
+	opset_obj_affect self -1 1 2
+else
+	if rand(50)
+		opset_obj_affect self -1 2 2
+	else
+		opset_obj_affect self -1 3 2
+	endif
+endif
+~
+>obj_rand 100~
+if is_equ_obj($n) == 594
+	if hour($) >= 18
+	or hour($) <= 6
+		if objval1($o) != 12
+			echoat $n 夜晚的力量被你身上的夜之魂緩緩吸收著...
+			oset self value1 + 1
+		endif
+	endif
+endif
+~
+>obj_act wear~
+if objval1($o) >= 12
+	if hour($) >= 18
+	or hour($) <= 6
+		echoat $n 聚集在夜之魂中的夜之力湧進了你的身體！
+		del_affect $n 'sneak'
+		add_affect $n 'sneak' 0 3 18 6 0
+		add_affect $n 'sneak' 0 3 19 6 0
+		add_affect $n 'sneak' 0 3 40 6 0
+		add_affect $n 'sneak' 0 3 43 15 0
+		oset self value1 = 0
+	endif
+endif
+~
+>obj_act remove~
+del_affect $n 'sneak'
+~
+|
+
+#595
+night mist soul~
+[0m[30;1m夜之魂[0m(Night Soul)~
+一團晦暗不明的霧氣(Mist)聚集在這裡。~
+~
+8 2|4|256|16777216 2077
+0~ 6~ 0~ 0~
+1 100000 0
+Z 4
+E
+night mist soul~
+這團霧氣似乎是黑夜凝聚而具現化的物質，從中能窺視(check)到無盡的黑夜。
+也許能想個方法來利用。
+~
+R 8|128|256|2048|1048576
+X black matter~
+>obj_repop 100~
+if rand(20)
+	opset_obj_affect self -1 1 2
+else
+	if rand(25)
+		opset_obj_affect self -1 2 2
+	else
+		if rand(33)
+			opset_obj_affect self -1 3 2
+		else
+			if rand(50)
+				opset_obj_affect self -1 4 2
+			else
+				opset_obj_affect self -1 5 2
+			endif
+		endif
+	endif
+endif
+~
+>obj_command check default~
+if objval1($o) != 6
+	echoat $n 你凝視著$O的內部，只看到一團晦暗不明的黑色。
+else
+	echoat $n 你凝視著$O的內部，似乎看見了黑夜的景色。
+endif
+~
+>obj_rand 100~
+if is_equ_obj($n) == 595
+	if hour($) >= 18
+	or hour($) <= 6
+		if objval0($o) == 0
+			break
+		endif
+		if objval1($o) == 5
+			echoat $n 吸收足夠的夜之力後，$O的霧氣凝聚在一起。
+			oset self value1 + 1
+		endif
+		if objval1($o) == 4
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 3
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 2
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 1
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 0
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+	endif
+endif
+~
+>obj_act wear~
+oset self value0 = 1
+if objval1($o) >= 6
+	if hour($) >= 18
+	or hour($) <= 6
+		echoat $n 聚集在$O中的夜之力湧進了你的身體！
+		del_affect $n 'body building'
+		add_affect $n 'body building' 1000 3 18 5 0
+		add_affect $n 'body building' 1000 3 19 5 0
+		add_affect $n 'body building' 1000 3 40 4 0
+		add_affect $n 'body building' 1000 3 44 15 0
+		oset self value1 = 0
+	endif
+endif
+~
+>obj_act remove~
+oset self value0 = 0
+del_affect $n 'body building'
+~
+|
+
+#596
+zovvut skin~
+碩脯魔外皮(Zovvut Skin)~
+一張慘白色的鬆垮皮件(Skin)被擺在這裡。~
+~
+15 16|256 1033
+70~ 1~ 0~ 75~
+10 100000 0
+Z 1
+A 5 1
+A 17 -35
+A 18 2
+A 19 2
+A 41 10
+X flesh~
+
+#597
+zovvut skin~
+碩脯魔外皮(Zovvut Skin)~
+一張慘白色的鬆垮皮件(Skin)被擺在這裡。~
+~
+15 16|256 1033
+70~ 1~ 0~ 75~
+10 100000 0
+Z 4
+A 5 1
+A 17 -40
+A 18 2
+A 19 2
+A 41 10
+X flesh~
+
+#598
+succubus wing~
+魅魔之翼(Succubus Wing)~
+一對充滿魔力的翅翼(Wing)被擺在這裡。~
+~
+9 2|4|16|64|256|512|134217728 1025
+10~ 0~ 100~ 0~
+3 500 0
+Z 1
+A 12 50
+A 40 5
+P 1|1048576
+X flesh~
+
+#599
+evil enchantment arrow~
+邪魅之箭(Evil Enchantment Arrow)~
+一綑朦朧不定的暗紅色箭矢(Arrow)被擺在這裡。~
+~
+27 4|16|64|256|512 65537
+1200~ 60~ 80~ 120~
+3 50000 0
+Z 1
+A 40 2
+A 19 2
+A 18 2
+X mirage~
+
+#0
+
+
+#ROOMDATA
+#500
+界域封印~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+移動(move)。各種顏色的光線從四面八方朝著此處匯聚而來，組成了一團閃爍不定的
+巨大光雲。你感到光雲裡散發出純正的神聖力量，看來這裡就是防止邪惡入侵的封印
+所在了？
+~
+0 1114128 0
+>room_defun repairseal~
+		if is_inv_obj($n) == 550
+				purge $n fragment-obj
+				echoat $n 你身上的封印碎片飛進了巨大的光雲之中！
+				echoaround $n $N身上的封印碎片飛進了巨大的光雲之中！
+				if roomvalue($n500v0) < 30
+						if is_qmark($n) <= wererat_save 300015
+								mload 559
+								mod_qmark $n wererat_save v2 + 1
+								if class($n) < 5
+										force rpqew-fqwere mpexp $n 3000
+								endif
+								force rpqew-fqwere mpexp $n 3000
+								force rpqew-fqwere mpskillexp $n 60
+								purge rpqew-fqwere
+						endif
+						modrvt 500 v0 + 1
+						if roomvalue($n500v0) > 29
+								callout 1 echotoarea [0m[33;1m在奪目的光芒之後，整個空間開始依循著某種規律律動起來！[0m
+								callout 1 purge seal-obj
+								callout 1 oload 552 1 floor
+						endif
+				endif
+				rcall repairseal $n
+		endif
+~
+>room_enter 64 100~
+		if is_qmark($n) != wererat_save 100002
+		or level($n) < 36
+				transfer $n 3840
+		else
+				if is_qmark($n) == wererat_save 300005
+						mod_qmark $n wererat_save v2 = 6
+						add_qmark $n wererat_plane -1 0 0 0 1 0
+						echoat $n 當光芒逐漸暗淡後，你發現你已經被傳送到了一個奇特的空間裡。
+				else
+						echoaround $n $N往這裡游了過來...
+						if is_qmark($n) != wererat_plane
+							add_qmark $n wererat_plane -1 0 0 0 1 0
+						endif
+						mod_qmark $n wererat_plane v0 = 0
+						if is_qmark($n) == ismoving
+							del_qmark $n ismoving
+						endif
+				endif
+		endif
+		force $n look
+		rcall repairseal $n
+~
+>room_command check plane seal light~
+		if objcount(551) > 0
+				if roomvalue($n500v0) < 10
+						echoat $n 封印看起來極端的不穩定，快想辦法修好它吧！
+				else
+						if roomvalue($n500v0) < 20
+								echoat $n 封印看起來有些不穩定，快想辦法修好它吧！
+						else
+								if roomvalue($n500v0) > 29
+										echoat $n 封印看來十分穩定，或許你可以試著穿越(enter)看看了？
+								else
+										echoat $n 封印閃爍著些微不穩定的光芒，再加點勁吧！
+								endif
+						endif
+				endif
+		else
+				echoat $n 什麼？
+		endif
+~
+>room_command enter plane seal light~
+		if robjcount(551) > 0
+		or robjcount(552) > 0
+				if roomvalue($n500v0) > 29
+						echoat $n 你試圖前往封印的另一端。
+						echoaround $n $N試圖穿越封印，整個人消沒在光團之中...
+						echoat $n [0m[33;1m你感到封印中充沛的神聖力量湧入了你的身體。[0m
+						cast san $n 30
+						if is_qmark($n) <= wererat_save 300016
+								mod_qmark $n wererat_save v2 = 17
+								force 3899 mload 554
+								force 3899 mload 554
+						endif
+						transfer $n 533
+				else
+						echoat $n 你試圖前往封印的另一端，卻被看不見的障礙擋了回來。
+						echoaround $n $N試圖穿越封印，但不久後就又退了回來。
+						callout 1 echoat $n 看來必須想辦法把封印修復完整一點才行...
+				endif
+		else
+				echoat $n 什麼？
+		endif
+~
+>room_defun profra~
+		if objcount(550) < 40
+				if roomvalue($n500v0) < 30
+						force rpqew-fqwere mpoload 550
+						rcall profra rpqew-fqwere
+				endif
+		endif
+~
+>room_defun sealdecrease~
+		if roomvalue($n500v0) > 0
+				modrvt 500 v0 - 1
+		endif
+~
+>room_time 100~
+		mload 559
+		if roomvalue($n500v0) < 30
+				echo [0m[33;1m一道光芒從光團中分裂而出，流星似地往遠方逝去...[0m
+				callout 1 echo [0m[35m巨大的光雲似乎變得更加黯淡了許多...[0m
+				if rand(80)
+						rcall sealdecrease rpqew-fqwere
+				endif
+				if rand(40)
+						rcall sealdecrease rpqew-fqwere
+				endif
+				if rand(20)
+						rcall sealdecrease rpqew-fqwere
+				endif
+				if rnplayer($) > 7
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 9
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 11
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 13
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 19
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+						if rand(15)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 25
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+						if rand(15)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+		endif
+		rcall profra rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_command move default~
+echoat $n 你要移動到哪裡(exits)去？
+~
+>room_mask east default~
+echoat $n 你判斷不出哪邊是東方！
+~
+>room_mask west default~
+echoat $n 你判斷不出哪邊是西方！
+~
+>room_mask north default~
+echoat $n 你判斷不出哪邊是北方！
+~
+>room_mask south default~
+echoat $n 你判斷不出哪邊是南方！
+~
+>room_mask up default~
+echoat $n 在這個沒有重力的地方，你判斷不出哪邊是上方！
+~
+>room_mask down default~
+echoat $n 在這個沒有重力的地方，你判斷不出哪邊是下方！
+~
+>room_mask exits default~
+echoat $n 　
+echoat $n 青與紫的電光在你的左手邊(left)交互纏繞
+echoat $n 一望無際的深藍往你的右手邊(right)延伸而去
+echoat $n 你的前方(front)閃爍著血似腥紅的暗芒
+echoat $n 銀輝色的光河橫亙在你的身後(back)
+echoat $n 你的頭頂(up)是深邃無邊的黑暗
+echoat $n 你的腳底(down)是深邃無邊的黑暗
+~
+>room_command move down~
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 13 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往深邃無邊的黑暗游去...
+	echoaround $n $N滑動著雙手，往深邃無邊的黑暗游去...
+	if rand(33)
+		transfer $n 530
+		force 530 echoaround $n $N往這裡游了過來...
+	else
+		if rand(50)
+			transfer $n 531
+			force 531 echoaround $n $N往這裡游了過來...
+		else
+			transfer $n 532
+			force 532 echoaround $n $N往這裡游了過來...
+		endif
+	endif
+endif
+~
+>room_command move up~
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 13 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往深邃無邊的黑暗游去...
+	echoaround $n $N滑動著雙手，往深邃無邊的黑暗游去...
+	if rand(33)
+		transfer $n 530
+		force 530 echoaround $n $N往這裡游了過來...
+	else
+		if rand(50)
+			transfer $n 531
+			force 531 echoaround $n $N往這裡游了過來...
+		else
+			transfer $n 532
+			force 532 echoaround $n $N往這裡游了過來...
+		endif
+	endif
+endif
+~
+>room_command move front~
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往血似腥紅的暗芒游去...
+	echoaround $n $N滑動著雙手，往血似腥紅的暗芒游去...
+	transfer $n 529
+	force 529 echoaround $n $N往這裡游了過來...
+endif
+~
+>room_command move right~
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往一望無際的深藍游去...
+	echoaround $n $N滑動著雙手，往一望無際的深藍游去...
+	transfer $n 527
+	force 527 echoaround $n $N往這裡游了過來...
+endif
+~
+>room_command move left~
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往青與紫的電光游去...
+	echoaround $n $N滑動著雙手，往青與紫的電光游去...
+	transfer $n 528
+	force 528 echoaround $n $N往這裡游了過來...
+endif
+~
+>room_command move back~
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往銀輝色的光河游去...
+	echoaround $n $N滑動著雙手，往銀輝色的光河游去...
+	transfer $n 526
+	force 526 echoaround $n $N往這裡游了過來...
+endif
+~
+|
+S
+#501
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+mload 559
+rcall radomfour rpqew-fqwere
+rcall randomtwo rpqew-fqwere
+purge rpqew-fqwere
+~
+>room_enter 64 100~
+echoaround $n $N往這裡游了過來...
+force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+mod_qmark $n wererat_plane v0 = 1
+del_qmark $n ismoving
+~
+|
+S
+#502
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 2
+		del_qmark $n ismoving
+~
+|
+S
+#503
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 03
+		del_qmark $n ismoving
+~
+|
+S
+#504
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 04
+		del_qmark $n ismoving
+~
+|
+S
+#505
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 05
+		del_qmark $n ismoving
+~
+|
+S
+#506
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 06
+		del_qmark $n ismoving
+~
+|
+S
+#507
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 07
+		del_qmark $n ismoving
+~
+|
+S
+#508
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 08
+		del_qmark $n ismoving
+~
+|
+S
+#509
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 09
+		del_qmark $n ismoving
+~
+|
+S
+#510
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 10
+		del_qmark $n ismoving
+~
+|
+S
+#511
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 11
+		del_qmark $n ismoving
+~
+|
+S
+#512
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 12
+		del_qmark $n ismoving
+~
+|
+S
+#513
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 13
+		del_qmark $n ismoving
+~
+|
+S
+#514
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 14
+		del_qmark $n ismoving
+~
+|
+S
+#515
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 15
+		del_qmark $n ismoving
+~
+|
+S
+#516
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 16
+		del_qmark $n ismoving
+~
+|
+S
+#517
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 17
+		del_qmark $n ismoving
+~
+|
+S
+#518
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 18
+		del_qmark $n ismoving
+~
+|
+S
+#519
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 19
+		del_qmark $n ismoving
+~
+|
+S
+#520
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 20
+		del_qmark $n ismoving
+~
+|
+S
+#521
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 21
+		del_qmark $n ismoving
+~
+|
+S
+#522
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 22
+		del_qmark $n ismoving
+~
+|
+S
+#523
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 23
+		del_qmark $n ismoving
+~
+|
+S
+#524
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 24
+		del_qmark $n ismoving
+~
+|
+S
+#525
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 25
+		del_qmark $n ismoving
+~
+|
+S
+#526
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 26
+		del_qmark $n ismoving
+~
+|
+S
+#527
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 27
+		del_qmark $n ismoving
+~
+|
+S
+#528
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 28
+		del_qmark $n ismoving
+~
+|
+S
+#529
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 29
+		del_qmark $n ismoving
+~
+|
+S
+#530
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 30
+		del_qmark $n ismoving
+~
+|
+S
+#531
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 31
+		del_qmark $n ismoving
+~
+|
+S
+#532
+界域裂隙~
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+~
+0 1114128 0
+>room_time 100~
+		mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+~
+>room_enter 64 100~
+		echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 32
+		del_qmark $n ismoving
+~
+|
+S
+#533
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 540
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 545
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 547
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 537
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+echoaround $n $N突然出現在這裡！
+force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+mod_qmark $n wererat_plane v0 = 33
+if is_qmark($n) == ismoving
+	del_qmark $n ismoving
+endif
+~
+|
+S
+#534
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 545
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 538
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 539
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 547
+>room_rand 33~
+if roomvalue($0) == 1
+	echo 空間不停劇烈地震盪著...
+	mload 578
+endif
+~
+>room_enter 64 100~
+echoaround $n $N突然出現在這裡！
+force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 34 0 0 1 0
+endif
+mod_qmark $n wererat_plane v0 = 34
+del_qmark $n ismoving
+~
+|
+S
+#535
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 538
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 542
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 546
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 539
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 35 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 35
+		del_qmark $n ismoving
+~
+|
+S
+#536
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 542
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 540
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 537
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 546
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 36 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 36
+		del_qmark $n ismoving
+~
+|
+S
+#537
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 536
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 533
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 548
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 544
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 37 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 37
+		del_qmark $n ismoving
+~
+|
+S
+#538
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 544
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 548
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 535
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 534
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 38 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 38
+		del_qmark $n ismoving
+~
+|
+S
+#539
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 534
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 538
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 543
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 541
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 39 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 39
+		del_qmark $n ismoving
+~
+|
+S
+#540
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 541
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 543
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 533
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 536
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 40 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 40
+		del_qmark $n ismoving
+~
+|
+S
+#541
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 547
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 534
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 541
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 548
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 41 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 41
+		del_qmark $n ismoving
+~
+|
+S
+#542
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 548
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 547
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 542
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 538
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 42 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 42
+		del_qmark $n ismoving
+~
+|
+S
+#543
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 539
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 546
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 545
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 540
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 43
+		del_qmark $n ismoving
+~
+|
+S
+#544
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 546
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 537
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 538
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 545
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 44
+		del_qmark $n ismoving
+~
+|
+S
+#545
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 543
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 544
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 534
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 533
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 45
+		del_qmark $n ismoving
+~
+|
+S
+#546
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 535
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 536
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 544
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 543
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 46
+		del_qmark $n ismoving
+~
+|
+S
+#547
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 533
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 534
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 541
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 548
+>room_rand 33~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 47
+		del_qmark $n ismoving
+~
+|
+S
+#548
+混沌領域~
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+~
+0 1646608 10
+D0
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 537
+D1
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 547
+D2
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 542
+D3
+在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。~
+~
+0 0 538
+>room_rand 100~
+		if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+~
+>room_enter 64 100~
+		echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 48
+		del_qmark $n ismoving
+~
+|
+S
+
+#549
+空間漩渦~
+你飄浮在一個無邊無際的空間之中，四周盡是一片沒有變化的空茫。無數說不出
+色彩的線圈圍繞著此處，彷彿還緩緩旋轉著，令你感到一陣陣的頭暈目眩。你不禁閉
+上眼睛，不知怎麼辦才能夠離開這裡。
+~
+0 1909776 7
+D0
+遠處跟這裡沒什麼兩樣。~
+~
+0 0 549
+D1
+遠處跟這裡沒什麼兩樣。~
+~
+0 0 549
+D2
+遠處跟這裡沒什麼兩樣。~
+~
+0 0 549
+D3
+遠處跟這裡沒什麼兩樣。~
+~
+0 0 549
+D4
+遠處跟這裡沒什麼兩樣。~
+~
+0 0 549
+D5
+遠處跟這裡沒什麼兩樣。~
+~
+0 0 549
+>room_enter 64 100~
+		if ispc($n)
+				echoat $n 周圍的空間化作了漩渦，將你捲了進去！
+				force $n look
+				mod_qmark $n wererat_save v2 = 21
+		else
+				purge chaos-reqwf
+		endif
+~
+|
+S
+
+#561
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 562
+D1
+~
+~
+0 0 568
+D2
+~
+~
+0 0 564
+D3
+~
+~
+0 0 576
+S
+#562
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 562
+D1
+~
+~
+0 0 567
+D2
+~
+~
+0 0 563
+D3
+~
+~
+0 0 575
+S
+#563
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 562
+D1
+~
+~
+0 0 566
+D2
+~
+~
+0 0 564
+D3
+~
+~
+0 0 574
+S
+#564
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 563
+D1
+~
+~
+0 0 565
+D2
+~
+~
+0 0 564
+D3
+~
+~
+0 0 573
+S
+#565
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 566
+D1
+~
+~
+0 0 572
+D2
+~
+~
+0 0 568
+D3
+~
+~
+0 0 564
+S
+#566
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|4|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 567
+D1
+~
+~
+0 0 571
+D2
+~
+~
+0 0 565
+D3
+~
+~
+0 0 563
+S
+#567
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 568
+D1
+~
+~
+0 0 570
+D2
+~
+~
+0 0 566
+D3
+~
+~
+0 0 562
+S
+#568
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 565
+D1
+~
+~
+0 0 569
+D2
+~
+~
+0 0 567
+D3
+~
+~
+0 0 568
+S
+#569
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 572
+D1
+~
+~
+0 0 576
+D2
+~
+~
+0 0 570
+D3
+~
+~
+0 0 568
+S
+#570
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 569
+D1
+~
+~
+0 0 575
+D2
+~
+~
+0 0 571
+D3
+~
+~
+0 0 567
+S
+#571
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 570
+D1
+~
+~
+0 0 574
+D2
+~
+~
+0 0 572
+D3
+~
+~
+0 0 566
+S
+#572
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 571
+D1
+~
+~
+0 0 573
+D2
+~
+~
+0 0 569
+D3
+~
+~
+0 0 565
+S
+#573
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 574
+D1
+~
+~
+0 0 564
+D2
+~
+~
+0 0 576
+D3
+~
+~
+0 0 572
+S
+#574
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 575
+D1
+~
+~
+0 0 563
+D2
+~
+~
+0 0 573
+D3
+~
+~
+0 0 571
+S
+#575
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 576
+D1
+~
+~
+0 0 562
+D2
+~
+~
+0 0 574
+D3
+~
+~
+0 0 570
+S
+#576
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+~
+0 1|16|8192|65536|262144|524288|1048576 7
+D0
+~
+~
+0 0 573
+D1
+~
+~
+0 0 577
+D2
+~
+~
+0 0 575
+D3
+~
+~
+0 0 569
+S
+#577
+黑暗大地~
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+　　東方隱約地透出一線光芒。
+~
+0 1|16|65536|262144|524288|1048576 7
+D3
+~
+~
+0 0 576
+>room_mask east default~
+		if ispc($n)
+				echoat $n 你在黑暗中走啊走地....不知怎麼就回到史卡拉貝城聖殿了。
+				transfer $n 3001
+				force 3001 force $n look
+		endif
+~
+|
+S
+#0
+
+#ROOMPROGS
+R 501 rat_firstplane.prg
+R 502 rat_firstplane.prg
+R 503 rat_firstplane.prg
+R 504 rat_firstplane.prg
+R 505 rat_firstplane.prg
+R 506 rat_firstplane.prg
+R 507 rat_firstplane.prg
+R 508 rat_firstplane.prg
+R 509 rat_firstplane.prg
+R 510 rat_firstplane.prg
+R 511 rat_firstplane.prg
+R 512 rat_firstplane.prg
+R 513 rat_firstplane.prg
+R 514 rat_firstplane.prg
+R 515 rat_firstplane.prg
+R 516 rat_firstplane.prg
+R 517 rat_firstplane.prg
+R 518 rat_firstplane.prg
+R 519 rat_firstplane.prg
+R 520 rat_firstplane.prg
+R 521 rat_firstplane.prg
+R 522 rat_firstplane.prg
+R 523 rat_firstplane.prg
+R 524 rat_firstplane.prg
+R 525 rat_firstplane.prg
+R 526 rat_firstplane.prg
+R 527 rat_firstplane.prg
+R 528 rat_firstplane.prg
+R 529 rat_firstplane.prg
+R 530 rat_firstplane.prg
+R 531 rat_firstplane.prg
+R 532 rat_firstplane.prg
+R 533 rat_secondplane.prg
+R 534 rat_secondplane.prg
+R 535 rat_secondplane.prg
+R 536 rat_secondplane.prg
+R 537 rat_secondplane.prg
+R 538 rat_secondplane.prg
+R 539 rat_secondplane.prg
+R 540 rat_secondplane.prg
+R 541 rat_secondplane.prg
+R 542 rat_secondplane.prg
+R 543 rat_secondplane.prg
+R 544 rat_secondplane.prg
+R 545 rat_secondplane.prg
+R 546 rat_secondplane.prg
+R 547 rat_secondplane.prg
+R 548 rat_secondplane.prg
+R 561 rat_thirdplane.prg
+R 562 rat_thirdplane.prg
+R 563 rat_thirdplane.prg
+R 564 rat_thirdplane.prg
+R 565 rat_thirdplane.prg
+R 566 rat_thirdplane.prg
+R 567 rat_thirdplane.prg
+R 568 rat_thirdplane.prg
+R 569 rat_thirdplane.prg
+R 570 rat_thirdplane.prg
+R 571 rat_thirdplane.prg
+R 572 rat_thirdplane.prg
+R 573 rat_thirdplane.prg
+R 574 rat_thirdplane.prg
+R 575 rat_thirdplane.prg
+R 576 rat_thirdplane.prg
+R 577 rat_thirdplane.prg
+S
+
+#SPECIALS
+S
+
+#RESETS
+R 0 561 4
+R 0 562 4
+R 0 563 4
+R 0 564 4
+R 0 565 4
+R 0 566 4
+R 0 567 4
+R 0 568 4
+R 0 569 4
+R 0 570 4
+R 0 571 4
+R 0 572 4
+R 0 573 4
+R 0 574 4
+R 0 575 4
+R 0 576 4
+S
+
+#SHOPS
+0
+
+#$

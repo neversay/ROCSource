@@ -1,0 +1,9232 @@
+#AREADATA
+Name       鬼屋~
+Identity   Ghost House~
+Builders   Cosmos~
+Translator ----~
+Modifier   ----~
+VNUMs         37200 37399
+Security   1
+Recall     3001
+F_toggle   8192
+End
+
+#MOBILES
+#37200
+shadow elf-ghouse~
+虛影(shadow)~
+一道透明的身影(shadow)在這靜立
+~
+他在此負責看守身後的木門，如果想進去請試著詢問他(talk shadow enter)
+~
+1|2|64 8|32|512 0 S
+100 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Elf~
+P 1|2|4|8|128
+S 16 -9999
+S 41 9999
+S 42 9999
+S 45 9999
+S 46 9999
+>greet_prog 100~
+if is_qmark($n) == ghouse_enter_count 100005
+	mpechoat $n [1;32m虛影(shadow)說著「你怎麼又來了？」[0m
+else
+	if is_qmark($n) == ghouse_enter_count 100004
+		mpechoat $n [1;32m虛影(shadow)說著「你為什麼要一直進進出出的？」[0m
+		mpechoat $n [1;32m虛影(shadow)說著「$n我再給你一次機會，這次進去如果你依然不認真的解決問題」[0m
+		mpechoat $n [1;32m虛影(shadow)說著「那麼短時間內我都不會讓你進去了。」[0m
+		mpechoat $n [1;32m虛影(shadow)說著「自己考慮清楚還要不要進去(talk shadow enter)」[0m
+	else
+		mpechoat $n [1;32m虛影(shadow)說著「$n你要進去嗎？(talk shadow enter)」[0m
+	endif
+endif
+~
+>talk_prog enter~
+if is_qmark($n) == ghouse_enter_count 100005
+	mpechoat $n [1;32m虛影(shadow)說著「你一直進進出出的讓我很困擾...」[0m
+	mpechoat $n [1;32m虛影(shadow)說著「去去去...不想認真挑戰就別待在這煩我」[0m
+	mpechoat $n [1;32m虛影(shadow)說著「等你過段時間想通後再來，好，現在你可以滾了！」[0m
+	mpechoat $n 一陣輕煙環繞在四周，轉瞬間你回到史卡拉貝廣場...
+	mptransfer $n 3014
+else
+	if class($n) >= 5
+		if level($n) >= 36
+			mpechoat $n [1;32m虛影(shadow)說著「這裡已不適合你了，去別處尋求挑戰吧」[0m
+		else
+			mpechoat $n [1;32m虛影(shadow)說著「如你所願...」[0m
+			mpechoat $n 一陣輕煙環繞在四周，轉瞬間你已身在木門之後了...
+			mpmod_qmark $n ghouse_enter_count timer + 5
+			mpmod_qmark $n ghouse_enter_count v0 + 1
+			mpadd_qmark $n ghouse_enter_count 10 1 0 0 0 1
+			mptransfer $n 37203
+		endif
+	else
+		mpechoat $n [1;32m虛影(shadow)說著「如你所願...」[0m
+		mpechoat $n 一陣輕煙環繞在四周，轉瞬間你已身在木門之後了...
+		mpmod_qmark $n ghouse_enter_count timer + 5
+		mpmod_qmark $n ghouse_enter_count v0 + 1
+		mpadd_qmark $n ghouse_enter_count 10 1 0 0 0 1
+		mptransfer $n 37203
+	endif
+endif
+~
+|
+#37201
+dog-ghouse~
+門犬(door)~
+一隻狗(dog)在此負責站位
+~
+他是負責在reboot後幫忙調整樓梯的幫手，所以，請勿動手(笑)
+~
+1|2|64 8|32|512 0 S
+100 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>repop_prog 100~
+if inroom($i) == 37206
+	if rand(40)
+		mpadd_qmark self ghouse_door -1 1 0 0 0 1
+	else
+		if rand(50)
+			mpadd_qmark self ghouse_door -1 2 0 0 0 1
+		else
+			mpadd_qmark self ghouse_door -1 3 0 0 0 1
+		endif
+	endif
+endif
+if inroom($i) == 37224
+	if rand(50)
+		mpadd_qmark self ghouse_door -1 1 0 0 0 1
+	else
+		mpadd_qmark self ghouse_door -1 2 0 0 0 1
+	endif
+endif
+~
+>tick_prog 100~
+if inroom($i) == 37206
+	if is_qmark($i) == ghouse_door 100001
+		mpforcer here makedoor 0 往北的門 door 0 0 37208
+		mpgoto 37224
+		mpforcer here makedoor 2 往南的門 door 0 0 37210
+	endif
+	if is_qmark($i) == ghouse_door 100002
+		mpgoto 37205
+		mpforcer here makedoor 0 往北的門 door 0 0 37211
+		mpgoto 37207
+		mpforcer here makedoor 0 往北的門 door 0 0 37215
+		mpgoto 37224
+		mpforcer here makedoor 3 往西的門 door 0 0 37214
+		mpforcer here makedoor 1 往東的門 door 0 0 37225
+		if rand(50)
+			mpgoto 37368
+			mpforcer here makedoor 1 往東的門 door 0 0 37356
+		else
+			mpgoto 37269
+			mpforcer here deldoor 0
+			mpforcer here makedoor 0 往北的門 door 0 0 37357
+			mpgoto 37368
+			mpforcer here makedoor 1 往東的門 door 0 0 37362
+		endif
+	endif
+	if is_qmark($i) == ghouse_door 100003
+		mpforcer here makedoor 4 往上的門 door 0 0 37219
+		mpgoto 37224
+		mpforcer here makedoor 4 往上的門 door 0 0 37223
+	endif
+mppurge self
+endif
+if inroom($i) == 37224
+if is_qmark($i) == ghouse_door 100001
+	mpforcer here makedoor 0 往北的門 door 0 0 37231
+	if rand(50)
+		mpgoto 37270
+		mpforcer here makedoor 1 往東的門 door 0 0 37233
+		mpgoto 37369
+		mpforcer here makedoor 3 往西的門 door 0 0 37281
+		mpgoto 37370
+		mpforcer here makedoor 3 往西的門 door 0 0 37282
+	else
+		mpgoto 37233
+		mpforcer here deldoor 3
+		mpforcer here makedoor 3 往西的門 door 0 0 37285
+		mpgoto 37285
+		mpforcer here makedoor 1 往東的門 door 0 0 37233
+		mpgoto 37366
+		mpforcer here makedoor 3 往西的門 door 0 0 37291
+	endif
+	if rand(50)
+		mpgoto 37302
+		mpforcer here makedoor 5 往下的門 door 0 0 37247
+		mpgoto 37373
+		mpforcer here makedoor 1 往東的門 door 0 0 37311
+	else
+		mpgoto 37247
+		mpforcer here deldoor 4
+		mpforcer here makedoor 4 往上的門 door 0 0 37324
+		mpgoto 37324
+		mpforcer here makedoor 5 往下的門 door 0 0 37247
+		mpgoto 37365
+		mpforcer here makedoor 1 往東的門 door 0 0 37336
+	endif
+endif
+if is_qmark($i) == ghouse_door 100002
+	mpforcer here makedoor 0 往北的門 door 0 0 37248
+	if rand(50)
+		mpgoto 37271
+		mpforcer here makedoor 1 往東的門 door 0 0 37263
+		mpgoto 37369
+		mpforcer here makedoor 3 往西的門 door 0 0 37281
+		mpgoto 37370
+		mpforcer here makedoor 3 往西的門 door 0 0 37282
+	else
+		mpgoto 37263
+		mpforcer here deldoor 3
+		mpforcer here makedoor 3 往西的門 door 0 0 37286
+		mpgoto 37286
+		mpforcer here makedoor 1 往東的門 door 0 0 37263
+		mpgoto 37366
+		mpforcer here makedoor 3 往西的門 door 0 0 37291
+	endif
+	if rand(50)
+		mpgoto 37302
+		mpforcer here makedoor 3 往西的門 door 0 0 37256
+		mpgoto 37373
+		mpforcer here makedoor 1 往東的門 door 0 0 37311
+	else
+		mpgoto 37256
+		mpforcer here deldoor 1
+		mpforcer here makedoor 1 往東的門 door 0 0 37324
+		mpgoto 37324
+		mpforcer here makedoor 3 往西的門 door 0 0 37256
+		mpgoto 37365
+		mpforcer here makedoor 1 往東的門 door 0 0 37336
+	endif
+endif
+endif
+mppurge self
+~
+|
+#37202
+elf girl-gh~
+精靈少女(elf girl)~
+一個小女孩(girl)拿著你的頭當皮球拍著
+~
+她看起來跟一般的小孩沒什麼不同，拿著手中的皮球玩的正高興，
+當你仔細看時，嚇然發現她拿的是你的頭！
+~
+1|2|64 8|32|512 0 S
+30 -500 0 0d0+0 0d0+0
+1 0
+0 8 2
+R Robot~
+P 4|8|128
+>rand_prog 2~
+if rand(50)
+	giggle
+else
+	mpecho 精靈少女(elf girl)偷偷'咬'了皮球一口
+endif
+~
+>talk_prog topic~
+smile $n
+mpecho [1;32m精靈少女(elf girl)說著「$n你要陪我玩嗎？(yes/no)」[0m
+~
+>talk_prog yes~
+mpecho [1;32m精靈少女(elf girl)說著「那我們來玩踢皮球！」[0m
+mpechoat $n 精靈少女(elf girl)說完便向你的頭抓去...
+mpechoaround $n 精靈少女(elf girl)說完便向$n的頭抓去...
+mpkill $n
+~
+>talk_prog no~
+mpecho [1;32m精靈少女(elf girl)說著「不管！陪我玩嘛～」[0m
+mpechoat $n 精靈少女(elf girl)說完便向你的頭抓去...
+mpechoaround $n 精靈少女(elf girl)說完便向$n的頭抓去...
+mpkill $n
+~
+>death_prog 100~
+mpecho 精靈少女(elf girl)的身體如木偶般碎散，化為灰燼
+mppurge self
+~
+|
+#37203
+boy-gh~
+小男孩(boy)~
+小男孩(boy)在這裡玩著捉迷藏
+~
+如果在其他地方，他和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+say $r我們來玩～～
+endif
+~
+>rand_prog 2~
+snicker
+~
+>death_prog 100~
+mpecho [1;32m小男孩(boy)說著「你為什麼打我！？」[0m
+mpecho 小男孩(boy)的身體漸漸變得透明‧‧‧
+mpmload 37204
+mppurge self
+~
+|
+#37204
+spirit-gh~
+怨靈(spirit)~
+一個透明的形體(spirit)正對你發洩他的怨氣
+~
+它現在已幾乎看不出男孩的樣子，透明的身軀唯一還能看到的是
+那雙瞪著你的眼珠。
+~
+1|32|64|524288 8|32|512|524288 -500 S
+35 -500 0 20d-10+0 0d50+0
+4000 0
+0 8 1
+R Ghost~
+P 8|128
+S 16 150
+S 41 -75
+S 42 -75
+>fight_prog 20~
+skilldrv onehit $n
+skilldrv onehit $n
+~
+|
+#37205
+girl-gh~
+小女孩(girl)~
+小女孩(girl)在這裡玩著洋娃娃
+~
+如果在其他地方，她和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+pull $r
+say 陪我玩好不好～～
+endif
+~
+>rand_prog 2~
+dance
+~
+>death_prog 100~
+mpecho [1;32m小女孩(girl)說著「你為什麼打我！？」[0m
+mpecho 小女孩(girl)的身體漸漸變得透明‧‧‧
+mpmload 37206
+mppurge self
+~
+|
+#37206
+spirit-gh~
+怨靈(spirit)~
+一個透明的形體(spirit)正對你發洩她的怨氣
+~
+它現在已幾乎看不出女孩的樣子，透明的身軀唯一還能看到的是
+那雙瞪著你的眼珠。
+~
+1|32|64|524288 8|32|512|524288 -500 S
+35 -500 0 20d-10+0 0d50+0
+4000 0
+0 8 2
+R Ghost~
+P 8|128
+S 16 150
+S 41 -75
+S 42 -75
+>fight_prog 20~
+skilldrv onehit $n
+skilldrv onehit $n
+~
+|
+#37207
+dark-gh~
+黑暗(dark)~
+一塊彷彿擁有意志的黑暗(dark)向你擁來
+~
+它不斷地吸食著周圍的黑暗來補充能量，或許你得想辦法讓四周亮
+一點。
+~
+1|32|64 8|32|512|32768|65536|524288 0 S
+38 -500 0 35d0+0 0d0+0
+10000 0
+0 8 0
+R Mist~
+P 4|8|128
+S 16 250
+S 41 -50
+S 42 -150
+>fight_prog 40~
+if is_inv_obj($n) == 21
+or is_equ_obj($n) == 21
+	mpecho 黑暗(dark)試圖吸取四周的黑暗，但附近似乎不夠暗
+	mpecho 魔法光球的光線使得黑暗(dark)[1;32m***尖聲哀叫***.(231-280)[0m
+	mpforcer here modhmv $i 01.231 280 00000000
+else
+	mpecho 黑暗(dark)吸取四周的黑暗作為能量...
+	mpforcer here modhmv $i 02.231 280 00000000
+endif
+~
+>fight_prog 25~
+skilldrv multihit $n
+~
+|
+#37208
+mirror image-gh~
+鏡影(mirror image)~
+一個和你一模一樣的身影(image)向你逼近！
+~
+當它面對你時，身影漸漸改變，最後變得和你一模一樣！看來只有
+活下來的才能證明自己是正牌的了。
+~
+1|32|64 8|32|512|524288 200 S
+38 -700 0 -10d20+-200 0d100+0
+8000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 200
+S 41 -100
+S 42 -150
+S 44 -50
+>hitprcnt_prog 20~
+if is_qmark($i) != ghouse_mirror
+if rand(20)
+	mpecho 鏡影(mirror image)眼見傷勢嚴重，一轉身便躲進了鏡子裡
+	mpforcer here modrvt v1 = 1
+	mppurge self
+endif
+endif
+~
+>fight_prog 20~
+c burn $n
+mpnowait
+~
+>fight_prog 10~
+c shock $n
+mpnowait
+~
+>death_prog 100~
+if is_qmark($i) == ghouse_mirror
+	mpgreward exp $n -36 200
+endif
+~
+|
+#37209
+ghost-gh~
+鬼魂(ghost)~
+一個無主冤魂(ghost)在這漫無目的的飄浮
+~
+一個無主冤魂(ghost)在這漫無目的的飄浮。
+~
+1|32|64 8|32|512|524288 200 S
+39 -1000 0 50d0+0 0d150+0
+4000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 150
+S 41 -175
+S 42 -100
+>fight_prog 33~
+skilldrv multihit $n
+~
+|
+#37210
+zombie-gh~
+殭屍(zombie)~
+一個殭屍(zombie)對所有的活物展開攻擊
+~
+一個殭屍(zombie)對所有的活物展開攻擊。
+~
+1|32|64 8|32|512 -200 S
+40 -800 0 5d10+-300 30d200+0
+5000 0
+0 8 0
+R Undead~
+P 8|128
+S 16 230
+S 41 -50
+S 42 -200
+>repop_prog 50~
+mpoload 37202 31
+mpat 5 wear all
+~
+>fight_prog 25~
+skilldrv onehit $n
+~
+|
+#37211
+alchemist marie-gh~
+瑪莉(marie)~
+一位煉金師(alchemist)裝扮的幽靈在這發著呆
+~
+一位煉金師(alchemist)裝扮的幽靈在這發著呆。
+~
+1|2|64 8|32|512 1000 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 2
+R Ghost~
+P 4|8|128
+>rand_prog 5~
+sigh
+say 我的孩子們...
+~
+>talk_prog topic~
+if is_qmark($i) != ghouse_marie
+	smile
+	say 你好，我已經很久沒見到活人了
+	say 你願意聽我說說故事嗎？(yes/no)
+endif
+~
+>defun_prog ghouse_talk_one~
+mpecho 正當瑪莉(marie)要繼續說下去時，一陣稚嫩的聲音響起...
+mpecho 不明人物[1;32m說著「主人，來陪我玩～」[0m
+mpecho 瑪莉(marie)一聲哀叫，消失在你的眼前...
+mppurge self
+break
+~
+>defun_prog ghouse_talk_two~
+say 我在這裡致力於生命的製造，雖然軀體的製作很容易
+say 但最難的還是'魂'的製作
+say 第一個心智不會成長，第二對也失敗了，第三個情緒無法控制
+say 第四個則是喪失了所有情緒，終於在第五個終於成功了...
+if rand(50)
+	mpcallout 2 mpcall ghouse_talk_one $n
+else
+	mpcallout 2 mpcall ghouse_talk_three $n
+endif
+~
+>defun_prog ghouse_talk_three~
+say 第五個可以說是我心血的結晶，因此我全副心力都花在這孩子身上
+say 因此也造成了悲劇...，其他孩子害怕她，害怕自己會被'捨棄'
+say 所以她們殺了我，並且趕走了第五個孩子
+say 這也是我當初沒有預料到的...
+if rand(50)
+	mpcallout 2 mpcall ghouse_talk_one $n
+else
+	mpcallout 2 mpcall ghouse_talk_four $n
+endif
+~
+>defun_prog ghouse_talk_four~
+say 在我死後，這裡著實沉靜了好一陣子，其他的孩子們守著我的屍體
+say 認為這樣等於從第五個孩子那裡搶回了我，但屍體是沒有反應的
+say 一直到某一天，一個死靈法師也看上了這個地方，想在這裡從事他的研究
+say 孩子們為了守護這裡而和他的骷髏、殭屍們發生了戰鬥
+say 最後死靈法師無奈之下，提出了一個交易，將我的靈魂招回此處
+say 換來與孩子們和平共存的協定，但這個秘法卻也造成了冥界的缺口
+say 吸引了許多邪惡的力量前來此處，包括'他'在內...
+if rand(50)
+	mpcallout 2 mpcall ghouse_talk_one $n
+else
+	mpcallout 2 mpcall ghouse_talk_five $n
+endif
+~
+>defun_prog ghouse_talk_five~
+sigh
+say 我還是很想念被趕走的那孩子...
+say 可惜我為她準備的禮物被'他'搶走了，其他孩子也不願幫我搶回來
+say 她現在究竟在那裡呢...
+say 小西...
+mpecho 瑪莉(marie)的身驅逐漸變淡，慢慢地消失了...
+mpexp $n 800
+mppurge self
+~
+>talk_prog yes~
+if is_qmark($i) != ghouse_marie
+	mpadd_qmark self ghouse_marie -1 0 0 0 0 1
+	say 這已經是兩百年前的往事了...
+	say 那時我醉心於煉金術的研究，卻不像一般的煉金師專注於法術的威力
+	say 而另闢奚徑，希望能達成煉金術的另一個極致─創造生命
+	say 於是我離開了居住多年的地方，來到這沒人打攪的地方
+	say 建造了這棟房子...
+	if rand(50)
+		mpcallout 2 mpcall ghouse_talk_one $n
+	else
+		mpcallout 2 mpcall ghouse_talk_two $n
+	endif
+endif
+~
+>talk_prog no~
+if is_qmark($i) != ghouse_marie
+	say 這樣啊...
+	mpecho 瑪莉(marie)轉過頭去繼續發呆
+endif
+~
+|
+#37212
+vampire bat-gh~
+吸血蝙蝠(vampire bat)~
+一隻巨大的蝙蝠(bat)凌空向你撲來
+~
+一隻巨大的蝙蝠(bat)凌空向你撲來
+~
+1|32|64|2048 8|32|512|524288 300 S
+37 -1000 0 15d-15+100 0d0+0
+10000 0
+0 8 0
+R Vampire~
+C 4
+P 8
+S 16 350
+S 41 -25
+S 42 -200
+>fight_prog 20~
+mpechoat $n 吸血蝙蝠(vampire bat)張開利齒向你咬去！
+mpechoaround $n 吸血蝙蝠(vampire bat)張開利齒向$n咬去！
+feed $n
+~
+|
+#37213
+elf girl-gh-real~
+精靈少女(elf girl)~
+一個看起來飽受驚嚇的少女(girl)在這哭泣
+~
+她在這裡似乎受了不少折磨，看到你也只是不住的哭泣，或許你能
+夠幫幫她。
+~
+1|2|64 8|32|512 0 S
+20 0 0 0d0+0 0d0+0
+1 0
+0 8 2
+R Elf~
+P 4|8|128
+>rand_prog 20~
+if rand(33)
+	say 嗚..嗚..
+else
+	if rand(50)
+		say 請你放過我吧，不要再折磨我了..
+		sniff
+	else
+		say 不要！不要過來～～
+		mpecho 她看來似乎很怕你
+	endif
+endif
+~
+>talk_prog topic~
+say 你..你是來救我的嗎？
+say 如果是的話，請打倒那個冒牌貨...
+point girl-gh-fail
+~
+>death_prog 100~
+if insameroom(girl-gh-fail)
+mpecho [1;32m精靈少女(elf girl)說著「我..我才是真的啊..」[0m
+mpecho 精靈少女(elf girl)死時，一旁的少女發出了尖厲的笑聲
+mpecho [1;32m精靈少女(elf girl)說著「連真偽都分不出來，這下我更能好好折磨她了！」[0m
+mpecho 一旁的少女帶著精靈少女(elf girl)的屍骸消失了...
+mpexp $n -300
+mppurge girl-gh-fail
+mppurge self
+endif
+~
+|
+#37214
+elf girl-gh-fail~
+精靈少女(elf girl)~
+一個看起來飽受驚嚇的少女(girl)在這哭泣
+~
+她在這裡似乎受了不少折磨，看到你也只是不住的哭泣，或許你能
+夠幫幫她。
+~
+1|2|64 8|32|512 0 S
+20 0 0 0d0+0 0d0+0
+1 0
+0 8 2
+R Elf~
+P 4|8|128
+>repop_prog 50~
+mpgoto self
+~
+>rand_prog 20~
+if rand(33)
+	say 嗚..嗚..
+else
+	if rand(50)
+		say 請你放過我吧，不要再折磨我了..
+		sniff
+	else
+		say 不要！不要過來～～
+		mpecho 她看來似乎很怕你
+	endif
+endif
+~
+>talk_prog topic~
+say 你..你是來救我的嗎？
+say 如果是的話，請打倒那個冒牌貨...
+point girl-gh-real
+~
+>death_prog 100~
+if insameroom(girl-gh-real)
+mpecho [1;32m精靈少女(elf girl)說著「竟..竟然被抓到了...」[0m
+mpecho 精靈少女(elf girl)死時，一旁的少女發出了高興的笑聲
+mpecho [1;32m精靈少女(elf girl)說著「這回換我贏了吧！終於該我折磨妳了！」[0m
+mpecho 一旁的少女帶著精靈少女(elf girl)的屍骸消失了...
+mpexp $n 300
+mppurge girl-gh-real
+mppurge self
+endif
+~
+|
+#37215
+doll-gh~
+洋娃娃(doll)~
+一個十分可愛的洋娃娃(doll)擺放在這裡
+~
+一個十分可愛的洋娃娃(doll)擺放在這裡
+~
+1|2|64|2048 8|32|512|524288 0 S
+37 -1000 0 40d-15+0 0d0+0
+10000 0
+0 8 0
+R Robot~
+P 4|8|128
+S 16 300
+S 41 50
+S 42 -200
+S 43 -15
+>rand_prog 15~
+if ispc($r)
+mpoload 37200 31
+mpat 5 wear all
+mpechoat $r 洋娃娃(doll)不知從那拿出一把剪刀向你刺來！
+mpechoaround $r 洋娃娃(doll)不知從那拿出一把剪刀向$n刺來！
+mpkill $r
+endif
+~
+>fight_prog 33~
+skilldrv multihit $n
+~
+|
+#37216
+machine dog-gh~
+機械狗(machine dog)~
+一隻由機械和屍骸組合成的小狗(dog)正在對你嚎叫
+~
+一隻由機械和屍骸組合成的小狗(dog)正在對你嚎叫
+~
+1|32|64 8|32|512|524288 0 S
+39 -500 0 40d5+0 0d200+0
+6000 0
+0 8 0
+R Robot~
+P 4|8|128
+S 16 250
+S 41 100
+S 42 -300
+S 43 20
+>fight_prog 25~
+skilldrv onehit $n
+~
+>death_prog 50~
+if rmobcount(37216) >= 2
+mpgoto self
+mpdef_rembch 2.dog-gh
+mpecho 一旁的機械狗(machine dog)拿起屍體來修補自身的傷害
+mpforcer here modhmv $b 04.50 50 00000000
+endif
+~
+|
+#37217
+doll bear-gh~
+熊布偶(bear doll)~
+一隻有著人類嘴唇和耳朵的熊布偶(bear)在這搜集殘肢
+~
+一隻有著人類嘴唇和耳朵的熊布偶(bear)在這搜集殘肢
+~
+1|32|64 8|32|512|524288 0 S
+38 -300 0 -10d10+-200 0d-100+0
+8000 0
+0 8 0
+R Robot~
+P 4|8|128
+S 16 250
+S 41 50
+S 42 -200
+S 43 30
+>fight_prog 40~
+skilldrv onehit $n
+skilldrv onehit $n
+~
+>death_prog 50~
+if rmobcount(37217) >= 2
+mpgoto self
+mpdef_rembch 2.bear-gh
+mpecho 一旁的熊布偶(bear doll)拿起屍體來修補自身的傷害
+mpforcer here modhmv $b 04.50 50 00000000
+endif
+~
+|
+#37218
+doll corpse-gh~
+屍偶(corpse doll)~
+一個分不出是屍體還是布偶的人型(corpse)向你撲來
+~
+他身上的殘肢可能比填充用的棉花還要多，由於相信只要替換完全
+部的軀體便能復活，這些過往的戰士向你展開攻擊！
+~
+1|32|64|2048 8|32|512|524288 -500 S
+37 -600 0 50d-25+0 30d100+0
+12000 0
+0 8 0
+R Robot~
+C 1
+P 8|128
+S 16 300
+S 41 -175
+S 42 -100
+S 43 -5
+>repop_prog 100~
+mpoload 37206 31
+mpat 5 wear all
+~
+>fight_prog 20~
+skilldrv speedhit $n
+~
+>death_prog 50~
+if rmobcount(37218) >= 2
+mpgoto self
+mpdef_rembch 2.corpse-gh
+mpecho 一旁的屍偶(corpse doll)拿起屍體來修補自身的傷害
+mpforcer here modhmv $b 04.50 50 00000000
+endif
+~
+|
+#37219
+zombie-one-gh~
+殭屍(zombie)~
+一個殭屍(zombie)在這享用著美味的人肉
+~
+一個殭屍(zombie)在這享用著美味的人肉
+~
+1|32|64 8|32|512 -200 S
+39 -700 0 -5d5+-300 10d300+0
+5000 0
+0 8 0
+S 16 200
+S 35 40
+S 41 -25
+S 42 -250
+S 43 25
+R Undead~
+P 8|128
+>fight_prog 40~
+skilldrv onehit $n
+~
+|
+#37220
+zombie-two-gh~
+殭屍(zombie)~
+一個殭屍(zombie)四處遊蕩著獵食'甜點'
+~
+一個殭屍(zombie)四處遊蕩著獵食'甜點'
+~
+1|32|64 8|32|512 -200 S
+38 -1000 0 65d0+0 10d300+0
+5000 0
+0 8 0
+S 16 200
+S 35 40
+S 41 -25
+S 42 -250
+R Undead~
+P 8|128
+>fight_prog 40~
+skilldrv multihit $n
+~
+|
+#37221
+cook-gh~
+廚師(cook)~
+一位廚師(cook)在這烹調出美味的人肉餐點
+~
+一位廚師(cook)在這烹調出美味的人肉餐點
+~
+1|32|64 8|32|512 -200 S
+40 -500 0 25d-10+0 10d100+0
+12000 0
+0 8 0
+S 16 300
+S 35 10
+S 41 -60
+S 42 -150
+S 43 -30
+R Undead~
+C 1
+P 8|128|4194304
+>repop_prog 100~
+mpoload 37201 31
+mpat 5 wear all
+~
+>fight_prog 20~
+skilldrv multihit $n
+~
+|
+#37222
+female servant-gh~
+女傭人形(female servant)~
+一位女傭(servant)裝扮的女孩在這清潔環境
+~
+一位女傭(servant)裝扮的女孩在這清潔環境
+~
+1|2|64 8|32|512 0 S
+39 -500 0 70d0+0 10d-300+0
+8000 0
+0 8 2
+R Robot~
+P 4|8|128
+S 16 250
+S 41 -100
+S 42 -200
+S 43 -5
+>repop_prog 100~
+mpoload 37207 31
+mpat 5 wear all
+~
+>death_prog 100~
+if is_qmark($i) != ghouse_servant_kill
+	mpgreward exp $n -36 250
+endif
+~
+>defun_prog ghouse_servant_one~
+if is_qmark($i) != ghouse_servant_kill
+	mpadd_qmark self ghouse_servant_kill -1 0 0 0 0 1
+endif
+mpechoat $n [1;32m女傭人形(female servant)說著「...髒東西！」[0m
+mpkill $n
+~
+>defun_prog ghouse_servant_two~
+mpechoat $n [1;32m女傭人形(female servant)說著「...」[0m
+mpechoat $n 女傭人形(female servant)低頭繼續打掃。
+~
+>fight_prog 33~
+skilldrv multihit $n
+~
+>greet_prog 100~
+if ispc($n)
+	if race($n) == human
+	or race($n) == elf
+		mpcall ghouse_servant_two $n
+	else
+		mpcall ghouse_servant_one $n
+	endif
+endif
+~
+|
+#37223
+guard-gh~
+警衛人形(guard)~
+一名警衛(guard)在此巡視並排除入侵者
+~
+一名警衛(guard)在此巡視並排除入侵者
+~
+1|2|64 8|32|512 0 S
+40 -400 0 35d-10+-100 0d50+0
+10000 0
+0 8 1
+R Robot~
+C 1
+P 4|8|128|4194304
+S 16 300
+S 41 -125
+S 42 -125
+S 43 -30
+>greet_prog 100~
+if ispc($n)
+	mpecho [1;32m警衛人形(guard)說著「排除入侵者！」[0m
+	mpkill $n
+endif
+~
+>fight_prog 25~
+skilldrv multihit $n
+~
+|
+#37224
+skeleton soldier-gh~
+骷髏兵(skeleton soldier)~
+一個骷髏兵(skeleton soldier)在這聽候主人的命令
+~
+一個骷髏兵(skeleton soldier)在這聽候主人的命令
+~
+1|2|32|64 8|32|512 -200 S
+38 0 0 10d-20+200 0d150+0
+7000 0
+0 8 0
+R Undead~
+C 1|4
+P 8|128
+S 16 250
+S 41 -75
+S 42 -250
+S 43 -35
+>fight_prog 25~
+skilldrv multihit $n
+~
+>repop_prog 100~
+mpoload 37203 31
+mpoload 37204 31
+mpat 5 wear all
+~
+|
+#37225
+necromancy-gh~
+死靈法師(necromancy)~
+一位死靈法師(necromancy)在這做著各種屍體實驗
+~
+一位死靈法師(necromancy)在這做著各種屍體實驗
+~
+1|2|32|64 8|32|512 -800 S
+42 0 0 -25d-25+0 0d0+0
+30000 0
+0 8 1
+R Undead~
+P 4|8|128|4194304
+S 16 500
+S 41 -150
+S 42 -80
+>repop_prog 100~
+mpoload 37218 20
+mpat 5 wear all
+~
+>fight_prog 25~
+mpdis_magic self seal magic
+mpdis_magic self mute
+~
+>fight_prog 15~
+if ispc($r)
+c fireball $r
+mpnowait
+else
+c fireball $n
+mpnowait
+endif
+~
+>fight_prog 20~
+c earthquake
+mpnowait
+~
+>fight_prog 25~
+if ispc($r)
+c shock $r
+mpnowait
+else
+c shock $n
+mpnowait
+endif
+~
+>death_prog 100~
+if rmobcount(37224) != 0
+	mpecho 死靈法師(necromancy)藉由骷髏兵身上的黑暗力量復生了！
+	mppurge soldier-gh
+	mpmload 37226
+	mppurge self
+else
+	mpecho 死靈法師(necromancy)沒有骷髏兵可提供黑暗之力，化為一堆飛灰！
+	mpgreward exp $n -36 500
+	if mobcount(37238) == 1
+		yell 我的最高傑作...
+		mpgoto abomination-gh
+		mpmod_qmark abomination-gh ghouse_abomination v0 + 1
+		mpgoto $n
+	endif
+endif
+~
+|
+#37226
+necromancy-gh~
+死靈法師(necromancy)~
+一位死靈法師(necromancy)在這做著各種屍體實驗
+~
+一位死靈法師(necromancy)在這做著各種屍體實驗
+~
+1|2|32|64 8|32|512 -800 S
+30 1000 0 -25d-25+200 20d200+0
+30000 0
+0 8 1
+R Undead~
+P 4|8|128
+S 16 200
+S 41 -150
+S 42 -80
+>repop_prog 100~
+mpadd_qmark self ghouse_necromancy_time -1 10 0 0 0 1
+mpoload 37218 20
+mpat 5 wear all
+~
+>tick_prog 100~
+if is_qmark($i) != ghouse_necromancy_time
+	mpecho 死靈法師的黑暗之力無以為繼，化為塵土
+	mppurge self
+endif
+~
+>fight_prog 25~
+mpdis_magic self seal magic
+mpdis_magic self mute
+~
+>fight_prog 15~
+if ispc($r)
+c fireball $r
+mpnowait
+else
+c fireball $n
+mpnowait
+endif
+~
+>fight_prog 20~
+c earthquake
+mpnowait
+~
+>fight_prog 25~
+if ispc($r)
+c shock $r
+mpnowait
+else
+c shock $n
+mpnowait
+endif
+~
+>death_prog 100~
+if rmobcount(37224) != 0
+	mpecho 死靈法師(necromancy)藉由骷髏兵身上的黑暗力量復生了！
+	mppurge soldier-gh
+	mpmload 37226
+	mppurge self
+else
+	mpecho 死靈法師(necromancy)沒有骷髏兵可提供黑暗之力，化為一堆飛灰！
+	if mobcount(37238) == 1
+		yell 我的最高傑作...
+		mpgoto abomination-gh
+		mpmod_qmark abomination-gh ghouse_abomination v0 + 1
+		mpgoto $n
+	endif
+endif
+~
+|
+#37227
+mouse-gh~
+老鼠(mouse)~
+一隻老鼠(mouse)在這跑來跑去，似乎並不怕人
+~
+一隻老鼠(mouse)在這跑來跑去，似乎並不怕人
+~
+1|64 32|512 0 S
+37 -1000 0 35d-10+0 0d0+0
+2000 0
+0 8 1
+R Animal~
+P 8|128
+S 16 150
+S 41 -100
+S 42 -150
+>greet_prog 100~
+if ispc($n)
+if rmobcount(37227) >= 3
+	mpecho 老鼠(mouse)見牠們'鼠多勢眾'，大膽向你咬來！
+	mpkill $n
+endif
+endif
+~
+>fight_prog 25~
+skilldrv onehit $n
+skilldrv onehit $n
+~
+>death_prog 100~
+if inroom($i) == 37327
+mpforcer here modrvt v0 + 1
+endif
+if inroom($i) == 37329
+mpforcer here modrvt v0 + 1
+endif
+if inroom($i) == 37330
+mpforcer here modrvt v0 + 1
+endif
+if inroom($i) == 37331
+mpforcer here modrvt v0 + 1
+endif
+~
+|
+#37228
+worm-gh~
+蛆蟲(worm)~
+一坨白白的物體(worm)慢慢地向你蠕動靠近
+~
+一坨白白的物體(worm)慢慢地向你蠕動靠近
+~
+1|32|64 8|512 0 S
+36 -800 0 0d5+0 0d200+0
+3000 0
+0 8 1
+R Worm~
+P 4|8|128
+S 16 150
+S 41 -120
+S 42 50
+>fight_prog 25~
+if ispc($r)
+mpechoat $r 蛆蟲用力地咬了你一口！
+mpechoaround $r 蛆蟲用力地咬了$r一口！
+mpforcer here modhmv $r 03.5 10 00000000
+else
+mpechoat $n 蛆蟲用力地咬了你一口！
+mpechoaround $n 蛆蟲用力地咬了$n一口！
+mpforcer here modhmv $n 03.5 10 00000000
+endif
+~
+|
+#37229
+girl-three-gh~
+少女人形(girl)~
+一位少女(girl)在這靜靜地看著書籍
+~
+她看起來跟一般的女孩沒什麼不同，但在這種地方看書似乎會損
+害視力...
+~
+1|2|64 8|32|512 0 S
+42 -500 0 0d-20+0 0d100+0
+50000 0
+0 8 2
+R Robot~
+C 1
+P 4|8|128|4194304
+S 16 750
+S 41 -100
+S 42 -150
+S 43 -35
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 37205 20
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+mpechoat $n [1;32m少女人形(girl)說著「別打攪我看書！」[0m
+if rand(33)
+mpkill $n
+endif
+endif
+~
+>fight_prog 50~
+if rand(20)
+if is_qmark($i) != ghouse_girl_three_one
+mpadd_qmark self ghouse_girl_three_one -1 0 0 0 0 1
+mpecho [1;32m少女人形(girl)說著「招喚之書！」[0m
+mpecho 一名警衛應少女人形的招喚而來
+mpmload 37223
+mpforce guard-gh mpkill $n
+break
+endif
+endif
+if rand(25)
+if is_qmark($i) != ghouse_girl_three_two
+mpadd_qmark self ghouse_girl_three_two -1 0 0 0 0 1
+mpecho [1;32m少女人形(girl)說著「火燄之書！」[0m
+mpecho 地板忽然冒起了陣陣烈燄！
+mpforcer here cast fireball $n 30
+break
+endif
+endif
+if rand(33)
+if is_qmark($i) != ghouse_girl_three_three
+mpadd_qmark self ghouse_girl_three_three -1 0 0 0 0 1
+mpecho [1;32m少女人形(girl)說著「冰雪之書！」[0m
+mpecho 洞穴忽然飄起了細雪！
+mpforcer here cast colo $r 30
+break
+endif
+endif
+if rand(50)
+if is_qmark($i) != ghouse_girl_three_four
+mpadd_qmark self ghouse_girl_three_four -1 0 0 0 0 1
+mpecho [1;32m少女人形(girl)說著「雷電之書！」[0m
+mpecho 少女人形(girl)手中的書本化為一道巨大的閃電！
+mpforcer here cast lightning $n 30
+break
+endif
+else
+if is_qmark($i) != ghouse_girl_three_five
+mpadd_qmark self ghouse_girl_three_five -1 0 0 0 0 1
+mpecho [1;32m少女人形(girl)說著「治癒之書！」[0m
+mpecho 少女人形(girl)的傷勢看來好多了
+mpforcer here modhmv $i 04.50 50 00000000
+endif
+endif
+~
+>fight_prog 100~
+if is_qmark($i) == ghouse_girl_three_one
+if is_qmark($i) == ghouse_girl_three_two
+if is_qmark($i) == ghouse_girl_three_three
+if is_qmark($i) == ghouse_girl_three_four
+if is_qmark($i) == ghouse_girl_three_five
+if is_qmark($i) != ghouse_girl_three_end
+mpadd_qmark self ghouse_girl_three_end -1 0 0 0 0 1
+mpecho [1;32m少女人形(girl)說著「看我的天罰！」[0m
+mpecho 少女人形(girl)從懷中拿出了聖經
+god
+mpforcer here modhmv $i 04.100 100 00000000
+mpforcer here cast fireball $n 30
+mpforcer here cast fireball $r 30
+endif
+endif
+endif
+endif
+endif
+endif
+~
+>death_prog 100~
+if is_qmark($i) == ghouse_girl_three_end
+mpgreward exp $n -36 1000
+endif
+~
+|
+#37230
+stone ball-gh~
+石球(stone ball)~
+一顆巨大的石球(stone ball)擋住了這裡的走道
+~
+這顆巨大的石球擋住了整個走廊，如果不把它擊破的話恐怕是沒
+辦法通過了
+~
+1|2|64 8|32|64|512|268435456 0 S
+30 1000 0 0d0+500 50d1000+0
+1 0
+0 8 1
+R Object~
+P 1|4|8|64|128|32768|65536|131072
+>death_prog 100~
+mpdis_magic self all
+mpgoto 37352
+mpforcer here makedoor 2 往南的門 door 0 0 37269
+mpforcer here modrvt v0 = 0
+mpforcer here force 37269 makedoor 0 往北的門 door 0 0 37352
+mpecho 隨著石球的破碎，走廊終於可以通過了。
+~
+|
+#37231
+gargoyle-gh~
+石像鬼(gargoyle)~
+一頭石頭構成的惡魔(gargoyle)向你張牙舞爪地撲來
+~
+一頭石頭構成的惡魔(gargoyle)向你張牙舞爪地撲來
+~
+1|32|64 8|32|512|524288 300 S
+41 -800 0 20d-15+0 10d0+0
+10000 0
+0 8 0
+S 16 300
+S 41 100
+S 42 -300
+R Gargoyle~
+C 1
+P 1|4|8|128
+>repop_prog 100~
+mpadd_qmark self ghouse_gargoyle -1 0 0 0 0 1
+if rand(33)
+	mpmod_qmark self ghouse_gargoyle v0 = 1
+else
+	if rand(50)
+		mpmod_qmark self ghouse_gargoyle v0 = 2
+	else
+		mpmod_qmark self ghouse_gargoyle v0 = 3
+	endif
+endif
+~
+>tick_prog 100~
+if is_qmark($i) == gh_gargoyle_stone
+	if hitprcnt($i) >= 60
+		mpecho $I傷勢恢復後。
+		mpmodify pdr - 500
+		mpmodify mdr + 500
+		mpdel_qmark self gh_gargoyle_stone
+		mpadd_qmark self gh_stone_timer -1 0 0 0 0 1
+		stone
+	else
+		mpforcer here modhmv $i 03.20 20 00000000
+	endif
+else
+	if is_qmark($i) != gh_stone_timer
+		break
+	endif
+	if is_qmark($i) <= gh_stone_timer 100010
+		mpmod_qmark self gh_stone_timer v0 + 1
+	else
+		mpdel_qmark self gh_stone_timer
+	endif
+endif
+~
+>fight_prog 20~
+if is_qmark($i) == gh_gargoyle_stone
+	break
+endif
+if is_qmark($i) == ghouse_gargoyle 100001
+	if rand(60)
+		mpecho $I的身軀漸漸化成飛龍，舞動雙翼刮起狂風！
+		cast shock
+		mpnowait
+	else
+		mpecho $I的身軀漸漸化成飛龍，吐出洶湧烈燄！
+		cast fireball
+		mpnowait
+	endif
+endif
+~
+>fight_prog 20~
+if is_qmark($i) == gh_gargoyle_stone
+	break
+endif
+if is_qmark($i) == ghouse_gargoyle 100002
+	mpecho $I的身軀伸出許多觸手展開攻擊！
+	if rand(50)
+		skilldrv multihit $n
+		mpnowait
+	else
+		if pcnum($) > 0
+			skilldrv multihit $r
+			mpnowait
+		endif
+	endif
+endif
+~
+>fight_prog 20~
+if is_qmark($i) == gh_gargoyle_stone
+	break
+endif
+if is_qmark($i) == ghouse_gargoyle 100003
+	mpecho $I的身軀漸漸變成惡魔的模樣，喃喃唸起了咒語！
+	if rand(33)
+		c chill $n
+		mpnowait
+	else
+		if rand(50)
+			c shock $n
+			mpnowait
+		else
+			c earthquake
+			mpnowait
+		endif
+	endif
+endif
+~
+>fight_prog 100~
+if is_qmark($i) == gh_stone_timer
+	break
+endif
+if hitprcnt($i) < 20
+	if is_qmark($i) != gh_gargoyle_stone
+		mpadd_qmark self gh_gargoyle_stone -1 0 0 0 0 1
+		mpecho $I見傷勢嚴重，飛到一旁牆邊。
+		mpmodify pdr + 500
+		mpmodify mdr - 500
+		mpgoto self
+		stone
+	endif
+endif
+~
+>death_prog 100~
+mpgreward exp $n -36 500
+~
+|
+#37232
+stone statue-gh~
+石像(stone statue)~
+一座面目猙獰的石像(stone statue)座落在此
+~
+它看起來十分的堅硬！這座石像雕塑的栩栩如生，彷彿下一刻就會對
+你展開攻擊
+~
+1|2|64 8|32|64|512|268435456 300 S
+40 -600 0 0d0+0 0d1000+0
+10000 0
+0 8 1
+S 16 300
+S 41 9999
+S 42 -500
+R Statue~
+P 1|4|8|64|128|32768|65536|131072
+
+#37233
+tentacle-gh~
+觸手(tentacle)~
+一隻十分粗大、長滿肉瘤的觸手(tentacle)正向你伸來！
+~
+一隻十分粗大、長滿肉瘤的觸手(tentacle)正向你伸來！
+~
+1|2|32|64 8|32|512 -300 S
+40 -500 0 50d-10+0 0d300+0
+6000 0
+0 8 0
+R Plant~
+C 1
+P 4|8|128
+S 16 250
+S 41 -180
+S 42 100
+>fight_prog 20~
+if is_qmark($i) != ghouse_tentacle
+	mpadd_qmark self ghouse_tentacle -1 0 0 0 0 1
+	mpforcer here add_affect $r paralyze 1020 0 17 -100 268435456
+	mpechoat $r 觸手緊緊地纏住了你，讓你動彈不得！
+	mpechoaround $r 觸手緊緊地纏住了$r，讓$r動彈不得！
+endif
+~
+>fight_prog 33~
+skilldrv speedhit $n
+mpnowait
+~
+|
+#37234
+lichen-gh~
+綠蘚怪(lichen)~
+一片奇怪的苔蘚(lichen)攀附在牆上
+~
+一片奇怪的苔蘚(lichen)攀附在牆上
+~
+1|32|64 8|32|512 -100 S
+39 -500 0 -15d10+0 0d200+0
+6000 0
+0 8 0
+R Plant~
+P 4|8|128
+S 16 250
+S 41 -150
+S 42 100
+S 43 15
+>fight_prog 25~
+mpechoat $n 綠蘚怪(lichen)爬到了你身上，侵蝕你的皮肉！
+mpforcer here modhmv $n 03.10 15 00000000
+~
+|
+#37235
+reaper-gh~
+樹妖(Reaper)~
+樹妖(Reaper)揮舞著如爪子般的樹幹向你捲來
+~
+樹妖(Reaper)揮舞著如爪子般的樹幹向你捲來
+~
+1|2|32|64 8|32|512 -300 S
+40 0 0 25d0+0 0d400+0
+7000 0
+0 8 0
+R Plant~
+P 4|8|128
+S 16 300
+S 41 -140
+S 42 100
+S 43 20
+>fight_prog 10~
+skilldrv multihit $n
+mpnowait
+~
+>fight_prog 25~
+skilldrv heavyhit $n
+skilldrv onehit $n
+~
+|
+#37236
+dark mist-gh~
+黑霧(dark mist)~
+一團濃厚沉重的黑色煙霧(mist)侵蝕著四周一切活物
+~
+一團濃厚沉重的黑色煙霧(mist)侵蝕著四周一切活物
+~
+1|32|64 8|32|512|32768|65536|524288 -500 S
+41 -300 0 10d5+100 0d-100+0
+10000 0
+0 8 0
+R Mist~
+C 1
+P 4|8|128
+S 16 300
+S 41 80
+S 42 -330
+S 43 -20
+>fight_prog 20~
+skilldrv multihit $n
+~
+>fight_prog 20~
+mpechoat $n 一片黑霧侵入你的體內，讓你感到一陣嘔心！
+mpforcer here add_affect $n poison 1030 2 0 0 4096
+~
+|
+#37237
+allip-gh~
+怨魂(allip)~
+一道充滿著怨念與殺意的魂魄(allip)在這找尋洩恨的目標
+~
+一道充滿著怨念與殺意的魂魄(allip)在這找尋洩恨的目標
+~
+1|32|64 8|32|512|524288 -700 S
+41 -400 0 80d-5+0 -30d200+0
+10000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 300
+S 35 -30
+S 41 -250
+S 42 300
+S 43 10
+>fight_prog 20~
+skilldrv multihit $n
+~
+>fight_prog 10~
+mpecho 怨魂哀叫一聲，似乎受到極大的痛苦
+combat
+mpnowait
+mpgoto self
+mpkill $n
+~
+>fight_prog 20~
+c 'burning hands' $n
+mpnowait
+~
+|
+#37238
+abomination-gh~
+肉傀儡(abomination)~
+一具由各式各樣的屍塊混合成的傀儡(abomination)散發著致命毒氣
+~
+一具由各式各樣的屍塊混合成的傀儡(abomination)散發著致命毒氣
+~
+1|2|32|64 8|32|512 -1000 S
+44 8000 0 -20d0+400 40d500+0
+50000 0
+0 8 0
+S 2 -18
+S 16 500
+S 35 30
+S 41 -700
+S 42 -800
+S 43 -10
+R Undead~
+C 1
+P 4|8|128|4194304|67108864
+>repop_prog 100~
+mpadd_qmark self ghouse_abomination -1 0 0 0 0 1
+mpoload 37208 31
+mpat 5 wear all
+~
+>fight_prog 25~
+mpecho 肉傀儡(abomination)揮舞著巨大的屠刀攻來...
+skilldrv heavyhit $n
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+if is_qmark($i) >= ghouse_abomination 100001
+	mpgreward exp $n -36 200
+	mpat 5 remove chopper
+	mppurge chopper
+	mpoload 37209 20
+endif
+~
+|
+#37239
+final flesh girl-four-gh~
+最終人形(final flesh)~
+一名精靈少女(girl)在這守護著某種事物
+~
+她與其他的精靈少女一模一樣，不同的是她的臉上完全看不出任何
+表情。
+~
+1|2|64|8388608 8|32|512 0 S
+44 -500 0 0d-30+-50 -5d-50+0
+30000 0
+0 8 2
+S 16 500
+S 35 -5
+S 41 -40
+S 42 -40
+S 43 -10
+R Elf~
+C 1
+P 4|8|128|1048576|4194304|67108864
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>defun_prog ghouse_fourgirl_one~
+mpecho 最終人形(final flesh)眼中的光芒漸漸暗了下來...
+mpecho 最終人形(final flesh)如斷線木偶般跌落在地，不再動彈...
+mpgreward exp $n -36 500
+mpat 37371 mpforcer here modrvt v1 = 0
+mpat 37371 mpforcer here modrvt v0 = 0
+mppurge self
+~
+>defun_prog ghouse_fourgirl_two~
+mpechoat $n 最終人形(final flesh)失去了控制，瘋狂地向你攻來
+mpechoaround $n 最終人形(final flesh)失去了控制，瘋狂地向$n攻去
+mpmload 37240
+mpforce girl-four-gh-crazy mpkill $n
+mppurge self
+~
+>defun_prog ghouse_fourgirl_three~
+say 會危害主人的都要消除！
+mpecho 最終人形(final flesh)忽然展開了攻擊！
+mpmload 37240
+mppurge self
+~
+>defun_prog ghouse_fourgirl_four~
+say 我只有...一個主人...
+mpechoat $n 最終人形(final flesh)似乎失去控制，瘋狂地向你攻來
+mpechoaround $n 最終人形(final flesh)似乎失去控制，瘋狂地向$n攻去
+mpmload 37240
+mpforce girl-four-gh-crazy mpkill $n
+mppurge self
+~
+>defun_prog ghouse_fourgirl_five~
+say 謝謝你...
+mpecho 最終人形(final flesh)把晶石裝回胸膛，靜靜地離開了...
+mpgreward exp $n -36 350
+mpat 37371 mpforcer here modrvt v1 = 0
+mpat 37371 mpforcer here modrvt v0 = 0
+mppurge self
+~
+>defun_prog ghouse_fourgirl_six~
+say 這.就..感覺....控..錯誤.....
+mpechoat $n 最終人形(final flesh)似乎失去控制，瘋狂地向你攻來
+mpechoaround $n 最終人形(final flesh)似乎失去控制，瘋狂地向$n攻去
+mpmload 37240
+mpforce girl-four-gh-crazy mpkill $n
+mppurge self
+~
+>defun_prog ghouse_fourgirl_seven~
+say 色狼！
+mpechoat $n 最終人形(final flesh)全力對你展開攻擊！
+mpmload 37240
+mpforce girl-four-gh-crazy mpkill $n
+mppurge self
+~
+>talk_prog rest~
+if is_qmark($i) == ghouse_girl_four 100001
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 休息...嗎...
+		say 主人...不要我了嗎...
+		mpcallout 1 mpcall ghouse_fourgirl_one $n
+	endif
+endif
+~
+>talk_prog clear~
+if is_qmark($i) == ghouse_girl_four 100001
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 清除...？
+		mpecho 最終人形(final flesh)似乎陷入了混亂
+		mpcallout 1 say 主人...要...清除自己？
+		mpcallout 2 mpcall ghouse_fourgirl_two $n
+	endif
+endif
+~
+>talk_prog thing~
+if is_qmark($i) == ghouse_girl_four 100001
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 真的嗎！？謝謝！
+		mpecho 最終人形(final flesh)頭也不回地離開了...
+		mpgreward exp $n -36 250
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog 1~
+if is_qmark($i) == ghouse_girl_four 100002
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog 2~
+if is_qmark($i) == ghouse_girl_four 100002
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog 3~
+if is_qmark($i) == ghouse_girl_four 100002
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog 4~
+if is_qmark($i) == ghouse_girl_four 100002
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		bow
+		say 剛才失禮了，我還有任務，失陪了
+		mpecho 最終人形(final flesh)迅速的離去了
+		mpgreward exp $n -36 500
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog 5~
+if is_qmark($i) == ghouse_girl_four 100002
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog wizard~
+if is_qmark($i) == ghouse_girl_four 100003
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog alchemist~
+if is_qmark($i) == ghouse_girl_four 100003
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 是的...
+		mpecho 最終人形(final flesh)的表情似乎有點複雜，行了個禮便離開了...
+		mpgreward exp $n -36 400
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog sorcerer~
+if is_qmark($i) == ghouse_girl_four 100003
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog destroy~
+if is_qmark($i) == ghouse_girl_four 100004
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 消除...嗎
+		say 不行...不能消除
+		mpecho 最終人形(final flesh)忽然轉過身來展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog nothing~
+if is_qmark($i) == ghouse_girl_four 200000
+	if is_qmark($i) == ghouse_girl_four 100004
+		mpmod_qmark self ghouse_girl_four v0 = 0
+		say 這樣啊...
+	endif
+	if is_qmark($i) == ghouse_girl_four 100010
+		mpmod_qmark self ghouse_girl_four v0 = 0
+		say 這樣啊...
+	endif
+endif
+~
+>talk_prog where~
+if is_qmark($i) == ghouse_girl_four 200000
+	if is_qmark($i) == ghouse_girl_four 100004
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 他在...華麗走廊的...
+		mpecho 最終人形(final flesh)忽然頓了一下...
+		mpcallout 1 mpcall ghouse_fourgirl_three $n
+	endif
+	if is_qmark($i) == ghouse_girl_four 100005
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...不是朋友，敵人！
+		mpecho 最終人形(final flesh)再次展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog own~
+if is_qmark($i) == ghouse_girl_four 100005
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say .....
+		mpcallout 1 mpcall ghouse_fourgirl_four $n
+	endif
+endif
+~
+>talk_prog who~
+if is_qmark($i) == ghouse_girl_four 200000
+	if is_qmark($i) == ghouse_girl_four 100005
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		emote 搖了搖頭
+		say 不知道...是人類...其他沒有資料...
+		say 他拿走了主人給西維亞的禮物...
+		mpecho 最終人形(final flesh)行了個禮便離開了...
+		mpgreward exp $n -36 250
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+	if is_qmark($i) == ghouse_girl_four 100009
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog heart~
+if is_qmark($i) == ghouse_girl_four 100006
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 心...嗎
+		mpecho 最終人形(final flesh)扒開自己的胸膛，取出了一顆透明的晶石
+		say 就是這個嗎...
+		mpcallout 1 mpcall ghouse_fourgirl_five $n
+	endif
+endif
+~
+>talk_prog soul~
+if is_qmark($i) == ghouse_girl_four 100006
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 那是...什麼東西？
+		say 我...沒有...那種零件
+		mpecho 最終人形(final flesh)閃過一絲落寞的神情，靜靜地離開了...
+		mpgreward exp $n -36 500
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog brain~
+if is_qmark($i) == ghouse_girl_four 100006
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 腦...？
+		mpecho 最終人形(final flesh)扒開自己的頭骨，挖出了一些乳白色的...腦漿
+		mpcallout 1 mpcall ghouse_fourgirl_six $n
+	endif
+endif
+~
+>talk_prog heal~
+if is_qmark($i) == ghouse_girl_four 100007
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 我知道了
+		c 'full heal' $n
+		mpecho 最終人形(final flesh)行了個禮便離開了...
+		mpgreward exp $n -36 200
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog secret~
+if is_qmark($i) == ghouse_girl_four 100007
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 玻璃走廊的兩旁..三姊待的下水道..死靈術士在天花板...
+		say 還有午夜的時之間..他不知在那...找不到...
+		mpecho 最終人形(final flesh)行了個禮便離開了...
+		mpgreward exp $n -36 400
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog measurements~
+if is_qmark($i) == ghouse_girl_four 100007
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 公分..嗎
+		say 88..57....
+		mpcallout 1 mpecho 最終人形(final flesh)突然沉默下來...
+		mpcallout 2 mpcall ghouse_fourgirl_seven $n
+	endif
+endif
+~
+>talk_prog human~
+if is_qmark($i) == ghouse_girl_four 100008
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		nod
+		say 失禮了，我還有任務，失陪了
+		mpecho 最終人形(final flesh)迅速的離去了
+		mpgreward exp $n -36 500
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog elf~
+if is_qmark($i) == ghouse_girl_four 100008
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog drow~
+if is_qmark($i) == ghouse_girl_four 100008
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say ...敵人！
+		mpecho 最終人形(final flesh)再度展開了攻擊！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog dead~
+if is_qmark($i) == ghouse_girl_four 100009
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 這樣嗎...
+		say 我們...做錯了嗎...
+		mpecho 最終人形(final flesh)閃過一絲落寞的神情，靜靜地離開了...
+		mpgreward exp $n -36 500
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog forget~
+if is_qmark($i) == ghouse_girl_four 100009
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 我..不能...
+		say 她在玻璃走廊，午夜門會開啟
+		say 拜託你了...
+		mpecho 最終人形(final flesh)行了個禮便離開了...
+		mpgreward exp $n -36 500
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog protect~
+if is_qmark($i) == ghouse_girl_four 100010
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 王座..防止巨大的黑暗入侵..
+		say 可是力量不夠...
+		mpecho 最終人形(final flesh)忽然頓了一下，身旁的黑霧彷如有生命般從縫隙湧入！
+		mpmload 37240
+		mppurge self
+	endif
+endif
+~
+>talk_prog help~
+if is_qmark($i) == ghouse_girl_four 100010
+	if is_qmark($i) == ghouse_girl_four 200000
+		mpmod_qmark self ghouse_girl_four v1 = 1
+		say 我還有任務...抱歉...
+		mpecho 最終人形(final flesh)行了個禮便離開了...
+		mpgreward exp $n -36 500
+		mpat 37371 mpforcer here modrvt v1 = 0
+		mpat 37371 mpforcer here modrvt v0 = 0
+		mppurge self
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == ghouse_girl_four 100000
+	if rand(10)
+		mpmod_qmark self ghouse_girl_four v0 = 1
+		say 主人...有新的命令嗎？
+		mpecho 她說妳可以休息(rest)，不用再待在這裡了
+		mpecho 她要妳把這裡的幽靈全部清除(clear)
+		mpecho 她有要緊的事情(thing)找妳，要妳馬上去找她
+		break
+	else
+		if rand(11)
+			mpmod_qmark self ghouse_girl_four v0 = 2
+			say 你們...真的認識主人？
+			say 那麼...請說出我在五姊妹中的排行(1-5)
+			break
+		else
+			if rand(13)
+				mpmod_qmark self ghouse_girl_four v0 = 3
+				say 你們...真的是主人的朋友？
+				say 那麼...請告訴我主人的職業
+				mpecho 巫師(wizard) 鍊金師(alchemist) 幻法師(sorcerer)
+				break
+			else
+				if rand(14)
+					mpmod_qmark self ghouse_girl_four v0 = 4
+					say 主人找你來...是為了死靈法師...？
+					mpecho 是的，她要妳把死靈法師"消除"(destroy)
+					mpecho 不，她沒告訴我任何事情(nothing)
+					mpecho 我就是來幫忙打倒死靈法師的，妳知道他在那(where)嗎？
+					break
+				else
+					if rand(17)
+						mpmod_qmark self ghouse_girl_four v0 = 5
+						say ...有事嗎？
+						mpecho 我想知道妳的"主人"現在在那裡(where)
+						mpecho 妳的主人拋棄妳了，妳現在是我的所有物(own)了
+						mpecho 妳知道主人口中的"他"是誰(who)嗎？
+						break
+					else
+						if rand(20)
+							mpmod_qmark self ghouse_girl_four v0 = 6
+							mpecho 最終人形(final flesh)欲言又止，似乎想說什麼
+							say 請問...我們和一般人何處不同...？
+							mpecho 心(heart) 魂(soul) 腦(brain)
+							break
+						else
+							if rand(25)
+								mpmod_qmark self ghouse_girl_four v0 = 7
+								say ...有需要幫忙的地方嗎？
+								mpecho 可以幫我治療(heal)一下傷勢嗎？
+								mpecho 可以告訴我這裡有什麼秘道(secret)嗎？
+								mpecho 請問妳的三圍(measurements)...？
+								break
+							else
+								if rand(33)
+									mpmod_qmark self ghouse_girl_four v0 = 8
+									say 你...真的認識主人？
+									say 那麼...請說出主人的種族...
+									mpecho 人類(human) 精靈(elf) 黑精靈(drow)
+									break
+								else
+									if rand(50)
+										mpmod_qmark self ghouse_girl_four v0 = 9
+										mpecho 最終人形(final flesh)欲言又止，似乎想說什麼
+										say 請問...主人她現在好嗎？
+										mpecho 人都死(dead)了還有好不好的
+										mpecho 我不清楚(forget)，妳不知道她在那嗎？
+										mpecho 妳在說誰(who)？
+										break
+									else
+										mpmod_qmark self ghouse_girl_four v0 = 10
+										say ...有事嗎？
+										mpecho 不，什麼事都沒有(nothing)
+										mpecho 請問妳在這裡守著(protect)什麼東西？
+										mpecho 請問妳可以幫忙(help)我打倒這裡的怪物嗎？
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($i) != ghouse_girl_four
+	if ispc($n)
+		say 入侵者...？
+		mpkill $n
+	endif
+endif
+~
+>fight_prog 15~
+mpat 5 c  2 'double heal'
+mpnowait
+~
+>fight_prog 15~
+c chi $n
+mpnowait
+~
+>fight_prog 15~
+c wea $r
+mpnowait
+~
+>fight_prog 5~
+c 'seal magic' $r
+mpnowait
+~
+>fight_prog 5~
+c whi
+mpnowait
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+mpat 37371 mpforcer here modrvt v0 = 0
+~
+|
+#37240
+final flesh girl-four-gh-crazy~
+最終人形(final flesh)~
+一名精靈少女(girl)在這對所有敵人展開攻擊
+~
+她與其他的精靈少女一模一樣，此刻的她只知道消滅眼前的敵人，
+再聽不到其他的命令。
+~
+1|2|32|64|8388608 8|32|512 0 S
+45 0 0 50d-25+500 50d500+0
+80000 0
+0 8 2
+S 35 50
+R Elf~
+C 4
+S 16 800
+S 41 -130
+S 42 -130
+S 43 -15
+P 4|8|128|1048576|4194304|67108864
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 37219 10
+mpat 5 wear all
+~
+>fight_prog 15~
+c fireball $n
+mpnowait
+if rand(50)
+c fireball $r
+mpnowait
+endif
+~
+>fight_prog 5~
+c 'seal magic' $r
+mpnowait
+~
+>fight_prog 15~
+skilldrv multihit $n
+if rand(50)
+skilldrv multihit $r
+endif
+~
+>fight_prog 5~
+c whi
+mpnowait
+~
+>death_prog 100~
+mpgreward exp $n -36 200
+mpat 37371 mpforcer here modrvt v1 = 0
+mpat 37371 mpforcer here modrvt v0 = 0
+~
+|
+#37241
+dark knight-gh-dark~
+黑騎士(dark knight)~
+一名渾身環繞著黑氣的騎士(knight)渴望著所有生靈的靈魂
+~
+他身上的黑色甲冑彷彿會呼吸般地吐出陣陣黑霧，由於霧氣的關係
+，你看不清他的樣貌，而這些霧氣正慢慢向你逼近！
+~
+1|2|32|64|8388608 8|32|512 -1000 S
+40 0 0 15d-20+500 0d200+0
+1 0
+0 8 1
+R Human~
+C 1|4
+S 16 -1000
+S 41 -170
+S 42 -170
+S 43 -60
+P 4|8|128|1048576|4194304|67108864
+>repop_prog 100~
+mpoload 37221 31
+mpat 5 wear all
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 5~
+circular
+mpnowait
+~
+>fight_prog 20~
+skilldrv onehit $n
+~
+>fight_prog 20~
+skilldrv onehit $r
+~
+>fight_prog 10~
+if class($n) >= 5
+if level($n) >= 36
+wear all
+flaming
+endif
+endif
+~
+>fight_prog 10~
+c fireball $r
+mpnowait
+~
+>fight_prog 25~
+mpecho 黑騎士忽然停止了攻擊，身上的盔甲漸漸褪色變成雪白...
+mpmload 37242
+if is_qmark($i) == ghouse_knight 100001
+mpforcer here modhmv knight-gh-white 03.90 99 00000000
+endif
+if is_qmark($i) == ghouse_knight 100002
+mpforcer here modhmv knight-gh-white 03.80 89 00000000
+endif
+if is_qmark($i) == ghouse_knight 100003
+mpforcer here modhmv knight-gh-white 03.70 79 00000000
+endif
+if is_qmark($i) == ghouse_knight 100004
+mpforcer here modhmv knight-gh-white 03.60 69 00000000
+endif
+if is_qmark($i) == ghouse_knight 100005
+mpforcer here modhmv knight-gh-white 03.50 59 00000000
+endif
+if is_qmark($i) == ghouse_knight 100006
+mpforcer here modhmv knight-gh-white 03.40 49 00000000
+endif
+if is_qmark($i) == ghouse_knight 100007
+mpforcer here modhmv knight-gh-white 03.30 39 00000000
+endif
+if is_qmark($i) == ghouse_knight 100008
+mpforcer here modhmv knight-gh-white 03.20 29 00000000
+endif
+if is_qmark($i) == ghouse_knight 100009
+mpforcer here modhmv knight-gh-white 03.10 19 00000000
+endif
+mpforce knight-gh-white mpkill $n
+mppurge self
+~
+>death_prog 100~
+mpecho 倒下的黑騎士再度爬了起來，身上的盔甲漸漸褪色變成雪白...
+mpmload 37242
+if is_qmark($i) == ghouse_knight 100001
+mpforcer here modhmv knight-gh-white 03.90 99 00000000
+endif
+if is_qmark($i) == ghouse_knight 100002
+mpforcer here modhmv knight-gh-white 03.80 89 00000000
+endif
+if is_qmark($i) == ghouse_knight 100003
+mpforcer here modhmv knight-gh-white 03.70 79 00000000
+endif
+if is_qmark($i) == ghouse_knight 100004
+mpforcer here modhmv knight-gh-white 03.60 69 00000000
+endif
+if is_qmark($i) == ghouse_knight 100005
+mpforcer here modhmv knight-gh-white 03.50 59 00000000
+endif
+if is_qmark($i) == ghouse_knight 100006
+mpforcer here modhmv knight-gh-white 03.40 49 00000000
+endif
+if is_qmark($i) == ghouse_knight 100007
+mpforcer here modhmv knight-gh-white 03.30 39 00000000
+endif
+if is_qmark($i) == ghouse_knight 100008
+mpforcer here modhmv knight-gh-white 03.20 29 00000000
+endif
+if is_qmark($i) == ghouse_knight 100009
+mpforcer here modhmv knight-gh-white 03.10 19 00000000
+endif
+mpforce knight-gh-white mpkill $n
+mppurge self
+~
+|
+#37242
+white knight-gh-white~
+白騎士(white knight)~
+一名身著雪白盔甲的騎士(knight)痛苦地站在這裡
+~
+他的靈魂承受著極大的痛苦，生前的慾望使他背離神聖的道路，如
+今只能等待他人為他帶來解脫。
+~
+1|2|32|64|8388608 8|32|512 1000 S
+44 0 0 15d-50+500 0d200+0
+50000 0
+0 8 1
+R Human~
+S 16 500
+S 41 -100
+S 42 -100
+S 43 -100
+P 4|8|128|1048576|4194304|67108864
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 37216 31
+mpat 5 wear all
+if rand(33)
+say 趁現在...殺了我！
+endif
+~
+>fight_prog 15~
+c 'double heal' $n
+~
+>fight_prog 5~
+c 'full heal' $r
+~
+>fight_prog 10~
+if rand(50)
+c san $n
+else
+c san $r
+endif
+~
+>fight_prog 20~
+c heal $r
+~
+>fight_prog 100~
+if hitprcnt($i) < 10
+if rand(33)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 1 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.90 99 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 20
+if rand(33)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 2 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.80 89 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 30
+if rand(33)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 3 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.70 79 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 40
+if rand(25)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 4 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.60 69 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 50
+if rand(25)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 5 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.50 59 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 60
+if rand(25)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 6 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.40 49 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 70
+if rand(20)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 7 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.30 39 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 80
+if rand(20)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 8 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.20 29 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 90
+if rand(20)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpadd_qmark knight-gh-dark ghouse_knight -1 9 0 0 0 1
+mpforcer here modhmv knight-gh-dark 03.10 19 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+if hitprcnt($i) < 100
+if rand(15)
+say 不...別想再控制我...
+mpecho 四周的黑霧再度籠罩騎士，騎士的眼神也隨著盔甲的變色閃著妖異的紅光...
+mpmload 37241
+mpforcer here modhmv knight-gh-dark 03.0 9 00000000
+mpforce knight-gh-dark mpkill $n
+mppurge self
+else
+break
+endif
+endif
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+~
+|
+#37243
+armor samurai-gh~
+盔甲武士(samurai)~
+一副破損嚴重的盔甲(armor)被隨意棄置在這裡
+~
+一副破損嚴重的盔甲(armor)被隨意棄置在這裡
+~
+1|2|32|64 8|32|512|524288 -1000 S
+44 -1000 0 20d-25+-300 0d0+0
+50000 0
+0 8 0
+R Robot~
+C 1
+P 4|8|128
+S 16 300
+S 41 -100
+S 42 -100
+S 43 -40
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 37220 31
+mpoload 37217 31
+mpat 5 wear all
+~
+>fight_prog 40~
+skilldrv multihit $n
+~
+>fight_prog 20~
+c 2 earth
+mpnowait
+~
+>fight_prog 10~
+circular
+mpnowait
+~
+>death_prog 100~
+mpecho 隨著盔甲轟然倒下，一道黑影從盔甲中穿出！
+if class($n) == 0
+mpecho 黑影藉著剛剛戰鬥的經驗，慢慢變成了法師的模樣...
+mpmload 37244
+endif
+if class($n) == 1
+mpecho 黑影藉著剛剛戰鬥的經驗，慢慢變成了牧師的模樣...
+mpmload 37245
+endif
+if class($n) == 2
+mpecho 黑影藉著剛剛戰鬥的經驗，慢慢變成了妙賊的模樣...
+mpmload 37246
+endif
+if class($n) == 3
+mpecho 黑影藉著剛剛戰鬥的經驗，慢慢變成了戰士的模樣...
+mpmload 37247
+endif
+if class($n) == 4
+mpecho 黑影藉著剛剛戰鬥的經驗，慢慢變成了野蠻人的模樣...
+mpmload 37248
+endif
+if class($n) >= 5
+mpmload 37249
+endif
+~
+|
+#37244
+shadow-gh~
+魔影(shadow)~
+一道法師模樣的黑影(shadow)在此尋找下一個宿主
+~
+一道法師模樣的黑影(shadow)在此尋找下一個宿主
+~
+1|2|32|64 8|32|512|524288 -1000 S
+44 -800 0 -20d-40+0 -30d200+0
+30000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 300
+S 41 -100
+S 42 -50
+S 44 -40
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 30~
+c shock $n
+mpnowait
+~
+>fight_prog 5~
+c fireball $n
+mpnowait
+~
+>fight_prog 15~
+c chi $n
+mpnowait
+~
+>fight_prog 20~
+c burn $n
+mpnowait
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+if class($n) == 0
+mpecho 黑影漸漸散去的同時，一副腰帶鏗鏘一聲掉落在地
+mpgreward exp $n -36 600
+mpoload 37213 3
+endif
+~
+|
+#37245
+shadow-gh~
+魔影(shadow)~
+一道牧師模樣的黑影(shadow)在此尋找下一個宿主
+~
+一道牧師模樣的黑影(shadow)在此尋找下一個宿主
+~
+1|2|32|64 8|32|512|524288 -1000 S
+44 -500 0 0d-10+0 -15d200+0
+30000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 300
+S 35 -15
+S 41 -80
+S 42 -100
+S 44 -40
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 25~
+c flamestrike $n
+mpnowait
+~
+>fight_prog 20~
+c earthquake
+mpnowait
+~
+>fight_prog 20~
+c heal
+mpnowait
+~
+>fight_prog 15~
+c harm $r
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+if class($n) == 1
+mpecho 黑影漸漸散去的同時，一副腰帶鏗鏘一聲掉落在地
+mpgreward exp $n -36 500
+mpoload 37214 3
+endif
+~
+|
+#37246
+shadow-gh~
+魔影(shadow)~
+一道妙賊模樣的黑影(shadow)在此尋找下一個宿主
+~
+一道妙賊模樣的黑影(shadow)在此尋找下一個宿主
+~
+1|2|32|64 8|32|512|524288 -1000 S
+44 -300 0 60d-10+300 15d-100+0
+30000 0
+0 8 0
+R Ghost~
+C 4
+P 4|8|128
+S 16 300
+S 35 15
+S 41 -100
+S 42 -100
+S 43 -10
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 5~
+mpgoto self
+backstab $n
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+if class($n) == 2
+mpecho 黑影漸漸散去的同時，一副腰帶鏗鏘一聲掉落在地
+mpgreward exp $n -36 500
+mpoload 37212 3
+endif
+~
+|
+#37247
+shadow-gh~
+魔影(shadow)~
+一道戰士模樣的黑影(shadow)在此尋找下一個宿主
+~
+一道戰士模樣的黑影(shadow)在此尋找下一個宿主
+~
+1|2|32|64 8|32|512|524288 -1000 S
+44 0 0 40d-5+-150 20d100+0
+30000 0
+0 8 0
+R Ghost~
+C 1
+P 4|8|128
+S 16 300
+S 35 20
+S 41 -50
+S 42 -150
+S 43 -20
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 15~
+kick $n
+mpnowait
+~
+>fight_prog 5~
+bashhead $n
+mpnowait
+~
+>fight_prog 10~
+disarm
+mpnowait
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+if class($n) == 3
+mpecho 黑影漸漸散去的同時，一副腰帶鏗鏘一聲掉落在地
+mpgreward exp $n -36 200
+mpoload 37211 3
+endif
+~
+|
+#37248
+shadow-gh~
+魔影(shadow)~
+一道野蠻人模樣的黑影(shadow)在此尋找下一個宿主
+~
+一道野蠻人模樣的黑影(shadow)在此尋找下一個宿主
+~
+1|2|32|64 8|32|512|524288 -1000 S
+44 300 0 -40d30+-300 40d400+0
+30000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 300
+S 35 40
+S 41 -100
+S 42 -200
+S 43 -20
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 10~
+disarm
+mpnowait
+~
+>fight_prog 15~
+berserk
+mpnowait
+~
+>fight_prog 5~
+frenzy
+mpnowait
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+if class($n) == 4
+mpecho 黑影漸漸散去的同時，一副腰帶鏗鏘一聲掉落在地
+mpgreward exp $n -36 500
+mpoload 37215 3
+endif
+~
+|
+#37249
+shadow-gh~
+魔影(shadow)~
+一道黑影(shadow)在此尋找下一個宿主
+~
+一道黑影(shadow)在此尋找下一個宿主
+~
+1|2|32|64 8|32|512|524288 -1000 S
+44 0 0 10d10+-200 -20d-200+0
+30000 0
+0 8 0
+R Ghost~
+C 1
+P 4|8|128
+S 16 300
+S 35 -20
+S 41 -50
+S 42 -50
+S 44 -40
+>fight_prog 15~
+c fireball $n
+mpnowait
+~
+>fight_prog 25~
+mpat 5 c 2 'double heal'
+mpnowait
+~
+>fight_prog 10~
+berserk
+mpnowait
+~
+>fight_prog 20~
+bashhead $n
+mpnowait
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+~
+|
+#37250
+aniki-gtown~
+兄貴(aniki)~
+一名肌肉賁張、牙齒閃爍著光芒的光頭中年大叔(aniki)在這展示身材
+~
+他就是眾人口中的'他'了，看著他一身健美的肌肉，和雄渾的男人氣
+息，不禁認為這才是所有男人的典範，不過如果他能脫下那身不搭嘎
+的水手服就好了。
+~
+1|2|32|64|8388608 8|32|512 1000 S
+44 0 0 0d0+0 0d0+0
+100000 0
+0 8 1
+R Human~
+C 1
+P 4|8|128|1048576|4194304|67108864
+S 16 1000
+S 41 -100
+S 42 -100
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 10~
+if rand(50)
+mpechoat $n 兄貴(amiki)牙齒的耀目光芒讓你睜目如盲！
+c bli $n
+mpnowait
+else
+mpechoat $r 兄貴(amiki)牙齒的耀目光芒讓你睜目如盲！
+c bli $r
+mpnowait
+endif
+~
+>fight_prog 5~
+mpecho 兄貴(aniki)的光頭散發著耀眼的光芒！
+c 'sun flash'
+mpnowait
+~
+>fight_prog 15~
+mpecho 兄貴(aniki)展示著他健壯的肌肉！
+mpat 5 c gi
+mpnowait
+skilldrv onehit $n
+skilldrv onehit $r
+~
+>death_prog 100~
+mpat 37371 mpforcer here modrvt v1 = 0
+if rand(3)
+	if sex($n) == 2
+		mpecho [1;32m兄貴(aniki)說著「不！我珍藏的寶物啊！」[0m
+		mpecho 兄貴(aniki)還來不及撕毀身上的衣服便倒了下去
+		mpgreward exp $n -36 1000
+		mpoload 37210 1
+	else
+		mpecho [1;32m兄貴(aniki)說著「我不會讓你們拿到我的寶物的！」[0m
+		mpecho 兄貴(aniki)用盡最後的力氣撐爆了身上的衣服！
+		break
+	endif
+else
+	mpecho [1;32m兄貴(aniki)說著「我不會讓你們拿到我的寶物的！」[0m
+	mpecho 兄貴(aniki)用盡最後的力氣撐爆了身上的衣服！
+endif
+~
+|
+#37251
+mirror image-gh~
+鏡影(mirror image)~
+一個和你一模一樣的身影(image)向你逼近！
+~
+當它面對你時，身影漸漸改變，最後變得和你一模一樣！看來只有
+活下來的才能證明自己是正牌的了。
+~
+1|32|64 8|32|512|524288 200 S
+38 -700 0 -10d20+-200 0d100+0
+8000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 200
+S 41 -100
+S 42 -150
+S 44 -50
+>hitprcnt_prog 20~
+if is_qmark($i) != ghouse_mirror
+if rand(20)
+	mpecho 鏡影(mirror image)眼見傷勢嚴重，一轉身便躲進了鏡子裡
+	mpforcer here modrvt v1 = 1
+	mppurge self
+endif
+endif
+~
+>fight_prog 20~
+c burn $n
+mpnowait
+~
+>fight_prog 10~
+c shock $n
+mpnowait
+~
+>death_prog 100~
+if is_qmark($i) == ghouse_mirror
+	mpgreward exp $n -36 200
+endif
+~
+|
+#37252
+ghost-gh~
+鬼魂(ghost)~
+一個無主冤魂(ghost)在這漫無目的的飄浮
+~
+一個無主冤魂(ghost)在這漫無目的的飄浮。
+~
+1|32|64 8|32|512|524288 200 S
+39 -1000 0 50d0+0 0d50+0
+4000 0
+0 8 0
+R Ghost~
+P 4|8|128
+S 16 150
+S 41 -175
+S 42 -100
+>fight_prog 33~
+skilldrv multihit $n
+~
+|
+#37253
+zombie-gh~
+殭屍(zombie)~
+一個殭屍(zombie)對所有的活物展開攻擊
+~
+一個殭屍(zombie)對所有的活物展開攻擊。
+~
+1|32|64 8|32|512 -200 S
+40 -800 0 5d10+-300 30d0+0
+5000 0
+0 8 0
+R Undead~
+P 8|128
+S 16 230
+S 41 -50
+S 42 -200
+>repop_prog 50~
+mpoload 37202 31
+mpat 5 wear all
+~
+>fight_prog 25~
+skilldrv onehit $n
+~
+|
+#37254
+zombie-gh~
+殭屍(zombie)~
+一個殭屍(zombie)對所有的活物展開攻擊
+~
+一個殭屍(zombie)對所有的活物展開攻擊。
+~
+1|32|64 8|32|512 -200 S
+40 -800 0 5d10+-300 30d0+0
+5000 0
+0 8 0
+R Undead~
+P 8|128
+S 16 230
+S 41 -50
+S 42 -200
+>repop_prog 50~
+mpoload 37202 31
+mpat 5 wear all
+~
+>fight_prog 25~
+skilldrv onehit $n
+~
+|
+#37255
+zombie-gh~
+殭屍(zombie)~
+一個殭屍(zombie)對所有的活物展開攻擊
+~
+一個殭屍(zombie)對所有的活物展開攻擊。
+~
+1|32|64 8|32|512 -200 S
+40 -800 0 5d10+-300 30d0+0
+5000 0
+0 8 0
+R Undead~
+P 8|128
+S 16 230
+S 41 -50
+S 42 -200
+>repop_prog 50~
+mpoload 37202 31
+mpat 5 wear all
+~
+>fight_prog 25~
+skilldrv onehit $n
+~
+|
+#37256
+zombie-gh~
+殭屍(zombie)~
+一個殭屍(zombie)對所有的活物展開攻擊
+~
+一個殭屍(zombie)對所有的活物展開攻擊。
+~
+1|32|64 8|32|512 -200 S
+40 -800 0 5d10+-300 30d0+0
+5000 0
+0 8 0
+R Undead~
+P 8|128
+S 16 230
+S 41 -50
+S 42 -200
+>repop_prog 50~
+mpoload 37202 31
+mpat 5 wear all
+~
+>fight_prog 25~
+skilldrv onehit $n
+~
+|
+#37257
+skeleton soldier-gh~
+骷髏兵(skeleton soldier)~
+一個骷髏兵(skeleton soldier)在這聽候主人的命令
+~
+一個骷髏兵(skeleton soldier)在這聽候主人的命令
+~
+1|32|64 8|32|512 -200 S
+38 0 0 10d-20+200 0d50+0
+7000 0
+0 8 0
+R Undead~
+C 1|4
+P 8|128
+S 16 250
+S 41 -75
+S 42 -250
+S 43 -35
+>fight_prog 30~
+skilldrv multihit $n
+~
+>repop_prog 100~
+mpoload 37203 31
+mpoload 37204 31
+mpat 5 wear all
+~
+|
+#37258
+skeleton soldier-gh~
+骷髏兵(skeleton soldier)~
+一個骷髏兵(skeleton soldier)在這聽候主人的命令
+~
+一個骷髏兵(skeleton soldier)在這聽候主人的命令
+~
+1|32|64 8|32|512 -200 S
+38 0 0 10d-20+200 0d50+0
+7000 0
+0 8 0
+R Undead~
+C 1|4
+P 8|128
+S 16 250
+S 41 -75
+S 42 -250
+S 43 -35
+>fight_prog 30~
+skilldrv multihit $n
+~
+>repop_prog 100~
+mpoload 37203 31
+mpoload 37204 31
+mpat 5 wear all
+~
+|
+#37259
+mouse-gh~
+老鼠(mouse)~
+一隻老鼠(mouse)在這跑來跑去，似乎並不怕人
+~
+一隻老鼠(mouse)在這跑來跑去，似乎並不怕人
+~
+1|32|64 32|512 0 S
+37 -1300 0 35d-5+0 0d0+0
+2000 0
+0 8 1
+R Animal~
+P 8|128
+S 16 150
+S 41 -100
+S 42 -150
+>fight_prog 25~
+skilldrv onehit $n
+skilldrv onehit $n
+~
+|
+#37260
+boy-gh~
+小男孩(boy)~
+小男孩(boy)在這裡玩著捉迷藏
+~
+如果在其他地方，他和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+say $r我們來玩～～
+endif
+~
+>rand_prog 2~
+snicker
+~
+>death_prog 100~
+mpecho [1;32m小男孩(boy)說著「你為什麼打我！？」[0m
+mpecho 小男孩(boy)的身體漸漸變得透明‧‧‧
+mpmload 37204
+mppurge self
+~
+|
+#37261
+boy-gh~
+小男孩(boy)~
+小男孩(boy)在這裡玩著捉迷藏
+~
+如果在其他地方，他和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+say $r我們來玩～～
+endif
+~
+>rand_prog 2~
+snicker
+~
+>death_prog 100~
+mpecho [1;32m小男孩(boy)說著「你為什麼打我！？」[0m
+mpecho 小男孩(boy)的身體漸漸變得透明‧‧‧
+mpmload 37204
+mppurge self
+~
+|
+#37262
+boy-gh~
+小男孩(boy)~
+小男孩(boy)在這裡玩著捉迷藏
+~
+如果在其他地方，他和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+say $r我們來玩～～
+endif
+~
+>rand_prog 2~
+snicker
+~
+>death_prog 100~
+mpecho [1;32m小男孩(boy)說著「你為什麼打我！？」[0m
+mpecho 小男孩(boy)的身體漸漸變得透明‧‧‧
+mpmload 37204
+mppurge self
+~
+|
+#37263
+girl-gh~
+小女孩(girl)~
+小女孩(girl)在這裡玩著洋娃娃
+~
+如果在其他地方，她和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+pull $r
+say 陪我玩好不好～～
+endif
+~
+>rand_prog 2~
+dance
+~
+>death_prog 100~
+mpecho [1;32m小女孩(girl)說著「你為什麼打我！？」[0m
+mpecho 小女孩(girl)的身體漸漸變得透明‧‧‧
+mpmload 37206
+mppurge self
+~
+|
+#37264
+girl-gh~
+小女孩(girl)~
+小女孩(girl)在這裡玩著洋娃娃
+~
+如果在其他地方，她和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+pull $r
+say 陪我玩好不好～～
+endif
+~
+>rand_prog 2~
+dance
+~
+>death_prog 100~
+mpecho [1;32m小女孩(girl)說著「你為什麼打我！？」[0m
+mpecho 小女孩(girl)的身體漸漸變得透明‧‧‧
+mpmload 37206
+mppurge self
+~
+|
+#37265
+girl-gh~
+小女孩(girl)~
+小女孩(girl)在這裡玩著洋娃娃
+~
+如果在其他地方，她和其他小孩沒什麼兩樣，但既然會出現在這裡
+，恐怕就不是一般小孩了。
+~
+1|2|64 8|32|512 0 S
+1 0 0 0d0+0 0d0+0
+1 0
+0 8 1
+R Human~
+P 4|8|128
+>rand_prog 2~
+if ispc($r)
+pull $r
+say 陪我玩好不好～～
+endif
+~
+>rand_prog 2~
+dance
+~
+>death_prog 100~
+mpecho [1;32m小女孩(girl)說著「你為什麼打我！？」[0m
+mpecho 小女孩(girl)的身體漸漸變得透明‧‧‧
+mpmload 37206
+mppurge self
+~
+|
+#37266
+baseball angel-baseball~
+棒球小天使(baseball angel)~
+棒球小天使(baseball angel)在這裡慶祝著中華隊成功進軍奧運。
+~
+棒球小天使(baseball angel)在這裡慶祝著中華隊成功進軍奧運。
+~
+1|2|64 8|32|512 0 S
+1000 0 0 0d0+0 0d0+0
+1 0
+0 8 2
+R Angel~
+S 16 -10000
+>talk_prog topic~
+say 你是來領取亞洲盃紀念品(award)的嗎？
+gig $n
+~
+>talk_prog award~
+if level($n) >= 36
+  if is_qmark($n) != baseball_2003
+	mpadd_qmark $n baseball_2003 -1 0 0 0 0 1
+	say 來，這就是紀念球棒
+	mpecho 棒球小天使(baseball angel)把球棒交給了$N
+	mpoload 37222 $n 36 target
+  else
+  	say 你已經領過紀念品囉
+  endif
+else
+	say 你還太小了，還不能領紀念品喔
+	pat $n
+endif
+~
+|
+#0
+
+#OBJECTS
+#37200
+scissors~
+剪刀(scissors)~
+一把銳利的剪刀(scissors)上面還沾著黑紅的血跡~
+~
+5 1|64 1|8192
+100~ 0~ 0~ 1~
+5 0 0
+A
+18 3
+A
+19 3
+C 2000
+X iron~
+#37201
+chopper~
+菜刀(chopper)~
+一把鋒利的菜刀(chopper)黏著料理留下的肉屑~
+~
+5 1|4|64 1|8192
+150~ 0~ 0~ 13~
+10 0 0
+A
+1 1
+A
+3 -3
+A
+18 4
+A
+19 5
+C 3000
+X iron~
+#37202
+bone~
+骸骨(bone)~
+一根烏黑腐壞的骸骨(bone)在棄置在這裡~
+~
+5 1|4|131072 1|8192
+50~ 0~ 0~ 6~
+8 0 0
+A
+5 -2
+A
+18 2
+A
+19 2
+C 5000
+X bone~
+#37203
+small shield~
+小圓盾(small shield)~
+一面木製的小圓盾(shield)被放在這裡~
+~
+9 0 1|512
+0~ 0~ 100~ 0~
+5 0 0
+A
+13 20
+A
+27 2
+A
+30 -5
+C 1000
+X wooden~
+#37204
+falchion~
+彎刃大刀(falchion)~
+一把巨大的彎刀(falchion)閃耀著血紅的光芒~
+~
+5 1|64|512 1|8192
+200~ 0~ 0~ 9~
+15 0 0
+A
+17 -8
+A
+18 -3
+A
+19 8
+A
+40 -2
+C 5000
+X steel~
+#37205
+dictionary~
+辭典(dictionary)~
+一本厚達萬頁的辭典(dictionary)看來非常沉重~
+~
+5 1|64|65536|16777216 1|8192
+100~ 0~ 0~ 8~
+40 0 0
+A
+3 1
+A
+12 40
+A
+27 5
+C 5000
+X paper~
+#37206
+cracked breastplate~
+腐壞的胸甲(cracked breastplate)~
+一件帶有令人作嘔的臭氣的胸甲(breastplate)丟棄在這裡~
+~
+9 4|128 1|8
+0~ 0~ 120~ 0~
+10 0 0
+A
+1 -1
+A
+13 -10
+A
+24 -3
+A
+27 -3
+C 3000
+X iron~
+#37207
+bloody dress~
+染血的洋裝(bloody dress)~
+一件胸前沾染了血跡的洋裝(dress)放在這裡~
+~
+9 16|4096 1|8
+0~ 0~ 100~ 0~
+1 0 0
+A
+12 20
+A
+39 -10
+C 10000
+X fiber~
+#37208
+bloody chopper~
+血腥屠刀(bloody chopper)~
+一把巨大的屠刀(chopper)上沾黏著各種血跡和殘肢~
+~
+5 1|4|64|512 1|8192
+300~ 0~ 0~ 13~
+25 0 0
+A
+19 5
+C 20000
+X steel~
+#37209
+bloody chopper~
+血腥屠刀(bloody chopper)~
+一把巨大的屠刀(chopper)上沾黏著各種血跡和殘肢~
+~
+5 1|4|64|512 1|8192
+300~ 0~ 0~ 13~
+25 0 0
+A
+1 1
+A
+13 30
+A
+19 10
+C 20000
+X steel~
+#37210
+sailor clothes~
+[1;34m水手服[0m(sailor clothes)~
+一件海藍色的衣服(clothes)被人遺忘在這裡~
+~
+9 1|256 1|8
+0~ 0~ 200~ 0~
+1 0 0
+A
+1 1
+A
+2 1
+A
+3 1
+A
+4 1
+A
+5 1
+P 1|2|4|8|16|1048576
+C 10000
+R 1|1048576
+X fiber~
+#37211
+angry belt~
+憤懣環帶(angry belt)~
+一條鮮紅色的環帶(belt)被擺在這裡~
+~
+9 64 1|2048
+0~ 0~ 100~ 0~
+3 0 0
+A
+1 3
+A
+2 -1
+P 8|1048576
+C 5000
+X leather~
+#37212
+sneaky belt~
+鬼祟環帶(sneaky belt)~
+一條暗灰色的環帶(belt)被擺在這裡~
+~
+9 64 1|2048
+0~ 0~ 100~ 0~
+3 0 0
+A
+2 3
+A
+3 -1
+P 4|1048576
+C 5000
+X leather~
+#37213
+scheme belt~
+陰謀環帶(scheme belt)~
+一條暗藍色的環帶(belt)被擺在這裡~
+~
+9 64 1|2048
+0~ 0~ 100~ 0~
+3 0 0
+A
+3 3
+A
+4 -1
+P 1|1048576
+C 5000
+X leather~
+#37214
+stubborn belt~
+執拗環帶(stubborn belt)~
+一條深綠色的環帶(belt)被擺在這裡~
+~
+9 64 1|2048
+0~ 0~ 100~ 0~
+3 0 0
+A
+4 3
+A
+5 -1
+P 2|1048576
+C 5000
+X leather~
+#37215
+stupid belt~
+駑鈍環帶(stupid belt)~
+一條粉紅色的環帶(belt)被擺在這裡~
+~
+9 64 1|2048
+0~ 0~ 100~ 0~
+3 0 0
+A
+5 3
+A
+1 -1
+P 16|1048576
+C 5000
+X leather~
+#37216
+dawn sword~
+曉白之劍(dawn sword)~
+一把泛著晨光的長劍(sword)放在這裡~
+~
+5 1|64|65536 1|8192
+250~ 0~ 0~ 1~
+20 0 0
+M 0 當你握起劍時，你感覺自己只說得出簡單的字句~
+M 1 你感覺自己的表達能力恢復了~
+A
+3 -2
+A
+18 5
+A
+19 5
+A
+29 -10
+C 1
+X platinum~
+#37217
+rose reddish leggings~
+薔赭腳脛(rose reddish leggings)~
+一雙帶有薔薇色和赭紅色的腳脛(leggings)靜靜的躺在地上~
+~
+9 0 1|32
+0~ 0~ 200~ 0~
+3 0 0
+A
+18 2
+A
+19 -5
+C 15000
+X lead~
+#37218
+dupe staff~
+欺瞞之杖(dupe staff)~
+一柄形狀怪異扭曲的法杖(staff)放在這裡~
+~
+4 1|64 1|16384
+14~ 5~ 5~ weaken~
+10 0 0
+A
+12 20
+A
+13 20
+A
+14 20
+C 5000
+X tin~
+#37219
+recall heart~
+回憶之心(recall heart)~
+一顆閃爍著橙紅光芒的晶體(heart)如有生命般起伏~
+~
+8 1|2|32|16777216 1|4
+0~ 0~ 0~ 0~
+10 0 0
+A
+13 100
+C 200000
+X perfect matter~
+#37220
+katana~
+武士刀(katana)~
+一把陳舊的武士刀(katana)被置放在這裡~
+~
+5 16|64 1|8192
+200~ 0~ 0~ 1~
+20 0 0
+A
+18 4
+A
+19 4
+A
+28 -5
+C 6000
+X steel~
+#37221
+black sword~
+邪黑之劍(black sword)~
+一把烏黑的長劍(sword)放在這裡~
+~
+5 1|64 1|8192
+200~ 0~ 0~ 1~
+20 0 0
+C 10000
+X obsidian~
+#37222
+2003asia bat~
+[1;33m2003亞洲盃紀念球棒[0m(2003Asia Bat)~
+一根金光閃閃的球棒(bat)放在這裡。~
+~
+5 1|64 1|8192
+110~ 0~ 0~ 00~
+11 0 0
+E
+2003asia bat~
+這根球棒閃著耀眼的黃金光芒，上面還刻了一些小字：「打擊率零
+點零七七，十三打數一安打十一次三振，記取教訓是通往進步之路
+。」
+~
+A
+18 -11
+A
+19 1
+C 10000
+X gold~
+>obj_rand 100~
+if hour($) == 0
+       	if objval3($o) != 14
+       		oset self value3 + 1
+       	else
+       		oset self value3 = 0
+       	endif
+endif
+~
+|
+
+
+#0
+
+#ROOMDATA
+#37200
+buffor room~
+    暫時沒有敘述
+~
+0 8|65536|524288|1048576 0
+>room_defun ghouse_rock_one~
+at 37356 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37355 echo 一顆巨大的石球從北邊滾了過來！
+at 37355 deldoor 0
+at 37356 transfer pc 37355
+at 37356 makedoor 3 往西的門 door 0 0 37368
+at 37355 force all look
+~
+>room_defun ghouse_rock_two~
+at 37355 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37354 echo 一顆巨大的石球從北邊滾了過來！
+at 37354 deldoor 0
+at 37355 transfer pc 37354
+at 37355 makedoor 0 往北的門 door 0 0 37356
+at 37354 force all look
+~
+>room_defun ghouse_rock_three~
+at 37354 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37353 echo 一顆巨大的石球從北邊滾了過來！
+at 37353 deldoor 0
+at 37354 transfer pc 37353
+at 37354 makedoor 0 往北的門 door 0 0 37355
+at 37353 force all look
+~
+>room_defun ghouse_rock_four~
+at 37353 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37352 echo 一顆巨大的石球從北邊滾了過來！
+at 37352 deldoor 0
+at 37353 transfer pc 37352
+at 37353 makedoor 0 往北的門 door 0 0 37354
+at 37352 force all look
+~
+>room_defun ghouse_rock_five~
+at 37352 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37269 echo 一顆巨大的石球從北邊滾了過來！
+at 37269 deldoor 0
+at 37352 transfer pc 37269
+at 37352 makedoor 0 往北的門 door 0 0 37353
+at 37352 deldoor 2
+at 37269 force all look
+callout 1 at 37269 echo 隨著一聲轟然巨響，你發現往北的走廊被石球完全封住了！
+callout 1 at 37200 transfer ball-gh 37352
+~
+|
+S
+#37201
+晦暗的木門~
+    一扇年代悠久的木門聳立在你眼前，木頭因歲月的流逝顯得灰黑
+破敗，但上面的刻字(word)依然閃耀著最初的銀光，木門旁還插了一
+塊牌子(sign)，同時有著銀色的字。
+~
+0 8|65536|524288|1048576 0
+E
+word~
+此區域原作者為Cosmos，希望大家玩的愉快
+~
+E
+sign~
+本區域適合31-36級玩家組隊前來，請小心不要迷路(笑)
+~
+D2
+~
+~
+0 0 8604
+S
+#37202
+大廳~
+    整座大廳到處積滿了灰塵，但卻不是空無一人，地上的孩童足跡
+和遠處傳來的稚嫩笑聲，在在顯示這裡確有人居，雖然你不知道誰會
+住在這鬼氣森森的屋子裡...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37205
+D1
+~
+~
+0 0 37203
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37203
+大廳~
+    整座大廳到處積滿了灰塵，但卻不是空無一人，地上的孩童足跡
+和遠處傳來的稚嫩笑聲，在在顯示這裡確有人居，雖然你不知道誰會
+住在這鬼氣森森的屋子裡...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37206
+D1
+~
+~
+0 0 37204
+D2
+~
+~
+0 0 37201
+D3
+~
+~
+0 0 37202
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+>room_enter 64 100~
+if is_qmark($n) == ghouse_enter_count 100005
+	mod_qmark $n ghouse_enter_count timer = 100
+endif
+~
+|
+S
+#37204
+大廳~
+    整座大廳到處積滿了灰塵，但卻不是空無一人，地上的孩童足跡
+和遠處傳來的稚嫩笑聲，在在顯示這裡確有人居，地上的皮球滾到你
+腳邊停了下來，你順著軌跡望去，卻什麼也沒看到...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37207
+D3
+~
+~
+0 0 37203
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37205
+大廳~
+    整座大廳到處積滿了灰塵，四周的擺設卻很整齊，傢俱、擺飾都
+完好無缺，能證明歲月在此流逝的似乎只有那層灰..，一股違合的感
+覺讓你覺得不太舒服。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37206
+D2
+~
+~
+0 0 37202
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37206
+大廳~
+    整座大廳到處積滿了灰塵，但卻不是空無一人，地上的孩童足跡
+和遠處傳來的稚嫩笑聲，在在顯示這裡確有人居，雖然你不知道誰會
+住在這鬼氣森森的屋子裡...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37207
+D2
+~
+~
+0 0 37203
+D3
+~
+~
+0 0 37205
+>room_time 100~
+if roomvalue($0) == 0
+mload 37201
+modrvt v0 = 1
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37207
+大廳~
+    整座大廳到處積滿了灰塵，四周的擺設卻很整齊，傢俱、擺飾都
+完好無缺，能證明歲月在此流逝的似乎只有那層灰..，一股違合的感
+覺讓你覺得不太舒服。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37204
+D3
+~
+~
+0 0 37206
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37208
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37209
+D2
+~
+~
+0 0 37206
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37209
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37210
+D2
+~
+~
+0 0 37208
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37210
+昏黃的走廊~
+    空氣在這裡彷如停滯一般，感覺不到任何氣息，沒有聲音、沒有風
+，有的只是你的呼吸和牆上兀自晃動的燭火...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37224
+D2
+~
+~
+0 0 37209
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37211
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37212
+D2
+~
+~
+0 0 37205
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37212
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37213
+D2
+~
+~
+0 0 37211
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37213
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37214
+D2
+~
+~
+0 0 37212
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37214
+昏黃的走廊~
+    空氣在這裡彷如停滯一般，感覺不到任何氣息，沒有聲音、沒有風
+，有的只是你的呼吸和牆上兀自晃動的燭火...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37224
+D2
+~
+~
+0 0 37213
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37215
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37216
+D2
+~
+~
+0 0 37207
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37216
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37217
+D2
+~
+~
+0 0 37215
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37217
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37218
+D3
+~
+~
+0 0 37216
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37218
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37269
+D3
+~
+~
+0 0 37217
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37219
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37220
+D5
+~
+~
+0 0 37206
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37220
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37219
+D4
+~
+~
+0 0 37221
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37221
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉，牆上掛的一幅壁畫(pictu
+re)吸引了你的注意。
+~
+0 8|65536|524288|1048576 0
+E
+picture~
+畫中有著五位長相相同的精靈少女，除了髮色外，服飾、身高等都如
+同一個模子印出來般，你看著看著竟覺得有股寒意...
+~
+D0
+~
+~
+0 0 37222
+D5
+~
+~
+0 0 37220
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37222
+昏黃的走廊~
+    此處唯一的光源是牆上那細小的白色蠟燭，微弱的燭火無風自擺
+，彷彿隨時都會被"吹熄"，地上厚重的地毯吸收了所有的腳步聲，處
+在這陰暗的環境下，你開始覺得有些昏沉。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37223
+D2
+~
+~
+0 0 37221
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37223
+昏黃的走廊~
+    空氣在這裡彷如停滯一般，感覺不到任何氣息，沒有聲音、沒有風
+，有的只是你的呼吸和牆上兀自晃動的燭火...
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37222
+D5
+~
+~
+0 0 37224
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37224
+昏黃的走廊~
+    空氣在這裡彷如停滯一般，感覺不到任何氣息，沒有聲音、沒有風
+，有的只是你的呼吸和牆上兀自晃動的燭火...
+~
+0 4|8|65536|524288|1048576 0
+>room_time 100~
+if roomvalue($0) == 0
+mload 37201
+modrvt v0 = 1
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 不明人物 [1;32m說著「$r又來了耶～」[0m
+	echoat $r 不明人物 [1;32m說著「我要他的頭」[0m
+	echoat $r 不明人物 [1;32m說著「那我要手...」[0m
+	break
+	endif
+	if rand(5)
+	echoat $r 遠處依稀傳來孩童的笑聲...
+	break
+	endif
+	if rand(7)
+	echoat $r 不明人物 [1;32m說著「$r陪我玩～」[0m
+	break
+	endif
+	if rand(10)
+	echoat $r 不明人物 [1;33m告訴你「$r來玩吧...」[0m
+	break
+	endif
+	if rand(20)
+	echoat $r 不明人物 [1;33m告訴你「$r我當鬼喔～」[0m
+	endif
+endif
+~
+|
+S
+#37225
+螺旋石階~
+    喀噠、喀噠的腳步聲在這迴盪著，不知是你自己還是別人的腳步
+聲，石壁縫隙透進的光線讓人得以看清階梯而不致踩空，但四周躲著
+什麼東西可完全看不到了。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37224
+D5
+~
+~
+0 0 37226
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 你的腳步聲在這不停地迴響著...
+	endif
+endif
+~
+|
+S
+#37226
+螺旋石階~
+    喀噠、喀噠的腳步聲在這迴盪著，不知是你自己還是別人的腳步
+聲，石壁縫隙透進的光線讓人得以看清階梯而不致踩空，但四周躲著
+什麼東西可完全看不到了。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37227
+D4
+~
+~
+0 0 37225
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 你的腳步聲在這不停地迴響著...
+	endif
+endif
+~
+|
+S
+#37227
+螺旋石階~
+    階梯轉到這裡便沒了光線，你只好摸著牆小心翼翼地前進，四周
+的黑暗似乎有東西正看著你，當你轉過頭時，仍只有一片黑暗...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37226
+D5
+~
+~
+0 0 37228
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 你的腳步聲在這不停地迴響著...
+	endif
+endif
+~
+|
+S
+#37228
+螺旋石階~
+    喀噠、喀噠的腳步聲在這迴盪著，不知是你自己還是別人的腳步
+聲，石壁縫隙透進的光線讓人得以看清階梯而不致踩空，但四周躲著
+什麼東西可完全看不到了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37229
+D4
+~
+~
+0 0 37227
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 你的腳步聲在這不停地迴響著...
+	endif
+endif
+~
+|
+S
+#37229
+螺旋石階~
+    階梯轉到這裡便沒了光線，你只好摸著牆小心翼翼地前進，四周
+的黑暗似乎有東西正看著你，當你轉過頭時，仍只有一片黑暗...
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37228
+D5
+~
+~
+0 0 37230
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 你的腳步聲在這不停地迴響著...
+	endif
+endif
+~
+|
+S
+#37230
+螺旋石階~
+    喀噠、喀噠的腳步聲在這迴盪著，不知是你自己還是別人的腳步
+聲，這裡看來已經接近盡頭，不遠處的光線告訴你已快要脫離這黑暗
+的地方了。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37269
+D4
+~
+~
+0 0 37229
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 你的腳步聲在這不停地迴響著...
+	endif
+endif
+~
+|
+S
+#37231
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37239
+D1
+~
+~
+0 0 37232
+D2
+~
+~
+0 0 37224
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37232
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37240
+D3
+~
+~
+0 0 37231
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	echo 一隻蝙蝠衝破天窗而來！
+	mload 37212
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37233
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，四周的霧氣偶爾有著奇異的擾動，不知是風吹的影響，亦
+或是...
+~
+0 4|8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37234
+D3
+~
+~
+0 0 37270
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37234
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，四周的霧氣偶爾有著奇異的擾動，不知是風吹的影響，亦
+或是...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37236
+D3
+~
+~
+0 0 37233
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	makedoor 0 往北的門 door 0 0 37235
+	echo 兩道身影撞破北邊的玻璃衝了過來！
+	mload 37210
+	mload 37210
+	force 37235 mload 37210
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+	deldoor 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37235
+屍骨花園~
+    這裡的花朵在血液的灌溉下長得十分嬌艷，想必泥土下埋的屍
+體也發揮了堆肥的作用，其中幾個土堆被從內翻開，應該就是剛剛
+破窗襲擊的殭屍吧。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37234
+S
+#37236
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，四周的霧氣偶爾有著奇異的擾動，不知是風吹的影響，亦
+或是...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37238
+D3
+~
+~
+0 0 37234
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	makedoor 2 往南的門 door 0 0 37237
+	echo 兩道身影撞破南邊的玻璃衝了過來！
+	mload 37210
+	mload 37210
+	force 37237 mload 37210
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+	deldoor 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37237
+屍骨花園~
+    這裡的花朵在血液的灌溉下長得十分嬌艷，想必泥土下埋的屍
+體也發揮了堆肥的作用，其中幾個土堆被從內翻開，應該就是剛剛
+破窗襲擊的殭屍吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37236
+S
+#37238
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，四周的霧氣偶爾有著奇異的擾動，不知是風吹的影響，亦
+或是...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37239
+D3
+~
+~
+0 0 37236
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37239
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37241
+D1
+~
+~
+0 0 37240
+D2
+~
+~
+0 0 37231
+D3
+~
+~
+0 0 37238
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37240
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37243
+D2
+~
+~
+0 0 37232
+D3
+~
+~
+0 0 37239
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37241
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37242
+D2
+~
+~
+0 0 37239
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37242
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37243
+D3
+~
+~
+0 0 37241
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	echo 一隻蝙蝠衝破天窗而來！
+	mload 37212
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37243
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37242
+D1
+~
+~
+0 0 37244
+D2
+~
+~
+0 0 37240
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37244
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37243
+D4
+~
+~
+0 0 37245
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37245
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37246
+D5
+~
+~
+0 0 37244
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	echo 一隻蝙蝠衝破天窗而來！
+	mload 37212
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37246
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37247
+D3
+~
+~
+0 0 37245
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37247
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 4|8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37246
+D4
+~
+~
+0 0 37302
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37248
+玻璃迴廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37249
+D2
+~
+~
+0 0 37224
+D4
+~
+~
+0 0 37262
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37249
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37253
+D1
+~
+~
+0 0 37250
+D3
+~
+~
+0 0 37248
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37250
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37255
+D1
+~
+~
+0 0 37252
+D2
+~
+~
+0 0 37251
+D3
+~
+~
+0 0 37249
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37251
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37250
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37252
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37250
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37253
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37254
+D1
+~
+~
+0 0 37255
+D2
+~
+~
+0 0 37249
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37254
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37253
+D4
+~
+~
+0 0 37268
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37255
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37256
+D2
+~
+~
+0 0 37250
+D3
+~
+~
+0 0 37253
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	echo 一隻蝙蝠衝破天窗而來！
+	mload 37212
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37256
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 4|8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37257
+D1
+~
+~
+0 0 37302
+D3
+~
+~
+0 0 37255
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37257
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37258
+D2
+~
+~
+0 0 37256
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37258
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，東邊隱約傳來時鐘滴答的響聲，卻沒有任何出入口，望著
+東邊的黑影，你心想可能在某個時刻才會打開吧。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37257
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+if hour($i) == 0
+echo 隨著十二下鐘聲響起，東邊的玻璃牆漸漸地消失了...
+makedoor 1 往東的門 door 0 0 37259
+endif
+if hour($i) == 1
+echo 東邊出現一道玻璃牆堵住了去路...
+deldoor 1
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(50)
+	echoat $r 滴‧答‧滴‧答‧
+	break
+	endif
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37259
+時之間~
+    大大小小、各式各樣的時鍾在這裡各自走動，每個時鍾的時間各
+不相同，彷彿它們只是裝飾品而已，唯一的木桌椅看起來也很久沒用
+而積了一層灰，整間房間似乎荒廢已久。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37258
+>room_time 100~
+if mobcount(37211) == 0
+if hour($i) == 0
+echo 一道近乎透明的身影緩緩出現...
+mload 37211
+endif
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(50)
+	echoat $r 滴‧答‧滴‧答‧
+	endif
+endif
+~
+|
+S
+#37260
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37261
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37261
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37265
+D1
+~
+~
+0 0 37262
+D3
+~
+~
+0 0 37260
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37262
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37266
+D3
+~
+~
+0 0 37261
+D5
+~
+~
+0 0 37248
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	echo 一隻蝙蝠衝破天窗而來！
+	mload 37212
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37263
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 4|8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37264
+D3
+~
+~
+0 0 37271
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37264
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37265
+D3
+~
+~
+0 0 37263
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37265
+玻璃廣場~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，從頂上的天窗似乎看得到遠方的巨大黑影，可能是高處的
+建築物吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37266
+D2
+~
+~
+0 0 37261
+D3
+~
+~
+0 0 37264
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	echo 一隻蝙蝠衝破天窗而來！
+	mload 37212
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+endif
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37266
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37267
+D2
+~
+~
+0 0 37262
+D3
+~
+~
+0 0 37265
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37267
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37268
+D2
+~
+~
+0 0 37266
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37268
+玻璃走廊~
+    這裡的牆壁全是一片片大落地窗，但窗外濃重的霧氣使得能見度
+非常的差，呼嘯的風聲似乎夾雜著其他聲響，你在心中努力說服自己
+那只是錯覺...吧。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37267
+D5
+~
+~
+0 0 37254
+>room_time 100~
+if roomvalue($1) == 1
+	echo 一道身影忽然從鏡子衝了出來！
+	mload 37208
+	add_qmark image-gh ghouse_mirror -1 0 0 0 0 1
+	modhmv image-gh 03.50 50 00000000
+	modrvt v1 = 0
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 窗外似乎有某種視線...
+	endif
+endif
+~
+|
+S
+#37269
+螺旋石階~
+    喀噠、喀噠的腳步聲在這迴盪著，不知是你自己還是別人的腳步
+聲，這裡看來已經接近盡頭，不遠處的光線告訴你已快要脫離這黑暗
+的地方了。
+~
+0 4|8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37352
+D2
+~
+~
+0 0 37218
+D3
+~
+~
+0 0 37230
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 你的腳步聲在這不停地迴響著...
+	endif
+endif
+~
+|
+S
+#37270
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，但眼前沾滿血跡、互相撕咬的玩偶和孩童卻讓你有置身地獄之
+感，如果不想和一旁如斷線木偶般的前人一樣，最好還是趕快離開這
+裡。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37271
+D3
+~
+~
+0 0 37273
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37271
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，但眼前沾滿血跡、互相撕咬的玩偶和孩童卻讓你有置身地獄之
+感，如果不想和一旁如斷線木偶般的前人一樣，最好還是趕快離開這
+裡。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37272
+D2
+~
+~
+0 0 37270
+D3
+~
+~
+0 0 37274
+D4
+~
+~
+0 0 37281
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37272
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，但眼前沾滿血跡、互相撕咬的玩偶和孩童卻讓你有置身地獄之
+感，如果不想和一旁如斷線木偶般的前人一樣，最好還是趕快離開這
+裡。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37271
+D3
+~
+~
+0 0 37275
+D4
+~
+~
+0 0 37282
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37273
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，但眼前沾滿血跡、互相撕咬的玩偶和孩童卻讓你有置身地獄之
+感，如果不想和一旁如斷線木偶般的前人一樣，最好還是趕快離開這
+裡。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37274
+D1
+~
+~
+0 0 37270
+D3
+~
+~
+0 0 37277
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37274
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，但眼前沾滿血跡、互相撕咬的玩偶和孩童卻讓你有置身地獄之
+感，如果不想和一旁如斷線木偶般的前人一樣，最好還是趕快離開這
+裡。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37275
+D1
+~
+~
+0 0 37271
+D2
+~
+~
+0 0 37273
+D4
+~
+~
+0 0 37283
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37275
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，但眼前沾滿血跡、互相撕咬的玩偶和孩童卻讓你有置身地獄之
+感，北邊的門散發出一股惡臭，該不會是擺放屍體的地方吧...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+1|2 0 37276
+D1
+~
+~
+0 0 37272
+D2
+~
+~
+0 0 37274
+D4
+~
+~
+0 0 37284
+>room_rand 10~
+if ispc($r)
+	if rand(4)
+	echoat $r 嗚...嗚...
+	break
+	endif
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37276
+惡臭的廁所~
+    這間廁所不知多久沒打掃了，糞尿流出馬桶溢了一地，陣陣惡臭
+讓你感到作嘔，不知何處傳來的哭聲更讓人感到不寒而慄。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+1|2 0 37275
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 嗚...嗚...
+	endif
+endif
+~
+|
+S
+#37277
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，不過這裡的玩偶不是斷手就是斷腳，然後再用冒險者的手腳接
+上，你看到幾個殘廢的玩偶向你走來，似乎對你的肉體頗有興趣...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37278
+D1
+~
+~
+0 0 37273
+D3
+~
+~
+0 0 37279
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37278
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，不過這裡的玩偶不是斷手就是斷腳，然後再用冒險者的手腳接
+上，西邊的門傳出陣陣音樂，搖籃曲在這聽起來也讓人覺得毛骨悚然
+。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37277
+D3
+~
+~
+1|2 0 37280
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37279
+遊戲室~
+    溫暖的燈光、輕快的音樂和孩童的笑聲，這原本應是一幅溫馨的
+景象，不過這裡的玩偶不是斷手就是斷腳，然後再用冒險者的手腳接
+上，北邊的門傳出陣陣音樂，搖籃曲在這聽起來也讓人覺得毛骨悚然
+。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+1|2 0 37280
+D1
+~
+~
+0 0 37277
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37280
+遊戲室~
+    這是一間充滿孩童氣息的房間，擺滿了娃娃和可愛的裝飾，如果
+不是因為四散噴濺的血跡，或許是個不錯的休息處。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+1|2 0 37278
+D2
+~
+~
+1|2 0 37279
+S
+#37281
+閣樓~
+    閣樓的情況並不比下面好上多少，爛掉的皮球和球棒被隨意棄置
+，你不用拿起來看也知道那是人頭和手腳，而它們正巧需要新的玩具
+...
+~
+0 4|8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37282
+D1
+~
+~
+0 0 37369
+D3
+~
+~
+0 0 37283
+D5
+~
+~
+0 0 37271
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37282
+閣樓~
+    閣樓的情況並不比下面好上多少，爛掉的皮球和球棒被隨意棄置
+，你不用拿起來看也知道那是人頭和手腳，而它們正巧需要新的玩具
+...
+~
+0 4|8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37370
+D2
+~
+~
+0 0 37281
+D3
+~
+~
+0 0 37284
+D5
+~
+~
+0 0 37272
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37283
+閣樓~
+    閣樓的情況並不比下面好上多少，爛掉的皮球和球棒被隨意棄置
+，你不用拿起來看也知道那是人頭和手腳，而它們正巧需要新的玩具
+...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37284
+D1
+~
+~
+0 0 37281
+D5
+~
+~
+0 0 37274
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37284
+閣樓~
+    閣樓的情況並不比下面好上多少，爛掉的皮球和球棒被隨意棄置
+，你不用拿起來看也知道那是人頭和手腳，而它們正巧需要新的玩具
+...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37282
+D2
+~
+~
+0 0 37283
+D5
+~
+~
+0 0 37275
+>room_rand 10~
+if ispc($r)
+	if rand(5)
+	echoat $r 我不想死啊...救救我...給我你的身體...
+	break
+	endif
+	if rand(7)
+	echoat $r 還差一隻眼睛...
+	break
+	endif
+	if rand(10)
+	echoat $r 還差一條腿...
+	break
+	endif
+	if rand(20)
+	echoat $r 還需要一隻手...
+	endif
+endif
+~
+|
+S
+#37285
+餐廳~
+    各式各樣的美食在餐桌散發著香味，這裡的廚師手藝想必了得，
+不過它們似乎不滿足於桌上的"人肉全席"，打算拿你做"活人三吃"。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37286
+D3
+~
+~
+0 0 37289
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37286
+餐廳~
+    各式各樣的美食在餐桌散發著香味，這裡的廚師手藝想必了得，
+不過它們似乎不滿足於桌上的"人肉全席"，打算拿你做"活人三吃"。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37285
+D2
+~
+~
+0 0 37287
+D3
+~
+~
+0 0 37290
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37287
+廚房~
+    吵菜聲和各種香氣充斥著廚房，你還可以看到牆上掛著各樣食材
+，大腿肉、舌頭、胸肌肉...，唯一的共通點就是這裡都是"人肉"，
+看來你這食材最好在被發現前離開。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37286
+D2
+~
+~
+0 0 37288
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡的濃煙遮蔽了視線
+	endif
+endif
+~
+|
+S
+#37288
+廚房~
+    吵菜聲和各種香氣充斥著廚房，你還可以看到牆上掛著各樣食材
+，大腿肉、舌頭、胸肌肉...，唯一的共通點就是這裡都是"人肉"，
+看來你這食材最好在被發現前離開。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37287
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡的濃煙遮蔽了視線
+	endif
+endif
+~
+|
+S
+#37289
+餐廳~
+    各式各樣的美食在餐桌散發著香味，這裡的廚師手藝想必了得，
+不過它們似乎不滿足於桌上的"人肉全席"，打算拿你做"活人三吃"。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37285
+D2
+~
+~
+0 0 37290
+D3
+~
+~
+0 0 37294
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37290
+餐廳~
+    各式各樣的美食在餐桌散發著香味，這裡的廚師手藝想必了得，
+不過它們似乎不滿足於桌上的"人肉全席"，打算拿你做"活人三吃"。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37289
+D1
+~
+~
+0 0 37286
+D3
+~
+~
+0 0 37295
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37291
+走廊~
+    這裡稍稍遠離了用餐的喧囂，雖然如此，仍有些意猶未盡的食客
+想吃些點心，或許你這麼大個一次吃不完，但他們還可以"打包"。
+~
+0 4|8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37366
+D2
+~
+~
+0 0 37292
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37292
+走廊~
+    這裡稍稍遠離了用餐的喧囂，雖然如此，仍有些意猶未盡的食客
+想吃些點心，或許你這麼大個一次吃不完，但他們還可以"打包"。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37291
+D2
+~
+~
+0 0 37293
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37293
+餐廳~
+    各式各樣的美食在餐桌散發著香味，這裡的廚師手藝想必了得，
+不過當你這"新鮮食物"走來時，用餐者都放下了手邊的食物，爭相來
+品嘗你的味道...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37292
+D2
+~
+~
+0 0 37294
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37294
+餐廳~
+    各式各樣的美食在餐桌散發著香味，這裡的廚師手藝想必了得，
+不過當你這"新鮮食物"走來時，用餐者都放下了手邊的食物，爭相來
+品嘗你的味道...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37293
+D1
+~
+~
+0 0 37289
+D2
+~
+~
+0 0 37295
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37295
+餐廳~
+    各式各樣的美食在餐桌散發著香味，這裡的廚師手藝想必了得，
+不過當你這"新鮮食物"走來時，用餐者都放下了手邊的食物，爭相來
+品嘗你的味道...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37294
+D5
+~
+~
+0 0 37296
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 桌上的食物散發著香味
+	endif
+endif
+~
+|
+S
+#37296
+走廊~
+    這裡稍稍遠離了用餐的喧囂，雖然如此，仍有些意猶未盡的食客
+想吃些點心，你的眼球對他們而言正好是不錯的果凍。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37297
+D4
+~
+~
+0 0 37295
+S
+#37297
+走廊~
+    這裡稍稍遠離了用餐的喧囂，雖然如此，仍有些意猶未盡的食客
+想吃些點心，你的牙齒和指骨對他們而言正好是不錯的零嘴。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37296
+D3
+~
+~
+0 0 37298
+S
+#37298
+儲藏室~
+    這裡堆滿了各種食物，精靈耳、眼魔觸手、連蜥蝪人的尾巴都一
+條條掛在牆上，如果你被發現的話恐怕會被就地"儲存"吧...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37297
+D2
+~
+~
+0 0 37299
+D3
+~
+~
+0 0 37300
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡似乎特別的寒冷
+	endif
+endif
+~
+|
+S
+#37299
+儲藏室~
+    這裡堆滿了各種食物，精靈耳、眼魔觸手、連蜥蝪人的尾巴都一
+條條掛在牆上，如果你被發現的話恐怕會被就地"儲存"吧...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37298
+D3
+~
+~
+0 0 37301
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡似乎特別的寒冷
+	endif
+endif
+~
+|
+S
+#37300
+儲藏室~
+    這裡堆滿了各種食物，精靈耳、眼魔觸手、連蜥蝪人的尾巴都一
+條條掛在牆上，如果你被發現的話恐怕會被就地"儲存"吧...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37298
+D2
+~
+~
+0 0 37301
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡似乎特別的寒冷
+	endif
+endif
+~
+|
+S
+#37301
+儲藏室~
+    這裡堆滿了各種食物，精靈耳、眼魔觸手、連蜥蝪人的尾巴都一
+條條掛在牆上，如果你被發現的話恐怕會被就地"儲存"吧...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37300
+D1
+~
+~
+0 0 37299
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡似乎特別的寒冷
+	endif
+endif
+~
+|
+S
+#37302
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，精緻的紅地毯一塵不染，連牆
+上的壁燈看來也價值不菲，整個走廊乾淨到發亮的程度，但又是誰在
+這裡打掃的呢？
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37303
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37303
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，精緻的紅地毯一塵不染，連牆
+上的壁燈看來也價值不菲，整個走廊乾淨到發亮的程度，但又是誰在
+這裡打掃的呢？
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37302
+D2
+~
+~
+0 0 37304
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	makedoor 4 往上的門 door 0 0 37313
+	echo 兩道身影破開天花板向你撲來！
+	mload 37210
+	mload 37224
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+	deldoor 4
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37304
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，從這些一塵不染的擺飾可看出
+清掃者的用心，牆壁甚至隱約映照出你的身影，唯一美中不足的是天
+花板的老鼠，從剛才便吱吱叫個不停。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37303
+D1
+~
+~
+0 0 37305
+D3
+~
+~
+0 0 37306
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37305
+休息室~
+    這間休息室完全考慮到使用者的需要，但盛盤的人肉和舒適的墓
+穴顯然不符合你的需求，而正在休息的人(?)也對你的到來感到不快
+。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37304
+S
+#37306
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，從這些一塵不染的擺飾可看出
+清掃者的用心，天花板似乎剛修補不久，該不會是被老鼠咬破的吧，
+跟人一樣大的老鼠？
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37304
+D2
+~
+~
+0 0 37307
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37307
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，從這些一塵不染的擺飾可看出
+清掃者的用心，牆壁甚至隱約映照出你的身影，唯一美中不足的是天
+花板的老鼠，從剛才便吱吱叫個不停。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37306
+D2
+~
+~
+0 0 37309
+D3
+~
+~
+0 0 37308
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	makedoor 4 往上的門 door 0 0 37317
+	echo 兩道身影破開天花板向你撲來！
+	mload 37210
+	mload 37224
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+	deldoor 4
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37308
+休息室~
+    這間休息室完全考慮到使用者的需要，但盛盤的人肉和舒適的墓
+穴顯然不符合你的需求，而正在休息的人(?)也對你的到來感到不快
+。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37307
+S
+#37309
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，從這些一塵不染的擺飾可看出
+清掃者的用心，牆壁甚至隱約映照出你的身影，唯一美中不足的是天
+花板的老鼠，從剛才便吱吱叫個不停。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37307
+D2
+~
+~
+0 0 37310
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37310
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，精緻的紅地毯一塵不染，連牆
+上的壁燈看來也價值不菲，整個走廊乾淨到發亮的程度，但又是誰在
+這裡打掃的呢？
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37309
+D2
+~
+~
+0 0 37311
+>room_enter 127 5~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 12
+	makedoor 4 往上的門 door 0 0 37319
+	echo 兩道身影破開天花板向你撲來！
+	mload 37210
+	mload 37224
+endif
+endif
+~
+>room_time 100~
+if roomvalue($0) > 1
+	modrvt v0 - 1
+endif
+if roomvalue($0) == 1
+	modrvt v0 = 0
+	deldoor 4
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37311
+華麗的走廊~
+    這裡想必是用來招待賓客的地區，精緻的紅地毯一塵不染，連牆
+上的壁燈看來也價值不菲，整個走廊乾淨到發亮的程度，但又是誰在
+這裡打掃的呢？
+~
+0 4|8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37310
+D3
+~
+~
+0 0 37373
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 天花板傳來一陣刮搔的聲音
+	endif
+endif
+~
+|
+S
+#37312
+天花板~
+    屋頂隨著你每踏一步便抖落大堆灰塵，暗處還可看到許多腐爛
+發臭的屍塊，想必都是被偷襲後滅跡了，或許不久後這裡還會多一
+些肉塊...
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37313
+S
+#37313
+天花板~
+    屋頂隨著你每踏一步便抖落大堆灰塵，暗處還可看到許多腐爛
+發臭的屍塊，想必都是被偷襲後滅跡了，或許不久後這裡還會多一
+些肉塊...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37312
+D3
+~
+~
+0 0 37314
+D5
+~
+~
+0 0 37303
+S
+#37314
+天花板~
+    這裡每隔一段距離便點有一根蠟燭，故此你才能看清四周的環
+境，天花板的足跡明顯並非老鼠留下的，想到這你不禁握緊了手中
+的武器。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37313
+D3
+~
+~
+0 0 37315
+S
+#37315
+天花板~
+    這裡每隔一段距離便點有一根蠟燭，故此你才能看清四周的環
+境，天花板的足跡明顯並非老鼠留下的，想到這你不禁握緊了手中
+的武器。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37314
+D2
+~
+~
+0 0 37316
+S
+#37316
+天花板~
+    這裡每隔一段距離便點有一根蠟燭，故此你才能看清四周的環
+境，天花板的足跡明顯並非老鼠留下的，想到這你不禁握緊了手中
+的武器。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37315
+D2
+~
+~
+0 0 37317
+S
+#37317
+天花板~
+    這裡每隔一段距離便點有一根蠟燭，故此你才能看清四周的環
+境，天花板的足跡明顯並非老鼠留下的，想到這你不禁握緊了手中
+的武器。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37316
+D2
+~
+~
+0 0 37318
+D5
+~
+~
+0 0 37307
+S
+#37318
+天花板~
+    天花板上除了霉味同時也混合了屍臭以及其他味道，顯然殭屍
+並不是湊巧爬上來的，或許更深入點能找到原因，如果能活著的話
+...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37317
+D2
+~
+~
+0 0 37319
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 某處隱約傳來了哀號...
+	endif
+endif
+~
+|
+S
+#37319
+天花板~
+    天花板上除了霉味同時也混合了屍臭以及其他味道，顯然殭屍
+並不是湊巧爬上來的，或許更深入點能找到原因，如果能活著的話
+...
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37318
+D1
+~
+~
+0 0 37320
+D5
+~
+~
+0 0 37310
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 某處隱約傳來了哀號...
+	endif
+endif
+~
+|
+S
+#37320
+天花板~
+    天花板上除了霉味同時也混合了屍臭以及其他味道，顯然殭屍
+並不是湊巧爬上來的，或許更深入點能找到原因，如果能活著的話
+...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37321
+D3
+~
+~
+0 0 37319
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 某處隱約傳來了哀號...
+	endif
+endif
+~
+|
+S
+#37321
+天花板~
+    天花板上除了霉味同時也混合了屍臭以及其他味道，顯然殭屍
+並不是湊巧爬上來的，或許更深入點能找到原因，如果能活著的話
+...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37322
+D3
+~
+~
+0 0 37320
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 某處隱約傳來了哀號...
+	endif
+endif
+~
+|
+S
+#37322
+天花板~
+    臭味到了這裡越來越明顯，你還聞到一股魔法藥劑的氣味，看
+來答案就在前面了！
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37321
+D4
+~
+~
+0 0 37323
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 某處隱約傳來了哀號...
+	endif
+endif
+~
+|
+S
+#37323
+死靈術士之間~
+    這裡就是天花板的殭屍出現的原因，一個死靈法師的工作室！
+各式各樣解剖重組的屍骸重又合成殭屍，架子上擺的各種藥點劑顯
+然也不是什麼好東西，你只想趕快離開這個"血肉橫飛"的現場。
+~
+0 8|65536|524288|1048576 0
+D5
+~
+~
+0 0 37322
+S
+#37324
+破爛的走廊~
+    這裡顯然很久沒整修了，地板每踩一步都發出抗議般的呻吟，
+牆壁找不出一塊完整的地方，老鼠肆無忌憚地橫行，一點也不怕人
+。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37325
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 地板下似乎有風聲...
+	endif
+endif
+~
+|
+S
+#37325
+破爛的走廊~
+    這裡顯然很久沒整修了，地板每踩一步都發出抗議般的呻吟，
+牆壁找不出一塊完整的地方，老鼠肆無忌憚地橫行，一點也不怕人
+。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37326
+D2
+~
+~
+0 0 37324
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 地板下似乎有風聲...
+	endif
+endif
+~
+|
+S
+#37326
+破爛的走廊~
+    這裡顯然很久沒整修了，地板每踩一步都發出抗議般的呻吟，
+牆壁找不出一塊完整的地方，這裡的老鼠多的不像樣，聚集起來的
+牠們膽子更大了，竟對人展開攻擊！
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37327
+D3
+~
+~
+0 0 37325
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 地板下似乎有風聲...
+	endif
+endif
+~
+|
+S
+#37327
+破爛的走廊~
+    走廊到了這裡連地板也殘破不堪，稍微用點力也會踩破一個洞
+，聽著腳下空洞的腳步聲，地板下顯然不是泥土地這麼簡單。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37328
+D2
+~
+~
+0 0 37329
+D3
+~
+~
+0 0 37326
+>room_rand 100~
+if roomvalue($0) >= 5
+if roomvalue($1) == 0
+	modrvt v0 = 0
+	modrvt v1 = 20
+	makedoor 5 往下的門 door 0 0 37342
+	echo 地板承受不住戰鬥造成的震動而崩塌了！
+	transfer all 37342
+endif
+endif
+~
+>room_time 100~
+if roomvalue($1) > 1
+	modrvt v1 - 1
+endif
+if roomvalue($1) == 1
+	modrvt v1 = 0
+	deldoor 5
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 地板下似乎有風聲...
+	break
+	endif
+	if rand(20)
+	echoat $r 腳下的地板隨時都有破裂的危險...
+	endif
+endif
+~
+|
+S
+#37328
+休息室~
+    這裡的房間也無法倖免地被老鼠破壞，地板破到露出地基的岩石
+，窗簾、傢俱都已看不出原來的樣式，而且四面八方都聽得到老鼠的
+叫聲。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37327
+S
+#37329
+破爛的走廊~
+    走廊到了這裡連地板也殘破不堪，稍微用點力也會踩破一個洞
+，聽著腳下空洞的腳步聲，地板下顯然不是泥土地這麼簡單。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37327
+D2
+~
+~
+0 0 37330
+>room_rand 100~
+if roomvalue($0) >= 5
+if roomvalue($1) == 0
+	modrvt v0 = 0
+	modrvt v1 = 20
+	makedoor 5 往下的門 door 0 0 37343
+	echo 地板承受不住戰鬥造成的震動而崩塌了！
+	transfer all 37343
+endif
+endif
+~
+>room_time 100~
+if roomvalue($1) > 1
+	modrvt v1 - 1
+endif
+if roomvalue($1) == 1
+	modrvt v1 = 0
+	deldoor 5
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 地板下似乎有風聲...
+	break
+	endif
+	if rand(20)
+	echoat $r 腳下的地板隨時都有破裂的危險...
+	endif
+endif
+~
+|
+S
+#37330
+破爛的走廊~
+    走廊到了這裡連地板也殘破不堪，稍微用點力也會踩破一個洞
+，聽著腳下空洞的腳步聲，地板下顯然不是泥土地這麼簡單。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37329
+D2
+~
+~
+0 0 37331
+>room_rand 100~
+if roomvalue($0) >= 5
+if roomvalue($1) == 0
+	modrvt v0 = 0
+	modrvt v1 = 20
+	makedoor 5 往下的門 door 0 0 37344
+	echo 地板承受不住戰鬥造成的震動而崩塌了！
+	transfer all 37344
+endif
+endif
+~
+>room_time 100~
+if roomvalue($1) > 1
+	modrvt v1 - 1
+endif
+if roomvalue($1) == 1
+	modrvt v1 = 0
+	deldoor 5
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 地板下似乎有風聲...
+	break
+	endif
+	if rand(20)
+	echoat $r 腳下的地板隨時都有破裂的危險...
+	endif
+endif
+~
+|
+S
+#37331
+破爛的走廊~
+    走廊到了這裡連地板也殘破不堪，稍微用點力也會踩破一個洞
+，聽著腳下空洞的腳步聲，地板下顯然不是泥土地這麼簡單。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37330
+D1
+~
+~
+0 0 37332
+D3
+~
+~
+0 0 37333
+>room_rand 100~
+if roomvalue($0) >= 5
+if roomvalue($1) == 0
+	modrvt v0 = 0
+	modrvt v1 = 20
+	makedoor 5 往下的門 door 0 0 37345
+	echo 地板承受不住戰鬥造成的震動而崩塌了！
+	transfer all 37345
+endif
+endif
+~
+>room_time 100~
+if roomvalue($1) > 1
+	modrvt v1 - 1
+endif
+if roomvalue($1) == 1
+	modrvt v1 = 0
+	deldoor 5
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(10)
+	echoat $r 地板下似乎有風聲...
+	break
+	endif
+	if rand(20)
+	echoat $r 腳下的地板隨時都有破裂的危險...
+	endif
+endif
+~
+|
+S
+#37332
+休息室~
+    這裡的房間也無法倖免地被老鼠破壞，地板破到露出地基的岩石
+，窗簾、傢俱都已看不出原來的樣式，而且四面八方都聽得到老鼠的
+叫聲。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37331
+S
+#37333
+破爛的走廊~
+    這裡顯然很久沒整修了，地板每踩一步都發出抗議般的呻吟，
+牆壁找不出一塊完整的地方，這裡的老鼠多的不像樣，聚集起來的
+牠們膽子更大了，竟對人展開攻擊！
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37331
+D2
+~
+~
+0 0 37334
+D5
+~
+~
+0 0 37337
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 地板下似乎有風聲...
+	endif
+endif
+~
+|
+S
+#37334
+破爛的走廊~
+    這裡顯然很久沒整修了，地板每踩一步都發出抗議般的呻吟，
+牆壁找不出一塊完整的地方，這裡的老鼠多的不像樣，聚集起來的
+牠們膽子更大了，竟對人展開攻擊！
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37333
+D2
+~
+~
+0 0 37335
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 地板下似乎有風聲...
+	endif
+endif
+~
+|
+S
+#37335
+破爛的走廊~
+    這裡顯然很久沒整修了，地板每踩一步都發出抗議般的呻吟，
+牆壁找不出一塊完整的地方，老鼠肆無忌憚地橫行，一點也不怕人
+。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37334
+D3
+~
+~
+0 0 37336
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 地板下似乎有風聲...
+	endif
+endif
+~
+|
+S
+#37336
+破爛的走廊~
+    這裡顯然很久沒整修了，地板每踩一步都發出抗議般的呻吟，
+牆壁找不出一塊完整的地方，老鼠肆無忌憚地橫行，一點也不怕人
+。
+~
+0 4|8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37335
+D3
+~
+~
+0 0 37365
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 地板下似乎有風聲...
+	endif
+endif
+~
+|
+S
+#37337
+地板的破洞~
+    這裡似乎是前人挖的地洞，一旁的裂縫吹來陣陣涼風，隱約還
+能聽到水流的聲音，和某種生物的叫聲...
+~
+0 8|65536|524288|1048576 0
+D4
+~
+~
+0 0 37333
+S
+#37338
+黑暗的洞窟~
+    這個洞窟大約只能容納五六人擠在一起，除了一張木桌木椅，
+再沒其他的東西，雖然這洞窟讓人感覺奇怪，但也沒什麼引人注
+目的地方。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37339
+S
+#37339
+下水道~
+    下水道到了這裡光線已照不到了，濺起的水聲迴盪向深處而去
+，許多鏽蝕的刀劍棄置一旁，盔甲也多破爛毀損，顯然都是受到了
+重擊造成的結果。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37338
+D3
+~
+~
+0 0 37340
+S
+#37340
+下水道~
+    下水道到了這裡光線已照不到了，濺起的水聲迴盪向深處而去
+，許多鏽蝕的刀劍棄置一旁，盔甲也多破爛毀損，顯然都是受到了
+重擊造成的結果。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37339
+D2
+~
+~
+0 0 37341
+S
+#37341
+下水道~
+    這裡離上面的地板有段不算短的距離，及腰的汙水緩衝了掉下
+來的力道而不至於摔死，但是要慶幸恐怕也要先逃出這不見天日的
+地方再說了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37340
+D2
+~
+~
+0 0 37342
+S
+#37342
+下水道~
+    這裡離上面的地板有段不算短的距離，及腰的汙水緩衝了掉下
+來的力道而不至於摔死，但是要慶幸恐怕也要先逃出這不見天日的
+地方再說了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37341
+D2
+~
+~
+0 0 37343
+S
+#37343
+下水道~
+    這裡離上面的地板有段不算短的距離，及腰的汙水緩衝了掉下
+來的力道而不至於摔死，但是要慶幸恐怕也要先逃出這不見天日的
+地方再說了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37342
+D2
+~
+~
+0 0 37344
+S
+#37344
+下水道~
+    這裡離上面的地板有段不算短的距離，及腰的汙水緩衝了掉下
+來的力道而不至於摔死，但是要慶幸恐怕也要先逃出這不見天日的
+地方再說了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37343
+D2
+~
+~
+0 0 37345
+S
+#37345
+下水道~
+    通道到了這裡開始變得崎嶇不平，你不止一次被水中暗藏的石
+塊或凹洞絆倒，兩旁的岩壁也漸漸不那麼陡峭，感覺前面的地形是
+越來越開闊了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37344
+D2
+~
+~
+0 0 37346
+S
+#37346
+下水道~
+    通道到了這裡變得崎嶇不平，你不止一次被水中暗藏的石塊或
+凹洞絆倒，兩旁的岩壁也漸漸不那麼陡峭，感覺前面的地形是越來
+越開闊了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37345
+D3
+~
+~
+0 0 37347
+S
+#37347
+下水道~
+    通道到了這裡變得崎嶇不平，你不止一次被水中暗藏的石塊或
+凹洞絆倒，你注意到其中一面岩壁似乎可以攀爬上去(climb up)，
+岩壁頂端還可以看到些微的亮光。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37346
+D2
+~
+~
+0 0 37348
+>room_command climb up~
+echoat $n 你攀附著岩石爬了上去...
+echoaround $n $n攀附著岩石爬了上去...
+transfer $n 37337
+~
+|
+S
+#37348
+下水道~
+    通道到了這裡變得崎嶇不平，你不止一次被水中暗藏的石塊或
+凹洞絆倒，兩旁的岩壁也漸漸不那麼陡峭，感覺前面的地形是越來
+越開闊了。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37347
+D3
+~
+~
+0 0 37349
+S
+#37349
+下水道~
+    通道在這已經變得較為平坦，水深也僅到膝蓋而已，兩旁的濕
+地插著幾把斷裂的武器，做為許久前某場戰鬥唯一的見證。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37348
+D2
+~
+~
+0 0 37350
+S
+#37350
+下水道~
+    通道在這已經變得較為平坦，水深也僅到膝蓋而已，前方的水
+流通往其他地方，看著四周的環境，似乎已回到離大門不遠的地方
+。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37349
+D3
+~
+~
+0 0 37351
+S
+#37351
+下水道~
+    通道在這已經變得較為平坦，水深也僅到腳踝而已，前方的水
+流通往其他地方，西邊往下望去正好可看到屋子的大門，看來終於
+可以離開這裡了。
+。
+~
+0 4|8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37350
+D3
+~
+~
+0 0 37201
+S
+#37352
+外牆走廊~
+    你正處於這棟屋子的外圍處，大理石柱上的各種猙獰雕像無言
+地瞪視著你，看著他們那栩栩如生的模樣，你覺得就算馬上動起來
+也不奇怪。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37353
+D2
+~
+~
+0 0 37269
+>room_enter 127 100~
+if ispc($n)
+if roomvalue($0) == 0
+	modrvt v0 = 1
+	force 37356 modrvt v0 = 1
+	echoat $n 喀啦
+endif
+endif
+~
+|
+S
+#37353
+外牆走廊~
+    你正處於這棟屋子的外圍處，大理石柱上的各種猙獰雕像無言
+地瞪視著你，看著他們那栩栩如生的模樣，你覺得就算馬上動起來
+也不奇怪。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37354
+D2
+~
+~
+0 0 37352
+S
+#37354
+外牆走廊~
+    你正處於這棟屋子的外圍處，惡魔、龍、樹精等雕像無聲地佇
+立，不過是石像嘛，雖然你試著相信自己的話，仍覺得雕像的雙眼
+正上下打量著你。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37355
+D2
+~
+~
+0 0 37353
+D3
+~
+~
+0 0 37374
+S
+#37355
+外牆走廊~
+    你正處於這棟屋子的外圍處，魔神、三頭蜥蝪等雕像無聲地佇
+立，不過是石像嘛，雖然你試著相信自己的話，仍覺得雕像的雙眼
+正上下打量著你。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37356
+D2
+~
+~
+0 0 37354
+S
+#37356
+外牆走廊~
+    你正處於這棟屋子的外圍處，妖精、龍、巨魔等雕像無聲地佇
+立，不過是石像嘛，雖然你試著相信自己的話，仍覺得雕像的雙眼
+正上下打量著你。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37355
+D3
+~
+~
+0 0 37368
+>room_defun ghouse_rock_one~
+at 37356 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37355 echo 一顆巨大的石球從北邊滾了過來！
+at 37355 deldoor 0
+at 37356 transfer pc 37355
+at 37356 makedoor 3 往西的門 door 0 0 37368
+at 37355 force all look
+~
+>room_defun ghouse_rock_two~
+at 37355 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37354 echo 一顆巨大的石球從北邊滾了過來！
+at 37354 deldoor 0
+at 37355 transfer pc 37354
+at 37355 makedoor 0 往北的門 door 0 0 37356
+at 37354 force all look
+~
+>room_defun ghouse_rock_three~
+at 37354 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37353 echo 一顆巨大的石球從北邊滾了過來！
+at 37353 deldoor 0
+at 37354 transfer pc 37353
+at 37354 makedoor 0 往北的門 door 0 0 37355
+at 37353 force all look
+~
+>room_defun ghouse_rock_four~
+at 37353 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37352 echo 一顆巨大的石球從北邊滾了過來！
+at 37352 deldoor 0
+at 37353 transfer pc 37352
+at 37353 makedoor 0 往北的門 door 0 0 37354
+at 37352 force all look
+~
+>room_defun ghouse_rock_five~
+at 37352 echo 巨大的石球滾來，逼得你不得不往回'逃'
+at 37269 echo 一顆巨大的石球從北邊滾了過來！
+at 37269 deldoor 0
+at 37352 transfer pc 37269
+at 37352 makedoor 0 往北的門 door 0 0 37353
+at 37352 deldoor 2
+at 37269 force all look
+callout 1 at 37269 echo 隨著一聲轟然巨響，你發現往北的走廊被石球完全封住了！
+callout 1 at 37200 transfer ball-gh 37352
+~
+>room_enter 127 100~
+if ispc($n)
+if roomvalue($0) == 1
+echoat $n 當你踏入房間時，一顆巨大的石球向你滾來！
+modrvt v0 = 0
+mload 37230
+def_rembch ball-gh
+transfer $b 37200
+deldoor 3
+callout 2 at $b rcall ghouse_rock_one $b
+callout 4 at $b rcall ghouse_rock_two $b
+callout 6 at $b rcall ghouse_rock_three $b
+callout 8 at $b rcall ghouse_rock_four $b
+callout 10 at $b rcall ghouse_rock_five $b
+endif
+endif
+~
+|
+S
+#37357
+外牆走廊~
+    你正處於這棟屋子的外圍處，走廊外的花圃種了許多奇花異草
+，有的花甚至可以讓人躺在上面，不過看那花瓣上鋒利的倒刺，應
+該沒有人會想這麼做。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37358
+D2
+~
+~
+0 0 37269
+S
+#37358
+外牆走廊~
+    你正處於這棟屋子的外圍處，走廊外的花圃種了許多奇花異草
+，有的花甚至可以讓人躺在上面，不過看那花瓣上鋒利的倒刺，應
+該沒有人會想這麼做。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37359
+D2
+~
+~
+0 0 37357
+S
+#37359
+外牆走廊~
+    你正處於這棟屋子的外圍處，走廊外的花圃種了許多奇花異草
+，有的花甚至可以讓人躺在上面，不過看那花瓣上鋒利的倒刺，應
+該沒有人會想這麼做。
+~
+0 8|65536|524288|1048576 0
+D3
+~
+~
+0 0 37358
+D4
+~
+~
+0 0 37360
+S
+#37360
+外牆走廊~
+    你正處於這棟屋子的外圍處，走廊外的花圃種了許多奇花異草
+，有的植物莖葉還在不斷"蠕動"，你心想最好避開一點，誰知道被
+它纏上會有什麼結果。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37361
+D5
+~
+~
+0 0 37359
+S
+#37361
+外牆走廊~
+    你正處於這棟屋子的外圍處，走廊外的花圃種了許多奇花異草
+，有的植物莖葉還在不斷"蠕動"，你心想最好避開一點，誰知道被
+它纏上會有什麼結果。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37362
+D2
+~
+~
+0 0 37360
+S
+#37362
+外牆走廊~
+    你正處於這棟屋子的外圍處，走廊外的花圃種了許多奇花異草
+，有的植物莖葉還在不斷"蠕動"，你心想最好避開一點，誰知道被
+它纏上會有什麼結果。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37361
+D3
+~
+~
+0 0 37368
+S
+#37363
+主廳一樓~
+    這座主廳肯定是屋子裡最奢華的地方，沉重的金製餐具，雕飾
+精美的水晶柱、寶石像，如果不是因為四周的薄霧，它們散發的光
+芒恐怕會讓你無法直視。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37364
+D2
+~
+~
+0 0 37366
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37364
+主廳一樓~
+    這座主廳肯定是屋子裡最奢華的地方，沉重的金製餐具，雕飾
+精美的水晶柱、寶石像，如果不是因為四周的薄霧，它們散發的光
+芒恐怕會讓你無法直視。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37365
+D2
+~
+~
+0 0 37367
+D3
+~
+~
+0 0 37363
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37365
+主廳一樓~
+    這座主廳肯定是屋子裡最奢華的地方，沉重的金製餐具，雕飾
+精美的水晶柱、寶石像，如果不是因為四周的薄霧，它們散發的光
+芒恐怕會讓你無法直視。
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37368
+D3
+~
+~
+0 0 37364
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37366
+主廳一樓~
+    這座主廳肯定是屋子裡最奢華的地方，光是頭頂的水晶燈就夠
+平常人過一輩子了，這裡有樓梯可通往二樓，就連扶手也散發著純
+銀的光芒。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37363
+D1
+~
+~
+0 0 37367
+D4
+~
+~
+0 0 37369
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37367
+主廳一樓~
+    在這豪華的主廳出現這口井著實是很突兀的事情，毀碎的暗紅石
+磚和青苔述說了它年代的久遠，和一旁金光閃閃的傢俱形成強烈的對
+比，或許你可以試著看看(see well)這口井。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37364
+D1
+~
+~
+0 0 37368
+D3
+~
+~
+0 0 37366
+>room_command see well~
+if mobcount(37238) == 1
+	echoat $n 當你注視著井水時，水中隱約出現了一些文字...
+	echoat $n 「外表不是一切，外強可能中乾」
+else
+if mobcount(37239) == 1
+	echoat $n 當你注視著井水時，水中隱約出現了一些文字...
+	echoat $n 「呼喊(call)造物主之名吧！」
+else
+if mobcount(37240) == 1
+	echoat $n 當你注視著井水時，水中隱約出現了一些文字...
+	echoat $n 「言語已失去作用，暴力是唯一之路」
+else
+if mobcount(37241) == 1
+	echoat $n 當你注視著井水時，水中隱約出現了一些文字...
+	echoat $n 「黑暗不會消失，白日渴求低首」
+else
+if mobcount(37242) == 1
+	echoat $n 當你注視著井水時，水中隱約出現了一些文字...
+	echoat $n 「黑暗不會消失，白日渴求低首」
+else
+if mobcount(37243) == 1
+	echoat $n 當你注視著井水時，水中隱約出現了一些文字...
+	echoat $n 「黑影從中學習，以矛制矛將有所得」
+else
+if mobcount(37250) == 1
+	echoat $n 當你注視著井水時，水中隱約出現了一些文字...
+	echoat $n 「殺啊！奪回男人的浪漫！」
+else
+	echoat $n 你注視著井水，但沒什麼特殊之處
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+~
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37368
+主廳一樓~
+    這座主廳肯定是屋子裡最奢華的地方，光是頭頂的水晶燈就夠
+平常人過一輩子了，這裡有樓梯可通往二樓，就連扶手也散發著純
+銀的光芒。
+~
+0 4|8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37365
+D3
+~
+~
+0 0 37367
+D4
+~
+~
+0 0 37373
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37369
+主廳二樓~
+    慌亂不安的感覺飄浮在空氣中，腳下的鮮紅地毯讓人彷踏在血
+紅沼澤裡，你舉目四望，但整座主廳像被黑霧籠罩，什麼都看不清
+楚。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37370
+D5
+~
+~
+0 0 37366
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37370
+主廳二樓~
+    似乎有什麼不對勁，種種負面的想法充斥腦際，你覺得有什麼
+正壓迫著這座主廳，一股黑暗、又極度強大的氣勢...
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37371
+D2
+~
+~
+0 0 37369
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37371
+王座~
+    所有不安和恐慌的感覺都源自於此，這王座的價值可能足以買
+下一個城鎮，但它散發的感覺已說明這絕非凡物，這充滿邪惡氣息
+的物品將招來強大的惡魔。
+~
+0 8|65536|524288|1048576 0
+D1
+~
+~
+0 0 37372
+D3
+~
+~
+0 0 37370
+>room_time 100~
+if roomvalue($1) == 0
+	if roomvalue($0) == 0
+	modrvt v0 = 12
+	endif
+	if roomvalue($0) > 1
+	modrvt v0 - 1
+	endif
+	if roomvalue($0) == 1
+	modrvt v0 = 0
+	modrvt v1 = 1
+		if rand(1)
+		mload 37250
+		break
+		endif
+		if rand(30)
+		mload 37238
+		break
+		endif
+		if rand(43)
+		mload 37239
+		break
+		endif
+		if rand(50)
+		mload 37241
+		break
+		else
+		mload 37243
+		endif
+	endif
+endif
+if roomvalue($1) == 1
+if mobcount(37238) == 0
+if mobcount(37239) == 0
+if mobcount(37240) == 0
+if mobcount(37241) == 0
+if mobcount(37242) == 0
+if mobcount(37243) == 0
+if mobcount(37244) == 0
+if mobcount(37245) == 0
+if mobcount(37246) == 0
+if mobcount(37247) == 0
+if mobcount(37248) == 0
+if mobcount(37249) == 0
+if mobcount(37250) == 0
+modrvt v1 = 0
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+~
+>room_command call marie~
+if rmobcount(37239) == 1
+if isfight(girl-four-gh)
+echoat $n [1;37m你大聲呼喊著瑪麗(marie)的名字...[0m
+echoaround $n [1;37m$n大聲呼喊著瑪麗(marie)的名字...[0m
+transfer girl-four-gh 37371
+add_qmark girl-four-gh ghouse_girl_four -1 0 0 0 0 1
+force girl-four-gh say ...主人...的朋友？
+echo $n 最終人形(final flesh)停止了攻擊
+endif
+endif
+~
+>room_enter 127 100~
+if is_qmark($n) == ghouse_enter_count
+	del_qmark $n ghouse_enter_count
+endif
+if ispc($n)
+if rmobcount(37238) == 1
+echoat $n 一陣綠色的煙霧飄來，你感覺到力量漸漸地流失！
+add_affect $n poison 1030 4 1 -1 4096
+endif
+endif
+~
+|
+S
+#37372
+主廳二樓~
+    似乎有什麼不對勁，種種負面的想法充斥腦際，你覺得有什麼
+正壓迫著這座主廳，一股黑暗、又極度強大的氣勢...
+~
+0 8|65536|524288|1048576 0
+D2
+~
+~
+0 0 37373
+D3
+~
+~
+0 0 37371
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37373
+主廳二樓~
+    慌亂不安的感覺飄浮在空氣中，腳下的鮮紅地毯讓人彷踏在血
+紅沼澤裡，你舉目四望，但整座主廳像被黑霧籠罩，什麼都看不清
+楚。
+~
+0 8|65536|524288|1048576 0
+D0
+~
+~
+0 0 37372
+D5
+~
+~
+0 0 37368
+>room_rand 10~
+if ispc($r)
+	if rand(20)
+	echoat $r 這裡異常地安靜...
+	endif
+endif
+~
+|
+S
+#37374
+小洞穴~
+    這個洞穴什麼都沒有，你怎麼看也猜不出前人挖掘這個洞窟究
+竟有什麼目的。
+~
+0 4|8|512|65536|524288|1048576 0
+D1
+~
+~
+0 0 37354
+S
+#0
+
+#RESETS
+M 0 37200 1 37201
+M 0 37202 1 37203
+*小男孩
+M 0 37203 1 37205
+M 0 37260 1 37208
+M 0 37261 2 37212
+M 0 37261 2 37216
+M 0 37262 1 37221
+*小女孩
+M 0 37205 1 37204
+M 0 37263 1 37210
+M 0 37264 1 37214
+M 0 37265 2 37217
+M 0 37265 2 37222
+*黑暗
+M 0 37207 3 37226
+M 0 37207 3 37228
+M 0 37207 3 37229
+*鏡影
+M 0 37208 3 37231
+M 0 37208 3 37234
+M 0 37208 3 37243
+M 0 37251 3 37249
+M 0 37251 3 37257
+M 0 37251 3 37265
+*鬼魂
+M 0 37209 2 37238
+M 0 37209 2 37241
+M 0 37252 3 37251
+M 0 37252 3 37254
+M 0 37252 3 37260
+*殭屍
+M 0 37210 3 37232
+M 0 37210 3 37233
+M 0 37210 3 37245
+M 0 37253 2 37253
+M 0 37253 2 37267
+M 0 37254 1 37290
+M 0 37255 3 37312
+M 0 37255 3 37315
+M 0 37255 3 37320
+M 0 37256 3 37340
+M 0 37256 3 37343
+M 0 37256 3 37347
+*精靈少女
+M 0 37213 1 37276
+M 0 37214 1 37276
+*娃娃
+M 0 37215 2 37280
+M 0 37215 2 37280
+*狗玩具
+M 0 37216 3 37270
+M 0 37216 3 37272
+M 0 37216 3 37277
+*熊布偶
+M 0 37217 3 37274
+M 0 37217 3 37275
+M 0 37217 3 37283
+*屍偶
+M 0 37218 2 37279
+M 0 37218 2 37283
+*殭屍
+M 0 37219 4 37285
+M 0 37219 4 37290
+M 0 37219 4 37292
+M 0 37219 4 37299
+M 0 37220 3 37292
+M 0 37220 3 37297
+M 0 37220 3 37301
+*廚師
+M 0 37221 2 37287
+M 0 37221 2 37288
+*女傭
+M 0 37222 2 37303
+M 0 37222 2 37309
+*警衛
+M 0 37223 3 37304
+M 0 37223 3 37308
+M 0 37223 3 37310
+*噴泉
+O 0 3135 0 37306
+*骷髏兵
+M 0 37224 2 37323
+M 0 37224 2 37323
+M 0 37257 2 37314
+M 0 37257 2 37317
+M 0 37258 3 37341
+M 0 37258 3 37346
+M 0 37258 3 37350
+*死靈法師
+M 0 37225 1 37323
+*老鼠
+M 0 37227 12 37324
+M 0 37227 12 37326
+M 0 37227 12 37327
+M 0 37227 12 37327
+M 0 37227 12 37329
+M 0 37227 12 37329
+M 0 37227 12 37330
+M 0 37227 12 37330
+M 0 37227 12 37331
+M 0 37227 12 37331
+M 0 37227 12 37332
+M 0 37227 12 37334
+M 0 37259 2 37341
+M 0 37259 2 37347
+*蛆
+M 0 37228 2 37326
+M 0 37228 2 37333
+*少女
+M 0 37229 1 37338
+*石像鬼
+M 0 37231 4 37352
+M 0 37231 4 37353
+M 0 37231 4 37354
+M 0 37231 4 37355
+*觸手
+M 0 37233 2 37357
+M 0 37233 2 37360
+*綠蘚怪
+M 0 37234 1 37358
+*樹妖
+M 0 37235 2 37361
+M 0 37235 2 37359
+*黑霧
+M 0 37236 3 37363
+M 0 37236 3 37368
+M 0 37236 3 37370
+*怨魂
+M 0 37237 3 37364
+M 0 37237 3 37366
+M 0 37237 3 37373
+D 0 37275 0 1
+D 0 37276 2 1
+D 0 37278 3 1
+D 0 37279 0 1
+D 0 37280 1 1
+D 0 37280 2 1
+S
+
+#$

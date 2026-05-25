@@ -1,0 +1,8915 @@
+#AREADATA
+Name        銀龍海灣~
+Identity    dragonbay~
+Builders    Amenda~
+Translator  ----~
+Modifier    Reticent Gif~
+VNUMs         14200 14350
+Security    1
+Recall      14229
+F_toggle    524288|1048576
+End
+
+#HELPS
+0 $~
+
+
+#MOBILES
+#14201
+sparrow~
+黃雀(sparrow)~
+一隻鮮豔的小黃雀(sparrow)站在枝頭唱著好聽的歌。
+~
+這是一隻可愛的小黃雀(sparrow)，大小大概可以讓你輕易的握在手中。
+它輕盈地站在枝頭婉轉高歌。
+~
+1|2|64|128 0 50 S
+15 0 0 0d0+0 0d-500+0
+0 0
+0 8 1
+R Animal~
+>rand_prog 30~
+mpecho 吱吱 - 唧唧，樹梢的小鳥唱著好聽的歌。
+~
+|
+#14202
+seagull~
+海鷗(seagull)~
+一隻海鷗(seagull)在天空遨翔。
+~
+一隻海鷗(seagull)在你的頭頂飛翔，小心別被它"轟炸"到了。
+~
+1|2|64|128 0 50 S
+17 0 0 0d0+0 0d-700+0
+0 0
+0 8 1
+R Animal~
+#14203
+small crab~
+小螃蟹(small crab)~
+一隻小螃蟹(small crab)在你腳邊爬著。
+~
+這是一隻黃色背殼，黑色鉗子的小螃蟹，看來沒什麼傷害性。
+~
+1|2|64|128 0 50 S
+5 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Animal~
+#14204
+little dragon~
+小龍(little dragon)~
+一隻青色的小龍(little dragon)好奇地望著你。
+~
+在你眼前的是一隻可愛的青色小龍，他背上長著未發育完成的皮翅，
+抬起兩隻前足坐在地上。雖然他的體型相當壯碩，坐下來時身高已經
+到你的下巴，但是從兩顆明亮無邪眼睛透露出的無辜神情，彷彿就像
+人類的小嬰兒一樣。
+~
+1|2|64|128 0 50 S
+25 0 0 0d0+-100 -20d0+0
+0 0
+0 8 1
+R Dragon~
+>rand_prog 30~
+if rand(50)
+        mpecho 小龍發出無意義的聲音：咕＊咕...嘟＊嘟....
+else
+        mpecho 你身邊的小龍竟從嘴角流了一大灘口水下來，髒死了！
+endif
+~
+|
+#14205
+young babysitter calgory-m~
+年輕的保母(young babysitter)~
+一位年輕漂亮的保母(young babysitter)在這裡照顧小龍們。
+~
+這是一位年輕漂亮的"美眉"，大概只有十六、七歲。她為了這些調皮
+搗蛋的小龍們已經焦頭爛額了。忙亂中她還是抽空對你微笑了一下。
+~
+1|2|64|128 0 950 S
+40 0 0 20d30+-300 -20d0+0
+0 0
+0 8 2
+P 8
+>talk_prog topic~
+if is_qmark($n) == dragonbay_mayor_secret 100010
+or is_qmark($n) & dragonbay_quest_mark 100004
+	if is_qmark($n) != devileye_quest
+        if is_qmark($n) !& dragonbay_quest_mark 200001
+		if is_qmark($i) != dragonbay_talking
+                	smile $n
+                	say 親愛的神選之人您好，您能再來這裡拜訪真是令人
+                	say 欣喜。您未來所要面對的將是來自異界強大的力量
+                	say ，想必將要經歷一番苦戰是免不了的。在那麼大的
+                	say 壓力之下，有一件事情不知該不該再麻煩你....
+			mpadd_qmark self dragonbay_talking 2 0 0 0 0 1
+			mpcall devileye_happened $n
+                	break
+		endif
+	endif
+        endif
+endif
+bow $n
+say 您好，我是卡佳麗(calgory)。就像您看到的，
+say 我是這群頑皮孩子(children)的保母。
+mpechoat $n 卡佳麗(calgory)打量了你一下說：
+say 您是從外地來的吧？
+~
+>defun_prog devileye_happened~
+mpcallout 1 say 算了，畢竟這是我們的私事....
+mpcallout 2 say 您還是好好的準備即將面對的異界之戰吧。
+mpcallout 3 mpecho 你看到$I似乎有什麼難言之隱....(what's happened)
+mpcallout 3 mpdel_qmark self dragonbay_talking
+~
+>talk_prog restart~
+if is_qmark($n) <= devileye_quest 100010
+        say 好的，此任務可以重新開始。
+        mpdel_qmark $n devileye_quest
+endif
+~
+>talk_prog p what's happened~
+if is_qmark($n) == dragonbay_mayor_secret 100010
+or is_qmark($n) & dragonbay_quest_mark 100004
+	if is_qmark($n) != devileye_quest
+        if is_qmark($n) !& dragonbay_quest_mark 200001
+                say 是這樣子的，在那最後一次的大規模進攻中，我的
+                say 父親卡洛斯(Carlose) 也喪命在那恐怖的魔眼叢林
+                say 裡了。至今，屍骨仍為尋獲，為此，曾祖父其實內
+                say 疚了許久許久....不知道可不可以麻煩您替我撫平
+                say 曾祖父那藏在內心許久的創傷呢？
+                mpadd_qmark $n devileye_quest -1 1 0 0 0 1
+        endif
+	endif
+endif
+~
+>talk_prog children~
+say 我們銀龍族的小娃娃都會在這裡長大，
+say 直到他們會說話為止...
+sigh
+say 這群小娃娃簡直是一場大災難啊！
+~
+>talk_prog no~
+if is_qmark($n) == devileye_quest 100001
+        say 也是，這種事本來就不應該麻煩您了。
+        mpecho $I露出了一臉哀傷的神情，眼角似乎還泛起了淚珠。
+endif
+~
+>talk_prog yes~
+if is_qmark($n) == devileye_quest 100001
+        say 那麼，一切就麻煩您了。
+        thank $n
+        kiss $n
+        mpmod_qmark $n devileye_quest v0 = 2
+        break
+endif
+if is_qmark($n) == dragonbay_mayor_secret 100004
+        say 我的曾祖父很偉大喲，他是族裡面最有智慧的人，
+        say 從兩百年前就是族裡的大長老！不過....
+        mpcallout 3 mpcall say_1
+        mpmod_qmark $n dragonbay_mayor_secret v0 = 5
+        break
+endif
+if is_qmark($n) == dragonbay_mayor_secret 100002
+        bow $n
+        say 謝謝你，好心的冒險家....我想豆豆不會跑太遠的...
+        break
+endif
+nod
+say 你們不是銀龍族的人....也許你們該先到鎮上
+say 去找鎮長，我們一直有些有關異族的傳說，
+say 不過只有鎮長最清楚。
+~
+>talk_prog p recoh yarecoh~
+worry
+say 對不起，我現在正在忙(trouble)，恐怕沒辦法陪
+say 你聊有關我曾祖父的事...
+~
+>talk_prog presbyter~
+worry
+say 對不起，我現在正在忙(trouble)，恐怕沒辦法陪
+say 你聊有關大長老的事...
+~
+>talk_prog trouble~
+if is_qmark($n) == dragonbay_mayor_secret 100001
+        say 我照顧的一位寶寶，豆豆，趁我不注意時偷偷跑出去
+        say 玩了！他現在還小，我真怕會出什麼意外....
+        look $n
+        say 我必須留在這裡照顧其他的孩子們，所以...不知道
+        say 你能不能夠到附近幫我找找看(search)好嗎？
+        mpmod_qmark $n dragonbay_mayor_secret v0 = 2
+endif
+~
+>talk_prog search~
+if is_qmark($n) == dragonbay_mayor_secret 100002
+        nod $n
+        say 是的，麻煩您在附近到處找找，好心的勇者。
+endif
+~
+>greet_prog 100~
+if isnpc($n)
+        if vnum($n) == 14207
+                mpecho $N嗚咽地向$I跑去....
+                mpecho $I高興地抱著$N
+                say 小豆豆，下次別再亂跑了喔...
+                mpecho 你看到$N向$I撒嬌後，又被$I送回洞裡...
+                mppurge toto-m
+                mpcallout 3 mpecho $I感激地回頭對你說：謝謝你，勇者，幸好沒發生意外。
+                mpcallout 4 say 您剛剛是想問我有關曾祖父的事吧？(yes/no)
+        endif
+endif
+~
+>defun_prog say_1~
+say 曾祖父現在年紀大了，喜歡安靜，不希望人家打擾他。
+say 除非有事，他一般都懶懶地在大龍峒曬太陽。
+gig
+say 你們想見他的話，到芒草原那裡誠心地向東方祭拜
+say (knee east)，如果曾祖父心情好，他就會
+say 和你們聊聊天的...
+~
+|
+#14206
+mayor hookard-m~
+鎮長(mayor)~
+一位中年的鎮長(mayor)坐在椅子上埋首辦公。
+~
+這是一位國字臉的中年人，下巴還留著一小撮鬍子。他的神色看起來很安逸，
+這也是這裡所有鎮民的特色。看到你走進來，他抬頭微笑地望著你，似乎在等
+你先開口。
+~
+1|2|64|128 0 750 S
+45 0 0 40d50+-500 -40d0+0
+0 0
+0 8 1
+P 8
+>talk_prog restart~
+if is_qmark($n) < dragonbay_mayor_secret 100007
+        say 好的，任務重新開始！
+        mpdel_qmark $n dragonbay_mayor_secret
+else
+        say 對不起，到這個階段，你的任務只能繼續下去。
+endif
+~
+>talk_prog topic~
+if is_qmark($n) > dragonbay_mayor_secret 100008
+or is_qmark($n) & dragonbay_quest_mark 100004
+        say 你好，親愛的神選之人，請問有什麼事情可以為您效勞的嗎？
+        smile $n
+else
+        say 你好，陌生的勇者，我是這裡的鎮長 - 胡克爾(hookard)。我代表
+        say 所有的鎮民歡迎你的到訪。
+        mpechoat $n 胡克爾(hookard)站起來對你欠欠腰。
+        mpechoaround $n 胡克爾(hookard)站起來對$n欠欠腰。
+        say 這裡很少有外人拜訪，您看來不像能夠穿越時空的大巫師，所以，
+        say 您是越過地底沼澤抵達這裡的嗎？
+endif
+~
+>talk_prog yes~
+if is_qmark($n) == dragonbay_mayor_secret
+or is_qmark($n) & dragonbay_quest_mark 100004
+        break
+endif
+say 難得，難得！能夠穿越凶險的地底沼澤來到這裡，您一定是大陸上
+say 最頂尖的勇者！不過，為了保險起見，我可以請問你一個問題嗎？
+say 請問，最後的金鑰匙，是你擊敗什麼魔物才得到的？
+~
+>talk_prog p ancient reaper~
+if is_qmark($n) == dragonbay_mayor_secret
+or is_qmark($n) & dragonbay_quest_mark 100004
+        break
+endif
+say 是的，您答對了，勇者。
+bow $n
+say 請原諒我的失禮，因為這關係到一項可怕的秘密(secret)，
+say 我不得不特別小心...
+mpechoat $n $I 住口沒再說下去，你最好主動打聽一下。
+mpadd_qmark $n dragonbay_mayor_secret -1 0 0 0 0 1
+~
+>talk_prog secret~
+if is_qmark($n) == dragonbay_mayor_secret
+or is_qmark($n) & dragonbay_quest_mark 100004
+        say 其實，這個地區之所以這麼難以抵達，是因為方圓二十公里的區域
+        say 都被用強力的魔法與外界隔絕，無法通過。而唯一留下來的一條路
+        say 徑，就是橫越地底沼澤，靠著以前大長老豎立的傳送點傳送過來。
+        mpcallout 4 mpcall say_1
+        mpcallout 8 mpcall say_2
+        mpcallout 12 mpcall say_3
+        mpcallout 16 mpcall say_4
+endif
+~
+>defun_prog say_1~
+say 這個海灣之所以要特別保護，是因為我們這個世界的空間在這個海灣
+say 地底下特別薄弱，很容易被其他世界的生物打穿而入侵我們的世界..
+shrug
+say 詳細的道理其實我也不明白，總之若異界魔物想要大量入侵，這裡是
+say 唯一可能的地方！而我們銀龍族因為是這個世界裡最高戰鬥力的種族
+say ，便被眾神賦予看守的宿命，世世代代都必須駐守此地....
+sigh
+~
+>defun_prog say_2~
+say 幾千年來，我們族人每隔數十年就與侵入的魔物激戰，鮮紅的血液早
+say 就灑遍這個海灣的每個角落。不但是地面與天空，英勇的戰士們甚至
+say 需要主動出擊，深入限制我們力量的地底，進攻防禦堅固的地底要塞
+say ，卻也因此造成極大的傷亡...
+mpecho $I 又深深地歎了一口氣。
+~
+>defun_prog say_3~
+say 銀龍一族正常的壽命該有五、六百年的，但現在連三百年龍族的戰士
+say 都湊不滿一團，可見這些年來發生的戰役有多慘烈！
+mpechoat $n $I 抬起頭深深望了你一眼：
+mpechoaround $n $I 抬起頭深深望了$n一眼。
+~
+>defun_prog say_4~
+say 銀龍一族戰鬥力再強，也不可能無止境地獨力對抗整個異世界的
+say 入侵。再過幾百年也許就要全族戰死在這個海灣了....
+sigh
+say 據說眾神留下一個預言，祂們說這個世界的命運，最終還是寄託
+say 在這個世界的所有生物。也就因為這個最後希望，以前的大長老
+say (presbyter)才會打開一個傳送點，希望將來能有銀龍以外的勇
+say 者通過考驗抵達這裡，成為這個世界最後的救贖！
+~
+>talk_prog presbyter~
+say 大長老是我們族裡最有智慧的人。現在我們的大長老是第二十代
+say 的大長老雷克亞衛克(recoh yarecoh)。
+~
+>talk_prog p recoh yarecoh~
+if is_qmark($n) > dragonbay_mayor_secret 100001
+or is_qmark($n) & dragonbay_quest_mark 100004
+        break
+endif
+mpecho $I 顯現猶豫之色....
+say 對不起....大長老是不見外人的。連我們族人也很少會去打擾他
+say 老人家...
+mpechoat $n 看到你著急的神情，$I又說了：
+say 不過...
+say 卡佳麗是大長老最疼愛的曾孫女，也許你能夠找她聊聊吧？
+mpmod_qmark $n dragonbay_mayor_secret v0 = 1
+~
+|
+#14207
+little dragon toto-m~
+小龍(little dragon)~
+一隻青色的小龍(little dragon)在這裡獨自哭泣。
+~
+在你眼前的是一隻可愛的青色小龍，背上長著未發育完成的皮翅，
+他身上有些擦傷，獨自躲在一個角落流淚。
+~
+1|2|64|128 0 50 S
+37 -200 0 -80d-80+-100 -20d0+0
+0 0
+0 8 1
+R Dragon~
+>rand_prog 20~
+mpecho $I用手揉著哭紅的眼睛，口齒不清地說：佳麗，佳麗....
+~
+|
+#14208
+mega silver-dragon presbyter~
+百萬巨龍(mega dragon)~
+一隻超巨大的銀龍(mega silver-dragon)懶懶地躺在地上。
+~
+這隻巨大的銀龍懶懶地躺在廣場上，他的頭依在地上吃力地想要看清楚你。
+這隻銀龍看起來像是一座銀色的小山丘，連一半的天空都被它巨大的身軀
+擋住了。你數了數他頭上的角，竟然有八根之多。希望他別臨時打個噴嚏，
+不然大家都要化為灰燼。
+~
+1|2|64|128|8192|1048576 8|32|128 850 S
+100 10000 0 0d50+0 -50d400+0
+0 0
+0 8 1
+C 1|2|4|8
+R Dragon~
+P 1|2|4|8|2048|2097152|4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) & dragonbay_quest_list 100016
+        if is_qmark($n) == devileye_quest 100014
+                good $n
+                say 真是太好了，想不到你真的辦到了。
+                say 那麼，現在可以請你將魔眼邪臂交給我嗎？
+                mpmod_qmark $n devileye_quest v0 = 15
+                break
+        endif
+endif
+if is_qmark($n) > dragonbay_mayor_secret 100008
+        look $n
+        say $n，你還在這裡幹什麼？還沒找到賈伯斯(Jabose)嗎？
+        break
+endif
+mpechoat $n 一個低沈的聲音傳進你的心中：歡迎你，年輕的勇者，我就是銀龍族的大長老雷克亞衛克。
+~
+>talk_prog topic~
+if is_qmark($n) == dragonbay_mayor_secret 100005
+        say 你好，相信胡克爾已經告訴你我們銀龍族的一些歷史。所
+        say 以我就長話短說...
+        say 前幾年我和甘道夫聊天時，他曾提過我們銀龍悲慘的宿命
+        say 也許就要結束...
+        say 的確，過了這麼多年，這個世界其他的生物也該負起自己
+        say 的責任了。
+        mpcallout 3 mpcall say_1 $n
+        mpmod_qmark $n dragonbay_mayor_secret v0 = 6
+        break
+endif
+mpecho $I懶懶地打量著你....
+~
+>defun_prog say_1~
+say 這是一項極為凶險的任務，就常理判斷，應該沒有成功的
+say 可能。不過為了眾神留下來的傳說，也為了銀龍一族的存
+say 續，我不得不狠下心尋找可能的人選....
+mpechoaround $I以懷疑的眼光看了$n一眼：
+mpechoat $I以懷疑的眼光看了你一眼：
+say 為了你自身的安全，我想再確認你的能力，可否請你把通過
+say 沼澤時得到的牙齒和藤蔓交給我呢？
+~
+>defun_prog say_2~
+say 對抗異界侵略的關鍵都在海灣的地層底下，這部分只能要
+say 靠你自己的智慧去發掘。對不起我無法派遣軍隊同行，因
+say 為我們都必須幻化為人身後才能在地道通行，但在這種型
+say 態下戰鬥力會大幅衰退。雖然這些年來大家已經盡量去適
+say 應"人"這種型態了..
+~
+>defun_prog say_3~
+say 你可以到武道場去找武術教練賈伯斯(Jabose)，他曾數度
+say 率領戰士進入地底，對地底(underground)的情形很清楚..
+wave $n
+say 加油，孩子，「神選之人」之名可是意義重大的，別辜負大家的期望。
+~
+>give_prog 15115~
+if is_qmark($n) > dragonbay_mayor_secret 100005
+        if is_qmark($n) < dragonbay_mayor_secret 100008
+                nod $n
+                say 好的，這的確是混沌九頭蛇的牙齒。
+                mpjunk tooth
+                mpmod_qmark $n dragonbay_mayor_secret v0 + 1
+        endif
+endif
+drop all
+if is_qmark($n) == dragonbay_mayor_secret 100008
+        say 既然你也相信自己的實力，我就不再阻止你了。
+        say 現在，我以銀龍大長老之名，賦予你「神選之人」的身份！
+        rumor $n 通過嚴格的鑑定，成為神選之人！
+        mpmod_qmark $n dragonbay_mayor_secret v0 = 9
+        mpcallout 4 mpcall say_2 $n
+        mpcallout 10 mpcall say_3 $n
+endif
+~
+>give_prog 15081~
+if is_qmark($n) > dragonbay_mayor_secret 100005
+        if is_qmark($n) < dragonbay_mayor_secret 100008
+                nod $n
+                say 好的，這的確是萬古樹妖的藤蔓。
+                mpjunk rattan
+                mpmod_qmark $n dragonbay_mayor_secret v0 + 1
+        endif
+endif
+drop all
+if is_qmark($n) == dragonbay_mayor_secret 100008
+        say 既然你也相信自己的實力，我就不再阻止你了。
+        say 現在，我以銀龍大長老之名，賦予你「神選之人」的身份！
+        rumor $N 通過嚴格的鑑定，成為神選之人！
+        mpmod_qmark $n dragonbay_mayor_secret v0 = 9
+        mpcallout 4 mpcall say_2 $n
+        mpcallout 10 mpcall say_3 $n
+endif
+~
+>talk_prog carlose~
+if is_qmark($i) != dragonbay_talking
+	if is_qmark($n) == devileye_quest 100002
+		mpadd_qmark self dragonbay_talking 2 0 0 0 0 1
+        	mpechoat $n $I一臉震驚的看著你。
+        	mpechoaround $n $I一臉震驚的看著$N。
+        	say 你從那裡聽到這個名字的？
+        	mpcallout 1 say 應該是我那曾孫女和你提起的吧。
+        	mpcallout 2 sigh
+        	mpcallout 3 say 這已經是多年前的往事了....
+        	mpcallout 4 say 其實，我想卡佳麗內心應該比我還要難受才是
+        	mpcallout 5 say 畢竟，那是她所最敬愛的父親呀....
+        	mpcallout 6 say 身為銀龍一族的大長老，竟也對那叢林無能為力。
+        	mpcallout 7 say 我實在是不知道該怎麼辦才好....
+        	mpcallout 8 mpecho 你看到$I不禁開始哽咽了起來，並沒有再繼續說下去。
+		mpcallout 9 mpecho 你看到$I不禁淚流滿面，不知該如何是好。
+        	mpcallout 9 mpmod_qmark $n devileye_quest v0 = 3
+		mpcallout 9 mpdel_qmark self dragonbay_talking
+	endif
+endif
+~
+>act_prog tear~
+if is_qmark($i) != dragonbay_talking
+	if is_qmark($n) == devileye_quest 100003
+		mpadd_qmark self dragonbay_talking 2 0 0 0 0 1
+        	say 謝謝你。
+        	say 我想，就讓老夫來訴說一下這件事的經過吧。
+        	mpcallout 1 mpcall devileye_say1 $n
+        	mpcallout 3 mpcall devileye_say2 $n
+        	mpcallout 5 mpcall devileye_say3 $n
+        	mpcallout 7 mpcall devileye_say4 $n
+		mpcallout 7 mpdel_qmark self dragonbay_talking
+	endif
+endif
+~
+>defun_prog devileye_say1~
+say 在數年前，我們銀龍一族決定要對異界發動最新
+say 一波攻擊時，我的孫子也就是卡洛斯也參與了。
+say 原本，我們認為在有了魔眼叢林的地形圖之後，
+say 就能夠順利的突破該關卡，誰知道我們錯了。
+~
+>defun_prog devileye_say2~
+say 整個魔眼叢林全都在蜘蛛女皇魔力的操控之中，
+say 叢林內部的地形經常會在蜘蛛女皇的意志下移動
+say 。因此，造成了我們銀龍戰士慘烈的傷亡。
+~
+>defun_prog devileye_say3~
+say 就在我們進攻到正東方時，我們選擇走進了一條
+say 地圖上的死路想要稍微調息養傷一下。誰知，就
+say 在那時候地形又產生了變化，而我那最疼愛的孫
+say 子卻在地形變化的過程中給蜘蛛絲纏住了。
+~
+>defun_prog devileye_say4~
+say 雖然我當時極力的想救他出來，但那些該死的蜘
+say 蛛卻在此時朝著我們迎面而來。可想而知，無法
+say 動彈的卡洛斯也就因此而喪失了他的寶貴生命。
+mpecho $I說到了這裡，再也無法繼續說下去了。
+mpechoat $n 而你也不曉得究竟該怎麼幫助他，還是該主動開口問他呢？
+mpechoat $n  (talk mega How should I help you)
+mpmod_qmark $n devileye_quest v0 = 4
+~
+>talk_prog p how should i help you~
+if is_qmark($n) == devileye_quest 100004
+        mpecho $I從那悲傷的陰霾中走了出來繼續說道。
+        say 神選之人呀，逝者已矣，再多的哀傷也喚不回卡洛
+        say 斯的生命了。現在我只是想要將他的遺骨找回來好
+        say 好的安葬，不曉得你是否可以替老夫完成這個心願
+        say 呢？
+        mpmod_qmark $n devileye_quest v0 = 5
+endif
+~
+>talk_prog yes~
+if is_qmark($n) == devileye_quest 100013
+        say 謝謝你答應我這無理的要求。
+        say 那我會先將卡洛斯的遺骸遷入墓地再等你的好消息。
+        mpmod_qmark $n devileye_quest v0 = 14
+        if is_qmark($n) & dragonbay_quest_list 100016
+                mpmod_qmark $n dragonbay_quest_list v0 r 16
+        endif
+        break
+endif
+if is_qmark($n) == devileye_quest 100011
+        thank $n
+        say 那就麻煩你了，我要先將卡洛斯的遺骸做一下相關的處理。
+        say 我想，你身上應該不會剛巧帶著那稀有的凱米特金才是。
+        say 若有必要回去史卡拉貝大陸的話，聖殿主祭可以幫你的忙。
+        mpmod_qmark $n devileye_quest v0 = 12
+        break
+endif
+if is_qmark($n) == devileye_quest 100008
+        say 我需要以下四個東西：
+        say 永凍雪、女神的祝福、瓊漿玉液、龍心淚
+        say 而且需要在十天以內就要使用，不然這遺骸將會因
+        say 邪惡魔法的侵蝕而風化掉。當你準備好起身後就跟
+        say 我說一聲吧(ok)，我會幫你傳回史卡拉貝大陸的。
+        mpmod_qmark $n devileye_quest v0 = 9
+        mpadd_qmark $n devileye_quest_timer 240 0 0 0 0 1
+        break
+endif
+if is_qmark($n) == devileye_quest 100005
+        thank $n
+        say 那真是太好了，那老夫就在這裡等候你的佳音。
+        mpcallout 1 mpechoat $n 你覺得目前所得到的線索似乎還不夠多，應該再問更詳細些。
+        mpmod_qmark $n devileye_quest v0 = 6
+endif
+~
+>talk_prog 線索~
+mpcall devileye_quest_clue $n
+~
+>talk_prog trie~
+mpcall devileye_quest_clue $n
+~
+>talk_prog clue~
+mpcall devileye_quest_clue $n
+~
+>defun_prog devileye_quest_clue~
+if is_qmark($i) != dragonbay_talking
+	if is_qmark($n) == devileye_quest 100006
+		mpadd_qmark self dragonbay_talking 2 0 0 0 0 1
+        	say 抱歉，顧著哀傷而忘了跟你做更詳細的說明。
+        	mpcallout 1 mpcall devileye_clue1 $n
+        	mpcallout 3 mpcall devileye_clue2 $n
+        	mpcallout 5 mpcall devileye_clue3 $n
+        	mpcallout 7 mpcall devileye_clue4 $n
+		mpcallout 7 mpdel_qmark self dragonbay_talking
+	endif
+endif
+~
+>defun_prog devileye_clue1~
+say 或許你也聽過了，在那最後一次的戰役之中，我
+say 們銀龍一族受創嚴重。當然，也就沒有可能再有
+say 餘力下去魔眼叢林那裡替死去的戰士們收屍。也
+say 因此，我們只能任那些戰士們的遺骸給蜘蛛皇后
+say 隨心所欲的操控。
+~
+>defun_prog devileye_clue2~
+say 而卡洛斯的遺骸雖然也是卡在那在那些蜘蛛網之
+say 中，但是要找到的難度卻又更高了。因為他剛好
+say 是在地形變動之後才喪命的，當在我解決眼前所
+say 有的蜘蛛想要找他時，地形已經變動回來了。
+~
+>defun_prog devileye_clue3~
+say 畢竟，地形回復之後，原來的那個方位已經變成
+say 危險的蜘蛛補食網了。就這樣，讓我連他最後一
+say 眼都看不到。而現在就算你真找到卡洛斯的遺骸
+say ，我想應該也不好辨識了。唯一能辨識的方法，
+say 我想只能靠他生前載在手上，由我送給他的那條
+say 手鍊來辨識了吧。
+~
+>defun_prog devileye_clue4~
+say 不過，千萬要記得在找到遺骸之後，不論用任何
+say 方式，一定要儘速的拿回來給我。若是讓遺骸成
+say 為蜘蛛皇后的操控之物，那一切就沒救了。因為
+say 在經過蜘蛛皇后的強大魔力操控之後，整副遺骸
+say 將會灰飛煙滅。一切希望就靠你了，保重。
+mpmod_qmark $n devileye_quest v0 = 7
+~
+>give_prog 24209~
+if is_qmark($n) == devileye_quest 100007
+or is_qmark($n) == devileye_quest 100006
+        mpjunk $o
+        mpecho $I在接下了遺骸之後，眼淚瞬間滴落了下來。
+        say 實在是太感謝你了，神選之人....
+        say 雖然知道接下來的要求有點過份，但是可以麻煩
+        say 你幫我取得幾樣東西嗎？因為卡洛斯的遺骸似乎
+        say 已經沾染了太多邪惡的魔力了，我必需要將這邪
+        say 惡的魔力完全洗淨才行。
+        mpmod_qmark $n devileye_quest v0 = 8
+else
+        ? $n
+        drop skeleton-dragonbay
+endif
+~
+>talk_prog ok~
+if is_qmark($n) == devileye_quest 100009
+        say 好，那我現在就將你傳送回史卡拉貝大陸。
+        say 希望你能夠在時間以內趕回來，我將在此等你。
+        mpmod_qmark $n devileye_quest v0 = 10
+        mpat 3001 mpecho 你看到$N突然從空氣之中顯現出身影。
+        mptransfer $n 3001
+        mpecho 你看到$N突然消失在空氣之中。
+        mpforcer 3001 force $n look
+endif
+~
+>give_prog 8921~
+if is_qmark($i) == dragonbay_talking
+	c 'erm nodrop' tear
+	mpnowait
+	drop tear
+	break
+endif
+if is_qmark($n) == devileye_quest 100010
+        if is_qmark($n) == devileye_quest_timer
+                if is_qmark($n) !& devileye_quest_timer 100001
+                        mpjunk $o
+                        nod $n
+                        say 很好，我已經收到了龍心淚。
+                        mpmod_qmark $n devileye_quest_timer v0 | 1
+                        mpcall devileye_quest_timer_check $n
+                else
+                        say 你已經給過我龍心淚了。
+			c 'rem nodrop' tear
+			mpnowait
+                        drop tear
+                endif
+        else
+                sigh
+                say 時間已經超過了，你現在給我也沒用了。
+		c 'rem nodrop' tear
+		mpnowait
+                drop tear
+        endif
+else
+        ? $n
+	c 'rem nodrop' tear
+	mpnowait
+        drop tear
+endif
+~
+>give_prog 909~
+if is_qmark($i) == dragonbay_talking
+	drop ambrosia
+	break
+endif
+if is_qmark($n) == devileye_quest 100010
+        if is_qmark($n) == devileye_quest_timer
+                if is_qmark($n) !& devileye_quest_timer 100002
+                        mpjunk $o
+                        nod $n
+                        say 很好，我已經收到了瓊漿玉液。
+                        mpmod_qmark $n devileye_quest_timer v0 | 2
+                        mpcall devileye_quest_timer_check $n
+                else
+                        say 你已經給過我瓊漿玉液了。
+                        drop ambrosia
+                endif
+        else
+                sigh
+                say 時間已經超過了，你現在給我也沒用了。
+                drop ambrosia
+        endif
+else
+        ? $n
+        drop ambrosia
+endif
+~
+>give_prog 9351~
+if is_qmark($i) == dragonbay_talking
+	drop bless
+	break
+endif
+if is_qmark($n) == devileye_quest 100010
+        if is_qmark($n) == devileye_quest_timer
+                if is_qmark($n) !& devileye_quest_timer 100004
+                        mpjunk $o
+                        nod $n
+                        say 很好，我已經收到了女神的祝福。
+                        mpmod_qmark $n devileye_quest_timer v0 | 4
+                        mpcall devileye_quest_timer_check $n
+                else
+                        say 你已經給過我女神的祝福了。
+                        drop bless
+                endif
+        else
+                sigh
+                say 時間已經超過了，你現在給我也沒用了。
+                drop blsee
+        endif
+else
+        ? $n
+        drop bless
+endif
+~
+>give_prog 1808~
+if is_qmark($i) == dragonbay_talking
+	drop eversnow
+	break
+endif
+if is_qmark($n) == devileye_quest 100010
+        if is_qmark($n) == devileye_quest_timer
+                if is_qmark($n) !& devileye_quest_timer 100008
+                        mpjunk $o
+                        nod $n
+                        say 很好，我已經收到了永凍雪。
+                        mpmod_qmark $n devileye_quest_timer v0 | 8
+                        mpcall devileye_quest_timer_check $n
+                else
+                        say 你已經給過我永凍雪了。
+                        drop eversnow
+                endif
+        else
+                sigh
+                say 時間已經超過了，你現在給我也沒用了。
+                drop eversnow
+        endif
+else
+        ? $n
+        drop eversnow
+endif
+~
+>defun_prog devileye_quest_timer_check~
+if is_qmark($i) != dragonbay_talking
+	if is_qmark($n) == devileye_quest_timer 100015
+		mpadd_qmark self dragonbay_talking 2 0 0 0 0 1
+        	say 太好了，終於趕在時間內取得了所有必要的東西了。
+        	mpcallout 1 mpecho 你看到$I取出了卡洛斯的遺骸。
+        	mpcallout 2 mpecho $I將女神的祝福灑在遺骸之上，瞬間一陣黑煙冒出....
+        	mpcallout 3 mpecho $I將瓊漿玉液灑在遺骸之中，遺骸的髒污瞬間洗淨了不少....
+        	mpcallout 4 mpecho $I再將龍心淚滴在遺骸之上，一股龍氣瞬間融入遺骸之中....
+        	mpcallout 5 mpecho 最後$I運用強大的魔力將永凍雪化為一股霧氣把骸骨籠罩其中
+        	mpcallout 6 mpecho 當霧氣消散之後，$I的熱淚再度流了下來。
+        	mpcallout 7 say 實在是太感謝你了，倘若沒有你的幫忙....
+        	mpcallout 8 say 卡洛斯的遺骸不知要何時才能夠順利的入土為安。
+        	mpcallout 9 say 但是，不曉得可不可以再麻煩你替我取得一樣東西。
+        	mpcallout 10 say 我希望能夠用稀有的凱米特金來為卡洛斯打造墓地。
+        	mpcallout 11 say 不曉得你是否可以答應我這不合理的要求呢？
+        	mpcallout 11 mpmod_qmark $n devileye_quest v0 = 11
+        	mpcallout 11 mpdel_qmark $n devileye_quest_timer
+		mpcallout 11 mpdel_qmark self dragonbay_talking
+	endif
+endif
+~
+>give_prog 32114~
+if is_qmark($i) != dragonbay_talking
+	if is_qmark($n) == devileye_quest 100012
+		mpadd_qmark self dragonbay_talking 2 0 0 0 0 1
+		mpjunk $o
+        	say 真是太感激你了....
+        	say 但是，不曉得能不能再麻煩你最後一件事....
+        	mpecho $I似乎欲言又止，臉上露出了些微疑慮的表情。
+        	mpcallout 2 say 我希望你能夠替我消滅魔眼蜘蛛皇后。
+        	mpcallout 3 say 因為，我希望能夠用魔眼邪臂來當祭品。
+        	mpcallout 4 say 以慰卡洛斯在天之靈....
+        	mpcallout 5 say 不曉得你是否可以答應我這最後的無理要求？
+        	mpcallout 5 mpmod_qmark $n devileye_quest v0 = 13
+		mpcallout 5 mpdel_qmark self dragonbay_talking
+	endif
+else
+	drop gold
+endif
+~
+>give_prog 24222~
+if is_qmark($i) == dragonbay_talking
+	give $o $n
+	drop $o
+	break
+endif
+if is_qmark($n) == devileye_quest 100015
+	mpadd_qmark self dragonbay_talking 2 0 0 0 0 1
+	mpcallout 3 mpdel_qmark self dragonbay_talking
+	mpjunk $o
+	bow $n
+	say 太好了，想必這下卡洛斯泉下有知也該倍感欣慰了。
+	say 在去祭拜卡洛斯之前，我想我也該好好的答謝你才是。
+	mpcallout 1 mpcall devileye_reward1 $n
+	mpcallout 2 mpcall devileye_reward2 $n
+	mpcallout 3 mpcall devileye_reward3 $n
+endif
+~
+>defun_prog devileye_reward1~
+say 其實，在這之前，我對你的能力與耐性還不是十
+say 分的放心。畢竟，沒有足夠的能力與耐性，是無
+say 法順利挑戰異界的。所以先前我刻意的對你做了
+say 幾個不合理的要求，只是想不到你卻都二話不說
+say 的達成了我這些要求。
+~
+>defun_prog devileye_reward2~
+say 更重要的是，你也順利的擊殺了魔眼蜘蛛皇后。
+say 前幾任的神選之人，其實多半都命喪於魔眼叢林
+say 之中，那裡就有如一場恐怖的惡夢。所以現在我
+say 已十分的肯定你的確有那資格擁有「神選之人」
+say 之名。
+~
+>defun_prog devileye_reward3~
+say 現在，我就將銀龍一族代代相傳的聖器交給你。
+if class($n) == 0
+or class($n) == 5
+or class($n) == 6
+or class($n) == 15
+        mpechoat $n $I將[1;37m聖靈護腕[0m(Numinous Bracer)交給了你。
+        mpechoaround $n $I將[1;37m聖靈護腕[0m(Numinous Bracer)交給了$N。
+        mpoload 24221 $n 40 target
+endif
+if class($n) == 1
+or class($n) == 7
+or class($n) == 8
+or class($n) == 16
+        mpechoat $n $I將[1;37m聖靈脛甲[0m(Numinous Jambeau)交給了你。
+        mpechoaround $n $I將[1;37m聖靈脛甲[0m(Numinous Jambeau)交給了$N。
+        mpoload 24227 $n 40 target
+endif
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+        mpechoat $n $I將[1;37m聖靈面具[0m(Numinous Mask)交給了你。
+        mpechoaround $n $I將[1;37m聖靈面具[0m(Numinous Mask)交給了$N。
+        mpoload 24224 $n 40 target
+endif
+if class($n) == 3
+or class($n) == 11
+or class($n) == 12
+or class($n) == 13
+        mpechoat $n $I將[1;37m聖靈戰袍[0m(Numinous Tunic)交給了你。
+        mpechoaround $n $I將[1;37m聖靈戰袍[0m(Numinous Tunic)交給了$N。
+        mpoload 24225 $n 40 target
+endif
+if class($n) == 4
+or class($n) == 14
+or class($n) == 18
+or class($n) == 19
+        mpechoat $n $I將[1;37m聖靈戰斧[0m(Numinous Poleax)交給了你。
+        mpechoaround $n $I將[1;37m聖靈戰斧[0m(Numinous Poleax)交給了$N。
+        mpoload 24253 $n 40 target
+endif
+mpcall devileye_reward4 $n
+~
+>defun_prog devileye_reward4~
+say 除此之外，我再助你提升自身潛在的能力。
+if is_qmark($n) == max_skill_exp
+        mpmod_qmark $n max_skill_exp v0 + 5
+else
+        mpadd_qmark $n max_skill_exp -1 5 0 0 0 1
+endif
+mpechoat $n 你感到你潛在的能力提升了 15000。
+mpskillexp $n 60000
+mpresp $n 3
+mpdel_qmark $n devileye_quest
+if is_qmark($n) != dragonbay_quest_mark
+        mpadd_qmark $n dragonbay_quest_mark -1 0 1 0 0 1
+else
+        mpmod_qmark $n dragonbay_quest_mark v1 | 1
+endif
+~
+>fight_prog 100~
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+cast 'high explosive'
+mpnowait
+~
+>fight_prog 20~
+if isaffected($i) & 16777216
+        mpdis_magic self all
+        mpecho $I 的身體發出奇特的光線....！
+        mpecho 封鎖魔法法術對 $I 已經失去效用....！
+        c 'seal magic' $r
+        mpnowait
+endif
+if isaffected($i) & 1
+        mpecho $I 解除了自己的盲目！
+        c 'cure blindness'
+        mpnowait
+endif
+if isaffected($i) & 4096
+        c 'cure poison'
+        mpnowait
+endif
+if isaffected($i) !& 128
+        if hitprcnt($i) < 30
+                c sanctuary
+                mpnowait
+        endif
+endif
+if isaffected($i) & 268435456
+        mpdis_magic self paralyze
+endif
+~
+>hitprcnt_prog 30~
+if rand(30)
+        mpat 5 c 'double heal'
+        mpnowait
+endif
+mpecho $I 對你的攻勢忽然開始猛烈了起來....。
+mpat 5 c barrier
+mpnowait
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $n
+~
+|
+#14209
+martial master jabose-m~
+賈伯斯(jabose)~
+武術教練賈伯斯(jabose)站在這裡，訓練年輕的戰士戰鬥技巧。
+~
+賈伯斯是位高壯的大漢。他站在訓練場的中央，隨時準備接受挑戰。
+~
+1|2|64|128|512|8192 8|32|128 650 S
+45 3000 0 50d50+-300 -10d0+0
+0 0
+0 8 1
+C 1|2|4|8
+P 8
+>talk_prog devil-eye~
+if is_qmark($i) == dragonbay_talking
+        mpechoat $n 你沒看到 $I 正在和人說話嗎？
+else
+if is_qmark($n) > dragonbay_mayor_secret 100008
+or is_qmark($n) & dragonbay_quest_mark 100004
+        mpadd_qmark self dragonbay_talking 5 0 0 0 0 1
+        say 你是想問魔眼蜘蛛嗎？那我便告訴你吧。
+        say 過去我們幾次的大規模進攻，其實在魔眼叢林內部是死傷最
+        say 為嚴重的。過去也曾有不少任的神選之人敗亡於魔眼叢林之
+        say 中，畢竟對魔眼叢林不太了解的人而言，進去也只是多增添
+        say 一條亡魂罷了。
+        mpcallout 4 mpcall say2_1 $n
+        mpcallout 8 mpcall say2_2 $n
+        mpcallout 12 mpcall say2_3 $n
+        mpcallout 16 mpcall say2_4 $n
+        mpcallout 20 mpcall say2_5 $n
+        mpcallout 24 mpcall say2_6 $n
+        mpcallout 24 mpdel_qmark $i dragonbay_talking
+else
+        dunno $n
+endif
+endif
+~
+>talk_prog underground~
+if is_qmark($i) == dragonbay_talking
+        mpechoat $n 你沒看到 $I 正在和人說話嗎？
+else
+if is_qmark($n) > dragonbay_mayor_secret 100008
+or is_qmark($n) & dragonbay_quest_mark 100004
+        mpadd_qmark self dragonbay_talking 5 0 0 0 0 1
+        say 你好，神選之人，我會把我所知道的都告訴你，希望你能成功。
+        bow $n
+        say 你們的目標當然是異界在這裡打通的大規模入口，這個時空
+        say 隙縫據說是在這個地區很深的地底，不過從來也沒有人能夠
+        say 排除萬難，親眼證實...
+        mpcallout 4 mpcall say_1 $n
+        mpcallout 8 mpcall say_2 $n
+        mpcallout 12 mpcall say_3 $n
+        mpcallout 16 mpcall say_4 $n
+        mpcallout 20 mpcall say_5 $n
+        mpcallout 24 mpcall say_6 $n
+        mpcallout 24 mpmod_qmark $n dragonbay_mayor_secret v0 = 10
+        mpcallout 24 mpdel_qmark self dragonbay_talking
+        break
+endif
+inn $n
+say 你問這種事幹什麼？那裡不是小孩子的遊樂場...
+endif
+~
+>defun_prog say2_1~
+say 首先，魔眼叢林內四處都佈滿了含有會使人麻痺的蜘蛛絲，
+say 而這蜘蛛絲又不是一般刀劍便可以扯開的。所以我們當初都
+say 是靠燒的方式來開路，而魔法商店那裡在近幾年來也有研發
+say 出相關的藥水供神選之人及其夥伴在魔眼叢林中使用。
+~
+>defun_prog say2_2~
+say 而後來我們發現到，其實若能夠使自己體內的腎上腺素大量
+say 激發的話，就算觸碰到魔眼蜘蛛絲也不一定會麻痺。只不過
+say ，懂得控制腎上腺素的人並不多見就是，而且也並不是一定
+say 可以避免掉麻痺的情形。
+~
+>defun_prog say2_3~
+say 而在魔眼叢林之中，由歷代魔眼蜘蛛皇后統領的魔眼蜘蛛群
+say 在顧守著，而在叢林之中，更有著為數不少的死亡陷阱正等
+say 著人不小心的走進去，直至目前為止，已經有不少人喪生在
+say 牠們所做的死亡陷阱之中了。
+~
+>defun_prog say2_4~
+say 其實我們並不是不曉得那些陷阱所在點，而是整座魔眼叢林
+say 都遭受到魔眼蜘蛛皇后的魔力控制，因此整座叢林就有如有
+say 生命似的會產生變動。即使手中有著叢林內部的地圖，還是
+say 很容易使人走到頭昏眼花並且誤中陷阱。
+~
+>defun_prog say2_5~
+say 再來我想有必要跟您介紹一下魔眼蜘蛛們的特性。那些魔眼
+say 蜘蛛們全部有八種顏色，除了炎系與雷系的法術之外，其它
+say 系的法術都擁有著頂絕的抗性。而拿刀劍砍殺牠們的話，牠
+say 們體內的酸液則會噴濺而出，不小心被濺灑到的話，後果是
+say 相當嚴重的。
+~
+>defun_prog say2_6~
+say 而魔眼蜘蛛真正可怕的是牠們背上的那隻魔眼，當那隻魔眼
+say 在戰鬥中張開時，也是自己或是身旁夥伴倒下之時，所以若
+say 是遇見魔眼蜘蛛時，切記一定得在牠們背上的魔眼完全張開
+say 前把牠們殺掉才行。當然，聽說也曾有人試著要把那魔眼給
+say 弄失明就是，但效果如何我則不曉得。
+~
+>defun_prog say_1~
+say 其實很多年前，前代的大長老希望能夠一次徹底解決問題，
+say 所以曾經率領全族的戰士大規模地進攻異界的地底基地。
+say 不幸地，這項計畫在幾次慘重的傷亡後不得不終止，從此以
+say 後我們就不再做這種大規模進攻。
+~
+>defun_prog say_2~
+say 現在的戰術目標都只是做有限目標的快速擊打，以掃除對方
+say 在這個世界的軍事生產力為主，同時也藉此探知他們的戰術
+say 演變和戰略方向。
+say 很遺憾地，銀龍一族由於勢單力薄，幾千年的戰損下來軍力
+say 天平似乎慢慢向他們傾斜了....
+sigh
+~
+>defun_prog say_3~
+say 我最近兩百年共率軍進攻地底四次，最深曾經達到地下第六
+say 層。不過據戰史記載，遠古的大侵攻最深曾經攻抵地下第十
+say 七層，而且當時敵軍軍力尚無枯竭的跡象，所以我估計你們
+say 要抵達目的地，也許需要突破二十層以上的防線....
+pat $n
+~
+>defun_prog say_4~
+say 這些年來，由於各種強大力量的激烈衝突，以及各式各樣的
+say 遠古禁咒，整個地底的時空已經亂成一團，幾乎什麼樣的種
+say 族與生物都有可能出現在地底，各種奇異的環境景象都能在
+say 下面發現，所以你們最好有心理準備。
+say 以我的經驗，前三層是洞穴巨人、魔眼蜘蛛(devil-eye) 與
+say 眼魔的領域，這大概是可以確定的。但再往下，我曾經碰過
+say 鬼魂大軍、吸血鬼之王、牛頭人軍團、強力巫妖、迷霧之湖
+say ，而且每次都不大相同...
+~
+>defun_prog say_5~
+say 更重要的，即使你們能夠突破重重防線到達地底核心，要如
+say 何把這個破洞填補起來至今仍然沒人知道，所以你們到時候
+say 只能見機行事，也許還需要直接攻入異世界....
+shrug
+say 這好像是一項不可能的任務，我不願打壓你們的士氣，但把
+say 事實真相告訴你們好讓你們做萬全準備又是我的責任...
+sigh
+say 如果你們有信心而且準備妥當了，入口就在是非終點。
+~
+>defun_prog say_6~
+say 只要是神選之人，就能夠把封印暫時打開(break seal)，
+say 但也只是打開一個暫時的單向入口，換言之，不是完成任
+say 務光榮回來，就是全部戰死地底！
+wav $n
+say 切記，沒有萬全準備，不要輕易進去....
+~
+|
+#14210
+baker~
+糕餅師傅(baker)~
+糕餅師傅(baker)熱心地招呼客人試吃。
+~
+糕餅師傅很喜歡客人滿足的表情，對他而言這比金錢還重要。
+他很熱心地招呼你試吃今天最滿意的作品。
+~
+1|2|64|128|8192 8|32|128 550 S
+43 1000 0 50d50+-300 -10d0+0
+0 0
+0 8 1
+C 1|2|4|8
+P 8
+#14211
+weaponist~
+武器店老闆(weaponist)~
+武器店老闆(weaponist)懶散地站在櫃臺前。
+~
+這家店的生意很差，所以老闆也很不起勁。不過他似乎並不在意，
+臉上還帶著一股安逸的閒情。
+~
+1|2|64|128|8192 8|32|128 550 S
+43 1000 0 50d50+-300 -10d0+0
+0 0
+0 8 1
+C 1|2|4|8
+P 8
+#14212
+armourer~
+護具店老闆(armourer)~
+護具店老闆(armourer)坐在椅子上打盹。
+~
+她是一位肥胖的中年婦人，因為店裡的生意很差，所以乾脆打起盹來。
+~
+1|2|64|128|8192 8|32|128 550 S
+43 1000 0 50d50+-300 -10d0+0
+0 0
+0 8 2
+C 1|2|4|8
+P 8
+#14213
+alchemist~
+魔法店老闆(alchemist)~
+魔法店老闆(alchemist)躲在陰暗角落注視你。
+~
+由於店裡昏暗的光線，你幾乎看不到躲在櫃臺後的魔法店老闆(alchemist)。
+不過，你卻可以感覺到他凌厲的目光正在暗中觀察你。
+~
+1|2|64|128|8192 8|32|128 550 S
+43 1000 0 50d50+-300 -10d0+0
+0 0
+0 8 2
+C 1|2|4|8
+P 8
+#14214
+templar romina-m~
+聖殿主祭(templar)~
+聖殿主祭(templar)試著幫助所有需要幫助的人。
+~
+她是一位穿著白色長袍的貌美婦人。除了需要幫人治療外，
+大部分時間她都跪在祭壇前，口中喃喃唸著難懂的咒語。
+~
+1|2|64|128|8192 8|32|128 650 S
+70 3000 0 50d50+-300 -10d0+0
+0 0
+0 8 2
+C 1|2|4|8
+P 1|4|8|64|1024|67108864|262144
+S 13 500000
+S 40 50
+S 41 50000
+S 42 50000
+S 45 50000
+S 46 50000
+S 18 5000
+S 19 5000
+S 43 50000
+S 44 50000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>talk_prog topic~
+if rand(33)
+        bow $n
+        say 您好，我是聖殿主祭羅蜜娜(romina)。
+        say 除了幫您療傷解痛，如果您想回到(return)原本的大陸，
+        say 我也可以幫一點忙....
+else
+        if rand(50)
+                smile $n
+                say 您好，我是聖殿主祭羅蜜娜(romina)。
+                say 若您有需要的話，我可以施術為您召回屍體(grave)。
+        else
+                nod $n
+                say 你好，我是聖殿主祭羅蜜娜(romina)。
+                say 只要你除掉了地層魔域裡的任一怪物首領，
+                say 你都可以來此找我領取對應的技能經驗值(skexp)。
+                if is_qmark($n) != dragonbay_quest_list
+                        mpechoat $n 好了，以後你可以來找我領取技能經驗值(skexp)了。
+                        mpadd_qmark $n dragonbay_quest_list -1 0 0 0 0 1
+                endif
+                if is_qmark($n) != dragonbay_quest_mark
+                        mpadd_qmark $n dragonbay_quest_mark -1 0 0 0 0 1
+                endif
+        endif
+endif
+~
+>talk_prog skexp~
+if is_qmark($n) != dragonbay_quest_list
+        mpechoat $n 好了，以後你可以來找我領取技能經驗值(skexp)了。
+        mpadd_qmark $n dragonbay_quest_list -1 0 0 0 0 1
+endif
+if is_qmark($n) != dragonbay_quest_mark
+        mpadd_qmark $n dragonbay_quest_mark -1 0 0 0 0 1
+endif
+if is_qmark($n) == deepland_reaper_killed
+        if is_qmark($n) !& dragonbay_quest_mark 100001
+                mpechoat $n 你因為擊敗了萬古樹妖，而得到了 30000點技能經驗值。
+                mpskillexp $n 30000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 1
+        endif
+endif
+if is_qmark($n) == deepland_chaos_killed
+        if is_qmark($n) !& dragonbay_quest_mark 100002
+                mpechoat $n 你因為擊敗了混沌九頭蛇，而得到了 5000點技能經驗值。
+                mpskillexp $n 5000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 2
+        endif
+endif
+if is_qmark($n) == dragonbay_mayor_secret 100010
+        if is_qmark($n) !& dragonbay_quest_mark 100004
+                mpechoat $n 你因為取得神選之人的名號，而得到了 40000點技能經驗值。
+                mpskillexp $n 40000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 4
+                mpdel_qmark $n dragonbay_mayor_secret
+        endif
+endif
+if is_qmark($n) & dragonbay_quest_list 100008
+        if is_qmark($n) !& dragonbay_quest_mark 100008
+                mpechoat $n 你因為擊敗了亞殤巨人王，而得到了 5000點技能經驗值。
+                mpskillexp $n 5000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 8
+        endif
+endif
+if is_qmark($n) & dragonbay_quest_list 100016
+        if is_qmark($n) !& dragonbay_quest_mark 100016
+                mpechoat $n 你因為擊敗了魔眼蜘蛛皇后，而得到了 20000點技能經驗值。
+                mpskillexp $n 20000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 16
+        endif
+endif
+~
+>talk_prog skexp~
+if is_qmark($n) & dragonbay_quest_list 100032
+        if is_qmark($n) !& dragonbay_quest_mark 100032
+                mpechoat $n 你因為擊敗了牛魔王，而得到了 20000點技能經驗值。
+                mpskillexp $n 20000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 32
+        endif
+endif
+if is_qmark($n) & dragonbay_quest_list 100064
+        if is_qmark($n) !& dragonbay_quest_mark 100064
+                mpechoat $n 你因為擊敗了嗜血將軍，而得到了 20000點技能經驗值。
+                mpskillexp $n 20000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 64
+        endif
+endif
+if is_qmark($n) & dragonbay_quest_list 100128
+        if is_qmark($n) !& dragonbay_quest_mark 100128
+                mpechoat $n 你因為擊敗了萬影之王，而得到了 20000點技能經驗值。
+                mpskillexp $n 20000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 128
+        endif
+endif
+if is_qmark($n) & dragonbay_quest_list 100256
+        if is_qmark($n) !& dragonbay_quest_mark 100256
+                mpechoat $n 你因為擊敗了女妖之后，而得到了 20000點技能經驗值。
+                mpskillexp $n 20000
+                mpmod_qmark $n dragonbay_quest_mark v0 | 256
+        endif
+endif
+~
+>talk_prog grave~
+if is_qmark($i) == dragonbay_grave
+        echoat $n 你沒看到$I正在施術中嗎？
+else
+        mpadd_qmark $i dragonbay_grave 2 0 0 0 1 1
+        if is_qmark($n) > dragonbay_mayor_secret 100008
+        or is_qmark($n) & dragonbay_quest_mark 100004
+                say 原來是「神選之人」，我這就為您召回屍體。
+                mpcall dragonbay_grave_cast $n
+        else
+                if level($n) == 42
+                        mpcall dragonbay_grave_lv42 $n
+                endif
+                if level($n) == 41
+                        mpcall dragonbay_grave_lv41 $n
+                endif
+                if level($n) == 40
+                        mpcall dragonbay_grave_lv40 $n
+                endif
+                if level($n) == 39
+                        mpcall dragonbay_grave_lv39 $n
+                endif
+                if level($n) == 38
+                        mpcall dragonbay_grave_lv38 $n
+                endif
+                if level($n) == 37
+                        mpcall dragonbay_grave_lv37 $n
+                endif
+                if level($n) == 36
+                        mpcall dragonbay_grave_lv36 $n
+                endif
+                if level($n) == 35
+                        mpcall dragonbay_grave_lv35 $n
+                endif
+        endif
+endif
+~
+>defun_prog dragonbay_grave_lv42~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 16000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 16000 點的經驗值。」[0m
+mpexp $n -16000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_lv41~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 14000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 14000 點的經驗值。」[0m
+mpexp $n -14000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_lv40~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 12000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 12000 點的經驗值。」[0m
+mpexp $n -12000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_lv39~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 10000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 10000 點的經驗值。」[0m
+mpexp $n -10000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_lv38~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 8000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 8000 點的經驗值。」[0m
+mpexp $n -8000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_lv37~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 6000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 6000 點的經驗值。」[0m
+mpexp $n -6000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_lv36~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 4000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 4000 點的經驗值。」[0m
+mpexp $n -4000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_lv35~
+mpechoat $n $I[1;32m對著你說著「依照規定必須扣除你 2000 點的經驗值。」[0m
+mpechoaround $n $I[1;32m對著[0m$N[1;32m說著「依照規定必須扣除你 2000 點的經驗值。」[0m
+mpexp $n -2000
+mpcall dragonbay_grave_cast $n
+~
+>defun_prog dragonbay_grave_cast~
+mpechoat $n [1;36m你看到$I開始施行術法替你召回屍體。[0m
+mpechoaround $n [1;36m你看到$I開始施行術法替[0m$N[1;36m召回屍體。[0m
+mpcallout 2 mpcall dragonbay_grave_castover $n
+~
+>defun_prog dragonbay_grave_castover~
+c grave $n
+mpnowait
+mpdel_qmark $i dragonbay_grave
+~
+>talk_prog return~
+say 您確定現在就要回到原本的大陸嗎？(yes)
+~
+>talk_prog yes~
+say 好的，我立刻幫您傳送回到史卡拉貝！
+mpechoat $n 四周的光線越來越耀眼....
+mpechoaround $n $N 的身影伴隨著一陣光芒消失....
+mpforcer here at 3001 echo 你看到 $N 的身影突然出現在這裡。
+mptransfer $n 3001
+mpforcer here at 3001 force $n look
+~
+|
+#14215
+silver-m dragon-m~
+銀龍(silver dragon)~
+一隻巨大的銀龍(silver dragon)瞪視著你。
+~
+這隻成年的巨大銀龍威武地瞪視著你，他看來心情不是很好。
+你數了數他頭上的角，竟然有六根之多。
+~
+1|2|64|128|8192|1048576 8|32|128 850 S
+55 5000 0 40d100+-300 -50d0+0
+0 0
+0 8 1
+C 1|2|4|8
+R Dragon~
+P 1|2|4|8|2048|2097152|4194304
+#14216
+silver-m dragon-f~
+銀龍(silver dragon)~
+一隻巨大的銀龍(silver dragon)瞪視著你。
+~
+這隻成年的巨大銀龍威武地瞪視著你，她看來心情不是很好。
+你數了數她頭上的角，竟然有四根之多。
+~
+1|2|64|128|8192|1048576 8|32|128 850 S
+51 5000 0 40d100+-300 -50d0+0
+0 0
+0 8 2
+C 1|2|4|8
+R Dragon~
+P 1|2|4|8|2048|2097152|4194304
+#14217
+nanthen troll king~
+亞殤巨人王(nanthen king)~
+一隻超巨大、超強壯的亞殤洞穴巨人王(nanthen king)正在欺負別的巨人。
+~
+看到他的體型，你就知道你碰到大麻煩了。這個大怪獸一定是這群亞殤洞穴巨人
+的頭頭，別的巨人甚至不到他的肩膀高。更重要的，他的醜陋和他的身材成正比，
+噁心得你都快吐出來了。
+~
+8405095 520 -1000 S
+60 10000 0 0d80+0 0d0+0
+200000 0
+0 8 1
+R Troll~
+C 1
+P 4|4194304|33554432|8388608
+>fight_prog 60~
+berserk
+mpnowait
+if hitprcnt($i) > 50
+        frenzy
+        mpnowait
+        skilldrv speedhit $n
+        skilldrv speedhit $n
+        skilldrv speedhit $n
+else
+        wear all
+        disarm
+        mpnowait
+        bashhead
+        mpnowait
+        skilldrv multihit $n
+        skilldrv multihit $n
+        kick
+        mpnowait
+endif
+mpat 5 c heal
+mpnowait
+mpat 5 c heal
+mpnowait
+~
+>repop_prog 100~
+mpadd_qmark $i delayed_cast -1 99999 0 0 0 1
+mpat 5 mpoload 15016
+mpat 5 mpoload 14207
+mpat 5 wear all
+~
+>death_prog 100~
+mpat 14272 mpforcer here modrvt t0 = 600
+mpmod_all_qmark $n dragonbay_quest_list v0 | 8
+mpadd_all_qmark $n merit_dungeon -1 0 0 0 0 1
+mpmod_all_qmark $n merit_dungeon v0 | 1
+~
+|
+#14218
+nanthen troll~
+亞殤洞穴巨人(nanthen troll)~
+一隻巨大、醜陋的亞殤洞穴巨人(nanthen troll)正在收刮財寶。
+~
+亞殤洞穴巨人是洞穴巨人中一個興盛的旁支，他們比普通的洞穴巨人還要巨大兇狠，
+平時靠著掠奪其他種族，甚至其他洞穴巨人來過活。
+~
+8405093 520 -1000 S
+48 2500 0 0d0+0 0d0+0
+100000 0
+0 8 1
+R Troll~
+C 1
+P 4194304|33554432
+>tick_prog 100~
+if pcnum($) == 0
+        if mobcount(14217) == 0
+                mppurge self
+        endif
+endif
+~
+>fight_prog 40~
+berserk
+mpnowait
+if hitprcnt($i) > 50
+        frenzy
+        mpnowait
+else
+        wear all
+        disarm
+        mpnowait
+        bashhead
+        mpnowait
+        skilldrv multihit $n
+        kick
+        mpnowait
+endif
+mpat 5 c heal
+mpnowait
+mpat 5 c heal
+mpnowait
+~
+>repop_prog 100~
+mpadd_qmark $i delayed_cast -1 99999 0 0 0 1
+mpat 5 mpoload 15016
+mpat 5 wear all
+~
+|
+#14219
+tarj beholder~
+塔迦眼魔(tarj beholder)~
+塔迦眼魔(tarj beholder)詭異地浮在半空中，他那隻大眼睛正試著催眠你。
+~
+塔迦眼魔(tarj beholder)是眼魔中唯一群居的一族，同時也是魔法
+最高深的一族，你能看到它們真是走運了，只是你得有命回去炫耀才行。
+~
+1|64|128|65536|524288|8388608 128|8192|32768 -800 S
+41 0 0 0d0+0 0d-200+0
+0 0
+0 8 0
+R Beholder~
+C 2
+P 1|8|1048576|2097152|4194304|8388608
+S
+13 4000
+>tick_prog 100~
+if pcnum($) == 0
+        if mobcount(14220) == 0
+                mppurge self
+        endif
+endif
+~
+>greet_prog 100~
+if isnpc($n)
+or isimmort($n)
+or race($n) == Drow
+or race($n) == Beholder
+        break
+endif
+c 2 sleep $n
+mpnowait
+c curse $n
+mpnowait
+c fae $n
+mpnowait
+c weaken $n
+mpnowait
+kill $n
+~
+>rand_prog 50~
+if race($r) == Drow
+or race($r) == Beholder
+or isnpc($r)
+or pcnum($) == 0
+or isaffected($r) / sleep
+or isfight($i)
+        break
+endif
+c 2 sleep $r
+mpnowait
+c curse $r
+mpnowait
+c fae $r
+mpnowait
+c weaken $r
+mpnowait
+~
+>fight_prog 40~
+if rand(50)
+        c gate
+        break
+endif
+mpnowait
+if rand(50)
+        c glac
+        mpnowait
+        c whi
+        mpnowait
+        c curse $r
+        mpnowait
+        c fae $r
+        mpnowait
+        c weaken $r
+        mpnowait
+else
+        c 3 fire
+        mpnowait
+        c earth
+        mpnowait
+        c curse $r
+        mpnowait
+        c fae $r
+        mpnowait
+        c weaken $r
+        mpnowait
+endif
+mpnowait
+~
+>repop_prog 100~
+mpadd_qmark $i delayed_cast -1 99999 0 0 0 1
+~
+|
+#14220
+great tarj beholder~
+大眼魔(great beholder)~
+大塔迦眼魔(great tarj beholder)正在"為你"施展上古魔咒。
+~
+大塔迦眼魔是塔迦眼魔中的貴族，通常歲數都已經超過五百歲。
+這種生物只有在傳說中聽到，沒想到你這輩子有機會親眼看到。
+如果幸運的話，也許你能當他的寵物幾十年，他會善待你的。
+~
+1|64|128|65536|524288|8388608 128|8192|32768|134217728 -800 S
+45 0 0 0d0+0 0d-300+0
+0 0
+0 8 0
+R Beholder~
+C 2
+P 1|4|8|1048576|2097152|4194304|8388608
+S
+13 5000
+>greet_prog 50~
+if isnpc($n)
+or isimmort($n)
+or race($n) == Beholder
+or race($n) == Drow
+        break
+endif
+if isaffected($n) / charm
+        wake $n
+        break
+endif
+c 2 charm $n
+mpnowait
+wake $n
+mpnowait
+mpgoto self
+mpgroup self $n 1 0
+~
+>rand_prog 50~
+if race($r) == Drow
+or race($r) == Beholder
+or pcnum($) == 0
+or isimmort($r)
+or isnpc($r)
+or isfight($i)
+        break
+endif
+if isaffected($r) / charm
+        wake $r
+        break
+endif
+c 2 charm $r
+mpnowait
+wake $r
+mpnowait
+mpgoto self
+mpgroup self $r 1 0
+~
+>fight_prog 50~
+if rand(50)
+        c gate
+        mpnowait
+        break
+endif
+mpnowait
+if rand(50)
+        c whi
+        mpnowait
+        c demon
+        mpnowait
+        c 3 chill $r
+        mpnowait
+        c fae $r
+        mpnowait
+else
+        c sun
+        mpnowait
+        c 2 power
+        mpnowait
+        c 3 chill $r
+        mpnowait
+        c fae $r
+        mpnowait
+endif
+mpnowait
+~
+>death_prog 100~
+if mobcount(14220) > 2
+        mpjunk all
+endif
+mpat 14306 mpforcer 14306 rcall dragonbay_beholder_reborn
+~
+>repop_prog 100~
+mpadd_qmark $i delayed_cast -1 99999 0 0 0 1
+mpoload 14211 36
+wear all
+~
+|
+#14221
+repairman~
+修理店老闆(repairman)~
+修理店老闆(repairman)閒閒望著窗外。
+~
+因為店裡的生意很差，所以修理店老闆望著窗外沈思。
+~
+1|2|64|128|8192|268435456 8|32|64|128 550 S
+35 1000 0 50d50+-300 -10d0+0
+0 0
+0 8 2
+C 1|2|4|8
+P 8|128
+>greet_prog 100~
+if is_qmark($n) & dragonbay_quest_mark 200004
+	break
+endif
+if is_qmark($n) == dragonbay_mayor_secret 100010
+or is_qmark($n) & dragonbay_quest_mark 100004
+else
+	break
+endif
+if is_qmark($n) != dragonbay_recycle
+	mpadd_qmark $n dragonbay_recycle -1 0 0 0 0 1
+	tell $n 神選之人，請稍等一下！
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) & dragonbay_quest_mark 200004
+	if is_qmark($n) == dragonbay_repair_item
+		tell $n 神選之人，你今天想要修理什麼嗎？
+	else
+		tell $n 神選之人，多虧你上次從魔域中帶回許多裝備。
+		tell $n 現在每天都有修理(repair)不完的東西呢。
+		tell $n 生意慘淡的清閒日子就此結束。
+		snick
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100007
+	if is_qmark($n) == dragonbay_recycle_timer
+		tell $n 我還在修東西，請晚點再來。
+		break
+	endif
+	if is_qmark($n) != dragonbay_quest_mark
+		mpadd_qmark $n dragonbay_quest_mark -1 0 4 0 0 1
+	else
+		mpmod_qmark $n dragonbay_quest_mark v1 | 4
+	endif
+	mpdel_qmark $n dragonbay_recycle
+	tell $n 回收的裝備得到很高的評價呢！
+	tell $n 神選之人，全鎮的居民都相當感謝你的協助。
+	tell $n 如果有什麼我幫得上忙的事，請跟我說一聲。
+	bow $n
+	mpresp $n 2
+	mpexp $n 20000
+	mpskillexp $n 15000
+	mpechoat $n 你感到潛在的力量覺醒了！
+	if is_qmark($n) == max_skill_exp
+		mpmod_qmark $n max_skill_exp v0 + 3
+	else
+		mpadd_qmark $n max_skill_exp -1 3 0 0 0 1
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100000
+	mpadd_qmark self talking
+	mpcallout 3 mpdel_qmark self talking
+	mpmod_qmark $n dragonbay_recycle v0 = 1
+	tell $n 神選之人呀！
+	tell $n 雖然鎮上的大家都知道你為了我們準備隻身前往異界消滅邪惡勢力。
+	tell $n 但自從上次的總攻失敗，鎮上目前沒有能力提供你支援了。
+	tell $n 好不容易盼到救世主出現，卻沒有餘力跟隨其後，大家都感到相當悔恨呢。
+	tell $n 如果可以我也想跟隨你殺入地底消滅邪惡勢力！
+	mpcallout 2 glare
+	mpcallout 2 tell $n 可惜我不是老練的戰士，沒辦法在地底戰鬥.....
+	mpcallout 3 tell $n 但就算如此，我也想用自己能作到的事為鎮上盡一份心力！(support)
+endif
+~
+>talk_prog p repair~
+if is_qmark($n) == dragonbay_repair_item
+	tell $n 如果有想修的破損銀龍裝備直接拿給我就行了。
+	tell $n 不過我的時間有限，一次只能處理一件呦！
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) & dragonbay_quest_mark 200004
+	mpadd_qmark self talking
+	mpcallout 3 mpdel_qmark self talking
+	mpadd_qmark $n dragonbay_repair_item -1 0 0 0 0 1
+	tell $n 不是我自誇，在全海灣你找不到比我更厲害的修復師了。
+	tell $n 武器、裝甲、飾品甚至是家具，任何的東西我都能修的好！
+	mpcallout 1 hmm
+	mpcallout 2 tell $n 可以回收破損的銀龍裝備拿來讓我修復。
+	mpcallout 2 tell $n 不過神選之人如果覺得銀龍族的裝備對你的旅途會有幫助。
+	mpcallout 2 tell $n 雖然我最近有點忙....
+	mpcallout 3 tell $n 就當成是答謝你上次幫我們大忙的謝禮。
+	mpcallout 3 tell $n 撥點時間出來，一次處理一件裝備還是有辦法作到的。
+endif
+~
+>talk_prog p support~
+if is_qmark($n) & dragonbay_quest_mark 200004
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_recycle 100001
+	mpadd_qmark self talking
+	mpcallout 3 mpdel_qmark self talking
+	mpmod_qmark $n dragonbay_recycle v0 = 2
+	tell $n 鎮上的居民能作到的只有保護好銀龍海灣不受暗黑勢力侵略。
+	tell $n 讓你進入魔域能無後顧之憂。
+	mpcallout 1 tell $n 這在狹窄的地底或許沒辦法，但在寬廣的地面就沒這問題了。
+	mpcallout 1 tell $n 但身為龍族，隨時有能力變化為戰力十足的龍型態應戰。
+	mpcallout 1 tell $n 雖然大部分還留在鎮上的居民們都不是戰士。
+	mpcallout 3 tell $n 不過以當前的狀況要能穩健守住攻勢，還欠缺些東西....(lack)
+endif
+~
+>talk_prog p lack~
+if is_qmark($n) & dragonbay_quest_mark 200004
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_recycle 100002
+	mpadd_qmark self talking
+	mpdel_qmark self talking
+	mpmod_qmark $n dragonbay_recycle v0 = 3
+	tell $n 上次傾全鎮之力對地層魔域發動攻勢，預期要攻破眼魔迷宮並在下方建立據點。
+	tell $n 但結果就像你所知道的，所有部隊在第二層的叢林中幾乎全滅。
+	tell $n 隨軍運送建立據點(camp)的資源也一同泡湯了。
+	shrug
+endif
+~
+>talk_prog p camp~
+if is_qmark($n) & dragonbay_quest_mark 200004
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_recycle 100003
+	mpadd_qmark self talking
+	mpcallout 2 mpdel_qmark self talking
+	mpmod_qmark $n dragonbay_recycle v0 = 4
+	hmm
+	tell $n 當時的計劃是要在魔域建立傳送據點，部隊只攜帶最低限的糧食等物資。
+	tell $n 希望能輕裝行軍快速完成據點，再用傳送的方式進行補給。
+	mpcallout 2 tell $n 反而民生必需品上沒受到太大的影響。
+	mpcallout 2 tell $n 沒記錯的話，損失最嚴重的大多是製作傳送點(portal)所需的金屬、礦材跟軍備品。
+endif
+~
+>talk_prog p portal~
+if is_qmark($n) & dragonbay_quest_mark 200004
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_recycle 100004
+	mpadd_qmark self talking
+	mpcallout 4 mpdel_qmark self talking
+	mpmod_qmark $n dragonbay_recycle v0 = 5
+	tell $n 你通過地沼所看到的金屬平臺就是我們銀龍族作的單向傳送點。
+	tell $n 雖然製作用的材料並不困難，但考慮要放置在地層魔域中的變因。
+	tell $n 鎮長決定平臺改用更堅固的合金製作，魔力源則選更強大的寶石取代水晶。
+	mpcallout 2 tell $n 更不用講帶下去的裝備品了，也跟著部隊一起叢林中毀滅。
+	mpcallout 2 tell $n 及作為魔力源使用的寶石也在侵攻行動中遺失。
+	mpcallout 2 tell $n 計劃中投入全鎮庫存的秘銀、精金、奧利哈康等大量貴重金屬，
+	mpcallout 4 tell $n 當時運送的資源量(resources)，算一算可足夠再建造兩座銀龍海灣呢。
+	mpcallout 4 tell $n 上次的失敗對全鎮而言，無疑是一個重大的打擊....
+endif
+~
+>talk_prog p resources~
+if is_qmark($n) & dragonbay_quest_mark 200004
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_recycle 100005
+	mpadd_qmark self talking
+	mpcallout 4 mpdel_qmark self talking
+	mpmod_qmark $n dragonbay_recycle v0 = 6
+	tell $n 不只有製作傳送點會使用到這些材料，一些軍事用的武器、裝備也都需要。
+	tell $n 缺乏裝備的情況下，就算訓練再多的年輕戰士也只能讓他們赤手空拳上戰場。
+	tell $n 但現階段卻沒有足夠的材料製作充足的新裝備了。
+	mpcallout 2 tell $n 就算是破損品，只要稍微修復又能變回一件優良的裝備了。
+	mpcallout 2 tell $n 銀龍族的裝備都是使用龍燄鍛製的，本身就有較高的品質。
+	mpcallout 2 tell $n 我認為現階段想解決急需裝備的問題，將舊品回收修復會是比較實際的作法。
+	mpcallout 3 look $n
+	mpcallout 4 bow $n
+	mpcallout 4 tell $n 神選之人呀，如果在叢林中發現任何毀損的裝備，請拿來給我吧。
+endif
+~
+>defun_prog recycle_count~
+if is_qmark($n) >= dragonbay_recycle 200030
+	mpmod_qmark $n dragonbay_recycle v0 = 7
+	if is_qmark($n) >= dragonbay_recycle 300010
+		mpadd_qmark $n dragonbay_recycle_timer 12 0 0 0 0 1
+	else
+		if is_qmark($n) >= dragonbay_recycle 300009
+			mpadd_qmark $n dragonbay_recycle_timer 18 0 0 0 0 1
+		else
+			if is_qmark($n) >= dragonbay_recycle 300008
+				mpadd_qmark $n dragonbay_recycle_timer 24 0 0 0 0 1
+			else
+				if is_qmark($n) >= dragonbay_recycle 300007
+					mpadd_qmark $n dragonbay_recycle_timer 30 0 0 0 0 1
+				else
+					if is_qmark($n) == dragonbay_recycle 300006
+						mpadd_qmark $n dragonbay_recycle_timer 36 0 0 0 0 1
+					else
+						if is_qmark($n) == dragonbay_recycle 300005
+							mpadd_qmark $n dragonbay_recycle_timer 42 0 0 0 0 1
+						else
+							if is_qmark($n) == dragonbay_recycle 300004
+								mpadd_qmark $n dragonbay_recycle_timer 48 0 0 0 0 1
+							else
+								if is_qmark($n) == dragonbay_recycle 300003
+									mpadd_qmark $n dragonbay_recycle_timer 54 0 0 0 0 1
+								else
+									if is_qmark($n) == dragonbay_recycle 300002
+										mpadd_qmark $n dragonbay_recycle_timer 60 0 0 0 0 1
+									else
+										if is_qmark($n) == dragonbay_recycle 300001
+											if is_qmark($n) == dragonbay_recycle 200032
+												mpadd_qmark $n dragonbay_recycle_timer 63 0 0 0 0 1
+											else
+												if is_qmark($n) == dragonbay_recycle 200031
+													mpadd_qmark $n dragonbay_recycle_timer 64 0 0 0 0 1
+												else
+													mpadd_qmark $n dragonbay_recycle_timer 66 0 0 0 0 1
+												endif
+											endif
+										else
+											mpadd_qmark $n dragonbay_recycle_timer 72 0 0 0 0 1
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+	tell $n 我想現階段累積的裝備量夠多了，請給我一些時間修復回收來的裝備。
+	tell $n 完成後我會送交給部隊，並且聽聽他們的意見。
+	tell $n 到時候請再回來找我。
+	bow $n
+else
+	tell $n 如果在叢林中還有發現更多破損的裝備，請拿給我。
+endif
+~
+>defun_prog repair_check~
+mpadd_qmark self repairing_eq -1 0 0 0 0 1
+mpadd_qmark self repairing_spec -1 0 0 0 0 1
+if is_qmark($n) == dragonbay_repair_item 300001
+	mpadd_qmark self repairing_states -1 1 0 0 0 1
+endif
+if is_qmark($n) == dragonbay_repair_item 300002
+	mpadd_qmark self repairing_states -1 2 0 0 0 1
+endif
+if is_qmark($n) == dragonbay_repair_item 300003
+	mpadd_qmark self repairing_states -1 3 0 0 0 1
+endif
+if is_qmark($n) == dragonbay_repair_item 300004
+	mpadd_qmark self repairing_states -1 4 0 0 0 1
+endif
+if is_qmark($n) == dragonbay_repair_item 300005
+	mpadd_qmark self repairing_states -1 5 0 0 0 1
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 100003
+	mpmod_qmark self repairing_eq v0 | 1
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 100005
+	mpmod_qmark self repairing_eq v0 | 2
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 100006
+	mpmod_qmark self repairing_eq v0 | 4
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 100009
+	mpmod_qmark self repairing_eq v0 | 8
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 100012
+	mpmod_qmark self repairing_eq v0 | 16
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 100014
+	mpmod_qmark self repairing_eq v0 | 32
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 200002
+	mpmod_qmark self repairing_eq v1 | 1
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 200004
+	mpmod_qmark self repairing_eq v1 | 2
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 200005
+	mpmod_qmark self repairing_eq v1 | 4
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 200008
+	mpmod_qmark self repairing_eq v1 | 8
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 200011
+	mpmod_qmark self repairing_eq v1 | 16
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 200013
+	mpmod_qmark self repairing_eq v1 | 32
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 300001
+	mpmod_qmark self repairing_eq v2 | 1
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 300002
+	mpmod_qmark self repairing_eq v2 | 2
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 300003
+	mpmod_qmark self repairing_eq v2 | 4
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 300006
+	mpmod_qmark self repairing_eq v2 | 8
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 300008
+	mpmod_qmark self repairing_eq v2 | 16
+endif
+if is_qmark($n) >= dragonbay_rmtcheck 300013
+	mpmod_qmark self repairing_eq v2 | 32
+endif
+if is_qmark($n) & dragonbay_repair_spec 100001
+	mpmod_qmark self repairing_spec v0 | 1
+endif
+if is_qmark($n) & dragonbay_repair_spec 100002
+	mpmod_qmark self repairing_spec v0 | 2
+endif
+if is_qmark($n) & dragonbay_repair_spec 100004
+	mpmod_qmark self repairing_spec v0 | 4
+endif
+if is_qmark($n) & dragonbay_repair_spec 100008
+	mpmod_qmark self repairing_spec v0 | 8
+endif
+if is_qmark($n) & dragonbay_repair_spec 100016
+	mpmod_qmark self repairing_spec v0 | 16
+endif
+if is_qmark($n) & dragonbay_repair_spec 100032
+	mpmod_qmark self repairing_spec v0 | 32
+endif
+if is_qmark($n) & dragonbay_repair_spec 100064
+	mpmod_qmark self repairing_spec v0 | 64
+endif
+if is_qmark($n) & dragonbay_repair_spec 100128
+	mpmod_qmark self repairing_spec v0 | 128
+endif
+if is_qmark($n) & dragonbay_repair_spec 100256
+	mpmod_qmark self repairing_spec v0 | 256
+endif
+if is_qmark($n) & dragonbay_repair_spec 100512
+	mpmod_qmark self repairing_spec v0 | 512
+endif
+if is_qmark($n) & dragonbay_repair_spec 200001
+	mpmod_qmark self repairing_spec v1 | 1
+endif
+if is_qmark($n) & dragonbay_repair_spec 200002
+	mpmod_qmark self repairing_spec v1 | 2
+endif
+if is_qmark($n) & dragonbay_repair_spec 200004
+	mpmod_qmark self repairing_spec v1 | 4
+endif
+if is_qmark($n) & dragonbay_repair_spec 200008
+	mpmod_qmark self repairing_spec v1 | 8
+endif
+if is_qmark($n) & dragonbay_repair_spec 200016
+	mpmod_qmark self repairing_spec v1 | 16
+endif
+if is_qmark($n) & dragonbay_repair_spec 200032
+	mpmod_qmark self repairing_spec v1 | 32
+endif
+if is_qmark($n) & dragonbay_repair_spec 200064
+	mpmod_qmark self repairing_spec v1 | 64
+endif
+if is_qmark($n) & dragonbay_repair_spec 200128
+	mpmod_qmark self repairing_spec v1 | 128
+endif
+if is_qmark($n) & dragonbay_repair_spec 200256
+	mpmod_qmark self repairing_spec v1 | 256
+endif
+if is_qmark($n) & dragonbay_repair_spec 200512
+	mpmod_qmark self repairing_spec v1 | 512
+endif
+if is_qmark($n) & dragonbay_repair_spec 201024
+	mpmod_qmark self repairing_spec v1 | 1024
+endif
+if is_qmark($n) & dragonbay_repair_spec 202048
+	mpmod_qmark self repairing_spec v1 | 2048
+endif
+if is_qmark($n) & dragonbay_repair_spec 204096
+	mpmod_qmark self repairing_spec v1 | 4096
+endif
+if is_qmark($n) & dragonbay_repair_spec 208192
+	mpmod_qmark self repairing_spec v1 | 8192
+endif
+if is_qmark($n) == dragonbay_repair_spec 300001
+	mpmod_qmark self repairing_spec v2 = 1
+endif
+if is_qmark($n) == dragonbay_repair_spec 300002
+	mpmod_qmark self repairing_spec v2 = 2
+endif
+if is_qmark($n) == dragonbay_repair_spec 300003
+	mpmod_qmark self repairing_spec v2 = 3
+endif
+if is_qmark($n) == dragonbay_repair_spec 300004
+	mpmod_qmark self repairing_spec v2 = 4
+endif
+if is_qmark($n) == dragonbay_repair_spec 300005
+	mpmod_qmark self repairing_spec v2 = 5
+endif
+if is_qmark($n) == dragonbay_repair_spec 300006
+	mpmod_qmark self repairing_spec v2 = 6
+endif
+if is_qmark($n) == dragonbay_repair_spec 300007
+	mpmod_qmark self repairing_spec v2 = 7
+endif
+if is_qmark($n) == dragonbay_repair_spec 300008
+	mpmod_qmark self repairing_spec v2 = 8
+endif
+if is_qmark($n) == dragonbay_repair_spec 300009
+	mpmod_qmark self repairing_spec v2 = 9
+endif
+if is_qmark($n) == dragonbay_repair_spec 300010
+	mpmod_qmark self repairing_spec v2 = 10
+endif
+if is_qmark($n) == dragonbay_repair_spec 300011
+	mpmod_qmark self repairing_spec v2 = 11
+endif
+if is_qmark($n) == dragonbay_repair_spec 300012
+	mpmod_qmark self repairing_spec v2 = 12
+endif
+if is_qmark($n) == dragonbay_repair_spec 300013
+	mpmod_qmark self repairing_spec v2 = 13
+endif
+if is_qmark($n) == dragonbay_repair_spec 300014
+	mpmod_qmark self repairing_spec v2 = 14
+endif
+if is_qmark($n) == dragonbay_repair_item 100001
+	mpoload 14237 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100002
+	mpoload 14238 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100003
+	mpoload 14244 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100004
+	mpoload 14239 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100005
+	mpoload 14240 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100006
+	mpoload 14245 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100007
+	mpoload 14241 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100008
+	mpoload 14242 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100009
+	mpoload 14246 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100010
+	mpoload 14243 38
+endif
+if is_qmark($n) == dragonbay_repair_item 100011
+	if is_qmark($n) == dragonbay_repair_spec 300004
+		if is_qmark($n) & dragonbay_repair_spec 202048
+			if is_qmark($n) != dragonbay_ToL
+				mpadd_qmark $n dragonbay_ToL -1 0 0 0 0 1
+				mpoload 14217 38
+				give earring $n
+				drop earring
+				mpdel_qmark self repairing_eq
+				mpdel_qmark self repairing_spec
+				mpdel_qmark self repairing_states
+				mpmod_qmark $n dragonbay_repair_item v2 = 0
+				mpmod_qmark $n dragonbay_repair_item v1 = 0
+				mpmod_qmark $n dragonbay_repair_item v0 = 0
+				mpdel_qmark $n dragonbay_repair_spec
+				mpdel_qmark $n dragonbay_rmtcheck
+				break
+			else
+				mpoload 14247 38
+				repeq gemstone
+				give gemstone $n
+				drop gemstone
+				mpdel_qmark self repairing_eq
+				mpdel_qmark self repairing_spec
+				mpdel_qmark self repairing_states
+				mpmod_qmark $n dragonbay_repair_item v2 = 0
+				mpmod_qmark $n dragonbay_repair_item v1 = 0
+				mpmod_qmark $n dragonbay_repair_item v0 = 0
+				mpdel_qmark $n dragonbay_repair_spec
+				mpdel_qmark $n dragonbay_rmtcheck
+				break
+			endif
+		else
+			mpoload 14247 38
+			repeq gemstone
+			give gemstone $n
+			drop gemstone
+			mpdel_qmark self repairing_eq
+			mpdel_qmark self repairing_spec
+			mpdel_qmark self repairing_states
+			mpmod_qmark $n dragonbay_repair_item v2 = 0
+			mpmod_qmark $n dragonbay_repair_item v1 = 0
+			mpmod_qmark $n dragonbay_repair_item v0 = 0
+			mpdel_qmark $n dragonbay_repair_spec
+			mpdel_qmark $n dragonbay_rmtcheck
+			break
+		endif
+	else
+		mpoload 14247 38
+		repeq gemstone
+		give gemstone $n
+		drop gemstone
+		mpdel_qmark self repairing_eq
+		mpdel_qmark self repairing_spec
+		mpdel_qmark self repairing_states
+		mpmod_qmark $n dragonbay_repair_item v2 = 0
+		mpmod_qmark $n dragonbay_repair_item v1 = 0
+		mpmod_qmark $n dragonbay_repair_item v0 = 0
+		mpdel_qmark $n dragonbay_repair_spec
+		mpdel_qmark $n dragonbay_rmtcheck
+		break
+	endif
+endif
+repeq silver-dragons
+give silver-dragons $n
+drop silver-dragons
+mpdel_qmark self repairing_eq
+mpdel_qmark self repairing_spec
+mpdel_qmark self repairing_states
+mpmod_qmark $n dragonbay_repair_item v2 = 0
+mpmod_qmark $n dragonbay_repair_item v1 = 0
+mpmod_qmark $n dragonbay_repair_item v0 = 0
+mpdel_qmark $n dragonbay_repair_spec
+mpdel_qmark $n dragonbay_rmtcheck
+~
+>give_prog 14218~
+if is_qmark($i) == talking
+	mpechoat $n 她正在說話。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 1
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備需要金屬類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14219~
+if is_qmark($i) == talking
+	mpechoat $n 她正在說話。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 2
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備需要金屬類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14220~
+if is_qmark($i) == talking
+	mpechoat $n 她正在說話。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 3
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備可以用金屬、皮革、鱗片之類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14221~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 4
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備需要金屬類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14222~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 5
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備需要金屬類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14223~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 6
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備可以用皮革、鱗片、布料跟寶石之類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14224~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 7
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備需要金屬類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14225~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 8
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備需要金屬類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14226~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 9
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備可以用皮革、鱗片、布料、羽絨之類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14227~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 10
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備需要金屬類的材料。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14228~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		mpjunk $o
+		mpmod_qmark $n dragonbay_repair_item v0 = 11
+		mpadd_qmark $n dragonbay_rmtcheck -1 0 0 0 0 1
+		mpadd_qmark $n dragonbay_repair_spec -1 0 0 0 0 1
+		tell $n 修復這件裝備可以用各種材料，但是需要寶石。
+		tell $n 但現在原料短缺要請你帶素材給我。
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 3
+	mpmod_qmark $n dragonbay_recycle v2 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14229~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		tell $n 目前我缺少修復武器的工具。
+		tell $n 但缺少原料短時間內也沒辦法取得。
+		sorry $n
+		give $o $n
+		drop $o
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 3
+	mpmod_qmark $n dragonbay_recycle v2 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14230~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		tell $n 目前我缺少修復武器的工具。
+		tell $n 但缺少原料短時間內也沒辦法取得。
+		sorry $n
+		give $o $n
+		drop $o
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 3
+	mpmod_qmark $n dragonbay_recycle v2 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14231~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		tell $n 目前我缺少修復武器的工具。
+		tell $n 但缺少原料短時間內也沒辦法取得。
+		sorry $n
+		give $o $n
+		drop $o
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 3
+	mpmod_qmark $n dragonbay_recycle v2 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14232~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		tell $n 目前我缺少修復武器的工具。
+		tell $n 但缺少原料短時間內也沒辦法取得。
+		sorry $n
+		give $o $n
+		drop $o
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 3
+	mpmod_qmark $n dragonbay_recycle v2 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14233~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		tell $n 目前我缺少修復武器的工具。
+		tell $n 但缺少原料短時間內也沒辦法取得。
+		sorry $n
+		give $o $n
+		drop $o
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 3
+	mpmod_qmark $n dragonbay_recycle v2 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog 14418~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_repair_item
+	if is_qmark($n) == dragonbay_repair_item 100000
+		tell $n 目前我缺少修復武器的工具。
+		tell $n 但缺少原料短時間內也沒辦法取得。
+		sorry $n
+		give $o $n
+		drop $o
+		break
+	else
+		tell $n 我沒辦法一次處理那麼多個裝備。
+		sorry $n
+		drop $o
+		break
+	endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+	mpjunk $o
+	mpmod_qmark $n dragonbay_recycle v1 + 3
+	mpmod_qmark $n dragonbay_recycle v2 + 1
+	mpcall recycle_count $n
+else
+	drop $o
+endif
+~
+>give_prog all~
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) >= dragonbay_repair_item 100001
+if is_qmark($n) < dragonbay_repair_item 200003
+	mpmod_qmark $n dragonbay_repair_item v1 + 1
+	if rand(20)
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+	else
+		if rand(25)
+			mpmod_qmark $n dragonbay_repair_item v2 = 2
+		else
+			if rand(33)
+				mpmod_qmark $n dragonbay_repair_item v2 = 3
+			else
+				if rand(50)
+					mpmod_qmark $n dragonbay_repair_item v2 = 4
+				else
+					mpmod_qmark $n dragonbay_repair_item v2 = 5
+				endif
+			endif
+		endif
+	endif
+	if material($o) == metal
+	or material($o) == iron
+	or material($o) == lead
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+	endif
+	if material($o) == tin
+	or material($o) == aluminum
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 2
+	endif
+	if material($o) == bronze
+	or material($o) == brass
+	or material($o) == steel
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+	endif
+	if material($o) == dark iron
+	or material($o) == titanium
+	or material($o) == thorium
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 3
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v0 | 1
+	endif
+	if material($o) == mithril
+	or material($o) == truesilver
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v0 | 2
+	endif
+	if material($o) == mercury
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v0 | 4
+	endif
+	if material($o) == platinum
+	or material($o) == silver
+	or material($o) == gold
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v0 | 8
+	endif
+	if material($o) == fel iron
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 4
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v0 | 16
+	endif
+	if material($o) == elemental alloy
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 3
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v0 | 32
+	endif
+	if material($o) == adamantite
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 4
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v0 | 64
+	endif
+	if material($o) == eternium
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 5
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v0 | 128
+	endif
+	if material($o) == hematite
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v0 | 256
+	endif
+	if material($o) == orichalcum
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v0 + 5
+		mpmod_qmark $n dragonbay_repair_item v2 = 2
+		mpmod_qmark $n dragonbay_repair_spec v0 | 512
+	endif
+	if material($o) == leather
+	or material($o) == wool
+	or material($o) == cloth
+	or material($o) == fiber
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v1 | 1
+	endif
+	if material($o) == dragonskin matter
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 3
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v1 | 2
+	endif
+	if material($o) == scale
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v1 | 4
+	endif
+	if material($o) == dragon scale
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 3
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v1 | 8
+	endif
+	if material($o) == silk
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 2
+		mpmod_qmark $n dragonbay_repair_spec v1 | 16
+	endif
+	if material($o) == feather
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 2
+		mpmod_qmark $n dragonbay_repair_spec v1 | 32
+	endif
+	if material($o) == dove feather
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 4
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v1 | 64
+	endif
+	if material($o) == crane feather
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 4
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v1 | 128
+	endif
+	if material($o) == hawk feather
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 5
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v1 | 256
+	endif
+	if material($o) == phoenix feather
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v1 | 512
+	endif
+	if material($o) == wooden
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v1 | 1024
+	endif
+	if material($o) == ebony
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v1 | 2048
+	endif
+	if material($o) == juniper
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 2
+		mpmod_qmark $n dragonbay_repair_spec v1 | 4096
+	endif
+	if material($o) == oak
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v1 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v1 | 8192
+	endif
+	if material($o) == crystal
+	or material($o) == quartz
+	or material($o) == onyx
+	or material($o) == amethyst
+	or material($o) == citrine
+	or material($o) == aquamarine
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v2 = 1
+	endif
+	if material($o) == jade
+	or material($o) == jasper
+	or material($o) == nephrite
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 2
+		mpmod_qmark $n dragonbay_repair_spec v2 = 2
+	endif
+	if material($o) == turquoise
+	or material($o) == malachite
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 4
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v2 = 3
+	endif
+	if material($o) == opal
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v2 = 4
+	endif
+	if material($o) == beryl
+	or material($o) == emerald
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 2
+		mpmod_qmark $n dragonbay_repair_spec v2 = 5
+	endif
+	if material($o) == ruby
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v2 = 6
+	endif
+	if material($o) == sapphire
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v2 = 7
+	endif
+	if material($o) == garnet
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 5
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v2 = 8
+	endif
+	if material($o) == topaz
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v2 = 9
+	endif
+	if material($o) == diamond
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 1
+		mpmod_qmark $n dragonbay_repair_item v2 = 5
+		mpmod_qmark $n dragonbay_repair_spec v2 = 10
+	endif
+	if material($o) == pearl
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 3
+		mpmod_qmark $n dragonbay_repair_item v2 = 4
+		mpmod_qmark $n dragonbay_repair_spec v2 = 11
+	endif
+	if material($o) == devil-Eye crystal
+	or material($o) == dragon crystal
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 2
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v2 = 12
+	endif
+	if material($o) == moon crystal
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 3
+		mpmod_qmark $n dragonbay_repair_item v2 = 3
+		mpmod_qmark $n dragonbay_repair_spec v2 = 13
+	endif
+	if material($o) == sun stone
+		mpjunk $o
+		mpmod_qmark $n dragonbay_rmtcheck v2 + 3
+		mpmod_qmark $n dragonbay_repair_item v2 = 1
+		mpmod_qmark $n dragonbay_repair_spec v2 = 14
+	endif
+	mpjunk $o
+	if is_qmark($n) == dragonbay_repair_item 200003
+		mpadd_qmark self talking
+		tell $n 材料足夠修理這件裝備了，請你等一下。
+		mpcallout 1 mpechoat $n $I拿著你給的材料跟裝備在工作臺上加工。
+		mpcallout 2 mpecho 鏘─！　鏘─！　鏘─！！
+		mpcallout 3 mpcall repair_check $n
+		mpcallout 3 tell $n 東西作好了，請好好利用。
+		mpcallout 4 mpdel_qmark self talking
+	else
+		tell $n 還需要更多材料。
+	endif
+	drop $o
+	break
+endif
+endif
+if is_qmark($n) == dragonbay_recycle 100006
+or is_qmark($n) & dragonbay_quest_mark 200004
+	give $o $n
+	tell $n 這東西看起來不需要我修。
+	drop $o
+	break
+endif
+drop $o
+~
+|
+
+#14222
+martial-m master-m~
+銀龍導師(martial master)~
+一位銀龍導師(martial master)在這裡教導著學生戰鬥技巧。
+~
+經過歷次的侵攻之後，銀龍一族的成年男性不足，因此照顧與教育下一代的責任
+就落在女性的肩頭上。冰肌雪膚、銀髮披肩，不要因為姿色就小看她，成年銀龍
+應有的全部戰鬥技巧她一樣也不缺。
+~
+1|2|64|128|8192 8|32|64|128|32768 0 S
+50 50000 0 50d50+-300 -10d0+0
+0 0
+0 8 2
+C 1|2|4|8
+P 8|128|16384
+>repop_prog 100~
+mpat 5 mpoload 14212
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($i) == timer
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100013
+	mpmod_qmark $n dragonbay_revenger v0 = 14
+	tell $n 神選之人，感謝您的協助。
+	tell $n 研究的成果讓我相當滿意。
+	tell $n 這些是得到的產物，就送您當作謝禮吧。
+	bow $n
+	mpjunk all.potion
+	mpoload 24211 1
+	mpoload 24211 1
+	mpoload 24211 1
+	mpoload 24211 1
+	mpoload 24212 1
+	mpoload 24212 1
+	mpoload 24212 1
+	mpoload 24212 1
+	drop all.potion
+	mpdel_qmark $n dragonbay_revenger
+	mpadd_qmark self revenger_done
+	if is_qmark($n) != dragonbay_quest_mark
+		mpadd_qmark $n dragonbay_quest_mark -1 0 2 0 0 1
+	else
+		mpmod_qmark $n dragonbay_quest_mark v1 | 2
+	endif
+endif
+if is_qmark($n) == dragonbay_revenger 100011
+	mpmod_qmark $n dragonbay_revenger v0 = 12
+	tell $n 冥界的火燄還是不行...
+	tell $n 要用惡魔之火...強大的魔燄...
+	tell $n 屍體也麻煩你了。
+endif
+if is_qmark($n) == dragonbay_revenger 100009
+	mpmod_qmark $n dragonbay_revenger v0 = 10
+	tell $n 嗯....看來連魔域的烈火也無法達到目的。
+	tell $n 能請你幫我找尋冥界之火嗎？
+	tell $n 屍體的部分要再麻煩你了。
+	bow $n
+endif
+if is_qmark($n) == dragonbay_revenger 100008
+	if inroom($i) != 14350
+		mpadd_qmark self wait_come
+		mpecho $I往北走去。
+		mpgoto 14350
+		mpecho $I來了。
+		break
+	endif
+	mpmod_qmark $n dragonbay_revenger v0 = 9
+	mpadd_qmark self timer -1 2 0 0 0 1
+	mpdel_qmark self wait_come
+	tell $n 那麼我這就開始試燒，可能需要花幾小時。
+	tell $n 這期間您如果有事要忙，之後再回來找我就行了。
+	mpecho $I把一具具焦黑的蛛屍丟在地上，並把地獄火投入其中，開始焚屍。
+	mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地中央正燃燒著
+	mpforcer here setroom desc A 詭異的火燄。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北
+	mpforcer here setroom desc A 方望去，能看到連接大海的半月形海灣。
+endif
+if is_qmark($n) == dragonbay_revenger 100006
+	mpmod_qmark $n dragonbay_revenger v0 = 7
+	tell $n 啊，神選之人您來啦！
+	tell $n 我發現光用一般的火燄似乎無法燒結出液體。
+	tell $n 我想進一步作研究，能請您再幫我尋找魔域的烈火跟幾具蜘蛛屍體來嗎？
+	bow $n
+endif
+if is_qmark($n) == dragonbay_revenger 100005
+	if inroom($i) != 14350
+		mpadd_qmark self wait_come
+		mpecho $I往北走去。
+		mpgoto 14350
+		mpecho $I來了。
+		break
+	endif
+	mpmod_qmark $n dragonbay_revenger v0 = 6
+	mpadd_qmark self timer -1 1 0 0 0 1
+	mpdel_qmark self wait_come
+	tell $n 我這就開始試燒看看，期間可能需要花費幾小時。
+	tell $n 如果您還有其他的事要忙的話，之後再回來找我就行了。
+	tell $n 我會報告結果給您聽。
+	mpecho $I把一具具焦黑的蛛屍丟在地上，並點起一把火開始燒屍。
+	mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上有些東西正
+	mpforcer here setroom desc A 在被燃燒著。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北
+	mpforcer here setroom desc A 方望去，能看到連接大海的半月形海灣。
+endif
+~
+>tick_prog 100~
+if inroom($i) != 14350
+	break
+endif
+if is_qmark($i) == wait_come
+	if is_qmark($i) == wait_come 100003
+		mpecho $I往南走去。
+		mpgoto 14346
+		mpecho $I來了。
+		mpdel_qmark self wait_come
+		break
+	else
+		mpmod_qmark self wait_come v0 + 1
+		break
+	endif
+endif
+if is_qmark($i) == timer 100001
+	if is_qmark($i) == timer 200007
+		mpecho $I查看一下地上燒完的東西後，離開了這裡。
+		mpoload 24211 1
+		mpoload 24212 1
+		mpdel_qmark self timer
+		mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上有些被燃燒
+		mpforcer here setroom desc A 過的不明物。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北
+		mpforcer here setroom desc A 方望去，能看到連接大海的半月形海灣。
+		mpecho $I往南走去。
+		mpgoto 14346
+		mpecho $I來了。
+	else
+		if rand(50)
+			mpecho $I專心的燒著東西。
+			mpmod_qmark self timer v1 + 1
+		endif
+	endif
+endif
+if is_qmark($i) == timer 100002
+	if is_qmark($i) == timer 200006
+		mpecho $I查看一下地上燒完的東西後，離開了這裡。
+		mpoload 24211 1
+		mpoload 24212 1
+		mpdel_qmark self timer
+		mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上有些被燒到
+		mpforcer here setroom desc A 焦黑的物體。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北
+		mpforcer here setroom desc A 方望去，能看到連接大海的半月形海灣。
+		mpecho $I往南走去。
+		mpgoto 14346
+		mpecho $I來了。
+	else
+		if rand(50)
+			mpecho $I專注的看著魔域烈火燃燒著屍體。
+			mpmod_qmark self timer v1 + 1
+		endif
+	endif
+endif
+if is_qmark($i) == timer 100003
+	if is_qmark($i) == timer 200005
+		mpecho $I看了眼地上焦黑的餘灰，似乎有些不滿意。
+		mpoload 24211 1
+		mpoload 24212 1
+		mpdel_qmark self timer
+		mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上有燒完東西
+		mpforcer here setroom desc A 的焦黑燃渣。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北
+		mpforcer here setroom desc A 方望去，能看到連接大海的半月形海灣。
+		mpecho $I往南走去。
+		mpgoto 14346
+		mpecho $I來了。
+	else
+		if is_qmark($i) == timer 200000
+			mpmod_qmark self timer v1 + 1
+			mpecho $I把蛛屍一口氣丟在地上，並隨手丟入冥界之火開始燃燒。
+			mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上燃燒著充滿
+			mpforcer here setroom desc A 陰氣的火燄。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北
+			mpforcer here setroom desc A 方望去，能看到連接大海的半月形海灣。
+			break
+		endif
+		if rand(50)
+			mpecho $I看著冥界之火燃燒著屍體。
+			mpmod_qmark self timer v1 + 1
+		endif
+	endif
+endif
+if is_qmark($i) == timer 100004
+	if is_qmark($i) == timer 200003
+		mpecho $I手中不知緊握著什麼，看著地上灰燼滿意地露出一抹微笑。
+		mpoload 24211 1
+		mpoload 24212 1
+		mpdel_qmark self timer
+		mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上有燒完東西
+		mpforcer here setroom desc A 的灰燼。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北方望
+		mpforcer here setroom desc A 去，能看到連接大海的半月形海灣。
+		mpecho $I往南走去。
+		mpgoto 14346
+		mpecho $I來了。
+	else
+		if is_qmark($i) == timer 200000
+			mpmod_qmark self timer v1 + 1
+			mpecho $I把蛛屍一口氣丟在地上，並隨手丟入赤火魔燄開始燃燒。
+			mpforcer here setroom desc N 你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上燃燒著邪惡
+			mpforcer here setroom desc A 的赤燄。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北方望
+			mpforcer here setroom desc A 去，能看到連接大海的半月形海灣。
+			break
+		endif
+		if rand(50)
+			mpecho $I看著赤火魔燄猛烈燃燒著屍體。
+			mpmod_qmark self timer v1 + 1
+		endif
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在跟人講話。
+	break
+endif
+if is_qmark($n) & dragonbay_quest_mark 200002
+	if rand(20)
+		say 您好，神選之人。
+	endif
+	break
+endif
+if is_qmark($n) == dragonbay_revenger
+	say 您好，神選之人。
+	break
+endif
+if is_qmark($n) == dragonbay_mayor_secret 100010
+or is_qmark($n) & dragonbay_quest_mark 100004
+	if is_qmark($n) & dragonbay_quest_list 100016
+		mpadd_qmark self talking
+		mpadd_qmark $n dragonbay_revenger -1 0 0 0 0 1
+		say 您好，神選之人，全鎮的人都聽說您在魔眼叢林的戰績了。
+		say 依您的實力，想必突破下一層的眼魔迷宮，肯定也不是問題。
+		say 我會在此幫您祈求武運昌隆。
+		mpcallout 2 hmm
+		mpcallout 3 tell $n 我其實有件小事...但不知您是否方便幫忙...(yes/no)
+		mpcallout 3 tell $n 啊，請您稍等一下...
+		mpcallout 3 mpechoat $n $I用著水汪汪的大眼看著你，小聲的說。
+		mpcallout 3 mpdel_qmark self talking
+	else
+		if rand(20)
+			say 您好，神選之人。
+		endif
+	endif
+else
+	if rand(20)
+		say 您好，請問有什麼指教？
+	endif
+endif
+~
+>talk_prog p no~
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100000
+	mpadd_qmark self talking
+	mpdel_qmark $n dragonbay_revenger
+	tell $n 也是呢....
+	tell $n 像神選之人這種大英雄，自然沒空去一一回應凡人的無禮要求....
+	tell $n 抱歉，耽誤到您寶貴的時間了。
+	sorry $n
+	if is_qmark($n) != dragonbay_quest_mark
+		mpadd_qmark $n dragonbay_quest_mark -1 0 2 0 0 1
+	else
+		mpmod_qmark $n dragonbay_quest_mark v1 | 2
+	endif
+endif
+~
+>talk_prog p yes~
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100000
+	mpadd_qmark self talking
+	mpmod_qmark $n dragonbay_revenger v0 = 1
+	tell $n 您真的肯幫我？真是太高興了！
+	tell $n 沒想到神選之人會一口答應我這種凡人的要求。
+	mpcallout 2 tell $n 但實際上，現階段的狀況比大家講得更糟....(worse)
+	mpcallout 2 tell $n 這個結果導致鎮上人力大幅下降，全鎮只剩下防禦的能力。
+	mpcallout 2 tell $n 您應該也聽人說過，銀龍族在上次的異界侵攻行動中死傷慘重。
+	mpcallout 2 mpdel_qmark self talking
+endif
+~
+>talk_prog p worse~
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100001
+	mpadd_qmark self talking
+	mpmod_qmark $n dragonbay_revenger v0 = 2
+	tell $n 缺乏的不單單是人力資源，大量的裝備也隨著上次行動遺失。
+	tell $n 如果只是訓練一名戰士而不給他合適的裝備，上到戰場也無法發揮作用。
+	tell $n 大概連防禦第一層的洞穴巨人都會有問題呢。
+	mpcallout 2 tell $n 就現階段而言，招集全鎮去開採，短時間內也沒辦法獲取足夠的燃料。(fuel)
+	mpcallout 2 tell $n 雖然重鑄裝備以我們銀龍族的能力而言並不困難，但製作會需要大量的燃料。
+	mpcallout 2 mpdel_qmark self talking
+endif
+~
+>talk_prog p fuel~
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100002
+	mpadd_qmark self talking
+	mpmod_qmark $n dragonbay_revenger v0 = 3
+	tell $n 這就是想請您幫忙的地方了。
+	tell $n 但以目前的海況，我當然不會要求您從其他地方運送燃料來。
+	tell $n 畢竟從時間跟安全上而言，都不合常理。
+	mpcallout 2 tell $n 所以我想從近距離就能取得的新型燃料下手。
+	mpcallout 3 tell $n 魔眼蜘蛛的屍體。(corpse)
+	mpcallout 3 mpdel_qmark self talking
+endif
+~
+>talk_prog p corpse~
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在講話。
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100003
+	mpadd_qmark self talking
+	mpmod_qmark $n dragonbay_revenger v0 = 4
+	tell $n 您一定會覺得很奇怪，為什麼魔眼蜘蛛的屍體會是燃料對吧？
+	mpcallout 1 tell $n 不過這個猜測是有根據的。
+	mpcallout 1 tell $n 坦白告訴您，這其實只是我的猜測。
+	mpcallout 2 tell $n 但不過幾小時就通通揮發掉了。」
+	mpcallout 2 tell $n 屍堆化成灰燼後，在地面上殘留著些金色或銀色的液體，這些液體充滿魔力，
+	mpcallout 2 tell $n 「面對成群的蜘蛛，有人不小心用魔法再次擊中已經被燒得焦黑的蜘蛛屍體，
+	mpcallout 2 tell $n 前幾次進攻叢林的報告中有人提到過：
+	mpcallout 4 tell $n 而這些特性跟常見的魔力燃料有許多相似處。
+	mpcallout 4 tell $n 但液體非常容易揮發，沒幾個小時就會完全消失在空氣中。
+	mpcallout 4 tell $n 報告中指出，被燒乾的焦黑蜘蛛屍體能再次燒結出一種具有魔力的特殊液體。
+	mpcallout 6 bow $n
+	mpcallout 6 tell $n 讓我研究如何運用這些資源，對鎮上帶來貢獻。
+	mpcallout 6 tell $n 由於液體不容易保存，所以想請您直接帶五、六具乾透的焦黑蜘蛛屍體回來。
+	mpcallout 6 mpdel_qmark self talking
+endif
+~
+>defun_prog give_corpses_count~
+if is_qmark($n) == dragonbay_revenger 100004
+	mpmod_qmark $n dragonbay_revenger v1 + 1
+	if is_qmark($n) >= dragonbay_revenger 200005
+		tell $n 數量夠了，請您跟我來。
+		mpadd_qmark self wait_come
+		mpmod_qmark $n dragonbay_revenger v0 = 5
+		mpecho $I往北走去。
+		mpgoto 14350
+		mpecho $I來了。
+	else
+		tell $n 請再給我更多。
+	endif
+endif
+if is_qmark($n) == dragonbay_revenger 100007
+	mpmod_qmark $n dragonbay_revenger v1 + 1
+	if is_qmark($n) >= dragonbay_revenger 200010
+		if is_qmark($n) !& dragonbay_revenger 300001
+			tell $n 屍體數量足夠了，您還沒有給我魔域的烈火。
+		else
+			tell $n 我收到足夠的東西了，請您跟我來。
+			mpadd_qmark self wait_come
+			mpmod_qmark $n dragonbay_revenger v0 = 8
+			mpecho $I往北走去。
+			mpgoto 14350
+			mpecho $I來了。
+		endif
+	else
+		tell $n 請再給我更多。
+	endif
+endif
+if is_qmark($n) == dragonbay_revenger 100010
+	mpmod_qmark $n dragonbay_revenger v1 + 1
+	if is_qmark($n) >= dragonbay_revenger 200015
+		if is_qmark($n) !& dragonbay_revenger 300002
+			tell $n 屍體數量足夠了，但你還沒有給我冥界之火。
+		else
+			tell $n 東西齊全了，我這就拿去燒。
+			tell $n 如果你期間有其他事，晚點再來就行了。
+			mpadd_qmark self timer -1 3 0 0 0 1
+			mpmod_qmark $n dragonbay_revenger v0 = 11
+			mpecho $I往北走去。
+			mpgoto 14350
+			mpecho $I來了。
+		endif
+	else
+		tell $n 請再給我更多。
+	endif
+endif
+if is_qmark($n) == dragonbay_revenger 100012
+	mpmod_qmark $n dragonbay_revenger v1 + 1
+	if is_qmark($n) >= dragonbay_revenger 200020
+		if is_qmark($n) !& dragonbay_revenger 300004
+			tell $n 屍體夠多了，還缺少惡魔的火燄。
+		else
+			tell $n 這次一定能成功....
+			mpadd_qmark self timer -1 4 0 0 0 1
+			mpmod_qmark $n dragonbay_revenger v0 = 13
+			mpecho $I往北走去。
+			mpgoto 14350
+			mpecho $I來了。
+		endif
+	else
+		tell $n 還需要更多。
+	endif
+endif
+~
+>defun_prog give_fire_count~
+if is_qmark($n) == dragonbay_revenger 100007
+	if is_qmark($n) !& dragonbay_revenger 300001
+		mpmod_qmark $n dragonbay_revenger v2 | 1
+		if is_qmark($n) >= dragonbay_revenger 200010
+			tell $n 我收到足夠的東西了，請您跟我來。
+			mpmod_qmark $n dragonbay_revenger v0 = 8
+			mpecho $I往北走去。
+			mpgoto 14350
+			mpecho $I來了。
+		else
+			tell $n 我收到魔域的烈火了，請幫我收集更多的蜘蛛屍體。
+		endif
+	endif
+endif
+if is_qmark($n) == dragonbay_revenger 100010
+	if is_qmark($n) !& dragonbay_revenger 300002
+		mpmod_qmark $n dragonbay_revenger v2 | 2
+		if is_qmark($n) >= dragonbay_revenger 200015
+			tell $n 東西齊全了，我這就拿去燒。
+			tell $n 如果你期間有其他事，晚點再來就行了。
+			mpadd_qmark self timer -1 3 0 0 0 1
+			mpmod_qmark $n dragonbay_revenger v0 = 11
+			mpecho $I往北走去。
+			mpgoto 14350
+			mpecho $I來了。
+		else
+			tell $n 我收到冥界之火了，請幫我收集更多的蜘蛛屍體。
+		endif
+	endif
+endif
+if is_qmark($n) == dragonbay_revenger 100012
+	if is_qmark($n) !& dragonbay_revenger 300004
+		mpmod_qmark $n dragonbay_revenger v2 | 4
+		if is_qmark($n) >= dragonbay_revenger 200020
+			tell $n 這次一定能成功....
+			mpadd_qmark self timer -1 4 0 0 0 1
+			mpmod_qmark $n dragonbay_revenger v0 = 13
+			mpecho $I往北走去。
+			mpgoto 14350
+			mpecho $I來了。
+		else
+			tell $n 我收到惡魔的火燄了，還要更多的蜘蛛屍體。
+		endif
+	endif
+endif
+~
+>give_prog 13467~
+if inroom($i) == 14350
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) < dragonbay_revenger 100007
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100012
+	if is_qmark($n) & dragonbay_revenger 300004
+		tell $n 我已經有惡魔的火燄了。
+		drop $o
+	else
+		mpjunk $o
+		mpcall give_fire_count $n
+	endif
+else
+	tell $n 我不是要這個。
+	drop $o
+endif
+~
+>give_prog 929~
+if inroom($i) == 14350
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) < dragonbay_revenger 100007
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100010
+	if is_qmark($n) & dragonbay_revenger 300002
+		tell $n 你已經給過我冥界之火了。
+		drop $o
+	else
+		mpjunk $o
+		mpcall give_fire_count $n
+	endif
+else
+	tell $n 我不是要這個。
+	drop $o
+endif
+~
+>give_prog 13432~
+if inroom($i) == 14350
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) < dragonbay_revenger 100007
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100007
+	if is_qmark($n) & dragonbay_revenger 300001
+		tell $n 你已經給過我魔域的烈火了。
+		drop $o
+	else
+		mpjunk $o
+		mpcall give_fire_count $n
+	endif
+else
+	tell $n 我不是要這個。
+	drop $o
+endif
+~
+>give_prog 24210~
+if inroom($i) == 14350
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) == dragonbay_revenger 100004
+or is_qmark($n) == dragonbay_revenger 100007
+or is_qmark($n) == dragonbay_revenger 100010
+or is_qmark($n) == dragonbay_revenger 100012
+	mpjunk $o
+	mpcall give_corpses_count $n
+else
+	drop $o
+endif
+~
+>give_prog 24211~
+if inroom($i) == 14350
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($n) >= dragonbay_revenger 100004
+	mpechoat $n $I接過手後打開瓶蓋，$O裡的液體瞬間揮發掉了！
+	tell $n 啊！不小心就順手打開了...
+	mpjunk $o
+else
+	drop $o
+endif
+~
+>give_prog 24212~
+if inroom($i) == 14350
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($n) >= dragonbay_revenger 100004
+	mpechoat $n $I接過手後打開瓶蓋，$O裡的液體瞬間揮發掉了！
+	tell $n 啊！不小心就順手打開了...
+	mpjunk $o
+else
+	drop $o
+endif
+~
+>give_prog 14217~
+if inroom($i) == 14350
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n 她正在忙。
+	drop $o
+	break
+endif
+if is_qmark($n) & dragonbay_quest_mark 200002
+	if is_qmark($n) == dragonbay_ToL 100000
+		mpjunk $o
+		mpadd_qmark self talking
+		mpmod_qmark $n dragonbay_ToL v0 = 1
+		mpechoat $n $I仔細打量手上的耳墜。
+		mpcallout 1 tell $n 它們原本是成對的，直到我把它交給了他。
+		mpcallout 2 mpechoat $n $I從口袋中拿出一只耳墜。
+		mpcallout 3 tell $n 剩下就任由你處置吧。
+		mpcallout 3 tell $n 我已經失去持有它們的理由了。
+		mpcallout 4 mpoload 14234 $n 38 target
+		mpcallout 4 mpechoat $n $I把一副耳墜交付給你。
+		mpcallout 4 mpdel_qmark self talking
+	else
+		drop $o
+	endif
+else
+	drop $o
+endif
+~
+>give_prog all~
+if is_qmark($i) == timer
+	mpechoat $n 她看起來正在忙，沒注意到你。
+	drop $o
+	break
+endif
+drop $o
+~
+>death_prog 100~
+mpjunk all
+if is_qmark($i) == revenger_done
+	mpoload 14216 38
+	break
+endif
+~
+|
+
+#14223
+mage-m student-m~
+法師學徒(mage student)~
+一個法師學徒(mage student)在這裡學習練習戰鬥技巧。
+~
+銀龍一族年輕的法師學徒，正跟隨著導師學習對抗魔域怪物的施法訣竅。外表
+看起來就像個十三、四歲的小女孩，只是眼瞳與毛髮都是純粹的亮銀色。
+~
+1|64|128|8192 8|32 1000 S
+30 3000 0 50d50+-300 -10d0+0
+0 0
+0 8 2
+C 1|2|4|8
+P 8
+>repop_prog 100~
+mpat 5 mpoload 14214
+mpat 5 wear all
+~
+>death_prog 100~
+mpalign $n -50
+mpechoat $n 你殘忍地毀掉銀龍一族的未來，你的陣營下降了 50 點。
+mpjunk all
+~
+|
+
+#14224
+warrior-m student-m~
+戰士學徒(warrior student)~
+一個戰士學徒(warrior student)在這裡學習練習戰鬥技巧。
+~
+銀龍一族年輕的戰士學徒，正跟隨著導師學習對抗魔域怪物的戰鬥能力。外表
+看起來就像個十三、四歲的男孩子，但從他的臉上能看見堅毅神情。
+~
+1|64|128|8192 8|32 1000 S
+30 3000 0 50d50+-300 -10d0+0
+0 0
+0 8 1
+C 1|2|4|8
+P 8
+>repop_prog 100~
+if rand(50)
+	mpat 5 mpoload 14215
+else
+	mpat 5 mpoload 14212
+endif
+mpat 5 wear all
+~
+>death_prog 100~
+mpalign $n -50
+mpechoat $n 你殘忍地毀掉銀龍一族的未來，你的陣營下降了 50 點。
+mpjunk all
+~
+|
+
+#14225
+cleric-m student-m~
+牧師學徒(cleric student)~
+一個牧師學徒(cleric student)在這裡學習練習戰鬥技巧。
+~
+銀龍一族年輕的牧師學徒，正跟隨著導師學習對抗魔域怪物的輔助技巧。外表
+看起來像個十七、八歲的少女，只是眼瞳與毛髮都是純粹的亮銀色。
+~
+1|64|128|8192 8|32 1000 S
+35 3000 0 50d50+-300 -10d0+0
+0 0
+0 8 2
+C 1|2|4|8
+P 8
+>repop_prog 100~
+mpat 5 mpoload 14213
+mpat 5 wear all
+~
+>death_prog 100~
+mpalign $n -50
+mpechoat $n 你殘忍地毀掉銀龍一族的未來，你的陣營下降了 50 點。
+mpjunk all
+~
+|
+
+#0
+
+#MOBPROGS
+M 14206 dragonbay1.prg
+M 14209 dragonbay1.prg
+M 14210 dragonbay1.prg
+M 14211 dragonbay1.prg
+M 14212 dragonbay1.prg
+M 14213 dragonbay1.prg
+M 14205 dragonbay2.prg
+M 14214 dragonbay2.prg
+M 14221 dragonbay2.prg
+S
+
+#OBJECTS
+#14201
+flame morningstar~
+火焰流星錘(flame morningstar)~
+一把火焰流星錘(flame morningstar)靜靜的躺在地上。~
+~
+5 64 8193
+115~ 0~ 0~ 8~
+30 200000 0
+Z 1
+A
+18 4
+A
+19 6
+L 35
+C 200000
+V Beholder~ 4 100 0 400
+V Statue~ 0 100 0 300
+X radiant~
+#14202
+holy silver sword~
+聖銀劍(holy silver sword)~
+一把聖銀劍(holy silver sword)靜靜的躺在地上。~
+~
+5 66 8193
+135~ 0~ 0~ 1~
+25 150000 0
+Z 1
+A
+18 4
+A
+19 6
+L 36
+C 150000
+V Vampire~ 4 100 0 300
+V Ghost~ 8 100 12 100
+X silver~
+#14203
+sky axe~
+天之斧(sky axe)~
+天之斧(sky axe)靜靜的躺在地上, 刃鋒閃耀著銀色的光芒.~
+~
+5 3137 8193
+525~ 0~ 0~ 1~
+40 250000 0
+Z 1
+A
+18 4
+A
+19 6
+L 36
+C 250000
+V Animal~ 5 100 0 300
+X iron~
+#14204
+jewelry boots~
+寶石靴(jewelry boots)~
+一雙寶石靴(jewelry boots)靜靜的躺在地上。~
+~
+9 0 65
+0~ 0~ 20~ 0~
+35 100000 0
+A
+17 -38
+A
+27 -5
+A
+28 -5
+L 30
+C 100000
+X ruby~
+#14205
+shield great~
+巨盾(great shield)~
+一張巨盾(great shield)靜靜的躺在地上。~
+~
+9 64 513
+0~ 0~ 100~ 0~
+30 60000 0
+A
+17 -40
+A
+41 3
+C 60000
+X steel~
+#14206
+diamond gloves~
+鑲鑽手套(diamond gloves)~
+一雙鑲鑽手套(diamond gloves)靜靜的躺在地上。~
+~
+9 0 129
+0~ 0~ 20~ 0~
+5 80000 0
+A
+29 -5
+A
+30 -5
+L 33
+C 80000
+X diamond~
+#14207
+wierd key~
+古怪的鑰匙(wierd key)~
+一把古怪的鑰匙(wierd key)靜靜的躺在地上。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+#14208
+beholder ring signet~
+眼魔貴族戒指(beholder ring)~
+一個刻有某種印記(signet)的眼魔貴族戒指(beholder ring)靜靜的躺在地上。~
+~
+9 1|2|64|128 3
+0~ 0~ 60~ 0~
+1 300000 0
+Z 1
+A
+3 1
+A
+4 1
+A
+17 -24
+A
+40 4
+A
+24 8
+C 300000
+X mithril~
+#14209
+hammer silver dragons~
+銀龍戰槌(hammer of silver dragons)~
+一把巨大的銀色戰槌(hammer)靜靜的躺在地上。~
+~
+5 2|64|256 8193
+130~ 0~ 0~ 8~
+24 150000 0
+Z 1
+A
+1 2
+A
+19 7
+L 32
+X mithril~
+C 150000
+V Dragon~ 0 100 0 50
+#14210
+hammer silver dragons~
+銀龍戰槌(hammer of silver dragons)~
+一把巨大的銀色戰槌(hammer)靜靜的躺在地上。~
+~
+5 2|64|256 8193
+300~ 30~ 42~ 8~
+24 150000 0
+Z 1
+A
+18 7
+A
+19 7
+X mithril~
+C 150000
+V Dragon~ 0 100 0 50
+V Wyvern~ 0 100 0 50
+V Arachnid~ 0 110 0 120
+V Giant~ 0 110 0 120
+V Ogre~ 0 110 0 120
+V Troll~ 0 110 0 120
+
+#14211
+beholder ring signet~
+眼魔貴族戒指(beholder ring)~
+一個刻有某種印記(signet)的眼魔貴族戒指(beholder ring)靜靜的躺在地上。~
+~
+9 1|2|64|128|2048|16777216 1|2
+0~ 0~ 60~ 0~
+1 300000 0
+A
+3 1
+A
+4 1
+A
+17 -16
+A
+40 3
+A
+24 6
+C 300000
+X mithril~
+
+#14212
+hammer silver dragons~
+銀龍戰槌(hammer of silver dragons)~
+一把巨大的銀色戰槌(hammer)靜靜的躺在地上。~
+~
+5 2|64|256 8193
+300~ 30~ 38~ 8~
+24 150000 0
+A
+18 8
+A
+19 8
+L 37
+C 150000
+V Dragon~ 0 100 0 50
+V Wyvern~ 0 100 0 50
+V Wyrm~ 0 100 0 50
+V Drake~ 0 100 0 50
+V Arachnid~ 0 110 0 120
+V Giant~ 0 110 0 120
+V Ogre~ 0 110 0 120
+V Troll~ 0 110 0 120
+X mithril~
+
+#14213
+flame morningstar~
+火焰流星錘(flame morningstar)~
+一把火焰流星錘(flame morningstar)靜靜的躺在地上。~
+~
+5 64 8193
+115~ 32~ 36~ 8~
+30 200000 0
+A
+18 6
+A
+19 6
+L 37
+C 200000
+V Beholder~ 30 100 0 180
+V Statue~ 30 100 0 160
+X radiant~
+
+#14214
+holy silver sword~
+聖銀劍(holy silver sword)~
+一把聖銀劍(holy silver sword)靜靜的躺在地上。~
+~
+5 66 8193
+135~ 30~ 32~ 1~
+25 150000 0
+A
+18 6
+A
+19 6
+L 37
+C 150000
+V Vampire~ 20 100 0 180
+V Werewolf~ 20 100 0 180
+V Ghost~ 20 100 40 100
+X silver~
+
+#14215
+sky axe~
+天之斧(sky axe)~
+天之斧(sky axe)刃鋒閃耀著銀色的光芒，靜靜的躺在地上。~
+~
+5 3137 8193
+525~ 40~ 45~ 1~
+40 250000 0
+A
+18 4
+A
+19 10
+L 37
+C 250000
+V Animal~ 20 100 0 180
+X iron~
+
+#14216
+moonbow earring~
+夜虹耳墜(moonbow earring)~
+一只鑲嵌有黑蛋白石耳墜(earring)掉在地上。~
+~
+9 2|64|256|16777216 1|16
+0~ 0~ 100~ 0~
+1 0 0
+E
+moonbow earring~
+這是只小小的黑檀木耳墜，鑲在上面的黑蛋白石透出黯淡的彩光。
+銀龍海灣沒有生產蛋白石，更顯得這只耳墜別具意義。
+~
+A 2 1
+A 40 2
+X opal~
+
+#14217
+rainbow earring~
+日霓耳墜(rainbow earring)~
+一只鑲嵌有蛋白石耳墜(earring)掉在地上。~
+~
+9 1|64|256|16777216 1|16
+0~ 0~ 100~ 0~
+1 0 0
+E
+rainbow earring~
+這是一只小小的黑檀木耳墜，鑲在上面的蛋白石透出淡淡的彩光。
+銀龍海灣沒有生產蛋白石，更顯得這只耳墜別具意義。
+~
+A 2 1
+A 19 3
+X opal~
+
+#14218
+broken helm~
+破掉的頭盔(broken helm)~
+一套破了大洞的頭盔(helm)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -20
+
+#14219
+broken full plate~
+破掉的全身鎧甲(broken full plate)~
+一套破了大洞的全身鎧甲(full plate)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -100
+
+#14220
+broken armor~
+破掉的輕甲(broken armor)~
+一套破了大洞的輕甲(armor)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -20
+X mithril~
+
+#14221
+broken gauntlets~
+破掉的護手(broken gauntlets)~
+一雙破碎的護手(gauntlets)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -20
+
+#14222
+broken sleeves~
+破掉的臂甲(broken sleeves)~
+一套破碎的臂甲(sleeves)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -100
+
+#14223
+broken belt~
+破掉的束腰(broken belt)~
+一條斷裂的束腰(belt)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -20
+
+#14224
+broken leggings~
+破掉的脛甲(broken leggings)~
+一套破碎的脛甲(leggings)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -100
+
+#14225
+broken sabatons~
+破掉的戰靴(broken sabatons)~
+一雙破碎的戰靴(sabatons)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -20
+
+#14226
+broken cape~
+破掉的披肩(broken cape)~
+一件破掉的披肩(cape)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -20
+X silk~
+
+#14227
+broken shield~
+破掉的盾(broken shield)~
+一面破了大洞的盾(shield)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+15 0 0
+A 17 -100
+
+#14228
+broken accessory~
+毀壞的飾品(broken accessory)~
+一件毀壞的飾品(accessory)掉在地上。~
+~
+9 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X gold~
+
+#14229
+broken sword~
+折斷的直劍(broken sword)~
+一柄斷掉的劍(broken sword)掉在地上。~
+~
+5 0 1
+0~ 0~ 0~ 0~
+15 0 0
+X steel~
+
+#14230
+broken axe~
+折斷的戰斧(broken axe)~
+一把折斷的戰斧(broken axe)掉在地上。~
+~
+5 0 1
+0~ 0~ 0~ 0~
+15 0 0
+X steel~
+
+#14231
+broken hammer~
+折斷的戰鎚(broken hammer)~
+一把折斷的戰鎚(broken hammer)掉在地上。~
+~
+5 0 1
+0~ 0~ 0~ 0~
+15 0 0
+X steel~
+
+#14232
+broken bow~
+折斷的弓(broken bow)~
+一把折斷的弓(broken bow)掉在地上。~
+~
+5 0 1
+0~ 0~ 0~ 0~
+15 0 0
+X steel~
+
+#14233
+broken staff~
+折斷的法扙(broken staff)~
+一把折斷的法扙(broken staff)掉在地上。~
+~
+5 0 1
+0~ 0~ 0~ 0~
+15 0 0
+X steel~
+
+#14234
+double-rainbow earrings~
+虹霓耳墜(double-rainbow earrings)~
+一副鑲嵌有雙色蛋白石耳墜(earrings)掉在地上。~
+~
+9 1|2|64|256|16777216 1|16
+0~ 0~ 100~ 0~
+2 0 0
+Z 4
+E
+double-rainbow earrings~
+這是一副用黑檀木細雕而成的耳墜，兩墜分別鑲著黑及白兩種不同
+色調蛋白石，閃耀著對比的遊彩。信物包含著贈予者的承諾，但卻
+無法保證承諾一定會兌現。
+~
+A 2 1
+A 19 2
+A 40 1
+X opal~
+>obj_rand 100~
+oforcer here modhmv $n 24.2 2 0
+~
+|
+
+#14235
+unused item~
+還沒用到的item(unused item)~
+還沒用到的vnum。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+10 0 0
+
+#14236
+unused item~
+還沒用到的item(unused item)~
+還沒用到的vnum。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+10 0 0
+
+#14237
+silver-dragons helm~
+銀龍頭盔(silver-dragons helm)~
+一個銀龍頭盔(helm)掉在地上。~
+~
+9 64 1|16
+0~ 0~ 200~ 0~
+30 0 0
+E
+silver-dragons helm~
+銀龍族分配給戰士們的裝備，雖然有點重，但能確實提供穿戴者良好
+的防禦能力。盔頂有四根角狀裝飾，角的數量象徵族中地位。
+~
+>obj_act wear~
+if objval0($o) == 27
+	oset self v0 = 20
+endif
+if objval0($o) == 22
+	oset self v0 = 15
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+	oset self v0 = 12
+	opset_obj_affect self -1 13 25
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 100128
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 2
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 1
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+	oset self v0 + 3
+endif
+if is_qmark($n) & repairing_eq 100004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 1
+		opset_obj_affect self -1 43 5
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 5
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 1
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 3
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 1
+					opset_obj_affect self -1 41 4
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 2
+						opset_obj_affect self -1 42 3
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 1
+							opset_obj_affect self -1 42 4
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 1
+								opset_obj_affect self -1 40 1
+								opset_obj_affect self -1 41 -2
+								opset_obj_affect self -1 42 -2
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 4
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 41 -2
+										opset_obj_affect self -1 42 -2
+										opset_obj_affect self -1 44 2
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 1
+											opset_obj_affect self -1 43 3
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+	opset_obj_affect self -1 24 -2
+endif
+if is_qmark($n) & repairing_eq 100016
+	oset self v0 + 5
+	opset_obj_affect self -1 35 -1
+endif
+if is_qmark($n) & repairing_eq 100032
+	opset_obj_affect self -1 23 -4
+endif
+~
+|
+
+#14238
+silver-dragons full-plate~
+銀龍鎧甲(silver-dragons full-plate)~
+一件銀龍鎧甲(full-plate)掉在地上。~
+~
+9 64 1|8
+0~ 0~ 200~ 0~
+50 0 0
+E
+silver-dragons full-plate~
+銀龍族分配給戰士們的裝備，雖然有點重，但能確實提供穿戴者良好
+的防禦能力。銀龍不是好戰的種族，裝備皆從家中長輩傳承。
+~
+>obj_act wear~
+if objval0($o) == 40
+	oset self v0 = 25
+endif
+if objval0($o) == 30
+	oset self v0 = 20
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+	oset self v0 = 15
+	opset_obj_affect self -1 13 50
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 100128
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 3
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 2
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 3
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 2
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 3
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+	oset self v0 + 5
+endif
+if is_qmark($n) & repairing_eq 100004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 2
+		opset_obj_affect self -1 43 7
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 10
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 1
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 5
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 2
+					opset_obj_affect self -1 41 20
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 15
+						opset_obj_affect self -1 42 15
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 1
+							opset_obj_affect self -1 42 20
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 2
+								opset_obj_affect self -1 40 2
+								opset_obj_affect self -1 41 -2
+								opset_obj_affect self -1 42 -2
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 10
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 41 -2
+										opset_obj_affect self -1 42 -2
+										opset_obj_affect self -1 44 5
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 2
+											opset_obj_affect self -1 43 5
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+	opset_obj_affect self -1 24 -3
+endif
+if is_qmark($n) & repairing_eq 100016
+	oset self v0 + 5
+	opset_obj_affect self -1 35 -2
+endif
+if is_qmark($n) & repairing_eq 100032
+	opset_obj_affect self -1 23 -6
+endif
+~
+|
+
+#14239
+silver-dragons gauntlets~
+銀龍護手(silver-dragons gauntlets)~
+一雙銀龍護手(gauntlets)掉在地上。~
+~
+9 64 1|128
+0~ 0~ 200~ 0~
+30 0 0
+E
+silver-dragons gauntlets~
+銀龍族分配給戰士們的裝備，雖然有點重，但能確實提供穿戴者良好
+的防禦能力。銀龍不是好戰的種族，裝備皆從家中長輩傳承。
+~
+>obj_act wear~
+if objval0($o) == 27
+	oset self v0 = 20
+endif
+if objval0($o) == 22
+	oset self v0 = 15
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+	oset self v0 = 12
+	opset_obj_affect self -1 13 25
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 100128
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 3
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 1
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+	oset self v0 + 3
+endif
+if is_qmark($n) & repairing_eq 100004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 1
+		opset_obj_affect self -1 43 5
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 5
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 1
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 3
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 1
+					opset_obj_affect self -1 41 4
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 2
+						opset_obj_affect self -1 42 3
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 1
+							opset_obj_affect self -1 42 4
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 1
+								opset_obj_affect self -1 40 1
+								opset_obj_affect self -1 41 -2
+								opset_obj_affect self -1 42 -2
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 4
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 41 -2
+										opset_obj_affect self -1 42 -2
+										opset_obj_affect self -1 44 2
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 1
+											opset_obj_affect self -1 43 3
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+	opset_obj_affect self -1 24 -2
+endif
+if is_qmark($n) & repairing_eq 100016
+	oset self v0 + 5
+	opset_obj_affect self -1 35 -1
+endif
+if is_qmark($n) & repairing_eq 100032
+	opset_obj_affect self -1 23 -3
+endif
+~
+|
+
+#14240
+silver-dragons sleeves~
+銀龍臂甲(silver-dragons sleeves)~
+一套銀龍臂甲(sleeves)掉在地上。~
+~
+9 64 1|256
+0~ 0~ 200~ 0~
+30 0 0
+E
+silver-dragons sleeves~
+銀龍族分配給戰士們的裝備，雖然有點重，但能確實提供穿戴者良好
+的防禦能力。銀龍不是好戰的種族，裝備皆從家中長輩傳承。
+~
+>obj_act wear~
+if objval0($o) == 27
+	oset self v0 = 20
+endif
+if objval0($o) == 22
+	oset self v0 = 15
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+	oset self v0 = 12
+	opset_obj_affect self -1 13 25
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 100128
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 3
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 1
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+	oset self v0 + 3
+endif
+if is_qmark($n) & repairing_eq 100004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 1
+		opset_obj_affect self -1 43 5
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 5
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 1
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 3
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 1
+					opset_obj_affect self -1 41 4
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 2
+						opset_obj_affect self -1 42 3
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 1
+							opset_obj_affect self -1 42 4
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 1
+								opset_obj_affect self -1 40 1
+								opset_obj_affect self -1 41 -2
+								opset_obj_affect self -1 42 -2
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 4
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 41 -2
+										opset_obj_affect self -1 42 -2
+										opset_obj_affect self -1 44 2
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 1
+											opset_obj_affect self -1 43 3
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+	opset_obj_affect self -1 24 -2
+endif
+if is_qmark($n) & repairing_eq 100016
+	oset self v0 + 5
+	opset_obj_affect self -1 35 -1
+endif
+if is_qmark($n) & repairing_eq 100032
+	opset_obj_affect self -1 23 -3
+endif
+~
+|
+
+#14241
+silver-dragons leggings~
+銀龍脛甲(silver-dragons leggings)~
+一套銀龍脛甲(leggings)掉在地上。~
+~
+9 64 1|32
+0~ 0~ 200~ 0~
+30 0 0
+E
+silver-dragons leggings~
+銀龍族分配給戰士們的裝備，雖然有點重，但能確實提供穿戴者良好
+的防禦能力。銀龍不是好戰的種族，裝備皆從家中長輩傳承。
+~
+>obj_act wear~
+if objval0($o) == 27
+	oset self v0 = 20
+endif
+if objval0($o) == 22
+	oset self v0 = 15
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+	oset self v0 = 12
+	opset_obj_affect self -1 13 25
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 100128
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 3
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+	oset self v0 + 3
+endif
+if is_qmark($n) & repairing_eq 100004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 2
+		opset_obj_affect self -1 43 5
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 5
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 1
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 3
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 2
+					opset_obj_affect self -1 41 4
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 2
+						opset_obj_affect self -1 42 3
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 1
+							opset_obj_affect self -1 42 4
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 2
+								opset_obj_affect self -1 40 1
+								opset_obj_affect self -1 41 -2
+								opset_obj_affect self -1 42 -2
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 4
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 41 -2
+										opset_obj_affect self -1 42 -2
+										opset_obj_affect self -1 44 2
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 2
+											opset_obj_affect self -1 43 3
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+	opset_obj_affect self -1 24 -2
+endif
+if is_qmark($n) & repairing_eq 100016
+	oset self v0 + 5
+	opset_obj_affect self -1 35 -1
+endif
+if is_qmark($n) & repairing_eq 100032
+	opset_obj_affect self -1 23 -3
+endif
+~
+|
+
+#14242
+silver-dragons sabatons~
+銀龍戰靴(silver-dragons sabatons)~
+一雙銀龍戰靴(sabatons)掉在地上。~
+~
+9 64 1|64
+0~ 0~ 200~ 0~
+30 0 0
+E
+silver-dragons sabatons~
+銀龍族分配給戰士們的裝備，雖然有點重，但能確實提供穿戴者良好
+的防禦能力。銀龍不是好戰的種族，裝備皆從家中長輩傳承。
+~
+>obj_act wear~
+if objval0($o) == 27
+	oset self v0 = 20
+endif
+if objval0($o) == 22
+	oset self v0 = 15
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+	oset self v0 = 12
+	opset_obj_affect self -1 13 25
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 100128
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 1
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 1
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 1
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+	oset self v0 + 3
+endif
+if is_qmark($n) & repairing_eq 100004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 2
+		opset_obj_affect self -1 43 5
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 5
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 1
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 3
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 2
+					opset_obj_affect self -1 41 4
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 2
+						opset_obj_affect self -1 42 3
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 1
+							opset_obj_affect self -1 42 4
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 2
+								opset_obj_affect self -1 40 1
+								opset_obj_affect self -1 41 -2
+								opset_obj_affect self -1 42 -2
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 4
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 41 -2
+										opset_obj_affect self -1 42 -2
+										opset_obj_affect self -1 44 2
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 2
+											opset_obj_affect self -1 43 3
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+	opset_obj_affect self -1 24 -2
+endif
+if is_qmark($n) & repairing_eq 100016
+	oset self v0 + 5
+	opset_obj_affect self -1 35 -1
+endif
+if is_qmark($n) & repairing_eq 100032
+	opset_obj_affect self -1 23 -3
+endif
+~
+|
+
+#14243
+silver-dragons crest shield~
+銀龍紋章盾(silver-dragons crest shield)~
+一把銀龍紋章盾(shield)掉在地上。~
+~
+9 64 1|512
+0~ 0~ 200~ 0~
+50 0 0
+E
+silver-dragons shield~
+銀龍族分配給戰士們的裝備，雖然有點重，但能確實提供穿戴者良好
+的防禦能力。將陣營的紋章刻在盾面上，是榮譽、忠誠的體現。
+~
+>obj_act wear~
+if objval0($o) == 40
+	oset self v0 = 25
+endif
+if objval0($o) == 30
+	oset self v0 = 20
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+	oset self v0 = 15
+	opset_obj_affect self -1 13 50
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 100128
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 2
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 1
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 1
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 1
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 1
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+	oset self v0 + 5
+endif
+if is_qmark($n) & repairing_eq 100004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 3
+		opset_obj_affect self -1 43 5
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 15
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 2
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 3
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 2
+					opset_obj_affect self -1 41 15
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 12
+						opset_obj_affect self -1 42 12
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 2
+							opset_obj_affect self -1 42 15
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 1
+								opset_obj_affect self -1 40 1
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 4
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 44 5
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 1
+											opset_obj_affect self -1 43 3
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+	opset_obj_affect self -1 24 -4
+endif
+if is_qmark($n) & repairing_eq 100016
+	oset self v0 + 5
+	opset_obj_affect self -1 35 -3
+endif
+if is_qmark($n) & repairing_eq 100032
+	opset_obj_affect self -1 23 -10
+endif
+~
+|
+
+#14244
+silver-dragons scale mail~
+銀龍鱗甲(silver-dragons scale mail)~
+一套裁製貼身的鱗甲(mail)掉在地上。~
+~
+9 64 1|8
+0~ 0~ 200~ 0~
+15 0 0
+E
+silver-dragons scale mail~
+由皮革縫紉鱗狀物所製成的輕甲。龍族並非永生不死的種族，變異後
+遺留的鱗片將繼續守護著後代。
+~
+>obj_act wear~
+if objval0($o) > 17
+	oset self v0 = 17
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100001
+or is_qmark($n) & repairing_eq 200001
+	oset self v0 = 10
+	if is_qmark($n) & repairing_spec 100512
+	or is_qmark($n) & repairing_spec 200002
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 1
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 3
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 1
+		endif
+	else
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 1
+		endif
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 2
+		endif
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 1
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100002
+or is_qmark($n) & repairing_eq 200002
+	oset self v0 + 2
+endif
+if is_qmark($n) & repairing_eq 100004
+or is_qmark($n) & repairing_eq 200004
+	if is_qmark($n) & repairing_spec 100512
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 2
+		opset_obj_affect self -1 43 5
+	else
+		if is_qmark($n) & repairing_spec 100256
+			opset_obj_affect self -1 43 15
+		else
+			if is_qmark($n) & repairing_spec 100128
+				opset_obj_affect self -1 18 2
+				opset_obj_affect self -1 40 2
+				opset_obj_affect self -1 44 3
+			else
+				if is_qmark($n) & repairing_spec 100064
+					opset_obj_affect self -1 19 2
+					opset_obj_affect self -1 41 15
+				else
+					if is_qmark($n) & repairing_spec 100032
+						opset_obj_affect self -1 41 12
+						opset_obj_affect self -1 42 12
+					else
+						if is_qmark($n) & repairing_spec 100016
+							opset_obj_affect self -1 18 2
+							opset_obj_affect self -1 42 15
+						else
+							if is_qmark($n) & repairing_spec 100008
+								opset_obj_affect self -1 19 1
+								opset_obj_affect self -1 41 -3
+								opset_obj_affect self -1 42 -3
+								opset_obj_affect self -1 40 1
+							else
+								if is_qmark($n) & repairing_spec 100004
+									opset_obj_affect self -1 44 4
+									opset_obj_affect self -1 41 -2
+								else
+									if is_qmark($n) & repairing_spec 100002
+										opset_obj_affect self -1 18 1
+										opset_obj_affect self -1 41 -3
+										opset_obj_affect self -1 42 -3
+										opset_obj_affect self -1 44 5
+									else
+										if is_qmark($n) & repairing_spec 100001
+											opset_obj_affect self -1 19 2
+											opset_obj_affect self -1 43 5
+											opset_obj_affect self -1 42 -3
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+	if is_qmark($n) & repairing_spec 200002
+		oset self v0 + 2
+		opset_obj_affect self -1 39 -25
+	else
+		if is_qmark($n) & repairing_spec 200008
+			oset self v0 + 3
+		else
+			if is_qmark($n) & repairing_spec 200016
+				opset_obj_affect self -1 39 -30
+			else
+				if is_qmark($n) & repairing_spec 200004
+					oset self v0 + 3
+				else
+					if is_qmark($n) & repairing_spec 200001
+						oset self v0 + 2
+						opset_obj_affect self -1 39 -20
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 100008
+or is_qmark($n) & repairing_eq 200008
+	opset_obj_affect self -1 24 -2
+endif
+if is_qmark($n) & repairing_eq 100016
+or is_qmark($n) & repairing_eq 200016
+	oset self v0 + 2
+	opset_obj_affect self -1 35 -1
+endif
+if is_qmark($n) & repairing_eq 100032
+or is_qmark($n) & repairing_eq 200032
+	opset_obj_affect self -1 23 -6
+endif
+~
+|
+
+#14245
+silver-dragons belt~
+銀龍束腰(silver-dragons belt)~
+一條銀龍束腰(belt)掉在地上。~
+~
+9 64 1|2048
+0~ 0~ 200~ 0~
+1 0 0
+E
+silver-dragons belt~
+一條繫於腰間的配件。讓穿上笨重鎧甲的戰士，雙手能夠在戰鬥中
+快速置換物品。
+~
+>obj_act wear~
+if objval0($o) == 20
+	oset self v0 = 16
+endif
+if objval0($o) == 15
+	oset self v0 = 12
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 200001
+or is_qmark($n) & repairing_eq 300001
+	oset self v0 = 10
+	if is_qmark($n) == repairing_spec 300009
+	or is_qmark($n) == repairing_spec 300014
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 1
+		endif
+	endif
+	if is_qmark($n) == repairing_spec 300003
+		if is_qmark($n) == repairing_states 100001
+			opset_obj_affect self -1 1 2
+		endif
+	endif
+	if is_qmark($n) == repairing_spec 300002
+	or is_qmark($n) == repairing_spec 300005
+		if is_qmark($n) == repairing_states 100002
+			opset_obj_affect self -1 2 2
+		endif
+	endif
+	if is_qmark($n) == repairing_spec 300001
+	or is_qmark($n) == repairing_spec 300013
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 1
+		endif
+	endif
+	if is_qmark($n) == repairing_spec 300008
+		if is_qmark($n) == repairing_states 100003
+			opset_obj_affect self -1 3 2
+		endif
+	endif
+	if is_qmark($n) == repairing_spec 300007
+	or is_qmark($n) == repairing_spec 300011
+		if is_qmark($n) == repairing_states 100004
+			opset_obj_affect self -1 4 2
+		endif
+	endif
+	if is_qmark($n) == repairing_spec 300006
+	or is_qmark($n) == repairing_spec 300010
+		if is_qmark($n) == repairing_states 100005
+			opset_obj_affect self -1 5 2
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 200002
+or is_qmark($n) & repairing_eq 300002
+	oset self v0 + 2
+endif
+if is_qmark($n) & repairing_eq 200004
+or is_qmark($n) & repairing_eq 300004
+	if is_qmark($n) & repairing_spec 200256
+		opset_obj_affect self -1 18 1
+		opset_obj_affect self -1 19 2
+	else
+		if is_qmark($n) & repairing_spec 200064
+			opset_obj_affect self -1 44 10
+		else
+			if is_qmark($n) & repairing_spec 200128
+				opset_obj_affect self -1 41 10
+			else
+				if is_qmark($n) & repairing_spec 200008
+					opset_obj_affect self -1 42 5
+				else
+					if is_qmark($n) & repairing_spec 200002
+						oset self v0 + 10
+						opset_obj_affect self -1 41 5
+					else
+						if is_qmark($n) & repairing_spec 200512
+							opset_obj_affect self -1 40 1
+						else
+							if is_qmark($n) & repairing_spec 200016
+								opset_obj_affect self -1 18 1
+								opset_obj_affect self -1 39 -10
+							else
+								if is_qmark($n) & repairing_spec 200032
+									opset_obj_affect self -1 39 -20
+								else
+									if is_qmark($n) & repairing_spec 200001
+									or is_qmark($n) & repairing_spec 200004
+										oset self v0 + 15
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 200008
+or is_qmark($n) & repairing_eq 300008
+	opset_obj_affect self -1 24 -2
+endif
+if is_qmark($n) & repairing_eq 200016
+or is_qmark($n) & repairing_eq 300016
+	oset self v0 + 4
+	opset_obj_affect self -1 23 -3
+endif
+~
+|
+
+#14246
+silver-dragons cloak~
+銀龍披風(silver-dragons cloak)~
+一件銀龍披風(cloak)掉在地上。~
+~
+9 64 1|65536
+0~ 0~ 200~ 0~
+1 0 0
+E
+silver-dragons cloak~
+繡有銀龍紋章的披風，能掛在肩頸用於覆蓋背部的配件。當對上外表
+差異極大的敵人時，辨別敵我的作用將顯得不具任何意義。
+~
+>obj_act wear~
+if objval0($o) == 20
+	oset self v0 = 13
+endif
+if objval0($o) == 15
+	oset self v0 = 10
+endif
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 200001
+	oset self v0 = 10
+	if is_qmark($n) == repairing_states 100001
+		if is_qmark($n) & repairing_spec 200256
+			opset_obj_affect self -1 1 1
+		endif
+	else
+		if is_qmark($n) == repairing_states 100002
+			if is_qmark($n) & repairing_spec 200032
+				opset_obj_affect self -1 2 1
+			endif
+		else
+			if is_qmark($n) == repairing_states 100003
+				if is_qmark($n) & repairing_spec 200512
+					opset_obj_affect self -1 3 1
+				endif
+			else
+				if is_qmark($n) == repairing_states 100004
+					if is_qmark($n) & repairing_spec 200064
+						opset_obj_affect self -1 4 1
+					endif
+				else
+					if is_qmark($n) == repairing_states 100005
+						if is_qmark($n) & repairing_spec 200128
+							opset_obj_affect self -1 5 1
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 200002
+	oset self v0 + 3
+endif
+if is_qmark($n) & repairing_eq 200004
+	if is_qmark($n) & repairing_spec 200512
+		opset_obj_affect self -1 40 2
+	else
+		if is_qmark($n) & repairing_spec 200064
+			opset_obj_affect self -1 44 10
+		else
+			if is_qmark($n) & repairing_spec 200002
+				opset_obj_affect self -1 19 3
+			else
+				if is_qmark($n) & repairing_spec 200016
+					opset_obj_affect self -1 18 2
+				else
+					if is_qmark($n) & repairing_spec 200008
+						opset_obj_affect self -1 41 5
+					else
+						if is_qmark($n) & repairing_spec 200004
+							opset_obj_affect self -1 42 5
+						else
+							if is_qmark($n) & repairing_spec 200001
+								oset self v0 + 15
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($n) & repairing_eq 200008
+	opset_obj_affect self -1 13 25
+endif
+if is_qmark($n) & repairing_eq 200016
+	opset_obj_affect self -1 35 -1
+endif
+if is_qmark($n) & repairing_eq 200032
+	opset_obj_affect self -1 23 -3
+endif
+~
+|
+
+#14247
+gemstone charm~
+寶石護符(gemstone charm)~
+一個鑲有寶石的護符(charm)掉在地上。~
+~
+9 64|16777216 1|4
+0~ 0~ 200~ 0~
+1 0 0
+E
+gemstone charm~
+銀龍海灣的寶石易於附魔，能加護持有者，但過於依賴這份力量必將
+走向毀滅。護符飽含贈予者的思念，鑲有珍貴珠寶的護符更是如此。
+~
+>obj_command repeq default~
+if is_qmark($n) & repairing_eq 100008
+or is_qmark($n) & repairing_eq 200008
+	oset self v0 = 15
+	if is_qmark($n) == repairing_spec 300001
+		opset_obj_affect self -1 3 1
+		opset_obj_affect self -1 24 -5
+		opset_obj_affect self -1 37 -10
+	else
+		if is_qmark($n) == repairing_spec 300002
+			opset_obj_affect self -1 2 1
+			opset_obj_affect self -1 19 2
+			opset_obj_affect self -1 40 3
+		else
+			if is_qmark($n) == repairing_spec 300003
+				opset_obj_affect self -1 2 1
+				opset_obj_affect self -1 18 -1
+				opset_obj_affect self -1 19 3
+			else
+				if is_qmark($n) == repairing_spec 300004
+					opset_obj_affect self -1 4 1
+					opset_obj_affect self -1 40 3
+					opset_obj_affect self -1 44 5
+				else
+					if is_qmark($n) == repairing_spec 300005
+						opset_obj_affect self -1 2 1
+						opset_obj_affect self -1 31 -5
+						opset_obj_affect self -1 39 -15
+					else
+						if is_qmark($n) == repairing_spec 300006
+							oset self v0 + 10
+							opset_obj_affect self -1 5 1
+							opset_obj_affect self -1 27 -5
+						else
+							if is_qmark($n) == repairing_spec 300007
+								oset self v0 + 10
+								opset_obj_affect self -1 4 1
+								opset_obj_affect self -1 28 -5
+							else
+								if is_qmark($n) == repairing_spec 300008
+									opset_obj_affect self -1 3 1
+									opset_obj_affect self -1 40 3
+									opset_obj_affect self -1 44 10
+								else
+									if is_qmark($n) == repairing_spec 300009
+										oset self v0 + 10
+										opset_obj_affect self -1 1 1
+										opset_obj_affect self -1 30 -5
+									else
+										if is_qmark($n) == repairing_spec 300010
+											oset self v0 + 15
+											opset_obj_affect self -1 5 1
+											opset_obj_affect self -1 41 5
+										else
+											if is_qmark($n) == repairing_spec 300011
+												opset_obj_affect self -1 4 1
+												opset_obj_affect self -1 42 10
+											else
+												if is_qmark($n) == repairing_spec 300012
+													opset_obj_affect self -1 18 3
+													opset_obj_affect self -1 41 -9
+													opset_obj_affect self -1 40 2
+												else
+													if is_qmark($n) == repairing_spec 300013
+														opset_obj_affect self -1 18 3
+														opset_obj_affect self -1 41 -9
+														opset_obj_affect self -1 44 12
+													else
+														if is_qmark($n) == repairing_spec 300014
+															opset_obj_affect self -1 1 1
+															opset_obj_affect self -1 18 -1
+															opset_obj_affect self -1 43 10
+														endif
+													endif
+												endif
+											endif
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+	break
+endif
+if is_qmark($n) & repairing_eq 100004
+or is_qmark($n) & repairing_eq 200004
+	oset self v0 = 14
+	if is_qmark($n) == repairing_spec 300001
+		opset_obj_affect self -1 3 1
+		opset_obj_affect self -1 24 -3
+		opset_obj_affect self -1 37 -7
+	else
+		if is_qmark($n) == repairing_spec 300002
+			opset_obj_affect self -1 2 1
+			opset_obj_affect self -1 19 1
+			opset_obj_affect self -1 40 3
+		else
+			if is_qmark($n) == repairing_spec 300003
+				opset_obj_affect self -1 2 1
+				opset_obj_affect self -1 18 -2
+				opset_obj_affect self -1 19 3
+			else
+				if is_qmark($n) == repairing_spec 300004
+					opset_obj_affect self -1 4 1
+					opset_obj_affect self -1 40 2
+					opset_obj_affect self -1 44 5
+				else
+					if is_qmark($n) == repairing_spec 300005
+						opset_obj_affect self -1 2 1
+						opset_obj_affect self -1 31 -3
+						opset_obj_affect self -1 39 -12
+					else
+						if is_qmark($n) == repairing_spec 300006
+							oset self v0 + 8
+							opset_obj_affect self -1 5 1
+							opset_obj_affect self -1 27 -3
+						else
+							if is_qmark($n) == repairing_spec 300007
+								oset self v0 + 8
+								opset_obj_affect self -1 4 1
+								opset_obj_affect self -1 28 -3
+							else
+								if is_qmark($n) == repairing_spec 300008
+									opset_obj_affect self -1 3 1
+									opset_obj_affect self -1 40 2
+									opset_obj_affect self -1 44 10
+								else
+									if is_qmark($n) == repairing_spec 300009
+										oset self v0 + 8
+										opset_obj_affect self -1 1 1
+										opset_obj_affect self -1 30 -3
+									else
+										if is_qmark($n) == repairing_spec 300010
+											oset self v0 + 12
+											opset_obj_affect self -1 5 1
+											opset_obj_affect self -1 41 3
+										else
+											if is_qmark($n) == repairing_spec 300011
+												opset_obj_affect self -1 4 1
+												opset_obj_affect self -1 42 6
+											else
+												if is_qmark($n) == repairing_spec 300012
+													opset_obj_affect self -1 18 2
+													opset_obj_affect self -1 41 -12
+													opset_obj_affect self -1 40 2
+												else
+													if is_qmark($n) == repairing_spec 300013
+														opset_obj_affect self -1 18 3
+														opset_obj_affect self -1 41 -12
+														opset_obj_affect self -1 44 12
+													else
+														if is_qmark($n) == repairing_spec 300014
+															opset_obj_affect self -1 1 1
+															opset_obj_affect self -1 18 -2
+															opset_obj_affect self -1 43 8
+														endif
+													endif
+												endif
+											endif
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+	break
+endif
+if is_qmark($n) & repairing_eq 100002
+or is_qmark($n) & repairing_eq 200002
+	oset self v0 = 13
+	if is_qmark($n) == repairing_spec 300001
+		opset_obj_affect self -1 3 1
+		opset_obj_affect self -1 24 -2
+		opset_obj_affect self -1 37 -4
+	else
+		if is_qmark($n) == repairing_spec 300002
+			opset_obj_affect self -1 2 1
+			opset_obj_affect self -1 19 1
+			opset_obj_affect self -1 40 2
+		else
+			if is_qmark($n) == repairing_spec 300003
+				opset_obj_affect self -1 2 1
+				opset_obj_affect self -1 18 -2
+				opset_obj_affect self -1 19 2
+			else
+				if is_qmark($n) == repairing_spec 300004
+					opset_obj_affect self -1 4 1
+					opset_obj_affect self -1 40 1
+					opset_obj_affect self -1 44 5
+				else
+					if is_qmark($n) == repairing_spec 300005
+						opset_obj_affect self -1 2 1
+						opset_obj_affect self -1 31 -2
+						opset_obj_affect self -1 39 -10
+					else
+						if is_qmark($n) == repairing_spec 300006
+							oset self v0 + 5
+							opset_obj_affect self -1 5 1
+							opset_obj_affect self -1 27 -2
+						else
+							if is_qmark($n) == repairing_spec 300007
+								oset self v0 + 5
+								opset_obj_affect self -1 4 1
+								opset_obj_affect self -1 28 -2
+							else
+								if is_qmark($n) == repairing_spec 300008
+									opset_obj_affect self -1 3 1
+									opset_obj_affect self -1 40 2
+									opset_obj_affect self -1 44 5
+								else
+									if is_qmark($n) == repairing_spec 300009
+										oset self v0 + 5
+										opset_obj_affect self -1 1 1
+										opset_obj_affect self -1 30 -2
+									else
+										if is_qmark($n) == repairing_spec 300010
+											oset self v0 + 8
+											opset_obj_affect self -1 5 1
+											opset_obj_affect self -1 41 2
+										else
+											if is_qmark($n) == repairing_spec 300011
+												opset_obj_affect self -1 4 1
+												opset_obj_affect self -1 42 4
+											else
+												if is_qmark($n) == repairing_spec 300012
+													opset_obj_affect self -1 18 2
+													opset_obj_affect self -1 41 -15
+													opset_obj_affect self -1 40 2
+												else
+													if is_qmark($n) == repairing_spec 300013
+														opset_obj_affect self -1 18 2
+														opset_obj_affect self -1 41 -15
+														opset_obj_affect self -1 44 10
+													else
+														if is_qmark($n) == repairing_spec 300014
+															opset_obj_affect self -1 1 1
+															opset_obj_affect self -1 18 -3
+															opset_obj_affect self -1 43 5
+														endif
+													endif
+												endif
+											endif
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+	break
+endif
+if is_qmark($n) & repairing_eq 100001
+or is_qmark($n) & repairing_eq 200001
+	oset self v0 = 12
+	if is_qmark($n) == repairing_spec 300001
+		opset_obj_affect self -1 3 1
+		opset_obj_affect self -1 24 -2
+	else
+		if is_qmark($n) == repairing_spec 300002
+			opset_obj_affect self -1 2 1
+			opset_obj_affect self -1 40 2
+		else
+			if is_qmark($n) == repairing_spec 300003
+				opset_obj_affect self -1 2 1
+				opset_obj_affect self -1 18 -3
+				opset_obj_affect self -1 19 2
+			else
+				if is_qmark($n) == repairing_spec 300004
+					opset_obj_affect self -1 4 1
+					opset_obj_affect self -1 44 5
+				else
+					if is_qmark($n) == repairing_spec 300005
+						opset_obj_affect self -1 2 1
+						opset_obj_affect self -1 31 -2
+						opset_obj_affect self -1 39 -5
+					else
+						if is_qmark($n) == repairing_spec 300006
+							opset_obj_affect self -1 5 1
+							opset_obj_affect self -1 27 -2
+						else
+							if is_qmark($n) == repairing_spec 300007
+								opset_obj_affect self -1 4 1
+								opset_obj_affect self -1 28 -2
+							else
+								if is_qmark($n) == repairing_spec 300008
+									opset_obj_affect self -1 3 1
+									opset_obj_affect self -1 40 2
+								else
+									if is_qmark($n) == repairing_spec 300009
+										opset_obj_affect self -1 1 1
+										opset_obj_affect self -1 30 -2
+									else
+										if is_qmark($n) == repairing_spec 300010
+											oset self v0 + 4
+											opset_obj_affect self -1 5 1
+											opset_obj_affect self -1 41 2
+										else
+											if is_qmark($n) == repairing_spec 300011
+												opset_obj_affect self -1 4 1
+												opset_obj_affect self -1 42 2
+											else
+												if is_qmark($n) == repairing_spec 300012
+													opset_obj_affect self -1 18 2
+													opset_obj_affect self -1 41 -17
+													opset_obj_affect self -1 40 2
+												else
+													if is_qmark($n) == repairing_spec 300013
+														opset_obj_affect self -1 18 2
+														opset_obj_affect self -1 41 -17
+														opset_obj_affect self -1 44 10
+													else
+														if is_qmark($n) == repairing_spec 300014
+															opset_obj_affect self -1 1 1
+															opset_obj_affect self -1 18 -4
+															opset_obj_affect self -1 43 3
+														endif
+													endif
+												endif
+											endif
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+	break
+endif
+~
+|
+
+#0
+
+
+#ROOMDATA
+#14200
+地底傳送點~
+這是一個小型的地下室，四面的牆壁用一種類似水泥的黑色塗料漆得很
+平整，在火光的照耀下還透露出點點的閃光。房間中央的地上有一個圓形凸
+起約三十公分的高台，高台上還畫著一些難懂得符咒。高台右邊豎立著一個
+金屬版(plate)，上面似乎刻著一些重要說明。
+~
+0 4 2
+D4
+~
+~
+0 0 15303
+E
+plate~
+這座傳送點通往銀龍海灣，請擦拭傳送台上的水晶球(rub 'crystal ball')即
+可展開傳送的程序。
+注意！這是一個單向的傳送點，如果你不確定你的目的地，請現在就循原路
+退回去。
+                                銀龍大長老      艾索巴
+~
+>room_command rub p crystal ball~
+echo 一道閃亮的光芒籠罩了整個傳送台！
+at 14202 echo 一道閃亮的光芒籠罩了整個傳送台！
+transfer $n 14201
+~
+|
+S
+#14201
+傳送點~
+你驚異地發現正站在一條林間小徑的盡頭，四周的鳥語花香與徐徐的微風
+與剛剛地底幽暗的景觀完全不同。你腳上所踏的地方是一個圓形的高台，一些
+魔法咒文寫在高台四周，看起來像是某種傳送點。高台旁的一株大樹上釘了一
+面木牌(sign)，上面有些模糊的字，不靠近看不清楚。
+~
+0 4|262144 2
+D1
+~
+~
+0 0 14202
+E
+sign~
+往前就是銀龍海灣，這是一個小型而且安全的區域。銀龍們為了某種目的世世
+代代鎮守在這裡，也許你有機會發現這個千年的秘密。這個區域適合給各位冒
+險者休息打尖，好面對另一項極為艱困的挑戰。祝你旅途愉快。
+
+                                Amenda
+                                2001.12.19
+~
+>room_rand 30~
+echo 林間小鳥嘰嘰喳喳地叫著，陣陣微風吹過臉龐。
+~
+|
+S
+#14202
+林間小道~
+這是一條林木間的小路，頭上茂密的森林使得你不太肯定現在的天氣狀況，
+光線雖然黯淡，但還足夠看清楚風景。一股涼風由林木間吹過來，帶來了陣陣的
+蟲鳴。
+~
+0 262144 0
+D1
+~
+~
+0 0 14203
+D3
+~
+~
+0 0 14201
+S
+#14203
+小徑轉角~
+林間小徑在這裡轉了一個九十度角。小徑通往北方與西方。北方的光線比
+較亮，同時還隱約傳來陣陣的海濤聲。你感覺前面似乎有些會令你訝異的東西，
+腳步不由得加快。
+~
+0 262144 0
+D0
+~
+~
+0 0 14204
+D3
+~
+~
+0 0 14202
+S
+#14204
+森林邊緣~
+北方的光線越來越亮，你可以感到你已經走到這片森林的邊緣。陣陣微風
+夾帶著海濤聲自北方傳來，空氣中有一股大海的味道。你肯定前面的出口一定
+通往一望無際的大海。
+~
+0 262144 0
+D0
+~
+~
+0 0 14205
+D2
+~
+~
+0 0 14203
+S
+#14205
+森林出口~
+哇！大海！在你面前的是一片廣闊的碧海藍天，你正站在一個高崖的邊緣。
+前面是一望無際，海天連線的大洋，後面則是你剛剛走過的蔭鬱森林。陣陣潮
+濕略帶鹹味海風由海面吹向大陸，灌入森林的入口。看到這一片寬廣的風景，
+你的心情也為之開朗起來。
+~
+0 262144 0
+D1
+~
+~
+0 0 14206
+D2
+~
+~
+0 0 14204
+S
+#14206
+高崖邊的小徑~
+沿著高崖邊緣的小路行走，陣陣海風從你臉側吹過，海風夾帶來的大量水
+氣讓你一邊的衣服變得很潮濕，但你卻覺得水氣灌進領口的感覺很舒服。小徑
+兩旁都開著黃花的小草，偶而幾塊光禿禿的大石頭散佈在路旁，遠一點的地方
+便是茂密的森林。
+~
+0 262144 0
+D1
+~
+~
+0 0 14207
+D3
+~
+~
+0 0 14205
+S
+#14207
+高崖邊的小徑~
+你好奇地走近崖邊向下望，發現下面的海面距離崖頂大約有三十公尺。一
+波波的碎浪打到岩石後散開，讓靠近岸邊的海面水色比較蒼白。幾隻海鷗在附
+近的水面遨翔著，想要找些浮上來的小魚吃。往南邊望去，一條岔路筆直地通
+進森林裡面。
+~
+0 262144 0
+D1
+~
+~
+0 0 14208
+D2
+~
+~
+0 0 14217
+D3
+~
+~
+0 0 14206
+S
+#14208
+高崖邊的小徑~
+小徑沿著崖邊繼續向東西延伸，一座小山丘緊鄰著斷崖聳立在前方的崖邊。
+山丘上長滿雜草，偶而還有幾株枯木。你注意到有一道階梯一直通往山丘頂端。
+剛剛激烈的海風因為山丘的阻擋使得風勢明顯減弱，你估計這座小山丘約有五、
+六十公尺高，底部約有一百公尺寬。
+~
+0 262144 0
+D1
+~
+~
+0 0 14209
+D3
+~
+~
+0 0 14207
+D4
+~
+~
+0 0 14213
+S
+#14209
+崖底的入口~
+一條向下通往海邊的小路就在小山丘的旁邊，這邊的高崖比較不是哪麼
+陡峭，所以勉強可以開出一條下去的坡道。海風颯颯地吹過，刮過山丘時傳
+出陣陣嗚噎的鳴叫。遠方的海面似乎有幾隻龐大的生物正在飛行，但你無法
+確定到底是什麼。
+~
+0 262144 0
+D1
+~
+~
+0 0 14210
+D3
+~
+~
+0 0 14208
+D5
+~
+~
+0 0 14215
+S
+#14210
+高崖的終點~
+小徑在這裡轉向南，開始遠離崖邊。向南的道路越來越寬廣，你注意到
+路上開始有些行人。南邊的森林到這裡打住，剛好是以向南的道路為邊界。
+道路西邊是森林，而東邊是一片平原。向南的遠方有一些建築物，看來像是
+一座小鎮。
+~
+0 262144 0
+D2
+~
+~
+0 0 14211
+D3
+~
+~
+0 0 14209
+S
+#14211
+林邊小路~
+這是一條蜿蜒在森林邊的小路，越往南走小路就越寬闊。小路比東邊的
+草原高出大約三尺，沿著斜坡可以走進茂盛的草原。草原上長滿綠色的芒草
+，一望無際一直接到東邊的地平線。西邊的森林都是一些高大的針葉林，許
+多斷木殘枝堆積在林木間的地上，想要穿過去相當困難。
+~
+0 262144 0
+D0
+~
+~
+0 0 14210
+D2
+~
+~
+0 0 14212
+S
+#14212
+林邊小路~
+你走在林邊的小路上，東邊是一大片芒草原。當陣陣海風從北方吹來時，
+芒草便如波浪般千層起伏，十分壯觀。這種景色讓你想起在賽伐斯拖普看到的
+一望無際的麥田，不過你連現在所站的地方是否和賽伐斯拖普處在同一個時空
+都沒把握，也許剛剛的傳送點已經把你傳到幾千年之前，你暗自祈禱還有機會
+能夠回到自己熟悉的世界。
+路邊有一塊模糊的小路標(sign)。
+~
+0 262144 0
+D0
+~
+~
+0 0 14211
+D2
+~
+~
+0 0 14220
+E
+sign~
+你好奇地檢視這塊小路標，發現上面的文字是一種很古老的字體，所幸你
+勉強猜得出意思。如果沒錯的話，這段文字的意思應該是「長老的居所」，
+但你往路標所指的東方望去，只看到波濤堆疊的芒草原。難道這個路標指
+錯方向了？
+~
+>room_command knee p east~
+if is_qmark($n) > dragonbay_mayor_secret 100004
+or is_qmark($n) & dragonbay_quest_mark 100004
+	if roomvalue($0) != 1
+		modrvt v0 = 1
+        	callout 1 echo 在你誠意地向東方一拜後，前方的芒草神奇地向兩旁傾倒，
+        	callout 2 echo 露出一條小徑通向原野的彼方！
+        	callout 3 makedoor 1 小徑 path 1 -1 14225
+		callout 5 modrvt v0 = 0
+		callout 5 deldoor 1
+		callout 5 echo 東方的芒草再度回復了原樣。
+	endif
+endif
+~
+|
+S
+#14213
+小丘腰部~
+你已經爬到小丘一半的高度，海風呼嘯地從小丘兩旁吹過，風勢強勁時
+尖銳的號叫聲讓人心驚膽跳。你回頭望去，身後是廣大的陰鬱的森林，在東
+邊遠方似乎有一片草原，不過你因為風勢而無法張大眼睛來確定。山丘頂端
+已經不遠，不過可以想見上面的風勢會更強！
+~
+0 262144 0
+D4
+~
+~
+0 0 14214
+D5
+~
+~
+0 0 14208
+S
+#14214
+小丘頂端~
+勉強爬到小丘頂端的平台，強大的海風吹得你幾乎站不住。你抓緊全身
+的行頭唯恐一不小心就被吹跑了。你的前方是面向大海的高崖，崖邊似乎有
+一座石板牌。你半蹲著向前爬行，終於爬到石牌前面，上面的字(words)是你
+所認得的。
+~
+0 262144 0
+D5
+~
+~
+0 0 14213
+E
+words~
+注意！飛行的要領是善用氣流，而不是胡亂鼓動翅膀。
+
+前幾次嘗試時掉進海裡是正常的，即使是大長老也是這麼學會飛行。
+
+不要害怕，記得自己是高貴的龍族。
+~
+S
+#14215
+向下的滑坡~
+這是一條很陡的小路，上面佈滿碎石頭，你必須很小心地攙扶才不會整個
+人滑下去。一陣陣強風從山崖下吹上來，減輕了你重量上的壓力。廣闊的大海
+就在你的腳下，近處的海面上浮著白色的泡沫。
+~
+0 262144 0
+D4
+~
+~
+0 0 14209
+D5
+~
+~
+0 0 14216
+S
+#14216
+海邊~
+這裡是山崖底部的海邊，濃濃的海腥味瀰漫在四周。你站在一大塊岩石上，
+身旁的岩石上堆積許多深褐色的海藻，還有一些腐木塞在岩石之間。遠處幾隻海
+鷗停在石頭上以懷疑的目光看著你。你注意到腳旁已經有一隻按耐不住的螃蟹慢
+慢爬上你的靴子。
+~
+0 262144 0
+D4
+~
+~
+0 0 14215
+>room_command search default~
+if is_qmark($n) == dragonbay_mayor_secret 100002
+        echoat $n 你好像聽到巖縫裡有細微的哭聲，但又被海風蓋過....
+        mod_qmark $n dragonbay_mayor_secret v0 = 3
+        break
+endif
+if is_qmark($n) == dragonbay_mayor_secret 100003
+        echoat $n 你把岩石搬開，居然發現一隻小龍掉在巖縫裡！
+        echoaround $n $n把岩石搬開，居然發現一隻小龍掉在巖縫裡！
+        mload 14207
+        force toto-m follow $n
+        mod_qmark $n dragonbay_mayor_secret v0 = 4
+endif
+~
+|
+S
+#14217
+森林小徑~
+你走在一條深入森林內的小徑，陣陣鹹濕的海風自你背後吹來，你的腳步因
+為從後而來的海風而顯得特別輕快。小徑兩邊都是高聳的針葉樹，一些松鼠在枝
+椏間跳躍，偶而還有尖銳的鳥鳴自林間深處傳來。靠近森林出口的地方的樹幹上
+有一面牌子(tablet)。
+~
+0 262144 0
+D0
+~
+~
+0 0 14207
+D2
+~
+~
+0 0 14218
+E
+tablet~
+牌子上用紅色的油漆寫著：
+
+沒有老師的允許，不准走到懸崖邊！
+~
+S
+#14218
+林間深處~
+越向森林裡面走，四周越安靜。剛剛呼嘯的海風聲以及鹹濕的水氣都被森林
+裡靜謐的空氣取代。在崖邊吹了那麼久的海風，能夠安安靜靜地走在林間小徑讓
+你覺得很愉悅。右前方的樹幹上有一面大木板，上面寫了一首詩，你高興地朗誦
+起來：
+
+***************************************
+*                                     *
+*       懷君屬秋夜，散步詠涼天；      *
+*       空山松子落，幽人應未眠。      *
+*                                     *
+***************************************
+~
+0 262144 0
+D0
+~
+~
+0 0 14217
+D2
+~
+~
+0 0 14219
+S
+#14219
+托兒所~
+這裡是林間的一塊空地，空地四週都是茂密的針葉林，除了你走進來的這個
+小徑，沒有其他出口。讓你驚訝的是眼前居然有幾隻幼龍，站在空地中間好奇地
+望著你。空地北方有個小山洞，似乎通往地底下。
+~
+0 262144 0
+D0
+~
+~
+0 0 14218
+S
+#14220
+森林旁的道路~
+繼續向南走道路越來越寬廣，前面小鎮的樓房也越來越清晰，四周的空氣非常
+慵懶，一陣陣輕風自西邊的草原吹拂過來。你有種幻覺，彷彿是在史卡拉貝附近的
+小鎮做一天的觀光旅行，不久前暗黑精靈帝國與地底沼澤的冒險好像只是吟遊詩人
+口中的傳說。
+~
+0 262144 0
+D0
+~
+~
+0 0 14212
+D2
+~
+~
+0 0 14221
+S
+#14221
+小鎮的入口~
+你站在一個小鎮的入處，街道上的人影與交談聲清晰可辨。從這裡望過去，不
+管是建築物或者行人都是你在大陸熟悉的樣子。不過在熟悉中似乎還有什麼不大對
+勁，你在腦中思索一下，好像....是太單調了。你猛然醒悟，這裡的人種似乎太單
+調，只有和精靈相似的類人種族，完全看不到矮人、半獸人、甚至連散佈全大陸每
+個角落的賀比特也失去蹤影！
+    南邊的街道通往一棟大建築，西邊的街道是人來人往的商店街。
+    ~
+0 262144 0
+D0
+~
+~
+0 0 14220
+D2
+~
+~
+0 0 14228
+D3
+~
+~
+0 0 14222
+S
+#14222
+街道~
+你正走在小鎮裡的主要街道上，街道兩側是兩排整齊的商店與住家。街道上的
+行人不是非常多，大家都露出一股閒適的氣味。有些年紀大的老人坐在自家的門口
+前看著人來人往，看到你還對你點頭微笑。
+~
+0 262144 0
+D0
+~
+~
+0 0 14234
+D1
+~
+~
+0 0 14221
+D2
+~
+~
+0 0 14340
+D3
+~
+~
+0 0 14223
+S
+#14223
+小鎮市街~
+你正走在小鎮裡的主要街道上，北邊是一家精緻的武器店，南邊是一家小巧的
+護甲店。街道繼續向東西延伸。
+~
+0 262144 0
+D0
+~
+~
+0 0 14235
+D1
+~
+~
+0 0 14222
+D2
+~
+~
+0 0 14236
+D3
+~
+~
+0 0 14224
+S
+#14224
+街道西邊~
+這裡已經靠近街道西邊的尾端，行人又比之前少了一些。街道兩側的建築間夾雜
+著一些巨木，看來是當初從森林裡開闢出來時捨不得砍伐而留下來的。巨木的樹葉在
+陣陣和風吹拂下發出沙沙的聲響，讓你有種想坐下來睡個午覺的衝動。
+~
+0 262144 0
+D1
+~
+~
+0 0 14223
+D2
+~
+~
+0 0 14237
+D3
+~
+~
+0 0 14230
+S
+#14225
+草原通道~
+這是一條穿過草原的神奇通道，你的兩側都是長得比人還高的芒草，密密麻麻好像
+兩堵牆一樣。這條通道筆直向前，無窮無盡地通到草原的彼方。
+~
+0 262144 0
+D1
+~
+~
+0 0 14226
+D3
+~
+~
+0 0 14212
+S
+#14226
+草原通道~
+這是一條穿過草原的神奇通道，你的兩側都是長得比人還高的芒草，密密麻麻好像
+兩堵牆一樣。這條通道筆直向前，無窮無盡地通到草原的彼方。
+~
+0 262144 0
+D1
+~
+~
+0 0 14227
+D3
+~
+~
+0 0 14225
+S
+#14227
+草原通道~
+這是一條穿過草原的神奇通道，你的兩側都是長得比人還高的芒草，密密麻麻好像
+兩堵牆一樣。這條通道筆直向前，通到前方一座銀色地小山丘。你覺得這座小山丘
+好像有點起伏，也許是眼花了。
+~
+0 262144 0
+D1
+~
+~
+0 0 14243
+D3
+~
+~
+0 0 14226
+S
+#14228
+大道~
+這是這個小鎮裡最寬廣的街道，街道兩旁都是高級的民房，可惜沒有主人的邀請
+你不方便進入參觀。道路繼續向南，通往一棟雄偉的圓頂建築，建築物的橫樑上釘著
+斗大的四個古文遠遠就看得很清楚，自左而右分別是：銀  龍  聖  殿。
+~
+0 262144 0
+D0
+~
+~
+0 0 14221
+D1
+~
+~
+0 0 14241
+D2
+~
+~
+0 0 14229
+S
+#14229
+銀龍聖殿~
+從寬廣高聳的大門進來，映入眼簾的是一個莊嚴神聖的大廳堂。廳堂的照明全靠牆壁
+上的幾盞油燈，使得裡面的光線顯得特別黯淡，卻也增加了一些肅穆的氣氛。前方中間有
+一座小祭壇，祭壇前面鋪著一張紅色大絨毯，方便民眾跪拜祭祀。你注意到祭壇上面豎立
+著一張泛黃的柚木板(tablet)。祭壇後面有一扇木門。
+~
+0 8|1024|262144 0
+D0
+~
+~
+0 0 14228
+D2
+~
+~
+1|2 0 14242
+E
+tablet~
+牌子中間頭刻著一行很古老的文字，你勉強猜出大致的意思：
+
+*****************************************
+*       -- 銀龍族歷代祖先牌位 --        *
+*****************************************
+
+原來，這裡是龍族祭拜祖先，慎終追遠的廟堂，你恍然大悟。
+
+不過....龍族？哪來的龍啊？這裡不都是類人種族嗎？
+大概又是什麼號稱"龍的傳人"的自大種族了，你忍不住竊笑起來....
+~
+>room_command continue default~
+if is_qmark($n) == devileye_save
+	mod_qmark $n devileye_save v0 - 1
+	if is_qmark($n) == devileye_save 100001
+		del_qmark $n devileye_save
+	endif
+	echoat $n 一道閃光之後，你發現自己已經來到了眼魔層了。
+	echoaround $n 一道閃光之後，$N人便在原地消失了。
+	at 14281 echo 一道閃光之後，$N的人影從空氣中顯現而出。
+	transfer $n 14281
+	at 14281 force $n look
+else
+	echoat $n 什麼？
+endif
+~
+|
+S
+#14230
+林間小路~
+你走在一條林間的小徑上，小徑西邊通往茂密的針葉樹林，東邊通到一座小鎮。北邊
+還有一條更狹窄的岔路，入口的樹上釘著一個牌子，上面寫著：武道場。不知為什麼，你
+感到一股詭異邪惡的氣息自西邊傳來，幸好北邊武道場的陽剛之氣讓你鎮定不少。這兩股
+對立的氣氛在這裡激烈地交會，好像進行一場無聲的戰爭。
+~
+0 262144 0
+D0
+~
+~
+0 0 14238
+D1
+~
+~
+0 0 14224
+D3
+~
+~
+0 0 14231
+S
+#14231
+陰暗的轉角~
+林間小徑在這裡做了一個九十度的大轉角。南邊的氣息越來越陰暗，好像什麼鬼怪
+隨時要跳出來，這種感覺讓你很不想向南走去。東邊通往比較光明的地區。
+~
+0 262144 0
+D1
+~
+~
+0 0 14230
+D2
+~
+~
+0 0 14232
+S
+#14232
+是非小徑~
+是非小徑多是非，邪惡氣息漫山野。這裡的植物外觀都有點詭異，尤其一些
+多年生的大樹，因為長期浸漬在黑暗的氣息裡，樹幹及枝椏都扭曲變形，好像鬼
+怪一般在路旁對你猙獰，你真的很不願意繼續往南走。
+~
+0 262144 0
+D0
+~
+~
+0 0 14231
+D2
+~
+~
+0 0 14233
+S
+#14233
+是非小徑~
+是非小徑多是非，邪惡氣息漫山野。這裡的植物外觀都有點詭異，尤其一些
+多年生的大樹，因為長期浸漬在黑暗的氣息裡，樹幹及枝椏都扭曲變形，好像鬼
+怪一般在路旁對你猙獰，你真的很不願意繼續往南走。
+~
+0 262144 0
+D0
+~
+~
+0 0 14232
+D2
+~
+~
+0 0 14240
+S
+#14234
+翡翠麵包~
+這是一家小型的麵包店，規模和史卡拉貝與賽伐斯拖普的麵包專賣店差很多。
+你環顧四周的陳列架，上面擺的都是很普通不花俏的傳統麵包，看來這個小鎮的
+居民並不重視口腹之慾。櫃臺上釘著一張價目表(menu)。
+~
+0 262144 0
+D2
+~
+~
+0 0 14222
+E
+menu~
+價目表上寫的是：
+
+本店提供下列服務：
+
+   購買(buy)：在店內購買各式酒品。
+   查詢(list)：列出店內販賣的各式酒品和價位。
+   詢價(value)：看老闆願意以多少價錢購入你的東西。
+~
+S
+#14235
+紅寶石武器~
+這是一家小型的武器店，規模和史卡拉貝的瘋神武器專賣店差很多。在瘋神裡
+四面的牆上都掛滿不同武器，你往往要花幾個小時的時間才能略覽一遍。但是在這
+裡，你用一隻手的手指就數得出來所有的武器種類。這個小鎮的居民不是愛好和平，
+就是作戰時根本不需要武器。老闆微笑地遞給你一張價目表(menu)。
+~
+0 262144 0
+D2
+~
+~
+0 0 14223
+E
+menu~
+價目表上寫的是：
+
+本店提供下列服務：
+
+   購買(buy)：在店內購買各式酒品。
+   查詢(list)：列出店內販賣的各式酒品和價位。
+   詢價(value)：看老闆願意以多少價錢購入你的東西。
+~
+S
+#14236
+藍寶石防具~
+這是一家小型的防具店，規模和史卡拉貝的犀牛皮護甲專賣店差很多。在犀牛
+皮中四面的牆上都掛滿不同防具，你往往要花幾個小時的時間才能略覽一遍。但是
+在這裡，你用一隻手的手指就數得出來所有的護甲種類。這個小鎮的居民不是愛好
+和平，就是作戰時根本不需要穿護具。牆上有張表格(list)。
+~
+0 262144 0
+D0
+~
+~
+0 0 14223
+E
+list~
+價目表上寫的是：
+
+本店提供下列服務：
+
+   購買(buy)：在店內購買各式酒品。
+   查詢(list)：列出店內販賣的各式酒品和價位。
+   詢價(value)：看老闆願意以多少價錢購入你的東西。
+~
+S
+#14237
+水晶魔法屋~
+你站在一家昏暗的店家中，整家店沒有一面窗戶，連櫥窗後面都用黑色簾幕隔
+起來，不讓一絲光線透進來。店裡唯一的光源是櫃臺上的一斗油燈，搖曳的燭火只
+能勉強讓客人看到架子上的魔法物品。在暗影中你好不容易找到了這家店貼在牆上
+的價目表(list)。
+~
+0 262144 0
+D0
+~
+~
+0 0 14224
+E
+list~
+價目表上寫的是：
+
+本店提供下列服務：
+
+   購買(buy)：在店內購買各式酒品。
+   查詢(list)：列出店內販賣的各式酒品和價位。
+   詢價(value)：看老闆願意以多少價錢購入你的東西。
+~
+S
+#14238
+碎花石梯~
+這是一條很長向上的石階，通到北方的一個小丘頂端。石階是用灰色的水泥砌
+起來的，寬度大概可以容許四個人並排通過。石階兩旁種了許多鳳凰木，豔紅的鳳
+凰花開滿你的頭頂，還有許多就落在石階上面。翠綠的樹木與火紅的花朵讓這條石
+階充滿生意。
+~
+0 262144 0
+D0
+~
+~
+0 0 14239
+D2
+~
+~
+0 0 14230
+S
+#14239
+武道場入口~
+通過賞心悅目的石梯後，小丘上面有一座寬廣的露天武道場。北邊的方形武道場
+大約有二十公尺見方，地板主要是灰色的石板。石板旁邊的草地上擺了許多大小不一
+的石頭，看來是被當成椅子來坐。四方的視野很好，你可以看到一大片森林以及北方
+天際的大海。
+~
+0 4|262144 0
+D0
+~
+~
+1|2 0 14341
+D2
+~
+~
+0 0 14238
+S
+#14240
+是非終點~
+崎嶇的小徑終於到了終點，這裡寸草不生，陰風陣陣，大大小小的鵝卵石散落
+一地。最觸目的是小廣場中間的一堆巨石疊起來的石塔，好像要把底下的東西壓住。
+塔旁的地上躺了一塊石碑，從風化的情況看來恐怕有幾千年的歷史。石碑上用古老
+的文字寫著：時 空 隙 縫 鬼 魅 之 都。
+~
+0 262144 0
+D0
+~
+~
+0 0 14233
+D5
+~
+~
+1|2|4|16|32|64 0 14250
+>room_command break p seal~
+if is_qmark($n) > dragonbay_mayor_secret 100008
+or is_qmark($n) & dragonbay_quest_mark 100004
+        setdoor 5 flags 0
+        modrvt t0 = 1000
+        echo 你心思剛動，一陣陣轟隆隆巨響，石塔向旁邊移開，露出一個大黑洞！
+endif
+~
+>room_time 100~
+if roomtimer($0) == 1
+        setdoor 5 flags 119
+endif
+~
+|
+S
+#14241
+鎮長廳~
+這是一個陳設簡單的辦公廳，最主要的家具就是房間中間的大辦公桌，桌上
+一落落地堆了許多卷宗。入口左邊還有一張小茶几和三張椅子，看來是給訪客談
+論事情用的。
+~
+0 262144 0
+D3
+~
+~
+0 0 14228
+S
+#14242
+烈士墳場~
+眼前的景象讓你嚇了一跳，神殿後面竟然是一個很大的墳場。墓碑一排排很
+整齊而緊密地排列著，你估計就算數一整天也數不完，數目至少也有好幾萬具。
+你在大陸其他地方從來也沒看過這麼大的墳場。
+~
+0 32768|262144 0
+D0
+~
+~
+0 0 14229
+S
+#14243
+大龍峒~
+魔法小徑通到芒草原中央的一棟小石屋，這棟小石屋看來很簡陋，裡面頂多只
+有兩、三個小房間，但石屋前面卻有一個很大的廣場。
+~
+0 262144 0
+D3
+~
+~
+0 0 14227
+S
+#14250
+地道入口~
+這是你終極冒險旅程的第一步，可惜沒有五彩的燈光和歡呼的群眾。
+地道裡空氣污濁，還有一股濃濃的霉味，四周黝黑陰暗，只能靠火把
+勉強看到五尺以內的東西。
+頭上的入口在你進來後就迅速關閉，彷彿不認為你還有機會從這裡
+走出去。
+~
+0 8|66065 0
+D0
+~
+~
+0 0 14251
+S
+#14251
+狹窄陰森的地道~
+這是一條很窄很暗的地底通道，兩邊牆壁的泥土仆簌簌地塊塊掉落，
+地上也堆了一層很厚的粉塵，看起來這裡很多年沒有人走過。
+~
+0 8|66065 0
+D0
+~
+~
+0 0 14252
+D2
+~
+~
+0 0 14250
+S
+#14252
+狹窄陰森的地道~
+這是一條很窄很暗的地底通道，兩邊牆壁的泥土仆簌簌地塊塊掉落，
+地上也堆了一層很厚的粉塵，看起來這裡很多年沒有人走過。
+~
+0 8|66065 0
+D0
+~
+~
+0 0 14253
+D2
+~
+~
+0 0 14251
+S
+#14253
+地道的轉角~
+這是一條很窄很暗的地底通道，兩邊牆壁的泥土仆簌簌地塊塊掉落，
+地上也堆了一層很厚的粉塵，看起來這裡很多年沒有人走過。
+~
+0 8|66065 0
+D1
+~
+~
+0 0 14254
+D2
+~
+~
+0 0 14252
+S
+#14254
+狹窄陰森的地道~
+這是一條很窄很暗的地底通道，兩邊牆壁的泥土仆簌簌地塊塊掉落，
+地上也堆了一層很厚的粉塵，看起來這裡很多年沒有人走過。
+~
+0 8|66069 0
+D1
+~
+~
+0 0 14255
+D3
+~
+~
+0 0 14253
+S
+#14255
+十字路口~
+地道在這裡豁然開敞，有許多出口通往各個方向。不過無論那個方向
+看起來都差不多，都是陰森黑暗，一副粗製濫造的樣子。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14256
+D1
+~
+~
+0 0 14261
+D2
+~
+~
+0 0 14258
+D3
+~
+~
+0 0 14254
+S
+#14256
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至
+有尖銳的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14257
+D2
+~
+~
+0 0 14255
+S
+#14257
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有
+尖銳的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D2
+~
+~
+0 0 14256
+D3
+~
+~
+0 0 14262
+S
+#14258
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳
+的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14255
+D2
+~
+~
+0 0 14259
+S
+#14259
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳
+的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14258
+D1
+~
+~
+0 0 14280
+S
+#14260
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳
+的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14276
+D3
+~
+~
+0 0 14280
+S
+#14261
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳
+的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14279
+D3
+~
+~
+0 0 14255
+S
+#14262
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳
+的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14257
+D3
+~
+~
+0 0 14263
+S
+#14263
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳
+的稜角。通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14262
+D3
+~
+~
+0 0 14264
+S
+#14264
+狹窄通道~
+這裡的通道突然變得狹窄，如果是洞穴巨人的體型，大概要縮頭彎腰才勉
+強擠得過去。很明顯的這部分的地道並不是主要的幹道，應該是為了什麼非常
+特殊的目的故意開鑿出來的。
+~
+0 8|66065 0
+D1
+~
+~
+0 0 14263
+D2
+~
+~
+0 0 14265
+S
+#14265
+狹窄通道~
+這裡的通道突然變得狹窄，如果是洞穴巨人的體型，大概要縮頭彎腰才勉
+強擠得過去。很明顯的這部分的地道並不是主要的幹道，應該是為了什麼非常
+特殊的目的故意開鑿出來的。
+~
+0 8|66065 0
+D0
+~
+~
+0 0 14264
+D2
+~
+~
+0 0 14266
+S
+#14266
+大鐵門~
+狹窄的地道通到這裡為止，地上有一張很厚重的大鐵蓋，堅固的程度就算是
+最強壯的洞穴巨人也撞不開。上面還有一個古怪的鑰匙孔。
+~
+0 8|66065 0
+D0
+~
+~
+0 0 14265
+D5
+~
+~
+1|2|4|16|32 14207 24201
+>room_trap 2048 100~
+setdoor 5 flags 0
+modrvt t0 = 600
+~
+>room_time 100~
+if roomtimer($0) == 1
+        setdoor 5 flags 119
+endif
+~
+|
+S
+#14267
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14274
+D3
+~
+~
+0 0 14268
+S
+#14268
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14267
+D2
+~
+~
+0 0 14269
+S
+#14269
+吵鬧的入口~
+和剛剛走過的陰暗寂靜地道不同，這裡的地道傳來一陣陣的喧囂聲，前面彷彿在開
+一場瘋狂宴會。不過洞穴巨人的宴會往往是一場殘忍的殺戮，如果你不想當宴會裡的主
+角，還是別靠近吧。
+~
+0 8|65553|4 0
+D0
+~
+~
+0 0 14268
+D3
+~
+~
+0 0 14270
+S
+#14270
+地底廳堂~
+你站在一個非常廣闊，也非常混亂的大廳堂裡。四周好像經歷了一場大戰，所有
+的東西似乎都不在它們該有的位置。桌子被塞到天花板，油燈火把掉在地上，食物黏
+在牆上，地上根本是一團混亂。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14269
+D2
+~
+~
+0 0 14273
+D3
+~
+~
+0 0 14271
+S
+#14271
+地底廳堂~
+你站在一個非常廣闊，也非常混亂的大廳堂裡。四周好像經歷了一場大戰，所有
+的東西似乎都不在它們該有的位置。桌子被塞到天花板，油燈火把掉在地上，食物黏
+在牆上，地上根本是一團混亂。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14270
+D2
+~
+~
+0 0 14272
+S
+#14272
+地底廳堂~
+你站在一個非常廣闊，也非常混亂的大廳堂裡。四周好像經歷了一場大戰，所有
+的東西似乎都不在它們該有的位置。桌子被塞到天花板，油燈火把掉在地上，食物黏
+在牆上，地上根本是一團混亂。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14271
+D1
+~
+~
+0 0 14273
+>room_time 100~
+if mobcount(14217) == 0
+        if roomtimer($0) == 0
+                echotoarea 亞殤洞穴巨人們又開始活躍在地層魔域了！
+                mload 14217
+                at 14255 mload 14218
+                at 14255 mload 14218
+                at 14255 mload 14218
+                at 14255 mload 14218
+                at 14255 mload 14218
+                at 14257 mload 14218
+                at 14259 mload 14218
+                at 14261 mload 14218
+                at 14263 mload 14218
+                at 14274 mload 14218
+                at 14276 mload 14218
+                at 14278 mload 14218
+                at 14280 mload 14218
+                at 14270 mload 14218
+                at 14270 mload 14218
+                at 14271 mload 14218
+                at 14271 mload 14218
+                at 14272 mload 14218
+                at 14272 mload 14218
+                at 14273 mload 14218
+        endif
+endif
+~
+|
+S
+#14273
+地底廳堂~
+你站在一個非常廣闊，也非常混亂的大廳堂裡。四周好像經歷了一場大戰，所有
+的東西似乎都不在它們該有的位置。桌子被塞到天花板，油燈火把掉在地上，食物黏
+在牆上，地上根本是一團混亂。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14270
+D3
+~
+~
+0 0 14272
+S
+#14274
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14275
+D3
+~
+~
+0 0 14267
+S
+#14275
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14276
+D3
+~
+~
+0 0 14274
+S
+#14276
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14277
+D2
+~
+~
+0 0 14275
+D3
+~
+~
+0 0 14260
+S
+#14277
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D2
+~
+~
+0 0 14276
+D3
+~
+~
+0 0 14278
+S
+#14278
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14279
+D1
+~
+~
+0 0 14277
+S
+#14279
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D2
+~
+~
+0 0 14278
+D3
+~
+~
+0 0 14261
+S
+#14280
+簡陋的地道~
+這是一條簡陋的地底通道，通道四周的牆壁凹凸不平，有的地方甚至有尖銳的稜角。
+通道通往漆黑的前方，你步伐的迴響遠遠地傳去又傳來。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14260
+D3
+~
+~
+0 0 14259
+S
+#14281
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14284
+D1
+~
+~
+0 0 14282
+D2
+~
+~
+0 0 14288
+D3
+~
+~
+0 0 14286
+S
+#14282
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14283
+D1
+~
+~
+0 0 14291
+D2
+~
+~
+0 0 14289
+D3
+~
+~
+0 0 14281
+S
+#14283
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14294
+D2
+~
+~
+0 0 14282
+S
+#14284
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14295
+D2
+~
+~
+0 0 14281
+S
+#14285
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14296
+D2
+~
+~
+0 0 14286
+S
+#14286
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14285
+D1
+~
+~
+0 0 14281
+D2
+~
+~
+0 0 14287
+D3
+~
+~
+0 0 14299
+S
+#14287
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14286
+D2
+~
+~
+0 0 14302
+S
+#14288
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14281
+D2
+~
+~
+0 0 14303
+S
+#14289
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14282
+D2
+~
+~
+0 0 14304
+S
+#14290
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14291
+D2
+~
+~
+0 0 14305
+S
+#14291
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14292
+D2
+~
+~
+0 0 14290
+D3
+~
+~
+0 0 14282
+S
+#14292
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14293
+D2
+~
+~
+0 0 14291
+S
+#14293
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D2
+~
+~
+0 0 14292
+D3
+~
+~
+0 0 14294
+S
+#14294
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14293
+D2
+~
+~
+0 0 14283
+D3
+~
+~
+0 0 14295
+S
+#14295
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14294
+D2
+~
+~
+0 0 14284
+D3
+~
+~
+0 0 14296
+S
+#14296
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14295
+D2
+~
+~
+0 0 14285
+D3
+~
+~
+0 0 14297
+S
+#14297
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14296
+D2
+~
+~
+0 0 14298
+S
+#14298
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14297
+D2
+~
+~
+0 0 14299
+S
+#14299
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14298
+D1
+~
+~
+0 0 14286
+D2
+~
+~
+0 0 14300
+S
+#14300
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14299
+D2
+~
+~
+0 0 14301
+S
+#14301
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14300
+D1
+~
+~
+0 0 14302
+S
+#14302
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14287
+D1
+~
+~
+0 0 14303
+D3
+~
+~
+0 0 14301
+S
+#14303
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14288
+D1
+~
+~
+0 0 14304
+D3
+~
+~
+0 0 14302
+S
+#14304
+眼魔迷宮~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14289
+D1
+~
+~
+0 0 14305
+D3
+~
+~
+0 0 14303
+S
+#14305
+往下的入口~
+你站在一個紅磚地道裡，通道通往許多地方，四面看起來都一模一樣。
+這個房間的地板中央有一個向下的入口。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14290
+D3
+~
+~
+0 0 14304
+D5
+~
+~
+0 0 14306
+S
+#14306
+眼魔宮殿~
+這一層的地底通道明顯比較高級，牆壁都漆得很平整。
+在火把的照耀下，你的身影完整平順地投射在灰色的牆上。
+~
+0 8|65553|4 0
+D0
+~
+~
+0 0 14307
+D4
+~
+~
+0 0 14305
+>room_defun dragonbay_beholder_reborn~
+if roomvalue($0) == 11
+        modrvt v0 = 0
+        modrvt t0 = 500
+else
+        modrvt v0 + 1
+endif
+~
+>room_time 100~
+if mobcount(14220) == 0
+if roomtimer($0) == 0
+        echotoarea 眼魔宮殿傳來了一陣騷動！
+        at 14281 mload 14219
+        at 14281 mload 14219
+        at 14281 mload 14219
+        at 14286 mload 14219
+        at 14286 mload 14219
+        at 14286 mload 14219
+        at 14291 mload 14219
+        at 14291 mload 14219
+        at 14291 mload 14219
+        at 14296 mload 14219
+        at 14296 mload 14219
+        at 14296 mload 14219
+        at 14301 mload 14219
+        at 14301 mload 14219
+        at 14301 mload 14219
+        at 14304 mload 14219
+        at 14304 mload 14219
+        at 14304 mload 14219
+        at 14310 mload 14220
+        at 14310 mload 14220
+        at 14315 mload 14220
+        at 14315 mload 14220
+        at 14320 mload 14220
+        at 14320 mload 14220
+        at 14325 mload 14220
+        at 14325 mload 14220
+        at 14330 mload 14220
+        at 14330 mload 14220
+        at 14335 mload 14220
+        at 14335 mload 14220
+endif
+endif
+~
+|
+S
+#14307
+眼魔宮殿~
+這一層的地底通道明顯比較高級，牆壁都漆得很平整。
+在火把的照耀下，你的身影完整平順地投射在灰色的牆上。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14308
+D2
+~
+~
+0 0 14306
+S
+#14308
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14329
+D1
+~
+~
+0 0 14310
+D2
+~
+~
+0 0 14307
+D3
+~
+~
+0 0 14309
+S
+#14309
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14308
+D3
+~
+~
+0 0 14311
+S
+#14310
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14312
+D3
+~
+~
+0 0 14308
+S
+#14311
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14313
+D1
+~
+~
+0 0 14309
+D2
+~
+~
+0 0 14317
+D3
+~
+~
+0 0 14315
+S
+#14312
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14321
+D1
+~
+~
+0 0 14324
+D2
+~
+~
+0 0 14322
+D3
+~
+~
+0 0 14310
+S
+#14313
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D2
+~
+~
+0 0 14311
+D3
+~
+~
+0 0 14314
+S
+#14314
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14313
+D2
+~
+~
+0 0 14315
+D3
+~
+~
+0 0 14318
+S
+#14315
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14314
+D1
+~
+~
+0 0 14311
+D2
+~
+~
+0 0 14316
+D3
+~
+~
+0 0 14319
+S
+#14316
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14315
+D1
+~
+~
+0 0 14317
+D3
+~
+~
+0 0 14320
+S
+#14317
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14311
+D3
+~
+~
+0 0 14316
+S
+#14318
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14314
+D2
+~
+~
+0 0 14319
+S
+#14319
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14318
+D1
+~
+~
+0 0 14315
+D2
+~
+~
+0 0 14320
+S
+#14320
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14319
+D1
+~
+~
+0 0 14316
+S
+#14321
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14323
+D2
+~
+~
+0 0 14312
+S
+#14322
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14312
+D1
+~
+~
+0 0 14325
+S
+#14323
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14326
+D2
+~
+~
+0 0 14324
+D3
+~
+~
+0 0 14321
+S
+#14324
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14323
+D1
+~
+~
+0 0 14327
+D2
+~
+~
+0 0 14325
+D3
+~
+~
+0 0 14312
+S
+#14325
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14324
+D1
+~
+~
+0 0 14328
+D3
+~
+~
+0 0 14322
+S
+#14326
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D2
+~
+~
+0 0 14327
+D3
+~
+~
+0 0 14323
+S
+#14327
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14326
+D2
+~
+~
+0 0 14328
+D3
+~
+~
+0 0 14324
+S
+#14328
+眼魔宮殿~
+隊伍裡的矮人忽然把頭靠在地上到處尋找，敲敲打打。過了一會他抬起頭
+告訴你：「這下面是中空的，一定有什麼有東西。」
+這個消息對困在迷宮好幾天的你來說真有若苦旱逢甘霖。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14327
+D3
+~
+~
+0 0 14325
+D5
+~
+~
+0 0 14400
+S
+#14329
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14331
+D2
+~
+~
+0 0 14308
+S
+#14330
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14333
+D3
+~
+~
+0 0 14331
+S
+#14331
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14334
+D1
+~
+~
+0 0 14330
+D2
+~
+~
+0 0 14329
+D3
+~
+~
+0 0 14332
+S
+#14332
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14335
+D1
+~
+~
+0 0 14331
+S
+#14333
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14336
+D2
+~
+~
+0 0 14330
+D3
+~
+~
+0 0 14334
+S
+#14334
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14337
+D1
+~
+~
+0 0 14333
+D2
+~
+~
+0 0 14331
+D3
+~
+~
+0 0 14335
+S
+#14335
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D0
+~
+~
+0 0 14338
+D1
+~
+~
+0 0 14334
+D2
+~
+~
+0 0 14332
+S
+#14336
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D2
+~
+~
+0 0 14333
+D3
+~
+~
+0 0 14337
+S
+#14337
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14336
+D2
+~
+~
+0 0 14334
+D3
+~
+~
+0 0 14338
+S
+#14338
+眼魔宮殿~
+筆直的地底通道通往許多地方，每個方向都深邃地通往黑暗的陰影中。
+~
+0 8|65553 0
+D1
+~
+~
+0 0 14337
+D2
+~
+~
+0 0 14335
+S
+#14339
+amenda 的洞~
+這裡是地層三部曲的第三部 "地層魔域" 的起點。
+不過地層魔域 amenda 還沒完成，請稍待一些時日。
+~
+0 327697 0
+D4
+~
+~
+0 0 14328
+S
+#14340
+藍鑽工作室~
+由工作台上堆的一堆破損的護具來看，這應該是一個修理店。你注意到
+工作台旁一張小桌子上整齊地排滿一大堆奇形怪狀的工具，其中有些甚至還
+閃耀著攝人的魔法光彩。看來，要把一些刀槍不入的護甲修理好並不是那麼
+容易的事，你只希望店主人要求的價碼能在你負荷的範圍。
+~
+0 262144 0
+D0
+~
+~
+0 0 14222
+S
+#14341
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。
+~
+0 262144 0
+D0
+~
+~
+0 0 14342
+D1
+~
+~
+0 0 14344
+D2
+~
+~
+1|2 0 14239
+D3
+~
+~
+0 0 14347
+S
+
+#14342
+銀龍道場中央~
+你站在銀龍道場的正中央。環顧四周，能看到許多學生在灰色石板的場地
+上修行著戰技，不時聽見兵器揮舞的咻咻聲。
+~
+0 4|262144 0
+D0
+~
+~
+0 0 14343
+D1
+~
+~
+0 0 14345
+D2
+~
+~
+0 0 14341
+D3
+~
+~
+0 0 14348
+S
+
+#14343
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。
+~
+0 262144 0
+D1
+~
+~
+0 0 14346
+D2
+~
+~
+0 0 14342
+D3
+~
+~
+0 0 14349
+S
+
+#14344
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。
+~
+0 262144 0
+D0
+~
+~
+0 0 14345
+D3
+~
+~
+0 0 14341
+S
+
+#14345
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。
+~
+0 262144 0
+D0
+~
+~
+0 0 14346
+D2
+~
+~
+0 0 14344
+D3
+~
+~
+0 0 14342
+S
+
+#14346
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。北邊有扇通往道場
+外面的木門。
+~
+0 262144 0
+D0
+~
+~
+1 0 14350
+D2
+~
+~
+0 0 14345
+D3
+~
+~
+0 0 14343
+S
+
+#14347
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。
+~
+0 262144 0
+D0
+~
+~
+0 0 14348
+D1
+~
+~
+0 0 14341
+S
+
+#14348
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。
+~
+0 262144 0
+D0
+~
+~
+0 0 14349
+D1
+~
+~
+0 0 14342
+D2
+~
+~
+0 0 14347
+S
+
+#14349
+銀龍道場~
+這裡是銀龍一族培育新生代戰士的修行場所。建在高丘上的開放式武道場
+讓北方吹來的海風能進入這寬廣的空間內，就算進行激烈的活動也不至於讓人
+感到燥熱。四周角落排放著一些武器，能供人練習時使用。
+~
+0 262144 0
+D1
+~
+~
+0 0 14343
+D3
+~
+~
+0 0 14348
+S
+
+#14350
+道場後門~
+你站在銀龍道場後門外，這裡是一塊高丘上的小空地，空地上只有雜草沒
+特別的東西。從高處看向四周，能發現海灣周圍是被一整片的森林圍繞，往北
+方望去，能看到連接大海的半月形海灣。
+~
+0 4|262144 0
+D2
+~
+~
+1 0 14346
+S
+
+#0
+
+#ROOMPROGS
+R 14242 system_quest_check.prg
+R 14242 system_qmark_check.prg
+S
+
+#RESETS
+M 0 14201 1 14203  sparrow
+M 0 14202 5 14206  seagull
+M 0 14202 5 14208  seagull
+M 0 14202 5 14210  seagull
+M 0 14203 1 14216  crab
+M 0 14204 3 14219  little dragon
+M 0 14205 1 14219  calgory
+M 0 14206 1 14241  mayor
+E 1 14006 8 16     morning
+M 0 14208 1 14243
+M 0 14209 1 14342
+*
+M 0 14210 1 14234  baker
+E 1 14005 8 16     sword
+G 0 3397 0
+G 0 14023 0
+G 0 14025 0
+G 0 14026 0
+M 0 14211 1 14235  weaponist
+G 0 14212 0
+G 0 14213 0
+G 0 14214 0
+G 0 14215 0
+E 1 14005 8 16     sword
+E 1 14006 4 18     morning
+M 0 14212 1 14236  armourer
+G 0 14204 0
+G 0 14205 0
+G 0 14206 0
+E 1 14005 8 16     sword
+E 1 14006 4 18     morning
+M 0 14213 1 14237  alchemist
+G 0 3040 0
+G 0 3041 0
+G 0 3043 0
+G 0 3096 0
+G 0 3103 0
+G 0 13645 0
+G 0 24201 0
+G 0 24202 0
+G 0 24203 0
+G 0 24204 0
+G 0 24205 0
+G 0 24206 0
+G 0 24207 0
+M 0 14214 1 14229  templar
+M 0 14221 1 14340  repairman
+O 0 3135 0 14228   fountain
+O 0 3010 0 14229   donate pit
+*
+*       Create maze
+*
+R 1 14281 4
+R 1 14282 4
+R 1 14283 4
+R 1 14284 4
+R 1 14285 4
+R 1 14286 4
+R 1 14287 4
+R 1 14288 4
+R 1 14289 4
+R 1 14290 4
+R 1 14291 4
+R 1 14292 4
+R 1 14293 4
+R 1 14294 4
+R 1 14295 4
+R 1 14296 4
+R 1 14297 4
+R 1 14298 4
+R 1 14299 4
+R 1 14300 4
+R 1 14301 4
+R 1 14302 4
+R 1 14303 4
+R 1 14304 4
+R 1 14305 4
+R 1 14306 4
+R 1 14307 4
+R 1 14308 4
+R 1 14309 4
+R 1 14310 4
+R 1 14311 4
+R 1 14312 4
+R 1 14313 4
+R 1 14314 4
+R 1 14315 4
+R 1 14316 4
+R 1 14317 4
+R 1 14318 4
+R 1 14319 4
+R 1 14320 4
+R 1 14321 4
+R 1 14322 4
+R 1 14323 4
+R 1 14324 4
+R 1 14325 4
+R 1 14326 4
+R 1 14327 4
+R 1 14328 4
+R 1 14329 4
+R 1 14330 4
+R 1 14331 4
+R 1 14332 4
+R 1 14333 4
+R 1 14334 4
+R 1 14335 4
+R 1 14336 4
+R 1 14337 4
+R 1 14338 4
+*
+*M 0 14218 20 14255
+*M 0 14218 20 14255
+*M 0 14218 20 14255
+*M 0 14218 20 14255
+*M 0 14218 20 14255
+*
+*M 0 14218 20 14257
+*M 0 14218 20 14259
+*M 0 14218 20 14261
+*M 0 14218 20 14263
+*M 0 14218 20 14274
+*M 0 14218 20 14276
+*M 0 14218 20 14278
+*M 0 14218 20 14280
+*
+*M 0 14218 20 14270
+*M 0 14218 20 14270
+*M 0 14218 20 14271
+*M 0 14218 20 14271
+*M 0 14218 20 14272
+*M 0 14218 20 14272
+*M 0 14218 20 14273
+*M 0 14217 1 14272       nanthan king
+*G 0 14207 0
+*       tarj beholder
+*M 0 14219 15 14281
+*M 0 14219 15 14286
+*M 0 14219 15 14291
+*M 0 14219 15 14296
+*M 0 14219 15 14301
+*M 0 14219 15 14304
+*       great tarj beholder
+*M 0 14220 15 14310
+*M 0 14220 15 14315
+*M 0 14220 15 14320
+*M 0 14220 15 14325
+*M 0 14220 15 14330
+*M 0 14220 15 14335
+* martial for align drop
+M 0 14222 1 14346 martial master
+M 0 14223 3 14341 mage student
+M 0 14223 3 14349
+M 0 14223 3 14345
+M 0 14224 3 14343 warrior student
+M 0 14224 3 14344
+M 0 14224 3 14347
+M 0 14225 3 14348 cleric student
+M 0 14225 3 14345
+M 0 14225 3 14349
+S
+
+
+#SHOPS
+ 14210   0  0  0  0  0   105  80         0 20   ; The bakery boss
+ 14213   2  0  0  0  0   105  80         6 20   ; The scroll boss
+ 14211   5  0  0  0  0   105  80         6 19   ; The weapon boss
+ 14212   9  0  0  0  0   105  80         6 20   ; The armour boss
+0
+
+
+#SPECIALS
+M  14208 spec_breath_any
+M  14214 spec_cast_adept
+M  14215 spec_breath_any
+M  14216 spec_breath_any
+S
+
+
+#$

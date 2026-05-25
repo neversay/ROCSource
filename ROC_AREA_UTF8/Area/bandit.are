@@ -1,0 +1,7015 @@
+#AREADATA
+Name        盜賊要塞~
+Identity    bandit~
+Builders    Pax~
+Translator  Pluto~
+Modifier    Coconet~
+VNUMs	      4000 4199
+Security    1
+Recall      4580
+F_toggle    65536|524288|1048576
+End
+
+
+
+#MOBILES
+#4000
+chief-bandit bandit chief~
+盜賊頭頭(Bandit Chief)~
+盜賊頭頭(bandit chief)正高貴的坐在這裡。
+~
+他看起來沒什麼特別的。
+~
+1|2|64|1024|2048|4096|8192|262144|524288|8388608|16777216 8|32|128|512|8192|32768|65536|4294967296 -1000 S
+60 3000 0 30d-80+1000 0d-500+50
+-1 0
+0 8 0
+K circle darkraid track nightstalk assassination reflexion *untangle 'deadly strike' escape morphing backstab sneak
+ 'enhanced damage' 'tricky pacing' scan dodge hide critical 'dart mastery'~
+J assassin ninja ranger~
+C 1|4|8
+P 1|4|8|256|8192|16384|4194304|8388608|16777216
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self bandit_chief_heal -1 20 20 20 1 0
+~
+>all_greet_prog 100~
+if is_equ_obj($i) != 4004
+	wear bronze-dagger
+endif
+if is_equ_obj($i) != 4056
+	wear assassination-dagger
+endif
+if is_qmark($n) == bandit_enemy
+	if hitprcnt($i) > 50
+		if rand(20)
+			bs $n
+			mpnowait
+		else
+			assa $n
+			mpnowait
+			flee
+			flee
+			flee
+		endif
+	else
+		if rand(50)
+			assa $n
+			mpnowait
+			flee
+			flee
+			flee
+		else
+			bs $n
+			mpnowait
+		endif
+	endif
+	break
+endif
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_thief_exam
+		say 小子，沒有經過我的認定你只能夠稱為普通的盜賊。
+		mpcallout 1 say 如果想要成為真正的盜賊，最好向我好好請教一下。
+		mpcallout 1 mpadd_qmark $n bandit_thief_exam -1 1 0 0 0 1
+		break
+	endif
+else
+	say 職業不是盜賊的你，能夠走到我面前來已經算是不錯了。
+	mpcallout 1 say 說吧！有什麼問題或要求，如果我能夠辦到一定儘量幫助你。
+endif
+if is_qmark($n) == bandit_thief_exam 100005
+	if class($n) == 10
+		say 你來了啊！我的得力助手....
+		mpcallout 1 mpechoat $n $I 仔細打量著你....
+		mpcallout 1 mpechoaround $n $I 仔細打量著 $n ....
+		mpcallout 2 say 看來自從你上次離開至今，又長進了不少。
+		mpcallout 3 gig
+		mpcallout 4 say 我想你應該有能力挑戰進一步的試練。
+		mpcallout 5 say 通過的話，還可以學到新的技能！如果你夠小心的話。
+		mpcallout 6 chuckle
+		mpcallout 7 say 怎樣！想不想試試啊(sure/not sure)？
+		break
+	endif
+endif
+if is_qmark($n) >= bandit_thief_exam 100006
+	if class($n) == 10
+		say 如果你想再次回去修練(discipline)，就告訴我一聲。
+	endif
+endif
+~
+>talk_prog topic~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) == bandit_thief_exam 100001
+		say 我給你幾個任務，看看你是否有資格能夠接受我們的盜賊試煉。
+		say 你有足夠的勇氣與技巧接受嗎(yes/no)？
+		break
+	endif
+endif
+if class($n) == 10
+	if is_qmark($n) == bandit_thief_exam 100005
+		say 看來你已經逐漸的成長茁壯了，那麼該是接受最後試練的時候了，
+		say 最後的試練，你必須利用你所有曾經學會或是即將學會的技能，
+		say 去達到最後的這項修練。如果你準備好，就請告訴我(sure)。
+	endif
+endif
+if is_qmark($n) == bandit_thief_exam 100006
+	say 看來你是失敗了，別灰心。如果準備好了，想要再試一次，
+	say 那就再跟我說一下吧(discipline)。
+endif
+if is_qmark($n) == bandit_thief_exam 100007
+	say 你又來了呀，想要進去試煉再提升你的實力嗎(discipline)？
+endif
+~
+>talk_prog yes~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) == bandit_thief_exam 100001
+		if is_qmark($n) == thief_quest_list 100000
+			mpmod_qmark $n bandit_thief_exam v0 = 2
+			say 很好，這邊的任務可不是像在史卡拉貝那種小兒科的任務。
+			mpcallout 1 say 想要加入我們，沒有一定的實力是不行的。
+			mpcallout 2 say 當然，如果有幸成為我們的一員！
+			mpcallout 3 say 能夠享受的利益是遠比一般盜賊公會好的多。
+			mpcallout 4 hmm $n
+			mpcallout 5 say 既然你有心想要加入，我就先給你一個任務，
+			mpcallout 6 say 看看你的實力能不能符合我的要求吧。
+			mpcallout 7 hmm $n
+			mpcallout 8 say 最近我珍藏的一批珠寶竟然莫名的消失了，
+			mpcallout 9 say 看來應該是要塞裡面的內賊所為，這件事情我尚未處理。
+			mpcallout 10 say 不過你既然有心想加入，我看就當做你的考驗吧！
+			mpcallout 11 say 你去把我遭竊的珠寶找回來。
+			 mpcallout 12 mpat 4120 mpmload 4049
+			mpcallout 13 say 拿回來後直接把東西給我吧。
+			mpcallout 14 say 至於那個可惡的叛徒，他如果願意主動拿出來就算了。
+			mpcallout 15 say 不願意的話，你就替我教訓教訓他吧！
+			mpcallout 16 wave
+		else
+			mpcallout 1 mpechoat $n $I 不屑的看了你一眼....
+			mpcallout 1 mpechoaround $n $I 不屑的看了 $n 一眼....
+			mpcallout 2 say 連史卡拉貝那種小兒科任務都還沒完全解決的人，
+			mpcallout 3 say 我是不會要的。你去多磨練自己吧！
+		endif
+	endif
+endif
+~
+>talk_prog no~
+if is_qmark($n) ==bandit_thief_exam 100000
+	say 看來你是膽怯了。
+	mpcallout 1 say 等你有了足夠的勇氣與技巧的時候，再來找我吧！
+endif
+~
+>talk_prog p not sure~
+if is_qmark($n) == bandit_thief_exam 100005
+	ponder $n
+	mpcallout 1 say 既然你尚心存顧忌！就先去鍛鍊鍛鍊自己吧！
+	mpcallout 2 say 我就不逼你了！
+	mpcallout 3 wave $n
+endif
+~
+>talk_prog p sure~
+if class($n) == 10
+	if is_qmark($n) == bandit_thief_exam 100005
+      		gig
+      		mpmod_qmark $n bandit_thief_exam v0 = 6
+                mpcallout 1 say 很好很好！我果然沒看錯人，
+                mpcallout 2 say 我這就送你過去！
+                mpcallout 3 mpcall set_guardian
+                mpcallout 4 mpecho 你聽到一陣奇怪的喀喀聲，似乎是機關運作的聲響。
+                mpcallout 5 mptransfer $n 4152
+                mpcallout 6 mpat 4152 mpechoat $n 機關運作的喀喀聲停止後，你被送到了一間密室。
+	endif
+endif
+~
+>defun_prog set_guardian~
+mpat 4155 mppurge guardian-bandit
+mpat 4155 mpmload 4054
+mpat 4159 mppurge guardian-bandit
+mpat 4159 mpmload 4055
+mpat 4160 mppurge guardian-bandit
+mpat 4160 mpmload 4056
+mapt 4161 mppurge guardian-bandit
+mpat 4161 mpmload 4057
+mpat 4162 mppurge guardian-bandit
+mpat 4162 mpmload 4058
+mpat 4163 mppurge guardian-bandit
+mpat 4163 mpmload 4059
+mpat 4164 mppurge guardian-bandit
+mpat 4164 mpmload 4060
+~
+>talk_prog discipline~
+if class($n) == 10
+      if is_qmark($n) == bandit_thief_exam 100007
+                say 沒問題，我這就送你過去！
+                mptransfer $n 4152
+               	mpcall dis_guardian
+                mpcall set_guardian
+      endif
+      if is_qmark($n) == bandit_thief_exam 100006
+      		sm $n
+                mpcallout 1 say 很好！你的確很努力，
+                mpcallout 2 say 我這就送你過去！
+                mpcallout 3 mpcall dis_guardian
+                mpcallout 4 mpcall set_guardian
+                mpcallout 4 mpechoat $n 你聽到一陣奇怪的喀喀聲，似乎是機關運作的聲響。
+                mpcallout 5 mptransfer $n 4152
+                mpcallout 6 mpat 4152 mpechoat $n 機關運作的喀喀聲停止後，你被送到了一間密室。
+      endif
+endif
+~
+>defun_prog dis_guardian~
+mpat 4155 mppurge guardian-bandit
+mpat 4159 mppurge guardian-bandit
+mpat 4160 mppurge guardian-bandit
+mpat 4161 mppurge guardian-bandit
+mpat 4162 mppurge guardian-bandit
+mpat 4163 mppurge guardian-bandit
+mpat 4164 mppurge guardian-bandit
+~
+>give_prog 4067~
+if is_qmark($n) == bandit_thief_exam 100003
+        if is_qmark($n) != bandit_thief_jewel
+                mpadd_qmark $n bandit_thief_jewel -1 1 0 0 0 1
+                mpjunk all.jewel
+                say 我收到珠寶了。
+        else
+                if is_qmark($n) == bandit_thief_jewel 100002
+                        mpjunk all.jewel
+                        say 沒錯都齊了。
+                        say 你合格了，恭喜你成為我們的一員(member)。
+	        mpechoat $n 你心想 ：「該問問成員該有的優待吧？」
+                        mpmod_qmark $n bandit_thief_exam v0 = 4
+                        mpdel_qmark $n bandit_thief_jewel
+                else
+                        say 我不需要這個，你已經給過了。
+                        drop jewel
+                endif
+        endif
+else
+        say 你給我這做什麼？
+        drop jewel
+endif
+~
+>give_prog 4068~
+if is_qmark($n) == bandit_thief_exam 100003
+        if is_qmark($n) != bandit_thief_jewel
+                mpadd_qmark $n bandit_thief_jewel -1 2 0 0 0 1
+                mpjunk all.jewel
+                say 我收到珠寶了。
+        else
+                if is_qmark($n) == bandit_thief_jewel 100001
+                        mpjunk all.jewel
+                        say 沒錯都齊了。
+                        say 你合格了，恭喜你成為我們的一員(member)。
+	        mpechoat $n 你心想 ：「該問問成員該有的優待吧？」
+                        mpmod_qmark $n bandit_thief_exam v0 = 4
+                        mpdel_qmark $n bandit_thief_jewel
+                else
+                        say 我不需要這個，你已經給過了。
+                        drop jewel
+                endif
+        endif
+else
+        say 你給我這做什麼？
+        drop jewel
+endif
+~
+>defun_prog resp_check~
+say 你可以向我學習盜賊新技能：「解除陷阱」了
+mpadd_qmark $n untangle -1 1 0 0 0 1
+if resp($n) >= 8
+	mpoload 4065 $n viclv target
+	break
+endif
+if resp($n) >= 5
+	mpoload 4064 $n viclv target
+	break
+endif
+if resp($n) >= 3
+	mpoload 4063 $n viclv target
+	break
+endif
+if resp($n) >= 0
+	mpoload 4062 $n viclv target
+endif
+~
+>talk_prog member~
+if is_qmark($n) == bandit_thief_exam 100004
+	mpcallout 1 mpechoat $n $I仔細地打量你。
+	mpcallout 2 say 依照你的能力，我給你我們的證明。
+	mpcallout 3 mpcall resp_check $n
+	mpcallout 4 mpechoat $n $I 把盜賊的守則給了你。
+	mpmod_qmark $n bandit_thief_exam v0 = 5
+else
+	say 你還不夠格啊！
+endif
+~
+>talk_prog restart~
+if is_qmark($n) == bandit_thief_exam
+	if is_qmark($n) == bandit_thief_exam 100005
+		mpechoat $n 「遠處傳來一陣聲音：你已經完成本任務了！」
+		break
+	else
+		mpmod_qmark $n bandit_thief_exam v0 = 1
+		mpechoat $n 「遠處傳來一陣聲音：你的任務重新開始了！」
+	endif
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if hitprcnt($i) < 30
+	if is_qmark($i) > bandit_chief_heal 300001
+		mpecho [1;33m$I 吃下了一顆[0m[1;36m青色藥丸[0m[1;33m....[0m
+		mpat 5 c 3 'doubl heal'
+		mpmod_qmark self bandit_chief_heal v2 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 300001
+			yell 糟糕！我身上已經沒有[1;36m青色藥丸[0m了！
+			mpmod_qmark self bandit_chief_heal v2 = 0
+		endif
+	endif
+endif
+if hitprcnt($i) < 50
+	if is_qmark($i) > bandit_chief_heal 200001
+		mpecho [1;33m$I 吃下了一顆[0m[1;31m紅色藥丸[0m[1;33m....[0m
+		mpat 5 c 2 'double heal'
+		mpmod_qmark self bandit_chief_heal v1 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 200001
+			yell 糟糕！我身上已經沒有[1;31m紅色藥丸[0m了！
+			mpmod_qmark self bandit_chief_heal v1 = 0
+		endif
+	endif
+endif
+if hitprcnt($i) < 70
+	if is_qmark($i) > bandit_chief_heal 100001
+		mpecho [1;33m$I 吃下了一顆[0m白色藥丸[1;34m....[0m
+		mpat 5 c 'double heal'
+		mpmod_qmark self bandit_chief_heal v0 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 100001
+			yell 糟糕！我身上已經沒有[1;37m白色藥丸[0m了！
+			mpmod_qmark self bandit_chief_heal v0 = 0
+		endif
+	endif
+endif
+if is_equ_obj($i) != 4004
+	wear bronze-dagger
+endif
+if is_equ_obj($i) != 4056
+	wear assassination-dagger
+endif
+if rand(80)
+	disarm
+	mpnowait
+	yell $n 死吧！看我的背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	mpdef_rembch null-tar
+endif
+if rand(50)
+	disarm
+	mpnowait
+	yell $n 死吧！看我的連續背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	if insameroom($b)
+		mpgoto $b
+		bs $b
+		mpnowait
+	endif
+	mpdef_rembch null-tar
+endif
+~
+>kill_prog 100~
+if ispc($n)
+	mpget $n 3 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	shout 我竟然會被身為盜賊的人所擊敗，我不甘心....！
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	shout $n 我會記住你的，今後你將會被我的屬下所追殺....！
+endif
+~
+|
+#4001
+prince-bandit bandit prince~
+盜賊王子(Bandit Prince)~
+英俊的盜賊王子(bandit prince)有些事情要拜託你。
+~
+他身上並沒有什麼特別的。
+~
+1|2|4|64|1024|2048|4096|8192|262144|524288|8388608|16777216 8|32|128|512|8192|32768|65536 -1000 S
+50 3000 0 20d-30+500 0d-700+30
+-1 0
+0 8 0
+C 1|4|8
+P 8|256|8192|16384|4194304|8388608|16777216
+S 41 150
+S 42 150
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if being(princess-bandit)
+else
+	mpmload 4002
+endif
+if insameroom(princess-bandit)
+else
+	mptransfer princess-bandit
+	mpforce princess-bandit mpat 5 c 'full heal'
+endif
+mpgroup princess-bandit self 1 0
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+mpcall bandit_prince_heal $n
+if is_equ_obj($i) != 4060
+	wear poisonous-dagger
+endif
+if rand(50)
+	disarm
+	mpnowait
+	yell $n 死吧！看我的背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	mpdef_rembch null-tar
+endif
+if rand(30)
+	disarm
+	mpnowait
+	yell $n 看我的連續背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	if insameroom($b)
+		mpgoto $b
+		bs $b
+		mpnowait
+	endif
+	mpdef_rembch null-tar
+endif
+~
+>rand_prog 50~
+mpcall bandit_prince_heal
+~
+>defun_prog bandit_prince_heal~
+if insameroom(princess-bandit)
+	if isaffected($i) & 1
+		mpforce princess-bandit c 'cure blindness' prince-bandit
+	endif
+	if isaffected($i) !& 128
+		mpforce princess-bandit c sanc prince-bandit
+	endif
+	if isaffected($i) & 1024
+		mpforce princess-bandit c 'remove curse' prince-bandit
+	endif
+	if isaffected($i) & 4096
+		mpforce princess-bandit c 'cure poison' prince-bandit
+	endif
+	if isaffected($i) & 268435456
+		mpforce princess-bandit c vivi prince-bandit
+	endif
+	if hitprcnt($i) < 30
+		mpforce princess-bandit c 3 'double heal' prince-bandit
+		break
+	endif
+	if hitprcnt($i) < 50
+		mpforce princess-bandit c 2 'double heal' prince-bandit
+		break
+	endif
+	if hitprcnt($i) < 70
+		mpforce princess-bandit c 'double heal' prince-bandit
+	endif
+endif
+~
+>kill_prog 100~
+if ispc($n)
+	mpget $n 3 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell 我竟然會被身為盜賊的人所擊敗，我不甘心....！
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell $n 我會記住你的，我的父王將為我報仇....！
+endif
+~
+|
+#4002
+princess-bandit bandit princess~
+盜賊公主(Bandit Princess)~
+美麗的盜賊公主(bandit princess)靜靜的看著你。
+~
+她身上並沒有什麼特別的。
+~
+1|2|4|64|1024|2048|4096|8192|262144|524288|8388608|16777216 8|32|128|512|8192|32768|65536 -1000 S
+50 3000 0 20d-30+500 0d-400+30
+-1 0
+0 8 0
+C 1|4|8
+P 8|256|8192|16384|1048576|2097152|4194304|8388608|16777216|67108864
+S 41 150
+S 42 150
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 4114
+mpoload 4115
+mpoload 4116
+mpat 5 wear all
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if ispc($r)
+	if rand(25)
+		c blindness $r
+	else
+		if rand(33)
+			c 3 poison $r
+		else
+			if rand(50)
+				c 3 curse $r
+			else
+				c crush $r
+			endif
+		endif
+	endif
+endif
+mpcall bandit_princess_heal $n
+~
+>rand_prog 50~
+mpcall bandit_princess_heal
+~
+>defun_prog bandit_princess_heal~
+if mobcount(4001) > 0
+	if insameroom(prince-bandit)
+	else
+		yell 請王子回到我身邊幫助我擊退外敵！
+		mpecho [1;33m盜賊王子(Bandit Prince) 忽然出現了！[0m
+		mptransfer prince-bandit
+	endif
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if isaffected($i) !& 128
+	c sanc
+endif
+if isaffected($i) & 1024
+	c 'remove curse'
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+endif
+if hitprcnt($i) < 30
+	c 3 'gdouble heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 50
+	c 2 'gdouble heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 30
+	c 'gdouble heal'
+	mpnowait
+endif
+~
+>kill_prog 100~
+if ispc($n)
+	mpget $n 3 0
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell 我竟然會被身為盜賊的人所擊敗，我不甘心....！
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell $n 我會記住你的，我的父王將為我報仇....！
+endif
+~
+|
+#4003
+smugglar~
+偷渡者(smugglar)~
+這個偷渡者(smugglar)正在找尋可以犧牲的對象。
+~
+他身上並沒有什麼特別的。
+~
+1|4|32|64 0 -300 S
+37 0 0 1d1+1 1d1+1
+0 0
+0 8 0
+C 1
+P 4194304
+#4004
+scout~
+斥候(scout)~
+斥候(scout)在這裡守護著出入口。
+~
+他身上並沒有什麼特別的。
+~
+1|4|32|64 32 -350 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+C 1
+P 4194304
+#4005
+veteran bandit~
+老練的盜賊(veteran bandit)~
+老練的盜賊(veteran bandit)正要向你攻擊過來。
+~
+他身上並沒有什麼特別的。
+~
+1|3|4|32|128 8|32|512 -700 S
+40 0 0 1d1+1 1d1+1
+0 0
+0 8 0
+P 4194304
+#4006
+scarry thug~
+可怕的刺客(scarry thug)~
+一個臉上面露兇狠表情的可怕刺客(scarry thug)站在這裡。
+~
+~
+1|2|32|64 256 -600 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4007
+thief~
+小賊(thief)~
+一個小賊(thief)在這裡到處閒晃。
+~
+~
+1|4|32 0 -300 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4008
+bandit guard~
+盜賊守衛(bandit guard)~
+盜賊守衛(bandit guard)站在這裡。
+~
+~
+1|32 0 -500 S
+43 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4009
+brigand~
+土匪(brigand)~
+你看到一個土匪(brigand)站在這邊。
+~
+~
+1|4|32|64 32 -250 S
+46 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4010
+gangster~
+歹徒(gangster)~
+一個歹徒(gangster)站在這邊。
+~
+~
+1|32 0 -500 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4011
+scoundrel~
+惡棍(scoundrel)~
+一個惡棍(scoundrel)正在把玩自己身上那把血腥的匕首。
+~
+~
+1|2|4|32|64 0 -500 S
+41 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4012
+scamp~
+流氓(scamp)~
+一個流氓(scamp)在這邊試著要幹掉你。
+~
+~
+1|32|64 0 -400 S
+41 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4013
+burglar~
+竊賊(burglar)~
+一個竊賊(burglar)站在這邊。
+~
+~
+1|32|64 0 -300 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4014
+scavenger~
+清道夫(scavenger)~
+一個清道夫(scavenger)正在清理地上的垃圾。
+~
+~
+1|4|64 0 -100 S
+38 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4015
+wicked bandog~
+惡犬(bandog)~
+一頭被繩子拴住的惡犬(bandog)正在找尋晚餐。
+~
+~
+1|2|32|64|128 0 -50 S
+36 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Animal~
+#4016
+bandit leader~
+盜賊隊長(Bandit Leader)~
+盜賊隊長(bandit leader)看到你立刻呼喊其他士兵前來。
+~
+~
+1|4|32|64 0 -750 S
+40 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+P 8|256|4194304|8388608|16777216
+#4017
+rogue~
+強盜(rogue)~
+一個面貌醜惡的強盜(rogue)妄想著你身上的錢財。
+~
+~
+1|32 0 -300 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4018
+beggar~
+乞丐(beggar)~
+可憐的乞丐(beggar)希望你能給他一點錢。
+~
+~
+1|4|128 0 -50 S
+34 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4019
+keith-bandit foreman keith~
+凱司(Keith)~
+領班 - 凱司(Keith)靜靜的坐在這裡。
+~
+他坐在酒店裡頭與其他冒險者聊天，不過你似乎發現他的眼神有些慧黠。此外他的手上拿
+著一把特別的鑰匙(key)。
+~
+1|2 8|32|128|512|8192 0 S
+47 3000 0 30d-50+0 0d200+0
+0 0
+0 8 0
+C 1|4|8
+P 8|256|4194304|8388608|16777216
+S 41 200
+S 42 200
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpmload 4065
+~
+>talk_prog topic~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if resp($n) > 10
+		say 這不就是在史卡拉貝大名鼎鼎的 $n 嗎？
+	else
+		if resp($n) > 5
+			say 這不就是遠近馳名的 $n 嗎？
+		else
+			say 喔！原來是盜賊同志 $n 啊？
+		endif
+	enidif
+	say 怎麼？有什麼事情嗎？
+else
+	say 嗨！你好，有什麼事情需要我的幫忙嗎？
+endif
+~
+>talk_prog key~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	say 我手上的鑰匙啊？那是....有些特殊用途(for some purpose)的。
+	gigi
+else
+	say 鑰匙？不過是件裝飾品而已？
+	say 我說怎麼，你是在質問我還是拷問我嗎？
+	angry
+endif
+~
+>talk_prog p for some purpose~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	say 原來雖然是同志，卻不知道這件事情啊？
+	mpechoat $n $I 偷偷地在你耳朵旁說了些話....
+	mpechoaround $n $I 偷偷地在 $n 耳朵旁說了些話....
+	tell $n 其實這邊就是盜賊要塞(bandit keep)的入口啊！
+else
+	say $n 你在說些什麼呀？我完全聽不懂。
+endif
+~
+>talk_prog p bandit keep~
+if is_qmark($i) == bandit_talking
+	break
+endif
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	mpadd_qmark self bandit_talking
+	gasp $n
+	mpechoat $n $I 將你偷偷拉到房間一旁....
+	mpechoaround $n $I 將 $n 偷偷拉到房間一旁....
+	mpcallout 1 tell $n 你怎麼知道盜賊要塞這件事的....？
+	mpcallout 2 tell $n 算了，我不逼問你了....，
+	mpcallout 3 tell $n 但是盜賊要塞的入口位於此處....，
+	mpcallout 4 tell $n 是我們盜賊共同的秘密....，
+	mpcallout 5 tell $n 如果你答應信守承諾(promise)....，
+	mpcallout 6 tell $n 不將這項秘密說出去....，
+	mpcallout 7 tell $n 我可以答應為你開門。
+	mpcallout 7 mpdel_qmark self bandit_talking
+else
+	say $n 你在說些什麼呀？我完全聽不懂。
+endif
+~
+>talk_prog promise~
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	good $n
+	mpechoat $n $I 偷偷地將一把鑰匙交給了你....
+	mpechoaround $n $I 不知道塞了什麼東西給 $n ....
+	mpoload 4000 $n viclv target
+	tell $n 這把鑰匙可以打開此處往下通往盜賊要塞的門，
+	tell $n 前往該處接受更多盜賊的訓練吧！
+endif
+~
+>fight_prog 100~
+if insameroom(wizard-bandit)
+	mpforce wizard-bandit rescue keith-bandit
+else
+	if insameroom(ninja-bandit)
+		mpforce ninja-bandit rescue keith-bandit
+	endif
+endif
+~
+|
+#4020
+waiter-bandit waiter~
+侍者(waiter)~
+侍者(waiter)正忙著招待參觀的人潮。
+~
+~
+1 0 0 S
+34 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4021
+spider~
+劇毒蜘蛛(venomous spider)~
+一隻含有劇毒的蜘蛛(venomous spider)在這裡。
+~
+~
+1|32|64 0 -50 S
+37 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Arachnid~
+#4022
+small viper~
+小毒蛇(small viper)~
+一條小毒蛇(small viper)在這裡。
+~
+~
+1 0 -50 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Snake~
+#4023
+serpent~
+弄蛇人(serpent)~
+一個弄蛇人(serpent)坐在這邊向你噴出劇毒的毒煙。
+~
+~
+1|32 0 -50 S
+37 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+#4024
+snake~
+蛇(snake)~
+一條蛇(snake)在草地上滑行。
+~
+~
+1 0 0 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Snake~
+#4025
+maggots~
+蛆(maggots)~
+你看到一些蛆(maggots)在這邊。
+~
+~
+1 0 -10 S
+36 1 0 1d1+1 1d1+1
+0 0
+0 8 0
+R Worm~
+#4026
+wasp~
+黃蜂(wasps)~
+一隻黃蜂(wasps)在你耳邊嗡嗡的叫。
+~
+~
+33 0 -50 S
+14 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Insect~
+#4027
+toad~
+蟾蜍(toad)~
+一隻巨大的蟾蜍(toad)向你發出奇怪的叫聲。
+~
+~
+33 0 -50 S
+14 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Insect~
+#4028
+lizard~
+蜥蜴(lizard)~
+一頭小蜥蜴(lizard)從你的腳邊滑行過去。
+~
+~
+1 0 -10 S
+25 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Lizardman~
+#4029
+toxic worm~
+毒蟲(toxic worm)~
+一頭毒蟲(toxic worm)靜靜的躺在草地上，應該沒有危險才對。
+~
+~
+1 0 -10 S
+22 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Worm~
+#4030
+reaper~
+收割者(horrible reaper)~
+一個辛勤工作的收割者(reaper)在這邊。
+~
+~
+3 0 -300 S
+25 1 0 1d1+1 3d5+5
+-1 0
+0 8 0
+#4031
+Razorman Jailor~
+獄卒 - 剃刀(Razorman the Jailor)~
+獄卒 - 剃刀(razorman the jailor)坐在這邊，跟他打交道的結果只有死！
+~
+~
+99 131072 -700 S
+31 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4032
+old man oldman~
+老人(oldman)~
+一個瀕死的老人(oldman)靜靜的躺在這邊。
+~
+~
+3 131072 -10 S
+11 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4033
+giant troll~
+巨大的洞穴巨人(giant troll)~
+一頭巨大的洞穴巨人(giant troll)被囚禁在這邊。
+~
+~
+3 1024 100 S
+38 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R Troll~
+#4034
+thug~
+刺客(thug)~
+一個刺客(thug)站在這邊。
+~
+~
+37 0 -300 S
+17 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4035
+bandit soldier~
+盜賊士兵(bandit soldier)~
+一個強壯的盜賊士兵(bandit soldier)在這邊等待上級的命令。
+~
+~
+35 0 -300 S
+21 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4036
+scavenger~
+清道夫(scavenger)~
+清道夫(scavenger)正在清理這間休息室。
+~
+~
+35 0 -500 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4037
+prince~
+英俊王子(handsome prince)~
+英俊的王子(handsome prince)對你古怪的一笑。
+~
+~
+33 0 -750 S
+39 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+P 4194304
+#4038
+bandit~
+盜賊(bandit)~
+一個盜賊(bandit)在這邊用奇怪的眼光看著你。
+~
+~
+37 0 -300 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4039
+bandit guard~
+盜賊守衛(bandit guard)~
+一個盜賊守衛(bandit guard)在這邊。
+~
+~
+35 0 -500 S
+17 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4040
+bandit guard~
+盜賊守衛(bandit guard)~
+一個盜賊守衛(bandit guard)在這邊。
+~
+~
+35 0 -500 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4041
+bandit guard~
+盜賊守衛(bandit guard)~
+一個盜賊守衛(bandit guard)在這邊看守著。
+~
+~
+35 0 -500 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4042
+bandit guard~
+盜賊守衛(bandit guard)~
+一個盜賊守衛(bandit guard)在這邊。
+~
+~
+35 0 -500 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4043
+bandit guard~
+盜賊守衛(bandit guard)~
+一個盜賊守衛(bandit guard)在這邊。
+~
+~
+35 0 -500 S
+18 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4044
+scout~
+斥候(scout)~
+斥候(scout)在這裡守護著出入口。
+~
+他身上並沒有什麼特別的。
+~
+101 32 -350 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4045
+scout~
+斥候(scout)~
+斥候(scout)在這裡守護著出入口。
+~
+他身上並沒有什麼特別的。
+~
+101 32 -350 S
+20 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4046
+scout~
+斥候(scout)~
+斥候(scout)在這裡守護著出入口。
+~
+他身上並沒有什麼特別的。
+~
+101 32 -350 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4047
+scout~
+斥候(scout)~
+斥候(scout)在這裡守護著出入口。
+~
+他身上並沒有什麼特別的。
+~
+101 32 -350 S
+19 1 0 1d1+1 1d1+1
+-1 0
+0 8 0
+#4048
+free swordman~
+閒晃的劍客(free swordman)~
+一個劍術精湛的劍客(swordman)待在街上閒晃。
+~
+他是一個劍術十分精湛的劍客，但是卻成天無所事事的在街上閒晃。
+~
+1|64|128|2048|4096|8192|16384|524288|8388608 8|32|8192|16384 300 S
+70 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+S 13 50000
+S 18 120
+S 19 150
+S 39 -200
+S 40 60
+S 41 300
+S 42 300
+S 43 150
+S 44 150
+C 1|8
+P 1|4|8|256|4194304|1073741824|2147483648
+>repop_prog 100~
+mpat 5 mpoload 4061
+mpat 5 wear all
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self free_swordman_mist -1 0 0 0 1 0
+~
+>tick_prog 100~
+if is_qmark($i) > free_swordman_mist 100150
+	break
+endif
+if is_qmark($i) == free_swordman_mist
+	mpmod_qmark self free_swordman_mist v0 + 1
+endif
+if is_qmark($i) > free_swordman_skara 100080
+	break
+endif
+if is_qmark($i) == free_swordman_skara
+	mpmod_qmark self free_swordman_skara v0 + 1
+endif
+~
+>tick_prog 30~
+if is_qmark($i) >= free_swordman_mist 100150
+	mpdel_qmark self free_swordman_mist
+	say 在光明之鎮上走真無聊，
+	mpcallout 1 say 到史卡拉貝城去看看好了。
+	mpcallout 2 mpadd_qmark self free_swordman_skara -1 0 0 0 1 0
+	mpcallout 2 mpecho $I來了。
+	mpcallout 2 mpgoto 3049
+	mpcallout 2 mpecho $I離開了這裡。
+endif
+~
+>tick_prog 30~
+if is_qmark($i) >= free_swordman_skara 100080
+	mpdel_qmark self free_swordman_skara
+	hmm
+	mpcallout 1 say 還是再回光明之鎮一趟好了。
+	mpcallout 2 mpadd_qmark self free_swordman_mist -1 0 0 0 1 0
+	mpcallout 2 mpecho $I來了。
+	mpcallout 2 mpgoto 4522
+	mpcallout 2 mpecho $I離開了這裡。
+endif
+~
+>fight_prog 30~
+if rand(30)
+	circular
+	mpnowait
+else
+	perform empslash
+	mpnowait
+endif
+if rand(30)
+	flaming
+	mpnowait
+else
+	icecore
+	mpnowait
+endif
+~
+>fight_prog 50~
+say 憑你這種三腳貓的技巧，也想來跟我挑戰？
+skilldrv multihit $n
+skilldrv heavyhit $n
+skilldrv speedhit $n
+if rand(50)
+	if hitprcnt($i) < 70
+		c heal
+	endif
+	if hitprcnt($i) < 30
+		c 'double heal'
+	endif
+endif
+~
+>fight_prog 30~
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+endif
+if isaffected($i) & 8388608
+	grin
+	mpdis_magic self mute
+	say 禁言術對我來說是沒有用的。
+	mpecho $I 身上的禁言術消失了....。
+endif
+if isaffected($i) & 16777216
+	shake
+	say 你無法封鎖我身上的魔法。
+	mpdis_magic self 'seal magic'
+	mpecho $I 身上的封鎖魔法失效了....。
+endif
+if isaffected($i) & 268435456
+	say 麻痺術怎麼可能對我有效呢？
+	mpdis_magic self paralyze
+	mpecho $I 的身體再度又能夠活動自如....。
+endif
+~
+|
+#4049
+sneaky man~
+鬼鬼祟祟的人(sneaky man)~
+一個鬼鬼祟祟的人(sneaky man)在這裡張望著。
+~
+他身上好像帶了些什麼。
+~
+1|64|2048|262144 8|32|64|512|65536 -350 S
+30 1000 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R human~
+C 4
+>talk_prog topic~
+ if is_qmark($n) == bandit_thief_exam 100002
+      mpcallout 1 say 我是那麼沒骨氣的人嘛！
+      mpcallout 2 say 就憑你三兩句話就要我把東西交給你！
+      mpcallout 3 say 未免太小看人了吧！
+      mpcallout 4 say 要就放馬過來。
+      mpmod_qmark $n bandit_thief_exam v0 = 3
+ endif
+~
+>repop_prog 100~
+ 	mpat 5 mpoload 4036
+ 	mpat 5 mpoload 4037
+ 	mpat 5 mpoload 4038
+ 	mpat 5 mpoload 4039
+ 	mpat 5 wear all
+~
+>defun_prog fleeaway~
+        mpecho 正當你想再扁他一拳時，$I把東西往地上一丟就跑了。
+        mpoload 4067 floor
+~
+>fight_prog 75~
+ if is_qmark($n) == bandit_thief_exam 100003
+        if hitprcnt($i) <= 65
+                 if is_qmark($n) != bandit_thief_jeweldrop
+                        mpadd_qmark self bandit_thief_jeweldrop -1 0 0 0 0 1
+                        mpcallout 1 goto $i
+                        mpcallout 2 say 別..別..別再打了。
+                        mpcallout 3 say 我投降了！你們好心點停手吧，再打會出人命的！
+                        mpcallout 4 say 東西我還你們就是了！
+                        mpcallout 5 say 不過一部分我已經賣了。
+                        mpcallout 6 say 賣到了黑市，那個商人住在垃圾場附近。
+                        mpcallout 7 mpcall fleeaway
+                        mpcallout 8 mpat 5 mppurge self
+                endif
+        endif
+endif
+~
+|
+#4050
+merchant~
+黑市交易商(merchant)~
+一個偷偷摸摸的商人(merchant)試圖躲避你的視線。
+~
+他身上好像帶了些什麼。
+~
+1|64|2048|262144 32|64|512 -350 S
+28 10000 0 1d1+1 1d1+1
+-1 0
+0 8 0
+R human~
+C 4
+P 8
+S 41 500
+S 17 -500
+>greet_prog 100~
+if is_equ_obj($n) == 4066
+        say 你好！今天想賣點什麼？
+        if is_qmark($n) == bandit_thief_exam 100003
+                mpjunk all
+                mpoload 4068 35
+        endif
+else
+        say 大膽！敢闖進來！
+        mpkill $n
+endif
+~
+|
+#4051
+dog-bandit dog~
+看門狗(dog)~
+一條看門狗(dog)正對著你狂吠。
+~
+它的利牙上卡著不知是誰的血肉。
+~
+1|2|32|64|2048 8|32|512|8192 -350 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+C 1
+P 8|256|4194304
+#4052
+bodyguard-bandit bodyguard~
+保鑣(bodyguard)~
+一個強壯的保鑣(bodyguard)在這守護著他的主人。
+~
+他確確實實是個大塊頭。
+~
+1|32|64|262144 8|32|512|8192 -350 S
+40 3000 0 0d0+0 0d0+0
+0 0
+0 8 0
+C 1|8|32
+P 8|256|4194304
+A8
+wake+w+w
+mpgoto 4104
+~
+A16
+wake+e+e
+mpgoto 4150
+rest
+~
+|
+>repop_prog 100~
+mpmload 4051
+mpgroup self dog-bandit 1 0
+~
+>fight_prog 100~
+if rand(50)
+	if is_equ_obj($i) != 4018
+		wear club
+		disarm
+		mpnowait
+	endif
+endif
+if rand(50)
+	if insameroom(dog-bandit)
+		say 狗兒，攻擊！
+		mpforce dog-bandit berserk
+		mpforce dog-bandit hunt $n
+		mpforce dog-bandit frenzy
+	endif
+endif
+if rand(50)
+	if rand(33)
+		kick
+		mpnowait
+	else
+		if rand(50)
+			bashhead
+			mpnowait
+		else
+			skilldrv multihit $n
+		endif
+	endif
+endif
+~
+|
+#4053
+ninja tutor~
+忍術導師(ninja tutor)~
+一個不起眼的老人(elder)躲在陰影裡。
+~
+不起眼的外表下，隱隱透露出他經過多年鍛鍊的事實。
+~
+1|2|64|1024|2048|16384|16777216 8|32|512|65536 0 S
+52 3000 0 10d10-400 0d0+0
+-1 0
+0 8 1
+R human~
+C 1
+K mark recall~
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4056
+ mpat 5 mpoload 4056
+ mpat 5 mpoload 4064
+ mpat 5 wear all
+~
+>talk_prog topic~
+       emote 輕輕地咳了一下
+       mpcallout 1 mpcall talk_1 $n
+       mpcallout 3 mpcall talk_2 $n
+       mpcallout 5 mpcall talk_3 $n
+       mpcallout 7 mpcall talk_4 $n
+~
+>defun_prog talk_1~
+      say 年輕的冒險者啊！
+      say 我可以教你返回術和標記術！
+      say 但是要學會更高的技巧，卻需要找我的導師。
+~
+>defun_prog talk_2~
+      say 他將自己關在石碑底下，做心靈上的修練。
+      say 為了不讓他人打擾，他將可以解開封印的石板分成七塊。
+      say 交給七個守衛保管。小心，守衛者可是獸化之術的高手。
+~
+>defun_prog talk_3~
+      say 此外，守衛者只會放行他們〝自己人 〞。
+      say 仔細觀察他們的特徵，運用以前學過的技巧，應該能夠通過他們的守護。
+      say 另外，有些地方有特製的機關，最好活用我能教你的技巧。
+~
+>defun_prog talk_4~
+      say 如果你解開了封印。
+      say 我想他老人家也會因為你的努力，而把技巧教你的。
+      say 另外由於石碑乃是由特殊的礦石所製，所以在那休息會有意想不到的效果。
+      say 去吧，冒險者。
+~
+>hitprcnt_prog 40~
+mpat 5 c 'double heal'
+mpnowait
+if rand(30)
+	mpat 5 c 'double heal'
+	mpnowait
+	mpat 5 c heal
+	mpnowait
+else
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+~
+>fight_prog 100~
+if rand(60)
+   if rand(40)
+        yell 忍術   [1;16m龍  煙  術[m
+        c poison $n
+        mpnowait
+        c blindness $n
+        mpnowait
+        c 'faerie fire' $n
+        mpnowait
+        c curse $n
+        mpnowait
+      else
+        if rand(50)
+            yell $n 看招....！
+            yell [1;16m！！暴   雨   狂   花！！[m
+	    skilldrv multihit $n
+            mpnowait
+            skilldrv multihit $n
+            mpnowait
+          else
+	    mpcallout 1 mpcall fight_1 $n
+	    mpcallout 2 mpcall fight_2 $n
+            mpcallout 3 mpdef_rembch null-tar
+        endif
+   endif
+endif
+~
+>defun_prog fight_1~
+ wear assassin
+ wear assassin
+ disarm
+ mpnowait
+~
+>defun_prog fight_2~
+ mpechoat $n $I的身影突然消失在你面前...
+ mpdef_rembch $n
+ mpgoto 5 c invis
+ mpgoto $b
+ mpechoat $b $I的身影突然出現在你身後...
+ vis
+ bs $b
+ mpnowait
+~
+>death_prog 100~
+ yell 沒可能！我竟會敗啊....！
+ mpjunk all
+~
+|
+#4054
+seal guardian-bandit~
+封印守護者(seal guardian)~
+封印守護者(seal guardian)在陰影處看著你。
+~
+沒有特別起眼的特徵，身材也與常人無異，他以前大概是人類吧。
+~
+1|2|32|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4106
+ mpat 5 c 'detect invis'
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n 你心中響起一股聲音：「這不是你該來的地方。」
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+        if race($n) != human
+           mpkill $n
+           break
+        else
+           break
+        endif
+~
+>fight_prog 70~
+ if rand(40)
+      yell 忍術   [1;15m春  花  術[m
+      c 'faerie fire' $n
+      mpnowait
+      c poison $n
+      mpnowait
+ else
+     mpecho 「$I凝聚全身的精力」
+     if rand(40)
+        skilldrv speedhit $n
+        skilldrv speedhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        break
+      else
+        skilldrv heavyhit $n
+        skilldrv speedhit $n
+        break
+     endif
+ endif
+~
+|
+#4055
+seal guardian-bandit~
+封印守護者(seal guardian)~
+封印守護者(seal guardian)在陰影處看著你。
+~
+個子比較矮小，卻一臉智慧的模樣，眼神也散發一股光芒。
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4107
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n 你心中響起一股聲音：「這不是你該來的地方。」
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != gnome
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4056
+seal guardian-bandit~
+封印守護者(seal guardian)~
+封印守護者(seal guardian)在陰影處看著你。
+~
+個子雖然不高，卻結實的像一頭熊。
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4108
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n 你心中響起一股聲音：「這不是你該來的地方。」
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != dwarf
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4057
+seal guardian-bandit~
+封印守護者(seal guardian)~
+封印守護者(seal guardian)在陰影處看著你。
+~
+潔淨的面孔，散發著一股迷人的魅力。
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4111
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n 你心中響起一股聲音：「這不是你該來的地方。」
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != elf
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4058
+seal guardian-bandit~
+封印守護者(seal guardian)~
+封印守護者(seal guardian)在陰影處看著你。
+~
+稍微黝黑的皮膚，卻掩飾不了它俊美的面孔。
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4112
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n 你心中響起一股聲音：「這不是你該來的地方。」
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != drow
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4059
+seal guardian-bandit~
+封印守護者(seal guardian)~
+封印守護者(seal guardian)在陰影處看著你。
+~
+身材比人類矮了一些，手腳看起來卻比比例長了些。
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4113
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n 你心中響起一股聲音：「這不是你該來的地方。」
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != hobbit
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4060
+seal guardian-bandit~
+封印守護者(seal guardian)~
+封印守護者(seal guardian)在陰影處看著你。
+~
+體態輕盈，正在空中飛舞著。
+~
+1|2|64|2048|8192|16384 32|64 0 S
+40 1000 0 20d10+100 10d0+0
+-1 0
+0 8 0
+R Werewolf~
+C 1
+P 8
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpat 5 mpoload 4060
+ mpat 5 mpoload 4110
+ mpat 5 wear all
+~
+>all_greet_prog 100~
+  if class($n) != 10
+     mpechoat $n 你心中響起一股聲音：「這不是你該來的地方。」
+     mptransfer $n 4580
+     break
+  else
+     break
+  endif
+~
+>greet_prog 100~
+  if race($n) != imp
+    mpkill $n
+    break
+  else
+    break
+  endif
+~
+|
+#4061
+flameshadowt~
+火影(flameshadow)~
+要塞忍者的領袖-火影(flameshadow)在這裡靜靜地看著你的到來。
+~
+一個外貌看似六十歲的老者，不過它的眼神卻充滿生氣，一點都不似一個
+老者該有的眼神，看來他已經將自己鍛鍊到了極致。
+~
+1|2|64|1024|2048|4096|8192|16384|16777216 8|32|128|512 0 S
+58 4000 0 10d20+500 0d0+0
+-1 0
+0 8 1
+R human~
+C 1
+K mark recall throwing evade 'dart mastery' scout~
+P 8
+S
+46 200
+>repop_prog 100~
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpoload 4056
+ mpoload 4056
+ mpoload 4106
+ mpoload 4064
+ mpoload 4074
+ mpoload 4107
+ mpoload 4108
+ mpoload 4111
+ mpoload 4112
+ mpoload 4113
+ mpoload 4110
+ mpat 5 wear all
+~
+>talk_prog topic~
+        mpcallout 1 say 終究還是有人能來到這裡。
+        mpcallout 2 say 看來老天爺似乎不想讓我這一身絕技失傳。
+        mpcallout 3 say 孩子，我就把你想學的技巧傳授給你吧！
+~
+>fight_prog 100~
+if rand(60)
+   if rand(40)
+        yell 忍術   [1;18m龍  鬥  發  勁[m
+        mpecho 「$I雙手結印，渾身散發出隱隱黑氣。」
+        mpforcer here add_affect $i bless 0 30 1 18 20 0
+        skilldrv multihit $n
+        mpnowait
+        skilldrv multihit $n
+        mpnowait
+      else
+        if rand(50)
+            yell $n 看招....！
+            yell [1;17m！！森   羅   萬   象！！[m
+	    mpecho 「雙手結印！口中喃喃有辭！突然幻化成三人！」
+            mpdef_rembch $n
+            mptransfer $b 2
+            mpmload 4062 36
+            mpmload 4062 36
+            mptransfer $b
+            mpgoto self
+            mpforce flameshadowf mpgoto self
+            mpforce 2.flameshadowf mpgoto self
+            mpforce flameshadowf mpkill $b
+            mpforce 2.flameshadowf mpkill $b
+            mpdef_rembch null-tar
+          else
+	    mpcallout 1 mpcall fight_1 $n
+	    mpcallout 2 mpcall fight_2 $n
+            mpcallout 3 mpdef_rembch null-tar
+        endif
+   endif
+endif
+~
+>defun_prog fight_1~
+ wear assassin
+ wear assassin
+ disarm
+ mpnowait
+~
+>defun_prog fight_2~
+ mpechoat $n $I的身影突然消失在你面前...
+ mpdef_rembch $n
+ mpgoto 5 c invis
+ mpgoto $b
+ mpechoat $b $I的身影突然出現在你身後...
+ vis
+ bs $b
+ mpdef_rembch null-tar
+ mpnowait
+~
+>rand_prog 100~
+  if insameroom($r)
+     break
+    else
+     mppurge
+  endif
+~
+>death_prog 100~
+ yell 沒可能！我竟會敗啊....！
+ mpjunk all
+ mpnowait
+ mpoload 4074 38
+~
+|
+#4062
+flameshadowf~
+火影(flameshadow)~
+要塞忍者的領袖-火影(flameshadow)在這裡靜靜地看著你的到來。
+~
+一個外貌看似六十歲的老者，不過它的眼神卻充滿生氣，一點都不似一個
+老者該有的眼神，看來他已經將自己鍛鍊到了極至。
+~
+1|2|64|1024|2048|4096|8192|16384|16777216 8|32|128|512 0 S
+36 -1500 0 0d0+500 20d300+0
+-1 0
+0 8 1
+R human~
+P 8
+>repop_prog 100~
+ if insameroom(flameshadowt)
+        mpgroup self flameshadowt 1
+ endif
+ mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+ mpoload 4056
+ mpoload 4056
+ mpoload 4064
+ mpat 5 wear all
+~
+>death_prog 100~
+ mpecho 「$I化成了一道煙消失在空中」
+ mpjunk all
+~
+|
+#4063
+wizard-bandit wizard adventurer~
+冒險者巫師(adventurer wizard)~
+一位經驗老道的冒險者巫師(adventurer wizard)坐在這邊喝酒。
+~
+他擁有巫師所有的技能，不是一個好對付的冒險者，因此你最好不要隨便惹他。
+~
+1|2|64|8192|262144|8388608 8|32|128|512|8192|134217728|68719476736|549755813888 0 S
+45 3000 0 0d-50+-700 0d300+50
+0 0
+0 8 1
+C 2
+P 8|256|1024|4194304|8388608|16777216|268435456
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 4409
+mpat 5 wield translucent twohand
+mpoload 4542
+mpat 5 wear damage
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if mobcount(4065) > 0
+	if insameroom(bishop)
+	else
+		yell 主教快來！
+		mptransfer bishop-bandit
+	endif
+endif
+if rand(30)
+	if is_equ_obj($i) != 4409
+		wield translucent twohand
+	endif
+	if is_equ_obj($i) == 4542
+		brandish
+		mpnowait
+	endif
+	if ispc($r)
+		if class($r) == 5
+		or class($r) == 6
+		or class($r) == 7
+		or class($r) == 8
+			yell 哈哈！讓我幫你施個小法術吧！
+			mpforcer here c 'mystic armor' $r 50
+		endif
+	endif
+endif
+if ispc($r)
+	if rand(25)
+		c 'chill touch' $r
+		mpnowait
+	else
+		if rand(33)
+			c weaken $r
+			mpnowait
+		else
+			if rand(50)
+				c 'seal magic' $r
+				mpnowait
+			else
+				c 'dispel magic' $r
+				mpnowait
+			endif
+		endif
+	endif
+	if rand(25)
+		c 'gas breath' $r
+		mpnowait
+	else
+		if rand(33)
+			c 'star fire' $r
+			mpnowait
+		else
+			if rand(50)
+				c whirlwind $r
+				mpnowait
+			else
+				c fireball $r
+				mpnowait
+			endif
+		endif
+	endif
+endif
+mpcall bandit_group_heal
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if insameroom(bishop-bandit)
+	if hitprcnt($i) < 30
+		mpforce bishop-bandit c 3 'double heal' wizard-bandit
+		break
+	endif
+	if hitprcnt($i) < 50
+		mpforce bishop-bandit c 2 'doubl heal' wizard-bandit
+		break
+	endif
+	if hitprcnt($i) < 70
+		mpforce bishop-bandit c 'double heal' wizard-bandit
+	endif
+endif
+~
+|
+#4064
+monk-bandit monk adventurer~
+冒險者武僧(adventurer monk)~
+一位經驗老道的冒險者武僧(adventurer monk)坐在這邊喝酒。
+~
+他擁有僧侶所有的技能，不是一個好對付的冒險者，因此你最好不要隨便惹他。
+~
+1|2|64|8192|262144|8388608 8|32|128|512|8192|549755813888 0 S
+45 3000 0 100d50+300 0d-200+30
+0 0
+0 8 1
+C 1|4|32
+P 8|256|4194304|8388608|16777216
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+berserk
+mpnowait
+if mobcount(4065) > 0
+	if insameroom(bishop)
+	else
+		yell 主教快來！
+		mptransfer bishop-bandit
+	endif
+endif
+if insameroom(wizard-bandit)
+	mpforce wizard-bandit rescue monk-bandit
+else
+	if insameroom(ninja-bandit)
+		mpforce ninja-bandit rescue monk-bandit
+	endif
+endif
+if rand(33)
+	skilldrv multihit $n
+else
+	if rand(50)
+		skilldrv speedhit $n
+		skilldrv speedhit $n
+		skilldrv speedhit $n
+	else
+		skilldrv heavyhit $n
+		skilldrv heavyhit $n
+		skilldrv heavyhit $n
+	endif
+endif
+barehand
+mpnowait
+kick
+mpnowait
+bashhead
+mpnowait
+if insameroom(bishop-bandit)
+	if isaffected($i) & 1
+		mpforce bishop-bandit c 'cure blindness' monk-bandit
+	endif
+	if isaffected($i) !& 128
+		mpforce bishop-bandit c sanc monk-bandit
+	endif
+	if isaffected($i) & 4096
+		mpforce bishop-bandit c 'cure poison' monk-bandit
+	endif
+	if isaffected($i) & 268435456
+		mpforce bishop-bandit c vivi monk-bandit
+	endif
+	mpcall bandit_group_heal
+endif
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if hitprcnt($i) < 30
+	mpforce bishop-bandit c 3 'double heal' monk-bandit
+	break
+endif
+if hitprcnt($i) < 50
+	mpforce bishop-bandit c 2 'doubl heal' monk-bandit
+	break
+endif
+if hitprcnt($i) < 70
+	mpforce bishop-bandit c 'double heal' monk-bandit
+endif
+~
+|
+#4065
+bishop-bandit bishop adventurer~
+冒險者主教(adventurer bishop)~
+一位經驗老道的冒險者主教(adventurer bishop)坐在這邊喝酒。
+~
+他擁有主教所有的技能，不是一個好對付的冒險者，因此你最好不要隨便惹他。
+~
+1|2|64|8192|262144|8388608 8|32|128|512|549755813888 0 S
+45 3000 0 0d-50+0 -30d-200+30
+0 0
+0 8 1
+C 2
+P 8|256|1048576|2097152|4194304|8388608|16777216|268435456
+S 23 -99
+S 27 -99
+S 28 -99
+S 29 -99
+S 30 -99
+S 31 -99
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpmload 4063
+mpgroup self wizard-bandit 1 0
+mpmload 4064
+mpgroup self monk-bandit 1 0
+mpmload 4066
+mpgroup self ninja-bandit 1 0
+if insameroom(keith-bandit)
+	mpgroup self keith-bandit 1 1
+endif
+mpoload 3379
+mpat 5 wear saint
+mpoload 1900
+mpat 5 wield sledge twohand
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if rand(30)
+	if is_equ_obj($i) != 1900
+		wield sledge twohand
+	endif
+	if is_equ_obj($i) == 9217
+		brandish
+		mpnowait
+	endif
+endif
+if mobcount(4063) > 0
+	if insameroom(wizard-bandit)
+	else
+		yell 巫師快來幫忙！
+		mptransfer wizard-bandit
+	endif
+	mpforce wizard-bandit rescue bishop-bandit
+endif
+if mobcount(4066) > 0
+	if insameroom(ninja-bandit)
+	else
+		yell 忍者快來幫忙！
+		mptransfer ninja-bandit
+	endif
+	if insameroom(wizard-bandit)
+	else
+		mpforce ninja-bandit rescue bishop-bandit
+	endif
+endif
+if mobcount(4064) > 0
+	if insameroom(monk-bandit)
+	else
+		yell 武僧快來幫忙！
+		mptransfer monk-bandit
+	endif
+	if insameroom(wizard-bandit)
+	else
+		if insameroom(ninja-bandit)
+		else
+			mpforce monk-bandit rescue bishop-bandit
+		endif
+	endif
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	c sanc
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+mpcall bandit_group_heal
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if hitprcnt($i) < 30
+	if rand(10)
+		c 'full heal'
+		mpnowait
+	else
+		c 3 'double heal'
+		mpnowait
+	endif
+	break
+endif
+if hitprcnt($i) < 50
+	c 2 'doubl heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 70
+	c 'double heal'
+	mpnowait
+endif
+~
+|
+#4066
+ninja-bandit ninja adventurer~
+冒險者忍者(adventurer ninja)~
+一位經驗老道的冒險者忍者(adventurer ninja)坐在這邊喝酒。
+~
+他擁有忍者所有的技能，不是一個好對付的冒險者，因此你最好不要隨便惹他。
+~
+1|2|64|2048|4096|8192|262144|8388608|16777216 8|32|128|512|549755813888 0 S
+45 3000 0 30d-40+200 0d-1000+30
+0 0
+0 8 1
+C 1|4|8
+P 8|256|4194304|8388608|16777216
+S 41 250
+S 42 250
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 11149
+mpat 5 wear dawnbringer
+mpoload 11150
+mpat 5 wear nightbringer
+~
+>entry_greet_prog 100~
+if ispc($r)
+	if is_qmark($r) == bandit_enemy
+		yell 就是你， $r ，盜賊共同的敵人，去死！
+		bs $r
+		mpnowait
+		mpkill $r
+		if insameroom(wizard-bandit)
+			mpforce wizard-bandit rescue ninja-bandit
+		endif
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == bandit_enemy
+	yell 就是你， $n ，盜賊共同的敵人，去死！
+	bs $n
+	mpnowait
+	if insameroom(wizard-bandit)
+		mpforce wizard-bandit rescue ninja-bandit
+	endif
+endif
+~
+>fight_prog 100~
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if insameroom(wizard-bandit)
+	mpforce wizard-bandit rescue ninja-bandit
+endif
+if is_equ_obj($i) != 11149
+	wield dawnbringer right
+	disarm
+	mpnowait
+endif
+if is_equ_obj($i) != 11150
+	wield nightbringer left
+	disarm
+	mpnowait
+endif
+if rand(50)
+	yell 看我的背刺！
+	mpdef_rembch $n
+	mpgoto self
+	bs $b
+	if insameroom($b)
+		if rand(50)
+			yell 看我的雙重背刺！
+			mpgoto self
+			bs $b
+			if insameroom($b)
+				mpgoto self
+				bs $b
+			endif
+		endif
+	endif
+	mpdef_rembch null-tar
+	if insameroom(wizard-bandit)
+		mpforce wizard-bandit rescue ninja-bandit
+	endif
+endif
+if insameroom(bishop-bandit)
+	if isaffected($i) & 1
+		mpforce bishop-bandit c 'cure blindness' ninja-bandit
+	endif
+	if isaffected($i) !& 128
+		mpforce bishop-bandit c sanc ninja-bandit
+	endif
+	if isaffected($i) & 4096
+		mpforce bishop-bandit c 'cure poison' ninja-bandit
+	endif
+	if isaffected($i) & 268435456
+		mpforce bishop-bandit c vivi ninja-bandit
+	endif
+	mpcall bandit_group_heal
+endif
+~
+>rand_prog 50~
+mpcall bandit_group_heal
+~
+>defun_prog bandit_group_heal~
+if hitprcnt($i) < 30
+	mpforce bishop-bandit c 3 'double heal' ninja-bandit
+	break
+endif
+if hitprcnt($i) < 50
+	mpforce bishop-bandit c 2 'doubl heal' ninja-bandit
+	break
+endif
+if hitprcnt($i) < 70
+	mpforce bishop-bandit c 'double heal' ninja-bandit
+endif
+~
+|
+#4067
+seasoned adventurer~
+老練的冒險者(seasoned adventurer)~
+一位滿臉風霜的老練的冒險者(seasoned adventurer)，正高興地坐在這邊喝酒。
+~
+他看起來遊歷過許多地方，也許你能從他那打聽到什麼。
+~
+1|2|4|64|4096|8192|262144|8388608 8|32|512|8192 0 S
+45 2000 0 10d-20+0 0d0+0
+0 0
+0 8 1
+C 1|8|32
+P 8|256|4194304|8388608|16777216
+R Orc~
+S 41 200
+S 42 200
+>repop_prog 100~
+mpoload 3022
+mpat 5 wear sword
+mpoload 3022
+mpat 5 wear sword
+mpmload 4068
+mpgroup self orc 1 0
+mpmload 4069
+mpgroup self drunken 1 1
+~
+>rand_prog 30~
+if rand(20)
+	say 上次我在遠古森林找到的那把鈑手(wranch)真好用，
+	say 我把它拿來扳開鎖住的箱子，一下子就成功了。
+else
+	if rand(25)
+		say 聽說光明之鎮武器店老闆融合武器的工作重新開張了，
+		say 不過得先找到可以增強武器的寶珠，
+		say 以及有容納那些寶珠位置的武器才行。
+	else
+		if rand(33)
+			say 廣場那邊的樹看起來真的不錯呢，
+			say 又硬又粗，當作房子的建材真是太棒了。
+		else
+			if rand(50)
+				say 遠古森林那隻大鵬鳥的蛋真是絕世珍品，
+				say 聽說有人專門高價收售那顆蛋，
+				say 不過就是為了要吃到那顆蛋裡頭的蛋黃而已。
+			else
+				say 巨像真是很難打呢，尤其是高等級的巨像，
+				say 非但魔法幾乎沒用，攻擊也只能削下一點屑屑而已，
+				say 除非用雷系法術或重錘類武器才能有效造成傷害。
+			endif
+		endif
+	endif
+endif
+~
+>fight_prog 100~
+mpat 5 c 'double heal'
+mpnowait
+berserk
+mpnowait
+if rand(50)
+	wear sword
+	disarm
+	mpnowait
+	wear sword
+	disarm
+	mpnowait
+endif
+if rand(50)
+	if rand(50)
+		flaming
+		mpnowait
+	else
+		storm
+		mpnowait
+	endif
+endif
+if rand(50)
+	if rand(50)
+		perform empslash
+		mpnowait
+	else
+		circular
+		mpnowait
+	endif
+endif
+~
+|
+#4068
+furry orc~
+毛茸茸的半獸人(furry orc)~
+一位毛茸茸的半獸人(furry orc)大口喝酒，大塊吃肉。
+~
+紅眼睛的半獸人，酒從嘴角流了出來。
+~
+1|2|4|64|4096|8192|262144|8388608 8|32|512|8192 0 S
+40 3000 0 20d-10+-200 0d-100+0
+0 0
+0 8 1
+C 1|8|32
+P 8|256|4194304|8388608|16777216
+R Orc~
+S 41 200
+S 42 200
+>repop_prog 100~
+mpoload 3022
+mpat 5 wear sword
+mpoload 645
+mpat 5 wear shield
+~
+>rand_prog 25~
+if insameroom(waiter-bandit)
+	say 喂！侍者，快給我送塊牛肉來！
+	mpforce waiter-bandit say 是是！馬上送來！
+	mpforce waiter-bandit mpoload 602
+	mpforce waiter-bandit give beef furry
+	eat beef
+else
+	say 喂！侍者！....喂！！
+	mpcallout 1 ?
+	mpcallout 2 say 真是！跑去哪啦？
+endif
+~
+>fight_prog 100~
+mpat 5 c 'double heal'
+mpnowait
+berserk
+mpnowait
+if rand(50)
+	if is_equ_obj($i) != 3022
+		wear sword
+		disarm
+		mpnowait
+	endif
+else
+	if is_equ_obj($i) != 645
+		wear shield
+	endif
+endif
+kick
+mpnowait
+if rand(70)
+	kick
+	mpnowait
+endif
+if rand(50)
+	kick
+	mpnowait
+endif
+if rand(30)
+	kick
+	mpnowait
+endif
+bashhead
+mpnowait
+if rand(70)
+	bashhead
+	mpnowait
+endif
+if rand(50)
+	bashhead
+	mpnowait
+endif
+if rand(30)
+	bashhead
+	mpnowait
+endif
+~
+|
+#4069
+drunken adventurer~
+酒醉的冒險者(drunken adventurer)~
+一位酒醉的冒險者(drunken adventurer)伏在桌上，不時還說一些夢囈。
+~
+他看來是喝太多這裡最出名的麥酒了。
+~
+1|2|4|64|4096|8192|262144|8388608 8|32|512|8192 0 S
+40 2000 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8|16|32
+P 8|256|4194304|8388608|16777216
+R Orc~
+S 41 200
+S 42 200
+>repop_prog 100~
+mpoload 4557
+mpat 5 wear bow
+mpoload 4561
+mpat 5 wear arrow
+~
+>rand_prog 30~
+if rand(25)
+	say 呃...我沒醉，再來一杯....
+	break
+endif
+if rand(33)
+	emote ...zzzZZZ Z Z  Z
+	break
+endif
+if rand(50)
+	emote 突然抬起頭
+	mpcallout 1 emote 又倒下呼呼大睡
+else
+	emote 突然抬起頭
+	if ispc($r)
+		mpcallout 1 puke $r
+	else
+		mpcallout 1 puke
+	endif
+	mpcallout 2 emote 又倒下呼呼大睡
+endif
+~
+>fight_prog 100~
+mpat 5 c 'double heal'
+berserk
+mpnowait
+if rand(50)
+	if is_equ_obj($i) != 4557
+		wear bow
+		disarm
+		mpnowait
+	endif
+endif
+if insameroom(seasoned)
+	mpforce seasoned rescue drunken
+else
+	if insameroom(furry)
+		mpforce furry rescue drunken
+	endif
+endif
+if rand(50)
+	mete
+	mpnowait
+endif
+if rand(30)
+	mete
+	mpnowait
+endif
+~
+|
+#0
+
+
+
+
+#OBJECTS
+#4000
+key-bandit cellar key~
+牢房鑰匙(cellar key)~
+一把牢房鑰匙(cellar key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+X iron~
+
+#4001
+brambles crown~
+荊棘之冠(brambles crown)~
+荊棘之冠(brambles crown)被放在地面上。~
+~
+9 512 17
+0~ 0~ 100~ 0~
+20 800 0
+C 80000
+Z 1
+L 36
+A
+2 2
+A
+18 3
+A
+39 -10
+X ebony~
+
+#4002
+bronze staff~
+青銅手杖(bronze staff)~
+一把青銅手杖(bronze staff)被丟棄在角落。~
+~
+4 512 16385
+15~ 10~ 10~ armor~
+1 1 0
+A
+1 2
+A
+19 1
+C 1
+X bronze~
+
+#4003
+plate mail~
+鎧甲(plate mail)~
+一副鎧甲(plate mail)被放在地板上。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 10000 0
+C 10000
+X iron~
+
+#4004
+bronze-dagger bronze dagger~
+青銅匕首(bronze dagger)~
+一把青銅匕首(bronze dagger)被小心翼翼的放置在這裡。~
+~
+5 512 8193
+1001100~ 0~ 0~ 11~
+1 3000 0
+C 3000
+X bronze~
+
+#4005
+sharp dagger~
+尖銳匕首(sharp dagger)~
+一把尖銳匕首(sharp dagger)被丟棄在地面上。~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 2500 0
+C 2500
+X steel~
+
+#4006
+hard leather~
+堅硬皮甲(hard leather)~
+一套堅硬的皮甲(hard leather)放置在地上。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4007
+mace~
+釘頭錘(mace)~
+一把釘頭錘(mace)被丟在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 7~
+3 500 0
+C 500
+X iron~
+
+#4008
+morning star~
+流星錘(morning star)~
+一把流星錘(morning star)放置在地板上。~
+~
+5 0 8193
+1001100~ 0~ 0~ 8~
+7 700 0
+C 700
+X iron~
+
+#4009
+spear~
+長矛(spear)~
+一把長矛(spear)放在這裡。~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+5 1000 0
+C 1000
+X iron~
+
+#4010
+boomerang~
+迴力標(boomerang)~
+一把迴力標(boomerang)被放置在地板上。~
+~
+5 0 8193
+1001100~ 0~ 0~ 9~
+2 700 0
+C 700
+X bone~
+
+#4011
+small axe~
+小斧頭(small axe)~
+一把小斧頭被放置在地上。~
+~
+5 0 8193
+1001100~ 0~ 0~ 1~
+4 1 0
+C 1
+X iron~
+
+#4012
+leather jacket~
+皮夾克(leather jacket)~
+一套皮夾克(leather jacket)被放在地上。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 1 0
+C 1
+X leather~
+
+#4013
+chain mail~
+鍊甲(chain mail)~
+一套鍊甲(chain mail)被放置在這邊。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+8 2500 0
+C 2500
+X iron~
+
+#4014
+helm~
+頭盔(helm)~
+一面頭盔(helm)被放在這邊。~
+~
+9 0 17
+0~ 0~ 1001100~ 0~
+3 700 0
+C 700
+X iron~
+
+#4015
+gauntlets~
+手套(gauntlets)~
+一副手套(gauntlets)被放置在這邊。~
+~
+9 0 129
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4016
+leather boots~
+皮靴(leather boots)~
+一雙皮靴(leather boots)放置在這邊。~
+~
+9 0 65
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4017
+buckler~
+小圓盾(buckler)~
+一面小圓盾(buckler)被放置在這邊。~
+~
+9 0 513
+0~ 0~ 1001100~ 0~
+3 1000 0
+C 1000
+X wooden~
+
+#4018
+heavy club~
+沈重木棒(heavy club)~
+一根沈重的木棒(heavy club)被丟棄在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 7~
+1 2000 0
+C 2000
+X wooden~
+
+#4019
+broom~
+掃帚(broom)~
+一把掃帚(broom)在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 13~
+1 100 0
+C 100
+X wooden~
+
+#4020
+thief's dagger~
+盜賊匕首(thief's dagger)~
+一把盜賊匕首(thief's dagger)被放在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 500 0
+A
+18 2
+A
+2 1
+C 500
+X iron~
+
+#4021
+nice fur clothe~
+高級毛衣(nice fur clothes)~
+一套高級毛衣(nice fur clothes)被小心的放置在這邊。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4022
+sweater~
+毛線衣(sweater)~
+一件毛線衣(sweater)被丟棄在這邊。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 300 0
+C 300
+X wool~
+
+#4023
+a small dark sword~
+闇黑劍(dark sword)~
+一把小型的闇黑劍(dark sword)放置在這邊。~
+~
+13 0 9
+1001100~ 0~ 0~ 3~
+1 1 0
+X iron~
+
+#4024
+scale mail~
+鱗甲(scale mail)~
+一套鱗甲(scale mail)被丟棄在這邊。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 5000 0
+C 5000
+X scale~
+
+#4025
+long spear~
+長矛(long spear)~
+一把長矛(long spear)在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+1 2500 0
+C 2500
+X iron~
+
+#4026
+snake dagger~
+黃銅蛇型匕首(snake dagger)~
+一把蛇型的黃銅匕首(snake dagger)被放置在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 3000 0
+C 3000
+X brass~
+
+#4027
+brass hammer~
+黃銅錘(brass hammer)~
+一把巨大的黃銅錘(brass hammer)被放在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 7~
+1 3500 0
+C 3500
+X brass~
+
+#4029
+short sword~
+黃銅短劍(short sword)~
+一把黃銅短劍(short sword)被丟棄在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 800 0
+C 800
+X brass~
+
+#4030
+bowl~
+碗(bowl)~
+一個碗(bowl)被放在地板上。~
+~
+5 0 8193
+0~ 0~ 0~ 0~
+1 50 0
+C 50
+X stone~
+
+#4031
+long sword~
+黃銅長劍(long sword)~
+一把黃銅長劍(long sword)被丟在地板上。~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+2 1000 0
+C 1000
+X brass~
+
+#4032
+bandit sword~
+盜賊之劍(bandit sword)~
+一把盜賊之劍(bandit sword)被放置在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 2~
+1 1000 0
+C 1000
+X iron~
+
+#4034
+chair~
+椅子(chair)~
+一把椅子(chair)被放在這邊。~
+~
+12 0 1
+0~ 0~ 0~ 0~
+1 250 0
+C 250
+X wooden~
+
+#4035
+working skirt~
+工作裙(working skirt)~
+一套骯髒的工作裙(working skirt)放置在地上。~
+~
+9 0 2049
+0~ 0~ 1001100~ 0~
+1 300 0
+C 300
+X cloth~
+
+#4036
+nice fur cloak~
+高級毛斗蓬(nice fur cloak)~
+一襲高級毛斗蓬(nice fur cloak)被小心的放置這邊。~
+~
+9 0 5
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4037
+nice fur boots~
+高級毛靴子(nice fur boots)~
+一雙高級毛靴子(nice fur boots)被小心的放置在這邊。~
+~
+9 0 65
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4038
+nice fur sleeves~
+高級毛護臂(nice fur sleeves)~
+一副高級毛護臂(nice fur sleeves)被小心的放置在這邊。~
+~
+9 0 257
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4039
+nice fur gloves~
+高級毛手套(nice fur gloves)~
+一副高級毛手套(nice fur gloves)被小心的放置在這邊。~
+~
+9 0 129
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X wool~
+
+#4040
+metal helm~
+金屬頭盔(metal helm)~
+一面金屬頭盔(metal helm)被放置在這邊。~
+~
+9 0 17
+0~ 0~ 1001100~ 0~
+1 3000 0
+C 3000
+X tin~
+
+#4041
+ring mail~
+鎖子甲(ring mail)~
+一套鎖子甲(ring mail)被放在地板上。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+1 1000 0
+C 1000
+X iron~
+
+#4042
+leather boots~
+皮靴子(pair of leather boots)~
+一雙皮靴子(leather boots)放置在這邊。~
+~
+9 0 65
+0~ 0~ 1001100~ 0~
+1 500 0
+C 500
+X leather~
+
+#4043
+shiny dagger~
+發光匕首(shiny dagger)~
+一把漂亮的匕首(dagger)在這裡閃閃發亮。~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+1 3000 0
+C 3000
+X brass~
+
+#4044
+black coat~
+黑色斗蓬(black coat)~
+一襲黑色的斗蓬(black coat)放在地板上。~
+~
+9 0 5
+0~ 0~ 1001100~ 0~
+1 5000 0
+C 5000
+X cloth~
+
+#4045
+copper dagger~
+銅匕首(copper dagger)~
+一把銅製匕首(copper dagger)被丟棄在這邊。~
+~
+13 0 1
+1001100~ 0~ 0~ 11~
+1 1 0
+C 1
+X bronze~
+
+#4046
+copper helm~
+銅頭盔(copper helm)~
+一面銅製頭盔(copper helm)被丟棄在地板上。~
+~
+9 0 17
+0~ 0~ 1001100~ 0~
+1 4500 0
+C 4500
+X bronze~
+
+#4047
+broom big heavy~
+大掃帚(big broom)~
+一隻大掃帚(big broom)被放在角落。~
+~
+5 0 8193
+1001100~ 0~ 0~ 13~
+4 1000 0
+C 1000
+X wooden~
+
+#4048
+dish~
+盤子(dish)~
+一面盤子(dish)被丟棄在這邊。~
+~
+5 0 8193
+0~ 0~ 0~ 0~
+1 250 0
+C 250
+X glass~
+
+#4049
+iron key~
+鐵鑰匙(iron key)~
+一把鐵鑰匙(iron key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4050
+bronze key~
+青銅鑰匙(bronze key)~
+一把青銅鑰匙(bronze key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X bronze~
+
+#4051
+A big key~
+大鑰匙(big key)~
+一把大鑰匙(big key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4052
+a small key~
+小鑰匙(small key)~
+一把小鑰匙(small key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4053
+Jail key~
+監獄鑰匙(Jail key)~
+一把監獄鑰匙(jail key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4054
+room key~
+房間鑰匙(room key)~
+一把房間鑰匙(room key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X iron~
+
+#4055
+ruby key~
+紅寶石鑰匙(ruby key)~
+一把紅寶石鑰匙(ruby key)被丟棄在這邊。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 1 0
+C 1
+X ruby~
+
+#4056
+assassination-dagger assassination dagger~
+暗殺匕首(assassination dagger)~
+一把泛著黑色光芒的匕首(dagger)被丟棄在這邊。~
+~
+5 324 8193
+500~ 0~ 0~ 11~
+5 500000 0
+A
+2 1
+A
+5 1
+A
+39 -25
+A
+19 5
+A
+18 5
+A
+43 10
+C 500000
+P 1181188
+X steel~
+
+#4057
+oryx vest~
+飛羚皮甲(oryx vest)~
+一件輕的幾乎可以浮在空中的皮甲(vest)被丟棄在這邊。~
+~
+9 323 9
+0~ 0~ 4001400~ 0~
+1 500000 0
+Z 1
+A
+40 3
+A
+39 -30
+A
+24 5
+A
+19 -2
+A
+18 -2
+C 500000
+P 1181188
+X feather~
+
+#4058
+solar cloak~
+光之護袍(solar cloak)~
+一件發出萬丈光芒的袍子(cloak)被擺放在這邊。~
+~
+9 65795 1025
+0~ 0~ 3001300~ 0~
+5 100000 0
+A
+39 -10
+A
+35 -3
+A
+24 -4
+A
+17 -10
+A
+13 100
+A
+12 -50
+C 100000
+P 2130400
+X fiber~
+
+#4059
+flying shoes~
+飛翔之靴(shoes of flying)~
+一雙輕的幾乎可以浮起來的靴子(shoes)被擺放在這邊。~
+~
+9 65795 65
+0~ 0~ 5001500~ 0~
+5 100000 0
+A
+39 -10
+A
+18 1
+A
+2 2
+C 100000
+P 2130400
+X feather~
+
+#4060
+poisonous-dagger poisonous dagger~
+猛毒匕首(poisonous dagger)~
+一把泛著綠色光芒的匕首(dagger)被丟棄在這邊。~
+~
+5 131396 8193
+8001800~ 0~ 0~ 11~
+5 500000 0
+A
+42 3
+A
+41 3
+A
+19 1
+A
+18 2
+A
+43 10
+H poison~ 20 50 1
+C 500000
+P 1181188
+X iron~
+
+#4061
+heavy iron sword~
+重型鐵劍(heavy iron sword)~
+一把重達數十公斤的黑色鐵劍(iron sword)被丟棄在這邊。~
+~
+5 1|64|256 8193
+400~ 30~ 50~ 3~
+25 0 0
+C 30000
+A
+17 -20
+A
+18 5
+A
+19 5
+A
+43 25
+X dark iron~
+
+#4062
+Rules Thief~
+盜賊的守則(Rules of Thief)~
+盜賊所需要注意的事項(rules)被放在這邊。~
+~
+1 64|256 1
+0~ 0~ -1~ 0~
+4 0 0
+E
+rules~
+一片薄薄的石版，上面刻了一些字。
+~
+C 30000
+A
+40 1
+A
+39 -10
+P 1048576|131072|1024|512|4
+X stone~
+#4063
+Rules Thief~
+盜賊的守則(Rules of Thief)~
+盜賊所需要注意的事項(rules)被放在這邊。~
+~
+1 1|64|256 1
+0~ 0~ -1~ 0~
+2 0 0
+E
+rules~
+一件青銅圓柱雕刻，上面刻了一些字。
+~
+C 30000
+A
+40 1
+A
+39 -17
+P 1048576|131072|1024|512|4
+X bronze~
+#4064
+Rules Thief~
+盜賊的守則(Rules of Thief)~
+盜賊所需要注意的事項(rules)被放在這邊。~
+~
+1 1|64|256 1
+0~ 0~ -1~ 0~
+1 0 0
+E
+rules~
+一件黑檀木圓柱雕刻，上面刻了一些字。
+~
+C 30000
+A
+40 2
+A
+39 -20
+A
+3 1
+P 1048576|131072|1024|512|4
+X ebony~
+#4065
+Rules Thief~
+盜賊的守則(Rules of Thief)~
+盜賊所需要注意的事項(rules)被放在這邊。~
+~
+1 1|2|64|256|4194304 1
+0~ 0~ -1~ 0~
+0 0 0
+E
+rules~
+一件黑檀木圓柱雕刻，上面刻了一些字。
+~
+C 30000
+A
+40 2
+A
+39 -25
+A
+3 1
+P 1048576|131072|1024|512|4
+F AFF_SNEAK
+X ebony~
+#4066
+cloak~
+長袍(cloak)~
+一件堆滿灰塵的袍子(cloak)被丟在這邊。~
+~
+9 16384 1025
+0~ 0~ 1001100~ 0~
+5 10 0
+E
+cloak~
+袍子的上頭繡了一些花紋，看起來像是某種組織的標誌。
+~
+C 10
+X fiber~
+#4067
+jewel~
+珠寶(jewel)~
+一些閃爍著光芒的珠寶子(jewel)被遺忘在這裡。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 100000 0
+E
+jewel~
+散發著迷人的光輝，你的視線幾乎離不開它了。
+~
+C 10
+X diamond~
+#4068
+jewel~
+珠寶(jewel)~
+一些閃爍著光芒的珠寶子(jewel)被遺忘在這裡。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 100000 0
+E
+jewel~
+散發著迷人的光輝，你的視線幾乎離不開它了。
+~
+C 10
+X amethyst~
+#4069
+chest~
+破舊的箱子(chest)~
+一口破舊的箱子(chest)在屋子的角落。~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+破舊的外表下，似乎帶著歷史的秘密。
+~
+X ebony~
+#4070
+slate-a~
+破碎的石板(slate)~
+一塊破碎的石板(slate)被丟在一旁。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：[1;17m└ [m。
+~
+X stone~
+#4071
+dusty statueb~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，雖然有部分殘缺，不過尚能分辨原本
+是個人像。只見它舉著唯一僅剩的右手指向南方，也就是你來的方向。
+基座不知是否因為年代久遠而有些鬆動，彷彿可以旋轉一般？
+~
+X stone~
+#4072
+dusty statuea~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，雖然有部分殘缺，不過尚能分辨原本
+是個人像。旋轉停止後，它的手指向了北方。
+~
+X stone~
+#4073
+immaterial legging~
+無形戰甲(immaterial legging)~
+一件腳脛(legging)被丟棄在這裡。~
+~
+9 32|256|1024|65536 1|32
+0~ 0~ 1001100~ 0~
+5 10000 0
+E
+immaterial legging~
+它幾乎透明到你會忽略它的存在，因光線角度的不同而有著不同顏色。
+~
+C 15000
+Z 1
+A
+3 2
+A
+5 -1
+A
+17 10
+A
+39 -20
+A
+27 -5
+P 1048576|131072|32768|4096|1024|512|128|4|65536
+X glass~
+#4074
+wings bluesky~
+青空之翼(wings of bluesky)~
+青空之翼(wings of bluesky)擺在地上。~
+~
+9 2|256|65536|4194304 1|1024
+0~ 0~ 1201120~ 0~
+1 10000 0
+E
+wings bluesky~
+一件製作精美的長袍，長袍的外側繡著一對翅膀。
+~
+C 15000
+A
+35 -1
+A
+39 -30
+A
+42 5
+P 1024|1048576
+H fly~ 25 36 1
+X feather~
+#4075
+boots whitecloud~
+白雲之靴(boots of whitecloud)~
+白雲之靴(boots of whitecloud)擺在地上。~
+~
+9 1|64 1|64
+0~ 0~ 1001100~ 0~
+3 10000 0
+E
+boots whitecloud~
+一雙製作精美的長靴，長靴的外側繡著一些雲形圖?。
+~
+C 25000
+Z 1
+A
+5 1
+A
+19 2
+A
+39 -30
+P 1048576|131072|2048|1024|512|4
+X dragon scale~
+#4076
+deepblue hands~
+深藍之手(deepblue hands)~
+深藍之手(deepblue hands)擺在地上。~
+~
+9 1|2|64|256 1|128
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+deepblue hands~
+一雙深藍色的手套，有著極為美麗的藍色。
+~
+C 45000
+Z 1
+A
+2 1
+A
+13 -10
+A
+18 2
+A
+39 -30
+P 1048576|131072|2048|1024|512|4
+X ice~
+#4077
+deepgreen woods~
+碧綠之木(deepgreen woods)~
+碧綠之木(deepgreen woods)擺在地上。~
+~
+8 64|256 1|256
+0~ 0~ 1501150~ 0~
+2 10000 0
+E
+deepgreen woods~
+一塊顏色鮮豔的木雕品。
+~
+C 45000
+Z 1
+A
+3 2
+A
+9 10
+A
+17 +5
+A
+39 -25
+P 1048576|131072|2048|1024|512|256|128|4
+X ebony~
+#4078
+ring wind~
+風之戒(ring of wind)~
+風之戒(ring of wind)擺在地上。~
+~
+9 1|256 1|2
+0~ 0~ 1001100~ 0~
+1 10000 0
+E
+ring wind~
+一只綠色的戒指，上頭刻著舞動的線條。
+~
+C 50000
+Z 1
+A
+2 2
+A
+39 -25
+P 1048576|131072|32768|1024|512|128|4|65536
+X jade~
+#4079
+bracer water~
+水之鐲(bracer of water)~
+水之鐲(bracer of water)擺在地上。~
+~
+9 64|256|65536 1|4096
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+bracer water~
+一只閃爍著藍光的手鐲，有著波浪紋的浮雕。
+~
+C 50000
+Z 1
+A
+4 1
+A
+27 -2
+A
+3 1
+A
+39 -20
+P 1048576|131072|1024|512|128|4|65536
+X ice~
+#4080
+amulet fire~
+火之符(amulet of fire)~
+火之符(amulet of fire)擺在地上。~
+~
+9 2|16 1|4
+0~ 0~ 1001100~ 0~
+2 10000 0
+E
+amulet fire~
+一條火紅色的護符，雕刻成火焰的形狀。
+~
+C 80000
+Z 1
+A
+12 -26
+A
+18 4
+A
+19 -2
+A
+39 -18
+P 1048576|131072|1024|512|4|65536
+X fire~
+#4081
+chest~
+破舊的箱子(chest)~
+一口破舊的箱子(chest)在屋子的角落。~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+破舊的外表下，似乎帶著歷史的秘密。
+~
+X ebony~
+#4082
+chest~
+破舊的箱子(chest)~
+一口破舊的箱子(chest)在屋子的角落。~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+破舊的外表下，似乎帶著歷史的秘密。
+~
+X ebony~
+#4083
+chest~
+破舊的箱子(chest)~
+一口破舊的箱子(chest)在屋子的角落。~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+破舊的外表下，似乎帶著歷史的秘密。
+~
+X ebony~
+#4084
+chest~
+破舊的箱子(chest)~
+一口破舊的箱子(chest)在屋子的角落。~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+破舊的外表下，似乎帶著歷史的秘密。
+~
+X ebony~
+#4085
+chest~
+破舊的箱子(chest)~
+一口破舊的箱子(chest)在屋子的角落。~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+破舊的外表下，似乎帶著歷史的秘密。
+~
+X ebony~
+#4086
+chest~
+破舊的箱子(chest)~
+一口破舊的箱子(chest)在屋子的角落。~
+~
+15 2 0
+100~ 13~ 0~ 0~
+20 1000 0
+E
+chest~
+破舊的外表下，似乎帶著歷史的秘密。
+~
+X ebony~
+#4087
+slate-b~
+破碎的石板(slate)~
+一塊破碎的石板(slate)被丟在一旁。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：[1;17m└ [m。
+~
+X stone~
+#4088
+dusty statueb~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一怪異
+的地方就是在基座的上面似乎有兩個手印(hands)的浮雕，而手印中
+指則指向上方。基座上面佈滿了灰塵，唯一乾淨的地方就只有這手印
+而以，難道這手印常常被人家按過嗎？
+~
+X stone~
+#4089
+dusty statuea~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一怪異
+的地方就是基座的上面似乎有一個手印的浮雕，壓下了手印之後，這
+手印的中指似乎指向了下方。
+~
+X stone~
+#4090
+slate-c~
+破碎的石板(slate)~
+一塊破碎的石板(slate)被丟在一旁。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：[1;17m└ [m。
+~
+X stone~
+#4091
+slate-d~
+破碎的石板(slate)~
+一塊破碎的石板(slate)被丟在一旁。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：[1;17m└ [m。
+~
+X stone~
+#4092
+slate-e~
+破碎的石板(slate)~
+一塊破碎的石板(slate)被丟在一旁。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：[1;17m└ [m。
+~
+X stone~
+#4093
+slate-f~
+破碎的石板(slate)~
+一塊破碎的石板(slate)被丟在一旁。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：[1;17m└ [m。
+~
+X stone~
+#4094
+slate-g~
+破碎的石板(slate)~
+一塊破碎的石板(slate)被丟在一旁。~
+~
+8 1 1
+0~ 0~ 0~ 0~
+5 1000 0
+E
+slate~
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：[1;17m└ [m。
+~
+X stone~
+#4095
+dusty statueb~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一不同
+於其他雕像的地方是在基座上面似乎有個按鈕，基座上面除了按鈕
+(button)之外似乎都十分的乾淨。這是怎麼一回事呢？
+~
+X stone~
+#4096
+dusty statuea~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一不同
+的地方是在基座的上面似乎有個按鈕，感覺上這按鈕似乎才剛被人按
+過。
+~
+X stone~
+#4097
+dusty statueb~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，奇怪的是
+在這基座上面怎麼有個突兀的三角形(triangle)，這三角形上面一點
+灰塵都沒有像是剛被移動過，難不成這三角形有什麼機關嗎？
+~
+X stone~
+#4098
+dusty statuea~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，奇怪的是
+這基座上面似乎有個被移動過的三角形，難道這基座有什麼秘密嗎？
+~
+X stone~
+#4099
+dusty statueb~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整。比起其他
+雕像來說，這雕像的基座上面實在是太普通了，沒有任何怪異的地方
+。不過雕像的手上，怎麼有著一個明亮的水晶球，看起來就讓人好想
+觸摸一下！
+~
+X stone~
+#4100
+dusty statuea~
+佈滿灰塵的雕像(dusty statue)~
+佈滿灰塵的雕像(statue)擺在房間的正中央。~
+~
+12 64 0
+0~ 0~ 0~ 0~
+50 1000 0
+E
+statue~
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整。比起其他
+雕像來說，這雕像的基座實在是太普通了。不過這雕像手上的水晶球
+似乎又被觸摸過的痕跡！
+~
+X stone~
+
+#4101
+dark skirt~
+闇黑榴裙(dark skirt)~
+一襲黝黑的裙子(skirt)被棄置在地上。~
+~
+9 1|4|16|64 1|32
+0~ 0~ 400~ 0~
+5 0 0
+C 200000
+Z 1
+A
+3 1
+A
+13 25
+P 32|64|128|256|32768|65536|1048576
+
+#4102
+wonder light gloves~
+奇光護手(gloves of wonder light)~
+一套發出奇特光芒的手套(gloves)被擺放在這邊。~
+~
+9 1|32|64|256 1|128
+0~ 0~ 200~ 0~
+5 0 0
+C 200000
+Z 1
+A
+4 1
+A
+13 20
+P 32|64|128|256|32768|65536|1048576
+
+#4103
+colour girth~
+七彩護腰(colour girth)~
+一條發出七彩光芒的護腰(girth)被放在這邊。~
+~
+9 1|32|64|256 1|2048
+0~ 0~ 150~ 0~
+5 0 0
+C 200000
+Z 1
+A
+39 1
+A
+13 30
+P 32|64|128|256|32768|65536|1048576
+
+#4104
+hard wood~
+堅硬木材(hard wood)~
+一片堅硬的木料(hard wood)被放在地上。~
+~
+12 0 1
+0~ 0~ 0~ 0~
+50 0 0
+
+#4105
+brambles crown~
+荊棘之冠(brambles crown)~
+荊棘之冠(brambles crown)被放在地面上。~
+~
+9 512 17
+0~ 0~ 100~ 0~
+20 800 0
+C 80000
+L 36
+A
+2 2
+A
+18 2
+A
+39 -15
+P 4|512|1024|131072|1048576
+X ebony~
+#4106
+immaterial legging~
+無形戰甲(immaterial legging)~
+一件腳脛(legging)被丟棄在這裡。~
+~
+9 32|256|1024|65536 1|32
+0~ 0~ 1001100~ 0~
+5 10000 0
+E
+immaterial legging~
+它幾乎透明到你會忽略它的存在，因光線角度的不同而有著不同顏色。
+~
+C 15000
+A
+3 2
+A
+5 -1
+A
+17 15
+A
+39 -20
+A
+27 -5
+P 1048576|1024
+X glass~
+#4107
+boots whitecloud~
+白雲之靴(boots of whitecloud)~
+白雲之靴(boots of whitecloud)擺在地上。~
+~
+9 1|64 1|64
+0~ 0~ 1001100~ 0~
+3 10000 0
+E
+boots whitecloud~
+一雙製作精美的長靴，長靴的外側繡著一些雲形圖?。
+~
+C 25000
+A
+19 2
+A
+39 -30
+P 1048576|1024
+X dragon scale~
+#4108
+deepblue hands~
+深藍之手(deepblue hands)~
+深藍之手(deepblue hands)擺在地上。~
+~
+9 1|2|64|256 1|128
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+deepblue hands~
+一雙深藍色的手套，有著極為美麗的藍色。
+~
+C 45000
+A
+2 1
+A
+13 -10
+A
+18 2
+A
+39 -20
+P 1048576|1024
+X ice~
+#4109
+oryx vest~
+飛羚皮甲(oryx vest)~
+一件輕的幾乎可以浮在空中的皮甲(vest)被丟棄在這邊。~
+~
+9 323|2048 9
+0~ 0~ 4001400~ 0~
+1 500000 0
+A
+40 3
+A
+39 -30
+A
+24 5
+A
+19 -2
+A
+18 -2
+C 500000
+P 1181188
+X feather~
+#4110
+amulet fire~
+火之符(amulet of fire)~
+火之符(amulet of fire)擺在地上。~
+~
+9 2|16|16777216 1|4
+0~ 0~ 1001100~ 0~
+2 10000 0
+E
+amulet fire~
+一條火紅色的護符，雕刻成火焰的形狀。
+~
+C 80000
+A
+12 -26
+A
+18 4
+A
+19 -2
+A
+39 -16
+P 1048576|1024
+X fire~
+#4111
+deepgreen woods~
+碧綠之木(deepgreen woods)~
+碧綠之木(deepgreen woods)擺在地上。~
+~
+8 64|256 1|256
+0~ 0~ 1501150~ 0~
+2 10000 0
+E
+deepgreen woods~
+一塊顏色鮮豔的木雕品。
+~
+C 45000
+A
+3 1
+A
+9 10
+A
+17 +5
+A
+39 -25
+P 1048576|1024
+X ebony~
+#4112
+ring wind~
+風之戒(ring of wind)~
+風之戒(ring of wind)擺在地上。~
+~
+9 1|256|16777216 1|2
+0~ 0~ 1001100~ 0~
+1 10000 0
+E
+ring wind~
+一只綠色的戒指，上頭刻著舞動的線條。
+~
+C 50000
+A
+2 2
+A
+39 -25
+P 1048576|1024
+X jade~
+#4113
+bracer water~
+水之鐲(bracer of water)~
+水之鐲(bracer of water)擺在地上。~
+~
+9 64|256|65536|16777216 1|4096
+0~ 0~ 1501150~ 0~
+3 10000 0
+E
+bracer water~
+一只閃爍著藍光的手鐲，有著波浪紋的浮雕。
+~
+C 50000
+A
+4 1
+A
+27 -2
+A
+3 1
+A
+39 -16
+P 1048576|1024
+X ice~
+#4114
+dark skirt~
+闇黑榴裙(dark skirt)~
+一襲黝黑的裙子(skirt)被棄置在地上。~
+~
+9 1|4|16|64 1|32
+0~ 0~ 400~ 0~
+5 0 0
+C 200000
+A
+3 1
+A
+13 25
+A
+18 2
+A
+44 4
+P 32|64|128|256|32768|65536|1048576
+
+#4115
+wonder light gloves~
+奇光護手(gloves of wonder light)~
+一套發出奇特光芒的手套(gloves)被擺放在這邊。~
+~
+9 1|32|64|256 1|128
+0~ 0~ 200~ 0~
+5 0 0
+C 200000
+A
+4 1
+A
+13 20
+A
+18 3
+A
+44 5
+P 32|64|128|256|32768|65536|1048576
+
+#4116
+colour girth~
+七彩護腰(colour girth)~
+一條發出七彩光芒的護腰(girth)被放在這邊。~
+~
+9 1|32|64|256 1|2048
+0~ 0~ 150~ 0~
+5 0 0
+C 200000
+A
+18 7
+A
+44 5
+P 1081827
+
+#0
+
+
+
+#ROOMDATA
+#4000
+在酒店之下~
+這裡放置著一堆酒桶與食物。很明顯的這裡是酒店儲藏食物的地方，但是很奇怪的這
+裡有一條老舊的甬道通往東邊。
+~
+0 1 6
+D1
+~
+~
+0 0 4001
+D4
+~
+~
+119 4000 4069
+S
+#4001
+廢棄的甬道~
+當你進入這一條老舊狹小的甬道時，你發現裡頭其實非常乾淨，顯示這條甬道經常有
+人在使用。
+~
+0 1 6
+D1
+~
+~
+0 0 4002
+D3
+~
+~
+0 0 4000
+S
+#4002
+廢棄的甬道~
+當你進入這一條老舊狹小的甬道時，你發現裡頭其實非常乾淨，顯示這條甬道經常有
+人在使用。
+~
+0 1 6
+D3
+~
+~
+0 0 4001
+D4
+~
+~
+0 0 4070
+S
+#4005
+站在高山上~
+站在這邊你覺得心曠神怡，你同時可以遠遠的看到光明之鎮內鎮民活動的狀況。
+~
+0 4 1
+D0
+~
+~
+0 0 4041
+D1
+~
+~
+0 0 4665
+S
+#4041
+田園小道~
+路上寂靜，景色優美，在這裡你看到許多動物。
+~
+0 4 2
+D0
+~
+~
+0 0 4042
+D2
+~
+~
+0 0 4005
+S
+#4042
+田園小道~
+路上寂靜，景色優美，在這裡你看到許多動物。
+~
+0 4 2
+D0
+~
+~
+0 0 4043
+D2
+~
+~
+0 0 4041
+S
+#4043
+交叉路口~
+你現在站在一個路口上。你看到北方有一片森林，那裡有一條通往黑森林的小徑。
+~
+0 1028 2
+D1
+~
+~
+0 0 4044
+D2
+~
+~
+0 0 4042
+S
+#4044
+陰暗的小路~
+這裡樹木非常茂盛，步行小道穿過這片美麗的森林。
+~
+0 0 3
+D1
+~
+~
+0 0 4045
+D3
+~
+~
+0 0 4043
+S
+#4045
+陰暗的小路~
+你站在一條陰暗的小道上。這裡的空氣還算不錯。
+~
+0 0 3
+D0
+~
+~
+0 0 4046
+D3
+~
+~
+0 0 4044
+S
+#4046
+陰暗的小路~
+小道延伸到這裡轉向東邊而去。
+~
+0 0 3
+D1
+~
+~
+0 0 4047
+D2
+~
+~
+0 0 4045
+S
+#4047
+闇黑森林~
+所有景物看來更可怕了，而且一些奇怪的雜音從黑森林的深處傳來。
+~
+0 0 3
+D1
+~
+~
+0 0 4048
+D3
+~
+~
+0 0 4046
+S
+#4048
+闇黑森林~
+你在這裡只能夠勉強看到通往東邊與西邊的路。
+~
+0 0 3
+D1
+~
+~
+0 0 4054
+D3
+~
+~
+0 0 4047
+S
+#4054
+森林小路的盡頭~
+終於你看到東方有一些亮光，這裡一定是這條長路的終點。
+~
+0 4 3
+D1
+~
+~
+0 0 4055
+D3
+~
+~
+0 0 4048
+S
+#4055
+廢棄廣場的入口~
+走了這段穿過森林的暗路之後，突然到了一個廣場，你被強烈的光芒照的幾乎
+張不開眼睛。
+~
+0 0 1
+D0
+~
+~
+0 0 4058
+D1
+~
+~
+0 0 4056
+D3
+~
+~
+0 0 4054
+S
+#4056
+廢棄的廣場~
+你站在荒廢廣場的南側，一個奇怪的想法穿過你的心中，你很納悶這裡從前是什麼樣子。
+難道是一個像現在的史卡拉貝城一樣繁榮的城市嗎？
+~
+0 0 1
+D0
+~
+~
+0 0 4059
+D1
+~
+~
+0 0 4057
+D3
+~
+~
+0 0 4055
+S
+#4057
+廢棄的廣場~
+你站在一個毀掉的噴泉旁，你看到北方不遠處有一座醜陋高大的建築物。你隱約地聽到遠
+處傳來陣陣吵雜聲。
+~
+0 0 1
+D0
+~
+~
+0 0 4060
+D3
+~
+~
+0 0 4056
+S
+#4058
+廢棄的廣場~
+清風由西方吹來。你能看到西邊遠處有一個美麗的小山坡。
+~
+0 0 1
+D0
+~
+~
+0 0 4061
+D1
+~
+~
+0 0 4059
+D2
+~
+~
+0 0 4055
+S
+#4059
+廢棄的廣場~
+你現在靠近廣場的中央。到處都是垃圾、餿掉的食物和死屍。
+~
+0 0 1
+D0
+~
+~
+0 0 4062
+D1
+~
+~
+0 0 4060
+D2
+~
+~
+0 0 4056
+D3
+~
+~
+0 0 4058
+S
+#4060
+廢棄的廣場~
+這裡有一棵大樹。在樹影之下，你往上看想知道這棵樹到底多高。但是你看不到樹頂，
+只看到透過葉影的陽光。等會...，你能勉強從樹裡看到某些東西。
+~
+0 0 1
+D2
+~
+~
+0 0 4057
+D3
+~
+~
+0 0 4059
+S
+#4061
+廢棄的廣場~
+你現在站在廣場的西側。這裡除了一些醜陋的動物以外，什麼都沒有。
+~
+0 0 1
+D0
+~
+~
+0 0 4064
+D1
+~
+~
+0 0 4062
+D2
+~
+~
+0 0 4058
+S
+#4062
+廢棄的廣場~
+你站在一個毀掉的噴泉旁，而且你看到東方有一座醜陋的建築物。你聽到屋中傳來陣陣
+雜聲。而當你從一個小洞窺視裡面的時候，你看到許多人在那賭博、喝酒、甚至打架鬧事。
+~
+0 0 1
+D0
+~
+~
+0 0 4065
+D1
+~
+~
+3 0 4063
+D2
+~
+~
+0 0 4059
+D3
+~
+~
+0 0 4061
+S
+#4063
+酒店~
+這個酒吧毫無秩序的吵著。而且你能看到侍者在群桌中穿梭，服務客人。
+~
+0 4 0
+D1
+~
+~
+0 0 4068
+D3
+~
+~
+3 0 4062
+S
+#4064
+廢棄的廣場~
+這裡是廣場的東北邊。這裡的東西看起來都讓人不太舒服。在黑暗的角落裏，你可以看到
+一些正在緩緩爬行的噁心爬蟲類。
+~
+0 0 1
+D1
+~
+~
+0 0 4065
+D2
+~
+~
+0 0 4061
+S
+#4065
+廢棄的廣場~
+你看到北方有一座雄偉的山。往南的路通往廣場中央，從這裡你看到東邊有一株很醜的樹
+(tree)，而這裡有一些看起來能當作建材的良木。
+~
+0 0 4
+D1
+~
+~
+0 0 4066
+D2
+~
+~
+0 0 4062
+D3
+~
+~
+0 0 4064
+E
+tree~
+這些樹木的外型雖然很醜，但是質地卻是相當的堅硬，是拿來當建材的好材料。
+~
+>room_command hack tree~
+if roomvalue($0) >= 3
+	echoat $n 你已經將這邊的木材給砍光了，
+	echoat $n 需要過一段時間才能長出來。
+	break
+endif
+echoat $n 你嘗試要砍下這棵樹樹枝....
+echoaround $n $n 嘗試要砍下這棵樹的樹枝....
+if str($n) < 22
+	callout 1 echoat $n 你的力量不夠，無法砍斷這棵質地堅硬的樹。
+	callout 1 echoaround $n $n 用盡了力氣仍無法砍斷這棵樹。
+else
+	callout 1 modrvt v0 + 1
+	callout 1 modrvt t0 = 36
+	callout 1 echoat $n 你用力將這棵樹的樹枝給砍斷了....
+	callout 1 echoaround $n $n 用力將這棵樹的樹枝給砍斷了....
+	callout 1 oload 4104 5 floor
+endif
+~
+|
+S
+#4066
+廢棄的廣場~
+你看到一棵大樹在灌木叢的中央。這棵樹真的非常非常的大，你可以看到樹上有許多
+蜘蛛在上頭爬行。忽然你感覺到有一陣黑影在你眼前閃過，但是當你注意到的時候，黑影
+已經不見。
+~
+0 0 1
+D3
+~
+~
+0 0 4065
+S
+#4067
+角落~
+酒店的北側，沒有一間房間有位置能讓你坐下，因為這邊的人太多了，你最好小心喝醉酒
+的酒客或忽然對你發動攻擊。
+~
+0 0 0
+D2
+~
+~
+0 0 4068
+S
+#4068
+走進酒店~
+你走在總是有一堆遊手好閒的人聚集的酒店。
+~
+0 0 0
+D0
+~
+~
+0 0 4067
+D2
+~
+~
+0 0 4069
+D3
+~
+~
+0 0 4063
+S
+#4069
+角落~
+你看到一些人在這裡玩鬧、喝酒、賭博。在角落你看到一個強壯的人站在酒窖的門上。
+~
+0 0 0
+D0
+~
+~
+0 0 4068
+D5
+~
+~
+119 4000 4000
+>room_trap 32 100~
+if is_inv_obj($n) == 4000
+	echoat $n 當你打開了這扇門，身上的鑰匙也跟著消失....
+	echoaround $n 當 $n 打開了這扇門，手上的鑰匙忽然消失了....
+	purge $n key-bandit
+endif
+~
+|
+S
+#4070
+在甬道之上~
+當你走上甬道之後，新鮮的空氣讓你感到十分的舒暢。你十分驚訝走出甬道後所看到的
+一切。
+~
+0 0 0
+D1
+~
+~
+0 0 4071
+D5
+~
+~
+0 0 4002
+S
+#4071
+盜賊要塞~
+一條小路通至入口，在入口的上面有一塊招牌寫著：
+
+
+                  [ 盜  賊  要  塞 ]
+
+
+你注意到旁邊擺著一塊招牌(sign)。
+~
+0 0 0
+D1
+~
+~
+0 0 4072
+D3
+~
+~
+0 0 4070
+E
+sign~
+.
+這裡只歡迎盜賊同志們！
+若有其他族群的人擅入此處，只有死！
+~
+S
+#4072
+走進盜賊要塞裡頭~
+在這你看到廣大的盜賊要塞。北方是強盜居住的區域，東邊你看到一條寬廣的大街。而當
+你往西方看的時候，那裡有一個小牌樓。
+~
+0 4 0
+D0
+~
+~
+0 0 4073
+D1
+~
+~
+0 0 4113
+D2
+~
+~
+0 0 4082
+D3
+~
+~
+0 0 4071
+S
+#4073
+大道~
+站在大道上，你聽到身邊的人發出的呼喊聲和噪音。在這樣可怕的氣氛下，你覺得相當不
+自在。這裡的房子又舊又髒，而住在裡面的人也是。
+~
+0 0 0
+D0
+~
+~
+0 0 4074
+D2
+~
+~
+0 0 4072
+S
+#4074
+大道~
+這條大道持續向北邊延伸，如果你的職業不是盜賊的話，在這邊冒險是相當有趣的事情，
+不是嗎？
+~
+0 0 0
+D0
+~
+~
+0 0 4075
+D2
+~
+~
+0 0 4073
+S
+#4075
+住宅區~
+這個地方是給盜賊居住的。很明顯的這裡面積相當遼闊。
+~
+0 0 0
+D2
+~
+~
+0 0 4074
+D3
+~
+~
+0 0 4076
+S
+#4076
+住宅區~
+這個地方是給盜賊居住的。很明顯的這裡面積相當遼闊。
+~
+0 0 0
+D0
+~
+~
+0 0 4077
+D1
+~
+~
+0 0 4075
+D3
+~
+~
+0 0 4079
+S
+#4077
+盜賊的家~
+你站在盜賊的家裡頭，裡面有幾個盜賊住在裡面。
+~
+0 0 0
+D0
+~
+~
+0 0 4078
+D2
+~
+~
+0 0 4076
+S
+#4078
+臥室~
+這間臥室裡，在角落有一個骯髒的床鋪，上頭有一些花朵裝飾。
+~
+0 0 0
+D2
+~
+~
+0 0 4077
+S
+#4079
+田園小道~
+這條田園小道向東延伸而去。
+~
+0 0 0
+D1
+~
+~
+0 0 4076
+D3
+~
+~
+0 0 4080
+S
+#4080
+公園~
+哇！這是你看過風景最差的公園了。從來沒有看過這麼骯髒的公園。
+~
+0 0 0
+D0
+~
+~
+0 0 4081
+D1
+~
+~
+0 0 4079
+S
+#4081
+垃圾場~
+哇！這裡真是有夠....臭的！你真不敢相信盜賊們怎麼有辦法住在這邊。
+~
+0 0 0
+D2
+~
+~
+0 0 4080
+D4
+~
+~
+1 0 4101
+S
+#4082
+大道~
+在進入這個大強盜窩之後，一條寬廣的街道進入你的視線之中。你能確定你並不受這裡
+歡迎而且這裡的東西都帶有一絲邪氣。道路通往北邊與南邊。
+~
+0 0 0
+D0
+~
+~
+0 0 4072
+D2
+~
+~
+0 0 4083
+S
+#4083
+安靜的大廳~
+這個大廳十分的安靜，在這裡沒有看到任何一個人。當你繼續往前前進，你聽到大廳的某
+處傳來一些說話的聲音。
+~
+0 4 0
+D0
+~
+~
+0 0 4082
+D2
+~
+~
+0 0 4084
+S
+#4084
+小型拱廊~
+這裡是一個小型的拱廊，看起來蠻有趣的。
+~
+0 0 0
+D0
+~
+~
+0 0 4083
+D3
+~
+~
+0 0 4085
+S
+#4085
+長廊~
+這裡是一條整齊、清潔且舒適的長廊。
+~
+0 0 0
+D1
+~
+~
+0 0 4084
+D3
+~
+~
+0 0 4086
+S
+#4086
+長廊~
+這裡是一條整齊、清潔且舒適的長廊。
+~
+0 0 0
+D1
+~
+~
+0 0 4085
+D3
+~
+~
+0 0 4089
+S
+#4089
+長廊~
+這裡是一條整齊、清潔且舒適的長廊。
+~
+0 4 0
+D1
+~
+~
+0 0 4086
+D2
+~
+~
+0 0 4090
+S
+#4090
+巨大的拱廊~
+一座巨大的拱廊在你面前延伸開來，像是通往一個重要的地方。南邊有一道巨大的門。
+~
+0 0 0
+D0
+~
+~
+0 0 4089
+D2
+~
+~
+39 4049 4092
+S
+#4091
+斥候室~
+斥候待在這邊等候有緊急事故時可以立即出來處理。
+~
+0 0 0
+D1
+~
+~
+0 0 4092
+S
+#4092
+走進盜賊要塞總部~
+在總部之內滿滿都是斥候、守衛與資深的殺手。這個地方屬於一個邪惡的盜賊，職業不是
+盜賊的人在這邊千萬要小心。北邊是一道巨大的門。
+~
+0 0 0
+D0
+~
+~
+39 4049 4090
+D1
+~
+~
+0 0 4093
+D2
+~
+~
+0 0 4094
+D3
+~
+~
+0 0 4091
+S
+#4093
+斥候室~
+斥候待在這邊等候有緊急事故時可以立即出來處理。
+~
+0 0 0
+D3
+~
+~
+0 0 4092
+S
+#4094
+通道~
+這個地方沒什麼特別的，只是純粹用來通行。南邊有一道鎖住的大門。
+~
+0 4 0
+D0
+~
+~
+0 0 4092
+D2
+~
+~
+39 4050 4096
+S
+#4095
+辦公室~
+這裡是一間辦公室，裡頭有許多事務與文件需要處理。
+~
+0 0 0
+D1
+~
+~
+0 0 4096
+S
+#4096
+守衛室~
+強而有力的守衛在這邊預防任何危險勢力的侵入。北邊有一道鎖住的大門。
+~
+0 0 0
+D0
+~
+~
+39 4050 4094
+D1
+~
+~
+0 0 4097
+D2
+~
+~
+33 4050 4098
+D3
+~
+~
+0 0 4095
+S
+#4097
+盜賊頭頭的房間~
+當你進入這間房間的時候，你注意到這間房間與其他房間有著很大的不同。
+~
+0 0 0
+D3
+~
+~
+0 0 4096
+S
+#4098
+守衛室~
+強而有力的守衛在這邊預防任何危險勢力的侵入。
+~
+0 0 0
+D0
+~
+~
+33 4050 4096
+D2
+~
+~
+49 4502 4100
+S
+#4099
+會議室~
+當你走進這間房間的時候，你看到房間的正中央有一面巨大的桌子，桌子的周圍坐滿了人
+。看見那些滿臉驚訝表情的人們，你知道你挑錯時間了。
+~
+0 0 0
+D1
+~
+~
+0 0 4100
+S
+#4100
+會議室~
+當你走進這間房間的時候，你看到房間的正中央有一面巨大的桌子，桌子的周圍坐滿了人
+。看見那些滿臉驚訝表情的人們，你知道你挑錯時間了。
+~
+0 0 0
+D0
+~
+~
+0 0 4098
+D1
+~
+~
+0 0 4111
+D2
+~
+~
+0 0 4112
+D3
+~
+~
+0 0 4099
+S
+#4101
+空蕩蕩的房間~
+這間房間裡面什麼都沒有，看起來十分的普通....。
+~
+0 5 0
+D0
+~
+~
+0 0 4102
+D3
+~
+~
+0 0 4103
+D5
+~
+~
+1 0 4081
+S
+#4102
+空蕩蕩的房間~
+這間房間裡面什麼都沒有，看起來十分的普通....。不過牆上卻
+貼了一張紙(paper)。
+~
+0 1 0
+E
+paper~
+開飯時間：每天早上四點到八點，十六點到二十點。
+~
+D1
+東邊看起來是一間休息室。
+~
+~
+0 0 4150
+D2
+~
+~
+0 0 4101
+D3
+~
+~
+0 0 4104
+S
+#4103
+空蕩蕩的房間~
+這間房間裡面什麼都沒有，看起來十分的普通....。
+~
+0 1 0
+D0
+那裡好像有著秘密，竟然有守衛特地看守。
+~
+~
+0 0 4104
+D1
+~
+~
+0 0 4101
+D3
+西邊是一間破舊的更衣室。
+~
+~
+0 0 4151
+S
+#4104
+有守衛的房間~
+有著警衛戒備的房間，看起來背面的門後應該有些秘密。一靠近門口守衛便警戒起來，
+看來不是受到這裡的主人所邀請的客人，或是她們的夥伴，是很難進去的。
+~
+0 0 0
+D0
+雖然門關著，但是依稀可以聽到裡面好像在進行一些交易。
+~
+~
+7 0 4105
+D1
+~
+~
+0 0 4102
+D2
+~
+~
+0 0 4103
+S
+#4105
+黑市交易所~
+這裡是要把贓物脫手的好地方，價格或許低了點，但是卻不會惹上麻煩。
+當然，除非你當場被逮個正著。牆上貼了一張佈告(note)。
+~
+0 0 0
+E
+note~
+除非會員否則一概不出售任何物品。
+~
+D2
+~
+~
+7 0 4104
+S
+#4111
+會議室~
+當你走進這間房間的時候，你看到房間的正中央有一面巨大的桌子，桌子的周圍坐滿了人
+。看見那些滿臉驚訝表情的人們，你知道你挑錯時間了。
+~
+0 0 0
+D3
+~
+~
+0 0 4100
+S
+#4112
+盜賊頭頭的房間~
+你看到這邊房間裝飾著許多奢侈的裝飾品。很明顯的，這間房間屬於盜賊頭頭所有。
+~
+0 0 0
+D0
+~
+~
+0 0 4100
+S
+#4113
+大道~
+站在大道上，你聽到身邊的人發出的呼喊聲和噪音。在這樣可怕的氣氛下，你覺得相當不
+快。這裡的房子又舊又髒，而住在裡面的人也是。
+~
+0 0 0
+D1
+~
+~
+0 0 4114
+D3
+~
+~
+0 0 4072
+S
+#4114
+大道~
+在進入這個盜賊要塞之後，一條寬廣的街道進入你的視線之中。你能確定你並不受這裡
+歡迎而且這裡的東西都帶有一絲邪氣。道路通往東邊與西邊。
+~
+0 0 0
+D1
+~
+~
+0 0 4115
+D3
+~
+~
+0 0 4113
+S
+#4115
+大道~
+在進入這個盜賊要塞之後，一條寬廣的街道進入你的視線之中。你能確定你並不受這裡
+歡迎而且這裡的東西都帶有一絲邪氣。道路通往東邊與西邊。
+~
+0 0 0
+D1
+~
+~
+0 0 4116
+D3
+~
+~
+0 0 4114
+S
+#4116
+大道~
+道路仍然持續向東邊延伸，你看到有兩棟建築在你的北邊與南邊。
+~
+0 0 0
+D0
+~
+~
+0 0 4117
+D1
+~
+~
+0 0 4119
+D2
+~
+~
+0 0 4118
+D3
+~
+~
+0 0 4115
+S
+#4117
+小房子~
+在這棟小房子裏你只能夠看到破舊的家具。
+~
+0 0 0
+D2
+~
+~
+0 0 4116
+S
+#4118
+倒塌的建築~
+這棟建築已經毀壞很久了，但是你卻仍可以看到有人住在裡頭。
+~
+0 0 0
+D0
+~
+~
+0 0 4116
+S
+#4119
+大道~
+這條路在這邊到達盡頭了。你看到東邊有寬廣的出口。
+~
+0 0 0
+D1
+~
+~
+0 0 4120
+D3
+~
+~
+0 0 4116
+S
+#4120
+擁擠的廣場~
+許多盜賊都集合到這邊來。
+~
+0 0 0
+D0
+~
+~
+0 0 4121
+D1
+~
+~
+0 0 4124
+D2
+~
+~
+0 0 4125
+D3
+~
+~
+0 0 4119
+S
+#4121
+小巷子~
+這條小巷子往北邊延伸而去。
+~
+0 4 0
+D0
+~
+~
+0 0 4122
+D2
+~
+~
+0 0 4120
+S
+#4122
+陰暗小巷~
+當你在這條小巷子中繼續前進時，你發覺這裡越來越暗了。
+~
+0 0 0
+D1
+~
+~
+0 0 4123
+D2
+~
+~
+0 0 4121
+S
+#4123
+陰暗的角落~
+在這條小巷中的陰暗角落你感到十分的不安。
+~
+0 0 0
+D3
+~
+~
+0 0 4122
+S
+#4124
+擁擠的廣場~
+許多盜賊都集合到這裡來。
+~
+0 0 0
+D2
+~
+~
+0 0 4126
+D3
+~
+~
+0 0 4120
+S
+#4125
+擁擠的廣場~
+許多盜賊都集合到這裡來。
+~
+0 0 0
+D0
+~
+~
+0 0 4120
+D1
+~
+~
+0 0 4126
+S
+#4126
+擁擠的廣場~
+許多盜賊都集合到這裡來。
+~
+0 0 0
+D0
+~
+~
+0 0 4124
+D1
+~
+~
+0 0 4127
+D3
+~
+~
+0 0 4125
+S
+#4127
+後街~
+從這邊可以從吵雜的廣場通往安靜的小路。
+~
+0 4 0
+D2
+~
+~
+0 0 4128
+D3
+~
+~
+0 0 4126
+S
+#4128
+狹窄的小路~
+由廣場傳過來的吵雜聲已經越來越小了。
+~
+0 0 0
+D0
+~
+~
+0 0 4127
+D2
+~
+~
+0 0 4129
+S
+#4129
+狹窄的小路~
+由廣場傳過來的吵雜聲已經越來越小了。
+~
+0 0 0
+D0
+~
+~
+0 0 4128
+D3
+~
+~
+0 0 4130
+S
+#4130
+小房子~
+有一棟小房子在這邊，看起來真是小的可愛。
+~
+0 0 0
+D1
+~
+~
+0 0 4129
+D5
+~
+~
+39 4051 4131
+S
+#4131
+基礎~
+整個房間裡充滿了潮濕的空氣與悶熱的感覺，苔蘚、毛皮覆蓋了四周的牆壁。
+~
+0 0 0
+D1
+~
+~
+0 0 4132
+D4
+~
+~
+39 4051 4130
+S
+#4132
+基礎~
+整個房間裡充滿了潮濕的空氣與悶熱的感覺，苔蘚、毛皮覆蓋了四周的牆壁。
+~
+0 4 0
+D1
+~
+~
+0 0 4133
+D3
+~
+~
+0 0 4131
+S
+#4133
+巨大的門~
+當你靜靜的走進這邊房間，你看到東邊有一扇巨大的門。這扇門真的又高又大。
+~
+0 0 0
+D1
+~
+~
+39 4052 4134
+D3
+~
+~
+0 0 4132
+S
+#4134
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+~
+0 0 0
+D1
+~
+~
+0 0 4135
+D3
+~
+~
+39 4052 4133
+S
+#4135
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。南邊有一道巨大的門。
+~
+0 0 0
+D1
+~
+~
+3 0 4136
+D2
+~
+~
+39 4053 4137
+D3
+~
+~
+0 0 4134
+S
+#4136
+辦公室~
+在你面前是一張又大又堅固的桌子。垃圾、雜物或是一些沒吃完的食物都被丟在房間的角
+落。依照你的判斷，這裡應該是獄卒的辦公室。
+~
+0 0 0
+D3
+~
+~
+3 0 4135
+S
+#4137
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+~
+0 0 0
+D0
+~
+~
+39 4053 4135
+D2
+~
+~
+0 0 4138
+S
+#4138
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+~
+0 0 0
+D0
+~
+~
+0 0 4137
+D1
+~
+~
+0 0 4139
+S
+#4139
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+~
+0 0 0
+D1
+~
+~
+0 0 4143
+D3
+~
+~
+0 0 4138
+S
+#4141
+密室~
+你進入了一間陰暗的小房間，房間小到只能夠勉強擠進兩個人。
+~
+0 0 0
+D2
+~
+~
+0 0 4142
+S
+#4142
+牢房~
+這是給犯人住的牢房。在這間牢房中你只能夠看到一張床鋪與一些簡單的家具。
+~
+0 0 0
+D0
+~
+~
+0 0 4141
+D2
+~
+~
+39 4107 4143
+S
+#4143
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+~
+0 0 0
+D0
+~
+~
+39 4054 4142
+D1
+~
+~
+0 0 4145
+D2
+~
+~
+39 4054 4144
+D3
+~
+~
+0 0 4139
+S
+#4144
+牢房~
+這是給犯人住的牢房。在這間牢房中你只能夠看到一張床鋪與一些簡單的家具。
+~
+0 0 0
+D0
+~
+~
+39 4107 4143
+S
+#4145
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+~
+0 0 0
+D1
+~
+~
+0 0 4147
+D3
+~
+~
+0 0 4143
+S
+#4146
+牢房~
+這是給犯人住的牢房。在這間牢房中你只能夠看到一張床鋪與一些簡單的家具。
+~
+0 0 0
+D2
+~
+~
+39 4107 4147
+S
+#4147
+監獄~
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+~
+0 0 0
+D0
+~
+~
+39 4054 4146
+D2
+~
+~
+39 4054 4148
+D3
+~
+~
+0 0 4145
+S
+#4148
+空房間~
+這一間房間裡頭相當乾淨，不像其他監獄的房間。
+~
+0 0 0
+D0
+~
+~
+39 4107 4147
+D2
+~
+~
+3 0 4149
+S
+#4149
+儲藏室~
+厚厚的一層灰塵覆蓋在房間的地面上。這一間房間是用來儲存一些裝備。
+~
+0 5 0
+D0
+~
+~
+0 0 4148
+S
+#4150
+休息室~
+這裡有一張小桌子，幾張椅子。沒太多的裝飾，不過從地上的食物殘渣看來，
+守衛們大概都在這裡用餐。
+~
+0 1 0
+D3
+~
+~
+0 0 4102
+S
+#4151
+更衣室~
+這裡有一個衣櫃，不過門卻壞了一半。地上散佈了一些鏡子的碎片，房間角落
+堆著一些箱子(box)，有件衣服被箱子押到只露出一角。
+~
+0 1 0
+D1
+~
+~
+0 0 4103
+E
+box~
+這個箱子似乎可以移開(move)。
+~
+>room_command move box~
+ if robjcount(4066) == 0
+   echo 你找到一件堆滿灰塵的長袍。
+   oload 4066 5 $n floor
+ endif
+~
+|
+S
+#4152
+試練的入口~
+這是試練的起點，任何想學到更高級技巧的忍者都要經過這一關。唯一的出口指向
+北方，黯淡的火光使你看不清前方的狀況。在你視線所及的地方都是一層單調的灰色，
+灰濛濛的一片使你的視線迷失在模糊的空中。
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4153
+S
+#4153
+精進之路~
+火光在灰色的基調中閃爍著，孤獨而徬徨。微弱的火苗鬥不過滿溢的黑暗，陰影於
+是在四週灑落。你直覺有股視線正盯著你瞧....
+~
+0 8|8192|262144 0
+E
+elder~
+不起眼的老人(elder) - 人類(Human):
+不起眼的外表下，隱隱透露出他經過多年鍛鍊的事實。
+
+不起眼的老人(elder)[1;20m健康狀況良好。[m
+
+他身上穿著：
+< 光  源 > ([1;16m發光[m)盜賊的守則(Rules of Thief)
+<主要武器> 暗殺匕首(assassination dagger)
+<次要武器> 暗殺匕首(assassination dagger)
+
+        什麼都沒有。
+
+你不禁心想：「他真的是一位老人？還是一位忍者？」
+~
+D0
+~
+~
+0 0 4154
+D2
+~
+~
+0 0 4152
+S
+#4154
+封印的石碑~
+一座石碑直立在空地中央，四周散佈著幾簇火盆，熊熊的火焰令人尚可分辨週遭的
+環境。東西兩邊由於光線不夠明亮看起來像是消失在黑暗之中，而北方不遠處似乎有個
+人影在晃動，而南方....？
+
+    你心想：「南方不就是我剛剛來的地方嘛，鎮定鎮定！不要被一點小事嚇傻了！」
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4155
+D1
+~
+~
+0 0 4158
+D2
+~
+~
+0 0 4153
+D3
+~
+~
+0 0 4157
+>room_time 100~
+    echo 你覺得身體恢復的速度稍微加快了！
+    modhmv pc 04.3 6 00000000
+    modhmv pc 14.2 4 00000000
+    modhmv pc 24.4 8 00000000
+~
+>room_enter 31 100~
+if is_qmark($n) == bandit_thief_exam 100007
+	echoat $n 一陣閃光之後，你被傳送到了火影之間。
+	transfer $n 4165
+	at 4165 force $n look
+	at 4165 echoat $n 玩家請注意，打火影時屍體可能會被清掉，
+	at 4165 echoat $n 這是正常情形哦，所以打前請多三思才好。
+	break
+endif
+if is_qmark($n) == bandit_thief_exam 100006
+if is_inv_obj($n) == 4070
+if is_inv_obj($n) == 4087
+if is_inv_obj($n) == 4090
+if is_inv_obj($n) == 4091
+if is_inv_obj($n) == 4092
+if is_inv_obj($n) == 4093
+if is_inv_obj($n) == 4094
+			purge $n slate-a
+			purge $n slate-b
+			purge $n slate-c
+			purge $n slate-d
+			purge $n slate-e
+			purge $n slate-f
+			purge $n slate-g
+			echoat $n 當你一踏進這裡，你身上的七個石版忽然發出一陣耀眼的光茫。
+			echoat $n 等到你再清醒過來的時候，你已經被傳送到這個房間了。
+			mod_qmark $n bandit_thief_exam v0 = 7
+			transfer $n 4165
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+~
+|
+S
+#4155
+守護者之間~
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+~
+0 8|8192|262144 0
+D2
+~
+~
+0 0 4154
+>room_rand 100~
+      	if robjcount(4071) > 0
+             if robjcount(4072) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+~
+>room_command turn statue~
+        if robjcount(4071) > 0
+           callout 1 echo 「隨著石像的轉動，北面一道密門也漸漸打開。」
+           callout 2 makedoor 0 一座石門緩緩上升 stone 0 0 4156
+           callout 3 purge statueb
+           callout 4 oload 4072 1 floor
+        else
+           if robjcount(4072) > 0
+              callout 1 deldoor 0
+              callout 2 echo 「隨著石像的轉動，北面的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4071 1 floor
+           endif
+        endif
+~
+|
+S
+#4156
+隱藏的密室~
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+~
+0 8 0
+D2
+~
+~
+0 0 4155
+>room_enter 127 100~
+  if rand(30)
+     echo 「突然傳出一陣喀喀聲」
+     callout 3 deldoor 2
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除南邊的陷阱了。
+  endif
+~
+>room_mask untangle south~
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4157
+石碑的西邊~
+站在這裡往東方看去，仍可以看到石碑的影子。環顧四週，都覺得有股眼神在盯著
+你看。看來要小心點才是.....
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4159
+D1
+~
+~
+0 0 4154
+D2
+~
+~
+0 0 4161
+D3
+~
+~
+0 0 4160
+S
+#4158
+石碑的東邊~
+站在這裡往西方看去，仍可以看到石碑的影子。環顧四週，都覺得有股眼神在盯著
+你看。看來要小心點才是.....
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4162
+D1
+~
+~
+0 0 4163
+D2
+~
+~
+0 0 4164
+D3
+~
+~
+0 0 4154
+S
+#4159
+守護者之間~
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+~
+0 8|8192|262144 0
+D2
+~
+~
+0 0 4157
+>room_rand 100~
+      	if robjcount(4088) > 0
+             if robjcount(4089) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+~
+>room_command pull hands~
+        if robjcount(4088) > 0
+           callout 1 echo 「隨著你壓下手印，下面一道密門也漸漸打開。」
+           callout 2 makedoor 5 一座石門緩緩上升 stone 0 0 4171
+           callout 3 purge statueb
+           callout 4 oload 4089 1 floor
+           break
+        else
+           if robjcount(4089) > 0
+              callout 1 deldoor 5
+              callout 2 echo 「隨著手印的浮起，下面的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4088 1 floor
+              break
+           endif
+        endif
+~
+|
+S
+#4160
+守護者之間~
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+~
+0 8|8192|262144 0
+D1
+~
+~
+0 0 4157
+>room_rand 100~
+      	if robjcount(4095) > 0
+             if robjcount(4096) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+~
+>room_command push button~
+        if robjcount(4095) > 0
+           callout 1 echo 「隨著你壓下按鈕，北方一道密門也漸漸打開。」
+           callout 2 makedoor 0 一座石門緩緩上升 stone 0 0 4170
+           callout 3 purge statueb
+           callout 4 oload 4096 1 floor
+           break
+        else
+           if robjcount(4096) > 0
+              callout 1 deldoor 0
+              callout 2 echo 「隨著你壓下按鈕，北方的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4095 1 floor
+              break
+           endif
+        endif
+~
+|
+S
+#4161
+守護者之間~
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4157
+>room_rand 100~
+      	if robjcount(4098) > 0
+             if robjcount(4097) > 0
+                  deldoor 3
+                  purge statuea
+             endif
+        endif
+~
+>room_command move triangle~
+        if robjcount(4097) > 0
+           callout 1 echo 「隨著你移動三角形，左方一道密門也漸漸打開。」
+           callout 2 makedoor 3 一座石門緩緩上升 stone 0 0 4169
+           callout 3 purge statueb
+           callout 4 oload 4098 1 floor
+           break
+        else
+           if robjcount(4098) > 0
+              callout 1 deldoor 3
+              callout 2 echo 「隨著你移動三角形，左方的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4097 1 floor
+              break
+           endif
+        endif
+~
+|
+S
+#4162
+守護者之間~
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，東邊有一
+道門大剌剌地開著！
+~
+0 8|8192|262144 0
+D1
+~
+~
+0 0 4166
+D2
+~
+~
+0 0 4158
+S
+#4163
+守護者之間~
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+~
+0 8|8192|262144 0
+D2
+~
+~
+7 0 4167
+D3
+~
+~
+0 0 4158
+S
+#4164
+守護者之間~
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+~
+0 8|8192|262144 0
+D0
+~
+~
+0 0 4158
+>room_rand 100~
+      	if robjcount(4099) > 0
+             if robjcount(4100) > 0
+                  deldoor 3
+                  purge statuea
+             endif
+        endif
+~
+>room_command touch crystal ball~
+        if robjcount(4099) > 0
+           callout 1 echo 「隨著你碰觸水晶球，上方一道密門也漸漸打開。」
+           callout 2 makedoor 4 一座石門緩緩上升 stone 0 0 4168
+           callout 3 purge statueb
+           callout 4 oload 4100 1 floor
+        else
+           if robjcount(4100) > 0
+              callout 1 deldoor 4
+              callout 2 echo 「隨著你碰觸水晶球，左方的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4099 1 floor
+           endif
+        endif
+~
+|
+S
+#4165
+火影之間~
+一面潑墨山水畫掛在南面的牆壁上，另外有一扇五呎的屏風展開在東面矮桌旁。除
+此之外沒有什麼東西吸引你的注意，房間裡唯一在動的東西，就只有那盞擺在矮桌上的
+油燈了。
+~
+0 8|8192|262144 0
+D4
+~
+~
+0 0 4154
+S
+#4166
+隱藏的密室~
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+~
+0 8 0
+D3
+~
+~
+0 0 4162
+>room_defun aftershoot_deldoor~
+  if rand(60)
+     echo 「地板忽然下沉了一些」
+     callout 3 deldoor 3
+     callout 4 echo 「喔喔！看來你又觸動了機關！」
+     callout 5 echo 你發現你可能要自力救濟自行解除西邊的陷阱了。
+  endif
+~
+>room_enter 127 100~
+     echo 「一陣風聲劃破原本的沉默」
+     echo 「咻....」
+     callout 1 echoat $n 「你發現你被一支暗箭射中」
+     callout 1 modhmv $n 03.20 30 00000001
+     callout 2 rcall aftershoot_deldoor
+~
+>room_mask untangle west~
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，西邊的門打開了......
+		callout 1 makedoor 3 一座石門緩緩上升 stone 0 0 4162
+		callout 1 at 4162 makedoor 1 打開的門 stone 0 0 4166
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，西邊的門打開了......
+		callout 1 makedoor 3 一座石門緩緩上升 stone 0 0 4162
+		callout 1 at 4162 makedoor 1 打開的門 stone 0 0 4166
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4167
+隱藏的密室~
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+~
+0 8 0
+D0
+~
+~
+0 0 4163
+>room_enter 127 100~
+  if rand(40)
+     echo 「突然傳出一陣喀喀聲」
+     callout 3 deldoor 0
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除北邊的陷阱了。
+  endif
+~
+>room_mask untangle north~
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，北邊的門打開了......
+		callout 1 makedoor 0 一座石門緩緩上升 stone 0 0 4163
+		callout 1 at 4163 makedoor 2 門 stone 7 0 4167
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，北邊的門打開了......
+		callout 1 makedoor 0 一座石門緩緩上升 stone 0 0 4163
+		callout 1 at 4163 makedoor 2 門 stone 7 0 4167
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4168
+隱藏的密室~
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+~
+0 8 0
+D5
+~
+~
+0 0 4164
+>room_enter 127 100~
+  if rand(50)
+     echo 「突然傳出一陣喀喀聲」
+     callout 1 deldoor 5
+     callout 2 at 4164 deldoor 4
+     callout 2 at 4164 purge statue
+     callout 3 at 4164 oload 4099 1 floor
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除下方的陷阱了。
+  endif
+~
+>room_mask untangle down~
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，下方的門打開了......
+		callout 1 makedoor 5 一座石門緩緩上升 stone 0 0 4164
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，下方的門打開了......
+		callout 1 makedoor 5 一座石門緩緩上升 stone 0 0 4164
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4169
+隱藏的密室~
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+~
+0 8 0
+D1
+~
+~
+0 0 4161
+>room_enter 127 100~
+  if rand(30)
+     echo 「突然傳出一陣喀喀聲」
+     callout 1 deldoor 1
+     callout 2 at 4161 deldoor 3
+     callout 2 at 4161 purge statue
+     callout 3 at 4161 oload 4097 1 floor
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除東邊的陷阱了。
+  endif
+~
+>room_mask untangle east~
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，東邊的門打開了......
+		callout 1 makedoor 1 一座石門緩緩上升 stone 0 0 4161
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，東邊的門打開了......
+		callout 1 makedoor 1 一座石門緩緩上升 stone 0 0 4161
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4170
+隱藏的密室~
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+~
+0 8 0
+D2
+~
+~
+0 0 4160
+>room_enter 127 100~
+  if rand(30)
+     echo 「突然傳出一陣喀喀聲」
+     callout 1 deldoor 2
+     callout 2 at 4160 deldoor 0
+     callout 2 at 4160 purge statue
+     callout 3 at 4160 oload 4095 1 floor
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除南邊的陷阱了。
+  endif
+~
+>room_mask untangle south~
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4160
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4160
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#4171
+隱藏的密室~
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+~
+0 8 0
+D4
+~
+~
+0 0 4159
+>room_enter 127 100~
+if rand(30)
+	echo 「突然傳出一陣喀喀聲」
+	callout 3 deldoor 4
+	callout 4 echo 「喔喔！看來你是觸動了機關了！」
+	callout 5 echo 你發現你可能要自力救濟自行解除上方的陷阱了。
+endif
+~
+>room_mask untangle up~
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，向上的門打開了......
+		callout 1 makedoor 4 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，向上的門打開了......
+		callout 1 makedoor 4 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+~
+|
+S
+#0
+
+
+
+#SPECIALS
+M 4000 spec_assassin
+M 4048 spec_guard
+S
+
+
+
+#RESETS
+M 0 4067 1 4067
+M 0 4022 2 4056
+M 0 4022 2 4056
+M 0 4025 1 4057
+M 0 4026 2 4057
+M 0 4026 2 4057
+M 0 4027 2 4062
+M 0 4027 2 4062
+M 0 4024 1 4062
+M 0 4028 1 4062
+M 0 4025 1 4064
+M 0 4023 1 4065
+M 0 4021 3 4066
+M 0 4030 1 4066
+M 0 4020 3 4068
+E 0 4047 0 16
+E 0 4035 0 13
+M 0 4020 3 4068
+E 0 4047 0 16
+E 0 4035 0 13
+M 0 4019 1 4069
+E 0 4035 0 13
+E 0 4000 0 17
+O 0 4034 0 4069
+M 0 4015 2 4071
+M 0 4015 2 4071
+M 0 4038 5 4076
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4076
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4077
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4077
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4038 5 4078
+E 0 4032 0 16
+E 0 4012 0 5
+M 0 4013 3 4084
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4013 3 4084
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4013 3 4084
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4004 2 4090
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4044 2 4090
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4044 2 4090
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+G 0 4049 0
+M 0 4045 3 4091
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4045 3 4091
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+G 0 4050 0
+M 0 4006 1 4095
+E 0 4043 0 16
+E 0 4044 0 5
+M 0 4039 1 4096
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4036 1 4097
+E 0 4047 0 16
+G 0 4051 0
+M 0 4040 1 4098
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4005 2 4099
+E 0 4026 0 16
+E 0 4024 0 5
+E 0 4016 0 8
+M 0 4005 2 4100
+E 0 4026 0 16
+E 0 4024 0 5
+E 0 4016 0 8
+M 0 4041 2 4111
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4041 2 4111
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4037 1 4111
+E 0 4005 0 16
+E 0 4021 0 5
+E 0 4036 0 12
+E 0 4037 0 8
+E 0 4038 0 10
+E 0 4039 0 9
+M 0 4000 1 4112
+E 0 4105 0 6
+E 0 4004 0 16
+E 0 4056 0 18
+E 0 4109 0 5
+M 0 4003 4 4114
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4014 2 4114
+E 0 4019 0 16
+E 0 4022 0 5
+M 0 4014 2 4114
+E 0 4019 0 16
+E 0 4022 0 5
+M 0 4003 4 4115
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4003 4 4115
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4003 4 4115
+E 0 4007 0 16
+E 0 4012 0 5
+M 0 4010 3 4117
+E 0 4031 0 16
+E 0 4041 0 5
+E 0 4040 0 6
+M 0 4010 3 4117
+E 0 4031 0 16
+E 0 4041 0 5
+E 0 4040 0 6
+M 0 4010 3 4117
+E 0 4031 0 16
+E 0 4041 0 5
+E 0 4040 0 6
+M 0 4007 2 4118
+E 0 4020 0 16
+E 0 4012 0 5
+M 0 4007 2 4118
+E 0 4020 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4009 4 4123
+E 0 4008 0 16
+E 0 4012 0 5
+M 0 4017 3 4124
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4017 3 4124
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4017 3 4124
+E 0 4029 0 16
+E 0 4012 0 5
+M 0 4014 2 4125
+E 0 4019 0 16
+E 0 4022 0 5
+M 0 4035 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4014 0 6
+E 0 4009 0 16
+M 0 4035 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4014 0 6
+E 0 4009 0 16
+M 0 4035 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4014 0 6
+E 0 4009 0 16
+M 0 4016 3 4126
+E 0 4013 0 5
+E 0 4015 0 9
+E 0 4040 0 6
+E 0 4025 0 16
+M 0 4018 2 4128
+E 0 4030 0 16
+M 0 4018 2 4128
+E 0 4030 0 16
+M 0 4011 2 4130
+E 0 4045 0 16
+E 0 4046 0 6
+E 0 4013 0 5
+M 0 4011 2 4130
+E 0 4045 0 16
+E 0 4046 0 6
+E 0 4013 0 5
+M 0 4046 2 4133
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+G 0 4052 0
+M 0 4046 2 4133
+E 0 4040 0 6
+E 0 4015 0 9
+E 0 4041 0 5
+E 0 4029 0 16
+E 0 4042 0 8
+M 0 4031 1 4136
+G 0 4053 0
+E 0 4027 0 16
+E 0 4013 0 5
+E 0 4014 0 6
+M 0 4008 3 4137
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4042 2 4139
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+G 0 4054 0
+M 0 4001 1 4141
+E 0 4058 0 12
+E 0 4059 0 8
+E 0 4060 0 16
+M 0 4032 1 4142
+M 0 4006 1 4144
+E 0 4043 0 16
+E 0 4044 0 5
+M 0 4008 3 4145
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4033 1 4146
+M 0 4043 2 4148
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4043 2 4148
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4050 1 4105
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4052 2 4150
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+M 0 4052 2 4150
+E 0 4017 0 11
+E 0 4018 0 16
+E 0 4024 0 5
+E 0 4040 0 6
+O 0 4069 0 4156
+P 0 4070 0 4069
+M 0 4053 1 4153
+O 0 4071 0 4155
+O 0 4088 0 4159
+M 0 4061 1 4165
+O 0 4081 0 4166
+P 0 4087 0 4081
+O 0 4082 0 4167
+P 0 4090 0 4082
+O 0 4083 0 4168
+P 0 4091 0 4083
+O 0 4084 0 4169
+P 0 4092 0 4084
+O 0 4085 0 4170
+P 0 4093 0 4085
+O 0 4086 0 4171
+P 0 4094 0 4086
+O 0 4095 0 4160
+O 0 4097 0 4161
+O 0 4099 0 4164
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

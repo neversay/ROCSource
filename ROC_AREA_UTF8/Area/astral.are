@@ -1,0 +1,3696 @@
+#AREADATA
+Name        星界~
+Identity    astral~
+Builders    Andi~
+Translator  Pluto~
+Modifier    Pluto~
+VNUMs         1900 1979
+Security    1
+Recall      3001
+F_toggle    8192|65536
+End
+
+
+
+#MOBILES
+#1900
+astral guardian~
+星界守護者(Astral Guardian)~
+穿著灰色護甲的星界守護者(Astral Guardian)在這邊守護星界的入口。
+~
+你看到這個守衛有著模糊的人類外型，全身缺乏任何明顯的特徵。他站在這裡
+雙手交叉在胸前，似乎對你的到來一點也不關心。
+~
+1|2|64 8|32|128|512|8192 800 S
+36 2000 0 30d0+0 0d0+0
+-1 0
+0 8 0
+R Githyanki~
+C 1
+P 8|256
+>talk_prog topic~
+if is_qmark($i) == astral_talking
+        break
+endif
+if is_qmark($n) & astral_quest 100001
+        bow $n
+        say 感謝你平定了整個星界的動亂。
+        break
+endif
+if is_qmark($n) == astral_gith 100002
+        mpdel_qmark $n astral_gith
+        if is_qmark($n) != astral_quest
+                mpadd_qmark $n astral_quest -1 1 0 0 0 1
+        else
+                mpmod_qmark $n astral_quest v0 | 1
+        endif
+        yell $n [1;33m平定了在星界作亂的夜靈族！！[m
+        say 這是我僅能夠給你的獎品，請收下，我的英雄
+        mpoload 1927 35
+        give sceptre $n
+        if class($n) < 5
+                mpexp $n 3500
+        else
+                mpexp $n 3000
+        endif
+        wave $n
+        break
+endif
+if is_qmark($n) == astral_gith 100001
+        say 小心一點，冒險者！
+        say 星界裡面可是步步危機。
+        break
+endif
+mpadd_qmark self astral_talking 5 0 0 0 1 0
+say 你是由史卡拉貝城過來的冒險者嗎....？
+mpcallout 1 say 怎麼會來到這個危險的地方....？
+mpcallout 2 say 我奉史卡拉貝城市長之命來此鎮守星界之門....，
+mpcallout 3 say 為的就是不讓裡頭的夜靈族出來搗亂....，
+mpcallout 4 say 聽說夜靈族在星界之中作威作福....，
+mpcallout 5 say 還囚禁其他種族(race)的生物。
+mpcallout 5 mpdel_qmark self astral_talking
+~
+>talk_prog race~
+if is_qmark($i) == astral_talking
+        break
+endif
+mpadd_qmark self astral_talking 5 0 0 0 1 0
+say 有沒有聽過夜靈(githyanki)這一種種族....，
+mpcallout 1 say 那是一種善於使用魔法的生物....，
+mpcallout 2 say 外型長的跟一般人類差不多....，
+mpcallout 3 say 體型與身高大小也差不多....，
+mpcallout 4 say 但是膚色就像夜空那般的黑....，
+mpcallout 5 say 跟暗黑精靈(drow)不同的是....，
+mpcallout 6 say 他們沒有那麼長的耳朵，也沒那麼高。
+mpcallout 6 mpdel_qmark self astral_talking
+~
+>talk_prog githyanki~
+say 史卡拉貝城創始之初，曾經受到這種生物的侵襲，
+say 但自從它們與奪心魔(mind flayer)發生戰爭(war)後，
+say 就沒有再來侵擾這邊了。
+~
+>talk_prog p mind flayer~
+say 我不太清楚奪心魔的底細，他們目前仍是謎樣的種族。
+say 我只知道奪心魔又叫做靈吸怪(Illithid)。
+~
+>talk_prog war~
+if is_qmark($i) == astral_talking
+or is_qmark($i) == astral_gith
+or is_qmark($i) & astral_quest 100001
+        break
+endif
+say 有關戰爭的詳細內容我已經不太記得了....，
+mpecho $I 抬頭望著天空靜靜的回憶著....
+mpcallout 1 say 我在這邊已經很久了....，
+mpcallout 2 say 最近聽說在星界的夜靈族有向史卡拉貝侵襲的意圖....，
+mpcallout 3 say 雖然大主教黛妮亞為此在星界之門加持了魔法....，
+mpcallout 4 say 阻擋了夜靈族的侵擾....，
+mpcallout 5 say 但我懷疑夜靈族還是可以利用星界某處的缺口....，
+mpcallout 6 say 穿越到下界的史卡拉貝城....，
+mpcallout 7 mpechoat $I 看了你一眼，似乎在打量著你的能耐....
+mpcallout 7 mpechoaround $I 看了 $n 一眼，似乎在打量著 $n 的能耐....
+mpcallout 8 say 我因為有看守星界之門的任務在身....，
+mpcallout 9 say 所以不便擅離崗位來深入星界調查....，
+mpcallout 10 say 我想你應該是相當有經驗的冒險者吧....，
+mpcallout 11 say 你能夠幫我進入星界調查夜靈族的現況嗎(yes/no)？
+mpcallout 11 mpdel_qmark self astral_talking
+~
+>talk_prog yes~
+if is_qmark($n) == astral_gith
+or is_qmark($i) == astral_talking
+or is_qmark($n) & astral_quest 100001
+        break
+endif
+mpadd_qmark $n astral_gith -1 1 0 0 0 1
+bow $n
+say 謝謝您的幫忙了，不過請小心[1;31m吉斯王[m，
+say 聽說他有可怕的不死能力
+say 那麼讓我為您打開星界大門....
+open n
+~
+>talk_prog no~
+if is_qmark($i) == astral_talking
+or is_qmark($n) == astral_gith
+or is_qmark($n) & astral_quest 100001
+        break
+endif
+sigh $n
+say 是嗎？那真可惜，那只好另請高明了！
+wave $n
+~
+>greet_prog 100~
+if isnpc($n)
+        break
+endif
+if rand(50)
+        if is_qmark($n) & astral_quest 100001
+                bow $n
+                say 感謝你平定了整個星界的動亂。
+        else
+                say 你是史卡拉貝城來的冒險者嗎？
+                say 我是守護星界之門的守衛。
+                say 我奉勸你不要想進去，
+                say 因為星界裡面有非常可怕的生物。
+        endif
+else
+        if is_qmark($n) & astral_quest 100002
+                if is_inv_obj($n) == 1928
+                        mpechoat $n $I 發現了你身上有一片龍麟，似乎有些話想對你說。
+                        say $n ，你身上的是龍的鱗片嗎？它可是能夠被改造成精良的裝備！
+                        say 只要找到高級的鐵匠(blacksmith)就可以將其改造。
+                endif
+        endif
+endif
+~
+>talk_prog blacksmith~
+if is_qmark($n) & astral_quest 200001
+        say 多年前我還在史卡拉貝城當警備隊長的時候，
+        say 曾經聽說史卡拉貝城西北方的新囤墾區，
+        say 有個技術高超的鐵匠，
+        say 或許他可以給你一些幫助吧！
+endif
+~
+>talk_prog restart~
+if is_qmark($n) == astral_gith
+        if is_qmark($n) !& astral_quest 100001
+                mpechoat $n 天上傳來一陣聲響「本項任務已經重新開始！」
+                mpdel_qmark $n astral_gith
+        endif
+endif
+~
+|
+#1901
+nightmare~
+黑色夢魘(pitch-black nightmare)~
+黑色夢魘(pitch-black nightmare)用它好似在燃燒的蹄子踢你。
+~
+夢魘是一種完全邪惡的生物，是由幽冥世界的統治者放出來荼毒人類的。它看起來有
+些像一隻馬，全身比黑夜更加的黑暗，四隻蹄子燃燒著邪惡的火焰。
+~
+1|32|64 8|512 -1000 S
+15 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Phantom~
+#1902
+night hag~
+暗夜女巫(night hag)~
+暗夜女巫(night hag)嘗試要偷走你的靈魂。
+~
+你看到一個全身覆蓋在陰影中，有著長長的手爪與邪惡笑容的生物，它存在的目的就是
+為了讓它的主人能夠得到凡人被殺死之後的靈魂。
+~
+1|2|32|64 8|512 -1000 S
+22 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Undead~
+C 2
+#1903
+stalker invisible~
+無影追蹤者(invisible stalker)~
+你面前的空氣似乎有點扭曲變形。
+~
+你看到面前空氣中空氣中似乎有部分是扭曲變形的。你試著去觸碰它，但是並沒有摸
+到什麼，即使是你用最輕柔的動作去摸它也是一樣。
+~
+1|64 2 200 S
+15 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Undead~
+#1904
+soulless one~
+無魂生物(soulless being)~
+可憐的無魂生物(soulless one)無意志地到處飄流。
+~
+這個不幸的生物曾經在它的肉體上有過靈魂。但是現在卻無神地到處漫遊，無法意識
+到周圍環境的任何變化。
+~
+1|64|128 0 0 S
+13 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Undead~
+#1905
+githyanki hunter~
+夜靈獵人(githyanki hunter)~
+夜靈獵人(githyanki hunter)到處尋找著睡著的人出遊的靈魂。
+~
+你看到一個高度跟人類差不多，外表覆蓋著皮的類人生物。所有的夜靈都一樣，
+他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。
+~
+1|4|64|128|8192 512 -500 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 1
+#1906
+githyanki warrior~
+夜靈戰士(githyanki warrior)~
+你看到一個人形的戰士(warrior)穿著金屬的護甲。
+~
+你看到一個高度跟人類差不多，外表覆蓋著皮的類人生物。所有的夜靈都一樣，
+他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。他穿著設計相當華麗的護甲
+，並且拿著一把在空中揮舞時發出驚人聲響的長劍。
+~
+1|4|64 8|512 -500 S
+21 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 1|8
+#1907
+githyanki guardian~
+夜靈守衛(githyanki guardian)~
+全身披著護甲的人形守衛(guardian)在這裡擋住你的去路。
+~
+你看到一個高度跟人類差不多外表覆蓋著皮的類人生物。所有的夜靈都一樣，
+他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。他穿著設計相當華麗的護
+甲，並且拿著一把在空中揮舞時發出驚人聲響的長劍。
+~
+1|2|4|32|8192 8|512 -500 S
+23 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 1|8
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+endif
+~
+|
+#1908
+githyanki knight~
+夜靈騎士(githyanki knight)~
+一個全身穿著黑色護甲的高大騎士(knight)站在這邊。
+~
+你看到一個高度比人類高很多，外表覆蓋著皮的類人生物。所有的夜靈都一樣，
+他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。他穿著設計相當華麗的護甲
+你只有聽到他呼吸時發出的聲音以及它的利劍出鞘向你攻過來發出的聲音。
+~
+1|4|64|8192 8|32|512 -750 S
+28 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 1|8
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+endif
+~
+>fight_prog 50~
+skilldrv multihit $n
+~
+|
+#1909
+protector-astral githyanki protector~
+夜靈守護者(githyanki protector)~
+夜靈守護者(githyanki protector)在這邊保護著它的皇后。
+~
+你看到一個高度比人類高很多，外表覆蓋著皮的類人生物。所有的夜靈都一樣，
+他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。他穿著設計相當華麗的護甲
+你只有聽到他呼吸時發出的聲音以及它的利劍出鞘向你攻過來發出的聲音。
+~
+1|2|4|32|8192 8|32|512 -750 S
+30 500 0 5d10+0 -10d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 1|8
+>repop_prog 100~
+mpoload 1909
+mpoload 1915
+mpoload 1916
+mpoload 1917
+mpoload 1918
+mpat 5 wear all
+~
+>fight_prog 50~
+skilldrv multihit $n
+~
+|
+#1910
+githyanki gish~
+邪惡夜靈(evil gish)~
+一隻小型的夜靈(githyanki)在這邊對你露出它的牙齒。
+~
+你看到一個高度比人類高很多，外表覆蓋著皮的類人生物。所有的夜靈都一樣，
+他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。夜靈熟知有關閃電魔法的使
+用藝術，不像其他夜靈類生物對於法術不太精通。你注意到他唸著咒語召喚一陣
+閃電向你襲來。
+~
+1|4|64|128 512 -600 S
+19 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 2
+#1911
+githyanki gish~
+邪惡夜靈(gish)~
+一隻小型的夜靈(githyanki)在這邊對你露出它的牙齒。
+~
+你看到一個站起來高度比人類高很多外表覆蓋著皮的類人生物。所有的夜靈都一
+樣，他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。夜靈熟知有關閃電魔法
+的使用藝術，不像其他夜靈類生物對於法術不太精通。你注意到他唸著咒語召喚
+一陣閃電向你襲來
+~
+1|4|32|64 512 -600 S
+19 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 2
+#1912
+githyanki warlock~
+夜靈法師(githyanki warlock)~
+一個夜靈法師(warlock)站在這邊拿著銀色的長劍。
+~
+你看到一個外表覆蓋著皮，全身穿著黑色並拿著一把銀色長劍的類人生物。跟所有
+的夜靈族一樣，它有著尖銳的牙齒與凹陷無神的雙眼。當你看到它想要逃離時，他
+立刻發出一個火球向你身後攻擊。
+~
+1|2|32|64 8|16|512 -900 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 2
+>greet_prog 100~
+if ispc($n)
+        mpkill $n
+endif
+~
+>fight_prog 50~
+if rand(50)
+        c fireball
+        mpnowait
+else
+        c flamestrike
+        mpnowait
+endif
+~
+|
+#1913
+queen-astral githyanki lich-queen~
+夜靈妖后(lich-queen)~
+邪惡的夜靈妖后(lich-queen)守在吉斯王的門外為他把關。
+~
+夜靈妖后曾經也是人類，但是並不太久。由於此地的邪惡力量以及她修行邪惡魔
+法的原因，她的皮膚已經在她的頭顱上完全的萎縮。她凹陷的眼中對你射出讓你
+恐懼的光芒。
+~
+1|2|32|8192|8388608 8|32|128|512|8192 -1000 S
+33 700 0 5d5+0 -10d0+0
+-1 0
+0 8 2
+R Githyanki~
+C 1|2|8
+P 8|256
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpmload 1909
+mpgroup self protector-astral 1 0
+mpmload 1909
+mpgroup self protector-astral 1 0
+~
+>greet_prog 100~
+if isgood($n)
+        yell 善良陣營的人納命來！
+        c blindness $n
+        mpnowait
+        c curse $n
+        mpnowait
+        c powerball $n
+        mpnowait
+        hunt $n
+        mpnowait
+else
+        yell 受死吧！
+        hunt $n
+        mpnowait
+endif
+~
+>fight_prog 100~
+if ispc($r)
+        if rand(33)
+                c powerball $r
+                mpnowait
+        else
+                if rand(50)
+                        c blindness $r
+                        mpnowait
+                else
+                        c curse $r
+                        mpnowait
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+yell [1;35m吉斯王會為我報仇的！[m
+yell [1;35m我們夜靈族一定會血洗史卡拉貝城！[m
+~
+|
+#1914
+gith-astral lord gith~
+吉斯王(Lord Gith)~
+夜靈之主吉斯王(Lord Gith)整個形體都是黑色的。
+他冷冷的看著你的到來，準備對你發動攻擊。
+~
+吉斯王是夜靈族的最終救世主，他曾經領導夜靈族脫離奪心魔的統治。
+其實他已經死了近百年了，能夠站在你面前的原因是由於他獲得了邪惡
+力量的幫助。他站起來面對著你，你感到你的心跳漸漸加速，神經也漸
+漸地緊繃，因為你發現自己正面對著「死亡」本身。
+~
+1|2|4|32|64|4096|8192|262144|1048576|8688608 2|8|32|512|8192 -1000 S
+41 800 0 5d10+-200 -5d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 1|2|8
+P 8|256
+>all_greet_prog 100~
+if is_qmark($n) == astral_gith 100001
+        mpdef_rembch $n
+endif
+grin $n
+c blindness $n
+mpnowait
+c 3 curse $n
+mpnowait
+c whirlwind
+mpnowait
+~
+>fight_prog 50~
+if rand(50)
+        skilldrv multihit $n
+endif
+c whirlwind
+mpnowait
+mpat 5 c heal
+mpnowait
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpmod_all_qmark $n adv_book_1_main v0 | 16384
+mpgreward exp $n -42 700
+yell 我竟然會被 $n 給打敗，實在不甘心！
+yell 暗黑主宰，請您引導我的魂魄吧！
+if insameroom($b)
+        if is_qmark($b) == astral_gith 100001
+                mpmod_qmark $b astral_gith v0 = 2
+        endif
+        mpecho 遠方傳來[1;31m $I [m的笑聲：[1;35m你以為打敗我就可以脫離這無盡的黑暗了嗎？[m
+        mpecho 遠方傳來[1;31m $I [m的笑聲：[1;35m你就永遠留在這無盡暗夜之中吧！哈！哈哈！[m
+endif
+~
+|
+#1915
+ghost~
+幽魂(ghost)~
+幽魂(ghost)在這邊飄遊，想要毀掉每個存在的生命。
+~
+幽魂在移動的時候完全不會發出聲音。它看起來就像是有自己意志的影子，但是
+由於它的詛咒，它只能永遠的飄遊不能休息。這種生物的意志已經因為痛苦而不
+復存在其形體內，現在它唯一的意志就是摧毀所有入侵者，當然包括你在內。
+~
+1|32|64 512|524288|1048576 -1000 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Ghost~
+C 2
+#1916
+githzerai imprisoned~
+夜靈族囚犯(imprisoned githzerai)~
+一個夜靈(githzerai)正在繪製怎麼逃出星界的路線。
+~
+你看到一個很專心的類人生物，是曾經被奪心魔統治而與夜靈族有相當關係的
+人。但是不幸的夜靈族與奪心魔是世仇，他投靠了奪心魔但是又被抓回來，他現
+在正在想辦法逃出去。
+~
+1|64 512 -350 S
+15 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Githyanki~
+>talk_prog topic~
+say 我一定要逃出去，我已經鑽研星界迷宮很久，
+say 已經找出了方法(way)，我就快要完成了。
+~
+>talk_prog way~
+say 探索....漫遊....飄流....
+say 銀色光帶....穿梭....
+say 深處....然後就可以....
+laugh $n
+n
+w
+s
+e
+~
+|
+#1917
+mindflayer prisoner~
+奪心魔囚犯(mindflayer prisoner)~
+一個奪心魔(mindflayer)生物不停地發抖，以為你受吉斯王之命要拷問他。
+~
+你看到一個頭上長著四隻觸角，十分高大的生物。
+他畏縮在牆邊，以為你又要來拷問他。
+~
+1|2 0 0 S
+15 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Mind-flayer~
+C 2
+>talk_prog topic~
+yell 不！不要再拷問我了，我什麼都不知道！
+yell 你打死我我也還是不知道，不要再折磨我了。
+~
+|
+#1918
+dragon red~
+紅龍(red dragon)~
+一隻被夜靈族奴役的紅龍(red dragon)正用它的火焰煉製夜靈族的武器。
+~
+這隻強壯有力的野獸被星界堡壘的居民用魔法將其囚禁與控制。雖然它被控制，
+但是它的力量仍然十分的可怕，他幾乎有20英尺長的身體和強壯有力的雙翼。
+當他看著你時，口中仍然在繼續冒煙。
+~
+1|2 8|32|512 -500 S
+31 500 0 0d0+0 0d0+0
+5000 0
+0 8 1
+R Dragon~
+C 1
+>talk_prog topic~
+if is_qmark($n) != astral_red_dragon
+        if is_qmark($n) !& astral_quest 100002
+        or is_qmark($n) != astral_quest
+                say 我已經被它們奴役囚禁(prison)很久了，
+                say 我還有可以自由飛翔的一天嗎？
+        endif
+else
+        if is_qmark($n) == astral_red_dragon 100001
+                if is_inv_obj($n) == 1924
+                        say 趕緊將[1;36m星形鐵環[m交給我吧！
+                else
+                        say 你還沒拿到妖后的[1;36m星形鐵環[m嗎？
+                        say 趕緊去找星界的妖后，拿取她身上的[1;36m星型鐵環。[m
+                        say 這樣才能夠解開我身上的魔法枷鎖，還我自由....。
+                endif
+        endif
+endif
+~
+>talk_prog prison~
+if is_qmark($n) & astral_quest 100002
+or is_qmark($n) == astral_red_dragon
+        break
+endif
+mpadd_qmark $n astral_red_dragon -1 0 0 0 0 1
+sigh
+say 我被夜靈妖后用她的魔法將我監禁在這裡幫它們冶煉武器。
+say 每天夜以繼日地不斷奴役我，我已經快要不行了。
+say 你能夠協助我脫離妖后的魔掌嗎(yes/no)？
+~
+>talk_prog yes~
+if is_qmark($n) == astral_red_dragon 100000
+        mpmod_qmark $n astral_red_dragon v0 = 1
+        thank $n
+        say 如果你想要救我，就得先拿到妖后身上的[1;36m星型鐵環(pentagram)[m，
+        say 這個東西是她所有魔力的泉源，甚至....，
+        say 聽說這個東西也是能夠開啟通往夜靈之主住處的重要物品。
+endif
+~
+>talk_prog no~
+if is_qmark($n) == astral_red_dragon 100000
+        mpdel_qmark $n astral_red_dragon
+        sigh
+        say 好吧，總有一天我會想辦法自己逃離這裡的！
+endif
+~
+>talk_prog pentagram~
+if is_qmark($n) == astral_red_dragon 100001
+        say 這個東西就放在星界妖后的身上，不過她有很強的魔力，
+        say 而且她身邊也有許多強力的夜靈守衛在保護她的安全，
+        think
+        say 不過聽說妖后的法力是邪惡的屬性，
+        say 或許對於邪惡屬性的人傷害力較小。
+endif
+~
+>give_prog 1924~
+if is_qmark($n) == astral_red_dragon 100001
+        mpdel_qmark $n astral_red_dragon
+        if is_qmark($n) != astral_quest
+                mpadd_qmark $n astral_quest -1 2 0 0 0 1
+        else
+                mpmod_qmark $n astral_quest v0 | 2
+        endif
+        thank $n
+        say 謝謝你讓我取得了自由，我個人無以回報
+        say 就把我腳上的一片擁有我魔法能力的鱗片送給你吧！
+        mpoload 1928 5
+        give scale $n
+        if class($n) < 5
+                mpexp $n 4500
+        else
+                mpexp $n 3000
+        endif
+        say [1;36m你可將他拿給工匠鍛造，或許可以改鍛造出好用的裝備[m
+        if is_qmark($n) <= astral_gith 100001
+                say 這東西其實對你還有用...
+                give pentagram $n
+                say [1;36m你可以用它開啟通往吉斯王住處的暗黑之門。[m
+                say 我想你來星界應該是要平定整個夜靈族。
+                wave $n
+        else
+                mpjunk pentagram
+        endif
+        mpecho $I 張開雙翅，澎礡地飛向自由的天空....
+        mppurge self
+endif
+~
+>rand_prog 30~
+say 每天每天的在這邊搾乾我的能力來幫它們冶煉武器
+faint
+say 我已經快要受不了了！
+~
+>talk_prog restart~
+if is_qmark($n) == astral_red_dragon
+        mpechoat $n 天上傳來一陣聲音「本項任務已經重新開始了！」
+        mpdel_qmark $n astral_red_dragon
+endif
+~
+|
+#1919
+flame~
+火焰(flame)~
+一團被賦予生命力的火焰(flame)在這邊監視著囚犯的動靜。
+~
+這些像是有生命的火焰向你衝過來並要燒掉你的頭髮。
+~
+1|2|32|64 512 0 S
+17 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Elemental~
+#1920
+githyanki knight~
+夜靈騎士(githyanki knight)~
+一個全身穿著黑色護甲的高大的騎士(knight)站在這邊。
+~
+你看到一個站起來高度比人類高很多外表覆蓋著皮的類人生物。所有的夜靈都一
+樣，他們的牙齒都非常的尖銳而且有著凹陷無神的雙眼。他穿著設計相當華麗的
+護甲。你只聽到他呼吸時發出的聲音以及它的利劍出鞘向你攻過來發出的聲音。
+~
+1|2|4|32|64 8|32|512|8192 -750 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Githyanki~
+C 1|8
+>greet_prog 100~
+if isevil($n)
+        say 誰說你可以隨便進來這邊的？快滾！！
+else
+        say 闖入者，受死吧！
+        hunt $n
+        mpnowait
+        disarm
+        mpnowait
+        bashhead $n
+        mpnowait
+endif
+~
+>fight_prog 50~
+skilldrv multihit $n
+~
+|
+#0
+
+
+
+#OBJECTS
+#1900
+hammer sledge grey~
+灰色破擊戰鎚(grey sledge hammer)~
+一把灰色的戰鎚(hammer)被放在這個大地的裂縫中。~
+~
+5 0 8193
+1001100~ 0~ 0~ 8~
+55 0 0
+E
+hammer sledge grey~
+這個巨大的鎚子真是不可思議的重，此外，它整支都是灰色的，完全沒有其他雜色。
+~
+A
+19 7
+A
+18 -3
+A
+2 -2
+X iron~
+
+#1901
+scroll violet~
+紫色捲軸(violet scroll)~
+一卷紫色(violet)的文件被在地板上~
+~
+2 256 1
+15~ bless~ shield~  ~
+1 0 0
+E
+scroll violet~
+這張捲軸是寫在一張紫色的紙上，充滿了好聞的味道。
+~
+X paper~
+
+#1902
+tablet scroll black~
+黑邪魔卷(black tablet scroll)~
+地上有一卷黑色的捲軸(scroll)~
+~
+2 16 1
+30~ summon~ charm person~  ~
+5 0 0
+E
+tablet scroll black~
+這張捲軸被一個倒三角形的石頭鎖住，在表面寫著不明的文字。
+~
+X paper~
+
+#1903
+scroll githyanki~
+夜靈捲軸(githyanki scroll)~
+你看到一卷用其他種族文字撰寫的捲軸(scroll)~
+~
+2 0 1
+24~ lightning bolt~ lightning bolt~  ~
+1 0 0
+E
+scroll githyanki~
+這張捲軸上寫滿了你看不懂的文字。
+~
+X paper~
+
+#1904
+amulet demon~
+惡魔護符(demon's amulet)~
+一副沾有泥沙的小護符(amulet).~
+~
+3 144 16385
+25~ 5~ 5~ energy drain~
+5 0 0
+E
+amulet demon~
+這個護身符是由不明金屬打造的環所構成，上面雕滿了各種各樣的蛇紋圖騰、
+蛇口之下的犧牲者、以及各種你不忍注目的形象。
+
+在護身符的頂端刻著一個你不敢大聲唸出來的人名。
+~
+A
+4 -1
+A
+3 -1
+X bronze~
+
+#1905
+talisman devil~
+恐懼之杖(devilish talisman)~
+有一支發散著邪惡氣息的手杖(staff)被放在地上。~
+~
+4 144 16385
+25~ 5~ 5~ flamestrike~
+5 0 0
+E
+talisman devil~
+這個手杖的頂端是一個金屬環固定的圓石，這顆圓石似乎擁有生命，而且只
+要靠近它，你就會覺得一陣不適。
+
+在圓石的頂端寫著一個字，你害怕地不敢說出這個字。
+~
+A
+13 -10
+X tin~
+
+#1906
+knife silvery~
+銀色小刀(silvery knife)~
+一把切面光滑的銀色小刀(silvery knife)放在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 1~
+3 0 0
+E
+knife silvery~
+這把刀是由一種你從未見過的奇異的金屬組成，他非常尖銳與堅硬，你
+可以感覺到這把刀的光滑。
+~
+A
+19 1
+A
+18 1
+X aluminum~
+
+#1907
+dagger silvery~
+銀色匕首(silvery dagger)~
+一把看起來相當鋒利的銀色匕首(silvery dagger)放在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 11~
+3 0 0
+E
+dagger silvery~
+這把匕首是由一種你從未見過的奇異的金屬組成，他非常尖銳與堅硬，你
+可以感覺到這把匕首的光滑。
+~
+A
+19 1
+A
+18 2
+X aluminum~
+
+#1908
+sword thin~
+鋒利的薄刃劍(thin sword)~
+整個刀刃面鋒利的閃閃發光的劍(sword)被放在這邊。~
+~
+5 0 8193
+1001100~ 0~ 0~ 1~
+3 0 0
+E
+sword thin~
+這把劍是由一種奇異的亮銀金屬組成，在最寬的地方大約一英吋寬，這把劍
+的刀鋒如剃刀般銳利，它可以輕易切開石頭。
+~
+A
+19 2
+A
+18 1
+A
+2 1
+X aluminum~
+
+#1909
+sword thin two-handed~
+雙手薄刃劍(thin two-handed sword)~
+一把看起來很薄，但是卻很重的雙手劍(two-handed sword)被放在這邊。~
+~
+5 64 32769
+1001100~ 0~ 0~ 3~
+16 0 0
+E
+sword thin two two-handed~
+這把劍是由一種奇異的亮銀金屬組成，在最寬的地方大約一英吋寬，這把劍
+的刀鋒如剃刀般銳利，它可以輕易切開石頭。
+~
+A
+19 4
+A
+18 2
+A
+1 1
+X aluminum~
+
+#1910
+sword silvery~
+銀色長劍(silvery sword)~
+一把銀色長劍(silvery sword)發散著一股不自然的光芒。~
+~
+5 65 8193
+1001100~ 0~ 0~ 3~
+13 0 0
+E
+sword silvery~
+這把匕首是由一種你從未見過的奇異的金屬組成，他非常尖銳與堅硬，你
+可以感覺到這把匕首的光滑。
+~
+A
+19 2
+A
+18 4
+A
+2 2
+X aluminum~
+
+#1911
+flail barbed iron~
+帶刺鐵連枷(iron barbed flail)~
+一把上面有刺的連枷(barbed flail)被放在地上。~
+~
+5 82 8193
+1001100~ 0~ 0~ 5~
+14 0 0
+E
+flail barbed iron~
+這把武器帶走了非常多人的生命，你可以從帶血的鐵尖刺和把手上的血肉看
+出來。
+~
+A
+19 7
+A
+18 3
+X iron~
+
+#1912
+sword gith~
+吉斯邪劍(Gith sword)~
+你感到這一把劍(sword)上面似乎被施了一層詛咒的魔法。~
+~
+5 4304 8193
+1001100~ 0~ 0~ 3~
+25 0 0
+E
+sword gith~
+這把劍的邊鋒是無光的灰色，當你觸碰它時感覺到一股邪惡的力量滲進你的
+靈魂之中。
+
+你不大想把「他」放開。
+~
+A
+19 4
+A
+18 8
+A
+4 -1
+A
+3 -1
+A
+1 2
+X bone~
+
+#1913
+stone flame~
+火焰石(flaming stone)~
+整個房間都被這個燃燒著藍色火焰的石頭(stone)給照亮了。~
+~
+1 0 16385
+0~ 0~ -1~ 0~
+1 0 0
+E
+stone flame~
+這顆石頭燃著高溫和烈焰，但它可以被手拿著，這個小石頭能讓你看清楚方
+圓一哩的所有東西。
+~
+A
+28 -1
+A
+27 -1
+A
+24 -3
+A
+17 -2
+X basalt~
+
+#1914
+powder astral~
+星光粉(astral powder)~
+閃爍的粉末(powder)在你眼前漂浮著。~
+~
+8 0 1
+2000~ 0~ 0~ 0~
+1 0 0
+E
+powder astral~
+你看見了閃爍的星之灰在你眼前飄散。
+~
+X magnetism~
+
+#1915
+vest splint~
+金屬護甲(splint vest)~
+一副似乎是由雜亂的金屬片組成的護甲(vest)放在這邊。~
+~
+9 0 9
+0~ 0~ 1001100~ 0~
+45 0 0
+E
+vest splint~
+這套金屬片甲似乎是由亂七八糟的各式金屬片組成。
+~
+X lead~
+
+#1916
+skirt splint~
+金屬護裙(splint skirt)~
+一副似乎由雜亂的金屬片組成的護裙(skirt)被放在這邊。~
+~
+9 0 33
+0~ 0~ 1001100~ 0~
+20 0 0
+E
+skirt splint~
+這套金屬片護裙似乎是由亂七八糟的各式金屬片組成。
+~
+X tin~
+
+#1917
+sleeves splint~
+金屬護肘(splint sleeves)~
+一副似乎由雜亂的金屬片組成的護肘(skirt)被放在這邊。~
+~
+9 0 257
+0~ 0~ 1001100~ 0~
+15 0 0
+E
+sleeves splint~
+這套金屬片護肘似乎是由亂七八糟的各式金屬片組成。
+~
+X iron~
+
+#1918
+gauntlets ornate~
+華麗的手套(ornate gauntlets)~
+一副經過精心設計的華麗手套(ornate gauntlets)被放在這邊。~
+~
+9 64 129
+0~ 0~ 1001100~ 0~
+5 0 0
+E
+gauntlets ornate~
+這雙金屬片手套似乎是由亂七八糟的各式金屬片組成。
+~
+A
+19 1
+A
+18 1
+A
+1 2
+X silver~
+
+#1919
+vest cracked leather~
+腐敗的皮甲(cracked leather vest)~
+一副整個外表已經生鏽、腐壞的皮甲(leather vest)被丟棄在這邊。~
+~
+9 64 9
+0~ 0~ 1001100~ 0~
+5 0 0
+E
+vest cracked leather~
+這鎧甲非常古老，上面所有的皮片都已經發霉了，而且乾得像破布，上面蓋
+著霉漬、護身文字、鏽斑和血跡。
+~
+A
+24 -2
+A
+17 -6
+X leather~
+
+#1920
+potion violet~
+紫色藥水(violet potion)~
+這個高腳瓶中裝著透明的紫色(violet)液體。~
+~
+10 0 1
+18~ invis~  ~  ~
+2 0 0
+E
+potion violet~
+這瓶紫色藥水聞起來有點噁心。
+~
+X liquid~
+
+#1921
+potion vial murky~
+黑色液體藥水(vial of murky fluid)~
+這個瓶子(vial)中裝著黑色、像是爛泥的東西。~
+~
+10 0 1
+15~ armor~ blindness~  ~
+1 0 0
+E
+potion vial murky~
+這瓶藥水像是一沱黑色的爛泥，看起來十分噁心。
+~
+X liquid~
+
+#1922
+potion silvery~
+銀色藥水(silvery potion)~
+一個八角型的瓶子裡頭裝著銀色(silvery)的透明溶液。~
+~
+10 0 1
+20~ detect invis~ detect magic~  ~
+2 0 0
+E
+potion silvery~
+這瓶藥水裝著銀色的溶液，閃爍著銀光，看起來十分美麗。
+~
+X liquid~
+
+#1923
+mint chocolate~
+可口的薄荷巧克力(chocolate mint)~
+某人丟棄的一些薄荷巧克力(mint chocolate)被放在這邊。~
+~
+26 0 1
+35~  ~ cure critical~  ~
+0 0 0
+E
+mint chocolate~
+一片上好的巧克力，散發著清新的薄荷香。
+~
+X food~
+
+#1924
+pentagram~
+星形鐵環(pentagram)~
+一個外表是黑色的小鐵環(pentagram)被丟在這邊。~
+~
+18 32 16385
+0~ 0~ 0~ 0~
+10 0 0
+E
+pentagram~
+這個鐵環中間鑲著五芒星形，裡面還鑲著更小的五星形，看起來十分詭異。
+~
+X iron~
+
+#1925
+pouch rotting~
+腐朽的袋子(rotting pouch)~
+一個小型的袋子(pouch)被丟在地板上。~
+~
+20 0 1
+80~ 0~ 0~ 0~
+10 0 0
+E
+pouch rotting~
+你認為你看見了袋子破洞中露出了小截的金屬刺...
+~
+X wool~
+
+#1926
+rusted sword~
+銹劍(rusted sword)~
+一把腐蝕了的劍(rusted sword)掉在地上.~
+~
+5 0 8193
+1001100~ 0~ 0~ 3~
+10 0 0
+E
+rusted sword~
+這把劍看起來生鏽了，但這讓它看起來更加危險！
+~
+A
+19 5
+A
+18 -3
+X iron~
+
+#1927
+sceptre astral~
+星界權杖(Astral sceptre)~
+一把閃爍著無盡星光的權杖(sceptre)被放在地上。~
+~
+8 65 16385
+60000~ 0~ 1001100~ 0~
+1 0 0
+A
+19 1
+A
+18 1
+A
+1 1
+X mithril~
+
+#1928
+dragon scale~
+龍族的鱗片(dragon scale)~
+一片發散著紅色光芒的龍鱗(dragon scale)被放在這邊。~
+~
+9 64 33
+0~ 0~ 100~ 0~
+35 0 0
+X dragon scale~
+
+#1929
+scale leggings~
+戰龍脛甲(dragon scale leggings)~
+一副看起來有相當份量的脛甲(leggings)被丟在這邊。~
+~
+9 320 33
+0~ 0~ 1001100~ 0~
+40 0 0
+A
+5 1
+A
+1 2
+X dragon scale~
+
+#1930
+red meteor~
+紅色流星(red meteor)~
+一顆紅色的流星(meteor)墜落在此。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+40 0 0
+#0
+
+
+
+#ROOMDATA
+#1900
+彩虹橋底部~
+你正站在一個閃耀著七彩光芒的彩虹(rainbow)拱橋前面。你不知道為什麼
+感覺到這個拱橋像是分隔了兩個世界，一邊是人界，一邊是未知的可怕世界。
+~
+0 0 1
+E
+rainbow~
+這座彩虹閃爍著萬道的彩色光芒，多采多姿讓你無法以言語形容。
+~
+D4
+The rainbow extends above you, fading out of existence only meters away.
+~
+~
+0 -1 1901
+D5
+You can see the Temple of Midgaard below you.
+~
+~
+0 -1 1036
+S
+#1901
+在彩虹上~
+你正站在一個閃耀著七彩光芒的彩虹(rainbow)拱橋前面。往下你可以看到史
+卡拉貝城下面祭壇的尖頂是距離你多麼的遙遠。
+~
+0 0 5
+E
+rainbow~
+這座彩虹閃爍著萬道的彩色光芒，多采多姿讓你無法以言語形容。
+~
+D4
+The rainbow extends far above you, slowly fading into darkness.
+~
+~
+0 -1 1902
+D5
+The rainbow extends below you towards Midgaard.
+~
+~
+0 -1 1900
+S
+#1902
+在彩虹上~
+你正站在一個閃耀著七彩光芒的彩虹(rainbow)拱橋前面。往下你可以看到史
+卡拉貝城下面祭壇的尖頂是距離你多麼的遙遠，幾乎有一英里那麼遠了。
+~
+0 0 5
+E
+rainbow~
+這座彩虹閃爍著萬道的彩色光芒，多采多姿讓你無法以言語形容。
+~
+D4
+The rainbow extends far above you, slowly fading into darkness.
+~
+~
+0 -1 1903
+D5
+The rainbow extends below you towards the land you once knew as home.
+~
+~
+0 -1 1901
+S
+#1903
+在彩虹上~
+你正站在一個閃耀著七彩光芒的彩虹(rainbow)拱橋上面。站在這個彩虹的上
+面往下一看，你要看多遠就能看多遠。
+~
+0 0 5
+E
+rainbow~
+這座彩虹閃爍著萬道的彩色光芒，多采多姿讓你無法以言語形容。
+~
+D4
+The rainbow extends far above you.  You see a glowing white light at the
+rainbow's end.
+~
+~
+0 -1 1904
+D5
+The rainbow extends far below you, slowly fading into darkness.
+~
+~
+0 -1 1902
+S
+#1904
+在彩虹上~
+你接近這道彩虹的盡頭了。整道七色彩虹到這邊開始合併並接在堅硬的地
+上。在你四周都是閃爍著光芒的星辰。在你面前的是一座橋。
+~
+0 0 5
+D4
+The rainbow extends above you, merging into a brilliant glowing
+bridge.
+~
+~
+0 -1 1905
+D5
+The rainbow extends far below you, slowly fading into darkness.
+~
+~
+0 -1 1903
+S
+#1905
+彩虹盡頭的閃爍之橋上~
+你終於爬到彩虹的盡頭。整個彩虹的萬道光芒在此匯集到一個閃爍發光的
+橋上並通往北邊的一座沈重的白色大門(gate)前。在你四周的都是閃爍著光芒
+的星辰。
+~
+0 0 1
+E
+gate~
+這座大門大約比你的身高高了十倍不止。在這扇大門的身後好像是無盡的黑暗
+，在裡頭似乎沒有光這個元素的存在。
+~
+D0
+The bridge leads on to a massive white gate.  You see a large grey figure
+standing there.
+~
+~
+0 -1 1906
+D5
+The bridge disassociates into a beautiful spectrum of colours that
+drop out of sight below you.
+~
+~
+0 -1 1904
+S
+#1906
+星界之門~
+整座橋在這個七彩斑斕而沈重的大門(gate)前面終止，在門後面的是無盡的
+暗夜，但是卻充滿了銀色星辰所串接而成的長瀑。
+~
+0 0 1
+E
+plaque~
+這個匾額的內容是這樣的：
+
+這扇魔法大門是用來阻隔星界與史卡拉貝城這兩個世界
+，以確保星界裡面的邪惡生物不會出來害人。
+
+                        - 闇之冥王星普魯多(Pluto)
+~
+E
+gate~
+你看到一扇巨大、發散著光芒的大門，它的沈重讓人相信它是無法被穿透的。
+每一根大門上面的鐵條上面都也古老文字的雕刻同時像人類手腕一般的粗，而
+且由地上開始算約有14英尺那麼高。有個貼在匾額(plaque)在這扇門的上面。
+~
+D0
+Through the gate you see a massive field of blackness that extends as far
+as you can see.
+~
+gate~
+3 -1 1907
+D2
+The bridge extends towards the rainbow, which drops out of sight
+below you.
+~
+~
+0 -1 1905
+S
+#1907
+星界入口~
+你踏進了大門中，你感到似乎進入了另外一種領域...
+
+    你發覺你的身體正浮在一整片黑暗之中與游離的閃亮星辰之中。整個環境
+呈現無重力狀態讓你在裡頭完全失去了方向感，這時候你還來得及往南回到星
+界大門(gate)。
+~
+0 8196 2
+E
+gate~
+由這邊往七彩斑斕的星界之門一看卻已經相當的遙遠了。你勉強可以看到在星
+界之門鐵條外的星界守護者仍然盡忠職守的保護著星界裡面的生物不能跑到外
+面世界去。
+~
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1908
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1909
+D2
+The astral gate leads back to your world.
+~
+gate~
+3 -1 1906
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1910
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1911
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1912
+>room_enter 4 100~
+if ispc($n)
+        if is_qmark($n) <= astral_gith 100001
+                echoat $n 你聽到[1;31m吉斯王[m的笑聲：[1;35m沒用的冒險者，就憑你也要來平定我夜靈族。[m
+                echoat $n 你聽到[1;31m吉斯王[m的笑聲：[1;35m快來吧！我在星界城堡等著吃你的肉、啃你的骨、喝你的血！[m
+        break
+        endif
+        if is_qmark($n) & astral_quest 100001
+                echoat $n 你又聽到[1;31m吉斯王[m的笑聲：[1;35m你以為你真的打敗我了嗎？暗黑主宰已賜我不死之身啊！[m
+                echoat $n 你又聽到[1;31m吉斯王[m的笑聲：[1;35m永恆的生命，無盡的邪惡，史卡拉貝終將毀滅！[m
+        else
+                echoat $n 遠方傳來一陣聲響：[1;35m不知好歹的冒險者啊！竟敢侵犯我夜靈族的領域。[m
+                echoat $n 遠方傳來一陣聲響：[1;35m你將會在星界中被夜靈族啃食你的靈魂、吸食你的元神。[m
+        endif
+endif
+~
+>room_enter 59 100~
+if ispc($n)
+        if is_qmark($n) <= astral_gith 100001
+                echoat $n 你又聽到[1;31m吉斯王[m的笑聲：[1;35m連個簡單的星界迷宮都不能通過，你還妄想來跟我挑戰？[m
+                echoat $n 你又聽到[1;31m吉斯王[m的笑聲：[1;35m回去吧！冒險者。有朝一日我一定下去血洗史卡拉貝城。[m
+        else
+                echoat $n 遠方傳來一陣聲響：[1;35m滾出我夜靈族的領域吧！星界不是你這種低等生物來的地方。[m
+        endif
+endif
+~
+|
+S
+#1908
+探索星界~
+你發覺你的身體正浮在一整片黑暗之中與游離的閃亮星辰之中。整個環境
+呈現無重力狀態，讓你的移動十分困難，你很難保持你的重心並維持方向感。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1907
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1910
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1912
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1914
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1913
+S
+#1909
+探索星界~
+你發覺你的身體正浮在一整片黑暗之中與游離的閃亮星辰之中。整個環境
+呈現無重力狀態，讓你的移動十分困難，你很難保持你的重心並維持方向感。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1910
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1914
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1911
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1916
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1907
+S
+#1910
+探索星界~
+你發覺你的身體正浮在一整片黑暗之中與游離的閃亮星辰之中。整個環境
+呈現無重力狀態，讓你的移動十分困難，你很難保持你的重心並維持方向感。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1907
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1909
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1908
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1915
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1913
+S
+#1911
+探索星界~
+你發覺你的身體正浮在一整片黑暗之中與游離的閃亮星辰之中。整個環境
+呈現無重力狀態，讓你的移動十分困難，你很難保持你的重心並維持方向感。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1907
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1912
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1917
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1909
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1916
+S
+#1912
+探索星界~
+你發覺你的身體正浮在一整片黑暗之中與游離的閃亮星辰之中。整個環境
+呈現無重力狀態，讓你的移動十分困難，你很難保持你的重心並維持方向感。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1917
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1915
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1907
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1908
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1911
+S
+#1913
+漫遊星界~
+你發覺你的身體正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境
+呈現無重力狀態讓你在裡頭移動十分的困難。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1920
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1918
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1908
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1910
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1915
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1914
+S
+#1914
+漫遊星界~
+你發覺你的身體正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境
+呈現無重力狀態讓你在裡頭移動十分的困難。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1909
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1919
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1918
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1913
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1908
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1917
+S
+#1915
+漫遊星界~
+你發覺你的身體正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境
+呈現無重力狀態讓你在裡頭移動十分的困難。你有種感覺，史卡拉貝似乎離
+你很近。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1913
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1912
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1920
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1916
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1910
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1922
+S
+#1916
+漫遊星界~
+你發覺你的身體正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境
+呈現無重力狀態讓你在裡頭移動十分的困難。你有種感覺，史卡拉貝似乎離
+你很近。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1919
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1917
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1909
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1915
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1911
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1921
+S
+#1917
+漫遊星界~
+你發覺你的身體正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境
+呈現無重力狀態讓你在裡頭移動十分的困難。你有種感覺，史卡拉貝似乎離
+你很近。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1921
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1914
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1912
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1911
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1916
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1922
+S
+#1918
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1936
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1914
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1933
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1913
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1909
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1919
+S
+#1919
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1938
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1916
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1914
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1910
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1934
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1918
+S
+#1920
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1921
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1913
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1935
+D3
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1940
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1911
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1915
+S
+#1921
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1942
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1933
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1917
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1916
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1912
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1920
+S
+#1922
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1934
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1917
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1915
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1912
+D5
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1944
+S
+#1923
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1924
+D1
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1937
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1932
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1935
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1928
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1926
+S
+#1924
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1925
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1933
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1930
+D3
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1939
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1923
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1929
+S
+#1925
+在星界中旅行~
+你發覺你的身體正浮在一整片黑暗之中與游離的閃亮星辰之中。整個環境
+呈現無重力狀態讓你在裡頭移動十分的困難。在你附近你看到一條巨大的銀色
+光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1927
+D1
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1941
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1924
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1928
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1930
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1934
+S
+#1926
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1935
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1923
+D2
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1943
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1929
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1931
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1927
+S
+#1927
+星界飄流~
+你發覺你的身體正浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀
+態讓你的移動十分困難。在你附近你看到一條巨大的銀色光帶。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1925
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1932
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1933
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1931
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1926
+D5
+You see a tangible strand of silvery light.
+~
+~
+0 -1 1944
+S
+#1928
+穿梭星界~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀態，讓
+你的移動十分困難，而且你也幾乎無法保持正確的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1934
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1923
+D2
+The astral field leads off into the depths.
+~
+~
+0 -1 1947
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1909
+D4
+The astral field leads off into the depths.
+~
+~
+0 -1 1945
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1925
+S
+#1929
+穿梭星界~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀態，讓
+你的移動十分困難，而且你也幾乎無法保持正確的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1930
+D1
+The astral field leads off into the depths.
+~
+~
+0 -1 1949
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1924
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1926
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1935
+D5
+The astral field leads off into the depths.
+~
+~
+0 -1 1946
+S
+#1930
+穿梭星界~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀態，讓
+你的移動十分困難，而且你也幾乎無法保持正確的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1924
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1929
+D2
+The astral field leads off into the depths.
+~
+~
+0 -1 1945
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1933
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1925
+D5
+The astral field leads off into the depths.
+~
+~
+0 -1 1947
+S
+#1931
+穿梭星界~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀態，讓
+你的移動十分困難，而且你也幾乎無法保持正確的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1926
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1932
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1934
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1927
+D4
+The astral field leads off into the depths.
+~
+~
+0 -1 1948
+D5
+The astral field leads off into the depths.
+~
+~
+0 -1 1946
+S
+#1932
+穿梭星界~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。四周呈現無重力狀態，讓
+你的移動十分困難，而且你也幾乎無法保持正確的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into the depths.
+~
+~
+0 -1 1948
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1931
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1935
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1927
+D4
+The astral field leads off into the depths.
+~
+~
+0 -1 1949
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1923
+S
+#1933
+迷失~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境呈現無重力狀態
+讓你的移動十分困難，而且你也很難保持你的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1918
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1924
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1921
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1927
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1930
+S
+#1934
+迷失~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境呈現無重力狀態
+讓你的移動十分困難，而且你也很難保持你的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1925
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1931
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1922
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1928
+D5
+The astral field leads off into infinity.
+~
+~
+0 -1 1919
+S
+#1935
+迷失~
+你發覺你正飄浮在一整片黑暗與游離的閃亮星辰之中。整個環境呈現無重力狀態
+讓你的移動十分困難，而且你也很難保持你的方向感。
+    上下四方的出口都是通往無盡的黑暗。
+~
+0 8192 2
+D0
+The astral field leads off into infinity.
+~
+~
+0 -1 1923
+D1
+The astral field leads off into infinity.
+~
+~
+0 -1 1926
+D2
+The astral field leads off into infinity.
+~
+~
+0 -1 1932
+D3
+The astral field leads off into infinity.
+~
+~
+0 -1 1920
+D4
+The astral field leads off into infinity.
+~
+~
+0 -1 1929
+S
+#1936
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D3
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1937
+D5
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1918
+S
+#1937
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D1
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1936
+D2
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1923
+S
+#1938
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D1
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1939
+D3
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1919
+S
+#1939
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D1
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1924
+D2
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1938
+S
+#1940
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D1
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1941
+D3
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1920
+S
+#1941
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D4
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1925
+D5
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1940
+S
+#1942
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D0
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1921
+D4
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1943
+S
+#1943
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D2
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1926
+D5
+The strand of light twists and turns out of sight.
+~
+~
+0 -1 1942
+S
+#1944
+銀色光帶上~
+你正站在這個似乎能夠穿越星界時空的銀色光帶上。
+~
+0 8192 2
+D0
+You see the endless expanse of the astral field.
+~
+~
+0 -1 1927
+D3
+You see the infinite expanse of the astral field.
+~
+~
+0 -1 1922
+S
+#1945
+星界深處~
+你已經進入到星界領域的深處了。這個區域的結構似乎隨著你的進入開始
+扭曲變形。一些星界的光芒也開始扭曲並劃破長空射向其它的星界領域。
+    要在這個領域繼續探索下去的話千萬小心 - 因為你可能永遠回不來。
+~
+0 8192 2
+D0
+The astral field leads on into the depths.
+~
+~
+0 -1 1946
+D1
+The astral field leads on into infinity.
+~
+~
+0 -1 1930
+D2
+The nexial link has been blocked by the gods for your protection.
+~
+~
+0 -1 0
+D3
+The astral field leads on into the depths.
+~
+~
+0 -1 1949
+D4
+Through the nexial link you can see a stony keep.
+~
+~
+0 -1 1950
+D5
+The astral field leads on into infinity.
+~
+~
+0 -1 1928
+S
+#1946
+星界深處~
+你已經進入到星界領域的深處了。這個區域的結構似乎隨著你的進入開始
+扭曲變形。一些星界的光芒也開始扭曲並劃破長空射向其它的星界領域。
+    要在這個領域繼續探索下去的話千萬小心 - 因為你可能永遠回不來。
+~
+0 8192 2
+D0
+The astral field leads on into infinity.
+~
+~
+0 -1 1933
+D1
+The nexial link has been blocked by the gods for your protection.
+~
+~
+0 -1 0
+D2
+The astral field leads on into the depths.
+~
+~
+0 -1 1945
+D3
+The astral field leads on into the depths.
+~
+~
+0 -1 1947
+D4
+The astral field leads on into infinity.
+~
+~
+0 -1 1929
+D5
+The astral field leads on into infinity.
+~
+~
+0 -1 1931
+S
+#1947
+星界深處~
+你已經進入到星界領域的深處了。這個區域的結構似乎隨著你的進入開始
+扭曲變形。一些星界的光芒也開始扭曲並劃破長空射向其它的星界領域。
+    要在這個領域繼續探索下去的話千萬小心 - 因為你可能永遠回不來。
+~
+0 8192 2
+D0
+The astral field leads on into infinity.
+~
+~
+0 -1 1934
+D1
+The astral field leads on into the depths.
+~
+~
+0 -1 1946
+D2
+The astral field leads on into infinity.
+~
+~
+0 -1 1930
+D3
+The astral field leads on into infinity.
+~
+~
+0 -1 1928
+D4
+The nexial link has been blocked by the gods for your protection.
+~
+~
+0 -1 0
+D5
+The astral field leads on into the depths.
+~
+~
+0 -1 1948
+S
+#1948
+星界深處~
+你已經進入到星界領域的深處了。這個區域的結構似乎隨著你的進入開始
+扭曲變形。一些星界的光芒也開始扭曲並劃破長空射向其它的星界領域。
+    要在這個領域繼續探索下去的話千萬小心 - 因為你可能永遠回不來。
+~
+0 8192 2
+D0
+The astral field leads on into infinity.
+~
+~
+0 -1 1935
+D1
+The astral field leads on into infinity.
+~
+~
+0 -1 1931
+D2
+The astral field leads on into the depths.
+~
+~
+0 -1 1949
+D3
+The nexial link has been blocked by the gods for your protection.
+~
+~
+0 -1 0
+D4
+The astral field leads on into the depths.
+~
+~
+0 -1 1947
+D5
+The astral field leads on into infinity.
+~
+~
+0 -1 1932
+S
+#1949
+星界深處~
+你已經進入到星界領域的深處了。這個區域的結構似乎隨著你的進入開始
+扭曲變形。一些星界的光芒也開始扭曲並劃破長空射向其它的星界領域。在你
+的上方你看到一塊巨大的岩石，岩石上頭隱約可以看到有個小都市。
+~
+0 8192 2
+D0
+The astral field leads on into the depths.
+~
+~
+0 -1 1948
+D1
+The astral field leads on into the depths.
+~
+~
+0 -1 1945
+D2
+The astral field leads on into the depths.
+~
+~
+0 -1 1932
+D3
+The astral field leads on into infinity.
+~
+~
+0 -1 1929
+D4
+The nexial link has been blocked by the gods for your protection.
+~
+~
+0 -1 26500
+S
+#1950
+夜靈堡壘入口~
+你正站在一個引導你脫離星界的大門前面。看樣子你是找到夜靈族的巢穴
+了，這些討厭的吉斯王隨從 - 夜靈族。在你面前有一扇鐵製的大門可以引導
+你進入完全由巨石建造而成的堡壘。
+~
+0 4 0
+D0
+You see a rusty steel door which leads into the keep.
+~
+steel~
+3 -1 1951
+D5
+Below you is the nexial portal that leads into the astral plane.
+~
+~
+0 -1 1945
+>room_enter 32 100~
+if ispc($n)
+        if is_qmark($n) <= astral_gith 100001
+                echoat $n [1;31m吉斯王[m對你喊著：[1;35m竟讓你通過了星界迷宮。[m
+                echoat $n [1;31m吉斯王[m對你喊著：[1;35m來吧！找得到我的話，賞賜給你無盡的恐怖喔！[m
+        break
+        endif
+        if is_qmark($n) & astral_quest 100001
+                echoat $n 你竟然又聽到[1;31m吉斯王[m的笑聲：[1;35m黑暗與邪惡賜予我永恆的身軀！！[m
+        else
+                echoat $n 遠方傳來一陣聲音：[1;35m沒想到竟然可以穿透星界到達我的城堡啊！[m
+                echoat $n 遠方傳來一陣聲音：[1;35m你以為這樣就可以脫離無盡的恐怖了嗎？[m
+                echoat $n 遠方傳來一陣聲音：[1;35m還有更可怕的禮物等著你來拿，哈哈......！[m
+        endif
+endif
+~
+|
+S
+#1951
+守衛站~
+這裡是一個在堡壘中的小建築物。在你的東邊與西邊各有一扇小門。一些
+武器被掛在牆上，隨時用來防禦侵入堡壘的敵人。
+    除了北方以外四周都是門。
+~
+0 8 0
+D1
+You see an iron door which leads out onto a grey stone road.
+~
+door iron~
+3 -1 1961
+D2
+You see a rusty steel door which leads out to the nexial link.
+~
+steel~
+3 -1 1950
+D3
+You see an iron door which leads out onto a grey stone road.
+~
+door iron~
+3 -1 1952
+S
+#1952
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    小石頭小徑繼續往北而去，在東邊則是有一扇鐵門(iron door)。
+~
+0 0 1
+E
+door iron~
+The door is made from a set of iron plates set deep into the stone.
+~
+D0
+The grey cobblestones continue.
+~
+~
+0 -1 1953
+D1
+You see an iron door which leads into a small stone building set into the wall
+of the keep.
+~
+door iron~
+3 -1 1951
+S
+#1953
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+這條小石頭鋪成的路繼續通往北邊與南邊。西邊與東邊分別是兩棟建築物的
+大門。
+~
+0 0 1
+D0
+The grey cobblestones continue.
+~
+~
+0 -1 1954
+D1
+You see a small stone building with a wooden door.
+~
+door wooden~
+3 -1 1962
+D2
+The grey cobblestones continue.
+~
+~
+0 -1 1952
+D3
+An iron door blocks your entrance into a large stone building.
+~
+door iron~
+3 -1 1969
+S
+#1954
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路由此轉往南邊與東邊。
+~
+0 0 1
+D1
+The grey cobblestones continue.
+~
+~
+0 -1 1955
+D2
+The grey cobblestones continue.
+~
+~
+0 -1 1953
+S
+#1955
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路繼續通往東邊與西邊。在北邊你看到一棟這個堡壘中
+最大的建築物，在你面前的是進入建築物的兩扇沈重大門。
+~
+0 0 1
+D0
+Looming before you is a forbidding pair of metal doors.
+~
+doors metal~
+3 -1 1974
+D1
+The grey cobblestones continue.
+~
+~
+0 -1 1956
+D3
+The grey cobblestones continue.
+~
+~
+0 -1 1954
+S
+#1956
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路繼續通往東邊與西邊。往南的一扇木門(wooden door)
+可以進入一棟高大的石頭建材的建築物。
+~
+0 0 1
+E
+door wooden~
+這扇門相當的厚重，是由紋路複雜彎曲的灰色木頭製成。
+~
+D1
+The grey cobblestones continue.
+~
+~
+0 -1 1957
+D2
+You see a tall stone building with a wooden door.
+~
+door wooden~
+3 -1 1964
+D3
+The grey cobblestones continue.
+~
+~
+0 -1 1955
+S
+#1957
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路繼續通往西邊。往北的一扇木門(wooden door)可以進
+入一棟高大的石頭建材的建築物。
+~
+0 0 1
+E
+door wooden~
+這扇門相當的厚重，是由紋路複雜彎曲的灰色木頭製成。
+~
+D0
+You see a tall stone building with a wooden door.
+~
+door wooden~
+3 -1 1973
+D2
+The grey cobblestones continue.
+~
+~
+0 -1 1958
+D3
+The grey cobblestones continue.
+~
+~
+0 -1 1956
+S
+#1958
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路繼續通往北邊與南邊。往東的一扇鐵門可以進入一棟
+高大的石頭建材的建築物。
+~
+0 0 1
+D0
+The grey cobblestones continue.
+~
+~
+0 -1 1957
+D1
+An iron door blocks your entrance into a large stone building.
+~
+door iron~
+3 -1 1967
+D2
+The grey cobblestones continue.
+~
+~
+0 -1 1959
+S
+#1959
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路繼續通往北邊與南邊。
+~
+0 0 1
+D0
+The grey cobblestones continue.
+~
+~
+0 -1 1958
+D2
+The grey cobblestones continue.
+~
+~
+0 -1 1960
+S
+#1960
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路在這邊轉往北邊與西邊。往東的一扇鐵門(iron door)
+可以進入一棟高大的石頭建材的建築物。
+~
+0 0 1
+E
+door iron~
+這扇門是由許多精鍊過的高級鋼鐵製成，深深的嵌入這面石牆中。
+~
+D0
+The grey cobblestones continue.
+~
+~
+0 -1 1959
+D1
+An iron door blocks your entrance into a large stone building.
+~
+door iron~
+3 -1 1965
+D3
+The grey cobblestones continue.
+~
+~
+0 -1 1961
+S
+#1961
+灰色道路~
+在你腳下的道路幾乎都是由灰色的小石頭鋪成。火紅的太陽照亮整個堡壘
+的天空；跟平常你進入其他的城市比起來，這裡竟然沒有一點聲音。
+    這條小石頭鋪成的路繼續通往東邊，而西邊路的盡頭則是一扇鐵門。往北
+的一扇鐵門可以進入一棟高大的石頭建材的建築物。
+~
+0 0 1
+D0
+You see a small stone building with a wooden door.
+~
+door wooden~
+3 -1 1963
+D1
+The grey cobblestones continue.
+~
+~
+0 -1 1960
+D3
+You see an iron door which leads into a small stone building set into the wall
+of the keep.
+~
+door iron~
+3 -1 1951
+S
+#1962
+一棟小型建築物~
+你進入了一間裡頭有幾隻夜靈在守衛的昏暗的建築物中。四面的牆壁都裝飾
+著刻有古怪痕跡的木頭。幾支將要燃盡的蠟燭在裡面像快要被風吹熄的樣子。
+~
+0 8 0
+D3
+The wooden door leads back out onto the grey cobblestone road.
+~
+door wooden~
+3 -1 1953
+S
+#1963
+一棟小型建築物~
+你進入了一間裡頭有幾隻夜靈在守衛的昏暗的建築物中。四面的牆壁都裝飾
+著刻有古怪痕跡的木頭。幾支將要燃盡的蠟燭在裡面像快要被風吹熄的樣子。
+~
+0 8 0
+D2
+The wooden door leads back out onto the grey cobblestone road.
+~
+door wooden~
+3 -1 1961
+S
+#1964
+宏偉的住宅~
+你進入了一間燈光昏暗，有著拱型的天花板與高聳窗戶的房間。四周的牆
+面是由巨大的岩石蓋成並且有約10英尺那麼高。在地板上則刻有一個五芒星的
+圖案以及其他你沒看過但是可以感受到其邪惡力量的圖示。
+~
+0 8 0
+D0
+The wooden door leads back out onto the grey cobblestone road.
+~
+door wooden~
+3 -1 1956
+S
+#1965
+夜靈兵器庫~
+這個巨大的房間中放滿了各式各樣完整樣式的武器。幾乎此處的各種匕首
+、刀與劍都是由一種奇異的銀色金屬製成。
+    一陣打鐵聲響與打鐵的高熱由北方的出口傳來。而有一扇鐵門在你的西邊。
+~
+0 8 0
+D0
+You see a massive forgeroom, lit by a white-hot furnace.
+~
+~
+0 -1 1966
+D3
+The iron door leads back out onto the grey cobblestone road.
+~
+door iron~
+3 -1 1960
+S
+#1966
+大熔爐~
+在這個房間中間的是一個巨大沈重發散出高熱的大熔爐，旁邊則有幾隻
+夜靈正在利用它來冶煉武器。一個巨大的水槽在你的西邊，用來冷卻高溫淬
+煉後的金屬。
+    這個房間的北邊與南邊是離開這邊的出口。大熔爐上有個門在你的東方。
+~
+0 12 0
+D0
+You see the armoury.
+~
+~
+0 -1 1967
+D1
+Through the grille in the furnace door you see only flames.
+~
+door furnace~
+3 -1 1968
+D2
+You see the weaponry.
+~
+~
+0 -1 1965
+S
+#1967
+夜靈護甲庫~
+這個巨大的房間中放滿了各式各樣完整樣式的護甲。幾乎此處的各種護甲
+、護腕與頭盔都是由一種奇異的銀色金屬製成。
+    一陣打鐵聲響與打鐵的高熱由南方的出口傳來。而有一扇鐵門在你的西邊。
+~
+0 8 0
+D2
+You see a massive forgeroom, lit by a white-hot furnace.
+~
+~
+0 -1 1966
+D3
+The iron door leads back out onto the grey cobblestone road.
+~
+door iron~
+3 -1 1958
+S
+#1968
+火紅的熔爐中~
+你非常訝異於此空間充滿了令人窒息有毒的硫磺氣息。在你額頭上剛剛冒
+出來的汗立刻被這個房間的高溫給蒸發。你在這個房間已經開始感到頭暈目眩。
+
+........你最好趕快在你被燒成煤炭前離開這個房間！
+~
+0 8 0
+D0
+The flames blind you and obscure your vision.
+~
+~
+0 -1 1968
+D2
+The flames blind you and obscure your vision.
+~
+~
+0 -1 1968
+D3
+The flames blind you and obscure your vision.
+~
+door furnace~
+3 -1 1966
+>room_rand 30~
+if rmobcount(1918) > 0
+        echo [1;31m你感到你被這個房間的高熱給灼傷了！！[m
+        modhmv pc 03.5 10 0
+        echo [1;31m再不趕快離開，你可能會被燒死在這邊！！[m
+endif
+~
+|
+S
+#1969
+守衛站~
+你正站在一個用來守護這個堡壘監獄的守衛站。這個監獄並不大，因為夜
+靈族沒有抓人來監禁的習慣，因為通常被抓來的生物都活不久。
+    監獄的入口在你的西邊，道路本身則是繼續通往東邊。
+~
+0 8 0
+D1
+You see an iron door which leads back out onto the grey cobblestone road.
+~
+door iron~
+3 -1 1953
+D3
+You see the cellblock.
+~
+~
+0 -1 1970
+S
+#1970
+監獄的入口~
+在西邊牆上的火把照亮了整個房間，提供了這個陰暗的房間一點光明。在
+牆上掛了一些鞭子、手銬與鐵鍊 - 那些東西看起來常常使用。
+    牢房的門在你的北邊與南邊。守衛站的門則是在你的東邊。
+~
+0 8 0
+D0
+You see a small cell.
+~
+door cell~
+3 -1 1971
+D1
+You see the guard station.
+~
+~
+0 -1 1969
+D2
+You see a small cell.
+~
+door cell~
+3 -1 1972
+S
+#1971
+狹窄的監牢~
+一個狹小、昏暗、陰冷的監牢。
+    唯一個出口是在深厚南邊的門。
+~
+0 8 0
+D2
+You see the cellblock.
+~
+door cell~
+3 -1 1970
+S
+#1972
+狹窄的監牢~
+一個狹小、昏暗、陰冷的監牢。
+    唯一個出口是在深厚北邊的門。
+~
+0 8 0
+D0
+You see the cellblock.
+~
+door cell~
+3 -1 1970
+S
+#1973
+宏偉的住宅~
+你進入了一間燈光昏暗，有著拱型的天花板與高聳窗戶的房間。四周的牆
+面是由巨大的岩石蓋成並且有約10英尺那麼高。在地板上則刻有一個五芒星的
+圖案以及其他你沒看過但是可以感受到其邪惡力量的圖示。
+~
+0 8 0
+D2
+The wooden door leads back out onto the grey cobblestone road.
+~
+door wooden~
+3 -1 1957
+S
+#1974
+大廳~
+這邊是個被嵌在牆壁中的藍色石頭照亮的宏偉大廳。在牆壁上列滿了各式
+各樣由奇異銀色金屬製成的各式護甲與武器。
+    整個大廳繼續往北邊延伸，在南邊則是兩扇巨大的金屬大門。
+~
+0 8 0
+D0
+The great hall continues to the north.
+~
+~
+0 -1 1975
+D2
+The metal doors lead out onto the grey cobblestone road.
+~
+doors metal~
+3 -1 1955
+S
+#1975
+大廳~
+這邊是個被嵌在牆壁中的藍色石頭照亮的宏偉大廳。在牆壁上列滿了各式
+各樣由奇異銀色金屬製成的各式護甲與武器。
+    整個大廳繼續往南延伸。而北邊有個拱型通道通往一個陰暗的房間。
+~
+0 8 0
+D0
+You think you can see some steps leading up to an altar...
+~
+mist door~
+3 -1 1976
+D2
+The great hall continues to the south.
+~
+~
+0 -1 1974
+S
+#1976
+聖壇前~
+你的視線必須為這個房間的陰暗先做適應。在你四周的都是各式各樣夜靈
+族的雕像，每個雕像都面向注視著你，讓你不得不趕緊加快腳步通過此地。
+~
+0 9 0
+D0
+The steps lead north and up to a massive sacrificial altar.
+~
+~
+0 -1 1977
+D2
+You think you can see the hall.
+~
+mist door~
+3 -1 1975
+S
+#1977
+聖壇前~
+你終於爬上了長長的階梯，站在這用來呈獻貢品給吉斯王的巨大祭壇(altar)
+前。整個聖壇上面佈滿了血跡(blood)，還發散出一股你不可言喻的可怕力量。
+這股可怕力量的來源似乎來自於下方的某處...！
+~
+0 9 0
+E
+blood bloodstains stains~
+一股一股的鮮血由祭壇流出流到你的腳邊，你感到身體相當的不適。
+~
+E
+altar~
+整個祭壇被血腥的血跡給覆蓋。
+~
+D2
+The steps lie to the south, leading back down to the altar chamber floor.
+~
+~
+0 -1 1976
+D5
+The floor of the altar is pockmarked with small holes, draining blood.
+~
+hole~
+3 -1 1978
+S
+#1978
+往未知世界的通道~
+你進入了在祭壇下方的洞穴，在你四周又再度是無盡的黑暗。但是不同的
+是這次沒有閃亮的星辰可以照亮你的四周。在你的下方你似乎可以感受到一股
+可怕的不死生物所散發出來的氣息。
+~
+0 9 1
+D4
+You see the altar chamber.
+~
+hole~
+3 -1 1977
+D5
+You look down into the field of blackness, and feel a tangible wave of evil wash
+over you.  Stepping into the field would be a bad idea.
+~
+gateway~
+39 1924 1979
+S
+#1979
+全然的黑暗與絕望~
+這裡只有完全的黑暗......
+
+    你似乎被身旁漸漸匯集的死亡與絕望氣息給漸漸感染了！
+~
+0 8213 9
+>room_rand 30~
+if rmobcount(1914) == 0
+        echo 你聽到[1;32m星界守護者[m的聲音：[1;36m感謝你們擊敗了吉斯王。[m
+        echo 你聽到[1;32m星界守護者[m的聲音：[1;36m我會設法救你們出來！[m
+        echo [1;36m忽然你感到一陣頭暈目眩，發覺你已經回到星界之門附近了。[m
+        transfer all 1907
+endif
+~
+|
+S
+#0
+
+
+
+#SPECIALS
+M 1902 spec_cast_mage
+M 1905 spec_thief
+M 1910 spec_cast_mage
+M 1911 spec_cast_mage
+M 1912 spec_cast_mage
+M 1913 spec_cast_mage
+M 1914 spec_cast_undead
+M 1915 spec_cast_undead
+M 1917 spec_cast_mage
+M 1918 spec_breath_fire
+M 1919 spec_breath_fire
+S
+
+
+
+#RESETS
+M 0 1900 1 1906
+E 0 1900 0 16
+R 0 1908 6
+R 0 1909 6
+R 0 1910 6
+R 0 1911 6
+R 0 1912 6
+R 0 1913 6
+M 0 1904 10 1913
+E 0 1926 0 16
+R 0 1914 6
+M 0 1904 10 1914
+E 0 1926 0 16
+R 0 1915 6
+M 0 1904 10 1915
+E 0 1926 0 16
+R 0 1916 6
+M 0 1904 10 1916
+E 0 1926 0 16
+R 0 1917 6
+M 0 1904 10 1917
+E 0 1926 0 16
+R 0 1918 6
+M 0 1904 10 1918
+E 0 1926 0 16
+M 0 1905 8 1918
+E 0 1907 0 16
+R 0 1919 6
+M 0 1904 10 1919
+E 0 1926 0 16
+R 0 1920 6
+M 0 1903 4 1920
+G 0 1914 0
+M 0 1904 10 1920
+E 0 1926 0 16
+M 0 1905 8 1920
+E 0 1907 0 16
+R 0 1921 6
+M 0 1904 10 1921
+E 0 1926 0 16
+R 0 1922 6
+M 0 1904 10 1922
+E 0 1926 0 16
+M 0 1905 8 1922
+E 0 1907 0 16
+R 0 1923 6
+M 0 1906 6 1923
+E 0 1909 0 19
+E 0 1915 0 5
+R 0 1924 6
+M 0 1903 4 1924
+G 0 1914 0
+M 0 1905 8 1924
+E 0 1907 0 16
+R 0 1925 6
+R 0 1926 6
+M 0 1903 4 1926
+G 0 1914 0
+R 0 1927 6
+M 0 1906 6 1927
+E 0 1909 0 19
+E 0 1915 0 5
+R 0 1928 6
+R 0 1929 6
+M 0 1910 6 1929
+E 0 1906 0 16
+R 0 1930 6
+M 0 1903 4 1930
+G 0 1914 0
+M 0 1908 3 1930
+E 0 1909 0 19
+E 0 1915 0 5
+E 0 1916 0 7
+E 0 1917 0 10
+R 0 1931 6
+M 0 1910 6 1931
+E 0 1906 0 16
+R 0 1932 6
+R 0 1933 6
+M 0 1901 2 1933
+G 0 1904 0
+R 0 1934 6
+M 0 1901 2 1934
+G 0 1904 0
+R 0 1935 6
+R 0 1936 6
+R 0 1937 6
+R 0 1938 6
+R 0 1939 6
+R 0 1940 6
+R 0 1941 6
+R 0 1942 6
+R 0 1943 6
+R 0 1944 6
+M 0 1915 3 1945
+G 0 1921 0
+M 0 1902 1 1946
+G 0 1905 0
+M 0 1915 3 1947
+G 0 1921 0
+M 0 1915 3 1949
+G 0 1921 0
+M 0 1907 8 1951
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1907 8 1951
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1911 6 1953
+E 0 1906 0 16
+M 0 1908 3 1955
+E 0 1909 0 19
+E 0 1915 0 5
+E 0 1916 0 7
+E 0 1917 0 10
+M 0 1911 6 1959
+E 0 1906 0 16
+M 0 1911 6 1962
+E 0 1906 0 16
+M 0 1911 6 1962
+E 0 1906 0 16
+G 0 1922 0
+M 0 1911 6 1963
+E 0 1906 0 16
+M 0 1911 6 1963
+E 0 1906 0 16
+G 0 1922 0
+M 0 1912 4 1964
+E 0 1910 0 16
+G 0 1903 0
+M 0 1907 8 1965
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1907 8 1965
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1907 8 1967
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1907 8 1967
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1918 1 1968
+E 0 1913 0 0
+M 0 1919 6 1968
+M 0 1919 6 1968
+M 0 1919 6 1968
+M 0 1919 6 1968
+M 0 1919 6 1968
+M 0 1919 6 1968
+M 0 1907 8 1969
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1907 8 1969
+E 0 1908 0 16
+E 0 1915 0 5
+M 0 1917 1 1971
+M 0 1916 1 1972
+M 0 1912 4 1973
+E 0 1910 0 16
+G 0 1903 0
+M 0 1912 4 1974
+E 0 1910 0 16
+G 0 1903 0
+M 0 1912 4 1974
+E 0 1910 0 16
+G 0 1903 0
+M 0 1920 3 1976
+E 0 1908 0 16
+E 0 1908 0 18
+E 0 1915 0 5
+E 0 1916 0 7
+E 0 1917 0 10
+M 0 1920 3 1976
+E 0 1908 0 16
+E 0 1908 0 18
+E 0 1915 0 5
+E 0 1916 0 7
+E 0 1917 0 10
+M 0 1920 3 1976
+E 0 1908 0 16
+E 0 1908 0 18
+E 0 1915 0 5
+E 0 1916 0 7
+E 0 1917 0 10
+M 0 1913 1 1977
+E 0 1911 0 16
+E 0 1924 0 17
+G 0 1902 0
+F 1 1913 -1 -1909
+M 0 1914 1 1979
+E 0 1912 0 16
+E 0 1919 0 5
+G 0 1925 0
+O 0 1930 1 1931
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

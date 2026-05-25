@@ -1,0 +1,6814 @@
+#AREADATA
+Name        望鄉港~
+Identity    homeport~
+Builders    Sally~
+Translator  ----~
+Modifier    Coconet~
+VNUMs	    18000 18999
+Security    1
+Recall      18000
+Death       18000
+Areborn      12
+F_toggle    0
+End
+
+#MOBILES
+#18000
+sentry-homeport~
+入口衛兵(sentry)~
+一位衛兵(sentry)正守衛著望鄉港的入口。
+~
+一個出生於本地的人，他的眼裡有一種你說不上來的感覺。
+~
+1|2|64|8192 8|32|128 1000 S
+40 4000 0 30d30+0 -5d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8
+>repop_prog 100~
+mpoload 18008
+mpoload 18009
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	yell 破壞平和的人終將受到報應！
+	wear all
+	mpkill $n
+	mpnowait
+	mphunt $n
+	mpnowait
+	break
+endif
+if is_qmark($n) != homeport_quest
+	mpechoat $n $I 說：歡迎來到望鄉港，這邊是個充滿海灣氣息的港口
+	mpechoat $n $I 說：望鄉港是個平和的都市，破壞平和的人將會接受
+	mpechoat $n $I 說：嚴厲的懲罰。
+	mpadd_qmark $n homeport_quest -1 0 0 0 0 1
+endif
+~
+>talk_prog topic~
+if is_qmark($n) == homeport_enemy
+	yell 破壞平和的人終將受到報應！
+	wear all
+	mpkill $n
+	mpnowait
+	mphunt $n
+	mpnowait
+	break
+endif
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+tell $n 歡迎光臨，親愛的冒險者。
+tell $n 如果你很疲累，望鄉港的旅館將可以帶給你舒適的休息。
+tell $n 如果你想逛街，望鄉港的商店將不會讓你空手而歸。
+tell $n 如果你想工作，望鄉港的公會應該可以幫上點忙。
+tell $n 希望望鄉港能夠給你一個很好的回憶。
+~
+>fight_prog 30~
+wear all
+bashhead
+mpnowait
+bashhead
+mpnowait
+mpgoto self
+perform emp $n
+mpnowait
+if hitprcnt($i) < 25
+	mpat 5 cast 'double heal'
+	mpnowait
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受到報應！
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpnowait
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+|
+#18001
+portguard-homeport~
+港口守衛(portguard)~
+一位強壯的港口守衛(portguard)，正監視著來往人群裡有沒有可疑的人。
+~
+一個出生於本地的人，他的眼神很銳利，正看著每一個來往的行人。
+~
+1|2|64|8192 8|32 300 S
+40 5000 0 40d40+0 -5d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8
+>repop_prog 100~
+mpoload 18008
+mpoload 18003
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	yell 破壞平和的人終將受到報應！
+	wear all
+	mpkill $n
+	mpnowait
+	mphunt $n
+	mpnowait
+	break
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受到報應！
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpnowait
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+|
+#18002
+bodyguard-homeport~
+市長貼身守衛(bodyguard)~
+一個強壯的守衛(bodyguard)正貼身保護著市長的安全。
+~
+一個強壯的傭兵，他來自於遙遠的光明之鎮。
+~
+1|2|64|8192 8|32 400 S
+40 5000 500 0d0+0 -5d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8
+>repop_prog 100~
+mpoload 18008
+mpoload 18002
+mpat 5 wear all
+~
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	wear all
+	yell 破壞平和的人終將受到報應！
+	mpkill $n
+	mpnowait
+	mphunt $n
+	mpnowait
+	break
+endif
+~
+>fight_prog 30~
+wear all
+perform emp
+mpnowait
+bashhead
+mpnowait
+mpgoto self
+perform emp $n
+mpnowait
+if hitprcnt($i) < 25
+	mpat 5 cast 'double heal'
+	mpnowait
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受到報應！
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpnowait
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+|
+#18003
+Mayor-homeport Achilo-homeport~
+市長安齊羅(Mayor Achilo)~
+望鄉港的市長(Mayor)在這裡看著你。
+~
+一個有著強大意志的人，他以堅強的意志率領著民團，打敗了入侵的海盜，
+因而當上了望鄉港的市長。
+~
+1|2|64|2048|4096|8192|262144 8|32|128 900 S
+50 10000 500 40d0+0 -15d0+0
+-1 0
+0 8 1
+R Human~
+C 9
+P 12
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18000
+mpoload 18005
+mpoload 18006
+mpoload 18007
+mpoload 18004
+mpat 5 wear all
+~
+>tick_prog 100~
+if is_qmark($i) != talking
+	if hour($) < 7
+	or hour($) > 16
+		if inroom($i) == 18047
+			mpoload 18029 1
+			unlock e
+			open e
+			e
+			close w
+			lock w
+			mpcallout 2 mpjunk key
+		endif
+	else
+		if inroom($i) == 18048
+			mpoload 18029 1
+			unlock w
+			open w
+			w
+			close e
+			lock e
+			mpcallout 2 mpjunk key
+		endif
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	mpechoat $n $I 正在忙。
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+say 歡迎你來到望鄉港，親愛的旅者。
+say 這裡已經有一段時間沒有來自遠方的冒險者經過。
+say 又或許大家已經慢慢遺忘了這裡。
+ponder
+mpcallout 1 say 望鄉港其實是個充滿歷史的港口。
+~
+>talk_prog history 歷史~
+if is_qmark($n) == homeport_hero_quest
+	break
+endif
+if is_qmark($i) == talking
+	tell $n 歷史？我要好好想想...已經好久沒人問過我了
+	tell $n 你晚一點再來問我吧。
+else
+	mpadd_qmark $n homeport_hero_quest -1 0 0 0 0 1
+	mpadd_qmark self talking
+	mpcallout 4 mpdel_qmark self talking
+	tell $n 望鄉港，可以說是一個和平的地方。充滿了平和，安閒。
+	mpcallout 1 tell $n 沒有戰爭，沒有鬥爭，沒有外來的侵略。
+	mpcallout 2 tell $n 有的只是單純的居民，單純的貿易，簡簡單單的生活罷了。
+	mpcallout 3 tell $n 這一切，都是因為先人的努力，才有現在的成就。
+	mpcallout 4 mpechoat $n $I 陷入了沉思當中...(continue)。
+endif
+~
+>talk_prog continue~
+if is_qmark($n) == homeport_quest 100000
+	if is_qmark($i) == talking
+		mpechoat $n $I 似乎還陷入在深深的沉思當中，晚點再來請教他好了...
+	else
+		mpmod_qmark $n homeport_hero_quest v0 = 1
+		mpadd_qmark self talking
+		mpcallout 9 mpdel_qmark self talking
+		sorry $n
+		mpcallout 1 tell $n 真是抱歉，親愛的旅者。
+		mpcallout 2 tell $n 每次當我回想起那遙遠的年代，我就不自覺的陷入這種情緒當中。
+		mpcallout 3 mpechoat $n $I 似乎很努力的回想過去...
+		mpcallout 4 tell $n 在很久以前，遠方的史卡拉貝處在動亂不安的氛圍之下，緊繃的環境，大戰一觸即發。
+		mpcallout 5 tell $n 當下的環境中，有一群想追求平靜生活的人們，在一位英雄的帶領下，冒險來到這裡。
+		mpcallout 6 tell $n 經過一番努力，最終在古望鄉港遺跡(old homeport)附近建立起集落，安穩的居住下來。
+		mpcallout 7 tell $n 在平靜的環境中生活久了，人們也都過慣和平生活，而不想冒險外出面對未知的危險。
+		mpcallout 8 tell $n 人口進多出少的情況下，最終使望鄉港從集落搖身變成大城市。
+		mpcallout 9 tell $n 如果沒有當初那位英雄，或許就沒有現今的望鄉港。
+	endif
+endif
+~
+>talk_prog p old homeport~
+if is_qmark($i) == talking
+	mpechoat $n $I 似乎還陷入在深深的沉思當中，晚點在來請教他好了....
+else
+	mpadd_qmark self talking
+	mpcallout 4 mpdel_qmark self talking
+	mpcallout 1 tell $n 古望鄉港，只有在史書上面有記載著。
+	mpcallout 2 tell $n 根據記載，古望鄉港曾經是大陸上繁盛的港口之一。
+	mpcallout 3 tell $n 可惜的是，在幾百年前的記載忽然中斷，也再也沒有當初那段歷史的下文。
+	mpcallout 4 tell $n 直到後來，我們在英雄的帶領之下，找到了這裡。
+endif
+~
+>talk_prog hero 英雄~
+if is_qmark($n) == homeport_quest 100001
+	if is_qmark($i) == talking
+		mpechoat $n $I 似乎一時之間想不到關於你所問英雄的事蹟，晚點在來吧...
+	else
+		mpmod_qmark $n homeport_hero_quest v0 = 2
+		mpadd_qmark self talking
+		mpcallout 6 mpdel_qmark self talking
+		ponder $n
+		mpcallout 2 tell $n 根據我的記憶，那位英雄似乎叫做亞克(Yeark)。
+		mpcallout 3 tell $n 據聞，那英雄在望鄉港的情勢穩定之後，就悄悄的離去...
+		mpcallout 4 tell $n 沒有人知道他確切的去處。
+		mpcallout 5 tell $n 真要說，或許當初在村內和英雄比較熟的人會有比較清楚的消息..
+		mpcallout 6 mpechoat $n $I說完似乎又陷入了沉思當中。
+	endif
+endif
+~
+>fight_prog 50~
+wear all
+if rand(50)
+	frenzy
+	mpnowait
+endif
+bashhead
+mpnowait
+bashhead
+mpnowait
+bashhead
+mpnowait
+~
+>fight_prog 80~
+wear all
+skilldrv multihit $n
+skilldrv multihit $n
+snare $n
+mpnowait
+skilldrv multihit $n
+~
+>hitprcnt_prog 20~
+mpecho $I看著似乎無法抵抗，趁著一溜煙的時候躲進了休息室。
+mpgoto 18048
+untangle self
+mpnowait
+c vivi 
+mpnowait
+c 'full hea'
+mpnowait
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+|
+#18004
+Cinderella-homeport secretary-homeport~
+秘書仙蒂瑞拉(secretary Cinderella)~
+市長秘書(secretary)在這裡看著你。
+~
+一位笑起來很美的女性，但是美麗女人的過去，不一定是快樂的。
+~
+1|2|64|8192 8|32 400 S
+44 800 500 0d0+0 -5d0+0
+-1 0
+0 8 2
+C 2|32
+P 12
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	say 破壞平和的人，你還有臉來這裡？！
+	mpechoat $n $I朝著你的要害一記高根鞋飛踢，把你踹出了門外。
+	mpechoaround $n $I一記高根鞋飛踢命中$N要害，把他踹飛了！
+	modhmv $n 03.15 15 0
+	mptransfer $n 18043
+	break
+endif
+if rand(50)
+	smile $n
+	tell $n 如果要見市長，要先預約(order)喔。
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+smile $n
+tell $n 如果要見市長，要先預約喔。
+tell $n 不過市長在早上八點之後才會客。
+~
+>talk_prog order~
+if is_qmark($n) == homeport_enemy
+	say 破壞平和的人，你還來這邊做什麼！
+	mptransfer $n 18043
+	break
+endif
+if hour($) < 8
+or hour($) > 16
+	tell $n 市長在早上八點到下午四點之前才會客唷！
+else
+	if pcnum($18047) == 0
+		mpoload 18028 1
+		unlock n
+		mpforce $n n
+		lock n
+		mpjunk all.key
+	else
+		tell $n 市長現在正在會客中，請稍後。
+	endif
+endif
+~
+|
+#18005
+jailor-homeport~
+獄卒(jailor)~
+一個看守奴隸的獄卒(jailor)正聚精會神的站在這裡。 
+~
+其實他和一般的守衛隊員沒什麼差別，因為他也是從守衛隊員裡挑選出來的，
+負責看管監獄內的牢犯，同時留意四周的狀況。如果有人想要逃獄，甚至有人
+想來劫獄，可得先過他這一關。
+~
+1|2|64|8192 8|32 -400 S
+36 10000 0 0d0+0 -5d0+0
+-1 0
+0 8 1
+R Human~
+C 0
+P 8
+>repop_prog 100~
+mpoload 18008
+mpoload 18002
+mpat 5 wear all
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+stare $n
+say 閒雜人等別呆在這裡！
+~
+>fight_prog 50~
+wear all
+perform emp
+mpnowait
+bashhead
+mpnowait
+mpgoto self
+mpkill $r
+mpnowait
+perform emp
+if hitprcnt($i) < 25
+	mpat 5 cast 'double heal'
+	mpnowait
+endif
+~
+>death_prog 100~
+yell 別以為這樣就可以的將犯人救走！還有天羅地網在等著你！！！！
+~
+|
+#18006
+chichi-homeport~
+奇奇(chichi)~
+賣花女奇奇(chichi)站在這賣花，她眼中有超乎年齡的成熟。
+~
+她正努力地跟每個人推銷她籃子裡的鮮花，不過，她的生意似乎不太好。
+~
+1|64 8|32 1000 S
+10 0 0 0d0+0 -5d0+0
+-1 0
+0 8 1
+R Human~
+C 0
+P 8
+>greet_prog 30~
+if is_qmark($i) == greet_delay
+	break
+endif
+mpadd_qmark self greet_delay
+say 先生小姐要不要買花啊？
+mpcallout 2 mpdel_qmark self greet_delay
+~
+>talk_prog topic~
+if is_qmark($n) == homeport_gambler_quest 300001
+	tell $n 哎呀，花賣完了，真抱歉阿，客人。
+	mpechoat $n $I轉過身去，準備離開。
+	mpechoat $n 你似乎聽到$I在喃喃自語：這些錢不知道夠不夠還父親的賭債...
+	mpmod_qmark $n homeport_gambler_quest v2 = 2
+	break
+endif
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+tell $n 哎呀，花賣完了，該休息了。
+mpecho $I 轉身離開。
+mpat 5 purge self
+~
+>talk_prog father~
+if is_qmark($n) == homeport_gambler_quest 300002
+	mpmod_qmark $n homeport_gambler_quest v2 = 3
+	tell $n 你說你在賭場遇到我爸爸嗎？什麼他還跟你借錢？
+	sigh
+	mpcallout 1 tell $n 千萬別借他錢，不然我又要還更多的賭債了。
+else
+	tell $n 你是說我爸爸嗎？他整天都在賭場鬼混，唉。
+	sigh
+endif
+~
+|
+#18007
+fairy-homeport slave-homeport~
+妖精奴隸(fairy slave)~
+一位兩眼無神的妖精奴隸(fairy slave)絕望地站在這裡。
+~
+一位被商人抓來的妖精，看起來她的翅膀都受到很大的損傷。
+~
+1|2|64 8|32 900 S
+39 10000 0 0d0+0 -5d0+0
+-1 0
+0 8 2
+R fairy~
+C 0
+P 8
+>fight_prog 80~
+cast 2 double
+mpnowait
+~
+>talk_prog topic~
+if being($b)
+	break
+endif
+if is_qmark($n) == talking
+	tell $n 拜託，我真的什麼都不知道，別再逼我了！
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 200032
+	say 拜託，我真的什麼都不知道，別再逼我了！
+	say 天阿，我到底是做了什麼，怎麼會被這樣虐待！
+	mpechoat $n $I看來已經神志不清，或許該想辦法讓他清醒一下。
+	mpmod_qmark $n homeport_gambler_quest v1 = 33
+else
+	say 誰可以來救我出去啊！
+endif
+~
+>act_prog slap~
+if being($b)
+	break
+endif
+if is_qmark($n) == talking
+	tell $n 拜託，我真的什麼都不知道，別再逼我了！
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 200033
+	mpadd_qmark self talking 10 0 0 0 0 0
+	mpcallout 2 mpdel_qmark self talking
+	mpechoat $n 在你甩了$I幾個巴掌之後，$I似乎清醒了點。
+	mpcallout 1 mpechoat $n $I清醒之後看到你，似乎非常的興奮。
+	mpcallout 2 tell $n 快，什麼都別問，麻煩你快救我出去，我快撐不住了...
+	mpcallout 2 mpmod_qmark $n homeport_gambler_quest v1 = 34
+endif
+~
+>talk_prog why~
+if being($b)
+	break
+endif
+if is_qmark($n) == talking
+	tell $n 拜託，我真的什麼都不知道，別再逼我了！
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 200034
+	mpadd_qmark self talking
+	mpcallout 3 mpdel_qmark self talking
+	sigh
+	mpechoat $n $I的臉上似乎露出很為難的表情。
+	mpmod_qmark $n homeport_gambler_quest v1 = 40
+	mpcallout 1 tell $n 這...我真的不知道為什麼他們會把我抓來這邊。
+	mpcallout 2 tell $n 或許是他們想要從我口中套出其他人的下落吧。
+	mpcallout 3 tell $n 拜託，快帶我走吧，我快撐不下去了！
+endif
+~
+>talk_prog yes go 走 ok~
+if being($b)
+	break
+endif
+if is_qmark($n) == talking
+	tell $n 拜託，我真的什麼都不知道，別再逼我了！
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 200034
+or is_qmark($n) == homeport_gambler_quest 200040
+	mpadd_qmark self talking
+	mpcallout 1 mpdel_qmark self talking
+	bow $n
+	mpgroup $n imp-homeport 0
+	mpdef_rembch $n
+	mpmod_qmark $n homeport_gambler_quest v1 + 1
+	tell $n 那就麻煩你了！
+	mpcallout 1 tell $n 就麻煩你護送我到地道入口，就會有人來接我了。
+endif
+~
+>entry_prog 100~
+if being($b)
+	if is_qmark($b) != homeport_gambler_quest 200035
+		if is_qmark($b) != homeport_gambler_quest 200041
+			break
+		endif
+	endif
+	if inroom($i) == 18049
+		if is_qmark($b) == homeport_gambler_quest 200035
+			bow
+			tell $b 實在太感謝你了！
+			stun $b 5
+			mpcallout 1 mpechoat $b 你只見到$I喃喃的唸著咒語...
+			mpcallout 3 mpechoat $b $I的身上慢慢的被魔法陣給包圍。
+			mpcallout 4 tell $b 親愛的冒險者，實在太感謝你了，如果沒有你，我還不知道什麼時候才能逃離。
+			mpcallout 5 tell $b 這裡有個東西就當作是我的謝禮吧。
+			mpcallout 6 mpoload 18027 $b viclv target
+			mpcallout 6 mpechoat $b $I緩緩地消失在魔法陣中。
+			mpcallout 7 mpat 5 mppurge self
+		endif
+		if is_qmark($b) == homeport_gambler_quest 200041
+			bow
+			tell $b 實在太感謝你了！
+			stun $b 5
+			mpcallout 1 mpechoat $b 你只見到$I喃喃的唸著咒語...
+			mpcallout 3 mpechoat $b $I的身上慢慢的被魔法陣給包圍。
+			mpcallout 4 tell $b 親愛的冒險者，實在太感謝你了，如果沒有你，我還不知道什麼時候才能逃離。
+			mpcallout 5 tell $b 這裡有個東西就當作是我的謝禮吧。
+			mpcallout 6 mpoload 18026 $b viclv target
+			mpcallout 6 mpechoat $b $I緩緩地消失在魔法陣中。
+			mpcallout 7 mpat 5 mppurge self
+		endif
+	else
+		if inroom($i) == 18059
+		or inroom($i) == 18058
+		or is_qmark($b) > homeport_gambler_quest 300007
+			break
+		endif
+		if rand(90)
+			mpmod_qmark $b homeport_gambler_quest v2 + 1
+			if is_qmark($b) == homeport_gambler_quest 200035
+				mpmload 18029
+				mpforce guard-homeport mpdef_rembch $b
+				mpcall guard_hunt
+				mpmload 18029
+				mpforce guard-homeport mpdef_rembch $b
+				mpcall guard_hunt
+				mpmload 18031
+				mpforce captain-homeport mpdef_rembch $b
+				mpcall captain_hunt
+				mpgroup captain-homeport guard-homeport
+				mpgroup captain-homeport 2.guard-homeport
+				mpmload 18033
+				mpforce magician-homeport mpdef_rembch $b
+				mpgroup captain-homeport magician-homeport
+				mpmload 18035
+				mpforce savent-homeport mpdef_rembch $b
+				mogroup captain-h savent-h
+				mpforce guard-h pro magician-h
+				mpforce 2.guard-h pro savent-h
+				mpforce captain-h pro savent-h
+				mpforce captain-homeport mpkill $b
+			endif
+			if is_qmark($b) == homeport_gambler_quest 200041
+				mpmload 18030
+				mpforce guard-homeport2 mpdef_rembch $b
+				mpcall guard_hunt
+				mpmload 18030
+				mpforce guard-homeport2 mpdef_rembch $b
+				mpcall guard_hunt
+				mpmload 18032
+				mpforce captain-homeport2 mpdef_rembch $b
+				mpcall captain_hunt
+				mpgroup captain-homeport2 guard-homeport2
+				mpgroup captain-homeport2 2.guard-homeport2
+				mpmload 18034
+				mpforce magician-homeport mpdef_rembch $b
+				mpgroup captain-homeport2 magician-homeport
+				mpmload 18035
+				moforce savent-homeport mpdef_rembch $b
+				mpgroup captain-homeport2 savent-homeport
+				mpforce guard-homeport2 pro magician-homeport
+				mpforce 2.guard-homeport2 pro savent-homeport
+				mpforce captain-h pro savent-h
+				mpforce captain-homeport2 mpkill $b
+			endif
+		endif
+	endif
+endif
+~
+>defun_prog captain_hunt~
+mpforce captain-homeport hunt $r
+~
+>defun_prog guard_hunt~
+mpforce guard-homeport hunt $r
+~
+|
+
+#18008
+aryan-homeport~
+阿利安(aryan)~
+有名的商人阿利安(aryan)站在這裡。
+~
+一個不知來自何地的商人，來到這邊開了這間椰子會館。
+~
+1|2|64|2048|8192 8|32|128 900 S
+40 800 500 0d0+0 -5d0+0
+-1 0
+0 8 1
+R troll~
+C 9
+P 12
+>greet_prog 100~
+if is_qmark($n) == homeport_coconet_shop_timer
+	break
+endif
+if is_qmark($n) >= homeport_coconet_quest 200010
+	tell $n 多虧你的幫忙，我終於能開始營業摟～
+	bow $n
+	mpgold $n 200000
+	mpexp $n 30000
+	mpskillexp $n 3000
+	if is_qmark($n) >= homeport_coconet_quest 200011
+		mpoload 18044 1
+	endif
+	if is_qmark($n) >= homeport_coconet_quest 200012
+		mpoload 18044 1
+		mpoload 18044 1
+	endif
+	if is_qmark($n) >= homeport_coconet_quest 200013
+		mpoload 18044 1
+		mpoload 18044 1
+		mpoload 18044 1
+	endif
+	if is_qmark($n) != homeport_quest
+		mpadd_qmark $n homeport_quest -1 0 0 0 0 1
+	endif
+	mpmod_qmark $n homeport_quest v0 | 32
+	mpdel_qmark $n homeport_coconet_quest
+	break
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	mpechoat $n $I似乎很忙碌的在整理東西，沒注意到你的問話。
+	break
+endif
+if is_qmark($n) == homeport_coconet_shop_timer
+	tell $n 店面還在整理中，還要一段時間喔。
+	break
+endif
+if is_qmark($n) >= homeport_coconet_quest 200010
+	tell $n 多虧你的幫忙，我終於能開始營業摟～
+	bow $n
+	mpgold $n 200000
+	mpexp $n 20000
+	mpskillexp $n 10000
+	if is_qmark($n) >= homeport_coconet_quest 200011
+		mpoload 18044 1
+	endif
+	if is_qmark($n) >= homeport_coconet_quest 200012
+		mpoload 18044 1
+		mpoload 18044 1
+	endif
+	if is_qmark($n) >= homeport_coconet_quest 200013
+		mpoload 18044 1
+		mpoload 18044 1
+		mpoload 18044 1
+	endif
+	if is_qmark($n) != homeport_quest
+		mpadd_qmark $n homeport_quest -1 0 0 0 0 1
+	endif
+	mpmod_qmark $n homeport_quest v0 | 32
+	mpdel_qmark $n homeport_coconet_quest
+	break
+endif
+if is_qmark($n) & homeport_quest 100032
+	tell $n 我開店摟！需要什麼你自己看～
+else
+	tell $n 唉呦，一切都還在整修中，過陣子就會正式營業了。
+endif
+~
+>talk_prog help~
+if is_qmark($i) == talking
+	mpechoat $n $I似乎很忙碌的在整理東西，沒注意到你的問話。
+	break
+endif
+if is_qmark($n) & homeport_quest 100032
+	tell $n 你已經幫我很大的忙摟！感謝你。
+	break
+endif
+if is_qmark($n) & homeport_coconet_quest 100001
+	tell $n 已經我知道你要幫忙啦。
+	break
+endif
+if is_qmark($n) != homeport_coconet_quest
+	mpadd_qmark self talking -1 0 0 0 0 1
+	mpcallout 6 mpdel_qmark self talking
+	mpadd_qmark $n homeport_coconet_quest -1 0 0 0 0 1
+	think $n
+	tell $n 哎呀，你也知道開設一間商店不是一個容易的事情。
+	mpcallout 2 tell $n 要許多資金和許多的貨品。
+	mpcallout 3 mpechoat $n $I搓了搓手，滿臉無奈的樣子。
+	mpcallout 4 tell $n 我花了很多的心力，才把商店建設弄的差不多。
+	mpcallout 5 tell $n 現在只差最後幾個步驟，只是無奈我分身乏術。
+	mpcallout 6 tell $n 不知道你有沒有空幫忙呢？
+endif
+~
+>talk_prog yes~
+if is_qmark($i) == talking
+	mpechoat $n $I似乎很忙碌的在整理東西，沒注意到你的問話。
+	break
+endif
+if is_qmark($n) & homeport_coconet_quest 100001
+	tell $n 那就麻煩你摟。
+	break
+endif
+if is_qmark($n) == homeport_coconet_quest 100000
+	mpmod_qmark $n homeport_coconet_quest v0 | 1
+	mpadd_qmark self talking
+	mpcallout 5 mpdel_qmark self talking
+	bow $n
+	mpcallout 1 tell $n 那就麻煩你摟，首先是要找幾個椰子，這種東西似乎不太好找，
+	mpcallout 2 tell $n 不過據說在溫和的陽光照射到的海邊會有椰子樹的生長。
+	mpcallout 3 tell $n 所以我想你去那附近的村莊問問應該會有消息才是，
+	mpcallout 4 tell $n 那麼就多多就麻煩你摟。
+	mpcallout 5 addoil $n
+endif
+~
+>talk_prog no~
+if is_qmark($i) == talking
+	mpechoat $n $I似乎很忙碌的在整理東西，沒注意到你的問話。
+	break
+endif
+if is_qmark($n) & homeport_coconet_quest 100001
+	tell $n 現在才後悔，已經來不及摟～
+	hehe $n
+	break
+endif
+if is_qmark($n) == homeport_coconet_quest 100000
+	sigh
+	tell $n 我想也是，你那麼忙碌又怎麼會有時間來幫我吶...
+	mpdel_qmark $n homeport_coconet_quest
+endif
+~
+>defun_prog check_coconuts_number~
+mpmod_qmark $n homeport_coconet_quest v1 + 1
+if is_qmark($n) >= homeport_coconet_quest 200005
+	mpmod_qmark $n homeport_coconet_quest v1 = 10
+	mpadd_qmark $n homeport_coconet_shop_timer 120 0 0 0 0 1
+	if is_qmark($n) & homeport_coconet_quest 304096
+		mpmod_qmark $n homeport_coconet_quest v1 + 1
+	endif
+	if is_qmark($n) & homeport_coconet_quest 308192
+		mpmod_qmark $n homeport_coconet_quest v1 + 1
+	endif
+	if is_qmark($n) & homeport_coconet_quest 316384
+		mpmod_qmark $n homeport_coconet_quest v1 + 1
+	endif
+	tell $n 真感謝你送來的這些椰子，我想這些足夠我開店的需求摟。
+	tell $n 我大概還需要五天的時間來打理店面。
+	tell $n 等我開始營業後，記得再過來看看呦。
+	wave $n
+else
+	tell $n 感謝！我收到你找到的椰子摟，想必這一定可以加工成好商品的。
+endif
+mpexp $n 3000
+mpskillexp $n 300
+~
+>give_prog 215~
+if is_qmark($n) < homeport_coconet_quest 200005
+	if is_qmark($n) & homeport_coconet_quest 300004
+		tell $n 我已經很多這種東西囉！
+		give $o $n
+		drop $o
+	else
+		if is_qmark($n) & homeport_coconet_quest 300002
+			mpmod_qmark $n homeport_coconet_quest v2 | 4
+		else
+			if is_qmark($n) & homeport_coconet_quest 300001
+				mpmod_qmark $n homeport_coconet_quest v2 | 2
+			else
+				mpmod_qmark $n homeport_coconet_quest v2 | 1
+			endif
+		endif
+		mpcall check_coconuts_number $n
+		mpjunk $o
+	endif
+else
+	say 你給我這個做什麼？
+	give $o $n
+	drop $o
+endif
+~
+>give_prog 2395~
+if is_qmark($n) < homeport_coconet_quest 200005
+	if is_qmark($n) & homeport_coconet_quest 300032
+		tell $n 我已經很多這種東西囉！
+		give $o $n
+		drop $o
+	else
+		if is_qmark($n) & homeport_coconet_quest 300016
+			mpmod_qmark $n homeport_coconet_quest v2 | 32
+		else
+			if is_qmark($n) & homeport_coconet_quest 300008
+				mpmod_qmark $n homeport_coconet_quest v2 | 16
+			else
+				mpmod_qmark $n homeport_coconet_quest v2 | 8
+			endif
+		endif
+		mpcall check_coconuts_number $n
+		mpjunk $o
+	endif
+else
+	say 你給我這個做什麼？
+	give $o $n
+	drop $o
+endif
+~
+>give_prog 2517~
+if is_qmark($n) < homeport_coconet_quest 200005
+	if is_qmark($n) & homeport_coconet_quest 300256
+		tell $n 我已經很多這種東西囉！
+		give $o $n
+		drop $o
+	else
+		if is_qmark($n) & homeport_coconet_quest 300128
+			mpmod_qmark $n homeport_coconet_quest v2 | 256
+		else
+			if is_qmark($n) & homeport_coconet_quest 300064
+				mpmod_qmark $n homeport_coconet_quest v2 | 128
+			else
+				mpmod_qmark $n homeport_coconet_quest v2 | 64
+			endif
+		endif
+		mpcall check_coconuts_number $n
+		mpjunk $o
+	endif
+else
+	say 你給我這個做什麼？
+	give $o $n
+	drop $o
+endif
+~
+>give_prog 40049~
+if is_qmark($n) < homeport_coconet_quest 200005
+	if is_qmark($n) & homeport_coconet_quest 302048
+		tell $n 我已經很多這種東西囉！
+		give $o $n
+		drop $o
+	else
+		if is_qmark($n) & homeport_coconet_quest 301024
+			mpmod_qmark $n homeport_coconet_quest v2 | 2048
+		else
+			if is_qmark($n) & homeport_coconet_quest 300512
+				mpmod_qmark $n homeport_coconet_quest v2 | 1024
+			else
+				mpmod_qmark $n homeport_coconet_quest v2 | 512
+			endif
+		endif
+		mpcall check_coconuts_number $n
+		mpjunk $o
+	endif
+else
+	say 你給我這個做什麼？
+	give $o $n
+	drop $o
+endif
+~
+>give_prog 38219~
+if is_qmark($n) < homeport_coconet_quest 200005
+	if is_qmark($n) & homeport_coconet_quest 316384
+		tell $n 我已經很多這種東西囉！
+		give $o $n
+		drop $o
+	else
+		if is_qmark($n) & homeport_coconet_quest 308192
+			mpmod_qmark $n homeport_coconet_quest v2 | 16384
+		else
+			if is_qmark($n) & homeport_coconet_quest 304096
+				mpmod_qmark $n homeport_coconet_quest v2 | 8192
+			else
+				mpmod_qmark $n homeport_coconet_quest v2 | 4096
+			endif
+		endif
+		mpcall check_coconuts_number $n
+		mpjunk $o
+	endif
+else
+	say 你給我這個做什麼？
+	give $o $n
+	drop $o
+endif
+~
+>give_prog all~
+say 你給我這個做什麼？
+give $o $n
+drop $o
+~
+|
+#18009
+hyksos-homeport~
+西克索(hyksos)~
+有名的矮人商人西克索(hyksos)站在這裡。
+~
+一個來自矮人王國的商人，他的生意主要是販賣礦石以及從矮人王國
+訂製來的精品。
+~
+1|2|64|2048|8192 8|32|128 900 S
+40 800 500 0d0+0 -5d0+0
+-1 0
+0 8 1
+C 9
+P 12
+R Dwarf~
+>tick_prog 100~
+if hour($) == 6
+	open s
+endif
+if hour($) == 20
+	close s
+endif
+if pcnum($) > 0
+	if hour($) > 6
+	or hour($) < 20
+		if rand(30)
+			mpecho $I焦急地來回跺步，看著大道上的人群。
+			mpcallout 1 mpecho $I喃喃念著：「嘖...怎麼還沒來，訂單快趕不上時間啦....」
+			mpcallout 2 mpecho 看來$I似乎遇到些什麼"麻煩"。
+			mpcallout 2 mpcall knowthetrouble pc
+		endif
+	endif
+endif
+~
+>defun_prog knowthetrouble~
+if is_qmark($n) & homeport_quest 100016
+or is_qmark($n) == homeport_dwarf_quest
+	break
+endif
+mpforcer here add_qmark $n homeport_dwarf_hint -1 0 0 0 0 1
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	mpechoat $n $I看起來很忙，沒注意到你。
+	break
+endif
+if is_qmark($n) & homeport_quest 100016
+	tell $n 希望在這裡能找到對你有用的東西。
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest
+	break
+endif
+say 目前店內沒有存貨，要是你有急需，請去其他店問。
+mpechoat $n $I看起來完全不想招呼你。
+~
+>talk_prog trouble 麻煩~
+if is_qmark($i) == talking
+	mpechoat $n $I看起來很忙，沒注意到你。
+	break
+endif
+if is_qmark($n) & homeport_quest 100016
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest
+	break
+endif
+if is_qmark($n) == homeport_dwarf_hint
+	mpadd_qmark $n homeport_dwarf_quest -1 0 0 0 0 1
+	mpdel_qmark $n homeport_dwarf_hint
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 6 mpdel_qmark self talking
+	ponder
+	mpcallout 1 tell $n 但直到今天連個鬼影子都看不見。
+	mpcallout 1 tell $n 從矮人王國出發的馬車，早該在上星期就抵達了。
+	mpcallout 1 tell $n 每月定期配送的貨物還沒有來，導致店內的庫存見底。
+	mpcallout 1 tell $n 旅行者呀，如你所想的一樣，我的確碰到了些麻煩。
+	mpcallout 2 tell $n 現在商船也沒辦法隨叫隨到....
+	mpcallout 2 tell $n 然而，近期的傳聞使得港口變得異常的繁忙。
+	mpcallout 2 tell $n 雖然能加些錢改走海路，讓貨物快速抵達。
+	mpcallout 3 sigh
+	mpcallout 4 tell $n 要是貨物再不進來，就要開天窗了。
+	mpcallout 4 tell $n 但最麻煩的是，目前有筆大訂單要交貨。
+	mpcallout 4 tell $n 依目前店裡的商品存量，恐怕撐不過幾天。
+	mpcallout 5 look $n
+	mpcallout 6 tell $n 如果有人可以幫忙確認馬車、貨物的去向，還真是感激不盡。
+else
+	tell $n 你才麻煩呢！
+	bark $n
+endif
+~
+>talk_prog help 幫忙~
+if is_qmark($i) == talking
+	mpechoat $n $I看起來很忙，沒注意到你。
+	break
+endif
+if is_qmark($n) & homeport_quest 100016
+	tell $n 你已經幫我很大的忙囉！
+	bow $n
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 100000
+	if level($n) >= 36
+		mpmod_qmark $n homeport_dwarf_quest v0 | 1
+		mpadd_qmark self talking 2 0 0 0 0 0
+		mpcallout 4 mpdel_qmark self talking
+		mpdef_rembch null-tar
+		mpdef_rembch $n
+		bow $b
+		if isgood($b)
+			mpcallout 1 tell $b 你的內心果然如同你的外表般善良，這件事就拜託你了。
+		endif
+		if isneutral($b)
+			mpcallout 1 tell $b 旅行者呀，你累積的生存經驗肯定能解決這件事情。
+		endif
+		if isevil($b)
+			mpcallout 1 tell $b 我相信這件事的處理過程一定會運用到你狡詐的智慧。
+		endif
+		mpcallout 2 mpcall give_qitem $b
+	else
+		look $n
+		tell $n 我想，以你的實力幫不上忙。
+		tell $n 我可不想店裡的事忙不完，還要花時間幫你善後。
+	endif
+endif
+~
+>defun_prog give_qitem~
+if being($b)
+	if insameroom($b)
+		mpoload 18013 $b viclv target
+		mpechoat $b $I把信物給了你。
+		mpcallout 1 tell $b 你如果沒有什麼頭緒，拿著這個信物去找他，相信他會提供協助。
+		mpcallout 1 tell $b 這個是我和皮毛商號老闆的交易信物，詳細的事情標記在上面了。
+		mpcallout 2 addoil $b
+	else
+		mpat $b mpdel_qmark $b homeport_dwarf_quest
+		tell $b 我話還沒說完，怎麼你人就跑了？
+		tell $b 真是沒禮貌的傢伙，去去去...
+	endif
+endif
+~
+>talk_prog report~
+if is_qmark($i) == talking
+	mpechoat $n $I看起來很忙，沒注意到你。
+	break
+endif
+if is_qmark($n) >= homeport_dwarf_quest 100003
+	if is_qmark($n) != homeport_quest
+		mpadd_qmark $n homeport_quest -1 0 0 0 0 1
+	endif
+	mpmod_qmark $n homeport_quest v0 | 16
+	mpdel_qmark $n homeport_dwarf_quest
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 3 mpdel_qmark self talking
+	ponder
+	mpcallout 1 tell $n 看來拜託這些旅行者果然是很冒險的一件事情。
+	mpcallout 2 tell $n 現在只能希望那信物別被人家給冒用了。
+	mpcallout 3 tell $n 雖然你沒有幫上什麼忙，但還是辛苦你了。
+	mpcallout 3 mpexp $n 2000
+	mpcallout 3 mpgold $n 10000
+endif
+~
+>give_prog 18014~
+if is_qmark($i) == talking
+	tell $n 我正在忙，你等一下再來。
+	give $o $n
+	drop $o
+	break
+endif
+if is_qmark($n) & homeport_dwarf_quest 165551
+	if is_qmark($n) != homeport_quest
+		mpadd_qmark $n homeport_quest -1 0 0 0 0 1
+	endif
+	mpmod_qmark $n homeport_quest v0 | 16
+	mpdel_qmark $n homeport_dwarf_quest
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpjunk $o
+	mpcallout 4 mpdel_qmark self talking
+	mpechoat $n $I看了看礦石並且聽了你的敘述之後，沉思了一下。
+	mpcallout 1 tell $n 真是感謝你了，旅行者。
+	mpcallout 2 tell $n 這下子也趕得上訂單了。
+	mpcallout 2 tell $n 雖然信物弄丟了，可是你還是幫上了我的忙。
+	mpcallout 3 tell $n 我只能付給你這點小報酬，希望你別嫌少。
+	mpcallout 3 mpexp $n 5000
+	mpcallout 3 mpgold $n 500000
+	mpcallout 4 thank $n
+	mpcallout 10 mpecho $I把新加工好的商品上架。
+	if rand(33)
+		mpcallout 10 mpolaod 18047 36
+	else
+		if rand(50)
+			mpcallout 10 mpolaod 18048 36
+		else
+			mpcallout 10 mpolaod 18049 36
+		endif
+	endif
+	if rand(34)
+		mpcallout 10 mpolaod 18047 36
+	else
+		if rand(50)
+			mpcallout 10 mpolaod 18048 36
+		else
+			mpcallout 10 mpolaod 18049 36
+		endif
+	endif
+else
+	? $n
+	give $o $n
+	drop $o
+endif
+~
+>give_prog 18016~
+if is_qmark($i) == talking
+	tell $n 我正在忙，你等一下再來。
+	give $o $n
+	drop $o
+	break
+endif
+if is_qmark($n) == homeport_dwarf_quest 165591
+	if is_qmark($n) != homeport_quest
+		mpadd_qmark $n homeport_quest -1 0 0 0 0 1
+	endif
+	mpmod_qmark $n homeport_quest v0 | 16
+	mpmod_qmark $n homeport_quest v1 | 16
+	mpdel_qmark $n homeport_dwarf_quest
+	mpadd_qmark self talking 2 0 0 0 0 0
+	mpcallout 6 mpdel_qmark self talking
+	mpjunk $o
+	gasp
+	mpcallout 1 tell $n 這..這...這和我當初交代的好像不同吧？！
+	mpcallout 2 tell $n 而且這東西稍微有點....
+	mpcallout 3 tell $n 呃.....算了，總之這趟旅程辛苦你了。
+	mpcallout 4 tell $n 我已經順利的從其他地方調到了。
+	mpcallout 4 tell $n 貨物的部分你不用擔心。
+	mpcallout 5 mpexp $n 3000
+	mpcallout 5 mpgold $n 10000
+	mpcallout 5 tell $n 這是讓你奔波的酬勞。
+	mpcallout 6 bow $n
+	mpcallout 30 mpecho $I把新加工好的商品上架。
+	mpcallout 30 mpoload 18050 36
+else
+	? $n
+	give $o $n
+	drop $o
+endif
+~
+>give_prog all~
+? $n
+give $o $n
+drop $o
+~
+|
+
+#18010
+merchant-homeport guard-homeport~
+商會守衛(merchant guard)~
+一位有著強壯體格的豬臉傭兵(merchant)站在這裡。
+~
+他正注視你的一舉一動，你看見他的手正按在劍鞘上，似乎馬上就可以拔
+出劍來。
+~
+1|2|64|8192 8|32 0 S
+40 0 0 0d0+0 -5d0+0
+-1 0
+0 8 1
+R Orc~
+C 1
+P 8
+>tick_prog 100~
+if hour($) == 5
+	mpgoto 18039
+endif
+if hour($) == 8
+	west
+	west
+endif
+if hour($) == 20
+	east
+	east
+endif
+~
+>repop_prog 100~
+mpoload 18008
+mpoload 18003
+mpat 5 wear all
+~
+>fight_prog 40~
+wear all
+perform emp
+mpnowait
+bashhead
+mpnowait
+mpgoto self
+mpkill $r
+mpnowait
+circular
+mpnowait
+if hitprcnt($i) < 25
+	mpat 5 cast 'double heal'
+	mpnowait
+endif
+~
+|
+
+#18011
+bank-homeport clerk-homeport~
+銀行櫃檯小姐(bank clerk)~
+銀行櫃檯小姐(bank clerk)笑瞇瞇地看著你。
+~
+她們的工作信條是客人至上，服務第一，所以你可以很舒服地存放款。
+~
+7348291 8320 700 S
+42 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 2
+P 8
+
+#18012
+captain-homeport naxos-homeport~
+納可克(Naxos)~
+警備部隊長─納可克(Captain Naxos)站在這裡。
+~
+高大威猛，虎背熊腰的男人，他是這一帶守衛隊的總隊長，負責管理這附近
+所有的守衛武力。除了戰技精湛以外，他在領導統御與危機處理等方面也相
+當拿手，可以說是文武雙全，是位不可多得的人才。
+~
+22595|1073741824 8|32|128 400 S
+50 30000 500 120d40+-300 -30d-300+0
+-1 0
+0 8 1
+C 15
+P 12|4194304
+S 27 -20
+S 28 -20
+S 29 -20
+S 30 -20
+S 31 -20
+S 40 45
+S 41 50
+S 42 50
+S 43 100
+S 44 100
+S 45 200
+S 46 200
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+if rand(50)
+	say 千萬別在望鄉港為非作歹，是會被通緝的。
+else
+	say 希望這裡的治安還能令你滿意。
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	yell 為非作歹者死！
+	mpkill $n
+endif
+~
+>talk_prog yeark 亞克 英雄~
+ponder $n
+tell $n 你是說那位英雄亞克嗎？我的劍術可是他親自傳授的！
+mpcallout 2 tell $n 可惜的是，亞克在幾年前離開了望鄉港，不知下落了。
+~
+>death_prog 100~
+mpecho $I 死前奮力一擊
+if rand(50)
+	cast 'wail of tempest'
+endif
+if rand(50)
+	cast 'agg de'
+endif
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+if rand(2)
+	mpjunk all.secluded
+	mpoload 18037
+else
+	mpdis_magic self blindness
+	mpat 5 c inf
+	mplog $n got secluded-rare
+endif
+yell 我怎麼可能會敗！！！！
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpnowait
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 200
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18030
+mpoload 18036
+mpoload 18031
+mpat 5 wear all
+~
+>fight_prog 10~
+wear turquoise
+wear secluded
+flaming
+mpnowait
+flaming
+mpnowait
+mpat 5 c 3 'double heal'
+mpnowait
+mpat 5 c protection
+~
+>fight_prog 10~
+wear turquoise
+wear secluded
+storm
+mpnowait
+storm
+mpnowait
+earth
+mpnowait
+mpat 5 c 2 'double heal'
+mpnowait
+mpat 5 c protection
+~
+>fight_prog 30~
+mpat 5 mpforcer here c vivi nax 30
+mpat 5 c 'cure blind'
+~
+>fight_prog 10~
+wear turquoise
+wear secluded
+mpat 5 c 'cure blind'
+c virtual
+mpnowait
+mpat 5 c 2 'double heal'
+mpnowait
+mpat 5 c 'dispel magic' self
+mpat 5 c sanc
+mpnowait
+~
+>fight_prog 10~
+wear turquoise
+wear secluded
+sprinkle
+mpnowait
+mpat 5 c protection
+mpat 5 c 2 'double heal'
+mpnowait
+~
+>fight_prog 10~
+wear turquoise
+wear secluded
+perf emp
+mpnowait
+perform emp
+mpnowait
+mpat 5 c 2 'double heal'
+mpnowait
+~
+>fight_prog 7~
+yell [1;26m～　霆　風　哀　鳴　～[m
+cast 'wail of tempest'
+mpnowait
+~
+>fight_prog 7~
+yell [1;36m～　泠　晶　弦　歌　～[m
+cast 'agg de'
+mpnowait
+~
+|
+
+#18013
+syke-homeport~
+賽克(syke)~
+來自黑暗之城的黑精靈商人賽克(syke)站在這裡。
+~
+一個來自黑暗之城的商人，他的生意主要是販賣深土的特產品如黑色背包
+等東西。
+~
+1|2|64|2048|8192 8|32|128 900 S
+40 800 500 0d0+0 -5d0+0
+-1 0
+0 8 1
+R Drow~
+C 9
+P 12
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+tell $n 歡迎光臨，希望你對我們所販賣的商品還滿意！
+~
+>talk_prog rashka 拉席卡~
+if is_qmark($i) == talking
+	mpechoat $n $I似乎正在忙，沒空回答你的問題。
+	break
+endif
+if race($n) != drow
+	tell $n 你是說拉席卡阿！他可是我們引以為傲的護國大將阿。
+	tell $n 他是我們的英雄阿。
+else
+	tell $n 你也知道拉席卡阿！他可是我們引以為傲的護國大將阿。
+	tell $n 他是我們的英雄阿。	
+endif
+~
+|
+
+#18014
+guardian-homeport~
+崗哨守衛隊員(guardian)~
+一個正在崗哨值班的守衛隊員(guardian)。
+~
+一名高大強壯的男人，身上穿著標準的守衛隊護具與武器，他正盡責
+地在此執行上級交給他的任務。終年的海風在他的臉上留下了特有的
+痕跡，看得出來他在此地已經待了好一段時日了。
+~
+1|2|64|2048|8192 8|32|128 900 S
+40 5000 500 0d0+0 -5d0+0
+-1 0
+0 8 1
+R Hobbit~
+C 9
+P 12
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+say 前面禁止通行！請勿亂闖。
+~
+>repop_prog 100~
+mpoload 18008
+mpoload 18002
+mpat 5 wear all
+~
+>fight_prog 50~
+wear all
+perform emp
+mpnowait
+bashhead
+mpnowait
+mpgoto self
+mpkill $r
+mpnowait
+perform emp
+if hitprcnt($i) < 25
+	mpat 5 cast 'double heal'
+	mpnowait
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受到報應！
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpnowait
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	wear all
+	yell 破壞平和的人終將受到報應！
+	mpkill $n
+	mpnowait
+	mphunt $n
+	mpnowait
+	break
+endif
+~
+|
+
+#18015
+pickpocket-homeport~
+小偷(pickpocket)~
+一位偷偷摸摸的小偷(pickpocket)站在這裡。
+~
+他正偷偷摸摸地接近著你，想趁機偷取你的金錢。
+~
+1|2|64 32768|65536 -200 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Hobbit~
+C 0
+
+#18016
+visitor-homeport~
+遊客(visitor)~
+一個正在四處觀看商品的遊客(visitor)站在這裡。
+~
+他正在看著小販推薦的產品，他的神情似乎很快樂。
+~
+1|2|64 0 100 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 0
+
+#18017
+sellman-homeport~
+小販(sellman)~
+一個正在跟遊客介紹物品的小販(sellman)站在這裡。
+~
+他正努力跟每個經過的人推銷他的產品，他的神情似乎有點焦急。
+~
+1|64 8|32 200 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 0
+P 8
+
+#18018
+bartender-homeport~
+酒吧侍者(bartender)~
+一個有點年紀的酒吧侍者(bartender)站在這裡。
+~
+他正專心的調著酒，他的神情帶點滄桑，似乎看透了人生百態。
+~
+1|2|64 8|32 900 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 9
+P 12
+
+#18019
+drunken-homeport visitor-homeport~
+喝醉酒的遊客(drunken visitor)~
+一位已經喝醉酒的遊客(drunken visitor)倒在桌上呼呼大睡。
+~
+他已經醉倒在桌子上了，滿桌的空酒瓶似乎在訴說著一段傷心的過去。
+~
+1|2|64 8|32 200 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 0
+P 8
+>talk_prog topic~
+if is_qmark($i) == druken_talking
+	mpechoat $n $I似乎喝醉了，完全沒有聽到你的聲音。
+else
+	mpadd_qmark self druken_talking 5 0 0 0 0 0
+	if is_qmark($n) == homeport_gambler_quest 200030
+		if is_inv_obj($n) == 18025
+			mpechoat $n $I的眼睛一亮。
+			mpcallout 1 say 夾夾你貝身上物物的鑰停匙..洎洎洎是陋陋陋哪來的？..它可它它它以借夾夾夾我洎洎看丰丰一下劃嘛？
+			mpcallout 2 mpdel_qmark self druken_talking
+			mpcallout 3 mpmod_qmark $n homeport_gambler_quest v1 = 31
+			break
+		endif
+	endif
+	say 夾別吵我，讓我喝個夠，這樣才能忘停記煩斯惱。
+endif
+~
+>talk_prog restart~
+if is_qmark($n) > homeport_gambler_quest 200031
+	mpmod_qmark $n homeport_gambler_quest v1 = 32
+	mpmod_qmark $n homeport_gambler_quest v2 = 0
+	mpoload 18024 1
+	give key $n
+	say 它加物物物油物物阿﹜﹜，丰小丰丰子，鑰匙夾夾我沒幾把的。
+endif
+~
+>give_prog 18025~
+if is_qmark($n) == homeport_gambler_quest 200031
+	mpjunk key
+	mpoload 18024 1
+	mpadd_qmark self druken_talking 10 0 0 0 0 0
+	mpcallout 2 mpechoat $n $I拿著鑰匙看了又看，好像這鑰匙很貴重似的。
+	mpcallout 3 ponder
+	mpcallout 4 tell $n 陷這果絮然就是那把鑰匙....
+	mpcallout 5 tell $n 陷陷這是停停停商會的鑰停匙，丰丰上戍次丰不物物知劃劃道蝨蝨蝨誰有秀給夾夾夾我洎洎看。
+	mpcallout 6 give key $n
+	mpcallout 6 mpmod_qmark $n homeport_gambler_quest v1 = 32
+	mpcallout 6 mpdel_qmark self druken_talking
+else
+	drop key
+	say 別打藏藏藏擾夾夾夾夾我陷陷陷陷喝停酒﹜﹜，獄獄滾！
+endif
+~
+|
+
+#18020
+inner-homeport~
+旅館主人(inner)~
+一位滿頭白髮的旅館主人(inner)站在這裡。
+~
+他正抬頭看著你，等待著你的出現。
+~
+1|2|64 8|32 900 S
+40 0 0 0d-1000+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 9
+P 12
+>rand_prog 20~
+if pcnum($) > 0
+	if rand(50)
+		say 休息是為了走更長遠的路。
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == superior_room
+or is_qmark($n) == classic_room
+	tell $n 歡迎回來，如果想回房間的話，請跟我說一聲(room)。
+endif
+~
+>talk_prog topic~
+if is_qmark($n) == superior_room
+or is_qmark($n) == classic_room
+	tell $n 歡迎回來，如果想回房間休息的話，請跟我說一聲(room)。
+else
+	tell $n 這邊提供各式各樣的房間，旁邊有價目格表。
+	tell $n 如果有任何需要請跟我說。
+endif
+~
+>talk_prog room~
+if is_qmark($n) == superior_room
+	tell $n 好的，請好好休息。
+	mpechoat $n $I把你帶上三樓的房間。
+	mptransfer $n 18063
+endif
+if is_qmark($n) == classic_room
+	tell $n 好的，請好好休息。
+	mpechoat $n $I把你帶上二樓的房間。
+	mptransfer $n 18064
+endif
+~
+>bribe_prog 10000~
+if is_qmark($i) == superior_room
+	if is_qmark($i) == classic_room
+		tell $n 抱歉，目前所有客房都已經客滿了，可能要請你隔幾天在來。
+	else
+		tell $n 抱歉，高級客房已經客滿了，不過普通客房還有空位，請你考慮一下。
+	endif
+	mpgold $n 10000
+else
+	mpadd_qmark self superior_room 24 0 0 0 0 1
+	mpadd_qmark $n superior_room 24 0 0 0 0 0
+	tell $n 好的，高級客房，請您稍後。
+	mpcallout 1 mptransfer $n 18063
+	if hour($) = 7
+		mpcallout 1 mpechoat $n $I把你帶上三樓的房間，並把早餐放在桌上。
+	else
+		if hour($) = 12
+			mpcallout 1 mpechoat $n $I把你帶上三樓的房間，並把午餐放在桌上。
+		else
+			if hour($) = 18
+				mpcallout 1 mpechoat $n $I把你帶上三樓的房間，並把晚餐放在桌上。
+			else
+				mpcallout 1 mpechoat $n $I把你帶上三樓的房間。
+			endif
+		endif
+	endif
+endif
+~
+>bribe_prog 6000~
+if is_qmark($i) == classic_room
+	if is_qmark($i) == superior_room
+		tell $n 抱歉，目前所有客房都已經客滿了，可能要請你隔幾天在來。
+	else
+		tell $n 抱歉，普通客房已經客滿了，不過高級客房還有空位，請你考慮一下。
+	endif
+	mpgold $n 6000
+else
+	mpadd_qmark self classic_room 24 0 0 0 0 1
+	mpadd_qmark $n classic_room 24 0 0 0 0 0
+	tell $n 好的，普通客房，請您稍後。
+	mpcallout 1 mptransfer $n 18064
+	if hour($) = 7
+		mpcallout 1 mpechoat $n $I把你帶上二樓的房間，並把早餐放在桌上。
+	else
+		if hour($) = 12
+			mpcallout 1 mpechoat $n $I把你帶上二樓的房間，並把午餐放在桌上。
+		else
+			if hour($) = 18
+				mpcallout 1 mpechoat $n $I把你帶上二樓的房間，並把晚餐放在桌上。
+			else
+				mpcallout 1 mpechoat $n $I把你帶上二樓的房間。
+			endif
+		endif
+	endif
+endif
+~
+|
+
+#18021
+kadesh-homeport~
+卡德希(Kadesh)~
+有著深沈眼神的卡德希(Kadesh)站在這裡。
+~
+他正看著你，其實他是在看著你手上的錢。
+~
+2097155 40 0 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 9
+P 12
+#18022
+gambler-homeport~
+賭客(gambler)~
+一位神情緊張的賭客(gambler)正賭得興致大發。
+~
+你可以看到這賭客不停的流汗，而嘴中不時的傳出咒罵聲。他身上穿著的衣
+服十分的髒亂，想必他已經在這賭場裡面沉迷很久沒有離開了。
+~
+3 0 0 S
+36 5000 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 0
+P 8
+>repop_prog 100~
+mpadd_qmark self gambler_homeport_lose -1 0 0 0 0 0
+~
+>rand_prog 100~
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($i) > gambler_homeport_lose 100050
+	mpecho $I似乎輸到沒錢可以繼續下注了，轉身離開這裡。
+	mppurge self
+endif
+if rand(50)
+	curse
+	mpecho $I看來又輸錢了。
+	mpmod_qmark self gambler_homeport_lose v0 + 1
+else
+	if rand(40)
+		hop
+		mpecho $I似乎難得贏一次錢。
+	endif
+	if is_qmark($i) > gambler_homeport_lose 100000
+		mpmod_qmark self gambler_homeport_lose v0 - 1
+		break
+	endif
+endif
+if is_qmark($i) > gambler_homeport_lose 100020
+	sweat
+	mpecho $I摸了摸自己的口袋，臉上露出苦澀的表情。
+	break
+endif
+if is_qmark($i) > gambler_homeport_lose 100010
+	sweat
+	mpecho $I看來似乎輸的很慘。
+	break
+endif
+~
+>talk_prog topic~
+if is_qmark($n) & homeport_quest 100008
+	break
+endif
+if is_qmark($n) >= homeport_gambler_quest 100030
+or is_qmark($n) >= homeport_gambler_quest 200030
+	tell $n 我已經把所知道的都告訴你了，請讓我安靜的繼續翻本吧。
+	bow $n
+	break
+endif
+if is_qmark($n) == homeport_gambler_lend1
+or is_qmark($n) == homeport_gambler_lend2
+	tell $n 快點借我錢吧，小兄弟。
+	break
+endif
+if is_qmark($n) >= homeport_gambler_quest 300001
+	angry
+	tell $n 你不是不借老子錢！還來吵我做什麼！
+	break
+endif
+if is_qmark($i) == talking
+	tell $n 不要吵，等等輸錢了你負責！
+	break
+endif
+if is_qmark($n) != homeport_gambler_quest
+	mpadd_qmark $n homeport_gambler_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) > homeport_gambler_quest 100020
+	mpadd_qmark self talking 3 0 0 0 0 0
+	mpcallout 6 mpdel_qmark self talking
+	mpmod_qmark $n homeport_gambler_quest v0 = 30
+	mpechoat $n $I搓了搓手，抱歉的看著你。
+	mpcallout 2 tell $n 這個..這個..跟你借了那麼多錢，我實在是不知道該怎麼償還才是。
+	mpcallout 3 tell $n 這樣吧..我昨天聽說村子裡面的某民宅家裡有寶藏。
+	mpcallout 4 tell $n 或許這個消息足以讓你把借我的錢賺回來。
+	mpcallout 5 tell $n 今天已經輸夠多了，先回家休息一下等等再繼續。
+	mpcallout 6 mppurge self
+	mpcallout 6 mpechoat $n $I轉頭離開了。
+	break
+endif
+if is_qmark($n) > homeport_gambler_quest 200020
+	mpadd_qmark self talking 3 0 0 0 0 0
+	mpcallout 8 mpdel_qmark self talking
+	mpmod_qmark $n homeport_gambler_quest v1 = 30
+	mpechoat $n $I搓了搓手，似乎不知道該怎麼面對你。
+	mpcallout 2 tell $n 我賭運真的很糟糕，把所有的錢都輸光了。
+	mpcallout 3 tell $n 所以沒辦法償還你之前借我的賭本了....
+	mpcallout 4 mpechoat $n $I很愧疚的看著你。
+	mpcallout 4 mpechoaround $n $I很愧疚的看著$N。
+	mpcallout 5 tell $n 所以我想了又想，身上大概只有這把鑰匙大概比較有價值。
+	mpcallout 6 tell $n 這把鑰匙是我昨天從酒鬼身上騙來的，好像是跟什麼地方有關係。
+	mpcallout 7 tell $n 我想你一定可以找出這鑰匙的用處的。
+	mpcallout 7 mpoload 18025 $n 1 target
+	mpcallout 8 mppurge self
+	mpcallout 8 mpechoat $n $I轉頭離開了。
+	break
+endif
+if is_qmark($i) > gambler_homeport_lose 100025
+	mpadd_qmark self talking 3 0 0 0 0 0
+	mpcallout 5 mpdel_qmark self talking
+	mpadd_qmark $n homeport_gambler_lend1 5 0 0 0 0 0
+	hehe $n
+	mpcallout 1 tell $n 小子，來點錢翻本吧。
+	mpcallout 2 tell $n 我已經輸到身上連半毛錢都沒有了。
+	mpcallout 3 tell $n 我保證，我保證我一定還的出錢。
+	mpcallout 4 tell $n 何況我還知道一個秘密，值很多錢的。
+	mpcallout 5 mpechoat $n -- 不借還是借50000還是借100000？
+	break
+else
+	if is_qmark($i) > gambler_homeport_lose 100010
+		mpadd_qmark self talking 3 0 0 0 0 0
+		mpcallout 3 mpdel_qmark self talking
+		mpadd_qmark $n homeport_gambler_lend2 5 0 0 0 0 0
+		hehe $n
+		mpcallout 1 tell $n 小子，借點錢翻本吧。
+		mpcallout 2 tell $n 只要我翻本了，我一定會還你的。
+		mpcallout 3 mpechoat $n -- 不借還是借30000還是借50000？
+		break
+	endif
+	say 別吵拉！你沒看到本大爺正在賭博嘛！
+	say 別害本大爺分心了，滾滾滾。
+endif
+~
+>talk_prog no~
+if is_qmark($n) != homeport_gambler_quest
+	break
+endif
+if is_qmark($i) == talking
+	tell $n 老子現在正在忙，別打亂我的手氣。
+	break
+endif
+if is_qmark($n) == homeport_gambler_lend1
+or is_qmark($n) == homeport_gambler_lend2
+	mpadd_qmark self talking 5 0 0 0 0 0
+	mpcallout 3 mpdel_qmark self talking
+	mpdel_qmark $n homeport_gambler_lend1
+	mpdel_qmark $n homeport_gambler_lend2
+	mpmod_qmark $n homeport_gambler_quest v2 = 1
+	curse
+	mpcallout 1 tell $n 不借就不借，還說什麼....
+	mpcallout 2 tell $n 我自己去想辦法弄錢。
+	mpcallout 3 mpechoat $n 或許該想點辦法讓他別再繼續沉迷賭博了。
+endif
+~
+>bribe_prog 100000~
+if is_qmark($n) != homeport_gambler_lend1
+	mpgold $n 100000
+	tell $n 拿錢給我做啥？賭鬼也是有自尊的！
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n $I正在關心這場的結果，沒有注意到你把錢放在他面前。
+	break
+endif
+mpadd_qmark self talking 3 0 0 0 0 0
+mpcallout 5 mpdel_qmark self talking
+mpdel_qmark $n homeport_gambler_lend1
+mpechoat $n $I眼睛一亮，高興的把錢收下。
+mpcallout 2 thank $n
+mpcallout 2 bow $n
+mpcallout 3 tell $n 你放心，我一定會贏的。
+mpcallout 3 mpmod_qmark $n homeport_gambler_quest v0 + 4
+mpcallout 4 mpechoat $n $I說完就轉過去大喊，有後台借我錢翻本囉，我的運勢來了！
+mpcallout 5 mpcall gambler_quest_4 $n
+~
+>bribe_prog 50000~
+if is_qmark($n) != homeport_gambler_lend1
+	mpgold $n 50000
+	tell $n 拿錢給我做啥？賭鬼也是有自尊的！
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n $I正在關心這場的結果，沒有注意到你把錢放在他面前。
+	break
+endif
+mpadd_qmark self talking 3 0 0 0 0 0
+mpdel_qmark $n homeport_gambler_lend1
+mpechoat $n $I眼睛一亮，高興的把錢收下。
+mpcallout 2 thank $n
+mpcallout 2 bow $n
+mpcallout 3 tell $n 你放心，我一定會贏的。`
+mpcallout 3 mpmod_qmark $n homeport_gambler_quest v0 + 2
+mpcallout 4 mpechoat $n $I說完就轉過去大喊，有後台借我錢翻本囉，看我的！
+mpcallout 5 mpcall gambler_quest_3 $n
+~
+>bribe_prog 30000~
+if is_qmark($n) != homeport_gambler_lend2
+	mpgold $n 30000
+	tell $n 拿錢給我做啥？賭鬼也是有自尊的！
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n $I正在關心這場的結果，沒有注意到你把錢放在他面前。
+	break
+endif
+mpadd_qmark self talking 3 0 0 0 0 0
+mpdel_qmark $n homeport_gambler_lend2
+mpdel_qmark $n homeport_gambler_lend2
+mpechoat $n $I眼睛一亮，高興的把錢收下。
+mpcallout 2 thank $n
+mpcallout 3 tell $n 你放心，我一定會贏的。
+mpcallout 3 mpmod_qmark $n homeport_gambler_quest v1 + 4
+mpcallout 4 mpechoat $n $I說完就轉過去大喊，有錢翻本囉，這盤我下大注！
+mpcallout 5 mpcall gambler_quest_1 $n
+~
+>bribe_prog 10000~
+if is_qmark($n) != homeport_gambler_lend2
+	mpgold $n 10000
+	tell $n 拿錢給我做啥？賭鬼也是有自尊的！
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n $I太關心賭局的結果，沒有注意到你把錢放在他面前。
+	break
+endif
+mpadd_qmark self talking 3 0 0 0 0 0
+mpdel_qmark $n homeport_gambler_lend2
+mpmod_qmark $n homeport_gambler_quest v1 + 2
+mpechoat $n $I喃喃念著：真小家子氣....
+mpcallout 2 mpechoat $n $I喃喃嘀咕著：有總比沒有好。
+mpcallout 3 thank $n
+mpcallout 5 tell $n 如果贏了，我會感謝你的。
+mpcallout 6 mpechoat $n $I說完就轉過去喊著，有錢繼續賭囉，真好！
+mpcallout 7 mpcall gambler_quest_2 $n
+~
+>defun_prog gambler_quest_1~
+if insameroom($n)
+else
+	if rand(20)
+		mpcallout 2 mpdel_qmark self talking
+		mpmod_qmark $n homeport_gambler_quest v0 - 2
+		mpmod_qmark self gambler_homeport_lose v0 - 5
+		mpechoat $n $I臉上露出了微笑。
+		mpechoat $n 看來$I似乎這把贏了不少。
+		mpcallout 2 tell $n 真是感謝你，小兄弟。
+		mpcallout 2 tell $n 這點錢先還你當利息。
+		mpcallout 2 mpgold $n 15000
+	else
+		mpcallout 4 mpdel_qmark self talking
+		mpmod_qmark self gambler_homeport_lose v0 + 1
+		sweat
+		mpcallout 2 mpechoat $n 看來$I似乎賭運不順。
+		mpcallout 3 curse
+		mpcallout 4 say 我就不信老子我那麼倒楣！
+	endif
+endif
+~
+>defun_prog gambler_quest_2~
+if insameroom($n)
+else
+	if rand(30)
+		mpcallout 2 mpdel_qmark self talking
+		mpmod_qmark $n homeport_gambler_quest v0 - 1
+		mpmod_qmark self gambler_homeport_lost v0 - 2
+		mpechoat $n $I臉上露出了些許的微笑。
+		mpechoat $n 看來$I應該是贏了這把。
+		mpcallout 2 tell $n 這點錢先還你當利息吧，希望我手風可以繼續維持。
+		mpcallout 2 mpgold $n 5000
+	else
+		mpcallout 1 mpdel_qmark self talking
+		mpmod_qmark self gambler_homeport_lose v0 + 1
+		curse
+		mpcallout 1 say 手氣不順到個極點。
+	endif
+endif
+~
+>defun_prog gambler_quest_3~
+if insameroom($n)
+else
+	if rand(30)
+		mpcallout 3 mpdel_qmark self talking
+		mpmod_qmark $n homeport_gambler_quest v1 - 1
+		mpmod_qmark self gambler_homeport_lose v0 - 10
+		mpechoat $n $I臉上露出了久違的微笑。
+		mpcallout 1 mpechoat $n 看來$I似乎這把大勝。
+		mpcallout 3 tell $n 真是感謝你，小兄弟。
+		mpcallout 3 tell $n 這點錢先還你當利息。
+		mpcallout 3 mpgold $n 40000
+	else
+		mpcallout 4 mpdel_qmark self talking
+		mpmod_qmark self gambler_homeport_lose v0 + 2
+		sweat
+		mpcallout 2 mpechoat $n 看來$I似乎賭運不順。
+		mpcallout 3 curse
+		mpcallout 4 say 我就不信老子我那麼倒楣！
+	endif
+endif
+~
+>defun_prog gambler_quest_4~
+if rand(30)
+	mpcallout 2 mpdel_qmark self talking
+	mpmod_qmark $n homeport_gambler_quest v1 - 2
+	mpmod_qmark self gambler_homeport_lost v0 - 15
+	mpechoat $n $I臉上露出邪惡的笑容。
+	mpechoat $n 看來$I的賭運似乎好轉了。
+	mpcallout 2 tell $n 這點錢先還你當利息吧，希望可以繼續這麼順下去就好了。
+	mpcallout 2 mpgold $n 80000
+else
+	mpcallout 3 mpdel_qmark self talking
+	mpmod_qmark self gambler_homeport_lose v0 + 3
+	curse
+	mpcallout 2 say 手氣不順到個極點。
+endif
+~
+|
+
+#18023
+epamy-homeport~
+艾帕妮(Epamy)~
+艾帕妮皮飾店的老闆艾帕妮(Epamy)在這裡招呼客人。
+~
+一位有著親切笑容的老闆，她正努力向客戶推銷他的皮件。
+~
+1|2|64|2048|8192 8|32|128 900 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Human~
+C 9
+P 12
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	say 我們這邊不歡迎你，請走！
+	mpforce $n n
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受報應！
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+if rand(50)
+	say 歡迎光臨，親愛的客人。
+	say 這邊由於不時有獵人送來新鮮的毛皮，因此所賣的衣服
+	say 都是最流行的喔。
+else
+	say 歡迎光臨。
+	say 如果你有打到的毛皮，可以拿來這邊賣我喔。
+endif
+~
+>give_prog 4209~
+say 這是上好的豹皮，真是感謝你。
+mpjunk skin
+mpgold $n 30000
+mpexp $n 1000
+~
+>give_prog 4621~
+say 這是稀有的恐龍皮，真是感謝你。
+mpjunk skin
+mpgold $n 100000
+mpexp $n 3000
+~
+>give_prog 63381~
+say 這是稀有的雪狼皮，真是感謝你。
+mpjunk fur
+mpgold $n 100000
+mpexp $n 5000
+~
+>give_prog 205~
+say 這是上好的海狸皮，真是感謝你。
+mpjunk fur
+mpgold $n 30000
+mpexp $n 1000
+~
+>give_prog 35000~
+say 這是上好的狼皮，實在是太棒了。
+mpjunk wools
+mpgold $n 25000
+mpexp $n 1000
+~
+>give_prog 35001~
+say 這是上好的鹿皮，我正缺這種皮貨，真是感謝你。
+mpjunk wools
+mpgold $n 25000
+mpexp $n 1000
+~
+>give_prog 35002~
+say 這是頂級的兔皮，一定可以賣好價錢的。
+mpjunk wools
+mpgold $n 30000
+mpexp $n 1500
+~
+>give_prog 35003~
+say 這種狐皮是很稀有的，一定可以賣好價錢！
+mpjunk wools
+mpgold $n 50000
+mpexp $n 2000
+~
+>give_prog 35004~
+say 這種熊皮不是一般人能找到的，我願意高價跟你收購。
+mpjunk wools
+mpgold $n 50000
+mpexp $n 2000
+~
+|
+#18024
+dorini-homeport~
+多莉妮(Dorini)~
+花店老闆多莉妮(Dorini)站在這裡澆花。
+~
+一位風韻猶存的中年女性，她正在幫花澆水。
+~
+1|2|64|2048|8192 8|32|128 900 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 9
+P 12
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	say 我們這邊不歡迎你，請走！
+	mpforce $n w
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受報應！
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+if rand(33)
+	say 紫羅蘭的花語是愛情。
+	say 水仙的花語是自我。
+	say 而黃色風信子的花語是競爭。
+	say 希望你可以在這邊找到你所想要的花。
+else
+	if rand(50)
+		say 紫丁香的花語是光榮。
+		say 甘菊的花語是不畏艱苦。
+		say 水仙的花語是傲慢。
+		say 希望你可以找到適合自己的花。
+	else
+		say 柳樹的花語是愁傷。
+		say 紫色鬱金香的花語是永恆的愛。
+		say 百合樹的花語是田園幸福。
+		say 你知道每個人的生日都有適合的生日花語嗎？
+	endif
+endif
+~
+|
+
+#18025
+camillus-homeport~
+卡米拉斯(Camillus)~
+和善的卡米拉斯(Camillus)大叔站在這裡看著你。
+~
+他的臉上有著親切的笑容，他正好奇的看著你。
+~
+1|2|64|2048|8192 8|32|128 900 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 12
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	say 我們這邊不歡迎你，請走！
+	mpforce $n n
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受報應！
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+if rand(50)
+	say 這裡的海豚像是我們望鄉港著名的紀念品之ㄧ。
+	say 相傳出海的時候看到海豚是一種吉兆。
+else
+	say 望鄉港之光是我們自製的紀念品。
+	say 就象徵著從興盛到衰退，再到興盛的這段不滅的歷史。
+endif
+~
+|
+
+#18026
+mylae~
+米萊(Mylae)~
+米萊(Mylae)正在這裡打瞌睡。
+~
+他似乎有著滿臉的倦容，一直在打呵欠。
+~
+2051 0 900 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+C 9
+P 12
+>greet_prog 100~
+if is_qmark($n) == homeport_enemy
+	say 我們這邊不歡迎你，請走！
+	mpforce $n n
+endif
+~
+>death_prog 100~
+yell 破壞平和的人終將受報應！
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+>talk_prog 亞克 yeark 英雄~
+if is_qmark($n) < homeport_quest 200003
+	break
+endif
+if is_qmark($i) == talking
+	mpechoat $n $N 好像還在昏睡中。
+else
+	mpadd_qmark self talking -1 0 0 0 0 1
+	glare
+	say 怎麼又有人跑來問我這問題！
+	mpcallout 1 say 我住在這裡已經十年了，怎麼都沒聽過這個人。
+	mpcallout 2 say 你去問問其他人吧，或許會比較清楚，別打擾我睡眠了。
+	mpcallout 2 mpdel_qmark self talking
+endif
+~
+|
+
+#18027
+get-homeport~
+蓋爾特(Get)~
+蓋爾特(Get)正在這裡尋找下一個目標。
+~
+他有著一頭的紅髮，在如此帥氣的外型之下，想必有著許多女人的陪伴才是。
+~
+1|64|2048|4096|262144|1048576 8|32 900 S
+43 20000 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 9
+P 12
+>fight_prog 100~
+say 帥哥是不打架的喔！要比就比誰搭訕厲害！
+say 所以我出去搭訕啦！有緣再會！
+mpgoto 5
+~
+>tick_prog 100~
+if hour($) == 8
+	mpgoto 18012
+	say 早上了，該是閒晃的時候了。
+endif
+if is_qmark($i) != homeport_get_stay
+	say 該出去亂晃囉。
+	mpadd_qmark self homeport_get_stay 200 0 0 0 0 1
+endif
+~
+>talk_prog 亞克 yeark~
+if is_qmark($n) == talking
+	mpechoat $n $I似乎跟某個女生聊的正起勁，完全沒有聽到你的詢問。
+	break
+endif
+if is_qmark($n) == homeport_hero_quest 100002
+	mpmod_qmark $n homeport_hero_quest v0 = 3
+	mpadd_qmark self talking -1 0 0 0 0 1
+	mpcallout 9 mpdel_qmark self talking
+	ponder
+	mpcallout 1 tell $n 沒想到還有人記得這個名字。
+	mpcallout 2 smok
+	mpcallout 3 tell $n 說起亞克，真的是個了不起的英雄。
+	mpcallout 4 tell $n 想當初我們曾經一起走遍這個世界的每一塊角落，
+	mpcallout 5 tell $n 挑戰各式各樣不同的生物，不論是深土的九頭蛇，
+	mpcallout 6 tell $n 還是楓紅村的卡瑪斯，又或者是爬到山上去挑戰
+	mpcallout 7 tell $n 賽巴洛斯，又或者是海底的銀龍。
+	mpcallout 8 tell $n 想起來那段日子真的是很難忘。
+	mpcallout 9 mpat $n mpechoat $n $I 似乎陷入了回憶中(continue)。
+else
+	tell $n 亞克是誰？我不知道說。
+	tell $n 我只知道亞琴是個漂亮的大美女，不知道他和亞克有沒有關係！
+endif
+~
+>talk_prog continue~
+if is_qmark($i) == talking
+	mpechoat $n $I似乎跟某個女生聊的正起勁，完全沒有聽到你的詢問。
+	break
+endif
+if is_qmark($n) == homeport_hero_quest 100003
+	mpmod_qmark $n homeport_hero_quest v0 = 4
+	mpadd_qmark self talking 5 0 0 0 0 1
+	mpcallout 8 mpdel_qmark self talking
+	mpechoat $n $I 從沉思中驚醒過來。
+	mpcallout 1 tell $n 都是遙遠的歷史了，在怎樣輝煌的過去，終究會消去。
+	mpcallout 2 tell $n 就如同時間會讓人變的衰老般的無法抗拒....
+	mpcallout 3 tell $n 距離亞克離開到現在也已經十年了....
+	mpcallout 4 tell $n 希望他現在能過的很好....
+	mpcallout 5 ponder
+	mpcallout 6 tell $n 話說自從亞克離開之後，我已經很久沒看到一個真正的英雄了。
+	mpcallout 7 tell $n 或許，這樣的英雄不是每個人都可以達到的。
+	mpcallout 8 yell 我多麼的懷念你，我真摯的好友....
+endif
+~
+>talk_prog hero~
+if is_qmark($n) == homeport_hero_quest 100004
+	if is_qmark($n) != enable_level_40
+	or resp($n) < 20
+		mpechoat $n 遠方傳來一陣聲響「你還需要多磨練才行。」	
+		mpechoat $n 遠方傳來一陣聲響「基本的勇者試練要先通過才是。」
+		break
+	endif
+	mpmod_qmark $n homeport_hero_quest v0 = 5
+	tell $n 你真的想要接受這項考驗嗎？..這項考驗是不容易的。
+endif
+~
+>talk_prog no~
+if is_qmark($i) == talking
+	mpechoat $n 看來$I正在和誰在打情罵俏中。
+	break
+endif
+if is_qmark($n) == homeport_hero_quest 100005
+	mpmod_qmark $n homeport_hero_quest v0 = 4
+	sigh
+	tell $n 或許，我還是不該去勉強一個平凡人接受這項考驗才是。
+endif
+~
+>talk_prog yes~
+if is_qmark($i) == talking
+	mpechoat $n 看來$I正在和誰在打情罵俏中。
+	break
+endif
+if is_qmark($n) == homeport_hero_quest 100005
+	mpmod_qmark $n homeport_hero_quest v0 = 6
+	mpadd_qmark $n homeport_hero_trial -1 0 0 0 0 1
+	mpadd_qmark $n homeport_hero_things -1 0 0 0 0 1
+	mpadd_qmark self talking -1 0 0 0 0 1
+	mpcallout 9 mpdel_qmark self talking
+	good $n
+	mpcallout 1 tell $n 既然你接受了，我想，你就是對自己很有信心。
+	mpcallout 2 tell $n 想想，一個英雄需要具備些什麼？
+	mpcallout 3 tell $n 不外乎就是知識，技巧，勇氣，以及一些精神吧。
+	mpcallout 4 tell $n 還依稀記得十年前我和亞克在外面闖蕩的時候，
+	mpcallout 5 tell $n 曾經遇到三個讓我們很棘手的事件。
+	mpcallout 6 tell $n 算一算，十年的週期也該到了，那三個事件(things)也該再度被觸發了。
+	mpcallout 7 tell $n 或許你可以試著去解決那些事件，當你自認已經完成時，請回來告訴我(finish)。
+	mpcallout 8 tell $n 記住，一個英雄需要具備的是冒險的勇氣和正義。祝福你！
+endif
+~
+>defun_prog homeport_list~
+if is_qmark($n) != homeport_hero_things 100007
+	tell $n 麻煩你幫我代為尋找下列物品：
+	if is_qmark($n) !& homeport_hero_things 100001
+		mpechoat $n -- ‧天之芽(The bud of the sky)。
+	endif
+	if is_qmark($n) !& homeport_hero_things 100002
+		mpechoat $n -- ‧湖之草(The grass of the lake)。
+	endif
+	if is_qmark($n) !& homeport_hero_things 100004
+		mpechoat $n -- ‧神之心(The heart of the God)。
+	endif
+	tell $n 當然我也不能保證這些東西是否還存在這世上，所以如果你自認已經盡力了。
+	tell $n 跟我說一聲(finish)就好，我也不會太勉強你一定要找到的。
+else
+	mpcall finish_list $n
+	break
+endif
+mpdel_qmark self talking
+~
+>defun_prog finish_list~
+if is_qmark($n) > homeport_hero_things 100000
+	if is_qmark($n) & homeport_hero_things 100001
+		mpmod_qmark $n homeport_hero_quest v1 | 1
+	endif
+	if is_qmark($n) & homeport_hero_things 100002
+		mpmod_qmark $n homeport_hero_quest v1 | 2
+	endif
+	if is_qmark($n) & homeport_hero_things 100004
+		mpmod_qmark $n homeport_hero_quest v1 | 4
+	endif
+	mpmod_qmark $n homeport_hero_quest v0 = 7
+else
+	tell $n 看來你的能力還是不足。
+	mpmod_qmark $n homeport_hero_quest v0 = 99
+endif
+mpdel_qmark $n homeport_hero_trial
+mpdel_qmark $n homeport_hero_things
+mpdel_qmark self talking
+~
+>talk_prog things~
+if is_qmark($i) == talking
+	mpechoat $n 看來$I正在和誰在打情罵俏中。
+	break
+endif
+if is_qmark($n) == homeport_hero_quest 100006
+	mpadd_qmark self talking
+	mpcall homeport_list $n
+endif
+~
+>talk_prog finish~
+if is_qmark($i) == talking
+	mpechoat $n 看來$I正在和誰在打情罵俏中。
+	break
+endif
+if is_qmark($n) == homeport_hero_quest 100006
+	mpadd_qmark self talking
+	mpcall finish_list $n
+endif
+~
+>talk_prog p the bud of the sky~
+if is_qmark($n) == homeport_hero_quest 100006
+	if is_qmark($n) !& homeport_hero_things 100001
+		tell $n 天之芽，顧名思義就是在神木頂端所生長出來的嫩芽。
+		tell $n 雖然聽起來很好找，可是一方面神木的存在已經很少了。
+		tell $n 另外一方面則是嫩芽會吸引其他怪物的注意，因此我也
+		tell $n 不能保證是否還存在著這種嫩芽。或許你該去神木附近
+		tell $n 的村莊問問看會更清楚。
+	else
+		tell $n 你已經完成這項試驗了。
+	endif
+endif
+~
+>talk_prog p the grass of the lake~
+if is_qmark($n) == homeport_hero_quest 100006
+	if is_qmark($n) !& homeport_hero_things 100002
+		tell $n 湖之草，顧名思義就是在大陸中湖泊深處所生長的水草。
+		tell $n 由於湖泊深處通常都會有怪物的生存，我想湖之草也不一
+		tell $n 定會安然存在。或許能問問湖泊附近的人會比較清楚。
+	else
+		tell $n 你已經完成這項試驗了。
+	endif
+endif
+~
+>talk_prog p the heart of the god~
+if is_qmark($n) == homeport_hero_quest 100006
+	if is_qmark($n) !& homeport_hero_things 100004
+		tell $n 神之心，大概是這三個當中最難拿到的吧。我也不能很明
+		tell $n 確的說出這東西會在哪裡。只能說或許你該去奧林帕斯山
+		tell $n 問問才會有更明確的答案。只是....還是要靠緣分就是。
+	else
+		tell $n 你已經完成這項試驗了。
+	endif
+endif
+~
+|
+
+#18028
+bekesy-homeport~
+貝卡西(Bekesy)~
+身穿白袍的貝卡西(Bekesy)正微笑的迎接著你。
+~
+他有著灰白的白髮，似乎代表長者的智慧結晶，從他滿臉皺紋的顏面看去，
+似乎經歷過許多的風霜。在經歷了一生的冒險之後，他選擇留在這裡服務大
+眾。望鄉港的一切大小疾病，都是由他治療。而他對望鄉港的貢獻還不僅於
+此。
+~
+1|2|64|2048|4096|16384 8|32 1000 S
+43 5000 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Human~
+P 8
+S 40 30
+S 41 500
+S 42 500
+S 45 2000
+S 46 2000
+>repop_prog 100~
+mpoload 18035
+mpat 5 wear all
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>death_prog 100~
+yell 你會有報應的！
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 100 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer + 100
+endif
+~
+>fight_prog 30~
+c 2 earth
+mpnowait
+c 2 whirl
+mpnowait
+~
+>fight_prog 10~
+c 'holy judge'
+mpnowait
+~
+>fight_prog 50~
+c 3 weaken
+mpnowait
+c 3 chill
+mpnowait
+~
+>fight_prog 30~
+c 3 mute
+mpnowait
+c 3 double
+mpnowait
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+if rand(33)
+	say 受傷了嗎？要多注意自己的身體呦！
+else
+	if rand(50)
+		say 如果沒事情要多強身健體，才不會生病。
+	else
+		say 出外的冒險者最好身上帶點醫療用品，我這裡有提供繃帶的買賣。
+		say 一個只要 800就好。
+	endif
+endif
+~
+>speech_prog p cure blind~
+if isaffected($n) & 1
+	cast 'cure blind'
+	mpnowait
+else
+	tell $n 你根本沒瞎吧？
+endif
+~
+>bribe_prog 3000~
+if isfight($i)
+	cast 'double heal'
+	mpnowait
+else
+	emote 高聲朗誦：DKOBE YADLKE DOXKDDEY OWIEDHGLD
+	cast 'double heal' $n
+	mpnowait
+endif
+~
+>bribe_prog 2000~
+mpecho $I把十字架拿出來用力揮動。
+if isfight($i)
+	cast 'dispel evil'
+	mpnowait
+else
+	cast 'remove curse' $n
+	mpnowait
+endif
+~
+>bribe_prog 1500~
+if isfight($i)
+	cast disease
+	mpnowait
+else
+	mpecho $I喃喃唸著魔咒：大地之母蓋雅，我遵從妳的名，讓此人遠離疾病的威脅吧。
+	cast 'cure disease' $n
+	mpnowait
+endif
+~
+>bribe_prog 1200~
+if isfight($i)
+	cast poison
+	mpnowait
+else
+	mpecho $I喃喃唸著魔咒：大地之母蓋雅，我遵從妳的名，讓此人遠離毒物的侵害吧。
+	cast 'cure poison' $n
+	mpnowait
+endif
+~
+>bribe_prog 1000~
+if isfight($i)
+	cast 'cause critical'
+	mpnowait
+else
+	emote 高聲朗誦：DKOBE YADLKE DOXKDDEY OWIEDHGLD
+	cast 'cure critical' $n
+	mpnowait
+endif
+~
+>bribe_prog 800~
+mpoload 3146 20
+give bandage $n
+say 好的，這是您的繃帶。
+~
+>bribe_prog 700~
+if isfight($i)
+	cast 'cause serious'
+	mpnowait
+else
+	emote 高聲朗誦：DKOBE YADLKE DOXKDDEY OWIEDHGLD
+	cast 'cure serious' $n
+	mpnowait
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != homeport_enemy
+	mpadd_qmark $n homeport_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n homeport_enemy timer = 200
+endif
+~
+|
+
+#18029
+guard-homeport~
+守衛隊員(guard)~
+一位強壯的守衛(guard)，正監視著來往人群裡有沒有可疑的人。
+~
+一名高大強壯的男人，身上穿著標準的守衛隊護具與武器，他正盡責地在
+此執行上級交給他的任務。終年的海風在他的臉上留下了特有的痕跡，看
+得出來他在此地已經待了好一段時日了。
+~
+1|2|64|8192|262144 8|32|128 1000 S
+41 10000 0 25d40+0 -10d0+0
+-1 0
+0 8 1
+R Human~
+C 1|4|8|32
+P 8|33554432
+S 41 50
+S 43 50
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18004
+mpoload 18001
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+	hunt $n
+	mpnowait
+endif
+~
+>fight_prog 100~
+if rand(50)
+	frenzy
+	mpnowait
+endif
+bashhead
+mpnowait
+bashhead
+mpnowait
+bashhead
+mpnowait
+~
+>hitprcnt_prog 30~
+if insameroom(savent-homeport)
+	mpforce savent-homeport cast 2 'mass heal'
+	mpforce savent-homeport mpnowait
+else
+	berserk
+	mpnowait
+	frenzy
+	mpnowait
+	mpat 5 cast double
+	mpnowait
+endif
+~
+|
+
+#18030
+elite-homeport guard-homeport2~
+精英守衛(elite guard)~
+一位強壯的精英守衛(elite guard)，正監視著來往人群裡有沒有可疑的人。
+~
+一名高大強壯的男人，身上穿著標準的守衛隊護具與武器，他正盡責地在此
+執行上級交給他的任務。終年的海風在他的臉上留下了特有的痕跡，看得出
+來他在此地已經待了好一段時日了。
+~
+1|2|64|8192|262144 8|32|128 1000 S
+43 10000 0 50d30+0 -15d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8|33554432
+S 41 100
+S 43 100
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18004
+mpoload 18001
+mpat 5 wear all
+~
+>greet_prog 100~
+if ispc($n)
+	hunt $n
+	mpnowait
+	snare $n
+	mpnowait
+endif
+~
+>fight_prog 100~
+skilldrv multihit $n
+skilldrv multihit $n
+snare $n
+mpnowait
+mpgoto self
+skilldrv multihit $n
+~
+|
+
+#18031
+captain-homeport~
+守衛隊長(captain)~
+一位強壯的守衛隊長(captain)，正監視著來往人群裡有沒有可疑的人。
+~
+他是這附近守衛隊的隊長，雖然他也滿強壯的，但此地有許多的守衛隊員都
+比他要來得高大威猛，這或許暗示他藏有什麼過人的本領。此外，和其他的
+守衛隊員與居民一樣，他身上也帶著大海的氣息。
+~
+1|8192|262144|1048576|4096 8|32|128 1000 S
+42 12000 0 40d50+0 -15d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8|33554432
+S 41 150
+S 43 150
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18002
+mpoload 18003
+mpoload 18001
+mpat 5 wear all
+~
+>fight_prog 100~
+if insameroom(savent-homeport)
+	if isaffected($i) & 1
+		mpdis_magic self blindness
+		mpecho [1;33m賢者迅速的幫守衛隊長解除盲目！[m
+	endif
+	if isaffected($i) & 4096
+		mpdis_magic self poison
+		mpecho [1;32m賢者迅速的幫守衛隊長解除中毒！[m
+	endif
+	if isaffected($i) & 8388608
+		mpdis_magic self mute
+		mpecho [1;30m賢者迅速的幫守衛隊長解除禁言！[m
+	endif
+	if isaffected($i) & 16777216
+		mpecho [1;30m賢者迅速的幫守衛隊長解除魔法封印！[m
+		mpdis_magic self 'seal magic'
+	endif
+	if isaffected($i) & 268435456
+		mpecho [1;33m賢者迅速的幫守衛隊長解除麻痺！[m
+		mpdis_magic self paralyze
+	endif
+endif
+~
+>greet_prog 100~
+if ispc($n)
+	hunt $n
+	mpnowait
+endif
+~
+>fight_prog 100~
+skilldrv multihit $n
+frenzy
+mpnowait
+if rand(25)
+	frenzy
+	mpnowait
+endif
+skilldrv monehit $n
+skilldrv monehit $n
+skilldrv monehit $n
+~
+|
+#18032
+captain-homeport2~
+守衛隊長(captain)~
+一位強壯的守衛隊長(captain)，正監視著來往人群裡有沒有可疑的人。
+~
+他是這附近守衛隊的隊長，雖然他也滿強壯的，但此地有許多的守衛隊員都
+比他要來得高大威猛，這或許暗示他藏有什麼過人的本領。此外，和其他的
+守衛隊員與居民一樣，他身上也帶著大海的氣息。
+~
+1|8192|262144|1048576|4096 8|32|128 1000 S
+45 12000 0 50d30+0 -25d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8|33554432
+S 41 200
+S 43 200
+S 42 100
+S 44 100
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18002
+mpoload 18003
+mpoload 18001
+mpat 5 wear all
+~
+>fight_prog 100~
+if insameroom(savent-homeport)
+	if isaffected($i) & 1
+		mpdis_magic self blindness
+		mpecho [1;33m賢者迅速的幫守衛隊長解除盲目！[m
+	endif
+	if isaffected($i) & 4096
+		mpdis_magic self poison
+		mpecho [1;32m賢者迅速的幫守衛隊長解除中毒！[m
+	endif
+	if isaffected($i) & 8388608
+		mpdis_magic self mute
+		mpecho [1;30m賢者迅速的幫守衛隊長解除禁言！[m
+	endif
+	if isaffected($i) & 16777216
+		mpecho [1;30m賢者迅速的幫守衛隊長解除魔法封印！[m
+		mpdis_magic self 'seal magic'
+	endif
+	if isaffected($i) & 268435456
+		mpecho [1;33m賢者迅速的幫守衛隊長解除麻痺！[m
+		mpdis_magic self paralyze
+	endif
+endif
+~
+>greet_prog 100~
+if ispc($n)
+	hunt $n
+	mpnowait
+endif
+~
+>fight_prog 100~
+skilldrv multihit $n
+skilldrv multihit $n
+if rand(50)
+	yell 霞二段！
+	perform empslash
+	mpnowait
+	perform empslash
+	mpnowait
+endif
+~
+|
+
+#18033
+magician-homeport~
+魔法師(magician)~
+一位神秘的魔法師(magician)，非到緊要關頭絕不出動。 
+~
+要是你看見這樣的她出現在你面前，那表示這附近可能有重大事件發生了，
+因為她平常不會以全副武裝的姿態出現在一般大眾面前，算是這個地區的秘
+密武力。雖然她的打扮和一般的法師沒有多大差異，但這並不表示她和一般
+法師一樣不擅於格鬥技......
+~
+1|2|64|4096 8|32|128 1000 S
+42 7000 0 0d0+0 -25d-300+0
+-1 0
+0 8 2
+R Drow~
+C 1
+P 8|16777216
+S 42 100
+S 43 50
+S 40 45
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18001
+mpoload 18034
+mpat 5 wear all
+~
+>fight_prog 100~
+c 3 thunder $n
+mpnowait
+c mute $n
+mpnowait
+c tardy $n
+mpnowait
+c mute $r
+mpnowait
+c tardy $r
+mpnowait
+if rand(25)
+	c para $n
+	mpnowait
+	c para $r
+	mpnowait
+endif
+~
+>fight_prog 5~
+yell[1;26m～　霆　風　哀　鳴　～[m
+cast 'wail of tempest'
+mpnowait
+~
+|
+
+#18034
+magician-homeport2~
+魔法師(magician)~
+一位神秘的魔法師(magician)，非到緊要關頭絕不出動。
+~
+要是你看見這樣的她出現在你面前，那表示這附近可能有重大事件發生了，
+因為她平常不會以全副武裝的姿態出現在一般大眾面前，算是這個地區的秘
+密武力。雖然她的打扮和一般的法師沒有多大差異，但這並不表示她和一般
+法師一樣不擅於格鬥技......
+~
+1|2|64|4096 8|32|128 1000 S
+42 7000 0 0d0+0 -25d-350+0
+-1 0
+0 8 2
+R Drow~
+C 1
+P 8|16777216
+S 42 150
+S 40 45
+S 44 100
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18001
+mpoload 18034
+mpat 5 wear all
+~
+>fight_prog 5~
+yell[1;36m～　泠　晶　弦　歌　～[m
+cast 'agg de'
+mpnowait
+~
+>fight_prog 100~
+if class($n) == 14
+	c 4 li $n
+else
+	c 4 burn $n
+endif
+mpnowait
+c fae $n
+mpnowait
+c weaken $n
+mpnowait
+c fae $r
+mpnowait
+c weaken $r
+mpnowait
+if rand(25)
+	c 'sun flash'
+mpnowait
+~
+|
+
+#18035
+savent-homeport~
+賢者(savent)~
+一位神秘的賢者(savent)，非到緊要關頭絕不出動。
+~
+對於神明有著虔誠信仰的他，不但具有賢者最擅長的回復治療能力，同時
+自身的防禦能力也足以與重裝的騎士匹敵。平常的他就像是一般的居民，
+然而當發生緊急狀況，他便會以現在這全副武裝的模樣出現，是這個地區
+的秘密防衛武力，實力與一般守衛隊員相比，可以說是天差地別。
+~
+1|2|64|4096|1048576 8|32|128 1000 S
+42 7000 0 0d0+-200 -25d-300+0
+-1 0
+0 8 1
+R Drow~
+C 1
+P 8|16777216
+S 42 200
+S 40 45
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 18001
+mpoload 18034
+mpat 5 wear all
+~
+>fight_prog 100~
+if isaffected($i) & 1
+	cast 'cure blind'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	cast 'cure poison'
+	mpnowait
+endif
+if isaffected($i) & 8388608
+	mpdis_magic self mute
+	mpat 5 mpoload 4575
+	eat 4575
+endif
+if isaffected($i) & 16777216
+	mpdis_magic self 'seal magic'
+	yell '封印對我是沒用的！'
+endif
+if isaffected($i) & 268435456
+	cast vivi
+endif
+~
+>fight_prog 100~
+if insameroom(captain-h)
+	force captain-h rescue savent-h
+else
+	force guard-h rescue savent-h
+endif
+~
+>fight_prog 60~
+cast earthquake
+mpnowait
+mpgoto self
+cast tardy $r
+mpnowait
+mpgoto self
+cast tardy $r
+mpnowait
+cast colour $r
+mpnowait
+cast colour $r
+mpnowait
+~
+>fight_prog 100~
+if isaffected($i) !& 128
+	cast div
+	mpnowait
+endif
+if rand(10)
+	cast 'day of power'
+	mpnowait
+endif
+if rand(50)
+	cast 3 'mass heal'
+	mpnowait
+endif
+if rand(10)
+	cast gf
+	mpnowait
+	mpdel_qmark self spell_group_full_heal
+endif
+~
+|
+
+#18036
+sailor-homeport~
+水手(sailor)~
+一名身穿水手服的水手(sailor)正靜靜的站在這裡。
+~
+由於終年在大太陽底下從事勞力密集的工作，他的皮膚晒成了健康的古銅色，
+並且具有結實強壯的肉體。他的衣著相當地簡便，這是為了工作方便著想。另
+外，最好別妨礙他的工作，否則挨揍的話可是非常痛的。
+~
+1|2|64|8192 8|32 -400 S
+36 3000 0 20d0+0 -5d0+0
+-1 0
+0 8 1
+R Human~
+C 1
+P 8
+S 40 30
+>repop_prog 100~
+mpoload 18032 35
+mpoload 18033 35
+mpat 5 wear all
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+if rand(50)
+	say 海風的感覺還是跟以往一樣溫柔。
+else
+	say 聽說港口將在不久之後啟用，最近在整修中。
+endif
+~
+>fight_prog 60~
+bashhead
+mpnowait
+~
+>fight_prog 30~
+say [1;31m!!!～怒　海　波　濤～!!![m
+c whirlwind
+mpnowait
+c colour
+mpnowait
+c colour
+mpnowait
+~
+|
+
+#18037
+sailor-homeport2~
+水手(sailor)~
+一名身穿水手服的水手(sailor)正靜靜的站在這裡。
+~
+你眼前的這名女性看起來比許多男人還要強壯，她有著漂亮的古銅色皮膚，
+衣著和這附近的男性水手們差不了多少，只差沒打赤膊而已。可別小看她，
+男性水手們能做的工作，她幾乎也都能夠做到，有時候甚至做得更快更好。
+~
+1|2|64|8192 8|32 -400 S
+36 3000 0 30d0+0 -5d0+0
+-1 0
+0 8 2
+R Human~
+C 1
+P 8
+S 40 25
+>repop_prog 100~
+mpoload 18032 34
+mpoload 18033 35
+mpat 5 wear all
+~
+>fight_prog 60~
+kick
+mpnowait
+kick
+mpnowait
+kick
+mpnowait
+~
+>fight_prog 30~
+say [1;31m!!!～心　如　止　水～!!![m
+c whirlwind
+mpnowait
+c whirl
+mpnowait
+c calm
+mpnowait
+c 2 'double heal
+mpnowait
+~
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+if rand(33)
+	say 別小看女生，我可以和男水手一樣工作的。
+else
+	if rand(50)
+		say 海風中傳來了遠方海鷗的聲音，你聽到了嗎？
+	else
+		say 整修之後的港口據說將通往一個小島，以及迷霧之島。
+	endif
+endif
+~
+|
+
+#18038
+tourist-homeport~
+觀光客(tourist)~
+衣著華麗的觀光客(tourist)對四周指指點點。
+~
+和一般跑單幫的旅客不同，他是閒暇來觀光的，所以一點也沒有長途旅行的倦容。
+~
+193 0 50 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+say 這裡是個休息逛街的好地方，你說呢？
+smile
+say 聽說只要殺害望鄉港的老闆，就會被禁止入城。
+say 所以你要小心點喔。
+~
+|
+
+#18039
+tourist-homeport~
+遊客(tourist)~
+衣著華麗的遊客(tourist)對四周指指點點。
+~
+他只是來這裡觀光的人。
+~
+193 0 50 S
+32 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+if is_qmark($i) == talking
+	break
+endif
+mpadd_qmark self talking
+mpcallout 5 mpdel_qmark self talking
+bow $n
+say 你也是來觀光的嗎？
+say 記得到這裡的商店看看，有許多好貨喲！
+~
+|
+
+#0
+
+#OBJECTS
+#18000
+golden armor~
+金色鎧甲(golden armor)~
+一件由著名工匠所鍛造的鎧甲(armor)~
+~
+9 1025 9
+0~ 0~ 300~ 0~
+30 0 0
+L 36
+A 
+18 1
+A 
+19 1
+E
+golden armor~
+一件黃金製的鎧甲，能給你強力的保護。
+~
+X gold~
+
+#18001
+mystic armor~
+神秘鎧甲(mystic armor)~
+一件由秘銀鍛造而成的鎧甲(armor)被丟在地上。~
+~
+9 1025 9
+0~ 0~ 300~ 0~
+25 0 0
+L 30
+A 
+19 1
+X mithril~
+
+#18002
+zeus sword~
+宙斯之劍(zeus sword)~
+一把有著雷電之力的劍(sword)在地上。~
+~
+5 65 8193
+200~ 15~ 18~ 03~
+15 0 0
+L 30
+A
+18 5
+A
+19 5
+H lightning bolt~ 20 30 4
+X mithril~
+
+#18003
+apllo sword~
+阿波羅之劍(apllo sword)~
+一把有著火燄力量的劍(sword)被放在地上。~
+~
+5 65 8193
+200~ 15~ 18~ 03~
+15 0 0
+L 30
+A
+18 6
+A
+19 3
+H fireball~ 20 30 4
+X mithril~
+
+#18004
+mystic sword~
+神秘之劍(mystic sword)~
+一把由秘銀所打造而成的劍(sword)被放在地上。~
+~
+5 65 8193
+200~ 15~ 18~ 03~
+15 0 0
+L 34
+A
+18 4
+A
+19 4
+H dispel evil~ 20 30 4
+X mithril~
+
+#18005
+golden cape~
+黃金披風(golden cape)~
+一件由純金的金絲打造而成的披風(cape)~
+~
+9 3 1025
+0~ 0~ 300~ 0~
+5 0 0
+L 34
+A
+4 1
+A
+17 -2
+X gold~
+
+#18006
+golden bracelet~
+黃金手鐲(golden bracelet)~
+一個由黃金打造而成的手鐲(bracelet)~
+~
+9 3 4097
+0~ 0~ 200~ 0~
+5 0 0 
+L 34
+A
+24 -3
+X gold~
+
+#18007
+golden ring~
+黃金戒指(golden ring)~
+一個由純金打造的戒指(ring)~
+~
+9 3 3
+0~ 0~ 100~ 0~
+3 0 0 
+L 34
+A
+24 -1
+A
+18 1
+X gold~
+
+#18008
+dark armor~
+闇黑鎧甲(dark armor)~
+一件由黑色物質所打造的鎧甲(armor)~
+~
+9 23 9
+0~ 0~ 300~ 0~
+30 0 0 
+L 34
+A
+18 2
+A
+39 10
+X obsidian~
+
+#18009
+dark longsword~
+闇黑長劍(dark longsword)~
+一把由黑色物質所打造成的長劍(longsword)~
+~
+5 23 8193
+200~ 15~ 18~ 03~
+12 0 0
+L 35
+E 
+longsword~
+一把來自黑暗世界的邪惡長劍
+~
+A
+18 4
+A
+19 4
+H dispel good~ 20 20 4
+X obsidian~
+
+#18010
+dolphin fountain~
+海豚噴泉(dolphin fountain)~
+上頭有兩隻大理石海豚裝飾的噴泉(fountain)正噴著水。~
+~
+25 0 0
+0~ 0~ 0~ 0~
+1000 0 0
+
+#18011
+wind friendship~
+友誼之風(Wind of Friendship)~
+一個充滿了溫情的靴子(boot)正靜靜的躺在這裡。~
+~
+9 256 1|64
+0~ 0~ 100~ 0~
+2 0 0
+A
+2 1
+A
+39 -25
+X feather~
+>obj_act wear~
+echoat $n 你如同沐浴在友誼之中一般。
+~
+|
+
+#18012
+first love~
+初戀(First Love)~
+一個見證著你我兩人的相戀(Love)。~
+~
+9 1|256|16777216 1|4
+0~ 0~ 120~ 0~
+5 0 0
+A
+41 20
+A
+43 -20
+X emerald~
+>obj_act wear~
+echoat $n 初戀的感覺溫柔的包圍著你。
+~
+|
+
+#18013
+dwarven token~
+矮人商會信物(dwarven token)~
+一個在矮人商會中，具有代表性的信物(token)。~
+~
+8 1|256 1
+100~ 0~ 0~ 0~
+1 0 0
+E token~
+請把礦石交給攜帶此信物的人。
+~
+
+#18014
+ore~
+礦石(ore)~
+一塊黑黑不起眼的礦石(ore)放在這裡。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+20 0 0
+X stone~
+
+#18015
+jet~
+黑玉(jet)~
+一塊不起眼的黑色玉石(jet)放在這裡。~
+~
+8 3 1|16384
+0~ 0~ 0~ 0~
+1 30000 0
+A 3 1
+A 40 1
+X jet~
+
+#18016
+dwarven breast plate~
+矮人胸甲(dwarven breast plate)~
+一件老舊不起眼的黑色胸甲(plate)放在這裡。~
+~
+9 1|256 9
+0~ 0~ 150~ 0~
+25 50000 0
+C 50000
+A 17 -10
+A 29 -1
+A 43 2
+X jet~
+
+#18017
+leather suit~
+毛皮大衣(leather suit)~
+一件看起來十分保暖的大衣(suit)。~
+~
+9 1 9
+0~ 0~ 50~ 0~
+20 200000 0
+A
+27 3
+A
+17 -5
+L 20
+X leather~
+
+#18018
+marten suit~
+貂皮大衣(marten suit)~
+一件十分貴重的大衣(suit)。~
+~
+9 1 9
+0~ 0~ 50~ 0~
+30 300000 0
+A
+28 -4
+A
+17 -5
+L 20
+X leather~
+
+#18019
+boots of deer~
+鹿皮靴(boots of deer)~
+由鹿皮所製成靴子(boots)。~
+~
+9 1 65
+0~ 0~ 50~ 0~
+15 300000 0
+A
+27 3
+A
+28 -2
+A
+17 -5
+L 20
+X leather~
+
+#18020
+light of homeport~
+望鄉港之光(light of homeport)~
+象徵著望鄉港永遠不停止的光源(light)。~
+~
+1 1|256 1
+0~ 0~ -1~ 0~
+5 30000 0
+X crystal~
+L 15
+A
+28 -2
+A
+27 3
+
+#18021
+dolphin statue~
+海豚像(dolphin statue)~
+一個雕著海豚(dolphin)的飾品。~
+~
+8 1|256 16385
+0~ 0~ 0~ 0~
+3 40000 0
+X marble~
+A
+31 -5
+A
+3 1
+A
+4 -1
+
+#18022
+flat-top~
+平台(flat)~
+從神像當中浮起的一座平台(flat)。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+999 0 0
+E
+flat~
+一個不知道作用的平台，或許可以搜索看看？
+~
+X steel~
+
+#18023
+coral circlet~
+珊瑚手環(coral circlet)~
+用海底珊瑚當材料製作而成的手環(circlet)。~
+~
+9 1|2|256 4097
+0~ 0~ 50~ 0~
+5 40000 0
+X bone~
+A
+4 1
+A
+40 2
+
+#18024
+key~
+鑰匙(key)~
+一把黑黝黝不起眼的鑰匙(key)。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+
+#18025
+key~
+鑰匙(key)~
+一把黑黝黝不起眼的鑰匙(key)。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+
+#18026
+crystal leggings~
+水晶護腿(crystal leggings)~
+一個用水晶精雕細琢而成的護腿(leggings)。~
+~
+9 1|1024|2048 1|32
+0~ 0~ 100~ 0~
+5 30000 0
+X crystal~
+A
+40 1
+A
+2 -1
+
+#18027
+magical vest~
+魔導皮甲(magical vest)~
+一個散發出魔力的皮甲(vest)。~
+~
+9 1|256 1|8
+0~ 0~ 70~ 0~
+7 50000 0
+X crystal~
+A
+40 2
+
+#18028
+key~
+鑰匙(key)~
+一把黑黝黝不起眼的鑰匙(key)。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+
+#18029
+key~
+鑰匙(key)~
+一把黑黝黝不起眼的鑰匙(key)。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+
+#18030
+turquoise armor~
+綠松鎧甲(turquoise armor)~
+一件由綠松石所打造而成的鎧甲(armor)~
+~
+9 19 9
+0~ 0~ 100~ 0~ 
+35 0 0 
+A
+18 3
+A
+19 2
+A
+1 -1
+A
+42 -3
+A
+2 -1
+A
+31 -2
+X turquoise~
+
+#18031
+secluded mourning longsword~
+紫玉幽殤(Secluded Mourning)~
+一把由綠松石所打造成的長劍(longsword)~
+~
+5 1|2|16|64|1024|4096 8193
+200~ 15~ 18~ 03~ 
+12 0 0
+A
+43 15
+A
+18 -20
+H lifesteal~ 20 20 4
+X turquoise~
+
+#18032
+sailor clothes~
+水手服(sailor clothes)~
+一件水手工作時所穿的服裝(clothes)~
+~
+9 2048 9
+0~ 0~ 100~ 0~
+7 0 0
+A
+28 -3
+A
+39 -3
+X leather~
+
+#18033
+sailor pants~
+水手褲(sailor pants)~
+一件水手工作時所穿的服裝(pants)~
+~
+9 2048 33
+0~ 0~ 100~ 0~
+7 0 0
+A
+27 -2
+A
+39 5
+X leather~
+
+#18034
+green quartz staff~
+綠晶杖(green quartz staff)~
+一件用綠色晶石雕製而成的法杖(staff)。~
+~
+4 1|64|2048|1024 16385
+30~ 5~ 5~ fireball~
+7 0 0
+A
+3 1
+A
+39 -10
+X emerald~
+
+#18035
+doctor clothes~
+醫生服(doctor clothes)~
+一件醫生在治療病人時所穿的服裝(clothes)~
+~
+9 2048 9
+0~ 0~ 100~ 0~
+7 0 0
+A
+35 -2
+X feather~
+
+#18036
+turquoise shortsword~
+綠松短劍(turquoise shortsword)~
+一把由綠松石所打造成的長劍(shortsword)~
+~
+5 23 8193
+200~ 15~ 18~ 11~ 
+12 0 0
+A
+18 4
+A
+19 4
+H lifesteal~ 20 20 4
+V Insect~ 10 0 20 120
+V Worm~ 15 0 10 120
+X turquoise~
+
+#18037
+secluded-unique mourning longsword~
+[1;35m紫玉幽殤[m(Secluded mourning)~
+一把由綠松石所打造成的長劍(longsword)散發出淡淡的幽光。~
+~
+5 1|2|16|64|1024|4096 8193
+200~ 10~ 18~ 03~ 
+5 0 0
+A
+39 -20
+A
+43 15
+A
+18 -20
+H lifesteal~ 20 20 4
+X turquoise~
+
+#18038
+Coconut~
+大椰子(Coconut)~
+一顆成熟的大椰子(Coconut)掉落在地上。~
+~
+26 0 1
+1~ double heal~ double refresh~ 0~
+15 0 0
+E
+coconut~
+清涼又退火的椰子汁有助於體力的回復。
+~
+
+#18039
+tree coconut~
+椰子樹(Coconut Tree)~
+一棵十分高大的椰子樹(Coconut Tree)豎立在這裡。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+200 0 0
+E
+tree coconut~
+一棵十分高大的椰子樹，看著那整串已經成熟的椰子，若能夠喝到那新鮮的
+椰汁的話不知有多好。也許你可以試著推推看(push)，也許椰子會掉下來也
+說不定哦，但可要小心別被掉落的椰子給擊中，那可就不好玩了。
+~
+>obj_tick 100~
+if objval1($o) >= 3
+	break
+endif
+oset self v0 - 1
+if objval0($o) <= 0
+	oset self v1 + 1
+	oset self v0 = 100
+endif
+~
+>obj_command stop_pushing default~
+if is_qmark($n) == homeport_push_stun
+	oset self v2 = 0
+	oforcer here del_qmark $n homeport_push_stun
+	del_affect $n excited
+endif
+~
+>obj_command push default~
+if objval2($o) >= 1
+	oforcer here echoat $n 似乎有人已經在努力的推動椰子樹了，或許你該稍等一下。
+	break
+endif
+if mvnum($n) < 300
+	oforcer here echoat $n 你已經沒有體力去推動椰子樹了。
+	break
+endif
+add_affect $n excited 1130 2 3 -5 64
+oset self v2 = 1
+oforcer here add_qmark $n homeport_push_stun 2 0 0 0 0 1
+oforcer here modhmv $n 21.300 300 0
+oforcer here echoat $n 你使盡了吃奶的力氣，努力的推晃著眼前的椰子樹。
+oforcer here echoaround $n 你看到 $N 在貼近椰子樹後，便開始使勁的推晃著椰子樹。
+oforcer here callout 1 echoat $n 你用力的搖晃著椰子樹。
+if objval1($o) <= 0
+	oforcer here stun $n 40
+	oforcer here callout 3 echoat $n 滿身是汗的你仰頭望了一下，才發現樹上早已沒半顆椰子了。
+	oforcer here callout 3 echoaround $n 在 $N 使勁的推晃了一陣子之後，你卻發現樹上早就沒半顆椰子了。
+	oforcer here callout 3 force $n stop_pushing $o
+	break
+endif
+if is_qmark($n) & homeport_coconet_quest 100001
+	if rand(70)
+		oforcer here stun $n 40
+		oforcer here callout 3 echoat $n 無奈的是，椰子根本連動都不動。
+		oforcer here callout 3 force $n stop_pushing $o
+	else
+		oforcer here stun $n 80
+		oforcer here callout 3 echoat $n 終於，你頭上的椰子似乎開始鬆落.....
+		oforcer here callout 4 echoat $n 你衝上前去試圖接住那個要鬆落的椰子！
+		oforcer here callout 4 echoaround $n 一顆椰子鬆動落掉落了下來！
+		if inroom($n) == 208
+			if is_qmark($n) & homeport_coconet_quest 100002
+				if is_qmark($n) & homeport_coconet_quest 100004
+					oforcer here callout 5 echoat $n 雖然你試圖接住掉落的椰子，不過還是失敗了，椰子滾入了海中，消失不見。
+					oforcer here callout 5 echoaround $n $N試圖接住掉落的椰子，不過還是失敗了。
+					oforcer here callout 5 force $n stop_pushing $o
+					break
+				endif
+			endif
+			if is_qmark($n) & homeport_coconet_quest 100002
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 4
+			else
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 2
+			endif
+		endif
+		if inroom($n) == 2517
+			if is_qmark($n) & homeport_coconet_quest 100008
+				if is_qmark($n) & homeport_coconet_quest 100016
+					oforcer here callout 5 echoat $n 雖然你試圖接住掉落的椰子，不過還是失敗了，椰子滾入了海中，消失不見。
+					oforcer here callout 5 echoaround $n $N試圖接住掉落的椰子，不過還是失敗了。
+					oforcer here callout 5 force $n stop_pushing $o
+					break
+				endif
+			endif
+			if is_qmark($n) & homeport_coconet_quest 100008
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 16
+			else
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 8
+			endif
+		endif
+		if inroom($n) == 40037
+			if is_qmark($n) & homeport_coconet_quest 100032
+				if is_qmark($n) & homeport_coconet_quest 100064
+					oforcer here callout 5 echoat $n 雖然你試圖接住掉落的椰子，不過還是失敗了，椰子滾入了海中，消失不見。
+					oforcer here callout 5 echoaround $n $N試圖接住掉落的椰子，不過還是失敗了。
+					oforcer here callout 5 force $n stop_pushing $o
+					break
+				endif
+			endif
+			if is_qmark($n) & homeport_coconet_quest 100032
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 64
+			else
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 32
+			endif
+		endif
+		if inroom($n) == 11000
+			if is_qmark($n) & homeport_coconet_quest 100128
+				if is_qmark($n) & homeport_coconet_quest 100256
+					oforcer here callout 5 echoat $n 雖然你試圖接住掉落的椰子，不過還是失敗了，椰子滾入了海中，消失不見。
+					oforcer here callout 5 echoaround $n $N試圖接住掉落的椰子，不過還是失敗了。
+					oforcer here callout 5 force $n stop_pushing $o
+					break
+				endif
+			endif
+			if is_qmark($n) & homeport_coconet_quest 100128
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 256
+			else
+				oforcer here mod_qmark $n homeport_coconet_quest v0 | 128
+			endif
+		endif
+		if dex($n) < 20
+			oforcer here callout 6 echoat $n 雖然椰子終究被你接住，但你也因此而受傷了。
+			oforcer here callout 6 echoaround $n $N打算示範「如何用頭接住樹上掉落的椰子」，但顯然表演失敗了，他被砸得眼冒金星。
+			oforcer here callout 6 modhmv $n 03.30 30 0
+		else
+			oforcer here callout 6 echoat $n 你敏捷的接住了掉落的椰子，絲毫未損。
+			oforcer here callout 6 echoaround $n $N靈巧地接住樹上掉落的椰子。
+		endif
+		oset self v1 - 1
+		oforcer here oload 18038 1 $n target
+		oforcer here callout 6 force $n stop_pushing $o
+	endif
+else
+	oforcer here stun $n 40
+	oforcer here callout 3 echoat $n 無奈的是，椰子根本連動都不動。
+	oforcer here callout 3 force $n stop_pushing $o
+endif
+~
+|
+
+#18040
+palm wine~
+棕櫚酒(palm wine)~
+一瓶棕櫚酒(palm wine)被放在這裡。~
+~
+17 1|256 1
+0~ 10~ 8~ 0~
+3 100000 0
+E palm wine~
+這是使用椰子樹液釀造而成的酒。
+~
+
+#18041
+coconut water~
+椰子水(coconut water)~
+一瓶椰子水(coconut water)被放在這裡。~
+~
+17 0 1
+0~ 10~ 25~ 0~
+1 100000 0
+E coconut water~
+從椰仁中取出來的清澈果汁，香甜止渴又消暑。
+~
+>obj_act drink~
+if isaffected($n) == satiety
+	break
+endif
+echoat $n 喝下清甜的椰子水，讓你火氣下降。
+oforcer here add_affect $n satiety 0030 20 27 -10 0
+~
+|
+
+#18042
+coconut oil~
+椰子油(coconut oil)~
+一罐椰子油(coconut oil)被放在這裡。~
+~
+19 0 1
+40~ 28~ -10~ 0~
+1 100000 0
+E coconut oil~
+用椰肉榨出來的植物油，帶有獨特的椰香並富含大量的飽和脂肪酸。
+~
+
+#18043
+coconut shell jug~
+椰殼壺(coconut shell jug)~
+一個椰殼壺(jug)被放在這裡。~
+~
+17 256 1
+80~ 1~ 25~ 0~
+1 100000 0
+Z 4
+E coconut shell~
+一顆綁著繫繩的椰子殼，椰仁上被打出兩個洞並置入木塞。堅硬的外殼
+相當不容易摔破，用來盛裝液體會是不錯的選擇。
+~
+
+#18044
+Coconet shell jug~
+[1;32m椰神提壺[m(Shell of Coconet)~
+一個[1;32m椰殼壺[m(jug)被放在這裡。~
+~
+17 256 1
+0~ 80~ 25~ 0~
+1 100000 0
+Z 4
+E Coconet shell jug~
+一顆綁著繫繩的金黃色椰子殼，椰仁上被打出兩個洞並置入木塞。堅硬的外殼
+相當不容易摔破，裡面飄散出源源不絕的清甜香氣。
+~
+>obj_rand 100~
+if objval1($o) < 80
+	if hour($) == 0
+	or hour($) == 12
+		oset self v1 + 8
+		echoat $n 從 $O 裡湧出大量的液體。
+	endif
+	if objval1($o) > 80
+		oset self v1 = 80
+	endif
+endif
+~
+|
+
+#18045
+dwarven double-edged axe~
+矮人雙頭斧(dwarven double-edged axe)~
+一把雙頭斧(double-edged axe)被放在這裡。~
+~
+5 2 1|32768
+6001000~ 0~ 0~ 9~
+70 100000 0
+A 17 -20
+V Troll~ 0 100 40 100
+V Ogre~ 0 100 40 100
+V Hobgoblin~ 20 100 30 100
+X steel~
+E
+dwarven double-edged axe~
+矮人製造的武器雖然不如精靈武器來得精緻輕盈，但在實戰中卻相當的
+耐用可靠。
+~
+>obj_repop 100~
+oset self v0 = 53
+oset self v1 = 65
+~
+|
+
+#18046
+dwarven double-handed warhammer~
+矮人雙手戰鎚(dwarven double-handed warhammer)~
+一把雙手戰鎚(warhammer)被放在這裡。~
+~
+5 2 1|32768
+6001000~ 0~ 0~ 8~
+70 100000 0
+A 17 -20
+V Statue~ 0 100 40 100
+V Object~ 0 100 40 100
+X steel~
+E
+dwarven double-handed warhammer~
+矮人製造的武器雖然不如精靈武器來得精緻輕盈，但在實戰中卻相當的
+耐用可靠。
+~
+>obj_repop 100~
+oset self v0 = 53
+oset self v1 = 65
+~
+|
+
+#18047
+jet ring~
+黑玉指輪(jet ring)~
+一件黑色的胸甲(plate)放在這裡。~
+~
+9 2|64|256 1|2
+0~ 0~ 100~ 0~
+1 500000 0
+C 500000
+A 3 1
+A 5 1
+A 40 2
+X jet~
+E
+jet ring~
+黑玉是矮人王國盛產的有機寶石，只在最深處的地層才能挖掘。望鄉港
+有許多上流名媛為它獨特的黑色光澤所著迷，會專程花費大量金錢跑去
+矮人王國選購。
+~
+
+#18048
+jet pendant~
+黑玉吊墜(jet pendant)~
+一件黑色的胸甲(plate)放在這裡。~
+~
+9 2|64|256 1|4
+0~ 0~ 100~ 0~
+1 500000 0
+C 500000
+A 4 1
+A 5 1
+A 40 2
+X jet~
+E
+jet pendant~
+黑玉是矮人王國盛產的有機寶石，只在最深處的地層才能挖掘。望鄉港
+有許多上流名媛為它獨特的黑色光澤所著迷，會專程花費大量金錢跑去
+矮人王國選購。
+~
+
+#18049
+jet bracelet~
+黑玉手鍊(jet bracelet)~
+一件黑色的胸甲(plate)放在這裡。~
+~
+9 2|64|256 1|4096
+0~ 0~ 100~ 0~
+1 500000 0
+C 500000
+A 1 1
+A 5 1
+A 43 5
+A 44 10
+X jet~
+E
+jet bracelet~
+黑玉是矮人王國盛產的有機寶石，只在最深處的地層才能挖掘。望鄉港
+有許多上流名媛為它獨特的黑色光澤所著迷，會專程花費大量金錢跑去
+矮人王國選購。
+~
+
+#18050
+usurper breast plate~
+篡位者胸甲(usurper breast plate)~
+一件黑色的胸甲(plate)放在這裡。~
+~
+9 2|64|256 1|8
+0~ 0~ 100~ 0~
+25 500000 0
+A 17 -20
+A 29 -8
+A 42 15
+R 4|1048576
+X jet~
+E
+usurper breast plate~
+稀有材質製成的黑色胸甲，上頭刻劃的符紋能確實保護穿戴者的弱點，
+想必是為了貴重人士所特別訂製的吧。
+~
+
+#18051
+Kadesh chip 100-chip~
+卡德希賭場代幣(Kadesh 100-chip)~
+一枚上頭有著數字 100 的硬幣(chip)被放在桌上。~
+~
+8 2|64|256 1
+0~ 0~ 0~ 0~
+0 10 0
+E
+Kadesh 100-chip~
+這是望鄉港卡德希賭場的專用籌碼，上頭刻著數字 100。
+~
+#18052
+Kadesh chip 50-chip~
+卡德希賭場代幣(Kadesh 50-chip)~
+一枚上頭有著數字 50 的硬幣(chip)被放在桌上。~
+~
+8 2|64|256 1
+0~ 0~ 0~ 0~
+0 10 0
+E
+Kadesh 50-chip~
+這是望鄉港卡德希賭場的專用籌碼，上頭刻著數字 50。
+~
+#18053
+Kadesh chip 25-chip~
+卡德希賭場代幣(Kadesh 25-chip)~
+一枚上頭有著數字 25 的硬幣(chip)被放在桌上。~
+~
+8 2|64|256 1
+0~ 0~ 0~ 0~
+0 10 0
+E
+Kadesh 25-chip~
+這是望鄉港卡德希賭場的專用籌碼，上頭刻著數字 25。
+~
+#18054
+Kadesh chip 10-chip~
+卡德希賭場代幣(Kadesh 10-chip)~
+一枚上頭有著數字 10 的硬幣(chip)被放在桌上。~
+~
+8 2|64|256 1
+0~ 0~ 0~ 0~
+0 10 0
+E
+Kadesh 10-chip~
+這是望鄉港卡德希賭場的專用籌碼，上頭刻著數字 10。
+~
+#18055
+Kadesh chip 5-chip~
+卡德希賭場代幣(Kadesh 5-chip)~
+一枚上頭有著數字 5 的硬幣(chip)被放在桌上。~
+~
+8 2|64|256 1
+0~ 0~ 0~ 0~
+0 10 0
+E
+Kadesh 5-chip~
+這是望鄉港卡德希賭場的專用籌碼，上頭刻著數字 5。
+~
+
+#0
+
+#ROOMDATA
+#18000
+望鄉港南城門~
+眼前是座寬廣的護城橋，末端連接著貿易之都 － 望鄉港。走在橋頭
+上就能聽見北邊城市大門後傳來喧鬧的人群聲，朝著比克魯河流往出海口
+的方向望去，彷彿看見一輪夕陽正在落入海平線。眼前的景象讓你鬆了一
+口氣，經歷漫長的旅途後，總算抵達能夠安心駐足的城市了。
+
+　　　　　　　　橋邊不顯眼處豎立著一個招牌(board)。
+~
+0 0 2
+D0
+北方--中央大道
+~
+~
+0 0 18001
+D2
+南方--警備哨
+~
+~
+0 0 38354
+E 更新履歷update~
+1. homeport_quest  v0 | 2  友情
+　　　　　　　　　 v0 | 4  愛情
+　　　　　　　　　 v0 | 8  賭博的over homeport_gambler_quest
+　　　　　　　　　 v0 | 16 矮人商會任務 , homeport_dwarf_quest , done。
+　　　　　　　　　 v0 | 32 椰子會館任務 , homeport_coconet_quest , done。
+　　　　　　　　　 v0 | 64 黑暗精靈會館任務
+　　　　　　　　　 [1;31m!!!～鬥氣炎斬劍～!!![m
+
+2021/08/01 舊房間敘述整理、街道連接重整。
+2022/01/09 椰子會館任務重整完成。
+2022/01/28 矮人商會任務重整完成。
+~
+E board~
+這個區域是由Snoopy所規劃，Coconet接手之後改編而成的。或許和Snoopy
+一開始所規劃的區域有所不同，不過大致上還是延續著本來的區域架構。
+
+在這個區域當中，不想給予玩家太過困難的挑戰，因此會以解迷為主，對於
+許多自己的想法也融入在內，希望可以讓玩家有新的體驗。
+
+　　　　　　　　　　　　　　　　　　　　　　　　閻羅王(Coconet)
+~
+S
+
+#18001
+中央大道~
+踏在鋪著硬石板的大道上，雖然人群有些多，但步伐仍舊輕快，路旁
+充滿叫賣的小販和來自各地的旅客。南邊是望鄉港的大門，左右兩條街道
+分別為瑞克街及奇克街。
+~
+0 0 1
+D0
+北邊--中央大道
+~
+~
+0 0 18010
+D1
+東邊--奇克街
+~
+~
+0 0 18002
+D2
+南邊--南城門
+~
+~
+3 -1 18000
+D3
+西邊--瑞克街
+~
+~
+0 0 18006
+S
+
+#18002
+奇克街~
+這條邊街的寬度僅能通過一臺馬車，雖然人潮沒有中央大道來得多，
+但依然能看見三三兩兩的人群在路上移動，其中大多為船員，僅有少部分
+的遊客。或許是船員工寮設在這這條街的關係吧。
+~
+0 0 1
+D1
+東邊--奇克街
+~
+~
+0 0 18003
+D3
+西邊--中央大道
+~
+~
+0 0 18001
+>room_rand 10~
+echo 隨著風向的轉變，你聞到陣陣的花香。
+~
+|
+S
+
+#18003
+奇克街~
+隨著人群走，你來到奇克街的盡頭，四周建有許多簡陋的工寮，在南
+邊與東邊分別豎立著商店的招牌。路上不時能看見人群來來去去，偶爾能
+看見獵人帶著獵品進入南邊的商店，看來那裡應該是獵人的交易所。
+~
+0 0 1
+D0
+北邊--街邊窄巷
+~
+~
+0 0 18060
+D1
+東邊--花店
+~
+~
+0 0 18004
+D2
+南邊--皮飾店
+~
+~
+0 0 18005
+D3
+西邊--奇克街
+~
+~
+0 0 18002
+>room_rand 20~
+echo 一陣花香從東邊的店內隨風飄來。
+~
+|
+S
+
+#18004
+美麗花店~
+走進這家店，清甜的芬芳立刻取代了鹹濕的海潮味充斥著你的鼻腔。
+眼前綻放著一朵朵美麗的鮮花，盛開的向日葵正對著你招手，一旁的玫瑰
+也嬌羞地看著你，不時還能瞧見蝴蝶翩翩起舞，此刻彷彿置身於一座美麗
+的花園中。
+~
+0 8 0
+D3
+西邊--奇克街
+~
+~
+0 0 18003
+S
+#18005
+皮飾店~
+天啊..！一股極度濃烈的刺激氣體直衝腦門，聞起來就像一泡濃尿
+混著幾百顆臭雞蛋。牆邊一桶桶浸在液體中飄出硫味的動物皮，你立即
+知道自己走進間制革店。要是沒甚麼事，你一刻也不想繼續待下去！
+~
+0 0 0
+D0
+北邊--奇克街
+~
+~
+0 0 18003
+S
+#18006
+瑞克街的起點~
+街邊擠滿從各地前來的商販及遊客。瑞克街臨接中央大道的入口，
+距離港口也不遠，許多外國商人選擇在此街駐點。日與俱增的外國居民
+各自蓋起家鄉建築，將整條大街染上異國色彩。
+~
+0 0 1
+D1
+東邊--中央大道
+~
+~
+0 0 18001
+D2
+南邊--雜貨店
+~
+~
+0 0 18008
+D3
+西邊--瑞克街
+~
+~
+0 0 18007
+S
+#18007
+瑞克街~
+街邊擠滿從各地前來的商販及遊客。瑞克街臨接中央大道的入口，
+距離港口也不遠，許多外國商人選擇在此街駐點。日與俱增的外國居民
+各自蓋起家鄉建築，將整條大街染上異國色彩。
+~
+0 0 1
+D0
+北邊--街邊小巷
+~
+~
+0 0 18061
+D1
+東邊--瑞克街的起點
+~
+~
+0 0 18006
+D2
+南邊--紀念品商店
+~
+~
+0 0 18009
+S
+#18008
+雜貨店~
+一間小小的店，老闆娘親切的笑容，讓你想起好久不見的二嬸，想起
+那次的調皮搗蛋...老闆娘正朝著你走了過來。
+~
+0 8 0
+D0
+北邊--瑞克街的起點
+~
+~
+0 0 18006
+S
+#18009
+紀念品商店~
+商店的門口懸掛著兩隻栩栩如生的海豚，這是望鄉港最著名的紀念品
+特賣店。隨著望鄉港的重新興盛，市長利用既有的資源和環境製作出獨一
+無二的紀念品。來到望鄉港而沒買紀念品，就等於是白來一趟。
+~
+0 8 0
+D0
+北邊--瑞克街
+~
+~
+0 0 18007
+S
+#18010
+中央大道~
+一條鋪著硬石板的大道，路的二邊充滿了叫賣的小販和來自各地的旅
+客，西邊能通往港口街，往東邊是魯克街，北邊則能看見一座橫跨兩地的
+巨大石橋。
+~
+0 0 1
+D0
+北邊--中央大道
+~
+~
+0 0 18024
+D1
+東邊--魯克街
+~
+~
+0 0 18011
+D2
+南邊--中央大道
+~
+~
+0 0 18001
+D3
+西邊--港口街的起點
+~
+~
+0 0 18017
+S
+#18011
+魯克街的起點~
+路上擠滿來自各方的旅客，街上則開滿大大小小的旅店。魯克街臨近
+港口且位於中央大街的中心，許多到港的旅客會選擇在此租房，不僅能在
+城裡快速找到落腳處，還能方便前往各區域。你注意到北邊房屋傳出陣陣
+的叫罵聲。
+~
+0 0 1
+D0
+北邊--賭場
+~
+~
+3 -1 18016
+D1
+東邊--魯克街
+~
+~
+0 0 18012
+D3
+西邊--中央大道
+~
+~
+0 0 18010
+S
+#18012
+魯克街~
+熱鬧的街道上充滿旅客。除了北邊一間外觀樸實的旅館外，附近其他
+的旅店都已掛上客滿的告示，如果想在今天找到居住的地方，大概只能去
+那裡碰碰運氣了。
+~
+0 0 1
+D0
+北邊--朧岳旅舍
+~
+~
+0 0 18015
+D1
+東邊--魯克街
+~
+~
+0 0 18013
+D2
+南邊--街邊窄巷
+~
+~
+0 0 18060
+D3
+西邊--魯克街的起點
+~
+~
+0 0 18011
+S
+#18013
+魯克街~
+魯克街的街尾依然充滿人潮。周邊有許多望鄉港的知名飯館、酒館，
+雖然價格偏高，但能滿足在船上缺乏物資而無法享受到的味覺饗宴。北邊
+有間相對平價的酒館，裡面傳出一陣陣的哄鬧聲。
+~
+0 0 1
+D0
+北邊--岸泉酒館
+~
+~
+0 0 18014
+D3
+西邊--魯克街
+~
+~
+0 0 18012
+S
+#18014
+岸泉酒館~
+推開大門，一幅酒館日常的景象呈現在你眼前。柴火在爐中發出清脆
+的霹啪聲，疲憊的旅人點了杯酒找個空位歇息，聽起老水手緩緩敘說著那
+過往的回憶，一旁年輕水手則盡情地高歌談笑，彷彿天塌下來他們也無所
+畏懼。
+~
+0 8 0
+D2
+南邊--魯克街
+~
+~
+0 0 18013
+S
+#18015
+朧岳旅舍~
+這間旅店在望鄉港相當有名，外觀樸素但客房的內裝及服務絲毫不打
+馬虎眼，缺點是就算住一晚普通的客房也價格不斐，相對於其他旅館的開
+價高上兩倍，因此不會是旅客們的首選。但就算如此，住過這家旅館的人
+依然給予極高的風評。
+
+在櫃台上有個牌子(sign)，上面有一些字。
+~
+262144 8 0
+E
+sign~
+歡迎光臨：
+
+普通客房 -  1 天  6000 元。
+高級客房 -  1 天 10000 元。
+
+住宿另有供應三餐，將於 7 , 12 , 18 點送至客房。
+~
+D2
+南邊--魯克街
+~
+~
+0 0 18012
+S
+#18016
+賭場~
+狹小陰暗屋內擺放著幾張零落的桌子，桌旁圍繞著零星的人們。雖然
+人數不多，但也足以讓整間房子呈現擁擠的狀態。大多時候桌前的人群都
+鴉雀無聲，然而下一秒則開始大聲吼叫，聲音中夾雜著歡喜，但更多的是
+不堪入耳的咒罵聲。賭場中的每一秒，都體現出各種人生的瞬息萬變。
+~
+0 4|8|16|256|1024|8192|262144|1048576 0
+D2
+南邊--魯克街
+~
+~
+3 -1 18011
+>room_defun 100_chip~
+oload 18051 1 $n target
+~
+>room_defun 50_chip~
+oload 18052 1 $n target
+~
+>room_defun 25_chip~
+oload 18053 1 $n target
+~
+>room_defun 10_chip~
+oload 18054 1 $n target
+~
+>room_defun 5_chip~
+oload 18055 1 $n target
+~
+>room_defun pay_100_chip~
+purge $n vnum 18051
+~
+>room_defun pay_50_chip~
+purge $n vnum 18052
+~
+>room_defun pay_25_chip~
+purge $n vnum 18053
+~
+>room_defun pay_10_chip~
+purge $n vnum 18054
+~
+>room_defun pay_5_chip~
+purge $n vnum 18055
+~
+>room_defun check_100_chip~
+if carrycount($n , 18051) >= 1
+	add_qmark $n chip_ok -1 0 0 0 0 1
+endif
+~
+>room_defun check_50_chip~
+if carrycount($n , 18052) >= 1
+	add_qmark $n chip_ok -1 0 0 0 0 1
+endif
+~
+>room_defun check_25_chip~
+if carrycount($n , 18053) >= 1
+	add_qmark $n chip_ok -1 0 0 0 0 1
+endif
+~
+>room_defun check_10_chip~
+if carrycount($n , 18054) >= 1
+	add_qmark $n chip_ok -1 0 0 0 0 1
+endif
+~
+>room_defun check_5_chip~
+if carrycount($n , 18055) >= 1
+	add_qmark $n chip_ok -1 0 0 0 0 1
+endif
+~
+>room_defun baccarat_bet_check~
+if roomvalue($1) == 7
+	echoat $n 遊戲才剛結束，桌面還在整理。
+	del_qmark $n baccarat_bet_buf
+	break
+endif
+if roomvalue($1) >= 5
+	echoat $n 遊戲已經開始。
+	del_qmark $n baccarat_bet_buf
+	break
+endif
+if carrynum($n) > 99
+	echoat $n 你身上帶著太多東西了，贏牌也拿不動獎勵。
+	del_qmark $n baccarat_bet_buf
+	break
+endif
+if is_qmark($n) == baccarat_bet_buf 100001
+	if carrycount($n , 18051 ) < 1
+		echoat $n 你身上的籌碼不夠。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) == baccarat_bet_buf 100002
+	if carrycount($n , 18051 ) < 2
+		echoat $n 你身上的籌碼不夠。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) == baccarat_bet_buf 100003
+	if carrycount($n , 18051 ) < 3
+		echoat $n 你身上的籌碼不夠。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) == baccarat_bet_buf 100004
+	if carrycount($n , 18051 ) < 4
+		echoat $n 你身上的籌碼不夠。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) == baccarat_bet_buf 100005
+	if carrycount($n , 18051 ) < 5
+		echoat $n 你身上的籌碼不夠。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) >= baccarat_bet 100005
+	echoat $n 你這把已經下注太多了。
+	del_qmark $n baccarat_bet_buf
+	break
+endif
+if is_qmark($n) == baccarat_bet 100004
+	if is_qmark($n) > baccarat_bet_buf 100001
+		echoat $n 這次下注太多了，會超過這把的上限。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) == baccarat_bet 100003
+	if is_qmark($n) > baccarat_bet_buf 100002
+		echoat $n 這次下注太多了，會超過這把的上限。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) == baccarat_bet 100002
+	if is_qmark($n) > baccarat_bet_buf 100003
+		echoat $n 這次下注太多了，會超過這把的上限。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if is_qmark($n) == baccarat_bet 100001
+	if is_qmark($n) > baccarat_bet_buf 100004
+		echoat $n 這次下注太多了，會超過這把的上限。
+		del_qmark $n baccarat_bet_buf
+		break
+	endif
+endif
+if roomvalue($1) == 0
+	modrvt v1 = 1
+endif
+rcall baccarat_pay $n
+if is_qmark($n) != baccarat_bet
+	add_qmark $n baccarat_bet -1 0 0 0 1 0
+endif
+if is_qmark($n) != baccarat_banker_win
+	add_qmark $n baccarat_banker_win -1 0 0 0 1 0
+endif
+if is_qmark($n) != baccarat_player_win
+	add_qmark $n baccarat_player_win -1 0 0 0 1 0
+endif
+if is_qmark($n) != baccarat_banker_pair
+	add_qmark $n baccarat_banker_pair -1 0 0 0 1 0
+endif
+if is_qmark($n) != baccarat_player_pair
+	add_qmark $n baccarat_player_pair -1 0 0 0 1 0
+endif
+if is_qmark($n) != baccarat_tie_game
+	add_qmark $n baccarat_tie_game -1 0 0 0 1 0
+endif
+~
+>room_defun baccarat_pay~
+if is_qmark($n) >= baccarat_bet_buf 100001
+	rcall pay_100_chip $n
+	mod_qmark $n baccarat_bet_buf v0 - 1
+	rcall baccarat_pay $n
+endif
+~
+>room_defun chips_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_100_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 100
+	rcall pay_100_chip $n
+	rcall chips_count $n
+	break
+endif
+rcall check_50_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 50
+	rcall pay_50_chip $n
+	rcall chips_count $n
+	break
+endif
+rcall check_25_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 25
+	rcall pay_25_chip $n
+	rcall chips_count $n
+	break
+endif
+rcall check_10_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 10
+	rcall pay_10_chip $n
+	rcall chips_count $n
+	break
+endif
+rcall check_5_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 5
+	rcall pay_5_chip $n
+	rcall chips_count $n
+	break
+endif
+~
+>room_defun chips_change_all~
+if is_qmark($n) >= casino_chips_count 100100
+	mod_qmark $n casino_chips_count v0 - 100
+	rcall 100_chip $n
+	rcall chips_change_all $n
+	break
+endif
+if is_qmark($n) >= casino_chips_count 100050
+	mod_qmark $n casino_chips_count v0 - 50
+	rcall 50_chip $n
+	rcall chips_change_all $n
+	break
+endif
+if is_qmark($n) >= casino_chips_count 100025
+	mod_qmark $n casino_chips_count v0 - 25
+	rcall 25_chip $n
+	rcall chips_change_all $n
+	break
+endif
+if is_qmark($n) >= casino_chips_count 100010
+	mod_qmark $n casino_chips_count v0 - 10
+	rcall 10_chip $n
+	rcall chips_change_all $n
+	break
+endif
+if is_qmark($n) >= casino_chips_count 100005
+	mod_qmark $n casino_chips_count v0 - 5
+	rcall 5_chip $n
+	rcall chips_change_all $n
+	break
+endif
+del_qmark $n casino_chips_count
+~
+>room_defun 100_chips_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_100_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 100
+	rcall pay_100_chip $n
+	rcall 100_chips_count $n
+	break
+endif
+~
+>room_defun 50_chips_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_50_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 50
+	rcall pay_50_chip $n
+	rcall 50_chips_count $n
+	break
+endif
+~
+>room_defun 25_chips_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_25_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 25
+	rcall pay_25_chip $n
+	rcall 25_chips_count $n
+	break
+endif
+~
+>room_defun 10_chips_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_10_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 10
+	rcall pay_10_chip $n
+	rcall 10_chips_count $n
+	break
+endif
+~
+>room_defun 5_chips_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_5_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 5
+	rcall pay_5_chip $n
+	rcall 5_chips_count $n
+	break
+endif
+~
+>room_defun 100_chip_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_100_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 100
+	rcall pay_100_chip $n
+endif
+~
+>room_defun 50_chip_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_50_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 50
+	rcall pay_50_chip $n
+endif
+~
+>room_defun 25_chip_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_25_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 25
+	rcall pay_25_chip $n
+endif
+~
+>room_defun 10_chip_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_10_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 10
+	rcall pay_10_chip $n
+endif
+~
+>room_defun 5_chip_count~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+rcall check_5_chip $n
+if is_qmark($n) == chip_ok
+	del_qmark $n chip_ok
+	mod_qmark $n casino_chips_count v0 + 5
+	rcall pay_5_chip $n
+endif
+~
+>room_defun change_to_100~
+if is_qmark($n) >= casino_chips_count 100100
+	mod_qmark $n casino_chips_count v0 - 100
+	rcall 100_chip $n
+	rcall change_to_100 $n
+	break
+endif
+~
+>room_defun change_to_50~
+if is_qmark($n) >= casino_chips_count 100050
+	mod_qmark $n casino_chips_count v0 - 50
+	rcall 50_chip $n
+	rcall change_to_50 $n
+	break
+endif
+~
+>room_defun change_to_25~
+if is_qmark($n) >= casino_chips_count 100025
+	mod_qmark $n casino_chips_count v0 - 25
+	rcall 25_chip $n
+	rcall change_to_25 $n
+	break
+endif
+~
+>room_defun change_to_10~
+if is_qmark($n) >= casino_chips_count 100010
+	mod_qmark $n casino_chips_count v0 - 10
+	rcall 10_chip $n
+	rcall change_to_10 $n
+	break
+endif
+~
+>room_defun change_to_5~
+if is_qmark($n) >= casino_chips_count 100005
+	mod_qmark $n casino_chips_count v0 - 5
+	rcall 5_chip $n
+	rcall change_to_5 $n
+	break
+endif
+~
+>room_defun baccarat_banker_winner~
+if is_qmark($n) != casino_chips_count
+	add_qmark $n casino_chips_count -1 0 0 0 0 1
+endif
+if is_qmark($n) >= baccarat_banker_win 100002
+	mod_qmark $n baccarat_banker_win v0 - 1
+	mod_qmark $n casino_chips_count v0 + 200
+	rcall baccarat_banker_winner $n
+	break
+endif
+if is_qmark($n) == baccarat_banker_win 100001
+	mod_qmark $n baccarat_banker_win v0 - 1
+	mod_qmark $n casino_chips_count v0 + 100
+	mod_qmark $n casino_chips_count v0 + 50
+	if is_qmark($n) == baccarat_banker_win 200001
+		mod_qmark $n casino_chips_count v0 + 25
+		mod_qmark $n casino_chips_count v0 + 10
+		mod_qmark $n casino_chips_count v0 + 10
+	endif
+	if is_qmark($n) == baccarat_banker_win 200002
+		mod_qmark $n casino_chips_count v0 + 10
+		mod_qmark $n casino_chips_count v0 + 10
+		mod_qmark $n casino_chips_count v0 + 10
+		mod_qmark $n casino_chips_count v0 + 10
+	endif
+	if is_qmark($n) == baccarat_banker_win 200003
+		mod_qmark $n casino_chips_count v0 + 25
+		mod_qmark $n casino_chips_count v0 + 10
+	endif
+	if is_qmark($n) == baccarat_banker_win 200004
+		mod_qmark $n casino_chips_count v0 + 25
+		mod_qmark $n casino_chips_count v0 + 5
+	endif
+	if is_qmark($n) == baccarat_banker_win 200005
+		mod_qmark $n casino_chips_count v0 + 25
+	endif
+endif
+rcall chips_change_all $n
+~
+>room_defun baccarat_player_winner~
+if is_qmark($n) >= baccarat_player_win 100001
+	mod_qmark $n baccarat_player_win v0 - 1
+	rcall 100_chip $n
+	rcall 100_chip $n
+	rcall baccarat_player_winner $n
+	break
+endif
+~
+>room_defun baccarat_tie_winner~
+if is_qmark($n) >= baccarat_tie_game 100001
+	mod_qmark $n baccarat_tie_game v0 - 1
+	rcall 100_chip $n
+	rcall baccarat_tie_winner $n
+	break
+endif
+~
+>room_defun baccarat_ppair_winner~
+if is_qmark($n) >= baccarat_player_pair 100001
+	if is_qmark($n) >= baccarat_player_pair 200001
+		mod_qmark $n baccarat_player_pair v1 - 1
+		rcall 100_chip $n
+	endif
+	mod_qmark $n baccarat_player_pair v0 - 1
+	rcall 100_chip $n
+	rcall baccarat_ppair_winner $n
+	break
+endif
+~
+>room_defun baccarat_bpair_winner~
+if is_qmark($n) >= baccarat_banker_pair 100001
+	if is_qmark($n) >= baccarat_banker_pair 200001
+		mod_qmark $n baccarat_banker_pair v1 - 1
+		rcall 100_chip $n
+	endif
+	mod_qmark $n baccarat_banker_pair v0 - 1
+	rcall 100_chip $n
+	rcall baccarat_bpair_winner $n
+	break
+endif
+~
+>room_defun baccarat_tie_player~
+if is_qmark($n) >= baccarat_player_win 100001
+	mod_qmark $n baccarat_player_win v0 - 1
+	rcall 100_chip $n
+	rcall baccarat_tie_return $n
+	break
+endif
+~
+>room_defun baccarat_tie_banker~
+if is_qmark($n) >= baccarat_banker_win 100001
+	mod_qmark $n baccarat_banker_win v0 - 1
+	rcall 100_chip $n
+	rcall baccarat_tie_return $n
+	break
+endif
+~
+>room_defun baccarat_timeline~
+if roomvalue($1) == 0
+	break
+endif
+if roomvalue($1) == 1
+	force $n say 還有人要下注嗎？
+endif
+if roomvalue($1) < 5
+	modrvt v1 + 1
+	if roomvalue($1) == 4
+		force $n say 遊戲準備開始，還有人要下注嗎？
+	endif
+endif
+if roomvalue($1) == 5
+	force $n say 停止下注！
+	force $n mpcall baccarat_interval_1 $n
+	callout 1 echo 賭場裡面忽然全面地悄然無聲，似乎下一刻就有什麼事情正要發生。
+	modrvt v1 = 6
+endif
+~
+>room_defun baccarat_ending_transfor~
+modrvt v1 = 7
+transfer all 18016
+rcall homeport_casino_wl $b
+callout 2 force $b mpcall baccarat_reset_all $b
+~
+>room_defun homeport_casino_wl~
+if rand(30)
+	echo 忽然聲音爆了出來，看來有人贏了一場豪賭。
+else
+	echo 賭桌上傳出一片哀嚎，看來有人這把輸慘了。
+endif
+~
+|
+S
+#18017
+港口街的起點~
+四周建築井然有序，道路規劃得有條有理。當時海賊由碼頭入侵後，
+港口街遭受到嚴重破壞，傳承百年的建設在當時幾乎毀滅殆盡。重建完成
+後雖已看不見古老街區的影子，但卻成為居住起來更加方便的地方。
+~
+0 0 1
+D0
+北邊--民房
+~
+~
+3 -1 18026
+D1
+東邊--中央大道
+~
+~
+0 0 18010
+D2
+南邊--街邊小巷
+~
+~
+0 0 18062
+D3
+西邊--港口街
+~
+~
+0 0 18018
+>room_rand 20~
+echo 海風吹拂而來，海水的鹹味輕輕拂過四周。
+~
+|
+S
+#18018
+港口街~
+四周建築井然有序，道路規劃得有條有理，四周的房屋以白色石材建
+成，讓整條街看起來更加明亮開闊。從西邊吹來的海風伴隨著吵雜的喧嘩
+聲，朝斜坡走下去或許就能抵達碼頭了。
+~
+0 0 1
+D0
+北邊--民房
+~
+~
+3 -1 18027
+D1
+東邊--港口街的起點
+~
+~
+0 0 18017
+D3
+西邊--港口街市集
+~
+~
+0 0 18019
+>room_rand 20~
+echo 海風吹拂而來，海水的鹹味輕輕拂過四周。
+~
+|
+S
+#18019
+港口街漁市~
+這裡是港口附近比較熱鬧的一帶。當時海賊由碼頭入侵，位於此處的
+漁市集遭受嚴重的掠奪。如今所受的破壞已經修復完畢，四周漁販奮力叫
+賣吸引客人上門，顯然此處又再次成為望鄉港漁貨交易的重要市集。
+~
+0 0 1
+D0
+北邊--港口街的盡頭
+~
+~
+0 0 18020
+D1
+東邊--港口街
+~
+~
+0 0 18018
+D3
+西邊--守衛室
+~
+~
+0 0 18022
+>room_rand 20~
+echo 海風吹拂而來，海水的鹹味變得更加濃厚。
+~
+|
+S
+#18020
+港口街的盡頭~
+四周的建築不甚密集但井然有序。當時海賊由碼頭入侵，在此與守衛
+發生第一次衝突。當年遭受破壞的痕跡已不復見，唯有暗淡的碎石路面，
+似乎還再述說著當年的憂傷。北邊就是停泊船隻的碼頭。
+~
+0 0 1
+D0
+北邊--碼頭
+~
+~
+0 0 18023
+D2
+南邊--港口街
+~
+~
+0 0 18019
+D3
+西邊--守衛室
+~
+~
+0 0 18021
+>room_rand 30~
+echo 海風變得更強勁了。
+~
+|
+S
+
+#18021
+守衛室~
+由於海盜的時常入侵，造成望鄉港嚴重耗損大量人力、財物。為保護
+碼頭的安全，市長特別在碼頭區配置數個守衛室，進駐許多優秀的戰士，
+以此抵禦海賊來犯。
+~
+0 8 0
+D1
+東邊--港口街的盡頭
+~
+~
+0 0 18020
+S
+
+#18022
+守衛室~
+由於海盜的時常入侵，造成望鄉港嚴重耗損大量人力、財物。為保護
+碼頭的安全，市長特別在碼頭區配置數個守衛室，進駐許多優秀的戰士，
+以此抵禦海賊來犯。
+~
+0 8 0
+D1
+東邊--港口街
+~
+~
+0 0 18019
+S
+
+#18023
+碼頭~
+當時海賊由此入侵，碼頭首當其衝，如今遭破壞的痕跡已不復見，海
+風依舊吹拂著碼頭。四百多年來，寧靜海的風始終伴隨著望鄉港的人們，
+海風裡有血淚、有可歌可泣的故事都將流傳在老水手的回憶裡。
+~
+0 0 0
+D2
+南邊--港口街的盡頭
+~
+~
+0 0 18020
+D3
+西邊--碼頭
+~
+~
+0 0 18028
+>room_rand 40~
+echo 海風呼呼地刮過你的臉。
+~
+|
+S
+
+#18024
+中央大橋~
+你站在中央大橋的南端，這座巨大石橋是望鄉港的著名景點之一，將
+入海口分隔南北的兩區域連接在一起。中央大橋不僅能雙向併行馬車運輸
+貨物，橋面下的水路也能通過中小型船隻。中央大橋往北延伸，往南邊下
+橋則能回到中央大道。
+~
+0 0 1
+D0
+北邊--中央大橋北端
+~
+~
+0 0 18025
+D2
+南邊--中央大道
+~
+~
+0 0 18010
+S
+
+#18025
+中央大橋~
+你站在中央大橋的北端，這座巨大石橋是望鄉港的著名景點之一，將
+入海口分隔南北的兩區域連接在一起。中央大橋不僅能雙向併行馬車運輸
+貨物，橋面下的水路也能通過中小型船隻。中央大橋往南延伸，往北邊下
+橋則能看見一座圓型的廣場。
+~
+0 0 1
+D0
+北邊--望鄉港廣場
+~
+~
+0 0 18029
+D2
+南邊--中央大橋南端
+~
+~
+0 0 18024
+S
+
+#18026
+民房~
+隨手推開大門，空氣中瀰漫著一股濃濃的霉味，地面厚重的灰塵顯示
+出，這房子似乎有很長一段時間沒人居住了。右邊牆上掛著釣竿、漁網及
+一些泛黃的老舊照片。左邊牆面則掛著幾幅畫，雖然畫框的部分早已被蟲
+蛀掉一大半，但還是能清楚看出來畫中內容在敘述著過去望鄉港曾經發生
+的一切；從興盛，到被入侵，再到重建。房屋正中間放著兩張椅子和一張
+神桌，上面供奉著幾尊的神像，積塵上看來，大概也一陣子沒人祭拜了。
+~
+0 8|8192 0
+E
+photo~
+照片中的兩個人似乎是上古時代的Pluto 和Amenda，真不知道這張照片哪裡來的。
+這個相框似乎可以移動(move)？
+~
+E
+paints~
+一幅敘述著遙遠年代以來的點點滴滴的圖畫。不過怎麼會有被移動過的痕跡？
+~
+E
+spirits~
+很受人尊敬的兩尊神像，不過怎麼有人移動過的感覺？
+~
+D2
+南邊--港口街的起點
+~
+~
+3 -1 18017
+>room_command search flat~
+if is_qmark($n) != homeport_gambler_quest 100035
+	echoat $n 你在這平台上找不到東西。
+	break
+endif
+if robjcount(18022) > 0
+	if is_qmark($n) == homeport_quest
+		mpmod_qmark $n homeport_quest v0 | 8
+	else
+		mpadd_qmark $n homeport_quest -1 0 0 0 0 1
+		mpmod_qmark $n homeport_quest v0 | 8
+	endif
+	purge flat-top
+	echoat $n 你仔細的搜索了這個平台。
+	callout 1 echoat $n 你在平台的暗格中找到了一個手鐲。
+	callout 2 echoat $n 正當你拿起這手鐲的時候，平台也緩緩的降回去神桌當中。
+	callout 2 mpdel_qmark $n homeport_gambler_quest
+	callout 2 oload 18023 $n 38 target
+else
+
+endif
+~
+>room_enter 68 100~
+if pcnum($18026) > 1
+	echoat $n 大門似乎有著某種力量阻止你進入。
+	transfer $n 18017
+else
+	purge flat-top
+	modrvt v0 = 0
+	modrvt v1 = 0
+	if is_qmark($n) == homeport_gambler_quest 100035
+		echoat $n 你發現你上次找到的平台還浮現在神桌上。
+		oload 18022 99 floor
+	endif
+endif
+~
+>room_leave 68 100~
+echoat $n 隨著你的離去，大門也慢慢的關上，聲音也安靜了下來。
+modrvt v0 = 0
+modrvt v1 = 0
+~
+>room_command search default~
+echoat $n 你想要找什麼？
+echoaround $n $N 在$e身上摸來摸去，不知道在找什麼東西....
+~
+>room_command move default~
+echoat $n 你想要移動什麼？
+echoaround $n $N 的手不自覺的起舞著！？
+~
+>room_command move photo~
+if roomvalue($1) & 64
+	break
+endif
+if roomvalue($0) !& 1
+	echoat $n 這照片被固定住了，無法移動阿？！
+	break
+endif
+if roomvalue($1) & 1
+	echoat $n 這相框似乎已經被轉動過了。
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 100031
+	modrvt v1 | 64
+	echoat $n 你緩緩的轉動相框....
+	callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+	callout 3 echo 嘎..嘎..嘎..嘎..
+	callout 2 echo 嘎..嘎..嘎..嘎..
+	callout 4 echoat $n  聲音好像停止了....
+	callout 4 echoaround $n 四周的聲音好像靜止下來了。
+	callout 4 modrvt v1 r 64
+	callout 4 modrvt v1 | 1
+	callout 5 echoat $n 難道還少了點什麼？
+endif
+if is_qmark($n) == homeport_gambler_quest 100032
+	modrvt v1 | 64
+	if roomvalue($1) !& 2
+	or roomvalue($1) !& 4
+		echoat $n 你小心翼翼的移動相框....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..碰!。
+		callout 4 echoat $n 似乎有什麼東西卡到的樣子，一切恢復了平靜。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 r 2
+		callout 4 modrvt v1 r 4	
+	else
+		echoat $n 你小心翼翼的移動相框....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..
+		callout 4 echoat $n 你忽然發現在兩個神像當中，緩緩上升了一個平台。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 | 8
+		callout 4 modrvt v1 | 1	
+		callout 4 oload 18022 99 floor
+		callout 4 mod_qmark $n homeport_gambler_quest v0 = 35
+	endif
+endif
+if is_qmark($n) == homeport_gambler_quest 100033
+	modrvt v1 | 64
+	if roomvalue($1) !& 4
+		echoat $n 你小心翼翼的移動相框....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..碰!。
+		callout 4 echoat $n 似乎有什麼東西卡到的樣子，一切恢復了平靜。
+		callout 4 modrvt v1 r 64
+	else
+		echoat $n 你小心翼翼的移動相框....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..
+		callout 4 echoat $n 聲音好像靜止下來了。
+		callout 4 echoaround $n 四周的聲音好像靜止下來了。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 | 1
+		callout 5 echoat $n 難道還少了點什麼？
+	endif
+endif
+~
+>room_command move spirits~
+if roomvalue($1) & 64
+	break
+endif
+if roomvalue($0) !& 2
+	echoat $n 你膽敢擅自移動神像？！不怕天譴嘛！
+	break
+endif
+if roomvalue($1) & 2
+	echoat $n 這神像似乎已經被移動過了。
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 100031
+	modrvt v1 | 64
+	if roomvalue($1) !& 1
+		echoat $n 你小心翼翼的移動神像....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..碰!。
+		callout 4 echoat $n 似乎有什麼東西卡到的樣子，一切恢復了平靜。
+		callout 4 modrvt v1 r 64
+	else
+		echoat $n 你小心翼翼的移動神像....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..
+		callout 4 echoat $n 聲音好像靜止下來了。
+		callout 4 echoaround $n 四周的聲音好像靜止下來了。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 | 2
+		callout 5 echoat $n 難道還少了些什麼？
+	endif
+endif
+if is_qmark($n) == homeport_gambler_quest 100032
+	modrvt v1 | 64
+	echoat $n 你緩緩的轉動神像....
+	callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+	callout 3 echo 嘎..嘎..嘎..嘎..
+	callout 2 echo 嘎..嘎..嘎..嘎..
+	callout 4 echoat $n 聲音好像停止了....
+	callout 4 echoaround $n 四周的聲音好像靜止下來了。
+	callout 4 modrvt v1 r 64
+	callout 4 modrvt v1 | 2
+	callout 5 echoat $n 難道還少了些什麼？
+endif
+if is_qmark($n) == homeport_gambler_quest 100033
+	modrvt v1 | 64
+	if roomvalue($1) !& 1
+	or roomvalue($1) !& 4
+		echoat $n 你小心翼翼的移動神像....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..碰!。
+		callout 4 echoat $n 似乎有什麼東西卡到的樣子，一切恢復了平靜。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 r 1
+		callout 4 modrvt v1 r 4	
+	else
+		echoat $n 你小心翼翼的移動神像....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..
+		callout 4 echoat $n 你忽然發現在兩個神像當中，緩緩上升了一個平台。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 | 8
+		callout 4 modrvt v1 | 2	
+		callout 4 oload 18022 99 floor
+		callout 4 mod_qmark $n homeport_gambler_quest v0 = 35
+	endif
+endif
+~
+>room_command move paints~
+if roomvalue($1) & 64
+	break
+endif
+if roomvalue($0) !& 4
+	echoat $n 這圖畫似乎很堅固，無法移動阿？！
+	break
+endif
+if roomvalue($1) & 4
+	echoat $n 這圖畫似乎已經被移動過了。
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 100031
+	modrvt v1 | 64
+	if roomvalue($1) !& 1
+	or roomvalue($1) !& 2
+		echoat $n 你小心翼翼的移動圖畫....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..碰!。
+		callout 4 echoat $n 似乎有什麼東西卡到的樣子，一切恢復了平靜。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 r 1
+		callout 4 modrvt v1 r 2	
+	else
+		echoat $n 你小心翼翼的移動圖畫....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..
+		callout 4 echoat $n 你忽然發現在兩個神像當中，緩緩上升了一個平台。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 | 8	
+		callout 4 modrvt v1 | 4
+		callout 4 mod_qmark $n homeport_gambler_quest v0 = 35
+		callout 4 oload 18022 99 floor		
+	endif
+endif
+if is_qmark($n) == homeport_gambler_quest 100032
+	modrvt v1 | 64
+	if roomvalue($1) !& 2
+		echoat $n 你小心翼翼的移動圖畫....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..碰!。
+		callout 4 echoat $n 似乎有什麼東西卡到的樣子，一切恢復了平靜。
+		callout 4 modrvt v1 r 64
+	else
+		echoat $n 你小心翼翼的移動圖畫....
+		callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+		callout 2 echo 嘎..嘎..嘎..嘎..
+		callout 3 echo 嘎..嘎..嘎..嘎..
+		callout 4 echoat $n 聲音好像靜止下來了。
+		callout 4 echoaround $n 四周的聲音好像靜止下來了。
+		callout 4 modrvt v1 r 64
+		callout 4 modrvt v1 | 4
+		
+		callout 5 echoat $n 難道還少了點什麼？
+	endif
+endif
+if is_qmark($n) == homeport_gambler_quest 100033
+	modrvt v1 | 64
+	echoat $n 你緩緩的轉動圖畫....
+	callout 1 echo 四周傳來了嘎..嘎..嘎..的聲音。
+	callout 3 echo 嘎..嘎..嘎..嘎..
+	callout 2 echo 嘎..嘎..嘎..嘎..
+	callout 4 echoat $n 聲音好像停止了....
+	callout 4 echoaround $n 四周的聲音好像靜止下來了。
+	callout 4 modrvt v1 r 64
+	callout 4 modrvt v1 | 4
+	callout 5 echoat $n 難道還少了點什麼？
+endif
+~
+>room_command search around~
+if roomvalue($1) & 64
+	break
+endif
+if is_qmark($n) == homeport_gambler_quest 200030
+	modrvt v0 | 64
+	echoat $n 你開始仔細的搜索這房子。
+	callout 1 echoat $n 左邊的畫很正常，沒什麼特殊的地方。
+	callout 2 echoat $n 右邊的照片也很正常，也沒什麼特殊的地方。
+	callout 3 echoat $n 看來這房間蠻正常的。
+	callout 3 modrvt v0 r 64
+endif
+if is_qmark($n) == homeport_gambler_quest 100030
+	if rand(33)
+		mod_qmark $n homeport_gambler_quest v0 = 31
+	else
+		if rand(50)
+			mod_qmark $n homeport_gambler_quest v0 = 32
+		else
+			mod_qmark $n homeport_gambler_quest v0 = 33
+		endif
+	endif
+endif
+if is_qmark($n) == homeport_gambler_quest 100031
+or is_qmark($n) == homeport_gambler_quest 100032
+or is_qmark($n) == homeport_gambler_quest 100033
+	if roomvalue($0) == 7
+		echoat $n 這裡已經被人搜過了，你什麼也沒找到。
+		break
+	endif
+	if roomvalue($0) !& 1
+		modrvt v0 | 1
+		modrvt v1 | 64
+		echoat $n 你開始在這屋子右邊四處的找尋怪異的地方....		
+		callout 2 echoat $n 你發現右邊牆上的照片(photo)似乎有點怪異。
+		callout 2 modrvt v1 r 64
+		break
+	else
+		if roomvalue($0) !& 2
+			modrvt v0 | 2
+			modrvt v1 | 64
+			echoat $n 你在這屋子中間四處的找尋怪異的地方....
+			callout 2 echoat $n 你發現正中間的兩個神像(spirits)似乎有點怪異。
+			callout 2 modrvt v1 r 64
+			break
+		else
+			modrvt v0 | 4
+			modrvt v1 | 64
+			echoat $n 你在這房子的左邊找尋怪異之處....
+			callout 2 echoat $n 你似乎發現左邊的圖畫(paints)似乎可以移動。
+			callout 2 modrvt v1 r 64
+		endif	
+	endif
+endif
+~
+|
+S
+
+#18027
+民房~
+隨手推開大門，陰暗的大廳隨著你的到來滲入了一絲絲的陽光。舉目
+所至，左右兩側陳列整整兩排的書櫃，櫃上放滿了書本。而沒有陳列書櫃
+的地方，則懸掛著一幅幅的圖畫，雖然你看不懂畫中所想要傳表的內容，
+但這些圖畫還是引起了你的注意。從書櫃和圖畫上的積塵厚度，不難看出
+這房子好一陣子沒人使用過了。
+~
+0 8 0
+D2
+南邊--港口街
+~
+~
+3 -1 18018
+S
+
+#18028
+碼頭~
+望鄉港的碼頭伴隨著多少旅客，走過一段段的歷史與回憶。即使現今
+人事已非，你站在碼頭邊仍舊能感受到海風的熱情，似乎在高呼著過往的
+偉業和輝煌。
+~
+0 8 0
+D1
+東邊--碼頭
+~
+~
+0 0 18023
+>room_rand 40~
+echo 海風呼呼地刮過你的臉。
+~
+|
+S
+
+#18029
+望鄉廣場~
+你正站在一座四通八達的環狀廣場，這裡是望鄉港最象徵性的地標。
+廣場噴泉上的海豚代表著出海時的吉兆，也同時是望鄉港的市標。傳說，
+比克魯艦隊的船頭裝飾也以海豚為形象，以求取航海的好運。南邊是中央
+大橋，東、西二條路分別是商會街及普卡街，北邊則是梅爾大道。
+~
+0 0 1
+D0
+北邊--梅爾大道
+~
+~
+0 0 18041
+D1
+東邊--商會街
+~
+~
+0 0 18030
+D2
+南邊--中央大橋
+~
+~
+0 0 18025
+D3
+西邊--普卡街
+~
+~
+0 0 18034
+S
+
+#18030
+商會街~
+望鄉港是人類建立的城市，異族商人為了與人類抗衡，經過長年發展
+後，各族紛紛團結起來，在這條街上建立起屬於自己的商業會所，讓商會
+街搖身一變成為望鄉港的貿易重心。北邊有棟奇特的建築物，外觀像是一
+棵巨大的椰子樹。
+~
+0 0 1
+D0
+北邊--椰子會所
+~
+~
+0 0 18066
+D1
+東邊--商會街
+~
+~
+0 0 18031
+D3
+西邊--望鄉廣場
+~
+~
+0 0 18029
+S
+
+#18031
+商會街~
+各族會所對望鄉港中的商業活動都具有一定程度的影響力，尤其是在
+商會街。在這條街上進行買賣有許多規則及限制，並且會所將抽取額外的
+佣金作為服務及街道維護費。南邊的房子是暗黑精靈會所。
+~
+0 0 1
+D1
+東邊--商會街
+~
+~
+0 0 18032
+D2
+南邊--暗黑精靈會所
+~
+~
+0 0 18067
+D3
+西邊--商會街
+~
+~
+0 0 18030
+S
+
+#18032
+商會街~
+商會街的地價高昂，四周雖然不乏較大的商家，但還是以流動攤販為
+主。在望鄉港居無定所的行商人，只要繳點小錢就能獲得當地勢力支援，
+這對買賣雙方都有保障。因此許多商人把此處當成作生意的第一首選。位
+於北邊的房子是矮人會所。
+~
+0 0 1
+D0
+北邊--矮人商人會所
+~
+~
+3 -1 18068
+D1
+東邊--商會街
+~
+~
+0 0 18033
+D3
+西邊--商會街
+~
+~
+0 0 18031
+S
+
+#18033
+商會街廣場~
+望鄉港是人類的城市，異族商人為了與人類抗衡，團結起來紛紛在此
+建立屬於各族的會所，讓商會街成為望鄉港的貿易中心。四周大多是流動
+攤販，但也不乏較大的商家，四處參觀搞不好會有意外的收獲。
+~
+0 8 0
+D1
+東邊--東城門
+~
+~
+0 0 18070
+D3
+西邊--商會街
+~
+~
+0 0 18032
+S
+
+#18034
+普卡街~
+街道上人潮如水，這一帶是望鄉港比較熱鬧的區域，不但建築物櫛比
+鱗次，往來的人群臉上大多帶著笑容。北邊有棟白色建築，上方掛著紅色
+的十字。南邊的房門前則站著兩位高大的警衛，門上掛著一個橫匾，上面
+寫著「望鄉港警衛部」。
+~
+0 0 1
+D0
+北邊--貝卡醫院
+~
+~
+0 0 18038
+D1
+東邊--望鄉廣場
+~
+~
+0 0 18029
+D2
+南邊--望鄉港警衛部
+~
+~
+0 0 18036
+D3
+西邊--普卡街
+~
+~
+0 0 18035
+S
+
+#18035
+普卡街~
+走在普卡街上，四周人流來來往往，有平民，也有遊客，看來這一帶
+是望鄉港比較熱鬧的區域。許多商人打扮的人匆忙地進入北邊的建築，偶
+爾也有些本地居民朝北邊走去。西邊有條階梯能前往海岸的斷崖。
+~
+0 0 1
+D0
+北邊--銀行
+~
+~
+0 0 18037
+D1
+東邊--普卡街
+~
+~
+0 0 18034
+D3
+西邊--普卡眺望臺
+~
+~
+0 0 18039
+S
+
+#18036
+望鄉港警衛部~
+踏入望鄉港警衛部，一股嚴肅的氣氛瀰漫在這裡。四周不時有警衛
+出入。警衛處的櫃檯後面站著值班的警衛，雖然嚴肅，卻不會給人任何
+的壓迫感。櫃檯上面懸掛著「保鄉為民」的匾額。
+~
+0 8 0
+D0
+北邊--普卡街
+~
+~
+0 0 18034
+S
+
+#18037
+大陸連鎖銀行~
+在繁忙的望鄉港中，銀行的流通量是最大的。因此聰明的奧瑞桑把銀
+行開設在警衛部旁邊，想必是怕被竊賊入侵！行員後面的牆上貼著一張佈
+告(Note)，行員忙到沒有時間招呼你的進入。
+~
+0 8 0
+E
+note~
+本銀行已於2004/11/20正式開幕, 將為各位冒險者提供保管金錢的服務。
+
+      deposit  -- 存入金錢
+      withdraw -- 提領現金
+~
+D2
+南邊--普卡街
+~
+~
+0 0 18035
+S
+
+#18038
+貝卡醫院~
+這裡就如同你所見過的醫院，空氣中彌漫著讓人不甚舒服的藥水味，
+不時還會傳來幾聲呻吟，不知道又是哪個倒楣鬼正在接受醫療。雖然醫院
+的外表看起來不怎麼起眼，但裡面的設備還算齊全；因為村落的在地人已
+經不多，這裡只有一個醫生在醫療病人，雖然貝卡西醫生醫術高超，可是
+有時候病人一多還真忙不過來。若是你在酒吧或賭場和人起衝突被砍了幾
+刀，要是沒直接見閻王，倒可以拖著斷臂殘肢來這裡接受治療，畢竟費用
+還蠻便宜的。後面的牆壁上貼了一張公告(note)。
+~
+0 8 0
+D2
+南邊--普卡街
+~
+~
+0 0 18034
+E note~
+這裡提供以下服務：
+    中度療傷：700 coins
+    高度療傷：1000 coins
+    雙重治療：3000 coins
+    治療中毒：1200 coins
+    解除詛咒：2000 coins
+    治療疾病：1500 coins
+    治療失明：免費，只要說 cure blind
+
+    只要你有所貢獻，必會有所得。
+
+                              貝卡西醫院敬上
+~
+S
+
+#18039
+普卡眺望臺~
+爬上階梯後，你抵達一座涼亭，這裡是望鄉港的制高點也是著名景點
+之一。北邊有座受管制的燈塔，從南方看去能將整個港口區域盡收眼底。
+西邊則是落差幾十公尺的垂直斷崖，站在這裡能聽見海潮拍打岩壁的轟隆
+巨響，不時白色浪花飛濺還會而來，著實讓人感受到大自然的力量。
+~
+0 0 1
+D0
+北邊--普卡燈塔
+~
+~
+0 0 18040
+D1
+東邊--普卡街
+~
+~
+0 0 18035
+S
+
+#18040
+普卡燈塔~
+這座白身藍頂的高塔是目前望鄉港指引遠洋船隻的主要燈塔，望鄉港
+的經濟嚴重依賴海洋，對燈塔的重視度遠高過其他城市，因此燈塔也禁止
+閒雜人等進入。普卡燈塔不僅建得又大又堅固，內部的守備強度甚至能與
+綠樹王國的黑塔相較，無視警告擅自闖入，下場將不堪設想。
+~
+0 0 1
+D2
+南邊--普卡眺望臺
+~
+~
+0 0 18039
+S
+
+#18041
+梅爾大道~
+你能感覺到這條寬敞的大道明顯與其他街道不同。周圍房屋皆為獨棟
+且較其他街道的大，整齊的路樹不難看出有專人定期修剪維護，就連居民
+的穿著也明顯昂貴華美，這裡大概就是望鄉港的富人區吧。北邊較遠處有
+一間很大的建築。
+~
+0 0 1
+D0
+北邊--梅爾大道
+~
+~
+0 0 18042
+D2
+南邊--望鄉廣場
+~
+~
+0 0 18029
+S
+
+#18042
+梅爾大道~
+你能感覺到這條寬敞的大道明顯與其他街道不同。周圍房屋皆為獨棟
+且較其他街道的大，整齊的路樹不難看出有專人定期修剪維護，就連居民
+的穿著也明顯昂貴華美，這裡大概就是望鄉港的富人區吧。北邊不遠處有
+一間很大的建築。
+~
+0 0 1
+D0
+北邊--梅爾大道的盡頭
+~
+~
+0 0 18043
+D2
+南邊--梅爾大道
+~
+~
+0 0 18041
+S
+
+#18043
+梅爾大道的盡頭~
+這裡是梅爾大道的盡頭，周圍的建築景物顯示出附近居民非富即貴的
+身份地位。在北邊有間正對著道路的大型建築，大門上方掛著海豚標誌，
+下方的牌匾寫著：「望鄉港市政廳」。
+~
+0 0 1
+D0
+北邊--市政廳入口
+~
+~
+3 -1 18044
+D2
+南邊--梅爾大道
+~
+~
+0 0 18042
+S
+
+#18044
+市政廳入口~
+你走進了望鄉港的市政廳，地上鋪著紅色的地毯，似乎在歡迎著每位
+前來參觀的客人。大廳內掛著一幅幅過去市長們的肖像，說明著望鄉港曾
+經走過的歲月。西邊是會議廳，東邊是休息室，北邊則是市長辦公室。
+~
+0 8 0
+D0
+北邊--市長辦公室
+~
+~
+119 18028 18047
+D1
+東邊--休息室
+~
+~
+3 -1 18045
+D2
+南邊--梅爾大道的盡頭
+~
+~
+0 0 18043
+D3
+西邊--貴賓休息室
+~
+~
+3 -1 18046
+S
+
+#18045
+貴賓休息室~
+一間氣氛柔和的小房間，地上鋪著鵝黃色的地毯，再加上四周的黃色
+水晶裝飾，讓人忍不住想打個盹。
+~
+0 8 0
+D3
+西邊--市政廳入口
+~
+~
+3 -1 18044
+S
+
+#18046
+會議廳~
+一間鋪著紅色地毯的寬敞大房間，中央放著一張大型的長會議桌，牆
+面上裝有數扇敞式方窗，使房間明亮且空氣流通。
+~
+0 8 0
+D1
+東邊--市政廳入口
+~
+~
+3 -1 18044
+S
+
+#18047
+市長辦公室~
+走進這房間，一股柔和感突然在你心中流動著，柔和的燈光，地上鋪
+著鵝黃色的地毯，樸實的紅木傢俱，襯托出主人的高雅品味。
+~
+0 8 0
+D1
+東邊--市長休息室 //補key
+~
+~
+119 18029 18048
+D2
+南邊--市長辦公室入口
+~
+~
+0 0 18044
+>room_enter 4 100~
+if pcnum($) > 1
+	echoat $n 市長一次只和一個人會客，請稍後再來吧。
+	transfer $n 18044
+endif
+~
+|
+S
+
+#18048
+市長休息室~
+一間氣氛柔和的小房間，地上鋪著鵝黃色的地毯，再加上四週的黃色
+的水晶裝飾。
+~
+0 1032 0
+D3
+西邊--市長辦公室 //補key
+~
+~
+119 18029 18047
+S
+
+#18049
+地道的入口~
+眼前的是一條陰暗的通道，像是人手一鑿一鑿挖掘而成的粗糙作工，
+不像專業人員所為。頭上的岩層緩緩滲出水滴，掉落地面形成積水，讓地
+道變得相當潮濕，補強的木材已有些許腐壞鬆動，隨時都有可能坍塌。有
+條幾十公尺長的繩索從上方垂下，往上爬就能離開這裡。
+~
+0 24 0
+D0
+北邊--地道
+~
+~
+0 0 18050
+D4
+上方--暗黑精靈會所 //補key
+~
+~
+0 0 18067
+S
+
+#18050
+地道~
+與外界完全隔離的陰暗地道，說明著這裡有些見不得光的事情。走在
+岩石與木材補強的地道中，不時能看見些古老的刑具，甚至有時會踩到散
+落的白骨。前進的腳步伴隨滴答的水聲在地道中迴蕩，一陣寒意從你背後
+爬了上來。
+~
+0 24 0
+D0
+北邊--地道
+~
+~
+0 0 18053
+D1
+東邊--秘室
+~
+~
+7 0 18052
+D2
+南邊--地道
+~
+~
+0 0 18049
+D3
+西邊--秘室
+~
+~
+7 0 18051
+S
+
+#18051
+秘室~
+一間陰暗的秘室。
+~
+0 24 0
+D1
+東邊--地道
+~
+~
+7 0 18050
+S
+
+#18052
+秘室~
+一間陰暗的秘室。
+~
+0 24 0
+D3
+西邊--地道
+~
+~
+7 0 18050
+S
+
+#18053
+地道~
+與外界完全隔離的陰暗地道，說明著這裡有些見不得光的事情。走在
+岩石與木材補強的地道中，不時能看見些古老的刑具，甚至有時會踩到散
+落的白骨。前進的腳步伴隨滴答的水聲在地道中迴蕩，一陣寒意從你背後
+爬了上來。
+~
+0 24 0
+D0
+北邊--地道
+~
+~
+0 0 18054
+D2
+南邊--地道
+~
+~
+0 0 18050
+S
+
+#18054
+地道的盡頭~
+與外界完全隔離的陰暗地道，說明著這裡有些見不得光的事情。走在
+岩石與木材補強的地道中，不時能看見些古老的刑具，甚至有時會踩到散
+落的白骨。這條地道只被開鑿到這裡，前方已經沒有路了。
+~
+0 24 0
+D2
+南邊--地道
+~
+~
+0 0 18053
+D4
+上方--柵欄入口
+~
+~
+1|2|4|16|32|64 18024 18055 
+S
+
+#18055
+鐵牢內~
+這裡是一個陰暗的房間，牆面由石頭砌成，除了眼前的鐵柵門外，只
+有個被格柵板封住的排水孔。地面擺放著各式極具創意的刑具，你猜測這
+房間應該作為酷刑的場所。此時柵欄外的走道傳來陣陣的哀嚎聲，讓你更
+確信自己的推論。
+~
+0 0 1
+D0
+北邊--走道
+~
+~
+0 0 18056
+D5
+下方--地道的盡頭
+~
+~
+0 0 18054
+S
+
+#18056
+監牢走道~
+走道沿途上許多鐵牢內傳出孱弱的哀嚎，雖然不知道被關在裡面生物
+受過怎樣的對待，但從他們虛弱的樣子不難看出，他們肯定受過非人道的
+極刑。走道底端你看見三扇厚重的鐵門，其中兩扇被謹慎的鎖上，不知道
+後面有什麼東西。
+~
+0 0 0
+D0
+北邊--監牢守衛室
+~
+~
+1|2 -1 18057
+D1
+東邊--牢房 (key jailor身上)
+~
+~
+1|2|4 0 18058
+D2
+南邊--柵欄入口
+~
+~
+1|2|4|64 0 18055
+D3
+西邊--牢房 (key jailor身上)
+~
+~
+1|2|4 0 18059
+S
+
+#18057
+監牢守衛室~
+房間除了兩扇門外，沒有任何對外的開口，但比起其他監牢而言，算
+是擁有這裡最奢侈的設施：一套破舊的桌椅，一張鋪著稻草的破床，牆上
+還多了幾支照明的燭台。潮濕又通風不良的環境，房間內充斥著令人作噁
+的怪味，任何正常人都想快點離開這裡。但你不禁好奇這裡的守衛，是否
+也有相同心情。
+~
+0 8 0
+D2
+南邊--走道
+~
+~
+0 0 18056
+S
+
+#18058
+特殊牢房~
+這個陰暗的房間除了入口的鐵門外，連一個對外的排水孔也找不到，
+潮濕的空氣瀰漫著濃厚霉味，連石牆縫隙都長出了青苔，使你不由得低聲
+咒罵，世上竟有如此不適合人住的地方。佇足觀察四周，房間中的物品僅
+剩地面上凌厲的碎石，陳舊破損的牆面上有著模糊的刻痕，或許是先前被
+關的人在絕望之際胡亂留下的字跡。
+~
+0 8 0
+D3
+西邊--走道
+~
+~
+1|2|4|64 0 18056
+E
+words~
+你凝視著這彷彿要滲出血來的字體，心中不由得升起一絲惡寒。
+~
+S
+
+#18059
+特殊牢房~
+這個陰暗的房間除了入口的鐵門外，連一個對外的排水孔也找不到，
+潮濕的空氣瀰漫著濃厚霉味，連石牆縫隙都長出了青苔，使你不由得低聲
+咒罵，世上竟有如此不適合人住的地方。佇足觀察四周，房間的地面上殘
+留著破損的刑具和一些白骨。
+~
+0 8 0
+D1
+東邊--走道
+~
+~
+1|2|4|64 0 18056
+S
+
+#18060
+街邊窄巷~
+這是條位於房屋間的小通道，兩側由不同建築的外牆圍成，最狹窄處
+僅能一次通過一人。抬頭往上看去，天空像條微敞的門縫般細長狹窄。在
+昏暗的通道中，不時能發現些穿著隱密的怪人，他們倚靠牆面不發一語，
+就像在等待著甚麼。
+~
+0 8 0
+D0
+北邊--魯克街
+~
+~
+0 0 18012
+D2
+南邊--奇克街
+~
+~
+0 0 18003
+S
+
+#18061
+街邊小巷~
+這是條位於住宅區內的小巷。通道整體算不上寬敞，但勉強還能塞進
+一輛馬車。但彎曲巷道且路中有許多大小階段，整體來說小巷並不適
+合行駛馬車。
+~
+0 8 0
+D2
+南邊--瑞克街
+~
+~
+0 0 18007
+D3
+西邊--街邊小巷
+~
+~
+0 0 18062
+S
+
+#18062
+街邊小巷~
+這是條位於住宅區內的小巷。通道整體算不上寬敞，但勉強還能塞進
+一輛馬車。但巷道彎曲且途中會經過許多大小階段，整體來說小巷並
+不適合行駛馬車。從巷口北邊吹來的風，能聞到淡淡的海水鹹味。
+~
+0 8 0
+D0
+北邊--港口街
+~
+~
+0 0 18017
+D1
+東邊--街邊小巷
+~
+~
+0 0 18061
+S
+
+#18063
+高級客房~
+踏入這間客房，眼前那張彈簧床讓你不由自主的想一頭栽進去，上頭
+還放了一件看似十分高級的絲絨被；房間裡面還附有完整的衛浴設備，讓
+人可以先盥洗再好好睡上一覺養足精神。坐在床上往窗外看，可以瞧見不
+少遊客正從旅館旁的酒店和賭場進進出出，好不熱鬧。也許稍事休息後可
+以下去晃晃，喝點小酒或試試手氣，相信會有個愉快的夜晚。
+~
+0 8 0
+D5
+下方--旅館櫃台
+~
+~
+3 0 18015
+>room_time 100~
+if pcnum($) > 0
+	if hour($) = 7
+	or hour($) = 12
+	or hour($) = 18
+	endif
+endif
+modhmv pc 04.15 15 0
+modhmv pc 14.15 15 0
+modhmv pc 24.15 15 0
+~
+>room_rand 100~
+if is_qmark($n) != superior_room
+	echoat $n 退房的時間到了，旅館的店員把你帶下樓。
+	transfer $n 18015
+endif
+~
+|
+S
+
+#18064
+普通客房~
+踏入這間客房，眼前那張彈簧床讓你不由自主的想一頭栽進去，上頭
+還放了一件看似舒適的鬆軟棉被；房間內提供了簡單的淋浴設備，讓人可
+以先盥洗再好好睡上一覺養足精神。坐在床上往窗外看，可以瞧見不少遊
+客正從旅館旁的酒店和賭場進進出出，好不熱鬧。也許稍事休息後可以下
+去晃晃，喝點小酒或試試手氣，相信會有個愉快的夜晚。
+~
+0 8 0
+D5
+下方--旅館櫃台
+~
+~
+3 0 18015
+>room_time 100~
+if pcnum($) > 0
+	if hour($) = 7
+	or hour($) = 12
+	or hour($) = 18
+	endif
+endif
+modhmv pc 04.5 5 0
+modhmv pc 14.5 5 0
+modhmv pc 24.5 5 0
+~
+>room_rand 100~
+if is_qmark($n) != classic_room
+	echoat $n 退房的時間到了，旅館的店員把你帶下樓。
+	transfer $n 18015
+endif
+~
+|
+S
+
+#18065
+哨站~
+前方的林間道路滿是濃霧，可見度不高，這裡是你所能通行道路的最
+後一小段，再過去即是一片的廢墟，至於為什麼會在這裡建一個哨站來封
+鎖這條道路，到現在仍是眾說紛紜。傳聞中那裡曾有一座版圖不小的城堡
+和莊園，在戰爭中遭到破壞後就沒落了，現在成為盜匪的盤踞地；也有人
+傳言有惡魔封印在那片廢墟深處，所以才會禁止通行，事實總是不如故事
+來的精采。由花崗岩堆砌建造而成的哨站雖沒有高大宏偉的骨架，但其莊
+嚴而精巧的建築風格仍會讓人為之佇足；周圍彌漫著一股詭譎的氣息，讓
+人心中有些忐忑，望著守衛凝重的表情，更加深了那種不安的感覺。
+~
+0 8 0
+D2
+南邊--普卡街
+~
+~
+0 0 18041
+S
+
+#18066
+椰子會所~
+這間建築物的外表就是一個超大型的椰子，讓人不禁好奇到底是用來
+做什麼的。推開鑲滿大大小小椰子殼的門來到裡面，映如眼廉的竟然是一
+顆到處滾動的椰子？！你揉了揉眼睛再仔細一看，原來是一個人穿著椰子
+造形服飾的人在四處晃來晃去！就算你是位經驗豐富的冒險者也看得一頭
+霧水，完全搞不懂這家店是在作什麼買賣。
+~
+0 8 0
+D2
+南邊--商會街
+~
+~
+0 -1 18030
+>room_mask list qmark:homeport_quest v0&32~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+>room_mask buy qmark:homeport_quest v0&32~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+>room_mask sell qmark:homeport_quest v0&32~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+>room_mask value qmark:homeport_quest v0&32~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+|
+S
+
+#18067
+暗黑精靈會所~
+在商會門口守衛的銳利注視下你戰戰兢兢的踏入了這裡，心中不禁暗
+自咒罵暗黑精靈們不友善的態度，連對客人都不懂得禮貌些。你整理一下
+情緒環伺四周，整間商會裡的氣氛安靜地有些詭異，略嫌昏暗的燈光讓你
+不由得有些擔心。坐在角落的老闆因你的到來站了起來，你赫然發現他比
+一般所見過的暗黑精靈都來的強壯，歷盡蒼桑的臉孔不自覺透露出他過去
+所曾面對的風雨。他朝你看了看，那如老鷹般精銳有神的目光讓你想起了
+一名讓人聞風喪膽的大將，就是深土城的護國將領拉席卡...
+~
+0 8 0
+D0
+北邊--商會街
+~
+~
+3 -1 18031
+D5
+下邊--地下室 //補key
+~
+~
+119 18024 18049
+S
+
+#18068
+矮人商人會所~
+你掀開商會門口的簾幕探了探頭，不禁為裡面的陳設感到驚訝。矮人
+們善於建築設計的長才在這裡一覽無遺，無論是櫃台桌椅的擺設或是樑柱
+上的雕刻都讓人感嘆其鬼斧神工。親切的矮人老板向你招了招手，大方的
+笑容讓人感到十分親切。櫃台後方的架子上擺滿了精巧的手工藝品，似乎
+都是出自矮人雕刻家的作品，或許你可以在裡面找到什麼好東西。
+~
+0 8 0
+D2
+南邊--商會街
+~
+~
+0 0 18032
+>room_mask list qmark:homeport_quest v0&16~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+>room_mask buy qmark:homeport_quest v0&16~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+>room_mask sell qmark:homeport_quest v0&16~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+>room_mask value qmark:homeport_quest v0&16~
+echoat $n 這裡沒有人跟你進行買賣.
+~
+|
+S
+
+#18070
+望鄉港東城門~
+眼前有座寬廣的護城橋，末端連接著貿易之都 － 望鄉港。走在橋頭
+上就能看見許多馬車進出城市，大門後傳來此起彼落的叫賣聲。南北向的
+護城河導入流經平原的河水，安克農河豐沛的水量使護城河一年四季永不
+乾涸。經歷長途的旅程，眼前燈火通明的城市讓你感到安心。
+~
+0 8 0
+D1
+東邊--警備哨
+~
+~
+0 0 38434
+D3
+西邊--商會街廣場
+~
+~
+0 0 18033
+S
+
+#0
+
+#ROOMPROGS
+R 18016 baccarat_room.prg
+S
+
+#MOBPROGS
+M 18021 baccarat_dealer.prg
+S
+
+#RESETS
+O 0 18010 1 18029
+M 0 18000 1 18000
+M 0 18003 1 18047
+M 0 18024 1 18004
+G 0 9402 0
+G 0 9411 0
+M 0 18001 3 18021
+M 0 18001 3 18022
+M 0 18002 2 18044  *mayor bodyguard
+M 0 18008 1 18066  *coconut merchant
+G 0 18040 0
+G 0 18041 0
+G 0 18042 0
+G 0 18043 0
+M 0 18009 1 18068  *dwarf merchant
+G 0 18045 0
+G 0 18046 0
+G 0 18015 0
+M 0 18005 1 18057
+M 0 18004 1 18044  *mayor secretary
+M 0 18006 1 18025
+M 0 18007 1 18059
+M 0 18010 1 18039
+M 0 18011 1 18037
+M 0 18012 1 18036
+M 0 18013 1 18067  *drow merchant
+E 0 15054 0 16
+G 0 15017 0
+G 0 15018 0
+G 0 15019 0
+G 0 15020 0
+M 0 18014 1 18042
+M 0 18018 1 18014
+M 0 18019 1 18014
+M 0 18020 1 18015
+M 0 18015 1 18015
+M 0 18023 1 18005
+G 0 18017 0
+G 0 18018 0
+G 0 18019 0
+M 0 18022 1 18016 *賭場賭客
+M 0 18021 1 18016 *賭場老闆
+M 0 18027 1 18012
+M 0 18025 1 18009
+G 0 18020 0
+G 0 18021 0
+M 0 18028 1 18038 *doctor
+M 0 18026 1 18008
+G 0 13645 0 
+G 0 14031 0
+G 0 14033 0
+M 0 18036 1 18061
+M 0 18037 1 18062
+M 0 18038 2 18006
+M 0 18038 2 18003
+M 0 18039 1 18029
+M 0 18039 1 18029
+
+S
+
+#SHOPS
+18026 2 3 4 10 0 100 50 7 23
+18013 1 10 12 15 0 100 50 7 23
+18011 19 0 0 0 0 100 50 7 23
+18008 0 0 0 0 0 100 50 0 23 *coconut merchant
+18009 8 9 0 0 0 100 50 7 23 *dwarf merchant
+18024 19 0 0 0 0 100 50 7 23
+18023 9 0 0 0 0 100 50 7 23
+18025 8 9 1 0 0 100 50 7 22
+0
+
+
+
+#SPECIALS
+M 18015 spec_thief
+M 18034 spec_cast_mage
+M 18033 spec_cast_mage
+M 18035 spec_cast_cleric
+S
+
+#$

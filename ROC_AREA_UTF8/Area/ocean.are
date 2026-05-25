@@ -1,0 +1,2915 @@
+#AREADATA
+Name        海洋~
+Identity    river~
+Builders    Picard~
+Translator  Pluto~
+Modifier    Slay~
+VNUMs	      200 299
+Security    1
+Recall      3001
+F_toggle    0
+End
+
+
+
+#MOBILES
+#201
+witch hag woman~
+巫婆(witch)~
+一個巫婆(witch)在她的住處冷冷地看著你的行動。
+~
+她應該是你見過最老的巫婆吧。她手拿著一隻魔杖，另外一隻手拿著一本紅色
+的魔法書。
+~
+3 0 0 S
+17 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Hobbit~
+P 8
+>talk_prog coconut~
+if is_qmark($n) == homeport_coconet_quest 100001
+	if is_qmark($n) != homeport_coconet_quest 200003
+		ponder $n
+		mpechoat $n $I 說 '椰子樹？那種東西對我的魔法研究又沒任何幫助，早就被
+		mpechoat $n $I 說 '河口的茂密樹林所掩蓋了。
+		mpechoat $n $I 說 '好了好了，快走別吵我，我要繼續研究了。
+		if robjcount(216) == 0
+			mpat 208 mpoload 216 1 floor
+			mpat 208 mpforcer 208 modrvt timer = 120
+		endif
+	endif
+endif
+~
+>greet_prog 30~
+say 外來者，滾出我的房間....！
+say 話說完忽然就丟了一個火球過來....！
+c fireball $n
+mpgoto self
+say 趕快出去....！
+~
+>talk_prog topic~
+if is_qmark($n) & ocean_quest 300001
+	say 你還想要更多藥水嗎？一瓶 50000 枚金幣。
+	hehe $n
+	break
+endif
+say 我想做一種藥水(potion)，需要很多材料。
+~
+>talk_prog potion~
+if is_qmark($n) & ocean_quest 300001
+	break
+endif
+say 就是傳說中的水中呼吸藥水....。
+say 需要燕巢(net of swallow)、人頭(head)以及 15000 枚金幣。
+say 你想要幫我收集這些物品嗎(yes/no)？
+~
+>talk_prog yes~
+if is_qmark($n) & ocean_quest 300001
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpadd_qmark $n ocean_quest -1 0 0 0 0 1
+	say 太棒了，請將剛剛我說的幾項物品趕緊拿給我。
+endif
+~
+>talk_prog p net of swallow~
+say 據說附近碼頭的船長有。
+~
+>talk_prog head~
+say 這附近人不少吧！
+grin
+~
+>give_prog 212~
+if being($b)
+	mpjunk all.head
+	say 現在正在製作藥水，請稍等。
+	break
+endif
+if is_qmark($n) & ocean_quest 100008
+or is_qmark($n) & ocean_quest 100016
+	mpjunk all.head
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpjunk all.head
+else
+	if is_qmark($n) & ocean_quest 100001
+		mpjunk all.head
+		say 你已經給過我這個東西了。
+		break
+	endif
+	say OK，收到人頭！
+	mpmod_qmark $n ocean_quest v0 | 1
+	mpjunk all.head
+	if is_qmark($n) !& ocean_quest 100002
+		say 你還需要給我一份燕巢(net of swallow)。
+	endif
+	if is_qmark($n) !& ocean_quest 100004
+		say 你還需要給我 15000 枚金幣。
+	endif
+	if is_qmark($n) == ocean_quest 100007
+		mpecho $I 把材料與金幣丟進鍋子裡，開始製作藥水。
+		mpmod_qmark $n ocean_quest v0 | 8
+		mpdef_rembch $n
+		mpadd_qmark self ocean_quest -1 0 0 0 0 1
+	endif
+endif
+~
+>give_prog 213~
+if being($b)
+	mpjunk all.swallow
+	say 現在正在製作藥水，請稍等。
+	break
+endif
+if is_qmark($n) & ocean_quest 100008
+or is_qmark($n) & ocean_quest 100016
+	mpjunk all.swallow
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpjunk all.swallow
+else
+	if is_qmark($n) & ocean_quest 100002
+		mpjunk all.swallow
+		say 你已經給過我這個東西了。
+		break
+	endif
+	say OK，收到燕巢(net of swallow)！
+	mpmod_qmark $n ocean_quest v0 | 2
+	mpjunk all.swallow
+	if is_qmark($n) !& ocean_quest 100001
+		say 你還需要給我一顆人頭(head)。
+	endif
+	if is_qmark($n) !& ocean_quest 100004
+		say 你還需要給我 15000 枚金幣。
+	endif
+	if is_qmark($n) == ocean_quest 100007
+		mpecho $I 把材料與金幣丟進鍋子裡，開始製作藥水。
+		mpmod_qmark $n ocean_quest v0 | 8
+		mpdef_rembch $n
+		mpadd_qmark self ocean_quest -1 0 0 0 0 1
+	endif
+endif
+~
+>bribe_prog 50000~
+if is_qmark($n) & ocean_quest 300001
+	mpoload 214 1 floor
+	say 自己撿起來吧，我無法彎腰！
+	yawn
+endif
+~
+>bribe_prog 15000~
+if being($b)
+	mpgold $n 15000
+	mpjunk all.coins
+	say 現在正在製作藥水，請稍等。
+	break
+endif
+if is_qmark($n) & ocean_quest 100008
+or is_qmark($n) & ocean_quest 100016
+	mpjunk all.coins
+	break
+endif
+if is_qmark($n) != ocean_quest
+	mpjunk all.coins
+else
+	if is_qmark($n) & ocean_quest 100004
+		mpjunk all.coins
+		say 你已經給過我 15000 枚金幣了。
+		mpgold $n 15000
+		break
+	endif
+	say OK，收到 15000 枚金幣！
+	mpmod_qmark $n ocean_quest v0 | 4
+	mpjunk all.coins
+	if is_qmark($n) !& ocean_quest 100001
+		say 你還需要給我一顆人頭(head)。
+	endif
+	if is_qmark($n) !& ocean_quest 100002
+		say 你還需要給我一份燕巢(net of swallow)。
+	endif
+	if is_qmark($n) == ocean_quest 100007
+		mpecho $I 把材料與金幣丟進鍋子裡，開始製作藥水。
+		mpmod_qmark $n ocean_quest v0 | 8
+		mpdef_rembch $n
+		mpadd_qmark self ocean_quest -1 0 0 0 0 1
+	endif
+endif
+~
+>rand_prog 40~
+if is_qmark($i) == ocean_quest 100000
+	if insameroom($b)
+		if rand(70)
+			mpecho 鍋子忽然冒出一陣青煙！
+			say 完成了！
+			if is_qmark($b) !& ocean_quest 300001
+				mpmod_qmark $b ocean_quest v2 | 1
+				if class($n) < 5
+					mpexp $n 1000
+				endif
+				mpexp $b 2000
+			endif
+			mpoload 214 1 floor
+			say 自己撿起來吧，我無法彎腰！
+			yawn
+			mpdel_qmark self ocean_quest
+			mpdef_rembch null-tar
+		else
+			mpecho 鍋子忽然冒出一陣黑煙！
+			say 失敗了！常有的事，只好麻煩您再去找一次。
+			shrug
+			mpdel_qmark self ocean_quest
+			mpmod_qmark $b ocean_quest v0 = 0
+			mpdef_rembch null-tar
+		endif
+	endif
+endif
+~
+|
+#202
+sailor~
+水手(sailor)~
+一位熟練的水手(sailor)在這裡販賣著船隻。
+~
+管理這位水手的船長似乎不在這附近。
+~
+3 0 900 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+say 天氣很冷，好想要一件海狸大衣。
+	say 我願意用珍貴的燕巢(net of swallow)跟他換。
+~
+>death_prog 100~
+mpecho $I 的頭被血淋淋地砍了下來！
+	mpoload 212 floor
+~
+>give_prog 205~
+bow $n
+	mpoload 213
+	give swallow $n
+~
+|
+#203
+shark~
+鯊魚(shark)~
+一隻鯊魚(shark)張著大嘴向你咬來。
+~
+你怎麼還有時間看著這隻鯊魚？有時間看它，倒不如把它的背鰭砍下來當魚
+翅來吃。
+~
+97 1075839488 0 S
+24 200 0 10d10+0 0d-30+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>death_prog 50~
+if is_qmark($n) < ocean_quest 200004
+	mpmod_qmark $n ocean_quest v1 + 1
+endif
+	mpechoat $n 你把鯊魚(shark)的背鰭砍下！
+	mpechoaround $n $n 在 $I 死後砍下牠的背鰭！
+	mpoload 204 floor
+~
+|
+#204
+cetacean~
+鯨魚(cetacean)~
+一隻鯨魚(cetacean)正在海面上噴水。
+~
+別太接近這隻巨大的鯨魚，以免你的座船被他巨大的體積給撞壞的。
+~
+65 2105856 0 S
+37 1000 0 10d10+-50 0d100+0
+-1 0
+0 8 1
+R Animal~
+C 1
+#205
+octopus~
+章魚(octopus)~
+一隻章魚(octopus)在海面下悠閒地游來游去。
+~
+不要小看這一隻小小的章魚，他可以噴出墨汁讓你瞬間就失明。
+~
+65 1075839488 0 S
+31 500 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>fight_prog 20~
+mpechoat $n $I 忽然向你吐出了噁心的墨汁....。
+	c 3 blindness $n
+~
+|
+#206
+swordfish~
+旗魚(swordfish)~
+一隻尖銳危險的旗魚(swordfish)正在海面上奔馳。
+~
+站在旗魚行進的路線上是一件蠢事，被它的前頭的刺給刺中不是鬧著玩的。
+~
+65 1075847680 0 S
+37 1000 0 10d10+-50 0d100+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>greet_prog 30~
+if isnpc($n)
+		break
+	endif
+	mpechoat $n 你忽然看到一隻旗魚向你衝了過來....！
+	if level($n) >= 25
+		mpechoat $n 你已經來不及閃避了....！
+		mpkill $n
+	else
+		if rand(50)
+			mpechoat $n 你一個閃身，避過了旗魚尖銳的嘴巴....。
+		else
+			mpechoat $n 你一個閃身，沒能夠閃過去....。
+			mpkill $n
+		endif
+	endif
+~
+|
+#207
+seasnake~
+海蛇(seasnake)~
+一條含有劇毒的海蛇(seasnake)在海面上游著。
+~
+據說海蛇身上的毒素是生物中最毒的一種。
+~
+65 1075839488 0 S
+15 100 0 50d-5+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+C 1
+>greet_prog 20~
+if isnpc($n)
+		break
+	endif
+	mpechoat $n 你的行動驚動了海蛇，它忽然向你攻了過來。
+	mpkill $n
+~
+>fight_prog 50~
+mpechoat $n 海蛇的毒牙忽然向你噴出毒液....！
+	c poison $n
+~
+|
+#208
+beaver~
+海狸(beaver)~
+一隻可愛的海狸(beaver)正在這裡優閒地游泳。
+~
+據說不少黑心的商人為了毛皮殺了不少海狸，但這麼可愛的生物居然也有人狠下心捕殺。
+~
+65 2097152 1000 S
+15 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+>death_prog 50~
+mpecho $I 死前的叫聲讓你感到十分難受。
+~
+|
+#209
+fisher~
+漁夫(fisher)~
+一個窮困的漁夫(fisher)冒著風險來到海上捕魚。
+~
+他穿的衣服破破爛爛的，看來十分地缺錢。
+~
+65 2097152 200 S
+27 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>greet_prog 20~
+if isnpc($n)
+		break
+	endif
+	mpechoat $n $I 忙著捕魚，根本沒注意到你。
+~
+>talk_prog topic~
+say 最近錢真難賺....。
+~
+>death_prog 100~
+mpecho $I 的頭被血淋淋地砍了下來！
+	mpoload 212 floor
+~
+|
+#210
+starfish~
+海星(starfish)~
+一個海星(starfish)趴在沙灘上。
+~
+牠一動也不動，看來根本沒有任何防禦力。
+~
+3 1075838976 0 S
+2 0 0 0d0+50 0d50+0
+-1 0
+0 8 0
+R Fish~
+>fight_prog 100~
+mpgoto self
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpoload 211 floor
+~
+|
+#211
+dragon ichthyosaurus~
+海龍(Ichthyosaurus)~
+一隻巨大的海龍(Ichthyosaurus)正在這裡巡邏著奈普頓的領土。
+~
+牠是一隻巨大的龍，但仍然聽命於奈普頓。
+~
+65 2097280|17179869184 1000 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Dragon~
+>greet_prog 100~
+if isnpc($n)
+	break
+endif
+if is_qmark($n) == ocean_quest 200007
+	good $n
+	say 非常好！
+	mpecho $I 念著魔法咒語，一把三叉戟(trident)出現在你面前。
+	say 這把戟可以讓你在水中呼吸。
+	mpechoat $n $I 將三叉戟(trident)拿給了你....。
+	if class($n) < 5
+		mpexp $n 1500
+	endif
+	mpexp $n 3000
+	mpoload 206 $n viclv target
+	mpmod_qmark $n ocean_quest v1 = 8
+	mpmod_qmark $n ocean_quest v2 | 2
+	break
+endif
+if is_qmark($n) == ocean_quest 200004
+	good $n
+	say 很好，那我再給你一個任務怎麼樣(yes/no)？
+	mpmod_qmark $n ocean_quest v1 = 5
+	break
+endif
+if is_qmark($n) == ocean_quest 200002
+	say 你已經解決一隻了，還差兩隻！
+	break
+endif
+if is_qmark($n) == ocean_quest 200003
+	say 你已經解決兩隻了，還差一隻！
+	break
+endif
+~
+>talk_prog topic~
+say 這裡是歸海神 - 奈普頓(Neptune) 管的區域！
+if is_qmark($n) != ocean_quest
+	mpadd_qmark $n ocean_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) == ocean_quest 200000
+	if level($n) >= 30
+		say 也許你可以幫忙除掉在海上作亂的怪物....。
+		say 怎麼樣，要幫忙嗎(yes/no)？
+	endif
+endif
+~
+>talk_prog neptune~
+say 祂是偉大的海神，萬神之神 - 朱彼得(Jupiter) 與冥王 - 普魯多(Pluto) 的兄弟。
+~
+>talk_prog restart~
+if is_qmark($n) == ocean_quest 200008
+or is_qmark($n) & ocean_quest 300002
+	mpechoat $n 一道莊嚴的聲音說道：任務已經完成，無須重來。
+	break
+endif
+mpechoat $n 一道莊嚴的聲音說道：好，讓一切都重來吧！
+mpmod_qmark $n ocean_quest v1 = 0
+~
+>talk_prog yes~
+if is_qmark($n) == ocean_quest 200005
+		say 這個任務是除掉海中作亂的大海怪(Kraken)。
+		addoil $n
+		mpmod_qmark $n ocean_quest v1 = 6
+		break
+	endif
+	if is_qmark($n) == ocean_quest 200000
+		if level($n) >= 30
+			say 很好，你只要去殺掉三隻大白鯊(Great White Shark)就好！
+			mpmod_qmark $n ocean_quest v1 = 1
+		endif
+	endif
+~
+>fight_prog 20~
+say 不准在神聖的深海作亂！！
+cast whirlwind
+~
+|
+#212
+tortoise turtle~
+陸龜(tortoise)~
+這隻烏龜(turtle)在這裡緩慢地爬著。
+~
+牠爬行的速度真的慢到會讓你睡覺，但那堅固的殼可不是假的！
+~
+3 0 0 S
+29 0 0 0d0+-100 0d0+0
+-1 0
+0 8 0
+R Animal~
+>fight_prog 30~
+if hitprcnt($i) < 50
+	if isaffected($i) !& 128
+		mpat 5 cast sanc
+	endif
+	mpat 5 cast shield
+	mpat 5 cast armor
+	mpecho $I 縮進殼裡，躲了起來。
+	mpgoto self
+endif
+~
+|
+#213
+kraken~
+大海怪(Kraken)~
+傳說中居住在北海的大海怪(Kraken)在這裡作亂！
+~
+牠大概有普通章魚數倍之大，快點逃跑吧！
+~
+3 2097192|17179869184 -800 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Hydra~
+>greet_prog 30~
+if isnpc($n)
+or isimmort($n)
+	break
+else
+	mpechoat $n $I 揮舞觸手襲擊你！
+	mpkill $n
+endif
+~
+>rand_prog 5~
+if pcnum($) > 0
+	mpechoat $r $I 忽然對你噴出大量的墨汁！
+	cast blindness $r
+endif
+~
+>fight_prog 10~
+mpecho $I 瘋狂地揮舞著觸手！
+	cast whirlwind
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+if is_qmark($n) == ocean_quest 200006
+	mpmod_qmark $n ocean_quest v1 = 7
+endif
+~
+|
+#214
+angelfish~
+扁鮫(angelfish)~
+一隻很小的扁鮫(angelfish)正在這裡游著。
+~
+牠一看到你就馬上游走了。
+~
+65 1075838976 0 S
+14 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+#215
+coelancanth~
+腔棘魚(colelancanth)~
+一隻很大隻的腔棘魚(colelancanth)游了過來。
+~
+這隻魚十分地特殊，並不常見。
+~
+65 1075838976 0 S
+32 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+#216
+great shark~
+大白鯊(Great White Shark)~
+一隻可怕的大白鯊(Great White Shark)張著大嘴向你咬來！
+~
+你仔細一看，牠牙齒上還帶著一些殘肉與血跡，快點逃跑吧！
+~
+97 1075839016 -400 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+if is_qmark($n) == ocean_quest 200001
+or is_qmark($n) == ocean_quest 200002
+or is_qmark($n) == ocean_quest 200003
+	mpmod_qmark $n ocean_quest v1 + 1
+endif
+~
+|
+#217
+bass~
+大鱸魚(bass)~
+一隻大鱸魚(bass)在這裡游著。
+~
+牠全身都是黑的，而且相當巨大。
+~
+65 2097152 0 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+>death_prog 100~
+mpoload 209 floor
+~
+|
+#218
+tuna~
+鮪魚(tuna)~
+一隻鮪魚(tuna)在這裡游著。
+~
+鮪魚是一種十分適合食用的魚。
+~
+65 1075838976 0 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>death_prog 100~
+mpoload 207 floor
+~
+|
+#219
+salmon~
+鮭魚(salmon)~
+鮭魚(salmon)在這裡游著。
+~
+鮭魚是一種十分適合食用的魚。
+~
+65 2097152 0 S
+16 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>death_prog 100~
+mpoload 208 floor
+~
+|
+#220
+numbfish~
+電鰻(numbfish)~
+一隻電鰻(numbfish)往你這裡游了過來！
+~
+牠看起來蠻危險的，最好別靠近牠。
+~
+65 1075838976 0 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>rand_prog 10~
+if pcnum($) > 0
+	if rand(50)
+		cast 'lightning bolt' $r
+	else
+		cast 'chain lightning'
+	endif
+endif
+~
+>fight_prog 10~
+mpecho $I 忽然猛發出一陣電！
+	cast lightning
+~
+|
+#221
+alligator~
+鱷魚(alligator)~
+一隻巨大的鱷魚(alligator)張開大嘴咬向你！
+~
+這是一隻巨大的兩棲生物，看來是肉食的。
+~
+97 2097152 0 S
+24 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Fish~
+#222
+devil ray fish~
+魔鬼魚(devil ray)~
+這是一隻可怕的魚(fish)，最好離牠遠點。
+~
+傳說中被魔鬼魚碰上是會被詛咒的！
+~
+65 1075838976 -1000 S
+24 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+>greet_prog 10~
+cast curse $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpoload 210 floor
+~
+|
+#223
+acaleph~
+水母(acaleph)~
+一個透明的生物(acaleph)正漂浮在水中。
+~
+在水中，你幾乎看不到這個透明的生物。
+~
+65 2097154 0 S
+7 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Fish~
+#224
+whale~
+鯨魚(whale)~
+一隻巨大的鯨魚(whale)差點就撞上你。
+~
+牠的體積非常巨大。
+~
+65 1075838976 0 S
+34 300 0 0d0+0 0d50+0
+-1 0
+0 8 0
+R Animal~
+#225
+dolphin~
+海豚(dolphin)~
+一隻海豚(dolphin)從你身旁游過去。
+~
+海豚據說擁有很高的智能，至少比半獸人高太多了。
+~
+65 2097152 0 S
+33 0 0 0d0+0 0d-15+0
+-1 0
+0 8 0
+R Animal~
+#0
+
+
+
+#OBJECTS
+#201
+book red~
+紅色書籍(red book)~
+一本沾滿灰塵的紅色書籍(red book)放在這裡。~
+~
+15 64 16385
+50~ 1~ -1~ 0~
+5 1200 0
+E
+book red~
+掌握時間的人就掌握了世界。~
+
+C 1200
+X paper~
+
+#202
+flask glass~
+玻璃罐子(glass flask)~
+一瓶可以裝各種液體的玻璃罐子(glass flask)被丟在此處。
+~
+~
+17 64 16385
+250~ 50~ 0~ 0~
+15 500 0
+
+C 500
+X glass~
+
+#203
+canoe~
+獨木舟(canoe)~
+一艘獨木舟(canoe)被丟在這裡.~
+~
+22 0 1
+0~ 0~ 0~ 0~
+32 1000 0
+E
+canoe~
+這艘獨木舟蠻輕的。
+~
+
+C 1000
+X wooden~
+
+#204
+fin shark~
+鯊魚翅(shark fin)~
+一個巨大的魚翅(fin)掉在這裡。~
+~
+19 0 1
+15~ 0~ 0~ 0~
+5 15000 0
+C 15000
+X food~
+
+#205
+fur beaver~
+海狸的皮(fur)~
+一塊珍貴的海狸皮(fur)掉在這裡。~
+~
+9 0 9
+0~ 0~ 1501150~ 0~
+1 15000 0
+
+C 15000
+X wool~
+
+#206
+neptune trident~
+海神之戟(Trident of Neptune)~
+一把散發著大海之力的三叉戟(trident)被丟在這裡。~
+~
+5 256 8193
+1501150~ 0~ 0~ 11~
+15 50000 0
+E
+neptune trident~
+這把戟給予使用者進入深海的力量。
+~
+H breathe water~ 50 36 1
+
+C 50000
+X steel~
+
+#207
+tuna~
+鮪魚(tuna)~
+一條鮪魚(tuna)掉在這裡。~
+~
+19 0 1
+10~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#208
+salmon~
+鮭魚(salmon)~
+一條鮭魚(salmon)掉在這裡。~
+~
+19 0 1
+10~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#209
+bass~
+鱸魚(bass)~
+一大條鱸魚(bass)掉在這裡。~
+~
+19 0 1
+25~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#210
+devil ray fish~
+魔鬼魚(devil ray)~
+一條可怕的魚(fish)掉在這裡。~
+~
+19 0 1
+10~ 0~ 0~ 0~
+5 0 0
+X flesh~
+
+#211
+treasure coins gold~
+財寶(treasure)~
+一大堆的財寶(treasure)堆在這裡。~
+~
+20 0 1
+500~ 0~ 0~ 0~
+1 500 0
+C 500
+X gold~
+
+#212
+head~
+血淋淋的人頭(head)~
+一顆血淋淋的人頭(head)掉在這裡。~
+~
+13 0 1
+0~ 0~ 0~ 0~
+1 0 0
+X flesh~
+
+#213
+net swallow~
+燕巢(Net)~
+一個燕巢(net of swallow)~
+~
+19 0 1
+1~ 0~ 0~ 0~
+1 0 0
+X wooden~
+
+#214
+potion~
+水中呼吸藥水(Potion - Breathe water)~
+一瓶藥水(potion)散發著大海之力。~
+~
+10 0 1
+36~ breathe water~  ~  ~
+1 0 0
+X liquid~
+
+#215
+Coconut~
+一顆大椰子(Coconut)~
+一顆成熟的大椰子(Coconut)掉落在地上。~
+~
+26 0 1
+1~ double heal~ full ref~ 0~
+15 0 0
+E
+coconut~
+清涼又退火的椰子汁有助於體力的回復。
+~
+
+#216
+tree coconut~
+椰子樹(Coconut Tree)~
+一棵十分高大的椰子樹(Coconut Tree)豎立在這裡。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+200 0 0
+E
+tree coconut~
+一棵十分高大的椰子樹，看著那整串已經成熟的椰子，若能夠喝到那新鮮的
+椰汁的話不知有多好。也許你可以試著推推看(push)，也許椰子會掉下來也
+說不定哦，但可要小心別被掉落的椰子給擊中，那可就不好玩了。
+~
+
+#0
+
+
+
+#ROOMDATA
+#200
+海洋~
+buffer room of ocean.are
+~
+0 16|65536|524288|1048576 0
+E update~
+2020/02/17 統整完結 quest qmark 為 ocean_quest
+  製造藥水 為 ocean_quest & 300001 , v2 | 1
+  消滅海怪 為 ocean_quest & 300002 , v2 | 2
+~
+S
+#201
+在河流上~
+這條由東邊史卡拉貝城流過來的河流動的十分緩慢。在東邊可以看到一座橋橫跨
+在河流上。而河流繼續往西邊流動過去。
+~
+0 4 7
+D1
+一座史卡拉貝的橋橫跨在河流上。
+~
+~
+0 -1 3200
+D3
+這條河繼續往西邊流動過去。
+~
+~
+0 -1 202
+S
+#202
+在河流上~
+你在河流上緩緩的離開史卡拉貝城，並且城內的喧囂聲也已漸漸遠離。在城西濃
+密森林的陰影讓你在河流上幾乎見不到陽光。河流由東往西繼續延伸。
+~
+0 4 7
+D1
+河流往東回到史卡拉貝。
+~
+~
+0 -1 201
+D3
+那裡一片陰影。
+~
+~
+0 -1 203
+S
+#203
+在河流上~
+你在河流上漸漸遠離了史卡拉貝城城西森林的陰影，耀眼的陽光重新照耀在你身
+上。但見到北邊城西森林有不少的生物在河流邊喝水。河流由東向西繼續延伸。
+~
+0 4 7
+D1
+河流往東通往史卡拉貝。
+~
+~
+0 -1 202
+D3
+河流往西延伸。
+~
+~
+0 0 204
+S
+#204
+寬闊的河流~
+河流到這裡已經非常寬闊了。頭頂上也已經沒有樹木的遮蔭。史卡拉貝城在遠遠
+的東邊已經幾乎看不到。河流由東向西繼續的延伸。
+~
+0 4 7
+D1
+上游的河變的越來越窄、越暗了。
+~
+~
+0 -1 203
+D3
+前面的河流中央似乎有一個島。
+~
+~
+0 -1 205
+S
+#205
+河流分歧點~
+河流流到此處在一座小島上分別往西邊與南邊延伸。河流的水在這裡已經開始帶
+有鹹味，因此可以確定這裡已經接近大海。河流在此向西邊與南邊繼續流動。
+~
+0 4 7
+D1
+往東是一條河流的支流。
+~
+~
+0 -1 204
+D2
+那裡可以通往島的東邊。
+~
+~
+0 -1 207
+D3
+那裡可以通往島的北邊。
+~
+~
+0 -1 206
+S
+#206
+在河流上~
+腳下的河流由小島往西邊繼續流動。而河流上的小島長滿了各種植物，你幾乎找
+不到任何的落腳處可以讓你登陸。河流由西向東繼續延伸。
+~
+0 4 7
+D1
+你看到南邊河流的支流。
+~
+~
+0 -1 205
+D3
+往那裡是一個巨大的水域。
+~
+~
+0 -1 209
+S
+#207
+河流往南邊分流~
+河流由此漸漸流進小島的森林之中。往南邊的河流在此轉向西邊延伸。
+~
+0 4 7
+D0
+河流往東邊，往西邊是下游。
+~
+~
+0 -1 205
+D3
+你看到島的南邊。
+~
+~
+0 -1 208
+S
+#208
+一條小河~
+河流在此流進了小島的範圍之內，但是四周都是茂密的植物，你根本找不到可以
+上岸落腳的地方。
+~
+0 4 7
+D0
+一條小路通往那個陰暗的島。
+~
+~
+0 -1 242
+D1
+你看到南邊河流的支流。
+~
+~
+0 -1 207
+D3
+你看到西南邊河流的支流。
+~
+~
+0 -1 210
+>room_time 100~
+if roomtimer($0) == 0
+	if robjcount(216) > 0
+		purge all.coconut
+	endif
+endif
+~
+>room_command push tree~
+if robjcount(216) == 0
+	echoat $n 什麼？
+	break
+endif
+if is_qmark($n) == homeport_coconet_quest 100001
+	if roomvalue($1) & 2
+		echoat $n 似乎有人已經在努力的推動椰子樹了，或許你該稍等一下。
+	else
+		if mvnum($n) < 500
+			echoat $n 你已經沒有體力去推動椰子樹了。
+			break
+		else
+			modrvt v1 | 2
+			echoat $n 你使盡了吃奶的力氣，努力的推晃著眼前的椰子樹。
+                        echoaround $n 你看到 $N 在貼近椰子樹後，便開始使勁的推晃著椰子樹。
+                        if rand(50)
+                        	callout 1 echoat $n 你用力的搖晃著椰子樹。
+                        	callout 2 modhmv $n 21.350 500 0
+                        	callout 3 echoat $n 無奈的是，椰子根本連動都不動。
+                        	callout 4 modrvt v1 r 2
+                        else
+                        	callout 1 echoat $n 你用力的搖晃著椰子樹。
+                        	callout 2 modhmv $n 21.350 500 0
+                        	callout 3 echoat $n 終於，你頭上的椰子似乎開始鬆落‧‧‧。
+                        	callout 4 echoat $n 你衝上前去試圖接住那個要鬆落的椰子。
+                        	callout 5 rcall check_coconut $n
+                        endif
+		endif
+	endif
+else
+	echoat $n 滿身是汗的你仰頭望了一下，才發現樹上早已沒半顆椰子了。
+        echoaround $n 在 $N 使勁的推晃了一陣子之後，你卻發現樹上早就沒半顆椰子了。
+endif
+~
+>room_defun check_coconut~
+if is_qmark($n) < homeport_coconet_quest 200003
+	if dex($n) < 22
+		echoat $n 雖然椰子終究被你接住，但你也因此而受傷了。
+		modhmv $n 03.40 60 0
+	else
+		echoat $n 你敏捷的接住了掉落的椰子，絲毫未損。
+	endif
+	oload 215 1 $n target
+	mod_qmark $n homeport_coconet_quest v1 + 1
+	modrvt v1 r 2
+else
+	echoat $n 雖然你試圖接住掉落的椰子，不過還是失敗了，椰子滾入了海中，消失不見。
+	modrvt v1 r 2
+endif
+~
+|
+S
+#209
+在大河上~
+小島將河流分為兩個部分。在小島上除了濃密的植物你看不見任何其他東西。濃
+密的植物讓你找不到地方可以在小島上落腳。河流由東往西繼續延伸。
+~
+0 4 7
+D1
+往東看過去，你看到河流通往島的南邊。
+~
+~
+0 -1 206
+D2
+你看到西南邊河流的支流。
+~
+~
+0 -1 210
+D3
+河流逐漸流往一個巨大的水域。
+~
+~
+0 -1 211
+S
+#210
+河流的分支~
+小島在你的東邊漸漸的遠離。小島上到處都是茂密的植物。而河流在此處與另外
+一條河流匯集往西邊繼續延伸。
+~
+0 4 7
+D0
+河流往西邊，往東邊是下游。
+~
+~
+0 -1 209
+D1
+從這裡往上游去應該可以到達島的南邊。
+~
+~
+0 -1 208
+S
+#211
+寬廣的河流~
+河流在此處仍繼續的往西邊流動。你往你的西邊望去，發現已經幾乎看不到任何
+的陸地，只能夠看到天空與寬廣河流連接在一起的天際線。在東邊不遠處你可以看見
+一塊小島。
+~
+0 4 7
+D1
+往東是河流的上游。
+~
+~
+0 -1 209
+D3
+西邊可以看到河流的河口。
+~
+~
+0 -1 212
+S
+#212
+出海口~
+終於到達海洋了！陣陣的海浪衝激著岸上的岩石。海面上到處都有游動的海蛇與
+忽隱忽現的旗魚。往西就會進入廣大無垠的海洋。你發現往南還有一條不小的河道，
+這條支流不知道會流向哪。
+~
+0 4 7
+D1
+往東是河流的上游。
+~
+~
+0 -1 211
+D2
+~
+~
+0 -1 40000
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 213
+S
+#213
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。東邊的出海
+口距離你已經相當的遠了。在你的北邊、南邊與西邊都是無垠的大海。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 214
+D1
+你看到一個巨大河川的河口。
+~
+~
+0 -1 212
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 215
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 216
+S
+#214
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與西邊都是無垠的海洋。在東邊你遠遠的看到大陸的海岸線。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 217
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 213
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 221
+S
+#215
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與西邊都是無垠的海洋。在東邊你遠遠的看到大陸的海岸線。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 213
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 222
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 224
+S
+#216
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與東邊都是無垠的海洋。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 221
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 213
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 224
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 229
+S
+#217
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與西邊都是無垠的海洋。在東邊你遠遠的看到大陸的海岸線。
+~
+0 4 7
+D0
+往北有一座峭壁。
+~
+~
+0 -1 218
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 214
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 220
+S
+#218
+峭壁旁海洋~
+這邊的海水沖擊著礁石，讓海向顯得有些急。在北邊可以看到一面大峭壁，峭壁
+裡頭似乎有一條通道往裡頭延伸，但是你找不到可以爬上去的路。在東邊是巨大的峭壁。
+~
+0 4 7
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 217
+D3
+往西有一座峭壁。
+~
+~
+0 -1 219
+S
+#219
+峭壁旁海洋~
+這邊的海水沖擊著礁石，讓海向顯得有些急。在北邊可以看到一塊大峭壁，峭壁
+裡頭似乎有一條通道往裡頭延伸，但你找不到可以爬上去的路。西邊是陡峭的岩壁，
+南邊則是無垠的海洋。
+~
+0 4 7
+D1
+往東有一座峭壁。
+~
+~
+0 -1 218
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 220
+S
+#220
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與東邊都是無垠的海洋。在西邊你遠遠的看到大陸的海岸線。
+~
+0 4 7
+D0
+往北有一座峭壁。
+~
+~
+0 -1 219
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 217
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 221
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 234
+S
+#221
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與東邊都是無垠的海洋。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 220
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 214
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 216
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 233
+S
+#222
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊與西
+邊都是無垠的海洋。在東邊你遠遠的看到大陸的海岸線。往南邊溫度似乎越降越低，
+遠遠地可以看到一個大懸崖。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 215
+D2
+往南似乎是一塊被北極熊居住的危險地帶。
+~
+~
+0 -1 1801
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 223
+S
+#223
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與西邊都是無垠的海洋。在東邊你遠遠的看到大陸的海岸線。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 224
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 222
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 225
+S
+#224
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與西邊都是無垠的海洋。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 216
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 215
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 223
+D3
+往西的海似乎十分地「兇猛」。
+~
+~
+0 -1 226
+S
+#225
+怒號的大海~
+你可以瞭解在這個時候，你不能夠鬆懈下來。因為有很多的冒險者曾經在這狂風
+暴雨之中喪失了生命，你不希望你自己步上他們的後塵。
+你發現這裡的海水非常的深，也許可以潛進去探索－前提是你必須會在水裡呼吸。
+~
+0 4 7
+D0
+往北的海似乎十分地「兇猛」。
+~
+~
+0 -1 226
+D1
+往東的海似乎十分地「兇猛」。
+~
+~
+0 -1 223
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 227
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 228
+D5
+往那裡就是海中。
+~
+~
+0 -1 248
+>room_rand 50~
+if pcnum($) == 0
+	break
+endif
+if rand(30)
+		echo 狂風暴浪讓你幾乎站不住....！
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo 冷冽的強風讓你幾乎站不住腳！
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo 陣陣的海浪不斷的沖刷你的身體...！
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+	endif
+~
+|
+S
+#226
+凶猛的大海~
+天氣漸漸的變差，風勢越來越強勁，海浪越來越凶猛。海浪向你衝了過來，你的
+口中滿是鹹的海水。但是只要等到風浪平靜，你就可以繼續你的旅程。
+你發現這裡的海水非常的深，也許可以潛進去探索－前提是你必須會在水裡呼吸。
+~
+0 4 7
+D0
+往北的海似乎十分地「兇猛」。
+~
+~
+0 -1 229
+D1
+往東的海似乎十分地「兇猛」。
+~
+~
+0 -1 224
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 225
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 230
+D5
+往那裡就是海中。
+~
+~
+0 -1 249
+>room_rand 50~
+if rand(30)
+		echo 狂風暴浪讓你幾乎站不住....！
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo 冷冽的強風讓你幾乎站不住腳！
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+		break
+	endif
+	if rand(30)
+		echo 陣陣的海浪不斷的沖刷你的身體...！
+		if rand(50)
+			modhmv pc 03.3 5 0
+		endif
+	endif
+~
+|
+S
+#227
+炎熱的大海~
+你終於渡過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。你注意到南方有一座島嶼，但是島嶼上似乎有一座猛烈的火山。
+~
+0 4 7
+D0
+北邊海域的波浪似乎越來越強大，天候也更差了。
+~
+~
+0 -1 225
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 231
+S
+#228
+炎熱的大海~
+你終於渡過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。四面八方都是蔚藍的天空，讓你感到心曠神怡。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 230
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 225
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 231
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 232
+S
+#229
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與東邊都是無垠的海洋。你看到附近有一座島嶼，與史卡拉貝大陸似乎沒有相連。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 233
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 216
+D2
+南邊海域有一大群的雲聚集著，似乎是個警告。
+~
+~
+0 -1 226
+S
+#230
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在南邊、西
+邊與東邊都是無垠的海洋。你看到北邊有一座島嶼，與史卡拉貝大陸似乎沒有相連。
+~
+0 4 7
+D1
+東邊海域的雲聚集著，正發生一場暴風雨。
+~
+~
+0 -1 226
+D2
+往南你只看的到一片海。
+~
+~
+0 -1 228
+D3
+往西你只看的到一片海。
+~
+~
+0 -1 235
+S
+#231
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。四面八方都是蔚藍的天空，讓你感到心曠神怡。
+~
+0 4 7
+D0
+往北你只看的到一片海。
+~
+~
+0 -1 228
+D1
+往東你只看的到一片海。
+~
+~
+0 -1 227
+D2
+往南你只看的到一片海。
+~
+~
+0 -1 236
+D3
+往西你只看的到一片海。
+~
+~
+0 -1 237
+S
+#232
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。四面八方都是蔚藍的天空，讓你感到心曠神怡。
+~
+0 4 7
+D0
+往北你只看的到一片海。
+~
+~
+0 -1 235
+D1
+往東你只看的到一片海。
+~
+~
+0 -1 228
+D2
+往南你只看的到一片海。
+~
+~
+0 -1 237
+D3
+往西你只看的到一片海。
+~
+~
+0 -1 238
+S
+#233
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在北邊、南
+邊與東邊都是無垠的海洋。你看到附近有一座島嶼，與史卡拉貝大陸似乎沒有相連。
+~
+0 4 7
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 234
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 221
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 229
+S
+#234
+蔚藍的大海~
+你正在大海之上。遠遠的你可以看到陣陣的海浪衝擊著岸上的岩石。在南邊與東
+邊都是無垠的海洋。你看到西邊有一座島嶼，與史卡拉貝大陸似乎沒有相連。而北邊
+有一座陡峭的懸崖。
+~
+0 4 7
+D0
+你看到前方的海灘。
+~
+~
+0 0 245
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 220
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 233
+S
+#235
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。北面與西面的陸地似乎與史卡拉貝大陸沒有相連，這裡有一座碼頭可以讓
+你進入泊船。
+~
+0 4 7
+D0
+往北是個小碼頭。
+~
+~
+0 -1 239
+D1
+往東你只看的到一片海。
+~
+~
+0 -1 230
+D2
+往南你只看的到一片海。
+~
+~
+0 -1 232
+S
+#236
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。北面與西面的陸地似乎與史卡拉貝大陸沒有相連，你也注意到附近火山熔
+岩正在流動。
+~
+0 4 7
+D0
+往北你只看的到一片海。
+~
+~
+0 -1 231
+D3
+往西你只看的到一片海。
+~
+~
+0 -1 240
+S
+#237
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。此處四面八方都是無垠的大海。
+~
+0 4 7
+D0
+往北你只看的到一片海。
+~
+~
+0 -1 232
+D1
+往東你只看的到一片海。
+~
+~
+0 -1 231
+D2
+往南你只看的到一片海。
+~
+~
+0 -1 240
+D3
+往西你只看的到一片海。
+~
+~
+0 -1 241
+S
+#238
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。前方大陸的北邊與西邊並沒有連接到史卡拉貝大陸上。
+~
+0 4 7
+D1
+往東你只看的到一片海。
+~
+~
+0 -1 232
+D2
+往南你只看的到一片海。
+~
+~
+0 -1 241
+S
+#239
+碼頭~
+這座碼頭是由暗灰色的木頭構成。這個碼頭不是很大，看起來不太能夠抵擋浩瀚
+海洋的日侵月襲。但是它還能夠繼續矗立在此的原因，就是此處海洋一年四季都是風
+平浪靜。這裡唯一的出口是回到海洋之上。
+~
+0 0 1
+D2
+往南你只看的到一片海。
+~
+~
+0 -1 235
+S
+#240
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。你注意到南方與西方有一塊大陸，但是大陸上似乎有著強烈的冰雪。
+~
+0 4 7
+D0
+往北你只看的到一片海。
+~
+~
+0 -1 237
+D1
+往東你只看的到一片海。
+~
+~
+0 -1 236
+S
+#241
+炎熱的大海~
+你終於度過了狂風暴雨，來到了平靜的海面。這個平靜的大海下，孕育著許多珍
+奇的生命。你見到西南邊的大陸上有許多高聳的丘陵與翠綠的森林。
+~
+0 4 7
+D0
+往北你只看的到一片海。
+~
+~
+0 -1 238
+D1
+往東你只看的到一片海。
+~
+~
+0 -1 237
+S
+#242
+一條小徑~
+你強硬的穿越這座森林，漸漸的前面的小徑已經越來越明顯。走到一個寬闊的地
+方，發現你已經踏上一座小島，上頭有一棟小屋，小屋的窗戶露出明亮的光線。 
+~
+0 0 3
+D0
+往北你只看的到一片海。
+~
+~
+0 -1 243
+D2
+往南可以回到那道河川。
+~
+~
+0 -1 208
+S
+#243
+小屋之外~
+你站在一棟構造簡陋的小屋之外，小屋的構材似乎都是些隨手撿來的東西。你似
+乎隱約聽到屋裡傳來陣陣的噪音，但是現在卻又完全的靜止了。小屋的入口在你的西
+邊，你可以往南回到剛剛的路上。
+~
+0 0 3
+D2
+往南有一條小路穿過森林。
+~
+~
+0 -1 242
+D3
+西邊有一個木門。
+~
+door wooden~
+3 -1 244
+S
+#244
+小屋之中~
+在房間四周你看到許多書籍與玻璃瓶，或許是這間房子的主人用來製作魔法藥水
+的房間。在不遠的地方你看到一幅畫著絕世美女的畫。向東邊開門離開這間房間。
+~
+0 8 0
+D1
+這道門通往門外。
+~
+~
+3 -1 243
+S
+#245
+沙灘上~
+你到達了一個小型的沙灘。垂直高聳的峭壁矗立在你的東西兩邊，而寬廣的海洋
+在你的南邊。在北邊你可以看到一座坡度不陡的山坡，你心想你或許可以爬得上去。
+~
+0 8 0
+D0
+這個沙灘繼續往北山坡延伸。
+~
+~
+0 0 246
+D2
+你看到前方龐大的海洋。
+~
+~
+0 0 234
+S
+#246
+沙灘上~
+你正沿著沙灘緩緩的行走。這裡風光明媚，但是很幸運的沒有很多人知道有這個
+地方。繼續往北走你可以看到一座可以攀登的高山，往南可以回到海邊的沙灘。東西
+兩邊都是陡峭無法攀爬的峭壁。
+~
+0 8 0
+D0
+你看到山腳了。
+~
+~
+0 0 247
+D2
+你看到不遠處的沙灘與龐大的海洋。
+~
+~
+0 0 245
+S
+#247
+在山腳下~
+你在一座山的山腳下。一條狹窄的路似乎可以通往山上。往南可以回到剛剛上岸
+的沙灘。陡峭的峭壁矗立在你的東西兩邊。但是似乎往北的路可以通往這座峭壁的上
+頭。在遠處的峭壁上似乎有一座廟。
+~
+0 8 0
+D0
+~
+~
+0 0 20101
+D2
+你看到遠方的沙灘與龐大的海洋。
+~
+~
+0 0 246
+S
+#248
+大海中~
+你正在海底離水面不遠處，四周還算亮。四周有不少的小魚游著。
+這裡比海面上平靜多了。
+~
+0 0 8
+D0
+那裡一片藍色。
+~
+~
+0 -1 249
+D4
+往那裡就可以回到海面上。
+~
+~
+0 -1 225
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#249
+大海中~
+你正在海底離水面不遠處，四周還算亮。四周有不少的小魚游著。
+這裡比海面上平靜多了。
+~
+0 0 8
+D0
+那裡一片藍色。
+~
+~
+0 -1 250
+D2
+那裡一片藍色。
+~
+~
+0 -1 248
+D4
+往那裡就可以回到海面上。
+~
+~
+0 -1 226
+S
+#250
+大海中~
+你游到了這個地方，這裡周圍有不少的魚，還有一些海草生長在這裡。
+東邊有一團珊瑚礁，也許可以爬上去。
+~
+0 0 8
+D0
+那裡的水越來越暗了。
+~
+~
+0 -1 252
+D1
+那是一個天然的珊瑚礁。
+~
+~
+0 -1 251
+D2
+那裡一片藍色。
+~
+~
+0 -1 249
+S
+#251
+珊瑚礁~
+你爬上了這個浮在水面上的珊瑚礁，四都是蔚藍的大海，當然你也可以往下潛入
+水中。
+~
+0 0 4
+D0
+往北你只看的到一片廣大的海洋。
+~
+~
+0 -1 224
+D1
+往東你只看的到一片廣大的海洋。
+~
+~
+0 -1 229
+D2
+往南你只看的到一片廣大的海洋。
+~
+~
+0 -1 229
+D3
+往西你只看的到一片廣大的海洋。
+~
+~
+0 -1 230
+D5
+往那裡可以潛進海中。
+~
+~
+0 -1 250
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#252
+大海中~
+這裡大概就是海中島嶼的底下，四周特別地暗。南邊有一道光芒，而北邊則更暗了。
+~
+0 0 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 253
+D2
+那裡一片藍色。
+~
+~
+0 -1 250
+S
+#253
+進入深海~
+你進入深海之中了，這裡一片黑暗，你似乎再也找不到剛剛的出口。往北有一陣
+強大的水流，也許是什麼可怕的生物，最好別靠近。你感到非常的冷，只想趕快找到
+離開這裡的出路。
+~
+0 17 8
+D1
+那裡一片黑暗。
+~
+~
+0 -1 255
+D2
+那裡一片黑暗。
+~
+~
+0 -1 257
+D3
+那裡一片黑暗。
+~
+~
+0 -1 256
+D4
+那裡一片黑暗。
+~
+~
+0 -1 253
+D5
+那裡一片黑暗。
+~
+~
+0 -1 263
+>room_leave 16 100~
+echoat $n 你發現你居然又游回原地了！
+~
+|
+S
+#254
+漩渦中~
+你一進到這裡來，就被捲進一個巨大的漩渦之中。當你勉強逃出去後，你終於發
+現製造漩渦的就是眼前這個巨大的海怪！仔細一看，四周都是岩壁，看來這一定是牠
+的巢穴，而往下是唯一可能的生路。
+~
+0 21 8
+D5
+那裡是更深的海域。
+~
+~
+0 -1 264
+S
+#255
+進入深海~
+你正位在一片廣大的深海之中，你可以選擇往西回到原點，或是往下深入深海。
+~
+0 17 8
+D3
+那裡一片黑暗。
+~
+~
+0 -1 253
+D5
+那裡是更深的海域。
+~
+~
+0 -1 265
+S
+#256
+進入深海~
+你正位在一片廣大的深海之中，你可以選擇往東回到原點，或是往下深入深海。
+~
+0 17 8
+D1
+那裡一片黑暗。
+~
+~
+0 -1 253
+D5
+那裡是更深的海域。
+~
+~
+0 -1 266
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#257
+進入深海~
+你來到了海的中央，發現了一個往上的出口。其他方向都可以通行。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 253
+D1
+那裡一片黑暗。
+~
+~
+0 -1 261
+D2
+那裡一片黑暗。
+~
+~
+0 -1 257
+D3
+那裡一片黑暗。
+~
+~
+0 -1 256
+D4
+那裡一片藍色。
+~
+~
+0 -1 250
+D5
+那裡是更深的海域。
+~
+~
+0 -1 267
+S
+#258
+進入深海~
+你正在海中游著，一些神秘的光飄浮在水中。西邊有一個洞穴。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 257
+D1
+那裡一片藍色。
+~
+~
+0 -1 262
+D3
+那裡是一個洞穴。
+~
+~
+0 -1 260
+S
+#259
+進入深海~
+你正在一個巨大洞穴的北方，那裡傳來一陣威嚴的氣息。你可以從這裡往北、東
+游去。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 256
+D1
+那裡一片黑暗。
+~
+~
+0 -1 257
+D2
+那裡是一個洞穴。
+~
+~
+0 -1 260
+D5
+那裡是更深的海域。
+~
+~
+0 -1 269
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#260
+海龍之穴~
+你不小心闖入了這個海中洞穴，你眼前出現了一隻巨大的海龍雕像。你在洞穴牆
+上看到一個三叉戟(trident)。北邊跟東邊都有出口。
+~
+0 28 8
+E
+trident~
+這是代表海神－奈普頓(Neptune)力量的戟，只有勇者有機會拿到。
+~
+D0
+那裡一片黑暗。
+~
+~
+0 -1 259
+D1
+那裡一片黑暗。
+~
+~
+0 -1 258
+S
+#261
+進入深海~
+這裡比其他地方暖和多了，因為有一股熱氣從底下傳來。西邊的水就冷多了。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 255
+D2
+那裡一片黑暗。
+~
+~
+0 -1 262
+D3
+那裡一片藍色。
+~
+~
+0 -1 257
+S
+#262
+海中~
+這裡有一些珍珠，孟益看到它們一定會出高價的。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 261
+D3
+那裡一片黑暗。
+~
+~
+0 -1 258
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#263
+深海中~
+小心點，你已經進入海底極深之處了，這裡也許會出現一些可怕的生物也不一定。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 264
+D1
+那裡一片黑暗。
+~
+~
+0 -1 265
+D2
+那裡一片黑暗。
+~
+~
+0 -1 267
+D3
+那裡一片黑暗。
+~
+~
+0 -1 266
+D4
+那裡是較淺的海域。
+~
+~
+0 -1 253
+S
+#264
+深海中~
+你穿過大海怪的巢穴，進入了深海。這裡只有南邊有路。
+~
+0 17 8
+D2
+那裡一片黑暗。
+~
+~
+0 -1 263
+D4
+那裡是大海怪的巢穴。
+~
+~
+0 -1 254
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#265
+深海中~
+這裡四周一片黑暗，偶而有一些古怪的生物游過你身旁。牠們似乎都無視你的存在。
+~
+0 17 8
+D2
+那裡一片黑暗。
+~
+~
+0 -1 268
+D3
+那裡一片黑暗。
+~
+~
+0 -1 263
+D4
+那裡是較淺的海域。
+~
+~
+0 -1 255
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#266
+深海中~
+你正游在深海之中，你忽然注意到一旁有一艘沉船(ship)。
+~
+0 17 8
+E
+ship~
+從外觀看起來，這艘船已經沉入海中有很長一段時間了。
+~
+D1
+那裡一片黑暗。
+~
+~
+0 -1 263
+D2
+那裡一片黑暗。
+~
+~
+0 -1 269
+D3
+從那裡可以進入沉船之中。
+~
+~
+0 -1 270
+D4
+那裡是較淺的海域。
+~
+~
+0 -1 256
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#267
+深海中~
+你正游在深海之中，東邊傳來一股熱氣。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 263
+D1
+那裡一片黑暗。
+~
+~
+0 -1 268
+D3
+那裡一片黑暗。
+~
+~
+0 -1 269
+D4
+那裡是較淺的海域。
+~
+~
+0 -1 257
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#268
+深海中~
+這裡就是傳說的深海綠洲吧！地底不斷冒出熱水，四周也長了許多的水藻。也有
+不少的魚在這裡游著。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 265
+D3
+那裡一片黑暗。
+~
+~
+0 -1 267
+D4
+那裡是較淺的海域。
+~
+~
+0 -1 261
+>room_time 80~
+echo 地底冒出的熱水讓你感到十分舒服。
+	modhmv pc 04.2 4 0
+~
+|
+S
+#269
+深海中~
+你正游在深海之中，神秘的光芒閃爍著。
+~
+0 17 8
+D0
+那裡一片黑暗。
+~
+~
+0 -1 266
+D1
+那裡一片黑暗。
+~
+~
+0 -1 267
+D4
+那裡是較淺的海域。
+~
+~
+0 -1 259
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#270
+沉船中~
+你從一旁的大破洞進入了這個沉船之中，你發現一旁有一堆財寶！
+~
+0 17 8
+D1
+那裡一片黑暗。
+~
+~
+0 -1 266
+>room_enter 2 100~
+if isnpc($n)
+	break
+else
+	if is_qmark($n) == ocean_quest 200001
+	or is_qmark($n) == ocean_quest 200002
+	or is_qmark($n) == ocean_quest 200003
+		if rand(50)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	else
+		if rand(10)
+			mload 216
+			echoat $n [1;32m忽然一隻大白鯊(Great White Shark)從暗處中衝了出來！[m
+			force shark mpkill $n
+		endif
+	endif
+endif
+~
+|
+S
+#0
+
+
+
+#SPECIALS
+M 211 spec_breath_any
+M 213 spec_breath_gas
+M 216 spec_fido
+M 220 spec_breath_lightning
+S
+
+
+
+#RESETS
+M 0 220 2 211
+M 0 221 1 211
+M 0 208 2 218
+E 0 205 0 5
+M 0 208 2 219
+E 0 205 0 5
+M 0 209 1 221
+M 0 203 1 224
+M 0 222 3 224
+M 0 203 1 225
+M 0 218 5 226
+M 0 214 2 227
+M 0 215 2 227
+M 0 214 2 228
+M 0 203 1 230
+M 0 203 1 230
+M 0 204 1 231
+M 0 204 1 231
+M 0 204 1 232
+M 0 204 1 232
+M 0 205 1 233
+M 0 205 1 233
+M 0 205 1 234
+M 0 205 1 234
+M 0 206 1 235
+M 0 206 1 235
+M 0 206 1 236
+M 0 206 1 236
+M 0 207 1 237
+M 0 207 1 237
+M 0 207 1 238
+M 0 207 1 238
+M 0 202 1 239
+G 0 203 0
+M 0 201 1 244
+E 0 202 0 17
+O 0 201 0 244
+M 0 210 2 245
+M 0 210 2 246
+M 0 215 2 253
+M 0 213 1 254
+M 0 216 1 256
+M 0 211 1 260
+M 0 216 1 260
+M 0 219 5 263
+M 0 216 1 265
+M 0 217 4 265
+M 0 223 2 265
+M 0 223 2 267
+M 0 225 2 268
+M 0 215 2 269
+M 0 224 1 269
+O 0 211 0 270
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

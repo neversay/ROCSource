@@ -1,0 +1,7597 @@
+#AREADATA
+Name        索雷斯城~
+Identity    solace~
+Builders    Strahd~
+Translator  Amethyst~
+Modifier    Pluto~
+VNUMs         10201 10399
+Security    1
+Recall      4580
+Death       401
+F_toggle    65536|262144|524288
+End
+
+
+#MATERIAL
+#10201
+star fragment~
+[1;36m星之碎片[m(star fragment)~
+~
+~
+99 64|256 999999
+0~ 0~ 0~ 0~
+100 100 0
+#0
+
+
+
+#MOBILES
+#10201
+captain guard solace-captain~
+護衛隊隊長(Captain of the Guard)~
+索雷斯城護衛隊隊長(Captain of the Guard)在這邊看著你的到來。
+~
+護衛隊隊長(Captain of theGuard)雖然年事已高，但仍然十分強壯。你隱約可以看到他身上的
+黑曜石護甲(obsidianarmor)泛著紅色的光芒。在他的護甲上，刻有一個令他引以為傲的紋飾。
+從他的服飾看來，可以看到這個城市的繁盛。
+~
+1|2|64|128|1024|4096|262144|8388608|1073741824 128|512|8192 1000 S
+65 20000 0 0d0+700 30d400+0
+100000 0
+0 8 1
+R Giant~
+C 13
+P 16|256|32768|65536|4194304|8388608|16777216
+W whirlwind~ 150 500
+W glacier strike~ 200 1000
+S
+27 -15
+S
+28 30
+S
+30 -10
+S
+31 20
+A6
+mpgoto 10201
+unlock s
+open s
+yell 我宣布索雷斯城大門開啟！
+~
+A22
+mpgoto 10201
+close s
+lock s
+yell 我宣布索雷斯城大門關閉！
+mpgoto 10292
+~
+|
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 10201 40
+mpoload 10298 40
+mpoload 10202 40
+mpoload 10203 40
+mpoload 10204 40
+mpoload 10205 40
+mpoload 10206 40
+mpoload 10207 40
+mpoload 10209 40
+mpoload 10208 40
+mpoload 10331 40
+mpoload 10211 40
+mpoload 10212 40
+mpoload 10213 40
+mpoload 10213 40
+wear all
+mpoload 10210
+mpoload 10306
+~
+>defun_prog solace_enemy~
+if is_qmark($n) == solace_enemy
+        yell 大膽的狂徒，給我受死吧！
+        hunt $n
+        break
+endif
+~
+>fight_prog 40~
+if rand(30)
+        yell 喝！冰凍法術對我沒用啦！
+        mpdis_magic self chill
+        break
+endif
+if isaffected($i) & 1
+        yell 哈哈哈！盲目術對我是沒有用的....。
+        c 'cure blindness'
+        mpnowait
+endif
+if isaffected($i) & 4096
+        yell 糟糕！我中毒了....。
+        mpecho $I [1;33m趕緊喝下了解毒的藥水....。[m
+        mpdis_magic self poison
+endif
+if isaffected($i) & 8388608
+        mpdis_magic self mute
+        yell 禁言術在索雷斯城中對我是沒有用的....！
+endif
+if isaffected($i) & 16777216
+        yell 你是無法封鎖住我的魔法的....！
+        mpdis_magic self 'seal magic'
+endif
+if isaffected($i) & 268435456
+        mpecho $I [1;33m在全身無法動彈時，由口中吞下一顆藥丸....。[m
+        mpecho $I [1;33m身上的麻痺術被解開了....。[m
+        mpdis_magic self paralyze
+endif
+~
+>greet_prog 100~
+mpcall solace_enemy $n
+if rand(30)
+        if isgood($n)
+                sm $n
+                mpcallout 1 say 歡迎 $n 蒞臨 索雷斯城(Solace) 。
+        else
+                look $n
+                mpcallout 1 say 索雷斯城(Solace)法律嚴明，千萬不要在裡頭鬧事。
+        endif
+endif
+~
+>talk_prog news~
+mpcall solace_enemy $n
+if is_qmark($n) & solace_quest_record 100001
+        say 你也聽說了嗎！
+        say 真不不知道艾思摩亞(Ismoa)要找的人(people)到底什麼時候才會出現。
+        if is_qmark($n) != solace_quest_record
+                mpadd_qmark $n solace_quest_record -1 0 1 0 0 1
+        endif
+endif
+~
+>talk_prog people~
+if is_qmark($n) & solace_quest_record 100001
+        say 你能通過試練之窟的考驗，真是太厲害了。
+else
+        say 我也不知道他要找一個怎樣的人，只知道他建造了一個試練之窟(trial)考驗那個人。
+        mpcallout 1 say 他說，只有那個人才有能力通過考驗，但是至今也沒有人可以成功通過考驗(test)。
+        mpcallout 1 solace_quest_record02 $n
+endif
+~
+>defun_prog solace_quest_record02~
+if is_qmark($n) !& solace_quest_record 200003
+        mpmod_qmark $n solace_quest_record v1 | 2
+endif
+~
+>talk_prog ismoa~
+if is_qmark($n) !& solace_quest_record 100001
+        if is_qmark($n) & solace_quest_record 20003
+                say 你說艾思摩亞(Ismoa)嗎？我看他絕不是普通人物，他的兩個隨從，都身懷絕技。
+                mpcallout 1 say 上次要不是有他們幫忙，我早就戰死了。
+                mpcallout 1 solace_quest_record04 $n
+        endif
+endif
+~
+>defun_prog solace_quest_record04~
+if is_qmark($n) !& solace_quest_record 200007
+        mpcallout 1 mpmod_qmark $n solace_quest_trial v1 | 4
+endif
+~
+>talk_prog trial~
+if is_qmark($n) !& solace_quest_record 100001
+        if is_qmark($n) & solace_quest_record 20003
+                say 有關試練之窟的事的也不是很清楚，只知道是由艾思摩亞(Ismoa)所建造的。
+                mpcallout 1 say 如果你想知道多一點關於試練之窟的事，你就要去問艾思摩亞(Ismoa)本人了。
+                mpcallout 1 solace_quest_record08 $n
+        endif
+endif
+~
+>defun_prog solace_quest_record08~
+if is_qmark($n) !& solace_quest_record 200011
+        mpcallout 1 mpmod_qmark $n solace_quest_trial v1 | 8
+endif
+~
+>talk_prog test~
+if is_qmark($n) !& solace_quest_record 100001
+        if is_qmark($n) & solace_quest_record 200015
+                say 那個就是給予勇者的考驗，至於他為什麼要這樣做，我就不知道了。
+                mpcallout 1 say 他說如果有人可以從裡面拿到試練之窟的魔法石，他就會送他一份禮物。
+                mpcallout 2 say 說真的，他送出的禮物也絕非等閒之物，如果我有時間我也想去試一試(try)。
+                mpcallout 2 solace_quest_record16 $n
+        endif
+endif
+~
+>defun_prog solace_quest_record16~
+if is_qmark($n) !& solace_quest_record 200031
+        mpcallout 1 mpmod_qmark $n solace_quest_trial v1 | 16
+endif
+~
+>talk_prog try~
+if is_qmark($n) !& solace_quest_record 100001
+        if is_qmark($n) !& solace_quest_record 200063
+                say 如果你真的想試，就去找他帶來的隨從老者(Elder)，和他說(try)就可以了。
+                if is_qmark($n) & solace_quest_record 200031
+                        mpmod_qmark $n solace_quest_trial v1 | 32
+                endif
+        endif
+endif
+~
+>talk_prog elder~
+if is_qmark($n) == solace_quest_record
+        if is_qmark($n) & solace_quest_record 200063
+                say 他就在噴泉廣場那邊的山洞裡。
+        endif
+endif
+~
+>talk_prog topic~
+mpcall solace_enemy $n
+say 歡迎光臨索雷斯城(Solace)。
+mpcallout 1 say 有什麼問題請儘管問我。
+~
+>talk_prog solace~
+mpcall solace_enemy $n
+say 索雷斯城位於迷霧之島水晶湖的北邊....，
+mpcallout 1 say 與迷霧大平原間隔著一座小山....，
+mpcallout 2 say 也因為那座小山....，
+mpcallout 3 say 使得迷霧大平原上的恐龍無法入侵索雷斯城。
+~
+>talk_prog obsidian~
+mpcall solace_enemy $n
+say 你是說黑曜石(obsidian)嗎？
+mpcallout 1 say 黑曜石是迷霧之島的特產，具有強大的魔力。
+mpcallout 2 say 雖然黑曜石相當的重....，
+mpcallout 3 say 但是其隱藏的強大魔力仍使索雷斯城的匠師(craftsman)們趨之若鶩....，
+mpcallout 4 say 他們都希望自己能夠利用這迷霧之島的特產....，
+mpcallout 5 say 打造出最強大的裝備。
+~
+>talk_prog craftsman~
+mpcall solace_enemy $n
+say 索雷斯城的匠師，比起光明之鎮那些二楞子匠師好的多....，
+mpcallout 1 say 索雷斯城可是迷霧之島戰鬥之城....，
+mpcallout 2 say 那些史卡拉貝來這裡「遊覽」的人....，
+mpcallout 3 say 完全搞不清楚兩者間武力的差距....，
+mpcallout 4 mpechoat $n $I 用疑惑的眼神看著你....
+mpcallout 4 mpechoaround $n $I 用疑惑的眼神看著 $n ....
+mpcallout 5 say 你不會就是史卡拉貝城來的人吧？
+~
+>fight_prog 15~
+if is_qmark($i) != solace_captain_unique-skill
+        mpecho $I[1;33m忽然將手上那把劍高高的舉起........
+        mpadd_qmark $i solace_captain_unique-skill 5 0 0 0 1 0
+        mpcallout 1 wear doomgiver
+        mpcallout 2 mpecho [1;33m天空降下一道閃電，打在[m $I[1;33m手上那把審判者之劍........[m
+        mpcallout 4 yell 看我   *****   [1;36m雷       霆      萬      鈞[m   *****   的厲害！
+        mpcallout 5 perform empslash
+        mpcallout 5 perform empslash
+        mpcallout 5 perform empslash
+        mpcallout 5 mpdel_qmark $i solace_captain_unique-skill
+endif
+~
+>fight_prog 100~
+if is_qmark($i) == solace_captain_unique-skill
+        break
+endif
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+~
+>fight_prog 50~
+if is_qmark($n) != solace_enemy
+        mpadd_qmark $n solace_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n solace_enemy timer + 5
+endif
+if is_qmark($i) == solace_captain_unique-skill
+        break
+endif
+if is_equ_obj($i) != 10211
+        wear doomgiver
+        disarm
+        mpnowait
+endif
+if hitprcnt($i) <= 70
+        if is_qmark($i) != solace_captain_potion
+                mpadd_qmark $i solace_captain_potion 200 0 0 0 1 0
+        else
+                if is_qmark($i) <= solace_captain_potion 100020
+                        mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[m 喝下....。[m
+                        mpat 5 c 'double heal'
+                        mpnowait
+                        mpmod_qmark $i solace_captain_potion v0 + 1
+                else
+                        if is_qmark($i) == solace_captain_potion 100021
+                                yell 糟糕，身上沒有 治療藥水 了....！
+                                mpmod_qmark $i solace_captain_potion v0 + 1
+                        endif
+                endif
+        endif
+endif
+if hitprcnt($i) <= 30
+        if is_qmark($i) <= solace_captain_potion 200010
+                mpecho $I [1;33m見傷勢加重，趕緊掏出 ** [1;36m強效靈藥[33m ** 喝下....。[m
+                mpat 5 c 3 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_captain_potion v1 + 1
+        else
+                if is_qmark($i) == solace_captain_potion 200011
+                        yell 糟糕，身上沒有 ** 強效靈藥 ** 了....！
+                        mpmod_qmark $i solace_captain_potion v1 + 1
+                endif
+        endif
+endif
+~
+>rand_prog 40~
+if hitprcnt($i) <= 70
+        if is_qmark($i) != solace_captain_potion
+                mpadd_qmark $i solace_captain_potion 200 0 0 0 1 0
+        else
+                if is_qmark($i) <= solace_captain_potion 100020
+                        mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[33m 喝下....。[m
+                        mpat 5 c 'double heal'
+                        mpnowait
+                        mpmod_qmark $i solace_captain_potion v0 + 1
+                else
+                        if is_qmark($i) == solace_captain_potion 100021
+                                yell 糟糕，身上沒有 治療藥水 了....！
+                                mpmod_qmark $i solace_captain_potion v0 + 1
+                        endif
+                endif
+        endif
+endif
+if hitprcnt($i) <= 30
+        if is_qmark($i) <= solace_captain_potion 200010
+                mpecho $I [1;33m見傷勢加重，趕緊掏出 ** [1;36m強效靈藥[33m ** 喝下....。[m
+                mpat 5 c 3 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_captain_potion v1 + 1
+        else
+                if is_qmark($i) == solace_captain_potion 200011
+                        yell 糟糕，身上沒有 ** 強效靈藥 ** 了....！
+                        mpmod_qmark $i solace_captain_potion v1 + 1
+                endif
+        endif
+endif
+~
+>hitprcnt_prog 60~
+if is_qmark($i) == solace_captain_unique-skill
+        break
+endif
+if is_qmark($i) != solace_captain_potion
+        mpadd_qmark $i solace_captain_potion 200 0 0 0 1 0
+else
+        if is_qmark($i) <= solace_captain_potion 100020
+                mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[33m 喝下....。[m
+                mpat 5 c 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_captain_potion v0 + 1
+        else
+                if is_qmark($i) == solace_captain_potion 100021
+                        yell 糟糕，身上沒有 治療藥水 了....！
+                        mpmod_qmark $i solace_captain_potion v0 + 1
+                endif
+        endif
+endif
+~
+>hitprcnt_prog 30~
+if is_qmark($i) == solace_captain_unique-skill
+        break
+endif
+if is_qmark($i) != solace_captain_potion
+        mpadd_qmark $i solace_captain_potion 200 0 0 0 1 0
+else
+        if is_qmark($i) <= solace_captain_potion 100020
+                mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[33m 喝下....。[m
+                mpat 5 c 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_captain_potion v0 + 1
+        else
+                if is_qmark($i) == solace_captain_potion 100021
+                        yell 糟糕，身上沒有 治療藥水 了....！
+                        mpmod_qmark $i solace_captain_potion v0 + 1
+                endif
+        endif
+        if is_qmark($i) <= solace_captain_potion 200010
+                mpecho $I [1;33m見傷勢加重，趕緊掏出 ** [1;36m強效靈藥[33m ** 喝下....。[m
+                mpat 5 c 3 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_captain_potion v1 + 1
+        else
+                if is_qmark($i) == solace_captain_potion 200011
+                        yell 糟糕，身上沒有 ** 強效靈藥 ** 了....！
+                        mpmod_qmark $i solace_captain_potion v1 + 1
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mplog killed by $n
+if is_qmark($n) != solace_enemy
+        mpadd_qmark $n solace_enemy 200 0 0 0 1 0
+else
+        mpmod_qmark $n solace_enemy timer + 200
+endif
+~
+|
+#10202
+lieutenant commander~
+護衛隊副指揮官(Lieutenant Commander)~
+索雷斯城護衛隊的副指揮官(Lieutenant Commander)在這邊站著。
+~
+副指揮官(Lieutenant)是一個十分隨和的人，而他給人外表的印象不過只二十七歲左右。
+他身上的精鋼護甲滿是用手指畫上去的圖案。如果與他相處，將會發覺他驚人的智商。雖
+然他看起來人相當隨和，但他的能力是不容置疑的。
+~
+1|2|64|128|1024|4096|262144|8388608|1073741824 128|512|8192 1000 S
+60 50000 0 0d0+700 15d350+0
+100000 0
+0 8 1
+R Orc~
+C 13
+P 16|256|32768|65536|4194304|8388608|16777216
+W whirlwind~ 150 500
+W glacier strike~ 200 1000
+S
+27 -15
+S
+28 30
+S
+30 -10
+S
+31 20
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>defun_prog solace_enemy~
+if is_qmark($n) == solace_enemy
+        yell 大膽的狂徒，給我受死吧！
+        hunt $n
+        break
+endif
+~
+>fight_prog 40~
+if rand(40)
+        yell 喝！冰凍法術對我沒用啦！
+        mpdis_magic self chill
+        break
+endif
+if isaffected($i) & 1
+        yell 哈哈哈！盲目術對我是沒有用的....。
+        c 'cure blindness'
+        mpnowait
+endif
+if isaffected($i) & 4096
+        yell 糟糕！我中毒了....。
+        mpecho $I [1;33m趕緊喝下了解毒的藥水....。[m
+        mpdis_magic self poison
+endif
+if isaffected($i) & 8388608
+        mpdis_magic self mute
+        yell 禁言術在索雷斯城中對我是沒有用的....！
+endif
+if isaffected($i) & 16777216
+        yell 你是無法封鎖住我的魔法的....！
+        mpdis_magic self 'seal magic'
+endif
+if isaffected($i) & 268435456
+        mpecho $I [1;33m在全身無法動彈時，由口中吞下一顆藥丸....。[m
+        mpecho $I [1;33m身上的麻痺術被解開了....。[m
+        mpdis_magic self paralyze
+endif
+~
+>greet_prog 100~
+mpcall solace_enemy $n
+~
+>talk_prog topic~
+mpcall solace_enemy $n
+say 歡迎光臨索雷斯城(Solace)。
+mpcallout 1 say 有什麼問題請儘管問我。
+~
+>talk_prog solace~
+mpcall solace_enemy $n
+say 索雷斯城(Solace)在迷霧之島有多久了我並不清楚....，
+mpcallout 1 say 但是我可以確定在那遠方的罪惡之城史卡拉貝建立之前....，
+mpcallout 2 say 我們索雷斯城就已經存在了....。
+mpcallout 3 say 索雷斯城擁有迷霧之島所強大的武裝力量....，
+mpcallout 4 say 死亡谷中的不死族們連我們的大門都進不來....，
+mpcallout 5 say 這一切都仰賴 巫師馬尼斯(Magnus wizard) 的法力。
+~
+>talk_prog p magnus wizard~
+mpcall solace_enemy $n
+say 巫師馬尼斯(Magnus wizard) 是索雷斯城中擁有最強大魔力的巫師....，
+mpcallout 1 say 他為索雷斯城中每一項裝備都加持了魔法....，
+mpcallout 2 say 因此我們城內不少的裝備....，
+mpcallout 3 say 對於不死族都有額外的傷害力。
+~
+>fight_prog 15~
+if is_qmark($i) != solace_lieutenant_unique-skill
+        mpecho $I ;33m忽然將手上那把劍藏到的身後........
+        mpadd_qmark $i solace_lieutenant_unique-skill 5 0 0 0 1 0
+        mpcallout 1 wear shieldbreaker
+        mpcallout 2 mpecho ;31m在 $I 身後的那把 破盾劍的劍身燃起了熊熊的火焰........
+        mpcallout 4 yell *****          [1;31m地       火      劍      法[m   *****
+        mpcallout 5 flaming
+        mpcallout 5 earth
+        mpcallout 5 earth
+        mpcallout 5 mpdel_qmark $i solace_captain_unique-skill
+endif
+~
+>fight_prog 100~
+if is_qmark($i) == solace_lieutenant_unique-skill
+        break
+endif
+if ispc($r)
+        if isfight($r)
+                skilldrv multihit $r
+        endif
+endif
+~
+>fight_prog 50~
+if is_qmark($n) != solace_enemy
+        mpadd_qmark $n solace_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n solace_enemy timer + 5
+endif
+if is_qmark($i) == solace_lieutenant_unique-skill
+        break
+endif
+if is_equ_obj($i) != 10225
+        wear shieldbreaker
+        disarm
+        mpnowait
+endif
+if hitprcnt($i) <= 70
+        if is_qmark($i) != solace_lieutenant_potion
+                mpadd_qmark $i solace_lieutenant_potion 200 0 0 0 1 0
+        else
+                if is_qmark($i) <= solace_lieutenant_potion 100015
+                        mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[m 喝下....。[m
+                        mpat 5 c 'double heal'
+                        mpnowait
+                        mpmod_qmark $i solace_lieutenant_potion v0 + 1
+                else
+                        if is_qmark($i) == solace_lieutenant_potion 100016
+                                yell 糟糕，身上沒有 治療藥水 了....！
+                                mpmod_qmark $i solace_lieutenant_potion v0 + 1
+                        endif
+                endif
+        endif
+endif
+if hitprcnt($i) <= 30
+        if is_qmark($i) <= solace_lieutenant_potion 200008
+                mpecho $I [1;33m見傷勢加重，趕緊掏出  ** [1;36m強效靈藥[m **  喝下....。[m
+                mpat 5 c 3 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_lieutenant_potion v1 + 1
+        else
+                if is_qmark($i) == solace_lieutenant_potion 200009
+                        yell 糟糕，身上沒有 ** 強效靈藥 ** 了....！
+                        mpmod_qmark $i solace_lieutenant_potion v1 + 1
+                endif
+        endif
+endif
+~
+>rand_prog 30~
+if hitprcnt($i) <= 70
+        if is_qmark($i) != solace_lieutenant_potion
+                mpadd_qmark $i solace_lieutenant_potion 200 0 0 0 1 0
+        else
+                if is_qmark($i) <= solace_lieutenant_potion 100015
+                        mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[m 喝下....。[m
+                        mpat 5 c 'double heal'
+                        mpnowait
+                        mpmod_qmark $i solace_lieutenant_potion v0 + 1
+                else
+                        if is_qmark($i) == solace_lieutenant_potion 100016
+                                yell 糟糕，身上沒有 治療藥水 了....！
+                                mpmod_qmark $i solace_lieutenant_potion v0 + 1
+                        endif
+                endif
+        endif
+endif
+if hitprcnt($i) <= 30
+        if is_qmark($i) <= solace_lieutenant_potion 200008
+                mpecho $I [1;33m見傷勢加重，趕緊掏出  ** [1;36m強效靈藥[m **  喝下....。[m
+                mpat 5 c 3 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_lieutenant_potion v1 + 1
+        else
+                if is_qmark($i) == solace_lieutenant_potion 200009
+                        yell 糟糕，身上沒有 ** 強效靈藥 ** 了....！
+                        mpmod_qmark $i solace_lieutenant_potion v1 + 1
+                endif
+        endif
+endif
+~
+>hitprcnt_prog 60~
+if is_qmark($i) == solace_lieutenant_unique-skill
+        break
+endif
+if is_qmark($i) != solace_lieutenant_potion
+        mpadd_qmark $i solace_lieutenant_potion 200 0 0 0 1 0
+else
+        if is_qmark($i) <= solace_captain_potion 100015
+                mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[m 喝下....。[m
+                mpat 5 c 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_lieutenant_potion v0 + 1
+        else
+                if is_qmark($i) == solace_lieutenant_potion 100016
+                        yell 糟糕，身上沒有 治療藥水 了....！
+                        mpmod_qmark $i solace_lieutenant_potion v0 + 1
+                endif
+        endif
+endif
+~
+>hitprcnt_prog 30~
+if is_qmark($i) == solace_lieutenant_unique-skill
+        break
+endif
+if is_qmark($i) != solace_lieutenant_potion
+        mpadd_qmark $i solace_lieutenant_potion 200 0 0 0 1 0
+else
+        if is_qmark($i) <= solace_lieutenant_potion 100015
+                mpecho $I [1;33m見傷勢加重，趕緊掏出 [1;36m治療藥水[m 喝下....。[m
+                mpat 5 c 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_lieutenant_potion v0 + 1
+        else
+                if is_qmark($i) == solace_lieutenant_potion 100016
+                        yell 糟糕，身上沒有 治療藥水 了....！
+                        mpmod_qmark $i solace_lieutenant_potion v0 + 1
+                endif
+        endif
+        if is_qmark($i) <= solace_lieutenant_potion 200008
+                mpecho $I [1;33m見傷勢加重，趕緊掏出  ** [1;36m強效靈藥[m **  喝下....。[m
+                mpat 5 c 3 'double heal'
+                mpnowait
+                mpmod_qmark $i solace_lieutenant_potion v1 + 1
+        else
+                if is_qmark($i) == solace_lieutenant_potion 200009
+                        yell 糟糕，身上沒有 ** 強效靈藥 ** 了....！
+                        mpmod_qmark $i solace_lieutenant_potion v1 + 1
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mplog killed by $n
+if is_qmark($n) != solace_enemy
+        mpadd_qmark $n solace_enemy 200 0 0 0 1 0
+else
+        mpmod_qmark $n solace_enemy timer + 200
+endif
+~
+|
+#10203
+Sergeant Arms~
+議會警衛官(Sergeant at Arms)~
+議會警衛官(Sergeant at Arms)在這裡擦拭著他那柄心愛的戰鎚。
+~
+雖然議會警衛官(Sergeant at Arms)外表粗獷，但個性十分率直。已經踏入中年的他，
+身穿火紅戰甲，戴著戰盔，一副準備打仗的模樣。
+~
+1|2|64|128|1024|4096|262144|8388608 8|32|128|512|8192 1000 S
+55 100000 0 0d0+200 30d300+0
+100000 0
+0 8 1
+R Human~
+C 9
+P 16|256|4194304|8388608|16777216
+W whirlwind~ 150 500
+W glacier strike~ 200 1000
+S
+27 -15
+S
+28 30
+S
+30 -10
+S
+31 20
+>fight_prog 50~
+if hitprcnt($i) <= 50
+        mpat 5 c 3 'double heal'
+endif
+if rand(50)
+        perform empslash
+else
+        frenzy
+endif
+~
+>fight_prog 40~
+if hitprcnt($i) <= 50
+        mpat 5 c 3 'double heal'
+endif
+if isaffected($i) & 1
+        yell 哈哈哈！盲目術對我是沒有用的....。
+        c 'cure blindness'
+endif
+if isaffected($i) & 4096
+        yell 糟糕！我中毒了....。
+        mpecho $I [1;33m趕緊喝下了解毒的藥水....。[m
+        mpdis_magic self poison
+endif
+if isaffected($i) & 8388608
+        mpdis_magic self mute
+        yell 禁言術在索雷斯城中對我是沒有用的....！
+endif
+if isaffected($i) & 16777216
+        yell 你是無法封鎖住我的魔法的....！
+        mpdis_magic self 'seal magic'
+endif
+if isaffected($i) & 268435456
+        mpecho $I [1;33m在全身無法動彈時，由口中吞下一顆藥丸....。[m
+        mpecho $I [1;33m身上的麻痺術被解開了....。[m
+        mpdis_magic self paralyze
+endif
+~
+>defun_prog solace_enemy~
+if is_qmark($n) == solace_enemy
+        yell 大膽的狂徒，給我受死吧！
+        hunt $n
+        break
+endif
+~
+>greet_prog 100~
+mpcall solace_enemy $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mplog killed by $n
+if is_qmark($n) != solace_enemy
+        mpadd_qmark $n solace_enemy 200 0 0 0 1 0
+else
+        mpmod_qmark $n solace_enemy timer + 200
+endif
+~
+|
+#10204
+townguard guard~
+城鎮護衛(Townguard)~
+索雷斯城的護衛(townguard)正在這裡巡邏。
+~
+他是一位強壯的索雷斯城護衛隊隊員。
+~
+67 0 1000 S
+38 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Orc~
+P 8
+C 1
+#10205
+townguard guard agg~
+城鎮護衛(Townguard)~
+索雷斯城的護衛(townguard)正在這裡巡邏。
+~
+他是一位強壯的索雷斯城護衛隊隊員。
+~
+1|64 0 1000 S
+44 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Giant~
+C 1
+P 8
+#10206
+citizen solace~
+城鎮居民(Citizen of Solace)~
+索雷斯城的居民(citizen)在這裡站著。
+~
+他是索雷斯城的居民之一，從他的穿著看來，可見這裡的居民生活甚為富庶。
+~
+1 0 800 S
+43 0 0 0d0+0 0d0+0
+34 0
+0 8 1
+C 1
+#10207
+woman~
+婦人(woman)~
+一個婦人(woman)在這裡。
+~
+她是一位貌美如花的婦人(woman)。
+~
+1 0 800 S
+35 0 0 0d0+0 0d0+0
+34 0
+0 8 2
+#10208
+matt brewmaster~
+酒鬼馬太(Matt the brewmaster)~
+酒鬼馬太(Matt the brewmaster)正在這裡喝酒。
+~
+~
+3 128 800 S
+52 0 0 0d0+0 0d0+0
+34 0
+0 8 1
+C 1
+#10209
+Mcbaker~
+麵包師(Mcbaker)~
+麵包師(Mcbaker)默默的望著你，用手擦去臉上的麵粉。
+~
+他是一個肥胖，隨和的麵包師(baker)，他滿身的疤痕可以想像他是一個身經百戰的人。
+~
+3 0 900 S
+52 0 0 0d0+0 0d0+0
+12000 0
+0 8 1
+C 9
+P 8
+#10210
+cookie's helper~
+廚師的助手(Cookie's Helper)~
+廚師的助手(Cookie's Helper)正在向你展示一個麵包的樣本。
+~
+她是住在附近的小姑娘，當廚師(cookie)不在的時候，她就會到這裡幫忙。
+~
+3 0 900 S
+43 0 0 0d0+0 0d0+0
+12000 0
+0 8 2
+#10211
+marilyn~
+瑪麗妮(Marilyn)~
+瑪麗妮(Marilyn)向眾人展售可愛的小鳥。
+~
+瑪麗妮(Marilyn)綁著一條長長的馬尾。她不但外表美麗，而且十分善良，特別是對她心愛的鳥兒。
+~
+3 8|32|128 900 S
+54 0 0 0d0+0 0d0+0
+12000 0
+0 8 2
+C 3
+P 8
+#10212
+ghost jander~
+基安達的鬼魂(Ghost of Jander)~
+基安達的鬼魂(Ghost of Jander)在這裡飄浮著。
+~
+基安達的鬼魂(Ghost of Jander)若有似無的飄浮在這裡。他隱約穿著一身污穢的，破爛不堪的衣服，
+看似個子高大，一頭火紅色的頭髮，骨瘦如柴的臉上長滿鬍鬚，令人感覺到他曾經有著悲慘的經歷。
+~
+3 0 900 S
+57 0 0 0d0+200 10d200+0
+12000 0
+0 8 1
+R Undead~
+C 11
+>fight_prog 20~
+if is_qmark($i) != solace_jander_curseskill
+        mpadd $i solace_jander_curseskill 5 1 0 0 1 0
+        yell ＊＊＊     死      亡      的      詛      咒      ＊＊＊
+        mpnowait
+        c 'curse' $r 42
+        mpnowait
+        c 'faerie fire' $n 42
+        mpnowait
+        c 'tardy' $n 42
+        mpnowait
+else
+        yell ＊＊＊     闇      黑      魔      咒      ＊＊＊
+        mpnowait
+        c 'blindness' $r 42
+        mpnowait
+        c 'poison' $n 42
+        mpnowait
+        c 'weaken' $n 42
+        mpnowait
+endif
+~
+>fight_prog 80~
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+~
+>hitprcnt_prog 30~
+if rand(30)
+        if is_qmark($i) != solace_jander_transfer
+                mpadd $i solace_jander_transfer 10 1 0 0 1 0
+                mpecho say 你竟敢在這裡搗亂，我要你嘗嘗死亡的滋味。
+                mpecho 四周突然捲起一陣怪異的風，
+                mptransfer $n 10258
+                mpecho $n 被這陣風給捲走了。
+        else
+                mpecho say 你竟敢在這裡搗亂，我要你嘗嘗死亡的滋味。
+                mpecho 四周突然捲起一陣狂風，
+                c 'whirlwind' 42
+                mpnowait
+                c 'whirlwind' 42
+                mpnowait
+                mptransfer all 10258
+                mpecho $n 被這陣風給捲走了。
+        endif
+endif
+~
+|
+#10213
+ghost waiter~
+服務生的鬼魂(ghost of waiter)~
+服務生的鬼魂(ghost of a waiter)在這裡招待遠道而來的客人。
+~
+這是一個死去很久的服務生的鬼魂(ghost)。然而，他是其中一個因為打翻酒瓶或食物而被
+基安達(Jander)殺死的人。
+~
+3 0 900 S
+45 0 0 0d0+0 0d0+0
+12000 0
+0 8 1
+R Undead~
+C 1
+P 8
+#10214
+ghost barkeep~
+酒保的鬼魂(ghost of a barkeeper)~
+酒保的鬼魂(ghost of a barkeeper)在這裡等待你們點菜。
+~
+他也是受到基安達(Jander)迫害的受害者之一，當時他不過是把手放在抽屜裡而已。
+~
+1|2 0 900 S
+42 0 0 0d0+0 0d0+0
+12000 0
+0 8 2
+R Undead~
+C 1
+P 8
+#10215
+townguard guard~
+城鎮護衛(Townguard)~
+索雷斯城的護衛(townguard)正在這裡巡邏。
+~
+他是一位強壯的索雷斯城護衛隊隊員。
+~
+1|64 0 1000 S
+44 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Giant~
+C 1
+P 8
+#10216
+field rat~
+田鼠(field rat)~
+一隻田鼠(field rat)正在這裡尋找食物。
+~
+一隻全身泥污的田鼠(rat)正在四處尋找居民遺留的食物。
+~
+1|64 65536 300 S
+14 0 0 0d0+0 0d0+0
+500 0
+0 8 0
+R Rat~
+#10217
+town clerk~
+城鎮秘書(Town Clerk)~
+城鎮的秘書(Town Clerk)在這裡等待眾人前來繳稅。
+~
+他看來十分纖瘦。當他看到你的到來，對你露出了燦爛的笑容，好像他已經看到你衣袋裡的
+金幣(coins)一樣。
+~
+3 128 800 S
+50 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+C 1
+P 8
+>talk_prog coins~
+sm $n
+mpcallout 1 say 世界上只有錢才能夠真正的讓人掌握幸福，不是嗎？
+mpcallout 2 gig $n
+~
+|
+#10218
+treasury guards~
+保險庫守衛(Treasury Guards)~
+保險庫的守衛(Treasury Guards)在這裡保護城鎮的金錢。
+~
+他們是世上最高大和最吝嗇的人。雖然他們是人，確有如同食人巨魔般的力量。
+~
+3 172 800 S
+54 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Giant~
+C 11
+P 8
+#10219
+jhen-solace jhen~
+農夫基肯(Jhen the farmer)~
+農夫基肯(Jhen the farmer)站在這邊。
+~
+一個高大的農夫 - 基肯(Jhen)正在辛勤的工作，以賺取那微薄的生活費。
+~
+3 0 800 S
+39 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+C 1
+#10220
+krista-solace krista~
+水果店老闆 - 克麗斯塔(Krista the fruit peddler)~
+水果店老闆 - 克麗斯塔(Krista)在這邊辛勤賣著水果。
+~
+她是一個美貌的中年婦女，在這裡工作主要是為了生計。每一年這個時候，她都會到市集售賣水果。
+~
+3 0 800 S
+46 0 0 0d0+0 0d0+0
+500 0
+0 8 2
+C 3
+P 8
+#10221
+janni-solace Janni~
+基安尼(Janni)~
+基安尼(Janni)在這裡賣著精巧的飾物。
+~
+基安尼(Janni)用了畢生的心血製造討人喜歡的飾物。
+~
+3 0 800 S
+51 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Dwarf~
+C 11
+P 8
+#10222
+nisi-solace Nisi~
+雜貨店老闆妮絲(Nisi the grocer)~
+妮絲(Nisi)在這裡賣著雜七雜八的物品。
+~
+妮絲(Nisi)是一個十分風趣的人，這個可以從她售賣的貨物看得到。
+~
+3 0 800 S
+54 0 0 0d0+0 0d0+0
+500 0
+0 8 2
+R Elf~
+C 3
+P 8
+#10223
+molin-solace Molin~
+莫林(Molin the brewer)~
+莫林(Molin)靜靜地站在這邊。
+~
+莫林(Molin)是一個白髮蒼蒼的老人，頭髮長的到他的腳趾。
+~
+3 0 800 S
+57 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Half-elf~
+C 3
+P 8
+#10224
+rashan-solace Rashan~
+農民 - 雷山(Rashan the farmer)~
+農民 - 雷山(Rashan the farmer)在這邊站著。
+~
+雖然雷山(Rashan)已經年過中旬，但他依然故我地使用最原始的方法種植作物。
+~
+3 0 800 S
+52 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Half-dwarf~
+C 3
+P 8
+#10225
+lexie-solace Lexie~
+雷克熙(Lexie)~
+雷克熙(Lexie)站在這裡教導人們如何潛水。
+~
+雷克熙(Lexie)是一個十全十美的潛水人員，但說起如何教導學生，他就會很頭痛。
+~
+3 0 800 S
+54 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+P 8
+C 11
+>talk_prog topic~
+say 穿著整套潛水裝備，就可以在水中來去自如。
+say 裝備的方法很簡單，只要記得氧氣桶要最後再背上就行了。
+say 然後切記不要在水中拔掉裝備，常常有人這樣溺死！
+~
+|
+#10226
+croben-solace Croben~
+克羅班(Croben)~
+克羅班(Croben)在這邊製造各式各樣的容器。
+~
+克羅班(Croben)自小就跟隨他的袓父學習如何製造各式各樣的容器。
+~
+3 0 800 S
+39 15 -2 1d1+999 2d10+20
+500 0
+0 8 1
+#10227
+otik sandath bartender~
+廚師 - 奧提(Otik Sandath)~
+廚師 - 奧提(Otik Sandath)在酒吧走來走去。
+~
+奧提(Otik)是一位擅長烹調食物的老人家。
+~
+3 0 800 S
+61 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+>rand_prog 20~
+if pcnum($) > 0
+        if rand(50)
+                say 這根魔法權杖(magical staff)....，
+                mpcallout 1 say 我敢打賭它是吸血鬼之森(Vampire Forest)裡的吸血鬼(Vampire)鑄造出來的。
+        else
+                say 吸血鬼之森(Vampire Forest)這個地方被可怕的魔法所包圍著。
+        endif
+endif
+~
+|
+#10228
+tika barmaid~
+酒吧女郎 - 提卡(Tika the barmaid)~
+酒吧女郎 - 提卡(Tika the barmaid)把食物和飲品拿給人們。
+~
+一頭褐色的捲髮微微遮蓋住提卡(Tika)少許雀斑的臉，她那雙綠色的眼睛和她身上的
+工作服十分登對。艱苦的生活令她變得十分老練，因此她看起來比她實際年紀老了許
+多。她經常表現得十分粗魯，以遮蓋她內心容易受傷的弱點。
+~
+3 0 800 S
+40 0 0 0d0+0 0d0+0
+500 0
+0 8 2
+R Human~
+C 3
+P 8
+#10229
+thief cloaked figure~
+盜賊(Thief)~
+一個披著斗篷的黑影(figure)坐在這邊。
+~
+一個瘦削的，披著斗篷的黑影(figure)獨自坐在門前的一張桌子旁邊，一杯麥芽酒完封不動的
+擺在他面前。
+~
+3 0 800 S
+50 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Hobbit~
+C 5
+P 8
+>fight_prog 40~
+mpdef_rembch $n
+wear dagger
+disarm
+mpgoto self
+bs $b
+mpdef_rembch null-tar
+~
+|
+#10230
+old man~
+老人(old man)~
+一位老人(old man)在這裡站著。
+~
+他已是一個白髮蒼蒼的老人....。
+~
+3 0 800 S
+36 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Gnome~
+C 5
+#10231
+boy~
+男孩(boy)~
+一個男孩(boy)在這裡站著。
+~
+他是一個整天在發白日夢的小孩(boy)。
+~
+3 0 800 S
+30 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Gnome~
+>rand_prog 20~
+if pcnum($) > 0
+        if rand(50)
+                mpcallout 1 say 我幾日前在祈禱者之峰(Prayers Eye Peak)附近看到一隻白色的雄鹿，
+                mpcallout 2 say 如果我能夠飼養牠就太棒了。
+        else
+                mpcallout 1 say 有人曾經告訴我，祈禱者之峰(Prayers Eye Peak)上的一隻白色雄鹿，
+                mpcallout 2 say 任何牠所走過的路便會受到祝福。
+        endif
+endif
+~
+|
+#10232
+brat boy~
+令人討厭的小孩(bratty boy)~
+一個惹人討厭的小孩(brat)站在這著。
+~
+他是城裡最頑皮的小孩(boy)，如果你招惹上他將是你一生中最大的不幸。
+~
+3 0 800 S
+26 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Goblin~
+#10233
+mage-solace Mage~
+法師(mage)~
+一個法師(mage)站在這邊。
+~
+他是一個典型的冒險者(adventurer)。從他疲倦的樣子看來，他似乎已經經歷了一段漫長的旅程。
+~
+3 0 800 S
+48 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Elf~
+C 3
+P 8
+>fight_prog 100~
+if insameroom(cleric-solace)
+        if isgroup(cleric-solace)
+        else
+                mpgroup self cleric-solace 1 0
+        endif
+endif
+if insameroom(warrior-solace)
+        if isgroup(warrior-solace)
+        else
+                mpgroup self warrior-solace 1 0
+        endif
+endif
+if insameroom(thief-solace)
+        if isgroup(thief-solace)
+        else
+                mpgroup self thief-solace 1 0
+        endif
+endif
+~
+>fight_prog 40~
+c fireball
+c flamestrike
+if hitprcnt($i) <= 40
+        c 'double heal'
+        if insameroom(warrior-solace)
+                if hitprcnt(warrior-solace) <= 40
+                        mpforce warrior-solace mpat 5 c 'double heal'
+                        mpforce warrior-solace resc mage-solace
+                endif
+        endif
+        if insameroom(thief-solace)
+                if hitprcnt(thief-solace) <= 40
+                        mpforce thief-solace mpat 5 c 'double heal'
+                        mpforce thief-solace resc mage-solace
+                endif
+        endif
+        if insameroom(cleric-solace)
+                if hitprcnt(cleric-solace) <= 40
+                        mpforce cleric-solace c 'double heal'
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if rand(50)
+        if insameroom(cleric-solace)
+                if is_qmark(cleric-solace) > solace_cleric_heal 100005
+                        yell 用我最後死去的殘軀，讓牧師的魔力恢復吧！
+                        mpdel_qmark cleric-solace solace_cleric_heal
+                endif
+        endif
+else
+        if insameroom(warrior-solace)
+                if is_qmark(warrior-solace) > solace_cleric_heal 100005
+                        yell 用我最後死去的殘軀，讓戰士的體力恢復吧！
+                        mpdel_qmark cleric-solace solace_warrior_empslash
+                endif
+        endif
+endif
+~
+|
+#10234
+thief-solace Thief~
+盜賊(Thief)~
+一個盜賊(thief)站在這裡。
+~
+他是一個典型的冒險者(adventurer)。從他疲倦的樣子看來，他似乎已經經歷了一段漫長的旅程。
+~
+3 0 800 S
+50 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Half-dwarf~
+C 5
+P 8
+>fight_prog 40~
+mpdef_rembch $n
+wear dagger
+disarm
+mpgoto self
+bs $b
+mpdef_rembch null-tar
+~
+>hitprcnt_prog 20~
+if insameroom(cleric-solace)
+        if groupwith($i) == cleric-solace
+                yell 哇！我快要死了....，趕快給我幫助吧！
+                if rand(80)
+                        mpforce cleric-solace c 'gdouble heal'
+                else
+                        mpforce cleric-solace c 'gfull heal'
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if rand(50)
+        if insameroom(cleric-solace)
+                if is_qmark(cleric-solace) > solace_cleric_heal 100005
+                        yell 用我最後死去的殘軀，讓牧師的魔力恢復吧！
+                        mpdel_qmark cleric-solace solace_cleric_heal
+                endif
+        endif
+else
+        if insameroom(warrior-solace)
+                if is_qmark(warrior-solace) > solace_cleric_heal 100005
+                        yell 用我最後死去的殘軀，讓戰士的體力恢復吧！
+                        mpdel_qmark cleric-solace solace_warrior_empslash
+                endif
+        endif
+endif
+~
+|
+#10235
+warrior-solace Warrior~
+戰士(Warrior)~
+一個戰士(warrior)站在這邊。
+~
+他是一個典型的冒險者(adventurer)。從他疲倦的樣子看來，他似乎已經經歷了一段漫長的旅程。
+~
+3 0 800 S
+54 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Giant~
+C 11
+P 8
+>fight_prog 40~
+wear all
+disarm
+if rand(40)
+        say 看我的迴旋斬....！
+        circular
+endif
+if rand(40)
+        say 看我的火焰斬....！
+        flaming
+endif
+if rand(40)
+        say 看我的大地斬....！
+        earth
+endif
+if rand(50)
+        if is_qmark($i) <= solace_warrior_empslash 100005
+        or is_qmark($i) != solace_warrior_empslash
+                yell 看我的無敵霸皇劍....！
+                perform empslash
+                if is_qmark($i) != solace_warrior_empslash
+                        mpadd_qmark $i solace_warrior_empslash 50 0 0 0 1 0
+                else
+                        mpmod_qmark $i solace_warrior_empslash v0 + 1
+                endif
+        else
+                yell 看我的無敵霸........糟糕！體力用盡，無法施展！
+        endif
+endif
+~
+>hitprcnt_prog 20~
+if insameroom(cleric-solace)
+        if groupwith($i) == cleric-solace
+                yell 哇！我快要死了....，趕快給我幫助吧！
+                if rand(80)
+                        mpforce cleric-solace c 'gdouble heal'
+                else
+                        mpforce cleric-solace c 'gfull heal'
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if insameroom(cleric-solace)
+        if is_qmark(cleric-solace) > solace_cleric_heal 100005
+                yell 用我最後死去的殘軀，讓牧師的魔力恢復吧！
+                mpdel_qmark cleric-solace solace_cleric_heal
+        endif
+endif
+~
+|
+#10236
+cleric-solace Cleric~
+牧師(Cleric)~
+一個牧師(cleric)站在這邊。
+~
+他是一個典型的冒險者(adventurer)。從他疲倦的樣子看來，他似乎已經經歷了一段漫長的旅程。
+~
+3 0 800 S
+57 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+R Half-elf~
+P 8
+C 3
+>fight_prog 40~
+c harm
+c 'cause critical' $n
+if hitprcnt($i) <= 40
+        if rand(80)
+                c 'double heal'
+        else
+                if is_qmark($i) <= solace_cleric_heal 100005
+                or is_qmark($i) != solace_cleric_heal
+                        c 'full heal'
+                        if is_qmark($i) != solace_cleric_heal
+                                mpadd_qmark $i solace_cleric_heal 50 0 0 0 10
+                        else
+                                mpmod_qmark $i solace_cleric_heal v0 + 1
+                        endif
+                else
+                        yell 哇！我施展完全治癒術(full heal)的魔力用完啦....！
+                endif
+        endif
+endif
+~
+>fight_prog 60~
+if insameroom(warrior-solace)
+        if hitprcnt(warrior-solace) <= 30
+                if rand(80)
+                        c 2 'double heal' warrior-solace
+                else
+                        if is_qmark($i) <= solace_cleric_heal 100005
+                        or is_qmark($i) != solace_cleric_heal
+                                c 'full heal' warrior-solace
+                                if is_qmark($i) != solace_cleric_heal
+                                        mpadd_qmark $i solace_cleric_heal 50 0 0 0 1 0
+                                else
+                                        mpmod_qmark $i solace_cleric_heal v0 + 1
+                                endif
+                        else
+                                yell 哇！我施展完全治癒術(full heal)的魔力用完啦....！
+                        endif
+                endif
+                break
+        endif
+        if hitprcnt(warrior-solace) <= 50
+                if rand(80)
+                        c 'double heal' warrior-solace
+                endif
+                break
+        endif
+        if hitprcnt(warrior-solace) <= 80
+                if rand(80)
+                        c heal warroir-solace
+                endif
+        endif
+endif
+if insameroom(mage-solace)
+        if hitprcnt(mage-solace) <= 30
+                if rand(80)
+                        c 2 'double heal' mage-solace
+                else
+                        if is_qmark($i) <= solace_cleric_heal 100005
+                        or is_qmark($i) != solace_cleric_heal
+                                c 'full heal' mage-solace
+                                if is_qmark($i) != solace_cleric_heal
+                                        mpadd_qmark $i solace_cleric_heal 50 0 0 0 1 0
+                                else
+                                        mpmod_qmark $i solace_cleric_heal v0 + 1
+                                endif
+                        else
+                                yell 哇！我施展完全治癒術(full heal)的魔力用完啦....！
+                        endif
+                endif
+                break
+        endif
+        if hitprcnt(mage-solace) <= 50
+                if rand(80)
+                        c 'double heal' mage-solace
+                endif
+                break
+        endif
+        if hitprcnt(mage-solace) <= 80
+                if rand(80)
+                        c heal mage-solace
+                endif
+        endif
+endif
+if insameroom(thief-solace)
+        if hitprcnt(thief-solace) <= 30
+                if rand(80)
+                        c 2 'double heal' thief-solace
+                else
+                        if is_qmark($i) <= solace_cleric_heal 100005
+                        or is_qmark($i) != solace_cleric_heal
+                                c 'full heal' thief-solace
+                                if is_qmark($i) != solace_cleric_heal
+                                        mpadd_qmark $i solace_cleric_heal 50 0 0 0 1 0
+                                else
+                                        mpmod_qmark $i solace_cleric_heal v0 + 1
+                                endif
+                        else
+                                yell 哇！我施展完全治癒術(full heal)的魔力用完啦....！
+                        endif
+                endif
+                break
+        endif
+        if hitprcnt(thief-solace) <= 50
+                if rand(80)
+                        c 'double heal' thief-solace
+                endif
+                break
+        endif
+        if hitprcnt(thief-solace) <= 80
+                if rand(80)
+                        c heal thief-solace
+                endif
+        endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if insameroom(warrior-solace)
+        if is_qmark(warrior-solace) > solace_cleric_heal 100005
+                yell 用我最後死去的殘軀，讓戰士的體力恢復吧！
+                mpdel_qmark cleric-solace solace_warrior_empslash
+        endif
+endif
+~
+|
+#10237
+ghost gambler~
+賭徒的鬼魂(Ghost of gambler)~
+賭徒的鬼魂(ghost)正在賭錢。
+~
+即使是已經死去，這個可憐的孤魂仍然迷失在賭博中。
+~
+3 0 -200 S
+49 0 0 0d0+0 0d0+0
+500 0
+0 8 0
+R Ghost~
+C 3
+#10238
+child~
+小孩(child)~
+一個小孩(child)在這裡撿地上的蟲子吃。
+~
+~
+1 0 800 S
+26 0 0 0d0+0 0d0+0
+34 0
+0 8 0
+#10239
+rat~
+老鼠(rat)~
+這裡有一隻大老鼠(rat)。
+~
+~
+69 65536 -100 S
+31 0 0 0d0+0 0d0+0
+34 0
+0 8 0
+R Animal~
+#10240
+bat~
+蝙蝠(bat)~
+一隻大蝙蝠(bat)在這裡。
+~
+~
+35 8 100 S
+38 0 0 0d0+0 0d0+0
+34 0
+0 8 0
+R Bat~
+#10241
+old lady~
+老婦人(old lady)~
+一位老婦(old lady)站在這裡。
+~
+~
+69 0 100 S
+33 0 0 0d0+0 0d0+0
+34 0
+0 8 0
+#10242
+adventurer-solace tired adventurer~
+疲倦的冒險者(tired adventurer)~
+一個疲倦的冒險者(adventurer)正在這裡想著事情。
+~
+~
+1|2|128|4096|8192|8388608 8|32|512|8192 100 S
+50 2000 0 20d10+0 0d0+0
+34 0
+0 8 0
+P 8
+C 11
+>entry_prog 100~
+if insameroom(tiamat)
+        if is_qmark($i) == solace_adventurer_hire 100000
+                if being($b)
+                        shout 緹雅瑪特(Tiamat)，我終於找到你了，受死吧！
+                        mpmod_qmark self solace_adventurer_hire v0 = 1
+                        mpat tiamat mpadd_qmark tiamat solace_adventurer_quest 200 0 0 0 1 0
+                        mpat tiamat mpforce tiamat mpdef_rembch $b
+                        mpat $b mpmod_qmark $b solace_adventurer_quest v0 = 3
+                        if insameroom($b)
+                                tell $b 一起奮戰吧！
+                        else
+                                tell $b 趕快來幫助我吧！我單獨一個人撐不久的....！
+                        endif
+                        hunt tiamat
+                        mpnowait
+                endif
+        endif
+endif
+if inroom($i) == 16058
+        say 我們已經到達了楓紅林的漁港，讓我們上船吧。
+        mpechoat $b 你登上了 $I 的私人小船....
+        mptransfer $b 16060
+        mpcallout 1 mpgoto 16060
+        mpcallout 2 mpforcer here modrvt v0 = 1
+endif
+if inroom($i) == 2222
+        say 這邊如果沒有穿牆術(pass door)我是沒有辦法過去的....。
+        mpcallout 1 say 你可以給我喝霧化藥水(misty potion)....，
+        mpcallout 2 say 那麼我就可以跟隨你穿過這道牆壁。
+endif
+if inroom($i) == 2243
+        if is_equ_obj($i) != 10331
+                if is_inv_obj($i) == 10331
+                        remove all
+                        wear dragonslicer
+                        wear hammer
+                else
+                        say 沒想到轉眼間就已經到了這裡，
+                        say 如果能夠有斬龍劍的幫助，
+                        say 斬殺緹雅瑪特更能易如反掌。
+                endif
+        endif
+endif
+~
+>give_prog 2015~
+if inroom($i) == 2222
+        if is_qmark($i) == solace_adventurer_hire
+                say 好的，我立即喝下霧化藥水....。
+                mpcallout 1 qua potion
+        endif
+endif
+~
+>give_prog 2384~
+if inroom($i) == 2222
+        if is_qmark($i) == solace_adventurer_hire
+                say 好的，我立即喝下霧化藥水....。
+                mpcallout 1 qua potion
+        endif
+endif
+~
+>give_prog 10331~
+if is_qmark($i) >= solace_adventurer_hire 100000
+        if is_equ_obj($i) == 10331
+                say 我手上已經裝備斬龍劍了呢。
+                sm $n
+                drop dragonslicer
+        else
+                bow $n
+                remove all
+                wear dragonslicer
+                wear hammer
+        endif
+else
+        ? $n
+        drop dragonslicer
+endif
+~
+>fight_prog 80~
+if is_equ_obj($i) == 10331
+        if rand(40)
+                if insameroom(tiamat)
+                        yell 看我的狂龍八斬法！
+                        perform empslash
+                        mpnowait
+                        perform empslash
+                        mpnowait
+                endif
+        endif
+else
+        if is_inv_obj($i) == 10331
+                wear dragonslicer
+        endif
+endif
+if is_qmark($i) == solace_adventurer_hire 100001
+        if vnum($n) == 2220
+                if insameroom($b)
+                else
+                        tell $b 趕快過來幫我啊！緹雅瑪特(Tiamat)好強。
+                        mpmod_qmark self solace_adventurer_hire v1 + 1
+                        if is_qmark($i) == solace_adventurer_hire 200005
+                                tell $b 快來幫我啊！我快要不行了！
+                        endif
+                        if is_qmark($i) == solace_adventurer_hire 200010
+                                tell $b 再不來幫我，我快要被緹雅瑪特(Tiamat)打死啦！
+                        endif
+                        if is_qmark($i) == solace_adventurer_hire 200012
+                                rumor 由於 $b 遲遲不肯幫助隊友 $b ，讓他葬送在緹雅瑪特(Tiamat)的爪下。
+                                if is_qmark(tiamat) == solace_adventurer_quest
+                                        mpdel_qmark tiamt solace_adventurer_quest
+                                        mpat $b mpmod_qmark $b solace_adventurer_quest v0 = 9
+                                        mpat $b mpmod_qmark $b solace_advneturer_quest timer = 500
+                                endif
+                                shout 我會記住你的， $b。
+                                if is_equ_obj($i) == 10331
+                                        remove dragonslicer
+                                        drop dragonslicer
+                                endif
+                                mppurge self
+                        endif
+                endif
+        endif
+endif
+if insameroom($b)
+else
+        if is_qmark($i) >= solace_adventurer_hire 1010
+                mpmod_qmark self solace_adventurer_hire timer - 5
+        endif
+endif
+if isgood($n)
+        say 啊！我不能夠欺負善良！
+        flee
+        flee
+endif
+if race($n) == Human
+        say 啊！我不能夠攻擊同類！
+        flee
+        flee
+endif
+~
+>talk_prog restart~
+if is_qmark($n) & mist_quest 100008
+        say 抱歉，你已經完成了這項任務。
+        break
+endif
+if is_qmark($n) == solace_adventurer_quest 100009
+        say 我永遠不會忘記你對我做過的事情。
+        break
+endif
+if is_qmark($i) == solace_adventurer_hire
+        if being($b)
+                if insameroom($b)
+                        say 抱歉，我目前已經被 $b 雇用了。
+                else
+                        say 奇怪，我的雇主 $b 又跑到那邊去了？
+                endif
+        else
+                sigh
+                mpcallout 1 say 我的雇主不知道又跑到那邊去了？
+                mpcallout 2 say 回去索雷斯城找找看吧。
+                mpcallout 3 mpechoat $n $I 不理你的話，頭也不回的離開了....。
+                mpcallout 3 mpechoaround $n $I 不理 $n 的話，頭也不回的離開了....。
+                mpcallout 4 mppurge self
+        endif
+        break
+endif
+if is_qmark($n) <= solace_adventurer_quest 100004
+        mpechoat $n 遠方傳來一陣聲響「此項任務已經可以重新開始。」
+        mpdel_qmark $n solace_adventurer_quest
+endif
+~
+>rand_prog 50~
+if being($b)
+        if is_qmark($i) == solace_adventurer_hire
+                if insameroom($b)
+                else
+                        tell $b 你跑到那邊去了？
+                        tell $b 趕緊回來完成我們的任務啊。
+                        if is_qmark($i) > solace_adventurer_hire 1005
+                                mpmod_qmark self solace_adventurer_hire timer - 5
+                        endif
+                endif
+        else
+                tell $b 你的速度實在是太慢了，我只好另找高明了。
+                mppurge self
+        endif
+else
+        if is_qmark($i) == solace_adventurer_hire
+                say 又是一個沒有完成任務就離開的傢伙。
+                shrug
+                mpecho $I 往索雷斯城的方向走去....
+                mppurge self
+        endif
+endif
+~
+>kill_prog 100~
+if is_qmark($i) == solace_adventurer_hire 100001
+        if vnum($n) == 2220
+                shout 太好了，我終於親自殺掉緹雅瑪特了！
+                if insameroom($b)
+                else
+                        mpgoto $b
+                endif
+                if is_qmark($b) == mist_quest
+                        mpmod_qmark $b mist_quest v0 | 8
+                else
+                        mpadd_qmark $b mist_quest -1 8 0 0 0 1
+                endif
+                mpdel_qmark $b solace_adventurer_quest
+                mpcall solace_adventurer_gift1 $b
+        endif
+endif
+~
+>talk_prog topic~
+if being($b)
+        if rembch($n)
+                sm $n
+                say 我們出發吧！
+        else
+                say 我現在正被 $b 所雇用，一切事情稍後再說！
+        endif
+        break
+endif
+say 好無聊喔！好想去探險一下....。
+mpcallout 1 say 我一直都想要去龍塔....，
+mpcallout 2 say 看看傳說中的緹雅瑪特(Tiamat)到底是多麼強勁。
+~
+>talk_prog tiamat~
+if being($b)
+        say 我現在正被 $b 所雇用，一切事情稍後再說！
+        break
+endif
+if is_qmark($n) & mist_quest 100008
+        say 你好，希望我們往後還有機會可以一起合作。
+        break
+endif
+if is_qmark($n) == solace_adventurer_quest 100009
+        tell $n 你對我做過的事情，我永遠不會忘記的。
+        break
+endif
+say 喔！你願意帶我去風之大陸嗎？
+say 我願意為你的冒險旅程付出(support)一些微薄心力。
+~
+>talk_prog support~
+if being($b)
+        say 我現在正被 $b 所雇用，一切事情稍後再說！
+        break
+endif
+if is_qmark($n) & mist_quest 100008
+        say 你好，希望我們往後還有機會可以一起合作。
+        break
+endif
+if is_qmark($n) == solace_adventurer_quest 100009
+        tell $n 你對我做過的事情，我永遠不會忘記的。
+        break
+endif
+if class($n) < 5
+	tell $n 你還太弱小了，我怕你幫不上忙。
+	break
+endif
+if is_qmark($n) == solace_adventurer_quest
+        say 抱歉，你曾經接過這項任務，但卻沒有完成。
+        mpcallout 1 say 若需要重新開始本項任務，請跟我說 <talk adventurer restart> 。
+        break
+endif
+if area($i) == solace
+        nod $n
+        say 我在楓紅林的小漁港有一艘私人的小船，
+        say 能夠快速地到達目的地，
+        say 我們先到楓紅林的漁港去吧。
+        mpdef_rembch $n
+        mpgroup $n self 1 0
+        mpadd_qmark self solace_adventurer_hire 200 0 0 0 1 0
+        mpadd_qmark $n solace_adventurer_quest 200 0 0 0 0 1
+else
+        say 我想要先回去家鄉索雷斯城(solace)處理一些事務。
+        mpcallout 1 tell $n 這樣好了，我先回去索雷斯城(solace)等你。
+        mpcallout 2 tell $n 如果你有需要，就來索雷斯城找我吧！
+        mpcalluot 3 tell $n 索雷斯城(solace)位於迷霧之島水晶湖的北方。
+        mpcallout 4 wave $n
+        mpcallout 5 mppurge self
+endif
+~
+>defun_prog solace_adventurer_gift1~
+say 真是太感謝您了， $b 。
+say 因為你的幫助，我才得以親自除去強大的緹雅瑪特(Tiamat)。
+if is_equ_obj($i) == 10331
+        remove dragonslicer
+endif
+if is_inv_obj($i) == 10331
+        give dragonslicer $b
+        say 謝謝你的斬龍劍。
+endif
+if class($b) < 5
+        mpexp $b 10000
+else
+        mpexp $b 30000
+endif
+mpresp $b 3
+if class($b) < 5
+	say 不管如何，我一定要送你一個小禮物。
+	say 只是你現在還太弱小了，等你長大之後再來找我拿禮物吧。
+	mpmadd_qmark $b solace_adventurer_gift -1 0 0 0 0 1
+else
+	say 不管如何，我一定要送你一些個人的小禮物。
+	mpecho $I 由自己的行李袋中，拿出了一件物品....。
+	mpechoat $b $I 將禮物交給了你....。
+	mpechoaround $b $I 將禮物交給了 $b ....。
+	if class($b) == 11
+	or class($b) == 12
+	or class($b) == 13
+        	if level($b) > 39
+                	mpoload 10311 $b viclv target
+        	else
+                	mpoload 10311 $b 39 target
+        	endif
+	endif
+	if class($b) == 14
+	or class($b) == 18
+	or class($b) == 19
+	        if level($b) > 39
+        	        mpoload 10312 $b viclv target
+        	else
+                	mpoload 10312 $b 39 target
+        	endif
+	endif
+	if class($b) == 9
+	or class($b) == 10
+	or class($b) == 17
+	        if level($b) > 39
+                	mpoload 10313 $b viclv target
+        	else
+	                mpoload 10313 $b 39 target
+	        endif
+	endif
+	if class($b) == 5
+	or class($b) == 6
+	or class($b) == 15
+	        if level($b) > 39
+                	mpoload 10314 $b viclv target
+        	else
+	                mpoload 10314 $b 39 target
+	        endif
+	endif
+	if class($b) == 7
+	or class($b) == 8
+	or class($b) == 16
+	        if level($b) > 39
+                	mpoload 10315 $b viclv target
+        	else
+	                mpoload 10315 $b 39 target
+	        endif
+	endif
+endif
+mpcallout 2 say 謝謝你的協助，往後無盡的冒險生涯中再見了。
+mpcallout 3 wave $b
+mpcallout 4 mpecho $I 轉身離去，消失在你的視線中....。
+mpcallout 5 mppurge self
+~
+>defun_prog solace_adventurer_gift2~
+if is_equ_obj($i) == 10331
+        remove dragonslicer
+endif
+if is_inv_obj($i) == 10331
+        give dragonslicer $b
+        say 謝謝你的斬龍劍。
+endif
+say 因為我們的同心協力，才得以一起打敗了緹雅瑪特(Tiamat)。
+if class($b) < 5
+        mpexp $n 5000
+else
+        mpexp $b 15000
+endif
+mpresp $b 1
+if class($b) < 5
+	say 不管如何，我一定要送你一個小禮物。
+	say 只是你現在還太弱小了，等你長大之後再來找我拿禮物吧。
+	mpmadd_qmark $b solace_adventurer_gift -1 0 0 0 0 1
+else
+	say 不管如何，我一定要送你一些個人的小禮物。
+	mpecho $I 由自己的行李袋中，拿出了一件物品....。
+	if class($b) == 11
+	or class($b) == 12
+	or class($b) == 13
+	        if level($b) > 39
+                	mpoload 10316 $b viclv target
+        	else
+	                mpoload 10316 $b 39 target
+	        endif
+        	give ruby $b
+	endif
+	if class($b) == 14
+	or class($b) == 18
+	or class($b) == 19
+	        if level($b) > 39
+                	mpoload 10317 $b viclv target
+        	else
+	                mpoload 10317 $b 39 target
+	        endif
+	        give ruby $b
+	endif
+	if class($b) == 9
+	or class($b) == 10
+	or class($b) == 17
+	        if level($b) > 39
+                	mpoload 10318 $b viclv target
+        	else
+	                mpoload 10318 $b 39 target
+	        endif
+	        give ruby $b
+	endif
+	if class($b) == 5
+	or class($b) == 6
+	or class($b) == 15
+	        if level($b) > 39
+                	mpoload 10319 $b viclv target
+        	else
+	                mpoload 10319 $b 39 target
+	        endif
+	        give ruby $b
+	endif
+	if class($b) == 7
+	or class($b) == 8
+	or class($b) == 16
+	        if level($b) > 39
+                	mpoload 10320 $b viclv target
+        	else
+	                mpoload 10320 $b 39 target
+	        endif
+	        give ruby $b
+	endif
+endif
+mpcallout 2 say 謝謝你的協助，往後無盡的冒險生涯中再見了。
+mpcallout 3 wave $b
+mpcallout 4 mpecho $I 轉身離去，消失在你的視線中....。
+mpcallout 5 mppurge self
+~
+|
+#10243
+magnus-solace Magnus wizard~
+巫師馬尼斯(Magnus wizard)~
+巫師馬尼斯(Magnus)正在這裡稍作休息。
+~
+~
+1|2|64|1024 8|32|128|512|134217728|137438953472 100 S
+58 6000 0 30d-120+800 -60d250+0
+300000 0
+0 8 1
+R Elf~
+C 7
+P 1|4|8|16|64|256|4508576|2097152|4194304|16777216|2048|262144
+W frenzy~ 50 130
+K 'crushing hand' 'song of clenase' 'day of brightness' 'meteor shower' 'ice comet' 'will
+fortress' 'sand tide' 'banshee wail' 'succubus kiss' 'instant cast'~
+S
+27 -10
+S
+28 -10
+S
+30 -10
+S
+31 -10
+>rand_prog 50~
+if hitprcnt($i) <= 50
+        c 3 'double heal'
+endif
+~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if insameroom(10243)
+        mptransfer doom 10301
+endif
+~
+>fight_prog 30~
+if is_qmark($i) != solace_magnus_unique-skill
+        mpadd_qmark self solace_magnus_unique-skill 5 0 0 0 1 0
+        mpecho ;31m$I 的雙手緊握，口中喃喃唸著奇異的咒語........
+        if rand(50)
+                if is_qmark($i) == spell_armageddon_timer
+                        mpecho [1;33m$I 施展末日禁咒後虛弱的身體忽然又充滿了生氣........[m
+                        mpdel_qmark self spell_armageddon_timer
+                endif
+                mpcallout 1 mpecho [1;33m大地由於 $I 的強大法力開始震動........[m
+                mpcallout 2 yell 看我的 ****    末      日      禁      咒****
+                mpcallout 3 c armageddon
+                mpcallout 3 mpdel_qmark self solace_magnus_unique-skill
+        else
+                mpcallout 1 mpecho [1;31m$I 的身體燃起了熊熊的火焰........[m
+                mpcallout 2 yell 看我的 ****    怒      火      風      暴 ****
+                mpcallout 3 c 3 'angry fire storm'
+                mpcallout 3 mpdel_qmark self solace_magnus_unique-skill
+        endif
+endif
+~
+>hitprcnt_prog 40~
+c 2 'double heal'
+mpnowait
+if being($b)
+        if insameroom($b)
+        else
+                yell 末日領主(Lord Doom) 快來幫助我擊退強敵吧！
+                mpecho 末日領主(Lord Doom) [1;33m忽然出現了........[m
+                protect lord-solace
+        endif
+else
+        if mobcount(10244) >= 0
+                yell 末日領主(Lord Doom) 快來幫助我擊退強敵吧！
+                if insameroom(lord-solace)
+                else
+                        mpecho 末日領主(Lord Doom) [1;33m忽然出現了........[m
+                        mptransfer lord-solace
+                endif
+                mpgroup self lord-solace 0 1
+                mpdef_rembch lord-solace
+                protect lord-solace
+        endif
+endif
+~
+>fight_prog 40~
+if is_qmark($i) == solace_magnus_unique-skill
+        break
+endif
+if rand(50)
+        c powerball
+        mpnowait
+else
+        c 'star fire'
+        mpnowait
+endif
+if rand(30)
+        c 'full heal'
+        break
+endif
+if hitprcnt($i) <= 60
+        c 2 'double heal'
+endif
+~
+>fight_prog 100~
+if is_qmark($i) == solace_magnus_unique-skill
+        break
+endif
+if rand(50)
+        if isaffected($n) & 68719476736
+        or isaffected($n) & 137438953472
+                tell $n 你以為施展了魔盾術或魔鏡術就可以打敗我了嗎？
+                mpdis_magic $n 'mystic armor'
+                mpdis_magic $n 'mystic mirror'
+        endif
+        break
+endif
+c fireball
+mpnowait
+c flametrike
+mpnowait
+c 3 'burning hand'
+mpnowait
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+c 3 whirlwind
+mplog killed by $n
+~
+|
+#10244
+lord-solace Lord doom warrior~
+末日領主(Lord Doom)~
+末日領主(Lord Doom)從長途旅程中稍作休息。
+~
+~
+1|2|64|128|1024|4096|8192|16384|524288|8388608 8|128|512|8589934592 0 S
+60 0 0 0d-50+700 -10d300+0
+50000 0
+0 8 1
+R Giant~
+C 31
+P 8|4194304|8388608|16777216|2048
+K lifeshare~
+S
+23 30
+S
+27 -5
+S
+28 -5
+S
+30 -5
+S
+31 -5
+>rand_prog 50~
+if hitprcnt($i) <= 50
+        c 3 'double heal'
+endif
+~
+>hitprcnt_prog 40~
+c 2 'double heal'
+mpnowait
+if being($b)
+        if insameroom($b)
+        else
+                yell 馬尼斯(Magnus) 快來幫助我擊退強敵吧！
+                mpecho 馬尼斯(Magnus) [1;33m忽然出現了........[m
+                mptransfer magnus-solace
+                mpgroup self magnus-solace 1 0
+                mpforce magnus-solace protect self
+        endif
+else
+        if mobcount(10243) >= 0
+                yell 馬尼斯(Magnus) 快來幫助我擊退強敵吧！
+                if insameroom(magnus-solace)
+                else
+                        mpecho 馬尼斯(Magnus) [1;33m忽然出現了........[m
+                        mptransfer magnus-solace
+                endif
+                mpgroup self magnus-solace 1 0
+                mpforce magnus-solace protect self
+        endif
+endif
+~
+>fight_prog 20~
+wear wonder
+disarm
+mpcallout 1 mpecho $I [1;33m將手上的弓高高舉起........[m
+mpcallout 2 mpecho $I [1;33m大聲喊著「看我的   ***     流      星      箭      法      ***     」[m
+mpcallout 3 skilldrv speedhit $n
+mpcallout 3 skilldrv speedhit $n
+mpcallout 3 skilldrv speedhit $n
+mpcallout 3 skilldrv speedhit $n
+mpcallout 3 skilldrv speedhit $n
+mpcallout 3 skilldrv speedhit $n
+mpcallout 3 skilldrv speedhit $n
+mpcallout 3 skilldrv speedhit $n
+~
+>fight_prog 100~
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mplog killed by $n
+~
+|
+#10245
+foreign trade representative~
+公國貿易代表(Foreign Trade Representative)~
+一個公國貿易代表(representative)正在這裡等候與護衛隊隊長會面。
+~
+~
+3 0 100 S
+54 0 0 0d0+0 0d0+0
+34 0
+0 8 1
+P 8
+C 11
+#10246
+bodyguard-solace~
+保鑣(bodyguard)~
+一個保鑣(bodyguard)在這裡。
+~
+~
+3 0 100 S
+42 0 0 0d0+0 0d0+0
+34 0
+0 8 1
+P 8
+C 11
+#10247
+secretary-solace Secretary captain~
+秘書(Secretary)~
+護衛隊隊長的秘書(Secretary)在這邊。
+~
+她現在看來很忙。
+~
+3 0 100 S
+50 0 0 0d0+0 0d0+0
+34 0
+0 8 2
+>talk_prog topic~
+say 對不起，但今天護衛隊隊長(Captain)實在太忙了。
+mpcallout 1 say 請在這裡坐一會等他。
+~
+|
+#10248
+secretary-solace Secretary Lieutenant~
+副隊長的秘書(Secretary)~
+副隊長的秘書(Secretary)在這裡。
+~
+她現在看來很忙。
+~
+3 0 100 S
+46 0 0 0d0+0 0d0+0
+34 0
+0 8 2
+C 3
+P 8
+>talk_prog topic~
+say 對不起，但今天副隊長(Lieutenant)實在太忙了。
+say 請在這裡坐一會等他。
+~
+|
+#10249
+secretary-solace Secretary Sergeant~
+秘書(Secretary)~
+議會警衛官的秘書(The Sergeant at Arm's Secretary)在這裡站著。
+~
+她現在看來很忙。
+~
+3 0 100 S
+44 0 0 0d0+0 0d0+0
+34 0
+0 8 2
+R Giant~
+C 3
+P 8
+>talk_prog topic~
+say 對不起，但今天警衛官(Sergeant)實在太忙了。
+say 請在這裡坐一會等他。
+~
+|
+#10250
+macaw-solace Macaw~
+金剛鸚鵡(the macaw)~
+一隻金剛鸚鵡(macaw)在這裡。
+~
+這隻金剛鸚鵡(macaw)外表十分的美麗。
+~
+7 8|32|524288 0 S
+29 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+#10251
+raven-solace Raven~
+大烏鴉(the raven)~
+一隻黑色的大烏鴉(raven)在這邊。
+~
+這是一隻強壯的，不懼怕人的大烏鴉(raven)。
+~
+7 8|32|524288 0 S
+32 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+#10252
+hunting hawk~
+獵鷹(the hunting hawk)~
+一隻巨大的獵鷹(hawk)在這邊飛翔著。
+~
+這隻獵鷹(hawk)看來十分強壯，像是一個勇敢的戰士。而事實上，它是為狩獵遊戲而訓練出來的。
+~
+7 8|32|524288 0 S
+35 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+P 8
+>defun_prog solace_falcon_fight~
+hunt $b
+skilldrv speedhit $b
+skilldrv speedhit $b
+~
+>fight_prog 25~
+mpecho $I [1;33m忽然往高空飛去脫離了戰鬥....[m
+mpdef_rembch $n
+mpgoto 5
+mpcallout 1 mpat $b mpecho [1;33m你不斷的看到 $I 在高空盤旋....[m
+mpcallout 2 mpgoto $b
+mpcallout 2 mpat $b mpechoat $b [1;33m忽然 $I 往你俯衝了過來....！[m
+mpcallout 2 mpat $b mpechoaround $b [1;33m忽然 $I 往 $b 俯衝了過去....！[m
+mpcallout 3 mpcall solace_falcon_fight
+mpcallout 4 mpdef_rembch null-tar
+~
+|
+#10253
+falcon-solace Battle falcon~
+好戰的獵鷹(the battle falcon)~
+一隻強壯的獵鷹(falcon)在這裡飛翔。
+~
+這隻好戰的獵鷹(battle falcon)看來十分強壯，簡直和一個勇敢的戰士沒有分別。
+它巨大的身軀就像是為戰鬥而生存。
+~
+7 8|32|524288 0 S
+38 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Animal~
+P 8
+>defun_prog solace_falcon_fight~
+hunt $b
+skilldrv speedhit $b
+skilldrv speedhit $b
+skilldrv speedhit $b
+skilldrv speedhit $b
+~
+>fight_prog 40~
+mpecho $I [1;33m忽然往高空飛去脫離了戰鬥....[m
+mpdef_rembch $n
+mpgoto 5
+mpcallout 1 mpat $b mpecho [1;33m你不斷的看到 $I 在高空盤旋....[m
+mpcallout 2 mpgoto $b
+mpcallout 2 mpat $b mpechoat $b [1;33m忽然 $I 往你俯衝了過來....！[m
+mpcallout 2 mpat $b mpechoaround $b [1;33m忽然 $I 往 $b 俯衝了過去....！[m
+mpcallout 3 mpcall solace_falcon_fight
+mpcallout 4 mpdef_rembch null-tar
+~
+|
+#10254
+ismoa solace-ismoa~
+艾思摩亞(Ismoa)~
+艾思摩亞(Ismoa)站在這裡進行他的研究工作。
+~
+他的一身裝扮，給人一種高深莫測的感覺。並沒有人知道他的來歷，唯一知道的是
+有一次護衛隊隊長出外工作時遇到危險，得到他和他的保鏢相救，才能夠再此回到
+這個城裡。自此，他就一直住在這裡。
+艾思摩亞(Ismoa)為人十分隨和，而且精於各種法術，只要城裡的居民有事找他，
+他都很樂意去幫忙，似乎並沒有什麼事可以難倒他。
+~
+1|2|1024|8388608|268435456 8|16|32|128|8192|134217728|8589934592|137438953472 0 S
+65 100000 0 0d20+100 0d200+0
+100000 0
+0 8 1
+R Human~
+C 7
+P
+1|2|4|8|64|128|2048|32768|65536|131072|262144|524288|4508576|2097152|16777216|8388608|67108864|268435456|536870912
+S
+40 35
+#10255
+jila phista solace-jila~
+基拉斐斯達(Jila Phista)~
+基拉斐斯達(Jila Phista)在這裡保護艾思摩亞的安全。
+~
+斐斯達(Phista)一身武裝，手握魔斬劍，隨時迎戰來襲的敵人。
+據說他曾和護衛隊隊長交手，一招便把他打敗，技驚四座。
+而他手上的魔斬劍，更是一件完美的兵刃，即使是斬龍劍也為之遜色。
+~
+1|2|2048|4096|16384|262144|4508576|8388608|16777216 8|32|128|8192|524288|2097152 0 S
+67 100000 0 20d80+300 0d300+0
+200000 0
+0 8 1
+R Dragon~
+C 47
+P
+1|2|4|8|64|128|2048|32768|65536|131072|524288|4508576|16777216|8388608|67108864|536870912
+#10256
+elder~
+老者(Elder)~
+一位老人家(Elder)悠閒的坐在這裡休息。
+~
+他是艾思摩亞(Ismoa)的隨從之一。
+雖然他的年紀已經不小了，但仍十分壯健，縱然強如斐斯達(Phista)也要稱呼他一聲老師。
+~
+1|2|2048|4508576|8388608|16777216 8|32|128|8192|2097152 0 S
+62 100000 0 0d60+0 0d0+0
+10000 0
+0 8 1
+R Giant~
+C 47
+P 1|2|4|8|64|128|2048|32768|65536|131072|524288|4508576|16777216|8388608|67108864|536870912
+#10257
+meteor-system-solace~
+流星系統(Meteor System)~
+一個流星系統(Meteor System)在控制這個世界星星的墮下。
+~
+這顯然是風的心情(Amethyst)的惡作劇！
+~
+3 0 0 S
+1 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+R Robot~
+>tick_prog 100~
+if inroom($i) != 10328
+	mpgoto 10328
+	break
+endif
+if month($) == 14
+	if day($) == 6
+		if hour($) > 21
+		or hour($) < 3
+			if rand(15)
+				mpcall meteor_group
+			else
+				mpcall meteor_single
+				mpcall meteor_rate
+			endif
+		endif
+	else
+		if hour($) > 21
+		or hour($) < 3
+			mpcall meteor_single
+		endif
+	endif
+else
+	if day($) == 6
+		if hour($) > 21
+		or hour($) < 3
+			mpcall meteor_single
+			mpcall meteor_rate
+		endif
+	else
+		if hour($) > 21
+		or hour($) < 3
+			mpcall meteor_single
+		endif
+	endif
+endif
+~
+>defun_prog meteor_group~
+mpechotoall [1;36m一群流星劃破漆黑的夜空，照耀著整片大地！[m
+mpforcer here modrvt v0 + 6
+mpforcer here modrvt v1 + 3
+mpoload 10330
+telefragment fragment
+mpoload 10330
+telefragment fragment
+mpoload 10330
+telefragment fragment
+mpoload 10330
+telefragment fragment
+mpoload 10330
+telefragment fragment
+mpoload 10330
+telefragment fragment
+if rand(20)
+	mpoload 10330
+	telefragment fragment
+	mpforcer here modrvt v0 + 1
+	mpforcer here modrvt v1 + 1
+endif
+if rand(15)
+	mpoload 10330
+	telefragment fragment
+	mpforcer here modrvt v0 + 1
+	mpforcer here modrvt v1 + 1
+endif
+if rand(10)
+	mpoload 10330
+	telefragment fragment
+	mpforcer here modrvt v0 + 1
+	mpforcer here modrvt v1 + 1
+endif
+~
+>defun_prog meteor_single~
+if rand(15)
+	if rand(60)
+		mpechotoall [1;36m一顆流星劃破漆黑的夜空！[m
+	else
+		mpechotoall [1;36m一顆流星劃破漆黑的夜空，掉落在地上！[m
+		mpoload 10330
+		mpforcer here modrvt v0 + 1
+		mpforcer here modrvt v1 + 1
+		telefragment fragment
+	endif
+endif
+~
+>defun_prog meteor_rate~
+if rand(10)
+	if rand(50)
+		mpechotoall [1;36m一顆流星劃破漆黑的夜空！[m
+	else
+		mpechotoall [1;36m一顆流星劃破漆黑的夜空，掉落在地上！[m
+		mpforcer here modrvt v0 + 1
+		mpforcer here modrvt v1 + 1
+		mpoload 10330
+		telefragment fragment
+	endif
+endif
+~
+|
+#0
+
+
+
+#MOBPROGS
+M 10204 solace_enemy_greet.prg
+M 10205 solace_enemy_greet.prg
+M 10215 solace_enemy_greet.prg
+M 10218 solace_enemy_greet.prg
+M 10246 solace_enemy_greet.prg
+M 10209 solace_enemy.prg
+M 10217 solace_enemy.prg
+M 10219 solace_enemy.prg
+M 10220 solace_enemy.prg
+M 10221 solace_enemy.prg
+M 10222 solace_enemy.prg
+M 10223 solace_enemy.prg
+M 10224 solace_enemy.prg
+M 10225 solace_enemy.prg
+M 10226 solace_enemy.prg
+M 10247 solace_enemy.prg
+M 10248 solace_enemy.prg
+M 10249 solace_enemy.prg
+S
+
+
+#OBJECTS
+#10201
+fine helmet obsidian~
+精緻黑曜石戰盔(obsidian helmet)~
+一個精緻黑曜石戰盔(fine helmet)放在地板上。~
+~
+9 64|1024 17
+0~ 0~ 200~ 0~
+30 10000 0
+A
+13 1
+A
+1 1
+C 10000
+X obsidian~
+
+#10202
+fine sleeves obsidian~
+精緻黑曜石戰臂(obsidian sleeves)~
+一對精緻黑曜石戰臂(fine sleeves)放在地板上。~
+~
+9 1088 257
+0~ 0~ 200~ 0~
+40 10000 0
+A
+5 1
+A
+24 -5
+C 10000
+X obsidian~
+
+#10203
+fine leggings obsidian~
+精緻黑曜石戰脛(obsidian leggings)~
+一件精緻黑曜石戰脛(fine leggings)放在地板上。~
+~
+9 1088 33
+0~ 0~ 200~ 0~
+40 10000 0
+A
+14 20
+A
+2 2
+C 10000
+X obsidian~
+
+#10204
+fine gauntlets obsidian~
+精緻黑曜石手套(obsidian gauntlets)~
+一對精緻黑曜石手套(fine gauntlets)放在地板上。~
+~
+9 1088 129
+0~ 0~ 200~ 0~
+40 10000 0
+A
+18 3
+A
+23 -3
+C 10000
+X obsidian~
+
+#10205
+fine boots obsidian~
+精緻黑曜石戰靴(obsidian boots)~
+一對精緻黑曜石戰靴(fine boots)放在地板上。~
+~
+9 1088 65
+0~ 0~ 200~ 0~
+40 10000 0
+A
+13 10
+A
+23 -6
+C 10000
+X obsidian~
+
+#10206
+fine cloak obsidian~
+精緻黑曜石護袍(obsidian cloak)~
+一件精緻黑曜石護袍(fine cloak)放在地板上。~
+~
+9 1088 5
+0~ 0~ 200~ 0~
+40 10000 0
+A
+22 -4
+A
+24 -2
+C 10000
+X obsidian~
+
+#10207
+fine girth obsidian~
+精緻黑曜石腰帶(the obsidian girth)~
+一條精緻黑曜石腰帶(fine girth)放在地板上。~
+~
+9 1088 2049
+0~ 0~ 200~ 0~
+40 10000 0
+A
+1 1
+A
+24 -2
+C 10000
+X obsidian~
+
+#10208
+fine shield large obsidian~
+精緻黑曜石巨盾(the large obsidian shield)~
+一面巨大的精緻黑曜石盾牌(fine shield)放在地板上。~
+~
+9 1088 513
+0~ 0~ 200~ 0~
+40 10000 0
+A
+17 4
+A
+19 3
+C 10000
+X obsidian~
+
+#10209
+amulet solace~
+索雷斯護符(the amulet of Solace)~
+一件耀眼的鑲有金片的索雷斯護符(amulet)放在這裡。~
+~
+9 1088 5
+0~ 0~ 200~ 0~
+40 10000 0
+A
+17 -3
+A
+19 1
+C 10000
+X gold~
+
+#10210
+obsidian key~
+黑曜石鎖匙(obsidian key)~
+你看到一條黑色的鎖匙(key)放在這裡。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+5 100 0
+C 100
+X obsidian~
+
+#10211
+sword doomgiver~
+審判者之劍(sword Doomgiver)~
+一柄劍身刻有精緻花紋的劍(sword)被放在這裡。~
+~
+5 32|64|16777216 8193
+350~ 0~ 0~ 1~
+2 100000 0
+E
+sword~
+這柄劍的劍身長將近一米，而且筆直的如弓箭般，兩面都有一條幼細的凹紋。
+兩面的劍刃成為對稱直線，鋒利的劍刃令你不禁心寒。無論從任何的角度去看
+，這柄劍都是完美無暇，簡直就像由神所鑄造的。黑色的劍柄上模模糊糊的可
+以看到索雷斯城的徽章。在劍身上還刻有這樣的詩文:
+
+                      平衡放天秤上，恆量對與錯，正義與邪惡，
+                      以我的雙眼，搜尋一切破壞這片樂土的險惡心性。
+                      然後，將之消滅，以保護神聖的心靈。
+                      這是神賦予我的力量，也是我的天命。
+
+~
+A
+18 5
+A
+19 4
+A
+43 35
+C 100000
+F 16|512|2097152
+V Demon~ 0 110 30 100
+V Undead~ 0 120 50 100
+V Human~ 0 40 0 150
+V God~ 0 110 30 100
+V Angel~ 0 120 50 100
+X obsidian~
+
+#10212
+signet ring~
+索雷斯護隊識別戒子(Solace signet ring)~
+一隻黑曜石戒子(ring)被埋在泥土中。~
+~
+9 64 3
+0~ 0~ 200~ 0~
+1 1000 0
+A
+24 -2
+A
+13 4
+C 1000
+X obsidian~
+
+#10213
+fine obsidian bracer~
+精緻黑曜石護腕(fine obsidian bracer)~
+你看到一隻精緻黑曜石護腕(fine bracer)放在這邊。~
+~
+9 0 4097
+0~ 0~ 200~ 0~
+9 0 0
+X obsidian~
+
+#10214
+weapons cabinet~
+武器櫃(a weapons cabinet)~
+一個放滿武器的櫃(cabinert)在你的面前。~
+~
+15 0 0
+7~ 15~ 10210~ 0~
+300 0 0
+E
+cabinet~
+這是一個手工精緻的，十分堅固的後備武器櫃。兩扇門由磨砂玻璃所製成。周圍有一鼓奇怪的力量令你不能走近。
+~
+X wooden~
+
+#10215
+sword dragonslicer~
+斬龍劍(Sword Dragonslicer)~
+一柄劍身刻有精緻花紋的劍(sword)被放在這裡。~
+~
+5 32|64|16777216 8193
+350~ 0~ 0~ 1~
+7 100000 0
+E
+sword~
+這柄劍的劍身長將近一米，而且筆直的如弓箭般，兩面都有一條幼細的凹紋。
+兩面的劍刃成為對稱直線，鋒利的劍刃令你不禁心寒。無論從任何的角度去看
+，這柄劍都是完美無暇，簡直就像由神所鑄造的。黑色的劍柄上模模糊糊的可
+以看到索雷斯城的徽章。在劍身上還刻有這樣的詩文:
+
+                      無知的人問，斬龍劍，你是如何斬殺惡龍的？
+                      我..。會刺穿那個躲在龍鱗後面的心臟......
+                      又有人問，斬龍劍，你會在哪裡得到棲息？
+                      我..。只會棲息在被我斬殺的魔物的身體裡。
+
+~
+Z 1
+A
+18 2
+A
+19 6
+A
+43 50
+A
+23 -15
+L 35
+C 100000
+V Dragon~ 0 100 0 130
+V Dinosaur~ 0 120 0 140
+V Phantom~ 0 50 50 100
+V Ghost~ 0 50 50 100
+X obsidian~
+
+#10216
+fine helmet steel~
+精鋼頭盔(fine steel helmet)~
+一個精鋼頭盔(fine steel helmet)放在地板上。~
+~
+9 1088 17
+0~ 0~ 400~ 0~
+25 10000 0
+A
+21 -2
+A
+3 1
+C 10000
+X steel~
+
+#10217
+fine sleeves steel~
+精鋼臂甲(fine steel sleeves)~
+一對精鋼臂甲(fine sleeves)放在地板上。~
+~
+9 1088 257
+0~ 0~ 400~ 0~
+35 10000 0
+A
+20 -2
+A
+24 -1
+C 10000
+X steel~
+
+#10218
+fine leggings steel~
+精鋼護脛(fine steel leggings)~
+一對精鋼護脛(fine leggings)放在地板上。~
+~
+9 1088 33
+0~ 0~ 400~ 0~
+35 10000 0
+A
+14 10
+A
+2 1
+C 10000
+X steel~
+
+#10219
+fine gauntlets steel~
+精鋼護手(fine steel gauntlets)~
+一對精鋼護手(fine gauntlets)放在地板上。~
+~
+9 1088 129
+0~ 0~ 400~ 0~
+35 10000 0
+A
+18 1
+A
+23 -1
+A
+1 1
+C 10000
+X steel~
+
+#10220
+fine boots steel~
+精鋼長靴(fine steel boots)~
+一對精鋼長靴(fine boots)放在地板上。~
+~
+9 1088 65
+0~ 0~ 400~ 0~
+35 10000 0
+A
+13 5
+A
+23 -2
+C 10000
+X steel~
+
+#10221
+cloak lieutenant~
+索雷斯副指揮官護袍(the lieutenant's cloak)~
+一件副指揮官護袍(cloak)放在地板上。~
+~
+9 64|256|1024|16777216 5
+0~ 0~ 250~ 0~
+35 10000 0
+A
+23 -2
+A
+24 -3
+C 10000
+F 8
+P 4|8|256|1024|2097152
+X fiber~
+
+#10222
+fine girth steel~
+精鋼腰帶(fine  steel girth)~
+一條精鋼腰帶(fine girth)放在地板上。~
+~
+9 1088 2049
+0~ 0~ 400~ 0~
+35 10000 0
+A
+24 -1
+C 10000
+X steel~
+
+#10223
+fine shield large steel~
+精鋼巨盾(fine large steel shield)~
+一面巨大的鋼盾(fine shield)放在地板上。~
+~
+9 1088 513
+0~ 0~ 400~ 0~
+35 10000 0
+A
+17 -20
+A
+19 1
+C 10000
+X steel~
+
+#10224
+fine bracer steel~
+精鋼護腕(fine steel bracer)~
+你看到一套鋼護腕(fine steel bracer)被放在這邊。~
+~
+9 0 4097
+0~ 0~ 400~ 0~
+9 0 0
+A
+12 5
+X steel~
+
+#10225
+sword shieldbreaker~
+破盾劍(sword Shieldbreaker)~
+一把黑色並閃耀著光芒的劍(sword)被放在這邊。~
+~
+5 32|64|1024|4096|16777216 1|8192|32768
+200~ 0~ 0~ 1~
+47 100000 0
+E
+sword~
+這柄劍的劍身長將近一米，而且筆直的如弓箭般，兩面都有一條幼細的凹紋。
+兩面的劍刃成為對稱直線，鋒利的劍刃令你不禁心寒。無論從任何的角度去看
+，這柄劍都是完美無暇，簡直就像由神所鑄造的。黑色的劍柄上模模糊糊的可
+以看到索雷斯城的徽章。在劍身上還刻有這樣的詩文:
+
+                      我....能粉碎世上的利劍和尖銳的長矛；
+                      阻擋我去路的愚蠢東西必至滅亡。
+                      縱然如此，我....鋒利的劍刃，絕對，
+                      絕對不能指向無助的孤兒，和寡婦......
+
+~
+A
+13 -250
+A
+18 10
+A
+19 10
+A
+24 -10
+A
+35 -10
+A
+43 35
+C 100000
+F 8192
+P 2048|4096|1048576
+X obsidian~
+
+#10226
+helmet red~
+深紅色頭盔(the red helmet)~
+一個深紅色頭盔(helmet)放在地板上。~
+~
+9 1088 17
+0~ 0~ 150~ 0~
+20 10000 0
+A
+21 -1
+C 10000
+X scale~
+
+#10227
+sleeves red scalemail~
+深紅色魚鱗臂甲(red scalemail sleeves)~
+一對深紅色魚鱗臂甲(sleeves)放在地板上。~
+~
+9 1088 257
+0~ 0~ 150~ 0~
+30 10000 0
+A
+20 -1
+C 10000
+X scale~
+
+#10228
+leggings red scalemail~
+深紅色魚鱗脛甲(red scalemail leggings)~
+一對深紅色魚鱗脛甲(leggings)放在地板上。~
+~
+9 1088 33
+0~ 0~ 150~ 0~
+30 10000 0
+A
+14 5
+C 10000
+X scale~
+
+#10229
+gauntlets red scalemail~
+深紅色魚鱗手套(red scalemail gauntlets)~
+一對深紅色魚鱗手套(gauntlets)放在地皮上。~
+~
+9 1088 129
+0~ 0~ 150~ 0~
+30 10000 0
+A
+21 -1
+C 10000
+X scale~
+
+#10230
+boots red scalemail~
+深紅色魚鱗長靴(red scalemail boots)~
+一對深紅色魚鱗長靴(boots)放在地板上。~
+~
+9 1088 65
+0~ 0~ 150~ 0~
+30 10000 0
+A
+13 2
+A
+23 -1
+C 10000
+X scale~
+
+#10231
+cloak red sergeant~
+警衛官戰袍(sergeant's cloak)~
+一件紅色的警衛官戰袍(sergeant's cloak)放在地板上。~
+~
+9 1088 5
+0~ 0~ 150~ 0~
+30 10000 0
+A
+22 -1
+C 10000
+X fiber~
+
+#10232
+girth red scalemail~
+深紅色魚鱗腰帶(the red scalemail girth)~
+一條深紅色魚鱗腰帶(girth)放在地板上。~
+~
+9 1088 2049
+0~ 0~ 150~ 0~
+30 10000 0
+C 10000
+X scale~
+
+#10233
+shield large red~
+深紅色魚鱗巨盾(the large red shield)~
+一面巨大的紅色盾牌(shield)放在地板上。~
+~
+9 1088 513
+0~ 0~ 150~ 0~
+30 10000 0
+A
+17 1
+C 10000
+X scale~
+
+#10234
+bracer red~
+深紅色護腕(a red bracer)~
+你看到一隻深紅色護腕(bracer)在這邊。~
+~
+9 0 4097
+0~ 0~ 150~ 0~
+9 0 0
+A
+12 1
+X scale~
+
+#10235
+warhammer mage masher~
+魔法戰鎚(Mage Masher)~
+一柄紅色的刻有魔法文字的戰鎚(warhammer)放在這著。~
+~
+5 2 8193
+180~ 0~ 0~ 8~
+45 10000 0
+E
+mage masher warhammer~
+在戰鎚的頭部刻著這樣的幾個字: '魔法守獵者(MAGE MASHER)' 。
+似乎，當你把它指向一個施法者的時候，它就會隱隱發光，並會不停的振動著。
+然而，如果對方是一個牧師，或許也會有這樣的效果。
+~
+A
+18 4
+A
+19 1
+A
+12 -50
+V Statue~ 0 120 0 150
+V Robot~ 0 120 0 150
+V Undead~ 0 115 0 130
+V Dragon~ 0 150 0 120
+C 10000
+X silver~
+
+#10236
+plate black platemail~
+黑色戰甲(black platemail)~
+一套黑色的戰甲(platemail)放在地板上。~
+~
+9 64 9
+0~ 0~ 130~ 0~
+10 1000 0
+A
+24 -1
+A
+13 8
+C 1000
+X obsidian~
+
+#10237
+enchanted longsword~
+魔法長劍(enchanted longsword)~
+一把刻有魔法文字的長劍(longsword)被放在地板上。~
+~
+5 64 8193
+150~ 0~ 0~ 3~
+7 1000 0
+A
+18 2
+C 1000
+V Undead~ 0 115 0 120
+X silver~
+
+#10238
+enchanted hammer~
+魔法之鎚(enchanted hammer)~
+一把上面刻有魔法文字的鎚子(hammer)被放在地板上。~
+~
+5 64 8193
+150~ 0~ 0~ 7~
+12 1000 0
+A
+18 2
+C 1000
+V Undead~ 0 115 0 120
+A
+18 3
+A
+19 4
+X silver~
+
+#10239
+enchanted pike polearm~
+魔法長矛(enchanted pike)~
+一柄上面刻有魔法文字的長矛(pike)被放在地板上。~
+~
+5 64 8193
+150~ 0~ 0~ 1~
+7 1000 0
+A
+18 2
+C 1000
+V Undead~ 0 115 0 120
+X silver~
+
+#10240
+chamorro ringmail~
+查摩洛環甲(chamorro ringmail)~
+一套用樹皮縫製而成的環甲(ringmail)被放在這裡。~
+~
+9 64 9
+0~ 0~ 130~ 0~
+6 1000 0
+A
+12 15
+C 1000
+X wooden~
+
+#10241
+mc churros~
+吉拿棒(Mc churros)~
+一條吉拿棒(churros)被放在這裡。~
+~
+19 0 1
+20~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10242
+mc donut~
+炸甜甜圈(Mc donut)~
+一個巧克力口味的炸甜甜圈(donut)被放在這裡。~
+~
+19 0 1
+15~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10243
+mc bagel~
+炸貝果(Mc bagel)~
+一個炸貝果(bagel)被放在這邊。~
+~
+19 0 1
+10~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10244
+mc pastry~
+炸酥皮(Mc pastry)~
+一塊炸酥皮(pastry)被放在這裡。~
+~
+19 0 1
+12~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10245
+chocolate chip cookie~
+巧克力脆片餅乾(chocolate chip cookie)~
+一塊巧克力脆片餅乾(chocolate chip cookie)被放在這裡。~
+~
+19 0 1
+7~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10246
+peanut butter cookie~
+花生醬餅乾(peanut butter cookie)~
+一塊花生醬餅乾(peanut butter cookie)被放在這裡。~
+~
+19 0 1
+7~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10247
+oatmeal cookie~
+燕麥餅乾(oatmeal cookie)~
+一塊燕麥餅乾(oatmeal  cookie)被放在這裡。~
+~
+19 0 1
+7~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10248
+sugar cookie~
+糖霜餅乾(sugar cookie)~
+一塊糖霜餅乾(sugar cookie)被放在這裡。~
+~
+19 0 1
+7~ 0~ 0~ 0~
+5 100 0
+C 100
+X food~
+
+#10249
+taxes fines~
+稅單和罰款單(taxes and fines)~
+一褶稅單和罰款單(taxes and fines)放在這邊。~
+~
+13 0 1
+0~ 10~ 15~ 12~
+40 100 0
+C 100
+X paper~
+
+#10250
+enchanted two-handed sword~
+魔法雙手巨劍(enchanted two-handed sword)~
+一把上面刻有魔法文字的雙手巨劍(two-handed sword)被放在地上。~
+~
+5 64 32769
+300~ 0~ 40~ 1~
+30 1000 0
+A
+18 9
+A
+19 11
+C 1000
+V Undead~ 0 110 0 120
+X silver~
+
+#10251
+carrot~
+胡蘿蔔(carrot)~
+一個胡蘿蔔(carrot)被放在這裡。~
+~
+19 0 1
+5~ 0~ 0~ 0~
+2 100 0
+C 100
+X food~
+
+#10252
+cauliflower~
+花椰菜(cauliflower)~
+一顆花椰菜(cauliflower)被放在這裡。~
+~
+19 0 1
+5~ 0~ 0~ 0~
+2 100 0
+C 100
+X food~
+
+#10253
+bell pepper~
+胡椒粉(pepper)~
+一瓶胡椒粉(bell pepper)被放在這裡。~
+~
+19 0 1
+5~ 0~ 0~ 0~
+2 100 0
+C 100
+X herb~
+
+#10254
+celery stick~
+芹菜莖(celery stick)~
+一條芹菜莖(celery stick)被放在這裡。~
+~
+19 0 1
+5~ 0~ 0~ 0~
+2 100 0
+C 100
+X food~
+
+#10255
+glass ice tea~
+冰鎮紅茶(ice tea)~
+一杯冰鎮紅茶(a glass of ice tea)被放在這邊。~
+~
+17 0 1
+5~ 5~ 11~ 0~
+5 300 0
+C 300
+X liquid~
+
+#10256
+glass water~
+清水(water)~
+一杯清水(a glass of water)被放在這裡。~
+~
+17 0 1
+5~ 5~ 0~ 0~
+5 300 0
+C 300
+X liquid~
+
+#10257
+glass koca colah~
+可口可樂(koca colah)~
+一杯可口可樂(a glass of koca colah)被放在這裡。~
+~
+17 0 1
+5~ 5~ 15~ 0~
+5 300 0
+C 300
+X liquid~
+
+#10258
+bottle Snapple ice tea~
+史尼堡紅茶(Snapple ice tea)~
+一瓶史尼堡紅茶(Snapple ice tea)被放在這裡。~
+~
+17 0 1
+5~ 5~ 11~ 0~
+5 300 0
+C 300
+X liquid~
+
+#10259
+apple~
+蘋果(apple)~
+一個蘋果(apple)被放在這裡。~
+~
+19 0 1
+5~ 0~ 0~ 0~
+2 100 0
+C 100
+X food~
+
+#10260
+grape~
+葡萄(grape)~
+一串葡萄(grape)被放在這裡。~
+~
+19 0 1
+3~ 0~ 0~ 0~
+2 100 0
+C 100
+X food~
+
+#10261
+orange~
+橘子(a orange)~
+一個香甜的橘子(orange)被放在這邊。~
+~
+19 0 1
+6~ 0~ 0~ 0~
+2 100 0
+C 100
+X food~
+
+#10262
+pear~
+梨子(pear)~
+一個梨子(pear)被放在這裡。~
+~
+19 0 1
+6~ 0~ 0~ 0~
+2 100 0
+C 100
+X food~
+
+#10263
+charm solace~
+索雷斯護身符(charm of Solace)~
+一件發光的，繡有金色徽章的索雷斯護身符(charm of Solace)被放在這裡。~
+~
+9 0 5
+0~ 0~ 180~ 0~
+15 5000 0
+C 5000
+X gold~
+
+#10264
+ring solace~
+索雷斯之戒(ring of Solace)~
+一件發光的，刻有金色徽章的索雷斯之戒(ring of Solace)被放在這裡。~
+~
+9 0 3
+0~ 0~ 180~ 0~
+5 5000 0
+C 5000
+X gold~
+
+#10265
+earrings solace~
+索雷斯耳環(earrings of Solace)~
+一件發光的，刻有金色徽章的索雷斯耳環(earrings of Solace)被放在這裡。~
+~
+9 0 17
+0~ 0~ 180~ 0~
+4 5000 0
+C 5000
+X gold~
+
+#10266
+frozen pizza crust~
+比薩麵皮(pizza crust)~
+一片冰凍的比薩麵皮(pizza crust)放在地上解凍。~
+~
+9 0 513
+15~ 0~ 0~ 0~
+15 10 0
+C 10
+L 10
+X food~
+
+#10267
+frozen pumpkin~
+南瓜(pumpkin)~
+一個冰凍的南瓜(pumpkin)放在地上解凍。~
+~
+9 0 17
+15~ 0~ 0~ 0~
+15 10 0
+C 10
+L 10
+X food~
+
+#10268
+frozen side beef~
+牛肉(beef)~
+一塊冰凍的牛肉(beef)放在地上解凍。~
+~
+9 0 9
+19~ 0~ 0~ 0~
+23 10 0
+C 10
+L 10
+X food~
+
+#10269
+frozen asparagus spear~
+蘆筍尖(asparagus spear)~
+一個冰凍的蘆筍尖(asparagus spear)放在地上解凍。~
+~
+5 0 8193
+0~ 3~ 9~ 0~
+15 10 0
+A
+18 1
+C 10
+L 10
+X food~
+
+#10270
+mulberry extract~
+桑椹汁(mulberry extract)~
+一小瓶桑椹汁(mulberry extract)被人不小心地留在地上。~
+~
+10 64 1
+38~ refresh~ cure light~ cure poison~
+1 40 0
+C 40
+L 5
+X liquid~
+
+#10271
+rutabaga~
+地瓜(rutabaga)~
+一顆地瓜(rutabaga)放在地上。~
+~
+26 64 1
+38~ refresh~ dispel magic~ stone skin~
+1 40 0
+C 40
+L 15
+X food~
+
+#10272
+rutabaga~
+地瓜(rutabaga)~
+一顆黑色的地瓜(rutabaga)放在地上。~
+~
+26 64 1
+38~ poison~ know alignment~ blindness~
+1 40 0
+C 40
+L 15
+X food~
+
+#10273
+rutabaga~
+青色的地瓜(rutabaga)~
+一顆青色的地瓜(rutabaga)放在地上。~
+~
+26 192 1
+57~ cure critical~ teleport~ curse~
+1 40 0
+C 40
+L 15
+X food~
+
+#10274
+rutabaga~
+金色的地瓜(rutabaga)~
+一顆金色的地瓜(rutabaga)放在地上。~
+~
+26 64 1
+38~ armor~ cause serious~ teleport~
+1 40 0
+C 40
+L 15
+X food~
+
+#10275
+Scuba tank-dive~
+氧氣罐(scuba tank)~
+一個氧氣罐(scuba tank)放在這裡。~
+~
+22 0 1025
+0~ 0~ 0~ 0~
+30 40 0
+C 40
+L 10
+F 17179869184
+X iron~
+>obj_act wear~
+if is_equ_obj($n) == 10276
+	if is_equ_obj($n) == 10277
+		if is_equ_obj($n) == 10278
+			echoat $n 你把整套潛水裝備好，並打開氧氣罐的開關。
+			oforcer here callout 1 echoat $n 慢慢的氧氣從供氣器傳送出。
+			oforcer here callout 2 echoat $n 現在你可以開始潛水了！
+			oforcer here add_affect $n 'breathe water' 1100 -1 17179869184
+		else
+			echoat $n 你忘記穿氧氣桶前，要先綁上潛水腰帶，所以先把氧氣罐放下了。
+			ogoto self
+		endif
+	else
+		echoat $n 你忘記穿氧氣桶前，要先裝上供氣器，所以先把氧氣罐放下了。
+		ogoto self
+	endif
+else
+	echoat $n 你忘記穿氧氣桶前，要先穿好潛水蹼，所以先把氧氣罐放下了。
+	ogoto self
+endif
+~
+>obj_rand 100~
+if is_equ_obj($n) == 10275
+	if is_equ_obj($n) != 10276
+	or is_equ_obj($n) != 10277
+	or is_equ_obj($n) != 10278
+		ogoto $n
+		echoat $n 氧氣罐滑掉了！
+	endif
+else
+	break
+endif
+~
+|
+
+#10276
+Scuba flippers~
+潛水蹼(Scuba flippers)~
+一封潛水蹼(Scuba flippers)放在這裡。~
+~
+9 64 65
+0~ 0~ 100~ 0~
+7 40 0
+A
+2 2
+C 40
+L 10
+X leather~
+
+#10277
+scuba snorkle~
+供氣器(scuba snorkle)~
+一個潛水專用的供氣器(snorkle)被放在地上。~
+~
+9 0 17
+0~ 0~ 100~ 0~
+2 40 0
+C 40
+L 10
+X leather~
+
+#10278
+dive belt~
+潛水腰帶(dive belt)~
+一條潛水腰帶(dive belt)被放在地上。~
+~
+9 0 2049
+0~ 0~ 100~ 0~
+50 40 0
+C 40
+A
+5 1
+L 10
+X leather~
+
+#10279
+belt pouch~
+腰包(belt pouch)~
+一個腰包(belt pouch)被放在地上。~
+~
+15 0 2049
+50~ 1~ 0~ 0~
+5 40 0
+C 40
+L 10
+X leather~
+
+#10280
+cloak storage~
+儲存斗篷(cloak of storage)~
+一條儲存斗篷(cloak of storage)被掛在牆壁上。~
+~
+15 64 5
+125~ 1~ 100~ 0~
+5 400 0
+C 400
+L 25
+X cloth~
+
+#10281
+ring holding~
+永恆之戒(ring of holding)~
+一隻戒子(ring)被放在灰塵埋中。~
+~
+15 64 3
+300~ 1~ 0~ 0~
+3 40 0
+C 40
+L 35
+X tin~
+
+#10282
+travellers robe~
+旅者披風(travellers robe)~
+一件用絨毛製成的衣服(cloth)擺放在地上。~
+~
+9 0 1025
+0~ 0~ 100~ 0~
+15 400 0
+C 400
+A
+2 3
+X wool~
+
+#10283
+travellers dagger~
+旅者護身匕首(travellers dagger)~
+一把細小的匕首(dagger)在這裡。它看來是冒險者的最喜愛的防衛刀刃。~
+~
+5 0 8193
+100~ 0~ 0~ 11~
+10 400 0
+C 400
+X metal~
+
+#10284
+travellers spellbook~
+旅者魔法寶典(travellers spellbook)~
+一卷寫著魔法符號的典籍(book)被放在這裡。~
+~
+4 0 16385
+26~ 5~ 5~ flamestrike~
+45 400 0
+C 400
+X paper~
+
+#10285
+travellers holy symbol~
+旅者聖符(travellers holy symbol)~
+一個普通的護身符(symbol)被放在這裡。~
+~
+4 0 16385
+36~ 5~ 5~ remove curse~
+20 400 0
+C 400
+X wool~
+
+#10286
+travellers vest~
+旅者軟甲(travellers vest)~
+你看到一件旅行家常用的護甲(vest)在這邊。~
+~
+9 0 9
+0~ 0~ 100~ 0~
+5 100 0
+X wool~
+
+#10287
+travellers cloak~
+旅者護袍(travellers cloak)~
+你看到一件旅行家常用的護袍(cloak)在這裡。~
+~
+9 0 5
+0~ 0~ 100~ 0~
+5 100 0
+X wool~
+
+#10288
+travellers sword~
+旅者佩劍(travellers sword)~
+你看到一柄旅行家常用的佩劍(sword)在這裡。~
+~
+5 64 8193
+100~ 0~ 0~ 3~
+5 100 0
+X metal~
+
+#10289
+travellers scalemail~
+旅者護裙(travellers scalemail)~
+你看到一件旅行家常用的護裙(scalemail)在這邊。~
+~
+9 0 9
+0~ 0~ 100~ 0~
+5 100 0
+X wool~
+
+#10290
+travellers shield~
+旅者臂盾(travellers shield)~
+你看到一面旅行家常用的盾牌(shield)在這裡。~
+~
+9 0 513
+0~ 0~ 100~ 0~
+5 100 0
+X wooden~
+
+#10291
+travellers hammer~
+旅者戰鎚(travellers hammer)~
+你看到一件旅行家常用的戰鎚(hammer)在這裡。~
+~
+5 0 8193
+100~ 0~ 0~ 0~
+5 100 0
+X silver~
+
+#10292
+magnus's spellbook~
+馬尼斯魔法寶典(magnus's spellbook)~
+一卷寫著魔法符號的典籍(book)被放在這裡。~
+~
+4 0 16385
+50~ 5~ 5~ acid breath~
+55 20000 0
+C 20000
+X steel~
+
+#10293
+robe magi~
+魔法長袍(robe of the magi)~
+一件上面寫上魔法符號的衣服(cloth)被放在這裡。~
+~
+9 64 1025
+0~ 0~ 350~ 0~
+10 40000 0
+A
+44 10
+A
+27 -5
+A
+30 -5
+C 40000
+X fiber~
+
+#10294
+crystal plate armor~
+水晶鎧甲(crystal plate armor)~
+一套品質很高的水晶鎧甲(crystal plate armor)被放在這邊。~
+~
+9 96 9
+0~ 0~ 400~ 0~
+60 400 0
+A
+1 1
+A
+5 1
+A
+18 2
+C 400
+X crystal~
+
+#10295
+scythe grim reaper~
+冥王的大鐮(Scythe of the Grim Reaper)~
+一柄巨大黯淡的戰鐮(Scythe of the Grim Reaper)被放在地面上。~
+~
+5 2|4|16|64|512|1024 32769
+-1~ 60~ 70~ 1~
+66 10000 0
+C 10000
+L 41
+Z 4
+A 19 20
+A 43 25
+X black matter~
+E
+scythe grim reaper~
+一把用死鐮碎片打造出來的戰鐮，是冥王賜予死神用來奪取生命的道具。
+在握柄處刻有一段文字：
+　
+　
+　「只在面對死亡時，汝等生命皆為平等；除非是已死之物。」
+　
+~
+M 0 大鐮像活物般，產生陣陣的脈動。~
+M 1 大鐮回復成原本的樣貌。~
+V Human~ 0 100 0 200
+V Gnome~ 0 100 0 200
+V Dwarf~ 0 100 0 200
+V Elf~ 0 100 0 200
+V Orc~ 0 100 0 200
+V Lizardman~ 0 100 0 200
+V Centaur~ 0 100 0 200
+V Werewolf~ 0 100 0 200
+V Hobbit~ 0 100 0 200
+V Fairy~ 0 100 0 200
+V Beholder~ 0 100 0 200
+V Demon~ 500 100 0 1
+V Undead~ 500 100 0 1
+V Ghost~ 500 100 0 1
+V Gargoyle~ 500 100 0 1
+V Mummy~ 500 100 0 1
+V Vampire~ 500 100 0 1
+>obj_rand 100~
+if is_equ_obj($n) == 10295
+	oforcer here modhmv $n 03.30 30 0
+	echoat $n 大鐮噬取著你的生命....
+endif
+~
+|
+
+#10296
+crystal shield~
+水晶盾(crystal shield)~
+一面品質很高的水晶盾牌(cristal shield)被放在這邊。~
+~
+9 96 513
+0~ 0~ 200~ 0~
+20 400 0
+A
+44 5
+C 400
+X crystal~
+
+#10297
+crystal longsword~
+水晶長劍(crystal longsword)~
+一把品質很高的水晶長劍(crystal longsword)被放在這邊。~
+~
+5 96 8193
+200~ 0~ 0~ 1~
+7 400 0
+A
+44 10
+A
+18 3
+C 400
+X crystal~
+
+#10298
+fine obsidian plate armor~
+黑曜石鎧甲(fine obsidian plate armor)~
+一套黑曜石鎧甲(fine obsiadian plate armor)被放在地上。~
+~
+9 1088 9
+0~ 0~ 250~ 0~
+40 400 0
+A
+13 20
+A
+14 20
+C 400
+X obsidian~
+
+#10299
+fine steel plate armor~
+精鋼護甲(fine steel plate armor)~
+一套精鋼護甲(fine steel plate armor)被放在地上。~
+~
+9 1088 9
+0~ 0~ 400~ 0~
+37 400 0
+A
+13 15
+A
+14 15
+C 400
+X steel~
+
+#10300
+red plate armor~
+火紅色護甲(red plate armor)~
+一套深紅色護甲(red plate armor)被放在地上。~
+~
+9 1088 9
+0~ 0~ 280~ 0~
+33 400 0
+A
+13 50
+A
+14 50
+C 400
+X steel~
+
+#10301
+enchanted bow~
+魔幻之弓(enchanted bow)~
+一把刻有魔法文字的弓(bow)被放在地板上。~
+~
+5 64 32769
+150~ 0~ 0~ 14~
+30 1000 0
+A
+18 5
+A
+44 10
+C 1000
+V Ghost~ 0 110 0 150
+V Undead~ 0 110 0 150
+V Demon~ 0 110 0 150
+X silver~
+
+#10302
+safe deposit box~
+安全的寄存盒(safe deposit box)~
+一個堅硬的金屬盒子(box)埋藏在牆壁裡。~
+~
+15 0 0
+10000~ 5~ 0~ 0~
+0 0 0
+E
+safe deposit box~
+你看到一個堅硬的金屬保險箱存放了全城的存款。
+~
+X steel~
+
+#10303
+gold coins~
+一堆金幣(alot of gold coins)~
+一堆金幣(gold)放在這裡。~
+~
+20 0 1
+2385~ 0~ 0~ 0~
+0 2385 0
+C 2385
+X gold~
+
+#10304
+fountain water~
+噴水池(fountain)~
+一個巨大的大理石噴水池(fountain)在這裡。~
+~
+25 0 0
+96~ 50~ 0~ 0~
+500 3000 0
+E
+fountain~
+它是一個用純白色的大理石精心雕刻而成噴水池(fountain)。
+~
+C 3000
+X marble~
+
+#10305
+depository key~
+貯藏所鎖匙(depository key)~
+一條發光的貯藏所鎖匙(depository key)放在這裡。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+5 10000 0
+C 10000
+X iron~
+
+#10306
+city key gold solace~
+索雷斯城門鎖匙(key to the City of Solace)~
+一條閃耀著金色光芒城門鎖匙(key)放在這裡。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+5 10000 0
+C 10000
+X gold~
+
+#10307
+flaming homer~
+火炎鴿(Flaming homer)~
+一杯火炎鴿(Flaming homer)被放在這裡。~
+~
+17 0 1
+1~ 1~ 7~ 0~
+3 300 0
+C 300
+X liquid~
+
+#10308
+jello shot~
+塑膠彈珠(jello shot)~
+一顆塑膠彈珠jello shot)在地上震動著。~
+~
+17 0 1
+1~ 1~ 3~ 0~
+3 300 0
+C 300
+X liquid~
+
+#10309
+bloody heads~
+血染之酒沫(bloody heads)~
+一杯血染之酒沫(bloody heads)放在這裡。~
+~
+17 0 1
+1~ 1~ 5~ 0~
+3 300 0
+C 300
+X liquid~
+
+#10310
+skull chair~
+骷髏頭王座(skull throne)~
+一張巨大的，有一條蛇(snake)穿梭各骷髏頭的眼(eye)和鼻(nose)的骷髏頭王座(skull throne)在這裡。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+100 300 0
+C 300
+X bone~
+
+#10311
+bone boots~
+枯骨長靴(bone boots)~
+一雙外表似乎由人類骨頭(bone)製成，具有強大魔力的靴子(boots)被放在這邊。~
+~
+9 1|2|4|16|64|4194304 1|64
+0~ 0~ 70~ 0~
+15 0 0
+C 300000
+L 39
+A
+1 1
+A
+18 3
+F 8388608
+M 0 當你穿上長靴的時候，一群幽魂從你腳下竄起，遮住了你的嘴唇！~
+M 1 你脫下長靴，掐住你喉嚨的鬼魂便消失無蹤。~
+P 2048|4096|8192|1048576
+X bone~
+
+#10312
+bone sceptre~
+枯骨權杖(bone sceptre)~
+一支外表似乎由人類骨頭(bone)製成，具有強大魔力的權杖(sceptre)被放在這邊。~
+~
+9 1|2|4|16|64|4194304 1|16384
+0~ 0~ 70~ 0~
+15 0 0
+C 300000
+L 39
+A
+13 300
+A
+41 45
+F 1024
+M 0 當你握住權杖的時候，不潔的氣氛從杖頂洩出，你感覺到你受到詛咒！~
+M 1 當你放下權杖時，糾纏著你的不潔之力便消失無蹤！~
+P 16384|262144|524288|1048576
+X bone~
+
+#10313
+bone helmet~
+枯骨頭盔(bone helmet)~
+一具外表似乎由人類骨頭(bone)製成，具有強大魔力的頭盔(helmet)被放在這邊。~
+~
+9 1|2|4|16|64|4194304 1|16
+0~ 0~ 70~ 0~
+15 0 0
+C 300000
+L 39
+A
+2 3
+A
+17 -25
+F 16777216
+M 0 當你戴上頭盔時，一股強大的力量封印了你的魔力之源！~
+M 1 當你脫下頭盔時，恐怖的封印之力從你身體內撤退......~
+P 512|1024|131072|1048576
+X bone~
+
+#10314
+bone robe~
+枯骨長袍(bone robe)~
+一襲外表刻著人類骨頭(bone)樣式，具有強大魔力的長袍(robe)被放在這邊。~
+~
+9 1|2|4|16|64|4194304 1|8
+0~ 0~ 70~ 0~
+15 0 0
+C 300000
+L 39
+A
+3 1
+A
+4 1
+A
+42 40
+F 4096
+M 0 當你穿上長袍時，你才發現這袍子上沾滿了劇毒之氣！~
+M 1 當你脫下袍子時，襲身的劇毒之氣緩緩消散......~
+P 32|64|32768|1048576
+X bone~
+
+#10315
+bone necklace~
+枯骨項鍊(bone necklace)~
+一條外表刻著人類骨頭(bone)樣式，具有強大魔力的項鍊(necklace)被放在這邊。~
+~
+9 1|2|4|16|64|4194304|16777216 1|4
+0~ 0~ 70~ 0~
+5 0 0
+C 300000
+L 39
+A
+4 3
+A
+23 -3
+A
+40 3
+F 1024|2048
+M 0 你一戴上項鍊，就感覺到詛咒的力量纏住了你，身體也感到有異樣。~
+M 1 你脫下項鍊，詛咒之氣便離你遠去，身體也回復了正常。~
+P 128|256|65536|1048576
+X bone~
+
+#10316
+ruby leggings~
+紅寶石護脛(ruby leggings)~
+一套鑲嵌著紅寶石的護脛(ruby leggings)，被放置在這邊。~
+~
+9 1|64|256|65535 1|32
+0~ 0~ 470~ 0~
+25 0 0
+C 200000
+L 37
+A
+23 -5
+A
+28 -5
+X ruby~
+
+#10317
+ruby arm~
+紅寶石護臂(ruby arm)~
+一套鑲嵌著紅寶石的護臂(ruby leg)，被放置在這邊。~
+~
+9 1|64|256|65535 1|256
+0~ 0~ 470~ 0~
+25 0 0
+C 200000
+L 37
+A
+23 -5
+A
+27 -5
+X ruby~
+
+#10318
+ruby ring~
+紅寶石戒指(ruby ring)~
+一套鑲嵌著紅寶石的戒指(ruby ring)，被放置在這邊。~
+~
+9 1|64|256|65535|16777216 1|2
+0~ 0~ 470~ 0~
+25 0 0
+C 200000
+L 37
+A
+23 -5
+A
+30 -5
+X ruby~
+
+#10319
+ruby gauntlets~
+紅寶石護手(ruby gauntlets)~
+一套鑲嵌著紅寶石的護手(ruby gauntlets)，被放置在這邊。~
+~
+9 1|64|256|65536 1|128
+0~ 0~ 470~ 0~
+25 0 0
+C 200000
+L 37
+A
+23 -5
+A
+31 -5
+X ruby~
+
+#10320
+ruby girth~
+紅寶石束腰(ruby girth)~
+一套鑲嵌著紅寶石的束腰(ruby girth)，被放置在這邊。~
+~
+9 1|64|256|65536 1|2048
+0~ 0~ 470~ 0~
+25 0 0
+C 200000
+L 37
+A
+23 -3
+A
+35 -2
+X ruby~
+
+#10321
+wonder heavy bow~
+奇蹟巨弓(wonder heavy bow)~
+一把刻有魔法文字的弓(bow)被放在地板上。~
+~
+5 1|2|64|256|512|1024 1|32768
+0~ 0~ 0~ 14~
+7 100000 0
+C 100000
+A
+13 -50
+A
+40 7
+X mithril~
+
+#10322
+wonder arrow~
+奇蹟之箭(wonder arrow)~
+一袋刻有魔法文字的箭矢(arrow)被放在地板上。~
+~
+27 1|2|64|256|512|1024 1|65536
+1000~ 0~ 0~ 50~
+7 100000 0
+C 100000
+H dispel good~ 50 40 16
+H dispel evil~ 50 40 16
+X mithril~
+
+#10323
+rainbow medal~
+彩虹臂徽(rainbow medal)~
+一枚刻著許多魔法文字的彩虹臂徽(rainbow medal)被放在地上。~
+~
+9 1|2 1|256
+0~ 0~ 380~ 0~
+3 40000 0
+A
+44 7
+A
+3 1
+A
+12 20
+C 40000
+X perfect matter~
+
+#10324
+sprays shoes~
+激光長靴(sprays shoes)~
+一雙發散出七彩光芒的長靴(shoes)被丟棄在這邊。~
+~
+9 1|2|16|64 1|64
+0~ 0~ 380~ 0~
+5 40000 0
+A
+44 5
+A
+4 1
+A
+12 20
+C 40000
+X radiant~
+
+#10325
+head dead~
+亡者之首(Head of the Dead)~
+一個面目猙獰的人首(head)放在這裡。~
+~
+9 4|16|128|512|2048 1|16384
+0~ 0~ -1~ 0~
+20 60000 0
+Z 4
+A
+4 -2
+A
+5 -2
+A
+18 2
+A
+19 5
+A
+40 2
+C 60000
+F 1099511627776
+M0 當你握著亡者之首時，你身體開始感到不適。~
+M1 當你放下亡者之首時，你身體的感覺舒服多了！~
+X bone~
+
+#10326
+evil-killer sword~
+[1;36m魔斬劍[m(Sword -- Evil-Killer)~
+一柄泛著神聖光芒的長劍(sword)靜靜的躺在這裡。~
+~
+5 64|256|16777216|65536|32768|1024|4508576 1|8192
+350~ 0~ 0~ 3~
+5 500000 0
+A
+2 3
+A
+39 -100
+A
+18 15
+A
+19 15
+A
+24 -5
+A
+40 10
+A
+43 20
+A
+44 30
+H dispel evil~ 25 40 4
+T 24
+C 500000
+P 64|32|1|32768
+V Vampire~ 5 150 50 180
+V Demon~ 0 100 60 190
+V Undead~ 0 120 70 160
+V God~ 0 30 0 30
+V Angel~ 0 50 0 50
+V Dragon~ 0 30 0 20
+F 137438953472
+U 10327
+X perfect matter~
+
+#10327
+evil-killer sword~
+[1;36m魔斬劍[m(Sword -- Evil-Killer)~
+一柄泛著神聖光芒的長劍(sword)靜靜的躺在這裡。~
+~
+5 64|256|16777216|65536|32768|1024 1|8192
+350~ 0~ 0~ 3~
+5 500000 0
+A
+2 1
+A
+18 15
+A
+19 10
+A
+40 8
+A
+43 10
+A
+44 20
+H dispel evil~ 25 40 4
+C 500000
+P 64|32|1|32768|2097152
+V Vampire~ 5 120 30 130
+V Demon~ 0 100 10 130
+V Undead~ 0 120 5 120
+V God~ 0 30 0 30
+V Angel~ 0 50 0 50
+V Dragon~ 0 30 0 20
+F 8192
+X perfect matter~
+
+#10328
+angry staff~
+[3;31m狂怒之杖[m(angry staff)~
+一把充滿憤怒力量的魔杖(staff)放在這裡。~
+~
+5 16843072 8193
+800~ 0~ 0~ 0~
+35 60000 0
+A
+1 3
+A
+3 -1
+A
+4 -1
+A
+18 3
+A
+19 10
+A
+39 20
+A
+43 10
+H berserk~ 30 42 2
+C 60000
+X chaos matter~
+
+#10329
+magical bag~
+無限空間腰包(Magical Bag)~
+一個魔法腰包(Bag)被放在這裡。~
+~
+15 64|256|65536 2049
+-1~ 1~ 0~ 1~
+0 0 0
+X perfect matter~
+
+#10330
+star fragment~
+[1;36m星之碎片[m(star fragment)~
+一塊[1;36m星之碎片[m(star fragment)放在地面上。~
+~
+8 65536 1
+0~ 0~ 0~ 0~
+0 200000 0
+C 200000
+X star fragment~
+>obj_command telefragment default~
+if inroom($n) == 10328
+	oteleport all
+	echo 一塊[1;36m星之碎片[m掉落在這裡！
+endif
+~
+|
+#10331
+sword dragonslicer~
+斬龍劍(Sword Dragonslicer)~
+一柄劍身刻有精緻花紋的劍(sword)被放在這裡。~
+~
+5 32|64|1024|16777216 8193
+350~ 0~ 0~ 1~
+2 100000 0
+E
+sword~
+這柄劍的劍身長將近一米，而且筆直的如弓箭般，兩面都有一條幼細的凹紋。
+兩面的劍刃成為對稱直線，鋒利的劍刃令你不禁心寒。無論從任何的角度去看
+，這柄劍都是完美無暇，簡直就像由神所鑄造的。黑色的劍柄上模模糊糊的可
+以看到索雷斯城的徽章。在劍身上還刻有這樣的詩文:
+
+                      無知的人問，斬龍劍，你是如何斬殺惡龍的？
+                      我..。會刺穿那個躲在龍鱗後面的心臟......
+                      又有人問，斬龍劍，你會在哪裡得到棲息？
+                      我..。只會棲息在被我斬殺的魔物的身體裡。
+
+~
+A
+18 2
+A
+19 6
+A
+43 35
+A
+23 -15
+L 35
+C 100000
+V Dragon~ 0 110 0 160
+V Wyvern~ 0 110 0 160
+V Wyrm~ 0 110 0 160
+V Drake~ 0 110 0 160
+V Dinosaur~ 0 130 0 160
+V Phantom~ 0 50 50 100
+V Ghost~ 0 50 50 100
+X obsidian~
+
+#0
+
+
+
+#ROOMDATA
+#10201
+索雷斯城城門~
+這裡是索雷斯城的大門。它的重要性在於它阻擋了怪物(monsters)進入
+索雷斯城，保障了城內所有居民的生命及財產的安全。這是一個位於司徒米
+爾河流(Crytalmir Lake)旁邊的寧靜農業城鎮。這裡有一面標牌(sign)釘在
+附近的一顆樹上，同時有一塊石碑(plaque)豎立在路旁。
+~
+0 0 1
+E
+sign~
+**      歡迎光臨索雷斯城        **
+
+歡迎各位冒險者抵達索雷斯城。
+你可以在這裡稍作休息，然後再繼續你的旅程。
+
+請不要在這裡隨便的獵殺城內動物。
+
+並注意閣下在城內的行為。
+
+為保障城市及各位的安全，城門(Gates)會於晚上關閉。
+
+                                -索雷斯城護衛隊隊長-
+~
+E
+plaque~
+**************
+   索雷斯城
+**************
+
+史提雷德(Strahd)立。
+~
+D0
+索雷斯大道
+~
+~
+0 -1 10202
+D1
+小巷
+~
+~
+0 -1 10216
+D2
+索雷斯城城門
+~
+gate~
+1 10306 10003
+D3
+小巷
+~
+~
+0 -1 10217
+S
+#10202
+索雷斯大道~
+這是索雷斯城的主要幹道。再往前走你可以看到不同的商店和平房。
+~
+0 0 1
+D0
+索雷斯大道
+~
+~
+0 -1 10203
+D1
+基安達(Jander)的酒吧和飯店
+~
+door~
+3 -1 10257
+D2
+索雷斯城城門
+~
+~
+0 -1 10201
+D3
+平房
+~
+door~
+3 -1 10246
+S
+#10203
+索雷斯大道~
+這是索雷斯城的主要幹道。再往前走你可以看到不同的商店和平房。
+~
+0 0 1
+D0
+索雷斯大道
+~
+~
+0 -1 10204
+D2
+索雷斯大道
+~
+~
+0 -1 10202
+D3
+廚師(Cookie)的烹調室
+~
+~
+0 -1 10245
+S
+#10204
+索雷斯大道~
+這是索雷斯城的主要幹道。再往前走你可以看到不同的商店和平房。
+~
+0 0 1
+D0
+索雷斯大道
+~
+~
+0 -1 10205
+D2
+索雷斯大道
+~
+~
+0 -1 10203
+S
+#10205
+索雷斯大道交匯處~
+這裡是索雷斯大道的交匯處。東面或西面有著各行各業的商店和平房。繼續往北走則是
+索雷斯大道。
+~
+0 0 1
+D0
+索雷斯大道
+~
+~
+0 -1 10228
+D1
+東賈林道
+~
+~
+0 -1 10206
+D2
+索雷斯大道
+~
+~
+0 -1 10204
+D3
+西賈林道
+~
+~
+0 -1 10227
+S
+#10206
+東賈林道~
+這裡是東賈林道，它連結著許多的商店和平房。
+~
+0 0 1
+D1
+東賈林道
+~
+~
+0 -1 10207
+D2
+平房
+~
+door~
+3 -1 10251
+D3
+索雷斯大道和東賈林道的交會處
+~
+~
+0 -1 10205
+S
+#10207
+東賈林道~
+這裡是東賈林道。它連結著許多的商店和平房。
+~
+0 0 1
+D1
+東賈林道
+~
+~
+0 -1 10208
+D2
+瑪麗妮(Marilyn)的雀鳥飼養工埸
+~
+~
+0 -1 10252
+D3
+東賈林道
+~
+~
+0 -1 10206
+S
+#10208
+東賈林道~
+這裡是東賈林道。它連結著許多的商店和平房。
+~
+0 0 1
+D1
+東賈林道和可堤亞道的交匯處
+~
+~
+0 -1 10209
+D3
+東賈林道
+~
+~
+0 -1 10207
+S
+#10209
+東賈林道和可堤亞道的交匯處~
+這裡是東賈林道和可堤亞道的交匯處。你會發現這裡比城中的其它地方特別整潔。但無
+論你怎看，這裡也不像是城內最富庶的地方。相反，這裡不過是一個較大的交易中心而已。
+~
+0 0 1
+D2
+可堤亞道
+~
+~
+0 -1 10210
+D3
+東賈林道
+~
+~
+0 -1 10208
+S
+#10210
+可堤亞道~
+這裡縱然是索雷斯城的一條小巷，但商店仍是隨處可見。
+大部份的房屋都是簡陋的，要不就是破爛不堪的。雖然這裡是
+城內最貧窮的地方，但也是城內最整潔的地區。
+~
+0 0 1
+D0
+東賈林道和可堤亞道的交匯處
+~
+~
+0 -1 10209
+D2
+可堤亞道
+~
+~
+0 -1 10211
+S
+#10211
+可堤亞道~
+這裡縱然是索雷斯城的一條小巷，但商店仍是隨處可見。
+大部份的房屋都是簡陋的，要不就是破爛不堪的。雖然這裡是
+城內最貧窮的地方，但也是城內最整潔的地區。
+~
+0 0 1
+D0
+可堤亞道
+~
+~
+0 -1 10210
+D2
+可堤亞道
+~
+~
+0 -1 10212
+D3
+儲物大樓
+~
+door~
+3 -1 10254
+S
+#10212
+可堤亞道~
+這裡縱然是索雷斯城的一條小巷，但商店仍是隨處可見。
+大部份的房屋都是簡陋的，要不就是破爛不堪的。雖然這裡是
+城內最貧窮的地方，但也是城內最整齊的地區。
+~
+0 0 1
+D0
+可堤亞道
+~
+~
+0 -1 10211
+D2
+城內的其中一座瞭望塔
+~
+~
+0 -1 10213
+D3
+基安達(Jander)的酒吧
+~
+door~
+3 -1 10255
+S
+#10213
+東南方哨兵瞭望塔~
+這裡是索雷斯城東南方的哨兵瞭望塔。除了是監察站外，這裡
+還是哨兵休息時間常來的地方。在那邊角落有幾條樓梯通往塔頂。
+而在樓梯的上方有一塊標牌(sign)。
+~
+0 8 1
+E
+sign~
+** 警 告 **
+
+這裡是禁止進入的範圍。
+
+只有得到批准的人才可以進入！
+違令者將會被監禁或格殺勿論。
+
+                -護衛隊隊長-
+~
+D0
+可堤亞道
+~
+~
+0 -1 10212
+D3
+小巷
+~
+~
+0 -1 10214
+D4
+一條樓梯通往瞭望塔
+~
+~
+0 -1 10260
+S
+#10214
+小巷~
+這是北面城牆的一條小巷。
+~
+0 0 1
+D1
+東南哨兵站
+~
+~
+0 -1 10213
+D3
+小巷
+~
+~
+0 -1 10215
+S
+#10215
+小巷~
+這是北面城牆的一條小巷。
+~
+0 0 1
+D0
+桌球室
+~
+door~
+3 -1 10256
+D1
+小巷
+~
+~
+0 -1 10214
+D3
+小巷
+~
+~
+0 -1 10216
+S
+#10216
+小巷~
+這是北面城牆的一條小巷。
+~
+0 0 1
+D1
+小巷
+~
+~
+0 -1 10215
+D3
+入城的門(door)
+~
+~
+0 -1 10201
+S
+#10217
+小巷~
+這是北面城牆的一條小巷。
+~
+0 0 1
+D1
+入城的門(door)
+~
+~
+0 -1 10201
+D3
+小巷
+~
+~
+0 -1 10218
+S
+#10218
+小巷~
+這是北面城牆的一條小巷。
+~
+0 0 1
+D0
+一座古老的木屋
+~
+door~
+3 -1 10247
+D1
+小巷
+~
+~
+0 -1 10217
+D3
+小巷
+~
+~
+0 -1 10219
+S
+#10219
+小巷~
+這是北面城牆的一條小巷。
+~
+0 0 1
+D1
+小巷
+~
+~
+0 -1 10218
+D3
+東南哨兵站
+~
+~
+0 -1 10220
+S
+#10220
+西南方哨兵瞭望塔~
+這裡是索雷斯城西南方的哨兵瞭望塔。除了是監察站外，這裡
+還是哨兵休息時間常來的地方。在那邊角落有幾條樓梯通往塔頂。
+而在樓梯的上方有一塊標牌(sign)。
+~
+0 0 1
+E
+sign~
+** 警 告 **
+
+這裡是禁止進入的範圍。
+
+只有得到批准的人才可以進入！
+違令者將會被監禁或格殺勿論。
+
+                -護衛隊隊長-
+~
+D0
+豐收大道
+~
+~
+0 -1 10221
+D1
+小巷
+~
+~
+0 -1 10219
+D4
+一條樓梯通往瞭望塔
+~
+~
+0 -1 10261
+S
+#10221
+豐收大道~
+你正在豐收大道上。這裡是城內最寧靜的地方，四周圍充滿麵包和各式各樣的
+食物的香味。
+~
+0 0 1
+D0
+豐收大道
+~
+~
+0 -1 10222
+D1
+麵包店
+~
+~
+0 -1 10248
+D2
+西南哨兵站
+~
+~
+0 -1 10220
+S
+#10222
+豐收大道~
+你正在豐收大道上。這裡是城內最寧靜的地方，四周圍充滿麵包和各式各樣的
+食物的香味。
+~
+0 0 1
+D0
+豐收大道
+~
+~
+0 -1 10223
+D1
+平房
+~
+door~
+3 -1 10249
+D2
+豐收大道
+~
+~
+0 -1 10221
+S
+#10223
+豐收大道~
+你正在豐收大道上。這裡是城內最寧靜的地方，四周圍充滿麵包和各式各樣的
+食物的香味。
+~
+0 0 1
+D0
+東賈林道和豐收大道的交匯處
+~
+~
+0 -1 10224
+D2
+豐收大道
+~
+~
+0 -1 10222
+S
+#10224
+東賈林道和豐收大道的交匯處~
+這裡是東賈林道和豐收大道的交匯處。往南面走去是各式各樣的食品店。而東
+面則是小型的百貨店。
+~
+0 0 1
+D1
+東賈林道
+~
+~
+0 -1 10225
+D2
+豐收大道
+~
+~
+0 -1 10223
+S
+#10225
+西賈林道~
+這裡是西賈林道。各式各樣的商店隨處可見。
+~
+0 0 1
+D1
+西賈林道
+~
+~
+0 -1 10226
+D2
+馬太(Matt)的釀酒店
+~
+~
+0 -1 10242
+D3
+西賈林道和豐收大道的交匯處
+~
+~
+0 -1 10224
+S
+#10226
+西賈林道~
+這裡是西賈林道。各式各樣的商店隨處可見。
+~
+0 0 1
+D1
+西賈林道
+~
+~
+0 -1 10227
+D2
+平房
+~
+door~
+3 -1 10243
+D3
+西賈林道
+~
+~
+0 -1 10225
+S
+#10227
+西賈林道~
+這裡是西賈林道。各式各樣的商店隨處可見。
+~
+0 0 1
+D1
+索雷斯大道和西賈林道的交匯處
+~
+~
+0 -1 10205
+D2
+平房
+~
+door~
+3 -1 10244
+D3
+西賈林道
+~
+~
+0 -1 10226
+S
+#10228
+索雷斯大道~
+這是索雷斯城的主要幹道。再往前走你可以看到不同的商店和平房。
+~
+0 0 1
+D0
+索雷斯大道的終點
+~
+~
+0 -1 10229
+D2
+索雷斯大道和賈林道的交匯處
+~
+~
+0 -1 10205
+S
+#10229
+索雷斯大道的終點。~
+這裡是索雷斯大道的盡頭，你可以經由其它道路通往城內各處。西面是索
+雷斯的商業中心，每當收成的季節，農夫都會在這兒售賣他們的農作物。而在
+北面的遠處，你看到一座高大的建築物。東面則是護衛隊的行政大樓。
+~
+0 0 1
+D0
+一條鵝卵石的小道
+~
+~
+0 -1 10272
+D1
+一條滿佈灰塵的小路
+~
+~
+0 -1 10262
+D2
+索雷斯大道
+~
+~
+0 -1 10228
+D3
+商業中心
+~
+~
+0 -1 10230
+S
+#10230
+索雷斯商業中心~
+這裡是索雷斯城商業中心。每年收成的季節，農夫們都會來這裡售賣他們的
+農作物。各種蔬菜和水果的香味充滿整個商業中心。此外，你還可以在這裡買到
+各種心愛的飾物。在商業中心的入口處掛著一面標牌(sign)。
+~
+0 0 1
+E
+sign~
+**告 示**
+
+偷竊是嚴重的罪行，絕對不能容忍。
+任何可疑的行為都會判以極刑。
+
+
+                -護衛隊隊長-
+~
+D0
+克羅班(Croben)的器皿店
+~
+~
+0 -1 10241
+D1
+索雷斯大道的終點
+~
+~
+0 -1 10229
+D2
+妮絲(Nisi)的凍食店
+~
+~
+0 -1 10237
+D3
+商業中心
+~
+~
+0 -1 10231
+S
+#10231
+索雷斯商業中心~
+這裡是索雷斯城商業中心。每年收成的季節，農夫們都會來這裡售賣他們的農
+作物。各種蔬菜和水果的香味充滿整個商業中心。此外，你還可以在這裡買到各種
+心愛的飾物。
+~
+0 0 1
+D0
+雷克熙(Lexie)的潛水用品店
+~
+~
+0 -1 10240
+D1
+商業中心
+~
+~
+0 -1 10230
+D2
+基安尼(Janni)的飾物店
+~
+~
+0 -1 10236
+D3
+商業中心
+~
+~
+0 -1 10232
+S
+#10232
+索雷斯商業中心~
+這裡是索雷斯城商業中心。每年收成的季節，農夫們都會來這裡售賣他們的農
+作物。各種蔬菜和水果的香味充滿整個商業中心。此外，你還可以在這裡買到各種
+心愛的飾物。
+~
+0 0 1
+D0
+雷山(Rashan)的甘藍店
+~
+~
+0 -1 10239
+D1
+商業中心
+~
+~
+0 -1 10231
+D2
+克麗斯塔(Krista)水果店
+~
+~
+0 -1 10235
+D3
+商業中心
+~
+~
+0 -1 10233
+S
+#10233
+索雷斯商業中心~
+這裡是索雷斯城商業中心。每年收成的季節，農夫們都會來這裡售賣他們的農
+作物。各種蔬菜和水果的香味充滿整個商業中心。此外，你還可以在這裡買到各種
+心愛的飾物。這是商業中心最後的一段路，西面則是索雷斯城的城牆。
+~
+0 0 1
+D0
+莫林(Molin)的桑椹果汁店
+~
+~
+0 -1 10238
+D1
+商業中心
+~
+~
+0 -1 10232
+D2
+基肯(Jhen)的蔬菜車
+~
+~
+0 -1 10234
+S
+#10234
+基肯(Jhen)的蔬菜車~
+這是基肯(Jhen)賣農作物的地方。在那木頭車上堆滿了各式各樣的蔬菜，而且都
+特別大顆。你很難想像他到底會喜歡哪一種....。木頭車上釘了一塊標牌(sign)。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D0
+商業中心
+~
+~
+0 -1 10233
+S
+#10235
+克麗斯塔(Krista)水果店~
+這是卡爾斯達(Krista)的水果店。每一年她都會從山上的果園拿新鮮的生果到城裡賣。
+但這些生果似乎比正常的小了一些。如果她都能認同就好了....。
+一塊標牌(sign)方在水果上。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D0
+商業中心
+~
+~
+0 -1 10232
+S
+#10236
+基安尼(Janni)的飾物店~
+這是基安尼(Janni)的飾物店。他所製造的飾物是全城最有名的，也只有在這裡才能買
+得到。每個到索雷斯城的遊客都會在這裡買幾件送給朋友，相信你也不會例外吧？在玻璃
+櫥櫃的裡邊掛著一塊標牌(sign)。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D0
+商業中心
+~
+~
+0 -1 10231
+S
+#10237
+妮絲(Nisi)的凍食店~
+這裡是整個商業中心裡最古老的商店之一。妮絲(Nisi)經常都說這裡的凍食
+不但種類多，而且絕對新鮮。事實上，這些食品硬的連斧頭也砍不入..。你看看
+就會知道..你很難想像她是用什麼來防止它們溶解的..。在店舖裡的牆壁上掛著
+一塊細小的標牌(sign)。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D0
+商業中心
+~
+~
+0 -1 10230
+S
+#10238
+莫林(Molin)的桑椹果汁店~
+這是全城最有名的桑椹果汁店。傳聞桑椹果汁的名字遠至谷地裡的飢渴的旅客也知道。
+不知什麼原因，他先前受傷了，在一個月前才復原..。一塊細小的標牌(sign)掛在牆上。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D2
+商業中心
+~
+~
+0 -1 10233
+S
+#10239
+雷山(Rashan)的甘藍店~
+如果你有時間，不妨來這裡看一看。雷山(Rashan)的地瓜是世上最奇怪的。
+事實上，這裡是最少人來的店舖，經常都是空無一人的。相信雷山(Rashan)縱然
+想賣出一顆地瓜也是很難。在商業世界裡就是這麼現實的..。有一塊標牌(sign)
+掛在你的旁邊。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D2
+商業中心
+~
+~
+0 -1 10232
+S
+#10240
+雷克熙(Lexie)的潛水用品店~
+這是唯一一間和時代不符的店舖。但是又有誰不喜歡潛水呢？ 即使你不懂得潛水，也
+可以在這裡挑選一兩件，因為雷克熙(Lexie)會耐心的指導你。然而這裡似乎與大海相距遠
+了一點。但不管怎樣，你也可以在湖泊中玩玩。一塊標牌(sign)在這裡。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D2
+商業中心
+~
+~
+0 -1 10231
+S
+#10241
+克羅班(Croben)的器皿店~
+這是全城唯一的器皿店。克羅班(Croben)的器皿實在太多了，你隨便拿一個吧，
+反正他也不知它們多少錢一個，你可以想像到他除了製造器皿外也沒有什麼好做了。
+有一塊小標牌(sign)在這裡。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D2
+商業中心
+~
+~
+0 -1 10230
+S
+#10242
+馬太(Matt)的釀酒店~
+馬太(Matt)看來是從來都喝不夠的。所以他就自己開了一間釀酒店解決這個
+問題。「你永遠也喝不夠」是他的經常說的話，有時他甚至會送你一兩杯。這裡
+有一塊小標牌(sign)。
+~
+0 8 1
+E
+sign~
+標牌(sign)上寫著:
+
+  價目表(List)  - 你可以看到這店子裡可以買到的物品。
+  買(Buy)   - 買你想要的物品。
+  格價(Value) - 可以看到你想賣給店主物品的價值。
+  賣(Sell)  - 把一件物品賣給店主。
+~
+D0
+西賈林道
+~
+~
+0 -1 10225
+S
+#10243
+平房~
+這是西賈林道中的一所平房。但這裡并不是你的屋子，這裡的主人也沒有邀請你進來。
+那你在這裡想幹什麼？
+~
+0 8 1
+D0
+西賈林道
+~
+door~
+3 -1 10226
+S
+#10244
+平房~
+這是西賈林道中的一所平房。這裡的家具雖然不多，但也十分整洁。一個壁爐使整間房子
+都變得暖和。陣陣鮮花的香味令你心醉。噢....這是真是世上最好的房子。
+~
+0 8 1
+D0
+西賈林道
+~
+door~
+3 -1 10227
+S
+#10245
+廚師(Cookie)的烹調室~
+這是廚師(Cookie)的烹調室..。但是她現在不在這裡，如果你想買美味
+的食物，可以在這裡等她回來。
+~
+0 8 1
+D1
+索雷斯大道
+~
+~
+0 -1 10203
+D3
+一扇門
+~
+door~
+3 -1 10250
+S
+#10246
+平房~
+這是大街中的一所平房。這裡家具齊備，而且十分整洁。一個壁爐使整間房子都變得暖和。
+陣陣鮮花的香味令你心醉。噢....這是真是世上最好的房子。
+~
+0 8 1
+D1
+索雷斯大道
+~
+door~
+3 -1 10202
+S
+#10247
+古老的博奕店~
+這裡曾經是最出名，最多人的博奕店。但自從守衛隊隊長在這裡輸了以後，便立法禁止賭博。
+這裡已經有幾年沒有營業了，所以到處都是灰塵和蜘蛛網。
+~
+0 8 1
+D2
+小巷
+~
+door~
+3 -1 10218
+S
+#10248
+麵包店~
+你正在一間麵包店裡。各種甜美的味道充滿整間麵包店，炸麥餅和炸麵包的香味
+令你垂涎三尺。它們都整齊的放在架子上，無論從哪個角度看，它們都是最美味的食
+物。你好像曾幾何時見過它們，一塊標牌(sign)放在櫃檯上。
+~
+0 8 1
+E
+sign~
+這裡只供免費的購物指示:
+
+   買(Buy)  - 買你想要的食物。
+   價目表(List) - 麵包師會告訴你這裡有什麼食物。
+~
+D3
+豐收大道
+~
+~
+0 -1 10221
+S
+#10249
+平房~
+這是大街中的一所平房。這裡家具齊備，而且十分整齊。一個壁爐使整間房子都變得暖和。
+陣陣鮮花的香味令你心醉。噢....這是真是世上最好的房子。
+~
+0 8 1
+D3
+豐收大道
+~
+door~
+3 -1 10222
+S
+#10250
+廚師(Cookie)的休息室~
+這裡是廚師(Cookie)休息的地方。經常地，她都會來這裡和她的朋友聚會。
+~
+0 8 1
+D1
+儲物大樓在你的前面
+~
+door~
+3 -1 10245
+S
+#10251
+平房~
+這是西賈林道中的一所平房。但這裡并不是你的屋子，這裡的主人也沒有邀請你進來。
+那你在這裡想幹什麼？
+~
+0 8 1
+D0
+東賈林道
+~
+door~
+3 -1 10206
+S
+#10252
+瑪麗妮(Marilyn)的雀鳥飼養工埸~
+這裡是瑪麗妮(Marilyn)的雀鳥飼養工埸。這裡環境寬敞，給雀鳥提供了一
+個舒適的生活環境。你可以在這裡買你喜歡的寵物，帶它們回家。它們將會是你
+最好的朋友。
+~
+0 4450 1
+D0
+東賈林道
+~
+~
+0 -1 10207
+S
+#10253
+寵物店~
+這裡是瑪麗妮(Marilyn)寵物店。除了雀鳥飼養工埸外，這裡也是重要的雀鳥飼養
+埸之一。
+~
+0 12 1
+S
+#10254
+儲物大樓~
+這是一座經已被棄置了的儲物大樓。昔日，這裡存放了大量商業中心和行商賣剩
+的物資，但現在已經全數賣出了。但不管怎樣，這裡總有一天會再有使用的一日。
+~
+0 8 1
+D1
+可堤亞道
+~
+door~
+3 -1 10211
+S
+#10255
+基安達(Jander)的酒吧~
+這裡曾經是最繁榮的酒吧，但不知道是什麼原因，這裡變得空無一人。
+灰塵和蜘蛛網佈滿整間酒吧，看來這裡已經有許多年沒有人來過了。地上佈
+滿玻璃碎和破爛不堪的桌子和椅子。一塊標牌(sign)掛在牆上。東面有一扇
+門通往可堤亞道。
+~
+0 8 1
+E
+sign~
+歡迎光臨基安達(Jander)酒吧！
+
+喝酒可以帶給你無盡的歡樂！！！！
+
+但喝完了就不要再結婚....
+
+                - 基安達(Jander) -
+~
+D1
+可堤亞道
+~
+door~
+3 -1 10212
+D3
+桌球室
+~
+~
+0 -1 10256
+S
+#10256
+基安達(Jander)的桌球室~
+這裡曾經是最繁榮的酒吧，但不知道是什麼原因，這裡變得空無一人。
+灰塵和蜘蛛網佈滿整間酒吧，看來這裡已經有許多年沒有人來過了。一間酒
+吧在你的東面。一張破爛不堪的桌球檯倒在地板上。基安達(Jander)的辦公
+室門外有一塊標牌(sign)。南面可通往後街。
+~
+0 8 1
+E
+sign~
+*基安達(Jander)辦公室*
+
+請看這裡的標牌(sign)！
+
+然後立即滾出去！！
+
+-基安達(Jander)-
+~
+D0
+基安達(Jander)辦公室的門(office door)
+~
+office door~
+3 -1 10259
+D1
+酒吧
+~
+~
+0 -1 10255
+D2
+通往後街的門(backdoor)
+~
+door backdoor~
+3 -1 10215
+D3
+一間餐館
+~
+~
+0 -1 10257
+S
+#10257
+基安達(Jander)的餐館~
+基安達(Jander)的酒吧和餐館曾經是全城最有名的。但因為某些原因，這裡
+已經空無一人。灰塵和蜘蛛網佈滿整間酒吧，看來這裡已經有許多年沒有人來過
+了。桌球室和酒吧在你的東面。西面有一扇門通往索雷斯大道(Main Road)。
+~
+0 8 1
+D1
+桌球室
+~
+~
+0 -1 10256
+D3
+索雷斯大道
+~
+door~
+3 -1 10202
+S
+#10258
+行刑的密室~
+這兒是喻意死亡的密室。如果你好好守法，就不會被送到這裡。牆壁都掛滿
+死去的人的頭，從他們的表情看來，他們都是在極度痛苦下死的，而他們的靈魂
+似乎仍然在哭訴著。地板和天花板都鋪著黑色的雲石，你彷如置身於地獄之火之
+中，每一下的呼吸都令你有窒息的感覺。一面標牌(sign)在你的面前漂浮著。
+~
+0 2883612 1
+E
+sign~
+請坐，然後等一會。
+
+死亡只是一瞬間而已，不用心急，下一個就輪到你了。
+
+"你死去以後，你的靈魂也會隨之消失，灰飛煙滅..。"
+~
+>room_enter 64 100~
+echo $n 一股黑暗的力量包圍你全身。
+c 'curse' $n 42
+~
+>room_rand 20~
+echo 四面的牆壁傳來陣陣哭喊聲「好痛苦啊....！我好痛苦啊....！」
+~
+>room_rand 30~
+if pcnum($) == 0
+        break
+else
+        if rand(20)
+                echo $r 一股黑暗的力量向你詛咒著。
+                c 'curse' $n 42
+        endif
+        if rand(23)
+                echo $r 一陣紫色的煙霧在你四周盈聚，你感覺到防衛力下降了。
+                echo
+                c 'faerie fire' $n 42
+        endif
+        if rand(26)
+                echo $r 一陣冰凍的寒氣從四面牆壁 出來，你感到一絲寒意。
+                c 'chill touch' $n 42
+        endif
+        if rand(29)
+                echo $r 突然覺得四肢無，身體開始變得虛弱。
+                c 'weaken' $n 42
+        else
+                echo $r 四面牆壁噴一陣煙霧，你感覺到不舒服，似乎是中毒了。
+                c 'poison' $n 42
+        endif
+endif
+~
+|
+S
+#10259
+基安達(Jander)的辦公室~
+這裡是基安達(Jander)的辦公室，你沒有看清楚便闖了進來，最好還是小心一點。
+和酒吧其他地方一樣，這裡早已被棄置了很久，灰塵滿佈，也或許從前就是這個模樣。
+一張橡樹製的桌子放在房間的中央，一個書架靠著牆壁，而一排椅子放在桌子的前面。
+基本上員工們甚少見到基安達(Jander)本人，他通常都會在自己的辦公室工作，而且他
+的心情沒有一天是好的。南面有一扇間(door)。
+~
+0 8 1
+D2
+桌球室。
+~
+door~
+3 -1 10256
+S
+#10260
+東南方瞭望塔之內~
+你正站在東南方守衛塔的裡面。在這裡，你差不多可以看到整座村莊與遠方的樹梢。
+此外，你還可以看到司徒米爾河(Crystalmir lake)的美麗風景。你並沒有到這裡的權利
+，要是被發現了，你就麻煩了..。
+~
+0 8 1
+D5
+一條樓梯通往哨兵營
+~
+~
+0 -1 10213
+S
+#10261
+西南方瞭望塔之內~
+你正站在西南方守衛塔的裡面。在這裡，你差不多可以看到整座村莊與遠方的樹梢。
+此外，你還可以看到司徒米爾河(Crystalmir lake)的美麗風景。你並沒有到這裡的權利
+，要是被發現了，你就麻煩了..。
+~
+0 8 1
+D5
+一條樓梯通往哨兵營
+~
+~
+0 -1 10220
+S
+#10262
+滿佈灰塵的道路~
+這是一條灰塵滿佈的道路，看來是太多人往來之故。東面是護衛隊行政大樓。
+~
+0 0 1
+D1
+索雷斯城行政大樓
+~
+~
+0 -1 10263
+D3
+索雷斯大道的終點
+~
+~
+0 -1 10229
+S
+#10263
+護衛隊行政大樓~
+進入護衛隊行政大樓之前面是一座由雕刻精美的石像和其他繪圖精細的
+圖畫粉飾而成的建築物。東邊有一扇門(door)。
+~
+0 0 1
+D1
+會堂入口
+~
+door~
+3 -1 10264
+D3
+滿佈灰塵的道路
+~
+~
+0 -1 10262
+S
+#10264
+會堂入口~
+這是會堂的入口，周圍是用大理石和花崗岩所砌成。護衛隊行政大樓似乎是豪華了一點。
+三十尺高的天花板，讓站在這裡的人顯得十分矮小。地板的正中央畫的是索雷斯城的標誌。東
+面是一扇沉重的雙層玻璃門(door)。入口在你的西面。
+~
+0 8 1
+D1
+一扇沉重的雙層玻璃門(door)
+~
+doors~
+3 -1 10270
+D2
+大理石走廊
+~
+~
+0 -1 10265
+D3
+大樓入口
+~
+door~
+3 -1 10263
+S
+#10265
+大理石走廊~
+這條走廊是由各式各樣的圖畫和雕刻粉飾而成。兩旁是一排大理石的柱子。
+天花板掛的是水晶吊燈，把整條走廊照的燈火通明。西面的門(door)可以通往城
+鎮稅務局。
+~
+0 8 1
+D0
+走廊入口
+~
+~
+0 -1 10264
+D1
+大理石走廊
+~
+~
+0 -1 10268
+D3
+一扇通往城鎮稅務局辦公室的門
+~
+door officedoor~
+3 -1 10266
+S
+#10266
+城鎮稅務局~
+這是你交罰款和稅款的地方。一張辦公臺擺在你的前面。牆邊有幾張桌子
+和椅子，如果人太多，你可以先在這裡等一會。在辦公臺的後面西方有一扇鐵
+門(iron door)。東面是走廊(hallway)。西面是存款室的門(door)。
+~
+0 8 1
+D1
+大理石走廊
+~
+~
+3 -1 10265
+D3
+一扇沉重的鐵門
+~
+safe~
+7 10305 10267
+S
+#10267
+存款室~
+這個保險庫大的像一間房間。所有從罰款和稅款收得的金錢都會放在這裡。
+牆壁是用大理石所製成，一個純金的保險箱鑲在牆上。這裡只有一扇門(door)通
+往東面。
+~
+0 8 1
+D1
+城鎮稅務局辦公室
+~
+safe~
+7 10305 10266
+S
+#10268
+大理石走廊~
+這條走廊同樣是由各式各樣的圖畫和雕刻粉飾而成。兩旁是一排大理石的柱子。
+天花板掛的是水晶吊燈，把整條走廊照的燈火通明。一扇沉重的雙層玻璃門(door)在
+你的東面。
+~
+0 8 1
+D0
+一扇沉重的雙層玻璃門
+~
+doors~
+3 -1 10270
+D1
+噴泉
+~
+~
+0 -1 10269
+D3
+大理石走廊
+~
+~
+0 -1 10265
+S
+#10269
+噴泉廣場~
+這是一座巨型的噴泉。在噴泉的中央，一個用大理石雕成的獅子頭從口中噴出清澈的泉水。
+幾條栩栩如生的石雕魚從噴泉的底部向獅子噴水，兩者互相暉映，相映成趣。
+~
+0 8 1
+D1
+新興的街道
+~
+~
+0 -1 10318
+D3
+大理石走廊
+~
+~
+0 -1 10268
+S
+#10270
+走廊交匯處~
+這裡是走廊的交匯處。陽光透過天花格的玻璃窗直射下來，四周明亮照人
+。在你的四周都有一扇巨大的門(door)，而它們都是用橡木製成，上面用黃金
+鑲飾著。四周都有一扇門(door)。
+~
+0 8 1
+D0
+一扇雙層的門
+~
+doors~
+3 -1 10276
+D1
+一扇雙層的門
+~
+doors~
+3 -1 10271
+D2
+一扇雙層的門
+~
+doors~
+3 -1 10268
+D3
+一扇雙層的門
+~
+doors~
+3 -1 10264
+S
+#10271
+長廊的盡頭~
+這條豪華的長廊終於到了盡頭。精美的圖畫和雕像仍隨意可見。
+而天花板仍舊是色彩繽紛的馬賽克玻璃窗。西面有一扇門(door)。
+~
+0 8 1
+D0
+長廊
+~
+~
+0 -1 10277
+D3
+一扇雙層的門
+~
+doors~
+3 -1 10270
+S
+#10272
+一條鵝卵石的小道~
+你走在一條鵝卵石的小道上。它一直延伸到北邊的一座高大的建築物。
+~
+0 0 1
+D0
+一座大樓在你的前面
+~
+~
+0 -1 10282
+D2
+索雷斯大道的終點
+~
+~
+0 -1 10229
+S
+#10273
+警衛官的接待處~
+這房間用各式各樣的戰爭藝術工藝品所裝飾著。幾幅血腥的戰爭圖片掛在牆上，
+如果你約見了警衛官，你必須在這裡稍等一會。但沒有人知道你到底要等多久。北面
+是警衛官的房間。東面則可以通往行政走廊。
+~
+0 8 1
+D0
+一扇鐵門(door)
+~
+door~
+3 -1 10283
+D1
+走廊
+~
+door~
+1 -1 10274
+S
+#10274
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石鋪
+砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不如說
+它是一座王宮還貼切。西面是警衛官的候客室(Sergeant's waiting room)。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10284
+D1
+走廊
+~
+~
+0 -1 10275
+D3
+接待處
+~
+door~
+1 -1 10273
+S
+#10275
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石鋪
+砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不如說
+它是一座王宮還貼切。一扇橡木門(oak door)通往北面。
+~
+0 8 1
+D0
+一扇橡木門(oak door)
+~
+oak door~
+3 -1 10285
+D1
+走廊
+~
+~
+0 -1 10276
+D3
+走廊
+~
+~
+0 -1 10274
+S
+#10276
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石鋪
+砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不如說
+它是一座王宮還貼切。一扇雙層的門(door)往南面通去。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10286
+D2
+一房雙層的門(doors)
+~
+doors~
+3 -1 10270
+D3
+走廊
+~
+~
+0 -1 10275
+S
+#10277
+長廊~
+這條走廊和其它的相比起來有點簡陋。在大理石的地板上只有一些沉悶的
+裝飾(decorations)。而牆壁也不過是用粗糙的木柱裝飾。可能這是一個不起
+眼的地方，所以用不上特別的設計和裝飾。
+~
+0 8 1
+D0
+長廊
+~
+~
+0 -1 10287
+D2
+長廊的盡頭
+~
+~
+0 -1 10271
+S
+#10278
+公用房間的西面~
+你站在房間的西面。這裡通常是冒險者休息的地方，特別是那些給不起私人
+房間租金的冒險者。東面是房間的另一端。
+~
+0 8 1
+D1
+一間很大的房間
+~
+~
+0 -1 10279
+S
+#10279
+公用房間的東面~
+你站在房間的東面。這裡通常是冒險者休息的地方，特別是那些給不起私人
+房間租金的冒險者。西面是房間的另一端。北面有一扇門(door)通往走廊。
+~
+0 8 1
+D0
+寬敞的走廊
+~
+door~
+3 -1 10289
+D3
+一間很大的房間
+~
+~
+0 -1 10278
+S
+#10280
+酒吧的西面~
+你正站在酒吧的西面。這裡是酒吧最黑暗的角落，或許是燈光不夠的原因..。
+不管怎樣，在這裡喝杯啤酒，稍睡一會的確是不錯的選擇。
+~
+0 8 1
+D1
+酒吧的中央
+~
+~
+0 -1 10281
+S
+#10281
+永恆旅館~
+這間永恆旅館從開業至今，就沒有改變過。酒吧被幾棵樹圍繞著。一個老
+人在角落中編織著籃子，一群人好奇地圍在他的身邊。酒吧後面精緻的玻璃剛
+被奧提山大夫(Otik Sandath)擦的乾乾淨淨。一扇門(door)開在你的東面。
+~
+0 8 1
+D0
+酒吧的北面
+~
+~
+0 -1 10291
+D1
+一扇雕刻精美的門
+~
+door~
+3 -1 10282
+D3
+酒吧的西面
+~
+~
+0 -1 10280
+D4
+木樓梯
+~
+~
+0 -1 10290
+S
+#10282
+旅館房間的外面~
+你看到一間旅館建在一棵古老的大樹旁邊。而旅館中傳來陣陣的笑聲。
+微風輕撫著大樹和旅館，令人有一種溫暖的感覺。
+~
+0 8 1
+D0
+幾棵樹(trees)在那兒
+~
+tree~
+3 -1 10292
+D2
+一條鵝卵石的小道
+~
+~
+0 -1 10272
+D3
+一扇雕刻精美的門(door)
+~
+door~
+3 -1 10281
+S
+#10283
+警衛官的辦公室~
+這裡是警衛官的辦公室。城內所有投訴個案都是由他管理的。
+他的房間由許多許多武器和戰爭的圖片裝飾著，十分特別。一張很
+大的桌子和椅子在房間的正中央。一扇鐵門通往南面。
+~
+0 8 1
+D2
+一扇鐵門(door)
+~
+door~
+3 -1 10273
+S
+#10284
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是
+用寶石鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行
+政大樓，倒不如說它是一座王宮還貼切。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10294
+D2
+走廊
+~
+~
+0 -1 10274
+S
+#10285
+守衛休息室~
+這裡放著幾大箱，幾大桶的食物。但細看之下，都是已經變壞了的食物。
+這裡是守衛不用當值時休息的地方。一扇橡木門(oak door)往南面通去。
+~
+0 8 1
+D2
+一扇橡木門(oak door)
+~
+door~
+3 -1 10275
+S
+#10286
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10296
+D2
+走廊
+~
+~
+0 -1 10276
+S
+#10287
+長廊~
+這條走廊和其它的相比起來有點簡陋。在大理石的地板上只有一些沉悶
+的裝飾(decorations)。而牆壁也不過是用粗糙的木柱裝飾。可能這是一個
+不起眼的地方，所以用不上特別的設計和裝飾。
+~
+0 8 1
+D0
+長廊
+~
+~
+0 -1 10297
+D2
+長廊
+~
+~
+0 -1 10277
+S
+#10288
+走廊~
+你站在一條古老的走廊之上。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10298
+D1
+走廊
+~
+~
+0 -1 10289
+S
+#10289
+公用房間門外~
+你站在一條古老的間木走廊中。南面傳來陣陣的笑聲和低語聲。
+一扇通往公用房間的門在你的南面。
+~
+0 8 1
+D1
+走廊
+~
+~
+0 -1 10290
+D2
+公用房間
+~
+door~
+3 -1 10279
+D3
+走廊
+~
+~
+0 -1 10288
+S
+#10290
+旅館的第二層~
+你正站在旅館的第二層。一條樓梯通往樓下的酒吧。
+而你的西面傳來一陣一陣的低語聲和笑聲。
+
+~
+0 8 1
+D3
+走廊
+~
+~
+0 -1 10289
+D5
+木樓梯
+~
+~
+0 -1 10281
+S
+#10291
+酒吧的北面~
+一團火在壁爐中燃燒著，為這裡的人帶來了一絲的溫暖。和以往一樣，這
+裡的人總是那麼多，往來者每日過百。並沒有人注意到又有幾位客人進來了，
+似乎大家都習慣了這人來人往的環境。
+~
+0 8 1
+D2
+酒吧的中央
+~
+~
+0 -1 10281
+S
+#10292
+隊長的辦公室~
+這裡是隊長的辦公室(Captain's Office)。在你前面的是一張皮製沙發
+和一張大理石的桌子。西面放著一個武器架。大理石桌子的後面的牆壁上掛
+著一幅隊長的畫像。北面的牆上有一扇沉重的刻有警衛紋章的鐵門(Doors)。
+~
+0 8 1
+D0
+一扇沉重的刻有警衛紋章的鐵門(Doors)
+~
+doors~
+3 -1 10302
+D2
+牆壁(wall)
+~
+wall~
+0 -1 10282
+S
+#10293
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10303
+D1
+走廊
+~
+~
+0 -1 10294
+S
+#10294
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D1
+接待處
+~
+~
+0 -1 10295
+D2
+走廊
+~
+~
+0 -1 10284
+D3
+走廊
+~
+~
+0 -1 10293
+S
+#10295
+副隊長的接待處~
+如果你想和副隊長會面，那你先得在這裡等他一會。這裡的家具都是用
+木造的，牆壁上滿是用手指畫上去的圖案。在副隊長的桌子後面有一幅用蠟
+筆畫的畫。北面一扇有警衛紋章的玻璃門(glass door)。
+~
+0 8 1
+D0
+一扇有警衛紋章的玻璃門(glass door)
+~
+door~
+3 -1 10305
+D3
+走廊
+~
+~
+0 -1 10294
+S
+#10296
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10306
+D2
+走廊
+~
+~
+0 -1 10286
+S
+#10297
+長廊~
+這條走廊和其它的相比起來有點簡陋。在大理石的地板上只有一些沉悶
+的裝飾(decorations)。而牆壁也不過是用粗糙的木柱裝飾。可能這是一個
+不起眼的地方，所以用不上特別的設計和裝飾。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10307
+D2
+走廊
+~
+~
+0 -1 10287
+S
+#10298
+走廊~
+你站在一條古老的走廊之上。
+~
+0 8 1
+D0
+閱覽室
+~
+~
+0 -1 10308
+D2
+走廊
+~
+~
+0 -1 10288
+S
+#10299
+私人房間~
+這是一間私人房間(Private Room)。只要你有錢，你就可以租來住幾天，
+這樣就不用和其他人一起擠在同一間房間了。這裡的設備一應俱全，比其它房
+間好上幾百倍。北面有一扇門(door)。
+~
+0 8 1
+D0
+一扇門(door)
+~
+door~
+3 -1 10309
+S
+#10300
+私人房間~
+這是一間私人房間(Private Room)。只要你有錢，你就可以租來住幾天，
+這樣就不用和其他人一起擠在同一間房間了。這裡的設備一應俱全，比其它房
+間好上幾百倍。北面有一扇門(door)。
+~
+0 8 1
+D0
+一扇門(door)
+~
+door~
+3 -1 10310
+S
+#10301
+私人房間~
+這是一間私人房間(Private Room)。只要你有錢，你就可以租來住幾天，
+這樣就不用和其他人一起擠在同一間房間了。這裡的設備一應俱全，比其它房
+間好上幾百倍。北面有一扇門(door)。
+~
+0 8 1
+D0
+一扇門(door)
+~
+door~
+3 -1 10311
+S
+#10302
+隊長的會客室~
+你正站在隊長的會客室(Captain's Meeting room)裡。這裡是他處理日常事
+務，以及發出指示的地方。房間的中央放著一張大圓桌和幾張椅子。一扇雙層的
+玻璃門(Doors)通往北面。一扇沉重的鐵門(Doors)在你的南面。
+~
+0 8 1
+D0
+一扇雙層的玻璃門(Doors)
+~
+doors~
+3 -1 10312
+D2
+沉重的鐵門(Doors)
+~
+doors~
+3 -1 10292
+S
+#10303
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10313
+D2
+走廊
+~
+~
+0 -1 10293
+S
+#10304
+守衛休息室~
+這裡放著幾大箱，幾大桶的食物。但細看之下，都是已經變壞了的食物。
+這裡是守衛不用當值時休息的地方。一扇橡木門(oak door)往北面通去。
+~
+0 8 1
+D0
+一扇橡木門(oak door)
+~
+door~
+3 -1 10314
+S
+#10305
+副隊長的辦公室~
+這是副隊長的辦公室(Lieutenant's Office)。他通常都沒什麼事好做的，
+所以他都會用手指在四面的牆壁上畫畫。而房中的家具看來是一個七歲小孩用的，
+一點也看不出這是副隊長的房間。幾件塑膠的家具和花被隨亂的放在房間裡。一扇
+玻璃門(glass door)通往南面。
+~
+0 8 1
+D2
+一扇玻璃門(glass door)
+~
+door~
+3 -1 10295
+S
+#10306
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D0
+走廊
+~
+~
+0 -1 10316
+D2
+走廊
+~
+~
+0 -1 10296
+S
+#10307
+長廊~
+這條走廊和其它的相比起來有點簡陋。在大理石的地板上只有一些沉悶的
+裝飾(decorations)。而牆壁也不過是用粗糙的木柱裝飾。可能這是一個不起
+眼的地方，所以用不上特別的設計和裝飾。
+~
+0 8 1
+D0
+長廊的盡頭
+~
+~
+0 -1 10317
+D2
+走廊
+~
+~
+0 -1 10297
+S
+#10308
+閱覽室~
+這是在下午才開放的閱覽室(reading room)。在天氣晴朗的下午，到這裡的
+人就特別多。兩面牆壁的書架上都放滿了各式各樣的典籍。但書實在太多了，站
+在一條古老的走廊之上。在你的前面則是一排奢侈的私人房間(private rooms)。
+~
+0 8 1
+D1
+走廊
+~
+~
+0 -1 10309
+D2
+一扇門(door)
+~
+door~
+0 -1 10298
+S
+#10309
+走廊~
+你站在一條古老的走廊之上。
+在你的前面則是一排奢侈的私人房間(private rooms)。一扇門(door)在
+你的南面。
+~
+0 8 1
+D1
+走廊
+~
+~
+0 -1 10310
+D2
+一扇門(door)
+~
+door~
+3 -1 10299
+D3
+閱覽室(reading room)
+~
+~
+0 -1 10308
+S
+#10310
+走廊~
+你站在一條古老的走廊之上。
+在你的前面則是一排奢侈的私人房間(private rooms)。一扇門(door)在
+你的南面。
+~
+0 8 1
+D1
+走廊
+~
+~
+0 -1 10311
+D2
+一扇門(door)
+~
+door~
+3 -1 10300
+D3
+走廊
+~
+~
+0 -1 10309
+S
+#10311
+走廊~
+你站在一條古老的走廊之上。
+在你的前面則是一排奢侈的私人房間(private rooms)。一扇門(door)在
+你的南面。
+~
+0 8 1
+D2
+一扇門(door)
+~
+door~
+3 -1 10301
+D3
+走廊
+~
+~
+0 -1 10310
+S
+#10312
+隊長的候客室~
+這裡是隊長的候客室(Captain's Waiting Room)。一張隊長的畫像(portrait)掛
+在北面牆的正中央。整個房間都是華麗的佈置，你很難想像日後他走的時候要如何才
+能拿走所有的財物。如此看來，他倒像是一個土皇帝，一點也不像是守衛城鎮的護隊
+隊長。東面有一扇橡木門(oak door)。一扇雙層玻璃門(doors)在你的南面。
+~
+0 8 1
+D1
+一扇橡木門(oak door)
+~
+door~
+3 -1 10313
+D2
+一扇雙層玻璃門(Doors)
+~
+doors~
+3 -1 10302
+S
+#10313
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。隊長的候客室(Captain's Waiting Room)在你的
+西面。
+~
+0 8 1
+D1
+走廊
+~
+~
+0 -1 10314
+D2
+走廊
+~
+~
+0 -1 10303
+D3
+一扇候客室的門
+~
+door~
+3 -1 10312
+S
+#10314
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。一扇橡木門(oak door)通往南面。
+~
+0 8 1
+D1
+走廊
+~
+~
+0 -1 10315
+D2
+一扇橡木門(oak door)
+~
+door~
+3 -1 10304
+D3
+走廊
+~
+~
+0 -1 10313
+S
+#10315
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D1
+走廊
+~
+~
+0 -1 10316
+D3
+走廊
+~
+~
+0 -1 10314
+S
+#10316
+行政走廊~
+這走廊和其它走廊相比起來，似乎豪華了一點。所有的牆壁都是用寶石
+鋪砌而成，有的圖案更是用黃金鑲嵌而成。與其說這是一座行政大樓，倒不
+如說它是一座王宮還貼切。
+~
+0 8 1
+D1
+長廊的盡頭
+~
+~
+0 -1 10317
+D2
+走廊
+~
+~
+0 -1 10306
+D3
+走廊
+~
+~
+0 -1 10315
+S
+#10317
+長廊的盡頭~
+這是長廊的盡頭。牆壁上都掛滿了精緻的油畫和雕像。而天花板也畫上
+了色彩美麗的圖案，極盡奢華。
+~
+0 8 1
+D2
+走廊
+~
+~
+0 -1 10307
+D3
+走廊
+~
+~
+0 -1 10316
+S
+#10318
+新興的街道~
+這條街道顯然是剛建成不久的。因為艾思摩亞(Ismoa)搬到這城裡，
+沒有合適的地方給他住，所以特意興建的。
+這裡的建築很特別，給人一種清幽的感覺，簡直是隱居的好地方。
+~
+0 8 1
+D1
+噴泉廣場
+~
+~
+0 -1 10319
+D3
+街道的轉角
+~
+~
+0 -1 10269
+S
+#10319
+街道的轉角~
+街道的轉角處，一直往北面延申。
+這裡的建築很特別，給人一種清幽的感覺，簡直是隱居的好地方。
+~
+0 8 1
+D0
+新興的街道
+~
+~
+0 -1 10320
+D3
+新興的街道
+~
+~
+0 -1 10318
+S
+#10320
+新興的街道~
+這條街道顯然是剛建成不久的。因為艾思摩亞(Ismoa)搬到這城裡，
+沒有合適的地方給他住，所以特意興建的。
+這裡的建築很特別，給人一種清幽的感覺，簡直是隱居的好地方。
+~
+0 8 1
+D0
+街道的盡頭
+~
+~
+0 -1 10321
+D2
+街道的轉角
+~
+~
+0 -1 10319
+S
+#10321
+街道的盡頭~
+這裡就是街道的盡頭。西面就是艾思摩亞(Ismoa)的居所，而東面則是一個奇怪的山洞，
+聽說是艾思摩亞(Ismoa)建造來修練的地方。
+~
+0 8 1
+D1
+山洞
+~
+~
+0 -1 10324
+D2
+新興的街道
+~
+~
+0 -1 10320
+D3
+艾思摩亞(Ismoa)的居所
+~
+~
+0 -1 10322
+S
+#10322
+艾思摩亞(Ismoa)的居所~
+艾思摩亞(Ismoa)就是住在這裡。這裡的佈置雖然簡陋，
+但十分整潔，美觀，令你有一種祥和的感覺。
+~
+0 8 0
+D1
+街道的盡頭
+~
+~
+0 -1 10321
+D2
+鍊金術之間
+~
+~
+0 -1 10323
+S
+#10323
+鍊金術之間~
+這裡擺放著各式各樣古怪的器材，供艾思摩亞(Ismoa)研究法之用。
+牆邊放著一個大書架(shelf)，架上整齊的放著鍊金術的書籍。
+~
+0 8 0
+E shelf~
+你仔細的看著書架上的書籍，發現了一本相當古舊的書籍，
+書名是魔法空間論(Theory of Magical Region)。這本書似乎引起了你的興趣，
+你或者可以拿下來看看(read 'Theory of Magical Region')。
+~
+D0
+S
+艾思摩亞(Ismoa)的居所
+~
+~
+0 -1 10322
+S
+#10324
+山洞~
+進入山洞之後，你發現山洞內畫滿了古怪的魔法符號，
+有的你似曾相識，有的你好像連見也沒有見過。
+~
+0 8 0
+D2
+山洞之內
+~
+~
+0 -1 10325
+D3
+街道的盡頭
+~
+~
+0 -1 10321
+S
+#10325
+山洞之內~
+這裡和前面一樣，劃滿了魔法符號。但是，這些符號你全部也沒有見過。
+~
+0 8 0
+D0
+山洞
+~
+~
+0 -1 10324
+D2
+山洞的盡頭
+~
+~
+0 -1 10326
+S
+#10326
+山洞的盡頭~
+到了山洞的盡頭，已經沒路可進了。
+你只見一位老者悠閒地坐在這裡休息，而在老者前面不遠處，有一個形狀奇特的
+魔法陣。
+~
+0 8 0
+D0
+山洞之內
+~
+~
+0 -1 10325
+S
+#10328
+Quest 控制中心~
+room value 統計 star fragment 出現數及掉落數。
+~
+0 16|1024|1048576 0
+>room_time 100~
+if robjcount(10330) > 0
+	purge 'star fragment'
+endif
+~
+|
+S
+#0
+
+
+
+#SPECIALS
+M 10201 spec_cast_mage
+M 10202 spec_cast_cleric
+M 10203 spec_cast_mage
+M 10204 spec_guard
+M 10205 spec_guard
+M 10208 spec_cast_cleric
+M 10211 spec_cast_cleric
+M 10212 spec_cast_ghost
+M 10213 spec_cast_ghost
+M 10214 spec_cast_ghost
+M 10215 spec_guard
+M 10217 spec_thief
+M 10218 spec_guard
+M 10223 spec_cast_mage
+M 10224 spec_cast_mage
+M 10226 spec_cast_mage
+M 10229 spec_thief
+M 10232 spec_thief
+M 10233 spec_cast_mage
+M 10234 spec_thief
+M 10236 spec_cast_cleric
+M 10243 spec_cast_mage
+M 10254 spec_cast_judge
+M 10255 spec_cast_mage
+S
+
+
+
+#RESETS
+M 0 10215 40 10201
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10201
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10201
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10201
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10216 10 10201
+M 0 10241 8 10203
+M 0 10215 40 10205
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10205
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10205
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10205
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10216 10 10205
+M 0 10215 40 10209
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10209
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10209
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10209
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10216 10 10210
+M 0 10206 10 10211
+M 0 10204 12 10213
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10204 12 10213
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10216 10 10218
+M 0 10204 12 10220
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10204 12 10220
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10216 10 10222
+M 0 10241 8 10222
+M 0 10215 40 10224
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10224
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10224
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10224
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10206 10 10231
+M 0 10241 8 10231
+M 0 10215 40 10233
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10233
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10233
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10233
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10219 1 10234
+G 0 10251 0
+G 0 10252 0
+G 0 10253 0
+G 0 10254 0
+M 0 10220 1 10235
+G 0 10259 0
+G 0 10260 0
+G 0 10261 0
+G 0 10262 0
+M 0 10221 1 10236
+G 0 10263 0
+G 0 10264 0
+G 0 10265 0
+M 0 10222 1 10237
+G 0 10266 0
+G 0 10267 0
+G 0 10268 0
+G 0 10269 0
+M 0 10223 1 10238
+G 0 10270 0
+M 0 10224 1 10239
+G 0 10271 0
+G 0 10272 0
+G 0 10273 0
+G 0 10274 0
+M 0 10225 1 10240
+G 0 10275 0
+G 0 10276 0
+G 0 10277 0
+G 0 10278 0
+M 0 10226 1 10241
+G 0 10279 0
+G 0 10280 0
+G 0 10281 0
+M 0 10208 1 10242
+E 0 10240 0 5
+G 0 10255 0
+G 0 10256 0
+G 0 10257 0
+G 0 10258 0
+M 0 10206 10 10243
+M 0 10207 5 10243
+M 0 10238 10 10243
+M 0 10206 10 10244
+M 0 10207 5 10244
+M 0 10238 10 10244
+M 0 10210 1 10245
+G 0 10245 0
+G 0 10246 0
+G 0 10247 0
+G 0 10248 0
+M 0 10206 10 10246
+M 0 10207 5 10246
+M 0 10238 10 10246
+M 0 10241 8 10246
+M 0 10216 10 10247
+M 0 10237 6 10247
+M 0 10209 1 10248
+G 0 10241 0
+G 0 10242 0
+G 0 10243 0
+G 0 10244 0
+M 0 10206 10 10249
+M 0 10207 5 10249
+M 0 10238 10 10249
+M 0 10206 10 10251
+M 0 10207 5 10251
+M 0 10238 10 10251
+M 0 10241 8 10251
+M 0 10211 1 10252
+M 0 10253 1 10253
+M 0 10252 1 10253
+M 0 10251 1 10253
+M 0 10250 1 10253
+M 0 10216 10 10254
+M 0 10239 5 10254
+M 0 10240 4 10254
+M 0 10213 5 10255
+M 0 10214 1 10255
+G 0 10307 0
+G 0 10308 0
+G 0 10309 0
+M 0 10216 10 10255
+M 0 10213 5 10256
+M 0 10216 10 10256
+M 0 10213 5 10257
+M 0 10216 10 10257
+O 0 10310 0 10258
+M 0 10212 1 10259
+E 0 10325 0 17
+M 0 10205 4 10260
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10205 4 10260
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10205 4 10261
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10205 4 10261
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10206 10 10262
+M 0 10215 40 10264
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10264
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10264
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10264
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10217 1 10266
+E 0 10249 0 16
+E 0 10305 0 17
+M 0 10218 4 10267
+E 0 10236 0 5
+E 0 10250 0 16
+O 0 10302 0 10267
+P 0 10303 0 10302
+O 0 10302 0 10267
+P 0 10303 0 10302
+O 0 10302 0 10267
+P 0 10303 0 10302
+O 0 10302 0 10267
+P 0 10303 0 10302
+M 0 10241 8 10268
+M 0 10232 1 10269
+O 0 10304 0 10269
+M 0 10241 8 10273
+M 0 10249 1 10273
+M 0 10233 5 10278
+E 0 10282 0 12
+E 0 10283 0 16
+E 0 10284 0 17
+M 0 10234 5 10278
+E 0 10283 0 16
+E 0 10286 0 5
+E 0 10287 0 3
+M 0 10235 5 10278
+E 0 10288 0 16
+E 0 10289 0 5
+E 0 10290 0 11
+M 0 10236 5 10278
+E 0 10285 0 17
+E 0 10291 0 16
+E 0 10282 0 12
+M 0 10233 5 10279
+E 0 10282 0 12
+E 0 10283 0 16
+E 0 10284 0 17
+M 0 10234 5 10279
+E 0 10283 0 16
+E 0 10286 0 5
+E 0 10287 0 3
+M 0 10235 5 10279
+E 0 10288 0 16
+E 0 10289 0 5
+E 0 10290 0 11
+M 0 10236 5 10279
+E 0 10285 0 17
+E 0 10291 0 16
+E 0 10282 0 12
+M 0 10242 1 10279
+E 0 10238 0 16
+E 0 10238 0 18
+M 0 10233 5 10280
+E 0 10282 0 12
+E 0 10283 0 16
+E 0 10284 0 17
+M 0 10234 5 10280
+E 0 10283 0 16
+E 0 10286 0 5
+E 0 10287 0 3
+M 0 10235 5 10280
+E 0 10288 0 16
+E 0 10289 0 5
+E 0 10290 0 11
+M 0 10236 5 10280
+E 0 10285 0 17
+E 0 10291 0 16
+E 0 10282 0 12
+M 0 10233 5 10281
+E 0 10282 0 12
+E 0 10283 0 16
+E 0 10284 0 17
+M 0 10234 5 10281
+E 0 10283 0 16
+E 0 10286 0 5
+E 0 10287 0 3
+M 0 10235 5 10281
+E 0 10288 0 16
+E 0 10289 0 5
+E 0 10290 0 11
+M 0 10236 5 10281
+E 0 10285 0 17
+E 0 10291 0 16
+E 0 10282 0 12
+M 0 10206 10 10281
+M 0 10227 1 10281
+G 0 10307 0
+G 0 10308 0
+G 0 10309 0
+M 0 10228 1 10281
+G 0 10307 0
+G 0 10308 0
+G 0 10309 0
+M 0 10215 40 10282
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10282
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10282
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10282
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10203 1 10283
+E 0 10226 0 6
+E 0 10300 0 5
+E 0 10227 0 10
+E 0 10228 0 7
+E 0 10229 0 9
+E 0 10230 0 8
+E 0 10231 0 3
+E 0 10232 0 13
+E 0 10209 0 4
+E 0 10233 0 11
+E 0 10235 0 16
+E 0 10212 0 1
+E 0 10234 0 14
+E 0 10234 0 15
+M 0 10215 40 10285
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10285
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10285
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10285
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10204 12 10285
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10204 12 10285
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10204 12 10285
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10204 12 10285
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10215 40 10287
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10287
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10287
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10287
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10233 5 10291
+E 0 10282 0 12
+E 0 10283 0 16
+E 0 10284 0 17
+M 0 10234 5 10291
+E 0 10283 0 16
+E 0 10286 0 5
+E 0 10287 0 3
+M 0 10235 5 10291
+E 0 10288 0 16
+E 0 10289 0 5
+E 0 10290 0 11
+M 0 10236 5 10291
+E 0 10285 0 17
+E 0 10291 0 16
+E 0 10282 0 12
+M 0 10229 1 10291
+M 0 10230 3 10291
+M 0 10231 1 10291
+M 0 10201 1 10292
+M 0 10248 1 10295
+M 0 10241 8 10296
+M 0 10243 1 10300
+E 0 10292 0 17
+E 0 10293 0 12
+E 0 10323 0 10
+E 0 10324 0 8
+M 0 10244 1 10301
+E 0 10321 0 19
+E 0 10322 0 20
+M 0 10245 1 10302
+E 0 10294 0 5
+E 0 10297 0 16
+E 0 10296 0 11
+G 0 10303 0
+M 0 10246 3 10302
+M 0 10215 40 10304
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10215 40 10304
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10215 40 10304
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10215 40 10304
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10204 12 10304
+E 0 10236 0 5
+E 0 10237 0 16
+M 0 10204 12 10304
+E 0 10236 0 5
+E 0 10238 0 16
+M 0 10204 12 10304
+E 0 10236 0 5
+E 0 10239 0 16
+M 0 10204 12 10304
+E 0 10236 0 5
+E 0 10301 0 16
+M 0 10202 1 10305
+E 0 10216 0 6
+E 0 10299 0 5
+E 0 10217 0 10
+E 0 10218 0 7
+E 0 10219 0 9
+E 0 10220 0 8
+E 0 10221 0 3
+E 0 10222 0 13
+E 0 10209 0 4
+E 0 10223 0 11
+E 0 10225 0 16
+E 0 10212 0 1
+E 0 10224 0 14
+E 0 10224 0 15
+M 0 10206 10 10308
+M 0 10247 1 10312
+M 0 10257 1 10328
+S
+
+
+
+#SHOPS
+10208 0 0 0 0 0 105 15 0 23
+10209 0 0 0 0 0 110 100 6 17
+10210 0 0 0 0 0 110 100 6 17
+10211 0 0 0 0 0 110 100 0 23
+10214 0 0 0 0 0 110 100 0 23
+10219 0 0 0 0 0 110 100 4 20
+10220 0 0 0 0 0 110 100 4 20
+10221 0 0 0 0 0 125 75 4 20
+10222 5 9 19 0 0 125 75 4 20
+10223 10 0 0 0 0 125 75 4 20
+10224 0 0 0 0 0 125 75 4 20
+10225 22 0 0 0 0 125 75 4 20
+10226 15 0 0 0 0 125 75 4 20
+10227 0 0 0 0 0 105 15 0 23
+0
+
+
+
+#$

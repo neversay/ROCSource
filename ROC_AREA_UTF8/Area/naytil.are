@@ -1,0 +1,6306 @@
+#AREADATA
+Name        奈圖城堡~
+Identity    naytil~
+Builders    Draiden~
+Translator  Slay~
+Modifier    Slay~
+VNUMs	      10560 10699
+Security    1
+Recall      4580
+Death	    4580
+F_toggle    1638400
+End
+
+
+
+#MOBILES
+#10601
+Ifor-naytil grand wizard~
+大巫師 - 艾佛(Ifor)~
+大巫師艾佛(Grand Wizard - Ifor)靜靜的看著你。
+~
+你可以看到他的眼神中流動著強大力量的光彩。他穿著的服裝與攜帶的法杖上所附著的強
+大魔法似乎可以撼動整個空間。這一生中他是你看過力量最為強大的法師。
+~
+9731 134226600 900 S
+62 3000 1000 30d0+600 -50d20+0
+100000 0
+0 8 1
+K powerball 'star fire' 'remove alignment' armageddon 'turn undead' calm 'sun flash'
+'flaming armor' 'mana shield' meditate 'mystic mirror' 'wizard rage' 'mystic armor'
+'prot. from fire' 'prot. from wind' 'prot. from cold' 'prot. from earth'
+'mental empower' fireball 'prot. from lightning'~
+C 3
+P 4194304
+R Angel~
+W star fire~ 500 400
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>talk_prog seed~
+if is_qmark($n) == ocean_annie_seed 100006
+mpmod_qmark $n ocean_annie_seed v0 = 7
+soga
+say 原來你是為了白楓種子而來的啊
+mpcallout 1 say 真是可惜，種子我已經又拿給水晶湖的金月了
+mpcallout 2 say 現在應該已經差不多長葉了吧
+endif
+~
+>greet_prog 100~
+if ispc($n)
+	if rand(30)
+		mpechoat $n 當你進入這間房間時，這個巫師銳利的眼神似乎穿透了你的心靈。
+	endif
+endif
+~
+>fight_prog 50~
+if isaffected($i) & 16777216
+	mpdis_magic self 'seal magic'
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpecho ... $I 治癒了自己的眼睛...！
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpecho ... $I 去除了身上的毒素...！
+endif
+if isaffected($i) !& 128
+	if hitprcnt($i) < 30
+		c sanctuary
+	endif
+endif
+if isaffected($i) & 268435456
+	mpdis_magic self paralyze
+	mpecho ... $I 讓自己的身體又能夠活動自如...！
+endif
+if isaffected($i) & 536870912
+        if ran(30)
+             c calm
+        endif
+endif
+if area($i) == mist
+	mpecho $I 放出一股前所未有的強大魔力！
+	mpechoat $n 你被傳送走了！
+	if ispc($n)
+		mpechoaround $n $n被傳送走了！
+	else
+		mpechoaround $n $N被傳送走了！
+	endif
+	if rand(50)
+		mptransfer $n 9042
+	else
+		mptransfer $n 9908
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($i) == naytil_mary_visit
+	break
+endif
+if is_qmark($n) == naytil_quest_wait
+	if insameroom(nicholas-naytil)
+		if is_qmark($n) == naytil_quest 100007
+			mpforce nicholas say 大巫師正在加持魔法，請您稍候...。
+		else
+			mpforce nicholas say 大巫師正在加持魔法，請不要吵他...。
+		endif
+	endif
+	break
+else
+	if is_qmark($n) == naytil_quest 100007
+		say 好了，魔法加持已經完畢。
+		say 這個水晶就送給你吧！
+		mpoload 10664 35
+		give crystal $n
+		mpmod_qmark $n naytil_quest v0 = 8
+		say 對了，冒險者...
+		mpcallout 1 say 我感覺那個惡魔是南方高地(highland)的邪惡者所召喚來的。
+		mpcallout 2 say 邪惡的來源是那四個高塔的某一座，我不大確定。
+		mpcallout 3 mpcall legend_1 $n
+		mpcallout 4 say 希望你能代替我們去察看那四座塔。
+	else
+		say 您好！
+	endif
+endif
+~
+>defun_prog legend_1~
+say 那四座高塔的北方是一座巨大的城堡，高地人的大巫師博得
+say 就住在那裡，我想這場陰謀有可能就是他幕後主使的。
+say 但是那道邪惡的能源並不是從城堡中傳出來的，這讓我十分疑惑，
+~
+>defun_prog legend_2~
+say 我大概知道博得在想什麼詭計了，冒險者呀，高地人的城堡只有從四座塔的其中
+say 一個地窖密道才能進入，外面是無法通行的。在殲滅他們的先鋒部隊後，記得直接
+say 殺進去給博得一個驚喜！
+~
+>fight_prog 30~
+if insameroom(nicholas)
+	yell 請聖騎士助我一臂之力吧！
+	mpgroup nicholas-naytil ifor-naytil 0 1
+	mpforce nicholas-naytil protect ifor-naytil
+	if rand(30)
+		c 'double heal' nicholas
+	endif
+	if rand(30)
+		c 'gdouble heal'
+	endif
+endif
+c blindness $r
+c poison $r
+c curse $r
+~
+>rand_prog 80~
+if inroom($i) == 4580
+	if is_qmark($i) != naytil_mary_visit
+		say 我怎麼會在這裡？
+		mpecho $I 開始施法...
+		mpecho $I 化為一道閃光，消失在空氣之中。
+		mpgoto 10601
+		mpecho $I 忽然在一陣亮光中憑空出現！
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100000
+		mpforce mary hello ifor-naytil
+		say 妳好，瑪麗！
+		mpforce mary say 好久不見，大巫師！
+		say 什麼好久不見，短短一個月而已嘛！
+		mpforce mary smile
+		mpmod_qmark self naytil_mary_visit v0 = 1
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100001
+		say 真希望甘道夫(gandalf)那老頭也能來呢！
+		mpforce mary say 我也是，但甘道夫先生住的賽伐斯拖普離這裡實在太遠了。
+		sigh
+		mpmod_qmark self naytil_mary_visit v0 = 2
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100002
+		say 對了，對於最近奈圖王國出現的邪氣，妳有什麼想法？
+		mpforce mary say 我覺得這是一個魔族的巨大陰謀，背後的支持者一定是個危險人物...
+		mpforce mary say 因為近來死亡之谷也不斷傳來一股可怕的邪氣...
+		mpmod_qmark self naytil_mary_visit v0 = 3
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100003
+		say 那，妳對最近馬可斯將軍發起的反叛軍有何看法？
+		mpforce mary say 馬可斯是個可以信任的將軍，他會這麼做一定是有苦衷的。
+		agree mary
+		say 也許，這跟我的預言中最後一句有關係呢！
+		mpmod_qmark self naytil_mary_visit v0 = 4
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100004
+		say 對於蠢蠢欲動的高地，不知道該怎麼辦。
+		mpforce mary say 真希望我們光明之鎮能像聖城史卡拉貝那般強大，那我們就能幫助奈圖王國了。
+		shake
+		say 強大...就是腐敗的開端啊！
+		mpforce mary say 原來如此，我會好好記著您的話的。
+		mpmod_qmark self naytil_mary_visit v0 = 5
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100005
+		say 對了，我之前幫妳設下的魔法石狀況還不錯吧！
+		mpforce mary say 託您的福，現在恐龍已經較少入侵光明之鎮了。
+		giggle
+		mpmod_qmark self naytil_mary_visit v0 = 6
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100006
+		glare
+		say 有關西邊諸城邦...妳有聽到任何消息嗎？
+		mpforce mary shake
+		sigh
+		mpmod_qmark self naytil_mary_visit v0 = 7
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100007
+		say 索爾(shore)的事...妳真的不打算繼續調查？
+		mpforce mary say 難道大巫師您認為他是無辜的嗎？
+		say 也不能這麼說...
+		sigh
+		mpmod_qmark self naytil_mary_visit v0 = 8
+		break
+	endif
+	if is_qmark($i) == naytil_mary_visit 100008
+		say 那好，我也該回去了！
+		mpforce mary wave ifor-naytil
+		mpecho $I 施起了法...
+		mpecho $I 化為一道閃光，消失在空氣之中。
+		mpgoto 10601
+		mpecho $I 忽然在一陣亮光中憑空出現！
+		mpdel_qmark self naytil_mary_visit
+		break
+	endif
+endif
+~
+>rand_prog 90~
+if hitprcnt($i) < 20
+	if rand(50)
+		c 2 'double heal'
+	endif
+endif
+if hitprcnt($i) < 50
+	if rand(50)
+		c 'double heal'
+	endif
+endif
+if hitprcnt($i) < 70
+	if rand(50)
+		c heal
+	endif
+endif
+~
+>fight_prog 50~
+if inroom($i) == 4580
+	say 在這個教堂...你也敢攻擊我？！
+	cast 3 'wind sc'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 10
+	mpecho $I 大喝一聲後，他的周圍出現了魔法能量保護...。
+	mpat 5 c 'mana shield'
+	mpnowait
+	mpat 5 c 'stone skin'
+	mpnowait
+	mpat 5 c 'mystic mirror'
+	mpnowait
+	c powerball
+endif
+if hitprcnt($i) < 20
+	if rand(30)
+		mpecho $I 身上開始大量流血，但是對你的攻勢卻也更加猛烈...。
+	endif
+	mpat 5 c heal
+	c powerball
+endif
+if hitprcnt($i) < 50
+	if rand(30)
+		mpecho $I 大喝一聲！空間中的魔法能量開始向他身上匯集...。
+	endif
+	mpat 5 c barrier
+	mpnowait
+	mpat 5 c protection
+	mpnowait
+	c powerball
+endif
+~
+>fight_prog 20~
+if rand(20)
+	say 嘗嘗我的能量球吧！
+	cast 3 powerball
+endif
+if rand(20)
+	if isevil($n)
+		say 嘗嘗我的除魔術！
+		cast 2 'dispel evil'
+	endif
+endif
+cast fireball
+~
+>tick_prog 100~
+if inroom($i) == 10601
+	if day($) == 10
+		if hour($) == 6
+			say 啊，該去拜訪瑪麗(Mary)那小女孩了！
+			say 我得準備準備...
+			mpadd_qmark self naytil_mary_visit -1 0 0 0 0 1
+			break
+		endif
+		if hour($) == 7
+			say 好了，準備走了...
+			mpecho $I 開始施法...
+			mpat 4580 mpecho 一陣強大的魔法力量不斷冒出來...
+			break
+		endif
+		if hour($) == 8
+			mpecho $I 化為一道閃光，消失在空氣之中。
+			mpgoto 4580
+			mpecho $I 忽然在一陣亮光中憑空出現！
+			break
+		endif
+	endif
+endif
+~
+>talk_prog soil~
+if is_qmark($n) != naytil_ifor_stone
+        if is_qmark($n) == ocean_alc_stone 100003
+                say 原來如此，你是為了異界之土而來的。
+                mpadd_qmark $n naytil_ifor_stone -1 1 0 0 0 1
+                say 所謂的異界之土，指的是星界中的流星，風化後所產生的土壤。
+                say 如果你能將墜落的流星帶來給我，我就可以替你製造異界之土。
+        endif
+else
+        say 我想我之前已經跟你說明過了。
+endif
+~
+>give_prog 1930~
+if is_qmark($n) == naytil_ifor_stone 100001
+	mpmod_qmark $n naytil_ifor_stone v0 = 2
+	mpadd_qmark $n naytil_ifor_wait 48 0 0 0 0 0
+	say 我不能確定要多久才能使其風化。
+	say 請你過幾天再來跟我領取(take)
+endif
+~
+>talk_prog take~
+if is_qmark($n) == naytil_ifor_wait
+	say 我還在處理中，請稍待
+	break
+endif
+if is_qmark($n) == naytil_ifor_stone 100002
+	mpmod_qmark $n naytil_ifor_stone v0 = 3
+	mpoload 40040 $n target
+	say 這就是異界之土，請小心保管。
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+yell 我的預言真的即將實現了嗎...？！
+if is_qmark($n) != naytil_enemy
+	mpadd_qmark $n naytil_enemy 50 0 0 0 1 1
+else
+	mpmod_qmark $n naytil_enemy timer + 50
+endif
+~
+|
+#10602
+holy-naytil knight~
+神聖騎士(Holy Knight)~
+神聖騎士(Holy Knight)已經準備好隨時對你發動挑戰。
+~
+在奈圖王國中這位頗受信任的騎士是一個高階騎士。奈圖王國能夠持續保有和平全是
+這位騎士與他手下士兵們的功勞。即使你是一位優秀、老練的冒險者，看到這位騎士
+精湛的眼神，你仍然會感到不寒而慄。
+~
+3 8320 800 S
+43 0 0 0d-10+100 0d0+0
+2000 0
+0 8 1
+C 1
+P 4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == naytil_enemy
+	say 可恨的奈圖之敵！
+	track $n
+	hunt $n
+	break
+endif
+~
+>fight_prog 20~
+circular
+flaming
+earth
+if hitprcnt($i) < 30
+	mpat 5 invoke
+	if rand(50)
+		frenzy
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+say 奈圖王國的人不會放過你的...。
+if is_qmark($n) != naytil_enemy
+	mpadd_qmark $n naytil_enemy 50 0 0 0 1 1
+else
+	mpmod_qmark $n naytil_enemy timer + 50
+endif
+~
+|
+#10604
+janitor~
+清潔工(janitor)~
+清潔工(janitor)忽然對你叫囂著「把你的臭身體移開！」
+~
+這位清潔工拿著他手上的掃帚辛勤地到處清掃，以確保人們參觀這座城市時能夠得到十分
+良好的印象。他最擔心到處飄揚的灰塵會弄髒人們身上的衣物。
+~
+1 0 900 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Gnome~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 你沒看到我在忙嗎？先把你的髒腳拿開！
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 你沒看到我在忙嗎？先把你的髒腳拿開！
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10605
+hound dog~
+皇家獵犬(royal hound)~
+皇家獵犬(royal hound)站在你面前開始嗅你身上的味道。
+~
+這隻狗是奈圖城堡皇家御用獵犬。他的速度與戰鬥力可以比得上武裝戰士。當這隻獵犬
+在你身邊猶疑不去時，你開始擔心它會不會忽然把你給咬住。
+~
+161 0 -200 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+#10606
+cutthroat mob muscle~
+肌肉男(mob muscle)~
+這個肌肉男(mob muscle)向你威脅恐嚇要你身上的財物。
+~
+這個肌肉男曾經是個曾犯謀殺罪的罪犯。由他的行徑與身上結實的肌肉，你可以瞭解他已
+經在這個城市內橫行很久了。
+~
+5 0 -200 S
+31 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>rand_prog 30~
+if pcnum($) > 0
+	if rand(50)
+		mpechoat $r $I 說「乖乖的把身上的錢交出來，可以饒你不死。」
+	else
+		mpechoat $r $I 說「把你身上的錢拿過來吧！」
+		if rand(30)
+			mpkill $r
+		endif
+	endif
+endif
+~
+|
+#10607
+nobleman man~
+貴族(nobleman)~
+貴族(nobleman)正靜靜地注視他的筆記本。
+~
+這位奈圖城堡的貴族對你的到來十分有興趣。他注意到你或許能夠解決他煩惱的事情。
+他自信的表情似乎能夠將所有他想要控制的事情掌握住。如果你有什麼事情要拜託他
+的話，可能得付出不少的代價。
+~
+3 0 400 S
+33 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog topic~
+if rand(20)
+	say 有事要我幫忙嗎？先拿些錢來吧！
+endif
+~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 怎麼，他欠你很多錢嗎？
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 怎麼，他欠你很多錢嗎？
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10608
+noblewoman woman~
+女貴族(noblewoman)~
+女貴族(noblewoman)在這邊詢問有關預算的事項。
+~
+這位女貴族正在審核有關晚間購物的安全與照明設施的文件。她也不斷的向你表示她
+對於奈圖城堡的內務是多麼的關心。當你嘗試要對她表示一些自己的看法時，她又將
+你的話頭打斷。她似乎...似乎從來沒有停過嘴。
+~
+69 0 400 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>rand_prog 20~
+if pcnum($) > 0
+	if rand(20)
+		mpechoat $r $I 說「你覺得現在王國的照明夠嗎？」
+		break
+	endif
+	if rand(20)
+		mpechoat $r $I 說「你認為我們對於貴族們的安全是否有處理不當的地方呢？」
+		break
+	endif
+	if rand(20)
+		mpechoat $r $I 說「或許我們可以談談有關奈圖王國晚間散步安全的事項。」
+		break
+	endif
+	if rand(20)
+		mpechoat $r $I 說「不知道你對於奈圖王國的經濟問題有什麼看法？」
+		break
+	endif
+	if rand(20)
+		mpechoat $r $I 說「我們來聊一聊有關下次收稅時，您的看法與建議如何？」
+	endif
+endif
+~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 喔喔，我當然知道呀，我記得是位賣牛肉的屠夫吧？
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 喔喔，我當然知道呀，我記得是位賣牛肉的屠夫吧？
+		mpechoat $n 　
+		mpechoat $n 呃...還是找別人問好了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10609
+kitten-naytil black~
+黑貓(black kitten)~
+一隻又小又可愛的貓(kitten)對你發出喵喵的叫聲。
+~
+這一隻可愛的小黑貓跟奈圖公主不見的那一隻貓好像有點像。或許你可以藉由找回這一
+隻貓而得到一些獎賞，但是抓到這一隻貓可不是那麼容易的事情。
+~
+161 0 -200 S
+5 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+>greet_prog 100~
+if ispc($n)
+	if rand(80)
+		mpechoat $n $I 看到生人出現，一溜煙的就跑走了...。
+		if rand(30)
+			n
+		endif
+		if rand(30)
+			w
+		endif
+		if rand(30)
+			e
+		endif
+		if rand(30)
+			s
+		endif
+	endif
+endif
+~
+|
+#10610
+militia guard officer~
+御林軍軍官(militia officer)~
+這位御林軍軍官(militia officer)看著你的到來，又轉頭專心的看著部隊。
+~
+這位軍官的任務就是照顧、監視市民的狀況。他同時也負責御林軍的訓練與組織。他
+保證在他的領導下，奈圖城堡的安全絕對能夠獲得保障。同時也保證御林軍的素質與
+戰力。他是一個拘謹的人，時時刻刻專心致力於自己的工作。
+~
+65 8192 1000 S
+39 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 4194305
+>fight_prog 30~
+if rand(50)
+	flaming
+	flaming
+else
+	circular
+	circular
+endif
+~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 這個名子我好像有印象...但一時想不起來。
+		sorry $n
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 這個名子我好像有印象...但一時想不起來。
+		sorry $n
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10611
+border guard~
+邊界守衛(border guard)~
+粗獷的邊界守衛(border guard)防止侵入者的入侵。
+~
+邊界守衛在這裡看守邊界。他小心的確定沒有其他侵入者進入奈圖的國度內。他深愛著
+他的家園，因此絕對不容許有其他異族佔領這塊樂土。
+~
+67 8192 1000 S
+29 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Dwarf~
+C 1
+#10612
+border guard~
+邊界守衛(border guard)~
+粗獷的邊界守衛(border guard)防止侵入者的入侵。
+~
+邊界守衛在這裡看守邊界。他小心的確定沒有其他侵入者進入奈圖的國度內。他深愛著
+他的家園，因此絕對不容許有其他異族佔領這塊樂土。
+~
+67 73730 1000 S
+29 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+#10613
+border guard~
+邊界守衛(border guard)~
+粗獷的邊界守衛(border guard)在此防止侵入者的入侵。
+~
+邊界守衛在這裡看守邊界。他小心的確定沒有其他侵入者進入奈圖的國度內。他深愛著
+他的家園，因此絕對不容許有其他異族佔領這塊樂土。
+~
+39 8192 1000 S
+31 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+#10614
+wall guard~
+城牆守衛(wall guard)~
+粗獷的城牆守衛(wall guard)在此防止侵入者的入侵。
+~
+這個城牆守衛小心謹慎地在他的工作崗位上注意周遭的環境。他知道他是奈圖國度防止
+異族入侵的最後一道防線。他更知道如果這道防線失守了，奈圖國度的人民將遭受空前
+絕後的大災難。因此除非有長官親自的手御，否則他絕對不會離開此處。
+~
+39 8192 1000 S
+33 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+>greet_prog 100~
+if is_qmark($n) == naytil_enemy
+	say 可恨的奈圖之敵！
+	hunt $n
+	break
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+say 奈圖王國的人不會放過你的...。
+if is_qmark($n) != naytil_enemy
+	mpadd_qmark $n naytil_enemy 50 0 0 0 1 1
+else
+	mpmod_qmark $n naytil_enemy timer + 50
+endif
+~
+|
+#10615
+child sabrina-naytil princess~
+年輕的公主(young princess)~
+年輕的公主(young princess)在這邊似乎在尋找些什麼東西。
+~
+這位美麗的公主她的芳名叫做莎蓮娜。她看起來憂心忡忡的，因為她失去了自己最愛的寵
+物 - 一隻小黑貓。她擔心會有人把小貓給殺了，因此擔心的到處尋找它。
+~
+193 8320 1000 S
+29 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 4194312
+>talk_prog topic~
+if being($b)
+	break
+endif
+if is_qmark($n) == naytil_princess
+	break
+else
+	say 帶我去找我的小貓好嗎(yes/no)？
+endif
+~
+>talk_prog yes~
+if being($b)
+	break
+endif
+if is_qmark($n) == naytil_princess
+	break
+else
+	mpadd_qmark $n naytil_princess -1 0 0 0 0 1
+	hop
+	mpgroup $n self 1 0
+	mpdef_rembch $n
+endif
+~
+>talk_prog restart~
+if being($b)
+or is_qmark($n) == naytil_princess 100001
+	break
+endif
+if is_qmark($n) == naytil_princess 100000
+	mpechoat $n 遠方傳來一陣聲響「這項任務已經可以重解了。」
+	mpdel_qmark $n naytil_princess
+endif
+~
+>talk_prog no~
+if being($b)
+	break
+endif
+mpecho $I 露出失望的表情。
+~
+>entry_prog 100~
+if insameroom($b)
+	if insameroom(kitten-naytil)
+		hop
+		hug kitten
+		thank $b
+		if rand(50)
+			mpexp $b 2000
+		else
+			mpgold $b 10000
+		endif
+		mpmod_qmark $b naytil_princess v0 = 1
+		mpecho $I 帶著小黑貓(black kitten)跑走了。
+		mpdef_rembch null-tar
+		mppurge kitten
+		mppurge self
+	endif
+endif
+~
+|
+#10616
+nanny nannie woman~
+褓姆(nannie)~
+穿著顏色鮮豔活潑外套的褓姆(nannie)在這邊站著。
+~
+很明顯的，除了褓姆之外，這個女人還擔任著其他職業。她的目光在你的身上不斷移動。
+她伸了伸她的舌頭同時對你報以十分淫蕩的笑容。她似乎很瞭解對於男人來說，怎麼當一
+個女人。
+~
+161 8192 -500 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 荷菲夫？我不清楚這個人...
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 荷菲夫？我不清楚這個人...
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10617
+teacher marm woman schoolmarm~
+女老師(schoolmarm)~
+一個穿著古板的女人(woman)站在這邊。
+~
+這個女人有個非常重要的任務，就是培養公主在優越的環境與條件下能夠熟知閱讀、書寫
+與藝術方面的知識。她最終的目的就是培養公主能夠有悲天憫人的胸懷。
+~
+129 8320 1000 S
+39 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 王國內有這個人？我怎麼不知道
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 王國內有這個人？我怎麼不知道
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10618
+cook~
+廚師(cook)~
+一個穿著雪白外衣的廚師(cook)站在這邊。
+~
+這個廚師正在準備奈圖城堡內人員的餐點。幾乎所有在城堡內的工作人員對於自己的崗
+位都非常的重視，時時刻刻都看到裡面的人忙進忙出的。
+~
+135 524288 0 S
+19 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	tell $n 我沒空，沒看到我在忙嗎！
+	mpechoat $n 　
+	mpechoat $n 只有再找別人問看看了。
+endif
+~
+|
+#10619
+butler~
+僕役長(butler)~
+僕役長(butler)身穿黑色的燕尾服，手上端著盤子。
+~
+這個男人已經侍奉國王很久一段時間了，現在他已經年華不再。他已經為了國王與他的家
+庭成員付出了一生的精力與青春。
+~
+69 532540 500 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#10620
+maid~
+侍女(maid)~
+一個洗碗的侍女(maid)。
+~
+這個洗碗的侍女負責協助所有廚師需要的地方。她必須確定所有餐點都是乾淨的、客人都是
+快樂的。她也必須注意自己的儀態與服裝。
+~
+135 65536 0 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+#10621
+maid~
+侍女(maid)~
+一個負責樓上事務的侍女(maid)。
+~
+這個侍女負責樓上的臥室與客廳的整潔。她必須確定樓上都是非常清潔的狀況。
+~
+197 98304 0 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+#10622
+practice dummy~
+訓練人偶(practice dummy)~
+一具供人訓練的人偶(practice dummy)。
+~
+這個人偶是用來模擬戰鬥狀況中對手反擊的狀態。經常性的訓練也是維持奈圖王國能夠
+保有和平，未受到外來人類入侵的原因。
+~
+3 0 0 S
+39 1000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Object~
+>fight_prog 100~
+if hitprcnt($n) < 50
+	c 'double heal' $n
+endif
+circular
+earth
+mpgoto self
+~
+|
+#10623
+queen Salina~
+皇后莎麗娜(Queen Salina)~
+奈圖王國人民最愛戴的皇后 - 莎麗娜(Salina the beloved queen)。
+~
+她就是奈圖王國最美麗的女人之一，國王的愛妻 - 莎麗娜。她最喜歡靜靜地坐在自
+己的房間中，看著國王為她精心佈置的房間。她也試著能夠教會公主有關裁縫的手藝，
+但是不幸地公主對此毫無興趣。
+~
+579 8892 1000 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+P 4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == naytil_enemy
+	scream
+	yell 有刺客！
+endif
+~
+>death_prog 100~
+yell 有刺客啊！！
+	if is_qmark($n) == naytil_enemy
+		mpmod_qmark $n naytil_enemy timer + 70
+		break
+	else
+		mpadd_qmark $n naytil_enemy 70 1 0 0 1 0
+	endif
+~
+|
+#10624
+cleric-naytil Salderon~
+神聖祭司 - 沙德倫(Holy Cleric - Salderon)~
+奈圖王國中最具智慧的神聖祭司 - 智者沙德倫(Holy Cleric - Salderon)。
+~
+溫貝教堂的首席祭司 - 沙德倫站在你的面前。他誠心的祝福你能夠每天快樂。之後他繼
+續走向其他需要他祝福、幫助的人群之中。
+~
+1 1581756 1000 S
+52 0 500 0d0+400 0d400+0
+-1 0
+0 8 1
+P 4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>greet_prog 100~
+if is_qmark($n) == naytil_rebels 300002
+	if is_qmark($n) == naytil_rebels 100006
+		mpechoat $n $I告訴你：「我可以感應到，吉伯特伯爵身上不斷的傳出邪氣...」
+		mpechoat $n $I告訴你：「我給你的告誡是：不要以為人多就可以打敗他...」
+		break
+	endif
+endif
+if is_inv_obj($n) == 10403
+	if is_qmark($n) !& mtnaytil_record 200001
+		mpechoat $n $I告訴你：「你身上那塊石頭帶有頗強的魔力...」
+		mpechoat $n $I告訴你：「給我看看吧。」
+	endif
+endif
+~
+>give_prog 10403~
+if is_qmark($n) & mtnaytil_record 200001
+	ponder
+	drop rock
+	break
+endif
+	mpechoat $n $I告訴你：「看來你正在想辦法破解這塊石頭的魔力吧？」
+	mpechoat $n $I告訴你：「讓我幫你個忙吧！」
+	mpechoat $n $I告訴你：「不過我需要足夠的材料費...大概100000金幣就好了。」
+	if is_qmark($n) == mtnaytil_record
+		mpmod_qmark $n mtnaytil_record v0 = 1
+	else
+		mpadd_qmark $n mtnaytil_record -1 1 0 0 0 1
+	endif
+~
+>give_prog 10675~
+	mpjunk note
+	gasp
+	mpcallout 1 say 這是...
+	mpcallout 2 mpecho $I 收起紙條，一語不發地離開了。
+~
+>bribe_prog 100000~
+if is_qmark($n) != mtnaytil_record 100001
+	? $n
+	mpgold $n 100000
+	break
+endif
+	if is_qmark($n) == mtnaytil_record 100001
+		nod $n
+		tell $n 請耐心等待...
+		mpmod_qmark $n mtnaytil_record v0 = 2
+		mpecho $I 隨手變出一把手杖。
+		mpecho $I 開始施法灌注法力在一把手杖上...
+		mpcallout 4 mpecho $I 施法完成...
+		mpcallout 5 tell $n 完成了...
+		mpcallout 6 mpoload 10404 $n viclv target
+		mpcallout 6 mpechoat $n $I 把移石法杖(staff)給了你。
+		mpcallout 6 mpechoaround $n $I 把移石法杖(staff)給了$n。
+		mpcallout 6 mpmod_qmark $n mtnaytil_record v0 = 0
+		mpcallout 6 mpmod_qmark $n mtnaytil_record | 1
+	endif
+~
+>fight_prog 30~
+if isaffected($n) & 128
+	tell $n 你的聖光術(sanctuary)被我給破解了...。
+	mpdis_magic $n sanctuary
+endif
+if isaffected($n) & 8192
+	tell $n 你的天使加護(protection)被我破解了...。
+	mpdis_magic $n protection
+endif
+~
+>fight_prog 50~
+if rand(40)
+	c blindness $n
+endif
+if rand(40)
+	c harm $n
+endif
+if rand(40)
+	c mute $n
+endif
+if rand(20)
+	c 'wind screaming'
+endif
+~
+>fight_prog 50~
+if rand(30)
+	c 'full heal'
+endif
+if isaffected($i) !& 128
+	c sanctuary
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if isaffected($i) & 16777216
+	mpdis_magic self 'seal magic'
+endif
+~
+>talk_prog topic~
+say 我感到一股邪氣在奈圖王國裡不斷增強。
+say 我想，這道邪氣總有一天會侵入城堡內的...！
+~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300006
+	mpforce $n follow cleric-naytil
+	hmm
+	mpcallout 1 tell $n 你是問荷菲夫？好懷念的名子呀....
+	mpcallout 2 tell $n 在前幾次戰爭中死去了。
+	mpcallout 2 tell $n 不知道你找他有什麼事情，不過他已經死了。
+	mpcallout 3 tell $n 死於戰場之中。
+	mpcallout 3 tell $n 年輕人的死傷而研究魔導人偶，但最後自己卻
+	mpcallout 3 tell $n 仔細想想命運還真諷刺，他為了戰爭中能減少
+	mpcallout 5 sigh
+	mpcallout 6 tell $n 總之，現在你也再也見不到他了。
+	mpcallout 6 mpmod_qmark $n adv_myroad v2 = 7
+	mpcallout 7 mpechoat $n 看來是找不到人了，只有回去報告(report)現況了。
+else
+	mpechoat $n 他正在想事情，沒注意到你。
+endif
+~
+|
+#10625
+enchanted chair~
+魔法椅子(enchanted chair)~
+一把有魔法加持的椅子(enchanted chair)放在這邊。
+~
+這張魔法椅子是由艾佛大巫師施法製成的，整個是由上好的黑色橡木與櫻桃灰坎入其中製
+成。
+~
+3 4 0 S
+36 500 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Object~
+>fight_prog 100~
+mpgoto self
+~
+|
+#10626
+demon-naytil1 huge~
+巨大惡魔(huge demon)~
+一隻巨大惡魔(huge demon)站在這邊。
+~
+你看到一隻巨大的惡魔站在一個五芒星的圖騰上頭。他可以說是地獄裡頭最上位的生物。
+這隻惡魔被捕抓來保護這間圖書館，並提供國家的聖武士們研究如何毀滅惡魔的方法。
+~
+3|1048576 680 -1000 S
+44 500 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Beast~
+P 4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if mobcount(10649) >= 1
+	mppurge self
+endif
+~
+>all_greet_prog 100~
+if isnpc($n)
+	break
+endif
+if is_qmark($n) == naytil_quest 100002
+	gasp
+	say 該死，被發現了！但我的力量足以阻止任何人進入這個魔法陣！
+	grin
+	mpechoat $n $I 忽然對你發出一陣強大的力量！
+	mpechoaround $n $I 忽然對$n發出一陣強大的力量！
+	mpechoat $n 你被推出魔法陣了！
+	mpechoat $n 你心想「應該要回去向他們報告這裡有魔法陣的事情...。」
+	mpmod_qmark $n naytil_quest v0 = 3
+	mptransfer $n 10636
+	break
+endif
+if is_qmark($n) == naytil_quest 100003
+	smirk $n
+	mpechoat $n $I 忽然對你發出一陣強大的力量！
+	mpechoaround $n $I 忽然對$n發出一陣強大的力量！
+	mpechoat $n 你被推出魔法陣了！
+	mpechoaround $n $n被推出魔法陣了！
+	mptransfer $n 10636
+	break
+endif
+if is_qmark($n) == naytil_quest 100004
+	smirk $n
+	mpechoat $n $I 忽然對你發出一陣強大的力量！
+	mpechoaround $n $I 忽然對$n發出一陣強大的力量！
+	if is_inv_obj($n) == 10662
+	or is_equ_obj($n) == 10662
+		mpechoat $n 你忽然發現手上的聖潔水晶發出一道光芒！！
+		mpechoaround $n $n手上那塊水晶發出一道光芒！！
+		mpecho 這道光照射在惡魔身上，惡魔的力量大減！
+		gasp
+		say ...不...不會吧！我...我的力量...開始消失了！！
+		mpmload 10649
+		say ...可...可惡！
+		mpforce demon-naytil2 c whirwind
+		mpforce demon-naytil2 hunt $n
+		mppurge self
+	else
+		mpecho 你被推出魔法陣了！
+		mptransfer $n 10636
+	endif
+else
+	if is_qmark($n) == adv_myroad 300008
+	or is_qmark($n) == adv_myroad 300009
+		if is_inv_obj($n) == 10664
+		or is_equ_obj($n) == 10664
+			mpechoat $n 你手上的聖潔水晶發出一道光芒，破除了惡魔的結界！！
+		else
+			if rand(30)
+				c 3 powerball $n
+			endif
+			mpechoat $n 你被推出魔法陣了！
+			mpechoaround $n $n被推出魔法陣了！
+			mptransfer $n 10636
+			break
+		endif
+	else
+		if rand(30)
+			c 3 powerball $n
+		endif
+		mpechoat $n 你被推出魔法陣了！
+		mpechoaround $n $n被推出魔法陣了！
+		mptransfer $n 10636
+		break
+	endif
+endif
+~
+|
+#10627
+bunny little~
+小兔子(little bunny)~
+一隻可愛的小兔子(little bunny)在這裡跳來跳去。
+~
+這一隻小兔子十分可愛，讓你忍不住想要抱住它並且親親它。
+~
+1 98304 0 S
+32 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+#10628
+deer cuddly bambi~
+可愛的鹿(sweet deer)~
+一隻可愛的鹿(sweet deer)正在這裡吃草。
+~
+這隻可愛的鹿是居住在森林裡的生物之一，只有邪惡的人才狠的下心去傷害牠。
+牠看起來這麼地弱小，想殺牠的人可能需要好好考慮一下。
+~
+1 0 0 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Animal~
+>death_prog 100~
+if isgood($n)
+or isneutral($n)
+	mpechoat $n 你殘忍的行為使得你的惡名提高了！
+	mpalign $n -20
+endif
+~
+|
+#10629
+water elemental~
+水元素(water elemental)~
+一個巨大的水元素(water elemental)正在這裡到處潑水。
+~
+這個住在瀑布旁的水元素正在水邊玩著。
+~
+3 0 500 S
+37 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Elemental~
+C 3
+>fight_prog 40~
+if rand(50)
+	c 'colour spray'
+else
+	c 'chill touch'
+endif
+~
+|
+#10630
+clay golem~
+泥土巨像(clay golem)~
+一個泥土巨像(clay golem)正在這裡望著天空。
+~
+它的雙眼注射著天空，不知道在看著什麼。他的胸口隨著呼吸而起伏，使你發現
+他是有生命的！
+~
+3 8320 1000 S
+38 0 0 0d0+0 0d0+0
+-1 0
+0 8 0
+R Object~
+C 3
+#10631
+severn weaponsmith~
+武器店老闆賽凡(Severn the weaponsmith)~
+一個武器店老闆(weaponsmith)正在這裡用力地敲打著鐵器。
+~
+這個高大的人在他退休前曾經是個軍隊中的將軍。即使他年紀已經很大，但你仍然看
+不出他有衰退的跡象。有經驗的冒險者絕對不會輕易地對他下手。
+~
+71 8320 1000 S
+45 1000 0 10d10+-10 0d0+0
+-1 0
+0 8 1
+P 4194312
+>rand_prog 30~
+if pcnum($) > 0
+	think
+	say 不知道反叛軍(rebels)會不會對奈圖的經濟造成影響...
+endif
+~
+>greet_prog 100~
+if is_inv_obj($n) != 10407
+or is_inv_obj($n) != 10408
+or is_inv_obj($n) != 10409
+	wink $n
+	mpechoat $n $I 告訴你「需要攻城兵器嗎？」
+	mpechoat $n $I 告訴你「給我材料我就可以幫你做喔！」
+endif
+~
+>talk_prog topic~
+mpechoat $n $I 說「我目前提供製作...」
+	mpechoat $n $I 說「弩砲(ballista)、撞錘(ram)、及投石機(catapult)。」
+~
+>talk_prog ballista~
+mpechoat $n $I 說「弩砲(ballista)需要三塊魔法木材。」
+mpechoat $n $I 說「魔法木材在奈圖山上的樹林(trees)可以砍(cut)到。」
+~
+>talk_prog ram~
+		mpechoat $n $I 說「撞錘(ram)需要三樣鋼、鐵、或是一般金屬製的東西。」
+		mpechoat $n $I 說「那些東西應該挺好找的。」
+~
+>talk_prog catapult~
+		mpechoat $n $I 說「投石機(catapult)需要三樣青銅製的東西。」
+		mpechoat $n $I 說「那些東西應該挺好找的。」
+~
+>give_prog 10418~
+if is_qmark($i) == naytil_making_ballista
+	mpmod_qmark self naytil_making_ballista v0 + 1
+else
+	mpadd_qmark self naytil_making_ballista -1 1 0 0 0 1
+endif
+	say 已經收到魔法木材。
+	mpjunk $o
+	if is_qmark($i) == naytil_making_ballista 100003
+		if goldamt($n) < 150000
+			tell $n 等有多點錢再來吧！
+			break
+		endif
+		mpecho $I 開始製作弩砲(ballista)。
+		mpcallout 5 mpecho $I 說「完成了。」
+		mpcallout 5 mpdel_qmark self naytil_making_ballista
+		mpcallout 5 mpoload 10407 $n viclv target
+		mpcallout 5 mpgold $n -150000
+	endif
+~
+>give_prog all~
+if name($o) / iron
+or name($o) / steel
+or name($o) / metal
+	if is_qmark($i) == naytil_making_ram
+		mpmod_qmark self naytil_making_ram v0 + 1
+	else
+		mpadd_qmark self naytil_making_ram -1 1 0 0 0 1
+	endif
+	say 已經收到材料。
+	mpjunk $o
+	if is_qmark($i) == naytil_making_ram 100003
+		if goldamt($n) < 150000
+			tell $n 等有多點錢再來吧！
+			break
+		endif
+		mpecho $I 開始製作撞錘(ram)。
+		mpcallout 5 mpecho $I 說「完成了。」
+		mpcallout 5 mpdel_qmark self naytil_making_ram
+		mpcallout 5 mpoload 10408 $n viclv target
+		mpcallout 5 mpgold $n -150000
+	endif
+	break
+endif
+if name($o) / bronze
+	if is_qmark($i) == naytil_making_catapult
+		mpmod_qmark self naytil_making_catapult v0 + 1
+	else
+		mpadd_qmark self naytil_making_catapult -1 1 0 0 0 1
+	endif
+	say 已經收到材料。
+	mpjunk $o
+	if is_qmark($i) == naytil_making_catapult 100003
+		if goldamt($n) < 150000
+			tell $n 等有多點錢再來吧！
+			break
+		endif
+		mpecho $I 開始製作投石機(catapult)。
+		mpcallout 5 mpecho $I 說「完成了。」
+		mpcallout 5 mpdel_qmark self naytil_making_catapult
+		mpcallout 5 mpoload 10409 $n viclv target
+		mpcallout 5 mpgold $n -150000
+	endif
+endif
+~
+>talk_prog rebels~
+if is_qmark($n) == naytil_rebels
+	break
+endif
+	say 有一群激進的人組成了反叛軍，以奈圖山為基地，
+	say 試圖結束奈圖這個有數百年歷史的王國。
+	mpcallout 1 say 我也是從軍中的好友那裡聽來的，
+	mpcallout 1 say 你可以去問問聖騎士大人...
+~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		mpmod_qmark $n adv_myroad v2 = 6
+		tell $n 你要問荷菲夫？他是個厲害的鍊金術師呢！
+		tell $n 我的這些武器製造也有跟他討教過呢。
+		mpcallout 1 tell $n 但是他現在人在哪，我也不知道，有傳聞說他已經死了。
+		mpcallout 2 wave $n
+		mpcallout 2 tell $n 也許你可以去問祭司大人，他應該知道荷菲夫的現況。
+		mpcallout 3 mpechoat $n 看來大家都不知道他的去向，或許只能去找沙德倫問問了。
+	else
+		mpmod_qmark $n adv_myroad v2 = 6
+		tell $n 你要問荷菲夫？他是個厲害的鍊金術師呢！
+		tell $n 我的這些武器製造也有跟他討教過呢。
+		mpcallout 1 tell $n 但是他現在人在哪，我也不知道，有傳聞說他已經死了。
+		mpcallout 2 wave $n
+		mpcallout 2 tell $n 也許你可以去問祭司大人，他應該知道荷菲夫的現況。
+		mpcallout 3 mpechoat $n 看來大家都不知道他的去向，或許只能去找沙德倫問問了。
+		mpmod_qmark $n adv_myroad v2 = 6
+	endif
+endif
+~
+>tick_prog 80~
+mpjunk all
+~
+|
+#10632
+Argon armorer~
+防具店老闆阿爾根(Argon the armorer)~
+防具店老闆阿爾根(Argon the armorer)站在你面前。
+~
+他非常地強壯，全身都是結實的肌肉。最好別在他的店裡作怪。
+~
+71 8320 1000 S
+45 1000 0 10d10+-10 0d0+0
+-1 0
+0 8 1
+P 4194312
+>rand_prog 30~
+if pcnum($) > 0
+	think
+	say 不知道反叛軍(rebels)會不會對奈圖的經濟造成影響...
+endif
+~
+>talk_prog rebels~
+if is_qmark($n) == naytil_rebels
+	break
+endif
+	say 有一群激進的人組成了反叛軍，以奈圖山為基地，
+	say 試圖結束奈圖這個有數百年歷史的王國。
+	mpcallout 1 say 我也是從軍中的好友那裡聽來的，
+	mpcallout 1 say 你可以去問問聖騎士大人...
+~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		hmm
+		tell $n 我不記得這條街上有這號人物呀。
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		hmm
+		tell $n 我不記得這條街上有這號人物呀。
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10633
+spencer grocer~
+雜貨店老闆史班瑟(Spencer the grocer)~
+雜貨店的老闆(grocer)對你微笑著。
+~
+這個老闆在戰時曾經是賽凡手下的一個軍官。從他的外表看來，你實在無法想像他
+是一個強大的武士。
+~
+67 8320 1000 S
+39 1000 0 10d10+-10 0d0+0
+-1 0
+0 8 1
+P 4194312
+>rand_prog 30~
+if pcnum($) > 0
+	think
+	say 不知道反叛軍(rebels)會不會對奈圖的經濟造成影響...
+endif
+~
+>talk_prog rebels~
+if is_qmark($n) == naytil_rebels
+	break
+endif
+	say 有一群激進的人組成了反叛軍，以奈圖山為基地，
+	say 試圖結束奈圖這個有數百年歷史的王國。
+	mpcallout 1 say 我也是從軍中的好友那裡聽來的，
+	mpcallout 1 say 你可以去問問聖騎士大人...
+~
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 以前在軍中好像有聽說過...但詳細不清楚。
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 以前在軍中好像有聽說過...但詳細不清楚。
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10634
+Creet~
+克里特(Creet)~
+克里特(Creet)小心地打量著你。
+~
+他是個精明的人，不知道從什麼時候開始在這裡開店。
+~
+1|2|4|64|268435456 572 0 S
+47 1000 0 10d10+-10 0d0+0
+-1 0
+0 8 1
+P 4194312
+#10635
+henry kennelkeeper~
+亨利(Henry)~
+亨利(Henry the kennelkeeper)正在這裡照顧著奈圖王國的戰犬。
+~
+他似乎跟狗相處太久了，整個人也變的怪怪的。
+~
+67 8352 1000 S
+37 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1
+P 4194304
+#10636
+stableboy boy~
+馬僮(stableboy)~
+一個馬僮(stableboy)小心翼翼地照顧著馬。
+~
+一個年輕人，他現在正在照顧馬匹。
+~
+199 8192 400 S
+38 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+>talk_prog topic~
+say 想要買馬嗎？奈圖城堡的戰馬比起史卡拉貝附近的爛馬好多了。
+	say 給我10萬金幣，我可以將我賣的好馬賣給你。
+~
+>bribe_prog 100000~
+mpdis_magic self blindness
+	mpjunk all.coins
+	if class($n) == 11
+	or class($n) == 16
+		say 奈圖城堡的戰馬驍勇善戰，千萬要好好對待它。
+		mpmake_horse $n 10637 1 5
+		mpjunk all.coins
+	else
+		say 你的職業不是騎士或領主，不能購買戰馬。
+		mpgold $n 100000
+	endif
+~
+>death_prog 100~
+say 啊...！
+	if isnpc($n)
+		break
+	endif
+	if is_qmark($n) == naytil_enemy
+		mpmod_qmark $n naytil_enemy timer + 50
+		break
+	else
+		mpadd_qmark $n naytil_enemy 50 1 0 0 0 0
+	endif
+~
+|
+#10637
+horse stallion warstallion~
+戰馬(stallion)~
+一隻巨大的戰馬(warstallion)正跺著腳，看來脾氣不是很好。
+~
+這隻戰馬在戰時對奈圖王國很有幫助，但在平常則是隻危險的馬。
+~
+3 8192 0 S
+20 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Horse~
+#10638
+mother hound dog~
+母狗(mother dog)~
+這隻母狗(mother dog)正在這裡照顧她的孩子。
+~
+她對你大聲吼叫，似乎是怕你傷害她的孩子。
+~
+3 8192 0 S
+5 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Animal~
+#10639
+puppy~
+小狗(puppy)~
+一隻可愛的小狗(puppy)正在這裡睡覺。
+~
+你實在無法想像這隻可愛的小狗將來會成為兇狠的戰犬。
+~
+3 0 0 S
+5 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Animal~
+#10640
+guard militia militiaman~
+御林軍(militiaman)~
+御林軍(militiaman)在此保護著這條街道的安全。
+~
+這位由當地居民中選出來的強壯男子，在此擔任著國王賦予的重大責任 - 保護王國街道
+與孩童們的安全。他心中瞭解一旦被國王賦予這項責任，將是一個非常沈重但是重大的榮
+耀，一直到他老死都能夠保有這項榮耀。
+~
+71 8192 1000 S
+32 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+C 1
+P 8|4194304
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 我不清楚這個人。
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 我不清楚這個人。
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10641
+citizen naytil~
+奈圖市民(citizen of Naytil)~
+市民(citizen)在這裡忙著處理一些事情。
+~
+他是一個努力工作的市民。
+~
+129 0 650 S
+32 5 9 5d8+10 1d4+10
+-1 0
+0 8 1
+>talk_prog hovav~
+if is_qmark($n) == adv_myroad 300005
+	if is_qmark($n) == adv_myroad 200010
+		tell $n 抱歉，我不認識這個人。
+		mpechoat $n 　
+		mpechoat $n 看來一般民眾根本不知道這號人物，或許號稱與他齊名的人可能才會知道。
+		mpmod_qmark $n adv_myroad v2 = 6
+	else
+		tell $n 抱歉，我不認識這個人。
+		mpechoat $n 　
+		mpechoat $n 只有再找別人問看看了。
+		mpmod_qmark $n adv_myroad v1 + 1
+	endif
+endif
+~
+|
+#10642
+prisoner~
+囚犯(prisoner)~
+這個囚犯(prisoner)正安靜地坐在牢房裡。
+~
+他因為偷竊而被關了進來，由於他不肯認罪，所以不會被輕易釋放。
+~
+195 1024 -400 S
+10 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#10643
+troll beast~
+巨大的洞穴巨人(huge troll)~
+一個洞穴巨人(troll)兇猛地向你揮動爪子！
+~
+這隻醜陋的怪獸似乎已經把你當作他的下一餐了。
+~
+37 8744 -1000 S
+39 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R Troll~
+C 1
+P 4194304
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+growl
+if is_qmark($n) != naytil_quest
+	if level($n) >= 31
+		mpechoat $n 你心想「這可怕的怪獸終於倒下了...。」
+		mpechoat $n 你心想「奈圖城堡中居然有這種魔獸，你得回去向尼可拉斯報告(report)。」
+		mpadd_qmark $n naytil_quest -1 1 0 0 0 1
+	endif
+endif
+~
+|
+#10644
+female troll~
+女洞穴巨人(female troll)~
+一個女洞穴巨人(female troll)決定把你當作她的下一餐。
+~
+這個巨大的洞穴巨人看來想一口把你吞下！
+~
+39 8744 -1000 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+R Troll~
+>death_prog 100~
+mpdis_magic self blindness
+	mpat 5 c inf
+	growl
+	if is_qmark($n) != naytil_quest
+		if level($n) >= 31
+			mpechoat $n 這可怕的怪獸終於倒下了...。
+			mpechoat $n 奈圖城堡中居然有這種魔獸，你得回去向尼可拉斯報告(report)。
+			mpadd_qmark $n naytil_quest -1 1 0 0 0 1
+		endif
+	endif
+~
+|
+#10645
+little troll~
+小洞穴巨人(little troll)~
+這個小洞穴巨人(little troll)決定把你當做牠的點心。
+~
+這隻洞穴巨人正在撕裂兔子，並挖出牠的眼睛！牠長大之後肯定是隻可怕的魔獸！
+~
+39 8744 -1000 S
+24 -300 0 0d0+20 0d0+0
+-1 0
+0 8 2
+R Troll~
+#10646
+keywords~
+descriptor~
+當你進入這間房間的時候你看到這個東西？！
+~
+你覺得他是什麼就是什麼...。
+~
+67 8892 1000 S
+77 5 9 5d8+10 1d4+10
+-1 0
+0 8 2
+>rand_prog 20~
+if pcnum($) > 0
+	mpecho 你覺得他是什麼就是什麼...。
+	mpecho 你覺得我是什麼就是什麼...。
+	mpecho 你覺得你是什麼就是什麼...。
+endif
+~
+|
+#10647
+paladin knight nicholas-naytil~
+尼可拉斯(Nicholas)~
+奈圖王國最強大的聖騎士 - 尼可拉斯(Nicholas the Paladin)在這裡守護著奈圖城堡。
+~
+聖騎士是奈圖王國騎士之中最高的稱號，也是自古以來眾人夢寐以求的封號。因此，
+想必他一定是個強大，且擁有崇高美德的騎士。他在王國當中，是個受眾人崇拜的
+英雄。
+~
+353283 8872 1000 S
+54 2500 0 25d20+300 -5d100+0
+-1 0
+0 8 1
+K berserk frenzy 'enhanced damage' parry block powerblow lifeshare 'virtual swords' 'deadly strike' 'armor mastery' 'lance mastery'~
+C 1
+P 4194312
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 10601 37
+mpat 5 mpoload 10681 37
+wear all
+~
+>talk_prog p report about rebels~
+if is_qmark($i) == naytil_nicholas_soldiercount
+	mpechoat $n $I 說「請你等一下再來吧！」
+	mpechoat $n $I 說「記得重新對我報告(report about rebels)。」
+	break
+endif
+if is_qmark($n) == naytil_rebels 100002
+	if is_qmark($n) == naytil_rebels 300000
+		mpechoat $n $I 說「哼，你說他不但不願意投降，」
+		mpechoat $n $I 說「還想說服你加入他們！？」
+		mpmod_qmark $n naytil_rebels v0 = 4
+		mpcallout 1 mpechoat $n $I 說「這可惡的傢伙...」
+		mpcallout 2 mpechoat $n $I 說「不管怎麼樣，你總算完成了任務。」
+		mpcallout 3 mpechoat $n $I 說「另外這裡是你完成送信任務的獎賞。」
+		mpcallout 4 mpexp $n 2000
+		mpcallout 4 mpgold $n 80000
+		if level($n) >= 37
+			mpcallout 5 mpechoat $n $I 說「等等...」
+			mpcallout 6 look $n
+			mpcallout 7 mpechoat $n $I 說「幫我消滅反叛軍吧！」
+			mpcallout 8 mpcall brothers_to_your_arms $n
+		else
+			mpcallout 5 mpechoat $n $I 說「你現在等級不夠，不能繼續幫助我...」
+			mpcallout 6 mpechoat $n $I 說「等你到達37級以上，再來找我吧！」
+		endif
+	endif
+endif
+~
+>defun_prog brothers_to_your_arms~
+mpechoat $n $I 說「你只要跟我兵分兩路進攻反叛軍的總部，打敗馬可斯就好了！」
+mpechoat $n $I 說「如果你找到馬可斯，把他帶來，不論生死。」
+mpechoat $n $I 說「你決定要從哪一條路進攻呢？」
+mpechoat $n 你要從[32;1m正面[0m(1)進攻，還是從[34;1m水路[0m(2)進攻？
+mpmod_qmark $n naytil_rebels v0 = 5
+~
+>talk_prog 1~
+if is_qmark($n) != naytil_rebels
+	break
+endif
+if is_qmark($n) == naytil_rebels 300000
+	if is_qmark($n) == naytil_rebels 100005
+		nod $n
+		mpmod_qmark $n naytil_rebels v0 = 6
+		mpmload 10404
+		mpadd_qmark soldier naytil_soldier_waiting 100 0 0 0 0 1
+		mpforce soldier mpdef_remch $n
+		mpgroup $n soldier 1 0
+		mpmload 10404
+		mpadd_qmark soldier naytil_soldier_waiting 100 0 0 0 0 1
+		mpforce soldier mpdef_remch $n
+		mpgroup $n soldier 1 0
+		mpcallout 1 mpechoat $n $I 說「我會隨即帶兵從另一條路線進攻的。」
+		addoil $n
+	endif
+endif
+~
+>talk_prog 2~
+if is_qmark($n) != naytil_rebels
+	break
+endif
+if being($b)
+	mpechoat $n $I 說「抱歉，現在有人正在解任務，請晚點再來。」
+	break
+endif
+if is_qmark($n) == naytil_rebels 300000
+	if is_qmark($n) == naytil_rebels 100005
+		nod $n
+		mpmod_qmark $n naytil_rebels v0 = 7
+		mpmload 10404
+		mpadd_qmark soldier naytil_soldier_waiting 100 0 0 0 0 1
+		mpforce soldier mpdef_remch $n
+		mpgroup $n soldier 1 0
+		mpmload 10404
+		mpadd_qmark soldier naytil_soldier_waiting 100 0 0 0 0 1
+		mpforce soldier mpdef_remch $n
+		mpgroup $n soldier 1 0
+		mpcallout 1 mpechoat $n $I 說「我會隨即帶兵從另一條路線進攻的。」
+		addoil $n
+	endif
+endif
+~
+>talk_prog rebels~
+if is_qmark($n) == naytil_rebels
+	if is_qmark($n) == naytil_rebels 100001
+		if is_qmark($n) == naytil_rebels 300000
+			mpechoat $n $I 說「快點把信送去給馬可斯(Marcos)吧！」
+			mpechoat $n $I 說「回來時對我報告(report about rebels)。」
+			break
+		endif
+	endif
+	break
+endif
+	mpechoat $n $I 說「喔，你想知道有關反叛軍的事啊。」
+	mpechoat $n $I 說「他們是由奈圖以前的將軍 - 馬可斯(Marcos)所領導的一群人。」
+	mpechoat $n $I 說「他們最近佔領了西方的山，使得商人們無法通行。」
+	mpechoat $n $I 說「西方來的貢物也無法送到...」
+	if level($n) >= 36
+		mpcallout 1 mpechoat $n $I 說「老實說，我對他們感到非常頭痛。」
+		mpcallout 2 mpechoat $n $I 說「這裡有我駐守，決不會讓他們得逞。」
+		mpcallout 3 mpechoat $n $I 說「但是，為了防止蠻人堡的來襲，我不能離開這裡。」
+		mpcallout 4 mpechoat $n $I 說「你似乎是個出色的冒險者。」
+		mpcallout 5 mpechoat $n $I 說「願意幫我帶封信去給馬可斯嗎(yes/no)？」
+		mpadd_qmark $n naytil_rebels -1 1 0 0 0 1
+	else
+		mpcallout 1 mpechoat $n $I 說「你經驗不夠，恐怕沒辦法幫助我...」
+		break
+	endif
+~
+>talk_prog yes~
+if is_qmark($n) == naytil_rebels 100001
+	if is_qmark($n) == naytil_rebels 300000
+		if is_inv_obj($n) == 10400
+			mpechoat $n $I 說「我不是早就給你一封了？」
+			mpechoat $n $I 說「回來時對我報告(report about rebels)。」
+			break
+		endif
+		mpechoat $n $I 衷心地對你表達感謝之意。
+		mpechoat $n $I 說「馬可斯應該就在西方山中的山寨裡。」
+		mpechoat $n $I 說「回來時對我報告(report about rebels)。」
+		mpoload 10400 $n viclv target
+		mpechoat $n $I 給你一封信。
+		break
+	endif
+endif
+~
+>give_prog 10417~
+	if is_qmark($n) == naytil_rebels 300002
+		if is_qmark($n) == naytil_rebels 100006
+			mpjunk $o
+			mpmod_qmark $n naytil_rebels v0 = 7
+			mpechoat $n $I 讀了讀這張紙條。
+			mpechoat $n $I 說「這是...約翰．羅森的...」
+			mpcallout 1 mpechoat $n $I 憤怒地握緊了拳頭，一句話也說不出來。
+			mpcallout 2 mpechoat $n $I 說「我對你最後一個請求是...」
+			mpcallout 3 mpechoat $n $I 說「幫我除掉吉伯特那個雜種，還有...」
+			mpcallout 4 mpechoat $n $I 說「把約翰的遺體交給我父親...」
+			mpcallout 5 bow $n
+		endif
+	endif
+~
+>give_prog 10406~
+	if is_qmark($n) == naytil_rebels 300002
+		if is_qmark($n) == naytil_rebels 100004
+			mpjunk note
+			mpechoat $n $I 讀了讀這張紙條。
+			mpcallout 1 mpechoat $n $I 說「這...」
+			mpcallout 2 mpechoat $n $I 說「以我現在的身分不適合到那裡去。」
+			mpcallout 3 mpechoat $n $I 說「你去要塞繼續幫我調查(search)吧。」
+			mpcallout 3 mpmod_qmark $n naytil_rebels v0 = 5
+			break
+		endif
+	endif
+		? $n
+		drop note
+~
+>give_prog 10405~
+	if is_qmark($n) == naytil_rebels 300002
+		if is_qmark($n) == naytil_rebels 100003
+			mpmod_qmark $n naytil_rebels v0 = 4
+			mpechoat $n $I 低頭沉思。
+			mpcallout 1 mpechoat $n $I 說「父親？我已經好幾年沒見到他了...」
+			mpcallout 2 mpechoat $n $I 連忙拆信，並開始讀了起來。
+			mpcallout 4 mpechoat $n $I 說「父親叫我放下與馬可斯之間的恩怨，並共同除掉惡貴族...」
+			mpcallout 5 mpechoat $n $I 說「不，我不相信馬可斯，也不願意與貴族爭鬥。」
+			mpcallout 6 mpechoat $n $I 說「但是，你似乎是個可以相信的人。而且我父親也這麼說了...」
+			mpcallout 6 mpechoat $n $I 仔細的觀察著你。
+			mpcallout 7 mpechoat $n $I 說「好，我答應，但我有條件。」
+			mpcallout 8 mpechoat $n $I 說「你必須去蒐集惡貴族們的罪證。」
+			mpcallout 9 mpechoat $n $I 說「如果沒有證據，那我也沒有藉口對他們出手。」
+			mpcallout 10 mpechoat $n $I 說「根據父親所說，奈圖的惡貴族是吉伯特伯爵(Earl Gilbert)。」
+			mpcallout 11 mpechoat $n $I 說「他住在城堡內，從這裡往南不遠再往東就可以找到他的房間。」
+			mpcallout 12 mpechoat $n $I 說「你去他的房間搜查(search)看看...當然要趁他不在時。」
+			mpcallout 13 mpechoat $n $I 說「據我所知，他每天早上八點到十二點都不在房裡。」
+			mpcallout 14 mpechoat $n $I 對你大喊：「加油！」
+			break
+		endif
+	endif
+~
+>talk_prog no~
+if is_qmark($n) == naytil_rebels 100001
+	if is_qmark($n) == naytil_rebels 300000
+		mpechoat $n $I 長長的嘆了一口氣，「唉～～」。
+		mpdel_qmark $n naytil_rebels
+		break
+	endif
+endif
+~
+>give_prog 11528~
+if is_qmark($n)==fight_highland 100004
+      say 太好了，這次蠻人堡一定會感覺受到很大的挫折。看來可以平靜一陣子
+      say 。我們也好利用這段時間多訓練點人才出來，應付以後還有可能面臨的
+      say 危機。這次真的太感謝你了。這東西就給你了吧，我想留著這邪惡的東
+      say 西，對我們也沒什麼用。
+      mppurge wing
+      mpoload 11529 $n viclv target
+      mpechoat $n $I將惡魔之翼交給你。
+      mpechoaround $n $I將惡魔之翼交給$N。
+      mpresp $n 2
+      mpexp $n 5000
+      mpmod_qmark $n fight_highland v0 = 5
+endif
+~
+>talk_prog p report about highland~
+if is_qmark($n)==fight_highland 100002
+      ponder
+      say 原來如此，我就覺得奇怪我們這們神聖的地方怎麼會有惡魔的出
+      say 現，原來是蠻人堡的主意。
+      mpcallout 1 mpecho 忽然一道人影閃了進來，把一張紙交給了尼可拉斯之後又迅速的消失在你的視線內。
+      mpcallout 2 mpecho $I 仔細看了剛剛的那張紙條。
+      mpcallout 3 mpcall fight_highland $n
+endif
+~
+>defun_prog fight_highland~
+      mpmod_qmark $n fight_highland v0 = 3
+      mpecho $I 抬起頭來憂心的看著你。
+      say 剛剛你所看到的那人是我們奈圖派出去外面探聽情報的探子，在這種
+      say 年代，情報不齊全實在是很難順利的活下去。就如你剛剛所說的，這
+      say 張紙上寫著蠻人堡已經展開了另外一波的行動。根據紙上所說，這些
+      say 蠻人堡派出的人們已經前進到沼澤區了，我想就麻煩你幫我們奈圖最
+      say 後一個忙，去把他們解決吧。
+      mpcallout 1 mpforce ifor-naytil mpcall legend_2 $n
+      mpat 11506 mpmload 11518
+      mpat 11512 mpmload 11518
+      mpat 11502 mpmload 11518
+~
+>give_prog 10667~
+if is_qmark($n)==fight_naytil 100005
+      say 這...這...這不是騎士團首領的人頭嗎?!
+      say 你...。難道我們真的敗了嗎...
+      mpecho 尼可拉斯一副十分震驚的樣子。
+      mpcallout 1 mpecho 尼可拉斯似乎正極力的平息自己的情緒。
+      mpcallout 2 mpcall fight_naytil $n
+endif
+~
+>defun_prog fight_naytil~
+      say 看來，蠻人堡他們真的找到了一個很強的幫手。沒想到，連我們十分信任的騎士團
+      say 首領都遭到你的擊敗。好吧，我想我們奈圖這次失敗了，還敗在一個蠻人堡找來的
+      say 外人手上。既然都已經發展到這地步，我也認了。這東西你拿去吧，拿給博得他就
+      say 知道我們奈圖的意思了。
+      mpmod_qmark $n fight_naytil v0 = 7
+      mpoload 10670 $n viclv target
+      mpechoat $n $I將聖潔徽章交給你。
+      mpechoaround $n $I將聖潔徽章交給$N。
+~
+>talk_prog restart~
+if is_qmark($n) == naytil_rebels
+	if is_qmark($n) == naytil_rebels 300000
+		if is_qmark($n) == naytil_rebels 200001
+		or is_qmark($n) == naytil_rebels 200002
+			mpechoat $n 遠方傳來一陣聲響「你的任務已經完成，不需重解。」
+			break
+		endif
+		if is_qmark($n) <= naytil_rebels 100002
+			mpechoat $n 遠方傳來一陣聲響「你的任務(反叛軍與尼可拉斯之戰)可以重解了...。」
+			mpdel_qmark $n naytil_rebels
+			break
+		endif
+		if is_qmark($n) > naytil_rebels 100003
+			mpechoat $n 遠方傳來一陣聲響「你的任務(反叛軍與尼可拉斯之戰)第二階段可以重解了...。」
+			mpmod_qmark $n naytil_rebels v0 = 4
+			if rembch($n)
+				mpdef_rembch null-tar
+			endif
+			if is_qmark($i) == mtnaytil_nicholas_waiting
+				mpdel_qmark self mtnaytil_nicholas_waiting
+			endif
+			if is_qmark($i) == naytil_nicholas_soldiercount
+				mpat soldier-naytil mppurge soldier-naytil
+				mpat soldier-naytil mppurge soldier-naytil
+			endif
+			break
+		endif
+	endif
+	if is_qmark($n) == naytil_rebels 300001
+		if is_qmark($n) == naytil_rebels 100000
+			mpechoat $n 遠方傳來一陣聲響「你的任務(反叛軍與尼可拉斯之戰)可以重解了...。」
+			mpdel_qmark $n naytil_rebels
+			break
+		endif
+	endif
+endif
+if is_qmark($n) < fight_highland 100005
+	mpechoat $n 遠方傳來一陣聲響「你的任務(決戰高地)可以重解了，請前往「曼朵那」房間重新任務...。」
+	mpdel_qmark $n fight_highland
+	mpmod_qmark $n naytil_quest v0 = 8
+	break
+endif
+if is_qmark($n) <= naytil_quest 100006
+	mpechoat $n 遠方傳來一陣聲響「你的任務(圖書館中的惡魔)可以重解了...。」
+	mpdel_qmark $n naytil_quest
+endif
+~
+>give_prog 10410~
+if is_qmark($n) == naytil_rebels 300000
+	if is_qmark($n) == naytil_rebels 100008
+		mppurge corpse
+		mpechoat $n $I 嘆了一口氣。
+		mpechoat $n $I 說「真是可惜，他最後還是死了...」
+		mpechoat $n $I 說「非常感謝你，我馬上給你重賞。」
+		mpechoat $n $I 把奈圖邪戒(Naytilian Ring)給了你。
+		mpoload 10435 $n viclv target
+		mpgold $n 100000
+		mpexp $n 2000
+		mpmod_qmark $n naytil_rebels v0 = 0
+		mpmod_qmark $n naytil_rebels v1 = 2
+			if being(soldier-naytil)
+				mpat soldier-naytil mppurge soldier-naytil
+				mpat soldier-naytil mppurge soldier-naytil
+			endif
+		break
+	endif
+endif
+~
+>greet_prog 100~
+if is_qmark($n) == naytil_rebels 300000
+	if is_qmark($n) == naytil_rebels 100009
+		if insameroom(marcos-mtnaytil)
+			good $n
+			mpecho $I 派人把馬可斯(Marcos)帶走了。
+			mppurge marcos-mtnaytil
+			mpat 10687 mpmload 10419
+			mpechoat $n $I 說「非常感謝你，我馬上給你重賞。」
+			mpechoat $n $I 把奈圖聖戒(Naytilian Ring)給了你。
+			mpoload 10436 $n viclv target
+			mpgold $n 20000
+			mpexp $n 500
+			mpmod_qmark $n naytil_rebels v0 = 0
+			mpmod_qmark $n naytil_rebels v1 = 1
+				if being(soldier-naytil)
+					mpat soldier-naytil mppurge soldier-naytil
+					mpat soldier-naytil mppurge soldier-naytil
+				endif
+			break
+		endif
+	endif
+	if is_qmark($n) == naytil_rebels 100004
+		if level($n) >= 37
+			mpcall brothers_to_your_arms $n
+		endif
+	endif
+endif
+if is_qmark($n) == naytil_enemy
+	say 可恨的奈圖之敵！
+	hunt $n
+	skilldrv multihit $n
+	break
+endif
+if is_qmark($i) == naytil_nicholas_thinking
+	break
+endif
+if is_qmark($n) == naytil_quest 100003
+	mpecho 你趕緊跟 $I 報告有關魔法陣的問題...。
+	say 什麼，那隻惡魔竟然在圖書館中建立魔法陣！
+	if insameroom(ifor-naytil)
+		mpdef_rembch $n
+		mpecho $I 開始跟大巫師討論有關惡魔的事項...。
+		mpadd_qmark self naytil_nicholas_thinking -1 5 0 0 0 1
+		else
+			say 但是大巫師不在，你晚點再回來找我吧！
+		endif
+	endif
+	break
+endif
+if is_qmark($n) == naytil_quest 100005
+	say 謝謝你替我們去除了一個心腹大患...。
+	say 我們真的不知道怎麼感謝你才好...。
+	say 這樣好了，剛剛的水晶請拿給我，我可以讓它擁有更強的魔法力。
+	mpmod_qmark $n naytil_quest v0 = 6
+	break
+endif
+if ispc($n)
+	if is_wear_loc($n) == 16
+		mpechoat $n $I 說「放下你手中的武器，才能夠通過我去晉見國王(King)。」
+	endif
+endif
+~
+>talk_prog topic~
+bow $n
+say 我是奈圖城堡騎士團團長尼可拉斯．查普曼(Nicholas Chapman)，
+say 受國王賜封為聖騎士(paladin)。
+~
+>talk_prog p report~
+if is_qmark($n) != naytil_quest
+	break
+endif
+if being($b)
+	if is_qmark($i) != naytil_nicholas_thinking
+		tell $b 由於你遲遲未能完成本任務，因此本任務取消。
+		tell $b 若要重新開始任務，請來跟我面談(talk nicholas restart)。
+		mpdef_rembch null-tar
+	else
+		mpechoat $n 遠方傳來一陣聲響「抱歉，現在有人正在解這項任務，請您稍候。」
+	endif
+	break
+endif
+if is_qmark($i) == naytil_nicholas_thinking
+	if being($b)
+		mpechoat $n 遠方傳來一陣聲響「抱歉，現在有人正在解這項任務，請您稍候。」
+		break
+	else
+		mpdel_qmark self naytil_nicholas_thinking
+	endif
+endif
+if is_qmark($n) < naytil_quest 100002
+	gasp
+	say 你說城外有洞穴巨人的洞穴！？
+	ponder
+	if insameroom(ifor-naytil)
+		if day($) == 10
+		or day($) == 9
+			say 大巫師即將有事外出，請你晚點再來找我吧！
+			break
+		endif
+		mpdef_rembch $n
+		mpadd_qmark self naytil_nicholas_thinking 200 1 0 0 0 1
+	else
+		say 現在大巫師不在，請你晚點再來找我吧！
+	endif
+endif
+~
+>talk_prog paladin~
+sigh
+say 在這座城堡外，我感到一股不好的氣息...。
+say 雖然想親自去調查，但是我不能隨便離開城堡。
+~
+>talk_prog king~
+if inroom($i) == 10640
+	say 你現在就在國王的房間裡！
+	break
+endif
+if hour($) >= 18
+or hour($) <= 5
+	mpechoat $n $I 說「國王現在正在休息！」
+	break
+endif
+if is_wear_loc($n) == 16
+	mpechoat $n $I 說「放下你手中的武器，才能夠通過我去晉見國王(King)。」
+	break
+endif
+nod $n
+mpecho $I 送 $N 到國王的寢室去。
+mptransfer $n 10640
+mpat $n mpechoat $n $I 把你送到國王的寢室來。
+~
+>rand_prog 40~
+if being($b)
+	if insameroom($b)
+		if is_qmark($i) == naytil_nicholas_thinking 100001
+			mmm
+			say 看來那裡會有更多的魔物，我得跟大巫師商量一下...。
+			mpecho $I 開始跟大巫師 - 艾佛(Ifor)商量...。
+			mpmod_qmark self naytil_nicholas_thinking v0 = 2
+			break
+		endif
+		if is_qmark($i) == naytil_nicholas_thinking 100002
+			mpecho $I 與大巫師 - 艾佛(Ifor)一起向你轉過身來...。
+			say 大巫師發現原來是在圖書館的惡魔(Demon)在作怪...。
+			say 那個惡魔力量強大，我們必須趕緊去除掉牠！
+			say 那個惡魔現在應該還在頂樓的圖書館裡...。
+			say 拜託你了！
+			mpmod_qmark $b naytil_quest v0 = 2
+			mpdel_qmark self naytil_nicholas_thinking
+			mpdef_rembch null-tar
+			break
+		endif
+		if is_qmark($i) == naytil_nicholas_thinking 100005
+			mpecho 你看到大巫師 - 艾佛(Ifor) 皺了皺眉頭...。
+			mpforce ifor mpoload 10662
+			mpforce ifor give crystal nicholas
+			nod $b
+			say 大巫師給了我可以驅逐邪惡的 聖潔水晶(Crystal of Purity)，我將他交給你。
+			say 你可以利用這個東西破除惡魔的魔法陣。
+			give crystal $b
+			mpdel_qmark self naytil_nicholas_thinking
+			mpmod_qmark $b naytil_quest v0 = 4
+			mpdef_rembch null-tar
+			break
+		endif
+	else
+		tell $b 我說話說到一半你怎麼跑掉了？
+		mpechoat $b 你的任務失敗，請從上次的進度重來或是talk nicholas restart重新開始。
+		if is_qmark($i) == naytil_nicholas_thinking
+			mpdel_qmark self naytil_nicholas_thinking
+		endif
+		mpdef_rembch null-tar
+	endif
+endif
+if area($i) != naytil
+	say 我怎麼會在這裡？
+	mpdef_rembch null-tar
+	mpecho $I 離開了。
+	mpgoto 10601
+	break
+endif
+if being($b)
+	break
+endif
+if inroom($i) != 10601
+	say 我必須回去守護王座室。
+	mpecho $I 離開了。
+	mpgoto 10601
+endif
+~
+>give_prog 10662~
+if is_qmark($n) == naytil_quest 100006
+	if day($) == 9
+	or day($) == 10
+		say 大巫師即將離開，請晚點再給我。
+		give $o $n
+		break
+	endif
+	if insameroom(Ifor-naytil)
+		mpjunk crystal
+		mpecho $I 將水晶拿給了 艾佛(Ifor) 。
+		mpecho 你看見 艾佛(Ifor) 眼睛閉了起來，開始為這顆水晶加持魔法...。
+		say 加持魔法大約需要一整天的時間，請您在城堡裡頭稍事休息吧！
+		mpmod_qmark $n naytil_quest v0 = 7
+		mpadd_qmark $n naytil_quest_wait 24 0 0 0 0 1
+	else
+		say 大巫師現在不在，請晚點再給我。
+		give $o $n
+	endif
+endif
+~
+>fight_prog 40~
+if fightwith($i) == $i
+	mpecho $I 冷靜下來，停止攻擊。
+	mpgoto self
+	break
+endif
+if insameroom(holy-naytil)
+	yell 神聖騎士，來幫助我擊退敵人吧！
+	mpgroup self holy-naytil 1 0
+	mpforce holy-naytil protect self
+endif
+if insameroom(ifor-naytil)
+	yell 大巫師，來助我一臂之力吧！
+	mpgroup self ifor-naytil 0 1
+	protect ifor
+endif
+skilldrv onehit $n
+skilldrv onehit $n
+if rand(30)
+	mpecho $I 的攻勢變猛烈了...！
+	skilldrv multihit $n
+endif
+if rand(30)
+	mpecho $I 的攻勢變得更猛烈了...！
+	skilldrv multihit $n
+	skilldrv multihit $n
+endif
+~
+>fight_prog 20~
+mpdis_magic self all
+yell 艾佛大法師，助我去除身上不良的影響吧！
+if isaffected($i) & 1
+	mpat 5 c 'cure blindness'
+endif
+if isaffected($i) !& 128
+	mpat 5 c sanctuary
+endif
+if hitprcnt($i) < 20
+	mpat 5 c 2 'double heal'
+endif
+if hitprcnt($i) < 50
+	mpat 5 c 2 heal
+endif
+if hitprcnt($i) < 80
+	mpat 5 c heal
+endif
+~
+>fight_prog 20~
+circular
+flaming
+earth
+if hitprcnt($i) < 30
+	mpat 5 invoke
+	if rand(50)
+		frenzy
+	endif
+endif
+~
+>fight_prog 20~
+wield lance
+disarm
+c blindness
+circular
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpnowait
+yell 啊...！
+if isnpc($n)
+	break
+endif
+if is_qmark($n) == naytil_enemy
+	mpmod_qmark $n naytil_enemy timer + 50
+	break
+else
+	mpadd_qmark $n naytil_enemy 50 1 0 0 0 0
+endif
+~
+|
+#10648
+king naytil~
+奈圖王國國王(King of Naytil)~
+奈圖王國的國王(King of Naytil)站在你面前。
+~
+他身上散發出一股王者的氣勢。
+~
+3 128 1000 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 4194312
+>talk_prog topic~
+if is_qmark($n) == naytil_enemy
+	gasp
+	yell 有刺客！！
+	if being(nicholas-naytil)
+		mptransfer nicholas-naytil
+		mpecho 聖騎士 - 尼可拉斯(Nicholas the Paladin)連忙趕來。
+		mpforce nicholas-naytil hunt $n
+		break
+	endif
+	break
+endif
+	look $n
+	say 有什麼事嗎？
+~
+>death_prog 100~
+yell 刺...刺客！！
+	if is_qmark($n) == naytil_enemy
+		mpmod_qmark $n naytil_enemy timer + 70
+		break
+	else
+		mpadd_qmark $n naytil_enemy 70 1 0 0 0 0
+	endif
+
+~
+|
+#10649
+demon-naytil2~
+惡魔(demon)~
+一隻弱小的惡魔(demon)站在這邊。
+~
+你看到一隻衰弱的惡魔站在一個五芒星的圖騰上頭。他可以說是地獄裡頭最上位的生
+物。但是現在他全身似乎力量都在不斷地減少中。
+~
+3 512 -1000 S
+40 0 0 0d0+0 30d0+0
+-1 0
+0 8 1
+R Vampire~
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == naytil_quest 100004
+	mpecho 你感到這座城堡的邪氣隨著惡魔的死亡而減少了許多！
+	mpmod_qmark $n naytil_quest v0 = 5
+	if being(demon-naytil1)
+		mpat 5 mppurge demon-naytil1
+	endif
+endif
+~
+|
+#10650
+holy knight leader-hq~
+騎士團首領(holy knight leader)~
+騎士團首領(holy knight leader)正蓄勢待發的準備出擊。
+~
+他是一個奈圖王國中很受尊敬的騎士，雖然年紀已大了，但打仗時還是相
+當勇猛的，今天他受尼可拉斯命令，負責指揮奈圖軍對抗高地的部隊。
+~
+1|2|4096|16384|262144 8|128 1000 S
+50 0 0 30d50+-200 0d0+0
+0 0
+0 8 1
+R Human~
+C 1|8
+>greet_prog 100~
+if is_qmark($n) == fight_naytil 100005
+	yell 殺光入侵的敵軍！
+	mpkill $n
+endif
+~
+>death_prog 100~
+yell 可惡呀！我的任務還沒達成。我親愛的奈圖，永別了！
+mpoload 10667 floor
+mpecho 騎士團首領的頭滾到了地上。
+mpechoat $n 看來把這血淋淋的頭拿去給尼可拉斯看，應該可以讓他們稍微收斂點。
+~
+>fight_prog 30~
+circular
+flaming
+if hitprcnt($i) < 30
+	mpat 5 invoke
+	if rand(50)
+		frenzy
+	endif
+endif
+~
+>fight_prog 30~
+wield lance
+disarm
+circular
+~
+>fight_prog 30~
+yell 看  我  的  赤  炎  狂  瀾  !!!!!
+flaming
+flaming
+circular
+~
+|
+#10651
+holy cleric-hq~
+聖祭司(holy cleric)~
+聖祭司(holy cleric)正精神專注的在做戰前的準備工作。
+~
+在奈圖城堡的每場戰役中，聖祭司是個不可或缺的角色。別看他一副沒有戰力的樣子，
+他可是受到艾佛和沙得倫的親自指導，有著一身高強的法術。有他在團中，大大的增加
+了獲勝的可能性。
+~
+3 4|8|128 1000 S
+45 0 500 0d0+400 0d400+0
+0 0
+0 8 1
+R Human~
+>fight_prog 20~
+say 親愛的戴妮亞，拯救我的隊友於苦難之中吧。
+c gf
+c 'gcure blindness'
+~
+>fight_prog 30~
+say 你這不知好歹的人們，接受上天的懲罰吧。
+c lightning
+c flamestrike
+c 'sun flash'
+~
+>fight_prog 30~
+c 2 fireball
+~
+|
+#10652
+earl-gilbert-naytil gilbert-naytil~
+吉伯特伯爵(Earl Gilbert)~
+高貴的貴族領袖 - 吉伯特伯爵(Earl Gilbert)正在這裡喝著茶。
+~
+他看起來一副狡猾的模樣，看來肯定做過不少壞事才擁有今天的財富。
+他是惡貴族們的領袖，在王國中為權力與國王明爭暗鬥。
+~
+ACT_IS_NPC|ACT_SENTINEL AFF_SANCTUARY|AFF_DETECT_INVIS|AFF_DETECT_HIDDEN -1000 S
+56 5500 500 -40d-40+200 -13d200+0
+0 0
+0 8 1
+R Human~
+C 2
+S 44 30
+S 40 20
+P ALY_DI|ALY_DH|256|NO_MUTE
+>repop_prog 100~
+	mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+	mpoload 10672 36
+	mpat 5 wear all
+	if being(monster-naytil)
+		mppurge self
+	endif
+~
+>fight_prog 100~
+if hitprcnt($i) <= 30
+        mpecho $I 發狂似地仰天大叫！！
+        mpat evil-spirit-naytil mppurge evil-spirit-naytil
+        mpat evil-spirit-naytil mppurge evil-spirit-naytil
+        mpat evil-spirit-naytil mppurge evil-spirit-naytil
+        mpat evil-spirit-naytil mppurge evil-spirit-naytil
+        mpecho 一陣強光忽然照的你睜不開眼......！
+        mpecho 當你再次張開眼睛的時候，$I 已經化為一隻兇猛無比的邪獸......！
+        mpmload 10653
+        mpdis_magic self 'blindness'
+        mpforce monster-naytil mpkill $n
+        mppurge self
+endif
+~
+>fight_prog 40~
+smirk
+	if rand(70)
+		say ***  [1;31m闇黑主宰[m啊！賜我力量！  ***
+		if rand(60)
+			cast powerball
+		else
+			cast 2 powerball
+		endif
+	else
+		if mobcount(10413) <= 5
+			say 等著瞧......
+			say 看我這招......
+			yell [1;31m ！群 - 魔 - 亂 - 舞！ [m
+			mpecho 你感到一群邪靈來到了這裡...
+			mpmload 10413
+			mpmload 10413
+			mpgroup self evil-spirit-naytil self 1 0
+			mpgroup self 2.evil-spirit-naytil 1 0
+		endif
+	endif
+~
+>fight_prog 80~
+	if insameroom(evil-spirit-naytil)
+		if isaffected($i) !& 128
+			mpecho $I 利用邪靈之力，把自己的力量提升到數倍之強...！
+			mpat 5 cast 'cure blindness'
+			mpnowait
+			mpat 5 cast 'giant strength'
+			mpnowait
+			mpat 5 cast 'bless'
+			mpnowait
+			mpat 5 cast 'combat mind'
+			mpnowait
+			mpat 5 cast 'armor'
+			mpnowait
+			mpat 5 cast 'shield'
+			mpnowait
+			mpat 5 cast 'sanctuary'
+			mpnowait
+			mpat 5 cast 'barrier'
+			mpnowait
+			mpat 5 cast 'mental empower'
+			mpnowait
+		endif
+		if rand(50)
+			yell [1;37m！雷．電．光．殛！[m
+			c 3 lightning
+		endif
+	endif
+~
+>tick_prog 100~
+if hour($) == 8
+	mpecho $I 離開了自己的房間。
+	mpgoto 10529
+	mpecho $I 到了這裡來。
+	break
+endif
+if hour($) == 13
+	mpecho $I 離開了這裡。
+	mpgoto 10531
+	mpecho $I 回到了自己的房間。
+endif
+~
+>greet_prog 50~
+	mpechoat $n $I 說「唷，有個貴客來了！」
+	mpechoat $n $I 倒在地上笑的滾來滾去。
+~
+>death_prog 100~
+	yell 不，不會吧...！
+	mpdis_magic self 'seal magic'
+	mpat 5 cast infravision
+	mpnowait
+	mpdis_magic self 'blindness'
+		if is_qmark($n) !& mtnaytil_record 200004
+			yell 我差一點就能幫助我主達成牠的悲願......！
+			mpecho 是幻覺嗎？一陣黑煙從吉伯特身上逃了出來，消失無蹤......
+			rumor $n 除掉了奈圖王國的惡貴族領袖 - 吉伯特伯爵！
+			mpresp $n 2
+			if is_qmark($n) == mtnaytil_record
+				mpmod_qmark $n  mtnaytil_record v1 | 4
+			else
+				mpadd_qmark $n mtnaytil_record -1 0 4 0 0 1
+			endif
+		endif
+~
+|
+#10653
+monster-naytil~
+終極魔獸(monster)~
+一隻可怕無比的邪惡魔獸(monster)狠狠地撲向你！
+~
+牠全身沒有一絲人氣，看來已經完全獸化了...
+你不禁為牠感到悲哀...
+~
+ACT_IS_NPC|ACT_SENTINEL|ACT_AGGRESSIVE AFF_SANCTUARY|AFF_DETECT_INVIS|AFF_DETECT_HIDDEN -1000 S
+60 5000 1000 -80d-80+-300 -25d200+0
+0 0
+0 8 1
+R Beast~
+C 2
+P ALY_DI|ALY_DH|256
+>repop_prog 100~
+	mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+	mpadd_qmark self naytil_gilbert_transforming 50 1 0 0 1 0
+~
+>fight_prog 100~
+	mpecho $I 開始集中邪惡之力...
+	if rand(50)
+		break
+	else
+		if pcnum($) > 3
+			mpcallout 1 mpcall ultimate_evil_howling
+		else
+			mpcallout 1 mpcall weak_evil_howling
+		endif
+	endif
+~
+>defun_prog weak_evil_howling~
+	if rand(50)
+		mpecho $I 怒吼一聲，放出一陣魔性之力！
+		mpat 10530 mpecho 一陣邪氣隨著一聲怒吼流了過來！
+		mpforcer 10530 modhmv pc 01.50 100 00000001
+		mpat 10529 mpecho 一陣邪氣隨著一聲怒吼流了過來！
+		mpforcer 10529 modhmv pc 01.50 100 00000001
+		mpat 10528 mpecho 一陣邪氣隨著一聲怒吼流了過來！
+		mpforcer 10528 modhmv pc 01.50 100 00000001
+		mpforcer here modhmv pc 01.200 300 00000001
+	else
+		mpecho $I 怒吼一聲，放出一陣魔性之力！！
+		mpat 10530 mpecho 一陣強大的邪氣隨著一聲怒吼急衝了過來！！
+		mpforcer 10530 modhmv pc 01.150 300 00000001
+		mpat 10529 mpecho 一陣強大的邪氣隨著一聲怒吼急衝了過來！！
+		mpforcer 10529 modhmv pc 01.150 300 00000001
+		mpat 10528 mpecho 一陣強大的邪氣隨著一聲怒吼急衝了過來！！
+		mpforcer 10528 modhmv pc 01.150 300 00000001
+		mpforcer here modhmv pc 01.300 400 00000001
+	endif
+~
+>defun_prog ultimate_evil_howling~
+	if rand(50)
+		mpecho $I 怒吼一聲，放出全身的魔性之力！
+		mpat 10530 mpecho 一陣強大的邪氣隨著一聲怒吼如泉湧般流了過來！
+		mpforcer 10530 modhmv pc 01.150 300 00000001
+		mpat 10529 mpecho 一陣強大的邪氣隨著一聲怒吼如泉湧般流了過來！
+		mpforcer 10529 modhmv pc 01.150 300 00000001
+		mpat 10528 mpecho 一陣強大的邪氣隨著一聲怒吼如泉湧般流了過來！
+		mpforcer 10528 modhmv pc 01.150 300 00000001
+		mpforcer here modhmv pc 01.500 600 00000001
+	else
+		mpecho $I 怒吼一聲，放出全身的魔性之力！！
+		mpecho [1;31m你受到了強大無比的傷害.........！！[m
+		mpat 10530 mpecho 一陣強大的邪氣隨著一聲怒吼如瀑布般急衝了過來！！
+		mpforcer 10530 modhmv pc 03.20 40 00000001
+		mpat 10529 mpecho 一陣強大的邪氣隨著一聲怒吼如瀑布般急衝了過來！！
+		mpforcer 10529 modhmv pc 03.20 40 00000001
+		mpat 10528 mpecho 一陣強大的邪氣隨著一聲怒吼如瀑布般急衝了過來！！
+		mpforcer 10528 modhmv pc 03.20 40 00000001
+		mpforcer here modhmv pc 03.40 70 00000001
+	endif
+~
+>tick_prog 100~
+if isfight($i)
+	if is_qmark($i) == naytil_gilbert_transforming
+		break
+	else
+		mpecho $I 漸漸變回人形...
+		mpmload 10652
+		mppurge self
+	endif
+endif
+~
+>death_prog 100~
+	mpecho $I 狂聲咆嘯！！
+	mpat 5 cast infravision
+	mpnowait
+	mpdis_magic self 'blindness'
+		mpecho $I 噴出一大口黑血後，便倒在地上......
+		if is_qmark($n) !& mtnaytil_record 200004
+			rumor $n 除掉了在奈圖王國作惡多端的$I！
+			mpresp $n 2
+			if is_qmark($n) == mtnaytil_record
+				mpmod_qmark $n  mtnaytil_record v1 | 4
+			else
+				mpadd_qmark $n mtnaytil_record -1 0 4 0 0 1
+			endif
+		endif
+~
+|
+#10654
+light-h cavalry-h horse~
+輕型戰馬(light cavalry horse)~
+輕型戰馬(light cavalry horse)乖乖地站在這兒。
+~
+這是一匹輕型的戰馬，只配有馬鞍等基本騎馬工具；不過由於裝備輕巧，
+非常適合用來做來衝刺、突擊的任務。
+~
+1|536870912 0 0 S
+36 0 0 0d0+0 0d-400+0
+0 0
+0 8 0
+C 3
+P 8
+H 10679
+R Horse~
+
+#10655
+heavy-h cavalry-h horse~
+重型戰馬(heavy cavalry horse)~
+重型戰馬(heavy cavalry horse)乖乖地站在這兒。
+~
+這是一批重型的戰馬，除了馬鞍等基本騎馬工具外，還配有馬匹用裝甲用
+以抵禦攻擊，適合在重重攻擊下進行衝刺、突擊的任務。
+~
+1|536870912 0 0 S
+36 3000 0 0d0+-500 0d-200+0
+0 0
+0 8 0
+C 3
+P 8
+H 10680
+R Horse~
+
+#10656
+stableboy boy~
+馬僮(stableboy)~
+一個馬僮(stableboy)小心翼翼地照顧著馬。
+~
+一個年輕人，他現在正在照顧馬匹。
+~
+199 8192 400 S
+38 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+P 8
+>talk_prog topic~
+say 想要買馬嗎？奈圖城堡的戰馬比起史卡拉貝附近的爛馬好多了。
+say 你可以用 list 來觀看這裡有出售什麼馬匹。
+~
+|
+
+#0
+
+
+
+#OBJECTS
+#10601
+sword shining broadsword~
+光輝闊劍(shining broadsword)~
+一把閃耀著的闊劍(broadsword)被丟在這裡。~
+~
+5 320 8193
+2501250~ 0~ 0~ 1~
+14 0 0
+A
+1 2
+A
+5 1
+A
+18 5
+A
+19 5
+X iron~
+
+#10602
+breast shining breastplate~
+光輝胸甲(shining breastplate)~
+一件閃閃發光的胸甲(breastplate)被丟在這裡。~
+~
+9 67 9
+0~ 0~ 2501250~ 0~
+24 0 0
+A
+41 10
+A
+13 -30
+A
+18 2
+A
+19 2
+A
+10 10
+X iron~
+
+#10603
+shining helm~
+光輝頭盔(shining helm)~
+一件閃閃發光的頭盔(helm)被丟在這裡。~
+~
+9 65 17
+0~ 0~ 2501250~ 0~
+4 0 0
+A
+42 5
+A
+4 3
+X iron~
+
+#10604
+shining gauntlets~
+光輝護手(shining gauntlets)~
+一套閃閃發光的護手(gauntlets)被丟在這裡。~
+~
+9 67 129
+0~ 0~ 2501250~ 0~
+8 0 0
+A
+2 2
+X iron~
+
+#10605
+belt glory~
+榮耀腰帶(belt of glory)~
+一件奈圖王國最高榮耀的象徵，國王御賜的腰帶(belt)被丟在這裡。~
+~
+9 257 2049
+0~ 0~ 2501250~ 0~
+4 0 0
+A
+42 3
+A
+19 3
+P 2048|1048576
+X fiber~
+
+#10606
+cloak dark~
+深色披風(dark cloak)~
+一件披風(cloak)被丟在這裡。~
+~
+9 3332 1025
+0~ 0~ 2501250~ 0~
+5 0 0
+E
+cloak dark~
+一件接近全黑的披風。
+~
+A
+40 4
+A
+21 5
+A
+17 10
+X fiber~
+
+#10607
+cladding arm~
+合金護臂(arm cladding)~
+一個經過強化的合金護臂(arm cladding)被放在這裡。~
+~
+9 7168 257
+0~ 0~ 2501250~ 0~
+40 0 0
+E
+cladding~
+這件護臂因為帶有大量的強化金屬，變的非常的重。
+~
+A
+39 20
+A
+17 -15
+X steel~
+
+#10608
+leggings shining chain~
+光輝護脛(shining leggings)~
+一雙閃閃發光的護脛(leggings)被丟在這裡。~
+~
+9 3136 33
+0~ 0~ 2501250~ 0~
+9 0 0
+E
+leggings shining chain~
+這雙護脛是使用非常稀有的金屬再進行魔力加強而製成的。因此只有奈圖王國最強大
+的武士才能使用它。
+~
+A
+14 50
+A
+17 5
+A
+2 1
+X aluminum~
+
+#10609
+naytil pendant~
+奈圖垂飾(naytil pendant)~
+一個帶著魔力的垂飾(pendant)被丟在這裡。~
+~
+9 3329 5
+0~ 0~ 2501250~ 0~
+2 0 0
+E
+naytil pendant~
+這個垂飾是為了抵消光輝護符產生的影響。
+~
+A
+18 2
+A
+24 -3
+X gold~
+
+#10610
+shining talisman~
+光輝護符(shining talisman)~
+一個閃閃發光的護符(talisman)被丟在這裡。~
+~
+9 4161 5
+0~ 0~ 2501250~ 0~
+5 0 0
+E
+talisman~
+這個護符守護著使用者的頸部不受傷害，但它一旦被戴上，便無法被脫下。
+~
+A
+3 -1
+A
+4 -1
+A
+1 2
+A
+17 5
+X silver~
+
+#10611
+shield emblazoned~
+十字劍盾(emblazoned shield)~
+一個紋著十字(cross)與劍(sword)的盾(shield)被丟在這裡。~
+~
+9 3137 513
+0~ 0~ 2501250~ 0~
+18 0 0
+E
+cross~
+這個十字會驅逐一切的邪惡力量。
+~
+E
+sword~
+那是傳說中的神劍。
+~
+A
+17 -25
+A
+14 -50
+A
+2 -2
+A
+33 -10
+A
+13 50
+X mithril~
+
+#10612
+robe white bright~
+亮白袍子(bright white robe)~
+一個用白龍的皮製成的袍子(robe)。~
+~
+9 3137 9
+0~ 0~ 2501250~ 0~
+6 0 0
+E
+robe white bright~
+這件袍子由大巫師．艾佛加強過，擁有強大的魔力，但會減少使用者的力量。
+~
+A
+1 -2
+A
+5 -1
+A
+13 -50
+A
+12 100
+A
+18 -1
+A
+19 -1
+A
+27 -4
+A
+28 -4
+A
+29 -4
+A
+23 -4
+A
+24 -4
+A
+42 10
+X dragon scale~
+
+#10613
+staff ifor~
+艾佛之杖(staff of Ifor)~
+一把充滿無限魔力的手杖(staff)被丟在這裡。~
+~
+5 7491 8193
+2501250~ 25~ 32~ 7~
+5 0 0
+E
+staff ifor~
+這把手杖帶著驚人的魔力，且材質非常的特殊。只有善良的人能夠使用它。
+~
+A
+4 3
+A
+18 5
+A
+19 5
+A
+44 15
+V Drow~ 0 200 30 150
+X onyx~
+
+#10614
+red striped ball~
+紅色小球(red striped ball)~
+一顆奇怪的紅色小球(red striped ball)被放在這裡。~
+~
+5 4162 8193
+1001100~ 0~ 0~ 0~
+1 0 0
+A
+4 -6
+A
+18 20
+A
+19 20
+A
+17 200
+E
+red striped ball~
+這個紅色小球(red striped ball)是公主的父親用來保護公主的。公主得到這顆球後受到
+高人指示，這顆球能夠讓公主更有勇氣。有了這顆球，公主將有勇氣單獨面對任何敵人。
+~
+X ruby~
+
+#10615
+bed~
+粉紅色床鋪(pink canopied bed)~
+粉紅色床鋪(pink canopied bed)~
+~
+15 0 0
+11200~ 5~ 0~ 0~
+10000 0 0
+X cloth~
+
+#10616
+pillow~
+枕頭(pillow)~
+一個絲絨枕頭(pillow)被放在這裡。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+2 0 0
+X fiber~
+
+#10617
+drawers dresser~
+化妝台(dresser drawers)~
+一個化妝台(dresser drawers)被放在這裡。~
+~
+15 0 0
+11200~ 5~ 0~ 0~
+10000 0 0
+X wooden~
+
+#10618
+pink panties~
+粉紅色長褲(pair of pink panties)~
+這件粉紅色長褲(pair of pink panties)可以給予穿她的人舒服與保護。~
+~
+9 4098 2049
+0~ 0~ 2501250~ 0~
+2 0 0
+A
+23 25
+A
+17 10
+X cloth~
+
+#10619
+lace trimmed training bra~
+蕾絲內衣(lace trimmed training bra)~
+這件內衣(bra)是給女子用的，不是給男人用的。~
+~
+9 1073745920 9
+0~ 0~ 20~ 0~
+0 0 0
+A
+17 30
+A
+39 -20
+X fiber~
+
+#10620
+chest toychest~
+玩具箱(toy chest)~
+一個玩具箱(toy chest)被擺在這裡。~
+~
+15 0 0
+11200~ 5~ 0~ 0~
+10000 0 0
+X bronze~
+
+#10621
+chest toychest~
+玩具箱(toy chest)~
+一個玩具箱(toy chest)被擺在這裡。~
+~
+15 8 0
+11200~ 13~ 10623~ 0~
+10000 0 0
+X bronze~
+
+#10622
+magazine~
+「年輕女孩」雜誌(magazine the Young Lady)~
+一本內容相當有趣的雜誌(magazine)被放在這邊。~
+~
+2 65 16385
+25~ bless~ charm person~ know alignment~
+2 0 0
+X paper~
+
+#10623
+golden key~
+黃金鑰匙(golden key)~
+一把純金打造的鑰匙(key)。~
+~
+18 0 16385
+10621~ 0~ 0~ 0~
+2 0 0
+X gold~
+
+#10624
+wand brush ivory~
+象牙柄梳子(ivory handled brush)~
+一把貴重的象牙柄梳子(ivory handled brush)被放在這裡。~
+~
+12 33 16385
+0~ 0~ 0~ 0~
+2 0 0
+A
+19 1
+A
+18 1
+A
+5 1
+L 35
+X ivory~
+
+#10625
+jackets~
+夾克(set of jackets)~
+一套夾克(jacket)被放在地上。~
+~
+8 8192 16385
+0~ 0~ 0~ 0~
+2 0 0
+X leather~
+
+#10626
+pink pill~
+粉紅色藥丸(pink pill)~
+一顆晶瑩剔透的粉紅色藥丸(pink pill)被丟棄在這邊。~
+~
+26 0 1
+59~ destroy cursed~ remove curse~ blindness~
+1 0 0
+X herb~
+
+#10627
+black teddy~
+黑色泰迪熊(black teddy)~
+一個玩偶熊(bear)被丟棄在這邊。~
+~
+9 0 9
+0~ 0~ 2501250~ 0~
+2 0 0
+X wool~
+
+#10628
+whip bullwhip~
+公牛鞭(long black bullwhip)~
+一條又黑又長的公牛鞭子(bullwhip)放在這邊。~
+~
+5 16400 8193
+2501250~ 0~ 0~ 4~
+3 0 0
+X wool~
+
+#10629
+collar black leather~
+黑皮項圈(black leather collar)~
+一副黑皮項圈(black leather coller)被丟在這邊。~
+~
+9 4096 5
+0~ 0~ 2501250~ 0~
+3 0 0
+A
+17 -3
+A
+18 1
+A
+19 1
+X leather~
+
+#10630
+yard stick yardstick wooden~
+木頭法杖(wooden yardstick)~
+一根木頭的法杖(wooden yardstick)被丟棄在地上。~
+~
+5 0 8193
+2501250~ 0~ 0~ 7~
+2 0 0
+X wooden~
+
+#10631
+chalk~
+粉筆(chalk)~
+一隻白色的粉筆(chalk)被丟在這裡。~
+~
+5 0 8193
+2501250~ 0~ 0~ 0~
+1 0 0
+X stone~
+
+#10632
+refridgerator icebox box~
+冰箱(icebox)~
+一大盒冰箱(icebox)被擺在這裡。~
+~
+15 8 0
+11200~ 5~ 0~ 0~
+10000 0 0
+X wooden~
+
+#10633
+tray silver~
+銀盤(silver tray)~
+一個漂亮的銀色盤子(silver tray)被擺在這裡。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+4 0 0
+X silver~
+
+#10634
+turkey~
+冷掉的火雞(turkey)~
+這隻冷掉的火雞(turkey)看起來還是不錯。~
+~
+19 0 1
+8~ 0~ 0~ 0~
+2 0 0
+X food~
+
+#10635
+roast beef~
+冷掉的烤牛肉(roast beef)~
+這塊冷掉的烤牛肉(roast beef)看起來還是很好吃。~
+~
+19 0 1
+8~ 0~ 0~ 0~
+2 0 0
+X food~
+
+#10636
+flour sack~
+一包麵粉(flour)~
+一包麵粉(a sack of flour)被擺在這裡。~
+~
+19 0 1
+5~ 0~ 0~ 0~
+4 0 0
+X food~
+
+#10637
+water pool~
+一池冷水(water)~
+一池冷水(a pool of cool water)在這裡。~
+~
+25 0 0
+0~ 0~ 0~ 0~
+10000 0 0
+X liquid~
+
+#10638
+hat~
+廚師帽(chef's hat)~
+一個白色的廚師帽(chef's hat)被擺在這裡。~
+~
+9 0 17
+0~ 0~ 2501250~ 0~
+1 0 0
+X cloth~
+
+#10639
+duster featherduster~
+雞毛毯子(feather duster)~
+你看到一個雞毛毯子(feather duster)擺在這裡。~
+~
+13 0 16385
+15~ 0~ 0~ 0~
+2 0 0
+A
+12 25
+X feather~
+
+#10640
+slippers~
+拖鞋(slippers)~
+一雙軟棉棉的棉花拖鞋(slippers)被擺在這裡。~
+~
+9 65 65
+0~ 0~ 2501250~ 0~
+2 0 0
+A
+14 100
+X cloth~
+
+#10641
+key iron~
+鐵鑰匙(iron key)~
+一個巨大的鐵鑰匙(iron key)被遺忘在這裡。~
+~
+18 0 16385
+10632~ 0~ 0~ 0~
+1 0 0
+X iron~
+
+#10642
+key iron~
+鐵鑰匙(iron key)~
+一個巨大的鐵鑰匙(iron key)被遺忘在這裡。~
+~
+18 0 16385
+10604~ 0~ 0~ 0~
+1 0 0
+E
+key iron~
+這個鑰匙很重，上面刻著「奈圖」。~
+X iron~
+
+#10643
+sword broadsword~
+闊劍(broadsword)~
+一把鋒利的闊劍(broadsword)被擺在這裡。~
+~
+5 4 8193
+2501250~ 0~ 0~ 1~
+8 0 0
+E
+sword broadsword~
+這把劍是一般士兵使用的。
+~
+X iron~
+
+#10644
+mace iron~
+鐵鎚(iron mace)~
+一把不錯的鐵鎚(iron mace)被擺在這裡。~
+~
+5 4 8193
+2501250~ 0~ 0~ 7~
+8 0 0
+E
+mace iron~
+這把鐵鎚是一般士兵使用的。
+~
+X iron~
+
+#10645
+spear bronze~
+青銅矛(bronze spear)~
+一把青銅製的矛(bronze spear)被擺在這裡。~
+~
+5 16384 8193
+2501250~ 0~ 0~ 11~
+8 0 0
+E
+spear~
+這把矛是一般士兵使用的。
+~
+X bronze~
+
+#10646
+staff cursed~
+詛咒之杖(a cursed staff)~
+一把帶有詛咒的杖(a cursed staff)被擺在這裡。~
+~
+4 4820 16385
+27~ 25~ 25~ blindness~
+8 0 0
+A
+18 -5
+A
+19 -5
+A
+12 50
+A
+13 -30
+A
+3 1
+A
+4 1
+A
+17 75
+A
+1 -2
+A
+5 -2
+A
+14 -50
+X black matter~
+
+#10647
+breast bronze breastplate~
+青銅胸甲(bronze breastplate)~
+這件胸甲(breastplate)是奈圖一般兵所使用的戰甲。~
+~
+9 0 9
+0~ 0~ 2501250~ 0~
+18 0 0
+X bronze~
+
+#10648
+shield hex hex-etched~
+抗魔盾(hex-etched shield)~
+這個盾(shield)帶有抵抗魔法的力量。~
+~
+9 64 513
+20~ 0~ 2501250~ 0~
+7 0 0
+A
+23 -3
+A
+24 -3
+A
+35 -3
+X silver~
+
+#10649
+leggings bronze~
+青銅腳脛(bronze leggings)~
+一雙青銅腳脛(bronze leggings)被擺在這裡。~
+~
+9 0 33
+0~ 0~ 2501250~ 0~
+3 0 0
+X bronze~
+
+#10650
+armguards bronze~
+青銅護臂(bronze armguards)~
+一雙青銅護臂(bronze armguards)被擺在這裡。~
+~
+9 0 4097
+0~ 0~ 2501250~ 0~
+3 0 0
+X bronze~
+
+#10651
+bed~
+床(bed)~
+一個很大的床(bed)被擺在這裡。~
+~
+12 0 0
+0~ 0~ 0~ 0~
+10000 0 0
+E
+bed~
+這是國王跟皇后的床。
+~
+X cloth~
+
+#10652
+hammer~
+大鎚子(hammer)~
+一把大鎚子(hammer)被擺在這裡。~
+~
+5 0 8193
+2501250~ 0~ 0~ 8~
+5 300 0
+A
+18 2
+A
+19 2
+
+C 300
+X metal~
+
+#10653
+potion blue~
+藍色藥水(blue potion)~
+一瓶藍色藥水(blue potion)被放在這裡。~
+~
+10 64 1
+28~ poison~ poison~ harm~
+2 1000 0
+E
+potion blue~
+這瓶藥水有一股古怪的氣味。
+~
+
+C 1000
+X liquid~
+
+#10654
+potion red~
+紅色藥水(red potion)~
+一瓶紅色藥水(red potion)被放在這裡。~
+~
+10 64 1
+28~ harm~ poison~ harm~
+2 1500 0
+E
+potion red~
+這瓶藥水似乎是一些被下過魔咒的血。
+~
+
+C 1500
+X liquid~
+
+#10655
+potion green~
+綠色藥水(green potion)~
+一瓶綠色藥水(green potion)被放在這裡。~
+~
+10 64 1
+38~ blindness~ poison~ curse~
+2 1500 0
+E
+potion green~
+這瓶藥水帶有死亡的詛咒。
+~
+
+C 1500
+X liquid~
+
+#10656
+white towel~
+白色絲巾(white towel)~
+一條白色絲巾(white towel)被擺在這裡。~
+~
+9 0 257
+0~ 0~ 501050~ 0~
+1 0 0
+X fiber~
+
+#10657
+sheet white~
+白色被子(white sheet)~
+一張折的很好的白色被子(white sheet)被擺在這裡。~
+~
+9 0 1025
+0~ 0~ 2501250~ 0~
+3 0 0
+X cloth~
+
+#10658
+key iron~
+鐵鑰匙(iron key)~
+一把巨大的鐵鑰匙(iron key)被遺忘在這裡。~
+~
+18 0 16385
+10685~ 0~ 0~ 0~
+1 0 0
+E
+key iron~
+這把鑰匙上面刻著「監獄」。
+~
+X iron~
+
+#10659
+teeth necklace~
+尖牙項鍊(teeth necklace)~
+你看到一串項鍊(necklace)被放在這邊。~
+~
+9 532 5
+0~ 0~ 2501250~ 0~
+1 0 0
+E
+teeth necklace~
+這串項鍊是由失蹤的囚犯們所殘存的牙齒組成的。
+~
+A
+18 -2
+A
+19 4
+X gem~
+
+#10660
+wand command~
+指揮魔杖(wand of command)~
+一把帶有制服他人能力的魔杖(wand)被擺在這裡。~
+~
+3 2113 16385
+26~ 10~ 10~ charm person~
+1 0 0
+X gem~
+
+#10661
+lance glory~
+榮耀之槍(The Lance of Glory)~
+傳說中奈圖王國的寶物 - 榮耀之槍(The Lance of Glory)被丟在這裡。~
+~
+5 1025 8193
+4501450~ 0~ 0~ 2~
+15 500000 0
+E
+lance glory~
+這把長槍是奈圖王國(The Kingdom of Naytil)的寶物，屬於聖騎士尼可拉斯。
+上面有一個奈圖王國的皇家紋章。
+~
+Z 1
+A
+19 4
+A
+18 3
+A
+2 1
+A
+43 10
+H star fire~ 15 40 4
+H star fire~ 20 40 4
+H star fire~ 30 40 4
+C 500000
+P 2048|1048576
+X mithril~
+
+#10662
+crystal purity~
+聖潔水晶(Crystal of Purity)~
+一個聖潔水晶(Crystal of Purity)飄在半空中，散發出神聖的力量。~
+~
+1 1025 1
+0~ 0~ -1~ 0~
+1 100000 0
+C 100000
+X crystal~
+
+#10663
+cloak dark magic~
+闇魔披風(dark-magic cloak)~
+一件擁有吸收魔法力量的披風(cloak)被丟在這裡。~
+~
+9 3332 1025
+0~ 0~ 2501250~ 0~
+5 0 0
+E
+words~
+上面寫著
+「這件披風帶有極為強大的魔力，但它也會從使用者身上吸收魔力。使用時必須小心。」
+~
+E
+cloak dark~
+一件接近全黑的披風，裡面寫著一些字(words)。
+~
+A
+42 3
+A
+40 5
+A
+21 10
+A
+17 10
+A
+12 -150
+P 2048|1048576
+H soulsteal~ 10 36 4
+X fiber~
+
+#10664
+crystal purity~
+聖潔水晶(Crystal of Purity)~
+一個聖潔水晶(Crystal of Purity)飄在半空中，散發出神聖的力量。~
+~
+1 1025 1
+0~ 0~ -1~ 0~
+1 100000 0
+E
+crystal purity~
+這是奈圖王國的大巫師 - 艾佛(Ifor)所持有的水晶，擁有驅逐邪惡的力量。
+~
+A
+12 50
+A
+4 1
+A
+3 1
+H shield~ 25 36 1
+C 100000
+X crystal~
+
+#10665
+paladin gauntlets~
+聖騎士護手(paladin gauntlets)~
+一套發出萬丈光芒的護手(gauntlets)被丟在這裡。~
+~
+9 67 129
+0~ 0~ 2501250~ 0~
+5 0 0
+A
+18 3
+A
+19 2
+P 2048|1048576
+X steel~
+
+#10666
+wood flowerpot~
+花盆(flowerpot)~
+一個看起來由不知名木頭所製成的花盆(flowerpot)正靜靜地躺在這裡。~
+~
+15 256 1
+0~ 0~ 0~ 0~
+15 0 0
+X juniper~
+
+#10667
+head~
+血淋漓的人頭(head)~
+聖騎士團首領的人頭(head)正靜靜地躺在地上。~
+~
+15 256 1
+0~ 0~ 0~ 0~
+15 0 0
+X flesh~
+
+#10668
+holy knight lance~
+聖潔騎士槍(holy knight lance)~
+一把隱隱約約散發出光芒的槍(lance)正靜靜地躺在這裡。~
+~
+5 1|64|1024|65536 8193
+200~ 0~ 0~ 2~
+20 0 0
+A
+1 1
+A
+18 8
+A
+19 12
+A
+43 35
+H flamestrike~ 50 40 4
+H dispel evil~ 45 40 4
+H heal~ 20 20 4
+P 2048|1048576
+C 100000
+X mithril~
+>obj_repop 100~
+oset self v1 = 50
+oset self v2 = 55
+~
+>obj_act wear~
+if objval1($o) != 50
+	echoat $n 裝備更新完成。
+	oforcer here oload 10668 40 $n target
+	ogoto self
+	purge self
+endif
+~
+|
+
+#10669
+holy cleric wand~
+神聖權杖(holy cleric wand)~
+一把發出亮眼光芒的權杖(wand)正靜靜地躺在這裡。~
+~
+9 2|1024|65536 16385
+0~ 0~ 200~ 0~
+5 0 0
+A
+4 1
+A
+3 1
+A
+24 -3
+A
+44 12
+C 35000
+X topaz~
+
+#10670
+holy medal~
+聖潔徽章(holy medal)~
+一個上面似乎刻著字的徽章(medal)正靜靜躺在這裡。~
+~
+9 64|1024|65536|16384 513
+0~ 0~ 125~ 0~
+7 0 0
+A
+3 2
+A
+4 2
+A
+24 -5
+A
+35 -2
+X topaz~
+
+#10671
+holy medal~
+聖潔徽章(holy medal)~
+一個上面似乎刻著字的徽章(medal)正靜靜躺在這裡。~
+~
+9 64|1024|65536 513
+0~ 0~ 125~ 0~
+7 0 0
+A
+3 2
+A
+4 2
+A
+24 -5
+A
+35 -2
+X topaz~
+
+#10672
+blue flaming gauntlets~
+藍色烈焰手套(Blue flaming gauntlets)~
+一雙發出藍色烈焰的手套(gauntlets)掉在這裡。~
+~
+9 2|16|64|2048 1|128
+0~ 0~ 500~ 0~
+3 0 0
+A
+27 -8
+A
+18 -4
+A
+17 -11
+X metal~
+H fireball~ 30 40 4
+
+#10673
+potion detect invis~
+偵測隱形藥水(potion of detect invis)~
+一瓶神秘的的藥水(potion)放置在地上。~
+~
+10 64 1
+30~ detect invis~  ~  ~
+1 0 0
+L 1
+X liquid~
+
+#10674
+potion detect hidden~
+偵測藏匿藥水(potion of detect hidden)~
+一瓶神秘的藥水(potion)放置在地上。~
+~
+10 64 1
+30~ detect hidden~  ~  ~
+1 0 0
+L 1
+X liquid~
+
+#10675
+note~
+紙條(note)~
+一張骯髒污穢的紙條(note)掉在地上。~
+~
+8 0 1
+0~ 0~ 0~ 0~
+1 0 0
+E
+note~
+這張紙條看來非常老舊，你實在無法解讀上面所寫的文字。
+也許城堡內有人能幫助解讀。
+~
+X paper~
+#10676
+quarral~
+方鏃箭(quarral)~
+一綑方鏃箭(quarral)掉落在地上。~
+~
+27 0 1|65536
+500~ 65~ 75~ 50~
+25 100000 0
+L 38
+X steel~
+
+#10677
+venomous arrow~
+淬毒箭矢(venomous arrow)~
+一綑傳來陣陣異味的箭矢(arrow)被人丟棄在地上。~
+~
+27 131072 1|65536
+400~ 45~ 55~ 25~
+25 100000 0
+L 38
+H poison~ 60 40 16
+X wooden~
+
+#10678
+exploding arrow~
+爆炸箭矢(exploding arrow)~
+一綑傳來陣陣硫磺味的箭矢(arrow)掉落在地上。~
+~
+27 0 1|65536
+400~ 45~ 55~ 25~
+25 100000 0
+L 38
+H fireball~ 50 40 16
+X wooden~
+
+#10679
+light cavalry horse~
+輕型戰馬(light cavalry horse)~
+輕型戰馬~
+~
+29 4194304 131073
+-1~ 4160~ 0~ 0~
+0 0 0
+A
+18 2
+A
+39 -10
+E
+light cavalry horse~
+這是一匹輕型的戰馬，只配有馬鞍等基本騎馬工具；不過由於裝備輕巧，
+非常適合用來做來衝刺、突擊的任務。
+~
+O 10654
+
+#10680
+heavy cavalry horse~
+重型戰馬(heavy cavalry horse)~
+重型戰馬~
+~
+29 4194304 131073
+50~ 4224~ 0~ 0~
+10 0 0
+A
+19 2
+A
+17 -15
+E
+heavy cavalry horse~
+這是一批重型的戰馬，除了馬鞍等基本騎馬工具外，還配有馬匹用裝甲用
+以抵禦攻擊，適合在重重攻擊下進行衝刺、突擊的任務。
+~
+O 10655
+#10681
+lance glory~
+榮耀之槍(The Lance of Glory)~
+傳說中奈圖王國的寶物 - 榮耀之槍(The Lance of Glory)被丟在這裡。~
+~
+5 1025 8193
+4501450~ 0~ 0~ 2~
+15 500000 0
+E
+lance glory~
+這把長槍是奈圖王國(The Kingdom of Naytil)的寶物，屬於聖騎士尼可拉斯。
+上面有一個奈圖王國的皇家紋章。
+~
+A
+2 1
+A
+18 5
+A
+19 7
+A
+43 45
+H star fire~ 33 30 4
+H star fire~ 20 40 4
+C 500000
+P 2048|1048576
+X mithril~
+>obj_repop 100~
+oset self v1 = 35
+oset self v2 = 45
+~
+>obj_act wear~
+if objval2($o) != 45
+	echoat $n 裝備更新完成。
+	oforcer here oload 10681 37 $n target
+	ogoto self
+	purge self
+endif
+~
+|
+#0
+
+
+
+#ROOMDATA
+#10597
+奈圖馬房~
+奈圖的馬房被建在城牆邊，因此這裡對馬來說很安全也很溫暖。設計這座馬房的人把
+它設計成空氣較為容易流通，因此馬也更健康了。
+~
+0 8|1073741824 0
+D2
+你幾乎無法找出回城堡東邊角落的路了。
+~
+~
+0 -1 10675
+S
+#10598
+奈圖馬房~
+奈圖的馬房被建在城牆邊，因此這裡對馬來說很安全也很溫暖。設計這座馬房的人把
+它設計成空氣較為容易流通，因此馬也更健康了。
+~
+0 8 0
+S
+#10599
+奈圖酒家~
+這是一家擠滿顧客的酒家，或許是奈圖城堡就這裡一個可以放鬆心情的地方吧？裡
+面的空氣很糟，聲音很吵，氣氛很熱絡。許多酒客們已經趴在桌上呼呼大睡，也有許多
+人在酒精的助擁下手舞足蹈。來到這種地方除了大口灌酒大口吃肉外大概也沒其他事好
+做。北邊有一扇門可以離開。
+~
+0 4|8|131072|262144|524288|1048576 0
+D0
+~
+~
+0 -1 10669
+D2
+~
+~
+0 -1 10600
+S
+#10600
+奈圖酒家~
+這是一家擠滿顧客的酒家，或許是奈圖城堡就這裡一個可以放鬆心情的地方吧？裡
+面的空氣很糟，聲音很吵，氣氛很熱絡。許多酒客們已經趴在桌上呼呼大睡，也有許多
+人在酒精的助擁下手舞足蹈。來到這種地方除了大口灌酒大口吃肉外大概也沒其他事好
+做。
+~
+0 4|8|131072|262144|524288|1048576 0
+D0
+~
+~
+0 -1 10599
+S
+#10601
+奈圖的王座室~
+你正在奈圖王國國王所居住的地方。牆上的畫描述著以前發生的大戰。上面畫著一隻
+巨大的惡魔與一群冒險者大戰。天空變暗、大地震撼，法師們使出強大的咒語。在畫
+面中間，是一個穿著一件發光的戰甲，手拿劍的人類，他就是這個王國的初代國王。
+在你面前的是王座，底下有一塊黃銅牌子(plaque)。
+~
+0 12 0
+E
+plaque~
+The City of Naytil was dedicated to Pedrin and Melana on 1995 September 27.
+由混沌幻世(ROC)的闇之冥王星普魯多(Pluto)與史雷(Slay)進行翻譯與改編。
+~
+D2
+南邊是大廳。
+~
+~
+0 -1 10602
+S
+#10602
+大廳~
+你正站在大廳裡，牆上的畫描述著初代國王如何統一王國，登上王位。在北方就是
+國王的王座了。東邊有一個很大的大理石階梯到餐廳。
+~
+0 8 0
+D0
+那裡就是國王的王座。
+~
+~
+0 -1 10601
+D1
+你看到奈圖城堡漂亮的大廳。
+~
+~
+0 -1 10605
+D2
+那裡是入口大廳。
+~
+~
+0 -1 10603
+D3
+一個大理石階梯，通到二樓。
+~
+~
+0 -1 10611
+S
+#10603
+入口大廳中央~
+你正站在入口大廳的正中央。牆上畫著一個偉大的聖騎士帶領著大軍與人民前往一個
+荒地。下面則畫著荒地中建起了一座巨大的城市。最後一個圖上的城璧寫著「奈圖」。
+~
+0 8 0
+D0
+那裡是入口大廳的北方。
+~
+~
+0 -1 10602
+D2
+那裡是入口大廳的前面。
+~
+~
+0 -1 10604
+S
+#10604
+進入入口大廳~
+巨大的門抵擋著外來的邪惡勢力。這座城堡是奈圖王國最後的要塞，也是奈圖王國成
+立的地方。
+~
+0 8|4 0
+D0
+那裡是入口大廳的中心。
+~
+~
+0 -1 10603
+D1
+那裡有個很高級的門。
+~
+~
+3 -1 10528
+D3
+一個普通的門，上面寫著「閒雜人等勿進入」。
+~
+~
+3 -1 10652
+S
+#10605
+大廳~
+你正在一個大理石大廳上走著。屋頂約離地18尺，上面有個拱門支撐著。大廳中間是
+一個很大的桌子，等著用餐開始。東邊似乎有人在煮些東西。
+~
+0 8 0
+D2
+那裡是大廳。
+~
+~
+0 -1 10606
+D3
+那裡是奈圖的入口大廳。
+~
+~
+0 -1 10602
+S
+#10606
+大廳~
+你正在一個大理石大廳上走著。屋頂約離地18尺，上面有個拱門支撐著。大廳中間是
+一個很大的桌子，等著用餐開始。東邊似乎有人在煮些東西。東邊有個門
+~
+0 8 0
+D0
+大廳繼續往北繼續下去。
+~
+~
+0 -1 10605
+D1
+那裡就是食物香味傳來的地方。
+~
+~
+3 -1 10607
+S
+#10607
+很大的廚房~
+這個大廚房有象牙製的爐子與大量的木材。一旁擺著很多廚具。
+一個石門通往北邊。
+一個金屬門通往東邊。
+一個木門通往南邊。
+一個擺動著的門通往西邊。
+~
+0 8 0
+D0
+門上寫著「儲水室」。
+~
+~
+3 -1 10608
+D1
+門上寫著「冷藏室」。
+~
+~
+3 -1 10609
+D2
+門上寫著「餐飲室」。
+~
+~
+3 -1 10610
+D3
+一個很大的大廳。
+~
+~
+3 -1 10606
+S
+#10608
+儲水室~
+你正在一個儲水室裡。水從屋頂流下來，流往南邊一個池子。南邊有一座石門。
+~
+0 8 0
+D2
+那是一個很大的廚房。
+~
+~
+1 -1 10607
+S
+#10609
+冷藏室~
+這裡儲藏著大量的牛肉、雞肉、魚肉、等易腐爛的食物。大塊的冰塊被放在這裡防止
+肉腐敗。西邊有一道金屬門。
+~
+0 8 0
+D3
+一個巨大的廚房。
+~
+~
+1 -1 10607
+S
+#10610
+奈圖的餐飲室~
+這個房間擺著很多個巨大的櫃子，裡面裝滿了食物，使得奈圖即使被敵人包圍很久，
+仍然不會缺乏食物。一個木門通往北邊。
+~
+0 8 0
+D0
+一個巨大的廚房。
+~
+~
+1 -1 10607
+S
+#10611
+大理石階梯~
+一個巨大的大理石階梯延伸到二樓。搬運這麼大塊的大理石肯定相當的困難，因此這
+個階梯肯定費了不少財力才建成的。
+~
+0 8 0
+D1
+東邊是大廳。
+~
+~
+0 -1 10602
+D4
+那個階梯繼續往上面去。
+~
+~
+0 -1 10612
+S
+#10612
+大理石階梯~
+這個階梯正擺在一大群的畫中央，形成一副壯觀的景象。
+~
+0 8 0
+D4
+階梯通往樓上一個走廊。
+~
+~
+0 -1 10613
+D5
+從那裡可以從階梯上往下走。
+~
+~
+0 -1 10611
+S
+#10613
+樓上的走廊~
+這個走廊大量的使用白色橡木做為裝飾，建築師肯定是一個很好的藝術家。只是比起
+樓下就差多了。這裡是城內人們睡覺休息的地方。
+~
+0 8 0
+D1
+白色橡木的走廊繼續往東延伸。
+~
+~
+0 -1 10614
+D3
+白色橡木的走廊繼續往西延伸。
+~
+~
+0 -1 10618
+D5
+一個巨大的大理石階梯通往樓下。
+~
+~
+0 -1 10612
+S
+#10614
+白色橡木走廊~
+這個走廊大量的使用白色橡木做為裝飾，建築師肯定是一個很好的藝術家。地上的地
+毯讓你感到十分地舒適。北邊有一道漂亮的門，南邊則有一道巨大的門。
+~
+0 8 0
+D0
+一個經過精心設計的桉木門。
+~
+~
+3 -1 10634
+D1
+白色橡木的走廊繼續往東延伸。
+~
+~
+0 -1 10615
+D2
+一個巨大的門擋住你的去路。
+~
+~
+87 10641 10633
+D3
+那裡有一個大階梯。
+~
+~
+0 -1 10613
+S
+#10615
+白色橡木走廊~
+這個走廊大量的使用白色橡木做為裝飾，建築師肯定是一個很好的藝術家。這個走廊
+整理的很乾淨，負責這裡的總管必定是個很有責任感的人。北邊有一道金屬門，南邊
+則是一個木門。
+~
+0 8 0
+D0
+一個很厚重的金屬門擋住你的去路。
+~
+~
+3 -1 10635
+D1
+白色橡木的走廊繼續往東延伸。
+~
+~
+0 -1 10616
+D2
+這個木門上寫著「請保持安靜」。
+~
+~
+3 -1 10637
+D3
+白色橡木的走廊繼續往西延伸。
+~
+~
+0 -1 10614
+S
+#10616
+白色橡木走廊~
+你在這裡感覺到兩股強大的力量。北(north)邊那道門有一股強大的神秘力量吸引著你，
+南(south)邊的門則發出平靜的神聖力量。
+~
+0 8 0
+E
+south~
+門上有一個符號：一把劍在一個十字上。這大概就是奈圖王國的神的符號。
+這個神是這個國家的眾神之王。他十分地正義，並守護著世上所有的聖騎士。
+~
+E
+north~
+門上有一個神秘的符號。那大概就是吸引著你的力量。
+~
+D0
+~
+~
+3 -1 10638
+D1
+你看到走廊到那裡就沒路了。
+~
+~
+0 -1 10617
+D2
+~
+~
+3 -1 10639
+D3
+白色橡木的走廊繼續往西延伸。
+~
+~
+0 -1 10615
+S
+#10617
+白色橡木走廊~
+南邊傳來一陣武器互撞的聲音，那裡可能是個危險的地方。往北是城主的房間。
+
+~
+0 8 0
+D0
+北邊有一道黃金門，設計與建造這道門的人肯定是世界級的建築師。
+~
+~
+3 -1 10640
+D2
+一道毀壞的門通往南邊。
+~
+~
+3 -1 10641
+D3
+白色橡木的走廊繼續往西延伸。
+~
+~
+0 -1 10616
+S
+#10618
+白色橡木走廊~
+你聞到很多食物的香味。那大概是從樓下的廚房傳來的吧！你不禁開始餓了起來。
+北邊有一道老舊的門，南邊有一道巨大的門。
+~
+0 8 0
+D0
+這道門雖然老舊，但還沒有損壞。
+~
+~
+3 -1 10630
+D1
+那裡有一個大階梯。
+~
+~
+0 -1 10613
+D2
+一道巨大的門擋住你的去路。
+~
+~
+87 10641 10632
+D3
+白色橡木的走廊繼續往東延伸。
+~
+~
+0 -1 10619
+S
+#10619
+白色橡木走廊~
+你感到一陣微風不斷地吹了進來。走在這裡的地毯上讓你感到十分地舒適。北邊有一
+道鐵門，南邊有一道橡木門。
+~
+0 8 0
+D0
+這個鐵門通往北邊。
+~
+~
+3 -1 10627
+D1
+白色橡木的走廊繼續往東延伸。
+~
+~
+0 -1 10618
+D2
+這道橡木門通往南邊，你聽到一些寫粉筆的聲音。
+~
+~
+3 -1 10629
+D3
+白色橡木的走廊繼續往西延伸。
+~
+~
+0 -1 10620
+S
+#10620
+白色橡木走廊~
+在這裡你聞到了一股霉味，跟城堡裡其他地方完全不同。那道霉味從南邊傳來。
+南、北邊各有一道門。
+~
+0 8 0
+D0
+一道暗色的橡木門通往北邊。
+~
+~
+3 -1 10625
+D1
+白色橡木的走廊繼續往東延伸。
+~
+~
+0 -1 10619
+D2
+一道黑色的門通往南邊。
+~
+~
+3 -1 10624
+D3
+白色橡木的走廊到西邊就沒路了。
+~
+~
+0 -1 10621
+S
+#10621
+白色橡木走廊~
+你在這個走廊上感到一陣新鮮空氣吹了過來。你在牆上看到幾張畫，都是公主莎麗娜
+與她的家人的畫像。南北邊都各有一道門。
+~
+0 8 0
+D0
+一個粉紅色的門。
+~
+~
+3 -1 10622
+D1
+白色橡木的走廊繼續往東延伸。
+~
+~
+0 -1 10620
+D2
+一個粉紅色的門，上面有一隻玩具熊的圖案。
+~
+~
+3 -1 10623
+S
+#10622
+公主的臥室~
+這房間裡有一個很大的床，上面有些毛絨絨的枕頭。一旁有不少漂亮的家具擺在一邊，
+一旁擺著公主的玩具。對一個小女孩來說，這可以說是一個完美的房間。
+一道粉紅色的門通往南邊。
+~
+0 8 0
+D2
+一個粉紅色的門。
+~
+~
+3 -1 10621
+S
+#10623
+公主的遊樂室~
+一大堆的玩具，箱子，玩具熊，跟玩偶被擺在這房間裡。它們全部都被放在一個玻璃櫃中。
+這個公主大概是個很愛乾淨的小孩，這裡整理的還算乾淨，玩具也排的很整齊。
+一道門通往北邊。
+~
+0 8 0
+D0
+一個粉紅色的門，上面有一隻玩具熊的圖案。
+~
+~
+3 -1 10621
+S
+#10624
+黑色皮革房間~
+這裡是保母的房間。但似乎沒有人發現到這間房間的存在。你開始懷疑為什麼這房間
+會被佈置成這個樣子。北邊有一道門。
+~
+0 8 0
+D0
+一個門通往北邊。
+~
+~
+3 -1 10620
+S
+#10625
+洗衣房~
+皇族每天換洗的衣物都會在這裡被清洗乾淨。一道玻璃門通往北邊一間充滿蒸汽的房間。
+至於南邊則有一道黑色橡木門。
+~
+0 8 0
+D0
+一道門通往北邊。
+~
+~
+3 -1 10626
+D2
+一道黑色橡木門通往南邊。
+~
+~
+3 -1 10620
+S
+#10626
+淋浴室~
+這裡的蒸汽多到你幾乎看不清楚眼前的景象，甚至難以呼吸。你只希望可以把眼前這
+些煩人的蒸汽全弄走。這裡的牆壁鋪上了白色磁磚，看起來很不錯。南邊有一道門通
+往洗衣室。
+~
+0 8 0
+D2
+一道門通往南邊。
+~
+~
+3 -1 10625
+S
+#10627
+樓梯底部~
+這個樓梯上畫著眾多的獨角獸與天馬，背景被漆成天藍色與草原般的綠色。
+這個壁畫一直延伸到這個樓梯的頂部。
+~
+0 8 0
+D2
+一道銀色柵門往南通往一個走廊。
+~
+~
+3 -1 10619
+D4
+一個鋪著綠色地毯的階梯往上通行。
+~
+~
+0 -1 10628
+S
+#10628
+樓梯頂部~
+這副壁畫在這裡是一片夜晚與白天的混合。充滿繁星的夜空與白天交錯在一起，形成
+一副特殊的景象。牆上有一道門往北通行。
+~
+0 8 0
+D0
+一道綠色的門通往北邊。
+~
+~
+3 -1 10646
+D5
+一個鋪著綠色地毯的階梯往二樓通行。
+~
+~
+0 -1 10627
+S
+#10629
+教室~
+這個教室就是莎麗娜公主學習的地方。她在這裡學習宮殿的禮儀與公主應有的舉止。
+莎麗娜這麼小就開始被教導這些事物的原因是，眾人希望她能夠成為一個好公主，並
+嫁給一個值得繼承奈圖王國王位的人。
+~
+0 8 0
+D0
+一道橡木門往北通行。
+~
+~
+3 -1 10619
+S
+#10630
+小廚房~
+這一個小廚房是為了王室而存在的。樓下的大廚房是為了一次製作大批人的食物，而
+這個小廚房則僅製作王室成員的食物。一陣香味從一旁作菜的大廚那裡吹了過來。
+東邊與南邊各有一道門。
+~
+0 8 0
+D1
+一道虛掩著的門往東通行。
+~
+~
+3 -1 10631
+D2
+一扇破舊的門往南通行。
+~
+~
+3 -1 10618
+S
+#10631
+餐飲室~
+這個餐飲室存放著這個樓層廚房所需的物品，而廚師便不需要到樓下的大餐飲室。
+整間房間裡最引人注意的物品便是一旁，使食物保持新鮮的冰箱。
+西邊有一道虛掩著的門。
+~
+0 8 0
+D3
+這道門僅被虛掩著，方便廚師們進出。
+~
+~
+3 -1 10630
+S
+#10632
+武器庫~
+這裡大部分的武器都被安全地鎖了起來，僅有少部分被擺在一旁以備萬一。住在城堡
+裡的門了解這些武器的重要性，因此他們教導孩子們不要懼怕武器。
+~
+0 8 0
+D0
+一道巨大的門通往北邊。
+~
+~
+87 10641 10618
+S
+#10633
+防具庫~
+城裡所有的防具都被鎖在這裡，只有幾件被遺忘在地上。
+~
+0 8 0
+D0
+這道又重又大的門是為了防止入侵者。
+~
+~
+87 10641 10614
+S
+#10634
+私人餐廳~
+這個餐廳只擺了幾個小桌子，看來是某些家庭的私人餐廳。南邊有一道不錯的門。
+~
+0 8 0
+D2
+一道裝飾的很漂亮的門通往南邊。
+~
+~
+3 -1 10614
+S
+#10635
+樓梯底部~
+這是一個白色的樓梯，而往上的樓梯則看起來更白了。雖然這裡空氣不怎麼好，但並
+不很渾濁。牆上有一張紙，寫著一些警告(warning)。南邊有一道黑色柵門。
+~
+0 8 0
+E
+warning~
+如果你愛惜你的性命的話，別再往上走了。那裡有一隻野獸守衛著我的工廠。
+~
+D2
+一道厚重的黑色柵門擋住了你的去路。
+~
+~
+3 -1 10615
+D4
+純白色的階梯。
+~
+~
+0 -1 10636
+S
+#10636
+樓梯頂部~
+這個白色樓梯的頂部被打掃的非常乾淨，幾乎沒有任何灰塵。看來有些生物居住在這裡...。
+牆上掛著一張紙(sign)。
+~
+0 8 0
+E
+door~
+門後傳來陣陣可怕的聲音，也許是惡魔(demon)...。
+~
+E
+sign~
+你已經被警告了，不要越過那道門！
+~
+D0
+一道不祥的黑門(door)...。
+~
+~
+3 -1 10642
+D5
+往下走看起來會比越過那道門好。
+~
+~
+0 -1 10635
+S
+#10637
+教師的房間~
+這塊空氣渾濁的區域就是公主那又老又古板的教師住的地方。這裡空氣非常的糟糕，
+但她似乎絲毫不以為意。北邊有一道門。
+~
+0 8 0
+D0
+那道門跟這整個房間一樣－又空又無聊。
+~
+~
+3 -1 10615
+S
+#10638
+巫師的房間~
+這個樸素的房間其實是一個巫師居住的地方，但你對一個巫師在房間內什麼都沒放而
+感到驚奇。原來，他使用一種強大的法術將所有的物品藏了起來。
+一道門通往南邊。
+~
+0 9224 0
+E
+symbol~
+這是一個很強大的魔法符咒，它會保持這個房間平靜。
+~
+D2
+一道門通往南邊，上面有一個符號(symbol)。
+~
+~
+3 -1 10616
+S
+#10639
+神職人員的房間~
+這裡就是奈圖城的高階牧師休息的地方。從這裡的乾淨程度看來，房間主人一定也是
+個潔淨的人。一道門通往北邊。
+~
+0 1544 0
+D0
+一道非常乾淨的門，上面連一絲痕跡都找不到。
+~
+~
+3 -1 10616
+S
+#10640
+國王與皇后的房間~
+你一進到這房間就被這難以致信的景象給嚇到了。這個房間每一個部份都顯出了奈圖
+藝術家們精湛的工藝技術。這整座房間的景象徹底地讓你感到真正的藝術。牆上還掛
+了一副國王與皇后的畫像(painting)。
+一道門通往南邊。
+~
+0 8 0
+E
+painting~
+這副畫像作的非常的好，簡直就像他們正站在你面前一般。
+~
+D2
+一道用黃金裝飾著的門通往南邊。
+~
+~
+3 -1 10617
+S
+#10641
+訓練室~
+這間房間是為了讓國王保持強健的身體而建造的。裡面擺著許多假人讓國王鍛鍊。
+一道門通往北邊
+~
+0 8 0
+D0
+一道毀壞的門顯出這裡曾發生過的一番掙扎。
+~
+~
+3 -1 10617
+S
+#10642
+五芒星陣~
+你無視先前的警告，來到了這個被五芒星陣保護住的房間。一個惡魔被放在這裡守護
+著這一切。牠將把你從內到外徹底撕裂！一道黑色的門往南通行。
+~
+0 8 0
+D0
+那裡通往北邊一個工作台。
+~
+~
+0 -1 10643
+D1
+一個很大的雕像站在東邊。
+~
+~
+0 -1 10644
+D2
+這道黑門通往南邊。
+~
+~
+3 -1 10636
+S
+#10643
+亂七八糟的工作台~
+這個工作台上擺了一堆亂七八糟的東西，你看了看四周，決定不碰它們。你注意到一
+本擺在上面的書(book)。
+~
+0 8 0
+E
+book~
+上面寫著：
+「我今天試著測試一個新兵器，但是這個實驗並不成功，我晚點會處理這個失敗作。」
+~
+D1
+一陣刺鼻的藥物味讓你感到很難受。如果你走過去真的可能會吐出來的。
+~
+~
+0 -1 10645
+D2
+一道巨大的五芒星陣，往那裡走是很危險的。
+~
+~
+0 -1 10642
+>room_command search p notebook~
+if is_qmark($n) == adv_myroad 300009
+	if is_qmark($n) !& adv_myroad 100004
+		echoat $n 你在這裡翻找著。
+		stun $n 20
+		callout 2 echoat $n 你找到一本筆記了。
+		callout 2 oload 35118 45 $n target
+		callout 2 mod_qmark $n adv_myroad v0 | 4
+	else
+		echoat $n 你在這裡已經找到想要的東西了，沒必要再找。
+	endif
+else
+	echoat $n 這本書沒什麼特別的。
+endif
+~
+|
+S
+#10644
+人偶製造區~
+這裡到處都灑滿了碎鐵，黏土，甚至血肉。但這些都不重要，你只看到眼前那個會動
+的人偶。一旁桌上有一本書(book)。
+~
+0 8 0
+E
+book~
+上面寫著：
+「我成功了，一個生存著的生物。我創造了一個可以適應各種情況的生物。再修改一
+  下它的缺點，它就可以取代國王整支部隊...。今後在戰爭中我們國家的年輕人就
+  不需要為了保護國家而去戰場上赴死了...。」
+                                              奈圖王國鍊金師 荷菲夫(Hovav)
+~
+D0
+一陣刺鼻的藥物味讓你感到很難受。如果你走過去真的可能會吐出來的。~
+~
+0 -1 10645
+D3
+一道巨大的五芒星陣，往那裡走是很危險的。
+~
+~
+0 -1 10642
+>room_command search p book~
+if is_qmark($n) == adv_myroad 300008
+	echoat $n 你在書中看到一張便籤(note)貼在上面，或許可以讀看看。
+	mod_qmark $n adv_myroad v2 = 9
+else
+	echoat $n 這本書沒什麼特別的。
+endif
+~
+>room_command search p note~
+if is_qmark($n) == adv_myroad 300009
+	echoat $n 你讀東西是用手找的嗎？
+else
+	echoat $n 什麼？
+endif
+~
+>room_mask read note~
+if is_qmark($n) == adv_myroad 300009
+	echoat $n 便籤(note) - [1;33m紙質(paper)[0m
+	echoat $n 上面寫著：
+	echoat $n 「如果你看到這張紙條，這代表著在戰場上的我已經死亡了。但是為了國家，我死不
+	echoat $n 　足惜；唯一遺憾是我的研究將隨著我的離去而被埋沒在此。但是現在你發現了這張
+	echoat $n 　紙條，就代表著我畢生的心血能夠再次重現於世。比起肉體上的消亡，我的精神將
+	echoat $n 　永存後世，再也沒有比這件事更令人振奮了。我的筆記(notebook)在工作臺台，將
+	echoat $n 　它從黑暗中帶離吧，有緣人！」
+	echoat $n 　　　　　　　　　　　　　　　　　　　　　　　奈圖王國鍊金師 荷菲夫(Hovav)
+else
+	echoat $n [33m你在這裡沒看到那玩意兒。[0m
+endif
+~
+|
+S
+#10645
+製藥工房~
+這整個亂七八糟的工作台上擺了好幾種實驗用剩的液體。喝下它們是一個十分不智的
+決擇。一旁桌上擺著一本筆記本(notebook)，解釋著整個實驗。
+~
+0 8 0
+E
+notebook ~
+上面寫著：
+「今天我試著為國王製作一種可以將人傳送到某地的藥水，可是實驗並不成功。我
+  感覺到似乎有些強大的外敵試著阻止我的實驗，每當我快要成功時，藥水忽然就
+  開始冒毒...。我越來越為這事感到失望了。」
+~
+D2
+一個巨大的雕像站在南邊那裡。
+~
+~
+0 -1 10644
+D3
+一個亂七八糟的工作台，擺著一堆危險的東西。
+~
+~
+0 -1 10643
+>room_command search p notebook~
+if is_qmark($n) == adv_myroad 300009
+	if is_qmark($n) !& adv_myroad 100004
+		echoat $n 你在這裡翻找著。
+		stun $n 20
+		callout 2 echoat $n 你沒找到想要的東西。
+	else
+		echoat $n 你在這裡已經找到想要的東西了，沒必要再找。
+	endif
+else
+	echoat $n 這本筆記本沒什麼特別的。
+endif
+~
+|
+S
+#10646
+牧場~
+這是一個很好的牧場，一個建築物發出光來，照亮了整個牧場。這裡的動物們自由地
+在這裡到處走動，你感到心情十分放鬆。
+~
+0 0 2
+D0
+一個平靜的牧場。
+~
+~
+0 -1 10647
+D1
+你聽到水從高處往下沖擊的聲音。
+~
+~
+0 -1 10648
+D2
+一道綠色的門。
+~
+~
+3 -1 10628
+S
+#10647
+牧場~
+這裡住著很多動物。莎麗娜公主常常溜出來這裡玩。你雖然到處都看得到動物存在的
+跡象，但你怎麼找都找不到牠們。
+~
+0 0 2
+D1
+一個平靜的牧場。
+~
+~
+0 -1 10649
+D2
+一個森林往東延伸。
+~
+~
+0 -1 10646
+S
+#10648
+大瀑布~
+怒濤一般的水不斷地從崖上往下流，從底部到崖頂大概有一百多尺。瀑布沖擊下來時，
+一陣水氣形成一陣霧。這裡可以說是一個極為美麗的大自然奇觀。
+~
+0 0 3
+D0
+一個森林往北延伸。
+~
+~
+0 -1 10649
+D3
+一個平靜的牧場。
+~
+~
+0 -1 10646
+S
+#10649
+森林深處~
+這些暗綠色的針葉樹似乎對你傳達一些訊息。一陣陣清涼的空氣慢慢地吹了過來，有
+如樹木在對你說話一般。一個搖動不定的階梯通往一個巨大的樹。
+~
+0 0 3
+D2
+南邊水沖擊的聲音幾乎要讓你耳朵聾掉了。
+~
+~
+0 -1 10648
+D3
+一個森林往西延伸。
+~
+~
+0 -1 10647
+D4
+不穩的板子被釘在樹上，因此它一直搖動。
+~
+~
+0 -1 10650
+S
+#10650
+往樹上爬~
+你好不容易爬上了那個搖來搖去的階梯，到了上面來。這裡的景觀非常的好，你從這
+裡可以看到轟隆作響的大瀑布，以前那片巨大的牧場。神奇的大自然景觀讓你感到非
+常的平靜，放鬆。你忽然發現你頭上有一道祕門。
+~
+0 0 3
+D4
+一個小祕門就在搖搖晃晃的板子上面。
+~
+~
+3 -1 10651
+D5
+你下面是一片樹林與廣大的牧場。
+~
+~
+0 -1 10649
+S
+#10651
+樹屋~
+這裡原來就是莎麗娜公主在城外的一間小樹屋。也只有在這裡公主才能接觸到大自然
+而不陷入危險。北邊你看到一片廣大的山脈，包圍了城堡的東西兩面。這座山脈為奈
+圖城堡帶來了天險，防止從東西來的外敵。南邊是一座巨大的城牆與一座巨大的鐵門。
+因此居住在奈圖可說是相當安全。地板上有一道門。西邊有一個出口，可以從那裡跳
+到對面的山路上。
+~
+0 8 0
+D3
+從那裡可以到對面的山路上。
+~
+~
+0 -1 10400
+D5
+一個小祕門就在地板上面。
+~
+~
+3 -1 10650
+S
+#10652
+僕人的走廊~
+這條走廊只有城內的僕人會使用，因為它很接近主要的走廊，所以十分方便城堡內的
+僕人行動。這條走廊打掃的非常乾淨。東、北、南都各有一道門。
+~
+0 8 0
+D0
+一道樸素的門。
+~
+~
+3 -1 10656
+D1
+你聽到門外喧鬧的聲音。
+~
+~
+3 -1 10604
+D2
+一道樸素的門，上面寫著「請敲門」。
+~
+~
+3 -1 10655
+D3
+一條純潔的走廊。
+~
+~
+0 -1 10653
+S
+#10653
+僕人的走廊的中心~
+雖然是走廊的中心，但這裡仍然沒有什麼裝飾品。而且這裡也打掃的很乾淨。
+南北邊各有一道樸素的門。
+~
+0 8 0
+D0
+一道樸素的門通往北邊。
+~
+~
+3 -1 10658
+D1
+一條純潔的走廊。
+~
+~
+0 -1 10652
+D2
+一道樸素的門通往南邊，上面寫著「廁所」。
+~
+~
+3 -1 10657
+D3
+一陣微弱的蒸汽與灰水的氣味從那邊傳來。
+~
+~
+0 -1 10654
+S
+#10654
+僕人的走廊的終點~
+這個乾淨走廊的終點顯得有點潮濕，西邊的房間有一些蒸汽冒了出來，而南北邊各有
+一道門。
+~
+0 8 0
+D0
+一道樸素的門，上面寫著「亞麻布壁櫥」。
+~
+~
+3 -1 10660
+D1
+一條純潔的走廊。
+~
+~
+0 -1 10653
+D2
+一道樸素的門，上面寫著「沐浴室」。
+~
+~
+3 -1 10659
+D3
+一道樸素的門，上面寫著「洗衣室」。
+~
+~
+3 -1 10661
+S
+#10655
+僕役長的房間~
+這些奈圖的僕役長隨時都準備好要服務城內的人們。房間被設計成出入簡易，所以僕
+役長們可以在戰時快速前往協助城內的騎士。除此之外，這個房間佈置的相當的簡單。
+北邊有一道門。
+~
+0 8 0
+D0
+一道簡單的門通往北邊。
+~
+~
+3 -1 10652
+S
+#10656
+女僕的房間~
+這是城內女僕居住的房間。這裡被打掃的十分乾淨，物品也擺放的很整齊。
+一道門通往南邊。
+~
+0 8 0
+D2
+一道簡單的門通往南邊。
+~
+~
+3 -1 10652
+S
+#10657
+僕人的廁所~
+這間房間的裝潢也是很簡單，但仍然被保持的很乾淨。一道門通往北邊。
+~
+0 8 0
+D0
+一道破舊的門通往北邊。
+~
+~
+3 -1 10653
+S
+#10658
+廚師的房間~
+這裡是整個奈圖城堡廚師住的地方。這是一個蠻大的房間，但裝潢也是很簡單。
+~
+0 8 0
+D2
+一道簡單的門，上面寫著「煮出好食物就是服務你的主人」。
+~
+~
+3 -1 10653
+S
+#10659
+僕人的沐浴室~
+蒸汽充滿了這整個房間。奈圖城堡的僕人們都會在一天結尾時這裡洗澡。對奈圖人來
+說，保持潔淨就是邁向聖潔的第一步。一道門通往北邊。
+~
+0 8 0
+D0
+一道破舊的門通往北邊。
+~
+~
+3 -1 10654
+S
+#10660
+城堡的亞麻布壁櫥~
+這個壁櫥平常應該都是滿的，但現在全都被清空了。看來那些棉布一定是被送洗了。
+通常你在這裡可以找到床單、被子、桌巾等等物品。
+一道門通往南邊。
+~
+0 8 0
+D2
+一道破舊的門通往南邊。
+~
+~
+3 -1 10654
+S
+#10661
+洗衣室~
+這間房間裡非常的潮濕。你看到一旁有些很大的特製機器，正清洗著衣物。這個機器
+是使用齒輪配合幾條腰帶靠在牆上運轉的。所有城堡裡僕人的衣物都是在這裡被清
+洗乾淨的。一道破舊的門通往東邊。
+~
+0 8 0
+D1
+一道破舊的門通往東邊。
+~
+~
+3 -1 10654
+S
+#10662
+天井大門~
+這整個巨大的天井是奈圖王國裡重要的商業區。這座城市能夠在這附近逐漸強大起來
+都得感謝城堡裡的騎士。一道巨大的鐵柵門(gate)豎立在北方。
+~
+0 0 0
+D1
+從天井傳來一陣陣的喧鬧聲。
+~
+~
+0 -1 10667
+D2
+那裡有一道巨大的柵門。
+~
+~
+0 -1 10663
+D3
+從天井傳來一陣陣的喧鬧聲。
+~
+~
+0 -1 10664
+>room_time 100~
+if hour($) == 8
+	if hasdoor(0)
+		break
+	endif
+	makedoor 0 一個巨大的鐵柵門大開著。 gate 0 0 10604
+	force 10604 makedoor 2 一個巨大的鐵柵門大開著。 gate 0 0 10662
+	echo 北邊的鐵柵門開啟了。
+	force 10604 echo 南邊的鐵柵門開啟了。
+	break
+endif
+if hour($) == 23
+	if hasdoor(0)
+		deldoor 0
+		force 10604 deldoor 2
+		echo 北邊的鐵柵門關閉了。
+		force 10604 echo 南邊的鐵柵門關閉了。
+	endif
+endif
+~
+|
+S
+#10663
+天井入口~
+這裡就是奈圖王國天井的入口，在多年之後，仍然忠實地守護著奈圖。天井內部則是
+整座城市的主要商業區。很多外地來的商人與人們都慕名而來參觀這裡的市場。
+南邊是一個巨大的鐵吊閘。
+~
+0 0 0
+D0
+那裡就是城堡的入口了。
+~
+~
+0 -1 10662
+D1
+那裡有一群商人在作生意。
+~
+~
+0 -1 10666
+D3
+你聞到一股輕微的食物氣味。
+~
+~
+0 -1 10665
+>room_enter 4 100~
+if is_qmark($n) == fight_naytil 100001
+	mod_qmark $n fight_naytil v0 = 2
+	echoat $n 你看見整個奈圖城堡都在準備防禦工事，巨大的活動盾牆和
+	echoat $n 柵欄林立，似乎準備與高地大幹一場。
+	echoat $n 你必須趕快回到曼朵那那跟她報告(report the news)才行。
+endif
+~
+|
+S
+#10664
+天井中~
+你正站在奈圖城堡城牆的一旁。從城外的裝潢你就可以看出城內的裝潢一定更漂亮。
+而這道城牆十分堅固，抵擋外敵肯定不成問題。
+~
+0 0 0
+D1
+那裡就是城堡的入口了。
+~
+~
+0 -1 10662
+D2
+天井南邊傳來陣陣的喧鬧聲。
+~
+~
+0 -1 10665
+D3
+天井持續沿著牆壁通行。
+~
+~
+0 -1 10669
+S
+#10665
+天井中~
+站在城牆裡讓你感到十分的安全，在這裡你絕不會被外來的敵人襲擊。這裡的城牆非
+常的堅固，且厚重。建造這片城牆的原來是原居住在這裡的巨人。
+一道門通往西邊。
+~
+0 0 0
+D0
+城堡就豎立在你面前。
+~
+~
+0 -1 10664
+D1
+你看到奈圖東邊的吊閘。
+~
+~
+0 -1 10663
+D3
+一道棕色的門，上面寫著「雜貨店」。
+~
+~
+3 -1 10668
+S
+#10666
+天井內~
+在這裡你感到十分的安全，雖然這裡人不多。一道門通往東邊。
+~
+0 0 0
+D0
+一道城牆出現在你面前。
+~
+~
+0 -1 10667
+D1
+一道門，上面寫著「我們買賣物品」。
+~
+~
+3 -1 10671
+D3
+那裡是奈圖入口的吊閘。
+~
+~
+0 -1 10663
+S
+#10667
+城牆邊~
+這道城牆是設計成阻擋外面吹來的冷風，因此天井裡氣溫相當的適中。這座城堡的設
+計者對城內的居民設想的倒是很周到。
+~
+0 0 0
+D1
+一條老舊的小巷通往東邊。
+~
+~
+0 -1 10670
+D2
+那裡是這座城堡的外城牆。
+~
+~
+0 -1 10666
+D3
+奈圖的入口就在你面前。
+~
+~
+0 -1 10662
+S
+#10668
+商店~
+這家商店在奈圖城門裡營業著。這裡賣著一些本地的產物，並收買不少外地來的商品，
+例如來自史卡拉貝的商品。這間商店的經營者是一個退休的士兵，因此他不會默許無
+聊的惡棍進入他的商店。東邊有一道門。
+~
+0 8 0
+D1
+一道棕色的門回到街上。
+~
+~
+3 -1 10665
+S
+#10669
+西邊小巷~
+你正站著一條圍繞著城堡的小巷。這條相當老舊的街道上有些戰鬥發生的痕跡。
+你聽到西邊有一場戰鬥正進行中。往南邊通往奈圖的酒吧，一陣陣的吵雜聲傳了過來。
+~
+0 0 0
+D1
+東邊的天井十分的溫暖。
+~
+~
+0 -1 10664
+D2
+~
+~
+0 -1 10599
+D3
+你在那裡看到一個轉角。
+~
+~
+0 -1 10672
+>room_enter 4 100~
+if isnpc($n)
+	if name($n) / guest-naytil
+	or name($n) / waiter-naytil
+		force $n south
+	endif
+endif
+~
+|
+S
+#10670
+東邊小巷~
+這條小巷上到處都是馬經過留下的痕跡。在東邊你聞到一股動物身上特有的怪味，似
+乎是個馬房。
+~
+0 0 0
+D1
+那裡傳來一陣狗與馬的氣味。
+~
+~
+0 -1 10675
+D3
+你聽到天井傳來的喧鬧聲。
+~
+~
+0 -1 10667
+S
+#10671
+武器店~
+這間商店最初只是為了讓城內的騎士們可以把他們的錢換成對他們較有用的東西，
+但現在卻成了一家對外開放的大商店。西邊有一道門。
+~
+0 8 0
+D3
+西邊有一道門。
+~
+~
+3 -1 10666
+S
+#10672
+西邊小巷的轉彎~
+這條小巷似乎是奈圖的士兵們平常專用的道路，城內的民眾也會盡量避開這條路。
+最好趁早離開這裡，免得等一下被發現。
+西南邊各有一道門。
+~
+0 0 0
+D0
+一陣戰鬥的聲音從北邊傳來。
+~
+~
+0 -1 10678
+D1
+往那裡可以回到安全的小巷上。
+~
+~
+0 -1 10669
+D2
+你聽到一陣鎚子敲打的聲音。
+~
+~
+3 -1 10674
+D3
+你聞到一陣火烤的氣味。
+~
+~
+3 -1 10673
+S
+#10673
+打鐵鋪~
+這間打鐵鋪打造了奈圖大多士兵所使用的武器。在這裡你可以看到火爐裡被燒成紅色
+的鐵礦，以及一堆冷卻中的劍。由此看來，這間打鐵鋪每天一定生產大量的武器。
+不過現在這間打鐵舖並不對外人供應武器。
+東邊有一道門。
+~
+0 8 0
+D1
+一道門通往小巷。
+~
+~
+3 -1 10672
+S
+#10674
+黃金盾牌商店~
+這家商店的老闆正在他的小店內辛苦地敲打著一件製作中的戰甲。奈圖城內大多數的
+戰甲－包括國王穿的，都是從這家店出品的。
+北邊有一道門。
+~
+0 8 0
+D0
+一道門通往小巷。
+~
+~
+3 -1 10672
+S
+#10675
+奈圖的東角落~
+你正站在奈圖城堡裡東邊的角落。牆壁是用花崗岩蓋成的，建造人把這道牆裝飾的十
+分漂亮。你腳下有一塊奠基石(cornerstone)，上面寫著些字。
+~
+0 0 0
+E
+cornerstone~
+這座城堡是由巨人建立的，為了感謝奈圖的國王 - 游斯汀。感謝他對巨人
+族的貢獻。
+~
+D0
+你看到那裡有一座馬房。
+~
+~
+0 -1 10597
+D2
+一陣陣怪味從南邊的狗屋傳來。
+~
+~
+0 -1 10676
+D3
+你聽到人群的喧鬧聲從小巷傳來。
+~
+~
+0 -1 10670
+S
+#10676
+狗屋~
+皇家戰犬都是在這間狗屋裡被養大的。牠們十分的聰明，知道這裡就是牠們的家。
+這裡沒有設下任何的門或柵欄，所以這些獵犬可以自由地到處跑。
+~
+0 8 0
+D0
+城堡的東角落就在你面前。
+~
+~
+0 -1 10675
+S
+#10677
+馬房~
+奈圖的馬房被建在城牆邊，因此這裡對馬來說很安全也很溫暖。設計這座馬房的人把
+它設計成空氣較為容易流通，因此馬也更健康了。
+~
+0 8 0
+D2
+你幾乎無法找出回城堡東邊角落的路了。
+~
+~
+0 -1 10675
+S
+#10678
+練習場~
+士兵們在這裡有一塊練習戰技的場地。在這裡他們可以自由的練習，因為外來的人不
+會隨便進入，而且因為那道厚重的城牆，他們練習時製造再多的噪音外面的人也不會
+聽到。北邊有一道門。
+~
+0 0 0
+D0
+一個有點破爛的門，上面寫著「軍營，閒雜人等禁止進入」。
+~
+~
+19 -1 10679
+D2
+你聽到一陣微弱的鐵鎚敲打聲。
+~
+~
+0 -1 10672
+S
+#10679
+軍營~
+這個軍營靠著峽谷的山壁，這裡在奈圖的城堡蓋成後便成為一個軍營。這裡對軍隊來
+說是一塊好地方，因為附近沒有居民，他們不用擔心在訓練時傷到任何人或毀壞任何
+物品。一道門通往南邊。
+~
+0 8 0
+D2
+一個有點破爛的門通往練習場。
+~
+~
+19 -1 10678
+D5
+那裡是監獄。
+~
+~
+0 -1 10681
+S
+#10680
+奈圖城堡前方~
+你正站在奈圖城堡的前方。這整座城堡被建在一個大峽谷的中間，因此完全不用擔心
+敵人從後方來襲。之後，建城的人再建造一面巨大的城牆，使外敵更難入侵了。往西
+邊有一條小路可以讓你進入高地區。
+~
+0 ROOM_NO_MOB 0
+D3
+一條小路，通往一個湖泊。
+~
+~
+0 0 11574
+>room_enter 127 100~
+if ispc($n)
+	if is_qmark($n) != mtnaytil_record
+		add_qmark $n mtnaytil_record -1 1 0 0 0 1
+	endif
+endif
+~
+>room_time 100~
+	if hour($) == 6
+		if hasdoor(0)
+			break
+		endif
+		makedoor 0 那道厚重的吊閘就是這座城堡的第一防線。 portcullis 0 0 10663
+		force 10663 makedoor 2 那道厚重的吊閘就是這座城堡的第一防線。 portcullis 0 0 10680
+		echo 北方巨大的吊閘慢慢的放了下來。
+		force 10663 echo 一群守衛合力把南方巨大的吊閘放了下來。
+		break
+	endif
+	if hour($) == 21
+		if hasdoor(0)
+			deldoor 0
+			force 10663 deldoor 2
+			echo 北方巨大的吊閘慢慢的關了起來。
+			force 10663 echo 一群守衛合力把南方巨大的吊閘關了起來。
+		endif
+	endif
+~
+|
+S
+#10681
+監獄通道~
+這裡是奈圖城堡中關著犯人的監獄。雖然打掃的很乾淨，但你總覺得這裡有一股荒涼
+的感覺。看來這裡的犯人日子過的並不好。
+~
+0 8 0
+D0
+當你敲了敲這面牆，一陣回音傳了過來。
+~
+~
+19 -1 10689
+D1
+監獄通道的東邊。
+~
+~
+0 -1 10682
+D3
+監獄通道的西邊。
+~
+~
+0 -1 10683
+D4
+你聞到了軍營那裡傳來的新鮮空氣。
+~
+~
+0 -1 10679
+S
+#10682
+監獄通道東邊~
+這條通道上的兩個監獄被緊緊的鎖住。雖然裡面是空的，但獄卒們仍然把它們鎖住。
+這可以確定以後有罪犯被關進來時，獄卒可以養成鎖住門的好習慣。
+北東南各有一道門。
+~
+0 8 0
+D0
+這道黃色的鐵門上寫著「牢房1」。
+~
+~
+55 10658 10685
+D1
+這道藍色的鐵門上寫著「牢房2」。
+~
+~
+103 10658 10684
+D2
+這道橘色的鐵門上寫著「牢房3」。
+~
+~
+7 10658 10686
+D3
+你聞到了西邊那裡傳來的新鮮空氣。
+~
+~
+0 -1 10681
+S
+#10683
+監獄通道西邊~
+這條監獄通道西邊有兩個牢房。這裡的牢房十分的堅固，而到這裡來的罪犯們便無法
+隨便逃出，試著逃跑的只會被抓回來。南北各有一道門。
+~
+0 8 0
+D0
+這道紅色的鐵門上寫著「牢房4」。
+~
+~
+87 10658 10687
+D1
+你聞到了那裡傳來的新鮮空氣。
+~
+~
+0 -1 10681
+D2
+這道綠色的鐵門上寫著「牢房5」。
+~
+~
+119 10658 10688
+S
+#10684
+藍色牢房~
+這個藍色的牢房是為了用來關住囚犯的。這整座牢房不但十分堅固，還被施過幾個強
+力的法術防止逃獄事件發生。這可以說是奈圖城堡另一個吸引外來商人投資的特色。
+一道門通往西邊。
+~
+0 9 0
+D3
+一道鐵門通到監獄通道。
+~
+~
+103 10658 10682
+S
+#10685
+黃色牢房~
+這個黃色的牢房是為了用來關住囚犯的。你停了下來，四周看看，忽然發現北邊那道
+牆壁傳來一陣陣的聲音。你往上面輕拍了一下，一陣回音傳了過來。
+一道門通往南邊。
+~
+0 9 0
+D2
+一道鐵門通到監獄通道。
+~
+~
+55 10658 10682
+S
+#10686
+橘色牢房~
+這個橘色的牢房是為了用來關住囚犯的。這整座牢房不但十分堅固，還被施過幾個強
+力的法術防止逃獄事件發生。這可以說是奈圖城堡另一個吸引外來商人投資的特色。
+一道門通往北邊。
+~
+0 9 0
+D0
+一道鐵門通到監獄通道。
+~
+~
+7 10658 10682
+S
+#10687
+紅色牢房~
+這個紅色的牢房是為了用來關住囚犯的。這整座牢房不但十分堅固，還被施過幾個強
+力的法術防止逃獄事件發生。這可以說是奈圖城堡另一個吸引外來商人投資的特色。
+一道門通往南邊。
+~
+0 9 0
+D2
+一道鐵門通到監獄通道。
+~
+~
+87 10658 10683
+S
+#10688
+綠色牢房~
+這個綠色的牢房是為了用來關住囚犯的。這整座牢房不但十分堅固，還被施過幾個強
+力的法術防止逃獄事件發生。這可以說是奈圖城堡另一個吸引外來商人投資的特色。
+一道門通往北邊。
+~
+0 9 0
+D0
+一道鐵門通到監獄通道。
+~
+~
+119 10658 10683
+S
+#10689
+臭氣沖天的通道~
+這條通道又髒又臭，比起奈圖城堡裡其他部分，簡直相差太多了。你還可以看到牆上
+生長的苔蘚以及地上的灰塵。但這個地方並不是個被廢棄的地方，因為你可以看到生
+物出現的痕跡。一道門通往南邊。
+~
+0 9 0
+D0
+這條通道一直通往北邊。
+~
+~
+0 -1 10690
+D2
+一道密門，可以回到監獄通道上。
+~
+~
+19 -1 10681
+S
+#10690
+臭氣沖天的通道~
+這條骯髒的通道越來越髒了。臭味也越來越重了。你試著捏住你的鼻子走過這條通道。
+~
+0 9 0
+D0
+通道在那裡往上轉去。
+~
+~
+0 -1 10691
+D2
+這條通道似乎到那裡結束。
+~
+~
+0 -1 10689
+S
+#10691
+骯髒的轉角~
+這個轉角被某些邪惡的生物當作廁所一樣的使用。這裡堆了山一般高的排泄物，牆上
+也被弄得髒兮兮的。這個地方極有可能是一個散發疾病的源頭。
+~
+0 9 0
+D1
+一條更暗的走道在那邊。
+~
+~
+0 -1 10692
+D2
+走道繼續通往南邊。
+~
+~
+0 -1 10690
+>room_command search default~
+if roomvalue($0) == 1
+	echoat $n 你不能這麼做。
+	break
+endif
+	echoat $n 你正搜尋著這個地方...
+	echoaround $n $n 正在四處搜尋...
+	modrvt v0 = 1
+	if rand(60)
+		callout 2 echoat $n 但是你什麼都沒有找到。
+	else
+		callout 2 echoat $n 你從一旁垃圾堆中抽出一個紙條。
+		callout 2 oload 10675 1 floor
+	endif
+	modrvt v0 = 2
+	modrvt t0 = 100
+~
+|
+S
+#10692
+臭氣沖天的走道~
+這裡到處都是腳印，而這些腳印都是踩在一些排泄物上的。你發現這些腳印上有巨大
+的爪痕，看來這恐怕是隻巨大的兩足野獸。看起來這些腳印通往東邊。
+~
+0 9 0
+D1
+一條骯髒的走道，看來不怎麼安全。
+~
+~
+0 -1 10693
+D3
+那裡傳來的臭味相當可怕。
+~
+~
+0 -1 10691
+S
+#10693
+臭氣沖天的走道~
+這裡的臭味真是讓你無法忍受。你感到窒息，且幾乎要吐出來了！這裡的臭味與噁心
+的苔蘚讓你下次絕對不會想要再到這裡來。
+~
+0 9 0
+D2
+你聽到一陣走路的拖曳聲音從南邊傳來。
+~
+~
+0 -1 10694
+D3
+南邊的空氣好多了，雖然還是很臭。
+~
+~
+0 -1 10692
+S
+#10694
+交叉口~
+你正站在一條交叉口上，這裡似乎相當的危險。那條骯髒的走道似乎越來越髒了。
+你聽到四周傳來一陣陣走路的聲音，而這裡的牆壁不斷的製照著回音，使你無法辨認
+聲音的來源。
+~
+0 9 0
+D0
+那個臭氣沖天的走廊看來比這裡好多了。
+~
+~
+0 -1 10693
+D1
+那裡傳來一陣霉味。
+~
+~
+0 -1 10696
+D3
+那裡相當泥濘，也留下了生物出現過的痕跡。
+~
+~
+0 -1 10695
+D4
+一個天然的石頭階梯在這裡通往上面。
+~
+~
+0 -1 10697
+S
+#10695
+洞穴巨人的洞穴~
+這裡真的非常的骯髒、噁心，幾乎世界上所有骯髒的事物你都可以在這裡發現。地上
+灑滿了骨頭、內臟、破碎的護甲、等等東西。不知城內的人看到這副景象會有什麼感想。
+~
+0 9 0
+D1
+那個交叉口現在看起來安全多了。
+~
+~
+0 -1 10694
+S
+#10696
+蘑菇走道~
+這個走道長滿了各種蕈類，可惜它們全部都是有毒的。這些蕈類的毒性極強，所以你
+在空氣中就能感受到一股微弱的毒氣。這股毒氣與因為吃了蘑菇而死在一旁的屍體腐
+臭味讓你感到更噁心了。
+~
+0 9 0
+D3
+那條交叉口現在看起來好多了。
+~
+~
+0 -1 10694
+>room_time 40~
+echo 一股微弱的毒氣讓你感到呼吸困難。
+modhmv pc 01.30 80 0
+~
+|
+S
+#10697
+階梯上~
+一陣微風吹了過來，也把你身上沾到的臭氣給吹走了。你無法再想像回到下面的景象，
+並祈禱著你現在走的路可以帶你通往出口。
+~
+0 9 0
+D4
+這條階梯繼續往上通行。
+~
+~
+0 -1 10698
+D5
+這個階梯往下通往一條噁心的通道。
+~
+~
+0 -1 10694
+S
+#10698
+長滿苔蘚的隧道~
+這條長滿苔蘚的隧道上有兩條路都有些腳印，地上有些鹿跟兔子的骨頭被丟在地上。
+不過，至少這裡比樓下那可怕的景象好出太多了。你只希望不要再看到那可怕的景
+象。
+~
+0 9 0
+D1
+你看到一道光從隧道終點傳來。
+~
+~
+0 -1 10699
+D5
+一條階梯通往下方。
+~
+~
+0 -1 10697
+S
+#10699
+長滿苔蘚的隧道出口~
+你終於到達這條隧道的出口了。你現在正站在一個懸崖上，下面是一片森林。而只有
+南邊那條路看起來比較容易下去。
+~
+0 9 0
+D2
+從那裡下到森林裡可能相當危險。
+~
+~
+0 -1 10649
+D3
+一條較安全的通道。
+~
+~
+0 -1 10698
+S
+#0
+
+
+
+#SPECIALS
+M 10601 spec_cast_mage
+M 10602 spec_guard
+M 10610 spec_guard
+M 10611 spec_guard
+M 10612 spec_guard
+M 10613 spec_guard
+M 10614 spec_guard
+M 10623 spec_cast_cleric
+M 10624 spec_cast_adept
+M 10652 spec_cast_mage
+S
+
+
+
+#RESETS
+M 0 10602 2 10601
+E 0 10601 0 16
+E 0 10602 0 5
+E 0 10603 0 6
+E 0 10604 0 9
+E 0 10605 0 13
+E 0 10606 0 12
+E 0 10607 0 10
+E 0 10608 0 7
+E 0 10609 0 3
+E 0 10610 0 4
+E 0 10611 0 11
+M 0 10647 1 10601
+*E 0 10601 0 16
+*E 0 10681 0 18
+E 0 10602 0 5
+E 0 10603 0 6
+E 0 10665 0 9
+E 0 10605 0 13
+E 0 10663 0 12
+E 0 10607 0 10
+E 0 10608 0 7
+E 0 10609 0 3
+E 0 10610 0 4
+M 0 10601 1 10601
+E 0 10612 0 5
+E 0 10613 0 16
+M 0 10624 1 10601
+M 0 10604 2 10603
+M 0 10619 2 10606
+E 0 10601 0 16
+E 0 10609 0 3
+M 0 10618 4 10607
+M 0 10618 4 10607
+E 0 10638 0 6
+M 0 10618 4 10607
+M 0 10620 3 10607
+M 0 10620 3 10607
+O 0 10635 0 10607
+O 0 10637 0 10608
+O 0 10634 0 10609
+O 0 10636 0 10610
+M 0 10615 1 10613
+E 0 10614 0 16
+E 0 10623 0 17
+M 0 10621 2 10617
+E 0 10640 0 8
+M 0 10621 2 10621
+E 0 10639 0 17
+O 0 10615 0 10622
+P 0 10616 0 10615
+O 0 10617 0 10622
+P 0 10618 0 10617
+P 0 10619 0 10617
+O 0 10620 0 10623
+P 0 10622 0 10620
+P 0 10625 0 10620
+O 0 10621 0 10623
+P 0 10624 0 10621
+M 0 10616 1 10624
+G 0 10626 0
+E 0 10627 0 5
+E 0 10628 0 16
+M 0 10617 1 10629
+E 0 10630 0 16
+E 0 10631 0 18
+M 0 10618 4 10630
+E 0 10638 0 6
+M 0 10619 2 10630
+E 0 10609 0 3
+E 0 10601 0 16
+G 0 10633 0
+M 0 10620 3 10630
+O 0 10635 0 10630
+O 0 10632 0 10631
+P 0 10634 0 10632
+O 0 10636 0 10631
+O 0 10643 0 10632
+O 0 10644 0 10632
+O 0 10645 0 10632
+O 0 10646 0 10632
+O 0 10647 0 10633
+O 0 10648 0 10633
+O 0 10649 0 10633
+O 0 10650 0 10633
+M 0 10625 2 10638
+M 0 10623 1 10640
+O 0 10651 0 10640
+M 0 10648 1 10640
+M 0 10622 4 10641
+E 0 10643 0 16
+E 0 10647 0 5
+M 0 10622 4 10641
+E 0 10644 0 16
+E 0 10650 0 10
+M 0 10622 4 10641
+E 0 10649 0 7
+E 0 10645 0 16
+M 0 10622 4 10641
+E 0 10649 0 7
+E 0 10650 0 10
+E 0 10647 0 5
+E 0 10645 0 16
+M 0 10626 1 10642
+M 0 10630 1 10644
+O 0 10653 0 10645
+O 0 10654 0 10645
+O 0 10655 0 10645
+M 0 10628 5 10646
+M 0 10627 7 10647
+M 0 10629 1 10648
+O 0 10633 0 10655
+O 0 10640 0 10656
+O 0 10638 0 10658
+O 0 10656 0 10659
+O 0 10656 0 10660
+O 0 10657 0 10660
+O 0 10657 0 10661
+O 0 10666 0 10623
+M 0 10640 4 10662
+E 0 10649 0 7
+E 0 10650 0 10
+E 0 10647 0 5
+E 0 10645 0 16
+M 0 10640 4 10662
+E 0 10602 0 5
+E 0 10601 0 16
+G 0 10641 0
+M 0 10609 1 10664
+M 0 10607 2 10665
+M 0 10641 7 10665
+E 0 10644 0 16
+M 0 10641 7 10665
+E 0 10644 0 16
+M 0 10641 7 10665
+E 0 10644 0 16
+M 0 10608 2 10666
+M 0 10633 1 10668
+G 0 602 0
+G 0 603 0
+G 0 605 0
+G 0 610 0
+G 0 611 0
+M 0 10634 1 10671
+G 0 10676 0
+G 0 10677 0
+G 0 10678 0
+M 0 10631 1 10673
+E 0 10652 0 16
+G 0 10643 0
+G 0 10645 0
+M 0 10632 1 10674
+E 0 10652 0 16
+G 0 10647 0
+G 0 10649 0
+G 0 10650 0
+M 0 10610 1 10675
+E 0 10601 0 16
+E 0 10602 0 5
+E 0 10603 0 6
+E 0 10604 0 9
+E 0 10605 0 13
+E 0 10606 0 12
+E 0 10607 0 10
+E 0 10608 0 7
+E 0 10609 0 3
+E 0 10610 0 4
+E 0 10611 0 11
+G 0 10660 0
+M 0 10635 1 10676
+M 0 10605 5 10676
+E 0 10629 0 3
+M 0 10638 2 10676
+M 0 10639 10 10676
+M 0 10639 10 10676
+M 0 10639 10 10676
+M 0 10636 2 10677
+M 0 10602 1 10679
+E 0 10601 0 16
+E 0 10602 0 5
+E 0 10603 0 6
+E 0 10604 0 9
+E 0 10605 0 13
+E 0 10606 0 12
+E 0 10607 0 10
+E 0 10608 0 7
+E 0 10609 0 3
+E 0 10610 0 4
+E 0 10611 0 11
+M 0 10640 4 10680
+E 0 10645 0 16
+E 0 10609 0 3
+E 0 10610 0 4
+M 0 10640 4 10680
+E 0 10611 0 11
+E 0 10601 0 16
+G 0 10642 0
+M 0 10642 1 10684
+M 0 10642 1 10685
+M 0 10642 1 10686
+M 0 10606 1 10687
+M 0 10642 1 10688
+M 0 10644 1 10695
+M 0 10645 2 10695
+M 0 10645 2 10695
+M 0 10643 3 10695
+E 0 10649 0 7
+E 0 10650 0 10
+E 0 10659 0 3
+M 0 10652 1 10531
+*
+M 0 10654 1 10598
+M 0 10655 1 10598
+M 0 10656 1 10597
+S
+
+
+
+#SHOPS
+10632 9 0 0 0 0 110 65 0 23
+10633 1 8 13 15 19 120 80 0 23
+10634 5 27 0 0 0 100 50 0 23
+0
+
+
+
+#$
+

@@ -1,0 +1,5467 @@
+#AREADATA
+Name        銀蛇武士堡~
+Identity    warrior~
+Builders    Amenda~
+Translator  ----~
+Modifier    ----~
+VNUMs	      13700 13899
+Security    1
+Recall      3001
+F_toggle    262144
+End
+
+
+
+#MOBILES
+#13700
+gateguard~
+大門衛士(gateguard)~
+大門衛士(gateguard)挺起胸膛站得筆直，仔細注意著每個出入的人。
+~
+他是一個非常強壯的武士，也是武士堡調教出來的好榜樣。
+~
+1|2|64|8192 128 500 S
+36 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+>talk_prog topic~
+if is_qmark($n) & warrior_quest 100001
+or is_qmark($n) & warrior_quest 100002
+or is_qmark($n) & warrior_quest 100004
+	mpechoat $n $I 對你露出敬佩的眼神....
+	say 你能通過銀蛇堡的試練，真是不簡單。
+	say 別忘了常回來練練功，一定能讓你的戰技更高強。
+	break
+endif
+mpechoat $n $I 的濃眉大眼似笑非笑地望著你....
+say 嗨，小白臉，你想成為銀蛇武士嗎(yes/no)？
+~
+>talk_prog yes~
+say 銀蛇武士的訓練是艱苦的，首先當然你必須是一位戰士，
+say 然後你得到堡壘二樓找我們堡主談談，
+say 一旦你加入銀蛇堡，堡內的訓練設施會讓你武藝大進！
+~
+>talk_prog no~
+say 趕快回家向媽媽撒嬌吧！
+laugh $n
+~
+>greet_prog 40~
+if ispc($n)
+	if isgood($n)
+		hello $n
+	else
+		say $n 你別想在銀蛇武士堡裡做壞事！
+	endif
+endif
+~
+>tick_prog 100~
+if inroom($i) == 13702
+	if hour($) > 0
+		if hour($) < 12
+			say 啊...該下哨了，這裡就交給你們了...
+			mpecho $I 行了一個軍禮....
+			n
+			e
+			s
+			mpgoto 13729
+			sleep
+		endif
+	endif
+break
+endif
+if inroom($i) == 13729
+	if hour($) > 12
+		wake
+		say 啊...那麼晚了！要趕快上哨....
+		n
+		w
+		s
+		mpgoto 13702
+	endif
+break
+endif
+say 銀蛇武士是不能擅自離開崗位的！
+mpecho $I 匆匆忙忙跑了回去....
+mpgoto 13729
+~
+|
+#13701
+gateguard~
+大門衛士(gateguard)~
+大門衛士(gateguard)挺起胸膛站得筆直，仔細注意著每個出入的人。
+~
+他是一個非常強壯的武士，也是武士堡調教出來的好榜樣。
+~
+1|2|64|8192 128 500 S
+36 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+>talk_prog topic~
+if is_qmark($n) & warrior_quest 100001
+or is_qmark($n) & warrior_quest 100002
+or is_qmark($n) & warrior_quest 100004
+	mpechoat $n $I 對你露出敬佩的眼神....
+	say 你能通過銀蛇堡的試練，真是不簡單。
+	say 別忘了常回來練練功，一定能讓你的戰技更高強。
+	break
+endif
+mpechoat $n $I 的濃眉大眼似笑非笑地望著你....
+say 嗨，小白臉，你想成為銀蛇武士嗎(yes/no)？
+~
+>talk_prog yes~
+say 銀蛇武士的訓練是艱苦的，首先當然你必須是一位戰士，
+say 然後你得到堡壘二樓找我們堡主談談，
+say 一旦你加入銀蛇堡，堡內的訓練設施會讓你武藝大進！
+~
+>talk_prog no~
+say 趕快回家向媽媽撒嬌吧！
+laugh $n
+~
+>greet_prog 40~
+if ispc($n)
+	if isgood($n)
+		hello $n
+	else
+		say $n 你別想在銀蛇武士堡裡做壞事！
+	endif
+endif
+~
+>tick_prog 100~
+if inroom($i) == 13702
+	if hour($) > 0
+		if hour($) < 12
+			say 啊...該下哨了，這裡就交給你們了...
+			mpecho $I 行了一個軍禮....
+			n
+			e
+			n
+			mpgoto 13728
+			sleep
+		endif
+	endif
+break
+endif
+if inroom($i) == 13728
+	if hour($) > 12
+		wake
+		say 啊...那麼晚了！要趕快上哨....
+		s
+		w
+		s
+		mpgoto 13702
+	endif
+break
+endif
+say 銀蛇武士是不能擅自離開崗位的！
+mpecho $I 匆匆忙忙跑了回去....
+mpgoto 13728
+~
+|
+#13702
+cook leader~
+大廚師(cook leader)~
+大廚師(cook leader)站在油鍋前煎炸食品。
+~
+大廚師(cook leader)站在油鍋前煎炸食品。
+~
+1|2|64 0 500 S
+32 0 0 0d0+0 0d0+0
+500 0
+0 8 2
+>talk_prog topic~
+say 煮出美食的方法就是快火，大鍋，還有新鮮材料！
+~
+|
+#13703
+cook~
+廚師(cook)~
+廚師(cook)站在料理台前包水餃。
+~
+廚師(cook)站在料理台前包水餃。
+~
+1|2|64 8|32|512 500 S
+31 0 0 0d0+0 0d0+0
+500 0
+0 8 1
+P 8|128
+>talk_prog topic~
+say 要煮出百多人的三餐不是一件易事。
+~
+>talk_prog p rising-sun house~
+if is_qmark($n) == thief_quest_list 200400
+	nod $n
+	say 噓，小聲一點，跟我過來....
+	mpechoat $n $I 偷偷把你拉到廚房的角落....
+	mpmod_qmark $n thief_quest_list v1 = 401
+	mpadd_qmark self warrior_cook_story 50 0 0 0 1 0
+	mpdef_rembch $n
+endif
+~
+>rand_prog 50~
+if insameroom($b)
+	if is_qmark($i) == warrior_cook_story 100000
+		say 你是工會派來的吧？據說你們只派夠格的高手，所以我才會找你們。
+		mpechoaround $b $I 以懷疑的眼光看看 $b ，似乎不怎麼相信 $b 的能力....
+		mpechoat $b $I 以懷疑的眼光看看你，似乎不怎麼相信你的能力....
+		say 罷了，會咬人的狗不叫，也許這樣不起眼才叫高手。
+		mpecho $I 用懷疑的語氣喃喃自語著....
+		mpmod_qmark self warrior_cook_story v0 + 1
+		break
+	endif
+	if is_qmark($i) == warrior_cook_story 100001
+		say 你的任務就是去暗殺永恆之塔一樓的爆米花小販(puffed-rice dealer)，
+		say 我們相信他是風火海的一線諜報人員，已經破壞過我們很多滲透計畫。
+		say 啊，說這個你也不懂....
+		mpecho $I 發現說溜了嘴，急忙打個哈哈....
+		say 事成後，砍下他的頭交給附近的園丁(gardener)，絕對少不了你的好處的。
+		mpmod_qmark $b thief_quest_list v1 = 402
+		mpdel_qmark self warrior_cook_story
+		mpdef_rembch null-tar
+	endif
+endif
+~
+|
+#13704
+vice cook~
+助手(vice cook)~
+助手(vice cook)站在水槽前洗菜。
+~
+助手(vice cook)站在水槽前洗菜。
+~
+1|2|64 0 500 S
+8 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+#13705
+warrior~
+武士(warrior)~
+一個神采飛揚的武士(warrior)站在這裡。
+~
+一個神采飛揚的武士(warrior)站在這裡。
+~
+1|2|64 0 500 S
+36 0 0 0d0+0 0d0+0
+3000 0
+0 8 2
+C 1|8
+>talk_prog topic~
+say 我偷偷告訴你，據說這裡是風之城的分舵喲！
+~
+|
+#13706
+drunken warrior~
+酒醉的武士(drunken warrior)~
+一個酒醉的武士(drunken warrior)還在灌酒。
+~
+一個酒醉的武士(drunken warrior)還在灌酒。
+~
+1|2|64 0 500 S
+37 0 0 0d0+0 0d0+0
+1000 0
+0 8 2
+C 1|8
+>greet_prog 20~
+say 呃....乾杯...
+~
+>rand_prog 20~
+say 可惡的維達(vidal)，知道這項秘密(secret)卻不肯說....
+~
+>talk_prog vidal~
+say 人稱浪子維達，劍術出神入化，目前也在銀蛇堡作客。
+~
+>talk_prog topic~
+say 可惡的維達(vidal)，知道這項秘密(secret)卻不肯說....
+~
+>talk_prog secret~
+say 廢話，我要是知道還在這裡喝悶酒？你不會去問他啊？
+~
+|
+#13707
+metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64|4096 0 0 S
+44 20000 0 30d60+0 10d0+0
+-1 0
+0 8 0
+P 8|128
+S 16 -300
+R Statue~
+>rand_prog 50~
+if inroom($i) != 13747
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13747
+endif
+~
+>fight_prog 30~
+mpecho $I 展開強大的連續攻擊！
+skilldrv multihit $n
+skilldrv multihit $n
+~
+>death_prog 100~
+mpmload 13707
+mppurge self
+~
+|
+#13708
+metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64|4096 0 0 S
+44 20000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+C 4
+P 8|128
+S 16 -300
+R Statue~
+>fight_prog 70~
+wear all
+disarm
+mpnowait
+if rand(50)
+	if rand(50)
+		flaming
+		mpnowait
+	else
+		earth
+		mpnowait
+	endif
+else
+	if rand(50)
+		circular
+		mpnowait
+	else
+		disarm
+		mpnowait
+		skilldrv multihit $n
+	endif
+endif
+~
+>rand_prog 50~
+if inroom($i) != 13744
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13744
+endif
+~
+>death_prog 100~
+mpmload 13708
+mppurge self
+~
+|
+#13709
+metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64|8192|262144 128 0 S
+44 10000 0 20d20+0 0d0+0
+-1 0
+0 8 0
+C 1|8
+P 8|128
+S 16 -300
+R Statue~
+>rand_prog 50~
+if inroom($i) != 13745
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13745
+endif
+~
+>fight_prog 70~
+wear all
+if rand(50)
+	kick
+	mpnowait
+else
+	bashhead
+	mpnowait
+endif
+if rand(50)
+	circular
+	mpnowait
+endif
+~
+|
+#13710
+metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|4|128 0 0 S
+44 40000 0 -30d-60+-1000 0d-300+0
+-1 0
+0 8 0
+C 1|8
+P 8|128
+S 16 -300
+R Statue~
+>rand_prog 50~
+if inroom($i) != 13743
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13743
+endif
+~
+>death_prog 100~
+mpmload 13710
+mppurge self
+~
+|
+#13711
+metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64 0 0 S
+45 10000 0 -30d-50+0 0d0+0
+-1 0
+0 8 0
+C 2
+P 8|128
+S 16 -300
+S 23 40
+S 24 40
+S 35 40
+R Statue~
+>rand_prog 50~
+if inroom($i) != 13748
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13748
+endif
+~
+>fight_prog 100~
+mpforcer here c 'cure blindness' golem 50
+if rand(50)
+	if rand(50)
+		if rand(50)
+			mpforcer here c 'acid blast' $n 50
+		else
+			mpforcer here c fireball $n 50
+		endif
+	else
+		if rand(50)
+			mpforcer here c whirlwind 50
+		else
+			mpforcer here c blindness $n 50
+			mpforcer here c colour $n 50
+		endif
+	endif
+else
+	if rand(50)
+		if rand(50)
+			mpforcer here c paralyze $n 50
+		else
+			mpforcer here c earthquake 50
+		endif
+	else
+		if rand(50)
+			mpforcer here c 'gas breath' $n 50
+		else
+			mpforcer here c powerball $n 50
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpmload 13711
+mppurge self
+~
+|
+#13712
+cleric1-warrior metal cleric~
+金屬牧師(metal cleric)~
+一個金屬牧師(metal cleric)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬牧師(metal cleric)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64 0 0 S
+36 800 0 -30d-50+0 0d0+0
+-1 0
+0 8 0
+S 16 -300
+C 2
+P 8|128
+R Statue~
+>repop_prog 100~
+if insameroom(golem-warrior)
+	mpgroup self golem-warrior 1 0
+endif
+~
+>rand_prog 50~
+if area($i) != warrior
+	mpecho $I 忽然轉身往銀蛇武士堡的方向而去....
+	mppurge self
+endif
+if inroom($i) != 13749
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	follow self
+	group leave
+	mpdef_rembch null-tar
+	mpgoto 13749
+endif
+~
+>talk_prog training~
+if ispc($n)
+	nod $n
+	follow self
+	group leave
+	mpgroup $n self 1 0
+	mpdef_rembch $n
+endif
+~
+>fight_prog 30~
+if hitprcnt($b) < 50
+	mpforcer here c 'full heal' $b 50
+else
+	if hitprcnt($i) < 50
+		mpforcer here cast 'full heal' cleric1-warrior 50
+	else
+		mpforcer here c 'full refresh' $b 50
+	endif
+endif
+if fightwith($i) == $b
+	follow self
+	group leave
+	mpdef_rembch null-tar
+endif
+~
+|
+#13713
+golem-warrior metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64|8388608 0 0 S
+40 20000 0 0d0+100 0d0+0
+-1 0
+0 8 0
+R Statue~
+C 1|8
+P 8|128
+S 16 -300
+>repop_prog 100~
+if insameroom(cleric1-warrior)
+	mpgroup cleric1-warrior self 1 0
+endif
+~
+>rand_prog 50~
+if inroom($i) != 13749
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13749
+endif
+~
+>fight_prog 50~
+if rand(50)
+	flaming
+	mpnowait
+else
+	bashhead
+	mpnowait
+	circular
+	mpnowait
+endif
+~
+|
+#13714
+metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64|4096|8192|262144|1048576|8388608 8|32|128|512 0 S
+47 4000 0 0d0+0 -5d0+0
+-1 0
+0 8 0
+C 1|2|4|8
+P 8|128|4194304
+S 16 -300
+>rand_prog 50~
+if inroom($i) != 13750
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13750
+endif
+~
+>fight_prog 70~
+wear all
+disarm
+mpnowait
+if rand(13)
+	flaming
+	mpnowait
+else
+	if rand(15)
+		circular
+		mpnowait
+	else
+		if rand(17)
+			bashhead
+			mpnowait
+		else
+			if rand(20)
+				storm
+				mpnowait
+			else
+				if rand(25)
+					mpforcer here c powerball $n 50
+				else
+					if rand(33)
+						mpforcer here c fireball $n 50
+					else
+						if rand(50)
+							mpforcer here c blindness $n 50
+						else
+							c whirl
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+endif
+~
+|
+#13715
+metal golem~
+金屬人偶(metal golem)~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+一個金屬人偶(metal golem)站在這裡，準備教你高等戰鬥技巧。
+~
+1|2|64 0 0 S
+40 80000 0 0d0+0 0d0+0
+-1 0
+0 8 0
+P 8|128
+S 16 -300
+>rand_prog 50~
+if inroom($i) != 13746
+	mpecho 金屬人偶慢慢走回自己的訓練室....
+	mpgoto 13746
+endif
+~
+>death_prog 100~
+mpmload 13715
+mppurge self
+~
+|
+#13716
+experienced warrior~
+老練的武士(warrior)~
+老練的武士(experienced warrior)坐在這裡看書。
+~
+老練的武士坐在這裡看書，看他的衣著與氣度應該是堡裡的高階戰士。
+~
+1|2||64|8192|262144 8|32|128 800 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+P 8
+>talk_prog topic~
+sigh
+say 我覺得堡主好像有什麼內情，
+say 據說他和其他幫派有關，
+say 武士堡慢慢變成他的禁臠了！
+~
+|
+#13717
+perplexed warrior~
+迷惘的武士(perplexed warrior)~
+迷惘的武士(perplexed warrior)坐在這裡皺眉苦思。
+~
+迷惘的武士(perplexed warrior)坐在這裡皺眉苦思。
+~
+1|2|64|8192 0 300 S
+39 0 0 0d0+0 0d0+0
+0 0
+0 8 2
+C 1|8
+>talk_prog topic~
+say 為什麼正義導師說我殺哥布林是錯的？想不懂！真的想不懂！
+kowtow
+~
+|
+#13718
+meditating warrior~
+沈思的武士(meditating warrior)~
+一位陷入沈思的武士(meditating warrior)，偶而露出理解的微笑。
+~
+一位陷入沈思的武士(meditating warrior)，偶而露出理解的微笑。
+~
+1|2|64|8192 0 300 S
+35 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+>talk_prog topic~
+smile
+say 我慢慢了解大男人也是該有愛心柔情了。
+~
+|
+#13719
+sleeping warrior~
+武士(warrior)~
+一位熟睡的武士(sleeping warrior)坐在這裡滴口水。
+~
+一位熟睡的武士(sleeping warrior)坐在這裡滴口水。
+~
+1|2|64|8192 0 100 S
+37 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+#13720
+valor tutor~
+勇氣導師(valor tutor)~
+銀蛇堡勇氣導師(valor tutor)靜靜坐在這裡.
+~
+銀蛇堡勇氣導師靜靜坐在這裡，準備教導新手武士勇氣(valor)的意義。
+~
+1|2|64|8192 8|32|128|512|8192 1000 S
+40 0 0 0d60+0 0d-100+0
+-1 0
+0 8 1
+C 1
+P 8|128
+>talk_prog valor~
+mpecho $I 對你點點頭，示意你坐近一點....
+say 年輕人，所謂勇氣並不是暴虎馮河的血氣之勇，
+say 也不是一時衝動，完全沒有考慮整件事情最終結果的盲目之勇。
+mpecho 講到這裡， $I 停了一下，看看你的反應....
+mpadd_qmark self warrior_valor_speech -1 1 0 0 1 1
+if is_qmark($n) != warrior_quest
+	mpadd_qmark $n warrior_quest -1 0 2 0 0 1
+else
+	if is_qmark($n) !& warrior_quest 200002
+		mpmod_qmark $n warrior_quest v1 | 2
+	endif
+endif
+~
+>rand_prog 50~
+if is_qmark($i) == warrior_valor_speech 100001
+        say 真正的勇氣是經過深思熟慮，由理智控制感情，
+        say 為了捍衛自己遵循的理念，雖千萬人吾往矣的決心與毅力。
+        say 所以真正的勇氣可以持之以恆，日積月累的奮鬥，
+        say 而不是事發瞬間的血氣上衝而已。
+        mpecho $I 對你露出嘉許的微笑，希望你小心思索下面的話....
+        mpmod_qmark self warrior_valor_speech v0 + 1
+	break
+endif
+if is_qmark($i) == warrior_valor_speech 100002
+	say 一般年輕武士總是誤解勇氣的真義，
+	say 以為身上多幾條疤痕便代表自己的勇氣又多了幾分，
+	say 其實肉體的疼痛只是暫時的，而且可以用藥物抒解。
+	say 許多心裡上的壓力卻能夠讓你汗流浹背，把人逼瘋，
+	say 能夠克服心理上的障礙才代表你的勇氣修練已初窺門徑。
+        nod $n
+	say 你去吧，好好思索我的話....
+	mpdel_qmark self warrior_valor_speech
+endif
+~
+|
+#13721
+justice tutor~
+正義導師(justice tutor)~
+銀蛇堡正義導師(justice tutor)靜靜坐在這裡.
+~
+銀蛇堡正義導師靜靜坐在這裡，準備教導新手武士正義(justice)的意義。
+~
+1|2|64|8192 8|32|128|512|8192 1000 S
+40 0 100 0d0+-200 0d-100+0
+0 0
+0 8 1
+C 1|8
+P 8|128
+>talk_prog justice~
+mpecho $I 閉著的雙眼突然打開，晶亮地注視著你....
+say 正義！？多少罪行假正義之名而行？
+mpecho $I 一時激動，說不出話來....
+mpadd_qmark self warrior_justice_speech -1 1 0 0 1 1
+if is_qmark($n) != warrior_quest
+	mpadd_qmark $n warrior_quest -1 0 4 0 0 1
+else
+	if is_qmark($n) !& warrior_quest 200004
+		mpmod_qmark $n warrior_quest v1 | 4
+	endif
+endif
+~
+>rand_prog 50~
+if is_qmark($i) == warrior_justice_speech 100001
+	mpecho $I 清一清喉嚨，慢慢地說....
+        say 每個人心裡都有把天秤，所以每個人的正義都是不同的。
+        say 基本上，你在各個地方所受到的教育、
+        say 從祖父母口裡聽到的英雄故事、
+        say 甚至酒吧裡吟遊詩人所傳頌的壯闊史詩，
+        say 都是在幫你校準心裡的那把天秤，
+        say 好符合這塊大陸普遍認行的標準....
+        mpmod_qmark self warrior_justice_speech v0 = 2
+	break
+endif
+if is_qmark($i) == warrior_justice_speech 100002
+	sigh
+	say 但是，人類有人類的正義，龍族有龍族的正義，
+	say 甚至巨魔們也有他們認為正當的行為，
+        say 不要以為你的信念是唯一的真理，你的正義不過是成長過程裡，
+        say 其他人施加在你身上期望的大雜燴而已....
+        mpmod_qmark self warrior_justice_speech v0 = 3
+	break
+endif
+if is_qmark($i) == warrior_justice_speech 100003
+	say 雖然有各個種族不同的正義衝突，
+	say 這個世界仍然很巧妙地維持一種平衡，
+	say 當你終於明白自己的渺小，
+	say 就表示你可以開始聆聽大地與天空細聲告訴你他們的運行之道了。
+        nod $n
+	say 你去吧，好好思索我的話.....
+	mpdel_qmark self warrior_justice_speech
+endif
+~
+|
+#13722
+love tutor~
+愛心導師(love tutor)~
+銀蛇堡愛心導師(love tutor)慈祥地坐在這裡.
+~
+銀蛇堡愛心導師慈祥地坐在這裡，準備教導新手武士愛心(love)的意義。
+~
+1|2|64|8192 8|32|128|512|8192 1000 S
+40 0 0 0d0+0 -20d-100+0
+-1 0
+0 8 2
+C 2
+P 8|128
+>talk_prog love~
+smile $n
+say 孩子，你終於來了，我等你很久了....
+mpadd_qmark self warrior_love_speech -1 1 0 0 1 1
+if is_qmark($n) != warrior_quest
+	mpadd_qmark $n warrior_quest -1 0 8 0 0 1
+else
+	if is_qmark($n) !& warrior_quest 200008
+		mpmod_qmark $n warrior_quest v1 | 8
+	endif
+endif
+~
+>rand_prog 50~
+if is_qmark($i) == warrior_love_speech 100001
+	mpecho $I 望著遠方，慢慢地說...
+        say 在這裡我想教你的，是有關愛心的真義。
+        say 對於這個世界，身旁的人，甚至你自身的愛，
+        say 應該是所有行為的起點。你所奉行的準則，
+        say 它的最底層一定是由愛出發....
+        mpmod_qmark self warrior_love_speech v0 = 2
+	break
+endif
+if is_qmark($i) == warrior_love_speech 100002
+        say 你的愛越強烈，獲得的能量與表現出來的能力也就越驚人。
+        say 其中，聖者與平凡武士的成就之所以會有那麼大的差異，
+        say 是因為他們所愛的對象，所愛的程度有所差別。
+        mpmod_qmark self warrior_love_speech v0 = 3
+	break
+endif
+if is_qmark($i) == warrior_love_speech 100003
+	say 一般愛自身多一點的，他會去追逐名利與權勢，
+	say 強烈的程度會造成勾心鬥角，不擇手段。
+        say 愛身旁的人多一點的，我們稱呼他負責任的父親，
+        say 或者善盡孝道的人子。一般他們付出時，其實也是回報的時候。
+	say 然後，愛大眾多一點的，就是被眾人景仰的聖者了....
+	mpecho $I 想了一下....
+	mpmod_qmark self warrior_love_speech v0 = 4
+	break
+endif
+if is_qmark($i) == warrior_love_speech 100004
+	say 其實，只要是有智慧的生物，都需要溫柔的慰藉。
+        say 不管愛人與被愛都幸福的，
+        say 有時候接受他人的關懷甚至比付出愛心還困難，
+	nod $n
+	say 你去吧，記住不要太拘限自己的心....
+	mpdel_qmark self warrior_love_speech
+endif
+~
+|
+#13723
+stronghold leader~
+銀蛇堡堡主(stronghold leader)~
+銀蛇堡堡主(stronghold leader)忙碌地處理他的公務。
+~
+銀蛇堡堡主(stronghold leader)忙碌地處理他的公務。
+~
+1|2|64|8192|262144 8|32|128|512|8192 900 S
+55 5000 0 30d50+0 -10d-100+0
+10000 0
+0 8 1
+C 1|8
+P 4|8|128|256|4194304|8388608
+>greet_prog 100~
+if isnpc($n)
+or is_qmark($n) & warrior_quest 200001
+	break
+endif
+if class($n) == 3
+or class($n) == 11
+or class($n) == 12
+or class($n) == 13
+	mpecho $I 從公文堆裡抬起頭....
+	nod $n
+	say 你好，年輕的武士，你想要加入銀蛇武士嗎(yes/no)？
+	if is_qmark($n) != warrior_quest
+		mpadd_qmark $n warrior_quest -1 0 0 0 0 1
+	endif
+endif
+~
+>talk_prog topic~
+if is_qmark($n) == warrior_quest 200000
+	if class($n) == 3
+	or class($n) == 11
+	or class($n) == 12
+	or class($n) == 13
+		say 你想要加入銀蛇武士嗎(yes/no)？
+	endif
+endif
+if is_qmark($n) == warrior_quest 200001
+	say 你已經瞭解了勇氣、正義與愛心的意義了嗎？
+	say 等你瞭解了再來找我進行進一步的訓練(advance training)。
+endif
+if is_qmark($n) == windcity_clan_member 100001
+	say 你的功績我已經知道了，你真是風之城不可多得的人才。
+	say 城主和元帥們聽到你的事也都讚譽有加，
+ 	say 決定再派你去執行一項艱鉅的任務，
+ 	say 而這也是我們給你的一項考驗，
+	mpecho $I 以深深的目光看著你....
+	say 密探回報，據說風火海正在設法勾結曼托爾城堡，壯大自己的聲勢。
+	say 元帥們希望能夠知道密約的內容，
+	say 如此一來我們仍然有可能斧底抽薪，把牛頭人再拉攏過來，
+	nod $n
+	say 去吧，他們現在應該在風火海總舵，
+	say 盡你所能把密約奪回來！我相信你不會讓城主及元帥們失望！
+	mpmod_qmark $n windcity_clan_member v0 = 2
+endif
+~
+>talk_prog yes~
+if is_qmark($n) == warrior_quest 200000
+	mpechoat $n $I 站起來，從桌後走過來跟你握手....
+	mpechoaround $n $I 站起來，從桌後走過來與 $n 握手....
+	say 銀蛇堡歡迎所有有抱負的年輕武士加入，
+	say 我們會盡量傳授你一位優秀武士所應具有的戰技與觀念，
+        say 為這塊大陸的安樂與和平貢獻一份心力。
+	think
+	say 銀蛇武士的基本信仰是勇氣、正義與愛心，
+	say 每位武士都必須徹底明白這三種美德所代表的含意，
+        say 請你先去向堡裡的三位美德導師請益，並仔細思考他們的話，
+        say 等你想通了再來向我要求我進行下一階段的訓練(advance training)。
+	mpmod_qmark $n warrior_quest v1 | 1
+endif
+~
+>talk_prog no~
+if is_qmark($n) == warrior_quest 200000
+	nod
+	say 喔，那你自己逛逛吧。
+	mpecho $I 又埋頭繼續工作....
+endif
+~
+>talk_prog p advance training~
+if is_qmark($n) == warrior_quest 200015
+	good $n
+	say 我現在把堡裡的鑰匙交給你，
+	say 你可以盡量使用堡內的訓練設備精進你的武藝。
+	mpoload 13700 $n viclv target
+	mpechoat $n $I 把鑰匙交給你....
+	mpechoaround $n $I 把鑰匙交給了 $n ....
+	say 若你認為武藝已經達到標準，
+	say 你可以到訓練大廳左側的房間裡尋求每一種職業的最終試煉，
+	say 對了，如果你不幸喪命，告訴我們的主教(talk bishop grave)，
+	say 她就會幫你把屍體找回來喔！
+	say 加油，年輕的武士！
+	wave $n
+endif
+~
+>talk_prog p restart~
+if is_qmark($n) == warrior_quest
+	say 好吧！任務重新開始。
+	mpmod_qmark $n warrior_quest v1 = 0
+endif
+~
+>talk_prog join~
+if level($n) <= 21
+or is_qmark($n) == windcity_clan_member
+	break
+endif
+if is_qmark($n) & warrior_quest 100008
+	if is_qmark($n) != windcity_clan_member
+		if is_qmark($n) >= wfs_clan_member 100001
+			say 對不起，我們不歡迎風火海的成員！
+		else
+			shout [1;32m歡迎 $n 加入風之城！[m
+			if class($n) < 5
+				mpexp $n 5400
+			else
+				mpexp $n 3600
+			endif
+			good $n
+			mpechoaround $n $I 站起來，從桌後走過來與 $n 握手....
+			mpechoat $n $I 站起來，從桌後走過來與你握手....
+			say 太好了，風之城又多了一位良將！
+			mpadd_qmark $n windcity_clan_member -1 0 0 0 0 1
+			if is_qmark($n) == wfs_clan_member
+				mpdel_qmark $n wfs_clan_member
+			endif
+			mpoload 13736 $n viclv target
+			mpechoat $n $I 從抽屜拿出一枚藍色戒指給你....
+			mpechoaround $n $I 從抽屜拿出一枚藍色戒指給 $n ....
+			say 這個戒指代表風之城，請隨身攜帶，因為風之城成員之間就靠它來相認了。
+			say 你先回去吧，我們會再主動和你聯絡！
+		endif
+	endif
+endif
+~
+>give_prog 13479~
+if is_qmark($n) == windcity_clan_member 100002
+	mpecho $I 看過 $O 之後轉過頭來看著你....
+	mpjunk secret
+	say 太好了！你果是一位不世出的人才！
+	say 城主和元帥們一致決議，在你圓滿達成任務後，
+	say 就將你升任為舵主！現在請把門人戒指交給我吧
+	mpmod_qmark $n windcity_clan_member v0 = 3
+	mpmod_qmark $n windcity_clan_member v1 = 0
+endif
+~
+>give_prog 13736~
+if is_qmark($n) == windcity_clan_member 100003
+	mpecho $I 把 $O 收了起來....
+	mpjunk windcity
+	mpechoat $n $I 從身旁的保險櫃中拿出一枚銀色的戒子，將戒子交給了你....
+	mpechoaround $n $I 從身旁的保險櫃中拿出一枚銀色的戒子，將戒子交給了 $n ....
+	if class($n) < 5
+		mpexp $n 5400
+	else
+		mpexp $n 3600
+	endif
+	mpoload 13737 $n viclv target
+	say 恭禧你 $n ，從今以後我們便是同僚了，
+	say 以你的能力相信一定能夠擔任元帥的職位，
+ 	say 往後還要請你多多關照，
+ 	say 就讓我們為風之城的壯大一起努力吧！
+	smile $n
+	say 我想有機會城主一定會親自召見你，我們到時再見了！
+	wave $n
+	mpmod_qmark $n windcity_clan_member v0 = 4
+endif
+~
+>fight_prog 100~
+if is_equ_obj($i) != 13703
+	wear mace
+endif
+if is_equ_obj($i) != 13717
+	wear sword
+endif
+disarm
+mpnowait
+if rand(25)
+	flaming
+	mpnowait
+else
+	if rand(33)
+		circular
+		mpnowait
+	else
+		if rand(50)
+			strom
+			mpnowait
+		else
+			bashhead
+			mpnowait
+			kick
+			mpnowait
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpmod_all_qmark $n adv_book_1_main v0 | 32
+if is_qmark($n) != snow_enemy
+	if is_qmark($n) == snow_Porak02_quest 100005
+		mpechoat $n 你確認$I已經死亡後，稍微鬆了口氣。
+		mpechoat $n 忽然間，你發現牆上多了幾個字，不曉得什麼時候冒出來的。
+		mpechoat $n 上面寫著：「塔頂的女王等著你的光臨。」
+		mpechoat $n 旁邊還有一行小字：「看完擦掉。」
+		mpmod_qmark $n snow_Porak02_quest v0 = 6
+	endif
+endif
+~
+|
+#13724
+retired knight~
+退休的騎士(retired knight)~
+一位服膺正義，已經退休的騎士(retired knight)精神奕奕地望著你。
+~
+一位服膺正義(justice)，已經退休的騎士精神奕奕地望著你。
+~
+1|2|64|8192|262144 8|32|128|8192 800 S
+40 1500 0 0d0+0 0d-100+0
+0 0
+0 8 1
+C 1|4|8
+P 8|128|256|4194304
+>talk_prog justice~
+say 記住，孩子，騎士是奉行騎士精神，鋤強扶弱，代表正義的偉大職業！
+~
+>greet_prog 100~
+if ispc($n)
+	if class($n) == 11
+		if is_qmark($n) != warrior_knight_test
+			if is_qmark($n) !& warrior_quest 100001
+				smile $n
+				say 您好，您是來參加騎士的最終試煉嗎(yes/no)？
+			endif
+			break
+		endif
+		if is_qmark($n) == warrior_knight_test 100001
+			say 如果你想再試一次，請告訴我一聲(ready)。
+			break
+		endif
+		if is_qmark($n) == warrior_knight_test 100002
+			mpexp $n 3600
+			good $n
+			mpdel_qmark $n warrior_knight_test
+			if is_qmark($n) != warrior_quest
+				mpadd_qmark $n warrior_quest -1 1 0 0 0 1
+			else
+				mpmod_qmark $n warrior_quest v0 | 1
+			endif
+			mpforce $n remove all
+			mptransfer $n 9
+			mpat 9 mpforce $n drop all
+			mpat 9 mppurge
+			mptransfer $n
+			say 恭禧你，你已完成了代表正義的騎士之修鍊！這是你通過試煉的證明。
+			mpoload 13727 $n 36 target
+			mpechoat $n $I 把銀蛇騎士光輝戰甲給你....
+			mpechoaround $n $I 把銀蛇騎士光輝戰甲給 $n ....
+			say 你雖然完成銀蛇堡騎士的測驗，但還有許多東西必須自己去體會，
+			say 當你有疑問時歡迎你隨時回來繼續未完的訓練。
+			mpecho $I 好像還有什麼話要說....
+			mpcallout 1 mpcall warrior_secret_1 $n
+		endif
+	endif
+endif
+~
+>defun_prog warrior_secret_1~
+say 我順便跟你說個秘密，在這下面有一個房間，
+say 住著一名虔誠的聖堂武士，你可以到下面跟他請教騎士道的精髓，
+say 順便學習更強大的騎士技能，祝你好運了！
+~
+>talk_prog no~
+say 沒關係，等你準備好再來吧。
+~
+>talk_prog yes~
+if class($n) == 11
+	if is_qmark($n) & warrior_quest 100001
+		say 這個試煉只允許騎士參加一次。
+		break
+	endif
+	nod $n
+	say 為了測試出您真正的戰技，
+	say 參加最終試煉的騎士按規定我們會取下您所有的裝備代為保管。
+	say 為避免有任何不測，請先把所有貴重物品自行取下。
+	say 另外試煉開始後，結束試煉的方法只有通過考驗與死亡兩種，
+	say 當您準備好後請告訴我(ready)。
+endif
+~
+>talk_prog ready~
+if class($n) == 11
+	if is_qmark($n) & warrior_quest 100001
+		say 這個試煉只允許騎士參加一次。
+		break
+	endif
+	if level($n) < 36
+		shake
+		say 你的等級太低了！
+		break
+	endif
+	c 'detect invis' $n
+	mpnowait
+	mpforce $n remove all
+	mpforce $n drop all
+	mpoload 13703 $n 35 target
+	mpoload 13703 $n 35 target
+	mpoload 13704 $n 35 target
+	mpoload 13715 $n 35 target
+	mpoload 13715 $n 35 target
+	mpforce $n wear all
+	mpadd_qmark $n warrior_knight_test -1 1 0 0 0 1
+	mptransfer $n 13756
+endif
+~
+>fight_prog 100~
+wear all
+disarm
+mpnowait
+if rand(50)
+	bashhead
+	mpnowait
+	kick
+	mpnowait
+else
+	circular
+	mpnowait
+endif
+~
+|
+#13725
+middle monster~
+中型魔獸(middle monster)~
+中型魔獸(middle monster)搖頭晃腦地站在這裡。
+~
+中型魔獸(middle monster)搖頭晃腦地站在這裡。
+~
+1|2|64 0 -300 S
+35 0 0 0d-10+0 0d0+0
+-1 0
+0 8 1
+R Ogre~
+#13726
+big monster~
+大型魔獸(big monster)~
+大型魔獸(big monster)對你齜牙裂嘴。
+~
+大型魔獸(big monster)對你齜牙裂嘴。
+~
+1|2|32|64 0 -500 S
+40 0 0 -10d-15+100 0d0+0
+-1 0
+0 8 1
+R Ogre~
+C 1|8
+P 256
+#13727
+giant monster~
+巨型魔獸(giant monster)~
+巨型魔獸(giant monster)對你咆哮著。
+~
+巨型魔獸(giant monster)對你咆哮著。
+~
+1|2|32|64|8192|262144 8|32|512 -800 S
+40 0 0 -10d-15+100 0d0+0
+-1 0
+0 8 1
+R Ogre~
+C 1|8
+>all_greet_prog 100~
+c 'faerie fog'
+~
+>fight_prog 100~
+if rand(33)
+	disarm
+	mpnowait
+else
+	if rand(50)
+		kick
+		mpnowait
+	else
+		bashhead
+		mpnowait
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == warrior_knight_test 100001
+	mpmod_qmark $n warrior_knight_test v0 = 2
+endif
+~
+|
+#13728
+old swordsman~
+老劍客(old swordsman)~
+一位充滿勇氣，鬚髮皆白的老劍客(old swordsman)對你微笑。
+~
+一位充滿勇氣(valor),鬚髮皆白的老劍客對你微笑。
+~
+1|2|64|8192|262144 8|32|128 800 S
+40 1500 200 0d0+0 0d-100+0
+-1 0
+0 8 1
+C 1|4|8
+P 8|128|256|4194304
+>talk_prog valor~
+say 別忘了，年輕的劍士，劍客是代表勇氣的職業，
+say 不論你碰到什麼樣的困難都不能畏縮，
+say 尤其當你精研各式各樣劍客高等劍法以後。
+~
+>greet_prog 100~
+if ispc($n)
+	if class($n) == 12
+		if is_qmark($n) != warrior_swordsman_test
+			if is_qmark($n) !& warrior_quest 100002
+				smile $n
+				say 您好，您是來參加劍客的最終試煉嗎(yes/no)？
+			endif
+			break
+		endif
+		if is_qmark($n) == warrior_swordsman_test 100001
+			say 如果你想再試一次，請告訴我一聲(ready)。
+			break
+		endif
+		if is_qmark($n) == warrior_swordsman_test 100002
+			mpexp $n 3600
+			good $n
+			mpdel_qmark $n warrior_swordsman_test
+			if is_qmark($n) != warrior_quest
+				mpadd_qmark $n warrior_quest -1 2 0 0 0 1
+			else
+				mpmod_qmark $n warrior_quest v0 | 2
+			endif
+			mpforce $n remove all
+			mptransfer $n 9
+			mpat 9 mpforce $n drop all
+			mpat 9 mppurge
+			mptransfer $n
+			say 恭禧你，你已完成了代表勇氣的劍客之修鍊！這是你通過試煉的證明。
+			mpoload 13728 $n 36 target
+			mpechoat $n $I 把銀蛇劍客徽章給你....
+			mpechoaround $n $I 把銀蛇劍客徽章給 $n ....
+			say 你雖然完成銀蛇堡劍客的測驗，但還有許多東西
+			say 必須自己去體會，當你有疑問時歡迎你隨時回來
+			say 繼續未完的修鍊。
+			wave $n
+		endif
+	endif
+endif
+~
+>talk_prog no~
+say 沒關係，等你準備好再來吧。
+~
+>talk_prog yes~
+if class($n) == 12
+	if is_qmark($n) & warrior_quest 100002
+		say 這個試煉只允許劍客參加一次。
+		break
+	endif
+	nod $n
+	say 為了測試出您真正的戰技，
+	say 參加最終試煉的劍客按規定我們會取下您所有的裝備代為保管。
+	say 為避免有任何不測，請先把所有貴重物品自行取下。
+	say 另外試煉開始後，結束試煉的方法只有通過考驗與死亡兩種，
+	say 當您準備好後請告訴我(ready)。
+endif
+~
+>talk_prog ready~
+if class($n) == 12
+	if is_qmark($n) & warrior_quest 100002
+     		say 這個試煉只允許劍客參加一次。
+		break
+	endif
+	if level($n) < 36
+		shake
+		say 你的等級太低了！
+		break
+	endif
+	c 'detect invis' $n
+	mpnowait
+	mpforce $n remove all
+	mpforce $n drop all
+	mpoload 13719 $n 35 target
+	mpoload 13704 $n 35 target
+	mpoload 13715 $n 35 target
+	mpoload 13715 $n 35 target
+	mpoload 13726 $n 35 target
+	mpoload 13726 $n 35 target
+	mpforce $n wear all
+	mpadd_qmark $n warrior_swordsman_test -1 1 0 0 0 1
+	mptransfer $n 13760
+endif
+~
+>fight_prog 100~
+wear all
+disarm
+mpnowait
+if rand(25)
+	flaming
+	mpnowait
+else
+	if rand(33)
+		perform empslash
+		mpnowait
+	else
+		if rand(50)
+			flaming
+			mpnowait
+		else
+			strom
+			mpnowait
+		endif
+	endif
+endif
+~
+|
+#13729
+middle monster~
+中型魔獸(middle monster)~
+中型魔獸(middle monster)搖頭晃腦地站在這裡。
+~
+中型魔獸(middle monster)搖頭晃腦地站在這裡。
+~
+1|2|64 0 -300 S
+35 0 0 0d-15+0 0d0+0
+-1 0
+0 8 1
+R Ogre~
+#13730
+giant monster~
+巨型魔獸(giant monster)~
+巨型魔獸(giant monster)對你咆哮著。
+~
+巨型魔獸(giant monster)對你咆哮著。
+~
+1|2|32|64|8192 8|32|512 -800 S
+40 0 0 -10d-15+100 0d0+0
+-1 0
+0 8 1
+R Ogre~
+C 1|8
+P 256
+>all_greet_prog 100~
+c 'faerie fog'
+~
+>fight_prog 20~
+flaming
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == warrior_swordsman_test 100001
+	mpmod_qmark $n warrior_swordsman_test v0 = 2
+endif
+~
+|
+#13731
+practicing warrior~
+練習的武士(practicing warrior)~
+一位全心練習戰鬥技巧的的武士(practicing warrior)在此舞劍。
+~
+一位全心練習戰鬥技巧的的武士(practicing warrior)在此舞劍。
+~
+1|64 0 500 S
+35 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+#13732
+warrior guide~
+武士教練(warrior guide)~
+一位武士教練(warrior guide)不厭其煩教導戰術技巧。
+~
+一位武士教練(warrior guide)不厭其煩教導戰術技巧。
+~
+1|64 0 700 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+>talk_prog topic~
+say 劍客必須善用他強力的劍術，
+say 而僧侶可以將徒手格鬥技巧發揮到極致，
+say 擊敗任何動作敏捷的對手！
+~
+|
+#13733
+sweaty knight~
+滿身大汗的騎士(sweaty knight)~
+滿身大汗的騎士(sweaty knight)在這裡喘著氣。
+~
+滿身大汗的騎士(sweaty knight)在這裡喘著氣。
+~
+1|2|64|8192|262144 0 600 S
+36 0 0 0d0+0 0d0+0
+0 0
+0 8 2
+C 1|8
+>talk_prog topic~
+say 我正在練習騎士重要的打帶跑(hunt/flee)戰術。
+~
+>greet_prog 30~
+if ispc($n)
+	say 我正在練習騎士重要的打帶跑(hunt/flee)戰術。
+endif
+~
+>talk_prog hunt/flee~
+nod
+say 打帶跑是近來才發展出來的騎士專屬戰術，威力很強！
+say 它最主要是利用逃跑點數(wimpy)來逃跑(flee)，
+say 首先要把逃跑點數(wimpy)設到最高，然後獵殺(hunt)你的對手。
+say 只要對方無法獵殺(hunt)你，那麼一直打帶跑(hunt/flee)他就完蛋了！
+~
+>fight_prog 50~
+yell 看我的打帶跑戰術！
+hunt $n
+mpnowait
+skilldrv multihit $n
+flee
+~
+|
+#13734
+vidal-m tall swordsman~
+高大挺拔的劍客(tall swordsman)~
+一位高大挺拔的劍客(tall swordsman)充滿自信地站在這裡。
+~
+看他嘴角那種目空一切的微笑，大概猜得出他就是著名的浪子維達(vidal)。
+~
+1|64|1024|8192|262144 8|32|128|512|8192 700 S
+50 500 200 0d0+150 -5d120+0
+5000 0
+0 8 1
+C 1|4|8
+P 8|128|256|4194312|8388608|16777216
+K empslash~
+>rand_prog 50~
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+~
+>talk_prog topic~
+say 堡主派人邀請我們來作客，我就住在二樓房間。
+~
+>fight_prog 100~
+if is_equ_obj($i) != 13701
+	wear sword
+endif
+disarm
+mpnowait
+if rand(25)
+	circular
+	mpnowait
+else
+	if rand(33)
+		flaming
+		mpnowait
+	else
+		if rand(50)
+			storm
+			mpnowait
+		else
+			perform empslash
+		endif
+	endif
+endif
+~
+>talk_prog secret~
+mpecho $I 露出不屑的微笑....
+say 天啊，又是一個好私密者，你們煩不煩啊？
+pon
+say 況且，我認識你嗎(yes/no)？
+~
+>talk_prog no~
+say 照啊，我又不認識你，幹嘛陪你廢話！
+hop
+s
+e
+~
+>talk_prog yes~
+say 真的？我們認識？
+think
+say 最近很多人為了一點小事就可以到處認乾爸。
+say 這樣吧，如果你真的認識我，
+say 應當知道我最好的朋友叫什麼名字吧？
+~
+>talk_prog amenda~
+say 少來，拍她馬屁我也不認帳....
+laugh
+~
+>talk_prog polygun~
+say 哎呀！有點門道了....
+think
+say 再考你一題，如果我們夠交情你一定曉得，
+say 天底下最囉唆的女人是哪一位啊？
+~
+>talk_prog sexygirl~
+say 說得好！說得好！
+clap $n
+say 看來我們真的認識，只是我記性太差，請你原諒一次。
+bow $n
+say 其實也沒大不了的秘密，
+say 只是我把北邊那道門的鑰匙藏在最後的金屬人身上了！
+hop
+say 至於那扇門後到底有什麼，你去問波利剛(back door) 吧，他比較清楚....
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+mpmod_all_qmark $n adv_book_1_main v0 | 64
+~
+|
+#13735
+serpent-m bishop~
+銀蛇主教(serpent bishop)~
+銀蛇主教(serpent bishop)在這裡為每個人祈福。
+~
+銀蛇主教(serpent bishop)在這裡為每個人祈福。
+~
+1|2|64 8|32|128|512|8192 1000 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 2
+C 2
+P 8|128
+>talk_prog topic~
+say 波利剛人是不錯啦，不過這樣緊迫盯人好煩喔！
+blush
+~
+>talk_prog grave~
+if is_qmark($n) == warrior_quest 200015
+	say 好的，讓我把你的屍體找回來....
+	c grave $n
+endif
+~
+|
+#13736
+polygun-m bishop~
+波利剛(polygun)~
+貞理主教波利剛(bishop polygun)在這裡閒晃，找人磕牙。
+~
+說實話，他正在騷擾好脾氣的銀蛇主教....
+~
+1|2|64|67108864 8|32|128|512 1000 S
+36 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 2
+P 8|128
+>talk_prog topic~
+say 我喜歡漂漂的銀蛇主教！
+~
+>talk_prog p back door~
+if is_qmark($i) == warrior_polygun_follow 100001
+	say 對不起，我現在在忙，晚點再來。
+	break
+endif
+chu
+say 一定是維達懶得理你，才叫你來找我....
+think
+say 不過，天下沒有白吃的午餐，
+say 你去弄一袋瓜子(gourd nuts)來給銀蛇主教當零食，
+say 我才告訴你。
+poke serpent-m
+if is_qmark($n) != warrior_quest
+	mpadd_qmark $n warrior_quest -1 0 0 1 0 1
+else
+	if is_qmark($n) != warrior_quest 300001
+		mpmod_qmark $n warrior_quest v2 = 1
+	endif
+endif
+~
+>talk_prog p gourd nuts~
+say 銀蛇堡裡就有人在賣，你只要告訴他要買瓜子(gourd nuts)就可以了。
+~
+>give_prog 13730~
+if is_qmark($n) == warrior_quest 300001
+	say 謝啦....
+	give nuts serpent-m
+	mpforce serpent-m mpjunk nuts
+	say 我也是聽人說的，據說那裡可以學到許多高級戰士的進階戰鬥技巧，
+	say 不過要通過嚴格的考驗才見得到他，
+	pon
+	say 反正我最近沒什麼要緊的事，乾脆陪你去逛逛吧。
+	mpdef_rembch $n
+	mpgroup $n self 1 0
+	mpmod_qmark $n warrior_quest v2 = 0
+	mpadd_qmark self warrior_polygun_follow 30 1 0 0 1 1
+	mpforce $n protect self
+else
+	ponder
+	drop gourd
+endif
+~
+>rand_prog 50~
+if hitprcnt($i) < 50
+	if rand(20)
+		c 'full heal'
+		mpnowait
+	else
+		c 'double heal'
+		mpnowait
+	endif
+	break
+endif
+if inroom($i) == 13771
+	if insameroom(serpent-m)
+		if isfight(serpent-m)
+			rescue serpent-m
+			break
+		endif
+		if rand(20)
+			poke serpent-m
+			say 拜託啦....，晚上一起出來吃個飯嘛....。
+			break
+		endif
+	endif
+else
+	if insameroom($b)
+		if hitprcnt($b) < 50
+			if rand(20)
+				say 小心，安全第一！
+				c 'full heal' $b
+			endif
+		else
+	    		if isaffected($b) !& 128
+				say 要深入險境還是上聖光比較好。
+				c sanc $b
+			endif
+		endif
+		break
+	else
+		say 啊....好久沒看到銀蛇主教了....
+		think
+		say 我還是回去吧....
+		mpgoto 13771
+		mpdef_rembch null-tar
+		follow self
+		group leave
+		if being(vidal-m)
+	    		mptransfer vidal-m 13706
+		endif
+	endif
+endif
+~
+>entry_prog 100~
+if inroom($i) == 13803
+	say 好啦，地底冒險結束了，我也該回去了。
+	wave
+	follow self
+	group leave
+	mpgoto 13771
+	mpdef_rembch null-tar
+	mpdel_qmark self warrior_polygun_follow
+	if being(vidal-m)
+		mptransfer vidal-m 13706
+	endif
+endif
+~
+>fight_prog 30~
+if insameroom($b)
+	if hitprcnt($b) < 60
+		yell 緊急治療！
+		c 'double heal' $b
+	endif
+endif
+if insameroom(vidal-m)
+	c 2 'double heal' vidal-m
+endif
+if rand(50)
+	c harm
+else
+	c fireball
+endif
+~
+>hitprcnt_prog 40~
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if rand(50)
+	flee
+else
+	c 2 'double heal'
+endif
+mpdis_magic self blindness
+mpecho .
+yell 維達！維達！快來救我！！！
+if being(vidal-m)
+	mpecho .
+	mpecho [1;32m浪子維達不知從那突然冒了出來！[m
+	mptransfer vidal-m
+	mpforce vidal-m rescue polygun-m
+endif
+c 'full heal'
+~
+>tick_prog 30~
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if area($i) == warrior
+	if being($b)
+	else
+		if is_qmark($i) == warrior_polygun_follow
+			mpdel_qmark self warrior_polygun_follow
+		endif
+		if inroom($i) != 13771
+      		mpgoto 13771
+	    	if being(vidal-m)
+			mptransfer vidal-m 13706
+		endif
+	endif
+	break
+endif
+if pcnum($) > 0
+	ponder
+	say 我好想銀蛇主教喔，還是先回祭壇吧。
+endif
+follow self
+group leave
+if is_qmark($i) == warrior_polygun_follow
+	mpdel_qmark self warrior_polygun_follow
+endif
+mpgoto 13771
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 c inf
+if being(vidal-m)
+	mptransfer vidal-m 13706
+endif
+~
+|
+#13737
+gardener~
+園丁(gardener)~
+園丁(gardener)正在修剪花木，整理花圃。
+~
+園丁(gardener)正在修剪花木，整理花圃。
+~
+1|2|64 8|32|512 500 S
+30 0 0 0d0+0 0d0+0
+500 0
+0 8 2
+P 8|128
+>talk_prog topic~
+say 你好，這裡的花草都是我栽培的，我還種植一些食用農產喔！
+~
+>talk_prog p gourd nuts~
+say 呃....這是很珍貴的東西，目前只有我能培育出來，
+say 所以我要收一點費用喔....
+think
+say 就算一萬金幣一袋吧....
+~
+>bribe_prog 10000~
+mpjunk all.gold
+mpoload 13730
+give nuts $n
+bow $n
+~
+>give_prog 13476~
+if is_qmark($n) == thief_quest_list 200402
+	mpmod_qmark $n thief_quest_list v0 r 16
+	mpmod_qmark $n thief_quest_list v1 = 0
+	mpjunk head
+	good $n
+	if is_qmark($n) == windcity_clan_member
+		say 我早就聽說我們風之城有位能力極強，前途無量的年輕人，
+		say 只是沒想到你已經成長到這個地步了！
+ 		clap $n
+ 		say 你這次行動做得十分完美，堡主剛剛已經知道這件事了，
+		say 請您趕快去見他吧，還有更重要的任務需要你的幫忙！
+		bow $n
+		mpmod_qmark $n windcity_clan_member v0 = 1
+	else
+		say 這是我們答應的懸賞，請收下....
+		mpechoat $n $I 從袋子裡拿出一雙藍色的長靴交給你。
+		mpechoaround $n $I 從袋子裡拿出一雙藍色的長靴交給 $n ....
+		mpoload 13738 $n viclv target
+		say 我說，蛟龍也要大海才能奔騰，
+		say 我想風之城(windcity)是個蠻有前途的組織，你可以考慮看看。
+	endif
+	if mobcount(3022) == 1
+		if is_qmark(hanzo) & thief_quest_solved 100016
+			mpat hanzo mpmod_qmark hanzo thief_quest_solved v0 r 16
+		endif
+	endif
+endif
+~
+>talk_prog windcity~
+smile $n
+say 你可以去和堡裡的小販談一談，他和風之城可能有關係。
+~
+|
+#13738
+peddler-m~
+小生意人(peddler)~
+小生意人(peddler)暫時在這裡休息，儲備精神。
+~
+小生意人(peddler)暫時在這裡休息，儲備精神。
+~
+1|2|64|128|67108864 8|32|512 200 S
+35 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+P 4|8|128
+>talk_prog topic~
+if rembch($n)
+	tell $n 我們的目標是精靈村。
+	break
+endif
+if is_qmark($i) == serpent_peddler_follow
+	say 對不起，我現在很忙，稍後再找我吧。
+	break
+endif
+if inroom($i) == 13735
+	if is_qmark($n) & warrior_quest 100008
+		break
+	endif
+	say 我想到精靈之森辦點貨物，但又怕遇到搶匪....
+	mpechoat $n $I 以懷疑的目光看著你....
+	mpechoaround $n $I 以懷疑的目光看著 $n ....
+	say 看你蠻強壯的，願意保護我走一趟嗎？
+	say 只要能安全抵達酬勞絕對少不了(yes/no)。
+	mpadd_qmark $n serpent_peddler_quest -1 1 0 0 0 1
+else
+	say 我該到銀蛇武士堡辦點事了....
+	mpgoto 13735
+endif
+~
+>talk_prog yes~
+if is_qmark($i) == serpent_peddler_follow
+	say 對不起，我現在很忙，稍後再找我吧。
+	break
+endif
+if is_qmark($n) == serpent_peddler_quest 100001
+	say 有錢能使鬼推磨，你等我一會....
+	mpecho $I 開始收拾行李....
+	mpdef_rembch $n
+	mpmod_qmark $n serpent_peddler_quest v0 = 2
+	mpadd_qmark self serpent_peddler_wait 18 0 0 0 1 0
+endif
+~
+>talk_prog no~
+if is_qmark($n) == serpent_peddler_quest 100001
+	sigh
+	say 金玉其外，敗絮其中....
+	mpdel_qmark $n serpent_peddler_quest
+endif
+~
+>rand_prog 50~
+if insameroom($b)
+	if is_qmark($i) == serpent_peddler_wait
+		say 好了，咱們走吧。
+		mpgroup $b self 1 0
+		mpdel_qmark self serpent_peddler_wait
+		mpadd_qmark self serpent_peddler_follow 250 1 0 0 1 0
+	endif
+	break
+endif
+if is_qmark($b) == serpent_peddler_quest 300001
+	mpdis_magic self blindness
+	yell $b 拼命保護我，他真是一個重信義的人！
+	yell 為了怕夜長夢多，$b 我們還是快趕路吧。
+	mpgoto $b
+	mpecho $I 快步走了過來....
+	mpmod_qmark $b serpent_peddler_quest v2 = 0
+	break
+endif
+if inroom($i) == 13735
+	if is_qmark($i) == serpent_peddler_follow
+		say 我該到銀蛇武士堡辦點事了....
+		mpgoto 13735
+	endif
+endif
+~
+>entry_prog 100~
+if insameroom($b)
+	if inroom($i) == 6002
+		if is_qmark($i) == serpent_peddler_follow 100001
+			mpdis_magic self blindness
+			mpat 5 cast inf
+			mpecho .
+			mpecho 三個大漢突然從林間竄出，擋住你的去路！
+			mpmload 13748
+			mpforce head mpdef_rembch $b
+			mpforce head follow $b
+			mpecho .
+			mpecho 你要付十萬金幣給強盜頭子，以求順利達成任務；
+		        mpecho 還是要為民除害，把這三個敗類翦除？
+			mpmod_qmark self serpent_peddler_follow v0 = 2
+			break
+		endif
+	endif
+	if inroom($i) == 3012
+		if is_qmark($i) == serpent_peddler_follow 100002
+			mpecho .
+			pat $b
+			say 剛才真是謝謝你了，我看我們也走累了....
+			think
+			say 這樣吧，我們先到咕嚕咕嚕酒吧喝一杯吧，
+			say 由我請客，順便表達我的感謝。
+			mpmod_qmark self serpent_peddler_follow v0 = 3
+			break
+		endif
+	endif
+	if inroom($i) == 3006
+		if is_qmark($i) == serpent_peddler_follow 100003
+			if insameroom(silent-m)
+				mpecho .
+				mpecho $I 一看到沈默的煉金師(silent alchemist)就臉色大變！
+				gasp
+				mpforce silent-m say 好傢伙，總算讓我找到你了！
+				mpforce silent-m say 你賣我們的那些假捲軸，害我最好的伙伴被洞穴巨人分屍了！
+				mpforce silent-m say 我今天一定要為他們報仇！
+				mpecho .
+				say 喂，你要搞清楚，殺人的又不是我，
+				say 更何況捲軸法力失效是常有的事，誰叫你貪小便宜。
+				mpecho .
+				mpforce silent-m say 可惡，害死了人還不認錯！納命來！
+				mpechoat $n 沈默的煉金師(silent alchemist)正要出手攻擊，卻被你擋下....
+				mpechoaround $n 沈默的煉金師(silent alchemist)正要出手攻擊，卻被 $n 擋下....
+				mpforce $b say 住手，他是我的委託人，沒問過我別想動手！
+				mpforce silent-m say 好吧，讓你選....
+				mpforce silent-m say 你是要伸張正義(talk alc help silent)，
+				mpforce silent-m say 還是要助紂為孽(talk alc help peddler)？
+				mpmod_qmark $b serpent_peddler_quest v0 = 3
+				mpmod_qmark self serpent_peddler_follow v0 = 4
+			endif
+		endif
+		break
+	endif
+	if inroom($i) == 13602
+		if is_qmark($b) == serpent_peddler_quest 100004
+			bow $b
+			say 到這裡就安全了，謝謝你一路保護我。
+			say 這是我答應的酬勞：
+			mpgold $b 150000
+			mpexp $b 1000
+			think
+			say 看你這麼值得信任...。
+			say 其實我是史卡拉貝最大幫派 風之城 的成員，
+			say 專門負責到各地尋找像你這種勇敢又有義氣的人。
+			say 加入 風之城 有數不盡的榮華富貴，
+			say 就連銀蛇堡都是我們的分堂。
+			say 你只要告訴銀蛇堡主你想加入我們(join)，
+			say 你將來的成就絕對不可限量！
+			wave $b
+			say 我走了，別放棄自己的大好機會喔！
+			mpecho 精靈守衛開門讓 $I 進去....
+			mpdel_qmark $b serpent_peddler_quest
+			if is_qmark($b) != warrior_quest
+				mpadd_qmark $b warrior_quest -1 8 0 0 0 1
+			else
+				if is_qmark($b) !& warrior_quest 100008
+					mpmod_qmark $b warrior_quest v0 | 8
+				endif
+			endif
+			mppurge self
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+if is_qmark($b) == serpent_peddler_quest 100100
+	if mobcount(3160) == 0
+		mpmload 3160
+	endif
+	mptransfer silent-m
+	mpforce silent-m yell 謝謝你！我的朋友，你是正義的化身！
+	mptransfer $b
+	mpechoat $b 沈默的煉金師(silent alchemist)召喚了你！
+	mpecho 沈默的煉金師(silent alchemist)用奇異的方法處理掉屍體！
+	mpforce silent-m think
+	mpforce silent-m say 我沒什麼值錢的東西，但我願意交你這個朋友。
+	mpforce silent-m say 我其實是個超級傭兵，一天價碼五十萬！
+	mpforce silent-m say 但以後若有用得著的地方，你只要付我四十萬，
+	mpforce silent-m say 我就為你賣命兩天！
+	mpforce silent-m bow $b
+	if is_qmark($b) != warrior_quest
+		mpadd_qmark $b warrior_quest -1 8 0 0 0 1
+	else
+		if is_qmark($b) !& warrior_quest 100008
+			mpmod_qmark $b warrior_quest v0 | 8
+		endif
+	endif
+	mpadd_qmark $b skarabrae_alchemist_mercenary -1 0 0 0 0 1
+	mpdel_qmark $n serpent_peddler_quest
+	mppurge self
+endif
+~
+>talk_prog p restart~
+if is_qmark($i) == serpent_peddler_follow
+	say 對不起，我現在很忙，稍後再找我吧。
+	break
+endif
+if is_qmark($n) & warrior_quest 100008
+	shake
+	say 你已經完成這項任務了！
+else
+	say 好的，任務重新開始。
+	if is_qmark($n) == serpent_peddler_quest
+		mpdel_qmark $n serpent_peddler_quest
+	endif
+	mpgoto 13735
+endif
+~
+|
+#13739
+guard golem~
+守衛人偶(guard golem)~
+守衛人偶(guard golem)一看到你便猛烈攻擊。
+~
+守衛人偶(guard golem)一看到你便猛烈攻擊。
+~
+1|2|64|8192 8|32|512 0 S
+38 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1|8
+P 8|128
+>greet_prog 50~
+hunt $n
+mpnowait
+if rand(50)
+	skilldrv multihit $n
+endif
+~
+|
+#13740
+knight-warrior metal knight~
+金屬騎士(metal knight)~
+金屬騎士(metal knight)守衛著地道，不讓任何人通過。
+~
+金屬騎士(metal knight)守衛著地道，不讓任何人通過。
+~
+1|2|32|64|8192|262144 8|32|128|512|8192 0 S
+40 500 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 1|8
+P 8|128|256
+>repop_prog 100~
+if insameroom(cleric2-warrior)
+	mpgroup cleric2-warrior self 1 0
+endif
+~
+>fight_prog 50~
+wear all
+disarm
+mpnowait
+if rand(50)
+	kick
+	mpnowait
+else
+	bashhead
+	mpnowait
+endif
+~
+|
+#13741
+cleric2-warrior metal cleric~
+金屬牧師(metal cleric)~
+金屬牧師(metal cleric)守衛著地道，不讓任何人通過。
+~
+金屬牧師(metal cleric)守衛著地道，不讓任何人通過。
+~
+1|2|32|64 8|32|128|512 0 S
+36 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R Robot~
+C 2
+P 8|128|256
+>repop_prog 100~
+if insameroom(knight-warrior)
+	mpgroup self knight-warrior 1 0
+endif
+~
+>fight_prog 40~
+mpforcer here c 'double heal' cleric2-warrior 50
+if insameroom(knight-warrior)
+	mpforcer here c 'double heal' knight-warrior 50
+endif
+~
+|
+#13742
+swordsman-warrior golden swordsman~
+黃金劍客(golden swordsman)~
+黃金劍客(golden swordsman)一夫當關，萬夫莫敵。
+~
+黃金劍客(golden swordsman)一夫當關，萬夫莫敵。
+~
+1|2|32|64|8192|262144 8|32|128|512 600 S
+45 1700 200 0d0+0 -5d0+0
+0 0
+0 8 1
+C 1|4|8
+P 8|128|256|4194304
+>repop_prog 100~
+if insameroom(savant-warrior)
+	mpgroup savant-warrior self 1 0
+endif
+~
+>fight_prog 50~
+wear all
+if rand(25)
+	flaming
+	mpnowait
+else
+	if rand(33)
+		storm
+		mpnowait
+	else
+		if rand(50)
+			circular
+			mpnowait
+		else
+			perform empslash
+			mpnowait
+		endif
+	endif
+endif
+~
+>death_prog 100~
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpmod_all_qmark $n adv_book_1_main v0 | 16
+if is_qmark($n) == skarabrae_study_quest01 100011
+        mpechoat $n 你擊倒了$I！可以回公會交差了。
+        mpmod_qmark $n skarabrae_study_quest01 v0 = 12
+endif
+~
+|
+#13743
+savant-warrior golden savant~
+黃金賢者(golden savant)~
+黃金賢者(golden savant)是黃金劍客最好的搭檔。
+~
+黃金賢者(golden savant)是黃金劍客最好的搭檔。
+~
+1|2|32|64 8|32|128|512|8192 600 S
+45 0 0 0d-20+0 0d0+0
+0 0
+0 8 2
+C 2
+P 8|128|256|4194304
+>repop_prog 100~
+if insameroom(swordsman-warrior)
+	mpgroup self swordsman-warrior 1 0
+	mpdef_rembch swordsman-warrior
+endif
+~
+>fight_prog 50~
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+if being($b)
+	if isaffected($b) & 1
+		c 'cure blindness' swordsman-warrior
+		mpnowait
+	endif
+endif
+c 'gdouble heal'
+mpnowait
+~
+|
+#13744
+elder~
+老人(elder)~
+一位老人(elder)在此贖罪(atone)。
+~
+一位老人(elder)在此贖罪(atone)。
+~
+1|2|64|512|1024 8|32|128|512|8192 1000 S
+60 1000 0 0d0+0 -10d0+0
+0 0
+0 8 1
+K reposte 'break shield' charge 'twin swords'~
+C 1|2|4|8
+P 4|8|128
+>talk_prog atone~
+sigh
+say 我以前殺戮太重，所以在此贖罪....
+mpechoat $n $I 抬頭望了你一眼....
+mpechoaround $n $I 抬頭望了你一眼....
+say 我不知道你是如何進來的，不過這也算是緣份，
+say 只要你記住我的榜樣，我就教你有關反擊以及破盾的技巧。
+say 甚至教你騎士衝撞與劍客合作的高級劍法也行。
+say (practice reposte/break shield/charge/twin swords)。
+~
+|
+#13745
+big monster~
+大型魔獸(big monster)~
+大型魔獸(big monster)對你齜牙裂嘴。
+~
+大型魔獸(big monster)對你齜牙裂嘴。
+~
+1|2|32|64 0 -500 S
+36 0 0 -10d-15+100 0d0+0
+-1 0
+0 8 1
+R Ogre~
+C 1|8
+P 256
+#13746
+rouge-s~
+惡棍(rouge)~
+一個看起來很兇的惡棍(rouge)正在努力「工作」！
+~
+看他一副斜眉弔眼的樣子，你今天出門一定忘了拜拜。
+~
+1|2|64|8192|262144 8|32|512 -800 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+P 8|128
+>repop_prog 100~
+mpoload 13719
+mpat 5 wear sword
+~
+>fight_prog 30~
+wear all
+bashhead
+mpnowait
+~
+|
+#13747
+robber-s~
+土匪(robber)~
+頭上纏著白巾，滿臉落腮鬍的土匪(robber)對你奸笑著。
+~
+倒楣，沒給他個二五八萬大概是不能善了。
+~
+1|2|64|8192|262144 8|32|512 -900 S
+41 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|8
+P 8|128
+>repop_prog 100~
+mpoload 13719
+mpat 5 wear sword
+~
+>fight_prog 30~
+wear all
+bashhead
+mpnowait
+~
+|
+#13748
+head~
+強盜頭子(head)~
+兩道橫眉，頂著大光頭的強盜頭子(head)，血盆大口發出陣陣惡臭。
+~
+看他一副凶惡相就知道已經幹過數不清的壞事。他對你趾高氣昂的勒索就好像
+你是他買來的奴隸一樣。
+~
+1|2|64|8192|262144|8388608 8|32|512 -1000 S
+45 500 0 0d-10+0 0d0+0
+10000 0
+0 8 1
+C 1|8
+P 8|128|256
+>repop_prog 100~
+mpoload 3081
+mpat 5 wear knife
+mpoload 13734
+mpmload 13746
+mpgroup self rouge-s 1 0
+mpmload 13747
+mpgroup self robber-s 1 0
+close e
+lock e
+if insameroom(peddler-m)
+	cac peddler-m
+endif
+say 此山是我開，此樹是我栽，
+say 欲從此路去，留下買路財！
+~
+>fight_prog 40~
+wear all
+disarm
+mpnowait
+circular
+mpnwoait
+take all
+wear all
+~
+>rand_prog 50~
+if insameroom($b)
+	if is_qmark($i) == warrior_head_speak 100004
+		curse
+		say 哼，老子沒空等你了！
+		growl $b
+		follow self
+                group leave
+		mpkill $b
+		mpmod_qmark self warrior_head_speak v0 + 1
+	endif
+	if is_qmark($i) == warrior_head_speak 100003
+		mpecho $I 目露凶光，眼看就要有一場廝殺....
+		mpmod_qmark self warrior_head_speak v0 + 1
+	endif
+	if is_qmark($i) == warrior_head_speak 100002
+		grin
+		say 怎樣？還是乖乖付錢吧....
+		mpmod_qmark self warrior_head_speak v0 + 1
+	endif
+	if is_qmark($i) == warrior_head_speak 100001
+		mpechoat $b $I 不耐煩的看著你....
+		mpechoaround $b $I 不耐煩的看著 $b....
+		say 快點做決定吧，老子等的不耐煩了！
+		mpechoat $b (give 100000 coins head 或 kill head)
+		mpmod_qmark self warrior_head_speak v0 + 1
+	endif
+	if is_qmark($i) != warrior_head_speak
+		mpadd_qmark self warrior_head_speak -1 1 0 0 1 0
+	endif
+endif
+~
+>bribe_prog 100000~
+cackle
+say 小子，算你識相，知道進退，已經有數不清的莽夫死在我劍下了！
+unlock e
+open e
+mpechoat $n $I 狠狠地踢了你屁股....
+mpechoaround $n $I 狠狠地踢了 $n 屁股....
+say 快滾吧，小子！
+if exp($n) > 1000
+	mpexp $n -1000
+endif
+mpecho $I 和他的部下哄笑著離開了....
+if being(rouge-s)
+	mpat rouge-s mppurge rouge-s
+endif
+if being(robber-s)
+	mpat robber-s mppurge robber-s
+endif
+mppurge self
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast inf
+if being(rouge-s)
+	mpat rouge-s mppurge rouge-s
+endif
+if being(robber-s)
+	mpat robber-s mppurge robber-s
+endif
+~
+|
+#13749
+amiable monk~
+慈祥的僧侶(monk)~
+一位慈祥的僧侶(amiable monk)和藹地對你微笑。
+~
+他的頭髮已經掉光了，只剩一個油亮的光頭。但他的眼神中似乎有種魔力，
+當他對你微笑時你感覺你們之間的距離剎那間都不見，好像認識許多年一樣。
+~
+1|2|64|8192|262144 8|32|128|512|8192 800 S
+40 1500 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1|2|4|8
+P 8|128|4194304|8388608
+>talk_prog topic~
+bow $n
+say 僧侶是一項注重戰技的職業，
+say 你必須要有足夠的技巧與訓練，
+say 才能夠讓以徒手格鬥為主的僧侶，
+say 對於敵人達到最大的殺傷力。
+~
+>greet_prog 100~
+if ispc($n)
+	if class($n) == 13
+		if is_qmark($n) != warrior_monk_test
+			if is_qmark($n) !& warrior_quest 100004
+				smile $n
+				say 您是來參加僧侶的最終試煉嗎？(yes/no)
+			endif
+			break
+		endif
+		if is_qmark($n) == warrior_monk_test 100001
+			say 若你想再試一次，請告訴我一聲(ready)。
+			break
+		endif
+		if is_qmark($n) == warrior_monk_test 100002
+			mpdel_qmark $n warrior_monk_test
+			mpexp $n 3600
+			good $n
+			mpforce $n remove all
+			if is_qmark($n) != warrior_quest
+				mpadd_qmark $n warrior_quest -1 4 0 0 0 1
+			else
+				if is_qmark($n) !& warrior_quest 100004
+					mpmod_qmark $n warrior_quest v0 | 4
+				endif
+			endif
+			mptransfer $n 9
+			mpat 9 mpforce $n drop all
+			mpat 9 mppurge
+			mptransfer $n
+			say 恭禧你，你已完成了代表愛心的僧侶之修鍊！這是你通過試煉的證明。
+			mpoload 13741 $n 36 target
+			mpechoat $n $I 把銀蛇僧侶束腰給你....
+			say 你雖然完成銀蛇堡僧侶的測驗，
+			say 但還有許多東西必須自己去體會，
+			say 當你有疑問時歡迎你隨時回來繼續未完的修鍊。
+			mpecho $I 好像還有話要說....
+			mpcallout 1 mpcall warrior_secret_1 $n
+		endif
+	endif
+endif
+~
+>talk_prog no~
+say 沒關係，等你準備好再來吧。
+~
+>talk_prog yes~
+if class($n) == 13
+	if is_qmark($n) & warrior_quest 100004
+		say 這個試煉只允許僧侶參加一次。
+		break
+	endif
+	nod $n
+ 	say 為了測試出您真正的戰技，
+ 	say 參加最終試煉的僧侶按規定我們會取下您所有的裝備代為保管。
+ 	say 為避免有任何不測，請先把所有貴重物品自行取下。
+ 	say 另外試煉開始後，結束試煉的方法只有通過考驗與死亡兩種，
+ 	say 當您準備好後請告訴我(ready)。
+endif
+~
+>talk_prog ready~
+if class($n) == 13
+	if is_qmark($n) & warrior_quest 100004
+     		say 這個試煉只允許僧侶參加一次。
+		break
+	endif
+	if level($n) < 36
+		shake
+		say 你的等級太低了！
+		break
+	endif
+	c giant $n
+	mpnowait
+	c bless $n
+	mpnowait
+	mpforce $n remove all
+	mpforce $n drop all
+	mpoload 13715 $n 35 target
+	mpoload 13715 $n 35 target
+	mpoload 13742 $n 35 target
+	mpforce $n wear all
+	mpadd_qmark $n warrior_monk_test -1 1 0 0 0 1
+	mptransfer $n 13810
+endif
+~
+>defun_prog warrior_secret_1~
+say 在我下方的房間中住著一位武功高強的僧侶，
+say 我想通過試煉的你可以往下走，去跟他請益一些事物，
+say 相信對你大有益處。
+wave $n
+~
+>fight_prog 100~
+barehand $n
+mpnowait
+if rand(25)
+	frenzy
+	mpnowait
+else
+	if rand(33)
+		kick
+		mpnowait
+	else
+		if rand(50)
+			bashhead
+			mpnowait
+		else
+			skilldrv multihit $n
+		endif
+	endif
+endif
+~
+|
+#13750
+middle monster~
+中型魔獸(middle monster)~
+中型魔獸(middle monster)搖頭晃腦地站在這裡。
+~
+中型魔獸(middle monster)搖頭晃腦地站在這裡。
+~
+1|2|64 2|8|32|512 -300 S
+30 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+C 1
+R Ogre~
+>greet_prog 30~
+hunt $n
+mpnowait
+~
+>death_prog 100~
+ if mobcount(13750) == 1
+ 	mpoload 13739
+ endif
+~
+|
+#13751
+giant monster~
+巨型魔獸(giant monster)~
+巨型魔獸(giant monster)對你咆哮著。
+~
+巨型魔獸(giant monster)對你咆哮著。
+~
+1|2|32|64|8192|262144 8|32|512 -800 S
+40 0 0 -15d-35+0 0d-170+0
+-1 0
+0 8 1
+R Ogre~
+C 1|8
+>all_greet_prog 100~
+c 'faerie fog'
+~
+|
+#13752
+invincible monster~
+不敗之魔獸(invincible monster)~
+不敗之魔獸(invincible monster)正等著傻瓜向他挑戰。
+~
+不敗之魔獸(invincible monster)在這裡等著傻瓜向他挑戰。
+~
+1|2|32|64|8192|262144 8|32|128|512|8192 -1000 S
+45 0 0 -10d-35+0 -5d-100+0
+0 0
+0 8 1
+R Ogre~
+C 1|8|32
+P 256
+#13753
+thief~
+神偷(thief)~
+神偷(thief)一溜煙從你面前晃過，你幾乎忘了他的存在。
+~
+保密防賊，人人有責！
+~
+1|4|128 2|8|65536|32768|524288 100 S
+40 0 0 0d0+0 0d-400+0
+0 0
+0 8 1
+R Imp~
+C 4
+#13754
+angry monk~
+怒目僧侶(angry monk)~
+一位隱居於武士堡內的怒目僧侶(angry monk)在這裡教導僧侶更多的技巧。
+~
+一位白眉的僧侶，在這裡等待受教的學生。
+~
+1|2|64|1024|2048|262144 8|32|128 100 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+K powerup 'blind fight' 'fifth attack'~
+R Orc~
+C 4
+P 4|8|128
+#13755
+prayerful knight~
+虔誠的騎士(prayerful knight)~
+一位隱居於武士堡內的虔誠騎士(prayerful knight)在這裡專心祈禱。
+~
+一位年長的騎士，穿著全套鎧甲，跪在床邊祈禱著。
+~
+1|2|64|1024|2048|262144 8|32|128 100 S
+40 0 0 0d0+0 0d0+0
+0 0
+0 8 1
+K charge defensive 'armor mastery'~
+R Human~
+C 4
+P 4|8|128
+#0
+
+
+
+#OBJECTS
+#13700
+serpent key~
+銀蛇鑰匙(serpent key)~
+一支銀蛇鑰匙(serpent key)掉在角落.~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+
+X silver~
+
+#13701
+sword long~
+長劍(long sword)~
+一把長劍(long sword)靜靜的躺在地上。~
+~
+5 3136 8193
+1351135~ 0~ 0~ 3~
+8 0 0
+E
+sword long~
+銀蛇武士堡的長劍，是一把很好的武器，但只有少數人能夠使用。
+~
+A
+18 2
+A
+19 4
+
+P 1062912
+X iron~
+
+#13702
+dagger~
+制式匕首(dagger)~
+一把制式匕首(dagger)靜靜的躺在地上。~
+~
+5 3136 8193
+1351135~ 0~ 0~ 11~
+5 0 0
+E
+dagger~
+一把精心製作的匕首，握把上刻著幾個小字：「銀蛇武士堡」。
+~
+A
+18 1
+A
+19 3
+
+P 1062912
+X steel~
+
+#13703
+mace~
+制式釘頭鎚(mace)~
+一把制式釘頭鎚(mace)靜靜的躺在地上。~
+~
+5 64 8193
+1351135~ 0~ 0~ 7~
+5 0 0
+E
+mace~
+一把精心製作的釘頭鎚，握把上刻著幾個小字：「銀蛇武士堡」。
+~
+A
+18 2
+A
+19 3
+
+P 1062912
+X steel~
+
+#13704
+vest~
+制式護甲(vest)~
+一件制式護甲(vest)靜靜的躺在地上。~
+~
+9 64 9
+0~ 0~ 1351135~ 0~
+15 0 0
+E
+vest~
+一件精心製作的護甲，內部刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -4
+
+P 1062912
+X steel~
+
+#13705
+shield~
+制式盾牌(shield)~
+一面制式盾牌(shield)靜靜的躺在地上。~
+~
+9 3072 513
+0~ 0~ 1351135~ 0~
+15 0 0
+E
+shield~
+一面精心製作的盾牌，內部刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -3
+
+P 1062912
+X steel~
+
+#13706
+cloak~
+制式護袍(cloak)~
+一件制式護袍(cloak)靜靜的躺在地上。~
+~
+9 3072 5
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+cloak~
+一件精心製作的護袍，裡面刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X cloth~
+
+#13707
+helmet~
+制式頭盔(helmet)~
+一頂制式頭盔(helmet)靜靜的躺在地上。~
+~
+9 3072 17
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+helmet~
+一頂精心製作的頭盔，內部刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X steel~
+
+#13708
+leggings~
+制式護腿(leggings)~
+一雙制式護腿(leggings)靜靜的躺在地上。~
+~
+9 3072 33
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+leggings~
+一雙精心製作的護腿，內部刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X steel~
+
+#13709
+boots~
+制式長靴(boots)~
+一雙制式長靴(boots)靜靜的躺在地上。~
+~
+9 3072 65
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+boots~
+一雙精心製作的靴子，裡面刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X steel~
+
+#13710
+gloves~
+制式手套(gloves)~
+一雙制式手套(gloves)靜靜的躺在地上。~
+~
+9 3072 129
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+gloves~
+一雙精心製作的手套，裡面刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X steel~
+
+#13711
+sleeves~
+制式護臂(sleeves)~
+一雙制式護臂(sleeves)靜靜的躺在地上。~
+~
+9 3072 257
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+sleeves~
+一雙精心製作的護臂，裡面刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X steel~
+
+#13712
+cape~
+制式披風(cape)~
+一件制式披風(cape)靜靜的躺在地上。~
+~
+9 3072 1025
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+cape~
+一件精心製作的披風，裡面刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X cloth~
+
+#13713
+belt~
+制式腰帶(belt)~
+一條制式腰帶(belt)靜靜的躺在地上。~
+~
+9 3072 2049
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+belt~
+一條精心製作的腰帶，帶扣的地方刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X steel~
+
+#13714
+bracer~
+制式護腕(bracer)~
+一個制式護腕(bracer)靜靜的躺在地上。~
+~
+9 3072 4097
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+bracer~
+一個精心製作的護腕，上面刻著幾個小字：「銀蛇武士堡」。
+~
+A
+17 -1
+
+P 1062912
+X steel~
+
+#13715
+ring signet~
+銀蛇武士堡衛隊戒指(signet ring)~
+一個刻有某種印記的戒指(signet ring)靜靜的躺在地上。~
+~
+9 64 3
+0~ 0~ 1351135~ 0~
+1 0 0
+E
+ring signet~
+銀蛇武士堡警衛隊的象徵物，每個警衛都一定會戴著它。因為這不單單只是身份
+的象徵，也是一份榮譽。
+~
+A
+18 1
+A
+19 1
+A
+24 -1
+
+P 1062912
+X steel~
+
+#13716
+banner~
+制式戰旗(banner)~
+一面制式戰旗(banner)靜靜的躺在地上。~
+~
+1 3072 1
+0~ 0~ -1~ 0~
+1 0 0
+E
+banner~
+一面銀蛇武士堡的戰旗，可以為你在黑暗中帶來光明。
+~
+A
+19 1
+A
+17 -2
+
+P 1062912
+X fiber~
+
+#13717
+sword long~
+長劍(long sword)~
+一把長劍(long sword)靜靜的躺在地上。~
+~
+5 0 8193
+1351135~ 0~ 0~ 3~
+8 0 0
+
+X steel~
+
+#13718
+wooden closet~
+木製儲物櫃(wooden closet)~
+木製儲物櫃(wooden closet)~
+~
+15 0 0
+500~ 13~ 5226~ 0~
+0 0 0
+
+X wooden~
+
+#13719
+sword long~
+長劍(long sword)~
+一把長劍(long sword)靜靜的躺在地上。~
+~
+5 67 8193
+1351135~ 0~ 0~ 3~
+20 0 0
+A
+18 3
+A
+19 4
+
+P 1062912
+X iron~
+
+#13720
+scroll blind~
+盲目術卷軸(Scroll of blind)~
+一個卷軸(scroll)放置在地上。~
+~
+2 64 1
+15~ blindness~  ~  ~
+4 0 0
+E
+scroll blind~
+卷軸的外面有一個封記，上面畫著幾個魔法符號，用來將魔法力量封在卷軸裡。
+~
+
+X paper~
+
+#13721
+black key~
+黑色鑰匙(black key)~
+一支黑色鑰匙(black key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+3 0 0
+
+T 25
+X iron~
+
+#13722
+red key~
+紅色鑰匙(red key)~
+一支紅色鑰匙(red key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+3 0 0
+
+T 25
+X iron~
+
+#13723
+yellow key~
+黃色鑰匙(yellow key)~
+一支黃色鑰匙(yellow key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+3 0 0
+
+T 25
+X iron~
+
+#13724
+orange key~
+橘色鑰匙(orange key)~
+一支橘色鑰匙(orange key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+3 0 0
+
+T 25
+X iron~
+
+#13725
+purple key~
+紫色鑰匙(purple key)~
+一支紫色鑰匙(purple key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+3 0 0
+
+T 25
+X iron~
+
+#13726
+potion white~
+精神煥發藥水(Potion of white)~
+一罐精神煥發藥水(Potion of white)放置在地上。~
+~
+10 64 1
+32~ full refresh~  ~  ~
+1 0 0
+E
+potion white~
+藥水的外面有一個封記，上面畫著幾個魔法符號，用來將魔法力量封在藥水裡。
+~
+
+T 50
+X liquid~
+
+#13727
+serpent knight armour~
+銀蛇騎士光輝戰甲(serpent knight armour)~
+一個銀蛇騎士光輝戰甲(serpent knight armour)掉在地上。~
+~
+9 3137 9
+0~ 0~ 1351135~ 0~
+1 50000 0
+A
+13 15
+A
+18 2
+A
+19 2
+
+C 50000
+P 1050624
+X steel~
+
+#13728
+serpent swordsman token~
+銀蛇劍客徽章(serpent swordsman token)~
+一個銀蛇劍客徽章(serpent swordsman token)掉在地上。~
+~
+9 3137 16385
+0~ 0~ 1351135~ 0~
+1 50000 0
+A
+14 20
+A
+18 2
+A
+19 2
+
+C 50000
+P 1052672
+X silver~
+
+#13729
+metal key~
+金屬鑰匙(metal key)~
+一支金屬鑰匙(metal key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+5 0 0
+
+X tin~
+
+#13730
+gourd nuts~
+瓜子(gourd nuts)~
+一袋瓜子(gourd nuts)靜靜的放在地上。~
+~
+19 0 1
+30~ 0~ 0~ 0~
+1 10000 0
+
+C 10000
+X food~
+
+#13731
+golden key~
+黃金鑰匙(golden key)~
+一支黃金鑰匙(golden key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+8 0 0
+
+X gold~
+
+#13732
+golden belt~
+黃金腰帶(golden belt)~
+黃金腰帶(golden belt)靜靜地躺在這裡.~
+~
+9 2114 2049
+0~ 0~ 1351135~ 0~
+10 60000 0
+A
+12 15
+A
+18 1
+A
+19 1
+
+C 60000
+P 1114498
+X gold~
+
+#13733
+golden helm~
+黃金頭盔(golden helm)~
+一頂黃金頭盔(golden helm)靜靜的躺在地上.~
+~
+9 2050 17
+0~ 0~ 1351135~ 0~
+25 0 0
+A
+13 25
+
+P 1054720
+X gold~
+
+#13734
+key~
+柵門鑰匙(key)~
+一支柵門鑰匙(key)掉在角落。~
+~
+18 0 1
+0~ 0~ 0~ 0~
+1 0 0
+
+T 25
+X iron~
+
+#13736
+ring windcity~
+風之城門人戒指(windcity ring)~
+一個刻有風之城印記的戒指(windcity ring)靜靜的躺在地上。~
+~
+9 192 3
+0~ 0~ 1351135~ 0~
+1 30000 0
+A
+14 10
+A
+18 3
+
+C 30000
+X steel~
+
+#13737
+ring supervisor windcity~
+風之城舵主戒指(windcity supervisor ring)~
+一個刻有風之城印記的戒指(windcity supervisor ring)靜靜的躺在地上。~
+~
+9 192 3
+0~ 0~ 1351135~ 0~
+1 50000 0
+Z 4
+A
+13 10
+A
+18 2
+A
+19 2
+C 50000
+X mithril~
+
+#13738
+boots windcity~
+風城長靴(windcity boots)~
+一雙風城長靴(windcity boots)靜靜的躺在地上。~
+~
+9 65 65
+0~ 0~ 1351135~ 0~
+15 20000 0
+E
+boots~
+一雙精心製作的靴子，裡面刻著幾個小字：「風之城」。
+~
+A
+2 1
+A
+14 10
+A
+18 2
+
+C 20000
+X feather~
+
+#13739
+blue key~
+藍色鑰匙(blue key)~
+一支藍色鑰匙(blue key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+3 0 0
+
+T 25
+X tin~
+
+#13740
+green key~
+綠色鑰匙(green key)~
+一支綠色鑰匙(green key)掉在角落.~
+~
+18 16384 1
+0~ 0~ 0~ 0~
+3 0 0
+
+T 25
+X tin~
+
+#13741
+serpent monk sash~
+銀蛇僧侶束腰(serpent monk sash)~
+一條銀蛇僧侶束腰(serpent monk sash)掉在地上。~
+~
+9 3137 2049
+0~ 0~ 1351135~ 0~
+1 50000 0
+Z 4
+A
+1 3
+A
+18 1
+C 50000
+P 1056768
+X fiber~
+
+#13742
+monk exam banner~
+僧侶試煉戰旗(monk exam banner)~
+一面僧侶試煉戰旗(monk exam banner)掉在地上。~
+~
+1 0 1
+0~ 0~ -1~ 0~
+1 0 0
+A
+18 4
+T 100
+P 1056768
+X fiber~
+
+#13743
+monk exam belt~
+僧侶試煉腰帶(monk exam belt)~
+一條僧侶試煉腰帶(monk exam belt)靜靜的躺在地上。~
+~
+9 0 2049
+0~ 0~ 1351135~ 0~
+5 0 0
+E
+belt~
+一條精心製作的腰帶，帶扣的地方刻著幾個小字：「銀蛇武士堡」。
+~
+A
+19 3
+
+T 100
+P 1056768
+X fiber~
+
+#0
+
+
+
+#ROOMDATA
+#13700
+穿越森林的小徑~
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+小徑通往南和北。
+~
+0 0 3
+D0
+~
+~
+0 0 13701
+D2
+~
+~
+0 0 6003
+>room_enter 5 100~
+if ispc($n)
+	if is_qmark($n) != warrior_quest
+		add_qmark $n warrior_quest -1 0 0 0 0 1
+	endif
+	if is_qmark($n) == warrior_knight_test 100003
+	or is_qmark($n) == warrior_swordsman_test 100003
+	or is_qmark($n) == warrior_monk_test 100003
+	or is_qmark($n) >= serpent_peddler_quest 100005
+		echoat $n 遠方傳來一陣聲響「系統已經自動將您於銀蛇武士堡中的相關標記，」
+		echoat $n 遠方傳來一陣聲響「自動轉換為目前現行的機制。」
+		if is_qmark($n) == warrior_training 100015
+			mpdel_qmark $n warrior_training
+			mpmod_qmark $n warrior_quest v1 = 15
+		endif
+		if is_qmark($n) == warrior_knight_test 100003
+			echoat $n 遠方傳來一陣聲響「你於銀蛇武士堡通過騎士試煉的標記已成功轉換。」
+			del_qmark $n warrior_knight_test
+			mod_qmark $n warrior_quest v0 | 1
+		endif
+		if is_qmark($n) == warrior_swordsman_test 100003
+			echoat $n 遠方傳來一陣聲響「你於銀蛇武士堡通過劍士試煉的標記已成功轉換。」
+			del_qmark $n warrior_swordsman_test
+			mod_qmark $n warrior_quest v0 | 2
+		endif
+		if is_qmark($n) == warrior_monk_test 100003
+			echoat $n 遠方傳來一陣聲響「你於銀蛇武士堡通過僧侶試煉的標記已成功轉換。」
+			del_qmark $n warrior_monk_test
+			mod_qmark $n warrior_quest v0 | 4
+		endif
+		if is_qmark($n) >= serpent_peddler_quest 100005
+			echoat $n 遠方傳來一陣聲響「你於銀蛇武士堡中完成抉擇任務的標記已成功轉換。」
+			del_qmark $n serpent_peddler_quest
+			mod_qmark $n warrior_quest v0 | 8
+		endif
+	endif
+endif
+~
+|
+S
+#13701
+森林邊緣~
+這裡已是森林邊緣，林間動物的蹤影慢慢稀少。往前你看到一片草原，以及一
+個建立在森林出口的堅固堡壘。你注意到路邊有塊牌子(sign)。
+~
+0 0 3
+E
+sign~
+前面是銀蛇武士堡，如果你是戰士型的人物，堡內將會教導你許多有用的技
+能。這個區域並不具危險性，所有等級都能參觀，不過還是三十六級的英雄人物
+會有比較大的收穫。本區域由Amenda設計，如果有任何改進意見，歡迎回報。
+~
+D0
+~
+~
+0 0 13702
+D2
+~
+~
+0 0 13700
+S
+#13702
+堡壘大門~
+在你面前的是堡壘堅固的大門，目前大門敞開著，歡迎所有的人入內參觀休
+息。你心裡猜想要是這座厚實的大門關起來了，想要從外面攻破大概是不可能
+的。大門上方吊著一塊很大的木製招牌，上面寫著：銀蛇武士堡。
+~
+0 0 1
+D0
+~
+~
+0 0 13703
+D2
+~
+~
+0 0 13701
+S
+#13703
+堡壘大廳~
+你站在堡壘的大廳，地上鋪著彩織的地毯，牆上掛了許多武士的畫像，寬廣的
+走廊通向四方。
+~
+0 8 0
+D0
+~
+~
+0 0 13704
+D1
+~
+~
+0 0 13717
+D2
+~
+~
+0 0 13702
+D3
+~
+~
+0 0 13730
+S
+#13704
+堡壘正廊~
+這裡是堡壘內部寬闊的走廊，兩邊的牆壁都是用很好的檜木做的，牆上還有一
+些勵志的標語。一個階梯通往堡壘二樓，前面傳來一陣陣金鐵交擊的聲響。
+~
+0 12 0
+D0
+~
+~
+0 0 13705
+D2
+~
+~
+0 0 13703
+D4
+~
+~
+0 0 13770
+S
+#13705
+訓練廣場~
+你一走進來便被這裡壯闊的景象嚇一跳，沒想到武士堡內竟然有這麼寬廣的大
+訓練場。訓練場裡有許多年輕的武士們正在努力鍛鍊戰技，有些人互相對打練
+習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察其他武士的腳步身法，
+不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架子上則是十八般武
+器，應有盡有。
+~
+0 8 0
+D0
+~
+~
+0 0 13706
+D1
+~
+~
+0 0 13711
+D2
+~
+~
+0 0 13704
+D3
+~
+~
+0 0 13708
+S
+#13706
+訓練場中央~
+你站在寬闊訓練場的中央，週圍的武士們都很努力地鍛鍊武藝。看他們精神抖
+擻的樣子，你也覺得有點技癢了。
+~
+0 8 0
+D0
+~
+~
+0 0 13707
+D1
+~
+~
+0 0 13712
+D2
+~
+~
+0 0 13705
+D3
+~
+~
+0 0 13709
+S
+#13707
+訓練廣場後部~
+這裡是武士堡內大訓練場的後部。訓練場裡有許多年輕的武士們正在努力鍛鍊
+戰技，有些人互相對打練習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察
+其他武士的腳步身法，不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架
+子上則是十八般武器，應有盡有。你前面有扇怪異的門，鑰匙孔特別大，看來不是
+所有人都可以隨意進入。
+~
+0 8 0
+D0
+~
+~
+55 13729 13714
+D1
+~
+~
+0 0 13713
+D2
+~
+~
+0 0 13706
+D3
+~
+~
+0 0 13710
+S
+#13708
+訓練廣場一角~
+這裡是武士堡內大訓練場的一角。訓練場裡有許多年輕的武士們正在努力鍛鍊
+戰技，有些人互相對打練習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察
+其他武士的腳步身法，不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架
+子上則是十八般武器，應有盡有。
+~
+0 8 0
+D0
+~
+~
+0 0 13709
+D1
+~
+~
+0 0 13705
+S
+#13709
+訓練廣場左側~
+這裡是武士堡內大訓練場的左側。訓練場裡有許多年輕的武士們正在努力鍛鍊
+戰技，有些人互相對打練習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察
+其他武士的腳步身法，不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架
+子上則是十八般武器，應有盡有。你前面有扇門，不過被鎖起來了，看來不是所有
+人都可以隨意進入。
+~
+0 8 0
+D0
+~
+~
+0 0 13710
+D1
+~
+~
+0 0 13706
+D2
+~
+~
+0 0 13708
+D3
+~
+~
+23 13700 13752
+S
+#13710
+訓練廣場一角~
+這裡是武士堡內大訓練場的一角。訓練場裡有許多年輕的武士們正在努力鍛鍊
+戰技，有些人互相對打練習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察
+其他武士的腳步身法，不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架
+子上則是十八般武器，應有盡有。
+~
+0 8 0
+D1
+~
+~
+0 0 13707
+D2
+~
+~
+0 0 13709
+S
+#13711
+訓練廣場一角~
+這裡是武士堡內大訓練場的一角。訓練場裡有許多年輕的武士們正在努力鍛鍊
+戰技，有些人互相對打練習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察
+其他武士的腳步身法，不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架
+子上則是十八般武器，應有盡有。
+~
+0 8 0
+D0
+~
+~
+0 0 13712
+D3
+~
+~
+0 0 13705
+S
+#13712
+訓練廣場右側~
+這裡是武士堡內大訓練場的右側。訓練場裡有許多年輕的武士們正在努力鍛鍊
+戰技，有些人互相對打練習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察
+其他武士的腳步身法，不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架
+子上則是十八般武器，應有盡有。你前面有扇門，不過被鎖起來了，看來不是所有
+人都可以隨意進入。
+~
+0 8 0
+D0
+~
+~
+0 0 13713
+D1
+~
+~
+23 13700 13739
+D2
+~
+~
+0 0 13711
+D3
+~
+~
+0 0 13706
+S
+#13713
+訓練廣場一角~
+這裡是武士堡內大訓練場的一角。訓練場裡有許多年輕的武士們正在努力鍛鍊
+戰技，有些人互相對打練習，有些人三三兩兩地討論招式優劣，有些人仔細地觀察
+其他武士的腳步身法，不時還冒出一聲響亮的叫好聲。牆上掛了許多盾牌甲冑，架
+子上則是十八般武器，應有盡有。
+~
+0 8 0
+D2
+~
+~
+0 0 13712
+D3
+~
+~
+0 0 13707
+S
+#13714
+陰暗的迴廊~
+武士堡裡有這麼陰暗的地方真是令人意外，這裡應是堡壘後面少人來到的地
+方，不曉得前面會通道那裡。
+~
+0 9 0
+D0
+~
+~
+0 0 13715
+D2
+~
+~
+0 0 13707
+S
+#13715
+陰暗的迴廊~
+武士堡裡有這麼陰暗的地方真是令人意外，這裡應是堡壘後面少人來到的地
+方，不曉得前面會通道那裡。
+~
+0 9 0
+D0
+~
+~
+0 0 13716
+D2
+~
+~
+0 0 13714
+S
+#13716
+陰暗的迴廊~
+武士堡裡有這麼陰暗的地方真是令人意外，這裡應是堡壘後面少人來到的地
+方，不曉得前面會通道那裡。
+~
+0 9 0
+D2
+~
+~
+0 0 13715
+D5
+~
+~
+39 13729 13797
+S
+#13717
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多小房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13728
+D1
+~
+~
+0 0 13718
+D2
+~
+~
+0 0 13729
+D3
+~
+~
+0 0 13703
+S
+#13718
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多小房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13726
+D1
+~
+~
+0 0 13719
+D2
+~
+~
+0 0 13727
+D3
+~
+~
+0 0 13717
+S
+#13719
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多小房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13724
+D1
+~
+~
+0 0 13720
+D2
+~
+~
+0 0 13725
+D3
+~
+~
+0 0 13718
+S
+#13720
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13722
+D1
+~
+~
+3 0 13721
+D2
+~
+~
+3 0 13723
+D3
+~
+~
+0 0 13719
+S
+#13721
+倉庫~
+這個大房間裡有許多長長的大架子，上面堆滿許多食物及日常雜貨，架子上還
+根據儲放的物品而標上了名字。看到這麼多的東西，你才明白要維持這麼大一座
+堡壘正常運作並不是一件容易的事。
+~
+0 8 0
+D3
+~
+~
+1 0 13720
+S
+#13722
+廚房~
+這是一個規模很大的廚房，單單爐火就有四、五個，其他像烤箱、蒸籠、料理
+台等廚房設備一應俱全。廚師們正忙著烹調美味的食物，一陣陣香味給起你的食
+慾。
+~
+0 8 0
+D2
+~
+~
+1 0 13720
+S
+#13723
+兵器庫~
+這裡是武士堡的兵器庫，有各式各樣的護甲和武器。不過，沒經過允許，還是
+不要拿吧。
+~
+0 8 0
+D0
+~
+~
+1 0 13720
+S
+#13724
+餐廳~
+你看到一排排的桌子與板凳，大概可以容納上百人在這裡吃飯。每張桌子都被
+收拾得很乾淨，還鋪上白色的餐巾。現在不是用餐時間，所以沒有人在用膳。
+~
+0 8 0
+D2
+~
+~
+1 0 13719
+S
+#13725
+酒吧~
+堡裡的休閒設施並不多，這裡可能是少數的幾處。一張張圓桌旁三三兩兩地坐
+了幾個人，但大部份是空的。正在喝酒談天的客人興致倒很好，豪爽地蠻飲顯露
+出武士粗獷的性格。
+~
+0 131080 0
+D0
+~
+~
+1 0 13719
+S
+#13726
+武士臥室~
+這裡是在銀蛇堡受訓的武士的臥室，一張張床整齊地排列著。大部份的床鋪都
+收拾得很乾淨，但有少數床單棉被顯得零亂。看來有些武士並不是那麼注重整
+潔。
+~
+0 8 0
+D2
+~
+~
+1 0 13718
+S
+#13727
+武士臥室~
+這裡是在銀蛇堡受訓的武士的臥室，一張張床整齊地排列著。大部份的床鋪都
+收拾得很乾淨，但有少數床單棉被顯得零亂。看來有些武士並不是那麼注重整
+潔。
+~
+0 8 0
+D0
+~
+~
+1 0 13718
+S
+#13728
+衛隊臥室~
+這裡是銀蛇堡衛隊隊員的臥室，一張張潔白的床整齊地排列著，枕頭棉被都收
+拾得整齊畫一，床旁邊個人的小桌子也都收拾得一塵不染，看來一些衣物及私人
+用品都已收進床頭的儲物櫃了。
+~
+0 8 0
+D2
+~
+~
+1 0 13717
+S
+#13729
+衛隊臥室~
+這裡是銀蛇堡衛隊隊員的臥室，一張張潔白的床整齊地排列著，枕頭棉被都收
+拾得整齊畫一，床旁邊個人的小桌子也都收拾得一塵不染，看來一些衣物及私人
+用品都已收進床頭的儲物櫃了。
+~
+0 8 0
+D0
+~
+~
+1 0 13717
+S
+#13730
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13733
+D1
+~
+~
+1 0 13703
+D2
+~
+~
+1 0 13734
+D3
+~
+~
+0 0 13731
+S
+#13731
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間，前面傳來陣陣鳥
+語花香。
+~
+0 8 0
+D0
+~
+~
+0 0 13735
+D1
+~
+~
+1 0 13730
+D2
+~
+~
+1 0 13736
+D3
+~
+~
+0 0 13732
+S
+#13732
+庭園~
+這裡是武士堡裡一個很大的庭園，除了花影幽微、樹木扶疏外，還有一個小湖
+與涼亭。許多豔麗的大蝴蝶在花叢間翩翩飛舞，淡淡清香的微風使你覺得很舒爽。
+~
+0 0 3
+D0
+~
+~
+0 0 13737
+D1
+~
+~
+0 0 13731
+D3
+~
+~
+0 0 13738
+S
+#13733
+客房~
+銀蛇武士堡由於地處要衝，再加上附近區域治安良好的聲名，過往的商旅及遊
+客總是喜歡在此暫住一晚，吃頓廚師精心的手藝，做一個香甜的好夢。為了服務
+奔波多日的大眾，武士堡設有許多客房，提供溫暖的床鋪與絕對安全的休息環境。
+~
+0 262144 0
+D2
+~
+~
+0 0 13730
+S
+#13734
+客房~
+銀蛇武士堡由於地處要衝，再加上附近區域治安良好的聲名，過往的商旅及遊
+客總是喜歡在此暫住一晚，吃頓廚師精心的手藝，做一個香甜的好夢。為了服務
+奔波多日的大眾，武士堡設有許多客房，提供溫暖的床鋪與絕對安全的休息環境。
+~
+0 262144 0
+D0
+~
+~
+0 0 13730
+S
+#13735
+客房~
+銀蛇武士堡由於地處要衝，再加上附近區域治安良好的聲名，過往的商旅及遊
+客總是喜歡在此暫住一晚，吃頓廚師精心的手藝，做一個香甜的好夢。為了服務
+奔波多日的大眾，武士堡設有許多客房，提供溫暖的床鋪與絕對安全的休息環境。
+~
+0 262144 0
+D2
+~
+~
+0 0 13731
+S
+#13736
+客房~
+銀蛇武士堡由於地處要衝，再加上附近區域治安良好的聲名，過往的商旅及遊
+客總是喜歡在此暫住一晚，吃頓廚師精心的手藝，做一個香甜的好夢。為了服務
+奔波多日的大眾，武士堡設有許多客房，提供溫暖的床鋪與絕對安全的休息環境。
+~
+0 262144 0
+D0
+~
+~
+0 0 13731
+S
+#13737
+庭園~
+這裡是武士堡裡一個很大的庭園，除了花影幽微、樹木扶疏外，還有一個小湖
+與涼亭。許多豔麗的大蝴蝶在花叢間款款飛舞，淡淡清香的微風使你覺得置身世
+外桃源。
+~
+0 0 3
+D2
+~
+~
+0 0 13732
+S
+#13738
+涼亭~
+這是建在池中間的一個小涼亭。坐在涼亭裡吹著微風，看池裡的鯉魚悠游地
+穿梭，你真希望能在這裡度過一個午後。
+~
+0 0 1
+D1
+~
+~
+0 0 13732
+S
+#13739
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8|16|2097152 0
+D0
+~
+~
+0 0 13743
+D1
+~
+~
+1 0 13740
+D2
+~
+~
+1 0 13747
+D3
+~
+~
+0 0 13712
+S
+#13740
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8|16|2097152 0
+D0
+~
+~
+0 0 13744
+D1
+~
+~
+1 0 13741
+D2
+~
+~
+1 0 13748
+D3
+~
+~
+0 0 13739
+S
+#13741
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8|16|2097152 0
+D0
+~
+~
+0 0 13745
+D1
+~
+~
+1 0 13742
+D2
+~
+~
+1 0 13749
+D3
+~
+~
+0 0 13740
+S
+#13742
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8|16|2097152 0
+D0
+~
+~
+0 0 13746
+D2
+~
+~
+1 0 13750
+D3
+~
+~
+0 0 13741
+S
+#13743
+銀蛇堡命中率訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著一個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這是一個魔法金屬人偶，用來調整你裝備的命中率，它的攻擊力已被限制住所
+以你可以放心使用。在沒有施加任何法術時，它的防護力大約是負一千點，你可
+以藉由護甲術或天使之火術來增減他的防護力。根據我們多年的經驗，一般你遇
+得到的魔獸其防護力鮮有超過五百點，既使是傳聞中的大魔王大概也只有負八百
+到一千兩百點 - 而這也是一位頂尖騎士的極限了。
+~
+D1
+~
+~
+1 0 13744
+D2
+~
+~
+1 0 13739
+S
+#13744
+銀蛇堡劍術訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著一個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這是一個魔法金屬人偶，用來訓練你的劍術。它能夠施展一位優秀的劍客所有
+的劍法，他的威力與浪子維達不相上下，並且擁有用不完的移動力。你可以在
+此思考面對一位強大的劍客時該有的戰鬥技巧。
+~
+D1
+~
+~
+1 0 13745
+D2
+~
+~
+1 0 13740
+D3
+~
+~
+1 0 13743
+S
+#13745
+銀蛇堡戰術訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著一個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這是一個魔法金屬人偶，用來磨練各種特殊戰技。它擁有一位頂尖騎士該有的
+所有戰鬥技巧，你可以用它來考驗自己所受過的訓練。記住，它足以成為你效法
+的目標，所以請小心自己的安全。當你擊敗它時不必沾沾自喜，反而該切身警惕，
+因為它的弱點也就是一般騎士的弱點。
+~
+D1
+~
+~
+1 0 13746
+D2
+~
+~
+1 0 13741
+D3
+~
+~
+0 0 13744
+S
+#13746
+銀蛇堡群技訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著一個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這是一個魔法金屬人偶，用來測試各種多人共使的群體技巧。它沒有任何攻擊
+力可言，卻擁有極強韌的身軀，你可以藉此試試多人群技所能達到的上限。
+~
+D2
+~
+~
+1 0 13742
+D3
+~
+~
+0 0 13745
+S
+#13747
+銀蛇堡防護力訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著一個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這是一個魔法金屬人偶，用來調整你裝備的防護力。在沒有施加任何法術時，
+它的命中率大約是三十點，破壞力大約是六十點，使用時請注意自身的安危。你
+可使用戰之藝術或衰弱術等來增減它的命中率。降低自身的防護值不但有可能使
+敵人的攻擊落空，更重要的，既使被擊中你所受到的傷害也會減少。有一點必須
+提醒，如果你負重過重，受傷的可能性與傷害力也會提高，因此我們建議你在搭
+配裝備時必須多方考量。
+~
+D0
+~
+~
+0 0 13739
+D1
+~
+~
+1 0 13748
+S
+#13748
+銀蛇堡抗魔法值訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著一個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這是一個魔法金屬人偶，用來調整你裝備的抗魔法值(Save v.s. spell point)。
+它完全沒有物理攻擊的威力，但卻可以施展出大約四十五級威力的魔法，使用時
+請小心自身的安全。這個人偶經過眾多大魔法師們的魔力灌注，共可以施展目前
+所知的風、火、水、地、雷、毒、古代、自然八系法術，你可以藉此調整出特殊
+需要的裝備。同時這個人偶也擁有相當強的魔法抗力，你可以同時實驗你的魔法
+破壞力。
+~
+D0
+~
+~
+0 0 13740
+D1
+~
+~
+1 0 13749
+D3
+~
+~
+0 0 13747
+S
+#13749
+銀蛇堡保護技巧訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著兩個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這個訓練室用來訓練你面臨強大敵人時保護隊伍裡孱弱施術者的技巧。房間中
+的牧師會盡量為你施展生命力完全恢復術與體力完全恢復術 - 如果你能夠保護
+它的話。記住，攻擊的人偶有相當的智慧，它也曉得不先把牧師擊敗是不可能擊
+敗你的！要開始訓練前請告訴牧師"training"。
+~
+D0
+~
+~
+0 0 13741
+D1
+~
+~
+1 0 13750
+D3
+~
+~
+0 0 13748
+S
+#13750
+銀蛇堡綜合訓練室~
+你站在一個很大的房間裡，房間的牆壁及天花板散發出一種柔和的白光，使得
+你連最細微的東西都看得一清二楚。房間的中央站著兩個維妙維肖的精密金屬
+人偶，右邊的牆壁上貼了一份說明(menu)，許多方向都有出口。
+~
+0 8|16|2097152 0
+E
+menu~
+這是我們費盡心血製造出來最強悍的人偶，它擁有前面各個訓練室所有人偶
+的技巧，以威力而言，他已具有中型魔王的實力了！在面對真正的敵人之前，
+拿它來考驗自己的實力是一個好主意。
+~
+D0
+~
+~
+0 0 13742
+D3
+~
+~
+1 0 13749
+S
+#13752
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13755
+D1
+~
+~
+1 0 13709
+D3
+~
+~
+0 0 13753
+S
+#13753
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13759
+D1
+~
+~
+1 0 13752
+D3
+~
+~
+0 0 13754
+S
+#13754
+寬闊的走廊~
+這裡是武士堡裡東西向一條很長的走廊，通往堡裡許多房間。
+~
+0 8 0
+D0
+~
+~
+0 0 13763
+D1
+~
+~
+1 0 13753
+S
+#13755
+正義之室，騎士的起點~
+這個房間充滿著威武的氣勢，兩旁站立了許多空的盔甲，牆角呈列了
+許多閃閃發光的武器與盾牌。牆上還掛了許多彩繪，都是描述偉大的騎士
+奮勇殺敵的英姿。
+~
+0 12 0
+D2
+~
+~
+0 0 13752
+D5
+~
+~
+3 0 13817
+S
+#13756
+騎士之路~
+這是一條漫長的走廊，兩旁牆上的油燈發出昏暗的光芒。你的腳步踏在
+地上的石板，發出沈悶的聲響，旁邊凹凸的牆壁似乎會隨時迸開，跳出你惡
+夢中的怪獸。
+~
+0 73740 0
+D0
+~
+~
+0 0 13757
+S
+#13757
+騎士之路~
+這是一條漫長的走廊，兩旁牆上的油燈發出昏暗的光芒。你的腳步踏在
+地上的石版，發出沈悶的聲響，旁邊凹凸的牆壁似乎會隨時迸開，跳出你惡
+夢中的怪獸。
+~
+0 73736 0
+D1
+~
+~
+0 0 13758
+D2
+~
+~
+0 0 13756
+S
+#13758
+騎士之路~
+這是一條漫長的走廊，兩旁牆上的油燈發出昏暗的光芒。你的腳步踏在
+地上的石版，發出沈悶的聲響，旁邊凹凸的牆壁似乎會隨時迸開，跳出你惡
+夢中的怪獸。
+~
+0 73736 0
+D1
+~
+~
+55 13721 13791
+D3
+~
+~
+0 0 13757
+S
+#13759
+勇氣之室，劍客的起點~
+這個房間的中央插了一柄很巨大的劍，看到這把劍的尺寸你不禁
+懷疑這只是裝飾用的，還是真有人能夠揮舞它。旁邊的架子上還擺了
+各式各樣的劍，長的短的寬的薄的大概有兩三百柄。
+~
+0 12 0
+D2
+~
+~
+0 0 13753
+S
+#13760
+劍客之路~
+這是一條古老的走廊，兩旁的石壁都長了很厚的青苔，你的身
+影在火光下晃動，映在地上彷彿猙獰的鬼魅。四週安靜無聲，只有
+你自己的喘息和水滴滴落的聲響。
+~
+0 73740 0
+D0
+~
+~
+0 0 13761
+S
+#13761
+劍客之路~
+這是一條古老的走廊，兩旁的石壁都長了很厚的青苔，你的身
+影在火光下晃動，映在地上彷彿猙獰的鬼魅。四週安靜無聲，只有
+你自己的喘息和水滴滴落的聲響。
+~
+0 73736 0
+D0
+~
+~
+3 0 13762
+D2
+~
+~
+0 0 13760
+S
+#13762
+劍客之路~
+這是一條古老的走廊，兩旁的石壁都長了很厚的青苔，你的身
+影在火光下晃動，映在地上彷彿猙獰的鬼魅。四週安靜無聲，只有
+你自己的喘息和水滴滴落的聲響。
+~
+0 73736 0
+D2
+~
+~
+0 0 13761
+D3
+~
+~
+0 0 13795
+S
+#13763
+愛心之室，僧侶的起點~
+看得出來這是一個新建的房間，房間的木板牆壁還瀰漫出一股新木
+的幽香，地板上的地氈也亮麗得好像沒有人踩過。房間後面深處的放著
+一個檀香，檀香的香味讓你感到心情都平靜了下來。
+~
+0 12 0
+D2
+~
+~
+0 0 13754
+D5
+~
+~
+3 0 13816
+S
+#13770
+銀蛇武士堡二樓~
+樓梯上來後你面對的是一個寬闊的迴廊，四面都有出口。二樓
+看起來比一樓更肅穆，地上鋪著紅地毯，每隔幾步就有一個沈重
+的武士盔甲站立著。
+~
+0 8 0
+D0
+~
+~
+0 0 13780
+D1
+~
+~
+0 0 13772
+D2
+~
+~
+0 0 13771
+D3
+~
+~
+0 0 13774
+D5
+~
+~
+0 0 13704
+S
+#13771
+祭壇~
+這裡是銀蛇武士的醫療中心，不管是什麼樣的傷痛經驗豐富的
+主教都能妙手回春。銀蛇武士們訓練能夠如此紮實，沒有後顧之
+憂也是原因之一。
+~
+0 8 0
+D0
+~
+~
+0 0 13770
+S
+#13772
+二樓走廊~
+你輕聲地走在武士堡柔軟的地毯上，感覺好像在高級的大飯店
+一樣。走道兩旁隔幾步就有全套盔甲或者插著鮮花的花瓶，莊嚴
+裡也不失一些溫暖。
+~
+0 8 0
+D0
+~
+~
+0 0 13785
+D1
+~
+~
+0 0 13773
+D2
+~
+~
+0 0 13776
+D3
+~
+~
+0 0 13770
+S
+#13773
+二樓走廊~
+你輕聲地走在武士堡柔軟的地毯上，感覺好像在高級的大飯店
+一樣。走道兩旁隔幾步就有全套盔甲或者插著鮮花的花瓶，莊嚴
+裡也不失一些溫暖。
+~
+0 8 0
+D0
+~
+~
+0 0 13777
+D2
+~
+~
+0 0 13778
+D3
+~
+~
+0 0 13772
+S
+#13774
+二樓走廊~
+你輕聲地走在武士堡柔軟的地毯上，感覺好像在高級的大飯店
+一樣。走道兩旁隔幾步就有全套盔甲或者插著鮮花的花瓶，莊嚴
+裡也不失一些溫暖。走廊南北都有關起來的門。
+~
+0 8 0
+D0
+~
+~
+3 0 13818
+D1
+~
+~
+0 0 13770
+D2
+~
+~
+3 0 13819
+D3
+~
+~
+0 0 13775
+S
+#13775
+二樓走廊~
+你輕聲地走在武士堡柔軟的地毯上，感覺好像在高級的大飯店
+一樣。走道兩旁隔幾步就有全套盔甲或者插著鮮花的花瓶，莊嚴
+裡也不失一些溫暖。走廊南北都有關起來的門。
+~
+0 8 0
+D0
+~
+~
+7 0 13788
+D1
+~
+~
+0 0 13774
+D2
+~
+~
+7 0 13789
+S
+#13776
+指揮中心~
+為了應付隨時可能發生的緊急狀況，銀蛇堡的指揮中心不分日夜都有經驗豐富
+的武士待命。一旦有任何情況，他們會用最快的速度調遣需要的人員抵達現場。
+~
+0 8 0
+D0
+~
+~
+0 0 13772
+S
+#13777
+資料室~
+這裡保藏了許多優秀武士們的心血結晶，也許你可以在這裡找到一些有
+價值的資料。四個巨大的架子分別標明著戰士之卷、騎士之卷、劍客之卷與
+僧侶之卷(warrior，knight，swordsman，monk)。
+~
+0 8 0
+E
+warrior~
+給新手戰士們的建議：
+    首先，單獨一位戰士並不能發揮威力，但只要能夠和牧師或者法師組成一
+隊，他們助攻型的法術能夠讓戰士如虎添翼！所以盡量和其他人一起組隊冒險。
+另外，戰士系的人物不像法師，戰士是非常依賴裝備的，所以不要吝惜你的金錢，
+盡可能把所有最好的防具武器穿戴起來，你花掉的金錢很快就能從敵人的屍體裡
+賺回來。最後，小心設好你的wimpy，我們的建議是，能設多高就設多高，究竟
+死而復活是要花很大的代價的，我們已經看過太多好勇鬥狠的新手戰士因為 wimpy
+設太低而遺失他所有的裝備 - 這真是情何以堪啊！
+~
+E
+knight~
+給新手騎士們的建議：
+    騎士最具威力的地方是每回合六次攻擊的能力，如果武器裡含有隱藏力量，
+每回合攻擊的次數會更多。騎士不像劍客需要時時補充移動力，所以具有很高的
+單獨行動能力。新手騎士和有經驗的騎士最大的差別除了裝備之外，便是打帶跑
+戰術(hunt and flee)的運用。善於使用打帶跑戰術的騎士甚至可以輕易擊敗比他
+能力高出數十級的魔獸，新手騎士們不可不詳加琢磨。
+~
+E
+swordsman~
+給新手劍客們的建議：
+    如果劍客和騎士一對一決鬥，幾乎可以確定活下來的一定是劍客。劍客是一
+種爆發力極強的職業，許多特殊的劍技都可以在一瞬間將敵人斬成兩段。並且由
+於劍客在劍術上的專研，他們不容易被打掉武器，面對防禦值(ac)高的敵手也能
+使用特殊劍法增加命中率。唯一的缺點是劍客一定要有牧師系的職業在一旁支，
+否則劍客的瞬間爆發力馬上就會用盡他所有的移動力。
+~
+E
+monk~
+給新手僧侶們的建議：
+    僧侶是一項多才多藝的職業，利用徒手格鬥的技巧，可以讓精於閃躲的敵人
+完全無法逃出你的手掌心之中。僧侶徒手格鬥的高命中率，一直是這項職業的最
+大技巧。當然，雙手徒手的靈活攻擊，更是使用武器所辦不到的。
+~
+D2
+~
+~
+0 0 13773
+S
+#13778
+堡主的辦公廳~
+這是一個很氣派的房間，地上鋪著長毛的紅地毯，兩旁的牆角擺了許多綠色的
+植物。房間前半部有一張橢圓桌子和幾張皮椅，後半部有個很大的辦公桌。
+~
+0 8 0
+D0
+~
+~
+0 0 13773
+S
+#13780
+二樓走廊~
+你輕聲地走在武士堡柔軟的地毯上，感覺好像在高級的大飯店
+一樣。走道兩旁隔幾步就有全套盔甲或者插著鮮花的花瓶，莊嚴
+裡也不失一些溫暖。
+~
+0 8 0
+D0
+~
+~
+0 0 13781
+D2
+~
+~
+0 0 13770
+D4
+~
+~
+0 0 13790
+S
+#13781
+銀蛇殿堂~
+這裡是銀蛇武士思考武士之道的地方，每當銀蛇武士對於他所選擇的道路產生
+懷疑時便會到這裡默默思考，尋求精神上的指引。年輕的武士常常因為內在的涵
+養跟不上武藝的進步而產生武學障，通常他的導師便會勸他暫時放棄武術的修
+練，到銀蛇大殿觀照自身直到通明為止。大殿後面的牆上是一幅很大的銀蛇浮
+雕，蛇身彎曲盤繞成8字型，大殿中央則擺了許多座墊，供人靜坐沈思。
+~
+0 8 0
+D0
+~
+~
+0 0 13782
+D1
+~
+~
+0 0 13784
+D2
+~
+~
+0 0 13780
+D3
+~
+~
+0 0 13783
+S
+#13782
+蛇身「正義」之室~
+這是一個比較小的房間，房間後面的牆上有一個銀蛇浮雕，其中蛇首蛇尾都是
+銀色而蛇身是金色，房間中央零零散散放了幾個座墊。
+~
+0 8|1024 0
+D2
+~
+~
+0 0 13781
+S
+#13783
+蛇尾「愛心」之室~
+這是一個比較小的房間，房間後面的牆上有一個銀蛇浮雕，其中蛇首蛇身都是
+銀色而蛇尾是金色，房間中央零零散散放了幾個座墊。
+~
+0 8|1024 0
+D1
+~
+~
+0 0 13781
+S
+#13784
+蛇首「勇氣」之室~
+這是一個比較小的房間，房間後面的牆上有一個銀蛇浮雕，其中蛇身蛇尾都是
+銀色而蛇首是金色，房間中央零零散散放了幾個座墊。
+~
+0 8|1024 0
+D3
+~
+~
+0 0 13781
+S
+#13785
+會議室~
+銀蛇堡平時除了訓練優秀的武士外，也積極地參與大陸上各項保衛和平的活
+動。在許多著名的戰役裡銀蛇武士們都扮演著重要的角色，這裡便是銀蛇武士們
+討論目前狀況，做出重要決定的地方。
+~
+0 8 0
+D2
+~
+~
+0 0 13772
+S
+#13788
+私人的房間~
+這是一個私人的房間，房間裡的陳設其實很簡單，只有床鋪、衣櫃、一張桌子
+與椅子。但這個房間的位置居然能和堡主的房間分庭抗禮，使你不得不懷疑房間
+主人的身份和地位。你注意到桌上有張便簽(note)。
+~
+0 8 0
+E
+note~
+維達吾愛，三天內再不給我死回來，你就準備和波利剛(polygun)到茵夢湖
+游泳去吧！
+					愛你愛得想要你死的賽西鴿兒(sexygirl)
+~
+D2
+~
+~
+0 0 13775
+S
+#13789
+堡主的房間~
+這是一個裝潢很高雅的房間，牆上掛了幾張油畫，地上用的是上等的柚木地
+板，房裡的傢具也都是用上好的紅檜做的。房間左邊有張大書桌，右邊是張大床，
+床上的鵝絨絲被看起非常溫暖舒服。
+~
+0 8 0
+D0
+~
+~
+0 0 13775
+S
+#13790
+瞭望台~
+這裡是銀蛇堡頂端的瞭望台，一陣陣強風把你的頭髮都吹亂了。你勉強張開眼
+睛望過去，前面是一大片平原，後面則是精靈們的森林。
+~
+0 8 0
+D5
+~
+~
+0 0 13780
+S
+#13791
+騎士之路~
+這是一條漫長的走廊，兩旁牆上的油燈發出昏暗的光芒。你的腳步踏在
+地上的石版，發出沈悶的聲響，旁邊凹凸的牆壁似乎會隨時迸開，跳出你惡
+夢中的怪獸。
+~
+0 73736 0
+D0
+~
+~
+0 0 13792
+D3
+~
+~
+0 0 13758
+S
+#13792
+騎士之路~
+這是一條漫長的走廊，兩旁牆上的油燈發出昏暗的光芒。你的腳步踏在
+地上的石版，發出沈悶的聲響，旁邊凹凸的牆壁似乎會隨時迸開，跳出你惡
+夢中的怪獸。
+~
+0 73736 0
+D2
+~
+~
+0 0 13791
+D3
+~
+~
+55 13722 13793
+S
+#13793
+騎士之路~
+這是一條漫長的走廊，兩旁牆上的油燈發出昏暗的光芒。你的腳步踏在
+地上的石版，發出沈悶的聲響，旁邊凹凸的牆壁似乎會隨時迸開，跳出你惡
+夢中的怪獸。
+~
+0 65544 0
+D0
+~
+~
+0 0 13794
+D1
+~
+~
+49 13722 13792
+S
+#13794
+騎士之路~
+這是一條漫長的走廊，兩旁牆上的油燈發出昏暗的光芒。你的腳步踏在
+地上的石版，發出沈悶的聲響，旁邊凹凸的牆壁似乎會隨時迸開，跳出你惡
+夢中的怪獸。
+~
+0 73736 0
+D2
+~
+~
+0 0 13793
+D3
+~
+~
+55 13723 13755
+S
+#13795
+劍客之路~
+這是一條古老的走廊，兩旁的石壁都長了很厚的青苔，你的身
+影在火光下晃動，映在地上彷彿猙獰的鬼魅。四週安靜無聲，只有
+你自己的喘息和水滴滴落的聲響。
+~
+0 73736 0
+D1
+~
+~
+0 0 13762
+D2
+~
+~
+55 13724 13796
+S
+#13796
+劍客之路~
+這是一條古老的走廊，兩旁的石壁都長了很厚的青苔，你的身
+影在火光下晃動，映在地上彷彿猙獰的鬼魅。四週安靜無聲，只有
+你自己的喘息和水滴滴落的聲響。
+~
+0 65544 0
+D0
+~
+~
+0 0 13795
+D1
+~
+~
+55 13725 13759
+S
+#13797
+地道~
+這是一條建立在銀蛇堡下的地底隧道，兩旁的牆壁都是用紅磚砌成。這裡
+似乎是銀蛇堡建立時為了某種目的開鑿出來的，不過很明顯已經荒廢一陣子。
+前面的地道深邃幽暗，似乎隱藏著很大的凶險。
+~
+0 65552 0
+D1
+~
+~
+1 0 13798
+D4
+~
+~
+1 0 13716
+S
+#13798
+地道~
+這是一條建立在銀蛇堡下的地底隧道，兩旁的牆壁都是用紅磚砌成。這裡
+似乎是銀蛇堡建立時為了某種目的開鑿出來的，不過很明顯已經荒廢一陣子。
+前面的地道深邃幽暗，似乎隱藏著很大的凶險。
+~
+0 65552 0
+D1
+~
+~
+1 0 13799
+D3
+~
+~
+1 0 13797
+S
+#13799
+地道~
+這是一條建立在銀蛇堡下的地底隧道，兩旁的牆壁都是用紅磚砌成。這裡
+似乎是銀蛇堡建立時為了某種目的開鑿出來的，不過很明顯已經荒廢一陣子。
+前面的地道深邃幽暗，似乎隱藏著很大的凶險。
+~
+0 65552 0
+D2
+~
+~
+1 0 13800
+D3
+~
+~
+1 0 13798
+S
+#13800
+地道~
+這是一條建立在銀蛇堡下的地底隧道，兩旁的牆壁都是用紅磚砌成。這裡
+似乎是銀蛇堡建立時為了某種目的開鑿出來的，不過很明顯已經荒廢一陣子。
+前面的地道深邃幽暗，似乎隱藏著很大的凶險。
+~
+0 65552 0
+D0
+~
+~
+1 0 13799
+D2
+~
+~
+1 0 13801
+S
+#13801
+地道~
+這是一條建立在銀蛇堡下的地底隧道，兩旁的牆壁都是用紅磚砌成。這裡
+似乎是銀蛇堡建立時為了某種目的開鑿出來的，不過很明顯已經荒廢一陣子。
+前面的地道深邃幽暗，似乎隱藏著很大的凶險。
+~
+0 65552 0
+D0
+~
+~
+1 0 13800
+D1
+~
+~
+1 0 13802
+S
+#13802
+地道~
+這是一條建立在銀蛇堡下的地底隧道，兩旁的牆壁都是用紅磚砌成。這裡
+似乎是銀蛇堡建立時為了某種目的開鑿出來的，不過很明顯已經荒廢一陣子。
+前面的地道深邃幽暗，似乎隱藏著很大的凶險。
+~
+0 65552 0
+D0
+~
+~
+55 13731 13803
+D3
+~
+~
+1 0 13801
+S
+#13803
+石室~
+這是一間寬敞的石室，石室中間有張石桌，上面一盞油燈明滅地照著。靠牆
+壁的地方鑿了一個凹槽進去，裡面還鋪了一些乾草，看來是當作床用。
+~
+0 16|65544 0
+D2
+~
+~
+49 13731 13802
+S
+#13810
+僧侶之道~
+這是一個昏暗的走道，牆壁上塗著灰色的油漆，地上是光滑的磨石子路。
+這裡基本上蠻乾淨的，但在昏暗的光線中你仍注意到牆角的一些血跡，看來這
+個地方暗藏著許多想不到的危險。
+~
+0 73749 0
+D1
+~
+~
+0 0 13811
+S
+#13811
+僧侶之道~
+這是一個昏暗的走道，牆壁上塗著灰色的油漆，地上是光滑的磨石子路。
+這裡基本上蠻乾淨的，但在昏暗的光線中你仍注意到牆角的一些血跡，看來這
+個地方暗藏著許多想不到的危險。
+~
+0 73745 0
+D0
+~
+~
+55 13739 13812
+D3
+~
+~
+0 0 13810
+S
+#13812
+僧侶之道~
+這是一個昏暗的走道，牆壁上塗著灰色的油漆，地上是光滑的磨石子路。
+這裡基本上蠻乾淨的，但在昏暗的光線中你仍注意到牆角的一些血跡，看來這
+個地方暗藏著許多想不到的危險。
+~
+0 73749 0
+D2
+~
+~
+0 0 13811
+D3
+~
+~
+0 0 13813
+S
+#13813
+僧侶之道~
+這是一個昏暗的走道，牆壁上塗著灰色的油漆，地上是光滑的磨石子路。
+這裡基本上蠻乾淨的，但在昏暗的光線中你仍注意到牆角的一些血跡，看來這
+個地方暗藏著許多想不到的危險。
+~
+0 73749 0
+D1
+~
+~
+0 0 13812
+D3
+~
+~
+55 13740 13814
+S
+#13814
+僧侶之道~
+這是一個昏暗的走道，牆壁上塗著灰色的油漆，地上是光滑的磨石子路。
+這裡基本上蠻乾淨的，但在昏暗的光線中你仍注意到牆角的一些血跡，看來這
+個地方暗藏著許多想不到的危險。
+~
+0 73745 0
+D1
+~
+~
+0 0 13813
+D2
+~
+~
+0 0 13815
+S
+#13815
+僧侶之道~
+這是一個昏暗的走道，牆壁上塗著灰色的油漆，地上是光滑的磨石子路。
+這裡基本上蠻乾淨的，但在昏暗的光線中你仍注意到牆角的一些血跡，看來這
+個地方暗藏著許多想不到的危險。
+~
+0 73745 0
+D0
+~
+~
+0 0 13814
+D2
+~
+~
+3 0 13763
+>room_leave 4 100~
+if is_qmark($n) == warrior_monk_test 100001
+	mod_qmark $n warrior_monk_test v0 = 2
+endif
+~
+|
+S
+#13816
+僧侶冥思房~
+這是一間狹小、昏暗的房間，是提供給客居於此的僧侶休息用的房間，不過
+照室內的擺設來看，這個房間已經有人先用了。
+~
+0 1|4|8|16|512|65536|1048576 0
+D4
+~
+~
+3 0 13763
+>room_enter 16 100~
+if ispc($n)
+	if is_qmark($n) & warrior_quest 100004
+	else
+		echoat $n 一道聲音傳來「你還不夠格來見我！」
+		echoat $n 你被一股力量推回去！
+		transfer $n 13763
+	endif
+else
+	transfer $n 13763
+endif
+~
+|
+S
+#13817
+騎士祈禱房~
+這是一間狹小、昏暗的房間，是提供給客居於此的騎士休息、祈禱用的房間，
+不過照室內的擺設來看，這個房間已經有人先用了。
+~
+0 1|4|8|16|512|65536|1048576 0
+D4
+~
+~
+3 0 13755
+>room_enter 16 100~
+if ispc($n)
+	if is_qmark($n) & warrior_quest 100001
+	else
+		echoat $n 一道聲音傳來「請不要打攪一位清修的騎士！」
+		echoat $n 你被一股力量推回去！
+		transfer $n 13755
+	endif
+else
+	transfer $n 13755
+endif
+~
+|
+S
+#13818
+貴賓的房間~
+這是銀蛇堡裡專供貴賓休憩的房間。這個房間不但陳設豪華，而且銀蛇堡保證
+房間客人的安全，在這裡你完全不必擔心會被暗殺。
+~
+0 8|1024|1048576 0
+D2
+~
+~
+3 0 13774
+S
+#13819
+貴賓的房間~
+這是銀蛇堡裡專供貴賓休憩的房間。這個房間不但陳設豪華，而且銀蛇堡保證
+房間客人的安全，在這裡你完全不必擔心會被暗殺。
+~
+0 8|1024|1048576 0
+D0
+~
+~
+3 0 13774
+S
+
+#0
+
+
+
+#SPECIALS
+M 13700 spec_guard
+M 13701 spec_guard
+M 13711 spec_cast_mage
+M 13721 spec_cast_judge
+M 13722 spec_cast_cleric
+M 13735 spec_cast_adept
+M 13753 spec_thief
+S
+
+
+
+#RESETS
+M 0 13700 2 13702
+E 0 13703 0 16
+E 0 13704 0 5
+E 0 13705 0 11
+E 0 13708 0 7
+E 0 13709 0 8
+E 0 13706 0 3
+E 0 13713 0 13
+E 0 13714 0 14
+E 0 13715 0 2
+E 0 13716 0 0
+M 0 13731 2 13705
+E 0 13701 0 16
+M 0 13734 1 13707
+E 0 13701 0 16
+M 0 13732 2 13708
+E 0 13701 0 16
+M 0 13733 1 13711
+E 0 13701 0 16
+E 0 13701 0 18
+M 0 13739 3 13716
+E 0 13703 0 16
+M 0 13702 1 13722
+M 0 13703 1 13722
+M 0 13704 2 13722
+M 0 13705 2 13725
+E 0 13701 0 16
+E 0 13710 0 9
+E 0 13711 0 10
+M 0 13706 1 13725
+E 0 13701 0 16
+M 0 13701 2 13728
+E 0 13702 0 16
+E 0 13704 0 5
+E 0 13705 0 11
+E 0 13707 0 6
+E 0 13709 0 8
+E 0 13712 0 12
+E 0 13713 0 13
+E 0 13714 0 14
+E 0 13715 0 2
+E 0 13716 0 0
+O 0 13718 0 13728
+O 0 13718 0 13729
+M 0 13738 1 13735
+M 0 13737 1 13737
+M 0 13710 1 13743
+E 0 13717 0 16
+M 0 13708 1 13744
+E 0 13717 0 16
+M 0 13709 1 13745
+E 0 13717 0 16
+E 0 13717 0 18
+M 0 13715 1 13746
+M 0 13707 1 13747
+E 0 13717 0 16
+M 0 13711 1 13748
+M 0 13712 1 13749
+M 0 13713 1 13749
+E 0 13717 0 16
+M 0 13714 1 13750
+E 0 13717 0 16
+E 0 13717 0 18
+G 0 13729 0
+M 0 13724 1 13755
+E 0 13719 0 16
+E 0 13719 0 18
+M 0 13725 3 13757
+E 0 13719 0 16
+G 0 13609 0
+G 0 13721 0
+G 0 13026 0
+M 0 13725 3 13757
+E 0 13719 0 18
+G 0 13720 0
+G 0 13026 0
+M 0 13725 4 13757
+G 0 13720 0
+G 0 13026 0
+G 0 13026 0
+M 0 13728 1 13759
+E 0 13719 0 16
+M 0 13729 6 13761
+E 0 13719 0 16
+G 0 13026 0
+M 0 13729 6 13761
+E 0 13719 0 16
+G 0 13026 0
+M 0 13729 6 13761
+E 0 13719 0 18
+G 0 13026 0
+M 0 13729 6 13761
+E 0 13719 0 18
+G 0 13026 0
+M 0 13729 6 13761
+G 0 13026 0
+M 0 13729 6 13761
+G 0 13026 0
+M 0 13726 1 13762
+E 0 13719 0 16
+G 0 13724 0
+G 0 13026 0
+G 0 13720 0
+G 0 3043 0
+M 0 13749 1 13763
+M 0 13754 1 13816
+M 0 13735 1 13771
+M 0 13736 1 13771
+M 0 13716 1 13776
+E 0 13703 0 16
+E 0 13717 0 18
+E 0 13704 0 5
+E 0 13707 0 6
+E 0 13708 0 7
+E 0 13709 0 8
+E 0 13714 0 14
+E 0 13715 0 2
+E 0 13716 0 0
+F 1 13735 1 13736
+M 0 13723 1 13778
+E 0 13703 0 16
+E 0 13717 0 18
+E 0 13704 0 5
+E 0 13707 0 6
+E 0 13708 0 7
+E 0 13709 0 8
+E 0 13706 0 3
+E 0 13712 0 12
+E 0 13713 0 13
+E 0 13714 0 14
+E 0 13714 0 15
+E 0 13716 0 0
+M 0 13717 2 13781
+M 0 13718 1 13781
+M 0 13719 1 13781
+M 0 13721 1 13782
+M 0 13722 1 13783
+M 0 13720 1 13784
+M 0 13745 1 13791
+E 0 13719 0 16
+G 0 13609 0
+G 0 13720 0
+G 0 3043 0
+G 0 13722 0
+G 0 13026 0
+G 0 13026 0
+M 0 13727 1 13793
+E 0 13719 0 16
+E 0 13719 0 18
+G 0 13723 0
+M 0 13730 1 13796
+E 0 13719 0 16
+G 0 13725 0
+M 0 13740 1 13800
+E 0 13719 0 16
+E 0 13719 0 18
+M 0 13741 1 13800
+*F 1 13740 1 13741
+M 0 13742 1 13802
+E 0 13733 0 6
+G 0 13731 0
+E 0 13719 0 16
+M 0 13743 1 13802
+E 0 13732 0 13
+*F 1 13742 1 13743
+M 0 13744 1 13803
+M 0 13750 8 13811
+E 0 13743 0 13
+E 0 13719 0 16
+G 0 13026 0
+M 0 13750 7 13811
+G 0 13026 0
+M 0 13751 1 13813
+E 0 13719 0 16
+G 0 13740 0
+G 0 3043 0
+G 0 13026 0
+M 0 13752 1 13814
+E 0 13719 0 16
+E 0 13719 0 18
+M 0 13753 2 13706
+E 0 3020  0 16
+M 0 13755 1 13817
+S
+
+
+
+#SHOPS
+0
+
+
+
+#$

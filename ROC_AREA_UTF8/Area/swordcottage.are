@@ -1,0 +1,5575 @@
+#AREADATA
+Name	    {36 42} 名劍山莊~
+Identity    swordcottage~
+Builders    Kention~
+Translator  Kention~
+Modifier    ~
+VNUMs	    64101 64300
+Security    1
+Recall      3001
+Death       3001
+F_toggle    0
+End
+
+#MOBILES
+#64101
+Jwo ho sin young man~
+卓鶴山(Jwo ho sin)~
+一個年輕人(Young man)在這裡迎接山莊的客人。
+~
+他頭戴青皮帽，身穿長袍馬掛，負責引導初入名劍山莊的各路
+英雄好漢。他滿臉笑容的和你打恭作揖。
+~
+1|2|64|4096 8|32 800 S
+50 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8|32768|65536
+S 13 20000
+>talk_prog p hair dress~
+	if is_qmark($n) == swordcottage 200001
+		say 這個...我也不太清楚
+		say 你可以去問問別人。
+	else
+		say 什麼髮飾？
+	endif
+~
+>tick_prog 10~
+	if is_qmark($i) > swordcottage_enter 100001
+		mpmod_qmark $i swordcottage_enter v0 - 1
+	endif
+~
+>greet_prog 100~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 名劍山莊不歡迎你，請回吧
+	else
+		mpechoat $n $I恭敬的向你鞠躬
+		tell $n 歡迎光臨名劍山莊，有什麼問題請儘管吩咐．
+			if is_qmark($i) != swordcottage_enter
+				mpadd_qmark $i swordcottage_enter -1 0 0 0 0 1
+			endif
+	endif
+~
+>talk_prog topic~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答你的問題，你請回吧
+	else
+		tell $n 請問有什麼問題？
+		mpechoat $n －－－請問我能進去嗎(Enter)？
+		mpechoat $n －－－請問莊主在哪裡(where)？
+		mpechoat $n －－－關於名劍山莊的問題(About)
+	endif
+~
+>talk_prog enter~
+	if is_qmark($n) != swordcottage_killer
+			if is_qmark($i) > swordcottage_enter 100006
+				tell $n 對不起，山莊內的客人已滿，我沒辦法讓您進去。
+				sorry $n
+			else
+					if resp($n) > 30
+						if sex($n) == 2
+							tell $n 好的，名劍山莊非常歡迎像您這樣有名的俠女
+							mpechoat $n $I打開門讓你進去。
+							mpechoaround $n $I打開門讓$n進去。
+							mptransfer $n 64151
+							mpmod_qmark $i swordcottage_enter v0 + 1
+						else
+							tell $n 好的，名劍山莊非常歡迎像您這樣有名的俠客
+							mpechoat $n $I打開門讓你進去。
+							mpechoaround $n $I打開門讓$n進去。
+							mptransfer $n 64151
+							mpmod_qmark $i swordcottage_enter v0 + 1
+						endif
+					else
+						mpechoat $n $I仔細的打量你...
+						mpechoaround $n $I仔細的打量$n...
+						tell $n 對不起，我恐怕沒辦法讓您進去。
+						tell $n 名劍山莊只歡迎有名的俠客或是俠女，$n您請回吧。
+					endif			
+			endif
+	else
+		tell $n 名劍山莊不歡迎您，請回吧。
+	endif
+~
+>talk_prog where~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		tell $n 只要往前一直走，莊主就在大廳裡面．
+	endif
+~
+>talk_prog about~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		tell $n 想知道什麼嗎？
+		mpechoat $n －－－名劍山莊的由來(From)？
+		mpechoat $n －－－名劍山莊的莊主(Master)？
+	endif
+~
+>talk_prog from~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		mpechoat $n $I說著：名劍山莊原本只是一個普通的山莊，後來因為第
+		mpechoat $n $I說著：三任莊主喜好劍術，於是便改名為名劍山莊，同
+		mpechoat $n $I說著：時廣邀英雄劍俠到山莊內作客。現在的莊主則是
+		mpechoat $n $I說著：第六任莊主，但是卻因為沒有兒子，而打算招贅
+		mpechoat $n $I說著：一名年輕人來挑起大業。
+		mpechoat $n $I說著：大致上就是這個樣子了。
+	endif
+~
+>talk_prog master~
+	if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		mpechoat $n $I說著：現任莊主秦徹生先生是第六任莊主，現在就在大
+		mpechoat $n $I說著：廳裡面，您可以去拜訪他。
+	endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		yell 嗚啊！！$n在名劍山莊行兇阿！！
+	else
+		mpadd_all_qmark $n swordcottage_killer 200 0 0 0 1
+	endif
+~
+>fight_prog 100~
+	say 名劍山莊不歡迎鬧事的人！
+	mpechoat $n $I一揮手，一陣強大的風把你推了出去！
+	mpechoaround $n $n被$I推了出去！
+	mptransfer $n 64121
+	mpnowait
+~
+|
+#64102
+chin-mob cher sen-swordcottage~
+秦徹生(Chin cher sen)~
+莊主秦徹生(Chin cher sen)神采奕奕的站在這裡。
+~
+他就是掌管整個名劍山莊的莊主-秦徹生(Chin cher sen)，
+江湖上傳言他能在雨中舞劍而身上不沾半點雨滴。除了高超
+的劍術，秦徹生也以素有正義感而聞名．但是早年喪妻的他
+，似乎正為了唯一的女兒，秦映月的婚事而煩惱著．
+~
+1|2|64|2048|4096 8|32|128 1000 S
+55 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 60000
+S 41 70
+S 42 70
+S 43 100
+S 44 100
+>tick_prog 10~
+	if is_qmark($i) != swordcottage_hairdress
+		say 怎麼會不見了呢...
+		sigh
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n 你還不離開嗎？那我就送你一程吧！
+	mpkill $n
+else
+	nod $n
+	tell $n 久仰大名，歡迎來到名劍山莊
+endif
+~
+>talk_prog disappear~
+	if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+	else
+		if is_qmark($n) == castsword
+			say 這件事情跟鑄劍谷的人沒有關係。
+			mpechoat $n $I把頭別過去，似乎不想理你。
+			mpechoaround $n $I把頭別過去，似乎不想理$n。
+		else
+			if is_qmark($i) != swordcottage_hairdress
+				if is_qmark($n) == swordcottage
+					tell $n 其實是我髮妻(wife)留下來的髮飾(hair dress)被我弄丟了。
+					tell $n 雖然找了不少地方，可是就是找不到。
+					sigh
+					mpmod_qmark $n swordcottage v2 = 1
+				else
+					tell $n 其實是我髮妻(wife)留下來的髮飾(hair dress)被我弄丟了。
+					tell $n 雖然找了不少地方，可是就是找不到。
+					sigh
+					mpadd_qmark $n swordcottage -1 0 0 1 0 1
+				endif
+			else
+				您的什麼東西掉了嗎？
+			endif
+		endif
+	endif
+~
+>talk_prog p hair dress~
+if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+else
+	if is_qmark($n) == swordcottage 300001
+		if is_qmark($i) != swordcottage_hairdress
+			tell $n 是一個暗紅色的髮飾，不知道掉在哪了
+		else
+			tell $n 我已經托人在莊內尋找，不勞您費心。
+		endif
+	endif
+endif
+~
+>talk_prog p gin-ming~
+	if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+	else
+	if is_qmark($n) == jd_liu 100001
+		mpechoat $n 你將柳敬明託付的事情告訴$I
+		gasp $n
+		tell $n 您認識敬明？我也找他找了許久，但一直沒有消息。
+		tell $n 但你說當年雲風與秋雨一起到山莊排解紛爭，我卻不記得有這回事
+		tell $n 當年僅有秋雨上山來找我，他同時告訴我雲風有事不能到來，請他代為致歉
+		tell $n 但...怎麼會有這種事？
+		ponder
+		tell $n 如果你所說的屬實，那麼務必先找出雲風失蹤的地方。
+		tell $n 李總管確實告訴我，當時雲風沒有踏入山莊
+		tell $n 或許他在上山莊的路上有事...或是失蹤了？
+		tell $n 麻煩您跑一趟，在來山莊的路上找找。
+		tell $n 我趁這段時間問一下李總管當時的詳細狀況。也問問秋雨。
+		tell $n 麻煩您了
+		bow $n
+		mpmod_qmark $n jd_liu v0 = 2
+		mpechoat $n 你覺得山下那座土堆實在太可疑了...要再去調查一次嗎？
+	else
+		tell $n 敬明阿！好久沒看到他了，不知道他近況如何...
+	endif
+	endif
+~
+>give_prog 11144~
+	if is_qmark($n) == jd_liu 100003
+		mpechoat $n $I顫抖著手讀完這封信
+		tell $n 我知道了，我馬上讓秋雨過來一趟，請他好好說明
+		tell $n 這封信麻煩您帶去給敬明，讓他知道這件事吧...唉。
+		mpat 64137 mptransfer chen-swordcottage 64247
+		give letter $n
+	else
+		?
+		tell $n 你給我這個做什麼？
+		drop letter
+	endif
+~
+>talk_prog p where is chow-yu~
+if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+else
+	if is_qmark($n) == jd_liu 100004
+		tell $n 說來慚愧，秋雨一聽到我要找他，馬上離開了山莊，也來不及攔住他
+		tell $n 看來這件事是真的了，希望少俠能為敬名報這殺父之仇。
+		bow $n
+		tell $n 我猜秋雨應該會回到他認為最隱密的地方，也許是當初少俠發現雲風遺書的地方
+		tell $n 請少俠跑這最後一趟，替武林去除這個敗類吧！
+		tell $n 願劍神Kention保佑你。
+		mpmod_qmark $n jd_liu v0 = 5
+	else
+		tell 你找秋雨嗎？他應該在客房裡阿。
+	endif
+endif
+~
+>talk_prog wife~
+	if is_qmark($n) == castsword
+		say 這件事情跟鑄劍谷的人沒有關係。
+		mpechoat $n $I把頭別過去，似乎不想理你。
+		mpechoaround $n $I把頭別過去，似乎不想理$n。
+	else
+		if is_qmark($n) == swordcottage_killer
+			say 你這兇手！還敢問我事情！
+			mpkill $n
+		else
+			if is_qmark($n) == swordcottage 300001
+				if is_qmark($i) == swordcottage_talking
+					mpechoat $n $I現在正在跟別人說話。
+				else
+					if is_qmark($i) != swordcottage_hairdress
+						if resp($n) > 65
+							mpcallout 1 mpadd_qmark self swordcottage_talking
+							mpcallout 1 mpechoat $n $I說著：既然您問起了，事情是這樣的...
+							mpcallout 1 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 2 mpechoat $n $I說著：十幾年前，我受友人所託，出海前往另一個島
+							mpcallout 3 mpechoat $n $I說著：到達該島之後，我發現當地居民與我族衣著，習慣皆不相同
+							mpcallout 4 mpechoat $n $I說著：恰巧那位友人必須留在島上一段時間，希望留我作伴
+							mpcallout 5 mpechoat $n $I說著：正好家中無事，我也不加推辭，就留在該島練劍
+							mpcallout 5 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 6 mpechoat $n $I說著：在練劍的同時，我認識了一位當地的少女
+							mpcallout 7 mpechoat $n $I說著：她經常送一些食物以及水過來給我，並且在旁邊看著我練劍
+							mpcallout 8 mpechoat $n 你好像覺得這種劇情很耳熟...
+							mpcallout 8 mpechoaround $n $n露出一點不可置信的表情
+							mpcallout 9 mpechoat $n $I苦笑著說：是的，後來的事情您應該也猜到了
+							mpcallout 10 mpechoat $n $I說著：我後來與那位少女相戀，並且結了婚
+							mpcallout 11 mpechoat $n $I說著：但這也是一切不幸的開始...
+							mpcallout 11 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 12 mpechoat $n $I說著：她有了身孕之後，我常常出外狩獵一些牲畜給她補身子
+							mpcallout 13 mpechoat $n $I說著：同時也託不斷來回的船隻幫我捎一些藥品回來
+							mpcallout 14 mpechoat $n $I說著：但是她仍然不幸過世，就在她生映月的那天晚上
+							mpcallout 15 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 16 mpechoat $n $I說著：因為難產，流血過多，因而死亡...
+							mpcallout 17 mpechoat $n $I說著：我當時悲憤難耐，便一劍劈開了島上的大石
+							mpcallout 18 mpechoat $n $I說著：後來友人勸我回來家鄉，一方面是該繼承家業，另一方面也是看我整日愁靡...
+							mpcallout 18 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 19 mpechoat $n $I說著：於是我在當地建立了一間石室，將我的配劍置入
+							mpcallout 20 mpechoat $n $I說著：也算是為了紀念亡妻
+							mpcallout 21 mpechoat $n $I說著：當時她留給我的，就只剩這個髮飾
+							mpcallout 21 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 22 mpechoat $n $I仔細的打量你...
+							mocallout 22 mpechoaround $I仔細的看了看$n...
+							mpcallout 23 mpechoat $n $I說著：少俠聲名遠播，不知是否可以委託您幫我找回這個髮飾？(yes/no)
+							mpcallout 23 mpdel_qmark self swordcottage_talking
+						else
+							tell $n 她在十數年前便已過世，只留下映月與我相依為命．
+							glare
+							tell $n 十年生死兩茫茫...
+							sigh
+							tell $n 不勞您多費心，我自己再找找便是。
+						endif
+					else
+						tell $n 她在十數年前便已過世，只留下映月與我相依為命．
+						glare
+						tell $n 十年生死兩茫茫...
+						sigh
+					endif
+				endif
+			else
+				tell $n 她在十數年前便已過世，只留下映月與我相依為命．
+				glare
+				tell $n 十年生死兩茫茫...
+				sigh
+			endif
+		endif
+	endif
+~
+>talk_prog yes~
+if is_qmark($i) != swordcottage_hairdress
+	tell $n 那就有勞您了
+	bow
+	tell $n 也許您可以問問李總管，他對莊內的情況比較熟悉。
+	tell $n 願劍神Kention保佑你。
+	mpmod_qmark $n swordcottage v2 = 2
+	mpadd_qmark $i swordcottage_hairdress	200 0 0 0 0 -1
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpmod_all_qmark $n swordcottage_killer timer = -1
+		say 映月，你爹..沒辦法..再..照顧你..了..
+		mpecho 碰的一聲，$I倒地不起。
+		rumor 名劍山莊莊主$I被$n殺害了！名劍山莊下令永久通緝$n！
+	else
+		mpadd_all_qmark $n swordcottage_killer -1 0 0 0 0 1
+		rumor 名劍山莊莊主$I被$n殺害了！名劍山莊下令永久通緝$n！
+	endif
+~
+>give_prog 64135~
+		if is_qmark($n) == swordcottage_killer
+			say 你這兇手！還敢來見我！
+			mpkill $n
+			mpjunk hair
+		else
+				if is_qmark($n) == swordcottage 300003
+					tell $n 太好了！沒想到您真的找到了！
+					mpjunk hair
+					tell $n 真是太感謝你了。
+					bow $n
+					tell $n 一些微薄的謝禮，希望您能收下。
+					mpoload 64138 $n viclv target
+					mpexp $n 10000
+					mpmod_qmark $n swordcottage v2 = 4
+				else
+					tell $n 這似乎不是你找到的吧？
+					drop hair
+					tell $n 請那位找到的先生來見我，我會好好的酬謝他。
+				endif
+		endif
+~		
+>fight_prog 20~
+wear sword
+yell [1;31m焱日天劍[0m 
+flaming
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 20~
+wear sword
+yell [1;34m流風劍舞[0m 
+storm
+mpnowait
+earth
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>fight_prog 10~
+wear sword
+yell [1;36m絢目劍花[0m 
+mpat 5 c 'cure blind'
+c virtual
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c 'dispel magic' self
+mpat 5 c sanc
+mpnowait
+~
+>fight_prog 30~
+wear sword
+yell [1;32m劍霸天下[0m 
+perf emp
+mpnowait
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+~
+|
+#64103
+uen chun lon-swordcottage~
+雲從龍(uen chun lon)~
+雲從龍(uen chun lon)腰繫長劍，神采奕奕的站在一旁。
+~
+他是莊主早年認識的故交，雖然跟莊主歲差10年，卻不減兩
+人情誼，據說在某次山賊劫村時，秦徹生與素未謀面的他一
+同擊退山賊，後來便應秦徹生的邀請到山莊內做客．
+~
+1|2|64|2048|4096 8|32|128 1000 S
+53 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 30000
+S 41 40
+S 42 40
+S 43 70
+S 44 70
+>talk_prog topic~
+	if is_qmark($n) == castsword
+		tell $n 你是鑄劍谷的人吧？
+		tell $n 莊主不太喜歡鑄劍谷的人，跟他說話可得當心點。
+	else
+		if is_qmark($n) == swordcottage_killer
+			say 抱歉，莊主不歡迎你，我只好請你出去摟。
+			mpkill $n
+		else
+			say 是訪客阿，請好好享受山莊的風景吧。
+			say 這麼說起來，我也是訪客呢！哈哈哈！
+		endif
+	endif
+~
+>talk_prog underwear~
+	say 那種東西的話...我不太清楚喔。
+	shrug
+~
+>talk_prog p hair dress~
+	if is_qmark($n)　== swordcottage 200001
+		tell $n 髮飾阿。
+		tell $n 對不起，這種小東西我通常不會注意的。
+		mpechoat $n $I對著你苦笑著。
+		mpechoaround $n $I對著$n苦笑著。
+	else
+		say 髮飾？你想要的話也許可以去附近的村子買吧。
+	endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpecho $I 狠狠的瞪了你一眼，然後頹然倒地。
+	else
+		mpecho $I 狠狠的瞪了你一眼，然後頹然倒地。
+		mpadd_all_qmark $n swordcottage_killer 200 0 0 0 0 1
+	endif
+~
+>fight_prog 40~
+wear sword
+yell [1;32m劍霸天下[0m 
+perf emp
+mpnowait
+perf emp
+mpnowait
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+mpnowait
+~
+|
+#64104
+Lee-mob ie ven~
+李逸凡(Lee ie ven)~
+總管李逸凡(Lee ie ven)在這裡忙著處理事情。
+~
+某次秦徹生在山上練劍不慎受傷，後來承蒙李逸凡相救，秦
+徹生便邀請他至山莊做總管。名義上雖然是總管，實際上他
+對秦徹生的了解比誰都還要深．
+~
+1|64|2048|4096 8|32|128 1000 S
+45 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>talk_prog p hair dress~
+if is_qmark($n) == swordcottage_killer
+	mpecho $I說著：謝謝您的關心，不過我們可以自己解決。
+else
+	if is_qmark($n) >= swordcottage 300001
+		if rand(50)
+			tell $n 之前好像在哪邊看到過...
+			tell $n 莊主常去練習場練劍，之前也到過存劍室除去妖魔，也許你可以到這兩個地方找找。
+			tell $n 但存劍室現在被莊主封起來了，一般人不能進去，您要進去務必小心。
+			tell $n 對莊主來說，那可是最珍貴的寶物哪。
+		else
+			say 我想想，好像有看過...
+			say 可是我不太記得，讓我再想想，麻煩您過點時間再過來問我一次
+			sigh
+	else
+		say 什麼髮飾？
+	endif
+endif
+~
+>greet_prog 10~
+	say 這可怎麼辦阿，那頭蛟龍(Chiao)實在是...
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n 名劍山莊不歡迎你，請回吧。
+else
+	tell $n 歡迎來到名劍山莊。
+	tell $n 提醒您，存劍室內有不明妖魔出現，請不要太靠近。
+	tell $n 如果您成功打倒妖魔，請拿著證據回來，莊內有薄禮致贈。
+	tell $n 願劍神Kention保佑您的平安。
+	bow $n
+endif
+~
+>talk_prog chiao~
+if is_qmark($i) != swordcottage_talk
+	if is_qmark($n) != swordcottage_killer
+		if is_qmark($n) >= swordcottage 200001
+			tell $n 謝謝您的幫忙，我們不會忘記的。
+			break
+		else	
+				mpadd_qmark $i swordcottage_talk
+				mpcallout 1 tell $n 是這樣子的，最近有僕人發現連接山莊的那個湖泊出現蛟龍。
+				mpcallout 2 tell $n 出現蛟龍還不打緊，但是我們發現牠有兇猛的攻擊性，名劍山莊不少僕人家畜都被牠咬傷。
+				mpcallout 3 mpechoat $n －－我可以幫忙嗎？(Help)
+				mpcallout 3 mpechoat $n －－那真是太遺憾了(Sorry)
+				mpcallout 3 tell $n 所以我現在很傷腦筋阿...
+				mpdel_qmark $i swordcottage_talk
+		endif
+	else
+		mpecho $I說著：謝謝您的關心，不過我們可以自己解決。
+	endif
+else
+		mpechoat $n 別人在說話，不要插嘴比較好。
+endif
+~
+>talk_prog sorry~
+	say 希望有辦法可以趕走牠。
+	sigh
+~
+>talk_prog help~
+if is_qmark($i) != swordcottage_talk
+	if is_qmark($n) != swordcottage_killer
+		if is_qmark($n) == swordcottage
+			if is_qmark($n) < swordcottage 200001
+			else	
+				if is_qmark($n) == swordcottage
+					mpcallout 1 mpadd_qmark $i swordcottage_talk
+					mpcallout 1 tell $n 你願意幫忙？那真是太好了！
+					mpcallout 2 tell $n 蛟龍就在山莊後面的湖泊裡。
+					mpcallout 3 tell $n 你殺死蛟龍之後，就來跟我回報吧(report)！
+					mpcallout 3 mpmod_qmark $n swordcottage v1 = 1
+					mpcallout 4 tell $n 願劍神Kention保佑你。
+					mpcallout 4 tell $n 那就麻煩你了！
+					mpcallout 4 mpdel_qmark $i swordcottage_talk
+				else
+					mpcallout 1 mpadd_qmark $i swordcottage_talk
+					mpcallout 1 tell $n 你願意幫忙？那真是太好了！
+					mpcallout 2 tell $n 蛟龍就在山莊後面的湖泊裡。
+					mpcallout 3 tell $n 你殺死蛟龍之後，就來跟我回報吧(report)！
+					mpcallout 3 mpadd_qmark $n swordcottage -1 0 1 0 0 1
+					mpcallout 4 tell $n 願劍神Kention保佑你。
+					mpcallout 4 say 那就麻煩你了！
+					mpcallout 4 mpdel_qmark $i swordcottage_talk
+				endif	
+			endif
+		endif
+	else
+		mpecho $I說著：謝謝您的關心，不過我們可以自己解決。
+	endif
+else
+		mpechoat $n 別人在說話，不要插嘴比較好。
+endif
+~
+>talk_prog report~
+	if is_qmark($n) == swordcottage 200003
+		tell $n 真是辛苦您了。
+		tell $n 這就當做給您的報酬吧，小意思，請笑納。
+		mpskillexp $n 10000
+		mpgold $n 100000
+		mpmod_qmark $n swordcottage v1 = 7
+		break
+	else
+		if is_qmark($n) == swordcottage 200006
+			tell $n 原來...看來是我們沒有好好約束自己的長工。
+			tell $n 造成您的困擾真是抱歉，也感謝您圓滿的解決這次的事情
+			tell $n 這是一點小意思，請笑納。
+			mpgold $n 100000
+			mpmod_qmark $n swordcottage v1 = 7
+			break
+		endif
+	say 你要跟我回報什麼？
+	endif
+~
+>talk_prog p strange~
+	if is_qmark($n) == swordcottage 200002
+		tell $n 奇怪的地方？你是說蛟龍逗留的原因嗎？
+		tell $n 這麼說來，我的確聽過山莊內長工們的耳語...
+		tell $n 說是其中一個長工偷了蛟龍的夜明珠(light orb)，所以蛟龍才不斷作亂
+		tell $n 但我認為這只是傳言而已。
+		mpmod_qmark $n swordcottage v1 = 4
+	else
+		tell $n 有什麼奇怪的地方嗎？
+	endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+yell $n在名劍山莊濫殺無辜阿！
+	if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+~
+>fight_prog 100~
+	if insameroom(sen-swordcottage)
+		say 莊主！有敵人入侵！
+		mpforce sen-swordcottage mpkill $n
+	else
+		$I迅速的逃跑了！
+		mpgoto 64190
+	endif
+~
+|
+#64105
+Bie wu chae-swordcottage~
+白無缺(Bie wu chae)~
+白無缺(Bie wu chae)在這裡若有所思的踱步。
+~
+秦徹生一生收了數十名弟子，但是他也曾經說過，最滿意的
+便是白無缺這個大弟子。無缺自小喪失雙親，路過的莊主便
+將他攜回莊內撫養長大，同時傳授與他劍法，根據莊內的謠
+傳，他也是莊主內定的女婿．
+~
+1|2|64|2048|4096 8|32|128 1000 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 20000
+S 41 50
+S 42 50
+S 43 40
+S 44 40
+>talk_prog p hair dress~
+	if is_qmark($n) == castsword
+		mpecho $I露出不太高興的表情。
+		say 鑄劍谷掉了的髮飾都在名劍山莊嗎？
+	else
+		if is_qmark($n) == swordcottage 300001
+			tell $n 師母的髮飾？
+			ponder
+			tell $n 我也不太清楚。如果是師父請您幫的忙，希望您在莊內幫忙找找看。
+			tell $n 萬事拜託了。
+		else
+			tell $n 什麼髮飾？
+		endif
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n 請您馬上離開名劍山莊！
+	mpkill $n
+else
+	nod $n
+	tell $n 是客人嗎？歡迎來到名劍山莊，我是莊主的弟子。
+	smile $n
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+mpecho $I死前用盡全身力氣施展最後一招劍技！
+storm slash
+mpnowait
+storm slash
+mpnowait
+mpecho 劍技一完，$I也跟著倒地不起。
+if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+~
+>fight_prog 20~
+wear sword
+yell [1;31m焱日天劍[0m 
+flaming
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 30~
+wear sword
+yell [1;32m劍霸天下[0m 
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+~
+|
+#64106
+sho ji yum-swordcottage~
+蕭紫雲(Sho ji yum)~
+蕭紫雲(Sho ji yum)在這裡專心練劍。
+~
+紫雲自幼就嚮往練武，正巧他的雙親也與秦徹生為故交，便
+將他送至名劍山莊內．雖然身為二弟子多少受了一點委屈，
+不過他仍然潛心練劍，期望有一天能夠跟自己的師兄一較高
+下．
+~
+1|2|64|2048|4096 8|32|128 1000 S
+46 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 1|4|8|64|8388608
+S 13 20000
+S 41 30
+S 42 30
+S 43 40
+S 44 40
+>talk_prog p hair dress~
+	if is_qmark($n) == castsword
+		mpecho $I臉色變的很難看。
+		say 你懷疑是我們偷的嗎？別隨便來這誣賴人！
+		mpechoat $n 看他一臉火大的樣子，快點走比較好。
+	else
+		if is_qmark($n) == swordcottage 300001
+			tell $n 師母的？啊啊，我不知道耶。
+			mpecho $I抓了抓頭。
+			tell $n 我對找東西最不擅長了。現在滿腦子想的都是怎麼除去藏劍室的妖魔。
+		else
+			tell $n 什麼髮飾？
+		endif
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	tell $n 快滾吧！
+	mpkill $n
+else
+	nod $n
+	tell $n 是新的訪客阿，歡迎來到名劍山莊。
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+mpmod_all_qmark $n swordcottage_killer timer +50
+mpecho $I死前用盡全身力氣施展最後一招劍技！
+flaming
+mpnowait
+flaming
+mpnowait
+mpecho 劍技一完，$I也跟著倒地不起。
+	if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+~
+>fight_prog 30~
+wear sword
+yell [1;34m流風劍舞[0m 
+storm
+mpnowait
+earth
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>fight_prog 10~
+wear sword
+yell [1;36m絢目劍花[0m 
+mpat 5 c 'cure blind'
+c virtual
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c 'dispel magic' self
+mpat 5 c sanc
+mpnowait
+~
+|
+#64107
+chin-swordcottage in yo~
+秦映月(chin in yo)~
+秦映月(chin in yo)站在這邊，臉上露出微笑的表情。
+~
+蓄著及腰的長髮，映月有著亮麗的外表跟甜美的笑容，身
+為名劍山莊莊主的寶貝女兒，秦映月背負著必須嫁給劍術
+高超劍客的使命，最佳的人選自然是她的兩個師兄，不過
+她本人似乎並不怎麼擔心這個問題。
+~
+1|64|2048|4096 8|32|128 1000 S
+38 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 1|8
+P 8
+S 13 30000
+S 41 70
+S 42 70
+S 43 70
+S 44 70
+R half-elf~
+A8
+mpgoto self+wake
+say 又是新的一天呢。
+mpecho 映月伸了個懶腰
+mpecho 映月緩緩走出房間。
+mpgoto 64206
+~
+A19
+say 差不多該休息了呢。
+mpecho 映月緩緩走回自己的房間
+mpgoto 64215
+rest
+~
+|
+>talk_prog p hair dress~
+	if is_qmark($n) == castsword
+		say 對不起，爹要我別跟鑄劍谷的人交談。
+	else
+		if is_qmark($n) == swordcottage 300001
+			say 娘的髮飾？
+			say 爹一直很寶貝的收著，怎麼會弄丟了呢？
+			say 我也去找找好了。
+		else
+			say 什麼髮飾？
+		endif
+	endif
+~
+>talk_prog underwear~
+	say 那，那種東西...
+	blush
+	say 我，我是穿著沒錯，可是要做什麼呢？
+	mpechoat $n －－－我只是問問而已(nothing)
+	if is_qmark($n) == swordcottage 100001
+	mpechoat $n －－－可以給我嗎(give me)？
+	endif
+~
+>talk_prog nothing~
+	if sex($n) == 2
+		say 都是女生，好奇什麼呢？
+		giggle $n
+	else
+		say 是，是這樣嗎
+		say 我平常，平常都會放在衣櫃裡...啊！失，失禮了
+		say 對，對不起，我對這種話題實在...
+		mpechoat $n 害羞的對你笑了笑
+		mpechoaround $n $I害羞的對$n笑了笑
+	endif
+~
+>talk_prog p give me~
+	if is_qmark($n) == swordcottage 100001
+		say 這，這種事情...
+			mpmod_qmark $n swordcottage v0 + 1
+			if sex($n) == 2
+				mpcallout 1 tell $n 同樣都是女生，怎麼會跟我要內衣呢？我的內衣又沒有比較特別
+				mpcallout 2 mpechoat $n $I輕輕的拉開自己的領口
+				mpcallout 2 mpechoaround $n $I和$n好像在討論什麼秘密話題．
+				mpcallout 3 tell $n 就是很普通的內衣而已
+				mpcallout 4 mpechoat $n 妳仔細的看了看，她的身材真是..呃，她的內衣真的很普通
+				mpcallout 5 mpechoat $n －－－我想帶回去給裁縫師當模型(take back)
+			else
+				blush
+				mpcallout 1 tell $n 怎麼會跟我要內衣呢？
+				mpcallout 2 mpechoat $n －－－我想帶回去給裁縫師當模型(take back)
+				mpcallout 3 mpechoat $n －－－我想蒐集，這是我的興趣(instering)
+			endif
+	else
+		say 你有跟我要什麼嗎？
+	endif
+~
+>talk_prog instering~
+	if is_qmark($n) == swordcottage 100002
+		tell $n 可，可是真的不能給你！
+		mpechoat $n $I漲紅了臉說著：真，真的很抱歉！
+		mpechoat $n 你心理想著，如果她不肯給，那只好去偷了！
+		mpmod_qmark $n == swordcottage v0 = 4
+	else
+		say 什麼興趣？
+	endif
+~
+>talk_prog p take back~
+	if is_qmark($n) == swordcottage 100002
+		if sex($n) == 2
+			if resp($n) < -1
+				mpcallout 1 ponder
+				mpcallout 2 tell $n 我想我可以相信妳，妳等我一下喔
+				mpcallout 3 mpechoat $n $I把妳拉到角落去
+				mpcallout 3 mpechoaround $n $n跟$I好像在偷偷商量什麼
+				mpcallout 4 mpechoat $n $I緩緩的解開身上的衣服
+				mpcallout 5 mpechoat $n $I在妳的面前輕輕的把內衣脫下來
+				mpcallout 6 mpechoat $n $I玲瓏有緻的身材讓妳看傻了，白裡透紅的肌膚跟粉紅色的...
+				mpcallout 7 mpechoat $n $I發現妳在看她，害羞的笑了笑
+				mpcallout 8 mpechoat $n $I把衣服穿了回去
+				mpcallout 9 tell $n 別告訴爹喔，他一定會罵我的
+				mpcallout 10 $I把內衣塞給妳
+				mpcallout 10 mpoload 64115 $n viclv target
+				mpcallout 10 mpmod_qmark $n swordcottage v0 = 5
+			else
+				tell $n $I漲紅了臉說著：對，對不起，就算這樣還是不能給你！
+				mpechoat $n 你心裡想著，如果她不肯給，那只好去偷了！
+				mpmod_qmark $n == swordcottage v0 = 4
+			endif
+		else
+			tell $n $I漲紅了臉說著：對，對不起，就算這樣還是不能給你！
+			mpechoat $n 你心裡想著，如果她不肯給，那只好去偷了！
+			mpmod_qmark($n) == swordcottage v0 = 4
+		endif
+	endif
+~
+>talk_prog topic~
+if is_qmark($n) == swordcottage_killer
+	scr
+	mpechoat $n $I看到你就馬上逃跑了！
+	mpgoto 64190
+else
+	tell $n 啊呀，是客人嗎？歡迎你來參觀這裡。
+	smile $n
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpmod_all_qmark $n swordcottage_killer timer = -1
+		say 爹...我...對不起...
+		mpecho $I的身體緩緩倒在地上。
+		rumor 名劍山莊莊主的千金$I被$n殘忍的殺害了！名劍山莊從此通緝$n！
+	else
+		mpadd_all_qmark $n swordcottage_killer -1 0 0 0 0 1
+	endif
+~
+>fight_prog 40~
+	if insameroom(chae-swordcottage)
+		say 無缺哥小心！
+		mpforce chae-swordcottage say 映月注意點！別受傷了！
+		mpgroup chae-swordcottage $i 0 1
+		mpforce chae-swordcottage follow chin-swordcottage
+		mpforce chae-swordcottage pro chin-swordcottage
+	else
+		yell 救命啊！
+		mptransfer chae-swordcottage
+		mpforce chae-swordcottage say 映月！沒有受傷吧！
+		mpforce chae-swordcottage mpkill $n
+		mpgoto self
+	endif
+~
+>fight_prog 40~
+	if insameroom(yum-swordcottage)
+		say 紫雲哥小心！
+		mpforce yum-swordcottage say 映月，站後面點！
+	else
+		yell 救命啊！
+		mptransfer yum-swordcottage
+		mpforce yum-swordcottage mpecho 紫雲衝過來檔在映月的身前！
+		mpforce yum-swordcottage say 映月小心！
+		mpforce yum-swordcottage follow chin-swordcottage
+		mpgroup yum-swordcottage $i 0 1
+		mpforce yum-swordcottage pro chin-swordcottage
+		mpforce yum-swordcottage mpkill $n
+		mpgoto self
+	endif
+~
+>fight_prog 30~
+	if insameroom(sen-swordcottage)
+		say 爹！
+		mpforce sen-swordcottage say 後退！
+	else
+		mptransfer sen-swordcottage
+		mpforce sen-swordcottage follow chin-swordcottage
+		mpgroup sen-swordcottage $i 0 1
+		mpforce sen-swordcottage pro chin-swordcottage
+		mpforce sen-swordcottage say 怎麼回事！
+		mpforce sen-swordcottage mpkill $n
+
+	endif
+~
+>fight_prog 50~
+	if insameroom(lon-swordcottage)
+		say 雲大哥！
+		mpforce lon-swordcottage say 當心點。
+		mpforce lon-swordcottage mpkill $n
+		mpforce lon-swordcottage pro chin-swordcottage
+	else
+		yell 雲大哥！你在嗎？快來幫我呀！
+		mptransfer lon-swordcottage
+		mpforce lon-swordcottage follow chin-swordcottage
+		mpgroup lon-swordcottage $i 0 1
+		mpforce lon-swordcottage pro chin-swordcottage
+		mpforce lon-swordcottage mpecho 雲從龍忽然衝了過來，檔在映月的身前！
+		mpforce lon-swordcottage say 看來是刺客大駕光臨了。
+		mpforce lon-swordcottage mpkill $n
+	endif
+~
+|
+#64108
+wang gen we~
+王俊維(Wang gen we)~
+王俊維(Wang gen we)在這裡到處陪著笑臉。
+~
+滿臉的笑容看起來反而有點獐頭鼠目，身為名劍山莊內的
+的長工，他也常常藉故下山，以便到城鎮好好的享樂一番
+。
+~
+11|64|4096 8|32 800 S
+25 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>rand_prog 10~
+	say 我們莊主的那位姑娘還真是漂亮啊！
+	drool
+~
+>talk_prog girl~
+	if is_qmark($n) == swordcottage 100002
+		tell $n 秘密可別說出去阿！
+		hehe $n
+	else
+		if is_qmark($n) == swordcottage 100001
+			tell $n 我不是委託你去偷了嗎？
+		else
+			say 真想一親方澤阿...
+			drool
+				if is_qmark($i) == swordcottage_talking
+					mpechoat $n $I正在說話，等等吧
+							if resp($n) < -1
+								mpcallout 1 mpadd_qmark self swordcottage_talking
+								mpcallout 1 tell $n 呃...其實沒什麼特別的事
+								mpcallout 2 tell $n 其實是我..我..我想要...
+								mpcallout 3 mpechoat $n $I看了一下四周
+								mpcallout 3 mpechoaround $n $I看了一下四週
+								mpcallout 4 tell $n 算了，反正妳沒什麼名氣，也不怕妳說
+								mpcallout 5 tell $n 雖然知道不太好，其實我想要映月的內衣
+								mpcallout 6 tell $n 別說出去啊，事成之後我一定重重酬謝
+								mpcallout 7 mpechoat $n －－你這個變態，看我制裁你！(Kill wang)
+								mpcallout 7 mpechoat $n －－好吧，我就幫你一次(ok)
+								mpcallout 7 mpadd_qmark $n swordcottage -1 0 0 0 65536|1048576 1
+								mpcallout 7 mpdel_qmark self swordcottage_talking
+							else
+								tell $n 呃...其實沒什麼特別的事，天氣真好不是嗎，阿哈，阿哈哈哈哈哈...
+								emote 小聲的唸著：還是繼續偷懶做白日夢吧...
+							endif
+				endif
+		endif
+	endif
+~
+>give_prog 64114~
+	if is_qmark($n) == swordcottage 100005
+		mppurge cloth
+		mpmod_qmark $n swordcottage v0 = 6
+		tell $n 幹的太好了！
+		tell $n 這是給你的獎賞！
+		mpskillexp $n 20000
+		mpecho $I歡喜的離開了。
+		mppurge self
+	else
+		tell 你給我這個幹嗎？
+		mppurge underwear
+		mpechoat $n 雖然他這麼說，也沒有把東西還給你的意思...
+	endif
+~
+>give_prog 64115~
+	if is_qmark($n) == swordcottage 100005
+		mppurge underwear
+		mpmod_qmark $n swordcottage v0 = 7
+		tell $n 幹的太好了！
+		tell $n 這是給你的獎賞！
+		mpskillexp $n 10000
+		mpecho $I歡喜的離開了。
+		mppurge self
+	else
+		tell 你給我這個幹嗎？
+		mppurge underwear
+		mpechoat $n 雖然他這麼說，也沒有把東西還給你的意思...
+	endif
+~
+>talk_prog ok~
+	if is_qmark($n) == swordcottage 100000
+		tell $n 成交！你快去吧！
+		mpmod_qmark $n swordcottage v0 = 1
+	else
+		tell $n 你在說什麼鬼話？
+	endif
+~
+>talk_prog p light orb~
+if is_qmark($n) == swordcottage 200004
+	mpechoat $n $I看了一下四周
+	mpechoaround $n $I迅速的環顧了周圍
+	tell $n 我以為我做得很隱密了，沒想到你居然知道，不簡單不簡單。
+	tell $n 雖然對你刮目相看，但是這個東西可不能白白給你。
+	tell $n 拿點錢來就賣你！不多不少，一百萬兩！
+	mpechoat $n 你覺得這傢伙根本是個小人...
+else
+	tell $n 什，什麼夜明珠！我什麼也不知道！
+	mpechoat $n 看來他大概偷了什麼不該偷的東西吧...
+endif
+~
+>bribe_prog 1000000~
+	if is_qmark($n) == swordcottage 200004
+		grin $n
+		tell $n 雖然捨不得，就賣給你吧！
+		mpechoat $n 你覺得他哪裡有捨不得的樣子...
+		mpoload 64134 $n viclv target
+		mpecho $I抱著一大袋金幣，歡喜的離開了。
+		mpmod_qmark $n swordcottage v1 = 5
+		mppurge self
+	else
+		tell $n 你給小人這筆錢是打算讓小人養老嗎？
+		tell $n 那小人就不客氣的收下了！
+		mpecho $I歡喜的離開了。
+		mppurge self
+	endif
+~
+>death_prog 100~
+		say 我還沒取老婆啊！
+	if is_qmark($n) == swordcottage 200004
+		mpmod_qmark $n swordcottage v1 = 5
+		mpechoat $n $I身上掉出了一顆珠子！
+		mpoload 64134 36
+	endif
+~
+|
+#64109
+learner~
+弟子(learner)~
+一名弟子(Learner)在這裡努力練劍。
+~
+這名弟子努力的將師父傳授的劍法不斷練習。
+~
+1|2|64|4096 8|32 800 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+S 13 10000
+S 41 10
+S 42 10
+S 43 10
+S 44 10
+P 8
+>greet_prog 100~
+	if is_qmark($n) == castsword
+		mpechoat $n $I冷冷的看了你一眼，隨即又做起他自己的事。
+	else
+		mpechoat $n $I向你鞠個躬，隨即又做起自己的事。
+	endif
+~
+>fight_prog 30~
+storm
+mpnowait
+~
+|
+#64110
+maty~
+僕人(Maty)~
+一名僕人(maty)在這裡不斷打掃著。
+~
+名劍山莊的僕人都是由莊主親自挑選的，通常也會一點基本的劍法防身。
+~
+1|64|4096 8|32 800 S
+40 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>death_prog 100~
+	if is_qmark($n) == swordcottage_killer
+		yell $n在名劍山莊濫殺無辜阿！
+	else
+		mpadd_all_qmark $n swordcottage_killer 50 0 0 65536|1048576 1
+	endif
+~
+|
+
+#64111
+maty~
+僕人(Maty)~
+一個僕人(Maty)正在這邊吃東西。
+~
+雖然只是一碗冷飯，他也吃的津津有味。肚子也
+有點餓了(Hungry)，要跟他要來吃嗎？
+~
+1|2|64|4096 8|32 800 S
+36 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+R human~
+C 1|8
+P 8
+>tick_prog 30~
+	mpecho $I吃了兩口碗裡的飯，又啃了一塊冷肉。
+~
+>talk_prog hungry~
+	if is_qmark($i) != swordcottage_rice
+		if is_qmark($n) == castsword
+			say 滾滾滾！我們這沒東西給鑄劍谷的人吃！
+		else
+			say 拿去拿去，別再煩我了
+			mpechoat $n $I塞給你一碗冷飯。
+			mpechoaround $n $I塞給$n一碗冷飯。
+			mpoload 64162 $n viclv target
+			mpadd_qmark $i swordcottage_rice 10 0 0 0 0
+		endif
+	else
+		say 再給我自己都不夠吃了！
+		curse
+	endif
+~
+>fight_prog 20~
+	say 看招！
+	flaming
+	mpnowait
+~
+|
+
+#64120
+chiao-swordcottage~
+蛟(Chiao)~
+一隻蛟龍(Chiao)在這邊四處游動。
+~
+蛟龍像蛇，可是卻有四足，小頭細頸，能吞人。傳說池塘
+的魚滿三千六百條，則蛟來為之長，見人先以涎水迷惑，
+再加以補食，使人血盡而亡。
+~
+1|64|128 1|2|8|32|64|128|2097152|17179869184 -500 S
+48 0 0 0d0+0 0d0+0
+-1 0
+0 8|65536|1048576 1
+R dragon~
+C 1|32
+P 4|8|64
+S 13 30000
+S 41 50
+S 42 50
+S 43 40
+S 44 40
+>greet_prog 100~
+if is_inv_obj($n) == 64134
+	mpechoat $n 蛟龍似乎盯著你身上某個東西猛瞧。
+	mpechoaround $n 蛟龍不斷的盯著$n，是打算吃了他嗎？
+else
+	if is_qmark($n) == swordcottage 200001
+		mpechoat $n $I著急的四處游動，似乎在附近尋找什麼...
+		mpechoaround $n $N好像發現$I一些奇怪的舉動...
+		mpechoat $n 要先回去問問總管嗎？(strange)
+		mpmod_qmark $n swordcottage v1 = 2
+	else
+		mpecho 蛟龍在這裡到處游動著。
+endif
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	mpecho $I死前發出奇怪的吼叫！
+	c 'frost breath' $n
+if is_qmark($n) == swordcottage 200002
+	mpmod_qmark $n v1 = 3
+	mpechoat $n 你覺得可以去向總管回報了。
+endif
+~
+>give_prog 64134~
+	if is_qmark($n) == swordcottage 200005
+		mpechoat $n 蛟龍高興的在你身旁游來游去。
+		mpechoaround $n 蛟龍在$n的身邊游來游去，看來是決定好今天的晚餐了！
+		mpmod_qmark $n swordcottage v1 = 6
+		mpechoat $n 蛟龍向你點了點頭，便帶著夜明珠消失在湖的深處...
+		mpechoaround $n 蛟龍向$n點了點頭，莫非$n學了馴獸術不成？！
+		mpechoat $n 你的善行得到劍神Kention的讚賞。
+		mpechoaround $n $n的身上環繞著異樣的光輝...
+		mpsillkexp $n 50000
+		mpresp $n 1
+		mpechoat $n 快去跟總管回報吧！
+		mppurge self
+	else
+		mpechoat $n 蛟龍對你搖了搖頭，似乎說這不是他的東西...
+		mpechoaround $n 蛟龍向$n搖了搖頭，莫非$n學了馴獸術不成？！
+	endif
+~
+>fight_prog 10~
+	if is_level($n) < 39
+		mpechoat $n $I向你吐出大量的唾沫！你覺得昏昏欲睡...
+		mpechoaround $n $N似乎被$I給迷惑了...
+		c 'charm pe' $n
+		mpnowait
+		mpforce $n follow chiao-swordcottage
+	else
+		mpechoat $n $I向你吐出大量的唾沫！但是對你似乎沒有什麼影響！
+	endif
+~
+>fight_prog 30~
+	c 'frost breath' $n
+	mpnowait
+~
+>fight_prog 40~
+	c 'gas breath' $n
+	mpnowait
+~
+>fight_prog 20~
+	$I忽然向你猛攻而來！
+	fre
+	mpnowait
+~
+|
+#64130
+Ghost~
+魑魅(Ghost)~
+魑魅(Ghost)若隱若現的漂浮在這裡
+~
+天地間的事物在經歷過一段時間的洗禮後都有可能變成這種小怪物。
+~
+1|2|4 0 -200 S
+40 0 0 0d0+100 0d0+-100
+10000 0
+0 8 0
+R Ghost~
+#64131
+Ghost~
+魍魎(Ghost)~
+魍魎(Ghost)正用小小的眼睛看著你
+~
+如同魑魅一樣，不過這個小怪物似乎比較好奇...。
+~
+1|2|4 0 -200 S
+40 0 0 0d0+-100 0d0+100
+10000 0
+0 8 0
+R Ghost~
+#64132
+zombie~
+殭屍(zombie)~
+殭屍(Zombie)在這裡尋找活人的氣息
+~
+看來它便是莊內謠傳的怪物了，畢竟存劍室黯淡無光，又
+充滿陰氣，僵屍或許是從哪個地方破牆而入，就留在這裡
+了吧。仔細一看，他的嘴角還留著些許鮮血，是不是不久
+以前才吸過血呢？
+~
+1|2|32|64|2048|8192|1048576 8|32|4096 -1000 S
+48 0 0 0d0+0 0d0+0
+0 0
+0 8 0
+R undead~
+S 13 30000
+S 17 100
+S 18 10
+S 19 10
+S 41 50
+S 42 50
+S 43 40
+S 44 40
+>fight_prog 20~
+	fre
+	mpnowait
+~
+>fight_prog 30~
+	feed
+	mpnowait
+	feed
+	mpnowait
+~
+>death_prog 100~
+	if is_qmark($n) == swordcottage 300002
+		mpforcer here modrvt v0 = 1
+		mpechoat $n $I一倒下，撞破了房間地板的一角。
+	else
+		mload 64164 1 floor
+		mpechoat $n $I的頭被你砍了下來！
+	endif
+~
+|
+#64133
+Swordman-swordcottage-fight~
+劍客(Swordman)~
+劍客(Swordman)在這裡尋找能交手的對象。
+~
+他現在在名劍山莊作客，同時在山莊內與其他訪客切磋劍技，
+要嘗試與他聊聊嗎？
+~
+1|64|2048|4096 8|32 1000 S
+43 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+S 13 30000
+S 41 30
+S 42 30
+S 43 30
+S 44 30
+P 8
+>talk_prog topic~
+	mpechoat $n $I仔細的打量你
+	tell $n 看起來您似乎有些絕活，要不要與我切磋切磋呢？
+	mpechoat $n 好阿，那就試試看吧(try it) 
+	mpechoat $n 今天不太適合，抱歉(sorry)
+~
+>talk_prog p try it~
+	say 那請小心，我要進攻了！
+	mpkill $n
+~
+>talk_prog sorry~
+	say 好的，亦無妨，希望下次還有機會與你交手。
+	bow $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say 哇！我被打敗了！
+mpgreward exp $n 38 2000
+mpmload 64134
+mpforce Swordman-swordcottage-calm say 謝謝你的指教，我要再想想我技巧的缺陷。
+mpforce Swordman-swordcottage-calm bow $n
+mpgoto 5
+mppurge self
+~
+>fight_prog 20~
+wear sword
+say 看我的旋風劍！
+storm
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+|
+#64134
+Swordman-swordcottage-calm~
+劍客(Swordman)~
+劍客(Swordman)在這裡思索自己技巧的缺陷。
+~
+他現在在名劍山莊作客，同時在山莊內與其他訪客切磋劍技，
+但因為剛才一戰失敗過，現在正在思索自己的劍技缺陷。
+~
+1|64|2048|4096 8|32 1000 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+S 13 25000
+C 1|8
+P 8
+>talk_prog topic~
+	tell $n 你好，可以讓我一個人靜一靜嗎？
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say 哇！我還沒想通自己的技巧缺陷阿！
+~
+>fight_prog 20~
+wear sword
+say 看我的旋風劍！
+storm
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>tick_prog 10~
+	mpecho $I露出若有所思的樣子，再度將劍握在手上！
+	mpmload 64133
+	mpgoto 5
+	mpppurge self
+~
+|
+#64135
+SwordWoman-swordcottage-fight~
+俠女(SwordWoman)~
+俠女(SwordWoman)在這裡找尋交手的對象。
+~
+她現在在名劍山莊作客，同時在山莊內與其他訪客切磋劍技，
+別看她是女性，劍技仍然相當精湛。
+~
+1|64|2048|4096 8|32 1000 S
+41 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+S 13 14000
+S 41 16
+S 42 17
+S 43 17
+S 44 18
+P 8
+>talk_prog topic~
+	mpechoat $n $I仔細的打量你
+	tell $n 您似乎也是個習武之人，能否與我互相切磋呢？
+	mpechoat $n 好的，那就試試看吧(try it) 
+	mpechoat $n 今天不太適合，抱歉(sorry)
+~
+>talk_prog p try it~
+	say 那請小心，我要進攻了！
+	mpkill $n
+~
+>talk_prog sorry~
+	say 請不要在意，希望下次還有機會與你交手。
+	bow $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say 哇！沒想到我還是輸了！
+mpgreward exp $n 38 2000
+mpmload 64136
+mpforce Swordwoman-swordcottage-calm say 謝謝你的教導，我要在想想。
+mpforce Swordwoman-swordcottage-calm bow $n
+mpgoto 5
+mppurge self
+~
+>fight_prog 20~
+wear sword
+say 看我的火焰劍！
+flaming
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>rand_prog 5~
+	mpecho $I露出若有所思的樣子，再度將劍握在手上！
+	mpmload 6413
+	mpgoto 5
+	mpppurge self
+~
+|
+#64136
+SwordWoman-swordcottage-calm~
+俠女(SwordWoman)~
+俠女(SwordWoman)在這裡若有所思。
+~
+她現在在名劍山莊作客，同時在山莊內與其他訪客切磋劍技，
+方才似乎輸給了誰，她正在思考如何突破。
+~
+1|64|2048|4096 8|32 1000 S
+30 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>talk_prog topic~
+	tell $n 請讓我靜一靜。
+	sorry $n
+~
+>death_prog 100~
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+say 再給我一點時間...
+~
+>fight_prog 20~
+wear sword
+say 看我的火焰劍！
+flaming
+mpnowait
+mpat 5 c 'double heal'
+~
+>fight_prog 20~
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+~
+>tick_prog 15~
+	mpecho $I露出若有所思的樣子，再度將劍握在手上！
+	mpmload 64135
+	mpgoto 5
+	mpppurge self
+~
+|
+#64137
+water Ghost~
+水鬼(Water Ghost)~
+水鬼(Ghost)若隱若現的漂浮在這裡
+~
+他似乎想找你當替死鬼！
+~
+1|4|32|64|128 8|32|65536|2097152|17179869184 -600 S
+40 0 0 0d0+100 0d0+-100
+10000 0
+0 8 0
+R Ghost~
+>fight_prog 30~
+	feed
+	mpnowait
+~
+|
+#64138
+chen-swordcottage chow-yu~
+陳秋雨(Chen Chow-yu)~
+前任清河鎮鎮長陳秋雨(Chen Chow-yu)在這裡來回踱步。
+~
+		他便是傳聞中風雨雙俠之一的陳秋雨，自從離開清河
+鎮後，現在他客居在名劍山莊，偶爾指點後輩劍法，頗受
+後輩歡迎。
+~
+1|2|64|2048|4096 8|32|128 1000 S
+42 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+>greet_prog 100~
+if is_inv_obj($n) == 64140
+	if is_qmark($n)==jd_liu 100005
+		mpechoat $n $I一看到你身上的玉羅漢，嚇的倒退三步！
+		mpcallout 1 tell $n 你！你怎麼會有這個東西！
+		mpcallout 2 mpechoat $n 聽到這句話，你大概猜到事情的一半了...
+		mpcallout 2 tell $n 那一劍的確刺中這個玉羅漢，刺穿了他的胸口啊！
+		mpcallout 3 mpkill $n
+		mpcallout 3 wear sword
+		mpcallout 3 mpoload 64104
+		mpcallout 3 mpechoat $n $I忽然拔出一把劍朝你刺來！
+		mpcallout 3 say 可惡，只好殺你滅口了！
+	else
+		mpechoat $n $I看到你身上的配飾，露出了古怪的表情。
+	endif
+endif
+~
+>talk_prog topic~
+	tell $n 喔，原來是客人阿
+	mpechoat $n $I對你笑了笑。
+	tell $n 歡迎來到名劍山莊阿
+	mpechoat $n 不知道為什麼，你覺得他笑起來有種陰氣...
+~
+>death_prog 100~
+if is_qmark($n)==jd_liu 100005
+	yell 嗚哇！雲風！沒想到我還是被你的後人所殺！
+	mpmod_qmark $n jd_liu v0 = 6
+	mpechoat $n $I死前從身上掉出一個破舊的包袱。
+	mpechoat $n 想必那個包袱就是柳雲風的遺物，快拿去給柳敬明吧。
+	mpoload 11143 36 floor
+else
+	yell 嗚哇！殺人啦！
+endif
+~
+|
+#64150
+swordgod-SD kention-SD statue-SD~
+劍神像(SwordGod Kention Statue)~
+一尊劍神的神像(SwordGod Kention Statue)被擺在這邊。
+~
+他好像可以幫你解決一些困惑，要不要嘗試問他什麼呢？
+~
+1|2|64|2048|4096 8|32|128 1000 S
+70 0 0 0d0+0 0d0+0
+-1 0
+0 8 1
+C 1|8
+P 8
+R god~
+>talk_prog topic~
+	if is_qmark($n) == swordcottage
+		mpechoat $n 你想詢問哪一件事情？？
+			if is_qmark($n) >= swordcottage 200001
+				mpechoat $n 關於蛟龍	-	(chiao)
+			endif
+			if is_qmark($n) >= swordcottage 300001
+				mpechoat $n 關於髮飾	-	(hair dress)
+			endif
+			if is_qmark($n) >= jd_liu 100001
+				mpechoat $n 關於小柳	-	(liu)
+			endif
+		mpechoat $n 關於劍神	-	(Kention)
+	endif
+~
+>talk_prog kention~
+	mpechoat $n 劍神Kention是這個區域的作者，目前正在躲稿債中。
+~
+>talk_prog chiao~
+		if is_qmark($n) == swordcottage 200000
+			mpechoat $n 你跟這件事毫無關係。
+		endif
+		if is_qmark($n) == swordcottage 200001
+			mpechoat $n 你不是跟總管接下這個任務了嗎？快去打倒蛟龍吧。
+		endif
+			if is_qmark($n) == swordcottage 200002
+		mpechoat $n 你看到了蛟龍的反應，是要殺掉蛟龍，還是要去找總管呢？
+			endif
+			if is_qmark($n) == swordcottage 200003
+		mpechoat $n 你打倒蛟龍了，快去跟總管回報吧。
+			endif
+		if is_qmark($n) == swordcottage 200004
+			mpechoat $n 你聽到了總管說的傳言，去調查一下吧。
+		endif
+		if is_qmark($n) == swordcottage 200005
+			mpechoat $n 你跟長工買到了寶物不是嗎？
+		endif
+  	if is_qmark($n) == swordcottage 200006
+			mpechoat $n 你圓滿解決這件事了，快去找總管吧。
+		endif
+		if is_qmark($n) == swordcottage 200007
+			mpechoat $n 你把這件事解決了。
+		endif
+	endif
+~
+>talk_prog p hair dress~
+	if is_qmark($n) == swordcottage 300000
+		mpechoat $n 你跟這件事毫無關係。
+	endif
+	if is_qmark($n) == swordcottage 300001
+		mpechoat $n 莊主的東西掉了，跟他多問一些情報吧。
+	endif
+	if is_qmark($n) == swordcottage	300002
+		mpechoat $n 幫莊主找回髮飾吧。
+	endif
+	if is_qmark($n) == swordcottage 300003
+		mpechoat $n 都找回來了，就還給莊主吧。
+	endif
+	if is_qmark($n) == swordcottage 300004
+		mpechoat $n 你把這件事解決了。
+	endif
+~
+>talk_prog liu~
+	if is_qmark($n) != jd_liu
+		mpechoat $n 你跟這件事毫無關係。
+	if is_qmark($n) == jd_liu 100001
+		mpechoat $n 你不是剛接下任務嗎？快去找莊主吧
+	if is_qmark($n) == jd_liu 100002
+		mpechoat $n 你答應莊主去找遺書，快去吧
+	if is_qmark($n) == jd_liu 100003
+		mpechoat $n 你找到信了，快拿去給莊主與小柳吧
+	if is_qmark($n) == jd_liu 100004
+		mpechoat $n 小柳給你信物了，快去找莊主問秋雨的下落吧
+	if is_qmark($n) == jd_liu 100005
+		mpechoat $n 莊主告訴你秋雨可能的躲藏處，去打倒他吧
+	if is_qmark($n) == jd_liu 100006
+		mpechoat $n 你打倒秋雨了，快把遺物交給小柳吧
+	if is_qmark($n) == jd_liu 100007
+		mpechoat $n 你已經完成任務了。
+	endif
+~
+|
+#0
+
+#OBJECTS
+#64100
+chu tin sword-jdsword~
+[1;34m鑄頂劍[0m(chu tin sword)~
+一柄沉重的巨劍(Sword)被插在這邊的地上。~
+~
+5 1|2|64|256|16777216 1|32768
+200~ 40~ 50~ 3~
+50 0 0
+E
+chu~
+傳聞名匠歐冶子在山上尋找礦材，無意間發現巨大的金屬，於是
+將整塊金屬雕琢打磨成劍，如同玄蘇劍一般劍身漆黑，重量卻較
+玄蘇劍重上十倍，全長共六呎五吋，揮舞這把巨劍能破山裂石，
+後為鑄劍生列為七大名劍之一。
+~
+E
+tin~
+傳聞名匠歐冶子在山上尋找礦材，無意間發現巨大的金屬，於是
+將整塊金屬雕琢打磨成劍，如同玄蘇劍一般劍身漆黑，重量卻較
+玄蘇劍重上十倍，全長共六呎五吋，揮舞這把巨劍能破山裂石，
+後為鑄劍生列為七大名劍之一。
+~
+E
+sword~
+傳聞名匠歐冶子在山上尋找礦材，無意間發現巨大的金屬，於是
+將整塊金屬雕琢打磨成劍，如同玄蘇劍一般劍身漆黑，重量卻較
+玄蘇劍重上十倍，全長共六呎五吋，揮舞這把巨劍能破山裂石，
+後為鑄劍生列為七大名劍之一。
+~
+A
+18 -8
+A
+19 20
+A
+43 10
+X obsidian~
+
+#64101
+sword gen shi~
+[1;33m顓頊劍[0m(Sword of gen shi)~
+一把泛著黃色光亮的短劍(Sword)被放在這邊。~
+~
+5 1|2|64|256|1024|65536|16777216 1|8192
+80~ 5~ 15~ 3~
+1 0 0
+E
+gen~
+傳說顓頊具有斬殺妖魔的力量，歐冶子就根據這項傳說，運用稀有
+的龍骨混合黃銅，製作出了妖魔所畏懼的顓頊劍，並且以龍血在其
+上寫上咒文，將除魔的力量封在劍中。顓頊劍本身細短，彷彿匕首
+一般，但劍身卻隱隱透露出一種壓魄力。
+~
+E
+shi~
+傳說顓頊具有斬殺妖魔的力量，歐冶子就根據這項傳說，運用稀有
+的龍骨混合黃銅，製作出了妖魔所畏懼的顓頊劍，並且以龍血在其
+上寫上咒文，將除魔的力量封在劍中。顓頊劍本身細短，彷彿匕首
+一般，但劍身卻隱隱透露出一種壓魄力。
+~
+E
+sword~
+傳說顓頊具有斬殺妖魔的力量，歐冶子就根據這項傳說，運用稀有
+的龍骨混合黃銅，製作出了妖魔所畏懼的顓頊劍，並且以龍血在其
+上寫上咒文，將除魔的力量封在劍中。顓頊劍本身細短，彷彿匕首
+一般，但劍身卻隱隱透露出一種壓魄力。
+~
+A
+40 2
+A
+44 5
+A
+17 -10
+A
+41 -10
+X dragon bone~
+
+#64102
+sword devil winner~
+[1;37m勝邪劍[0m(Sword of devil winner)~
+一把透著銀光的劍(Sword)被放在這邊。~
+~
+5 1|2|64|256|1024|65536|16777216 1|8192
+150~ 5~ 15~ 3~
+20 0 0
+E
+sword~
+歐冶子窮其一生鑄劍，但是他生前常說，生平最滿意的就是這把勝
+邪劍，既然名為勝邪，這把劍也就曾在劍客手上斬妖無數，劍身筆
+挺且長，劍鋒尖銳，似乎可以斬斷所有的東西一般。後來被鑄劍生
+評為七大名劍之一。
+~
+E
+devil~
+歐冶子窮其一生鑄劍，但是他生前常說，生平最滿意的就是這把勝
+邪劍，既然名為勝邪，這把劍也就曾在劍客手上斬妖無數，劍身筆
+挺且長，劍鋒尖銳，似乎可以斬斷所有的東西一般。後來被鑄劍生
+評為七大名劍之一。
+~
+E
+winner~
+歐冶子窮其一生鑄劍，但是他生前常說，生平最滿意的就是這把勝
+邪劍，既然名為勝邪，這把劍也就曾在劍客手上斬妖無數，劍身筆
+挺且長，劍鋒尖銳，似乎可以斬斷所有的東西一般。後來被鑄劍生
+評為七大名劍之一。
+~
+A
+43 10
+A
+1 1
+A
+18 5
+A
+19 5
+X platinum~
+
+#64103
+gen chin sword~
+[1;35m純鈞劍[0m(Chin gen sword)~
+純鈞劍(Chin gen sword)被插在這邊的地上~
+~
+5 1|2|64|256|1024|65536|16777216 1|8192
+150~ 80~ 90~ 3~
+120 0 0
+E
+gen~
+嚴格來說，純鈞劍並不是歐冶子打造的，歐冶子只是將山上一塊
+酷似劍型的石塊搬下山後稍微磨鑄而成，因為材料單純，整把劍
+的顏色一體成型，與鑄頂劍非常類似，但較鑄頂劍更重而鈍，後
+來被鑄劍生評為七大名劍之一。
+~
+E
+chin~
+嚴格來說，純鈞劍並不是歐冶子打造的，歐冶子只是將山上一塊
+酷似劍型的石塊搬下山後稍微磨鑄而成，因為材料單純，整把劍
+的顏色一體成型，與鑄頂劍非常類似，但較鑄頂劍更重而鈍，後
+來被鑄劍生評為七大名劍之一。
+~
+E
+sword~
+嚴格來說，純鈞劍並不是歐冶子打造的，歐冶子只是將山上一塊
+酷似劍型的石塊搬下山後稍微磨鑄而成，因為材料單純，整把劍
+的顏色一體成型，與鑄頂劍非常類似，但較鑄頂劍更重而鈍，後
+來被鑄劍生評為七大名劍之一。
+~
+A
+18 -10
+A
+19 10
+X basalt~
+
+#64104
+sword dragon spring~
+龍泉寶劍(Sword of Dragon spring)~
+一把刻著龍紋的劍(Sword)被放在這邊。~
+~
+5 1|2|64|256|16777216 1|8192
+120~ 0~ 0~ 3~
+10 0 0
+A
+18 5
+A
+19 5
+A
+1 -1
+
+#64110
+bamboo~
+竹子(Bamboo)~
+一根竹子(Bamboo)被插在這裡．~
+~
+5 1|2|256|1024 1|8192
+20~ 0~ 0~ 3~
+10 20 0
+A
+2 1
+A
+18 2
+A
+19 -1
+X wooden~
+
+
+#64111
+Cloth~
+布衣(Cloth)~
+一件布衣(Cloth)被丟在這裡。~
+~
+9 0 1|8
+0~ 0~ 40~ 0~
+8 200 0
+E Cloth~
+一件普通的布衣。
+~
+A
+17 -5
+X Cloth~
+
+#64112
+Silk Cloth~
+絲衣(Silk Cloth)~
+一件手工製成的絲衣(Silk Cloth)被放在這裡。~
+~
+9 0 1|8
+0~ 0~ 64~ 0~
+5 500 0
+E
+Silk~
+這一件衣服的質感相當的好，應該是用高級的蠶絲作成的。
+~
+E
+Cloth~
+這一件衣服的質感相當的好，應該是用高級的蠶絲作成的。
+~
+A
+40 1
+A
+17 10
+X Fiber~
+
+#64113
+Boots~
+布靴(Boots)~
+一雙布靴(Boots)被放在這裡。~
+~
+9 0 1|64
+0~ 0~ 80~ 0~
+5 100 0
+E Boots
+一雙很普通的布製靴子。
+~
+A
+17 -8
+X Cloth~
+
+#64114
+pink cloth~
+粉紅色外衣(Pink cloth)~
+一件粉紅色的女性內衣(Pink Cloth)被放在這邊~
+~
+9 0 1|8
+0~ 0~ 50~ 0~
+1 0 0
+A
+6 2
+X fiber~
+
+#64115
+underwear-white~
+純白色內衣(Underwear)~
+一件純白色的女性內衣(underwear)被放在這邊~
+~
+9 0 1|8
+0~ 0~ 50~ 0~
+1 0 0
+X fiber~
+A
+17 30
+A
+39 -20
+
+#64116
+cloth~
+馬褂(cloth)~
+一件黑色的馬褂(Cloth)被放在這邊~
+~
+9 0 1|8
+0~ 0~ 70~ 0~
+7 0 0
+X fiber~
+A
+17 -20
+
+#64117
+Long Gwon~
+長袍(Long Gwon)~
+一件長袍(Long Gwon)被放在這邊~
+~
+9 4194304 1|8
+0~ 0~ 80~ 0~
+5 0 0
+E
+long~
+一件手工精美的男用長袍。
+~
+E
+Gwon~
+一件手工精美的男用長袍。
+~
+X Fiber~
+
+#64118
+Clean Forst Sword~
+青霜劍(Clean Forst Sword)~
+一把相當銳利的劍(Sword)被放在這裡。~
+~
+5 1|2|256|1024 1|8192
+120~ 0~ 0~ 3~
+10 2000 0
+E
+Clean~
+老鐵匠運用山上的霜水所打造而成的劍。
+~
+E
+Forst~
+老鐵匠運用山上的霜水所打造而成的劍。
+~
+E
+Sword~
+老鐵匠運用山上的霜水所打造而成的劍。
+~
+A
+18 6
+A
+19 8
+A
+3 1
+X Emerald~
+
+#64119
+wood sword~
+木劍(Wood Sword)~
+一把木劍(Wood Sword)被放在這邊。~
+~
+5 0 1|8192
+50~ 0~ 0~ 3~
+3 200 0
+A
+1 1
+L 1
+X wood~
+
+#64120
+iron sword~
+鐵劍(Iron Sword)~
+一把鐵劍(Iron Sword)被放在這邊。~
+~
+5 1 1|8192
+70~ 0~ 0~ 3~
+10 2000 0
+A
+18 3
+A
+19 3
+X iron~
+
+#64121
+Long Gwon~
+黑色長袍(Long Gwon)~
+一件黑色長袍(Long Gwon)被放在這邊~
+~
+9 4194304 1|8
+0~ 0~ 80~ 0~
+5 0 0
+E
+long~
+一件手工精美的男用黑色長袍。
+~
+E
+Gwon~
+一件手工精美的男用黑色長袍。
+~
+X Fiber~
+
+#64130
+moon art glass~
+[1;36m琉璃月飾[0m(Art glass of moon)~
+一個上弦月外型的飾品(Art glass)被放在這邊。~
+~
+9 1|64|256 1|4|16384
+0~ 0~ 30~ 0~
+1 30000 0
+E
+moon~
+這是一個用琉璃製成的項鍊，琉璃的色彩讓整
+個項鍊都散發出不同的光亮。
+~
+E
+art~
+這是一個用琉璃製成的項鍊，琉璃的色彩讓整
+個項鍊都散發出不同的光亮。
+~
+E
+glass~
+這是一個用琉璃製成的項鍊，琉璃的色彩讓整
+個項鍊都散發出不同的光亮。
+~
+A
+40 2
+A
+44 7
+A
+3 1
+A
+5 -1
+X crystal~
+
+#64131
+Water bracer~
+在水一方(Water bracer)~
+一個淺藍色的護腕(bracer)被放在這。~
+~
+9 1|2|256 1|4096
+0~ 0~ 60~ 0~
+5 20000 0
+A
+1 1
+A
+19 3
+A
+5 -2
+X ice~
+
+#64132
+chaio scale~
+蛟龍鱗(Chaio Scale)~
+一塊巨大的蛟龍鱗片(Chaio Scale)被放在這邊。~
+~
+9 1|2|4|16|64|256|512 1|8
+0~ 0~ 60~ 0~
+40 20000 0
+A
+5 3
+A
+2 -1
+A
+17 -30
+A
+41 10
+X dragon scale~
+
+#64133
+chaio tooth~
+蛟龍牙(Chaio Tooth)~
+一根巨大的蛟龍牙齒(Chaio Tooth)被擺在這邊。~
+~
+5 1|2|4|16|64|256|512 1|8192
+90~ 26~ 30~ 2~
+30 30000 0
+A
+19 12
+A
+18 -3
+X bone~
+
+#64134
+light orb~
+夜明珠(Light orb)~
+一顆珍貴的夜明珠(Light orb)被放在這邊。~
+~
+1 1|64|256 1
+0~ 0~ -1~ 0~
+1 4000000 0
+A
+4 1
+
+#64135
+hair dress~
+髮飾(Hair dress)~
+一個暗紅色的髮飾(Hair dress)被放在這邊。~
+~
+8 1 1|16
+0~ 0~ 0~ 0~
+1 300 0
+A
+4 1
+A
+3 1
+X ebony~
+
+#64136
+south mountain bamboo~
+南山之竹(South Mountain Bamboo)~
+一隻碧綠晶瑩的竹子(Bamboo)被放在這裡~
+~
+27 1|2|4|16 65537
+10~ 5~ 75~ 10~
+5 0 0
+E
+south~
+這是一根用玉雕刻而成的竹子，相當的逼真
+~
+E
+mountain~
+這是一根用玉雕刻而成的竹子，相當的逼真
+~
+E
+bamboo~
+這是一根用玉雕刻而成的竹子，相當的逼真
+~
+A
+18 1
+A
+44 3
+X jade~
+
+#64137
+leaf leggings~
+薄葉西殘(Leaf Leggings)~
+一雙枯黃色的脛甲(leggings)被放在這邊~
+~
+9 1 1|32
+0~ 0~ 50~ 0~
+7 0 0
+A
+40 1
+A
+2 1
+A
+41 -5
+A
+42 -5
+X wood~
+
+#64138
+moon light gloves~
+月明松下(Moon Light Gloves)~
+一雙光亮的手套(gloves)被放在這邊~
+~
+9 1|2|1024 1|128
+100~ 0~ 40~ 0~
+5 0 0
+A
+18 2
+A
+44 6
+X feather~
+
+#64139
+drunken moon silver bell bow~
+[1;37m殤月銀鈴[0m(Drunken moon - Silver bell bow)~
+一把繫著銀色鈴鐺的長弓被擱在這邊~
+~
+5 1|64|128|256|1024|2048|65536 1|32768
+70~ 0~ 0~ 14~
+5 0 0
+E
+drunken~
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+~
+E
+moon~
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+~
+E
+silver~
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+~
+E
+bell~
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+~
+E
+bow~
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+~
+A
+18 12
+A
+40 1
+A
+35 -2
+A
+41 -7
+A
+42 -7
+X silver~
+
+#64140
+jade rohan~
+玉羅漢(Jade Rohan)~
+一個雕工精湛的玉羅漢(Jade Rohan)被放在這邊。~
+~
+9 1|64|256 1|4|16384
+0~ 0~ 30~ 0~
+1 30000 0
+E
+jade~
+這是柳敬明(Liu Gin-ming)託付給你的東西，
+是柳雲風(Liu Yun-fon)的遺物。
+~
+E
+rohan~
+這是柳敬明(Liu Gin-ming)託付給你的東西，
+是柳雲風(Liu Yun-fon)的遺物。
+~
+A
+18 2
+A
+44 5
+X jade~
+
+#64160
+beef~
+牛肉(Beef)~
+一塊冷掉的牛肉被放在這邊。~
+~
+19 0 1
+0~ 0~ 0~ 0~
+5 300 0
+X flesh~
+
+#64161
+bacon~
+醃肉(Bacon)~
+一塊醃好的肉(Bacon)被放在這邊。~
+~
+19 0 1
+0~ 0~ 0~ 0~
+10 300 0
+X flesh~
+
+#64162
+cold rice~
+冷飯(Cold rice)~
+一碗冷飯(Cold Rice)被擺在這邊。~
+~
+19 0 1
+0~ 0~ 0~ 0~
+10 300 0
+X food~
+
+#64163
+firewood~
+木柴(Firewood)~
+一捆木柴(Firewood)被放在這邊。~
+~
+27 0 1|65536
+30~ 0~ 0~ 0~
+30 150 0
+L 1
+A
+2 -1
+A
+1 1
+X wood~
+
+#64164
+zombie head~
+僵屍頭(Zombie head)~
+一顆僵屍頭(Zombie head)被扔在這邊。~
+~
+13 0 0
+0~ 0~ 0~ 0~
+5 0 0
+X fresh~
+
+#64180
+pluto remind book~
+普魯多的提醒(Pluto's remind)~
+一本光亮的書(Book)被放在這裡~
+~
+5 1|2|4|16 1|8192
+999~ 80~ 100~ 3~
+1 0 0
+X chaos matter~
+
+#64181
+amenda romantic necklace~
+風中傳奇的浪漫(Amenda's romantic)~
+一個閃耀著紅色光芒的項鍊(necklace)被放在這~
+~
+9 1|2|4|16 1|4
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+
+#64182
+zcecil support necklace~
+影子的暗中支持(Zcecil's support)~
+一個黑色的項鍊(necklace)被放在這邊~
+~
+9 1|2|4|16 1|4
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+
+#64183
+reticent angry cape~
+織夢者的憤怒(reticent's angry)~
+一件大紅色的斗篷(cape)在這裡發出異樣的壓迫感~
+~
+9 1|2|4|16 1|1024
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+19 500
+A
+43 500
+
+#64184
+Faraway plan ring~
+法拉威的計畫(Faraway's plan)~
+一個深藍色的戒指(Ring)被放在這邊~
+~
+9 1|2|4|16 1|2
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+1 10
+A
+2 10
+
+#64185
+adol yell bracer~
+亞特魯的呼喊(Adol's yell)~
+一個像是在吶喊的手環放在這邊~
+~
+9 1|2|4|16 1|4096
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+40 200
+
+#64186
+feena laugh bracer~
+菲娜的嘲笑(Feena's laugh)~
+一個刻有笑容的手環(bracer)被放在這邊~
+~
+9 1|2|4|16 1|4096
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+40 500
+
+#64187
+jye hard work gloves~
+傑伊的苦工(Jye's hard work)~
+一對異常靈敏的手套(gloves)被放在這邊~
+~
+9 1|2|4|16 1|128
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+18 500
+
+#64188
+xian big dog head~
+席安的大狗頭(Xian's big dog head)~
+一個大型的狗頭(Dog head)被放在這邊~
+~
+9 1|2|4|16 1|16
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+17 -500
+
+#64189
+zeel adjudicate light~
+方提修的審判(Zeel's adjudicate)~
+一陣強烈的光芒(light)漂浮在這邊~
+~
+1 1|2|4|16 1
+0~ 0~ 0~ 0~
+1 0 0
+X chaos matter~
+A
+24 -500
+
+#64190
+neversay pen~
+子不語的筆(Neversay's pen)~
+一隻筆(pen)被放在這邊~
+~
+9 1|2|4|16 1|16384
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+3 10
+A
+4 10
+
+#64191
+whisperwind saying ring~
+風鈴的低語(Whisperwind's saying)~
+一個似乎在訴說什麼的戒指(ring)被放在這邊~
+~
+9 1|2|4|16 1|2
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+1 10
+A
+2 10
+
+#64192
+kention thinking arm~
+三等生的思考(kention's thinking)~
+一個深藍色的護臂(arm)被放在這邊~
+~
+9 1|2|4|16 1|256
+0~ 0~ 99~ 0~
+1 0 0
+X chaos matter~
+A
+40 500
+
+#64193
+amethyst fantasy shoes~
+紫水晶的夢幻(Amethyst's fantasy)~
+一雙接近透明的紫色鞋子(Shoes)被放在這邊~
+~
+9 1|2|4|16 1|64
+0~ 0~ 99~ 0~
+1 0 0
+X amethyst~
+A
+39 -1000
+
+#64194
+snarl  belt~
+史納爾的愚笨(Snarl's foolish)~
+一環黑色狀的帶子(belt)被放在這邊~
+~
+9 1|2|4|16 1|2048
+0~ 0~ 99~ 0~
+1 0 0
+X aura~
+
+#64195
+get gallant leggings~
+蓋特的風流(Get's gallant)~
+一雙鮮豔的紅色脛甲(leggings)被放在這邊~
+~
+9 1|2|4|16 1|32
+0~ 0~ 99~ 0~
+1 0 0
+X ruby~
+
+#64196
+slay paper~
+史雷的文稿(Slay's paper)~
+一份文稿(paper)被放在這邊~
+~
+9 1|2|4|16 1|512
+0~ 0~ 99~ 0~
+1 0 0
+X paper~
+
+#64197
+coconet protect armor~
+椰子神的守護(Coconet's protect)~
+一個堅固而後重的圓殼(Armor)被丟在這邊~
+~
+9 1|2|4|16 1|8
+0~ 0~ 99~ 0~
+1 0 0
+X obsidian~
+
+#64198
+asla create arrow~
+阿斯拉的創造(Asla's create)~
+一把尖銳的箭矢(Arrow)被放在這裡~
+~
+27 1|2|4|16 65537
+10~ 5~ 75~ 10~
+1 0 0
+X chaos matter~
+
+#0
+
+#ROOMDATA
+#64101
+山路入口~
+你踏上了通往名劍山莊的曲折山路，陡峭的階梯十分高聳，
+以往要拜訪名劍山莊的客人都必須經過這條道路－當然你也不例
+外。
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 11151
+D0
+~
+~
+0 0 64102
+S
+#64102
+山路~
+		你踏上了通往名劍山莊的曲折山路，陡峭的階梯十分高聳，
+路旁的花草長的十分茂密，以往要拜訪名劍山莊的客人都必須經
+過這條道路－當然你也不例外。
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64101
+D0
+~
+~
+0 0 64103
+S
+#64103
+山路~
+		你踏上了通往名劍山莊的曲折山路，陡峭的階梯十分高聳，
+雖然你覺得走了一段時間，可是名劍山莊似乎還很遠。以往要拜
+訪名劍山莊的客人都必須經過這條道路－當然你也不例外。東方
+有一座高聳的土堆，上面有一些古老的腳印，不知道是哪邊的小
+孩爬上去過玩。
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64102
+D3
+~
+~
+0 0 64104
+>room_command climb up~
+	if is_qmark($n) == jd_liu 100002
+	or if is_qmark($n) == jd_liu 100006
+		echoat $n 彷彿有人在後面推你一把一般，你輕鬆的爬過了土堆
+		echoaround $n $n好像被人給丟過去一般，消失在土堆的另外一邊！
+		transfer $n 64246
+	else
+    echoat $n 你嘗試爬上這座土堆，可是卻摔了下來
+    echoaround $n $n嘗試爬上土堆，可是卻摔了下來
+endif
+~
+|
+S
+#64104
+半山腰~
+		這裡是通往名劍山莊的曲折山路，陡峭的階梯十分高聳，四
+周的樹林也越來越茂密，雖然你覺得走了一段時間，可是名劍山
+莊似乎還很遠。通路通往東方和西方。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64103
+D3
+~
+~
+0 0 64105
+S
+#64105
+半山腰~
+		這裡是通往名劍山莊的曲折山路，陡峭的階梯十分高聳，四
+周的樹林也越來越茂密雖然你覺得走了一段時間，可是名劍山莊
+似乎還很遠。通路通往東方和北方。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64104
+D0
+~
+~
+0 0 64106
+S
+#64106
+山路半途~
+		這裡是通往名劍山莊的路途，你站在山腰間的一小塊空地上
+，雖然你覺得走了一段時間，可是名劍山莊似乎還很遠。前方的
+道路通往北方跟南方。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64107
+D2
+~
+~
+0 0 64105
+S
+#64107
+半山腰~
+		這裡是通往名劍山莊的曲折山路，陡峭的階梯十分高聳，雖
+然你覺得走了一段時間，可是名劍山莊似乎還很遠。道路通往東
+方和南方。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64108
+D2
+~
+~
+0 0 64106
+S
+#64108
+接近山頂的路~
+		你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。接下來的路通往西方和
+南方。
+~
+0 65536|1048576 1
+D3
+~
+~
+0 0 64107
+D2
+~
+~
+0 0 64109
+S
+#64109
+接近山頂的路~
+		你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。山頂的路通往北方和南
+方。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64108
+D2
+~
+~
+0 0 64110
+S
+#64110
+接近山頂的路~
+		你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。雖然視野慢慢開闊起來
+，不過不知道你還有沒有心情欣賞？
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64109
+D3
+~
+~
+0 0 64111
+S
+#64111
+接近山頂的路~
+		你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。雖然視野慢慢開闊起來
+，不過不知道你還有沒有心情欣賞？通路通往東方和西方。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64110
+D3
+~
+~
+0 0 64112
+S
+#64112
+山頂~
+		你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。附近的登山者也越來越
+少，你開始懷疑山莊的食物到底是請誰背上去的？
+
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64111
+D0
+~
+~
+0 0 64113
+S
+#64113
+山頂~
+		你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。附近的登山者也越來越
+少，你開始懷疑山莊的食物到底是請誰背上去的？通路通往北方
+和南方。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64114
+D2
+~
+~
+0 0 64112
+S
+#64114
+山頂~
+		你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。附近的登山者也越來越
+少，你開始懷疑山莊的食物到底是請誰背上去的？通路通往東方
+和南方。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64115
+D2
+~
+~
+0 0 64113
+S
+#64115
+山頂~
+		你踏上了通往名劍山莊的曲折山路，山莊就在眼前了，快加
+把勁登上去吧。
+~
+0 65536|1048576 1
+D3
+~
+~
+0 0 64114
+D2
+~
+~
+0 0 64116
+S
+#64116
+山頂~
+		你踏上了通往名劍山莊的曲折山路，山莊就在眼前了，快加
+把勁登上去吧。通路通往北方和南方。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64115
+D2
+~
+~
+0 0 64117
+S
+#64117
+山巔~
+		快接近頂端的風景相當的迷人，四周都是高聳的綠樹以及野
+花，不過往前看還可以，如果要往下看，先確定自己有足夠的膽
+量吧．
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64116
+D3
+~
+~
+0 0 64118
+S
+#64118
+山巔~
+		快接近頂端的風景相當的迷人，四周都是高聳的綠樹以及野
+花，不過往前看還可以，如果要往下看，先確定自己有足夠的膽
+量吧．通路通往東方和西方。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64117
+D3
+~
+~
+0 0 64119
+S
+#64119
+山巔~
+		快接近頂端的風景相當的迷人，四周都是高聳的綠樹以及野
+花，不過往前看還可以，如果要往下看，先確定自己有足夠的膽
+量吧．通路通往東方和北方。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64118
+D0
+~
+~
+0 0 64120
+S
+#64120
+山巔~
+		快接近頂端的風景相當的迷人，四周變成耐寒的松樹以及綠
+草，地上似乎還有冰雪初融的痕跡．
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64119
+D0
+~
+~
+0 0 64121
+S
+#64121
+山巔~
+		快接近頂端的風景相當的迷人，四周變成耐寒的松樹以及綠
+草，地上似乎還有冰雪初融的痕跡．山莊的大門在北方。
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64120
+D0
+~
+~
+0 0 64122
+S
+#64122
+名劍山莊入口~
+		爬上名劍山莊之後，你身後的視野瞬間開闊了起來，從這個
+地方還能夠遙望清河鎮呢。你面前高達三丈多的巨大牌坊，上面
+清清楚楚寫著四個大字－
+
+		名	劍	山	莊
+		
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64121
+S
+#64123
+走道~
+    一條單純的走廊，南邊通往一個房間，東邊則繼續延伸。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64127
+D2
+~
+~
+0 0 64124
+S
+#64124
+僕人房~
+		這邊是名劍山莊的僕人所居住的房間，裡面收拾的相當整齊
+，不過山莊的僕人收入大概不錯，幾件衣服都是用相當高等的料
+子做成的。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64123
+D2
+~
+~
+0 0 64125
+S
+#64125
+僕人房~
+		這邊是名劍山莊的僕人所居住的房間，裡面收拾的相當整齊
+，看起來大概也沒什麼特別的地方。南邊通往一間小型的房間。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64124
+D2
+~
+~
+1|2 0 64126
+S
+#64126
+僕人房倉庫~
+		這邊是名劍山莊的僕人所使用的倉庫，裡面收拾的相當整齊
+擺放著一些日常的雜物，不過還是沒什麼特別的地方。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64125
+S
+#64127
+走道~
+		一條單純的走廊，南邊通往一個房間，西邊和東邊則繼續延
+伸。
+~
+0 8|65536|1048576 1
+D3
+~
+~
+0 0 64123
+D2
+~
+~
+0 0 64128
+D1
+~
+~
+1|2 0 64131
+S
+#64128
+廚師的房間~
+		這邊是名劍山莊的僕人所居住的房間，不過從這裡面擺放的
+廚具來看，這邊應該是廚師們的房間吧。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64127
+D2
+~
+~
+0 0 64129
+S
+#64129
+廚師的房間~
+		廚師有偷吃的習慣嗎？這邊的桌子都有點油膩，地板上還可
+以看到幾根吃剩的骨頭..。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64128
+D2
+~
+~
+0 0 64130
+S
+#64130
+廚師的倉庫~
+		看來就算糧倉空了，這群廚師也不會餓到，因為這間倉庫堆
+滿了個是各樣的口糧還有酒，真是有些糟糕的廚師....
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64129
+S
+#64131
+通道~
+		這裡附近都是房間，專門為了居住在名劍山莊內的弟子以及
+僕人所建造的，四周也擺放了一些花盆作為擺飾，感覺起來相當
+的典雅。西邊通往僕人房，東邊繼續通往走道，南邊可以前往弟
+子的房間。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64135
+D2
+~
+~
+0 0 64132
+D3
+~
+~
+0 0 64127
+S
+#64132
+弟子房間~
+		這邊是名劍山莊的學徒跟弟子所居住的房間，因為鄰近僕人
+房，所以也收拾的相當乾淨。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64131
+D2
+~
+~
+0 0 64133
+S
+#64133
+弟子房間~
+		這邊是名劍山莊的學徒跟弟子所居住的房間，因為鄰近僕人
+房，所以也收拾的相當乾淨。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64132
+D2
+~
+~
+0 0 64134
+S
+#64134
+倉庫~
+		這邊是名劍山莊的學徒跟弟子所使用的倉庫，裡面放著許許
+多多的道具跟材料，當然還有一些不會腐壞的食材。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64133
+S
+#64135
+通道~
+		這裡附近都是房間，專門為了居住在名劍山莊內的弟子以及
+僕人所建造的，四周也擺放了一些花盆作為擺飾，感覺起來相當
+的典雅。西邊是通道，東邊也繼續通往走道，南邊可以前往弟子
+的房間。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64139
+D2
+~
+~
+0 0 64136
+D3
+~
+~
+0 0 64131
+S
+#64136
+客房~
+		這邊是名劍山莊的客人所使用的房間，名劍山莊在外聲名
+遠播，有不少訪客前來拜訪，有時候莊主也會請他們留宿一晚
+，所以這幾間客房也常常被使用。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64135
+D2
+~
+~
+0 0 64137
+S
+#64137
+客房~
+		這邊是名劍山莊的客人所使用的房間，名劍山莊在外聲名
+遠播，有不少訪客前來拜訪，有時候莊主也會請他們留宿一晚
+，所以這幾間客房也常常被使用。
+~
+0 8|1024|65536|1048576 1
+D0
+~
+~
+0 0 64136
+D2
+~
+~
+0 0 64138
+S
+#64138
+倉庫~
+		這裡放著棉被和枕頭，還有幾張床單，是拿來替換的。不過
+有些床單已經發霉了，大概是僕人沒有注意到吧。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64137
+S
+#64139
+通道~
+		這裡附近都是房間，專門為了居住在名劍山莊內的弟子以及
+僕人所建造的，四周也擺放了一些花盆作為擺飾，感覺起來相當
+的典雅。西邊是通道，南邊可以回到走廊。
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64140
+D3
+~
+~
+0 0 64135
+S
+#64140
+走廊~
+		這裡是通往房間的走廊，走廊的外圍還種了相當多的花草
+作為景觀裝飾。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64139
+D2
+~
+~
+0 0 64141
+S
+#64141
+走廊~
+		這裡是通往房間的走廊，走廊的外圍還種了相當多的花草
+作為景觀裝飾。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64140
+D1
+~
+~
+0 0 64144
+D2
+~
+~
+0 0 64142
+S
+#64142
+迴廊~
+		這裡只是一個迴廊，無法通往任何地方。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64141
+S
+#64143
+廣場~
+		你站在名劍山莊廣場的西北角，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64146
+D2
+~
+~
+0 0 64144
+S
+#64144
+廣場~
+		你正站在名劍山莊廣場的西方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。西方可以通往一棟較大的建築物。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64143
+D1
+~
+~
+0 0 64147
+D2
+~
+~
+0 0 64145
+D3
+~
+~
+1|2 0 64141
+S
+#64145
+廣場~
+		你站在名劍山莊廣場的西南角，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64144
+D1
+~
+~
+0 0 64148
+S
+#64146
+廣場~
+		你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64149
+D2
+~
+~
+0 0 64147
+D3
+~
+~
+0 0 64143
+S
+#64147
+廣場~
+		你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64146
+D1
+~
+~
+0 0 64150
+D2
+~
+~
+0 0 64148
+D3
+~
+~
+0 0 64144
+S
+#64148
+廣場~
+		你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64147
+D1
+~
+~
+0 0 64151
+D3
+~
+~
+0 0 64145
+S
+#64149
+廣場~
+		你正站在名劍山莊廣場的北方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。北方較遠處有一棟巨大的建築物。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64193
+D1
+~
+~
+0 0 64152
+D2
+~
+~
+0 0 64150
+D3
+~
+~
+0 0 64146
+S
+#64150
+廣場~
+		你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64149
+D1
+~
+~
+0 0 64153
+D2
+~
+~
+0 0 64151
+D3
+~
+~
+0 0 64147
+S
+#64151
+廣場~
+		你正站在名劍山莊廣場的南方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。南方是你過來的入口。
+~
+0 4|65536|1048576 1
+D0
+~
+~
+0 0 64150
+D1
+~
+~
+0 0 64154
+D2
+~
+~
+0 0 64122
+D3
+~
+~
+0 0 64148
+S
+#64152
+廣場~
+		你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D1
+~
+~
+0 0 64155
+D2
+~
+~
+0 0 64153
+D3
+~
+~
+0 0 64149
+S
+#64153
+廣場~
+		你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64152
+D1
+~
+~
+0 0 64156
+D2
+~
+~
+0 0 64154
+D3
+~
+~
+0 0 64150
+S
+#64154
+廣場~
+		你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64153
+D1
+~
+~
+0 0 64157
+D3
+~
+~
+0 0 64151
+S
+#64155
+廣場~
+		你站在名劍山莊廣場的東北方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+~
+0 65536|1048576 1
+D2
+~
+~
+0 0 64156
+D3
+~
+~
+0 0 64152
+S
+#64156
+廣場~
+		你正站在名劍山莊廣場的東方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。東方可以通往一棟較大的建築物。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64155
+D1
+~
+~
+1|2 0 64160
+D2
+~
+~
+0 0 64157
+D3
+~
+~
+0 0 64153
+S
+#64157
+廣場~
+		你站在名劍山莊廣場的東南方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。東方可以通往一棟較大的建築物。
+~
+0 65536|1048576 1
+D0
+~
+~
+0 0 64156
+D3
+~
+~
+0 0 64154
+S
+#64158
+練習場~
+		這裡是名劍山莊的練習場西南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|2097152 0
+D1
+~
+~
+0 0 64162
+D2
+~
+~
+0 0 64159
+S
+#64159
+練習場~
+		這裡是名劍山莊練習場的西方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64158
+D1
+~
+~
+0 0 64163
+D2
+~
+~
+0 0 64160
+S
+#64160
+練習場~
+		這裡是名劍山莊練習場的西方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64159
+D1
+~
+~
+0 0 64164
+D2
+~
+~
+0 0 64161
+D3
+~
+~
+0 0 64156
+S
+#64161
+練習場~
+		這裡是名劍山莊練習場的西南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64160
+D1
+~
+~
+0 0 64165
+S
+#64162
+練習場~
+		這裡是名劍山莊練習場的正北方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D1
+~
+~
+0 0 64166
+D2
+~
+~
+0 0 64163
+D3
+~
+~
+0 0 64158
+S
+#64163
+練習場~
+		這裡是名劍山莊練習場的正中央，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64162
+D1
+~
+~
+0 0 64167
+D2
+~
+~
+0 0 64164
+D3
+~
+~
+0 0 64159
+S
+#64164
+練習場~
+		這裡是名劍山莊練習場的正中央，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64163
+D1
+~
+~
+0 0 64168
+D2
+~
+~
+0 0 64165
+D3
+~
+~
+0 0 64160
+S
+#64165
+練習場~
+		這裡是名劍山莊練習場的正南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64164
+D1
+~
+~
+0 0 64169
+D3
+~
+~
+0 0 64161
+S
+#64166
+練習場~
+		這裡是名劍山莊練習場的東北方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。東方有一扇門。
+~
+0 8|65536|1048576|2097152 0
+D1
+~
+~
+3 0 64170
+D2
+~
+~
+0 0 64167
+D3
+~
+~
+0 0 64162
+S
+#64167
+練習場~
+		這裡是名劍山莊練習場的東方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64166
+D2
+~
+~
+0 0 64168
+D3
+~
+~
+0 0 64163
+S
+#64168
+練習場~
+		這裡是名劍山莊練習場的東方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64167
+D2
+~
+~
+0 0 64169
+D3
+~
+~
+0 0 64164
+S
+#64169
+練習場~
+		這裡是名劍山莊練習場的東南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+~
+0 8|65536|1048576|2097152 0
+D0
+~
+~
+0 0 64168
+D3
+~
+~
+0 0 64165
+S
+#64170
+柴房~
+		這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+~
+0 8|65536|1048576|1048576 1
+D1
+~
+~
+0 0 64174
+D2
+~
+~
+0 0 64171
+D3
+~
+~
+3 0 64166
+S
+#64171
+柴房~
+		這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64170
+D1
+~
+~
+0 0 64175
+S
+#64172
+存劍室~
+		如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡的灰塵跟
+雜物特別多，據說有怪物侵入後，莊主便下令將這個房間暫時
+的封鎖，所以有很長一段時間沒有人打理了。這間房間的地板
+有些輕微破損。
+~
+0 4|8|512|65536|1048576 1
+D1
+~
+~
+0 0 64176
+D2
+~
+~
+0 0 64173
+
+>room_command search default~
+if roomvalue($0) == 1
+        if is_qmark($n) == swordcottage 300002
+               callout 1 echoat $n 你在這邊到處亂挖...
+               callout 1 echoaround $n $N在這邊到處亂挖
+               callout 2 echoat $n 你找到一個暗紅色的髮飾...
+               callout 2 echoaround $n $N挖出一個暗紅色的髮飾...
+               callout 2 oload 64135 15 floor
+               call out 2 modrvt v0 = 2
+               callout 2 mod_qmark $n swordcottage v2 = 3
+        else
+                echoat $n 你的雙手沾滿灰塵。
+                echoaround $n $N挖出一堆灰塵。
+        endif
+else
+        echoat $n 這裡好像有人進來過。
+        echoaround $n $n四處張望了一下。
+endif
+~
+>room_time 100~
+if rnplayer($) == 0
+        if roomvalue($0) == 2
+                purge all.hair
+                modrvt v0 = 0
+        endif
+endif
+~
+|
+S
+#64173
+存劍室~
+		如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡四周的東
+西特別多，據說有怪物侵入後，莊主便下令將這個房間暫時的
+封鎖，所以有很長一段時間沒有人打理了。
+~
+0 4|8|512|65536|1048576 1
+D0
+~
+~
+0 0 64172
+D1
+~
+~
+0 0 64177
+>room_command search around~
+	if roomvalue($0) == 0
+		echoat $n 你在這邊仔細的摸索著...
+		echoaround $n $n在這邊仔細的搜索著...
+			if rand(70)
+				echoat $n 你摸到一把木劍...
+				echoaround $n $n摸到一把木劍...
+				oload 64119 1 floor
+        			modrvt v0 = 1
+			else
+				echoat $n 你摸到一把鐵劍...
+				echoaround $n $n摸到一把鐵劍...
+				oload 64120 36 floor
+        			modrvt v0 = 1
+			endif
+	else
+		echoat $n 你什麼都沒找到
+		echoaround $n $n好像什麼都沒找到
+	endif
+~
+>room_time 100~
+if rnplayer($) == 0
+        if roomvalue($0) == 1
+                purge all.sword
+                modrvt v0 = 0
+        endif
+endif
+~
+|
+S
+#64174
+柴房~
+		這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64175
+D3
+~
+~
+0 0 64170
+S
+#64175
+柴房~
+		這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64174
+D2
+~
+~
+3 0 64176
+D3
+~
+~
+3 0 64171
+S
+#64176
+存劍室~
+		如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡的灰塵跟
+雜物特別多，據說有怪物侵入後，莊主便下令將這個房間暫時
+的封鎖，所以有很長一段時間沒有人打理了。
+~
+0 4|8|512|65536|1048576 1
+D0
+~
+~
+3 0 64175
+D2
+~
+~
+0 0 64177
+D3
+~
+~
+0 0 64172
+S
+#64177
+存劍室~
+		如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡的灰塵跟
+雜物特別多，據說有怪物侵入後，莊主便下令將這個房間暫時
+的封鎖，所以有很長一段時間沒有人打理了。
+~
+0 4|8|512|65536|1048576 1
+D0
+~
+~
+0 0 64176
+D3
+~
+~
+0 0 64173
+S
+#64178
+無缺的房間~
+		這裡是白無缺的房間，牆壁上掛著一把白色的劍作
+為裝飾，床鋪靠在一旁的牆邊，整體看起來相當舒適。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64181
+D2
+~
+~
+3 0 64179
+S
+#64179
+走廊~
+		北邊跟南邊都各自通往一個房間，西邊的牆壁上則
+掛了一把劍當裝飾。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64178
+D1
+~
+~
+0 0 64182
+D2
+~
+~
+3 0 64180
+S
+#64180
+紫雲的房間~
+		這邊是蕭紫雲的房間，大概跟無缺的房間也沒什麼不同。
+只是把裝飾用的劍改成了幾張畫。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64179
+D1
+~
+~
+0 0 64183
+S
+#64181
+無缺的房間~
+		這裡是白無缺的房間，房間中央放置了一張桌子，上面擺
+放著茶壺跟杯子，還有一張棋盤。
+~
+0 8|65536|1048576 1
+D2
+~
+~
+3 0 64182
+D3
+~
+~
+0 0 64178
+S
+#64182
+走廊~
+		北邊跟南邊都各自通往一個房間，東邊可以回到大廳。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64181
+D1
+~
+~
+0 0 64185
+D2
+~
+~
+3 0 64183
+D3
+~
+~
+0 0 64179
+S
+#64183
+紫雲的房間~
+		這邊是蕭紫雲的房間，除了桌子之外，牆上還多了幾
+張畫，大概是他的收藏吧。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64182
+D3
+~
+~
+0 0 64180
+S
+#64184
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的西北方。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64187
+D2
+~
+~
+0 0 64185
+S
+#64185
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。西方通往一個長廊，東方則回到大廳正中央。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64184
+D1
+~
+~
+0 0 64188
+D2
+~
+~
+0 0 64186
+D3
+~
+~
+0 0 64182
+S
+#64186
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的西南方。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64185
+D1
+~
+~
+0 0 64189
+S
+#64187
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。莊主
+就在你的右手邊。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64190
+D2
+~
+~
+0 0 64188
+D3
+~
+~
+0 0 64184
+S
+#64188
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。右手
+邊可以回到大廳正中央。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64187
+D1
+~
+~
+0 0 64191
+D2
+~
+~
+0 0 64189
+D3
+~
+~
+0 0 64185
+S
+#64189
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。右邊
+通往門口。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64188
+D1
+~
+~
+0 0 64192
+D3
+~
+~
+0 0 64186
+S
+#64190
+名劍山莊大廳中央~
+		這裡是名劍山莊莊主引見客人用的大廳，前方擺了一
+張太師椅，牆壁上則掛著一把打造精美的寶劍，雖然名劍
+山莊以劍當作裝飾品，不過這把劍似乎並不是為了裝飾而
+打造出來的？
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64208
+D1
+~
+~
+0 0 64194
+D2
+~
+~
+0 0 64191
+D3
+~
+~
+0 0 64187
+S
+#64191
+名劍山莊大廳中央~
+		這裡是名劍山莊莊主引見客人用的大廳，兩旁有著高
+聳的柱子，柱子上用細功雕上了細緻的圖畫。前方不遠處
+似乎就是莊主的位置。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64190
+D1
+~
+~
+0 0 64195
+D2
+~
+~
+0 0 64192
+D3
+~
+~
+0 0 64188
+S
+#64192
+名劍山莊大廳中央~
+		這裡是名劍山莊莊主引見客人用的大廳，兩旁有著高
+聳的柱子，柱子上用細功雕上了細緻的圖畫。身後則是你
+過來的竹林走道。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64191
+D1
+~
+~
+0 0 64196
+D2
+~
+~
+0 0 64193
+D3
+~
+~
+0 0 64189
+S
+#64193
+竹林走道~
+		這裡是一條長長的走道，旁邊種滿了竹子(Bamboo)，
+後面是你過來的廣場，前方則是大廳。
+~
+0 65536|1048576 1
+E
+bamboo~
+一排一排的竹子長在這邊，你想剪一點帶回去嗎？
+~
+D0
+~
+~
+0 0 64192
+D2
+~
+~
+0 0 64149
+>room_command cut p bamboo~
+	if roomvalue($0) == 0
+		echoat $n 你剪下了一把竹子
+		echoaround $n $n剪下了一把竹子
+		oload 64110 1 floor
+		modrvt v0 = 1
+	else
+		echoat $n 竹子都快被拔光了！
+	endif
+~
+>room_time 100~
+if rnplayer($) == 0
+        if roomvalue($0) == 1
+                purge all.bamboo
+                modrvt v0 = 0
+        endif
+endif
+~
+|
+S
+#64194
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。莊主
+就在你的左手邊。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64197
+D2
+~
+~
+0 0 64195
+D3
+~
+~
+0 0 64190
+S
+#64195
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。左手
+邊回到大廳的正中央。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64194
+D1
+~
+~
+0 0 64198
+D2
+~
+~
+0 0 64196
+D3
+~
+~
+0 0 64191
+S
+#64196
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。左邊
+是你進來的門口，右邊跟前方則繼續延伸。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64195
+D1
+~
+~
+0 0 64199
+D3
+~
+~
+0 0 64192
+S
+#64197
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的東北方。
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64198
+D3
+~
+~
+0 0 64194
+S
+#64198
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。東方通往飯廳。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64197
+D1
+~
+~
+3 0 64201
+D2
+~
+~
+0 0 64199
+D3
+~
+~
+0 0 64195
+S
+#64199
+名劍山莊大廳~
+		這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的東南方，擺放著幾個花瓶當裝飾。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64198
+D3
+~
+~
+0 0 64196
+S
+#64200
+飯廳~
+		這裡是莊內僕人用餐的地方，現在也還有三三兩兩
+的僕人在這裡吃冷飯。或許你可以跟他們要一碗？
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64201
+S
+#64201
+飯廳~
+		這裡是莊主招待客人的飯廳，莊主如果要跟客人聚
+餐，就會會在這邊用餐，不過，因為現在不是用餐時間
+，桌子上面並沒有菜餚。右方可以通往廚房，左邊則回
+到大廳。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64200
+D1
+~
+~
+0 0 64204
+D2
+~
+~
+0 0 64202
+D3
+~
+~
+3 0 64198
+S
+#64202
+飯廳~
+		這裡是莊主平常吃飯的地方，比較起招待客人的餐
+廳，這裡顯得樸素的多，但是可惜的是－－仍然沒有菜
+餚。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64201
+S
+#64203
+糧倉~
+		因為山莊位處高處，平常除了山莊的僕人會種菜之外
+，稻米以及其他的食品則需要委託他人從山下運上來，但
+是如天色不佳就會耽誤時間，因此這邊通常都會放著不少
+的儲備糧食。
+~
+0 8|65536|1048576 1
+D2
+~
+~
+0 0 64204
+S
+#64204
+廚房~
+		莊主不只對劍挑剔，對食物也有獨特的要求，所以山
+莊的廚師都是外聘高明的師父來掌廚的。左邊可以回到餐
+廳。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64203
+D2
+~
+~
+0 0 64205
+D3
+~
+~
+0 0 64201
+S
+#64205
+廚房~
+		這裡擺滿各是各樣的碗盤廚具，還有幾個僕人在這邊
+洗碗，碗盤都是上等的瓷器，當然也是從山下運上來的。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+0 0 64204
+S
+#64206
+石山~
+		你爬上山莊後院的石山，四周佈滿了浮萍，晚上的時候
+如有星光，這裡更顯得浪漫無比。西邊通往山莊的水池。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64207
+D3
+~
+~
+0 0 64218
+S
+#64207
+迴廊~
+		這裡是山莊後院的迴廊，左方可以通往石山，右方則回
+到走廊。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64208
+D3
+~
+~
+0 0 64206
+S
+#64208
+走廊~
+		這裡是山莊後院的走廊，左右方可以通往迴廊，後方是
+你過來的小門，前方似乎是莊主家人的房間。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64209
+D3
+~
+~
+0 0 64207
+D0
+~
+~
+0 0 64212
+D2
+~
+~
+0 0 64190
+S
+#64209
+迴廊~
+		這裡是山莊後院的迴廊，左方可以回到走廊，右方則通
+往一個房間。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64210
+D3
+~
+~
+0 0 64208
+S
+#64210
+祭壇~
+		這裡是莊內的祭壇，正中央擺著劍神Kention的神像
+，劍神像的左手拿著一卷書，右手則拿著一把劍，不過
+你目光一轉，發現就在劍神像的斜後方擺著一尊拿著奇
+怪武器的女神像，女神像的表情則有如冰雪一般冷漠，
+而武器的前端正好頂在劍神像背後，這有什麼特別的含
+意嗎？
+~
+0 8|1024|65536|1048576 6
+D3
+~
+~
+0 0 64209
+S
+#64211
+走廊~
+		這邊的牆壁仍然使用劍來當裝飾，但是四週的擺設明顯
+高級了起來，前方通往莊主的房間，右方可以回到走廊。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64214
+D1
+~
+~
+0 0 64212
+S
+#64212
+走廊~
+		這邊的牆壁仍然使用劍來當裝飾，但是四週的擺設明顯
+高級了起來，你面前的牆壁意外的沒有任何的裝飾品，而且
+粉刷的特別乾淨。
+~
+0 8|65536|1048576 1
+D1
+~
+~
+0 0 64213
+D3
+~
+~
+0 0 64211
+D2
+~
+~
+0 0 64208
+S
+#64213
+走廊~
+		這邊的牆壁仍然使用劍來當裝飾，但是四週的擺設明顯
+高級了起來，前方通往映月的房間，左方可以回到走廊。
+~
+0 8|65536|1048576 1
+D0
+~
+~
+3 0 64215
+D3
+~
+~
+0 0 64212
+S
+#64214
+莊主的房間~
+		這個房間出乎意外的樸素，除了家具之外沒有任何其他
+的擺設，原本的雙人床上只剩下一個枕頭，看起來更顯得孤
+寂。
+~
+0 8|65536|1048576 1
+D2
+~
+~
+3 0 64211
+S
+#64215
+映月的房間~
+		你闖入了映月的房間裡面，四周百滿了各式各樣的裝飾
+品，梳妝台上也放著一面大銅鏡，桌上當然有女孩子家的胭
+脂跟梳子，一旁的櫃子雖然沒有開著，不過你猜想那大概是
+衣櫃吧？
+~
+0 8|65536|1048576 1
+D2
+~
+~
+3 0 64213
+>room_command search p underwear~
+	if is_qmark($n) == swordcottage 100004
+		if insameroom(chin-swordcottage)
+			echoat $n 主人還在你怎麼偷！
+		else
+			echoat $n 在東翻西找之後，你找出一件內衣...
+			echoaround $n $N在翻箱倒櫃之後，好像發現了什麼...
+			mod_qmark $n swordcottage v0 = 5
+			oload 64114 36 floop
+		endif
+	else
+		echoat $n 你想幹什麼壞事啊？
+	endif
+~
+|
+S
+#64216
+藏劍室~
+		這裡存放的果真是好劍，不但重量恰當，外型也相當的
+優雅，不過為什麼會特意藏在這種地方呢？
+~
+0 8|65536|1048576 1
+D5
+~
+~
+3 0 64217
+S
+#64217
+黑暗的通路~
+		你打開了藏劍室裡面黑暗的通路，這裡相當的狹小，最
+多只能通過兩個人，通道持續往前方延伸。
+~
+0 1|4|8|16|512|65536|1048576 1
+D4
+~
+~
+3 0 64216
+D0
+~
+~
+0 0 64243
+S
+
+#64218
+湖泊邊緣~
+		這個水池，或許應該說湖泊，並不是山莊所造，而是建立
+山莊之時把它納入山莊的範圍內，整個湖泊相當的廣大，往東
+可以回到石山，往西則是湖泊。
+~
+0 65536|1048576 2
+D1
+~
+~
+0 0 64206
+D3
+~
+~
+0 0 64219
+S
+
+#64219
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D1
+~
+~
+0 0 64220
+D2
+~
+~
+0 0 64222
+D5
+~
+~
+0 0 64228
+S
+#64220
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D1
+~
+~
+0 0 64221
+D2
+~
+~
+0 0 64223
+D3
+~
+~
+0 0 64219
+D5
+~
+~
+0 0 64229
+S
+#64221
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D1
+~
+~
+0 0 64218
+D2
+~
+~
+0 0 64224
+D3
+~
+~
+0 0 64220
+D5
+~
+~
+0 0 64230
+S
+#64222
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64219
+D1
+~
+~
+0 0 64223
+D2
+~
+~
+0 0 64225
+D5
+~
+~
+0 0 64231
+S
+#64223
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64220
+D1
+~
+~
+0 0 64224
+D2
+~
+~
+0 0 64226
+D3
+~
+~
+0 0 64222
+D5
+~
+~
+0 0 64232
+S
+#64224
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64221
+D2
+~
+~
+0 0 64227
+D3
+~
+~
+0 0 64223
+D5
+~
+~
+0 0 64233
+S
+#64225
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64222
+D1
+~
+~
+0 0 64226
+D5
+~
+~
+0 0 64234
+S
+#64226
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64223
+D1
+~
+~
+0 0 64227
+D3
+~
+~
+0 0 64225
+D5
+~
+~
+0 0 64235
+S
+#64227
+湖泊~
+		這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+~
+0 4|65536|1048576 7
+D0
+~
+~
+0 0 64224
+D3
+~
+~
+0 0 64226
+D5
+~
+~
+0 0 64239
+S
+#64228
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D1
+~
+~
+0 0 64229
+D2
+~
+~
+0 0 64231
+D4
+~
+~
+0 0 64219
+D5
+~
+~
+0 0 64237
+S
+#64229
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D1
+~
+~
+0 0 64230
+D2
+~
+~
+0 0 64232
+D3
+~
+~
+0 0 64228
+D4
+~
+~
+0 0 64220
+D5
+~
+~
+0 0 64238
+S
+#64230
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16 8
+D2
+~
+~
+0 0 64233
+D3
+~
+~
+0 0 64229
+D4
+~
+~
+0 0 64221
+S
+#64231
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64228
+D1
+~
+~
+0 0 64232
+D2
+~
+~
+0 0 64234
+D4
+~
+~
+0 0 64222
+D5
+~
+~
+0 0 64239
+S
+#64232
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64229
+D1
+~
+~
+0 0 64233
+D2
+~
+~
+0 0 64235
+D3
+~
+~
+0 0 64231
+D4
+~
+~
+0 0 64223
+D5
+~
+~
+0 0 64240
+S
+#64233
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64230
+D2
+~
+~
+0 0 64236
+D3
+~
+~
+0 0 64232
+D4
+~
+~
+0 0 64224
+S
+#64234
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64231
+D1
+~
+~
+0 0 64235
+D4
+~
+~
+0 0 64225
+S
+#64235
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64232
+D1
+~
+~
+0 0 64236
+D3
+~
+~
+0 0 64234
+D4
+~
+~
+0 0 64226
+S
+#64236
+水底~
+		這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+~
+0 8|16|65536|1048576 8
+D0
+~
+~
+0 0 64233
+D3
+~
+~
+0 0 64235
+D4
+~
+~
+0 0 64227
+S
+#64237
+深水~
+		你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+~
+0 1|8|16|65536 8
+D1
+~
+~
+0 0 64238
+D2
+~
+~
+0 0 64239
+D4
+~
+~
+0 0 64228
+S
+#64238
+深水~
+		你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+~
+0 1|8|16|65536|1048576 8
+D2
+~
+~
+0 0 64240
+D3
+~
+~
+0 0 64239
+D4
+~
+~
+0 0 64232
+S
+#64239
+深水~
+		你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+~
+0 1|8|16|65536|1048576 8
+D0
+~
+~
+0 0 64237
+D1
+~
+~
+0 0 64240
+D4
+~
+~
+0 0 64231
+S
+#64240
+深水~
+		你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+~
+0 1|8|16|65536|1048576 8
+D0
+~
+~
+0 0 64238
+D3
+~
+~
+0 0 64239
+D4
+~
+~
+0 0 64232
+D5
+~
+~
+0 0 64241
+S
+#64241
+洞窟前~
+		你在一個巨大的洞窟前面，那種異樣的感覺就在眼前了。
+洞窟看起來很小，大概只有一個人能進去。
+~
+0 1|8|16|65536|1048576 8
+D0
+~
+~
+0 0 64242
+D4
+~
+~
+0 0 64240
+S
+#64242
+洞窟~
+    天啊！出現在你面前的是一頭巨大的蛟龍！這下可以解釋
+為什麼這邊幾乎沒有魚的存在，因為都被當成食物了！
+~
+0 1|8|16|512|65536|1048576 8
+D2
+~
+~
+0 0 64241
+S
+#64243
+黑暗的通路~
+		這一條潮濕的通路應該不是天然形成的，四周的牆壁還有
+挖掘的痕跡，是不是什麼時候留下來的秘密通道呢？
+~
+0 1|4|8|16|512|65536|1048576 1
+D2
+~
+~
+0 0 64217
+D0
+~
+~
+0 0 64244
+S
+#64244
+死路~
+		通道在這裡停住，眼前只剩下一大堆崩落的岩石，看來是
+無法再往前走了，不知道有什麼方法可以過去？用爬的嗎？
+~
+0 1|4|8|16|512|65536|1048576 1
+D2
+~
+~
+0 0 64243
+>room_command climb~
+	echoat $n 你到處爬呀爬也爬不到那邊去，這洞窟就這麼大而已阿？
+	echoaround $n $n像壁虎一樣在落石上到處亂爬。
+	echo 落石的後面傳來一陣聲音：這裡還沒有辦法過去，快回去吧。
+~
+|
+S
+#64245
+通路的另一頭~
+		你從落石處爬了過來，要回去也只能爬回去。前方通往一
+個遼闊的平台。
+~
+0 1|4|8|16|512|65536|1048576 1
+D0
+~
+~
+0 0 64245
+>room_command climb~
+	echoat $n 你順著落石爬了回去
+	echoaround $n $n順著落石爬了回去
+	transfer $n 64245
+~
+|
+S
+#64246
+小徑~
+    你爬過土坡後發現一條非常隱密的小徑，左手邊
+是你來的土堆，右邊的山壁上有個僅能容納一人的洞
+穴，裡面還有些許的惡臭。
+~
+0 4|512 1
+D3
+~
+~
+0 0 64103
+D0
+~
+~
+0 0 64247
+>room_command climb up~
+		echoat $n 彷彿有人在後面推你一把一般，你輕鬆的爬過了土堆
+		echoaround $n $n好像被人給丟過去一般，消失在土堆的另外一邊！
+		transfer $n 64103
+~
+|
+S
+#64247
+黑暗的洞穴~
+		你踏入洞穴，驚見洞穴內有一具枯骨！枯骨的手
+腳皆被鐵鍊鎖死在牆上，胸前的肋骨則是碎了一大塊
+，彷彿死前還被嚴刑拷打過！四周非常的凌亂，除了
+骨頭，還有一些布片跟紙張的碎片。
+~
+0 1|4|8|16|512|65536|1048576 1
+D3
+~
+~
+0 0 64246
+>room_command search p around~
+	if is_qmark($n) == jd_liu 100002
+		echoat $n 你把地上的布跟骨頭翻開來...
+		echoat 在骨頭的下面你發現一封封皮老舊的信！
+		oload 11144 36 floor
+		mod_qmark $n jd_liu v0 = 3
+	else
+		你只發現一堆骨頭而已。
+	endif
+~
+|
+S
+#0
+
+
+#RESETS
+
+M 0 64101 1 64122 ;卓鶴山
+E 0 64116 0 5	  ;馬褂
+M 0 64102 1 64190 ;秦徹生
+E 0 64100 65536|1048576 16    ;鑄頂劍
+E 0 64121 0 5	  ;長袍
+E 0 64131 0 14	  ;在水一方
+M 0 64103 1 64190 ;雲從龍
+E 0 64104 0 16	  ;龍泉寶劍
+E 0 64117 0 5	  ;長袍
+M 0 64104 1 64192 ;李逸凡
+E 0 64116 0 5	  ;馬褂
+M 0 64105 1 64189 ;白無缺
+E 0 64118 0 16	  ;青霜劍
+E 0 64117 0 5	  ;長袍
+M 0 64106 1 64198 ;蕭紫雲
+E 0 64118 0 16	  ;青霜劍
+E 0 64117 0 5	  ;長袍
+M 0 64107 1 64206 ;秦映月
+E 0 64130 0 3	  ;琉璃月飾
+E 0 64112 0 5	  ;絲衣
+M 0 64108 1 64134 ;王俊維
+E 0 64111 0 5	  ;布衣
+M 0 64109 3 64167 ;弟子
+E 0 64120 65536|1048576 16	  ;鐵劍
+E 0 64111 0 5	  ;布衣
+M 0 64109 3 64169 ;弟子
+E 0 64120 65536|1048576 16	  ;鐵劍
+E 0 64111 0 5	  ;布衣
+M 0 64110 2 64127 ;僕人
+E 0 64111 0 5	  ;布衣
+E 0 64113 0 8	  ;布靴
+M 0 64110 2 64132 ;僕人
+E 0 64111 0 5	  ;布衣
+E 0 64113 0 8	  ;布靴
+M 0 64110 2 64144 ;僕人
+E 0 64111 0 5	  ;布衣
+E 0 64113 0 8	  ;布靴
+M 0 64111 1 64200 ;僕人(食)
+E 0 64111 0 5	  ;布衣
+E 0 64113 0 8	  ;布靴
+M 0 64133 4 64157	;劍客
+E 0 64120 65536|1048576 16	  ;鐵劍
+M 0 64135 3 64155	;俠女
+E 0 64120 65536|1048576 16	  ;鐵劍
+M 0 64138 1 64137	;陳秋雨
+M 0 64120 1 64242 ;蛟龍
+E 0 64132 0 5     ;鱗片
+E 0 64133 0 16	  ;牙齒
+M 0 64150 1 64210 ;神像
+M 0 64132 1 64172	;僵屍
+M 0 64137 5 64234	;水鬼
+
+S
+#$

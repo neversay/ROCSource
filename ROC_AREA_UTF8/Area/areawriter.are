@@ -1,0 +1,3495 @@
+#AREADATA
+Name        區域作者勞改營地~
+Identity    areawriter~
+Builders    Reticent~
+Translator  --~
+Modifier    --~
+VNUMs       66000 66099
+Security    1
+Recall      3001
+Death       66000
+F_toggle    0
+End
+
+#MOBILES
+#66000
+Chaos Demon-areawriter~
+混沌惡魔(Demon of Chaos)~
+一位負責監督幻世一切寫作事物的惡魔(Demon of Chaos) 正站在這裡監視著你。
+~
+為了混沌幻世的將來，原本生性善良的他只好化身為一位不茍言笑的惡魔。你看他那
+天使的白色羽翼還未全部轉成烏鴉的黑色羽翼呢。當他對著你們大聲的吼叫時，其實
+他的心裡是在滴血的。而他在這裡的工作不只是負責監督而已，他還負責著你們薪資
+分發的工作呢，真是辛苦他了。
+~
+2|64|512|2048|4096|262144|4194304|1048576|16777216 4|8|32|128|134217728|8589934592|68719476736|137438953472|549755813888 1000 S
+200 0 0 5000d5000+-10000 -5000d-10000+0
+1000000 0
+0 8 1
+C 1|4|8|32
+P 512|2048|32768|65536|67108864|2147483648|268435456
+R demon~
+S 13 500000
+S 27 -5000
+S 28 -5000
+S 29 -5000
+S 30 -5000
+S 31 -5000
+S 40 500
+S 41 100000
+S 42 100000
+S 45 100000
+S 46 100000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+~
+>talk_prog dh~
+if isaffected($n) !& 32
+        mpforcer here add_affect $n 'detect hidden' 1130 1000 41 -50000 32
+        mpforcer here add_affect $n gian 1130 1000 42 -50000 32
+endif
+~
+>talk_prog topic~
+if is_qmark($n) != roc_ppl_salary
+        tell $n 喝！你又熬到領薪水的日子(talk chaos salary)了。
+else
+        if is_qmark($n) == roc_ppl_salary
+                tell $n 趕快寫你的區域吧，現在不是你領薪水的時候！
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1024
+                tell $n 大約再過一天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1048
+                tell $n 大約再過兩天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1120
+                tell $n 大約再過五天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1240
+                tell $n 大約還得再過十天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1360
+                tell $n 大約還得再過十五天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1480
+                tell $n 大約還得再過二十天，你才能夠跟我領薪水。
+        else
+                tell $n 還得過二十幾天你才能夠跟我領薪水。
+        endif
+endif
+~
+>all_greet_prog 100~
+if is_qmark($n) != roc_ppl_salary
+        tell $n 喝！想不到你一來就能跟我領薪水(talk chaos salary)了。
+endif
+~
+>talk_prog salary~
+if is_qmark($n) == roc_ppl_salary
+        tell $n 趕快寫你的區域吧，現在不是你領薪水的時候！
+        if is_qmark($n) <= roc_ppl_salary 1024
+                tell $n 大約再過一天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1048
+                tell $n 大約再過兩天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1120
+                tell $n 大約再過五天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1240
+                tell $n 大約還得再過十天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1360
+                tell $n 大約還得再過十五天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1480
+                tell $n 大約還得再過二十天，你才能夠跟我領薪水。
+        else
+                tell $n 還得過二十幾天你才能夠跟我領薪水。
+        endif
+else
+        if level($n) <= 2
+                tell $n 你的等級必須至少到達第 3 級才能夠跟我領薪水。
+                break
+        endif
+        nod $n
+        tell $n 你可以跟我領薪水了，領完後給我快點繼續寫區域！
+        if is_qmark($n) <= 30
+                mpadd_qmark $n roc_ppl_salary 720 0 0 0 0 1
+        else
+                mpadd_qmark $n roc_ppl_salary 960 0 0 0 0 1
+        endif
+        if level($n) <= 5
+                tell $n 依照你的等級你可以領到 100000 元的金幣。
+                mpgold $n 100000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 10
+                tell $n 依照你的等級你可以領到 130000 元的金幣。
+                mpgold $n 130000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 15
+                tell $n 依照你的等級你可以領到 160000 元的金幣。
+                mpgold $n 160000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 20
+                tell $n 依照你的等級你可以領到 200000 元的金幣。
+                mpgold $n 200000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 25
+                tell $n 依照你的等級你可以領到 250000 元的金幣。
+                mpgold $n 250000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 30
+                tell $n 依照你的等級你可以領到 300000 元的金幣。
+                mpgold $n 300000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 35
+                tell $n 依照你的等級你可以領到 370000 元的金幣。
+                mpgold $n 370000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 37
+                tell $n 依照你的等級你可以領到 450000 元的金幣。
+                mpgold $n 450000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 39
+                tell $n 依照你的等級你可以領到 550000 元的金幣。
+                mpgold $n 550000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 41
+                tell $n 依照你的等級你可以領到 700000 元的金幣。
+                mpgold $n 700000
+                mpcall resp_gold $n
+                break
+        else
+                tell $n 依照你的等級你可以領到 1000000 元的金幣。
+                mpgold $n 1000000
+                mpcall resp_gold $n
+        endif
+endif
+~
+>defun_prog resp_gold~
+if resp($n) < 0
+        break
+endif
+if resp($n) >= 1
+        if resp($n) <= 5
+                tell $n 依照你的威望值，你可以額外領到 50000 元的金幣。
+                mpgold $n 50000
+                break
+        endif
+        if resp($n) <= 10
+                tell $n 依照你的威望值，你可以額外領到 100000 元的金幣。
+                mpgold $n 100000
+                break
+        endif
+        if resp($n) <= 20
+                tell $n 依照你的威望值，你可以額外領到 200000 元的金幣。
+                mpgold $n 200000
+                break
+        endif
+        if resp($n) <= 30
+                tell $n 依照你的威望值，你可以額外領到 300000 元的金幣。
+                mpgold $n 300000
+                break
+        endif
+        if resp($n) <= 45
+                tell $n 依照你的威望值，你可以額外領到 400000 元的金幣。
+                mpgold $n 400000
+                break
+        endif
+        if resp($n) <= 60
+                tell $n 依照你的威望值，你可以額外領到 500000 元的金幣。
+                mpgold $n 500000
+                break
+        endif
+        if resp($n) <= 80
+                tell $n 依照你的威望值，你可以額外領到 700000 元的金幣。
+                mpgold $n 700000
+                break
+        endif
+        if resp($n) <= 99
+                tell $n 依照你的威望值，你可以額外領到 900000 元的金幣。
+                mpgold $n 900000
+        else
+                tell $n 依照你的威望值，你可以額外領到 1000000 元的金幣。
+                mpgold $n 1000000
+        endif
+endif
+~
+>rand_prog 2~
+if pcnum($) > 0
+        if rand(50)
+                addoil $r
+                say 若餓(hungry) 了的話，可以跟我說一聲哦！
+        else
+                sweat $r
+                say 看不到隱形或藏匿的人嗎？我可以為你解決這問題(light)！
+        endif
+endif
+~
+>rand_prog 2~
+if pcnum($) > 0
+        if rand(50)
+                say 別打混呀，專心進行你的寫作工作吧！
+        else
+                say 有什麼問題就趕緊拉個人來問吧！
+        endif
+endif
+~
+>talk_prog p go second~
+mpechoat $n 你向 $I 申請要去勞改二營坐坐，獲得批準。
+mpechoaround $n $N 向 $I 申請要去勞改二營接受折磨獲得批準。
+mpechoaround $n 你看到 $I 將 $N 送到了勞改二營去。
+mpforcer 66001 echo 你看到 $N 被傳送到了這裡陪你們受難。
+mptransfer $n 66001
+mpforcer 66001 force $n look
+~
+>talk_prog p go third~
+if is_qmark($n) == areawriter_go_third
+        mpechoat $n 你才剛過去休息過，回去再寫一陣子區域再來休息吧！
+        mpechoaround $n $N 向 $I 申請要去勞改三營休息，卻不被批準！
+else
+        mpadd_qmark $n areawriter_go_third 12 0 0 0 1 1
+        mpechoat $n 你向 $I 申請要去勞改三營休息清靜一下，獲得批準。
+        mpechoaround $n $N 向 $I 申請要去勞改三營休息並且偷懶一下，獲得批準。
+        mpechoaround $n 你看到 $I 將 $N 送到了勞改三營去。
+        mpforcer 66002 echo 你看到 $N 被傳送到了這裡陪你們ＱＫ。
+        mptransfer $n 66002
+        mpforcer 66002 force $n look
+endif
+~
+>talk_prog hungry~
+if is_inv_obj($n) == 66002
+        mpechoat $n 你身上已經有一個特製米食了，真的餓了的話就快吃吧！
+else
+        mpechoat $n 當你正在喊餓的時候，你身上突然多了一個特製米食。
+        mpoload 66002 $n viclv target
+endif
+~
+>talk_prog light~
+if isaffected($n) & 8
+if isaffected($n) & 32
+        say 明明就什麼都看的到，竟然也想跟我要法術！
+        say 給我去二營懺悔吧你！
+        mpechoat $n 你被 $I 狠狠的丟到了勞改二營去。
+        mpechoaround $n 你看到 $N 被 $I 狠狠的丟到勞改二營去懺悔～阿門～
+        mpforcer 66001 echo 你看到 $N 被丟過來二營陪你們受罪。
+        mptransfer $n 66001
+        mpforcer 66001 force $n look
+        break
+endif
+endif
+if isaffected($n) !& 8
+        say 什麼！看不到隱形？
+        say 那就讓我來為 $N [1;32m你擦亮雙眼，好讓你看得更清楚吧！！
+        mpforcer here add_affect $n 'detect invis' 1130 1000 41 -50000 8
+        mpforcer here add_affect $n 'detect invis' 1130 1000 42 -50000 8
+endif
+if isaffected($n) !& 32
+        say 看不到藏匿者？
+        say 就讓我來為 $N [1;32m你擦亮雙眼，好讓藏匿者在你眼前現形吧！！
+        mpforcer here add_affect $n 'detect hidden' 1130 1000 39 10000 32
+        mpforcer here add_affect $n 'detect hidden' 1130 1000 17 10000 32
+endif
+~
+>fight_prog 50~
+say 殺～殺～殺～
+c 'full heal'
+mpnowait
+frenzy
+mpnowait
+frenzy
+mpnowait
+c 'sun flash'
+mpnowait
+~
+>fight_prog 50~
+mpecho $I大聲說道：喝！大膽無知之徒！竟敢打我！
+c 'double heal'
+mpnowait
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+mpnoait
+~
+|
+#66003
+girl Chie Matsuoka~
+松岡千惠(Chie Matsuoka)~
+一位綁著高馬尾的黑髮少女(girl)在這撥弄著吉他。
+~
+眼前的少女留著一頭及腰的長髮，用大蝴蝶結紮成高馬尾，雖然穿著
+普通的紫色T恤和成套的藍色外套與牛仔褲，仍掩蓋不了她的美貌與
+一股充滿自信的英氣，特別是那堅定地朝向夢想邁進的氣勢，正是她
+之所以為這裡的AW痴心愛戀的原因。
+~
+1|2 8|32|64|512 0 S
+100 0 0 0d0+0 0d0+0
+-1 0
+0 8 2
+C 13
+P 1|2|4|8|128|512|8388608
+S 41 10000
+S 42 10000
+S 45 10000
+S 46 10000
+>repop_prog 100~
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self awroom_xian -1 0 0 0 0 1
+~
+>talk_prog topic~
+if ispc($n)
+if being(xian)
+if insameroom(xian)
+        if name($n) == litespeed
+        say $n有區域的問題要問Xain喔
+        say 我對這方面不清楚
+        endif
+        if name($n) == cake
+        say $n有區域的問題要問Xain喔
+        say 我對這方面不清楚
+        endif
+        if name($n) == qwer
+        say 有事嗎？
+        say 這裡除了寫作區域的問題外請盡量保持安靜
+        endif
+else
+        say Xian現在不在這裡
+        say 需要我找他回來嗎？(back)
+endif
+else
+        say Xian現在不在線上
+        say 你還是請先離開吧
+        mptransfer $n 66000
+endif
+endif
+~
+>talk_prog topic~
+if ispc($n)
+if name($n) == xian
+if rand(10)
+smile
+say 怎麼了，要休息一下嗎？
+say 要聽歌嗎(song)？
+else
+if rand(11)
+say 寫區域雖然重要，課業也要顧喔
+say 聯考已經快到了
+addoil $n
+else
+if rand(14)
+say 不知道upsha跟wake的進度如何了...
+say 偶爾也要去看看他們喔
+else
+if rand(17)
+say 累了嗎？
+smile
+mpcallout 1 say 如果要出去透透氣就跟我說一聲吧(rest)
+else
+if rand(20)
+say 嗯～～嗯～～～
+mpcallout 1 say 快寫吧，我會在這陪你的
+mpcallout 2 hug $n
+else
+if rand(25)
+say 不知道skalt的翼人王國進度如何了...
+say 他答應七月九日前要交出一部份，你別忘了提醒他喔
+else
+if rand(33)
+emote 輕輕地撥弄著吉他的弦...
+say 如果imm跟ppl能和平共處就好了...
+mpcallout 1 sigh
+else
+if rand(50)
+emote 把一些光碟片打包起來...
+say 這些等到聯考完再拿出來吧
+say 現在已經沒時間玩這些了
+mpcallout 1 pat $n
+else
+emote 從吧臺拿了兩瓶啤酒...
+say 你也喝一瓶，休息一下吧
+mpcallout 1 smile
+mpcallout 2 mpechoat $n 千惠(Chie)把啤酒交給了你
+mpcallout 2 mpechoaround $n 松岡千惠(Chie Matsuoka)把啤酒交給了$N
+mpcallout 2 mpoload 3001 $n
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+~
+>talk_prog song~
+say 現在有三首歌可以聽，你想聽那一首？
+mpechoat $n 兩個夢(two dreams)
+mpechoat $n 旋轉的圓舞曲(song2)
+mpechoat $n 如果到了明天(song3)
+~
+>talk_prog p two dreams~
+if insameroom(xian)
+if is_qmark($i) != awroom_xian_sing
+mpadd_qmark self awroom_xian_sing -1 0 0 0 0 1
+emote 調了調吉他弦，開始唱了起來...
+mpcallout 1 mpcall awroom_xian_song1a
+else
+endif
+else
+say 抱歉，如果Xian不在的話我不想唱
+endif
+~
+>talk_prog song2~
+if insameroom(xian)
+if is_qmark($i) != awroom_xian_sing
+mpadd_qmark self awroom_xian_sing -1 0 0 0 0 1
+emote 調了調吉他弦，開始唱了起來...
+mpcallout 1 mpcall awroom_xian_song2a
+else
+endif
+else
+say 抱歉，如果Xian不在的話我不想唱
+endif
+~
+>talk_prog song3~
+if insameroom(xian)
+if is_qmark($i) != awroom_xian_sing
+mpadd_qmark self awroom_xian_sing -1 0 0 0 0 1
+emote 調了調吉他弦，開始唱了起來...
+mpcallout 1 mpcall awroom_xian_song3a
+else
+endif
+else
+say 抱歉，如果Xian不在的話我不想唱
+endif
+~
+>defun_prog awroom_xian_song1a~
+say 寂寞的夜晚用流下的淚滴來描繪夢的去向
+mpcallout 1 say 兩個夢，繼續摸索找尋著，即使痛苦也不會挫折
+mpcallout 2 say 一直都沒有忘記啊～相信著我倆相處過的時光
+mpcallout 4 say 街道寂靜的心跟著搖晃起來而無法克制時
+mpcallout 5 say 只有繼續相信那天的話
+mpcallout 6 say 有一天當我的願望實現時，張開眼，希望...
+mpcallout 7 say 你在身邊
+mpcallout 8 say 你能相信我的愛嗎？
+mpcallout 10 say 最後的夜，不成眠地寂靜流逝的夢的去向
+mpcallout 11 say 兩個夢想，當意識到溫柔的意義時，就忘不了
+mpcallout 12 say 任誰都會有崩潰時候而希望有你溫柔話語
+mpcallout 14 say 在夜的對岸，心到達時，就想對你告白，所以
+mpcallout 15 say 請不要跟丟了
+mpcallout 16 say 有一天當我的願望實現時，希望你在身邊
+mpcallout 17 say 我能相信你的愛嗎？
+mpcallout 19 say 街道寂靜的心也跟著搖晃起來而無法克
+mpcallout 20 say 制時，只有繼續相信那天的話
+mpcallout 21 say 有一天當我的願望實現時，張開眼，希望
+mpcallout 22 say 你在身邊
+mpcallout 23 say 你能相信我的愛嗎？
+mpcallout 23 mpdel_qmark self awroom_xian_sing
+~
+>defun_prog awroom_xian_song2a~
+say 如果能在大樹下，開懷地唱歌～
+mpcallout 1 say 一定可以傳到，那片無垠的青空～
+mpcallout 2 say 是誰在街上吹口哨呢
+mpcallout 3 say 今天又能開始，做快樂的事了～
+mpcallout 5 say 聽到了熟悉的聲音，是她在呼喚
+mpcallout 6 say 請告訴我，歡笑的魔法吧
+mpcallout 8 say 來，歌唱吧，唱著旋轉的圓舞曲吧～
+mpcallout 9 say 把手圍成圈圈，呼喚幸福到來吧
+mpcallout 11 say 風兒吹拂的草原，小鳥的歌聲
+mpcallout 12 say 都在祝福，美麗的新嫁娘
+mpcallout 13 say 掌握著寶物的手掌～
+mpcallout 14 say 用溫柔的心，會織出幸福吧
+mpcallout 16 say 夜深人靜的時候，雖然覺得很寂寞
+mpcallout 17 say 明亮的月兒，一定會，守護著我吧～
+mpcallout 19 say 來，跳舞吧，手牽著手跳著圓舞曲
+mpcallout 20 say 像以前那樣，快樂地跳吧
+mpcallout 22 say 來，歌唱吧，唱著旋轉的圓舞曲吧～
+mpcallout 23 say 把手圍成圈圈，呼喚幸福到來吧...
+mpcallout 23 mpdel_qmark self awroom_xian_sing
+~
+>defun_prog awroom_xian_song3a~
+say 剛開始的時候覺得非常不安～
+mpcallout 1 say 害怕不斷湧現的雲
+mpcallout 2 say 在迷霧中徬徨的我
+mpcallout 3 say 也曾有想逃的時候呢～
+mpcallout 5 say 但下過雨的大地會更堅固
+mpcallout 6 say 尋星之後會得到豐碩的成果～
+mpcallout 8 say 帶著自信向前進吧，抬頭挺胸向前走吧～
+mpcallout 9 say 為了踏上光明的道路
+mpcallout 10 say 即使有迷惘，即使會沮喪
+mpcallout 11 say 相信自己，一定作得到
+mpcallout 13 say 剛開始的時候大家都很無助
+mpcallout 14 say 看不到指路的那顆星～
+mpcallout 15 say 在黑暗中徬徨的我
+mpcallout 16 say 也會有想放棄的時候呢～
+mpcallout 18 say 但雨總是會停的
+mpcallout 19 say 在冒出嫩葉的樹蔭下會看到那顆星
+mpcallout 21 say 帶著夢想向前進吧，一直走到最後吧～
+mpcallout 22 say 總會看到彩虹的源頭
+mpcallout 23 say 雖然辛苦過，雖然跌倒過
+mpcallout 24 say 心中堅信，願望總有一天會實現的～
+mpcallout 26 say U～Ah～
+mpcallout 27 say 如果到了明天
+mpcallout 28 say 一定會有個和今天不同的開始吧
+mpcallout 30 say 帶著自信向前進吧，抬頭挺胸向前走吧～
+mpcallout 31 say 為了踏上光明的道路
+mpcallout 32 say 即使有迷惘，即使會沮喪
+mpcallout 33 say 相信自己，一定作得到...
+mpcallout 33 mpdel_qmark self awroom_xian_sing
+~
+>talk_prog rest~
+if name($n) == xian
+if is_qmark($i) == awroom_xian
+say 你要去1/還是2/呢？
+else
+say 你已經出去過囉
+endif
+endif
+~
+>tick_prog 100~
+if is_qmark($i) == awroom_xian 100001
+if is_qmark($i) >= awroom_xian 200024
+if being(xian)
+mpgoto xian
+emote 沖沖忙忙地跑來
+say Xian該回去囉
+mpecho Xian跟著松岡千惠(Chie Matsuoka)離開了...
+mptransfer xian 66003
+mpgoto 66003
+mpdel_qmark self awroom_xian
+endif
+else
+mpmod_qmark self awroom_xian v1 + 1
+endif
+endif
+~
+>talk_prog 1/~
+if name($n) == xian
+if is_qmark($i) == awroom_xian
+say 別出去太久，一天後我會去接你
+wave $n
+mptransfer $n 3001
+mpmod_qmark self awroom_xian v0 = 1
+endif
+endif
+~
+>talk_prog 2/~
+if name($n) == xian
+if is_qmark($i) == awroom_xian
+say 別出去太久，一天後我會去接你
+wave $n
+mptransfer $n 4580
+mpmod_qmark self awroom_xian v0 = 1
+endif
+endif
+~
+>talk_prog back~
+if being(xian)
+if insameroom(xian)
+else
+say 好的，我這就去找他
+emote 離開了黑貓酒吧...
+mpcallout 1 mpcall awroom_xian_back $n
+endif
+endif
+~
+>defun_prog awroom_xian_back~
+mpgoto xian
+emote 沖沖忙忙地跑來
+say Xian有訪客找你喔，快回去吧
+mpecho Xian跟著松岡千惠(Chie Matsuoka)離開了...
+mptransfer xian 66003
+mpgoto 66003
+mpecho Xian跟著松岡千惠(Chie Matsuoka)回來了...
+~
+|
+#66004
+yenzen-aw girl-aw-k~
+Y.Z.(YenZen)~
+一名女孩(Girl)站在這裡，似乎在想著什麼事情。
+~
+她的長相並沒有特別的突出，卻也還算清秀，一頭俐落的短髮
+披在肩上，臉上總是帶著淺淺的微笑，雖然如此，卻又不脫稚
+氣的表情，讓人不禁想要跟她多聊幾句。
+~
+1 0 1000 S
+36 0 0 0d0+0 0d0+0
+10000 0
+0 8 2
+R human~
+>talk_prog topic~
+if ispc($n)
+	if name($n) == kention
+		if rand(20)
+			mpcallout 1 say 還在忙嗎？雖然你總是在寫論文，也要記得照顧身體。
+			mpcallout 2 sweat kention
+			mpcallout 3 say 如果你需要我幫你拿東西(objects)，記得告訴我。
+		else
+			if rand(50)
+				say 論文的進度完成了嗎？記得跟Li報告一下喔。
+			endif
+		endif
+	else
+	endif
+~
+>talk_prog song~
+	if ispc($n)
+		if name($n) == kention
+			say 有什麼想聽的歌嗎？
+			mpechoat $n 1000言葉(Thusand word)
+			mpechoat $n 鳥詩(Bird poem)
+			mpechoat $n 藍銅礦(Azurite)
+		endif
+	endif
+~
+>talk_prog objects~
+	if ispc($n)
+		if name($n) == kention
+			say 你需要什麼嗎？
+			mpechoat $n 一個劍神的指引(Guide of Kention)
+			mpechoat $n 一枚靈魂戒指(Soul Ring)
+			mpechoat $n 沒事，我問問而已。
+		else
+			say 對不起，只有Kention可以請我幫他拿東西。
+		endif
+	else
+	endif
+~
+>talk_prog p guide of kention~
+	if ispc($n)
+		if name($n) == kention
+			mpcallout 1 nod $n
+			mpcallout 2 say 我馬上拿給你。
+			mpcallout 3 mpechoat $n $I在身上的口袋翻找著。
+			mpcallout 4 say 記得小心使用喔。
+			mpcallout 4 give aura $n
+			mpcallout 4 mpoload 3451 1
+			mpcallout 4 say 找到了！
+		else
+			say 對不起，沒有Kention的同意，我不能把這個給你。
+			sorry $n
+		endif
+	else
+	endif
+~
+>talk_prog p soul ring~
+	if ispc($n)
+		if name($n) == kention
+			mpcallout 1 nod $n
+			mpcallout 2 say 我馬上拿給你。
+			mpcallout 3 mpechoat $n $I在身上的口袋翻找著。
+			mpcallout 4 say 記得小心使用喔。
+			mpcallout 4 give ring $n
+			mpcallout 4 mpoload 3452 1
+			mpcallout 4 say 找到了！
+		else
+			say 對不起，沒有Kention的同意，我不能把這個給你。
+			sorry $n
+		endif
+	else
+	endif
+~
+|
+#66005
+girl-skalt~
+女孩(girl)~
+一位非常美麗的女孩(girl)在這邊替你打氣。
+~
+她今年19歲，但也許是因為比較早出社會工作的緣故，她給你的感覺遠比實際年齡
+成熟的多了，淡淡的妝跟最近剛燙的小波浪更是讓她充滿了女人味。她也是史卡烈
+特最愛的人喔，雖然史卡烈特很想直接用平常稱呼她的方式叫她，但很可惜的是她
+的名字必須要保密^^。
+~
+1|2 8|128|8192 1000 S
+50 10000 1000 0d0+-1000 -100d-1000+0
+0 0
+0 8 2
+R Human~
+P 1|2|4|8|16|32|64|128|512|32768|65536
+A7
+stand+mpecho 女孩(girl) 伸了個懶腰
+say 天亮囉，早安....+mpecho 女孩(girl) 開始梳洗....
+~
+A8
+mpecho 女孩(girl) 輕輕地走到你身邊....+say 今天也要認真工作喔^^
+mpecho 女孩(girl) 說完就跑到一旁坐著休息了....
+~
+A22
+mpecho 女孩(girl) 慵懶的揉了揉雙眼
+say 好晚了，我先休息囉，你不要熬夜喔，對身體不好
+mpecho 女孩(girl) 慢慢回到床邊....+say 還有！別想趁我睡著時亂來喔！+sleep
+~
+|
+>talk_prog topic~
+if rand(20)
+           smile
+           say 要加油喔，我會幫你打氣的^^
+   else
+           say 豬頭！你再混下去試試看！
+endif
+~
+>defun_prog areawriter_coffee~
+mpecho 你淺嚐了一口咖啡，頓時覺得精神百倍
+mpforcer here modhmv pc 04.5 10 00000000
+~
+>defun_prog areawriter_sweet_smile~
+mpecho $I 看你很開心的喝著她煮的咖啡，也很高興的露出了甜美的笑容
+mpecho 看到$I 的笑容，你覺得不管什麼疲勞跟煩惱都飛到九霄雲外了
+mpforcer here modhmv pc 24.5 10 00000000
+~
+>rand_prog 3~
+if pcnum($) > 0
+if rand(70)
+   mpcallout 1 say 我幫你準備好咖啡了喔^^
+   mpcallout 2 mpecho $I 溫柔的把咖啡遞給了你
+   mpcallout 3 mpcall areawriter_coffee $r
+   mpcallout 4 mpcall areawriter_sweet_smile $r
+else
+   mpcallout 1 say 先吃點東西休息一下吧，是我自己煮的喔^^
+   mpcallout 2 mpecho $I 輕輕地把她準備好的餐點交給了你
+   mpcallout 2 mpoload 66005 $r viclv target
+   mpcallout 3 say 記得要吃完喔，不然下次就不做給你吃了
+   mpcallout 4 gig
+endif
+endif
+~
+|
+#66006
+rasty-cake~
+菈司蒂(Rasty)~
+一個可愛的小女孩(Rasty)在這裡唱著好聽的歌曲。
+~
+她是個12歲，身材嬌小，有著娃娃臉的女孩。最大的特徵就是她的右眼紅左眼藍的雙色曈。
+雖然不會說話，卻會唱出好聽的歌，因此被認為是天使的詛咒，不受人歡迎。
+天使蛋糕(Cake)在旅行的途中發現了她，並且把她接到這裡來，使她能盡情的做喜歡的事情
+。
+~
+2 128 1000 S
+100 10000 0 5000d5000+-10000 -1000d-10000+0
+0 0
+0 8 2
+P 1|2|4|8|16|32|64|128|512|32768|65536
+S
+41 100000
+S
+42 100000
+S
+45 100000
+S
+46 100000
+R Human~
+>rand_prog 1~
+if rand(5)
+        if is_qmark(self) == rasty_singing
+                break
+        endif
+        mpgoto 3054
+        mpadd_qmark self rasty_singing 10 0 0 0 1 0
+        mpcallout 1 mpecho $I 開始唱起了美麗的天使之歌(Angel Serenade)...
+        mpcallout 3 mpecho 你覺得你的生命力開始隨著歌聲獲得回復...
+        mpcallout 3 mpforcer here modhmv pc 04.10 20 00000000
+        mpcallout 4 mpasound 你聽到了一陣十分美麗的歌聲...
+        mpcallout 10 mpecho 你覺得你的精神力隨著歌聲而獲得昇華...
+        mpcallout 10 mpforcer here modhmv pc 14.20 30 00000000
+        mpcallout 12 mpasound 你聽到了一陣十分美麗的歌聲...
+        mpcallout 14 mpecho 你不禁聽呆了...
+        mpcallout 16 mpecho $I 的歌漸漸地進入尾聲...
+        mpcallout 18 mpasound 美麗的歌聲逐漸的消失了...
+        mpcallout 20 mpecho 當 $I 唱完之後，你不禁跟著大家一起拍手叫好
+        mpcallout 20 mpdel_qmark self rasty_singing
+endif
+~
+>rand_prog 50~
+if inroom($i) == 3054
+        if is_qmark($i) != rasty_singing
+                mpcallout 1 mpecho 你看到菈司蒂突然看了看天邊的太陽...
+                mpcallout 3 blu
+                mpcallout 5 mpecho 菈司蒂向大家比手畫腳了一下...
+                mpcallout 8 mpecho 她似乎是要回家了...
+                mpcallout 15 bye
+                mpcallout 18 mpgoto 66006
+        endif
+endif
+~
+|
+#66007
+sliver queen~
+裂片妖后(Sliver Queen)~
+一隻像小山一樣巨大的裂片妖(Sliver Queen)正憤怒的朝你攻來。
+~
+該怎麼說才好呢..看來她能夠被稱為后不是沒有原因的，她正在不停的生出新的裂片妖
+呢！除了像小山一樣巨大的身軀外，她的模樣也和外面那些裂片妖大不相同。正常的裂
+片妖應該是只有一隻爪子和兩條尾巴的，可是妖后很明顯的伸出了七、八隻又長又銳利
+的爪子；至於尾巴，倒是沒有看到，大概是被她壯碩的身軀給壓住了吧。如果你注意看
+的話，她的身體下面似乎壓著一些東西。
+~
+2|16384|262144|1048576|8388608 128|549755813888 0 S
+60 0 0 50d30+0 -30d0+0
+0 0
+0 8 0
+R Dragon~
+C 32
+P 2|98304|1048576|2097152|16777216
+S 12 3000
+S 13 15000
+S 14 3000
+S 40 50
+S 41 50
+S 42 50
+S 43 50
+S 44 200
+>rand_prog 2~
+        mpecho $I挪動身體，揮舞著她的爪子，似乎很無聊的樣子。
+        yawn
+~
+>talk_prog 遠古遺產~
+        mpecho $I露出了緊張的神情....
+        say 你是怎麼知道遠古遺產就在我身體底下的？！
+        mpcallout 2 say 不過這些東西並不是我製造的，我只是碰巧撿到而已...
+~
+>talk_prog 製造~
+        say 我出生的時候這些東西就在這裡啦...我怎麼會知道是誰製造的呢...
+        mpcallout 1 say 大概是遠古的某些力量強大的法師吧...要不然還有誰會製造這種神器呢。
+        mpcallout 3 say 不過最近這些東西不怎麼安分，要不就是動來動去，
+        mpcallout 4 say 要不就是突然發出強光或是響聲...
+        mpcallout 6 say 可能是其他的遠古遺產被啟動了吧......
+        mpcallout 7 say 不過我也不知道其他的遠古遺產在哪......你自己想辦法找吧
+~
+>talk_prog 撿到~
+        say 這就要從我和我的孩子們的誕生開始說起啦....
+        say 不過由於故事十分冗長，我想你應該沒有興趣聽我長篇大論吧？
+        mpechoat $n choose a topic:[yes/no]
+~
+>talk_prog no~
+        say 乖孩子...專心的寫你的區域吧...
+        pat $n
+~
+>talk_prog yes~
+        say 你還真的想聽阿??
+        mpcallout 1 say 可惜我不想講....
+        mpcallout 4 say 也講不出來....
+        mpcallout 7 say 因為Qwer覺得故事太長了懶的打啦 :P
+        mpcallout 10 say 所以阿...專心寫區域比較要緊...想要知道我的故事...就趕緊催促Qwer把我寫出來吧。
+~
+>talk_prog topic~
+if rand(50)
+        tell $n 別在這裡打擾我！！！
+        mpecho $I憤怒的揮動著她的爪子。
+else
+        if rand(50)
+                say 就是你...$N...是你殺了我的孩子們。
+                mpechoaround $n $I揮動著她的爪子朝$N攻去!!!
+                mpechoat $n $I揮動著她的爪子朝你攻來!!!
+                mpcallout 1 mpforcer here modhmv $n 03.50 80 00000000
+                mpcallout 1 mpechoaround $n $I的攻擊使得$N受到重傷。
+                mpcallout 1 mpechoat $n $I的攻擊使你受到嚴重傷害。
+        else
+                tell $n 我是不會離開的！修想碰我的遠古遺產。
+        endif
+endif
+~
+|
+#66008
+moe fairy~
+萌(moe)~
+淘氣的小精靈(fairy)正悠閒地整理工坊。
+~
+萌(Moe)看起來就像是一個天真淘氣的妖精(fairy)，但身體的外圍發散著一道
+淡淡的神秘靈氣。原來，萌來自雲上彼端的天界(celestial)，是一種接近天使
+的異世界生物。為了履行古老的約定，萌會不辭一切地守護主人- Are。
+~
+1|2|64 0 1000 S
+40 10000 10000 100d100+-2000 -400d-2000+0
+0 0
+0 8 1
+P 1|4|8|16|32|64|128|512|ALY_DI|ALY_DH|ALY_INF
+R Angel~
+>tick_prog 100~
+  if inroom($i) != 66008
+      mpgoto 66008
+  endif
+  if pcnum($) > 0
+      if hpnum($r) < 200
+          mpforcer here c 'full heal' $n 40
+      endif
+  endif
+~
+>defun_prog are_moe_refuse~
+  ? $n
+  mpcallout 1 mpechoat     $n $I懶懶地對你說道：你是誰？我只聽主人的話喔。
+  mpcallout 1 mpechoaround $n $I懶懶地對$N說道：你是誰？我只聽主人的話喔。
+  mpcallout 2 yawn
+  mpcallout 2 mpdel_qmark $i are_moe_action
+~
+>defun_prog are_moe_defun1~
+  say 真懶惰...都不自己清理房間。
+  pout
+~
+>defun_prog are_moe_defun2~
+  say 終於整理乾淨了！
+  hop
+~
+>defun_prog are_moe_defun3~
+  mpforcer here c 'sober up' $n 40
+  mpforcer here del_affect $n 'weaken'
+~
+>defun_prog are_moe_defun4~
+  mpforcer here c 'detect invis'  $n 40
+  mpforcer here c 'detect hidden' $n 40
+  mpforcer here c 'detect poison' $n 40
+  mpforcer here c 'detect magic'  $n 40
+  mpforcer here c 'infravision'   $n 40
+~
+>defun_prog are_moe_defun5~
+  cast 5 'create food'
+  cast 'create spring'
+~
+>defun_prog are_moe_defun6~
+  say 成功了！
+  sing
+~
+>defun_prog are_moe_defun7~
+  mpecho 你不由自主地走出了工坊...
+  mpforce all out
+  mpat $n mpforce $n turn off
+~
+>repop_prog 100~
+  mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+  mpoload 66008 $i viclv target
+  mpat 5 wear all
+~
+>speech_prog p clean room~
+  if is_qmark($i) != are_moe_action
+      mpadd_qmark $i are_moe_action 1 0 0 0 1 0
+      if name($n) == Nadia
+          roll
+          mpcallout 1 mpcall are_moe_defun1
+          mpcallout 2 say 呦～讓我來打掃房間吧～
+          mpcallout 3 mpecho $I口中喃喃念著咒文：「clean room」
+          mpcallout 4 mppurge
+          mpcallout 4 mpecho 工坊內突然變得一塵不染，彷彿剛經過大掃除！
+          mpcallout 5 mpcall are_moe_defun2
+          mpcallout 5 mpdel_qmark $i are_moe_action
+      else
+          mpcall are_moe_refuse $n
+      endif
+  endif
+~
+>talk_prog drunken~
+  if is_qmark($i) != are_moe_action
+      mpadd_qmark $i are_moe_action 1 0 0 0 1 0
+      if name($n) == Nadia
+          waggle $n
+          mpcallout 1 say 喝酒是不好的。
+          mpcallout 2 say 唉～讓我來幫你醒酒吧～
+          mpcallout 3 mpecho $I口中喃喃念著咒文：「sober up plus」
+          mpcallout 4 mpcall are_moe_defun3 $n
+          mpcallout 5 wink
+          mpcallout 5 mpdel_qmark $i are_moe_action
+      else
+          mpcall are_moe_refuse $n
+      endif
+  endif
+~
+>speech_prog detect~
+  if is_qmark($i) != are_moe_action
+      mpadd_qmark $i are_moe_action 1 0 0 0 1 0
+      if name($n) == Nadia
+          nod
+          mpcallout 1 say 嗯～讓我來為您施放偵測法術吧～
+          mpcallout 2 mpecho $I口中喃喃念著咒文：「true sigh」
+          mpcallout 3 mpecho $N的眼睛閃爍著神奇的光輝！
+          mpcallout 3 mpcall are_moe_defun4
+          mpcallout 4 giggle
+          mpcallout 4 mpdel_qmark $i are_moe_action
+      else
+          mpcall are_moe_refuse $n
+      endif
+  endif
+~
+>talk_prog food~
+  if is_qmark($i) != are_moe_action
+      mpadd_qmark $i are_moe_action 1 0 0 0 1 0
+      if name($n) == Nadia
+          nod
+          mpcallout 1 say 嘻～讓我來為您準備佳餚～
+          mpcallout 2 mpcall are_moe_defun5 $n
+          mpcallout 3 clap
+          mpcallout 3 mpdel_qmark $i are_moe_action
+      else
+          mpcall are_moe_refuse $n
+      endif
+  endif
+~
+>speech_prog dispel~
+  if is_qmark($i) != are_moe_action
+      mpadd_qmark $i are_moe_action 1 0 0 0 1 0
+      if name($n) == Nadia
+          nod
+          mpcallout 1 say 嘻～讓我來為您解除準備佳餚～
+          mpcallout 2 mpecho $I口中喃喃念著咒文：「dispel」
+          mpcallout 3 mpforcer here del_affect $n all
+          mpcallout 3 mpecho $I除去了$N身上的所有法術。
+          mpcallout 4 mpcall are_moe_defun6
+          mpcallout 4 mpdel_qmark $i are_moe_action
+      else
+          mpcall are_moe_refuse $n
+      endif
+  endif
+~
+>talk_prog close~
+  if is_qmark($i) != are_moe_action
+      mpadd_qmark $i are_moe_action 1 0 0 0 1 0
+      if name($n) == Nadia
+          sorry
+          mpcallout 1 say 工坊要暫時關閉了～
+          mpcallout 2 mpecho $I口中喃喃念著咒文：「transfer」
+          mpcallout 3 mpcall are_moe_defun7 $n
+          mpcallout 4 sigh
+          mpcallout 4 mpdel_qmark $i are_moe_action
+      else
+          mpcall are_moe_refuse $n
+      endif
+  endif
+~
+>give_prog all~
+  drop all
+~
+|
+#66009
+Phyreishallys~
+菲蕾夏莉絲(Phyreishallys)~
+綠華精靈菲蕾夏莉絲(Phyreishallys)靜靜地站在這裡遙望遠方。
+~
+在古城歐亞那創建之初就已存在，四位歐亞那城的守護精靈之一，與女神希妮絲
+同為城內人們所尊敬、信賴的對象之一。帶點草綠的纖柔金色長髮直達腰際，淡
+雅的裝束配上清麗的容貌與穠纖合度的身軀，是個會令人忍不住多看幾眼的美麗
+女孩。不食人間煙火的神情中隱約帶著一絲過往的滄桑，似乎隱藏著什麼不為人
+知的回憶，只不過，每當有人向她探詢她的過去，絕大多數得到的僅僅是個淡淡
+的微笑，除此之外什麼也沒有。
+~
+1|2|64 4|32|128|8192 1000 S
+45 0 0 0d0+0 0d0+30
+0 0
+0 8 2
+R Elf~
+P 1|4|8|16|32|64|128|2048|32768|65536|1048576|2097152|8388608|67108864
+W armageddon~ 100 1
+S 41 100000
+S 42 100000
+S 45 100000
+S 46 100000
+>talk_prog topic~
+if is_qmark($i) != phyreishallys_talking
+        if ispc($n)
+                mpadd_qmark self phyreishallys_talking 10 0 0 0 0 1
+                if sex($n) == 2
+                        tell $n 妳是......夜之女神派來的人嗎？
+                        mpcallout 1 look $n
+                        mpcallout 2 tell $n 看起來好像不是，妳身上沒有那種氣息。
+                        mpcallout 3 tell $n 真是非常抱歉，我弄錯了......
+                        mpcallout 4 sorry $n
+                        mpcallout 4 mpdel_qmark self phyreishallys_talking
+                else
+                        tell $n 好像在哪裡見過你？
+                        mpcallout 1 tell $n 是我的錯覺吧。
+                        mpcallout 2 mpecho $I的視線再次飄向遠方......
+                        mpcallout 2 mpdel_qmark self phyreishallys_talking
+                endif
+        endif
+else
+        mpechoat $n 她似乎沒有多餘的心力同時與兩個人交談。
+endif
+~
+|
+#66012
+baby doll~
+娃兒(baby doll)~
+一個倍受寵愛的娃兒(doll)在這裡發呆.
+~
+　　在你眼前的，是一個真人大小般的娃娃，手工十分的
+細膩。你凝視著她那大大的眼睛，瞧！她在向你眨眼呢！
+她.........她在向你眨眼...她居然會動，看來製作她的
+人是個能力高強的神人。
+~
+1|2|64|512|1048576|268435456 8|16|32|128|8192|524288 1000 S
+40 10000 0 0d0+-2000 -2000d-2000+0
+0 0
+0 8 2
+R Angel~
+C 0
+P 1|2|4|8|16|32|64|128|512|2048|32768|65536|1048576|2097152|67108864
+S 45 500
+S 46 500
+>talk_prog hungry~
+if insameroom(lhatlord)
+        if name($n) == lhatlord
+                mpcall snarlhungry $n
+        else
+                mpcall otherhungry $n
+        endif
+else
+        mpechoat $n $I完全沒有動作.
+endif
+~
+>talk_prog freedom~
+if insameroom(lhatlord)
+        if name($n) == lhatlord
+                if is_qmark($i) > home_doll_freetime 100024
+                        mpcall cannotfree $n
+                else
+                        mpcall canfree $n
+                endif
+        else
+                if is_qmark($i) != talking
+                        mpadd_qmark self talking -1 1 1 1 0 1
+                        say 自由的確很重要阿！
+                        mpdel_qmark self talking
+                else
+                        mpcall warning $n
+                endif
+        endif
+else
+        mpechoat $n $I完全沒有動作.
+endif
+~
+>talk_prog topic~
+if insameroom(lhatlord)
+        if name($n) == lhatlord
+                if is_qmark($i) == home_doll_doing 100001
+                        say 恩？？
+	break
+                endif
+                if is_qmark($i) == home_doll_doing 100002
+                        say 親愛的，讓人家先掃地嘛！
+	break
+                endif
+                if is_qmark($i) == home_doll_doing 100003
+                        say 親愛的，你不可以偷看啦！
+                        say 這是要寫給你的耶！
+                        say 你要等人家寫完才可以看喔！
+	break
+                endif
+                if is_qmark($i) == home_doll_doing 100004
+                        mpecho $I隨著音樂輕輕的哼起了歌曲～～
+	break
+                endif
+                if is_qmark($i) == home_doll_doing 100005
+                        say 親愛的，這故事好感人喔！！
+                        say 可是怎麼女主角會選擇離開呢？
+                        mpecho $I因為感動而落下了淚來......
+	break
+                endif
+                if is_qmark($i) == home_doll_doing 100006
+                        say 親愛的，人家可以看ＢＬ的漫畫嗎？？
+	break
+                endif
+                if is_qmark($i) == home_doll_doing 100007
+                        say 這上面寫著，好多我不知道的護膚方法喔！
+	break
+                else
+                        mpcall dollsong $n
+                endif
+        else
+                mpcall othertalk $n
+        endif
+else
+        mpechoat $n $I完全沒有動作.
+endif
+~
+>act_prog nod~
+if insameroom(lhatlord)
+        if name($n) == lhatlord
+                if is_qmark($i) == home_doll_cook
+                        say 好的！我立刻去準備。
+                        mpmod_qmark self home_doll_cook v0 = 2
+                else
+                        say 恩！？
+                        mpcallout 1 mpechoaround $n $I一頭鑽進Lhatlord的懷裡.
+                        mpcallout 1 mpechoat $n $I一頭鑽進你的懷裡.
+                        mpcallout 2 mpechoaround $n 你心裡真是超級忌妒Lhatlord的.
+                endif
+        else
+                if is_qmark($i) != talking
+                        mpechoat $n $I對你不理不採.
+                else
+                        mpcall warning $n
+                endif
+        endif
+else
+        mpechoat $n $I完全沒有動作.
+endif
+~
+>act_prog kiss~
+if insameroom(lhatlord)
+        if name($n) == lhatlord
+                if is_qmark($i) == home_doll_turndown
+                        mpdel_qmark self home_doll_turndown
+                        say 親愛的！！
+                        mpcallout 1 mpecho $I甜蜜的表情真是羨煞了旁人.
+                        mpcallout 1 mpechoaround $n $I飛身撲向Lhatlord的懷裡.
+                        mpcallout 1 mpechoat $n $I飛身撲進了你的懷裡.
+                else
+                        blush lhatlord
+                        mpcallout 1 mpecho $I輕輕的閉上眼睛
+                        mpcallout 2 mpechoaround $n Lhatlord和$I的臉龐越來越接近了......
+                        mpcallout 2 mpechoat $n 你和$I的臉龐越來越接近了......
+                        mpcallout 3 mpechoaround $n Lhatlord溫柔的在$I的嘴角，輕輕的吻了一下.
+                        mpcallout 3 mpechoat $n 你溫柔的在$I的嘴角，輕輕的吻了一下.
+                endif
+        else
+                if is_qmark($n) != talking
+                        mpechoat $n $I閃過你的親吻，並且生氣的把你推了出去.
+                        mpechoaaround $n $I閃過$N的親吻，並且生氣的把他推了出去.
+                        mpechoat $n 同時你感覺到一陣疼痛從心裡散開來了.
+                        mpforcer here modhmv $n 03.30 30 0
+                        mptransfer $n 66000
+                        mpforcer 66000 mpforce $n look
+                else
+                        mpcall warning
+                endif
+        endif
+else
+	mpechoaaround $n $I閃過$N的親吻，並且生氣的把他送了出去.
+        mpechoat $n $I閃過你的親吻，生氣的把你推了出去.
+        mpechoat $n 同時你感覺到一陣疼痛從心裡散開來了.
+        mpforcer here modhmv $n 03.30 30 0
+        mptransfer $n 66000
+        mpforcer 66000 mpforce $n look
+endif
+~
+>act_prog pat~
+if insameroom(lhatlord)
+        if name($n) == lhatlord
+                if is_qmark($i) != home_doll_turndown
+                        mpadd_qmark self home_doll_turndown -1 1 0 0 1 0
+                        say 親愛的，我先休息去了喔！
+                        mpecho $I進入休眠狀態.
+                else
+                        say 恩......
+                        mpcallout 1 snuggle
+                        mpcallout 2 say 親愛的？！
+                endif
+        else
+                mpechoat $n $I矯捷的閃開你的手.
+                mpechoaround $n $I矯捷的閃開$N的手.
+        endif
+else
+        mpechoat $n $I完全沒有動作.
+endif
+~
+>tick_prog 100~
+if insameroom(lhatlord)
+        if rand(20)
+	if is_qmark($i) == home_doll_doing
+	        mpdel_qmark self home_doll_doing
+	endif
+                if rand(15)
+                        mpcall tickdoingidle $n
+                        break
+                endif
+                if rand(17)
+                        mpcall tickdoingclean $n
+                        break
+                endif
+                if rand(20)
+                        mpadd_qmark self home_doll_doing 3 3 0 0 1 0
+                        mpecho $I拿出了信紙和筆。
+                        mpcallout 1 mpecho $I沉思的想著要寫給誰。
+                        break
+                endif
+                if rand(25)
+                        mpadd_qmark self home_doll_doing 3 4 0 0 1 0
+                        mpecho $I戴上了耳機，轉到她最喜歡的音樂台
+                        break
+                endif
+                if rand(33)
+                        mpcall tickdoingnovel $n
+                        break
+                endif
+                if rand(50)
+                        mpadd_qmark self home_doll_doing 3 6 0 0 1 0
+                        mpecho 不知道$I從哪找來了漫畫
+                        mpcallout 1 mpecho $I專心的看起漫畫來了
+                        break
+                endif
+                mpcall tickdoingmagazine $n
+        endif
+else
+	if is_qmark($i) == home_doll_freetime
+		mpmod_qmark self home_doll_freetime v0 + 1
+	endif
+endif
+~
+>defun_prog warning~
+if is_qmark($n) == home_doll_enemy 100005
+        mpechoat $n 四周的能量造成強大的爆炸！！
+        mpechoat $n 你因為插嘴太多次，被趕了出去。
+        mptransfer $n 66000
+        mpat 66000 mpforce $n look
+        mpechoaround $n 你感到一陣震動，似乎有不懂禮貌的傢伙被轟出去了。
+endif
+if is_qmark($n) <= home_doll_enemy 100004
+        mpechoat $n 你感到四周充滿了奇妙的能量。
+        mpechoaround $n 你感到一股奇妙的能量聚在$N身邊不散。
+        mpmod_qmark $n home_doll_enemy v0 + 1
+endif
+if is_qmark($n) != home_doll_enemy
+        mpadd_qmark $n home_doll_enemy 24 1 0 0 0 1
+        mpechoat $n 你已經被紀錄了，再沒禮貌就遭殃了。
+endif
+~
+>defun_prog snarlhungry~
+if is_qmark($i) != talking
+        mpadd_qmark self talking -1 1 1 1 0 1
+        say 好的！親愛的！我立刻為你準備
+        mpcallout 1 mpecho $I換上了有小熊圖案的圍裙
+        mpcallout 2 mpecho $I輕輕的哼著小調
+        mpcallout 3 mpecho $I輕輕的哼著小調
+        mpcallout 4 say 親愛的！我做好了
+        mpcallout 4 mpoload 66002 $n viclv target
+        mpcallout 5 say 來我餵你吃喔～～阿～～
+        mpcallout 6 mpforce lhatlord eat rice
+        mpcallout 7 mpforce lhatlord say 口感就是完全滴不一樣。
+        mpcallout 7 mpforce lhatlord say 和外面那隻死惡魔給的，
+        mpcallout 7 mpforce lhatlord say 你充滿愛心的特製米糧，
+        mpcallout 8 smile
+        mpcallout 8 mpechoaround $n $I細心的幫Lhatlord擦了擦嘴
+        mpcallout 8 mpechoat $n $I細心的幫你擦了擦嘴
+        mpcallout 9 mpdel_qmark self talking
+else
+        tell $n 親愛的！你等一下喔！
+endif
+~
+>defun_prog otherhungry~
+if is_qmark($i) != talking
+        mpadd_qmark self talking -1 1 1 1 0 1
+        if is_qmark($i) != home_doll_cook
+                tell $n 你要問看看親愛的，他願不願意請你吃飯
+                mpadd_qmark self home_doll_cook 5 1 0 0 1 0
+                mpdel_qmark self talking
+        else
+                if is_qmark($i) == home_doll_cook 100002
+                        say 既然親愛的都答應了，那我就準備給你吃吧
+                        mpcallout 1 mpecho $I換上了普通的圍群
+                        mpcallout 2 mpecho $I認真的準備食物宴請客人
+                        mpcallout 3 mpoload 20 $n 1 target
+                        mpcallout 4 mpechoat $n $I將料理好的食物放到你手上。
+                        mpcallout 4 mpechoaround $n $I將料理好的食物放到$N手上。
+                        mpcallout 5 say 吃吧！我的手藝可是不錯的歐！
+                        mpcallout 5 mpdel_qmark self talking
+                else
+                        tell $n 親愛的可沒有答應要請你歐
+                        tell $n 你要問看看親愛的，他願不願意請你吃飯
+                        mpdel_qmark self talking
+                endif
+        endif
+else
+        mpcall warning $n
+endif
+~
+>defun_prog canfree~
+if is_qmark($i) != home_doll_freetime
+        if is_qmark($i) != talking
+                mpadd_qmark self talking -1 1 1 1 0 1
+                mpadd_qmark self home_doll_freetime 99 1 0 0 0 1
+                say 親愛的！時間到要記得回來喔！
+                say 還有要小心別被勞改營的人抓包。
+                mpcallout 1 mpecho $I喃喃唸起未知的咒語......
+                mpcallout 2 mpat lhatlord mpforce lhatlord look
+                mpcallout 2 mptransfer lhatlord 3001
+                mpcallout 3 say 各位！親愛的出門去了，你們先離開吧！
+                mpcallout 4 mptransfer all 66000
+                mpcallout 4 mpecho $I把你送離開房間
+                mpcallout 5 mpdel_qmark self talking
+        else
+                tell $n 親愛的，你讓人家先把話說完嘛。
+        endif
+else
+        if is_qmark($i) != talking
+                mpadd_qmark self talking -1 1 1 1 0 1
+                say 親愛的！你應該還不到回來的時間阿！
+                mpcallout 1 ponder
+                mpcallout 2 say 看來你是被勞改營的人抓回來了。
+                mpcallout 3 say 可是我暫時沒力量送你出去了耶！
+                mpcallout 4 say 好吧！那我來陪你吧！
+                mpcallout 5 mpforce lhatlord nod
+                mpcallout 6 mpforce lhatlord hug doll
+                mpcallout 7 mpdel_qmark self talking
+        else
+                tell $n 親愛的，你讓人家先把話說完嘛。
+        endif
+endif
+~
+>defun_prog cannotfree~
+if is_qmark($i) != talking
+        mpadd_qmark self talking -1 1 1 1 0 1
+        say 親愛的！你才剛出去過沒多久耶！
+        mpcallout 1 tear
+        mpcallout 1 say 不要丟下我一個啦！
+        mpcallout 2 sob lhatlord
+        mpcallout 3 mpecho 看著$I哭泣的臉龐，你不禁難過了起來
+        mpcallout 4 mpforce lhatlord say 好啦！好啦！我留下來陪你
+        mpcallout 5 say 我就知道....你對我最好了！！
+        mpcallout 6 mpechoat $n $I笑著往你身上飛撲過來
+        mpcallout 6 mpechoaround $n $I笑著往Lhatlord身上飛撲過去
+        mpcallout 7 mpechoaround $n 你心裡想著：可恨的Lhatlord.......
+        mpcallout 8 mpdel_qmark self talking
+else
+        tell $n 親愛的，你讓人家先把話說完嘛。
+endif
+~
+>defun_prog dollsong~
+if is_qmark($i) != talking
+        mpadd_qmark self talking -1 1 1 1 0 1
+        if rand(10)
+                mpcall song1 $n
+                break
+        endif
+        if rand(11)
+                mpcall song2 $n
+                break
+        endif
+        if rand(13)
+                mpcall song3 $n
+                break
+        endif
+        if rand(15)
+                mpcall song4 $n
+                break
+        endif
+        if rand(17)
+                mpcall song5 $n
+                break
+        endif
+        if rand(20)
+                mpcall song6 $n
+                break
+        endif
+        if rand(25)
+                mpcall song7 $n
+                break
+        endif
+        if rand(33)
+                mpcall song8 $n
+                break
+        endif
+        if rand(50)
+                mpcall song9 $n
+                break
+        else
+                mpcall song10 $n
+        endif
+else
+        mpechoat $n $I專心的唱著歌曲！！
+endif
+~
+>defun_prog song1~
+mpecho $I[1;34m唱著：少了你的手臂當枕頭　我還不習慣[m
+mpcallout 1 mpecho $I[1;34m唱著：你的望遠鏡望不到　我北半球的孤單[m
+mpcallout 2 mpecho $I[1;34m唱著：太平洋的潮水跟著地球　來回旋轉[m
+mpcallout 3 mpecho $I[1;34m唱著：我會耐心地等　等你有一天靠岸[m
+mpcallout 4 mpdel_qmark self talking
+~
+>defun_prog song2~
+mpecho $I[1;34m唱著：累不累 睡不睡 醉不醉[m
+mpcallout 1 mpecho $I[1;34m唱著：愛過以後 天亮以前[m
+mpcallout 2 mpecho $I[1;34m唱著：全世界 像個洞穴[m
+mpcallout 3 mpecho $I[1;34m唱著：(還有你 陪我守夜)[m
+mpcallout 4 mpdel_qmark self talking
+~
+>defun_prog song3~
+mpecho $I[1;34m唱著：我想對你說 我愛你到永遠就算承諾 沒時間讓它實現[m
+mpcallout 1 mpecho $I[1;34m唱著：我會守候這個不變的諾言 不管世界把你我分隔多遠[m
+mpcallout 2 mpecho $I[1;34m唱著：我要對你說 我愛你到永遠 等待有天 再重逢繼續相戀[m
+mpcallout 3 mpecho $I[1;34m唱著：我會記得我和你曾經有約 讓我愛你到永遠[m
+mpcallout 4 mpecho $I[1;34m唱著：我會守候這個不變的諾言 讓我愛你到永遠[m
+mpcallout 5 mpdel_qmark self talking
+~
+>defun_prog song4~
+mpecho $I[1;34m唱著：聽到我的電話 響了一聲就暫停[m
+mpcallout 1 mpecho $I[1;34m唱著：會不會是你 我總懷疑[m
+mpcallout 2 mpecho $I[1;34m唱著：因為這原因 心情不穩定[m
+mpcallout 3 mpecho $I[1;34m唱著：我們之間的問題 是我不相信你 敏感又多心 怕你變了心[m
+mpcallout 4 mpecho $I[1;34m唱著：因為愛你 害怕失去你 愛的天氣總是陰晴不定[m
+mpcallout 5 mpecho $I[1;34m唱著：愛的情緒 也在歡笑中哭泣[m
+mpcallout 6 mpecho $I[1;34m唱著：Baby 想對你說聲對不起 用錯了方式去愛你[m
+mpcallout 7 mpecho $I[1;34m唱著：因為我太在意如果沒有你.我的世界只剩回憶[m
+mpcallout 8 mpecho $I[1;34m唱著：每天只面對孤寂  已來不及 再說我愛你[m
+mpcallout 9 mpecho $I[1;34m唱著：自從那天分手後 停不住淚滴 想念一個人 能忘記自己[m
+mpcallout 10 mpecho $I[1;34m唱著：讓我愛你 什麼都願意 如果能遇見你 把你抱緊[m
+mpcallout 11 mpecho $I[1;34m唱著：從此不分離 絕不放棄 我要告訴你[m
+mpcallout 12 say Baby I'm sorry
+mpcallout 13 mpdel_qmark self talking
+~
+>defun_prog song5~
+mpecho $I[1;34m唱著：有你這一生就夠了 所有的尋覓都值得[m
+mpcallout 1 mpecho $I[1;34m唱著：我們的擁抱就像是呼吸 是那麼的自然又那麼必需[m
+mpcallout 2 mpecho $I[1;34m唱著：有你什麼事都對了 不管是否還有挫折[m
+mpcallout 3 mpecho $I[1;34m唱著：能彼此珍惜是多麼難得[m
+mpcallout 4 mpecho $I[1;34m唱著：這一生有你陪我就夠了[m
+mpcallout 5 mpdel_qmark self talking
+~
+>defun_prog song6~
+mpecho $I[1;34m唱著：我口袋裡　還有你給的溫馨[m
+mpcallout 1 mpecho $I[1;34m唱著：我的手心　還有你吻的氣息[m
+mpcallout 2 mpecho $I[1;34m唱著：低低的雲[m
+mpcallout 3 mpecho $I[1;34m唱著：讓想念的人喘不過氣[m
+mpcallout 4 mpecho $I[1;34m唱著：而你的背影　會在哪裡平靜[m
+mpcallout 5 mpdel_qmark self talking
+~
+>defun_prog song7~
+mpecho $I[1;34m唱著：Fly away　不管流下多少眼淚[m
+mpcallout 1 mpecho $I[1;34m唱著：堅持下去的動力還在　Nothing I will be afraid[m
+mpcallout 2 mpecho $I[1;34m唱著：Fly away　不管未來有多困難[m
+mpcallout 3 mpecho $I[1;34m唱著：我仍然能感覺　心跳還在　Nothing I will be afraid[m
+mpcallout 4 mpdel_qmark self talking
+~
+>defun_prog song8~
+mpecho $I[1;34m唱著：我只有這一千零一個願望[m
+mpcallout 1 mpecho $I[1;34m唱著：有一天幸福總會在我手上[m
+mpcallout 2 mpecho $I[1;34m唱著：每一顆心都有一雙翅膀[m
+mpcallout 3 mpecho $I[1;34m唱著：要勇往直前的飛翔[m
+mpcallout 4 mpecho $I[1;34m唱著：沒有到不了的地方[m
+mpcallout 5 mpdel_qmark self talking
+~
+>defun_prog song9~
+mpecho $I[1;34m唱著：我以為你在說笑[m
+mpcallout 1 mpecho $I[1;34m唱著：我以為我可以做得到[m
+mpcallout 2 mpecho $I[1;34m唱著：然而我掉進愛的圈套，妳早知道[m
+mpcallout 3 mpecho $I[1;34m唱著：卻轉身離開，給一滴淚當回報[m
+mpcallout 4 mpdel_qmark self talking
+~
+>defun_prog song10~
+mpecho $I[1;34m唱著：所以我只能幸福[m
+mpcallout 1 mpecho $I[1;34m唱著：所以我不該再讓妳淚眼模糊[m
+mpcallout 2 mpecho $I[1;34m唱著：思念這麼清楚，痛也這麼清楚[m
+mpcallout 3 say 對不起，親愛的
+mpcallout 4 mpecho $I[1;34m唱著：從今以後，這城市的星星[m
+mpcallout 5 mpecho $I[1;34m唱著：有我陪你數[m
+mpcallout 6 mpdel_qmark self talking
+~
+>defun_prog othertalk~
+if is_qmark($i) != talking
+        if is_qmark($i) == home_doll_doing 100001
+                mpechoat $n $I繼續發呆不理你
+        break
+        endif
+        if is_qmark($i) == home_doll_doing 100002
+                mpechoat $n $I繼續打掃不理你
+        break
+        endif
+        if is_qmark($i) == home_doll_doing 100003
+                mpechoat $n $I繼續寫信不理你
+        break
+        endif
+        if is_qmark($i) == home_doll_doing 100004
+                mpechoat $n $I繼續聽音樂不理你
+        break
+        endif
+        if is_qmark($i) == home_doll_doing 100005
+                mpechoat $n $I繼續看小說不理你
+        break
+        endif
+        if is_qmark($i) == home_doll_doing 100006
+                mpechoat $n $I繼續看漫畫不理你
+        break
+        endif
+        if is_qmark($i) == home_doll_doing 100007
+                mpechoat $n $I繼續看雜誌不理你
+        break
+        endif
+	mpechoat $n $I顧著想她的愛人，完全不理你.
+else
+        mpcall warning $n
+endif
+~
+>rand_prog 50~
+if insameroom(lhatlord)
+else
+      if pcnum($) != 0
+	 mpecho $I以微弱的聲音說著：親...愛...的...不...在...
+	 mpcallout 1 mpecho $I以微弱的聲音說著：所有...人...禁止...進入...
+	 mpcallout 2 mptransfer all 66000
+	 mpcallout 2 mpecho $I把你送出去了
+      endif
+      if being(lhatlord)
+	  if is_qmark($i) > home_doll_freetime 100024
+               mpat lhatlord mpecho 伴隨著一陣柔和的音樂
+               mpat lhatlord mpecho $I悄悄地出現在你面前
+               mpcallout 1 mpat lhatlord say 親愛的，時間到了喔！！
+               mpcallout 2 mpat lhatlord mpecho $I發出一到光芒，隨後便和Lhatlord消失在這裡了。
+               mpcallout 2 mpat lhatlord mptransfer lhatlord 66012
+               mpcallout 3 mpecho $I和Lhatlord一同出現在這裡。
+               mpcallout 3 mpforce lhatlord look
+               mpcallout 4 say 親愛的，旅途還快樂嗎？？
+          endif
+     endif
+endif
+~
+>defun_prog tickdoingidle~
+mpadd_qmark self home_doll_doing 3 1 0 0 1 0
+if rand(25)
+        mpecho $I痴痴的望著天空，看起來真是令人憐愛
+else
+        if rand(33)
+                mpecho $I眼神呆滯，看起來真是令人憐愛
+        else
+                if rand(50)
+                        mpecho $I就在哪邊呆呆的站著，看起來真是令人憐愛
+                else
+                        mpecho $I就在那邊呆呆的坐著，看起來真是令人憐愛
+                endif
+        endif
+endif
+~
+>defun_prog tickdoingclean~
+mpadd_qmark self home_doll_doing 3 2 0 0 1 0
+mpecho $I換上了女僕裝
+if rand(33)
+        mpcallout 1 mpecho $I拿起了雞毛撢子，努力的清掃
+else
+        if rand(50)
+                mpcallout 1 mpecho $I拿起了掃把，努力的清掃
+        else
+                mpcallout 1 mpecho $I拿起了抹布，努力的擦拭
+        endif
+endif
+~
+>defun_prog tickdoingnovel~
+mpadd_qmark self home_doll_doing 3 5 0 0 1 0
+if rand(50)
+        mpecho $I拿出了她最愛的言情小說集
+        mpcallout 1 mpecho $I專心的讀著言情小說集
+else
+        mpecho $I找出了她最愛的網路小說集
+        mpcallout 1 mpecho $I專心的讀著網路小說集
+endif
+~
+>defun_prog tickdoingmagazine~
+mpadd_qmark self home_doll_doing 3 7 0 0 1 0
+mpecho $I伸手一抓
+if rand(33)
+        mpcallout 1 mpecho $I抓下了一本時裝雜誌
+        mpcallout 2 mpecho $I專心的看起了時裝雜誌
+else
+        if rand(50)
+                mpcallout 1 mpecho $I抓下了一本髮型雜誌
+                mpcallout 2 mpecho $I專心的看起了髮型雜誌
+        else
+                mpcallout 1 mpecho $I抓下了一本美容雜誌
+                mpcallout 2 mpecho $I專心的看起了美容雜誌
+        endif
+endif
+~
+|
+
+#66013
+maid-aw~
+侍女(Maid)~
+一個侍女(Maid)在這邊打掃房間。
+~
+她穿著連身的長裙，頭髮稍微往上盤了起來，長相也相當的
+清純，甚至可以說是標緻的女孩，她現在正努力的清掃這間
+房間，希望房間的主人會覺得更舒適一點。
+~
+1 0 1000 S
+36 0 0 0d0+0 0d0+0
+10000 0
+0 8 2
+R human~
+>talk_prog topic~
+	if ispc($n)
+		if name($n) == coconet
+			say 啊，主人您回來啦。
+			giggle
+			mpechoat $n －－介紹一下自己吧(self)
+			mpechoat $n －－妳打掃的相當不錯呢(well done)
+		else
+			say 如果要找主人的話
+				if insameroom(coconet)
+					say 他就在旁邊呢。
+					point coconet
+				else
+					say 他可能正忙著寫Code吧
+					say 希望他不要太勞累了...
+					worry
+				endif
+		endif
+	endif
+~
+>talk_prog self~
+	if ispc($n)
+		if name($n) == coconet
+			say 我是Kention派來的侍女，負責幫您打掃房間。
+			say Kention說因為您平常相當的勞累，希望我能好好的工作。
+			smile coconet
+		else
+			say 我是Kention派來的侍女，負責幫Coconet主人打掃房間。
+			smile $n
+		endif
+	endif
+~
+>talk_prog p well done~
+	if name($n) == coconet
+		say 啊..謝，謝謝您的誇獎。
+		blush
+		mpechoat $n 她好像非常的高興。
+		mpechoaround $n $I好像非常的高興。
+	else
+		say 謝謝。
+		smile $n
+	endif
+~
+|
+
+#0
+
+#OBJECTS
+#66000
+coffee bucket~
+神奇的水桶(Bucket)~
+你看到西方牆邊桌上擺放著一個裝滿冰咖啡的水桶 (Bucket) 供你飲用。~
+~
+25 0 0
+-1~ -1~ 12~ 0~
+20 20000 0
+E
+coffee bucket~
+這個水桶裡所裝的冰咖啡可以幫助你提神，且也可以止渴。比較神奇的一點是，怎麼
+一個小小的桶子，卻可以供應那麼多位區域作者飲用呢？你若覺得無聊的話，可以試
+著能不能把桶子裡的冰咖啡喝完看看，當然還是不建議你嚐試就是了，因為早在你之
+前就有人試過了，事實証明是桶子裡的冰咖啡是無限供應的。而且你若一試，吵到其
+它區域作者的話，那就皮繃緊一點吧！
+~
+#66001
+blood aw bloodstain~
+ＡＷ之血(Blood of AW)~
+你看到地上一灘可疑的血跡(bloodstain)......~
+~
+25 0 0
+-1~ -1~ 13~ 0~
+20 20000 0
+#66002
+special-rice special rice~
+強化米食(Special Rice)~
+一個特製給區域作者們食用的米食(Special Rice) 被放在地上。~
+~
+19 1|128|16384|4194304 1
+1000~ 0~ 30~ 0~
+1 100000 0
+X food~
+E
+special rice~
+這是為了精力消耗比一般人要快的區域作者們所特製的米食。因為他們常常會工作到
+忘了進食，長期以來是很傷身子的。一般人可是無法享用到這種特製米食的哦。
+~
+#66004
+photo frame~
+照片(Photo)~
+一個木製的相框(Photo Frame)擺在這裡。~
+~
+9 1|2|64|256|1024|2048|32768|65536 1|16384
+0~ 0~ 300~ 0~
+0 0 0
+X perfect matter~
+E
+photo~
+照片拍得有些模糊，拍攝者大概是用手機或是畫素比較低的相機拍出這張照片，隱約
+可以從照片中看出一位穿著白色衣服的女孩，正專心的操作著電腦，旁邊還散落著好
+幾份文件，而拍攝的地點似乎是在一個小型的辦公室當中。除此之外，相框上還刻著
+一串數字：20070809,04:48.
+~
+#66005
+refection~
+餐點(refection)~
+一些美味的家常餐點(refection)等著你享用。~
+~
+19 4194304 0
+20~ 0~ -1~ 0~
+1 1000 0
+E
+refection~
+這些美味的餐點可是史卡烈特最心愛的"她"親手為史卡烈特做的喔，雖然史卡烈特
+很懷疑她到底會不會做菜，不過其他人還是不准碰！
+~
+L 1
+X food~
+#66006
+fountain~
+小型噴泉(fountain)~
+一個雖然小卻很精緻的的瀑布型噴泉(fountain)在這裡潺潺的流出牛奶。~
+~
+25 33554432 0
+0~ 0~ 10~ 0~
+1000 1 0
+E
+fountain~
+這是一個十分精緻的擺飾物，據說是依照菈司蒂當時居住地方的樣式做的。
+~
+L 1
+X marble~
+
+#66008
+Angelic bracelet~
+[1;36m天使藍銀手環[m(Angelic bracelet)~
+一只散發神聖光芒的手環(bracelet)被放在這邊。~
+~
+9 1|2|64|256|1024|2048|32768|65536 1|4096
+0~ 0~ 300~ 0~
+0 0 0
+X perfect matter~
+
+#66010
+portal~
+雪華城傳送門(Portal)~
+你看到一扇通往雪華城的傳送門(Portal)在你面前開啟著。~
+~
+8 0 0
+0~ 0~ 0~ 0~
+10000 0 0
+E
+portal~
+門的另一頭就是雪華城了，趕緊進去(enter)吧。
+~
+>obj_command enter default~
+echoat $n 你走進去了魔法傳送門。
+echoaround $n 你看到$N走進了魔法傳送門。
+oforcer 63300 echo 你看到 $N 瞬間出現在你的面前。
+oforcer here transfer $n 63300
+oforcer 63300 force $n look
+~
+|
+
+
+#0
+
+#ROOMS
+
+#66000
+區域作者勞改本營~
+你正待在一個區域作者的集中勞改營裡。四周完全看不到任何的出口，只有四面寫
+滿著文字 (word) 的大牆 (wall) ，這樣的設計用意乃是為了不希望你在這裡四處走動
+影響到其它的寫作者心情。此時的你應該是要為了ROC 的美好將來，而將自己全部的精
+神放在區域寫作上。長期的寫作若使得你產生疲倦感的話，你可以大叫幾聲來使自己輕
+鬆一下。若你口渴了，那麼在桌上也有冰咖啡可供飲用。而在東南方的牆角邊，則放置
+了一塊看板 (note) ，上頭似乎有寫著一些叮嚀的話。在你的西方，你則看到一塊看起
+來比較新的看板(note2) ，也許你可以看看上頭寫了什麼。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+E
+word~
+辛苦了，親愛的夥伴們。由於你們的付出，將會使得ROC 的將來更加的美好，想到了這
+裡，是不是就不會再覺得有多辛苦了呢？因為一切的付出都是非常值得不是嗎！
+
+有什麼寫作上的問題，可以到Area_Writer 版上去提出來，相信大家會很樂意為你伸出
+援手的！當然，若在線上有看到能問的人，也都可以找他們來為你線上解惑。
+
+最後還是勉勵大家一句話”區域仍未完工，同志仍需努力！”
+~
+E
+wall~
+四周所看到的牆壁是用大理石材質製造而成的，所以相當的堅固。用手摸了摸牆壁，竟
+然有幾處地方濕濕的，舔了舔沾濕的手指，才發現這些牆壁是被淚水所沾濕的。看來應
+該是一些區域作者們所偷偷落下的淚水吧，也許你可以觀察看看有誰的眼角是濕濕的，
+那麼就可以順道的勉勵他一下呢！當然，你要笑他也不會有人怪你就是了。
+~
+E
+note~
+你想要離開這裡嗎？想知道要怎樣才能夠離開這裡嗎？方法很簡單，那就是......
+”快把你手邊的區域完工吧！完工了自然就能夠獲得短暫的自由啊～～”
+
+當然，你可以跟監督人員申請你要調離本營而去二營(go second) 或三營(go third)。
+在此也先提醒你，過去二營要回來必須要頓悟某事。而三營則可以來去自如(out) 。
+
+而若你有個人工作室的話，你也可以試著打 home 看看，當然個人工作室也是能來去自
+如的。有什麼問題的話，請向監督人員哭訴，但他不見得會理你。
+~
+E
+note2~
+個人工作室使用說明：
+home                  ==> 回到個人工作室。
+out                   ==> 從個人工作室裡回到本營。
+turn on               ==> 開放個人工作室讓人參觀。 (限已有個人工作室者)
+turn off              ==> 關閉個人工作室不讓人參觀。 (限已有個人工作室者)
+visit username's      ==> 進入 username 的個人工作室。 (限該工作室有開放)
+check room            ==> 列出所有現有個人工作室清單。
+~
+>room_rand 2~
+if pcnum($) > 0
+        echo 你耳邊突然傳來一陣聲音：別再摸魚了！專心寫作區域吧！
+endif
+~
+>room_rand 2~
+if pcnum($) > 0
+        echo 你耳邊突然傳來一陣聲音：區域仍未完工，同志仍需努力！
+endif
+~
+>room_command turn on~
+if name($n) == xian
+or name($n) == cosmos
+        if roomvalue($0) & 1
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 1
+                break
+        endif
+break
+endif
+if name($n) == wake
+or name($n) == cake
+        if roomvalue($0) & 2
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 2
+        endif
+break
+endif
+if name($n) == kention
+or name($n) == kennedy
+        if roomvalue($0) & 4
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 4
+        endif
+break
+endif
+if name($n) == skalt
+or name($n) == corona
+        if roomvalue($0) & 8
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 8
+        endif
+break
+endif
+if name($n) == reticent
+or name($n) == ruri
+or name($n) == meredy
+or name($n) == meal
+or name($n) == alhana
+or name($n) == josh
+        if roomvalue($0) & 16
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 16
+        endif
+break
+endif
+if name($n) == dendrobium
+or name($n) == qwer
+or name($n) == qwere
+        if roomvalue($0) & 32
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 32
+        endif
+break
+endif
+if name($n) == nadia
+or name($n) == fielia
+or name($n) == ria
+or name($n) == are
+or name($n) == rea
+or name($n) == rae
+        if roomvalue($0) & 64
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 64
+        endif
+break
+endif
+if name($n) == feena
+or name($n) == lyre
+or name($n) == larkspur
+        if roomvalue($0) & 128
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 128
+        endif
+break
+endif
+if name($n) == lhatlord
+        if roomvalue($0) & 256
+                echoat $n 你的工作室已經是開啟讓人參觀的模式了。
+        else
+                echoat $n 你現在開放自己的工作室給其它人參觀。
+                echoaround $n $N 正式開放自己的工作室給各位參觀。
+                modrvt v0 | 256
+        endif
+break
+endif
+rcall areawriter_noroom $n
+~
+>room_command turn off~
+if name($n) == xian
+or name($n) == cosmos
+        if roomvalue($0) !& 1
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 1
+        endif
+break
+endif
+if name($n) == wake
+or name($n) == cake
+        if roomvalue($0) !& 2
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 2
+        endif
+break
+endif
+if name($n) == kennedy
+or name($n) == kention
+        if roomvalue($0) !& 4
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 4
+        endif
+break
+endif
+if name($n) == skalt
+or name($n) == corona
+        if roomvalue($0) !& 8
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 8
+        endif
+break
+endif
+if name($n) == reticent
+or name($n) == ruri
+or name($n) == meredy
+or name($n) == meal
+or name($n) == alhana
+or name($n) == josh
+        if roomvalue($0) !& 16
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 16
+        endif
+break
+endif
+if name($n) == dendrobium
+or name($n) == qwer
+or name($n) == qwere
+        if roomvalue($0) !& 32
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 32
+        endif
+break
+endif
+if name($n) == nadia
+or name($n) == fielia
+or name($n) == ria
+or name($n) == are
+or name($n) == rea
+or name($n) == rae
+        if roomvalue($0) !& 64
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 64
+        endif
+break
+endif
+if name($n) == feena
+or name($n) == lyre
+or name($n) == larkspur
+        if roomvalue($0) !& 128
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 128
+        endif
+break
+endif
+if name($n) == lhatlord
+        if roomvalue($0) !& 256
+                echoat $n 你的工作室已經是關閉讓人參觀的模式了。
+        else
+                rcall areawriter_turnoff_message $n
+                modrvt v0 r 256
+        endif
+break
+endif
+rcall areawriter_noroom $n
+~
+>room_defun areawriter_turnoff_message~
+echoat $n 你現在關閉自己的工作室不再讓其它人參觀。
+echoaround $n $N 現在關閉自己的工作室不再讓各位參觀。
+~
+>room_command visit p BH's~
+if name($n) == xian
+or name($n) == cosmos
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 1
+        echoat $n 你走進了 BH 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 BH 的個人工作室裡。
+        at 66003 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66003
+        at 66003 force $n look
+else
+        echoat $n BH 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit p wake's~
+if name($n) == wake
+or name($n) == cake
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 2
+        echoat $n 你走進了 Wake 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 Wake 的個人工作室裡。
+        at 66006 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66006
+        at 66006 force $n look
+else
+        echoat $n Wake 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit p kention's~
+if name($n) == kention
+or name($n) == kennedy
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 4
+        echoat $n 你走進了 Kention 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 Kention 的個人工作室裡。
+        at 66004 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66004
+        at 66004 force $n look
+else
+        echoat $n Kention 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit p skalt's~
+if name($n) == skalt
+or name($n) == corona
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 8
+        echoat $n 你走進了 Skalt 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 Skalt 的個人工作室裡。
+        at 66005 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66005
+        at 66005 force $n look
+else
+        echoat $n Skalt 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit p under's~
+if name($n) == reticent
+or name($n) == ruri
+or name($n) == meredy
+or name($n) == meal
+or name($n) == alhana
+or name($n) == josh
+        echoat $n 要回自己的愛窩請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 16
+        echoat $n 你走進了 Under 和 Ruri 的愛窩裡。
+        echoaround $n 你看到 $N 大膽的走進了 Under 和 Ruri 的愛窩裡。
+        at 66010 echo 你看到 $N 走進了這間Under 和 Ruri 愛窩。
+        transfer $n 66010
+        at 66010 force $n look
+else
+        echoat $n Under 和 Ruri 並沒有開放他們的愛窩讓人參觀喔！
+endif
+~
+>room_command visit p qwer's~
+if name($n) == dendrobium
+or name($n) == qwer
+or name($n) == qwere
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 32
+        echoat $n 你走進了 Qwer 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 Qwer 的個人工作室裡。
+        at 66007 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66007
+        at 66007 force $n look
+else
+        echoat $n Qwer 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit p are's~
+if name($n) == nadia
+or name($n) == fielia
+or name($n) == ria
+or name($n) == are
+or name($n) == rea
+or name($n) == rae
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 64
+        echoat $n 你走進了 Are 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 Are 的個人工作室裡。
+        at 66008 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66008
+        at 66008 force $n look
+else
+        echoat $n Are 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit p feena's~
+if name($n) == feena
+or name($n) == lyre
+or name($n) == larkspur
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 128
+        echoat $n 你走進了 Feena 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 Feena 的個人工作室裡。
+        at 66009 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66009
+        at 66009 force $n look
+else
+        echoat $n Feena 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit p lhatlord's~
+if name($n) == lhatlord
+        echoat $n 要回自己的家請直接打 home 就好。
+        break
+endif
+if roomvalue($0) & 256
+        echoat $n 你走進了 Lhatlord 的個人工作室裡。
+        echoaround $n 你看到 $N 走進了 Lhatlord 的個人工作室裡。
+        at 66012 echo 你看到 $N 走進了這間工作室。
+        transfer $n 66012
+        at 66012 force $n look
+else
+        echoat $n Lhatlord 並沒有開放他的個人工作室讓人參觀喔！
+endif
+~
+>room_command visit default~
+echoat $n 你想要參觀誰的工作室呢？
+~
+>room_command home default~
+if name($n) == xian
+or name($n) == cosmos
+        echo $N 回到了自己的工作室。
+        at 66003 echo 你看到 $N 回到了這裡。
+        transfer $n 66003
+        at 66003 force $n look
+        break
+endif
+if name($n) == wake
+or name($n) == cake
+        echo $N 回到了自己的工作室。
+        at 66006 echo 你看到 $N 回到了這裡。
+        transfer $n 66006
+        at 66006 force $n look
+        break
+endif
+if name($n) == kennedy
+or name($n) == kention
+        echo $N 回到了自己的工作室。
+        at 66004 echo 你看到 $N 回到了這裡。
+        transfer $n 66004
+        at 66004 force $n look
+        break
+endif
+if name($n) == skalt
+or name($n) == corona
+        echo $N 回到了自己的工作室。
+        at 66005 echo 你看到 $N 回到了這裡。
+        transfer $n 66005
+        at 66005 force $n look
+        break
+endif
+if name($n) == reticent
+or name($n) == ruri
+or name($n) == meredy
+or name($n) == meal
+or name($n) == alhana
+or name($n) == josh
+        echo $N 回到了自己的愛窩。
+        at 66010 echo 你看到 $N 回到了這裡。
+        transfer $n 66010
+        at 66010 force $n look
+        break
+endif
+if name($n) == dendrobium
+or name($n) == qwer
+or name($n) == qwere
+        echo $N 回到了自己的工作室。
+        at 66007 echo 你看到 $N 回到了這裡。
+        transfer $n 66007
+        at 66007 force $n look
+        break
+endif
+if name($n) == nadia
+or name($n) == fielia
+or name($n) == ria
+or name($n) == are
+or name($n) == rea
+or name($n) == rae
+        echo $N 回到了自己的工作室。
+        at 66008 echo 你看到 $N 回到了這裡。
+        transfer $n 66008
+        at 66008 force $n look
+        break
+endif
+if name($n) == feena
+or name($n) == lyre
+or name($n) == larkspur
+        echo $N 回到了自己的工作室。
+        at 66009 echo 你看到 $N 回到了這裡。
+        transfer $n 66009
+        at 66009 force $n look
+        break
+endif
+if name($n) == lhatlord
+        echo $N 回到了自己的工作室。
+        at 66012 echo 你看到 $N 回到了這裡。
+        transfer $n 66012
+        at 66012 force $n look
+        break
+endif
+rcall areawriter_noroom $n
+~
+>room_defun areawriter_noroom~
+echoat $n 你還沒有自己的工作室哦！請加緊腳步趕緊寫出你的個人工作室吧。
+echoat $n 當然，若是你已經有了工作室，而這隻角色無法回去工作室，那就出
+echoat $n 個聲告知一下。我們將會盡速替你處理。
+~
+>room_command check room~
+echoat $n 房間登記者    房  間  名  稱          開放與否
+echoat $n ==========    ==============          ========
+if roomvalue($0) & 1
+        echoat $n [1;37mBH            [32m黑貓酒吧                  [36m開放[0m
+else
+        echoat $n [1;37mBH            [32m黑貓酒吧                  [35m關閉[0m
+endif
+if roomvalue($0) & 4
+        echoat $n [1;37mKention       [32m鑄劍文字坊                [36m開放[0m
+else
+        echoat $n [1;37mKention       [32m鑄劍文字坊                [35m關閉[0m
+endif
+if roomvalue($0) & 8
+        echoat $n [1;37mSkalt         [32m史卡烈特的專用工作室      [36m開放[0m
+else
+        echoat $n [1;37mSkalt         [32m史卡烈特的專用工作室      [35m關閉[0m
+endif
+if roomvalue($0) & 2
+        echoat $n [1;37mWake          [32m溫馨的小木屋              [36m開放[0m
+else
+        echoat $n [1;37mWake          [32m溫馨的小木屋              [35m關閉[0m
+endif
+if roomvalue($0) & 16
+        echoat $n [1;37mUnder         [32m華麗的愛窩                [36m開放[0m
+else
+        echoat $n [1;37mUnder         [32m華麗的愛窩                [35m關閉[0m
+endif
+if roomvalue($0) & 32
+        echoat $n [1;37mQwer          [32m山洞的盡頭                [36m開放[0m
+else
+        echoat $n [1;37mQwer          [32m山洞的盡頭                [35m關閉[0m
+endif
+if roomvalue($0) & 64
+        echoat $n [1;37mAre           [32mAre的工坊(Are's Atelier)  [36m開放[0m
+else
+        echoat $n [1;37mAre           [32mAre的工坊(Are's Atelier)  [35m關閉[0m
+endif
+if roomvalue($0) & 128
+        echoat $n [1;37mFeena         [32m星砂湖畔                  [36m開放[0m
+else
+        echoat $n [1;37mFeena         [32m星砂湖畔                  [35m關閉[0m
+endif
+if roomvalue($0) & 256
+        echoat $n [1;37mLhatlord      [32m無盡空間                  [36m開放[0m
+else
+        echoat $n [1;37mLhatlord      [32m無盡空間                  [35m關閉[0m
+endif
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66001
+區域作者勞改二營~
+你正待在傳說中的區域作者集中勞改營裡，這裡是用來改變你滿腦腐敗安逸的玩家
+意識！在你的四周是密密麻麻寫滿著各種精神標語文字(word)的磚牆(wall)，根據牆上
+的污垢看來這裡八成已經放了幾百年沒人清理過了，根據建造者表示，這樣設計一個密
+閉沒有出入口的環境乃是不希望有人四處走動打擾其他區域作者的寫作心情，但實際上
+似乎更參雜了個人的惡趣味般，因為你在四周的牆上發現了刑具還有些亂古怪的東西！
+
+你想起進來時所聽到的「為了要讓區域作者有完美不受打擾的寫作環境，我們精心打造
+了一座區域作者的失樂園」這句話，不免思考起所謂的失樂園不是失落的樂園，是失去
+歡樂的園地啊！
+
+在東南方的牆角處放置了一塊看板 (note) ，上頭似乎有寫著一些叮嚀的話。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+E
+word~
+玩家的痛苦～就是我們的快樂啊～～
+
+讓我們一起來享受那玩家哀嚎時的慘狀吧～～
+
+就讓我們帶頭來改造那滿腦腐敗安逸的玩家思想吧！！
+
+怪物們才是我們永遠的同伴！永遠的親人吶～～～
+~
+E
+wall~
+四周原本是用純白色的磚塊築起的大牆。經過了慘烈的勞改風波之後，這些白色的磚塊
+早已被那些勞改同志的的鮮血給染紅了。現在這些磚塊一般人看到還以為是紅磚呢！
+~
+E
+note~
+在你思想尚未被完全改造前，想要逃離這個勞改營是不可能的事吶！！
+快給我專心的寫作你的區域吧～～你永遠別想出去了吶～～
+~
+>room_rand 2~
+if pcnum($) > 0
+        echo 頓悟吧！趕緊寫些變態區域吧！盡情的折磨玩家吧！
+endif
+~
+>room_rand 2~
+if pcnum($) > 0
+        echo 你耳邊突然傳來一陣聲音：玩家的痛苦，造就了我們的快樂啊～
+endif
+~
+>room_defun room_mark~
+def_rembch null-tar
+~
+>room_defun room_blood~
+        echoat $b 你看向這灘這疑的血跡...你發現血跡中似乎慢慢浮現出什麼... !
+        echoaround $b $B 看向了地上那灘可疑的血跡，整個人像失了魂一樣！
+        modrvt v1 = 1
+        add_affect $b 'paralyze' 0 2 39 500 268435456
+        callout 1 echoat $b 你看到一些字慢慢的浮現...
+        callout 2 echoat $b 一個...一個的...冒出來...
+        callout 3 echoat $b ...給...
+        callout 4 echoat $b ...給...我...
+        callout 5 echoat $b 你想著給我什麼啊？
+        callout 6 echoat $b 寫不出來就給我皮繃緊一點！
+        callout 6 echoat $b 給我快點寫！你是在摸啥那麼閒還有空看什麼可疑的血跡！
+        callout 7 echoat $b 在鞭打中你忽然了解原來...地上的血是這麼來的...
+        callout 7 echoat $b [1;36m織[1;35m夢[1;32m者[0m(Reticent)狠狠地鞭打著你。
+        callout 7 echoaround $b [1;36m織[1;35m夢[1;32m者[0m(Reticent)狠狠地鞭打著$B。
+        callout 8 modrvt v1 = 0
+        callout 8 echoat $b 鞭打中雖然你覺得流失了一點血，但體力增加了～
+        callout 8 modhmv $b 03.40 50 0
+        callout 8 modhmv $b 22.200 300 0
+        callout 8 del_affect $b paralyze
+        callout 9 rcall areawriter_second $b
+~
+>room_defun areawriter_second~
+echoat $b 你得到了啟示之後，決定發奮圖強！專心寫作！
+echoat $b 就在你頓悟沒多久，你的身影忽然被強制傳送到了本營。
+at 66000 echo 你看到 $B 的身影忽然出現在你面前。
+transfer $b 66000
+at 66000 force $b look
+rcall room_mark $b
+~
+>room_mask look bloodstain~
+rcall areawriter_lookmessage $n
+~
+>room_mask look bloodstai~
+rcall areawriter_lookmessage $n
+~
+>room_mask look bloodsta~
+rcall areawriter_lookmessage $n
+~
+>room_mask look bloodst~
+rcall areawriter_lookmessage $n
+~
+>room_mask look bloods~
+rcall areawriter_lookmessage $n
+~
+>room_mask look blood~
+rcall areawriter_lookmessage $n
+~
+>room_mask look bloo~
+rcall areawriter_lookmessage $n
+~
+>room_mask look blo~
+rcall areawriter_lookmessage $n
+~
+>room_mask look bl~
+rcall areawriter_lookmessage $n
+~
+>room_defun areawriter_lookmessage~
+if isaffected($n) / paralyze
+        echoat $n 你全身無法動彈！
+else
+        if hitprcnt($n) < 95
+                echoat $n 你的體力並不足以讓你好好參悟任何東西。
+        else
+                if roomvalue($1) == 0
+                        def_rembch $n
+                        rcall room_blood
+                else
+                        echoat $n $B 整個人佇在血跡前，你無法查看血跡。
+                endif
+        endif
+endif
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66002
+區域作者勞改三營~
+這裡便是區域勞改營裡的第三營。因為本營經常會發生過度擁擠的情形，而第二營
+又不是一般正常人願意久待的地方，所以才會擴建這個第三營出來。一如往常的，四周
+還是被又高又厚的石牆 (wall) 給圍著。而當然，依造慣例來看，牆上一定也是寫滿著
+密密麻麻的精神標語，難怪你一時之間差點看不出來這些石牆是用純白的大理石為材質
+做成的。而聽說這裡的石牆也比較厚重，所以比較沒有什麼雜音。一般時候，一些同伴
+都是把這裡當成是休息場所的，也能順便聊聊天打打屁，看能不能因此而找到一些寫作
+靈感出來。而休息夠了，就繼續回到工作崗位繼續打拼吧。
+~
+0 1|8|16|1024|8192|65536|131072|262144|524288||1048576 3
+E
+wall~
+記得一件事，你們是否要待在這裡的決定權是操作在你們手中。想要出去的話，可以請
+相關人士幫你傳送出去。只不過，究竟是寫作重要還是玩樂重要，希望你們能夠好好的
+評估再做出打算。有時候適時的逼迫自己花些時間致力於寫作上，未嚐不是件好事，不
+是嗎？
+
+相信各位在寫作的過程中，應該也都得到了不少的樂趣才是吧？
+
+加油囉，各位！等到成品出來的那天，那麼今天以前的一切付出都將是值得的。
+~
+>room_command out default~
+echoat $n 休息過後，你帶著飽足的精神回到了本營繼續努力。
+echoaround $n 你看到 $N 帶著飽足的精神回到了本營繼續努力。
+at 66000 echo 你看到 $N 從營改三營那裡回到了這裡。
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66003
+黑貓酒吧~
+這是一間建築在樹上的酒吧，從桌椅到吧台都是木製，與這裡的樹
+幹渾為一體，在酒吧的一角有著表演用的圓形舞台，牆上還有著備忘的
+牌子(note)，此外酒吧的中間擺了一個巨大的鍋子(caldron) 不知是做
+什麼用的，吧台除了擺有各種酒外還有調理臺，但整潔的程度讓你懷疑
+這裡的主人從未用過它。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 3
+E
+note~
+上面寫著人名以及目前進行的區域
+Xian          漁船
+Litespeed  狂暴森林
+Cake        芝麻街
+~
+E
+caldron~
+這個鍋子似乎正在調配某種原料，或許你可以再靠近一點...(see caldron)
+~
+>room_command see caldron~
+echoat $n 鍋中的液體緩緩地浮現出字形...
+if rand(33)
+callout 1 echoat $n 鍊金系統計畫
+callout 2 echoat $n 以容器類型的物品，觸發置入物品的判斷
+callout 3 echoat $n 運用v0,v1值加上成功率，產生新的物品
+callout 4 echoat $n 材料從現有物品交由鍊金師的店調成基本原料
+callout 5 echoat $n .....
+else
+if rand(50)
+callout 1 echoat $n 生活作息quest化計畫
+callout 2 echoat $n 以漁船的米亞做測試玩家的反應
+callout 3 echoat $n 下一步是在"亞克之森"將所有mob米亞化
+callout 4 echoat $n 並且做出以月為單位的生活作息，並且使其與quest相關
+callout 1 echoat $n .....
+else
+callout 1 echoat $n imm任務計畫
+callout 2 echoat $n 只開放一次的任務，為這任務專門寫一區域
+callout 3 echoat $n 任務內容不跼限於戰鬥，亦可以問答為主
+callout 4 echoat $n 任務完成後便封印該區域，不再開放
+callout 5 echoat $n .....
+endif
+endif
+~
+>room_command out default~
+if name($n) == xian
+or name($n) == cosmos
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 BH 的個人工作室。
+        echoaround $n $N 離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 BH 的個人工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66004
+鑄劍文字坊~
+這是一間有點大的房間，其中大部分的空間都堆滿著各式
+各樣的書籍(Book)，另外一邊的角落則特別空出一個位置擺放
+數個劍架，上面也擺著不少把劍(sword)，另外最引人注目的
+就是，房間的牆壁上貼著一張斗大的告示(Note)，似乎在警告
+什麼....
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+E
+note~
+    上面寫著斗大的四個字
+
+	拖	稿	者	死
+	
+					feena留    
+~
+E
+books~
+    大部分都是村上春樹的作品，中間還參雜著余秋雨的書
+，另外還有白先勇的小說以及侯文詠，蔡康永的作品
+~
+E
+sword~
+    有些劍看起來就是精心打造的極品，當然也不乏那種一
+把一百的破刀...
+~
+>room_command out default~
+if name($n) == kention
+or name($n) == kennedy
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Kention 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Kention 的個人工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66005
+史卡烈特的專用工作室~
+這是一間十分整齊的房間，不過大概不會是史卡烈特親手整理的，房間四周貼滿了
+海報 (poster)，還有不少的照片(picture)，對他而言這應該是最棒的環境了吧。
+房間裡面沒有太多的東西，大型家俱只有一台電腦跟一張單人床，電腦是史卡烈特
+拿來寫區域的工具，另外也是拿來聽音樂的音響代替品。床當然是準備給她睡的囉
+，那史卡烈特自己呢？男人就乖乖睡地板吧，能跟她在一起的話，史卡烈特應該也
+會很樂意睡地板吧^^
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+E poster~
+這些都是倉木麻衣的海報，史卡烈特現在超迷她的喔，要是有注意的話，甚至可以
+發現史卡烈特連電腦桌面都是用倉木麻衣的圖呢^^
+~
+E picture~
+這些是史卡烈特千辛萬苦收集來的，最愛的"她"的照片喔，這些可是至寶呢，不管
+心情多差，只要看看這些照片，心情馬上就會變好了^^
+~
+>room_command out default~
+if name($n) == Skalt
+or name($n) == Corona
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Skalt 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Skalt 的個人工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66006
+溫馨的小木屋~
+你來到了天使蛋糕的小木屋，裡面的佈置都是屬於暖色系的，讓你覺得十分的溫馨，
+在這間木屋裡面一切都顯得十分的安詳，你在這裡覺得時間都開始變慢，一切都是那麼的
+舒適。最吸引你注意的就是屋子裡中央的一個小型噴泉，它發出著令人舒服的流水聲，而且
+不停的流出牛奶，看來不管喝多少都不會乾涸的樣子。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+>room_command out default~
+if name($n) == wake
+or name($n) == cake
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Wake 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Wake 的個人工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66010
+華麗的愛窩~
+這裡是Under 與 Ruri 愛的小窩。四周盡是用上等玉石磨砌而成的平滑大牆，一看
+就知道一定花了不少錢。而天花板上還掛著一個 30 吋大的華麗吊燈，燈泡的光線經過
+那數之不盡的鑽石折射之後，讓走進這房間的人無時無刻都有著絢麗奪目的感覺。
+
+而四處都可以看到Under 所送給 Ruri 各式各樣的玫瑰花，有代表熱情的紅色玫瑰、代
+表關懷的粉紅色玫瑰、代表尊敬的白色玫瑰、代表青春的橙紅色玫瑰、代表純真的淡綠
+色玫瑰、代表癡愛的淡紫色玫瑰、代表個性的黑色玫瑰、代表珍貴的紫藍色玫瑰和代表
+羞怯的深紅色玫瑰。也因此，整個房間裡的空氣永遠都瀰漫著一股清淡的玫瑰花香。
+
+在房間正中央，擺放著一張羽毛床(bed) ，聽說是用天使的羽翼所編織而成的，實在不
+曉得Under 是去那裡找到這麼一張床的。在床頭的左側，則擺設著 Ruri 專用的梳妝台
+，上頭則有著Under 所送給 Ruri 的各式各樣的香水與名貴珠寶。而在床頭的右側，則
+是Under 平時在寫作時所用的書桌 (desk) ，平常Under 若寫作寫到累了，就會直接撲
+到床上去先和 Ruri 溫存一番，然後休息。在你的西方，則是一個用高級檜木所製成的
+大衣櫃，裡頭擺放著Under 和 Ruri 那數之不盡的私人衣物。在你的東方，你看到一排
+擺滿著各式各樣書藉的書櫃，裡頭擺放的全都是Under 平時拿來當資料參考的書藉，你
+實在無法相信Under 曾看過那麼多的書。而南方則是一個魔法門，你必須要打"out" 才
+可以離開這個房間。若看到Under 和 Ruri 在裡面的話，就別打擾人家溫存了吧。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+E
+bed~
+集結了眾多天使羽翼所編織而成的羽毛床，摸起來相當的平滑柔順，所以躺起來也就十
+分的舒適。而除了Under 與 Ruri 之外，一般人是無法躺在這張床上的喔！
+~
+E
+desk~
+在書桌上你看到了Under 所編寫的工作計劃書 (plan) ，裡頭寫的密密麻麻的，讓你看
+都看到快頭昏了。而在桌上你還看到了幾本有關於魔界介紹的相關書藉，看來是Under
+從書櫃中拿出來參閱時而忘了收回去了。
+~
+E
+plan~
+神聖小鎮 ==> 惡夢的初始，主要以生活化為特色走向。
+傳說之境 ==> 惡夢的起端，主要以房間特色為設計走向。
+魔界大陸 ==> 真正的惡夢，主要以混亂、邪惡、特色、變態為走向。
+~
+>room_command walk out~
+if name($n) == reticent
+or name($n) == alhana
+        echoat $n 你離開了自己的愛窩回到了辦公室。
+        echoaround $n $N離開了這裡轉身回到了辦公室。
+        at 100708 echo 你看到 $N 從愛窩那裡回到了這裡。
+        transfer $n 100708
+        at 100708 force $n look
+endif
+~
+>room_command out default~
+if name($n) == reticent
+or name($n) == ruri
+or name($n) == meal
+or name($n) == meredy
+or name($n) == alhana
+        echoat $n 你離開了自己的愛窩回到了勞改營本營。
+        echoaround $n $N離開了自己的愛窩回到了勞改營本營。
+        at 66000 echo 你看到 $N 從$s愛窩回到了這裡。
+else
+        if name($n) == josh
+                echoat $n 你並無法離開這間房間喔！乖....別哭唷～
+                break
+        else
+                echoat $n 你離開了 Under 和 Ruri 的愛窩。
+                echoaround $n $N離開了這間Under 和 Ruri 的愛窩回到了勞改營本營。
+                at 66000 echo 你看到 $N 從 Under 和 Ruri 的愛窩回到了這裡。
+        endif
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66007
+山洞的盡頭~
+這...這真的是Q某的房間嗎？你一定是看錯了，因為我不姓Ｑ阿ＸＤ。
+經歷了漫長的道路，你終於躲過裂片妖群的糾纏，在你這樣想著的時候，你赫然發現，
+這裡...居然...有一隻特大號的裂片妖。她正憤怒的看著你----不知道是因為你殺了
+他的孩子們，還是因為你魯莽的行為打擾到她了。
+你開始想...在那麼可怕的地方真的有辦法寫作嗎......:X
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 3
+>room_command out default~
+if name($n) == qwer
+or name($n) == qwere
+or name($n) == dendrobium
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Qwer 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Qwer 的個工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66008
+Are的工坊(Are's Atelier)~
+你正位於一間古老的魔法工坊裡，浸沐在這片神奇的光芒(rays)中。
+工坊的四周圍繞著結實的磚牆(wall)，地面著舖設完美無暇的水晶地磚。
+房間的中央擺設著一部奇怪的裝置(device)，在牆角處有一部巨大的書櫥
+(bookcase)以及散亂著書本的小床(bed)。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+E
+rays~
+滿天的神秘星光自天頂的窗格(skylight)篩灑而下，與古老的魔法磚牆
+(wall)相呼應，映射出奇異的微光。工坊內並不需要另外裝設任何照明
+工具，明亮程度已足以讓你清楚地閱讀密文細字的大辭典，光線柔和地
+讓你感覺不到眼睛有絲毫地疲累。
+~
+E
+skylight~
+透過頂上那道裝飾典雅的明亮天窗，你看到了一片燦爛的美麗星空。
+黑暗的穹頂不捨晝夜地呈現星辰的時移，顯然不是普通的玻璃天窗。
+它是一種占星士的魔法工具。
+~
+E
+wall~
+魔法的磚牆映射一種神奇的光芒，但你無法清楚地說出那光的顏色。
+仔細地觀察，你才發現每顆磚頭都刻印著不同的魔法文字(rune)。
+~
+E
+device~
+一塊深紅色的方形絨布被張舖在工坊的中央，看似擺設著某種魔法陣。
+魔法陣的上方漂浮著一顆散發微光的水晶球(crystal ball)，大小有如
+人的頭骨一般。水晶球正不斷地以緩慢的速度進行自轉著。
+~
+E
+crystal ball~
+這顆散發著微光的水晶球，彷彿吸收了那蓄積在工坊內的宇宙能量。
+它正不斷地運作著：水晶球的內部其實是提供某種魔法反應的場所。
+當你因為一時好奇，忍不住想伸手去觸碰它時，卻有一道無聲的警告
+阻止了你。你是否仍然執意地想要摸摸看(touch device)呢？
+~
+>room_defun are_room_defun1~
+  echoat $n [1;36m突然間一道強大的電流竄進你的身體！[m
+  echoat $n [1;37m哇！你昏了過去！[m
+  echoaround $n [1;36m突然間一道強大的電流竄進$N的身體！[m
+  echoaround $n [1;37m$N當場暈死過去！[m
+  add_affect $n paralyze 0 12 3 -10 0
+  modhmv $n 03.90 90 0
+  del_qmark $n are_device_touch
+~
+>room_defun are_room_defun2~
+  echoat $n [1;33m突然間一道衝擊波將你震開！[m
+  echoat $n 水晶球(crystal ball)的衝擊波打得你[1;32m猛噴鮮血，齒牙迸裂[m.
+  echoat $n [1;37m哇！你變得動彈不得！[m
+  echoaround $n [1;33m突然間一道衝擊波將$N震開！[m
+  echoaround $n 水晶球(crystal ball)的衝擊波打得$N[1;32m猛噴鮮血，齒牙迸裂[m.
+  add_affect $n paralyze 0 12 2 -10 0
+  modhmv $n 03.600 700 0
+  del_qmark $n are_device_touch
+~
+>room_defun are_room_defun3~
+  echoat $n [1;33m突然間一道火光將你震開！[m
+  echoat $n 水晶球(crystal ball)的火球術打得你[1;31m分筋錯骨，臟器碎裂[m.
+  echoat $n [1;37m哇！你什麼都看不見了！[m
+  echoaround $n [1;33m突然間一道火光將$N震開！[m
+  echoaround $n 水晶球(crystal ball)的火球術打得$N[1;31m分筋錯骨，臟器碎裂[m.
+  add_affect $n blindness 0 12 2 -10 0
+  modhmv $n 03.1001 1150 0
+  del_qmark $n are_device_touch
+~
+>room_command touch ball~
+if is_qmark($n) != are_device_touch
+        add_qmark $n are_device_touch 1 0 0 0 0 1
+        if hpnum($n) < 100
+                echoat $n 你已經沒有那體力碰觸那水晶球了...
+        else
+                if hpnum($n) < 500
+                        echo $N頑皮地伸出了$e的手...想要觸碰水晶球...
+                        callout 1 rcall are_room_defun1 $n
+                else
+                        if hpnum($n) < 1000
+                                echo $N頑皮地伸出了$e的手...想要觸碰水晶球...
+                                callout 1 rcall are_room_defun2 $n
+                        else
+                                echo $N頑皮地伸出了$e的手...想要觸碰水晶球...
+                                callout 1 rcall are_room_defun3 $n
+                        endif
+                endif
+        endif
+endif
+~
+>room_command out default~
+if name($n) == nadia
+or name($n) == fielia
+or name($n) == ria
+or name($n) == are
+or name($n) == rea
+or name($n) == rae
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Are 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Are 的個工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66009
+星砂湖畔~
+湖泊中映照出滿天的彩珠，漂浮在空中的兩片巨岩上正不斷地流下閃爍著綺
+麗光輝的星砂，使得湖畔成了一片晶亮的沙灘。幻光流螢與月夜白鳥在空中飛舞
+著，就像是想和天空中的點點繁星爭輝似的。這裡是夜之女神的領地，白晝是不
+會出現的，時光彷彿靜止了一般。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 2
+>room_command out default~
+if name($n) == feena
+or name($n) == lyre
+or name($n) == larkspur
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Feena 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Feena 的個工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66012
+無盡空間~
+你站在一個奇妙的空間裡面。在這裡，你感覺不到時間的流
+逝。前面不遠處似乎有個奇妙的窗口，你好像看到了一個女孩在
+裡面。不對！是一隻貓。不！是一個娃娃。天阿！這裡到底是甚
+麼地方阿！不過，天才Lhatlord倒是很喜歡在這邊躲典獄長。
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+>room_command out default~
+if name($n) == lhatlord
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Lhatlord 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Lhatlord 的個工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+#66013
+光耀之室~
+這是一間相當大的房間，四周的牆壁和地板都閃耀著溫
+和的光芒，房間的角落擺著幾個櫃子，正中央安置了一個噴
+水池，池裡面的水相當清澈，似乎可以直接飲用。除此之外
+，牆壁上還掛著許許多多的計畫表(note)，其中一張(paper)
+的符號特別奇怪，好像是異界的語言...
+~
+0 1|8|16|1024|8192|65536|262144|524288||1048576 0
+E
+note~
+上面寫著許許多多的進度，例如「催稿的目標」，「超級扣
+得撰寫法」，「霸格維修守則」，還有更多奇奇怪怪的標語
+。
+~
+E
+paper~
+＠＄！％＆＃＆＊＠＃！＄％＠
+＠︿＆＄＊＃︿！＃～＄＠＃！
+......................
+..................
+(以下不斷重複)
+你只看的懂最上面的兩個字：「扣得」
+~
+>room_command out default~
+if name($n) == coconet
+        echoat $n 你離開了自己的個人工作室回到了勞改營本營。
+        echoaround $n $N離開了自己的個人工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從他的個人工作室回到了這裡。
+else
+        echoat $n 你離開了 Coconet 的個人工作室。
+        echoaround $n $N離開了這間工作室回到了勞改營本營。
+        at 66000 echo 你看到 $N 從 Coconet 的個工作室回到了這裡。
+endif
+transfer $n 66000
+at 66000 force $n look
+~
+>room_mask cast evacuate~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacuat~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacua~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evacu~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast evac~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast eva~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast ev~
+echoat $n 想要脫離勞改營？你想都別想！
+~
+>room_mask cast recall~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast recal~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+>room_mask cast reca~
+echoat $n 想要藉這最後的方法脫離勞改營？等明年再說吧！
+~
+|
+S
+
+#0
+
+#RESETS
+M 0 66000 1 66000     ; 讀demon 到第一間房
+O 0 66000 0 66000     ; 讀供水容器到區域寫作房間
+O 0 66001 0 66001     ; 讀供水容器到區域寫作房間
+M 0 66003 1 66003     ; BH 的mob
+M 0 66004 1 66004     ; Kennedy 的mob
+O 0 66004 0 66004     ; 照片
+M 0 66005 1 66005     ; Skalt 的mob
+M 0 66006 1 66006     ; Cake 的mob
+O 0 66006 0 66006
+M 0 66007 1 66007     ;裂片妖
+M 0 66008 1 66008
+M 0 66009 1 66009
+M 0 66012 1 66012
+M 0 66013 1 66013
+S
+
+#$
