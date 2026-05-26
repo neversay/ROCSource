@@ -89,6 +89,8 @@ int fread_obj           args((CHAR_DATA * ch, FILE *fp));
 int fread_bank_obj      args((CHAR_DATA * ch, FILE *fp));
 int fread_newbank_obj   args((BANK_DATA * ch, FILE *fp));
 
+// HpMnMvDeMultiply_Char: Core Engine function: HpMnMvDeMultiply_Char - Main C routine handling game mechanics.
+// HpMnMvDeMultiply_Char: 核心引擎函式：HpMnMvDeMultiply_Char - 處理遊戲底層機制的核心 C 語言子程序。
 void HpMnMvDeMultiply_Char(CHAR_DATA *ch) {
     ch->hit /= PPL_HP_MULTIPLYER;
     ch->max_hit /= PPL_HP_MULTIPLYER;
@@ -98,6 +100,8 @@ void HpMnMvDeMultiply_Char(CHAR_DATA *ch) {
     ch->max_move /= PPL_HP_MULTIPLYER;
 }
 
+// HpMnMvMultiply_Char: Core Engine function: HpMnMvMultiply_Char - Main C routine handling game mechanics.
+// HpMnMvMultiply_Char: 核心引擎函式：HpMnMvMultiply_Char - 處理遊戲底層機制的核心 C 語言子程序。
 void HpMnMvMultiply_Char(CHAR_DATA *ch) {
     ch->hit *= PPL_HP_MULTIPLYER;
     ch->max_hit *= PPL_HP_MULTIPLYER;
@@ -109,6 +113,8 @@ void HpMnMvMultiply_Char(CHAR_DATA *ch) {
 
 #define MAXIMUM_QMARK_SKEXP 20000
 
+// AbnormalSkexpCheck: Core Engine function: AbnormalSkexpCheck - Main C routine handling game mechanics.
+// AbnormalSkexpCheck: 核心引擎函式：AbnormalSkexpCheck - 處理遊戲底層機制的核心 C 語言子程序。
 void AbnormalSkexpCheck(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return;
@@ -206,6 +212,8 @@ char *initial(const char *str) {
  * Would be cool to save NPC's too for quest purposes,
  *   some of the infrastructure is provided.
  */
+// save_char_obj: Saves player character stats, inventory, equipment, and quest variables to disk.
+// save_char_obj: 將玩家角色的屬性數值、背包裝備及任務變數等存檔資料儲存至磁碟。
 void save_char_obj(CHAR_DATA *ch) {
     FILE      *fp;
     CHAR_DATA *phorse;
@@ -273,6 +281,8 @@ void save_char_obj(CHAR_DATA *ch) {
 /*
  * Write the char.
  */
+// fwrite_char: Core Engine function: fwrite_char - Main C routine handling game mechanics.
+// fwrite_char: 核心引擎函式：fwrite_char - 處理遊戲底層機制的核心 C 語言子程序。
 void fwrite_char(CHAR_DATA *ch, FILE *fp) {
     AFFECT_DATA *paf;
     QMARK       *qmark;
@@ -448,6 +458,8 @@ void fwrite_char(CHAR_DATA *ch, FILE *fp) {
 /*
  * Write an object and its contents.
  */
+// fwrite_obj: Core Engine function: fwrite_obj - Main C routine handling game mechanics.
+// fwrite_obj: 核心引擎函式：fwrite_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void fwrite_obj(CHAR_DATA *ch, OBJ_DATA *obj, FILE *fp, int iNest) {
     AFFECT_DATA      *paf;
     EXTRA_DESCR_DATA *ed;
@@ -571,6 +583,8 @@ void fwrite_obj(CHAR_DATA *ch, OBJ_DATA *obj, FILE *fp, int iNest) {
     return;
 }
 
+// fwrite_newbank_obj: Core Engine function: fwrite_newbank_obj - Main C routine handling game mechanics.
+// fwrite_newbank_obj: 核心引擎函式：fwrite_newbank_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void fwrite_newbank_obj(CHAR_DATA *ch, OBJ_DATA *obj, FILE *fp, int iNest) {
     AFFECT_DATA      *paf;
     EXTRA_DESCR_DATA *ed;
@@ -686,6 +700,8 @@ void fwrite_newbank_obj(CHAR_DATA *ch, OBJ_DATA *obj, FILE *fp, int iNest) {
 /*
  * Write an eqbank object.
  */
+// fwrite_bank_obj: Core Engine function: fwrite_bank_obj - Main C routine handling game mechanics.
+// fwrite_bank_obj: 核心引擎函式：fwrite_bank_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void fwrite_bank_obj(CHAR_DATA *ch, OBJ_DATA *obj, FILE *fp, int iNest) {
     AFFECT_DATA      *paf;
     EXTRA_DESCR_DATA *ed;
@@ -800,6 +816,8 @@ void fwrite_bank_obj(CHAR_DATA *ch, OBJ_DATA *obj, FILE *fp, int iNest) {
 /*
  * Load a char and inventory into a new ch structure.
  */
+// load_char_obj: Loads player character stats, inventory, and variables from disk files.
+// load_char_obj: 從磁碟存檔檔案中載入玩家角色的屬性數值、背包裝備及各項變數。
 bool load_char_obj(DESCRIPTOR_DATA *d, char *name) {
     extern char *daPrompt;
     FILE        *fp;
@@ -974,6 +992,8 @@ bool load_char_obj(DESCRIPTOR_DATA *d, char *name) {
  * Read in a char.
  */
 
+// fread_char: Core Engine function: fread_char - Main C routine handling game mechanics.
+// fread_char: 核心引擎函式：fread_char - 處理遊戲底層機制的核心 C 語言子程序。
 int fread_char(CHAR_DATA *ch, FILE *fp) {
     int           nRoomNum = 3214;
     char         *word;
@@ -1574,6 +1594,8 @@ int fread_char(CHAR_DATA *ch, FILE *fp) {
     return error_count;
 }
 
+// recover: Core Engine function: recover - Main C routine handling game mechanics.
+// recover: 核心引擎函式：recover - 處理遊戲底層機制的核心 C 語言子程序。
 void recover(FILE *fp, long fpos) {
     char buf[MAX_STRING_LENGTH];
 
@@ -1595,6 +1617,8 @@ void recover(FILE *fp, long fpos) {
 
 // OBJ_HP * obj_hp_list;
 
+// fread_obj: Core Engine function: fread_obj - Main C routine handling game mechanics.
+// fread_obj: 核心引擎函式：fread_obj - 處理遊戲底層機制的核心 C 語言子程序。
 int fread_obj(CHAR_DATA *ch, FILE *fp) {
     EXTRA_DESCR_DATA *ed;
     OBJ_DATA          obj;
@@ -1909,6 +1933,8 @@ int fread_obj(CHAR_DATA *ch, FILE *fp) {
     return TRUE;
 }
 
+// fread_newbank_obj: Core Engine function: fread_newbank_obj - Main C routine handling game mechanics.
+// fread_newbank_obj: 核心引擎函式：fread_newbank_obj - 處理遊戲底層機制的核心 C 語言子程序。
 int fread_newbank_obj(BANK_DATA *ch, FILE *fp) {
     EXTRA_DESCR_DATA *ed;
     OBJ_DATA          obj;
@@ -2248,6 +2274,8 @@ int fread_newbank_obj(BANK_DATA *ch, FILE *fp) {
     return TRUE;
 }
 
+// fread_bank_obj: Core Engine function: fread_bank_obj - Main C routine handling game mechanics.
+// fread_bank_obj: 核心引擎函式：fread_bank_obj - 處理遊戲底層機制的核心 C 語言子程序。
 int fread_bank_obj(CHAR_DATA *ch, FILE *fp) {
     EXTRA_DESCR_DATA *ed;
     OBJ_DATA          obj;
@@ -2561,6 +2589,8 @@ int fread_bank_obj(CHAR_DATA *ch, FILE *fp) {
     return TRUE;
 }
 
+// do_horse_backup: Command: do_horse_backup - Main execution handler for the 'horse_backup' player/IMM command.
+// do_horse_backup: 指令：do_horse_backup - 處理玩家或天神執行 'horse_backup' 指令的主控程序。
 void do_horse_backup(CHAR_DATA *ch, char *argument) {
     FILE *fp;
     char  buf[MAX_STRING_LENGTH];
@@ -2600,6 +2630,8 @@ void do_horse_backup(CHAR_DATA *ch, char *argument) {
 void fwrite_neweqbank(CHAR_DATA *ch, FILE *fp);
 void free_neweqbank(BANK_DATA *bank);
 
+// do_backup: Command: do_backup - Main execution handler for the 'backup' player/IMM command.
+// do_backup: 指令：do_backup - 處理玩家或天神執行 'backup' 指令的主控程序。
 void do_backup(CHAR_DATA *ch, char *argument) {
     FILE *fp;
     char  buf[MAX_STRING_LENGTH];
@@ -2840,6 +2872,8 @@ CHAR_DATA *load_horse_obj(DESCRIPTOR_DATA *d, char *name) {
     return ch;
 }
 
+// save_horse_obj: Core Engine function: save_horse_obj - Main C routine handling game mechanics.
+// save_horse_obj: 核心引擎函式：save_horse_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void save_horse_obj(CHAR_DATA *ch) {
     FILE *fp;
     char  buf[MAX_STRING_LENGTH];

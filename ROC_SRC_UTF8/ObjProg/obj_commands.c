@@ -54,6 +54,8 @@
 extern int qmark_opr          args((int lhs, char *opr, int rhs, char *mod_name));
 extern long long ll_qmark_opr args((long long lhs, char *opr, long long rhs, char *mod_name)); // 增加數值較大的判定 2023/01/10
 
+// do_ogoto: Command: do_ogoto - ObjProg script command for objects to execute the corresponding 'ogoto' action.
+// do_ogoto: 指令：do_ogoto - 物品腳本專用指令，使物品執行相對應的 'ogoto' 動作。
 void do_ogoto(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char             arg[MAX_INPUT_LENGTH];
     ROOM_INDEX_DATA *location;
@@ -102,6 +104,8 @@ void do_ogoto(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
 }
 
 // 新增 ocast 2022/11/28
+// do_ocast: Command: do_ocast - ObjProg script command for objects to execute the corresponding 'ocast' action.
+// do_ocast: 指令：do_ocast - 物品腳本專用指令，使物品執行相對應的 'ocast' 動作。
 void do_ocast(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char       arg1[MAX_INPUT_LENGTH];
     char       arg2[MAX_INPUT_LENGTH];
@@ -161,6 +165,8 @@ void do_ocast(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
 }
 
 // 新增 obj rember 的指令 2022/11/10
+// do_odef_rembch: Command: do_odef_rembch - ObjProg script command for objects to execute the corresponding 'odef_rembch' action.
+// do_odef_rembch: 指令：do_odef_rembch - 物品腳本專用指令，使物品執行相對應的 'odef_rembch' 動作。
 void do_odef_rembch(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *vch;
@@ -188,6 +194,8 @@ void do_odef_rembch(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_oteleport: Command: do_oteleport - ObjProg script command for objects to execute the corresponding 'oteleport' action.
+// do_oteleport: 指令：do_oteleport - 物品腳本專用指令，使物品執行相對應的 'oteleport' 動作。
 void do_oteleport(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoomIndex = NULL;
     int              room1, room2, count = 0;
@@ -296,6 +304,8 @@ void do_oteleport(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_oforcer: Command: do_oforcer - ObjProg script command for objects to execute the corresponding 'oforcer' action.
+// do_oforcer: 指令：do_oforcer - 物品腳本專用指令，使物品執行相對應的 'oforcer' 動作。
 void do_oforcer(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *room = NULL;
     char             arg[MAX_INPUT_LENGTH];
@@ -339,6 +349,8 @@ void do_oforcer(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_oforce: Command: do_oforce - ObjProg script command for objects to execute the corresponding 'oforce' action.
+// do_oforce: 指令：do_oforce - 物品腳本專用指令，使物品執行相對應的 'oforce' 動作。
 void do_oforce(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
 
@@ -399,6 +411,8 @@ void do_oforce(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_oechoat: Command: do_oechoat - ObjProg script command for objects to execute the corresponding 'oechoat' action.
+// do_oechoat: 指令：do_oechoat - 物品腳本專用指令，使物品執行相對應的 'oechoat' 動作。
 void do_oechoat(OBJ_DATA *room, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -426,6 +440,8 @@ void do_oechoat(OBJ_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_ooecho: Command: do_ooecho - ObjProg script command for objects to execute the corresponding 'ooecho' action.
+// do_ooecho: 指令：do_ooecho - 物品腳本專用指令，使物品執行相對應的 'ooecho' 動作。
 void do_ooecho(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
     if (argument[0] == '\0') {
         bug("Echoat - No argument:  Obj: %d.",
@@ -440,6 +456,8 @@ void do_ooecho(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_oechoaround: Command: do_oechoaround - ObjProg script command for objects to execute the corresponding 'oechoaround' action.
+// do_oechoaround: 指令：do_oechoaround - 物品腳本專用指令，使物品執行相對應的 'oechoaround' 動作。
 void do_oechoaround(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -467,6 +485,8 @@ void do_oechoaround(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_oechotoall: Command: do_oechotoall - ObjProg script command for objects to execute the corresponding 'oechotoall' action.
+// do_oechotoall: 指令：do_oechotoall - 物品腳本專用指令，使物品執行相對應的 'oechotoall' 動作。
 void do_oechotoall(OBJ_DATA *room, CHAR_DATA *actor, char *argument) {
     CHAR_DATA *cha;
     char       buf[MAX_STRING_LENGTH];
@@ -484,6 +504,8 @@ void do_oechotoall(OBJ_DATA *room, CHAR_DATA *actor, char *argument) {
     }
 }
 
+// do_ononechoat: Command: do_ononechoat - ObjProg script command for objects to execute the corresponding 'ononechoat' action.
+// do_ononechoat: 指令：do_ononechoat - 物品腳本專用指令，使物品執行相對應的 'ononechoat' 動作。
 void do_ononechoat(OBJ_DATA *room, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -509,6 +531,8 @@ void do_ononechoat(OBJ_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_ononechoaround: Command: do_ononechoaround - ObjProg script command for objects to execute the corresponding 'ononechoaround' action.
+// do_ononechoaround: 指令：do_ononechoaround - 物品腳本專用指令，使物品執行相對應的 'ononechoaround' 動作。
 void do_ononechoaround(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -551,6 +575,8 @@ void do_ononechoaround(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
   opr      (符號): + - & | r =
   modifier (數字): 配合 field 填入適當數值
 */
+// do_opmodvt: Command: do_opmodvt - ObjProg script command for objects to execute the corresponding 'opmodvt' action.
+// do_opmodvt: 指令：do_opmodvt - 物品腳本專用指令，使物品執行相對應的 'opmodvt' 動作。
 void do_opmodvt(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim = NULL;
     OBJ_DATA        *obj    = NULL;
@@ -793,6 +819,8 @@ OBJ_DATA *obj_find(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
     return NULL;
 }
 
+// do_omodhmv: Command: do_omodhmv - ObjProg script command for objects to execute the corresponding 'omodhmv' action.
+// do_omodhmv: 指令：do_omodhmv - 物品腳本專用指令，使物品執行相對應的 'omodhmv' 動作。
 void do_omodhmv(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
     CHAR_DATA *vch;
     char       arg[MAX_INPUT_LENGTH];
@@ -952,6 +980,8 @@ void do_omodhmv(OBJ_DATA *obj, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_oadd_affect: Command: do_oadd_affect - ObjProg script command for objects to execute the corresponding 'oadd_affect' action.
+// do_oadd_affect: 指令：do_oadd_affect - 物品腳本專用指令，使物品執行相對應的 'oadd_affect' 動作。
 void do_oadd_affect(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
@@ -1058,6 +1088,8 @@ void do_oadd_affect(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     affect_join(target, &af);
 }
 
+// do_odel_affect: Command: do_odel_affect - ObjProg script command for objects to execute the corresponding 'odel_affect' action.
+// do_odel_affect: 指令：do_odel_affect - 物品腳本專用指令，使物品執行相對應的 'odel_affect' 動作。
 void do_odel_affect(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char         arg1[MAX_INPUT_LENGTH];
     char         arg2[MAX_INPUT_LENGTH];
@@ -1114,6 +1146,8 @@ void do_odel_affect(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_opurge: Command: do_opurge - ObjProg script command for objects to execute the corresponding 'opurge' action.
+// do_opurge: 指令：do_opurge - 物品腳本專用指令，使物品執行相對應的 'opurge' 動作。
 void do_opurge(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char             arg[MAX_INPUT_LENGTH];
     char             arg1[MAX_INPUT_LENGTH];
@@ -1237,6 +1271,8 @@ void do_opurge(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_ooset: Command: do_ooset - ObjProg script command for objects to execute the corresponding 'ooset' action.
+// do_ooset: 指令：do_ooset - 物品腳本專用指令，使物品執行相對應的 'ooset' 動作。
 void do_ooset(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj = NULL;
     // CHAR_DATA *pch;
@@ -1439,6 +1475,8 @@ void do_ooset(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
   location (數字): 參考 parameter.h - Apply types (for affects)
   modifier (數字): 配合 location 填入適當數值
 */
+// do_opset_obj_affect: Command: do_opset_obj_affect - ObjProg script command for objects to execute the corresponding 'opset_obj_affect' action.
+// do_opset_obj_affect: 指令：do_opset_obj_affect - 物品腳本專用指令，使物品執行相對應的 'opset_obj_affect' 動作。
 void do_opset_obj_affect(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim = NULL;
     AFFECT_DATA     *paf    = NULL;
@@ -1601,6 +1639,8 @@ void do_opset_obj_affect(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
   location (數字): 參考 parameter.h - Apply types (for affects)
            (字串): all, 表示移除該 obj 所有 affect
 */
+// do_opremove_obj_affect: Command: do_opremove_obj_affect - ObjProg script command for objects to execute the corresponding 'opremove_obj_affect' action.
+// do_opremove_obj_affect: 指令：do_opremove_obj_affect - 物品腳本專用指令，使物品執行相對應的 'opremove_obj_affect' 動作。
 void do_opremove_obj_affect(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim  = NULL;
     AFFECT_DATA     *paf     = NULL;
@@ -1768,6 +1808,8 @@ void do_opremove_obj_affect(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
   duration (數字): 有值的話, 當找不到 affect 時, 會自動呼叫 set 並把 duration 設成此值
                    沒值的話, 當找不到 affect 時, 什麼都不做
 */
+// do_opmodify_obj_affect: Command: do_opmodify_obj_affect - ObjProg script command for objects to execute the corresponding 'opmodify_obj_affect' action.
+// do_opmodify_obj_affect: 指令：do_opmodify_obj_affect - 物品腳本專用指令，使物品執行相對應的 'opmodify_obj_affect' 動作。
 void do_opmodify_obj_affect(OBJ_DATA *pobj, CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim = NULL;
     AFFECT_DATA     *paf    = NULL;

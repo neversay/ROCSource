@@ -49,6 +49,8 @@ extern int artifact(CHAR_DATA *ch);
 extern int mone_hit(CHAR_DATA *ch, CHAR_DATA *victim, int *dt_orig, int wpn, int msg_mode, int dt_mode); // Modified by Razgriz 20051014
 extern int GetBonusedValue_LanceMaster(CHAR_DATA *ch, int nPerc);
 
+// check_item_magic_flag: Combat logic: check_item_magic_flag - Applies combat calculations, checks, or damage formulas.
+// check_item_magic_flag: 戰鬥邏輯：check_item_magic_flag - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int check_item_magic_flag(OBJ_DATA *wield, int vrace, int dam) {
     if (wield && IS_SET(wield->extra_flags, ITEM_MAGIC))
         if (number_bits(2) == 1)
@@ -57,6 +59,8 @@ int check_item_magic_flag(OBJ_DATA *wield, int vrace, int dam) {
     return 0;
 }
 
+// check_dodge: Combat logic: check_dodge - Applies combat calculations, checks, or damage formulas.
+// check_dodge: 戰鬥邏輯：check_dodge - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_dodge(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff, int dexdiff) {
     int  chance;
     int  ppl_dex;
@@ -177,6 +181,8 @@ bool check_dodge(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff, int dexdiff) {
     return TRUE;
 }
 
+// check_evade: Combat logic: check_evade - Applies combat calculations, checks, or damage formulas.
+// check_evade: 戰鬥邏輯：check_evade - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_evade(CHAR_DATA *ch, CHAR_DATA *victim) {
     int chance;
     int mod = 100;
@@ -221,6 +227,8 @@ bool check_evade(CHAR_DATA *ch, CHAR_DATA *victim) {
  */
 // check_parry 加入 dt 值及 wpn , ch 攻擊時使用的武器 2022/12/04
 // bool check_parry( CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff )
+// check_parry: Combat logic: check_parry - Applies combat calculations, checks, or damage formulas.
+// check_parry: 戰鬥邏輯：check_parry - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_parry(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff, int dt, int wpn) {
     // int chance;
     int  mob_chance = 0;
@@ -704,6 +712,8 @@ bool check_parry(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff, int dt, int wp
 /*
  * Check for block.
  */
+// check_block: Combat logic: check_block - Applies combat calculations, checks, or damage formulas.
+// check_block: 戰鬥邏輯：check_block - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_block(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff) {
     OBJ_DATA *obj;
     int       weight;
@@ -978,6 +988,8 @@ bool check_block(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff) {
  */
 // victim 與 ch 錯亂, 故改為與 fight_damage 的位置一樣 2022/12/04
 // bool check_tactics( CHAR_DATA *ch, CHAR_DATA *victim )
+// check_tactics: Combat logic: check_tactics - Applies combat calculations, checks, or damage formulas.
+// check_tactics: 戰鬥邏輯：check_tactics - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_tactics(CHAR_DATA *victim, CHAR_DATA *ch) {
     int  chance = 0;
     int  reposte;         // 191213 加入 block reposte判定
@@ -1065,6 +1077,8 @@ bool check_tactics(CHAR_DATA *victim, CHAR_DATA *ch) {
     return TRUE;
 }
 
+// frenzy_check_dodge: Core Engine function: frenzy_check_dodge - Main C routine handling game mechanics.
+// frenzy_check_dodge: 核心引擎函式：frenzy_check_dodge - 處理遊戲底層機制的核心 C 語言子程序。
 bool frenzy_check_dodge(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff, int dexdiff) {
     int  chance;
     int  ppl_dex;
@@ -1153,6 +1167,8 @@ bool frenzy_check_dodge(CHAR_DATA *ch, CHAR_DATA *victim, int leveldiff, int dex
 /*
  * See if an attack justifies a KILLER flag.
  */
+// check_killer: Combat logic: check_killer - Applies combat calculations, checks, or damage formulas.
+// check_killer: 戰鬥邏輯：check_killer - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void check_killer(CHAR_DATA *ch, CHAR_DATA *victim) {
     // CHAR_DATA *vch;
 
@@ -1333,6 +1349,8 @@ void check_killer(CHAR_DATA *ch, CHAR_DATA *victim) {
 
 /** Check to see if weapon is poisoned.
  */
+// is_wielding_poisoned: Core Engine function: is_wielding_poisoned - Main C routine handling game mechanics.
+// is_wielding_poisoned: 核心引擎函式：is_wielding_poisoned - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_wielding_poisoned(CHAR_DATA *ch, int wpn) {
     OBJ_DATA *obj   = NULL;
     OBJ_DATA *arrow = NULL;
@@ -1351,6 +1369,8 @@ bool is_wielding_poisoned(CHAR_DATA *ch, int wpn) {
     return FALSE;
 }
 
+// is_safe: Core Engine function: is_safe - Main C routine handling game mechanics.
+// is_safe: 核心引擎函式：is_safe - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_safe(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (victim->in_room && IS_SET(victim->in_room->room_flags, ROOM_SAFE)) {
         return TRUE;
@@ -1463,6 +1483,8 @@ bool is_safe(CHAR_DATA *ch, CHAR_DATA *victim) {
     return FALSE;
 }
 
+// check_corpse_count: Combat logic: check_corpse_count - Applies combat calculations, checks, or damage formulas.
+// check_corpse_count: 戰鬥邏輯：check_corpse_count - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void check_corpse_count(CHAR_DATA *ch, CHAR_DATA *victim) {
     char   buf_q[MAX_INPUT_LENGTH];
     QMARK *qm;
@@ -1654,6 +1676,8 @@ CHAR_DATA *mob_ai_lv1(CHAR_DATA *ch) {
 }
 
 /*have registered or have license or is vampire*/
+// licensed: Core Engine function: licensed - Main C routine handling game mechanics.
+// licensed: 核心引擎函式：licensed - 處理遊戲底層機制的核心 C 語言子程序。
 bool licensed(CHAR_DATA *ch) {
     OBJ_DATA *obj;
 
@@ -1698,6 +1722,8 @@ bool registered(CHAR_DATA *ch, CHAR_DATA *victim) /*{{{*/
  * -Kahn
  */
 
+// pc_breathe: Core Engine function: pc_breathe - Main C routine handling game mechanics.
+// pc_breathe: 核心引擎函式：pc_breathe - 處理遊戲底層機制的核心 C 語言子程序。
 void pc_breathe(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     CHAR_DATA *victim_next;
@@ -1729,6 +1755,8 @@ void pc_breathe(CHAR_DATA *ch) {
  * -Kahn
  */
 
+// pc_screech: Core Engine function: pc_screech - Main C routine handling game mechanics.
+// pc_screech: 核心引擎函式：pc_screech - 處理遊戲底層機制的核心 C 語言子程序。
 void pc_screech(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     CHAR_DATA *victim_next;
@@ -1756,6 +1784,8 @@ void pc_screech(CHAR_DATA *ch) {
     return;
 }
 
+// pc_spit: Core Engine function: pc_spit - Main C routine handling game mechanics.
+// pc_spit: 核心引擎函式：pc_spit - 處理遊戲底層機制的核心 C 語言子程序。
 void pc_spit(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     CHAR_DATA *victim_next;
@@ -1786,6 +1816,8 @@ void pc_spit(CHAR_DATA *ch) {
     return;
 }
 
+// check_race_special: Combat logic: check_race_special - Applies combat calculations, checks, or damage formulas.
+// check_race_special: 戰鬥邏輯：check_race_special - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_race_special(CHAR_DATA *ch) {
     return FALSE;
     if (ch->race == race_lookup("Dragon")) {
@@ -1815,6 +1847,8 @@ bool check_race_special(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// check_wimpout: Combat logic: check_wimpout - Applies combat calculations, checks, or damage formulas.
+// check_wimpout: 戰鬥邏輯：check_wimpout - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void check_wimpout(CHAR_DATA *ch, CHAR_DATA *victim) {
     //----恐懼狀態會自動逃跑
 
@@ -1838,6 +1872,8 @@ void check_wimpout(CHAR_DATA *ch, CHAR_DATA *victim) {
 /* Reflexion skill by Amenda, 01/2/3 */
 /* Managed by Chris,    05/7/2 */
 
+// check_reflexion: Combat logic: check_reflexion - Applies combat calculations, checks, or damage formulas.
+// check_reflexion: 戰鬥邏輯：check_reflexion - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_reflexion(CHAR_DATA *ch, CHAR_DATA *victim, int dt, int dam, int dexdiff) {
     int chance = 0;
 
@@ -1917,6 +1953,8 @@ bool check_reflexion(CHAR_DATA *ch, CHAR_DATA *victim, int dt, int dam, int dexd
 }
 
 // 根據攻擊者的Level對傷害進行調降，以延長高等級的戰鬥
+// check_damage_adjust: Combat logic: check_damage_adjust - Applies combat calculations, checks, or damage formulas.
+// check_damage_adjust: 戰鬥邏輯：check_damage_adjust - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int check_damage_adjust(CHAR_DATA *ch, int dam) {
     if (ch->level > 29) {
         dam = UMAX(1, dam - (dam / 4) + 1);
@@ -1939,6 +1977,8 @@ int check_damage_adjust(CHAR_DATA *ch, int dam) {
 }
 
 // Spell Fury
+// check_spellfury: Combat logic: check_spellfury - Applies combat calculations, checks, or damage formulas.
+// check_spellfury: 戰鬥邏輯：check_spellfury - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int check_spellfury(CHAR_DATA *ch, CHAR_DATA *victim, int dam) {
     if (IS_NPC(ch) && IS_SET(ch->special, SPELL_FURY)) {
         if (number_percent() < ch->level + 10)
@@ -2051,6 +2091,8 @@ int check_spellfury(CHAR_DATA *ch, CHAR_DATA *victim, int dam) {
 }
 
 // 計算偷襲的加成與攻擊招喚物的後果
+// check_dirty_raid: Combat logic: check_dirty_raid - Applies combat calculations, checks, or damage formulas.
+// check_dirty_raid: 戰鬥邏輯：check_dirty_raid - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int check_dirty_raid(CHAR_DATA *ch, CHAR_DATA *victim, int dam) {
     if (victim->position >= POS_SLEEPING) {
         if (!victim->fighting)
@@ -2077,6 +2119,8 @@ int check_dirty_raid(CHAR_DATA *ch, CHAR_DATA *victim, int dam) {
     return dam;
 }
 
+// check_can_do_hit: Combat logic: check_can_do_hit - Applies combat calculations, checks, or damage formulas.
+// check_can_do_hit: 戰鬥邏輯：check_can_do_hit - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_can_do_hit(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (!victim || (victim == NULL) || victim->deleted)
         return FALSE;

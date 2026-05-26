@@ -96,6 +96,8 @@ void check_position      args((CHAR_DATA * ch, CHAR_DATA *victim, int dam));
  *  make it just a hair bit easier to see what a mob should be doing.
  */
 
+// do_self_skill: Command: do_self_skill - MobProg script command for NPCs to execute the corresponding 'self_skill' action.
+// do_self_skill: 指令：do_self_skill - 怪物腳本專用指令，供 NPC 執行相對應的 'self_skill' 動作。
 void do_self_skill(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *target, *next_target;
     char       arg0[MAX_INPUT_LENGTH];
@@ -295,6 +297,8 @@ void do_self_skill(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_self_magic: Command: do_self_magic - MobProg script command for NPCs to execute the corresponding 'self_magic' action.
+// do_self_magic: 指令：do_self_magic - 怪物腳本專用指令，供 NPC 執行相對應的 'self_magic' 動作。
 void do_self_magic(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *target, *next_target;
     char       arg0[MAX_INPUT_LENGTH];
@@ -491,6 +495,8 @@ void do_self_magic(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpstun: Command: do_mpstun - MobProg script command for NPCs to execute the corresponding 'mpstun' action.
+// do_mpstun: 指令：do_mpstun - 怪物腳本專用指令，供 NPC 執行相對應的 'mpstun' 動作。
 void do_mpstun(CHAR_DATA *ch, char *argument) {
     // char arg[MAX_INPUT_LENGTH];
 
@@ -500,6 +506,8 @@ void do_mpstun(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_mpteleport: Command: do_mpteleport - MobProg script command for NPCs to execute the corresponding 'mpteleport' action.
+// do_mpteleport: 指令：do_mpteleport - 怪物腳本專用指令，供 NPC 執行相對應的 'mpteleport' 動作。
 void do_mpteleport(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoomIndex = NULL;
     // int room1, room2, count = 0;
@@ -645,6 +653,8 @@ void do_mpteleport(CHAR_DATA *ch, char *argument) {
 
 // added by Amethyst
 // allow NPC to use trip directly
+// do_mptrip: Command: do_mptrip - MobProg script command for NPCs to execute the corresponding 'mptrip' action.
+// do_mptrip: 指令：do_mptrip - 怪物腳本專用指令，供 NPC 執行相對應的 'mptrip' 動作。
 void do_mptrip(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *target, *next_target;
 
@@ -685,6 +695,8 @@ void do_mptrip(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_skilldrv: Command: do_skilldrv - MobProg script command for NPCs to execute the corresponding 'skilldrv' action.
+// do_skilldrv: 指令：do_skilldrv - 怪物腳本專用指令，供 NPC 執行相對應的 'skilldrv' 動作。
 void do_skilldrv(CHAR_DATA *ch, char *argument) {
     char       arg1[MAX_INPUT_LENGTH];
     char       arg2[MAX_INPUT_LENGTH];
@@ -989,6 +1001,8 @@ void do_skilldrv(CHAR_DATA *ch, char *argument) {
 
 /* prints the argument to all the rooms aroud the mobile */
 
+// do_mpasound: Command: do_mpasound - MobProg script command for NPCs to execute the corresponding 'mpasound' action.
+// do_mpasound: 指令：do_mpasound - 怪物腳本專用指令，供 NPC 執行相對應的 'mpasound' 動作。
 void do_mpasound(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *was_in_room;
     int              door;
@@ -1025,6 +1039,8 @@ void do_mpasound(CHAR_DATA *ch, char *argument) {
 
 /* lets the mobile kill any player or mobile without murder*/
 
+// do_mpkill: Command: do_mpkill - MobProg script command for NPCs to execute the corresponding 'mpkill' action.
+// do_mpkill: 指令：do_mpkill - 怪物腳本專用指令，供 NPC 執行相對應的 'mpkill' 動作。
 void do_mpkill(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -1082,6 +1098,8 @@ void do_mpkill(CHAR_DATA *ch, char *argument) {
    it can also destroy a worn object and it can destroy
    items using all.xxxxx or just plain all of them */
 
+// do_mpjunk: Command: do_mpjunk - MobProg script command for NPCs to execute the corresponding 'mpjunk' action.
+// do_mpjunk: 指令：do_mpjunk - 怪物腳本專用指令，供 NPC 執行相對應的 'mpjunk' 動作。
 void do_mpjunk(CHAR_DATA *ch, char *argument) {
     char      arg[MAX_INPUT_LENGTH];
     OBJ_DATA *obj;
@@ -1133,6 +1151,8 @@ void do_mpjunk(CHAR_DATA *ch, char *argument) {
 
 /* prints the message to everyone in the room other than the mob and target */
 
+// do_mpechoaround: Command: do_mpechoaround - MobProg script command for NPCs to execute the corresponding 'mpechoaround' action.
+// do_mpechoaround: 指令：do_mpechoaround - 怪物腳本專用指令，供 NPC 執行相對應的 'mpechoaround' 動作。
 void do_mpechoaround(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -1168,6 +1188,8 @@ void do_mpechoaround(CHAR_DATA *ch, char *argument) {
 
 /* prints the message to only the target */
 
+// do_mpechoat: Command: do_mpechoat - MobProg script command for NPCs to execute the corresponding 'mpechoat' action.
+// do_mpechoat: 指令：do_mpechoat - 怪物腳本專用指令，供 NPC 執行相對應的 'mpechoat' 動作。
 void do_mpechoat(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -1204,6 +1226,8 @@ void do_mpechoat(CHAR_DATA *ch, char *argument) {
 
 /* prints the message to the room at large */
 
+// do_mpecho: Command: do_mpecho - MobProg script command for NPCs to execute the corresponding 'mpecho' action.
+// do_mpecho: 指令：do_mpecho - 怪物腳本專用指令，供 NPC 執行相對應的 'mpecho' 動作。
 void do_mpecho(CHAR_DATA *ch, char *argument) {
     // if ( !IS_NPC( ch ) || IS_AFFECTED( ch, AFF_CHARM ) || IS_AFFECTED( ch, AFF_SUMMONED ) )
     //  {
@@ -1224,6 +1248,8 @@ void do_mpecho(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpechotoall: Command: do_mpechotoall - MobProg script command for NPCs to execute the corresponding 'mpechotoall' action.
+// do_mpechotoall: 指令：do_mpechotoall - 怪物腳本專用指令，供 NPC 執行相對應的 'mpechotoall' 動作。
 void do_mpechotoall(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *cha;
     char       buf[MAX_STRING_LENGTH];
@@ -1253,6 +1279,8 @@ void do_mpechotoall(CHAR_DATA *ch, char *argument) {
 
 /* prints the non newline message to everyone in the room other than the mob and target*/
 
+// do_mpnonechoaround: Command: do_mpnonechoaround - MobProg script command for NPCs to execute the corresponding 'mpnonechoaround' action.
+// do_mpnonechoaround: 指令：do_mpnonechoaround - 怪物腳本專用指令，供 NPC 執行相對應的 'mpnonechoaround' 動作。
 void do_mpnonechoaround(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -1288,6 +1316,8 @@ void do_mpnonechoaround(CHAR_DATA *ch, char *argument) {
 
 /* prints the message to only the target with non newline change*/
 
+// do_mpnonechoat: Command: do_mpnonechoat - MobProg script command for NPCs to execute the corresponding 'mpnonechoat' action.
+// do_mpnonechoat: 指令：do_mpnonechoat - 怪物腳本專用指令，供 NPC 執行相對應的 'mpnonechoat' 動作。
 void do_mpnonechoat(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -1324,6 +1354,8 @@ void do_mpnonechoat(CHAR_DATA *ch, char *argument) {
 
 /* prints the non newline message to the room at large*/
 
+// do_mpnonecho: Command: do_mpnonecho - MobProg script command for NPCs to execute the corresponding 'mpnonecho' action.
+// do_mpnonecho: 指令：do_mpnonecho - 怪物腳本專用指令，供 NPC 執行相對應的 'mpnonecho' 動作。
 void do_mpnonecho(CHAR_DATA *ch, char *argument) {
     // if ( !IS_NPC( ch ) || IS_AFFECTED( ch, AFF_CHARM ) || IS_AFFECTED( ch, AFF_SUMMONED ) )
     // {
@@ -1345,6 +1377,8 @@ void do_mpnonecho(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpnowait: Command: do_mpnowait - MobProg script command for NPCs to execute the corresponding 'mpnowait' action.
+// do_mpnowait: 指令：do_mpnowait - 怪物腳本專用指令，供 NPC 執行相對應的 'mpnowait' 動作。
 void do_mpnowait(CHAR_DATA *ch, char *argument) {
     if (!IS_NPC(ch)) {
         send_to_char("什麼？\n\r", ch);
@@ -1358,6 +1392,8 @@ void do_mpnowait(CHAR_DATA *ch, char *argument) {
     ch->wait = 0;
 }
 
+// do_mpdesc: Command: do_mpdesc - MobProg script command for NPCs to execute the corresponding 'mpdesc' action.
+// do_mpdesc: 指令：do_mpdesc - 怪物腳本專用指令，供 NPC 執行相對應的 'mpdesc' 動作。
 void do_mpdesc(CHAR_DATA *ch, char *argument) {
     char type[MAX_INPUT_LENGTH];
     char buf[MAX_INPUT_LENGTH];
@@ -1397,6 +1433,8 @@ void do_mpdesc(CHAR_DATA *ch, char *argument) {
 /*
  * Mob mset command	//Added by Razgriz	20050626
  */
+// do_mpmset: Command: do_mpmset - MobProg script command for NPCs to execute the corresponding 'mpmset' action.
+// do_mpmset: 指令：do_mpmset - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmset' 動作。
 void do_mpmset(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       buf[MAX_STRING_LENGTH];
@@ -2177,6 +2215,8 @@ void do_mpmset(CHAR_DATA *ch, char *argument) {
 are loaded into inventory.  you can specify a level with
 the load object portion as well. */
 
+// do_mpmload: Command: do_mpmload - MobProg script command for NPCs to execute the corresponding 'mpmload' action.
+// do_mpmload: 指令：do_mpmload - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmload' 動作。
 void do_mpmload(CHAR_DATA *ch, char *argument) {
     char            arg[MAX_INPUT_LENGTH];
     MOB_INDEX_DATA *pMobIndex;
@@ -2210,6 +2250,8 @@ void do_mpmload(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpoload: Command: do_mpoload - MobProg script command for NPCs to execute the corresponding 'mpoload' action.
+// do_mpoload: 指令：do_mpoload - 怪物腳本專用指令，供 NPC 執行相對應的 'mpoload' 動作。
 void do_mpoload(CHAR_DATA *ch, char *argument) {
     char            arg1[MAX_INPUT_LENGTH];
     char            arg2[MAX_INPUT_LENGTH];
@@ -2364,6 +2406,8 @@ void do_mpoload(CHAR_DATA *ch, char *argument) {
    itself, but this had best be the last command in the MOBprogram
    otherwise ugly stuff will happen */
 
+// do_mppurge: Command: do_mppurge - MobProg script command for NPCs to execute the corresponding 'mppurge' action.
+// do_mppurge: 指令：do_mppurge - 怪物腳本專用指令，供 NPC 執行相對應的 'mppurge' 動作。
 void do_mppurge(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       arg1[MAX_INPUT_LENGTH];
@@ -2498,6 +2542,8 @@ void do_mppurge(CHAR_DATA *ch, char *argument) {
 
 /* lets the mobile goto any location it wishes that is not private */
 
+// do_mpgoto: Command: do_mpgoto - MobProg script command for NPCs to execute the corresponding 'mpgoto' action.
+// do_mpgoto: 指令：do_mpgoto - 怪物腳本專用指令，供 NPC 執行相對應的 'mpgoto' 動作。
 void do_mpgoto(CHAR_DATA *ch, char *argument) {
     char             arg[MAX_INPUT_LENGTH];
     ROOM_INDEX_DATA *location;
@@ -2536,6 +2582,8 @@ void do_mpgoto(CHAR_DATA *ch, char *argument) {
 
 /* lets the mobile do a command at another location. Very useful */
 
+// do_mpat: Command: do_mpat - MobProg script command for NPCs to execute the corresponding 'mpat' action.
+// do_mpat: 指令：do_mpat - 怪物腳本專用指令，供 NPC 執行相對應的 'mpat' 動作。
 void do_mpat(CHAR_DATA *ch, char *argument) {
     char             arg[MAX_INPUT_LENGTH];
     ROOM_INDEX_DATA *location;
@@ -2600,6 +2648,8 @@ void do_mpat(CHAR_DATA *ch, char *argument) {
 /* lets the mobile transfer people.  the all argument transfers
    everyone in the current room to the specified location */
 
+// do_mptransfer: Command: do_mptransfer - MobProg script command for NPCs to execute the corresponding 'mptransfer' action.
+// do_mptransfer: 指令：do_mptransfer - 怪物腳本專用指令，供 NPC 執行相對應的 'mptransfer' 動作。
 void do_mptransfer(CHAR_DATA *ch, char *argument) {
     char             arg1[MAX_INPUT_LENGTH];
     char             arg2[MAX_INPUT_LENGTH];
@@ -2737,6 +2787,8 @@ void do_mptransfer(CHAR_DATA *ch, char *argument) {
 }
 
 // use to modify npc
+// do_mpmodify: Command: do_mpmodify - MobProg script command for NPCs to execute the corresponding 'mpmodify' action.
+// do_mpmodify: 指令：do_mpmodify - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmodify' 動作。
 void do_mpmodify(CHAR_DATA *ch, char *argument) {
     char               arg[MAX_INPUT_LENGTH];
     char               opr[MAX_INPUT_LENGTH];
@@ -2864,6 +2916,8 @@ void do_mpmodify(CHAR_DATA *ch, char *argument) {
     */
 }
 
+// do_mpforce: Command: do_mpforce - MobProg script command for NPCs to execute the corresponding 'mpforce' action.
+// do_mpforce: 指令：do_mpforce - 怪物腳本專用指令，供 NPC 執行相對應的 'mpforce' 動作。
 void do_mpforce(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
 
@@ -2920,6 +2974,8 @@ void do_mpforce(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpforcer: Command: do_mpforcer - MobProg script command for NPCs to execute the corresponding 'mpforcer' action.
+// do_mpforcer: 指令：do_mpforcer - 怪物腳本專用指令，供 NPC 執行相對應的 'mpforcer' 動作。
 void do_mpforcer(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *room = NULL;
     char             arg[MAX_INPUT_LENGTH];
@@ -2961,6 +3017,8 @@ void do_mpforcer(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpcallout: Command: do_mpcallout - MobProg script command for NPCs to execute the corresponding 'mpcallout' action.
+// do_mpcallout: 指令：do_mpcallout - 怪物腳本專用指令，供 NPC 執行相對應的 'mpcallout' 動作。
 void do_mpcallout(CHAR_DATA *ch, char *argument) {
     char           arg[MAX_INPUT_LENGTH];
     int            timer;
@@ -2990,6 +3048,8 @@ void do_mpcallout(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpcall: Command: do_mpcall - MobProg script command for NPCs to execute the corresponding 'mpcall' action.
+// do_mpcall: 指令：do_mpcall - 怪物腳本專用指令，供 NPC 執行相對應的 'mpcall' 動作。
 void do_mpcall(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       fun[MAX_STRING_LENGTH];
@@ -3074,6 +3134,8 @@ void do_mpcall(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_mplog: Command: do_mplog - MobProg script command for NPCs to execute the corresponding 'mplog' action.
+// do_mplog: 指令：do_mplog - 怪物腳本專用指令，供 NPC 執行相對應的 'mplog' 動作。
 void do_mplog(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
 
@@ -3086,6 +3148,8 @@ void do_mplog(CHAR_DATA *ch, char *argument) {
     log_string(buf);
 }
 
+// do_mpdef_rembch: Command: do_mpdef_rembch - MobProg script command for NPCs to execute the corresponding 'mpdef_rembch' action.
+// do_mpdef_rembch: 指令：do_mpdef_rembch - 怪物腳本專用指令，供 NPC 執行相對應的 'mpdef_rembch' 動作。
 void do_mpdef_rembch(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *vch;
@@ -3115,6 +3179,8 @@ void do_mpdef_rembch(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_mpdis_magic: Command: do_mpdis_magic - MobProg script command for NPCs to execute the corresponding 'mpdis_magic' action.
+// do_mpdis_magic: 指令：do_mpdis_magic - 怪物腳本專用指令，供 NPC 執行相對應的 'mpdis_magic' 動作。
 void do_mpdis_magic(CHAR_DATA *ch, char *argument) {
     char         arg[MAX_INPUT_LENGTH];
     char         arg1[MAX_INPUT_LENGTH];
@@ -3165,6 +3231,8 @@ void do_mpdis_magic(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_mpgreward: Command: do_mpgreward - MobProg script command for NPCs to execute the corresponding 'mpgreward' action.
+// do_mpgreward: 指令：do_mpgreward - 怪物腳本專用指令，供 NPC 執行相對應的 'mpgreward' 動作。
 void do_mpgreward(CHAR_DATA *ch, char *argument) {
     char type[MAX_INPUT_LENGTH];
     char ppl[MAX_INPUT_LENGTH];
@@ -3301,6 +3369,8 @@ void do_mpgreward(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpgroup: Command: do_mpgroup - MobProg script command for NPCs to execute the corresponding 'mpgroup' action.
+// do_mpgroup: 指令：do_mpgroup - 怪物腳本專用指令，供 NPC 執行相對應的 'mpgroup' 動作。
 void do_mpgroup(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       arg1[MAX_INPUT_LENGTH];
@@ -3361,6 +3431,8 @@ void do_mpgroup(CHAR_DATA *ch, char *argument) {
 }
 
 /*
+// do_mpgroup: Command: do_mpgroup - MobProg script command for NPCs to execute the corresponding 'mpgroup' action.
+// do_mpgroup: 指令：do_mpgroup - 怪物腳本專用指令，供 NPC 執行相對應的 'mpgroup' 動作。
 void do_mpgroup( CHAR_DATA *ch, char *argument )
 {
     char arg[ MAX_INPUT_LENGTH ];
@@ -3426,6 +3498,8 @@ void do_mpgroup( CHAR_DATA *ch, char *argument )
 
 QMARK *qmark_list, *qmark_free;
 
+// do_add_qmark: Command: do_add_qmark - MobProg script command for NPCs to execute the corresponding 'add_qmark' action.
+// do_add_qmark: 指令：do_add_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'add_qmark' 動作。
 void do_add_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     QMARK     *qmark;
@@ -3521,6 +3595,8 @@ void do_add_qmark(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpadd_qmark: Command: do_mpadd_qmark - MobProg script command for NPCs to execute the corresponding 'mpadd_qmark' action.
+// do_mpadd_qmark: 指令：do_mpadd_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'mpadd_qmark' 動作。
 void do_mpadd_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     QMARK     *qmark;
@@ -3636,6 +3712,8 @@ QMARK *set_qmark(char *arg) {
     return qmark;
 }
 
+// check_qmark: Checks if a player possesses a specific quest mark variable.
+// check_qmark: 檢查玩家角色是否持有特定的任務記號變數。
 bool check_qmark(CHAR_DATA *target, char *arg) {
     QMARK *qmark;
 
@@ -3649,6 +3727,8 @@ bool check_qmark(CHAR_DATA *target, char *arg) {
     return FALSE;
 }
 
+// do_del_qmark: Command: do_del_qmark - MobProg script command for NPCs to execute the corresponding 'del_qmark' action.
+// do_del_qmark: 指令：do_del_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'del_qmark' 動作。
 void do_del_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     QMARK     *qmark;
@@ -3715,6 +3795,8 @@ void do_del_qmark(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpdel_qmark: Command: do_mpdel_qmark - MobProg script command for NPCs to execute the corresponding 'mpdel_qmark' action.
+// do_mpdel_qmark: 指令：do_mpdel_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'mpdel_qmark' 動作。
 void do_mpdel_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     QMARK     *qmark;
@@ -3776,6 +3858,8 @@ void do_mpdel_qmark(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// del_qmark: Deletes a specific quest mark node from a character's quest variables list.
+// del_qmark: 自角色的任務變數清單中刪除特定的任務記號節點。
 void del_qmark(QMARK *qmark) {
     // free_string( qmark->mark_name ); intentionally...don't free it !!
     free_string(qmark->mark_name);
@@ -3808,6 +3892,8 @@ void del_qmark(QMARK *qmark) {
     qmark_free          = qmark;
 }
 
+// do_mod_qmark: Command: do_mod_qmark - MobProg script command for NPCs to execute the corresponding 'mod_qmark' action.
+// do_mod_qmark: 指令：do_mod_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'mod_qmark' 動作。
 void do_mod_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       opr[MAX_INPUT_LENGTH];
@@ -3893,6 +3979,8 @@ void do_mod_qmark(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpmod_qmark: Command: do_mpmod_qmark - MobProg script command for NPCs to execute the corresponding 'mpmod_qmark' action.
+// do_mpmod_qmark: 指令：do_mpmod_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmod_qmark' 動作。
 void do_mpmod_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       opr[MAX_INPUT_LENGTH];
@@ -3980,6 +4068,8 @@ void do_mpmod_qmark(CHAR_DATA *ch, char *argument) {
 }
 
 // int qmark_opr( int lhs, char *opr, int rhs )
+// qmark_opr: Performs mathematical operations on integer quest variables.
+// qmark_opr: 對整數型態的任務變數執行數學運算操作。
 int qmark_opr(int lhs, char *opr, int rhs, char *mod_name) {
     if (!str_cmp(opr, "+"))
         return (lhs + rhs);
@@ -4004,6 +4094,8 @@ int qmark_opr(int lhs, char *opr, int rhs, char *mod_name) {
 }
 
 // 增加數值較大的判定 2023/01/10
+// ll_qmark_opr: Performs mathematical operations on 64-bit integer quest variables.
+// ll_qmark_opr: 對 64 位元長整數型態的任務變數執行數學運算操作。
 long long ll_qmark_opr(long long lhs, char *opr, long long rhs, char *mod_name) {
     if (!str_cmp(opr, "+"))
         return (lhs + rhs);
@@ -4025,6 +4117,8 @@ long long ll_qmark_opr(long long lhs, char *opr, long long rhs, char *mod_name) 
     return lhs;
 }
 
+// do_mpadd_all_qmark: Command: do_mpadd_all_qmark - MobProg script command for NPCs to execute the corresponding 'mpadd_all_qmark' action.
+// do_mpadd_all_qmark: 指令：do_mpadd_all_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'mpadd_all_qmark' 動作。
 void do_mpadd_all_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       buf[MAX_INPUT_LENGTH];
@@ -4053,6 +4147,8 @@ void do_mpadd_all_qmark(CHAR_DATA *ch, char *argument) {
         }
 }
 
+// do_mpmod_all_qmark: Command: do_mpmod_all_qmark - MobProg script command for NPCs to execute the corresponding 'mpmod_all_qmark' action.
+// do_mpmod_all_qmark: 指令：do_mpmod_all_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmod_all_qmark' 動作。
 void do_mpmod_all_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       buf[MAX_INPUT_LENGTH];
@@ -4085,6 +4181,8 @@ void do_mpmod_all_qmark(CHAR_DATA *ch, char *argument) {
         }
 }
 
+// do_mpdel_all_qmark: Command: do_mpdel_all_qmark - MobProg script command for NPCs to execute the corresponding 'mpdel_all_qmark' action.
+// do_mpdel_all_qmark: 指令：do_mpdel_all_qmark - 怪物腳本專用指令，供 NPC 執行相對應的 'mpdel_all_qmark' 動作。
 void do_mpdel_all_qmark(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       buf[MAX_INPUT_LENGTH];
@@ -4113,6 +4211,8 @@ void do_mpdel_all_qmark(CHAR_DATA *ch, char *argument) {
         }
 }
 
+// do_mpgold: Command: do_mpgold - MobProg script command for NPCs to execute the corresponding 'mpgold' action.
+// do_mpgold: 指令：do_mpgold - 怪物腳本專用指令，供 NPC 執行相對應的 'mpgold' 動作。
 void do_mpgold(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4163,6 +4263,8 @@ void do_mpgold(CHAR_DATA *ch, char *argument) {
  *
  * @author keelar
  */
+// do_mpmerit: Command: do_mpmerit - MobProg script command for NPCs to execute the corresponding 'mpmerit' action.
+// do_mpmerit: 指令：do_mpmerit - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmerit' 動作。
 void do_mpmerit(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4188,6 +4290,8 @@ void do_mpmerit(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpskillexp: Command: do_mpskillexp - MobProg script command for NPCs to execute the corresponding 'mpskillexp' action.
+// do_mpskillexp: 指令：do_mpskillexp - 怪物腳本專用指令，供 NPC 執行相對應的 'mpskillexp' 動作。
 void do_mpskillexp(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4227,6 +4331,8 @@ void do_mpskillexp(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpexp: Command: do_mpexp - MobProg script command for NPCs to execute the corresponding 'mpexp' action.
+// do_mpexp: 指令：do_mpexp - 怪物腳本專用指令，供 NPC 執行相對應的 'mpexp' 動作。
 void do_mpexp(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4265,6 +4371,8 @@ void do_mpexp(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mppractice: Command: do_mppractice - MobProg script command for NPCs to execute the corresponding 'mppractice' action.
+// do_mppractice: 指令：do_mppractice - 怪物腳本專用指令，供 NPC 執行相對應的 'mppractice' 動作。
 void do_mppractice(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4296,6 +4404,8 @@ void do_mppractice(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpcexp: Command: do_mpcexp - MobProg script command for NPCs to execute the corresponding 'mpcexp' action.
+// do_mpcexp: 指令：do_mpcexp - 怪物腳本專用指令，供 NPC 執行相對應的 'mpcexp' 動作。
 void do_mpcexp(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4328,6 +4438,8 @@ void do_mpcexp(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpalign: Command: do_mpalign - MobProg script command for NPCs to execute the corresponding 'mpalign' action.
+// do_mpalign: 指令：do_mpalign - 怪物腳本專用指令，供 NPC 執行相對應的 'mpalign' 動作。
 void do_mpalign(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4394,6 +4506,8 @@ void do_mpalign(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpresp: Command: do_mpresp - MobProg script command for NPCs to execute the corresponding 'mpresp' action.
+// do_mpresp: 指令：do_mpresp - 怪物腳本專用指令，供 NPC 執行相對應的 'mpresp' 動作。
 void do_mpresp(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4430,6 +4544,8 @@ void do_mpresp(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mpmake_horse: Command: do_mpmake_horse - MobProg script command for NPCs to execute the corresponding 'mpmake_horse' action.
+// do_mpmake_horse: 指令：do_mpmake_horse - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmake_horse' 動作。
 void do_mpmake_horse(CHAR_DATA *ch, char *argument) {
     return;
 #if 0
@@ -4596,6 +4712,8 @@ void do_mpmake_horse(CHAR_DATA *ch, char *argument) {
 #endif
 }
 
+// do_mpget: Command: do_mpget - MobProg script command for NPCs to execute the corresponding 'mpget' action.
+// do_mpget: 指令：do_mpget - 怪物腳本專用指令，供 NPC 執行相對應的 'mpget' 動作。
 void do_mpget(CHAR_DATA *ch, char *argument) {
     char       buf[MAX_STRING_LENGTH];
     CHAR_DATA *rch;
@@ -4708,6 +4826,8 @@ void do_mpget(CHAR_DATA *ch, char *argument) {
   location (數字): 參考 parameter.h - Apply types (for affects)
   modifier (數字): 配合 location 填入適當數值
 */
+// do_mpset_obj_affect: Command: do_mpset_obj_affect - MobProg script command for NPCs to execute the corresponding 'mpset_obj_affect' action.
+// do_mpset_obj_affect: 指令：do_mpset_obj_affect - 怪物腳本專用指令，供 NPC 執行相對應的 'mpset_obj_affect' 動作。
 void do_mpset_obj_affect(CHAR_DATA *ch, char *argument) {
     CHAR_DATA   *victim = NULL;
     AFFECT_DATA *paf    = NULL;
@@ -4813,6 +4933,8 @@ void do_mpset_obj_affect(CHAR_DATA *ch, char *argument) {
   location (數字): 參考 parameter.h - Apply types (for affects)
            (字串): all, 表示移除該 obj 所有 affect
 */
+// do_mpremove_obj_affect: Command: do_mpremove_obj_affect - MobProg script command for NPCs to execute the corresponding 'mpremove_obj_affect' action.
+// do_mpremove_obj_affect: 指令：do_mpremove_obj_affect - 怪物腳本專用指令，供 NPC 執行相對應的 'mpremove_obj_affect' 動作。
 void do_mpremove_obj_affect(CHAR_DATA *ch, char *argument) {
     CHAR_DATA   *victim  = NULL;
     AFFECT_DATA *paf     = NULL;
@@ -4923,6 +5045,8 @@ void do_mpremove_obj_affect(CHAR_DATA *ch, char *argument) {
   duration (數字): 有值的話, 當找不到 affect 時, 會自動呼叫 set 並把 duration 設成此值
                    沒值的話, 當找不到 affect 時, 什麼都不做
 */
+// do_mpmodify_obj_affect: Command: do_mpmodify_obj_affect - MobProg script command for NPCs to execute the corresponding 'mpmodify_obj_affect' action.
+// do_mpmodify_obj_affect: 指令：do_mpmodify_obj_affect - 怪物腳本專用指令，供 NPC 執行相對應的 'mpmodify_obj_affect' 動作。
 void do_mpmodify_obj_affect(CHAR_DATA *ch, char *argument) {
     CHAR_DATA   *victim = NULL;
     AFFECT_DATA *paf    = NULL;
@@ -5036,6 +5160,8 @@ void do_mpmodify_obj_affect(CHAR_DATA *ch, char *argument) {
 /* Added by Razgriz 20051010
  * force object do something
  */
+// do_mpforceo: Command: do_mpforceo - MobProg script command for NPCs to execute the corresponding 'mpforceo' action.
+// do_mpforceo: 指令：do_mpforceo - 怪物腳本專用指令，供 NPC 執行相對應的 'mpforceo' 動作。
 void do_mpforceo(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj = NULL;
     char      arg[MAX_INPUT_LENGTH];

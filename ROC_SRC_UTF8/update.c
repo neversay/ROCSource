@@ -113,6 +113,8 @@ char *action_next_command args((char *clist));
 /*
  * Advancement stuff.
  */
+// advance_level: Core Engine function: advance_level - Main C routine handling game mechanics.
+// advance_level: 核心引擎函式：advance_level - 處理遊戲底層機制的核心 C 語言子程序。
 void advance_level(CHAR_DATA *ch) {
     char buf[MAX_STRING_LENGTH];
     int  add_hp;
@@ -291,6 +293,8 @@ void advance_level(CHAR_DATA *ch) {
 /*
  * Demote stuff.
  */
+// demote_level: Core Engine function: demote_level - Main C routine handling game mechanics.
+// demote_level: 核心引擎函式：demote_level - 處理遊戲底層機制的核心 C 語言子程序。
 void demote_level(CHAR_DATA *ch) {
     char buf[MAX_STRING_LENGTH];
     int  add_hp;
@@ -395,6 +399,8 @@ void demote_level(CHAR_DATA *ch) {
     return;
 }
 
+// gain_exp: Core Engine function: gain_exp - Main C routine handling game mechanics.
+// gain_exp: 核心引擎函式：gain_exp - 處理遊戲底層機制的核心 C 語言子程序。
 void gain_exp(CHAR_DATA *ch, int gain) {
     int clanexp;
 
@@ -470,6 +476,8 @@ void gain_exp(CHAR_DATA *ch, int gain) {
     return;
 }
 
+// NightGeneration: Core Engine function: NightGeneration - Main C routine handling game mechanics.
+// NightGeneration: 核心引擎函式：NightGeneration - 處理遊戲底層機制的核心 C 語言子程序。
 void NightGeneration(CHAR_DATA *ch) {
     int nGain = 0;
     if (!IS_NPC(ch) && IS_SET(race_table[ch->race].race_abilities, RACE_INFRAVISION)) {
@@ -496,6 +504,8 @@ void NightGeneration(CHAR_DATA *ch) {
 /*
  * Regeneration stuff.
  */
+// hit_gain: Core Engine function: hit_gain - Main C routine handling game mechanics.
+// hit_gain: 核心引擎函式：hit_gain - 處理遊戲底層機制的核心 C 語言子程序。
 int hit_gain(CHAR_DATA *ch) {
     int gain, nDrink, nFood;
     int nDrunk; // 加入 醉酒值 的數值 2023/01/13
@@ -568,6 +578,8 @@ int hit_gain(CHAR_DATA *ch) {
     return gain;
 }
 
+// mana_gain: Core Engine function: mana_gain - Main C routine handling game mechanics.
+// mana_gain: 核心引擎函式：mana_gain - 處理遊戲底層機制的核心 C 語言子程序。
 int mana_gain(CHAR_DATA *ch) {
     int gain, nDrink, nFood;
     int nDrunk; // 加入 醉酒值 的數值 2023/01/13
@@ -651,6 +663,8 @@ int mana_gain(CHAR_DATA *ch) {
     return gain;
 }
 
+// move_gain: Core Engine function: move_gain - Main C routine handling game mechanics.
+// move_gain: 核心引擎函式：move_gain - 處理遊戲底層機制的核心 C 語言子程序。
 int move_gain(CHAR_DATA *ch) {
     int gain, nDrink, nFood;
     int nDrunk; // 加入 醉酒值 的數值 2023/01/13
@@ -722,6 +736,8 @@ int move_gain(CHAR_DATA *ch) {
     return gain;
 }
 
+// gain_condition: Core Engine function: gain_condition - Main C routine handling game mechanics.
+// gain_condition: 核心引擎函式：gain_condition - 處理遊戲底層機制的核心 C 語言子程序。
 void gain_condition(CHAR_DATA *ch, int iCond, int value) {
     /*   2023/01/13
      *   1. 於 gain_condition 再次阻擋不會餓渴種族數值變更
@@ -867,6 +883,8 @@ void gain_condition(CHAR_DATA *ch, int iCond, int value) {
  * This function takes 25% of ALL Merc cpu time.
  * -- Furey
  */
+// mobile_update: Core Engine function: mobile_update - Main C routine handling game mechanics.
+// mobile_update: 核心引擎函式：mobile_update - 處理遊戲底層機制的核心 C 語言子程序。
 void mobile_update(void) {
     CHAR_DATA *ch;
     EXIT_DATA *pexit;
@@ -984,6 +1002,8 @@ void mobile_update(void) {
 /*
  * Update the weather.
  */
+// weather_update: Core Engine function: weather_update - Main C routine handling game mechanics.
+// weather_update: 核心引擎函式：weather_update - 處理遊戲底層機制的核心 C 語言子程序。
 void weather_update(void) {
     DESCRIPTOR_DATA *d, *d_next;
     char             buf[MAX_STRING_LENGTH];
@@ -1158,6 +1178,8 @@ void weather_update(void) {
  * Update all chars, including mobs.
  * This function is performance sensitive.
  */
+// char_update: Core Engine function: char_update - Main C routine handling game mechanics.
+// char_update: 核心引擎函式：char_update - 處理遊戲底層機制的核心 C 語言子程序。
 void char_update(void) {
     CHAR_DATA *ch;
     CHAR_DATA *ch_save;
@@ -2012,6 +2034,8 @@ void char_update(void) {
  * This function is performance sensitive.
  * 加新註解 + 排版 by Razgriz 20050917
  */
+// obj_update: Core Engine function: obj_update - Main C routine handling game mechanics.
+// obj_update: 核心引擎函式：obj_update - 處理遊戲底層機制的核心 C 語言子程序。
 void obj_update(void) {
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
@@ -2509,6 +2533,8 @@ void obj_update(void) {
  *
  * -Kahn
  */
+// aggr_update: Core Engine function: aggr_update - Main C routine handling game mechanics.
+// aggr_update: 核心引擎函式：aggr_update - 處理遊戲底層機制的核心 C 語言子程序。
 void aggr_update(void) {
     CHAR_DATA       *ch;
     CHAR_DATA       *mch;
@@ -2663,6 +2689,8 @@ void aggr_update(void) {
 }
 
 /* Update the check on time for autoshutdown */
+// time_update: Core Engine function: time_update - Main C routine handling game mechanics.
+// time_update: 核心引擎函式：time_update - 處理遊戲底層機制的核心 C 語言子程序。
 void time_update(void) {
     FILE         *fp;
     char          buf[MAX_STRING_LENGTH];
@@ -2765,6 +2793,8 @@ void time_update(void) {
  * Remove deleted CHAR_DATA and OBJ_DATA from char_list and object_list.
  */
 
+// list_update: Core Engine function: list_update - Main C routine handling game mechanics.
+// list_update: 核心引擎函式：list_update - 處理遊戲底層機制的核心 C 語言子程序。
 void list_update(void) {
     CHAR_DATA  *ch;
     CHAR_DATA  *ch_next;
@@ -2929,6 +2959,8 @@ void list_update(void) {
     return;
 }
 
+// new_list_update: Core Engine function: new_list_update - Main C routine handling game mechanics.
+// new_list_update: 核心引擎函式：new_list_update - 處理遊戲底層機制的核心 C 語言子程序。
 void new_list_update(void) {
     CHAR_DATA  *ch;
     CHAR_DATA  *ch_next;
@@ -3089,6 +3121,8 @@ void new_list_update(void) {
 /* Deduct qmark timer, and delete the qmark if
  * its timer reach 0. -- Amenda
  */
+// qmark_update: Core Engine function: qmark_update - Main C routine handling game mechanics.
+// qmark_update: 核心引擎函式：qmark_update - 處理遊戲底層機制的核心 C 語言子程序。
 void qmark_update(void) {
     QMARK *qmark, *qmark_next_in_list;
 
@@ -3108,6 +3142,8 @@ void qmark_update(void) {
     }
 }
 
+// mob_action_update: Core Engine function: mob_action_update - Main C routine handling game mechanics.
+// mob_action_update: 核心引擎函式：mob_action_update - 處理遊戲底層機制的核心 C 語言子程序。
 void mob_action_update(void) {
     MOB_ACTION *mob_action;
     CHAR_DATA  *mob;
@@ -3161,6 +3197,8 @@ char *action_next_command(char *clist) {
     return (pointer);
 }
 
+// action_process_cmnd: Core Engine function: action_process_cmnd - Main C routine handling game mechanics.
+// action_process_cmnd: 核心引擎函式：action_process_cmnd - 處理遊戲底層機制的核心 C 語言子程序。
 void action_process_cmnd(char *cmnd, CHAR_DATA *mob) {
     char  buf[MAX_INPUT_LENGTH * 5];
     char *str;
@@ -3190,6 +3228,8 @@ void action_process_cmnd(char *cmnd, CHAR_DATA *mob) {
 }
 
 // Deduct room timer -- Amenda
+// rprg_update: Core Engine function: rprg_update - Main C routine handling game mechanics.
+// rprg_update: 核心引擎函式：rprg_update - 處理遊戲底層機制的核心 C 語言子程序。
 void rprg_update(void) {
     RPROG_DATA *rprg;
 
@@ -3208,6 +3248,8 @@ void rprg_update(void) {
     }
 }
 
+// room_rand: Core Engine function: room_rand - Main C routine handling game mechanics.
+// room_rand: 核心引擎函式：room_rand - 處理遊戲底層機制的核心 C 語言子程序。
 void room_rand(void) {
     RPROG_DATA *rprg;
 
@@ -3217,6 +3259,8 @@ void room_rand(void) {
                 rprog_rand_trigger(rprg);
 }
 
+// room_time: Core Engine function: room_time - Main C routine handling game mechanics.
+// room_time: 核心引擎函式：room_time - 處理遊戲底層機制的核心 C 語言子程序。
 void room_time(void) {
     RPROG_DATA *rprg;
 
@@ -3231,6 +3275,8 @@ void room_time(void) {
  * Update the ban file upon call.
  * Written by Tre of EnvyMud and modified by Kahn
  */
+// ban_update: Core Engine function: ban_update - Main C routine handling game mechanics.
+// ban_update: 核心引擎函式：ban_update - 處理遊戲底層機制的核心 C 語言子程序。
 void ban_update(void) {
     FILE     *fp;
     BAN_DATA *pban;
@@ -3255,6 +3301,8 @@ void ban_update(void) {
 }
 
 #ifdef R_AFFECT
+// firewall_update: Core Engine function: firewall_update - Main C routine handling game mechanics.
+// firewall_update: 核心引擎函式：firewall_update - 處理遊戲底層機制的核心 C 語言子程序。
 void firewall_update(R_AFFECT_DATA *paf) {
     CHAR_DATA *vch;
     for (vch = paf->owner->people; vch; vch = vch->next_in_room) {
@@ -3262,6 +3310,8 @@ void firewall_update(R_AFFECT_DATA *paf) {
     }
 }
 
+// raffect_update: Core Engine function: raffect_update - Main C routine handling game mechanics.
+// raffect_update: 核心引擎函式：raffect_update - 處理遊戲底層機制的核心 C 語言子程序。
 void raffect_update() {
     R_AFFECT_DATA *paf;
     if (!r_affect_list)
@@ -3284,6 +3334,8 @@ void raffect_update() {
  * Called once per pulse from game loop.
  * Random times to defeat tick-timing clients and players.
  */
+// update_handler: Core Engine function: update_handler - Main C routine handling game mechanics.
+// update_handler: 核心引擎函式：update_handler - 處理遊戲底層機制的核心 C 語言子程序。
 void update_handler(void) {
     static int pulse_area;
     static int pulse_mobile;
@@ -3348,6 +3400,8 @@ void update_handler(void) {
     return;
 }
 
+// rforce_update: Core Engine function: rforce_update - Main C routine handling game mechanics.
+// rforce_update: 核心引擎函式：rforce_update - 處理遊戲底層機制的核心 C 語言子程序。
 void rforce_update() {
     CHAR_DATA *ch;
 
@@ -3358,6 +3412,8 @@ void rforce_update() {
     return;
 }
 
+// rcall_out_update: Core Engine function: rcall_out_update - Main C routine handling game mechanics.
+// rcall_out_update: 核心引擎函式：rcall_out_update - 處理遊戲底層機制的核心 C 語言子程序。
 void rcall_out_update() {
     RCALL_OUT_DATA *cod, *cod_next;
     for (cod = rcall_out_list; cod; cod = cod_next) {
@@ -3373,6 +3429,8 @@ void rcall_out_update() {
         }
     }
 }
+// call_out_update: Core Engine function: call_out_update - Main C routine handling game mechanics.
+// call_out_update: 核心引擎函式：call_out_update - 處理遊戲底層機制的核心 C 語言子程序。
 void call_out_update() {
     CALL_OUT_DATA *cod, *cod_next;
     for (cod = call_out_list; cod; cod = cod_next) {

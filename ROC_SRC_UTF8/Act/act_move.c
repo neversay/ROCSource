@@ -83,6 +83,8 @@ bool has_key args((CHAR_DATA * ch, int key));
  */
 DECLARE_GAME_FUN(game_u_l_t);
 
+// aggr_check: Checks and triggers aggressive mobs when a character enters a room.
+// aggr_check: 當角色進入房間時，檢查並觸發主動攻擊怪物的仇恨。
 void aggr_check(CHAR_DATA *ch, ROOM_INDEX_DATA *to_room) {
     CHAR_DATA *inp;
 
@@ -155,6 +157,8 @@ void aggr_check(CHAR_DATA *ch, ROOM_INDEX_DATA *to_room) {
     }
 }
 
+// move_char: Core character movement routine across rooms.
+// move_char: 處理角色在房間之間移動的核心流程。
 void move_char(CHAR_DATA *ch, int door) {
     CHAR_DATA *fch, *rch;
     CHAR_DATA *fch_next;
@@ -590,6 +594,8 @@ void move_char(CHAR_DATA *ch, int door) {
     return;
 }
 
+// do_north: Performs the 'north' command to move north.
+// do_north: 執行 'north' 指令向北方移動。
 void do_north(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -604,6 +610,8 @@ void do_north(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_east: Performs the 'east' command to move east.
+// do_east: 執行 'east' 指令向東方移動。
 void do_east(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -618,6 +626,8 @@ void do_east(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_south: Performs the 'south' command to move south.
+// do_south: 執行 'south' 指令向南方移動。
 void do_south(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -632,6 +642,8 @@ void do_south(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_west: Performs the 'west' command to move west.
+// do_west: 執行 'west' 指令向西方移動。
 void do_west(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -646,6 +658,8 @@ void do_west(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_up: Performs the 'up' command to move upwards.
+// do_up: 執行 'up' 指令向移動向上。
 void do_up(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -660,6 +674,8 @@ void do_up(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_down: Performs the 'down' command to move downwards.
+// do_down: 執行 'down' 指令向移動向下。
 void do_down(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -674,6 +690,8 @@ void do_down(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_northeast: Command: do_northeast - Performs the 'northeast' command.
+// do_northeast: 指令：do_northeast - 執行 'northeast' 指令。
 void do_northeast(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -688,6 +706,8 @@ void do_northeast(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_nortwest: Command: do_nortwest - Performs the 'nortwest' command.
+// do_nortwest: 指令：do_nortwest - 執行 'nortwest' 指令。
 void do_nortwest(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -702,6 +722,8 @@ void do_nortwest(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_southeast: Command: do_southeast - Performs the 'southeast' command.
+// do_southeast: 指令：do_southeast - 執行 'southeast' 指令。
 void do_southeast(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -716,6 +738,8 @@ void do_southeast(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_southwest: Command: do_southwest - Performs the 'southwest' command.
+// do_southwest: 指令：do_southwest - 執行 'southwest' 指令。
 void do_southwest(CHAR_DATA *ch, char *argument) {
     if (ch->carry_number > can_carry_n(ch)) {
         send_to_char("你身上東西多得你動彈不得！\n\r", ch);
@@ -730,6 +754,8 @@ void do_southwest(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// find_door: Locates a door or exit by name or keyword.
+// find_door: 根據名稱或關鍵字尋找相應的門或出口。
 int find_door(CHAR_DATA *ch, char *arg) {
     EXIT_DATA *pexit;
     int door;
@@ -796,6 +822,8 @@ int find_door(CHAR_DATA *ch, char *arg) {
     return door;
 }
 
+// do_open: Command: do_open - Performs the 'open' command.
+// do_open: 指令：do_open - 執行 'open' 指令。
 void do_open(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -957,6 +985,8 @@ void do_open(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_close: Command: do_close - Performs the 'close' command.
+// do_close: 指令：do_close - 執行 'close' 指令。
 void do_close(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -1117,6 +1147,8 @@ void do_close(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// has_key: Checks if a character possesses the required key for a door.
+// has_key: 檢查角色背包中是否持有開鎖所需的鑰匙。
 bool has_key(CHAR_DATA *ch, int key) {
     OBJ_DATA *obj;
 
@@ -1128,6 +1160,8 @@ bool has_key(CHAR_DATA *ch, int key) {
     return FALSE;
 }
 
+// do_lock: Command: do_lock - Performs the 'lock' command.
+// do_lock: 指令：do_lock - 執行 'lock' 指令。
 void do_lock(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -1264,6 +1298,8 @@ void do_lock(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_unlock: Command: do_unlock - Performs the 'unlock' command.
+// do_unlock: 指令：do_unlock - 執行 'unlock' 指令。
 void do_unlock(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -1401,6 +1437,8 @@ void do_unlock(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_pick: Command: do_pick - Performs the 'pick' command.
+// do_pick: 指令：do_pick - 執行 'pick' 指令。
 void do_pick(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *gch;
@@ -1653,6 +1691,8 @@ void do_pick(CHAR_DATA *ch, char *argument) {
 }
 
 // modify by jye 0940625
+// do_stand: Command: do_stand - Performs the 'stand' command.
+// do_stand: 指令：do_stand - 執行 'stand' 指令。
 void do_stand(CHAR_DATA *ch, char *argument) {
     if (!ch->in_room)
         return;
@@ -1692,6 +1732,8 @@ void do_stand(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rest: Command: do_rest - Performs the 'rest' command.
+// do_rest: 指令：do_rest - 執行 'rest' 指令。
 void do_rest(CHAR_DATA *ch, char *argument) {
     if (!ch->in_room)
         return;
@@ -1718,17 +1760,23 @@ void do_rest(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_medi: Command: do_medi - Performs the 'medi' command.
+// do_medi: 指令：do_medi - 執行 'medi' 指令。
 void do_medi(CHAR_DATA *ch, char *argument) {
     send_to_char("如果你想要冥想，你得把它打完全(meditate)。\n\r", ch);
     return;
 }
 
+// do_destro: Command: do_destro - Performs the 'destro' command.
+// do_destro: 指令：do_destro - 執行 'destro' 指令。
 void do_destro(CHAR_DATA *ch, char *argument) {
     send_to_char(
         "If you want to destroy, you need to type correctly(destroy).\n\r", ch);
     return;
 }
 
+// do_meditate: Command: do_meditate - Performs the 'meditate' command.
+// do_meditate: 指令：do_meditate - 執行 'meditate' 指令。
 void do_meditate(CHAR_DATA *ch, char *argument) {
     //  CHAR_DATA *vch;
     AFFECT_DATA af;
@@ -1771,6 +1819,8 @@ void do_meditate(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_sleep: Command: do_sleep - Performs the 'sleep' command.
+// do_sleep: 指令：do_sleep - 執行 'sleep' 指令。
 void do_sleep(CHAR_DATA *ch, char *argument) {
     if (!ch->in_room)
         return;
@@ -1794,6 +1844,8 @@ void do_sleep(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_wake: Command: do_wake - Performs the 'wake' command.
+// do_wake: 指令：do_wake - 執行 'wake' 指令。
 void do_wake(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
@@ -1835,6 +1887,8 @@ void do_wake(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_sneak: Command: do_sneak - Performs the 'sneak' command.
+// do_sneak: 指令：do_sneak - 執行 'sneak' 指令。
 void do_sneak(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
 
@@ -1866,6 +1920,8 @@ void do_sneak(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_nightstalk: Command: do_nightstalk - Performs the 'nightstalk' command.
+// do_nightstalk: 指令：do_nightstalk - 執行 'nightstalk' 指令。
 void do_nightstalk(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     CHAR_DATA *rch;
@@ -2009,6 +2065,8 @@ void do_nightstalk(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_hide: Command: do_hide - Performs the 'hide' command.
+// do_hide: 指令：do_hide - 執行 'hide' 指令。
 void do_hide(CHAR_DATA *ch, char *argument) {
     /* Dont allow charmed mobiles to do this, check player's skill */
     if (!ch->in_room)
@@ -2041,6 +2099,8 @@ void do_hide(CHAR_DATA *ch, char *argument) {
 /*
  * Contributed by Alander.
  */
+// do_visible: Command: do_visible - Performs the 'visible' command.
+// do_visible: 指令：do_visible - 執行 'visible' 指令。
 void do_visible(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
 
@@ -2077,6 +2137,8 @@ void do_visible(CHAR_DATA *ch, char *argument) {
 }
 
 // disperse add by whisperwind 11.18.2004
+// do_disperse: Command: do_disperse - Performs the 'disperse' command.
+// do_disperse: 指令：do_disperse - 執行 'disperse' 指令。
 void do_disperse(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
 
@@ -2157,6 +2219,8 @@ void do_disperse(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_recall: Command: do_recall - Performs the 'recall' command.
+// do_recall: 指令：do_recall - 執行 'recall' 指令。
 void do_recall(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim, *horse;
     ROOM_INDEX_DATA *location;
@@ -2246,6 +2310,8 @@ void do_recall(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_train: Command: do_train - Performs the 'train' command.
+// do_train: 指令：do_train - 執行 'train' 指令。
 void do_train(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *mob;
     AFFECT_DATA *paf;
@@ -2865,6 +2931,8 @@ void do_train(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_chameleon: Command: do_chameleon - Performs the 'chameleon' command.
+// do_chameleon: 指令：do_chameleon - 執行 'chameleon' 指令。
 void do_chameleon(CHAR_DATA *ch, char *argument) {
     if (!IS_NPC(ch) && ch->pcdata->learned[gsn_chameleon] == 0) {
         send_to_char("[33m啥？[m\n\r", ch);
@@ -2884,6 +2952,8 @@ void do_chameleon(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_heighten: Command: do_heighten - Performs the 'heighten' command.
+// do_heighten: 指令：do_heighten - 執行 'heighten' 指令。
 void do_heighten(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
 
@@ -2917,6 +2987,8 @@ void do_heighten(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_shadow: Command: do_shadow - Performs the 'shadow' command.
+// do_shadow: 指令：do_shadow - 執行 'shadow' 指令。
 void do_shadow(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
 
@@ -2947,6 +3019,8 @@ void do_shadow(CHAR_DATA *ch, char *argument) {
  * Damage modified using Morpheus's code
  * Message for bashproof doors by that wacky guy Kahn
  */
+// do_bash: Command: do_bash - Performs the 'bash' command.
+// do_bash: 指令：do_bash - 執行 'bash' 指令。
 void do_bash(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *gch;
     char arg[MAX_INPUT_LENGTH];
@@ -3220,6 +3294,8 @@ void do_bash(CHAR_DATA *ch, char *argument) {
 }
 
 /* Snare skill by Binky for EnvyMud */
+// do_snare: Command: do_snare - Performs the 'snare' command.
+// do_snare: 指令：do_snare - 執行 'snare' 指令。
 void do_snare(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     AFFECT_DATA af;
@@ -3410,6 +3486,8 @@ void do_snare(CHAR_DATA *ch, char *argument) {
 }
 
 /* Untangle by Thelonius for EnvyMud */
+// do_untangle: Command: do_untangle - Performs the 'untangle' command.
+// do_untangle: 指令：do_untangle - 執行 'untangle' 指令。
 void do_untangle(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
@@ -3469,6 +3547,8 @@ void do_untangle(CHAR_DATA *ch, char *argument) {
  *  Menu for all game functions.
  *  Thelonius (Monk)  5/94
  */
+// do_wager: Command: do_wager - Performs the 'wager' command.
+// do_wager: 指令：do_wager - 執行 'wager' 指令。
 void do_wager(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *croupier;
 
@@ -3522,6 +3602,8 @@ void do_wager(CHAR_DATA *ch, char *argument) {
  * Game idea by Partan
  * Coded by Thelonius
  */
+// game_u_l_t: Handles ultimate game challenge logic at the croupier NPC.
+// game_u_l_t: 在賭場荷官 NPC 處處理終極遊戲挑戰的邏輯。
 void game_u_l_t(CHAR_DATA *ch, CHAR_DATA *croupier, char *argument) {
     char msg[MAX_STRING_LENGTH];
     char buf[MAX_STRING_LENGTH];
@@ -3637,6 +3719,8 @@ void game_u_l_t(CHAR_DATA *ch, CHAR_DATA *croupier, char *argument) {
 }
 
 /* check_asshunt function added by Amenda, 00/12/22 */
+// check_asshunt: Checks and processes assassin hunting status updates.
+// check_asshunt: 檢查並處理刺客追殺（Assassin Hunt）狀態的更新。
 void check_asshunt(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     OBJ_DATA *obj;
@@ -3806,6 +3890,8 @@ void check_asshunt(CHAR_DATA *ch) {
     return;
 }
 
+// do_ride: Command: do_ride - Performs the 'ride' command.
+// do_ride: 指令：do_ride - 執行 'ride' 指令。
 void do_ride(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *horse;
     // AFFECT_DATA af;
@@ -4046,6 +4132,8 @@ void do_ride(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_autocombat: Command: do_autocombat - Performs the 'autocombat' command.
+// do_autocombat: 指令：do_autocombat - 執行 'autocombat' 指令。
 void do_autocombat(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
 
@@ -4130,6 +4218,8 @@ void do_autocombat(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_hsummon: Command: do_hsummon - Performs the 'hsummon' command.
+// do_hsummon: 指令：do_hsummon - 執行 'hsummon' 指令。
 void do_hsummon(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *horse;
     int sklv = get_skill_level(ch, gsn_ride);
@@ -4188,6 +4278,8 @@ void do_hsummon(CHAR_DATA *ch, char *argument) {
 }
 
 // 協助目標 2021/11/20
+// do_cooperate: Command: do_cooperate - Performs the 'cooperate' command.
+// do_cooperate: 指令：do_cooperate - 執行 'cooperate' 指令。
 void do_cooperate(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
@@ -4229,4 +4321,6 @@ void do_cooperate(CHAR_DATA *ch, char *argument) {
     add_cooperator(ch, victim);
 }
 
+// do_adv: Command: do_adv - Performs the 'adv' command.
+// do_adv: 指令：do_adv - 執行 'adv' 指令。
 void do_adv(CHAR_DATA *ch, char *argument) {}

@@ -42,6 +42,8 @@ void check_alignment_eq(CHAR_DATA *ch);
 bool psionic_check(CHAR_DATA *ch, int sn);
 
 // Add by Neversay at 2004/July/11
+// do_lead_ucharge: Command: do_lead_ucharge - Leadership tactical skill to coordinate group 'ucharge' combat actions.
+// do_lead_ucharge: 指令：do_lead_ucharge - 戰術領軍技能，用於協調小隊成員的集體 'ucharge' 戰鬥行動。
 void do_lead_ucharge(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rider;
     char       arg[MAX_INPUT_LENGTH];
@@ -125,6 +127,8 @@ void do_lead_ucharge(CHAR_DATA *ch, char *argument) {
 }
 
 // Add by Neversay at 2004/July/11
+// do_lead_ufire: Command: do_lead_ufire - Leadership tactical skill to coordinate group 'ufire' combat actions.
+// do_lead_ufire: 指令：do_lead_ufire - 戰術領軍技能，用於協調小隊成員的集體 'ufire' 戰鬥行動。
 void do_lead_ufire(CHAR_DATA *ch, char *argument) {
     CHAR_DATA  *archer = NULL, *rch;
     OBJ_DATA   *obj, *arrow;
@@ -276,7 +280,7 @@ if( archer->deleted
         fire_number  = UMAX((3 + sklv_mete * 3) / number_enemy, 1);
         archer_hr    = (((sklv << 1) + sklv_archery - (sklv > number_bits(2) ? 20 : 50)) << 2) / number_enemy;
         archer->move -= 150;
-        send_to_char("你挽弓砲轟，許\多箭矢如流星般往敵陣飛去！\n\r", archer);
+        send_to_char("你挽弓砲轟，許多箭矢如流星般往敵陣飛去！\n\r", archer);
 
         // Join the affect to archer and remove it after firing.
         if ((archer->hitroll >> 2) + archer_hr < 0)
@@ -316,6 +320,8 @@ if( archer->deleted
 }
 
 // Add by Neversay at 2004/July/12
+// do_lead_assault: Command: do_lead_assault - Leadership tactical skill to coordinate group 'assault' combat actions.
+// do_lead_assault: 指令：do_lead_assault - 戰術領軍技能，用於協調小隊成員的集體 'assault' 戰鬥行動。
 void do_lead_assault(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     int        sklv;
@@ -382,6 +388,8 @@ void do_lead_assault(CHAR_DATA *ch, char *argument) {
 }
 
 // Add by Neversay at 2004/July/12
+// do_lead_assistance: Command: do_lead_assistance - Leadership tactical skill to coordinate group 'assistance' combat actions.
+// do_lead_assistance: 指令：do_lead_assistance - 戰術領軍技能，用於協調小隊成員的集體 'assistance' 戰鬥行動。
 void do_lead_assistance(CHAR_DATA *ch, CHAR_DATA *protector) {
     CHAR_DATA *rch;
     // 移除 number_rescue 參數, 讓 wait 在每個 rescue 時判定 2023/01/12
@@ -498,6 +506,8 @@ void do_lead_assistance(CHAR_DATA *ch, CHAR_DATA *protector) {
 }
 
 // Add by Neversay at 2004/July/16
+// do_lead_hidemarch: Command: do_lead_hidemarch - Leadership tactical skill to coordinate group 'hidemarch' combat actions.
+// do_lead_hidemarch: 指令：do_lead_hidemarch - 戰術領軍技能，用於協調小隊成員的集體 'hidemarch' 戰鬥行動。
 void do_lead_hidemarch(CHAR_DATA *ch, char *argument) {
     CHAR_DATA  *rch;
     AFFECT_DATA af;
@@ -553,6 +563,8 @@ void do_lead_hidemarch(CHAR_DATA *ch, char *argument) {
 }
 
 // Snare all enemy.
+// do_lead_envelopment: Command: do_lead_envelopment - Leadership tactical skill to coordinate group 'envelopment' combat actions.
+// do_lead_envelopment: 指令：do_lead_envelopment - 戰術領軍技能，用於協調小隊成員的集體 'envelopment' 戰鬥行動。
 void do_lead_envelopment(CHAR_DATA *ch, char *argument) {
     CHAR_DATA  *rch;
     AFFECT_DATA af;
@@ -668,8 +680,8 @@ void do_lead_envelopment(CHAR_DATA *ch, char *argument) {
         send_to_char("你包圍敵軍的企圖被識破！\n\r", ch);
         return;
     }
-    send_to_char("你成功\地包圍敵軍！\n\r", ch);
-    act("$n成功\地指揮，合圍包抄敵軍！", ch, NULL, NULL, TO_ROOM);
+    send_to_char("你成功地包圍敵軍！\n\r", ch);
+    act("$n成功地指揮，合圍包抄敵軍！", ch, NULL, NULL, TO_ROOM);
 
     for (rch = ch->in_room->people; rch; rch = rch->next_in_room) {
         if (rch->deleted)

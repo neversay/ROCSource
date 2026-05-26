@@ -29,6 +29,8 @@ extern void check_alignment_eq(CHAR_DATA *ch);
 extern bool IsSorGateMobEarth(int MOB_INDEX);
 // bool psionic_check(CHAR_DATA *ch, int sn );
 
+// do_defensive: Command: do_defensive - Performs the 'defensive' active combat or class skill.
+// do_defensive: 指令：do_defensive - 執行 'defensive' 主動戰鬥或職業專屬技能。
 void do_defensive(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         bonus = 0;
@@ -88,6 +90,8 @@ void do_defensive(CHAR_DATA *ch, char *argument) {
     affect_to_char(ch, &af);
 }
 
+// do_rescue: Command: do_rescue - Performs the 'rescue' active combat or class skill.
+// do_rescue: 指令：do_rescue - 執行 'rescue' 主動戰鬥或職業專屬技能。
 void do_rescue(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     CHAR_DATA *fch = NULL;
@@ -243,6 +247,8 @@ void do_rescue(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_disarm: Command: do_disarm - Performs the 'disarm' active combat or class skill.
+// do_disarm: 指令：do_disarm - 執行 'disarm' 主動戰鬥或職業專屬技能。
 void do_disarm(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -306,6 +312,8 @@ void do_disarm(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_barehand: Command: do_barehand - Performs the 'barehand' active combat or class skill.
+// do_barehand: 指令：do_barehand - 執行 'barehand' 主動戰鬥或職業專屬技能。
 void do_barehand(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -363,6 +371,8 @@ void do_barehand(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_invoke: Command: do_invoke - Performs the 'invoke' active combat or class skill.
+// do_invoke: 指令：do_invoke - 執行 'invoke' 主動戰鬥或職業專屬技能。
 void do_invoke(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         sklv;
@@ -560,6 +570,8 @@ void do_invoke(CHAR_DATA *ch, char *argument) {
     WAIT_STATE(ch, skill_table[gsn_invoke].beats);
 }
 
+// do_darkraid: Command: do_darkraid - Performs the 'darkraid' active combat or class skill.
+// do_darkraid: 指令：do_darkraid - 執行 'darkraid' 主動戰鬥或職業專屬技能。
 void do_darkraid(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         sklv      = get_skill_level(ch, gsn_dark_raid);
@@ -616,6 +628,8 @@ void do_darkraid(CHAR_DATA *ch, char *argument) {
 /** protect 指令處理function
  * last update by zcecil 2004/07/05
  */
+// do_protect: Command: do_protect - Performs the 'protect' active combat or class skill.
+// do_protect: 指令：do_protect - 執行 'protect' 主動戰鬥或職業專屬技能。
 void do_protect(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];

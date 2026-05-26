@@ -68,6 +68,8 @@ extern int qmark_opr          args((int lhs, char *opr, int rhs, char *mod_name)
 extern long long ll_qmark_opr args((long long lhs, char *opr, long long rhs, char *mod_name)); // 增加數值較大的判定 2023/01/10
 extern bool                   IsSorGateMob(int nMobIndex);
 
+// do_rpresp: Command: do_rpresp - RoomProg script command for rooms to execute the corresponding 'rpresp' action.
+// do_rpresp: 指令：do_rpresp - 房間腳本專用指令，使房間執行相對應的 'rpresp' 動作。
 void do_rpresp(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -106,6 +108,8 @@ void do_rpresp(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rpgold: Command: do_rpgold - RoomProg script command for rooms to execute the corresponding 'rpgold' action.
+// do_rpgold: 指令：do_rpgold - 房間腳本專用指令，使房間執行相對應的 'rpgold' 動作。
 void do_rpgold(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -145,6 +149,8 @@ void do_rpgold(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rpexp: Command: do_rpexp - RoomProg script command for rooms to execute the corresponding 'rpexp' action.
+// do_rpexp: 指令：do_rpexp - 房間腳本專用指令，使房間執行相對應的 'rpexp' 動作。
 void do_rpexp(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -185,6 +191,8 @@ void do_rpexp(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
 }
 
 // rpalign add at 20.02.25
+// do_rpalign: Command: do_rpalign - RoomProg script command for rooms to execute the corresponding 'rpalign' action.
+// do_rpalign: 指令：do_rpalign - 房間腳本專用指令，使房間執行相對應的 'rpalign' 動作。
 void do_rpalign(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -242,6 +250,8 @@ void do_rpalign(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
 }
 
 // rpskillexp add at 20.02.25
+// do_rpskillexp: Command: do_rpskillexp - RoomProg script command for rooms to execute the corresponding 'rpskillexp' action.
+// do_rpskillexp: 指令：do_rpskillexp - 房間腳本專用指令，使房間執行相對應的 'rpskillexp' 動作。
 void do_rpskillexp(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -276,6 +286,8 @@ void do_rpskillexp(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
 }
 
 // rpmerit add at 20.02.25
+// do_rpmerit: Command: do_rpmerit - RoomProg script command for rooms to execute the corresponding 'rpmerit' action.
+// do_rpmerit: 指令：do_rpmerit - 房間腳本專用指令，使房間執行相對應的 'rpmerit' 動作。
 void do_rpmerit(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -300,6 +312,8 @@ void do_rpmerit(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
 }
 
 // rppractice add at 20.02.25
+// do_rppractice: Command: do_rppractice - RoomProg script command for rooms to execute the corresponding 'rppractice' action.
+// do_rppractice: 指令：do_rppractice - 房間腳本專用指令，使房間執行相對應的 'rppractice' 動作。
 void do_rppractice(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -328,6 +342,8 @@ void do_rppractice(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_radd_qmark: Command: do_radd_qmark - RoomProg script command for rooms to execute the corresponding 'radd_qmark' action.
+// do_radd_qmark: 指令：do_radd_qmark - 房間腳本專用指令，使房間執行相對應的 'radd_qmark' 動作。
 void do_radd_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     QMARK     *qmark;
@@ -409,6 +425,8 @@ void do_radd_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rdel_qmark: Command: do_rdel_qmark - RoomProg script command for rooms to execute the corresponding 'rdel_qmark' action.
+// do_rdel_qmark: 指令：do_rdel_qmark - 房間腳本專用指令，使房間執行相對應的 'rdel_qmark' 動作。
 void do_rdel_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     QMARK     *qmark;
@@ -444,6 +462,8 @@ void do_rdel_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rmod_qmark: Command: do_rmod_qmark - RoomProg script command for rooms to execute the corresponding 'rmod_qmark' action.
+// do_rmod_qmark: 指令：do_rmod_qmark - 房間腳本專用指令，使房間執行相對應的 'rmod_qmark' 動作。
 void do_rmod_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       opr[MAX_INPUT_LENGTH];
@@ -515,6 +535,8 @@ void do_rmod_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_radd_all_qmark: Command: do_radd_all_qmark - RoomProg script command for rooms to execute the corresponding 'radd_all_qmark' action.
+// do_radd_all_qmark: 指令：do_radd_all_qmark - 房間腳本專用指令，使房間執行相對應的 'radd_all_qmark' 動作。
 void do_radd_all_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       buf[MAX_INPUT_LENGTH];
@@ -584,6 +606,8 @@ void do_radd_all_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_rdel_all_qmark: Command: do_rdel_all_qmark - RoomProg script command for rooms to execute the corresponding 'rdel_all_qmark' action.
+// do_rdel_all_qmark: 指令：do_rdel_all_qmark - 房間腳本專用指令，使房間執行相對應的 'rdel_all_qmark' 動作。
 void do_rdel_all_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       buf[MAX_INPUT_LENGTH];
@@ -654,6 +678,8 @@ void do_rdel_all_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_rmod_all_qmark: Command: do_rmod_all_qmark - RoomProg script command for rooms to execute the corresponding 'rmod_all_qmark' action.
+// do_rmod_all_qmark: 指令：do_rmod_all_qmark - 房間腳本專用指令，使房間執行相對應的 'rmod_all_qmark' 動作。
 void do_rmod_all_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       buf[MAX_INPUT_LENGTH];
@@ -724,6 +750,8 @@ void do_rmod_all_qmark(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_rpstun: Command: do_rpstun - RoomProg script command for rooms to execute the corresponding 'rpstun' action.
+// do_rpstun: 指令：do_rpstun - 房間腳本專用指令，使房間執行相對應的 'rpstun' 動作。
 void do_rpstun(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       arg1[MAX_INPUT_LENGTH];
@@ -789,6 +817,8 @@ void do_rpstun(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_rechoat: Command: do_rechoat - RoomProg script command for rooms to execute the corresponding 'rechoat' action.
+// do_rechoat: 指令：do_rechoat - 房間腳本專用指令，使房間執行相對應的 'rechoat' 動作。
 void do_rechoat(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -813,6 +843,8 @@ void do_rechoat(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_rgreward: Command: do_rgreward - RoomProg script command for rooms to execute the corresponding 'rgreward' action.
+// do_rgreward: 指令：do_rgreward - 房間腳本專用指令，使房間執行相對應的 'rgreward' 動作。
 void do_rgreward(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     char type[MAX_INPUT_LENGTH];
     char ppl[MAX_INPUT_LENGTH];
@@ -935,6 +967,8 @@ void do_rgreward(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_rrecho: Command: do_rrecho - RoomProg script command for rooms to execute the corresponding 'rrecho' action.
+// do_rrecho: 指令：do_rrecho - 房間腳本專用指令，使房間執行相對應的 'rrecho' 動作。
 void do_rrecho(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     if (argument[0] == '\0') {
         bug("Echoat - No argument:  Room: %d.",
@@ -947,6 +981,8 @@ void do_rrecho(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_rechoaround: Command: do_rechoaround - RoomProg script command for rooms to execute the corresponding 'rechoaround' action.
+// do_rechoaround: 指令：do_rechoaround - 房間腳本專用指令，使房間執行相對應的 'rechoaround' 動作。
 void do_rechoaround(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -971,6 +1007,8 @@ void do_rechoaround(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_rechotoarea: Command: do_rechotoarea - RoomProg script command for rooms to execute the corresponding 'rechotoarea' action.
+// do_rechotoarea: 指令：do_rechotoarea - 房間腳本專用指令，使房間執行相對應的 'rechotoarea' 動作。
 void do_rechotoarea(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     CHAR_DATA *cha;
     char       buf[MAX_STRING_LENGTH];
@@ -989,6 +1027,8 @@ void do_rechotoarea(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     }
 }
 
+// do_rechotoall: Command: do_rechotoall - RoomProg script command for rooms to execute the corresponding 'rechotoall' action.
+// do_rechotoall: 指令：do_rechotoall - 房間腳本專用指令，使房間執行相對應的 'rechotoall' 動作。
 void do_rechotoall(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     CHAR_DATA *cha;
     char       buf[MAX_STRING_LENGTH];
@@ -1007,6 +1047,8 @@ void do_rechotoall(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     }
 }
 
+// do_rnonechoat: Command: do_rnonechoat - RoomProg script command for rooms to execute the corresponding 'rnonechoat' action.
+// do_rnonechoat: 指令：do_rnonechoat - 房間腳本專用指令，使房間執行相對應的 'rnonechoat' 動作。
 void do_rnonechoat(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -1031,6 +1073,8 @@ void do_rnonechoat(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     return;
 }
 
+// do_rnonechoaround: Command: do_rnonechoaround - RoomProg script command for rooms to execute the corresponding 'rnonechoaround' action.
+// do_rnonechoaround: 指令：do_rnonechoaround - 房間腳本專用指令，使房間執行相對應的 'rnonechoaround' 動作。
 void do_rnonechoaround(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -1055,6 +1099,8 @@ void do_rnonechoaround(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) 
     return;
 }
 
+// do_modrvt: Command: do_modrvt - RoomProg script command for rooms to execute the corresponding 'modrvt' action.
+// do_modrvt: 指令：do_modrvt - 房間腳本專用指令，使房間執行相對應的 'modrvt' 動作。
 void do_modrvt(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
     char  arg[MAX_INPUT_LENGTH];
     char  opr[MAX_INPUT_LENGTH];
@@ -1151,6 +1197,8 @@ void do_modrvt(ROOM_INDEX_DATA *room, CHAR_DATA *actor, char *argument) {
 }
 
 // do_modhmv modified by jye 6.12.2005
+// do_modhmv: Command: do_modhmv - RoomProg script command for rooms to execute the corresponding 'modhmv' action.
+// do_modhmv: 指令：do_modhmv - 房間腳本專用指令，使房間執行相對應的 'modhmv' 動作。
 void do_modhmv(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     CHAR_DATA *vch;
     char       arg[MAX_INPUT_LENGTH];
@@ -1323,6 +1371,8 @@ void do_modhmv(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_modhmvgroup: Command: do_modhmvgroup - RoomProg script command for rooms to execute the corresponding 'modhmvgroup' action.
+// do_modhmvgroup: 指令：do_modhmvgroup - 房間腳本專用指令，使房間執行相對應的 'modhmvgroup' 動作。
 void do_modhmvgroup(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     CHAR_DATA *vch;
     char       arg[MAX_INPUT_LENGTH];
@@ -1469,6 +1519,8 @@ void do_modhmvgroup(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rat: Command: do_rat - RoomProg script command for rooms to execute the corresponding 'rat' action.
+// do_rat: 指令：do_rat - 房間腳本專用指令，使房間執行相對應的 'rat' 動作。
 void do_rat(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char             arg[MAX_INPUT_LENGTH];
     ROOM_INDEX_DATA *location;
@@ -1512,6 +1564,8 @@ void do_rat(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_def_rembch: Command: do_def_rembch - RoomProg script command for rooms to execute the corresponding 'def_rembch' action.
+// do_def_rembch: 指令：do_def_rembch - 房間腳本專用指令，使房間執行相對應的 'def_rembch' 動作。
 void do_def_rembch(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *vch;
@@ -1537,6 +1591,8 @@ void do_def_rembch(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_roload: Command: do_roload - RoomProg script command for rooms to execute the corresponding 'roload' action.
+// do_roload: 指令：do_roload - 房間腳本專用指令，使房間執行相對應的 'roload' 動作。
 void do_roload(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char            arg1[MAX_INPUT_LENGTH];
     char            arg2[MAX_INPUT_LENGTH];
@@ -1627,6 +1683,8 @@ void do_roload(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     oprog_repop_trigger(obj);
 }
 
+// do_rmload: Command: do_rmload - RoomProg script command for rooms to execute the corresponding 'rmload' action.
+// do_rmload: 指令：do_rmload - 房間腳本專用指令，使房間執行相對應的 'rmload' 動作。
 void do_rmload(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char            arg[MAX_INPUT_LENGTH];
     MOB_INDEX_DATA *pMobIndex;
@@ -1650,6 +1708,8 @@ void do_rmload(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_set_room: Command: do_set_room - RoomProg script command for rooms to execute the corresponding 'set_room' action.
+// do_set_room: 指令：do_set_room - 房間腳本專用指令，使房間執行相對應的 'set_room' 動作。
 void do_set_room(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char              type[MAX_INPUT_LENGTH];
     char              buf[MAX_INPUT_LENGTH];
@@ -1760,6 +1820,8 @@ void do_set_room(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_add_affect: Command: do_add_affect - RoomProg script command for rooms to execute the corresponding 'add_affect' action.
+// do_add_affect: 指令：do_add_affect - 房間腳本專用指令，使房間執行相對應的 'add_affect' 動作。
 void do_add_affect(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
@@ -1861,6 +1923,8 @@ void do_add_affect(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     affect_join(target, &af);
 }
 
+// do_del_affect: Command: do_del_affect - RoomProg script command for rooms to execute the corresponding 'del_affect' action.
+// do_del_affect: 指令：do_del_affect - 房間腳本專用指令，使房間執行相對應的 'del_affect' 動作。
 void do_del_affect(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char         arg1[MAX_INPUT_LENGTH];
     char         arg2[MAX_INPUT_LENGTH];
@@ -2142,6 +2206,8 @@ CHAR_DATA *world_find_char(ROOM_INDEX_DATA *room, char *name) {
     return target;
 }
 
+// do_rforce: Command: do_rforce - RoomProg script command for rooms to execute the corresponding 'rforce' action.
+// do_rforce: 指令：do_rforce - 房間腳本專用指令，使房間執行相對應的 'rforce' 動作。
 void do_rforce(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char             arg[MAX_INPUT_LENGTH];
     ROOM_INDEX_DATA *troom;
@@ -2214,6 +2280,8 @@ CHAR_DATA *rget_char_room(ROOM_INDEX_DATA *room, char *argument) {
     return NULL;
 }
 
+// do_rcallout: Command: do_rcallout - RoomProg script command for rooms to execute the corresponding 'rcallout' action.
+// do_rcallout: 指令：do_rcallout - 房間腳本專用指令，使房間執行相對應的 'rcallout' 動作。
 void do_rcallout(ROOM_INDEX_DATA *ch, CHAR_DATA *cch, char *argument) {
     char            arg[MAX_INPUT_LENGTH];
     int             timer;
@@ -2240,6 +2308,8 @@ void do_rcallout(ROOM_INDEX_DATA *ch, CHAR_DATA *cch, char *argument) {
     return;
 }
 
+// do_rcall: Command: do_rcall - RoomProg script command for rooms to execute the corresponding 'rcall' action.
+// do_rcall: 指令：do_rcall - 房間腳本專用指令，使房間執行相對應的 'rcall' 動作。
 void do_rcall(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       fun[MAX_STRING_LENGTH];
@@ -2308,6 +2378,8 @@ void do_rcall(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_rcast: Command: do_rcast - RoomProg script command for rooms to execute the corresponding 'rcast' action.
+// do_rcast: 指令：do_rcast - 房間腳本專用指令，使房間執行相對應的 'rcast' 動作。
 void do_rcast(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg1[MAX_INPUT_LENGTH];
     char       arg2[MAX_INPUT_LENGTH];
@@ -2365,6 +2437,8 @@ void do_rcast(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_rtransfer: Command: do_rtransfer - RoomProg script command for rooms to execute the corresponding 'rtransfer' action.
+// do_rtransfer: 指令：do_rtransfer - 房間腳本專用指令，使房間執行相對應的 'rtransfer' 動作。
 void do_rtransfer(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char             arg1[MAX_INPUT_LENGTH];
     char             arg2[MAX_INPUT_LENGTH];
@@ -2500,6 +2574,8 @@ void do_rtransfer(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_rtransfergroup: Command: do_rtransfergroup - RoomProg script command for rooms to execute the corresponding 'rtransfergroup' action.
+// do_rtransfergroup: 指令：do_rtransfergroup - 房間腳本專用指令，使房間執行相對應的 'rtransfergroup' 動作。
 void do_rtransfergroup(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char             arg1[MAX_INPUT_LENGTH];
     char             arg2[MAX_INPUT_LENGTH];
@@ -2596,6 +2672,8 @@ void do_rtransfergroup(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
 }
 
 // 新增兩種 wtransfer 針對全 mud char 作 transfer 2022/11/21
+// do_rwtransfer: Command: do_rwtransfer - RoomProg script command for rooms to execute the corresponding 'rwtransfer' action.
+// do_rwtransfer: 指令：do_rwtransfer - 房間腳本專用指令，使房間執行相對應的 'rwtransfer' 動作。
 void do_rwtransfer(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char             arg1[MAX_INPUT_LENGTH];
     char             arg2[MAX_INPUT_LENGTH];
@@ -2677,6 +2755,8 @@ void do_rwtransfer(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
         mprog_greet_trigger(target);
 }
 
+// do_rwtransfergroup: Command: do_rwtransfergroup - RoomProg script command for rooms to execute the corresponding 'rwtransfergroup' action.
+// do_rwtransfergroup: 指令：do_rwtransfergroup - 房間腳本專用指令，使房間執行相對應的 'rwtransfergroup' 動作。
 void do_rwtransfergroup(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char             arg1[MAX_INPUT_LENGTH];
     char             arg2[MAX_INPUT_LENGTH];
@@ -2775,6 +2855,8 @@ void do_rwtransfergroup(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rpurge: Command: do_rpurge - RoomProg script command for rooms to execute the corresponding 'rpurge' action.
+// do_rpurge: 指令：do_rpurge - 房間腳本專用指令，使房間執行相對應的 'rpurge' 動作。
 void do_rpurge(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       arg1[MAX_INPUT_LENGTH];
@@ -3004,6 +3086,8 @@ void do_rpurge(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_rlog: Command: do_rlog - RoomProg script command for rooms to execute the corresponding 'rlog' action.
+// do_rlog: 指令：do_rlog - 房間腳本專用指令，使房間執行相對應的 'rlog' 動作。
 void do_rlog(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
 
@@ -3012,6 +3096,8 @@ void do_rlog(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     log_string(buf);
 }
 
+// do_rpdeldoor: Command: do_rpdeldoor - RoomProg script command for rooms to execute the corresponding 'rpdeldoor' action.
+// do_rpdeldoor: 指令：do_rpdeldoor - 房間腳本專用指令，使房間執行相對應的 'rpdeldoor' 動作。
 void do_rpdeldoor(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     EXIT_DATA *pexit;
@@ -3036,6 +3122,8 @@ void do_rpdeldoor(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rpsetdoor: Command: do_rpsetdoor - RoomProg script command for rooms to execute the corresponding 'rpsetdoor' action.
+// do_rpsetdoor: 指令：do_rpsetdoor - 房間腳本專用指令，使房間執行相對應的 'rpsetdoor' 動作。
 void do_rpsetdoor(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     int        exit;
@@ -3123,6 +3211,8 @@ void do_rpsetdoor(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rpmakedoor: Command: do_rpmakedoor - RoomProg script command for rooms to execute the corresponding 'rpmakedoor' action.
+// do_rpmakedoor: 指令：do_rpmakedoor - 房間腳本專用指令，使房間執行相對應的 'rpmakedoor' 動作。
 void do_rpmakedoor(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     char       desc[MAX_INPUT_LENGTH];

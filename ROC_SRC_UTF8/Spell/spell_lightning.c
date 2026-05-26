@@ -43,6 +43,8 @@ extern char  *target_name;
 extern int    weakness_percent(CHAR_DATA *ch, int sn);
 extern int    weakness_damage(CHAR_DATA *ch, int sn);
 
+// spell_call_lightning: Spell: spell_call_lightning - Casts the 'call_lightning' spell.
+// spell_call_lightning: 魔法：spell_call_lightning - 施展 'call_lightning' 魔法法術。
 void spell_call_lightning(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *vch;
     CHAR_DATA *vch_next; // add vch_next , 2020/10/30
@@ -162,6 +164,8 @@ void spell_call_lightning(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // fulgurant dance add by whisperwind 10.31.2004
+// spell_fulgurant_dance: Spell: spell_fulgurant_dance - Casts the 'fulgurant_dance' spell.
+// spell_fulgurant_dance: 魔法：spell_fulgurant_dance - 施展 'fulgurant_dance' 魔法法術。
 void spell_fulgurant_dance(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;
@@ -392,6 +396,8 @@ void spell_fulgurant_dance(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // chain lightning added by whisperwind 10.1.2004
+// spell_chain_lightning: Spell: spell_chain_lightning - Casts the 'chain_lightning' spell.
+// spell_chain_lightning: 魔法：spell_chain_lightning - 施展 'chain_lightning' 魔法法術。
 void spell_chain_lightning(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     CHAR_DATA *victim_next;
@@ -520,6 +526,8 @@ void spell_chain_lightning(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // electrostatic bolt modified by whisperwind 8.24.2004
+// spell_electrostatic_bolt: Spell: spell_electrostatic_bolt - Casts the 'electrostatic_bolt' spell.
+// spell_electrostatic_bolt: 魔法：spell_electrostatic_bolt - 施展 'electrostatic_bolt' 魔法法術。
 void spell_electrostatic_bolt(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -665,6 +673,8 @@ void spell_electrostatic_bolt(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // lightning bolt modified by jye 6.12.2005
+// spell_lightning_bolt: Spell: spell_lightning_bolt - Casts the 'lightning_bolt' spell.
+// spell_lightning_bolt: 魔法：spell_lightning_bolt - 施展 'lightning_bolt' 魔法法術。
 void spell_lightning_bolt(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim = (CHAR_DATA *)vo;
     ROOM_INDEX_DATA *chk_room;
@@ -784,6 +794,8 @@ void spell_lightning_bolt(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // wail of tempest add by whisperwind 10.31.2004
+// spell_wail_of_tempest: Spell: spell_wail_of_tempest - Casts the 'wail_of_tempest' spell.
+// spell_wail_of_tempest: 魔法：spell_wail_of_tempest - 施展 'wail_of_tempest' 魔法法術。
 void spell_wail_of_tempest(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;

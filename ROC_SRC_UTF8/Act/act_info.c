@@ -411,6 +411,8 @@ char *format_obj_to_char(OBJ_DATA *obj, CHAR_DATA *ch, bool fShort) {
  * Show a list to a character.
  * Can coalesce duplicated items.
  */
+// show_list_to_char: Displays a list of objects to a character.
+// show_list_to_char: 向角色顯示特定物品清單的內容。
 void show_list_to_char(OBJ_DATA *list, CHAR_DATA *ch, bool fShort,
                        bool fShowNothing) {
     OBJ_DATA *obj;
@@ -517,6 +519,8 @@ void show_list_to_char(OBJ_DATA *list, CHAR_DATA *ch, bool fShort,
     return;
 }
 
+// show_list_to_char1: Formative helper to append object list display text.
+// show_list_to_char1: 格式化輔助函式，用於串接物品清單顯示文字。
 void show_list_to_char1(char *out, OBJ_DATA *list, CHAR_DATA *ch, bool fShort,
                         bool fShowNothing) {
     OBJ_DATA *obj;
@@ -626,6 +630,8 @@ void show_list_to_char1(char *out, OBJ_DATA *list, CHAR_DATA *ch, bool fShort,
     return;
 }
 
+// show_char_to_char_0b: Renders detailed combat or status view of a character.
+// show_char_to_char_0b: 渲染出角色的詳細戰鬥或狀態檢視。
 void show_char_to_char_0b(CHAR_DATA *victim, CHAR_DATA *ch) {
     char buf[BUF_STRING_LENGTH * 4];
     OBJ_DATA *pObj;
@@ -825,6 +831,8 @@ void show_char_to_char_0b(CHAR_DATA *victim, CHAR_DATA *ch) {
     return;
 }
 /* called by show_char_to_char */
+// show_char_to_char_0: Renders standard room-view text of a character to another.
+// show_char_to_char_0: 向某個角色渲染另一個角色的標準房間檢視文字。
 void show_char_to_char_0(CHAR_DATA *victim, CHAR_DATA *ch) {
     char buf[BUF_STRING_LENGTH * 4];
     OBJ_DATA *pObj;
@@ -1036,6 +1044,8 @@ void show_char_to_char_0(CHAR_DATA *victim, CHAR_DATA *ch) {
 }
 
 /* called when look someone */
+// show_char_to_char_1: Renders detailed look-view of a character to another.
+// show_char_to_char_1: 向某個角色渲染另一個角色的詳細查看檢視。
 void show_char_to_char_1(CHAR_DATA *victim, CHAR_DATA *ch) {
     OBJ_DATA *obj;
     char buf[MAX_STRING_LENGTH * 15];
@@ -1307,6 +1317,8 @@ void show_char_to_char_1(CHAR_DATA *victim, CHAR_DATA *ch) {
 }
 
 /* called when PC look environment or enter a room */
+// show_char_to_char: Displays characters in a room list to a character.
+// show_char_to_char: 向角色顯示房間清單中的所有其他角色。
 void show_char_to_char(CHAR_DATA *list, CHAR_DATA *ch) {
     CHAR_DATA *rch;
 
@@ -1336,6 +1348,8 @@ void show_char_to_char(CHAR_DATA *list, CHAR_DATA *ch) {
     return;
 }
 
+// check_blind: Checks if a character is blind and sends a message.
+// check_blind: 檢查角色是否處於失明狀態，並發送相應訊息。
 bool check_blind(CHAR_DATA *ch) {
     if (!IS_NPC(ch) && IS_SET(ch->act, PLR_HOLYLIGHT) && IS_IMMORTAL(ch))
         return TRUE;
@@ -1348,6 +1362,8 @@ bool check_blind(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// top10_remove: Removes a character's score entry from the top 10 ranking list.
+// top10_remove: 自前十名排行榜中移除指定角色的積分項目。
 void top10_remove(TOP10_DATA *td, CHAR_DATA *ch, int value, bool fIMM) {
     int i, j;
     // int fFound = FALSE;
@@ -1387,6 +1403,8 @@ void top10_remove(TOP10_DATA *td, CHAR_DATA *ch, int value, bool fIMM) {
     return;
 }
 
+// top10_check: Checks and updates a character's position on the top 10 rankings.
+// top10_check: 檢查並更新指定角色在前十名排行榜中的名次與狀態。
 void top10_check(CHAR_DATA *ch) {
     if (IS_SET(ch->act, PLR_HORSE))
         return;
@@ -1402,6 +1420,8 @@ void top10_check(CHAR_DATA *ch) {
     top10_save();
 }
 
+// show_top10: Formats and prints the top 10 ranking list to a character.
+// show_top10: 向角色格式化並輸出顯示前十名排行榜。
 void show_top10(CHAR_DATA *ch, TOP10_DATA *td, char *title, char *prefix,
                 char *posfix) {
     int i;
@@ -1430,6 +1450,8 @@ void show_top10(CHAR_DATA *ch, TOP10_DATA *td, char *title, char *prefix,
                  ch);
 }
 
+// do_top10: Command: do_top10 - Performs the 'top10' command.
+// do_top10: 指令：do_top10 - 執行 'top10' 指令。
 void do_top10(CHAR_DATA *ch, char *argument) {
     // char buf [MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
@@ -1649,6 +1671,8 @@ void do_top10(CHAR_DATA *ch, char *argument) {
     */
 }
 
+// do_look: Performs the 'look' command to inspect rooms, items, or characters.
+// do_look: 執行 'look' 指令以觀察房間環境、物品或角色。
 void do_look(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *victim, *rch;
@@ -2155,6 +2179,8 @@ void do_look(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_examine: Command: do_examine - Performs the 'examine' command.
+// do_examine: 指令：do_examine - 執行 'examine' 指令。
 void do_examine(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char buf[MAX_STRING_LENGTH];
@@ -2350,6 +2376,8 @@ void do_examine(CHAR_DATA *ch, char *argument) {
 /*
  * Thanks to Zrin for auto-exit part.
  */
+// do_exits: Command: do_exits - Performs the 'exits' command.
+// do_exits: 指令：do_exits - 執行 'exits' 指令。
 void do_exits(CHAR_DATA *ch, char *argument) {
     EXIT_DATA *pexit;
     extern char *const dir_name[];
@@ -2445,6 +2473,8 @@ char *alignment_color(int align) {
         return HIR;
 }
 
+// do_elescore: Command: do_elescore - Performs the 'elescore' command.
+// do_elescore: 指令：do_elescore - 執行 'elescore' 指令。
 void do_elescore(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
@@ -2628,6 +2658,8 @@ void do_elescore(CHAR_DATA *ch, char *argument) {
     send_to_char(rgLore, ch);
 }
 
+// do_score: Performs the 'score' command to display character status and stats.
+// do_score: 執行 'score' 指令顯示角色目前的詳細屬性與數值狀態。
 void do_score(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA *paf;
     char buf[BUF_STRING_LENGTH];
@@ -3682,6 +3714,8 @@ char *const month_name[] = {"冬",   "冬狼", "霜之巨人", "遠古", "大戰
                             "自然", "荒廢", "龍",       "太陽", "暑氣",  "巫術",
                             "暗影", "幽冥", "長夜",     "黑暗", "大惡魔"};
 
+// do_time: Command: do_time - Performs the 'time' command.
+// do_time: 指令：do_time - 執行 'time' 指令。
 void do_time(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     extern char str_boot_time[];
@@ -3734,6 +3768,8 @@ void do_time(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_weather: Command: do_weather - Performs the 'weather' command.
+// do_weather: 指令：do_weather - 執行 'weather' 指令。
 void do_weather(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
 
@@ -3761,6 +3797,8 @@ void do_weather(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_sector: Command: do_sector - Performs the 'sector' command.
+// do_sector: 指令：do_sector - 執行 'sector' 指令。
 void do_sector(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     ROOM_INDEX_DATA *in_room = NULL;
@@ -3821,6 +3859,8 @@ void do_sector(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_help: Performs the 'help' command to view help files.
+// do_help: 執行 'help' 指令查閱說明文件與指南。
 void do_help(CHAR_DATA *ch, char *argument) {
     HELP_DATA *pHelp;
     bool hfound = FALSE; /* modification to show multiple helps
@@ -3865,6 +3905,8 @@ void do_help(CHAR_DATA *ch, char *argument) {
  */
 // do_who modified by jye 6.18.2005
 int MAX_PPL;
+// do_who: Command: do_who - Performs the 'who' command.
+// do_who: 指令：do_who - 執行 'who' 指令。
 void do_who(CHAR_DATA *ch, char *argument) {
     DESCRIPTOR_DATA *d;
     // CLAN_DATA *cn;
@@ -4361,6 +4403,8 @@ void do_who(CHAR_DATA *ch, char *argument) {
 }
 
 /* Contributed by Kaneda */
+// do_whois: Command: do_whois - Performs the 'whois' command.
+// do_whois: 指令：do_whois - 執行 'whois' 指令。
 void do_whois(CHAR_DATA *ch, char *argument) {
     DESCRIPTOR_DATA *d;
     char buf[MAX_STRING_LENGTH];
@@ -4445,6 +4489,8 @@ void do_whois(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_inventory: Performs the 'inventory' command to list carried items.
+// do_inventory: 執行 'inventory' 指令列出角色目前背包所攜帶的物品。
 void do_inventory(CHAR_DATA *ch, char *argument) {
     if (IS_IMMORTAL(ch)) {
         char arg[MAX_INPUT_LENGTH];
@@ -4465,6 +4511,8 @@ void do_inventory(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_equipment: Command: do_equipment - Performs the 'equipment' command.
+// do_equipment: 指令：do_equipment - 執行 'equipment' 指令。
 void do_equipment(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     int iWear;
@@ -4656,6 +4704,8 @@ void do_equipment(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_compare: Command: do_compare - Performs the 'compare' command.
+// do_compare: 指令：do_compare - 執行 'compare' 指令。
 void do_compare(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj1;
     OBJ_DATA *obj2;
@@ -4768,11 +4818,15 @@ void do_compare(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_credits: Command: do_credits - Performs the 'credits' command.
+// do_credits: 指令：do_credits - 執行 'credits' 指令。
 void do_credits(CHAR_DATA *ch, char *argument) {
     do_help(ch, "diku");
     return;
 }
 
+// do_where: Command: do_where - Performs the 'where' command.
+// do_where: 指令：do_where - 執行 'where' 指令。
 void do_where(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     DESCRIPTOR_DATA *d;
@@ -4824,6 +4878,8 @@ void do_where(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_consider: Command: do_consider - Performs the 'consider' command.
+// do_consider: 指令：do_consider - 執行 'consider' 指令。
 void do_consider(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char *buf = '\0';
@@ -5020,6 +5076,8 @@ void do_consider(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// set_hname: Sets the head/honorary name of a character.
+// set_hname: 設定角色的頭銜或榮譽稱號。
 void set_hname(CHAR_DATA *ch, char *cname) {
     char buf[BUF_STRING_LENGTH];
     char buf1[BUF_STRING_LENGTH];
@@ -5047,6 +5105,8 @@ void set_hname(CHAR_DATA *ch, char *cname) {
     return;
 }
 
+// set_cname: Sets the Chinese name of a character.
+// set_cname: 設定角色的中文名稱。
 void set_cname(CHAR_DATA *ch, char *cname) {
     char buf[BUF_STRING_LENGTH];
     char buf1[BUF_STRING_LENGTH];
@@ -5074,6 +5134,8 @@ void set_cname(CHAR_DATA *ch, char *cname) {
     return;
 }
 
+// do_hname: Command: do_hname - Performs the 'hname' command.
+// do_hname: 指令：do_hname - 執行 'hname' 指令。
 void do_hname(CHAR_DATA *ch, char *arg) {
     char argument[MAX_INPUT_LENGTH];
     if (IS_NPC(ch))
@@ -5125,6 +5187,8 @@ void do_hname(CHAR_DATA *ch, char *arg) {
     send_to_char("[36mOK.[m\n\r", ch);
 }
 
+// do_cname: Command: do_cname - Performs the 'cname' command.
+// do_cname: 指令：do_cname - 執行 'cname' 指令。
 void do_cname(CHAR_DATA *ch, char *argument) {
     char no_ansi[MAX_STRING_LENGTH];
     int len, len2;
@@ -5158,6 +5222,8 @@ void do_cname(CHAR_DATA *ch, char *argument) {
     send_to_char("[36mOK.[m\n\r", ch);
 }
 
+// str_length: Safely counts the character length of a string, accounting for wide/Chinese characters.
+// str_length: 安全計算字串的字元長度（考慮寬字元與中文字元）。
 int str_length(char *str) {
     int len = 0;
     int i, k;
@@ -5174,6 +5240,8 @@ int str_length(char *str) {
     return k;
 }
 
+// set_title: Sets the title of a character.
+// set_title: 設定角色的稱號（Title）。
 void set_title(CHAR_DATA *ch, char *title) {
     char buf[BUF_STRING_LENGTH];
 
@@ -5200,6 +5268,8 @@ void set_title(CHAR_DATA *ch, char *title) {
     return;
 }
 
+// do_title: Command: do_title - Performs the 'title' command.
+// do_title: 指令：do_title - 執行 'title' 指令。
 void do_title(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -5221,6 +5291,8 @@ void do_title(CHAR_DATA *ch, char *argument) {
     send_to_char("[36mOK.[m\n\r", ch);
 }
 
+// do_description: Command: do_description - Performs the 'description' command.
+// do_description: 指令：do_description - 執行 'description' 指令。
 void do_description(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
 
@@ -5259,6 +5331,8 @@ void do_description(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_report: Command: do_report - Performs the 'report' command.
+// do_report: 指令：do_report - 執行 'report' 指令。
 void do_report(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -5282,6 +5356,8 @@ void do_report(CHAR_DATA *ch, char *argument) {
 }
 
 // practice modified by jye 6.07.2005
+// do_practice: Command: do_practice - Performs the 'practice' command.
+// do_practice: 指令：do_practice - 執行 'practice' 指令。
 void do_practice(CHAR_DATA *ch, char *argument) {
     char buf[BUF_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH * 4];
@@ -5599,6 +5675,8 @@ void do_practice(CHAR_DATA *ch, char *argument) {
  * return  0 : mob teach this skill, and no need to check pc's qmark
  * return  1 : mob teach this skill, but need pc has corresponding qmark
  */
+// is_skname: Checks if a skill or spell name is present in a skills list.
+// is_skname: 檢查特定技能或法術名稱是否包含在技能清單中。
 int is_skname(const char *str, char *namelist) {
     char name[MAX_INPUT_LENGTH];
     char *nameptr;
@@ -5623,6 +5701,8 @@ int is_skname(const char *str, char *namelist) {
     }
 }
 
+// do_join: Command: do_join - Performs the 'join' command.
+// do_join: 指令：do_join - 執行 'join' 指令。
 void do_join(CHAR_DATA *ch, char *argument) {
     char buf[BUF_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH * 2];
@@ -5779,6 +5859,8 @@ void do_join(CHAR_DATA *ch, char *argument) {
 /*
  * Lookup a class by name.
  */
+// class_lookup: Looks up class ID by class name.
+// class_lookup: 根據職業名稱尋找相應的職業 ID。
 int class_lookup(const char *name) {
     int cn;
 
@@ -5796,6 +5878,8 @@ int class_lookup(const char *name) {
 /*
  * 'Wimpy' originally by Dionysos.
  */
+// do_wimpy: Command: do_wimpy - Performs the 'wimpy' command.
+// do_wimpy: 指令：do_wimpy - 執行 'wimpy' 指令。
 void do_wimpy(CHAR_DATA *ch, char *argument) {
     char buf[BUF_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
@@ -5827,6 +5911,8 @@ void do_wimpy(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_password: Command: do_password - Performs the 'password' command.
+// do_password: 指令：do_password - 執行 'password' 指令。
 void do_password(CHAR_DATA *ch, char *argument) {
     char *pArg;
     char *pwdnew;
@@ -5917,6 +6003,8 @@ void do_password(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_socials: Command: do_socials - Performs the 'socials' command.
+// do_socials: 指令：do_socials - 執行 'socials' 指令。
 void do_socials(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH * 4];
@@ -5942,6 +6030,8 @@ void do_socials(CHAR_DATA *ch, char *argument) {
 /*
  * Contributed by Alander.
  */
+// do_commands: Command: do_commands - Performs the 'commands' command.
+// do_commands: 指令：do_commands - 執行 'commands' 指令。
 void do_commands(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH * 4];
@@ -5968,6 +6058,8 @@ void do_commands(CHAR_DATA *ch, char *argument) {
 }
 
 // do_channels modified by jye 6.12.2005
+// do_channels: Command: do_channels - Performs the 'channels' command.
+// do_channels: 指令：do_channels - 執行 'channels' 指令。
 void do_channels(CHAR_DATA *ch, char *argument) {
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
@@ -6163,6 +6255,8 @@ void do_channels(CHAR_DATA *ch, char *argument) {
 /*
  * Contributed by Grodyn.
  */
+// do_config: Command: do_config - Performs the 'config' command.
+// do_config: 指令：do_config - 執行 'config' 指令。
 void do_config(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
 
@@ -6357,12 +6451,16 @@ void do_config(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_wizlist: Command: do_wizlist - Performs the 'wizlist' command.
+// do_wizlist: 指令：do_wizlist - 執行 'wizlist' 指令。
 void do_wizlist(CHAR_DATA *ch, char *argument) {
 
     do_help(ch, "wizlist");
     return;
 }
 
+// do_spells: Command: do_spells - Performs the 'spells' command.
+// do_spells: 指令：do_spells - 執行 'spells' 指令。
 void do_spells(CHAR_DATA *ch, char *argument) {
     char buf[BUF_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH * 4];
@@ -6407,6 +6505,8 @@ void do_spells(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// skill_eff_percent: Calculates the effective percentage efficiency of a skill.
+// skill_eff_percent: 計算特定技能的有效發揮百分比效率。
 int skill_eff_percent(CHAR_DATA *ch, int sn) {
     if (IS_NPC(ch))
         return 0;
@@ -6419,6 +6519,8 @@ int skill_eff_percent(CHAR_DATA *ch, int sn) {
                      1000));
 }
 
+// do_slist: Command: do_slist - Performs the 'slist' command.
+// do_slist: 指令：do_slist - 執行 'slist' 指令。
 void do_slist(CHAR_DATA *ch, char *argument) {
     char buf[BUF_STRING_LENGTH * 2];
     char buf1[MAX_STRING_LENGTH * 8];
@@ -6585,6 +6687,8 @@ void do_slist(CHAR_DATA *ch, char *argument) {
 
 /* bypassing the config command - Kahn */
 
+// do_autoexit: Command: do_autoexit - Performs the 'autoexit' command.
+// do_autoexit: 指令：do_autoexit - 執行 'autoexit' 指令。
 void do_autoexit(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -6596,6 +6700,8 @@ void do_autoexit(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_autoloot: Command: do_autoloot - Performs the 'autoloot' command.
+// do_autoloot: 指令：do_autoloot - 執行 'autoloot' 指令。
 void do_autoloot(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -6607,6 +6713,8 @@ void do_autoloot(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_autogold: Command: do_autogold - Performs the 'autogold' command.
+// do_autogold: 指令：do_autogold - 執行 'autogold' 指令。
 void do_autogold(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -6618,6 +6726,8 @@ void do_autogold(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_autosac: Command: do_autosac - Performs the 'autosac' command.
+// do_autosac: 指令：do_autosac - 執行 'autosac' 指令。
 void do_autosac(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -6629,6 +6739,8 @@ void do_autosac(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_blank: Command: do_blank - Performs the 'blank' command.
+// do_blank: 指令：do_blank - 執行 'blank' 指令。
 void do_blank(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -6640,6 +6752,8 @@ void do_blank(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_brief: Command: do_brief - Performs the 'brief' command.
+// do_brief: 指令：do_brief - 執行 'brief' 指令。
 void do_brief(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -6651,6 +6765,8 @@ void do_brief(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_combine: Command: do_combine - Performs the 'combine' command.
+// do_combine: 指令：do_combine - 執行 'combine' 指令。
 void do_combine(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
 
@@ -6662,6 +6778,8 @@ void do_combine(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_pagelen: Command: do_pagelen - Performs the 'pagelen' command.
+// do_pagelen: 指令：do_pagelen - 執行 'pagelen' 指令。
 void do_pagelen(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
@@ -6694,6 +6812,8 @@ void do_pagelen(CHAR_DATA *ch, char *argument) {
 }
 
 /* Do_prompt from Morgenes from Aldara Mud */
+// do_prompt: Command: do_prompt - Performs the 'prompt' command.
+// do_prompt: 指令：do_prompt - 執行 'prompt' 指令。
 void do_prompt(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
 
@@ -6736,12 +6856,16 @@ void do_prompt(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_auto: Command: do_auto - Performs the 'auto' command.
+// do_auto: 指令：do_auto - 執行 'auto' 指令。
 void do_auto(CHAR_DATA *ch, char *argument) {
 
     do_config(ch, "");
     return;
 }
 
+// do_afk: Command: do_afk - Performs the 'afk' command.
+// do_afk: 指令：do_afk - 執行 'afk' 指令。
 void do_afk(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -6760,6 +6884,8 @@ void do_afk(CHAR_DATA *ch, char *argument) {
 }
 
 /* scan skill added by Amenda 00/12/6 */
+// do_scan: Command: do_scan - Performs the 'scan' command.
+// do_scan: 指令：do_scan - 執行 'scan' 指令。
 void do_scan(CHAR_DATA *ch, char *argument) {
     EXIT_DATA *pexit;
     int i;
@@ -6817,6 +6943,8 @@ void do_scan(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// scan_print: Formats and prints scanning results in a direction.
+// scan_print: 格式化並輸出向某個方向掃描（Scan）的結果。
 void scan_print(CHAR_DATA *ch, EXIT_DATA *pexit, int door, int level) {
     CHAR_DATA *pch;
     char buf[MAX_STRING_LENGTH * 2];
@@ -6868,6 +6996,8 @@ void scan_print(CHAR_DATA *ch, EXIT_DATA *pexit, int door, int level) {
 }
 
 /* scout skill added by Amenda 2002/6/28 */
+// do_scout: Command: do_scout - Performs the 'scout' command.
+// do_scout: 指令：do_scout - 執行 'scout' 指令。
 void do_scout(CHAR_DATA *ch, char *argument) {
     int i;
     int sklv = get_skill_level(ch, skill_lookup("scout"));
@@ -7082,6 +7212,8 @@ void do_scout(CHAR_DATA *ch, char *argument) {
 }
 
 // 判定 scout 的房間是否能進入 2022/12/22
+// can_scout_check: Checks if a character can scout a neighboring room.
+// can_scout_check: 檢查角色是否能夠偵察（Scout）相鄰的房間。
 bool can_scout_check(CHAR_DATA *ch, EXIT_DATA *pexit, ROOM_INDEX_DATA *to_room,
                      int sklv) {
 
@@ -7166,6 +7298,8 @@ bool can_scout_check(CHAR_DATA *ch, EXIT_DATA *pexit, ROOM_INDEX_DATA *to_room,
 
     return TRUE;
 }
+// scout: Executes scout action to peer into a neighboring room.
+// scout: 執行偵察行動以窺視相鄰房間的狀況。
 void scout(CHAR_DATA *ch, EXIT_DATA *pexit, ROOM_INDEX_DATA *to_room,
            int sklv) {
     int room_flags = 0; // 2022/12/22
@@ -7304,6 +7438,8 @@ void scout(CHAR_DATA *ch, EXIT_DATA *pexit, ROOM_INDEX_DATA *to_room,
     }
 }
 
+// skill_exp_level: Calculates the required skill experience level.
+// skill_exp_level: 計算特定技能所需的熟練度或經驗值等級。
 int skill_exp_level(int exp) { return 0; }
 
 char *skill_exp_desc(int exp) {
@@ -7335,6 +7471,8 @@ char *skill_exp_desc(int exp) {
     }
 }
 
+// do_skadv: Command: do_skadv - Performs the 'skadv' command.
+// do_skadv: 指令：do_skadv - 執行 'skadv' 指令。
 void do_skadv(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
@@ -7493,6 +7631,8 @@ void do_skadv(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_skdemote: Command: do_skdemote - Performs the 'skdemote' command.
+// do_skdemote: 指令：do_skdemote - 執行 'skdemote' 指令。
 void do_skdemote(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     // char buf[BUF_STRING_LENGTH];

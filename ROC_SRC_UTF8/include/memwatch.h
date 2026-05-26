@@ -1,3 +1,5 @@
+// memwatch.h: Header for the MEMWATCH memory leak and corruption detection library.
+// memwatch.h: MEMWATCH 記憶體洩漏與損壞追蹤檢測公用程式庫的標頭檔。
 /*
 ** MEMWATCH.H
 ** Nonintrusive ANSI C memory leak / overwrite detection

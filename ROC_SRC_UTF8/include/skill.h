@@ -1,3 +1,5 @@
+// skill.h: Structs for the central skill and spell lookup lists, categories, and progression parameters.
+// skill.h: 中央技能與魔法查閱資料表之結構、分類及熟練度晉升相關參數定義。
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *

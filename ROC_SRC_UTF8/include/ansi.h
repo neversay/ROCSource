@@ -1,3 +1,5 @@
+// ansi.h: Define constants for ANSI terminal escape codes used to color game text.
+// ansi.h: 定義 ANSI 終端控制碼常數，用於對遊戲內的文字進行著色與格式化。
 #ifndef _ANSI_H
 #define _ANSI_H
 

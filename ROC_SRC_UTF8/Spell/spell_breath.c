@@ -17,6 +17,8 @@
 // ----------------------------------------------- /
 //  舊版吐息置於文件下方                           /
 //************************************************ /
+// GetBreathDamage: Calculates damage inflicted by dragon breath spells.
+// GetBreathDamage: 計算龍息（Breath）魔法攻擊所造成的傷害值。
 int GetBreathDamage(int nBaseDmg, CHAR_DATA *ch, CHAR_DATA *victim, int nSklv, int nMainSVS, int sn) {
     int nDamage  = 0;
     int nAttSVS  = NEW_GET_SVS(ch, nMainSVS);
@@ -91,6 +93,8 @@ int GetBreathDamage(int nBaseDmg, CHAR_DATA *ch, CHAR_DATA *victim, int nSklv, i
     return nDamage;
 }
 
+// spell_acid_breath: Spell: spell_acid_breath - Casts the 'acid_breath' spell.
+// spell_acid_breath: 魔法：spell_acid_breath - 施展 'acid_breath' 魔法法術。
 void spell_acid_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA  *obj_lose;
     OBJ_DATA  *obj_next;
@@ -355,6 +359,8 @@ void spell_acid_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_fire_breath: Spell: spell_fire_breath - Casts the 'fire_breath' spell.
+// spell_fire_breath: 魔法：spell_fire_breath - 施展 'fire_breath' 魔法法術。
 void spell_fire_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA  *obj_lose;
     OBJ_DATA  *obj_next;
@@ -620,6 +626,8 @@ void spell_fire_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_frost_breath: Spell: spell_frost_breath - Casts the 'frost_breath' spell.
+// spell_frost_breath: 魔法：spell_frost_breath - 施展 'frost_breath' 魔法法術。
 void spell_frost_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA  *obj_lose;
     OBJ_DATA  *obj_next;
@@ -847,6 +855,8 @@ void spell_frost_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_gas_breath: Spell: spell_gas_breath - Casts the 'gas_breath' spell.
+// spell_gas_breath: 魔法：spell_gas_breath - 施展 'gas_breath' 魔法法術。
 void spell_gas_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1065,6 +1075,8 @@ void spell_gas_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_lightning_breath: Spell: spell_lightning_breath - Casts the 'lightning_breath' spell.
+// spell_lightning_breath: 魔法：spell_lightning_breath - 施展 'lightning_breath' 魔法法術。
 void spell_lightning_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1279,6 +1291,8 @@ void spell_lightning_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 /*  舊版龍息 , 2022/04/17
 
+// GetBreathDamage: Calculates damage inflicted by dragon breath spells.
+// GetBreathDamage: 計算龍息（Breath）魔法攻擊所造成的傷害值。
 int GetBreathDamage(int nBaseDmg, CHAR_DATA *ch, CHAR_DATA *victim, int nSklv, int nMainSVS, int nSecSVS)
 {
 #if BREATH_DEBUG
@@ -1359,6 +1373,8 @@ int GetBreathDamage(int nBaseDmg, CHAR_DATA *ch, CHAR_DATA *victim, int nSklv, i
         return nDamage;
 }
 
+// spell_acid_breath: Spell: spell_acid_breath - Casts the 'acid_breath' spell.
+// spell_acid_breath: 魔法：spell_acid_breath - 施展 'acid_breath' 魔法法術。
 void spell_acid_breath( int sn, int level, CHAR_DATA *ch, void *vo )
 {
     OBJ_DATA  *obj_lose;
@@ -1479,6 +1495,8 @@ void spell_acid_breath( int sn, int level, CHAR_DATA *ch, void *vo )
         return;
 }
 
+// spell_fire_breath: Spell: spell_fire_breath - Casts the 'fire_breath' spell.
+// spell_fire_breath: 魔法：spell_fire_breath - 施展 'fire_breath' 魔法法術。
 void spell_fire_breath( int sn, int level, CHAR_DATA *ch, void *vo )
 {
         OBJ_DATA  *obj_lose;
@@ -1571,6 +1589,8 @@ void spell_fire_breath( int sn, int level, CHAR_DATA *ch, void *vo )
         return;
 }
 
+// spell_frost_breath: Spell: spell_frost_breath - Casts the 'frost_breath' spell.
+// spell_frost_breath: 魔法：spell_frost_breath - 施展 'frost_breath' 魔法法術。
 void spell_frost_breath( int sn, int level, CHAR_DATA *ch, void *vo )
 {
         OBJ_DATA  *obj_lose;
@@ -1657,6 +1677,8 @@ void spell_frost_breath( int sn, int level, CHAR_DATA *ch, void *vo )
 //////////////////////////////////////////////////////////////////
 //	gas breath modified by keelar 04.29 2005
 //  毒息所引發的施毒術將與毒息的 sklv 有關、而不是 poison
+// spell_gas_breath: Spell: spell_gas_breath - Casts the 'gas_breath' spell.
+// spell_gas_breath: 魔法：spell_gas_breath - 施展 'gas_breath' 魔法法術。
 void spell_gas_breath( int sn, int level, CHAR_DATA *ch, void *vo )
 {
         CHAR_DATA *vch;
@@ -1733,6 +1755,8 @@ void spell_gas_breath( int sn, int level, CHAR_DATA *ch, void *vo )
         return;
 }
 
+// spell_lightning_breath: Spell: spell_lightning_breath - Casts the 'lightning_breath' spell.
+// spell_lightning_breath: 魔法：spell_lightning_breath - 施展 'lightning_breath' 魔法法術。
 void spell_lightning_breath( int sn, int level, CHAR_DATA *ch, void *vo )
 {
         CHAR_DATA *victim  = (CHAR_DATA *) vo;

@@ -125,6 +125,8 @@ bool IsDarkElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast);
 // void VenomousStrike(CHAR_DATA *pCh, CHAR_DATA *pVictim)
 // 增加物品判定 2021//11/10
 // int VenomousStrike(CHAR_DATA *pCh, CHAR_DATA *pVictim)
+// VenomousStrike: Core Engine function: VenomousStrike - Main C routine handling game mechanics.
+// VenomousStrike: 核心引擎函式：VenomousStrike - 處理遊戲底層機制的核心 C 語言子程序。
 int VenomousStrike(CHAR_DATA *pCh, CHAR_DATA *pVictim, int wpn) {
     AFFECT_DATA  af;
     AFFECT_DATA *paf; // 2021/11/10
@@ -255,6 +257,8 @@ int VenomousStrike(CHAR_DATA *pCh, CHAR_DATA *pVictim, int wpn) {
 }
 
 // 戰後屍體自動處理判定 2022/05/08
+// AutoCorpse: Core Engine function: AutoCorpse - Main C routine handling game mechanics.
+// AutoCorpse: 核心引擎函式：AutoCorpse - 處理遊戲底層機制的核心 C 語言子程序。
 void AutoCorpse(CHAR_DATA *ch, CHAR_DATA *victim, char *vchname) {
     int       split = 0;
     char      buf[10];
@@ -299,6 +303,8 @@ void AutoCorpse(CHAR_DATA *ch, CHAR_DATA *victim, char *vchname) {
     return;
 }
 
+// LifeShareDamage: Combat logic: LifeShareDamage - Applies combat calculations, checks, or damage formulas.
+// LifeShareDamage: 戰鬥邏輯：LifeShareDamage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int LifeShareDamage(CHAR_DATA *ch, CHAR_DATA *och, int dam) {
     CHAR_DATA *vch;
     int        LSDam;
@@ -333,6 +339,8 @@ int LifeShareDamage(CHAR_DATA *ch, CHAR_DATA *och, int dam) {
     return dam;
 }
 
+// IsRangedAttack: Core Engine function: IsRangedAttack - Main C routine handling game mechanics.
+// IsRangedAttack: 核心引擎函式：IsRangedAttack - 處理遊戲底層機制的核心 C 語言子程序。
 int IsRangedAttack(int nDmgType) {
     // 加入槍械射擊 , 暗器投擲 , 炸藥投擲 2022/04/29
     // if(nDmgType == 1014 || nDmgType == 1015 || nDmgType == gsn_throwing ){
@@ -345,6 +353,8 @@ int IsRangedAttack(int nDmgType) {
     return 0;
 }
 
+// IsMeleeSpell: Core Engine function: IsMeleeSpell - Main C routine handling game mechanics.
+// IsMeleeSpell: 核心引擎函式：IsMeleeSpell - 處理遊戲底層機制的核心 C 語言子程序。
 int IsMeleeSpell(int nDmgType) {
     static int  s_rgMsSn[8] = {0};
     static char s_szMsName[8][30] =
@@ -361,6 +371,8 @@ int IsMeleeSpell(int nDmgType) {
     return 0;
 }
 
+// GetPhysicalDamageUnderRiding: Combat logic: GetPhysicalDamageUnderRiding - Applies combat calculations, checks, or damage formulas.
+// GetPhysicalDamageUnderRiding: 戰鬥邏輯：GetPhysicalDamageUnderRiding - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int GetPhysicalDamageUnderRiding(CHAR_DATA *pVictim, int nDamage, int nDmgType) {
     if (get_eq_char(pVictim, WEAR_RIDE) == NULL ||
         !IS_SET(race_table[pVictim->race].race_abilities, RACE_CENTAUR)) {
@@ -383,6 +395,8 @@ int GetPhysicalDamageUnderRiding(CHAR_DATA *pVictim, int nDamage, int nDmgType) 
     return nDamage * nDmgRate / 100;
 }
 
+// GetMagicalDamageUnderRiding: Combat logic: GetMagicalDamageUnderRiding - Applies combat calculations, checks, or damage formulas.
+// GetMagicalDamageUnderRiding: 戰鬥邏輯：GetMagicalDamageUnderRiding - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int GetMagicalDamageUnderRiding(CHAR_DATA *pVictim, int nDamage, int nDmgType) {
     if (get_eq_char(pVictim, WEAR_RIDE) == NULL ||
         !IS_SET(race_table[pVictim->race].race_abilities, RACE_CENTAUR)) {
@@ -405,6 +419,8 @@ int GetMagicalDamageUnderRiding(CHAR_DATA *pVictim, int nDamage, int nDmgType) {
 }
 
 // 修改 protection 不同陣營效果 2022/10/26
+// GetDamageUnderProtection: Combat logic: GetDamageUnderProtection - Applies combat calculations, checks, or damage formulas.
+// GetDamageUnderProtection: 戰鬥邏輯：GetDamageUnderProtection - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int GetDamageUnderProtection(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage) {
     int nDamageRate = 100; // The Original Damage Rate of Protection, which is 3 / 4, 75%.
 
@@ -490,6 +506,8 @@ int GetDamageUnderProtection(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage) {
 }
 
 // 種族 Anti Magic 對魔法傷害減免
+// GetMagicalUnderAntiMagic: Core Engine function: GetMagicalUnderAntiMagic - Main C routine handling game mechanics.
+// GetMagicalUnderAntiMagic: 核心引擎函式：GetMagicalUnderAntiMagic - 處理遊戲底層機制的核心 C 語言子程序。
 int GetMagicalUnderAntiMagic(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage) {
     int nDamageRate = 100;
     if (victim == ch)
@@ -510,6 +528,8 @@ int GetMagicalUnderAntiMagic(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage) {
 }
 
 // 盾牌物理減傷 2020/10/30
+// GetPhysicalWithShield: Core Engine function: GetPhysicalWithShield - Main C routine handling game mechanics.
+// GetPhysicalWithShield: 核心引擎函式：GetPhysicalWithShield - 處理遊戲底層機制的核心 C 語言子程序。
 int GetPhysicalWithShield(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage, int dt) {
     OBJ_DATA *obj;
     int       nDamageRate = 100;
@@ -591,6 +611,8 @@ int GetPhysicalWithShield(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage, int dt)
 }
 
 // 盾牌魔法減傷 2020/10/30
+// GetMagicalWithShield: Core Engine function: GetMagicalWithShield - Main C routine handling game mechanics.
+// GetMagicalWithShield: 核心引擎函式：GetMagicalWithShield - 處理遊戲底層機制的核心 C 語言子程序。
 int GetMagicalWithShield(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage) {
     OBJ_DATA *obj;
     int       nDamageRate = 100;
@@ -665,6 +687,8 @@ int GetMagicalWithShield(CHAR_DATA *ch, CHAR_DATA *victim, int nDamage) {
 }
 
 // 攻擊命中的元素判定 2022/12/25
+// IsSpellElement: Core Engine function: IsSpellElement - Main C routine handling game mechanics.
+// IsSpellElement: 核心引擎函式：IsSpellElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSpellElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 9       // cause critical
         || dt == 10   // cause light
@@ -689,6 +713,8 @@ bool IsSpellElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 
     return FALSE;
 }
+// IsWindElement: Core Engine function: IsWindElement - Main C routine handling game mechanics.
+// IsWindElement: 核心引擎函式：IsWindElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsWindElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 77      // shocking grasp
         || dt == 92   // gas breath
@@ -714,6 +740,8 @@ bool IsWindElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 
     return FALSE;
 }
+// IsFireElement: Core Engine function: IsFireElement - Main C routine handling game mechanics.
+// IsFireElement: 核心引擎函式：IsFireElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsFireElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 7       // burning hands
         || dt == 43   // fireball
@@ -741,6 +769,8 @@ bool IsFireElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 
     return FALSE;
 }
+// IsColdElement: Core Engine function: IsColdElement - Main C routine handling game mechanics.
+// IsColdElement: 核心引擎函式：IsColdElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsColdElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 14      // chill touch
         || dt == 15   // colour spray
@@ -767,6 +797,8 @@ bool IsColdElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 
     return FALSE;
 }
+// IsEarthElement: Core Engine function: IsEarthElement - Main C routine handling game mechanics.
+// IsEarthElement: 核心引擎函式：IsEarthElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsEarthElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 1       // acid blast
         || dt == 37   // earthquake
@@ -792,6 +824,8 @@ bool IsEarthElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 
     return FALSE;
 }
+// IsLightningElement: Core Engine function: IsLightningElement - Main C routine handling game mechanics.
+// IsLightningElement: 核心引擎函式：IsLightningElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsLightningElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 8       // call lightning
         || dt == 57   // thunder strike
@@ -816,6 +850,8 @@ bool IsLightningElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 
     return FALSE;
 }
+// IsSaintElement: Core Engine function: IsSaintElement - Main C routine handling game mechanics.
+// IsSaintElement: 核心引擎函式：IsSaintElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSaintElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 34      // dispel evil
         || dt == 46   // flamestrike
@@ -840,6 +876,8 @@ bool IsSaintElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 
     return FALSE;
 }
+// IsDarkElement: Core Engine function: IsDarkElement - Main C routine handling game mechanics.
+// IsDarkElement: 核心引擎函式：IsDarkElement - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsDarkElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
     if (dt == 35      // dispel good
         || dt == 39   // energy drain
@@ -869,6 +907,8 @@ bool IsDarkElement(CHAR_DATA *ch, int dt, OBJ_DATA *wpn, bool IsCast) {
 }
 
 // 裝備特定的附魔數值判定 2022/12/25
+// GetObjElement: Core Engine function: GetObjElement - Main C routine handling game mechanics.
+// GetObjElement: 核心引擎函式：GetObjElement - 處理遊戲底層機制的核心 C 語言子程序。
 int GetObjElement(OBJ_DATA *obj, int type) {
     int EncDam  = 0;
     int EncTemp = 0;
@@ -907,6 +947,8 @@ int GetObjElement(OBJ_DATA *obj, int type) {
 }
 
 // 附魔法術傷害計算 2021/10/04
+// MagicElemental: Core Engine function: MagicElemental - Main C routine handling game mechanics.
+// MagicElemental: 核心引擎函式：MagicElemental - 處理遊戲底層機制的核心 C 語言子程序。
 int MagicElemental(CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj, int dt) {
     AFFECT_DATA *paf;
     int          EncDam  = 0;
@@ -1035,6 +1077,8 @@ int MagicElemental(CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj, int dt) {
 }
 
 // 附魔傷害計算 2021/10/06
+// PhysicalElemental: Core Engine function: PhysicalElemental - Main C routine handling game mechanics.
+// PhysicalElemental: 核心引擎函式：PhysicalElemental - 處理遊戲底層機制的核心 C 語言子程序。
 int PhysicalElemental(CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj) {
     AFFECT_DATA *paf;
     int          EncDam  = 0;
@@ -1124,6 +1168,8 @@ int PhysicalElemental(CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj) {
 }
 
 // 附魔法術傷害加成 2021/10/04
+// GetEnchantmentMagicDamage: Combat logic: GetEnchantmentMagicDamage - Applies combat calculations, checks, or damage formulas.
+// GetEnchantmentMagicDamage: 戰鬥邏輯：GetEnchantmentMagicDamage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int GetEnchantmentMagicDamage(CHAR_DATA *ch, CHAR_DATA *victim, int dt) {
     int       nDamage = 0;
     OBJ_DATA *obj;
@@ -1179,6 +1225,8 @@ int GetEnchantmentMagicDamage(CHAR_DATA *ch, CHAR_DATA *victim, int dt) {
 
 // 附魔物理傷害加成 2021/10/04
 // int GetEnchantmentPhysicalDamage(CHAR_DATA *ch, CHAR_DATA *victim, int dt , int wield)
+// GetEnchantmentPhysicalDamage: Combat logic: GetEnchantmentPhysicalDamage - Applies combat calculations, checks, or damage formulas.
+// GetEnchantmentPhysicalDamage: 戰鬥邏輯：GetEnchantmentPhysicalDamage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int GetEnchantmentPhysicalDamage(CHAR_DATA *ch, CHAR_DATA *victim, int dt, OBJ_DATA *wpn, OBJ_DATA *wpn2) {
     int nDamage = 0;
 
@@ -1246,6 +1294,8 @@ int GetEnchantmentPhysicalDamage(CHAR_DATA *ch, CHAR_DATA *victim, int dt, OBJ_D
 }
 
 /*  修改 blood thirsty 設定 , 故移除 2022/02/22
+// GetReflexionDamageUnderBloodThirsty: Combat logic: GetReflexionDamageUnderBloodThirsty - Applies combat calculations, checks, or damage formulas.
+// GetReflexionDamageUnderBloodThirsty: 戰鬥邏輯：GetReflexionDamageUnderBloodThirsty - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int GetReflexionDamageUnderBloodThirsty(CHAR_DATA *ch, int dam)
 {
         if (IS_NPC(ch)) return dam;
@@ -1264,6 +1314,8 @@ int GetReflexionDamageUnderBloodThirsty(CHAR_DATA *ch, int dam)
 */
 
 // blood thirsty 傷害計數 2022/02/20
+// BloodThirstyDamCount: Core Engine function: BloodThirstyDamCount - Main C routine handling game mechanics.
+// BloodThirstyDamCount: 核心引擎函式：BloodThirstyDamCount - 處理遊戲底層機制的核心 C 語言子程序。
 void BloodThirstyDamCount(CHAR_DATA *ch, int dam) {
     AFFECT_DATA af;
     int         sklv = get_skill_level(ch, gsn_blood_thirsty);
@@ -1294,6 +1346,8 @@ void BloodThirstyDamCount(CHAR_DATA *ch, int dam) {
 }
 
 // 針對 飛行武器 在發射後的 apdr 屬性加成 2022/05/06
+// ShootApdrAffect: Core Engine function: ShootApdrAffect - Main C routine handling game mechanics.
+// ShootApdrAffect: 核心引擎函式：ShootApdrAffect - 處理遊戲底層機制的核心 C 語言子程序。
 int ShootApdrAffect(CHAR_DATA *ch, OBJ_DATA *obj) {
     AFFECT_DATA *af;
     int          number = 0;
@@ -1314,6 +1368,8 @@ int ShootApdrAffect(CHAR_DATA *ch, OBJ_DATA *obj) {
 }
 
 // 計算 mystic armor 數值及傷害減少 2023/01/09
+// MysticArmorCount: Core Engine function: MysticArmorCount - Main C routine handling game mechanics.
+// MysticArmorCount: 核心引擎函式：MysticArmorCount - 處理遊戲底層機制的核心 C 語言子程序。
 int MysticArmorCount(CHAR_DATA *ch, int dam) {
     if (!IS_AFFECTED(ch, AFF_MYSTIC_ARMOR))
         return dam;
@@ -1378,6 +1434,8 @@ int MysticArmorCount(CHAR_DATA *ch, int dam) {
  * 加入中文註解  by Razgriz 20051013
  * 介面改寫 by Razgriz 20051014
  */
+// damage: Combat logic: damage - Applies combat calculations, checks, or damage formulas.
+// damage: 戰鬥邏輯：damage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int damage(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn, int msg_mode, int dmg_mode) {
     // OBJ_DATA *obj;
     int        sntemp;
@@ -2198,6 +2256,8 @@ int damage(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn, int msg_m
     return dam;
 }
 
+// magic__damage: Combat logic: magic__damage - Applies combat calculations, checks, or damage formulas.
+// magic__damage: 戰鬥邏輯：magic__damage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void magic__damage(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn) {
     CHAR_DATA *orig = victim;
     CHAR_DATA *CoVch; // 2021/11/20
@@ -2511,6 +2571,8 @@ void magic__damage(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn) {
     return;
 }
 
+// magic_damage: Combat logic: magic_damage - Applies combat calculations, checks, or damage formulas.
+// magic_damage: 戰鬥邏輯：magic_damage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int magic_damage(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn) {
     // OBJ_DATA *obj;
     // int sntemp;

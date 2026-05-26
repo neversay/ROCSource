@@ -1,3 +1,5 @@
+// oprog.h: Scripting structures and triggers for Object Programs (ObjProgs).
+// oprog.h: 物品腳本系統（ObjProgs）的資料結構、變數及觸發器函式宣告。
 #ifndef __OBJ_PROG_H__
 #define __OBJ_PROG_H__
 extern int mprog_do_ifchck      args((char *ifchck, CHAR_DATA *mob,

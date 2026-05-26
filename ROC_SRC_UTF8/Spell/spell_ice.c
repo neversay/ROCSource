@@ -3,6 +3,8 @@
 extern bool IsPK(CHAR_DATA *ch, CHAR_DATA *victim);
 
 // chill touch modified by whisperwind 8.23.2004
+// spell_chill_touch: Spell: spell_chill_touch - Casts the 'chill_touch' spell.
+// spell_chill_touch: 魔法：spell_chill_touch - 施展 'chill_touch' 魔法法術。
 void spell_chill_touch(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -99,6 +101,8 @@ void spell_chill_touch(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_colour_spray: Spell: spell_colour_spray - Casts the 'colour_spray' spell.
+// spell_colour_spray: 魔法：spell_colour_spray - 施展 'colour_spray' 魔法法術。
 void spell_colour_spray(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -161,6 +165,8 @@ void spell_colour_spray(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // agglomerate descant add by whisperwind 10.31.2004
+// spell_agglomerate_descant: Spell: spell_agglomerate_descant - Casts the 'agglomerate_descant' spell.
+// spell_agglomerate_descant: 魔法：spell_agglomerate_descant - 施展 'agglomerate_descant' 魔法法術。
 void spell_agglomerate_descant(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;
@@ -351,6 +357,8 @@ void spell_agglomerate_descant(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // lore of frost add by whisperwind 11.26.2004
+// spell_lore_of_frost: Spell: spell_lore_of_frost - Casts the 'lore_of_frost' spell.
+// spell_lore_of_frost: 魔法：spell_lore_of_frost - 施展 'lore_of_frost' 魔法法術。
 void spell_lore_of_frost(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -414,6 +422,8 @@ void spell_lore_of_frost(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_ice_comet: Spell: spell_ice_comet - Casts the 'ice_comet' spell.
+// spell_ice_comet: 魔法：spell_ice_comet - 施展 'ice_comet' 魔法法術。
 void spell_ice_comet(int sn, int level, CHAR_DATA *ch, void *vo) {
     QMARK     *qm;
     char       buf[MAX_INPUT_LENGTH];

@@ -2,6 +2,8 @@
 #include "merc.h"
 #include <stdio.h>
 
+// mprog_name_to_type: Converts a Mobile Program trigger name to its corresponding integer type code.
+// mprog_name_to_type: 將怪物腳本（MobProg）的觸發器名稱轉換為相對應的整數型態代碼。
 int mprog_name_to_type(char *name) {
     if (!str_cmp(name, "in_file_prog"))
         return IN_FILE_PROG;
@@ -115,6 +117,8 @@ MPROG_DATA *mprog_file_read(char *f, MPROG_DATA *mprg, MOB_INDEX_DATA *pMobIndex
 
 /* Snarf a MOBprogram section from the area file.
  */
+// load_mobprogs: Loads Mobile Program trigger files from disk.
+// load_mobprogs: 從磁碟檔案中載入怪物腳本（MobProg）觸發器定義。
 void load_mobprogs(FILE *fp) {
     MOB_INDEX_DATA *iMob;
     MPROG_DATA     *original;
@@ -168,6 +172,8 @@ void load_mobprogs(FILE *fp) {
 /* This procedure is responsible for reading any in_file MOBprograms.
  */
 
+// mprog_read_programs: Parses and reads Mobile Programs for a specific mobile monster index.
+// mprog_read_programs: 解析並為特定怪物（Mobile Index）讀入其所屬的怪物腳本。
 void mprog_read_programs(FILE *fp, MOB_INDEX_DATA *pMobIndex) {
     MPROG_DATA *mprg;
     char        letter;
@@ -240,6 +246,8 @@ void mprog_read_programs(FILE *fp, MOB_INDEX_DATA *pMobIndex) {
     return;
 }
 
+// action_read_programs: Reads and parses specific action programs associated with a mobile monster index.
+// action_read_programs: 讀取並解析與特定怪物相關聯的特定動作腳本。
 void action_read_programs(FILE *fp, MOB_INDEX_DATA *pMobIndex) {
     MOB_ACTION *mob_action;
     char        letter;

@@ -27,6 +27,8 @@ extern int HpDeMultiply_Affect(AFFECT_DATA *paf);
 bool       EncWpAffCheck(OBJ_DATA *obj, int type);
 
 // 判定物品是否本身有屬性, 如果有則只能加上相同屬性 2022/12/10
+// EncWpAffCheck: Function: EncWpAffCheck - Magical engine helper routine.
+// EncWpAffCheck: 函式：EncWpAffCheck - 魔法引擎輔助處理程序。
 bool EncWpAffCheck(OBJ_DATA *obj, int type) {
     AFFECT_DATA *paf;
     if (!obj)
@@ -127,6 +129,8 @@ bool EncWpAffCheck(OBJ_DATA *obj, int type) {
     return FALSE;
 }
 
+// spell_continual_light: Spell: spell_continual_light - Casts the 'continual_light' spell.
+// spell_continual_light: 魔法：spell_continual_light - 施展 'continual_light' 魔法法術。
 void spell_continual_light(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *light;
     int       sklv = get_skill_level(ch, sn);
@@ -163,6 +167,8 @@ void spell_continual_light(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_create_food: Spell: spell_create_food - Casts the 'create_food' spell.
+// spell_create_food: 魔法：spell_create_food - 施展 'create_food' 魔法法術。
 void spell_create_food(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *mushroom;
     int       type;
@@ -259,6 +265,8 @@ void spell_create_food(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_create_spring: Spell: spell_create_spring - Casts the 'create_spring' spell.
+// spell_create_spring: 魔法：spell_create_spring - 施展 'create_spring' 魔法法術。
 void spell_create_spring(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *spring;
     char      buf[MAX_STRING_LENGTH];
@@ -332,6 +340,8 @@ void spell_create_spring(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_create_water: Spell: spell_create_water - Casts the 'create_water' spell.
+// spell_create_water: 魔法：spell_create_water - 施展 'create_water' 魔法法術。
 void spell_create_water(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *obj = (OBJ_DATA *)vo;
     int       water;
@@ -365,6 +375,8 @@ void spell_create_water(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_destroy_cursed: Spell: spell_destroy_cursed - Casts the 'destroy_cursed' spell.
+// spell_destroy_cursed: 魔法：spell_destroy_cursed - 施展 'destroy_cursed' 魔法法術。
 void spell_destroy_cursed(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA  *obj;
     OBJ_DATA  *obj_next;
@@ -405,6 +417,8 @@ void spell_destroy_cursed(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_repair_armor: Spell: spell_repair_armor - Casts the 'repair_armor' spell.
+// spell_repair_armor: 魔法：spell_repair_armor - 施展 'repair_armor' 魔法法術。
 void spell_repair_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *obj = (OBJ_DATA *)vo;
 
@@ -463,6 +477,8 @@ void spell_repair_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_enchant_weapon: Spell: spell_enchant_weapon - Casts the 'enchant_weapon' spell.
+// spell_enchant_weapon: 魔法：spell_enchant_weapon - 施展 'enchant_weapon' 魔法法術。
 void spell_enchant_weapon(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj = (OBJ_DATA *)vo;
     AFFECT_DATA *paf;
@@ -674,6 +690,8 @@ void spell_enchant_weapon(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_identify: Spell: spell_identify - Casts the 'identify' spell.
+// spell_identify: 魔法：spell_identify - 施展 'identify' 魔法法術。
 void spell_identify(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj = (OBJ_DATA *)vo;
     AFFECT_DATA *paf;
@@ -1900,6 +1918,8 @@ void spell_identify(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_locate_object: Spell: spell_locate_object - Casts the 'locate_object' spell.
+// spell_locate_object: 魔法：spell_locate_object - 施展 'locate_object' 魔法法術。
 void spell_locate_object(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *obj;
     OBJ_DATA *in_obj;
@@ -1994,6 +2014,8 @@ void spell_locate_object(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_endless_sight: Spell: spell_endless_sight - Casts the 'endless_sight' spell.
+// spell_endless_sight: 魔法：spell_endless_sight - 施展 'endless_sight' 魔法法術。
 void spell_endless_sight(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     char       buf[MAX_STRING_LENGTH];
@@ -2056,6 +2078,8 @@ void spell_endless_sight(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_grave_robber: Spell: spell_grave_robber - Casts the 'grave_robber' spell.
+// spell_grave_robber: 魔法：spell_grave_robber - 施展 'grave_robber' 魔法法術。
 void spell_grave_robber(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA  *obj;
     CHAR_DATA *victim = (CHAR_DATA *)vo;
@@ -2173,6 +2197,8 @@ void spell_grave_robber(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_recharge_item: Spell: spell_recharge_item - Casts the 'recharge_item' spell.
+// spell_recharge_item: 魔法：spell_recharge_item - 施展 'recharge_item' 魔法法術。
 void spell_recharge_item(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *obj      = (OBJ_DATA *)vo;
     int       nSuccess = 0;
@@ -2207,6 +2233,8 @@ void spell_recharge_item(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_remove_nodrop: Spell: spell_remove_nodrop - Casts the 'remove_nodrop' spell.
+// spell_remove_nodrop: 魔法：spell_remove_nodrop - 施展 'remove_nodrop' 魔法法術。
 void spell_remove_nodrop(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *obj = (OBJ_DATA *)vo;
 
@@ -2225,6 +2253,8 @@ void spell_remove_nodrop(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Remove Alignment by Thelonius for EnvyMud */
+// spell_remove_alignment: Spell: spell_remove_alignment - Casts the 'remove_alignment' spell.
+// spell_remove_alignment: 魔法：spell_remove_alignment - 施展 'remove_alignment' 魔法法術。
 void spell_remove_alignment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *obj = (OBJ_DATA *)vo;
 
@@ -2258,6 +2288,8 @@ void spell_remove_alignment(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Expulsion of ITEM_NOREMOVE addition by Katrina */
+// spell_remove_curse: Spell: spell_remove_curse - Casts the 'remove_curse' spell.
+// spell_remove_curse: 魔法：spell_remove_curse - 施展 'remove_curse' 魔法法術。
 void spell_remove_curse(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA  *obj;
     CHAR_DATA *victim = (CHAR_DATA *)vo;
@@ -2296,6 +2328,8 @@ void spell_remove_curse(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_summon: Spell: spell_summon - Casts the 'summon' spell.
+// spell_summon: 魔法：spell_summon - 施展 'summon' 魔法法術。
 void spell_summon(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
 
@@ -2357,6 +2391,8 @@ void spell_summon(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_teleport: Spell: spell_teleport - Casts the 'teleport' spell.
+// spell_teleport: 魔法：spell_teleport - 施展 'teleport' 魔法法術。
 void spell_teleport(int sn, int level, CHAR_DATA *ch, void *vo) {
     // The max times the for loop search a legal room to teleport in.
     const int TIMES_LIMIT = 500;
@@ -2433,6 +2469,8 @@ void spell_teleport(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_magic_arrow: Spell: spell_magic_arrow - Casts the 'magic_arrow' spell.
+// spell_magic_arrow: 魔法：spell_magic_arrow - 施展 'magic_arrow' 魔法法術。
 void spell_magic_arrow(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *pArrow;
     AFFECT_DATA *pAffect;
@@ -2497,6 +2535,8 @@ void spell_magic_arrow(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // 魔法彈製作 2022/04/30
+// do_ammo: Command: do_ammo - Performs the 'ammo' magical command.
+// do_ammo: 指令：do_ammo - 執行 'ammo' 魔法相關指令。
 void do_ammo(CHAR_DATA *ch, char *argument) {
     OBJ_DATA    *gem;
     OBJ_DATA    *ammo;
@@ -2619,6 +2659,8 @@ void do_ammo(CHAR_DATA *ch, char *argument) {
 }
 
 /* Abstraction skill added by Amenda 12/31/00 */
+// do_abstraction: Command: do_abstraction - Performs the 'abstraction' magical command.
+// do_abstraction: 指令：do_abstraction - 執行 'abstraction' 魔法相關指令。
 void do_abstraction(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *gem;
     int       sn    = skill_lookup("abstraction");
@@ -2665,6 +2707,8 @@ void do_abstraction(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_autopower: Command: do_autopower - Performs the 'autopower' magical command.
+// do_autopower: 指令：do_autopower - 執行 'autopower' 魔法相關指令。
 bool do_autopower(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char      arg[MAX_INPUT_LENGTH];
@@ -2705,6 +2749,8 @@ bool do_autopower(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 /* Power gem skill added by Amenda 12/31/00 */
+// do_power: Command: do_power - Performs the 'power' magical command.
+// do_power: 指令：do_power - 執行 'power' 魔法相關指令。
 void do_power(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char      arg[MAX_INPUT_LENGTH];
@@ -2767,6 +2813,8 @@ OBJ_DATA *get_powergem_carry(CHAR_DATA *ch, char *argument) {
     return NULL;
 }
 
+// spell_resurrection: Spell: spell_resurrection - Casts the 'resurrection' spell.
+// spell_resurrection: 魔法：spell_resurrection - 施展 'resurrection' 魔法法術。
 void spell_resurrection(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *phorse;
     OBJ_DATA        *corpse;
@@ -2880,6 +2928,8 @@ void spell_resurrection(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_evacuate: Spell: spell_evacuate - Casts the 'evacuate' spell.
+// spell_evacuate: 魔法：spell_evacuate - 施展 'evacuate' 魔法法術。
 void spell_evacuate(int sn, int level, CHAR_DATA *ch, void *vo) {
     int              cost = 450 - get_skill_level(ch, sn) * 50;
     char             buf[BUF_STRING_LENGTH];
@@ -3051,6 +3101,8 @@ void spell_evacuate(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_enchant_armor: Spell: spell_enchant_armor - Casts the 'enchant_armor' spell.
+// spell_enchant_armor: 魔法：spell_enchant_armor - 施展 'enchant_armor' 魔法法術。
 void spell_enchant_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj = (OBJ_DATA *)vo;
     AFFECT_DATA *paf;
@@ -3122,6 +3174,8 @@ void spell_enchant_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_enhance_armor: Spell: spell_enhance_armor - Casts the 'enhance_armor' spell.
+// spell_enhance_armor: 魔法：spell_enhance_armor - 施展 'enhance_armor' 魔法法術。
 void spell_enhance_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj = (OBJ_DATA *)vo;
     AFFECT_DATA *paf;
@@ -3174,6 +3228,8 @@ void spell_enhance_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_magic_enchantment: Spell: spell_magic_enchantment - Casts the 'magic_enchantment' spell.
+// spell_magic_enchantment: 魔法：spell_magic_enchantment - 施展 'magic_enchantment' 魔法法術。
 void spell_magic_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;
@@ -3478,6 +3534,8 @@ void spell_magic_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_wind_enchantment: Spell: spell_wind_enchantment - Casts the 'wind_enchantment' spell.
+// spell_wind_enchantment: 魔法：spell_wind_enchantment - 施展 'wind_enchantment' 魔法法術。
 void spell_wind_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;
@@ -3761,6 +3819,8 @@ void spell_wind_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_flame_enchantment: Spell: spell_flame_enchantment - Casts the 'flame_enchantment' spell.
+// spell_flame_enchantment: 魔法：spell_flame_enchantment - 施展 'flame_enchantment' 魔法法術。
 void spell_flame_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;
@@ -4044,6 +4104,8 @@ void spell_flame_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_water_enchantment: Spell: spell_water_enchantment - Casts the 'water_enchantment' spell.
+// spell_water_enchantment: 魔法：spell_water_enchantment - 施展 'water_enchantment' 魔法法術。
 void spell_water_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;
@@ -4327,6 +4389,8 @@ void spell_water_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_earth_enchantment: Spell: spell_earth_enchantment - Casts the 'earth_enchantment' spell.
+// spell_earth_enchantment: 魔法：spell_earth_enchantment - 施展 'earth_enchantment' 魔法法術。
 void spell_earth_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;
@@ -4610,6 +4674,8 @@ void spell_earth_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_lightning_enchantment: Spell: spell_lightning_enchantment - Casts the 'lightning_enchantment' spell.
+// spell_lightning_enchantment: 魔法：spell_lightning_enchantment - 施展 'lightning_enchantment' 魔法法術。
 void spell_lightning_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;
@@ -4893,6 +4959,8 @@ void spell_lightning_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_saint_enchantment: Spell: spell_saint_enchantment - Casts the 'saint_enchantment' spell.
+// spell_saint_enchantment: 魔法：spell_saint_enchantment - 施展 'saint_enchantment' 魔法法術。
 void spell_saint_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;
@@ -5188,6 +5256,8 @@ void spell_saint_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_dark_enchantment: Spell: spell_dark_enchantment - Casts the 'dark_enchantment' spell.
+// spell_dark_enchantment: 魔法：spell_dark_enchantment - 施展 'dark_enchantment' 魔法法術。
 void spell_dark_enchantment(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA    *obj;
     CHAR_DATA   *vch;

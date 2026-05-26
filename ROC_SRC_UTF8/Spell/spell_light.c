@@ -3,6 +3,8 @@
 extern int GetWillFortressEffect(CHAR_DATA *rch);
 
 // dispel evil modified by whisperwind 8.26.2004
+// spell_dispel_evil: Spell: spell_dispel_evil - Casts the 'dispel_evil' spell.
+// spell_dispel_evil: 魔法：spell_dispel_evil - 施展 'dispel_evil' 魔法法術。
 void spell_dispel_evil(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -83,6 +85,8 @@ void spell_dispel_evil(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // holy judgement add by whisperwind 10.31.2004
+// spell_holy_judgement: Spell: spell_holy_judgement - Casts the 'holy_judgement' spell.
+// spell_holy_judgement: 魔法：spell_holy_judgement - 施展 'holy_judgement' 魔法法術。
 void spell_holy_judgement(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;
@@ -235,6 +239,8 @@ void spell_holy_judgement(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // turn undead modified by whisperwind 8.23.2004
+// spell_turn_undead: Spell: spell_turn_undead - Casts the 'turn_undead' spell.
+// spell_turn_undead: 魔法：spell_turn_undead - 施展 'turn_undead' 魔法法術。
 void spell_turn_undead(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -353,6 +359,8 @@ void spell_turn_undead(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_exorcise: Spell: spell_exorcise - Casts the 'exorcise' spell.
+// spell_exorcise: 魔法：spell_exorcise - 施展 'exorcise' 魔法法術。
 void spell_exorcise(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -370,6 +378,8 @@ void spell_exorcise(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_sun_flash: Spell: spell_sun_flash - Casts the 'sun_flash' spell.
+// spell_sun_flash: 魔法：spell_sun_flash - 施展 'sun_flash' 魔法法術。
 void spell_sun_flash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *vch, *vch_next;
     int         dam;
@@ -524,6 +534,8 @@ void spell_sun_flash(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_flamestrike: Spell: spell_flamestrike - Casts the 'flamestrike' spell.
+// spell_flamestrike: 魔法：spell_flamestrike - 施展 'flamestrike' 魔法法術。
 void spell_flamestrike(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        dam;
@@ -600,6 +612,8 @@ void spell_flamestrike(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_mass_turn: Spell: spell_mass_turn - Casts the 'mass_turn' spell.
+// spell_mass_turn: 魔法：spell_mass_turn - 施展 'mass_turn' 魔法法術。
 void spell_mass_turn(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo, *next_victim;
 

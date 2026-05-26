@@ -16,6 +16,8 @@
 /* $Id: spell_assist.c 1402 2005-06-12 13:24:20Z jye $ */
 #include "skill.h"
 // modified by jye 6.11.2005
+// spell_armor: Spell: spell_armor - Casts the 'armor' spell.
+// spell_armor: 魔法：spell_armor - 施展 'armor' 魔法法術。
 void spell_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -138,6 +140,8 @@ void spell_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
 // modified by whisperwind 9.17.2004
 
 // prot. from spells modified by whisperwind 9.18.2004
+// spell_pcold: Spell: spell_pcold - Casts the 'pcold' spell.
+// spell_pcold: 魔法：spell_pcold - 施展 'pcold' 魔法法術。
 void spell_pcold(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -179,6 +183,8 @@ void spell_pcold(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_pwind: Spell: spell_pwind - Casts the 'pwind' spell.
+// spell_pwind: 魔法：spell_pwind - 施展 'pwind' 魔法法術。
 void spell_pwind(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -220,6 +226,8 @@ void spell_pwind(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_pearth: Spell: spell_pearth - Casts the 'pearth' spell.
+// spell_pearth: 魔法：spell_pearth - 施展 'pearth' 魔法法術。
 void spell_pearth(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -261,6 +269,8 @@ void spell_pearth(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_pfire: Spell: spell_pfire - Casts the 'pfire' spell.
+// spell_pfire: 魔法：spell_pfire - 施展 'pfire' 魔法法術。
 void spell_pfire(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -302,6 +312,8 @@ void spell_pfire(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_plightning: Spell: spell_plightning - Casts the 'plightning' spell.
+// spell_plightning: 魔法：spell_plightning - 施展 'plightning' 魔法法術。
 void spell_plightning(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -344,6 +356,8 @@ void spell_plightning(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // day of power modified by whisperwind 10.31.2004
+// spell_day_of_power: Spell: spell_day_of_power - Casts the 'day_of_power' spell.
+// spell_day_of_power: 魔法：spell_day_of_power - 施展 'day_of_power' 魔法法術。
 void spell_day_of_power(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -405,6 +419,8 @@ void spell_day_of_power(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_day_of_brightness: Spell: spell_day_of_brightness - Casts the 'day_of_brightness' spell.
+// spell_day_of_brightness: 魔法：spell_day_of_brightness - 施展 'day_of_brightness' 魔法法術。
 void spell_day_of_brightness(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     CHAR_DATA *lord;
@@ -590,6 +606,8 @@ void spell_day_of_brightness(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_day_of_prot: Spell: spell_day_of_prot - Casts the 'day_of_prot' spell.
+// spell_day_of_prot: 魔法：spell_day_of_prot - 施展 'day_of_prot' 魔法法術。
 void spell_day_of_prot(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -654,6 +672,8 @@ void spell_day_of_prot(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // holy crown modified by whisperwind 10.31.2004
+// spell_holy_crown: Spell: spell_holy_crown - Casts the 'holy_crown' spell.
+// spell_holy_crown: 魔法：spell_holy_crown - 施展 'holy_crown' 魔法法術。
 void spell_holy_crown(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -728,6 +748,8 @@ void spell_holy_crown(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_bless: Spell: spell_bless - Casts the 'bless' spell.
+// spell_bless: 魔法：spell_bless - 施展 'bless' 魔法法術。
 void spell_bless(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -797,6 +819,8 @@ void spell_bless(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_breathe_water: Spell: spell_breathe_water - Casts the 'breathe_water' spell.
+// spell_breathe_water: 魔法：spell_breathe_water - 施展 'breathe_water' 魔法法術。
 void spell_breathe_water(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -825,6 +849,8 @@ void spell_breathe_water(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cone_of_silence: Spell: spell_cone_of_silence - Casts the 'cone_of_silence' spell.
+// spell_cone_of_silence: 魔法：spell_cone_of_silence - 施展 'cone_of_silence' 魔法法術。
 void spell_cone_of_silence(int sn, int level, CHAR_DATA *ch, void *vo) {
     ROOM_INDEX_DATA *pRoomIndex;
 
@@ -846,6 +872,8 @@ void spell_cone_of_silence(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_control_weather: Spell: spell_control_weather - Casts the 'control_weather' spell.
+// spell_control_weather: 魔法：spell_control_weather - 施展 'control_weather' 魔法法術。
 void spell_control_weather(int sn, int level, CHAR_DATA *ch, void *vo) {
     if (!str_cmp(target_name, "better"))
         weather_info.change += dice(level / 3 + get_skill_level(ch, sn) * 2, 4);
@@ -859,6 +887,8 @@ void spell_control_weather(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_detect_evil: Spell: spell_detect_evil - Casts the 'detect_evil' spell.
+// spell_detect_evil: 魔法：spell_detect_evil - 施展 'detect_evil' 魔法法術。
 void spell_detect_evil(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -893,6 +923,8 @@ void spell_detect_evil(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_detect_hidden: Spell: spell_detect_hidden - Casts the 'detect_hidden' spell.
+// spell_detect_hidden: 魔法：spell_detect_hidden - 施展 'detect_hidden' 魔法法術。
 void spell_detect_hidden(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -927,6 +959,8 @@ void spell_detect_hidden(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_detect_invis: Spell: spell_detect_invis - Casts the 'detect_invis' spell.
+// spell_detect_invis: 魔法：spell_detect_invis - 施展 'detect_invis' 魔法法術。
 void spell_detect_invis(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -961,6 +995,8 @@ void spell_detect_invis(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_detect_magic: Spell: spell_detect_magic - Casts the 'detect_magic' spell.
+// spell_detect_magic: 魔法：spell_detect_magic - 施展 'detect_magic' 魔法法術。
 void spell_detect_magic(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -995,6 +1031,8 @@ void spell_detect_magic(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_detect_poison: Spell: spell_detect_poison - Casts the 'detect_poison' spell.
+// spell_detect_poison: 魔法：spell_detect_poison - 施展 'detect_poison' 魔法法術。
 void spell_detect_poison(int sn, int level, CHAR_DATA *ch, void *vo) {
     OBJ_DATA *obj = (OBJ_DATA *)vo;
 
@@ -1012,6 +1050,8 @@ void spell_detect_poison(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Dispel Magic recoded by Thelonius for EnvyMud */
+// spell_dispel_magic: Spell: spell_dispel_magic - Casts the 'dispel_magic' spell.
+// spell_dispel_magic: 魔法：spell_dispel_magic - 施展 'dispel_magic' 魔法法術。
 void spell_dispel_magic(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA    *victim = (CHAR_DATA *)vo;
     AFFECT_DATA  *paf, *temp_paf;
@@ -1206,6 +1246,8 @@ void spell_dispel_magic(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by tale 12/29/2010
+// spell_flaming_armor_strike: Spell: spell_flaming_armor_strike - Casts the 'flaming_armor_strike' spell.
+// spell_flaming_armor_strike: 魔法：spell_flaming_armor_strike - 施展 'flaming_armor_strike' 魔法法術。
 void spell_flaming_armor_strike(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     double     dam;
@@ -1270,6 +1312,8 @@ void spell_flaming_armor_strike(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_faerie_fog: Spell: spell_faerie_fog - Casts the 'faerie_fog' spell.
+// spell_faerie_fog: 魔法：spell_faerie_fog - 施展 'faerie_fog' 魔法法術。
 void spell_faerie_fog(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *ich;
     int        sklv = get_skill_level(ch, sn);
@@ -1326,6 +1370,8 @@ void spell_faerie_fog(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by jye 6.10.2005
+// spell_fly: Spell: spell_fly - Casts the 'fly' spell.
+// spell_fly: 魔法：spell_fly - 施展 'fly' 魔法法術。
 void spell_fly(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1404,6 +1450,8 @@ void spell_fly(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_giant_strength: Spell: spell_giant_strength - Casts the 'giant_strength' spell.
+// spell_giant_strength: 魔法：spell_giant_strength - 施展 'giant_strength' 魔法法術。
 void spell_giant_strength(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1468,6 +1516,8 @@ void spell_giant_strength(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by whisperwind 9.22.2004
+// spell_infravision: Spell: spell_infravision - Casts the 'infravision' spell.
+// spell_infravision: 魔法：spell_infravision - 施展 'infravision' 魔法法術。
 void spell_infravision(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1504,6 +1554,8 @@ void spell_infravision(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by whisperwind 9.18.2004
+// spell_invis: Spell: spell_invis - Casts the 'invis' spell.
+// spell_invis: 魔法：spell_invis - 施展 'invis' 魔法法術。
 void spell_invis(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1541,6 +1593,8 @@ void spell_invis(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_know_alignment: Spell: spell_know_alignment - Casts the 'know_alignment' spell.
+// spell_know_alignment: 魔法：spell_know_alignment - 施展 'know_alignment' 魔法法術。
 void spell_know_alignment(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     char      *msg;
@@ -1585,6 +1639,8 @@ void spell_know_alignment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_mass_invis: Spell: spell_mass_invis - Casts the 'mass_invis' spell.
+// spell_mass_invis: 魔法：spell_mass_invis - 施展 'mass_invis' 魔法法術。
 void spell_mass_invis(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *gch;
     AFFECT_DATA af;
@@ -1627,6 +1683,8 @@ void spell_mass_invis(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_pass_door: Spell: spell_pass_door - Casts the 'pass_door' spell.
+// spell_pass_door: 魔法：spell_pass_door - 施展 'pass_door' 魔法法術。
 void spell_pass_door(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1671,6 +1729,8 @@ void spell_pass_door(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by whisperwind 9.18.2004
+// spell_protection: Spell: spell_protection - Casts the 'protection' spell.
+// spell_protection: 魔法：spell_protection - 施展 'protection' 魔法法術。
 void spell_protection(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1705,6 +1765,8 @@ void spell_protection(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_remove_silence: Spell: spell_remove_silence - Casts the 'remove_silence' spell.
+// spell_remove_silence: 魔法：spell_remove_silence - 施展 'remove_silence' 魔法法術。
 void spell_remove_silence(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1758,6 +1820,8 @@ void spell_remove_silence(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // modified by whisperwind 9.18.2004
 // 重新定義 sanctuary 效果 2022/10/26
+// spell_sanctuary: Spell: spell_sanctuary - Casts the 'sanctuary' spell.
+// spell_sanctuary: 魔法：spell_sanctuary - 施展 'sanctuary' 魔法法術。
 void spell_sanctuary(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1849,6 +1913,8 @@ void spell_sanctuary(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // modified by whisperwind 9.18.2004
 // 重新定義 divine light 效果 2022/10/26
+// spell_divine_light: Spell: spell_divine_light - Casts the 'divine_light' spell.
+// spell_divine_light: 魔法：spell_divine_light - 施展 'divine_light' 魔法法術。
 void spell_divine_light(int sn, int level, CHAR_DATA *ch, void *vo) {
     AFFECT_DATA af;
     CHAR_DATA  *gch;
@@ -1928,6 +1994,8 @@ void spell_divine_light(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by jye 6.11.2005
+// spell_shield: Spell: spell_shield - Casts the 'shield' spell.
+// spell_shield: 魔法：spell_shield - 施展 'shield' 魔法法術。
 void spell_shield(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2034,6 +2102,8 @@ void spell_shield(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by jye 6.11.2005
+// spell_stone_skin: Spell: spell_stone_skin - Casts the 'stone_skin' spell.
+// spell_stone_skin: 魔法：spell_stone_skin - 施展 'stone_skin' 魔法法術。
 void spell_stone_skin(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2143,6 +2213,8 @@ void spell_stone_skin(int sn, int level, CHAR_DATA *ch, void *vo) {
 /*
  * This is for muds that want scrolls of recall.
  */
+// spell_word_of_recall: Spell: spell_word_of_recall - Casts the 'word_of_recall' spell.
+// spell_word_of_recall: 魔法：spell_word_of_recall - 施展 'word_of_recall' 魔法法術。
 void spell_word_of_recall(int sn, int level, CHAR_DATA *ch, void *vo) {
     do_recall((CHAR_DATA *)vo, "");
     return;
@@ -2151,6 +2223,8 @@ void spell_word_of_recall(int sn, int level, CHAR_DATA *ch, void *vo) {
 /*
  * Code for Psionicist spells/skills by Thelonius
  */
+// spell_adrenaline_control: Spell: spell_adrenaline_control - Casts the 'adrenaline_control' spell.
+// spell_adrenaline_control: 魔法：spell_adrenaline_control - 施展 'adrenaline_control' 魔法法術。
 void spell_adrenaline_control(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2220,6 +2294,8 @@ void spell_adrenaline_control(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_combat_mind: Spell: spell_combat_mind - Casts the 'combat_mind' spell.
+// spell_combat_mind: 魔法：spell_combat_mind - 施展 'combat_mind' 魔法法術。
 void spell_combat_mind(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2276,6 +2352,8 @@ void spell_combat_mind(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_powerup: Spell: spell_powerup - Casts the 'powerup' spell.
+// spell_powerup: 魔法：spell_powerup - 施展 'powerup' 魔法法術。
 void spell_powerup(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2307,6 +2385,8 @@ void spell_powerup(int sn, int level, CHAR_DATA *ch, void *vo) {
     WAIT_MAGIC_STATE(ch, 12);
 }
 
+// spell_hasten: Spell: spell_hasten - Casts the 'hasten' spell.
+// spell_hasten: 魔法：spell_hasten - 施展 'hasten' 魔法法術。
 void spell_hasten(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2335,6 +2415,8 @@ void spell_hasten(int sn, int level, CHAR_DATA *ch, void *vo) {
     WAIT_MAGIC_STATE(ch, 12);
 }
 
+// spell_barrier: Spell: spell_barrier - Casts the 'barrier' spell.
+// spell_barrier: 魔法：spell_barrier - 施展 'barrier' 魔法法術。
 void spell_barrier(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2422,6 +2504,8 @@ void spell_barrier(int sn, int level, CHAR_DATA *ch, void *vo) {
  * [               curse] 技能命中加成 100%，傷害加成 100%。
  *
  */
+// spell_lore: Spell: spell_lore - Casts the 'lore' spell.
+// spell_lore: 魔法：spell_lore - 施展 'lore' 魔法法術。
 void spell_lore(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA    *victim    = (CHAR_DATA *)vo;
     int           nSklv     = get_skill_level(ch, sn), nWeakCnt;
@@ -2637,6 +2721,8 @@ void spell_lore(int sn, int level, CHAR_DATA *ch, void *vo) {
 /**/
 
 /* Previous version of Lore: added by Amenda 12/10/00 *
+// spell_lore: Spell: spell_lore - Casts the 'lore' spell.
+// spell_lore: 魔法：spell_lore - 施展 'lore' 魔法法術。
 void spell_lore( int sn, int level, CHAR_DATA *ch, void *vo )
 {
         CHAR_DATA *victim = (CHAR_DATA *) vo;
@@ -2718,6 +2804,8 @@ void spell_lore( int sn, int level, CHAR_DATA *ch, void *vo )
 
 /* Flaming armor spell added by Amenda 2/24/01 */
 // modified by whisperwind 9.18.2004
+// spell_flaming_armor: Spell: spell_flaming_armor - Casts the 'flaming_armor' spell.
+// spell_flaming_armor: 魔法：spell_flaming_armor - 施展 'flaming_armor' 魔法法術。
 void spell_flaming_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     AFFECT_DATA af;
     int         nSklv = get_skill_level(ch, sn);
@@ -2751,6 +2839,8 @@ void spell_flaming_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Mana Shield spell added by Amenda 2/24/01 */
+// spell_mana_shield: Spell: spell_mana_shield - Casts the 'mana_shield' spell.
+// spell_mana_shield: 魔法：spell_mana_shield - 施展 'mana_shield' 魔法法術。
 void spell_mana_shield(int sn, int level, CHAR_DATA *ch, void *vo) {
     AFFECT_DATA af;
     int         nSklv = get_skill_level(ch, sn);
@@ -2801,6 +2891,8 @@ void spell_mana_shield(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_sober_up: Spell: spell_sober_up - Casts the 'sober_up' spell.
+// spell_sober_up: 魔法：spell_sober_up - 施展 'sober_up' 魔法法術。
 void spell_sober_up(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     int         drunk;
@@ -2842,6 +2934,8 @@ void spell_sober_up(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by whisperwind 9.18.2004
+// spell_mystic_mirror: Spell: spell_mystic_mirror - Casts the 'mystic_mirror' spell.
+// spell_mystic_mirror: 魔法：spell_mystic_mirror - 施展 'mystic_mirror' 魔法法術。
 void spell_mystic_mirror(int sn, int level, CHAR_DATA *ch, void *vo) {
     AFFECT_DATA af;
     int         nSklv = get_skill_level(ch, sn);
@@ -2874,6 +2968,8 @@ void spell_mystic_mirror(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_mystic_armor: Spell: spell_mystic_armor - Casts the 'mystic_armor' spell.
+// spell_mystic_armor: 魔法：spell_mystic_armor - 施展 'mystic_armor' 魔法法術。
 void spell_mystic_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     AFFECT_DATA af;
     int         nSklv    = get_skill_level(ch, sn);
@@ -2927,6 +3023,8 @@ void spell_mystic_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by whisperwind 9.20.2004
+// spell_mental_empower: Spell: spell_mental_empower - Casts the 'mental_empower' spell.
+// spell_mental_empower: 魔法：spell_mental_empower - 施展 'mental_empower' 魔法法術。
 void spell_mental_empower(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3019,6 +3117,8 @@ void spell_mental_empower(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_will_fortress: Spell: spell_will_fortress - Casts the 'will_fortress' spell.
+// spell_will_fortress: 魔法：spell_will_fortress - 施展 'will_fortress' 魔法法術。
 void spell_will_fortress(int sn, int level, CHAR_DATA *ch, void *vo) {
     int         nSklv    = get_skill_level(ch, gsn_will_fortress);
     int         nCurrInt = get_curr_int(ch);
@@ -3089,6 +3189,8 @@ void spell_will_fortress(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_song_of_cleanse: Spell: spell_song_of_cleanse - Casts the 'song_of_cleanse' spell.
+// spell_song_of_cleanse: 魔法：spell_song_of_cleanse - 施展 'song_of_cleanse' 魔法法術。
 void spell_song_of_cleanse(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        base   = 0;
@@ -3205,6 +3307,8 @@ void spell_song_of_cleanse(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_recall: Spell: spell_recall - Casts the 'recall' spell.
+// spell_recall: 魔法：spell_recall - 施展 'recall' 魔法法術。
 void spell_recall(int sn, int level, CHAR_DATA *ch, void *vo) {
     QMARK           *qm;
     ROOM_INDEX_DATA *to_room;
@@ -3303,6 +3407,8 @@ void spell_recall(int sn, int level, CHAR_DATA *ch, void *vo) {
         rprog_entry_trigger(to_room, ch, 6);
 }
 
+// spell_mark: Spell: spell_mark - Casts the 'mark' spell.
+// spell_mark: 魔法：spell_mark - 施展 'mark' 魔法法術。
 void spell_mark(int sn, int level, CHAR_DATA *ch, void *vo) {
     char buf[BUF_STRING_LENGTH];
     int  dura   = ch->level / 4 + get_skill_level(ch, sn);

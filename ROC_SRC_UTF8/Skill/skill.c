@@ -78,6 +78,8 @@ extern int  GetBonusedValue_LanceMaster(CHAR_DATA *ch, int nPerc);
 bool CheckSleepCharm(CHAR_DATA *ch, CHAR_DATA *victim); // 2022/12/31
 
 // skill 發動武器 hp sleep 及 charm 的情況停止戰鬥, 避免造成crash 2022/12/31
+// CheckSleepCharm: Checks if a character is sleep-charmed or incapacitated.
+// CheckSleepCharm: 檢查角色是否處於沉睡魅惑或無法戰鬥的狀態。
 bool CheckSleepCharm(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (!victim || (victim == NULL) || victim->deleted)
         return TRUE;
@@ -97,6 +99,8 @@ bool CheckSleepCharm(CHAR_DATA *ch, CHAR_DATA *victim) {
     return FALSE;
 }
 
+// do_morphing: Command: do_morphing - Performs the 'morphing' active combat or class skill.
+// do_morphing: 指令：do_morphing - 執行 'morphing' 主動戰鬥或職業專屬技能。
 void do_morphing(CHAR_DATA *ch, char *argument) {
     char        arg[MAX_INPUT_LENGTH];
     AFFECT_DATA af;
@@ -173,6 +177,8 @@ void do_morphing(CHAR_DATA *ch, char *argument) {
 }
 
 // 魔彈投擲 2022/04/29
+// do_ammo_casting: Processes casting or fabricating magical ammo during combat.
+// do_ammo_casting: 在戰鬥中處理魔力彈藥的充能或塑造。
 void do_ammo_casting(CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj) {
     int        times      = obj->value[0];
     int        EnemyCount = 0;
@@ -266,6 +272,8 @@ void do_ammo_casting(CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj) {
     return;
 }
 
+// do_coin_dart: Command: do_coin_dart - Performs the 'coin_dart' active combat or class skill.
+// do_coin_dart: 指令：do_coin_dart - 執行 'coin_dart' 主動戰鬥或職業專屬技能。
 void do_coin_dart(CHAR_DATA *ch, char *argument) {
     int        amount;
     CHAR_DATA *victim;
@@ -388,6 +396,8 @@ void do_coin_dart(CHAR_DATA *ch, char *argument) {
         stop_fighting(victim, FALSE);
 }
 
+// do_trueshot: Command: do_trueshot - Performs the 'trueshot' active combat or class skill.
+// do_trueshot: 指令：do_trueshot - 執行 'trueshot' 主動戰鬥或職業專屬技能。
 void do_trueshot(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         sklv = get_skill_level(ch, gsn_shot_arrow);
@@ -409,6 +419,8 @@ void do_trueshot(CHAR_DATA *ch, char *argument) {
     send_to_char("藉由自然之力，你得到了更精準的能力。\n\r", ch);
 }
 
+// do_blood_thirsty: Command: do_blood_thirsty - Performs the 'blood_thirsty' active combat or class skill.
+// do_blood_thirsty: 指令：do_blood_thirsty - 執行 'blood_thirsty' 主動戰鬥或職業專屬技能。
 void do_blood_thirsty(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         sklv = get_skill_level(ch, gsn_blood_thirsty);
@@ -443,6 +455,8 @@ void do_blood_thirsty(CHAR_DATA *ch, char *argument) {
     act("$n 以生命為賭注，只求打爛眼前的敵人！", ch, NULL, NULL, TO_ROOM);
 }
 
+// do_reg_adore: Command: do_reg_adore - Performs the 'reg_adore' active combat or class skill.
+// do_reg_adore: 指令：do_reg_adore - 執行 'reg_adore' 主動戰鬥或職業專屬技能。
 void do_reg_adore(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         sklv      = get_skill_level(ch, gsn_adore);
@@ -481,6 +495,8 @@ void do_reg_adore(CHAR_DATA *ch, char *argument) {
     ch->hit = UMIN(ch->max_hit, ch->hit + hit_count);
 }
 
+// do_powerbolt: Command: do_powerbolt - Performs the 'powerbolt' active combat or class skill.
+// do_powerbolt: 指令：do_powerbolt - 執行 'powerbolt' 主動戰鬥或職業專屬技能。
 void do_powerbolt(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
 
@@ -506,6 +522,8 @@ void do_powerbolt(CHAR_DATA *ch, char *argument) {
     send_to_char("藉由自然之力，你將額外的力量依附在箭身上。\n\r", ch);
 }
 
+// do_perform: Command: do_perform - Performs the 'perform' active combat or class skill.
+// do_perform: 指令：do_perform - 執行 'perform' 主動戰鬥或職業專屬技能。
 void do_perform(CHAR_DATA *ch, char *argument) {
     char       arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim = NULL;
@@ -758,6 +776,8 @@ void do_perform(CHAR_DATA *ch, char *argument) {
 }
 
 /*Check on the complete condition of psionic spell.*/
+// psionic_check: Checks if a character has the required psionic level/energy.
+// psionic_check: 檢查角色是否擁有足夠的念力等級或念力能量。
 bool psionic_check(CHAR_DATA *ch, int sn) {
     CHAR_DATA *gch     = NULL;
     int        percent = get_skill_percent(ch, sn), mana = MANA_COST(ch, sn);
@@ -815,6 +835,8 @@ bool psionic_check(CHAR_DATA *ch, int sn) {
 }
 
 // 主動 blood thirsty 判定 2021/12/25
+// isBloodThirsty: Checks if a character is currently in a bloodthirsty rage.
+// isBloodThirsty: 檢查角色目前是否正處於嗜血狂暴狀態。
 bool isBloodThirsty(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return FALSE;
@@ -829,6 +851,8 @@ bool isBloodThirsty(CHAR_DATA *ch) {
 }
 
 //  lizardman 使用技能時判定天生技 2022/02/23
+// LizardmanSkill: Executes specific racial combat skill updates for Lizardmen.
+// LizardmanSkill: 執行蜥蜴人種族專屬的特殊戰鬥技能更新。
 void LizardmanSkill(CHAR_DATA *ch, CHAR_DATA *victim, int multi) {
     if (IS_NPC(ch))
         return;
@@ -941,6 +965,8 @@ void LizardmanSkill(CHAR_DATA *ch, CHAR_DATA *victim, int multi) {
  * who wield two weapons, with the first not being a dagger, will be
  * unable to backstab or circle.  Tough cookie.	 --- Thelonius
  */
+// do_backstab: Command: do_backstab - Performs the 'backstab' active combat or class skill.
+// do_backstab: 指令：do_backstab - 執行 'backstab' 主動戰鬥或職業專屬技能。
 void do_backstab(CHAR_DATA *ch, char *argument) {
     OBJ_DATA  *obj;
     CHAR_DATA *victim; //, *gch;
@@ -1216,6 +1242,8 @@ void do_backstab(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_circle: Command: do_circle - Performs the 'circle' active combat or class skill.
+// do_circle: 指令：do_circle - 執行 'circle' 主動戰鬥或職業專屬技能。
 void do_circle(CHAR_DATA *ch, char *argument) {
     OBJ_DATA  *obj;
     CHAR_DATA *rch;
@@ -1363,6 +1391,8 @@ if( number_percent() < get_skill_percent( ch, gsn_circle ) ) {
     return;
 }
 
+// do_berserk: Command: do_berserk - Performs the 'berserk' active combat or class skill.
+// do_berserk: 指令：do_berserk - 執行 'berserk' 主動戰鬥或職業專屬技能。
 void do_berserk(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         bonus = 0;
@@ -1446,6 +1476,8 @@ void do_berserk(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_change: Command: do_change - Performs the 'change' active combat or class skill.
+// do_change: 指令：do_change - 執行 'change' 主動戰鬥或職業專屬技能。
 void do_change(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -1547,6 +1579,8 @@ void do_change(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_kick: Command: do_kick - Performs the 'kick' active combat or class skill.
+// do_kick: 指令：do_kick - 執行 'kick' 主動戰鬥或職業專屬技能。
 void do_kick(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim, *rch;
     OBJ_DATA  *feet = NULL; // add at 200122
@@ -2102,6 +2136,8 @@ void do_kick(CHAR_DATA *ch, char *argument) {
     return;
 }
 /*
+// do_shadowless_kick: Command: do_shadowless_kick - Performs the 'shadowless_kick' active combat or class skill.
+// do_shadowless_kick: 指令：do_shadowless_kick - 執行 'shadowless_kick' 主動戰鬥或職業專屬技能。
 void do_shadowless_kick( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA      *victim, *rch;
@@ -2225,6 +2261,8 @@ void do_shadowless_kick( CHAR_DATA *ch, char *argument )
 */
 
 /* Hunt skill added by Amenda, 00/12/6 */
+// do_hunt: Command: do_hunt - Performs the 'hunt' active combat or class skill.
+// do_hunt: 指令：do_hunt - 執行 'hunt' 主動戰鬥或職業專屬技能。
 void do_hunt(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim, *vch, *rch;
     char       arg[MAX_INPUT_LENGTH];
@@ -2375,6 +2413,8 @@ void do_hunt(CHAR_DATA *ch, char *argument) {
 }
 
 /* Assassination skill added by Amenda, 00/12/22 */
+// do_ass: Command: do_ass - Performs the 'ass' active combat or class skill.
+// do_ass: 指令：do_ass - 執行 'ass' 主動戰鬥或職業專屬技能。
 void do_ass(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim, *vch, *rch;
     OBJ_DATA  *obj;
@@ -2555,6 +2595,8 @@ void do_ass(CHAR_DATA *ch, char *argument) {
 }
 
 /* Frenzy skill added by Amenda, 00/12/9 */
+// do_frenzy: Command: do_frenzy - Performs the 'frenzy' active combat or class skill.
+// do_frenzy: 指令：do_frenzy - 執行 'frenzy' 主動戰鬥或職業專屬技能。
 void do_frenzy(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -2844,6 +2886,8 @@ void do_frenzy(CHAR_DATA *ch, char *argument) {
 }
 
 /* Bashhead skill added by Amenda, 00/12/9 */
+// do_bashhead: Command: do_bashhead - Performs the 'bashhead' active combat or class skill.
+// do_bashhead: 指令：do_bashhead - 執行 'bashhead' 主動戰鬥或職業專屬技能。
 void do_bashhead(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -3071,6 +3115,8 @@ if ( sklv > 3 && victim->position > POS_STUNNED &&
     return;
 }
 
+// check_alignment_eq: Validates if character's aligned equipment causes penalties.
+// check_alignment_eq: 驗證角色的陣營屬性是否與其穿戴的裝備產生衝突或懲罰。
 void check_alignment_eq(CHAR_DATA *ch) {
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
@@ -3235,6 +3281,8 @@ void do_stare(CHAR_DATA *ch, char *argument) /*{{{*/
 } /*}}}*/
 
 // circular modified by jye 6.12.2005
+// do_circular: Command: do_circular - Performs the 'circular' active combat or class skill.
+// do_circular: 指令：do_circular - 執行 'circular' 主動戰鬥或職業專屬技能。
 void do_circular(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *vch, *next_vch;
     OBJ_DATA  *obj;
@@ -3430,6 +3478,8 @@ void do_circular(CHAR_DATA *ch, char *argument) {
         WAIT_STATE(ch, skill_table[gsn_circular].beats);
 }
 
+// do_meteoric_arrow: Command: do_meteoric_arrow - Performs the 'meteoric_arrow' active combat or class skill.
+// do_meteoric_arrow: 指令：do_meteoric_arrow - 執行 'meteoric_arrow' 主動戰鬥或職業專屬技能。
 void do_meteoric_arrow(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *gch, *victim;
     OBJ_DATA  *obj;
@@ -3521,8 +3571,8 @@ void do_meteoric_arrow(CHAR_DATA *ch, char *argument) {
     if (!IS_NPC(ch))
         ch->move -= 150 + sklv * 30;
 
-    act("$n挽弓一射，許\多箭矢如流星般向$N飛奔而去！", ch, NULL, victim, TO_ROOM);
-    send_to_char("你挽弓一射，許\多箭矢如流星般射出！\n\r", ch);
+    act("$n挽弓一射，許多箭矢如流星般向$N飛奔而去！", ch, NULL, victim, TO_ROOM);
+    send_to_char("你挽弓一射，許多箭矢如流星般射出！\n\r", ch);
 
     // 將npc 發數與 pc 分開, 避免使用 mete 夾帶普擊後發數過高 (fight_prog 成立當下必出普擊) 2021/10/24
     // if( victim && !victim->deleted )
@@ -3662,6 +3712,8 @@ void do_meteoric_arrow(CHAR_DATA *ch, char *argument) {
 }
 
 // 箭雨, 此技能與流星箭判定相同, 只有目標不同 2022/05/02
+// do_rainfall_arrow: Command: do_rainfall_arrow - Performs the 'rainfall_arrow' active combat or class skill.
+// do_rainfall_arrow: 指令：do_rainfall_arrow - 執行 'rainfall_arrow' 主動戰鬥或職業專屬技能。
 void do_rainfall_arrow(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *gch;
     CHAR_DATA *victim;
@@ -3881,6 +3933,8 @@ void do_rainfall_arrow(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// get_charge_hit_rate: Calculates the success/hit rate of a mounted charge attack.
+// get_charge_hit_rate: 計算騎乘衝鋒（Charge）攻擊的成功機率與命中率。
 int get_charge_hit_rate(int nHitRate, int nRideSklv, int nDodge) {
     if (nRideSklv > 6)
         nRideSklv = 6;
@@ -3900,6 +3954,8 @@ int get_charge_hit_rate(int nHitRate, int nRideSklv, int nDodge) {
     return Final_Rate;
 }
 
+// do_charge: Command: do_charge - Performs the 'charge' active combat or class skill.
+// do_charge: 指令：do_charge - 執行 'charge' 主動戰鬥或職業專屬技能。
 void do_charge(CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim, *rch = NULL;
     OBJ_DATA        *horse   = NULL;
@@ -4431,6 +4487,8 @@ void do_charge(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_throw: Command: do_throw - Performs the 'throw' active combat or class skill.
+// do_throw: 指令：do_throw - 執行 'throw' 主動戰鬥或職業專屬技能。
 void do_throw(CHAR_DATA *ch, char *argument) {
     OBJ_DATA  *obj;
     char       arg[MAX_INPUT_LENGTH];
@@ -4968,6 +5026,8 @@ void do_track(CHAR_DATA *ch, char *argument) /*{{{*/
     return;
 } /*}}}*/
 
+// do_stone_form: Command: do_stone_form - Performs the 'stone_form' active combat or class skill.
+// do_stone_form: 指令：do_stone_form - 執行 'stone_form' 主動戰鬥或職業專屬技能。
 void do_stone_form(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     int         nRaceSklv = get_skill_level(ch, gsn_inborn_ability);

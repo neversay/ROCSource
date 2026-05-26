@@ -84,6 +84,8 @@ void free_neweqbank args((BANK_DATA * bank));
 extern int top_bank;
 extern bool IsSorGateMob(int nMobIndex);
 
+// free_neweqbank_obj: Frees memory allocated for an equipment bank object.
+// free_neweqbank_obj: 釋放為裝備銀行物品所配置的記憶體。
 void free_neweqbank_obj(OBJ_DATA *obj) {
     AFFECT_DATA *paf;
     AFFECT_DATA *paf_next;
@@ -145,6 +147,8 @@ void free_neweqbank_obj(OBJ_DATA *obj) {
 
 // 完成 eqb_do_examine 的指令, 並移除 eqb_do_look 將兩者統合為單一指令
 // 2022/12/01
+// eqb_do_examine: Examines an object in the equipment bank.
+// eqb_do_examine: 檢查裝備銀行中的特定物品。
 void eqb_do_examine(CHAR_DATA *ch, OBJ_DATA *obj) {
     char buf[MAX_STRING_LENGTH];
     int diff;
@@ -342,6 +346,8 @@ void eqb_do_examine(CHAR_DATA *ch, OBJ_DATA *obj) {
 }
 
 /*  重新編寫 eqb_do_examine 並移除 eqb_do_look 2022/12/01
+// eqb_do_examine: Examines an object in the equipment bank.
+// eqb_do_examine: 檢查裝備銀行中的特定物品。
 void eqb_do_examine( CHAR_DATA *ch, OBJ_DATA *obj )
 {
         int diff;
@@ -396,6 +402,8 @@ send_to_char(HIB"完全損壞，不堪使用。"NOR"\n\r", ch); break;
     return;
 }
 
+// eqb_do_look: Looks at an object in the equipment bank.
+// eqb_do_look: 查看裝備銀行中的特定物品。
 void eqb_do_look( CHAR_DATA *ch, OBJ_DATA *obj )
 {
         char buf  [ MAX_STRING_LENGTH ];
@@ -468,6 +476,8 @@ void eqb_do_look( CHAR_DATA *ch, OBJ_DATA *obj )
         return;
 } */
 
+// get_obj: Picks up or retrieves an object, handling inventory and weight limits.
+// get_obj: 拾取或取得物品，處理背包空間與重量限制。
 void get_obj(CHAR_DATA *ch, OBJ_DATA *obj, OBJ_DATA *container) {
     if (!CAN_WEAR(obj, ITEM_TAKE) && obj->item_type != ITEM_CORPSE_PC) {
         send_to_char("你無法拿起.\n\r", ch);
@@ -584,6 +594,8 @@ void get_obj(CHAR_DATA *ch, OBJ_DATA *obj, OBJ_DATA *container) {
     return;
 }
 
+// do_autoget: Command: do_autoget - Performs the 'autoget' command.
+// do_autoget: 指令：do_autoget - 執行 'autoget' 指令。
 int do_autoget(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     OBJ_DATA *container;
@@ -754,6 +766,8 @@ BANK_DATA *new_bank() {
     return bank;
 }
 
+// fwrite_neweqbank: Writes equipment bank data to a file.
+// fwrite_neweqbank: 將新裝備銀行的資料寫入檔案中。
 void fwrite_neweqbank(CHAR_DATA *ch, FILE *fp) {
 
     if (!ch->neweqbank)
@@ -770,6 +784,8 @@ void fwrite_neweqbank(CHAR_DATA *ch, FILE *fp) {
     return;
 }
 
+// fread_neweqbank: Reads equipment bank data from a file.
+// fread_neweqbank: 從檔案中讀取新裝備銀行的資料。
 int fread_neweqbank(BANK_DATA *ch, FILE *fp) {
 
     char letter;
@@ -806,6 +822,8 @@ int fread_neweqbank(BANK_DATA *ch, FILE *fp) {
 }
 
 bool check_parse_name(char *name);
+// free_neweqbank: Frees memory allocated for an equipment bank.
+// free_neweqbank: 釋放新裝備銀行所佔用的記憶體空間。
 void free_neweqbank(BANK_DATA *bank) {
     OBJ_DATA *obj, *nobj;
     free_string(bank->name);
@@ -841,6 +859,8 @@ void free_neweqbank(BANK_DATA *bank) {
     return;
 }
 
+// check_container: Validates a container's properties and security status.
+// check_container: 驗證容器物品的屬性與安全性狀態。
 bool check_container(CHAR_DATA *ch, OBJ_DATA *container) {
     OBJ_DATA *obj;
     int O_Weight = 0; // 2022/12/01
@@ -901,6 +921,8 @@ bool check_container(CHAR_DATA *ch, OBJ_DATA *container) {
     return TRUE;
 }
 
+// check_eqbank: Validates an equipment bank structure.
+// check_eqbank: 驗證裝備銀行結構的有效性。
 bool check_eqbank(BANK_DATA *bank) {
     DESCRIPTOR_DATA *d;
     CHAR_DATA *to;
@@ -917,6 +939,8 @@ bool check_eqbank(BANK_DATA *bank) {
 
     return FALSE;
 }
+// do_eqbank: Command: do_eqbank - Performs the 'eqbank' command.
+// do_eqbank: 指令：do_eqbank - 執行 'eqbank' 指令。
 void do_eqbank(CHAR_DATA *ch, char *argument) {
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
@@ -1787,6 +1811,8 @@ void do_eqbank(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_get_silence: Command: do_get_silence - Performs the 'get_silence' command.
+// do_get_silence: 指令：do_get_silence - 執行 'get_silence' 指令。
 void do_get_silence(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     OBJ_DATA *container;
@@ -1923,6 +1949,8 @@ void do_get_silence(CHAR_DATA *ch, char *argument) {
 
     return;
 }
+// do_get: Performs the 'get' command to pick up items from the ground or containers.
+// do_get: 執行 'get' 指令從地面或容器中拾取物品。
 void do_get(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     OBJ_DATA *container;
@@ -2092,6 +2120,8 @@ void do_get(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_put: Command: do_put - Performs the 'put' command.
+// do_put: 指令：do_put - 執行 'put' 指令。
 void do_put(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *container;
     OBJ_DATA *obj;
@@ -2254,6 +2284,8 @@ void do_put(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_drop: Performs the 'drop' command to drop items onto the ground.
+// do_drop: 執行 'drop' 指令將身上攜帶的物品丟棄到地上。
 void do_drop(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -2382,6 +2414,8 @@ void do_drop(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_give: Command: do_give - Performs the 'give' command.
+// do_give: 指令：do_give - 執行 'give' 指令。
 void do_give(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     OBJ_DATA *obj;
@@ -2555,6 +2589,8 @@ void do_give(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_fill: Command: do_fill - Performs the 'fill' command.
+// do_fill: 指令：do_fill - 執行 'fill' 指令。
 void do_fill(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     OBJ_DATA *fountain;
@@ -2649,6 +2685,8 @@ void do_fill(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_drink: Command: do_drink - Performs the 'drink' command.
+// do_drink: 指令：do_drink - 執行 'drink' 指令。
 void do_drink(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -3099,6 +3137,8 @@ if (obj->value[3] != 0
     return;
 }
 
+// do_eat: Command: do_eat - Performs the 'eat' command.
+// do_eat: 指令：do_eat - 執行 'eat' 指令。
 void do_eat(CHAR_DATA *ch, char *argument) {
     AFFECT_DATA af;
     OBJ_DATA *obj;
@@ -3312,6 +3352,8 @@ void do_eat(CHAR_DATA *ch, char *argument) {
 /*
  * Remove an object.
  */
+// remove_obj: Unequips an object from a character's body wear slot.
+// remove_obj: 將特定裝備自角色的裝備欄位上卸下。
 bool remove_obj(CHAR_DATA *ch, int iWear, bool fReplace) {
     OBJ_DATA *obj;
 
@@ -3346,6 +3388,8 @@ bool remove_obj(CHAR_DATA *ch, int iWear, bool fReplace) {
     return TRUE;
 }
 
+// fremove_obj: Forcibly unequips an object from a character.
+// fremove_obj: 強制將特定裝備自角色身上卸下。
 bool fremove_obj(CHAR_DATA *ch, int iWear, bool fReplace) {
     OBJ_DATA *obj;
 
@@ -3384,6 +3428,8 @@ typedef struct wear_map {
     int place;
 } WEAR_MAP;
 
+// wear_obj: Equips an object onto a character's body wear slot.
+// wear_obj: 將特定物品裝備至角色的裝備欄位上。
 void wear_obj(CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace, int iWear) {
     char buf[MAX_STRING_LENGTH];
     bool fForce = FALSE;
@@ -4650,6 +4696,8 @@ void wear_obj(CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace, int iWear) {
 }
 
 /* Added by Keric for personal eq AC recover */
+// do_personal_recover: Command: do_personal_recover - Performs the 'personal_recover' command.
+// do_personal_recover: 指令：do_personal_recover - 執行 'personal_recover' 指令。
 void do_personal_recover(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *mob;
     OBJ_DATA *obj;
@@ -4827,6 +4875,8 @@ void do_personal_recover(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_repair: Command: do_repair - Performs the 'repair' command.
+// do_repair: 指令：do_repair - 執行 'repair' 指令。
 void do_repair(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *mob;
@@ -5012,6 +5062,8 @@ void do_repair(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_wear: Performs the 'wear' command to equip armor, clothing, or accessories.
+// do_wear: 執行 'wear' 指令裝備防具、服飾或飾品。
 void do_wear(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -5104,6 +5156,8 @@ void do_wear(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_fremove: Command: do_fremove - Performs the 'fremove' command.
+// do_fremove: 指令：do_fremove - 執行 'fremove' 指令。
 void do_fremove(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -5135,6 +5189,8 @@ void do_fremove(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_remove: Performs the 'remove' command to unequip items from wear slots.
+// do_remove: 執行 'remove' 指令卸下身上已裝備的物品。
 void do_remove(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -5169,6 +5225,8 @@ void do_remove(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_sacrifice: Command: do_sacrifice - Performs the 'sacrifice' command.
+// do_sacrifice: 指令：do_sacrifice - 執行 'sacrifice' 指令。
 void do_sacrifice(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -5250,6 +5308,8 @@ void do_sacrifice(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_adore: Command: do_adore - Performs the 'adore' command.
+// do_adore: 指令：do_adore - 執行 'adore' 指令。
 void do_adore(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     AFFECT_DATA af;
@@ -5329,6 +5389,8 @@ void do_adore(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_quaff: Command: do_quaff - Performs the 'quaff' command.
+// do_quaff: 指令：do_quaff - 執行 'quaff' 指令。
 void do_quaff(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     char arg[MAX_INPUT_LENGTH];
@@ -5385,6 +5447,8 @@ void do_quaff(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_recite: Command: do_recite - Performs the 'recite' command.
+// do_recite: 指令：do_recite - 執行 'recite' 指令。
 void do_recite(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *scroll;
     OBJ_DATA *obj;
@@ -5592,6 +5656,8 @@ void do_recite(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_brandish: Command: do_brandish - Performs the 'brandish' command.
+// do_brandish: 指令：do_brandish - 執行 'brandish' 指令。
 void do_brandish(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *staff;
     CHAR_DATA *vch, *victim;
@@ -5834,6 +5900,8 @@ void do_brandish(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_zap: Command: do_zap - Performs the 'zap' command.
+// do_zap: 指令：do_zap - 執行 'zap' 指令。
 void do_zap(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *wand;
     OBJ_DATA *obj;
@@ -6066,6 +6134,8 @@ void do_zap(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_steal: Command: do_steal - Performs the 'steal' command.
+// do_steal: 指令：do_steal - 執行 'steal' 指令。
 void do_steal(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *victim;
@@ -6409,6 +6479,8 @@ CHAR_DATA *find_keeper(CHAR_DATA *ch, char *argument) {
     return keeper;
 }
 
+// get_cost: Calculates the buy/sell price of an item at a shop keeper.
+// get_cost: 計算向商人買入或賣出特定物品時的價格。
 int get_cost(CHAR_DATA *keeper, OBJ_DATA *obj, bool fBuy) {
     SHOP_DATA *pShop;
     int cost;
@@ -6443,6 +6515,8 @@ int get_cost(CHAR_DATA *keeper, OBJ_DATA *obj, bool fBuy) {
 }
 
 // 新增以 qmark 判定的非賣品 2022/05/05
+// not_for_sale: Checks if an item from a shop keeper is not for sale.
+// not_for_sale: 檢查商人身上的特定物品是否為非賣品。
 bool not_for_sale(CHAR_DATA *ch, CHAR_DATA *keeper, OBJ_DATA *obj) {
 
     /*  目前有 5 種 qmark , 每個 value 代表一個 obj vnum
@@ -6578,6 +6652,8 @@ bool not_for_sale(CHAR_DATA *ch, CHAR_DATA *keeper, OBJ_DATA *obj) {
  * Obtained from Canth's snippets page at:
  * http://www.xs4all.nl/~phule/snippets/snippets.html
  */
+// do_buy: Command: do_buy - Performs the 'buy' command.
+// do_buy: 指令：do_buy - 執行 'buy' 指令。
 void do_buy(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
@@ -6916,6 +6992,8 @@ void do_buy(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_list: Command: do_list - Performs the 'list' command.
+// do_list: 指令：do_list - 執行 'list' 指令。
 void do_list(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH * 4];
@@ -7071,6 +7149,8 @@ void do_list(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_sell: Command: do_sell - Performs the 'sell' command.
+// do_sell: 指令：do_sell - 執行 'sell' 指令。
 void do_sell(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *keeper;
@@ -7157,6 +7237,8 @@ void do_sell(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_value: Command: do_value - Performs the 'value' command.
+// do_value: 指令：do_value - 執行 'value' 指令。
 void do_value(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *keeper;
@@ -7212,6 +7294,8 @@ void do_value(CHAR_DATA *ch, char *argument) {
 }
 
 /* Poison weapon by Thelonius for EnvyMud */
+// do_poison_weapon: Command: do_poison_weapon - Performs the 'poison_weapon' command.
+// do_poison_weapon: 指令：do_poison_weapon - 執行 'poison_weapon' 指令。
 void do_poison_weapon(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     OBJ_DATA *pobj;
@@ -7361,6 +7445,8 @@ void do_poison_weapon(CHAR_DATA *ch, char *argument) {
 }
 
 /* Contributed by BoneCrusher of EnvyMud. */
+// do_donate: Command: do_donate - Performs the 'donate' command.
+// do_donate: 指令：do_donate - 執行 'donate' 指令。
 void do_donate(CHAR_DATA *ch, char *arg) {
     OBJ_DATA *container;
     OBJ_DATA *obj;
@@ -7516,6 +7602,8 @@ void do_donate(CHAR_DATA *ch, char *arg) {
     return;
 }
 
+// do_register: Command: do_register - Performs the 'register' command.
+// do_register: 指令：do_register - 執行 'register' 指令。
 void do_register(CHAR_DATA *ch, char *arg) {
     CHAR_DATA *mob;
     int cost = ch->level * 5000;
@@ -7577,6 +7665,8 @@ void do_register(CHAR_DATA *ch, char *arg) {
     return;
 }
 
+// do_deposit: Command: do_deposit - Performs the 'deposit' command.
+// do_deposit: 指令：do_deposit - 執行 'deposit' 指令。
 void do_deposit(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *vch;
     char arg[MAX_INPUT_LENGTH];
@@ -7623,6 +7713,8 @@ void do_deposit(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_withdraw: Command: do_withdraw - Performs the 'withdraw' command.
+// do_withdraw: 指令：do_withdraw - 執行 'withdraw' 指令。
 void do_withdraw(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *vch;
     char arg[MAX_INPUT_LENGTH];
@@ -7668,6 +7760,8 @@ void do_withdraw(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_store: Command: do_store - Performs the 'store' command.
+// do_store: 指令：do_store - 執行 'store' 指令。
 void do_store(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     OBJ_DATA *vobj;
@@ -7774,6 +7868,8 @@ void do_store(CHAR_DATA *ch, char *argument) {
                  ch);
 }
 
+// do_receive: Command: do_receive - Performs the 'receive' command.
+// do_receive: 指令：do_receive - 執行 'receive' 指令。
 void do_receive(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *vch;
     OBJ_DATA *obj = NULL;
@@ -7917,6 +8013,8 @@ void do_receive(CHAR_DATA *ch, char *argument) {
         ch);
 }
 
+// do_destroy: Command: do_destroy - Performs the 'destroy' command.
+// do_destroy: 指令：do_destroy - 執行 'destroy' 指令。
 void do_destroy(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     OBJ_DATA *obj;
@@ -7954,6 +8052,8 @@ void do_destroy(CHAR_DATA *ch, char *argument) {
 }
 
 /*
+// do_consent: Command: do_consent - Performs the 'consent' command.
+// do_consent: 指令：do_consent - 執行 'consent' 指令。
 void do_consent( CHAR_DATA *ch, char* argument)
 {
     CHAR_DATA *victim;
@@ -8016,6 +8116,8 @@ void do_consent( CHAR_DATA *ch, char* argument)
     act("$n授權你撿取$s屍體。", ch, NULL, victim, TO_VICT);
 }
 */
+// do_bandage: Command: do_bandage - Performs the 'bandage' command.
+// do_bandage: 指令：do_bandage - 執行 'bandage' 指令。
 void do_bandage(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     OBJ_DATA *pobj;

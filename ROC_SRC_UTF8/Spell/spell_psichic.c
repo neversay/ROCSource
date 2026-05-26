@@ -1,6 +1,8 @@
 /* $Id: spell_psichic.c 916 2005-05-10 03:56:16Z zcecil $ */
 #include "skill.h"
 
+// GetWillFortressEffect: Calculates Will Fortress psionic defense effectiveness.
+// GetWillFortressEffect: 計算「意志堡壘」心靈防禦效果的發揮強度。
 int GetWillFortressEffect(CHAR_DATA *victim) {
     int nResist = 0;
     if (is_affected(victim, gsn_will_fortress)) {
@@ -13,6 +15,8 @@ int GetWillFortressEffect(CHAR_DATA *victim) {
  * lv40 sklv0: 40 * 1.2
  * lv40 sklv6: 46 * 1.6 / 1.2 = 83.2 / 1.2
  */
+// GetIllusionBaseDamage: Calculates baseline damage for illusion-type spells.
+// GetIllusionBaseDamage: 計算幻術（Illusion）類型魔法的基礎傷害值。
 double GetIllusionBaseDamage(int level, int sklv, bool isNpc) {
     double base_damage = (40 + level) / 2 + sklv / 2;
     if (isNpc)
@@ -22,6 +26,8 @@ double GetIllusionBaseDamage(int level, int sklv, bool isNpc) {
     return base_damage;
 }
 
+// isAffectedByIllusion: Checks if a character is currently affected by an illusion spell.
+// isAffectedByIllusion: 檢查角色目前是否正受到幻術魔法效果的影響。
 bool isAffectedByIllusion(CHAR_DATA *victim, int sn) {
     if (sn != gsn_green_breath && is_affected(victim, gsn_green_breath))
         return TRUE;
@@ -37,6 +43,8 @@ bool isAffectedByIllusion(CHAR_DATA *victim, int sn) {
 }
 
 /* Demon tremor spell added by Amenda, 12/18/00 */
+// spell_demontremor: Spell: spell_demontremor - Casts the 'demontremor' spell.
+// spell_demontremor: 魔法：spell_demontremor - 施展 'demontremor' 魔法法術。
 void spell_demontremor(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next = NULL, *vch = NULL;
     AFFECT_DATA af;
@@ -168,6 +176,8 @@ void spell_demontremor(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 /* GreenDragon breath spell added by Amenda, 8/27/01 */
 /* GreenDragon breath spell modify by Neversay, 2004/June/25 */
+// spell_green_breath: Spell: spell_green_breath - Casts the 'green_breath' spell.
+// spell_green_breath: 魔法：spell_green_breath - 施展 'green_breath' 魔法法術。
 void spell_green_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim, *victim_next;
     AFFECT_DATA      af;
@@ -327,6 +337,8 @@ void spell_green_breath(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Sand tide spell add by Neversay, 2004/June/25 */
+// spell_sand_tide: Spell: spell_sand_tide - Casts the 'sand_tide' spell.
+// spell_sand_tide: 魔法：spell_sand_tide - 施展 'sand_tide' 魔法法術。
 void spell_sand_tide(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim, *victim_next;
     AFFECT_DATA      af;
@@ -482,6 +494,8 @@ void spell_sand_tide(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Banshee scream spell add by Neversay, 2004/June/25 */
+// spell_banshee_wail: Spell: spell_banshee_wail - Casts the 'banshee_wail' spell.
+// spell_banshee_wail: 魔法：spell_banshee_wail - 施展 'banshee_wail' 魔法法術。
 void spell_banshee_wail(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim, *victim_next;
     AFFECT_DATA      af;
@@ -639,6 +653,8 @@ void spell_banshee_wail(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Succubus kiss spell add by Neversay, 2004/June/25 */
+// spell_succubus_kiss: Spell: spell_succubus_kiss - Casts the 'succubus_kiss' spell.
+// spell_succubus_kiss: 魔法：spell_succubus_kiss - 施展 'succubus_kiss' 魔法法術。
 void spell_succubus_kiss(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim, *victim_next;
     AFFECT_DATA      af;
@@ -793,6 +809,8 @@ void spell_succubus_kiss(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 /*
+// spell_psichic_storm: Spell: spell_psichic_storm - Casts the 'psichic_storm' spell.
+// spell_psichic_storm: 魔法：spell_psichic_storm - 施展 'psichic_storm' 魔法法術。
 void spell_psichic_storm( int sn, int level, CHAR_DATA *ch, void *vo )
 {
     CHAR_DATA *victim, *victim_next;
@@ -802,6 +820,8 @@ void spell_psichic_storm( int sn, int level, CHAR_DATA *ch, void *vo )
                 int nMindSklv = get_skill_level(ch, gsn_mind_storm);
 }
 */
+// spell_mind_blast: Spell: spell_mind_blast - Casts the 'mind_blast' spell.
+// spell_mind_blast: 魔法：spell_mind_blast - 施展 'mind_blast' 魔法法術。
 void spell_mind_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;
@@ -882,6 +902,8 @@ void spell_mind_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_disenchant: Spell: spell_disenchant - Casts the 'disenchant' spell.
+// spell_disenchant: 魔法：spell_disenchant - 施展 'disenchant' 魔法法術。
 void spell_disenchant(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *gch;
     int        curr_int = get_curr_int(ch), dam = 0,
@@ -923,6 +945,8 @@ void spell_disenchant(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_ventriloquate: Spell: spell_ventriloquate - Casts the 'ventriloquate' spell.
+// spell_ventriloquate: 魔法：spell_ventriloquate - 施展 'ventriloquate' 魔法法術。
 void spell_ventriloquate(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *vch;
     char       buf1[MAX_STRING_LENGTH];
@@ -944,16 +968,22 @@ void spell_ventriloquate(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_mind_thrust: Spell: spell_mind_thrust - Casts the 'mind_thrust' spell.
+// spell_mind_thrust: 魔法：spell_mind_thrust - 施展 'mind_thrust' 魔法法術。
 void spell_mind_thrust(int sn, int level, CHAR_DATA *ch, void *vo) {
     magic_damage(ch, (CHAR_DATA *)vo, dice(1, 10) + level / 2, sn, WEAR_NONE);
     return;
 }
 
+// spell_project_force: Spell: spell_project_force - Casts the 'project_force' spell.
+// spell_project_force: 魔法：spell_project_force - 施展 'project_force' 魔法法術。
 void spell_project_force(int sn, int level, CHAR_DATA *ch, void *vo) {
     magic_damage(ch, (CHAR_DATA *)vo, dice(4, 6) + level, sn, WEAR_NONE);
     return;
 }
 
+// spell_psionic_blast: Spell: spell_psionic_blast - Casts the 'psionic_blast' spell.
+// spell_psionic_blast: 魔法：spell_psionic_blast - 施展 'psionic_blast' 魔法法術。
 void spell_psionic_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim = (CHAR_DATA *)vo;
     static const int dam_each[] =
@@ -980,11 +1010,15 @@ void spell_psionic_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_psychic_crush: Spell: spell_psychic_crush - Casts the 'psychic_crush' spell.
+// spell_psychic_crush: 魔法：spell_psychic_crush - 施展 'psychic_crush' 魔法法術。
 void spell_psychic_crush(int sn, int level, CHAR_DATA *ch, void *vo) {
     magic_damage(ch, (CHAR_DATA *)vo, dice(3, 5) + level, sn, WEAR_NONE);
     return;
 }
 
+// spell_psychic_drain: Spell: spell_psychic_drain - Casts the 'psychic_drain' spell.
+// spell_psychic_drain: 魔法：spell_psychic_drain - 施展 'psychic_drain' 魔法法術。
 void spell_psychic_drain(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1004,6 +1038,8 @@ void spell_psychic_drain(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_psychic_healing: Spell: spell_psychic_healing - Casts the 'psychic_healing' spell.
+// spell_psychic_healing: 魔法：spell_psychic_healing - 施展 'psychic_healing' 魔法法術。
 void spell_psychic_healing(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        heal;
@@ -1016,6 +1052,8 @@ void spell_psychic_healing(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_thought_shield: Spell: spell_thought_shield - Casts the 'thought_shield' spell.
+// spell_thought_shield: 魔法：spell_thought_shield - 施展 'thought_shield' 魔法法術。
 void spell_thought_shield(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1034,6 +1072,8 @@ void spell_thought_shield(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_ultrablast: Spell: spell_ultrablast - Casts the 'ultrablast' spell.
+// spell_ultrablast: 魔法：spell_ultrablast - 施展 'ultrablast' 魔法法術。
 void spell_ultrablast(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *vch;
     CHAR_DATA *vch_next;
@@ -1058,6 +1098,8 @@ void spell_ultrablast(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 /* Glacier strike spell added by Amenda, 2/25/01 */
 /* Glacier strike spell modify by Neversay, 2004/June/24 */
+// spell_glacier_strike: Spell: spell_glacier_strike - Casts the 'glacier_strike' spell.
+// spell_glacier_strike: 魔法：spell_glacier_strike - 施展 'glacier_strike' 魔法法術。
 void spell_glacier_strike(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;
@@ -1208,6 +1250,8 @@ void spell_glacier_strike(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // spell create by Neversay at 2004/July/12
+// spell_ghosts_celebration: Spell: spell_ghosts_celebration - Casts the 'ghosts_celebration' spell.
+// spell_ghosts_celebration: 魔法：spell_ghosts_celebration - 施展 'ghosts_celebration' 魔法法術。
 void spell_ghosts_celebration(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next = NULL;
     AFFECT_DATA af;

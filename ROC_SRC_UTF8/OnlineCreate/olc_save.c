@@ -69,6 +69,8 @@ char *fix_string(const char *str) {
  Purpose:	Saves the listing of files to be loaded at startup.
  Called by:	do_asave(olc_save.c).
  ****************************************************************************/
+// save_area_list: Saves the main AREA.LST file containing all active world area files.
+// save_area_list: 儲存包含所有啟用中世界區域檔案的主 AREA.LST 清單檔案。
 void save_area_list() {
     FILE      *fp;
     AREA_DATA *pArea;
@@ -100,6 +102,8 @@ void save_area_list() {
  Purpose:	Save #MOBILES secion of an area file.
  Called by:	save_area(olc_save.c).
  ****************************************************************************/
+// save_mobiles: OLC Save System: Persists 'mobiles' data to the zone/area database file on disk.
+// save_mobiles: OLC 存檔系統：將 'mobiles' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_mobiles(FILE *fp, AREA_DATA *pArea) {
     int             vnum;
     MOB_INDEX_DATA *pMobIndex;
@@ -182,6 +186,8 @@ void save_mobiles(FILE *fp, AREA_DATA *pArea) {
  Purpose:	Save #OBJECTS section of an area file.
  Called by:	save_area(olc_save.c).
  ****************************************************************************/
+// save_material: OLC Save System: Persists 'material' data to the zone/area database file on disk.
+// save_material: OLC 存檔系統：將 'material' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_material(FILE *fp, AREA_DATA *pArea) {
     OBJ_INDEX_DATA *pObjIndex;
     AFFECT_DATA    *pAf;
@@ -237,6 +243,8 @@ void save_material(FILE *fp, AREA_DATA *pArea) {
     fprintf(fp, "#0\n\n\n\n");
     return;
 }
+// save_objects: OLC Save System: Persists 'objects' data to the zone/area database file on disk.
+// save_objects: OLC 存檔系統：將 'objects' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_objects(FILE *fp, AREA_DATA *pArea) {
     int               vnum;
     OBJ_INDEX_DATA   *pObjIndex;
@@ -347,6 +355,8 @@ void save_objects(FILE *fp, AREA_DATA *pArea) {
  Purpose:	Save #ROOMDATA section of an area file.
  Called by:	save_area(olc_save.c).
  ****************************************************************************/
+// save_rooms: OLC Save System: Persists 'rooms' data to the zone/area database file on disk.
+// save_rooms: OLC 存檔系統：將 'rooms' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_rooms(FILE *fp, AREA_DATA *pArea) {
     ROOM_INDEX_DATA  *pRoomIndex;
     EXTRA_DESCR_DATA *pEd;
@@ -405,6 +415,8 @@ void save_rooms(FILE *fp, AREA_DATA *pArea) {
  Purpose:	Save #SPECIALS section of area file.
  Called by:	save_area(olc_save.c).
  ****************************************************************************/
+// save_specials: OLC Save System: Persists 'specials' data to the zone/area database file on disk.
+// save_specials: OLC 存檔系統：將 'specials' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_specials(FILE *fp, AREA_DATA *pArea) {
     int             vnum;
     MOB_INDEX_DATA *pMobIndex;
@@ -431,6 +443,8 @@ void save_specials(FILE *fp, AREA_DATA *pArea) {
                 New formating thanks to Rac.
  Called by:	save_area(olc_save.c).
  ****************************************************************************/
+// vsave_specials: OLC Save System: Helper to write formatting for 'specials' data.
+// vsave_specials: OLC 存檔系統：用於寫入 'specials' 格式化資料的輔助函式。
 void vsave_specials(FILE *fp, AREA_DATA *pArea) {
     int             vnum;
     MOB_INDEX_DATA *pMobIndex;
@@ -458,6 +472,8 @@ void vsave_specials(FILE *fp, AREA_DATA *pArea) {
                 New format thanks to Rac.
  Called by:	save_area(olc_save.c)
  ****************************************************************************/
+// save_resets: OLC Save System: Persists 'resets' data to the zone/area database file on disk.
+// save_resets: OLC 存檔系統：將 'resets' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_resets(FILE *fp, AREA_DATA *pArea) {
     RESET_DATA      *pReset;
     MOB_INDEX_DATA  *pLastMob = NULL;
@@ -554,6 +570,8 @@ void save_resets(FILE *fp, AREA_DATA *pArea) {
                 New format thanks to Rac.
  Called by:	save_area(olc_save.c)
  ****************************************************************************/
+// vsave_resets: OLC Save System: Helper to write formatting for 'resets' data.
+// vsave_resets: OLC 存檔系統：用於寫入 'resets' 格式化資料的輔助函式。
 void vsave_resets(FILE *fp, AREA_DATA *pArea) {
     RESET_DATA      *pReset;
     MOB_INDEX_DATA  *pLastMob = NULL;
@@ -656,6 +674,8 @@ void vsave_resets(FILE *fp, AREA_DATA *pArea) {
  Purpose:	Saves the #SHOPS section of an area file.
  Called by:	save_area(olc_save.c)
  ****************************************************************************/
+// save_shops: OLC Save System: Persists 'shops' data to the zone/area database file on disk.
+// save_shops: OLC 存檔系統：將 'shops' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_shops(FILE *fp, AREA_DATA *pArea) {
     SHOP_DATA      *pShopIndex;
     MOB_INDEX_DATA *pMobIndex;
@@ -693,6 +713,8 @@ void save_shops(FILE *fp, AREA_DATA *pArea) {
                 New formating thanks to Rac.
  Called by:	save_area(olc_save.c)
  ****************************************************************************/
+// vsave_shops: OLC Save System: Helper to write formatting for 'shops' data.
+// vsave_shops: OLC 存檔系統：用於寫入 'shops' 格式化資料的輔助函式。
 void vsave_shops(FILE *fp, AREA_DATA *pArea) {
     SHOP_DATA      *pShopIndex;
     MOB_INDEX_DATA *pMobIndex;
@@ -730,6 +752,8 @@ void vsave_shops(FILE *fp, AREA_DATA *pArea) {
  Written by:	Walker <nkrendel@evans.Denver.Colorado.EDU>
  Called by:	save_area(olc_save.c).
  ****************************************************************************/
+// save_helps: OLC Save System: Persists 'helps' data to the zone/area database file on disk.
+// save_helps: OLC 存檔系統：將 'helps' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_helps(FILE *fp, AREA_DATA *pArea) {
     HELP_DATA *pHelp;
     bool       found = FALSE;
@@ -753,6 +777,8 @@ void save_helps(FILE *fp, AREA_DATA *pArea) {
     return;
 }
 
+// save_limbo: Saves limbo (VNUM 1-99) database items to the disk.
+// save_limbo: 將 Limbo 虛無空間（VNUM 1-99）的資料庫項目儲存至磁碟。
 void save_limbo(AREA_DATA *pArea) {
     FILE *fp;
 
@@ -802,6 +828,8 @@ void save_limbo(AREA_DATA *pArea) {
  Purpose:	Save an area, note that this format is new.
  Called by:	do_asave(olc_save.c).
  ****************************************************************************/
+// save_area: OLC Save System: Persists 'area' data to the zone/area database file on disk.
+// save_area: OLC 存檔系統：將 'area' 資料寫入並儲存至磁碟上的區域資料庫檔案。
 void save_area(AREA_DATA *pArea) {
     FILE *fp;
 
@@ -883,6 +911,8 @@ void save_area(AREA_DATA *pArea) {
  Purpose:	Entry point for saving area data.
  Called by:	interpreter(interp.c)
  ****************************************************************************/
+// do_asave: Command: do_asave - OLC system trigger command for 'asave' execution.
+// do_asave: 指令：do_asave - OLC 系統觸發指令，執行 'asave' 功能。
 void do_asave(CHAR_DATA *ch, char *argument) {
     char       arg1[MAX_INPUT_LENGTH];
     AREA_DATA *pArea;
@@ -1048,6 +1078,8 @@ void do_asave(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// aedit_save: OLC Area Editor: Handles the 'save' command in area editor mode.
+// aedit_save: OLC 區域編輯器：在區域編輯器模式下處理 'save' 指令。
 bool aedit_save(CHAR_DATA *ch, char *arg) {
     AREA_DATA *pArea;
 

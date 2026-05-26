@@ -428,6 +428,8 @@ void talk_channel        args((CHAR_DATA * ch, char *argument,
 void combat_info_message args((const char *format, CHAR_DATA *to,
                                CHAR_DATA *ch, CHAR_DATA *vch));
 
+// main: Main entry point of the game server. Bootstraps database, handles command arguments, and initiates the game loop.
+// main: 遊戲伺服器的主要進入點。引導資料庫載入、處理啟動引數，並啟動遊戲主迴圈。
 int main(int argc, char **argv) {
     struct timeval now_time;
 
@@ -551,6 +553,8 @@ int main(int argc, char **argv) {
 }
 
 #if defined(unix) || defined(AmigaTCP) || defined(WIN32)
+// init_socket: Initializes and binds the TCP/IP network socket on the designated port for incoming player connections.
+// init_socket: 初始化並綁定指定 Port 的 TCP/IP 網路通訊通訊埠，以接收玩家的連線。
 int init_socket(u_short port) {
     static struct sockaddr_in sa_zero;
     struct sockaddr_in        sa;
@@ -645,6 +649,8 @@ int init_socket(u_short port) {
 #endif
 
 #if defined(macintosh)
+// game_loop_mac_msdos: Legacy game loop driver for Macintosh and MS-DOS ports.
+// game_loop_mac_msdos: 適用於麥金塔（Macintosh）與 MS-DOS 移植版本的舊式遊戲主迴圈驅動程序。
 void game_loop_mac_msdos(void) {
     static DESCRIPTOR_DATA dcon;
     struct timeval         last_time;
@@ -783,6 +789,8 @@ void game_loop_mac_msdos(void) {
 #endif
 
 #if defined(unix) || defined(AmigaTCP) || defined(WIN32)
+// game_loop_unix: Core Engine function: game_loop_unix - Main C routine handling game mechanics.
+// game_loop_unix: 核心引擎函式：game_loop_unix - 處理遊戲底層機制的核心 C 語言子程序。
 void game_loop_unix(int control) {
     static struct timeval null_time;
     struct timeval        last_time;
@@ -1100,6 +1108,8 @@ void game_loop_unix(int control) {
 
 extern int top_desc;
 #if defined(unix) || defined(AmigaTCP) || defined(WIN32)
+// new_descriptor: Core Engine function: new_descriptor - Main C routine handling game mechanics.
+// new_descriptor: 核心引擎函式：new_descriptor - 處理遊戲底層機制的核心 C 語言子程序。
 void new_descriptor(int control) {
     static DESCRIPTOR_DATA d_zero;
     DESCRIPTOR_DATA       *dnew, *dcount, *dcount2; // Modified by Razgriz 20050923
@@ -1269,6 +1279,8 @@ void new_descriptor(int control) {
 #endif
 
 /*02/2/28, amenda, force quit immediately when close socket. to prevent bugs*/
+// lost_link_quit: Core Engine function: lost_link_quit - Main C routine handling game mechanics.
+// lost_link_quit: 核心引擎函式：lost_link_quit - 處理遊戲底層機制的核心 C 語言子程序。
 void lost_link_quit(CHAR_DATA *ch, char *argument) {
     OBJ_DATA  *obj, *obj_next_content;
     CHAR_DATA *phorse = ch->pcdata->horse;
@@ -1326,6 +1338,8 @@ void lost_link_quit(CHAR_DATA *ch, char *argument) {
 extern void fwrite_neweqbank args((CHAR_DATA * ch, FILE *fp));
 extern void free_neweqbank   args((BANK_DATA * bank));
 
+// close_socket: Core Engine function: close_socket - Main C routine handling game mechanics.
+// close_socket: 核心引擎函式：close_socket - 處理遊戲底層機制的核心 C 語言子程序。
 void close_socket(DESCRIPTOR_DATA *dclose) {
     CHAR_DATA *ch;
 
@@ -1427,6 +1441,8 @@ void close_socket(DESCRIPTOR_DATA *dclose) {
     return;
 }
 
+// close_socket2: Core Engine function: close_socket2 - Main C routine handling game mechanics.
+// close_socket2: 核心引擎函式：close_socket2 - 處理遊戲底層機制的核心 C 語言子程序。
 void close_socket2(DESCRIPTOR_DATA *dclose) {
     // CHAR_DATA *ch;
 
@@ -1519,6 +1535,8 @@ void close_socket2(DESCRIPTOR_DATA *dclose) {
     return;
 }
 
+// read_from_descriptor: Core Engine function: read_from_descriptor - Main C routine handling game mechanics.
+// read_from_descriptor: 核心引擎函式：read_from_descriptor - 處理遊戲底層機制的核心 C 語言子程序。
 bool read_from_descriptor(DESCRIPTOR_DATA *d) {
     int iStart;
 
@@ -1599,6 +1617,8 @@ bool read_from_descriptor(DESCRIPTOR_DATA *d) {
 /*
  * Transfer one line from input buffer to input line.
  */
+// read_from_buffer: Core Engine function: read_from_buffer - Main C routine handling game mechanics.
+// read_from_buffer: 核心引擎函式：read_from_buffer - 處理遊戲底層機制的核心 C 語言子程序。
 void read_from_buffer(DESCRIPTOR_DATA *d) {
     int i;
     int j;
@@ -1700,6 +1720,8 @@ void read_from_buffer(DESCRIPTOR_DATA *d) {
 /*
  * Low level output function.
  */
+// process_output: Core Engine function: process_output - Main C routine handling game mechanics.
+// process_output: 核心引擎函式：process_output - 處理遊戲底層機制的核心 C 語言子程序。
 bool process_output(DESCRIPTOR_DATA *d, bool fPrompt) {
     extern bool merc_down;
 
@@ -1763,6 +1785,8 @@ bool process_output(DESCRIPTOR_DATA *d, bool fPrompt) {
  * Bust a prompt (player settable prompt)
  * coded by Morgenes for Aldara Mud
  */
+// bust_a_prompt: Core Engine function: bust_a_prompt - Main C routine handling game mechanics.
+// bust_a_prompt: 核心引擎函式：bust_a_prompt - 處理遊戲底層機制的核心 C 語言子程序。
 void bust_a_prompt(DESCRIPTOR_DATA *d) {
     CHAR_DATA  *ch;
     const char *str;
@@ -2191,6 +2215,8 @@ void bust_a_prompt(DESCRIPTOR_DATA *d) {
  * Append onto an output buffer.
  */
 
+// write_to_buffer: Core Engine function: write_to_buffer - Main C routine handling game mechanics.
+// write_to_buffer: 核心引擎函式：write_to_buffer - 處理遊戲底層機制的核心 C 語言子程序。
 void write_to_buffer(DESCRIPTOR_DATA *d, const char *txt, int length) {
     /*
      * Find length in case caller didn't.
@@ -2238,6 +2264,8 @@ void write_to_buffer(DESCRIPTOR_DATA *d, const char *txt, int length) {
     return;
 }
 /*
+// write_to_buffer: Core Engine function: write_to_buffer - Main C routine handling game mechanics.
+// write_to_buffer: 核心引擎函式：write_to_buffer - 處理遊戲底層機制的核心 C 語言子程序。
 void write_to_buffer( DESCRIPTOR_DATA *d, const char *txt, int length )
 {
     *
@@ -2285,6 +2313,8 @@ void write_to_buffer( DESCRIPTOR_DATA *d, const char *txt, int length )
  * If this gives errors on very long blocks (like 'ofind all'),
  *   try lowering the max block size.
  */
+// write_to_descriptor: Core Engine function: write_to_descriptor - Main C routine handling game mechanics.
+// write_to_descriptor: 核心引擎函式：write_to_descriptor - 處理遊戲底層機制的核心 C 語言子程序。
 bool write_to_descriptor(int desc, char *txt, int length) {
     int iStart;
     int nWrite;
@@ -2317,6 +2347,8 @@ bool write_to_descriptor(int desc, char *txt, int length) {
 /*
  * Deal with sockets that haven't logged in yet.
  */
+// nanny: Core Engine function: nanny - Main C routine handling game mechanics.
+// nanny: 核心引擎函式：nanny - 處理遊戲底層機制的核心 C 語言子程序。
 void nanny(DESCRIPTOR_DATA *d, char *argument) {
     CHAR_DATA       *ch; //, *horse;
     NOTE_DATA       *pnote;
@@ -2901,6 +2933,8 @@ void nanny(DESCRIPTOR_DATA *d, char *argument) {
     return;
 }
 
+// abnormal_affect_check: Core Engine function: abnormal_affect_check - Main C routine handling game mechanics.
+// abnormal_affect_check: 核心引擎函式：abnormal_affect_check - 處理遊戲底層機制的核心 C 語言子程序。
 void abnormal_affect_check(CHAR_DATA *ch) {
     AFFECT_DATA *paf, *temp_paf;
     bool         has_been_removed = FALSE;
@@ -2961,6 +2995,8 @@ void abnormal_affect_check(CHAR_DATA *ch) {
     }
 }
 
+// abnormal_eq_check: Core Engine function: abnormal_eq_check - Main C routine handling game mechanics.
+// abnormal_eq_check: 核心引擎函式：abnormal_eq_check - 處理遊戲底層機制的核心 C 語言子程序。
 void abnormal_eq_check(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return;
@@ -2994,6 +3030,8 @@ void abnormal_eq_check(CHAR_DATA *ch) {
 }
 
 // add by jye 0940912
+// check_login: Combat logic: check_login - Applies combat calculations, checks, or damage formulas.
+// check_login: 戰鬥邏輯：check_login - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void check_login(CHAR_DATA *ch) {
     char             buf[BUF_STRING_LENGTH * 5];
     DESCRIPTOR_DATA *d;
@@ -3049,6 +3087,8 @@ void check_login(CHAR_DATA *ch) {
 /*
  * Parse a name for acceptability.
  */
+// check_parse_name: Combat logic: check_parse_name - Applies combat calculations, checks, or damage formulas.
+// check_parse_name: 戰鬥邏輯：check_parse_name - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_parse_name(char *name) {
     /*
      * Reserved words.
@@ -3117,6 +3157,8 @@ bool check_parse_name(char *name) {
 /*
  * Look for link-dead player to reconnect.
  */
+// check_reconnect: Combat logic: check_reconnect - Applies combat calculations, checks, or damage formulas.
+// check_reconnect: 戰鬥邏輯：check_reconnect - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_reconnect(DESCRIPTOR_DATA *d, char *name, bool fConn) {
     CHAR_DATA *ch, *och;
 
@@ -3201,6 +3243,8 @@ bool check_reconnect(DESCRIPTOR_DATA *d, char *name, bool fConn) {
 /*
  * Check if already playing.
  */
+// check_playing: Combat logic: check_playing - Applies combat calculations, checks, or damage formulas.
+// check_playing: 戰鬥邏輯：check_playing - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_playing(DESCRIPTOR_DATA *d, char *name) {
     DESCRIPTOR_DATA *dold;
 
@@ -3224,6 +3268,8 @@ bool check_playing(DESCRIPTOR_DATA *d, char *name) {
     return FALSE;
 }
 
+// stop_idling: Core Engine function: stop_idling - Main C routine handling game mechanics.
+// stop_idling: 核心引擎函式：stop_idling - 處理遊戲底層機制的核心 C 語言子程序。
 void stop_idling(CHAR_DATA *ch) {
     if (!ch || !ch->desc || ch->desc->connected != CON_PLAYING || !ch->was_in_room || ch->in_room != get_room_index(ROOM_VNUM_LIMBO))
         return;
@@ -3241,6 +3287,8 @@ void stop_idling(CHAR_DATA *ch) {
 /*
  * Write to all in the room.
  */
+// send_to_room: Core Engine function: send_to_room - Main C routine handling game mechanics.
+// send_to_room: 核心引擎函式：send_to_room - 處理遊戲底層機制的核心 C 語言子程序。
 void send_to_room(const char *txt, ROOM_INDEX_DATA *room) {
     DESCRIPTOR_DATA *d;
 
@@ -3253,6 +3301,8 @@ void send_to_room(const char *txt, ROOM_INDEX_DATA *room) {
 /*
  * Write to all characters.
  */
+// send_to_all_char: Core Engine function: send_to_all_char - Main C routine handling game mechanics.
+// send_to_all_char: 核心引擎函式：send_to_all_char - 處理遊戲底層機制的核心 C 語言子程序。
 void send_to_all_char(const char *text) {
     DESCRIPTOR_DATA *d;
 
@@ -3267,6 +3317,8 @@ void send_to_all_char(const char *text) {
 /*
  * Write to one char.
  */
+// send_to_char: Core Engine function: send_to_char - Main C routine handling game mechanics.
+// send_to_char: 核心引擎函式：send_to_char - 處理遊戲底層機制的核心 C 語言子程序。
 void send_to_char(const char *txt, CHAR_DATA *ch) {
     char buf[MAX_STRING_LENGTH * 15];
     int  len;
@@ -3311,6 +3363,8 @@ void send_to_char(const char *txt, CHAR_DATA *ch) {
    of EnvyMud Staff - Kahn */
 
 /*
+// show_string: Core Engine function: show_string - Main C routine handling game mechanics.
+// show_string: 核心引擎函式：show_string - 處理遊戲底層機制的核心 C 語言子程序。
 void show_string( struct descriptor_data *d, char *input )
 {
     register char *scan;
@@ -3421,6 +3475,8 @@ return;
 /*   Zavod of jcowan.reslife.okstate.edu 4000.             */
 /* ========================================================================= */
 
+// show_string: Core Engine function: show_string - Main C routine handling game mechanics.
+// show_string: 核心引擎函式：show_string - 處理遊戲底層機制的核心 C 語言子程序。
 void show_string(DESCRIPTOR_DATA *d, char *input) {
     char *start, *end;
     char  arg[MAX_INPUT_LENGTH];
@@ -3520,6 +3576,8 @@ void show_string(DESCRIPTOR_DATA *d, char *input) {
 /*
  * The primary output interface for formatted output.
  */
+// act: Core Engine function: act - Main C routine handling game mechanics.
+// act: 核心引擎函式：act - 處理遊戲底層機制的核心 C 語言子程序。
 void act(const char *format, CHAR_DATA *ch, const void *arg1,
          const void *arg2, int type) {
     OBJ_DATA          *obj1 = (OBJ_DATA *)arg1;
@@ -3694,6 +3752,8 @@ void act(const char *format, CHAR_DATA *ch, const void *arg1,
     return;
 }
 
+// act_nonline: Core Engine function: act_nonline - Main C routine handling game mechanics.
+// act_nonline: 核心引擎函式：act_nonline - 處理遊戲底層機制的核心 C 語言子程序。
 void act_nonline(const char *format, CHAR_DATA *ch, const void *arg1,
                  const void *arg2, int type) {
     OBJ_DATA          *obj1 = (OBJ_DATA *)arg1;
@@ -3870,6 +3930,8 @@ void act_nonline(const char *format, CHAR_DATA *ch, const void *arg1,
  * combat information. It is effenciency and clear than
  * origin act function.
  */
+// combat_info: Core Engine function: combat_info - Main C routine handling game mechanics.
+// combat_info: 核心引擎函式：combat_info - 處理遊戲底層機制的核心 C 語言子程序。
 void combat_info(const char *format, CHAR_DATA *ch, const void *arg, int type) {
     CHAR_DATA *to;
     CHAR_DATA *vch = (CHAR_DATA *)arg;
@@ -3937,6 +3999,8 @@ void combat_info(const char *format, CHAR_DATA *ch, const void *arg, int type) {
 }
 
 // combat_info_message modified by jye 6.13.2005
+// combat_info_message: Core Engine function: combat_info_message - Main C routine handling game mechanics.
+// combat_info_message: 核心引擎函式：combat_info_message - 處理遊戲底層機制的核心 C 語言子程序。
 void combat_info_message(const char *format, CHAR_DATA *to, CHAR_DATA *ch, CHAR_DATA *vch) {
     // static char *    const  he_she  [ ] = { "它",  "他",  "她" };
     static char *const him_her[] = {"它", "他", "她"};
@@ -4029,6 +4093,8 @@ void combat_info_message(const char *format, CHAR_DATA *to, CHAR_DATA *ch, CHAR_
  * Macintosh support functions.
  */
 #if defined(macintosh)
+// gettimeofday: Core Engine function: gettimeofday - Main C routine handling game mechanics.
+// gettimeofday: 核心引擎函式：gettimeofday - 處理遊戲底層機制的核心 C 語言子程序。
 int gettimeofday(struct timeval *tp, void *tzp) {
     tp->tv_sec  = time(NULL);
     tp->tv_usec = 0;
@@ -4039,6 +4105,8 @@ int gettimeofday(struct timeval *tp, void *tzp) {
  * Windows 95 and Windows NT support functions
  */
 #if defined(WIN32)
+// gettimeofday: Core Engine function: gettimeofday - Main C routine handling game mechanics.
+// gettimeofday: 核心引擎函式：gettimeofday - 處理遊戲底層機制的核心 C 語言子程序。
 void gettimeofday(struct timeval *tp, void *tzp) {
     tp->tv_sec  = time(NULL);
     tp->tv_usec = 0;

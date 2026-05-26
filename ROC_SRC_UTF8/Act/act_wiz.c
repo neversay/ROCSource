@@ -76,6 +76,8 @@ extern bool IsSorGateMob(int nMobIndex);
 char *flag_string(const struct flag_type *flag_table, long long int bits);
 /* Conversion of Immortal powers to Immortal skills done by Thelonius */
 
+// do_mtstat: Command: do_mtstat - Performs the 'mtstat' command.
+// do_mtstat: 指令：do_mtstat - 執行 'mtstat' 指令。
 void do_mtstat(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     OBJ_INDEX_DATA *mat;
@@ -143,6 +145,8 @@ void do_mtstat(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_mtset: Command: do_mtset - Performs the 'mtset' command.
+// do_mtset: 指令：do_mtset - 執行 'mtset' 指令。
 void do_mtset(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     OBJ_INDEX_DATA *mat;
@@ -192,6 +196,8 @@ void do_mtset(CHAR_DATA *ch, char *argument) {
     send_to_char("Ok.\n\r", ch);
 }
 
+// do_mtlist: Command: do_mtlist - Performs the 'mtlist' command.
+// do_mtlist: 指令：do_mtlist - 執行 'mtlist' 指令。
 void do_mtlist(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     OBJ_INDEX_DATA *mat;
@@ -215,6 +221,8 @@ void do_mtlist(CHAR_DATA *ch, char *argument) {
     }
 }
 
+// do_unbackup: Command: do_unbackup - Performs the 'unbackup' command.
+// do_unbackup: 指令：do_unbackup - 執行 'unbackup' 指令。
 void do_unbackup(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char buf[MAX_STRING_LENGTH];
@@ -260,6 +268,8 @@ void do_unbackup(CHAR_DATA *ch, char *argument) {
     send_to_char("Done.\n\r", ch);
     return;
 }
+// do_wizhelp: Command: do_wizhelp - Performs the 'wizhelp' command.
+// do_wizhelp: 指令：do_wizhelp - 執行 'wizhelp' 指令。
 void do_wizhelp(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char buf[MAX_STRING_LENGTH];
@@ -294,6 +304,8 @@ void do_wizhelp(CHAR_DATA *ch, char *argument) {
 }
 
 /*
+// do_test: Command: do_test - Performs the 'test' command.
+// do_test: 指令：do_test - 執行 'test' 指令。
 void do_test( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *rch;
@@ -320,6 +332,8 @@ random_greeting,num_greeting, help_greeting[random_greeting]); col     = 0;
 }
 */
 
+// do_bamfin: Command: do_bamfin - Performs the 'bamfin' command.
+// do_bamfin: 指令：do_bamfin - 執行 'bamfin' 指令。
 void do_bamfin(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -340,6 +354,8 @@ void do_bamfin(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_bamfout: Command: do_bamfout - Performs the 'bamfout' command.
+// do_bamfout: 指令：do_bamfout - 執行 'bamfout' 指令。
 void do_bamfout(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -360,6 +376,8 @@ void do_bamfout(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_deny: Command: do_deny - Performs the 'deny' command.
+// do_deny: 指令：do_deny - 執行 'deny' 指令。
 void do_deny(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -419,6 +437,8 @@ void do_deny(CHAR_DATA *ch, char *argument) {
  * he will be forbidden to use disconnect for a period of mud time.
  */
 
+// do_disconnect: Command: do_disconnect - Performs the 'disconnect' command.
+// do_disconnect: 指令：do_disconnect - 執行 'disconnect' 指令。
 void do_disconnect(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -509,6 +529,8 @@ void do_disconnect(CHAR_DATA *ch, char *argument) {
 }
 
 // by Amethyst
+// do_check_bit: Command: do_check_bit - Performs the 'check_bit' command.
+// do_check_bit: 指令：do_check_bit - 執行 'check_bit' 指令。
 void do_check_bit(CHAR_DATA *ch, char *argument) {
     char buf1[MAX_INPUT_LENGTH];
     char buf0[MAX_INPUT_LENGTH];
@@ -547,6 +569,8 @@ void do_check_bit(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_pardon: Command: do_pardon - Performs the 'pardon' command.
+// do_pardon: 指令：do_pardon - 執行 'pardon' 指令。
 void do_pardon(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -598,6 +622,8 @@ void do_pardon(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_echo: Command: do_echo - Performs the 'echo' command.
+// do_echo: 指令：do_echo - 執行 'echo' 指令。
 void do_echo(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -617,6 +643,8 @@ void do_echo(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_recho: Command: do_recho - Performs the 'recho' command.
+// do_recho: 指令：do_recho - 執行 'recho' 指令。
 void do_recho(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     DESCRIPTOR_DATA *d;
@@ -658,6 +686,8 @@ ROOM_INDEX_DATA *find_location(CHAR_DATA *ch, char *arg) {
     return NULL;
 }
 
+// do_transfer: Command: do_transfer - Performs the 'transfer' command.
+// do_transfer: 指令：do_transfer - 執行 'transfer' 指令。
 void do_transfer(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -762,6 +792,8 @@ void do_transfer(CHAR_DATA *ch, char *argument) {
     send_to_char("Ok.\n\r", ch);
 }
 
+// do_at: Command: do_at - Performs the 'at' command.
+// do_at: 指令：do_at - 執行 'at' 指令。
 void do_at(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *wch;
@@ -812,6 +844,8 @@ void do_at(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_goto: Command: do_goto - Performs the 'goto' command.
+// do_goto: 指令：do_goto - 執行 'goto' 指令。
 void do_goto(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     ROOM_INDEX_DATA *location;
@@ -863,6 +897,8 @@ void do_goto(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rstat: Command: do_rstat - Performs the 'rstat' command.
+// do_rstat: 指令：do_rstat - 執行 'rstat' 指令。
 void do_rstat(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *rch;
@@ -1028,6 +1064,8 @@ void do_rstat(CHAR_DATA *ch, char *argument) {
 }
 
 /*
+// do_ostat: Command: do_ostat - Performs the 'ostat' command.
+// do_ostat: 指令：do_ostat - 執行 'ostat' 指令。
 void do_ostat( CHAR_DATA *ch, char *argument )
 {
     OBJ_DATA	*obj;
@@ -1241,6 +1279,8 @@ Wear_loc: %d.\n\r", !obj->in_room    ?	      0 : obj->in_room->vnum,
 }
 */
 
+// do_mstat: Command: do_mstat - Performs the 'mstat' command.
+// do_mstat: 指令：do_mstat - 執行 'mstat' 指令。
 void do_mstat(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim, *vch;
@@ -1584,6 +1624,8 @@ void do_mstat(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mfind: Command: do_mfind - Performs the 'mfind' command.
+// do_mfind: 指令：do_mfind - 執行 'mfind' 指令。
 void do_mfind(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     MOB_INDEX_DATA *pMobIndex;
@@ -1654,6 +1696,8 @@ void do_mfind(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_ofind: Command: do_ofind - Performs the 'ofind' command.
+// do_ofind: 指令：do_ofind - 執行 'ofind' 指令。
 void do_ofind(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     OBJ_INDEX_DATA *pObjIndex;
@@ -1717,6 +1761,8 @@ void do_ofind(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mwhere: Command: do_mwhere - Performs the 'mwhere' command.
+// do_mwhere: 指令：do_mwhere - 執行 'mwhere' 指令。
 void do_mwhere(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -1827,6 +1873,8 @@ void do_mwhere(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_cras: Command: do_cras - Performs the 'cras' command.
+// do_cras: 指令：do_cras - 執行 'cras' 指令。
 void do_cras(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -1838,6 +1886,8 @@ void do_cras(CHAR_DATA *ch, char *argument) {
     send_to_char("If you want to make CRASH, spell it out.\n\r", ch);
     return;
 }
+// do_crash: Command: do_crash - Performs the 'crash' command.
+// do_crash: 指令：do_crash - 執行 'crash' 指令。
 void do_crash(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char buf[MAX_STRING_LENGTH];
@@ -1854,6 +1904,8 @@ void do_crash(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_reboo: Command: do_reboo - Performs the 'reboo' command.
+// do_reboo: 指令：do_reboo - 執行 'reboo' 指令。
 void do_reboo(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -1866,6 +1918,8 @@ void do_reboo(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_reboot: Command: do_reboot - Performs the 'reboot' command.
+// do_reboot: 指令：do_reboot - 執行 'reboot' 指令。
 void do_reboot(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char buf[MAX_STRING_LENGTH];
@@ -1890,6 +1944,8 @@ void do_reboot(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_shutdow: Command: do_shutdow - Performs the 'shutdow' command.
+// do_shutdow: 指令：do_shutdow - 執行 'shutdow' 指令。
 void do_shutdow(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -1902,6 +1958,8 @@ void do_shutdow(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_shutdown: Command: do_shutdown - Performs the 'shutdown' command.
+// do_shutdown: 指令：do_shutdown - 執行 'shutdown' 指令。
 void do_shutdown(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char buf[MAX_STRING_LENGTH];
@@ -1928,6 +1986,8 @@ void do_shutdown(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_snoop: Command: do_snoop - Performs the 'snoop' command.
+// do_snoop: 指令：do_snoop - 執行 'snoop' 指令。
 void do_snoop(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2016,6 +2076,8 @@ void do_snoop(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_switch: Command: do_switch - Performs the 'switch' command.
+// do_switch: 指令：do_switch - 執行 'switch' 指令。
 void do_switch(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2079,6 +2141,8 @@ void do_switch(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_return: Command: do_return - Performs the 'return' command.
+// do_return: 指令：do_return - 執行 'return' 指令。
 void do_return(CHAR_DATA *ch, char *argument) {
     if (!ch->desc)
         return;
@@ -2102,6 +2166,8 @@ void do_return(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mload: Command: do_mload - Performs the 'mload' command.
+// do_mload: 指令：do_mload - 執行 'mload' 指令。
 void do_mload(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2134,6 +2200,8 @@ void do_mload(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_oload: Command: do_oload - Performs the 'oload' command.
+// do_oload: 指令：do_oload - 執行 'oload' 指令。
 void do_oload(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *rch;
@@ -2191,6 +2259,8 @@ void do_oload(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_purge: Command: do_purge - Performs the 'purge' command.
+// do_purge: 指令：do_purge - 執行 'purge' 指令。
 void do_purge(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *rch;
@@ -2255,6 +2325,8 @@ void do_purge(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_advance: Command: do_advance - Performs the 'advance' command.
+// do_advance: 指令：do_advance - 執行 'advance' 指令。
 void do_advance(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2350,6 +2422,8 @@ void do_advance(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_trust: Command: do_trust - Performs the 'trust' command.
+// do_trust: 指令：do_trust - 執行 'trust' 指令。
 void do_trust(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2398,6 +2472,8 @@ void do_trust(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_restore: Command: do_restore - Performs the 'restore' command.
+// do_restore: 指令：do_restore - 執行 'restore' 指令。
 void do_restore(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2448,6 +2524,8 @@ void do_restore(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_freeze: Command: do_freeze - Performs the 'freeze' command.
+// do_freeze: 指令：do_freeze - 執行 'freeze' 指令。
 void do_freeze(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2506,6 +2584,8 @@ void do_freeze(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_log: Command: do_log - Performs the 'log' command.
+// do_log: 指令：do_log - 執行 'log' 指令。
 void do_log(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2558,6 +2638,8 @@ void do_log(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_noemote: Command: do_noemote - Performs the 'noemote' command.
+// do_noemote: 指令：do_noemote - 執行 'noemote' 指令。
 void do_noemote(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2603,6 +2685,8 @@ void do_noemote(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_notell: Command: do_notell - Performs the 'notell' command.
+// do_notell: 指令：do_notell - 執行 'notell' 指令。
 void do_notell(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2648,6 +2732,8 @@ void do_notell(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_silence: Command: do_silence - Performs the 'silence' command.
+// do_silence: 指令：do_silence - 執行 'silence' 指令。
 void do_silence(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2693,6 +2779,8 @@ void do_silence(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_peace: Command: do_peace - Performs the 'peace' command.
+// do_peace: 指令：do_peace - 執行 'peace' 指令。
 void do_peace(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -2714,6 +2802,8 @@ void do_peace(CHAR_DATA *ch, char *argument) {
 BAN_DATA *ban_free;
 BAN_DATA *ban_list;
 
+// do_ban: Command: do_ban - Performs the 'ban' command.
+// do_ban: 指令：do_ban - 執行 'ban' 指令。
 void do_ban(CHAR_DATA *ch, char *argument) {
     BAN_DATA *pban;
     CHAR_DATA *rch;
@@ -2762,6 +2852,8 @@ void do_ban(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_allow: Command: do_allow - Performs the 'allow' command.
+// do_allow: 指令：do_allow - 執行 'allow' 指令。
 void do_allow(CHAR_DATA *ch, char *argument) {
     BAN_DATA *prev;
     BAN_DATA *curr;
@@ -2801,6 +2893,8 @@ void do_allow(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_wizlock: Command: do_wizlock - Performs the 'wizlock' command.
+// do_wizlock: 指令：do_wizlock - 執行 'wizlock' 指令。
 void do_wizlock(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     extern bool wizlock;
@@ -2820,6 +2914,8 @@ void do_wizlock(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_slookup: Command: do_slookup - Performs the 'slookup' command.
+// do_slookup: 指令：do_slookup - 執行 'slookup' 指令。
 void do_slookup(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char buf[MAX_STRING_LENGTH];
@@ -2872,6 +2968,8 @@ void do_slookup(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_sset: Command: do_sset - Performs the 'sset' command.
+// do_sset: 指令：do_sset - 執行 'sset' 指令。
 void do_sset(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -2974,6 +3072,8 @@ void do_sset(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mset: Command: do_mset - Performs the 'mset' command.
+// do_mset: 指令：do_mset - 執行 'mset' 指令。
 void do_mset(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -3531,6 +3631,8 @@ void do_mset(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_oset: Command: do_oset - Performs the 'oset' command.
+// do_oset: 指令：do_oset - 執行 'oset' 指令。
 void do_oset(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     CHAR_DATA *rch;
@@ -3736,6 +3838,8 @@ void do_oset(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rset: Command: do_rset - Performs the 'rset' command.
+// do_rset: 指令：do_rset - 執行 'rset' 指令。
 void do_rset(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *person;
@@ -3809,6 +3913,8 @@ void do_rset(CHAR_DATA *ch, char *argument) {
 
 /*
 //modified by Chris with sort by remoteuser at 05/09/17.
+// do_users: Command: do_users - Performs the 'users' command.
+// do_users: 指令：do_users - 執行 'users' 指令。
 void do_users( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA	    *rch;
@@ -3907,6 +4013,8 @@ d->character->level, d->original  ? d->original->name  : d->character->name );
 }
 */
 
+// do_users: Command: do_users - Performs the 'users' command.
+// do_users: 指令：do_users - 執行 'users' 指令。
 void do_users(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     DESCRIPTOR_DATA *d;
@@ -4001,6 +4109,8 @@ void do_users(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_forcer: Command: do_forcer - Performs the 'forcer' command.
+// do_forcer: 指令：do_forcer - 執行 'forcer' 指令。
 void do_forcer(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *room = NULL;
     char arg[MAX_INPUT_LENGTH];
@@ -4046,6 +4156,8 @@ void do_forcer(CHAR_DATA *ch, char *argument) {
 /* Added by Razgriz 20050916
  * force object do something
  */
+// do_forceo: Command: do_forceo - Performs the 'forceo' command.
+// do_forceo: 指令：do_forceo - 執行 'forceo' 指令。
 void do_forceo(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj = NULL;
     char arg[MAX_INPUT_LENGTH];
@@ -4079,6 +4191,8 @@ void do_forceo(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_addexp: Command: do_addexp - Performs the 'addexp' command.
+// do_addexp: 指令：do_addexp - 執行 'addexp' 指令。
 void do_addexp(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *target;
@@ -4118,6 +4232,8 @@ void do_addexp(CHAR_DATA *ch, char *argument) {
 /*
  * Thanks to Grodyn for pointing out bugs in this function.
  */
+// do_force: Command: do_force - Performs the 'force' command.
+// do_force: 指令：do_force - 執行 'force' 指令。
 void do_force(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char arg[MAX_INPUT_LENGTH];
@@ -4190,6 +4306,8 @@ void do_force(CHAR_DATA *ch, char *argument) {
 /*
  * New routines by Dionysos.
  */
+// do_invis: Command: do_invis - Performs the 'invis' command.
+// do_invis: 指令：do_invis - 執行 'invis' 指令。
 void do_invis(CHAR_DATA *ch, char *argument) {
     int level;
     char arg[MAX_INPUT_LENGTH];
@@ -4227,6 +4345,8 @@ void do_invis(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_holylight: Command: do_holylight - Performs the 'holylight' command.
+// do_holylight: 指令：do_holylight - 執行 'holylight' 指令。
 void do_holylight(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -4247,6 +4367,8 @@ void do_holylight(CHAR_DATA *ch, char *argument) {
 
 /* Wizify and Wizbit sent in by M. B. King */
 
+// do_wizify: Command: do_wizify - Performs the 'wizify' command.
+// do_wizify: 指令：do_wizify - 執行 'wizify' 指令。
 void do_wizify(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     CHAR_DATA *victim;
@@ -4288,6 +4410,8 @@ void do_wizify(CHAR_DATA *ch, char *argument) {
 
 /* Idea from Talen of Vego's do_where command */
 
+// do_owhere: Command: do_owhere - Performs the 'owhere' command.
+// do_owhere: 指令：do_owhere - 執行 'owhere' 指令。
 void do_owhere(CHAR_DATA *ch, char *argument) {
     OBJ_DATA *obj;
     OBJ_DATA *in_obj;
@@ -4399,6 +4523,8 @@ void do_numlock(CHAR_DATA *ch, char *argument) /*By Globi*/
     return;
 }
 
+// do_numloc: Command: do_numloc - Performs the 'numloc' command.
+// do_numloc: 指令：do_numloc - 執行 'numloc' 指令。
 void do_numloc(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -4409,6 +4535,8 @@ void do_numloc(CHAR_DATA *ch, char *argument) {
     send_to_char("if you want to NUMLOCK, spell it out.\n\r", ch);
 }
 
+// do_newloc: Command: do_newloc - Performs the 'newloc' command.
+// do_newloc: 指令：do_newloc - 執行 'newloc' 指令。
 void do_newloc(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -4419,6 +4547,8 @@ void do_newloc(CHAR_DATA *ch, char *argument) {
     send_to_char("if you want to NEWLOCK, spell it out.\n\r", ch);
 }
 
+// do_newlock: Command: do_newlock - Performs the 'newlock' command.
+// do_newlock: 指令：do_newlock - 執行 'newlock' 指令。
 void do_newlock(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     extern int numlock;
@@ -4447,6 +4577,8 @@ void do_newlock(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_sstim: Command: do_sstim - Performs the 'sstim' command.
+// do_sstim: 指令：do_sstim - 執行 'sstim' 指令。
 void do_sstim(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch = get_char(ch);
 
@@ -4456,6 +4588,8 @@ void do_sstim(CHAR_DATA *ch, char *argument) {
     send_to_char("if you want to SSTIME, spell it out.\n\r", ch);
 }
 
+// do_sstime: Command: do_sstime - Performs the 'sstime' command.
+// do_sstime: 指令：do_sstime - 執行 'sstime' 指令。
 void do_sstime(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     extern time_t down_time;
@@ -4555,6 +4689,8 @@ void do_sstime(CHAR_DATA *ch, char *argument) {
  * Maniac (v942346@si.hhs.nl)
  * Vego (v942429@si.hhs.nl)
  */
+// do_imtlset: Command: do_imtlset - Performs the 'imtlset' command.
+// do_imtlset: 指令：do_imtlset - 執行 'imtlset' 指令。
 void do_imtlset(CHAR_DATA *ch, char *argument) {
 
     CHAR_DATA *rch;

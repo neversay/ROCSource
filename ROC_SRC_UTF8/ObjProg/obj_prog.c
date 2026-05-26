@@ -100,6 +100,8 @@ const char *s2;
 }
 #endif
 
+// oprog_name_to_type: Converts an Object Program trigger name to its corresponding integer type code.
+// oprog_name_to_type: 將物品腳本（ObjProg）觸發器名稱轉換為相對應的整數型態代碼。
 int oprog_name_to_type(char *name) {
     if (!str_cmp(name, "obj_act"))
         return OBJ_ACT;
@@ -131,6 +133,8 @@ int oprog_name_to_type(char *name) {
     return (ERROR_PROG);
 }
 
+// oprog_read_programs: Parses and reads Object Programs for a specific object item index.
+// oprog_read_programs: 解析並為特定物品（Object Index）讀入其所屬的物品腳本。
 void oprog_read_programs(FILE *fp, OBJ_INDEX_DATA *pIndex) {
     OPROG_DATA *rprg;
     char        letter;
@@ -188,6 +192,8 @@ void oprog_read_programs(FILE *fp, OBJ_INDEX_DATA *pIndex) {
  *  the command list and figuring out what to do. However, like all
  *  complex procedures, everything is farmed out to the other guys.
  */
+// oprog_driver: The core driver engine that executes a list of ObjProg script commands.
+// oprog_driver: 執行物品腳本指令串的底層核心驅動引擎。
 void oprog_driver(char *com_list, OBJ_DATA *obj, CHAR_DATA *actor, CHAR_DATA *victim, void *vo) {
     char       tmpcmndlst[MAX_STRING_LENGTH * 3];
     char       buf[MAX_INPUT_LENGTH];
@@ -262,6 +268,8 @@ void oprog_driver(char *com_list, OBJ_DATA *obj, CHAR_DATA *actor, CHAR_DATA *vi
 /* Obj prog wordlist check,
 added by Amethyst to improve the performance of OBJ_PROG.*/
 
+// oprog_wordlist_check: Checks if specific keywords are present in a wordlist to trigger ObjProgs.
+// oprog_wordlist_check: 檢查特定關鍵字是否出現在字詞清單中以觸發物品腳本。
 bool oprog_wordlist_check(char *arg, OBJ_DATA *obj, CHAR_DATA *actor, int type) {
     char        temp1[MAX_STRING_LENGTH];
     char        temp2[MAX_INPUT_LENGTH];
@@ -329,6 +337,8 @@ bool oprog_wordlist_check(char *arg, OBJ_DATA *obj, CHAR_DATA *actor, int type) 
     return FALSE;
 }
 
+// oprog_percent_check: Evaluates percentage-chance-based trigger events in ObjProgs.
+// oprog_percent_check: 評估物品腳本中基於百分比機率的觸發事件。
 void oprog_percent_check(OBJ_DATA *object, CHAR_DATA *actor, CHAR_DATA *victim, void *vo, int type) {
     OPROG_DATA *oprg;
     for (oprg = object->pIndexData->objprogs; oprg != NULL; oprg = oprg->next) {
@@ -339,6 +349,8 @@ void oprog_percent_check(OBJ_DATA *object, CHAR_DATA *actor, CHAR_DATA *victim, 
     return;
 }
 
+// oprog_act_trigger: Triggers ObjProgs in response to action messages.
+// oprog_act_trigger: 當收到動作訊息時觸發物品腳本。
 void oprog_act_trigger(char *txt, CHAR_DATA *ch, OBJ_DATA *mob) {
     OPROG_DATA *mprg;
     char        arg[MAX_STRING_LENGTH];
@@ -358,12 +370,16 @@ void oprog_act_trigger(char *txt, CHAR_DATA *ch, OBJ_DATA *mob) {
     return;
 }
 
+// oprog_tick_trigger: Triggers ObjProgs periodically on game tick updates.
+// oprog_tick_trigger: 在遊戲時間週期（Tick）更新時定期觸發物品腳本。
 void oprog_tick_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_TICK)
         oprog_percent_check(obj, NULL, NULL, NULL, OBJ_TICK);
     return;
 }
 
+// oprog_rand_trigger: Periodically checks and triggers random-chance ObjProgs.
+// oprog_rand_trigger: 定期檢查並觸發隨機機率的物品腳本。
 void oprog_rand_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_RAND)
         oprog_percent_check(obj, obj->carried_by, NULL, NULL, OBJ_RAND);
@@ -371,6 +387,8 @@ void oprog_rand_trigger(OBJ_DATA *obj) {
 }
 
 // obj_fight, obj 攜帶者 戰鬥中每 round 判定 2022/05/07
+// oprog_fight_trigger: Triggers ObjProgs periodically during combat updates.
+// oprog_fight_trigger: 在戰鬥更新期間定期觸發物品腳本。
 void oprog_fight_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_FIGHT)
         // obj 必須有攜帶者
@@ -380,6 +398,8 @@ void oprog_fight_trigger(OBJ_DATA *obj) {
 }
 
 // obj_hit, obj 命中目標 2022/10/23
+// oprog_hit_trigger: Triggers ObjProgs when the weapon hits a target in combat.
+// oprog_hit_trigger: 當武器在戰鬥中擊中目標時觸發物品腳本。
 void oprog_hit_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_HIT)
         // obj 必須有攜帶者
@@ -389,6 +409,8 @@ void oprog_hit_trigger(OBJ_DATA *obj) {
 }
 
 // obj_block, obj parry 或 block 時觸發 2022/10/23
+// oprog_block_trigger: Triggers ObjProgs when an item (like a shield) blocks an attack.
+// oprog_block_trigger: 當物品（如盾牌）成功格擋攻擊時觸發物品腳本。
 void oprog_block_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_BLOCK)
         // obj 必須有攜帶者
@@ -398,6 +420,8 @@ void oprog_block_trigger(OBJ_DATA *obj) {
 }
 
 // obj_kill, obj 攜帶者 殺死目標時判定 2022/05/08
+// oprog_kill_trigger: Triggers ObjProgs when the player wielding the item kills a target.
+// oprog_kill_trigger: 當裝備該物品的玩家擊殺目標時觸發物品腳本。
 void oprog_kill_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_KILL)
         // obj 必須有攜帶者
@@ -406,12 +430,16 @@ void oprog_kill_trigger(OBJ_DATA *obj) {
     return;
 }
 
+// oprog_disappear_trigger: Triggers ObjProgs when the item disappears or decays.
+// oprog_disappear_trigger: 當物品消失或腐爛損壞時觸發物品腳本。
 void oprog_disappear_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_DISAPPEAR)
         oprog_percent_check(obj, obj->carried_by, NULL, NULL, OBJ_DISAPPEAR);
     return;
 }
 
+// oprog_repop_trigger: Triggers ObjProgs immediately when the item repops (spawns).
+// oprog_repop_trigger: 當物品重新產生（Spawn）時立即觸發物品重生腳本。
 void oprog_repop_trigger(OBJ_DATA *obj) {
     if (obj->pIndexData->progtypes & OBJ_REPOP)
         oprog_percent_check(obj, NULL, NULL, NULL, OBJ_REPOP);
@@ -419,6 +447,8 @@ void oprog_repop_trigger(OBJ_DATA *obj) {
 }
 
 // obj_command prog by Amethyst
+// oprog_cmd_trigger: Triggers ObjProgs when a player attempts to run a matched command word.
+// oprog_cmd_trigger: 當玩家嘗試執行特定匹配的指令字詞時觸發物品指令腳本。
 bool oprog_cmd_trigger(OBJ_DATA *obj, CHAR_DATA *ch, char *txt) {
     OPROG_DATA *oprg;
     char        arg[MAX_INPUT_LENGTH];
@@ -648,6 +678,8 @@ char *oextract_if_endif(char *com_list, OBJ_DATA *obj) {
     return com_list;
 }
 
+// oprog_process_cmnd: Processes and executes an individual command line inside an ObjProg script.
+// oprog_process_cmnd: 在物品腳本內解析並執行個別指令行。
 void oprog_process_cmnd(char *cmnd, OBJ_DATA *obj, CHAR_DATA *actor, void *vo, CHAR_DATA *rndm) {
     char  buf[MAX_INPUT_LENGTH];
     char  tmp[MAX_INPUT_LENGTH];
@@ -680,6 +712,8 @@ void oprog_process_cmnd(char *cmnd, OBJ_DATA *obj, CHAR_DATA *actor, void *vo, C
     return;
 }
 
+// oprog_translate: Translates ObjProg trigger special variables (e.g. $n, $O) into formatted output strings.
+// oprog_translate: 將物品腳本觸發器的特殊變數（如 $n、$O）翻譯為格式化後的輸出字串。
 void oprog_translate(char ch, char *t, OBJ_DATA *obj, CHAR_DATA *actor, CHAR_DATA *rndm) {
     static char *he_she[]  = {"it", "he", "she"};
     static char *him_her[] = {"it", "him", "her"};

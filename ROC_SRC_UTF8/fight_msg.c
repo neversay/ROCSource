@@ -78,6 +78,8 @@ extern CLAN_WAR_DATA *clan_war;
 
 extern char *stat_color1(int cur, int max);
 
+// self_damage: Combat logic: self_damage - Applies combat calculations, checks, or damage formulas.
+// self_damage: 戰鬥邏輯：self_damage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void self_damage(CHAR_DATA *ch, CHAR_DATA *victim, int miss_times, int no_dam_times, int dam_times, int times, int dam, char *skill_name) {
     const char *vp;
     // const  char   *attack;
@@ -207,6 +209,8 @@ void self_damage(CHAR_DATA *ch, CHAR_DATA *victim, int miss_times, int no_dam_ti
     return;
 }
 
+// brief_e_dam_message: Core Engine function: brief_e_dam_message - Main C routine handling game mechanics.
+// brief_e_dam_message: 核心引擎函式：brief_e_dam_message - 處理遊戲底層機制的核心 C 語言子程序。
 void brief_e_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn, int total, int hit) {
     const char *vp;
     const char *attack;
@@ -347,6 +351,8 @@ void brief_e_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int 
 }
 
 /* Chinese damage message added by Amenda, 2/25/01 */
+// brief_c_dam_message: Core Engine function: brief_c_dam_message - Main C routine handling game mechanics.
+// brief_c_dam_message: 核心引擎函式：brief_c_dam_message - 處理遊戲底層機制的核心 C 語言子程序。
 void brief_c_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn, int total, int hit) {
     const char *vp;
     const char *attack;
@@ -583,6 +589,8 @@ void brief_c_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int 
     return;
 }
 
+// e_dam_message: Core Engine function: e_dam_message - Main C routine handling game mechanics.
+// e_dam_message: 核心引擎函式：e_dam_message - 處理遊戲底層機制的核心 C 語言子程序。
 void e_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn) {
     const char *vp;
     const char *attack;
@@ -709,6 +717,8 @@ void e_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn) {
 }
 
 /* Chinese damage message added by Amenda, 2/25/01 */
+// c_dam_message: Core Engine function: c_dam_message - Main C routine handling game mechanics.
+// c_dam_message: 核心引擎函式：c_dam_message - 處理遊戲底層機制的核心 C 語言子程序。
 void c_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn) {
     const char *vp;
     const char *attack;
@@ -949,6 +959,8 @@ if ( dt > MAX_SKILL && number_bits( 3 ) == 1 && weapon )
     return;
 }
 
+// brief_dam_message: Core Engine function: brief_dam_message - Main C routine handling game mechanics.
+// brief_dam_message: 核心引擎函式：brief_dam_message - 處理遊戲底層機制的核心 C 語言子程序。
 void brief_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn, int total, int hit) {
     int todam = dam;
     if (hit > 0)
@@ -959,6 +971,8 @@ void brief_dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wp
         brief_c_dam_message(ch, victim, todam, dt, wpn, total, hit);
 }
 
+// dam_message: Core Engine function: dam_message - Main C routine handling game mechanics.
+// dam_message: 核心引擎函式：dam_message - 處理遊戲底層機制的核心 C 語言子程序。
 void dam_message(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int wpn) {
     if (!is_chinese(ch, victim))
         e_dam_message(ch, victim, dam, dt, wpn);

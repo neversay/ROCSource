@@ -123,6 +123,8 @@ char *mprog_next_command(char *clist) {
 
 // 加入 fun name 顯示 bug 發生的 fun 2022/11/08
 // bool mprog_seval( char *lhs, char *opr, char *rhs )
+// mprog_seval: Evaluates string condition checks (operators like ==, !=) for MobProgs.
+// mprog_seval: 為怪物腳本評估字串條件判定（如 ==、!=）。
 bool mprog_seval(char *lhs, char *opr, char *rhs, char *fun_name) {
     if (!str_cmp(opr, "=="))
         return (bool)(!str_cmp(lhs, rhs));
@@ -146,6 +148,8 @@ bool mprog_seval(char *lhs, char *opr, char *rhs, char *fun_name) {
 
 // 加入 fun name 顯示 bug 發生的 fun 2022/11/08
 // bool mprog_veval( int lhs, char *opr, int rhs )
+// mprog_veval: Evaluates integer condition checks for MobProgs.
+// mprog_veval: 為怪物腳本評估整數數值條件判定。
 bool mprog_veval(int lhs, char *opr, int rhs, char *fun_name) {
     if (!str_cmp(opr, "=="))
         return (lhs == rhs);
@@ -178,6 +182,8 @@ bool mprog_veval(int lhs, char *opr, int rhs, char *fun_name) {
 }
 
 // 針對值過大的判定, 如 isaffected 及 roomflag 用的判定 2022/11/10
+// mprog_longval: Evaluates 64-bit integer condition checks for MobProgs.
+// mprog_longval: 為怪物腳本評估 64 位元長整數條件判定。
 bool mprog_longval(long long lhs, char *opr, long long rhs, char *fun_name) {
     if (!str_cmp(opr, "=="))
         return (lhs == rhs);
@@ -209,6 +215,8 @@ bool mprog_longval(long long lhs, char *opr, long long rhs, char *fun_name) {
     return 0;
 }
 
+// FightWithVarCheck: Checks variables during active combat updates in MobProgs.
+// FightWithVarCheck: 在戰鬥更新期間於怪物腳本中進行變數檢查。
 int FightWithVarCheck(CHAR_DATA *ch, CHAR_DATA *vch, char *opr) {
     if (!str_cmp(opr, "==")) {
         if (ch->fighting && ch->fighting == vch)
@@ -219,6 +227,8 @@ int FightWithVarCheck(CHAR_DATA *ch, CHAR_DATA *vch, char *opr) {
 
 // 加入 fun name 顯示 bug 發生的 fun 2022/11/08
 // int GetMprogSeval_RaceByCharData(CHAR_DATA *ch, char opr[], char val[] )
+// GetMprogSeval_RaceByCharData: Checks character race requirements for MobProg condition checks.
+// GetMprogSeval_RaceByCharData: 為怪物腳本條件判定檢查角色的種族要求。
 int GetMprogSeval_RaceByCharData(CHAR_DATA *ch, char opr[], char val[], char *fun_name) {
     if (ch) {
         if (ch->temp_race) {
@@ -8315,6 +8325,8 @@ char *extract_if_endif(char *com_list, CHAR_DATA *mob) {
  * would be to change act() so that vo becomes vict & v_obj.
  * but this would require a lot of small changes all over the code.
  */
+// mprog_translate: Translates MobProg trigger special variables (e.g. $n, $N, $I) into formatted output strings.
+// mprog_translate: 將怪物腳本觸發器的特殊變數（如 $n、$N、$I）翻譯為格式化後的輸出字串。
 void mprog_translate(char ch, char *t, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj, void *vo, CHAR_DATA *rndm) {
     static char *he_she[]  = {"it", "he", "she"};
     static char *him_her[] = {"it", "him", "her"};
@@ -8582,6 +8594,8 @@ void mprog_translate(char ch, char *t, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DAT
  * any variables by calling the translate procedure.  The observant
  * code scrutinizer will notice that this is taken from act()
  */
+// mprog_process_cmnd: Processes and executes an individual command line inside a MobProg script.
+// mprog_process_cmnd: 在怪物腳本內解析並執行個別指令行。
 void mprog_process_cmnd(char *cmnd, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj, void *vo, CHAR_DATA *rndm) {
     char  buf[MAX_INPUT_LENGTH];
     char  tmp[MAX_INPUT_LENGTH];
@@ -8621,6 +8635,8 @@ void mprog_process_cmnd(char *cmnd, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *
  *  the command list and figuring out what to do. However, like all
  *  complex procedures, everything is farmed out to the other guys.
  */
+// mprog_driver: The core driver engine that executes a list of MobProg script commands.
+// mprog_driver: 執行怪物腳本指令串的底層核心驅動引擎。
 void mprog_driver(char *com_list, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj, void *vo) {
     char       tmpcmndlst[MAX_STRING_LENGTH * 3];
     char       buf[MAX_INPUT_LENGTH];
@@ -8675,6 +8691,8 @@ void mprog_driver(char *com_list, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *ob
  *  on a certain percent, or trigger on a keyword or word phrase.
  *  To see how this works, look at the various trigger routines..
  */
+// mprog_wordlist_check: Checks if specific keywords are present in a wordlist to trigger MobProgs.
+// mprog_wordlist_check: 檢查特定關鍵字是否出現在字詞清單中以觸發怪物腳本。
 void mprog_wordlist_check(char *arg, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj, void *vo, int type) {
     char        temp1[MAX_STRING_LENGTH];
     char        temp2[MAX_INPUT_LENGTH];
@@ -8739,6 +8757,8 @@ void mprog_wordlist_check(char *arg, CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA 
     return;
 }
 
+// mprog_percent_check: Evaluates percentage-chance-based trigger events in MobProgs.
+// mprog_percent_check: 評估怪物腳本中基於百分比機率的觸發事件。
 void mprog_percent_check(CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj, void *vo, int type) {
     MPROG_DATA *mprg;
     // int tmp_number_percent = number_percent();
@@ -8759,6 +8779,8 @@ void mprog_percent_check(CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj, void *
     return;
 }
 
+// mprog_act_trigger: Triggers MobProgs in response to action messages (e.g. social emotes or physical actions).
+// mprog_act_trigger: 當收到動作訊息（如社交動作或肢體動作）時觸發怪物腳本。
 bool mprog_act_trigger(char *txt, CHAR_DATA *ch, CHAR_DATA *mob) {
     bool        returnValue = FALSE;
     MPROG_DATA *mprg;
@@ -8789,6 +8811,8 @@ bool mprog_act_trigger(char *txt, CHAR_DATA *ch, CHAR_DATA *mob) {
     return returnValue;
 }
 
+// mprog_bribe_trigger: Triggers MobProgs when a player gives gold (bribes) to a mobile NPC.
+// mprog_bribe_trigger: 當玩家給予金幣（賄賂）給 NPC 怪物時觸發怪物腳本。
 void mprog_bribe_trigger(CHAR_DATA *mob, CHAR_DATA *ch, int amount) {
     /// char       buf[ MAX_STRING_LENGTH ];
     MPROG_DATA *mprg;
@@ -8817,6 +8841,8 @@ void mprog_bribe_trigger(CHAR_DATA *mob, CHAR_DATA *ch, int amount) {
     return;
 }
 
+// mprog_death_trigger: Triggers MobProgs when a mobile monster dies.
+// mprog_death_trigger: 當怪物 NPC 死亡時觸發其死亡怪物腳本。
 void mprog_death_trigger(CHAR_DATA *actor, CHAR_DATA *mob) {
     AFFECT_DATA *paf;
     if (!IS_NPC(mob))
@@ -8840,6 +8866,8 @@ void mprog_death_trigger(CHAR_DATA *actor, CHAR_DATA *mob) {
     return;
 }
 
+// mprog_entry_trigger: Triggers MobProgs when a mobile monster enters a room.
+// mprog_entry_trigger: 當怪物 NPC 進入新房間時觸發其進入怪物腳本。
 void mprog_entry_trigger(CHAR_DATA *mob) {
     if (IS_NPC(mob) && (mob->pIndexData->progtypes & ENTRY_PROG))
         mprog_percent_check(mob, NULL, NULL, NULL, ENTRY_PROG);
@@ -8848,6 +8876,8 @@ void mprog_entry_trigger(CHAR_DATA *mob) {
 }
 
 // 新增 entry_greet_prog 判定進入房間內是否存在生物 2021/12/18
+// mprog_entry_greet_trigger: Triggers greet events when a mobile monster enters a room containing other characters.
+// mprog_entry_greet_trigger: 當怪物 NPC 進入包含其他角色的房間時觸發問候怪物腳本。
 void mprog_entry_greet_trigger(CHAR_DATA *mob) {
     CHAR_DATA *vch;
     CHAR_DATA *vch_next_in_room;
@@ -8875,6 +8905,8 @@ void mprog_entry_greet_trigger(CHAR_DATA *mob) {
     return;
 }
 
+// mprog_fight_trigger: Triggers MobProgs periodically during combat updates.
+// mprog_fight_trigger: 在戰鬥更新期間定期觸發怪物的戰鬥腳本。
 void mprog_fight_trigger(CHAR_DATA *mob, CHAR_DATA *ch) {
     if (!mob || !ch)
         return;
@@ -8898,6 +8930,8 @@ void mprog_fight_trigger(CHAR_DATA *mob, CHAR_DATA *ch) {
     return;
 }
 
+// mprog_give_trigger: Triggers MobProgs when a player gives an item to a mobile NPC.
+// mprog_give_trigger: 當玩家將物品交給怪物 NPC 時觸發給予怪物腳本。
 void mprog_give_trigger(CHAR_DATA *mob, CHAR_DATA *ch, OBJ_DATA *obj) {
     char        buf[MAX_INPUT_LENGTH];
     MPROG_DATA *mprg;
@@ -8919,6 +8953,8 @@ void mprog_give_trigger(CHAR_DATA *mob, CHAR_DATA *ch, OBJ_DATA *obj) {
 }
 
 // modified by coconet 0520 for let ALL_GREET_PROG can get when NIGHTSTALK
+// old_mprog_greet_trigger: Legacy greet trigger implementation when a player enters a mob's room.
+// old_mprog_greet_trigger: 當玩家進入怪物房間時的舊版問候觸發器實作。
 void old_mprog_greet_trigger(CHAR_DATA *ch) {
     CHAR_DATA *vmob;
     CHAR_DATA *vmob_next_in_room;
@@ -8942,6 +8978,8 @@ void old_mprog_greet_trigger(CHAR_DATA *ch) {
     return;
 }
 
+// mprog_greet_trigger: Standard greet trigger called when a player enters a room containing a mobile monster.
+// mprog_greet_trigger: 當玩家進入包含怪物 NPC 的房間時觸發標準問候腳本。
 void mprog_greet_trigger(CHAR_DATA *mob) {
     static int depth = 0;
     if (depth++ < 3)
@@ -8950,6 +8988,8 @@ void mprog_greet_trigger(CHAR_DATA *mob) {
     return;
 }
 
+// mprog_kill_trigger: Triggers MobProgs when a mobile NPC kills another character.
+// mprog_kill_trigger: 當怪物 NPC 殺死其他角色時觸發其殺敵腳本。
 void mprog_kill_trigger(CHAR_DATA *mob, CHAR_DATA *ch) {
     if (mob->pIndexData->progtypes & KILL_PROG)
         mprog_percent_check(mob, ch, NULL, NULL, KILL_PROG);
@@ -8957,6 +8997,8 @@ void mprog_kill_trigger(CHAR_DATA *mob, CHAR_DATA *ch) {
     return;
 }
 
+// mprog_hurt_trigger: Triggers MobProgs when a mobile NPC takes damage.
+// mprog_hurt_trigger: 當怪物 NPC 受到傷害時觸發受傷腳本。
 void mprog_hurt_trigger(CHAR_DATA *mob, CHAR_DATA *ch, int dt) {
     MPROG_DATA *mprg;
 
@@ -9035,6 +9077,8 @@ void mprog_hurt_trigger(CHAR_DATA *mob, CHAR_DATA *ch, int dt) {
     return;
 }
 
+// mprog_hitprcnt_trigger: Triggers MobProgs when a mobile NPC's health falls below specific percentage thresholds.
+// mprog_hitprcnt_trigger: 當怪物 NPC 的生命值低於特定百分比閥值時觸發血量比例腳本。
 void mprog_hitprcnt_trigger(CHAR_DATA *mob, CHAR_DATA *ch) {
     MPROG_DATA *mprg;
 
@@ -9047,6 +9091,8 @@ void mprog_hitprcnt_trigger(CHAR_DATA *mob, CHAR_DATA *ch) {
     return;
 }
 
+// mprog_random_trigger: Periodically checks and triggers random-chance MobProgs.
+// mprog_random_trigger: 定期檢查並觸發隨機機率的怪物腳本。
 void mprog_random_trigger(CHAR_DATA *mob) {
     // log_string("[RAND_PROG] CHECK.\n");
     if (mob->pIndexData->progtypes & RAND_PROG)
@@ -9054,6 +9100,8 @@ void mprog_random_trigger(CHAR_DATA *mob) {
     return;
 }
 
+// mprog_repop_trigger: Triggers MobProgs immediately when a mobile NPC repops (spawns).
+// mprog_repop_trigger: 當怪物 NPC 重新出生（Spawn）時立即觸發重生腳本。
 void mprog_repop_trigger(CHAR_DATA *mob) {
     if (mob->pIndexData->progtypes & REPOP_PROG)
         mprog_percent_check(mob, NULL, NULL, NULL, REPOP_PROG);
@@ -9061,12 +9109,16 @@ void mprog_repop_trigger(CHAR_DATA *mob) {
     return;
 }
 
+// mprog_tick_trigger: Triggers MobProgs periodically on game tick updates.
+// mprog_tick_trigger: 在遊戲時間週期（Tick）更新時定期觸發怪物腳本。
 void mprog_tick_trigger(CHAR_DATA *mob) {
     if (mob->pIndexData->progtypes & TICK_PROG)
         mprog_percent_check(mob, NULL, NULL, NULL, TICK_PROG);
     return;
 }
 
+// old_mprog_speech_trigger: Legacy implementation of speech trigger triggers on chat messages.
+// old_mprog_speech_trigger: 在聊天或對話訊息時觸發舊版說話腳本的實作。
 void old_mprog_speech_trigger(char *txt, CHAR_DATA *mob) {
     CHAR_DATA *vmob;
 
@@ -9077,6 +9129,8 @@ void old_mprog_speech_trigger(char *txt, CHAR_DATA *mob) {
     return;
 }
 
+// check_arrival: Checks room greet triggers when a character arrives.
+// check_arrival: 當角色抵達時檢查房間的問候觸發條件。
 void check_arrival(CHAR_DATA *ch, bool f) {
     if ((f || !IS_AFFECTED(ch, AFF_SNEAK)) //|| !IS_AFFECTED(ch, AFF_NIGHTSTALK))
                                            // wizinv 必須為 pc 才成立 2022/10/11
@@ -9088,6 +9142,8 @@ void check_arrival(CHAR_DATA *ch, bool f) {
     }
 }
 
+// mprog_speech_trigger: Triggers MobProgs in response to spoken words or chat messages in a room.
+// mprog_speech_trigger: 當房間內有人說話或發送聊天訊息時觸發標準說話腳本。
 void mprog_speech_trigger(char *txt, CHAR_DATA *mob) {
     static int depth = 0;
     if (depth++ < 3)
@@ -9096,6 +9152,8 @@ void mprog_speech_trigger(char *txt, CHAR_DATA *mob) {
     return;
 }
 
+// mprog_defun_trigger: Triggers MobProgs when custom defined triggers are fired.
+// mprog_defun_trigger: 當自訂觸發條件啟動時觸發怪物腳本。
 void mprog_defun_trigger(char *txt, CHAR_DATA *ch, CHAR_DATA *mob) {
     MPROG_DATA *mprg;
     char        arg[MAX_INPUT_LENGTH];
@@ -9116,6 +9174,8 @@ void mprog_defun_trigger(char *txt, CHAR_DATA *ch, CHAR_DATA *mob) {
     return;
 }
 
+// mprog_talk_trigger: Triggers MobProgs when a player talks directly to the NPC.
+// mprog_talk_trigger: 當玩家直接與 NPC 怪物對話時觸發對話腳本。
 void mprog_talk_trigger(char *txt, CHAR_DATA *ch, CHAR_DATA *mob) {
     MPROG_DATA *mprg;
     char        arg[MAX_STRING_LENGTH];

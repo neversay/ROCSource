@@ -2,6 +2,8 @@
 #include <ctype.h>
 #include <stdio.h>
 
+// fread_letter: Reads the next non-whitespace character (letter) from a file.
+// fread_letter: 從檔案中讀取下一個非空白字元（字母）。
 char fread_letter(FILE *fp) {
     char c;
 
@@ -46,6 +48,8 @@ char *fread_alpha_word(FILE *fp, int *status) {
     return NULL;
 }
 
+// fread_number: Reads a 64-bit integer number from a file, skipping leading whitespace.
+// fread_number: 從檔案中讀取一個 64 位元整數數值，並跳過前導空白。
 long long int fread_number(FILE *fp, int *status) {
     char          c;
     bool          sign;
@@ -116,6 +120,8 @@ long long int fread_number(FILE *fp, int *status) {
 /*
  * Read to end of line (for comments).
  */
+// fread_to_eol: Reads and discards all characters in the file up to the end of the line (EOL).
+// fread_to_eol: 讀取並丟棄檔案中直到行尾（EOL）的所有字元。
 void fread_to_eol(FILE *fp) {
     char c;
 

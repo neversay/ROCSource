@@ -2272,6 +2272,8 @@ const struct social_type social_table[] = {
  */
     {"", "", "", "", "", "", "", ""}};
 
+// check_social: Checks and executes a social command if it exists in the social table.
+// check_social: 檢查並執行社交動作指令（如果其存在於社交動作表中）。
 bool check_social(CHAR_DATA *ch, char *command, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];

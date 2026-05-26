@@ -26,6 +26,8 @@
 #include "../include/merc.h"
 #include "skill.h"
 // aspell_flame_elemental added by jye 0940711
+// AddOwnerNameToElemental: Associates summoned elementals with the summoner's identity.
+// AddOwnerNameToElemental: 將召喚出的元素生物與施法者的身分名稱進行關聯設定。
 void AddOwnerNameToElemental(CHAR_DATA *victim, CHAR_DATA *ch, char szEleType[], char count[]) {
     char buf[MAX_INPUT_LENGTH];
     strcpy(buf, "");
@@ -40,6 +42,8 @@ void AddOwnerNameToElemental(CHAR_DATA *victim, CHAR_DATA *ch, char szEleType[],
     victim->alignment = ch->alignment;
 }
 
+// spell_flame_elemental: Spell: spell_flame_elemental - Casts the 'flame_elemental' spell.
+// spell_flame_elemental: 魔法：spell_flame_elemental - 施展 'flame_elemental' 魔法法術。
 void spell_flame_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     char      *arg   = (char *)vo;
@@ -342,6 +346,8 @@ void spell_flame_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // aspell_water_elemental added by jye 0940711
 // remove sepc_fun by snarl 0940717
+// spell_water_elemental: Spell: spell_water_elemental - Casts the 'water_elemental' spell.
+// spell_water_elemental: 魔法：spell_water_elemental - 施展 'water_elemental' 魔法法術。
 void spell_water_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     char      *arg   = (char *)vo;
@@ -620,6 +626,8 @@ void spell_water_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // aspell_earth_elemental added by jye 0940711
+// spell_earth_elemental: Spell: spell_earth_elemental - Casts the 'earth_elemental' spell.
+// spell_earth_elemental: 魔法：spell_earth_elemental - 施展 'earth_elemental' 魔法法術。
 void spell_earth_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     char      *arg   = (char *)vo;
@@ -912,6 +920,8 @@ void spell_earth_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // aspell_wind_elemental added by jye 0940711
 // remove sepc_fun by snarl 0940717
+// spell_wind_elemental: Spell: spell_wind_elemental - Casts the 'wind_elemental' spell.
+// spell_wind_elemental: 魔法：spell_wind_elemental - 施展 'wind_elemental' 魔法法術。
 void spell_wind_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     char      *arg   = (char *)vo;
@@ -1202,6 +1212,8 @@ void spell_wind_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // aspell_lightning_elemental added by jye 0940711
 // remove sepc_fun by snarl 0940717
+// spell_lightning_elemental: Spell: spell_lightning_elemental - Casts the 'lightning_elemental' spell.
+// spell_lightning_elemental: 魔法：spell_lightning_elemental - 施展 'lightning_elemental' 魔法法術。
 void spell_lightning_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     char      *arg   = (char *)vo;
@@ -1489,6 +1501,8 @@ void spell_lightning_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Clay golem spell added by Amenda 2/25/01 */
+// spell_clay_golem: Spell: spell_clay_golem - Casts the 'clay_golem' spell.
+// spell_clay_golem: 魔法：spell_clay_golem - 施展 'clay_golem' 魔法法術。
 void spell_clay_golem(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     CHAR_DATA *gch;
@@ -1581,6 +1595,8 @@ void spell_clay_golem(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Water spirit spell added by Amenda 3/31/01 */
+// spell_water_spirit: Spell: spell_water_spirit - Casts the 'water_spirit' spell.
+// spell_water_spirit: 魔法：spell_water_spirit - 施展 'water_spirit' 魔法法術。
 void spell_water_spirit(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     CHAR_DATA *gch;
@@ -1662,6 +1678,8 @@ void spell_water_spirit(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Fire element spell added by Amenda 4/1/01 */
+// spell_fire_elemental: Spell: spell_fire_elemental - Casts the 'fire_elemental' spell.
+// spell_fire_elemental: 魔法：spell_fire_elemental - 施展 'fire_elemental' 魔法法術。
 void spell_fire_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     CHAR_DATA *gch;
@@ -1765,6 +1783,8 @@ void spell_fire_elemental(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_gate: Spell: spell_gate - Casts the 'gate' spell.
+// spell_gate: 魔法：spell_gate - 施展 'gate' 魔法法術。
 void spell_gate(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA      *gch;
     int             npccount = 0;

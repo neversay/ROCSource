@@ -73,6 +73,8 @@ const struct flag_stat_type flag_stat_table[] =
  Called by:	flag_value and flag_string.
  Note:		This function is local and used only in bit.c.
  ****************************************************************************/
+// is_stat: Core Engine function: is_stat - Main C routine handling game mechanics.
+// is_stat: 核心引擎函式：is_stat - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_stat(const struct flag_type *flag_table) {
     int flag;
 
@@ -94,6 +96,8 @@ bool is_stat(const struct flag_type *flag_table) {
  Called by:	flag_value and flag_string.
  Note:		This function is local and used only in bit.c.
  ****************************************************************************/
+// flag_lookup: Core Engine function: flag_lookup - Main C routine handling game mechanics.
+// flag_lookup: 核心引擎函式：flag_lookup - 處理遊戲底層機制的核心 C 語言子程序。
 long long int flag_lookup(const char *name, const struct flag_type *flag_table) {
     int flag;
 
@@ -111,6 +115,8 @@ long long int flag_lookup(const char *name, const struct flag_type *flag_table) 
  Purpose:	Returns the value of the flags entered.	 Multi-flags accepted.
  Called by:	olc.c and olc_act.c.
  ****************************************************************************/
+// flag_value: Core Engine function: flag_value - Main C routine handling game mechanics.
+// flag_value: 核心引擎函式：flag_value - 處理遊戲底層機制的核心 C 語言子程序。
 long long int flag_value(const struct flag_type *flag_table, char *argument) {
     char          word[MAX_INPUT_LENGTH];
     long long int bit;

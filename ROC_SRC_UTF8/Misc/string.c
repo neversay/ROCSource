@@ -27,6 +27,8 @@
  * Removes the tildes from a string.
  * Used for player-entered strings that go into disk files.
  */
+// smash_tilde: Replaces tilde characters ('~') with spaces to prevent breaking file loads.
+// smash_tilde: 將字串中的波浪號（'~'）替換為空格，以防止破壞存檔檔案的載入。
 void smash_tilde(char *str) {
     bool fChinese;
     fChinese = FALSE;
@@ -48,6 +50,8 @@ void smash_tilde(char *str) {
  * Return TRUE if different
  *   (compatibility with historical functions).
  */
+// str_cmp: Case-insensitive string comparison. Returns TRUE if astr != bstr, FALSE if equal.
+// str_cmp: 不區分大小寫的字串比較。若兩者不同則返回 TRUE，相同則返回 FALSE。
 bool str_cmp(const char *astr, const char *bstr) {
     bool fChinese;
     fChinese = FALSE;
@@ -83,6 +87,8 @@ bool str_cmp(const char *astr, const char *bstr) {
  * Return TRUE if astr not a prefix of bstr
  *   (compatibility with historical functions).
  */
+// str_prefix: Checks if string 'astr' is a prefix of string 'bstr' (case-insensitive).
+// str_prefix: 檢查字串 'astr' 是否是字串 'bstr' 的前綴（不區分大小寫）。
 bool str_prefix(const char *astr, const char *bstr) {
     bool fChinese;
     fChinese = FALSE;
@@ -122,6 +128,8 @@ bool str_prefix(const char *astr, const char *bstr) {
  * Returns TRUE is astr not part of bstr.
  *   (compatibility with historical functions).
  */
+// str_infix: Checks if string 'astr' is contained within string 'bstr' (case-insensitive).
+// str_infix: 檢查字串 'astr' 是否包含在字串 'bstr' 之中（不區分大小寫）。
 bool str_infix(const char *astr, const char *bstr) {
     char c0;
     int  sstr1;
@@ -147,6 +155,8 @@ bool str_infix(const char *astr, const char *bstr) {
  * Return TRUE if astr not a suffix of bstr
  *   (compatibility with historical functions).
  */
+// str_suffix: Checks if string 'astr' is a suffix of string 'bstr' (case-insensitive).
+// str_suffix: 檢查字串 'astr' 是否是字串 'bstr' 的後綴（不區分大小寫）。
 bool str_suffix(const char *astr, const char *bstr) {
     int sstr1;
     int sstr2;
@@ -189,6 +199,8 @@ char *capitalize(const char *str) {
  Purpose:	Clears string and puts player into editing mode.
  Called by:	none
  ****************************************************************************/
+// string_edit: Initializes online string editing editor for a character.
+// string_edit: 為玩家角色初始化線上文字編輯器以編輯特定的字串。
 void string_edit(CHAR_DATA *ch, char **pString) {
     send_to_char("-========-   字串編輯程式    -=========-\n\r", ch);
     send_to_char("    在空白行輸入 .h 可獲得說明訊息\n\r", ch);
@@ -211,6 +223,8 @@ void string_edit(CHAR_DATA *ch, char **pString) {
  Purpose:	Puts player into append mode for given string.
  Called by:	(many)olc_act.c
  ****************************************************************************/
+// string_append: Enters or appends text to an ongoing string editing buffer.
+// string_append: 進入或將新輸入的文字附加到正在編輯的字串緩衝區中。
 void string_append(CHAR_DATA *ch, char **pString) {
     send_to_char("-=======- 字串編輯程式 - 附加 -========-\n\r", ch);
     send_to_char("    在空白行輸入 .h 可獲得說明訊息\n\r", ch);
@@ -258,6 +272,8 @@ char *string_replace(char *orig, char *old, char *new) {
  Purpose:	Interpreter for string editing.
  Called by:	game_loop_xxxx(comm.c).
  ****************************************************************************/
+// string_add: Processes editor commands or appends text to a character's active string buffer.
+// string_add: 處理線上文字編輯器的指令，或將文字新增至角色目前的字串編輯緩衝區。
 void string_add(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
 
@@ -631,6 +647,8 @@ char *all_capitalize(const char *str) {
  * Return TRUE if different
  *   (compatibility with historical functions).
  */
+// ip_str_cmp: Case-insensitive IP address string comparison.
+// ip_str_cmp: 不區分大小寫的 IP 位址字串比較。
 bool ip_str_cmp(const char *astr, const char *bstr) {
     int count = 0;
 

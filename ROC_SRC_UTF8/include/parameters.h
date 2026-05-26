@@ -1,3 +1,5 @@
+// parameters.h: Game balance parameters, boundaries, hard limits, and absolute directory paths.
+// parameters.h: 遊戲平衡參數、數值邊界、系統上限及絕對資料夾路徑設定。
 //*****************************************************************
 //*  PROGRAM ID  : parameters.h                                   *
 //*  LANGUAGE    : c                                              *

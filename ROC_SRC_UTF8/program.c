@@ -141,6 +141,8 @@ char *rprog_type_to_name(int type) {
     }
 }
 
+// check_position: Combat logic: check_position - Applies combat calculations, checks, or damage formulas.
+// check_position: 戰鬥邏輯：check_position - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void check_position(CHAR_DATA *ch, CHAR_DATA *victim, int dam) {
     update_pos(victim);
 
@@ -202,6 +204,8 @@ void check_position(CHAR_DATA *ch, CHAR_DATA *victim, int dam) {
     return;
 }
 
+// do_rpstat: Command: do_rpstat - Main execution handler for the 'rpstat' player/IMM command.
+// do_rpstat: 指令：do_rpstat - 處理玩家或天神執行 'rpstat' 指令的主控程序。
 void do_rpstat(CHAR_DATA *ch, char *argument) {
     char        buf[MAX_STRING_LENGTH * 25]; // 讓最大字數 *25 避免字數過多 crash 2021/10/17
     RPROG_DATA *rprg;
@@ -225,6 +229,8 @@ void do_rpstat(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_opstat: Command: do_opstat - Main execution handler for the 'opstat' player/IMM command.
+// do_opstat: 指令：do_opstat - 處理玩家或天神執行 'opstat' 指令的主控程序。
 void do_opstat(CHAR_DATA *ch, char *argument) {
     char        buf[MAX_STRING_LENGTH * 25];
     char        arg[MAX_INPUT_LENGTH];
@@ -261,6 +267,8 @@ void do_opstat(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_mastat: Command: do_mastat - Main execution handler for the 'mastat' player/IMM command.
+// do_mastat: 指令：do_mastat - 處理玩家或天神執行 'mastat' 指令的主控程序。
 void do_mastat(CHAR_DATA *ch, char *argument) {
     char        buf[MAX_STRING_LENGTH * 25];
     char        arg[MAX_INPUT_LENGTH];
@@ -331,6 +339,8 @@ void do_mastat(CHAR_DATA *ch, char *argument) {
  * show the MOBprograms which are set.
  */
 
+// do_mpstat: Command: do_mpstat - Main execution handler for the 'mpstat' player/IMM command.
+// do_mpstat: 指令：do_mpstat - 處理玩家或天神執行 'mpstat' 指令的主控程序。
 void do_mpstat(CHAR_DATA *ch, char *argument) {
     char        buf[MAX_STRING_LENGTH * 25];
     char        arg[MAX_INPUT_LENGTH];

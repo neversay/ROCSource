@@ -263,6 +263,8 @@ OBJ_INDEX_DATA *material_list;
 /*
  * Big mama top level function.
  */
+// boot_db: Core boot function. Loads game parameters, area lists, mobs, rooms, objects, and configurations.
+// boot_db: 核心引導開機函式。載入遊戲參數、區域清單、怪物、房間、物品及各項系統設定。
 void boot_db(void) {
     /*
      * Init some data space stuff.
@@ -480,6 +482,8 @@ void boot_db(void) {
     return;
 }
 
+// load_basic_types: Core Engine function: load_basic_types - Main C routine handling game mechanics.
+// load_basic_types: 核心引擎函式：load_basic_types - 處理遊戲底層機制的核心 C 語言子程序。
 void load_basic_types() {
     OBJ_INDEX_DATA *oid;
     int             i;
@@ -494,6 +498,8 @@ void load_basic_types() {
     }
 }
 
+// load_symbol: Core Engine function: load_symbol - Main C routine handling game mechanics.
+// load_symbol: 核心引擎函式：load_symbol - 處理遊戲底層機制的核心 C 語言子程序。
 void load_symbol() {
     FILE        *fp;
     int          status;
@@ -536,6 +542,8 @@ void load_symbol() {
 /*
  * Snarf an 'area' header line.
  */
+// load_area: Core Engine function: load_area - Main C routine handling game mechanics.
+// load_area: 核心引擎函式：load_area - 處理遊戲底層機制的核心 C 語言子程序。
 void load_area(FILE *fp) {
     AREA_DATA *pArea;
     int        stat;
@@ -566,6 +574,8 @@ void load_area(FILE *fp) {
     return;
 }
 
+// load_diw_area: Core Engine function: load_diw_area - Main C routine handling game mechanics.
+// load_diw_area: 核心引擎函式：load_diw_area - 處理遊戲底層機制的核心 C 語言子程序。
 void load_diw_area(FILE *fp) {
     AREA_DATA *pArea;
     int        stat;
@@ -648,6 +658,8 @@ void load_diw_area(FILE *fp) {
  * Recall 3001
  * End
  */
+// new_load_area: Core Engine function: new_load_area - Main C routine handling game mechanics.
+// new_load_area: 核心引擎函式：new_load_area - 處理遊戲底層機制的核心 C 語言子程序。
 void new_load_area(FILE *fp) {
     AREA_DATA *pArea;
     CLAN_DATA *cn;
@@ -742,6 +754,8 @@ void new_load_area(FILE *fp) {
 /*
  * Sets vnum range for area using OLC protection features.
  */
+// assign_area_vnum: Core Engine function: assign_area_vnum - Main C routine handling game mechanics.
+// assign_area_vnum: 核心引擎函式：assign_area_vnum - 處理遊戲底層機制的核心 C 語言子程序。
 void assign_area_vnum(int vnum) {
     if (area_last->lvnum == 0 || area_last->uvnum == 0)
         area_last->lvnum = area_last->uvnum = vnum;
@@ -757,6 +771,8 @@ void assign_area_vnum(int vnum) {
 /*
  * Snarf a help section.
  */
+// load_helps: Core Engine function: load_helps - Main C routine handling game mechanics.
+// load_helps: 核心引擎函式：load_helps - 處理遊戲底層機制的核心 C 語言子程序。
 void load_helps(FILE *fp) {
     HELP_DATA *pHelp;
     char      *keyword;
@@ -794,6 +810,8 @@ void load_helps(FILE *fp) {
 /*
  * Snarf a recall point.
  */
+// load_recall: Core Engine function: load_recall - Main C routine handling game mechanics.
+// load_recall: 核心引擎函式：load_recall - 處理遊戲底層機制的核心 C 語言子程序。
 void load_recall(FILE *fp) {
     AREA_DATA *pArea;
     char       buf[MAX_STRING_LENGTH];
@@ -814,6 +832,8 @@ void load_recall(FILE *fp) {
 /*
  * Snarf a mob section.
  */
+// load_mobiles: Core Engine function: load_mobiles - Main C routine handling game mechanics.
+// load_mobiles: 核心引擎函式：load_mobiles - 處理遊戲底層機制的核心 C 語言子程序。
 void load_mobiles(FILE *fp) {
     MOB_INDEX_DATA *pMobIndex;
     MOB_WEAKNESS   *weak;
@@ -1208,6 +1228,8 @@ case APPLY_SAVING_GOOD:
     return;
 }
 
+// load_material: Core Engine function: load_material - Main C routine handling game mechanics.
+// load_material: 核心引擎函式：load_material - 處理遊戲底層機制的核心 C 語言子程序。
 void load_material(FILE *fp) {
     OBJ_INDEX_DATA *pObjIndex;
     AFFECT_DATA    *paf;
@@ -1420,6 +1442,8 @@ void load_material(FILE *fp) {
 /*
  * Snarf an obj section.
  */
+// load_objects: Core Engine function: load_objects - Main C routine handling game mechanics.
+// load_objects: 核心引擎函式：load_objects - 處理遊戲底層機制的核心 C 語言子程序。
 void load_objects(FILE *fp) {
     OBJ_INDEX_DATA *pObjIndex;
     AFFECT_DATA    *paf;
@@ -1778,6 +1802,8 @@ void load_objects(FILE *fp) {
  * Adds a reset to a room.  OLC
  * Similar to add_reset in olc.c
  */
+// new_reset: Core Engine function: new_reset - Main C routine handling game mechanics.
+// new_reset: 核心引擎函式：new_reset - 處理遊戲底層機制的核心 C 語言子程序。
 void new_reset(ROOM_INDEX_DATA *pR, RESET_DATA *pReset) {
     RESET_DATA *pr;
 
@@ -1802,6 +1828,8 @@ void new_reset(ROOM_INDEX_DATA *pR, RESET_DATA *pReset) {
 /*
  * Snarf a reset section. Changed for OLC.
  */
+// load_resets: Core Engine function: load_resets - Main C routine handling game mechanics.
+// load_resets: 核心引擎函式：load_resets - 處理遊戲底層機制的核心 C 語言子程序。
 void load_resets(FILE *fp) {
     RESET_DATA *pReset;
     int         iLastRoom = 0;
@@ -1947,6 +1975,8 @@ void load_resets(FILE *fp) {
 /*
  * Snarf a room section.
  */
+// load_rooms: Core Engine function: load_rooms - Main C routine handling game mechanics.
+// load_rooms: 核心引擎函式：load_rooms - 處理遊戲底層機制的核心 C 語言子程序。
 void load_rooms(FILE *fp) {
     ROOM_INDEX_DATA *pRoomIndex;
 
@@ -2090,6 +2120,8 @@ void load_rooms(FILE *fp) {
 }
 
 /* OLC 1.1b */
+// new_load_rooms: Core Engine function: new_load_rooms - Main C routine handling game mechanics.
+// new_load_rooms: 核心引擎函式：new_load_rooms - 處理遊戲底層機制的核心 C 語言子程序。
 void new_load_rooms(FILE *fp) {
     ROOM_INDEX_DATA *pRoomIndex;
 
@@ -2226,6 +2258,8 @@ void new_load_rooms(FILE *fp) {
 /*
  * Snarf a shop section.
  */
+// load_shops: Core Engine function: load_shops - Main C routine handling game mechanics.
+// load_shops: 核心引擎函式：load_shops - 處理遊戲底層機制的核心 C 語言子程序。
 void load_shops(FILE *fp) {
     SHOP_DATA *pShop;
     int        keeper = 0;
@@ -2274,6 +2308,8 @@ void load_shops(FILE *fp) {
 /*
  * Snarf spec proc declarations.
  */
+// load_specials: Core Engine function: load_specials - Main C routine handling game mechanics.
+// load_specials: 核心引擎函式：load_specials - 處理遊戲底層機制的核心 C 語言子程序。
 void load_specials(FILE *fp) {
     for (;;) {
         MOB_INDEX_DATA *pMobIndex;
@@ -2308,6 +2344,8 @@ void load_specials(FILE *fp) {
 /*
  * Snarf notes file.
  */
+// load_notes: Core Engine function: load_notes - Main C routine handling game mechanics.
+// load_notes: 核心引擎函式：load_notes - 處理遊戲底層機制的核心 C 語言子程序。
 void load_notes(void) {
     FILE      *fp;
     NOTE_DATA *pnotelast;
@@ -2376,6 +2414,8 @@ void load_notes(void) {
     return;
 }
 
+// load_down_time: Core Engine function: load_down_time - Main C routine handling game mechanics.
+// load_down_time: 核心引擎函式：load_down_time - 處理遊戲底層機制的核心 C 語言子程序。
 void load_down_time(void) {
     struct tm *check_time;
 
@@ -2511,6 +2551,8 @@ void load_down_time(void) {
 /*
  * Load up the ban file
  */
+// load_ban: Core Engine function: load_ban - Main C routine handling game mechanics.
+// load_ban: 核心引擎函式：load_ban - 處理遊戲底層機制的核心 C 語言子程序。
 void load_ban(void) {
     BAN_DATA *pban;
     FILE     *fp;
@@ -2551,6 +2593,8 @@ void load_ban(void) {
  * Has to be done after all rooms are read in.
  * Check for bad or suspicious reverse exits.
  */
+// fix_exits: Core Engine function: fix_exits - Main C routine handling game mechanics.
+// fix_exits: 核心引擎函式：fix_exits - 處理遊戲底層機制的核心 C 語言子程序。
 void fix_exits(void) {
     EXIT_DATA       *pexit;
     EXIT_DATA       *pexit_rev;
@@ -2606,6 +2650,8 @@ void fix_exits(void) {
 /*
  * Repopulate areas periodically.
  */
+// area_update: Core Engine function: area_update - Main C routine handling game mechanics.
+// area_update: 核心引擎函式：area_update - 處理遊戲底層機制的核心 C 語言子程序。
 void area_update(void) {
     AREA_DATA *pArea;
 
@@ -2662,6 +2708,8 @@ void area_update(void) {
 }
 
 // use this to create eqs from lv31 - 37
+// number_fuzzy2: Core Engine function: number_fuzzy2 - Main C routine handling game mechanics.
+// number_fuzzy2: 核心引擎函式：number_fuzzy2 - 處理遊戲底層機制的核心 C 語言子程序。
 int number_fuzzy2(int number) {
     switch (number_bits(3)) {
     case 0:
@@ -2690,6 +2738,8 @@ int number_fuzzy2(int number) {
 /* OLC
  * Reset one room.  Called by reset_area and olc.
  */
+// reset_room: Core Engine function: reset_room - Main C routine handling game mechanics.
+// reset_room: 核心引擎函式：reset_room - 處理遊戲底層機制的核心 C 語言子程序。
 void reset_room(ROOM_INDEX_DATA *pRoom) {
     RESET_DATA *pReset;
     CHAR_DATA  *pMob;
@@ -3058,6 +3108,8 @@ void reset_room(ROOM_INDEX_DATA *pRoom) {
  * Reset one area.
  */
 /*
+// reset_area: Core Engine function: reset_area - Main C routine handling game mechanics.
+// reset_area: 核心引擎函式：reset_area - 處理遊戲底層機制的核心 C 語言子程序。
 void reset_area( AREA_DATA *pArea )
 {
     CHAR_DATA  *mob;
@@ -3130,6 +3182,8 @@ last = FALSE;
 break;
 }
 }
+// if: Core Engine function: if - Main C routine handling game mechanics.
+// if: 核心引擎函式：if - 處理遊戲底層機制的核心 C 語言子程序。
 else
 if ( pMobIndex->count >= pReset->arg2 )
 {
@@ -3357,6 +3411,8 @@ return;
 /* OLC
  * Reset one area.
  */
+// reset_area: Core Engine function: reset_area - Main C routine handling game mechanics.
+// reset_area: 核心引擎函式：reset_area - 處理遊戲底層機制的核心 C 語言子程序。
 void reset_area(AREA_DATA *pArea) {
     ROOM_INDEX_DATA *pRoom;
     int              vnum;
@@ -4467,6 +4523,8 @@ OBJ_DATA *fcreate_object(OBJ_INDEX_DATA *pObjIndex, int level) {
 /*
  * Clear a new character.
  */
+// clear_char: Core Engine function: clear_char - Main C routine handling game mechanics.
+// clear_char: 核心引擎函式：clear_char - 處理遊戲底層機制的核心 C 語言子程序。
 void clear_char(CHAR_DATA *ch) {
     static CHAR_DATA ch_zero;
 
@@ -4515,6 +4573,8 @@ void clear_char(CHAR_DATA *ch) {
  */
 MOB_ACTION   *mob_action_list, *mob_action_free;
 BATTLE_ARRAY *ba_free;
+// free_char: System helper: free_char - Performs cleanup or manages organization data.
+// free_char: 系統公用：free_char - 進行記憶體清理或管理公會/組織資料。
 void          free_char(CHAR_DATA *ch) {
     OBJ_DATA    *obj;
     OBJ_DATA    *obj_next;
@@ -4724,6 +4784,8 @@ ROOM_INDEX_DATA *get_room_index(int vnum) {
 
 int rgRecall[5];
 
+// do_areas: Command: do_areas - Main execution handler for the 'areas' player/IMM command.
+// do_areas: 指令：do_areas - 處理玩家或天神執行 'areas' 指令的主控程序。
 void do_areas(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea1;
     AREA_DATA *pArea2;
@@ -4824,6 +4886,8 @@ void do_areas(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_memory: Command: do_memory - Main execution handler for the 'memory' player/IMM command.
+// do_memory: 指令：do_memory - 處理玩家或天神執行 'memory' 指令的主控程序。
 void do_memory(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
     char       buf[MAX_STRING_LENGTH];
@@ -4894,6 +4958,8 @@ void do_memory(CHAR_DATA *ch, char *argument) {
 /*
  * Stick a little fuzz on a number.
  */
+// number_fuzzy: Core Engine function: number_fuzzy - Main C routine handling game mechanics.
+// number_fuzzy: 核心引擎函式：number_fuzzy - 處理遊戲底層機制的核心 C 語言子程序。
 int number_fuzzy(int number) {
     switch (number_bits(2)) {
     case 0:
@@ -4910,6 +4976,8 @@ int number_fuzzy(int number) {
 /*
  * Generate a random number.
  */
+// number_range: Core Engine function: number_range - Main C routine handling game mechanics.
+// number_range: 核心引擎函式：number_range - 處理遊戲底層機制的核心 C 語言子程序。
 int number_range(int from, int to) {
     int power;
     int number;
@@ -4931,6 +4999,8 @@ int number_range(int from, int to) {
 /*
  * Generate a percentile roll.
  */
+// number_percent: Core Engine function: number_percent - Main C routine handling game mechanics.
+// number_percent: 核心引擎函式：number_percent - 處理遊戲底層機制的核心 C 語言子程序。
 int number_percent(void) {
     // use rand() in stdlib, modified by keelar
     return (1 + (rand() % 100));
@@ -4939,6 +5009,8 @@ int number_percent(void) {
 /*
  * Generate a random door.
  */
+// number_door: Core Engine function: number_door - Main C routine handling game mechanics.
+// number_door: 核心引擎函式：number_door - 處理遊戲底層機制的核心 C 語言子程序。
 int number_door(void) {
     int door;
 
@@ -4948,6 +5020,8 @@ int number_door(void) {
     return door;
 }
 
+// number_bits: Core Engine function: number_bits - Main C routine handling game mechanics.
+// number_bits: 核心引擎函式：number_bits - 處理遊戲底層機制的核心 C 語言子程序。
 int number_bits(int width) {
     return number_mm() & ((1 << width) - 1);
 }
@@ -4960,6 +5034,8 @@ int number_bits(int width) {
  */
 static int rgiState[2 + 55];
 
+// init_mm: Core Engine function: init_mm - Main C routine handling game mechanics.
+// init_mm: 核心引擎函式：init_mm - 處理遊戲底層機制的核心 C 語言子程序。
 void init_mm() {
     srand(time(NULL));
     int *piState;
@@ -4978,6 +5054,8 @@ void init_mm() {
     return;
 }
 
+// number_mm: Core Engine function: number_mm - Main C routine handling game mechanics.
+// number_mm: 核心引擎函式：number_mm - 處理遊戲底層機制的核心 C 語言子程序。
 int number_mm(void) {
     return rand();
     /*  更改亂數表 19/08/06
@@ -5005,6 +5083,8 @@ int number_mm(void) {
 /*
  * Roll some dice.
  */
+// dice: Core Engine function: dice - Main C routine handling game mechanics.
+// dice: 核心引擎函式：dice - 處理遊戲底層機制的核心 C 語言子程序。
 int dice(int number, int size) {
     int idice;
     int sum;
@@ -5025,10 +5105,14 @@ int dice(int number, int size) {
 /*
  * Simple linear interpolation.
  */
+// interpolate: Core Engine function: interpolate - Main C routine handling game mechanics.
+// interpolate: 核心引擎函式：interpolate - 處理遊戲底層機制的核心 C 語言子程序。
 int interpolate(int level, int value_00, int value_42) {
     return value_00 + level * (value_42 - value_00) / 42;
 }
 
+// interpolate1: Core Engine function: interpolate1 - Main C routine handling game mechanics.
+// interpolate1: 核心引擎函式：interpolate1 - 處理遊戲底層機制的核心 C 語言子程序。
 int interpolate1(int level1, int value1, int level2, int value2, int level) {
     return value1 + level * (value2 - value1) / (level2 - level1);
 }
@@ -5036,6 +5120,8 @@ int interpolate1(int level1, int value1, int level2, int value2, int level) {
 /*
  * Append a string to a file.
  */
+// append_file: Core Engine function: append_file - Main C routine handling game mechanics.
+// append_file: 核心引擎函式：append_file - 處理遊戲底層機制的核心 C 語言子程序。
 void append_file(CHAR_DATA *ch, char *file, char *str) {
     FILE *fp;
 
@@ -5065,6 +5151,8 @@ void append_file(CHAR_DATA *ch, char *file, char *str) {
 /*
  * Reports a bug.
  */
+// bug: Core Engine function: bug - Main C routine handling game mechanics.
+// bug: 核心引擎函式：bug - 處理遊戲底層機制的核心 C 語言子程序。
 void bug(const char *str, int param) {
     FILE *fp;
     char  buf[MAX_STRING_LENGTH * 36];
@@ -5121,6 +5209,8 @@ void bug(const char *str, int param) {
 /*
  * Writes a string to the log.
  */
+// log_string: Core Engine function: log_string - Main C routine handling game mechanics.
+// log_string: 核心引擎函式：log_string - 處理遊戲底層機制的核心 C 語言子程序。
 void log_string(const char *str) {
     char *strtime;
 
@@ -5145,6 +5235,8 @@ void log_string(const char *str) {
  *
  * -- Furey
  */
+// tail_chain: Core Engine function: tail_chain - Main C routine handling game mechanics.
+// tail_chain: 核心引擎函式：tail_chain - 處理遊戲底層機制的核心 C 語言子程序。
 void tail_chain(void) {
     return;
 }
@@ -5159,6 +5251,8 @@ void tail_chain(void) {
 RPROG_DATA *rprg_list;
 OPROG_DATA *oprg_list;
 
+// top10_load: Core Engine function: top10_load - Main C routine handling game mechanics.
+// top10_load: 核心引擎函式：top10_load - 處理遊戲底層機制的核心 C 語言子程序。
 void top10_load() {
     FILE       *fp;
     int         i, j;
@@ -5207,6 +5301,8 @@ void top10_load() {
     fpReserve = fopen(NULL_FILE, "r");
 }
 
+// top10_save: Core Engine function: top10_save - Main C routine handling game mechanics.
+// top10_save: 核心引擎函式：top10_save - 處理遊戲底層機制的核心 C 語言子程序。
 void top10_save() {
     FILE       *fp;
     int         i, j;
@@ -5239,6 +5335,8 @@ void top10_save() {
     fpReserve = fopen(NULL_FILE, "r");
 }
 
+// bugf: Core Engine function: bugf - Main C routine handling game mechanics.
+// bugf: 核心引擎函式：bugf - 處理遊戲底層機制的核心 C 語言子程序。
 void bugf(char *fmt, ...) {
     char    buf[MAX_STRING_LENGTH * 4];
     va_list args;
@@ -5255,6 +5353,8 @@ void bugf(char *fmt, ...) {
  *  * Writes a string to the log.
  *   * Got it from Erwin S.A. source - Zen
  *    */
+// logf_envy: Core Engine function: logf_envy - Main C routine handling game mechanics.
+// logf_envy: 核心引擎函式：logf_envy - 處理遊戲底層機制的核心 C 語言子程序。
 void logf_envy(char *fmt, ...) {
     char    buf[2 * MAX_STRING_LENGTH];
     va_list args;
@@ -5270,6 +5370,8 @@ void logf_envy(char *fmt, ...) {
 /** zcecil
  * 檢查 mob 是不是在非自主狀態
  */
+// is_real_npc: Core Engine function: is_real_npc - Main C routine handling game mechanics.
+// is_real_npc: 核心引擎函式：is_real_npc - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_real_npc(CHAR_DATA *ch) {
     /* 用條列式是為了加速return false*/
     if (!IS_NPC(ch))

@@ -17,6 +17,8 @@
 extern bool IsPK(CHAR_DATA *ch, CHAR_DATA *victim);
 
 // burning hands modified by whisperwind 8.23.2004
+// spell_burning_hands: Spell: spell_burning_hands - Casts the 'burning_hands' spell.
+// spell_burning_hands: 魔法：spell_burning_hands - 施展 'burning_hands' 魔法法術。
 void spell_burning_hands(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -106,6 +108,8 @@ void spell_burning_hands(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_fire_wall: Spell: spell_fire_wall - Casts the 'fire_wall' spell.
+// spell_fire_wall: 魔法：spell_fire_wall - 施展 'fire_wall' 魔法法術。
 void spell_fire_wall(int sn, int level, CHAR_DATA *ch, void *vo) {
 #ifdef HAS_ROOM_AFFECT
     R_AFFECT_DATA af;
@@ -133,6 +137,8 @@ void spell_fire_wall(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // phlogistic verse added by whisperwind 10.22.2004
+// spell_phlogistic_verse: Spell: spell_phlogistic_verse - Casts the 'phlogistic_verse' spell.
+// spell_phlogistic_verse: 魔法：spell_phlogistic_verse - 施展 'phlogistic_verse' 魔法法術。
 void spell_phlogistic_verse(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;
@@ -434,6 +440,8 @@ void spell_phlogistic_verse(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // song of firestorm add by whisperwind 11.26.2004
+// spell_song_of_firestorm: Spell: spell_song_of_firestorm - Casts the 'song_of_firestorm' spell.
+// spell_song_of_firestorm: 魔法：spell_song_of_firestorm - 施展 'song_of_firestorm' 魔法法術。
 void spell_song_of_firestorm(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -490,6 +498,8 @@ void spell_song_of_firestorm(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // fireball modified by whisperwind 9.18.2004
+// spell_fireball: Spell: spell_fireball - Casts the 'fireball' spell.
+// spell_fireball: 魔法：spell_fireball - 施展 'fireball' 魔法法術。
 void spell_fireball(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     CHAR_DATA *vch    = (CHAR_DATA *)vo;
@@ -640,6 +650,8 @@ void spell_fireball(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 /* starfire spell added by Amenda 12/26/00 */
 // modified by whisperwind 8.23.2004
+// spell_starfire: Spell: spell_starfire - Casts the 'starfire' spell.
+// spell_starfire: 魔法：spell_starfire - 施展 'starfire' 魔法法術。
 void spell_starfire(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim  = (CHAR_DATA *)vo;
     int        nSFSklv = get_skill_level(ch, sn);
@@ -713,6 +725,8 @@ void spell_starfire(int sn, int level, CHAR_DATA *ch, void *vo) {
 /*
  * Spell for mega1.are from Glop/Erkenbrand.
  */
+// spell_high_explosive: Spell: spell_high_explosive - Casts the 'high_explosive' spell.
+// spell_high_explosive: 魔法：spell_high_explosive - 施展 'high_explosive' 魔法法術。
 void spell_high_explosive(int sn, int level, CHAR_DATA *ch, void *vo) {
     QMARK     *qm;
     char       buf[MAX_INPUT_LENGTH];
@@ -943,6 +957,8 @@ void spell_high_explosive(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// check_fire_container: Function: check_fire_container - Magical engine helper routine.
+// check_fire_container: 函式：check_fire_container - 魔法引擎輔助處理程序。
 void check_fire_container(OBJ_DATA *con, CHAR_DATA *victim) {
     OBJ_DATA *obj_lose;
     OBJ_DATA *obj_next;
@@ -1012,6 +1028,8 @@ void check_fire_container(OBJ_DATA *con, CHAR_DATA *victim) {
 }
 
 /* Flame shield spell from Malice of EnvyMud */
+// spell_flaming: Spell: spell_flaming - Casts the 'flaming' spell.
+// spell_flaming: 魔法：spell_flaming - 施展 'flaming' 魔法法術。
 void spell_flaming(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1032,6 +1050,8 @@ void spell_flaming(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_angry_fire_storm: Spell: spell_angry_fire_storm - Casts the 'angry_fire_storm' spell.
+// spell_angry_fire_storm: 魔法：spell_angry_fire_storm - 施展 'angry_fire_storm' 魔法法術。
 void spell_angry_fire_storm(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        dam;

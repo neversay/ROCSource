@@ -29,6 +29,8 @@
  */
 AREA_DATA *get_area_data args((int vnum));
 
+// check_cost: Validates if a builder has enough security credits/gold for a specific action.
+// check_cost: 驗證建設者是否擁有足夠的安全信用點數或金幣來執行特定動作。
 bool check_cost(CHAR_DATA *ch, int cost) {
     char buf[MAX_STRING_LENGTH];
     if (!ch->clan)
@@ -52,6 +54,8 @@ bool check_cost(CHAR_DATA *ch, int cost) {
   3.檢查幫派戶頭，如果夠，扣款
   4.檢查是否為 imm，如果是，無償完成
   */
+// check_clco: Checks class-cost constraints for building class items/mobs.
+// check_clco: 檢查建立職業物品或怪物時的職業成本限制。
 bool check_clco(const struct flag_cost fc[], char *arg, CHAR_DATA *ch) {
     char buf[MAX_STRING_LENGTH];
     int  i;
@@ -80,6 +84,8 @@ bool check_clco(const struct flag_cost fc[], char *arg, CHAR_DATA *ch) {
     return TRUE;
 }
 
+// flag_cost: Calculates security credit/gold costs for adding specific flags.
+// flag_cost: 計算新增特定旗標（Flag）所需消耗的安全信用點數或金幣。
 int flag_cost(const struct flag_cost fc[], char *arg) {
     int i;
     for (i = 0; *(fc[i].name); ++i) {
@@ -89,6 +95,8 @@ int flag_cost(const struct flag_cost fc[], char *arg) {
     return -1;
 }
 
+// flag_class: Parses class type requirements from OLC flag inputs.
+// flag_class: 從 OLC 旗標輸入中解析所需的職業類型。
 int flag_class(const struct flag_cost fc[], char *arg) {
     int i;
     for (i = 0; *(fc[i].name); ++i) {
@@ -99,6 +107,8 @@ int flag_class(const struct flag_cost fc[], char *arg) {
 }
 
 /* Executed from comm.c.  Minimizes compiling when changes are made. */
+// run_olc_editor: Main OLC editor driver that intercepts and processes inputs based on user editor state.
+// run_olc_editor: 主 OLC 編輯器驅動程序，根據使用者編輯器狀態攔截並處理輸入。
 bool run_olc_editor(DESCRIPTOR_DATA *d) {
     switch (d->editor) {
     case ED_AREA:
@@ -125,6 +135,8 @@ bool run_olc_editor(DESCRIPTOR_DATA *d) {
 long long int flag_lookup(const char *name, const struct flag_type *flag_table);
 
 bool          is_stat(const struct flag_type *flag_table);
+// llflag_value: Safely parses long long bit flag values from an argument string.
+// llflag_value: 從引數字串中安全地解析 64 位元長整數位元旗標值。
 long long int llflag_value(const struct flag_type *flag_table, char *argument, long long int *v) {
     char          word[MAX_INPUT_LENGTH];
     long long int bit;
@@ -238,6 +250,8 @@ char *olc_ed_vnum(CHAR_DATA *ch) {
  Purpose:	Format up the commands from given table.
  Called by:	show_commands(olc_act.c).
  ****************************************************************************/
+// show_olc_cmds: Helper to display all available OLC builder commands in the current editor.
+// show_olc_cmds: 輔助函式，顯示目前編輯器中所有可用的 OLC 建設者指令。
 void show_olc_cmds(CHAR_DATA *ch, const struct olc_cmd_type *olc_table) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH];
@@ -267,6 +281,8 @@ void show_olc_cmds(CHAR_DATA *ch, const struct olc_cmd_type *olc_table) {
  Purpose:	Display all olc commands.
  Called by:	olc interpreters.
  ****************************************************************************/
+// show_commands: Displays the command summary list to an OLC builder.
+// show_commands: 向 OLC 建設者顯示指令摘要清單。
 bool show_commands(CHAR_DATA *ch, char *argument) {
     switch (ch->desc->editor) {
     case ED_AREA:
@@ -463,6 +479,8 @@ AREA_DATA *get_area_data(int vnum) {
  Purpose:	Resets builder information on completion.
  Called by:	aedit, redit, oedit, medit(olc.c)
  ****************************************************************************/
+// edit_done: Exits OLC editor mode safely and returns to standard play.
+// edit_done: 安全退出 OLC 編輯器模式並返回標準遊戲狀態。
 bool edit_done(CHAR_DATA *ch) {
     if (ch->desc->editor == ED_OBJECT) {
         OBJ_INDEX_DATA *pObj;
@@ -480,6 +498,8 @@ bool edit_done(CHAR_DATA *ch) {
  *****************************************************************************/
 
 /* Area Interpreter, called by do_aedit. */
+// aedit: Function: aedit - Core Online Creation editor helper.
+// aedit: 函式：aedit - 核心線上動態建設（OLC）編輯器輔助程序。
 void aedit(CHAR_DATA *ch, char *argument) {
     AREA_DATA    *pArea;
     char          command[MAX_INPUT_LENGTH];
@@ -536,6 +556,8 @@ void aedit(CHAR_DATA *ch, char *argument) {
 }
 
 /* Room Interpreter, called by do_redit. */
+// redit: Function: redit - Core Online Creation editor helper.
+// redit: 函式：redit - 核心線上動態建設（OLC）編輯器輔助程序。
 void redit(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     AREA_DATA       *pArea;
@@ -605,6 +627,8 @@ void redit(CHAR_DATA *ch, char *argument) {
 }
 
 /* Object Interpreter, called by do_oedit. */
+// oedit: Function: oedit - Core Online Creation editor helper.
+// oedit: 函式：oedit - 核心線上動態建設（OLC）編輯器輔助程序。
 void oedit(CHAR_DATA *ch, char *argument) {
     AREA_DATA      *pArea;
     OBJ_INDEX_DATA *pObj;
@@ -691,6 +715,8 @@ void oedit(CHAR_DATA *ch, char *argument) {
 }
 
 /* Mobile Interpreter, called by do_medit. */
+// medit: Function: medit - Core Online Creation editor helper.
+// medit: 函式：medit - 核心線上動態建設（OLC）編輯器輔助程序。
 void medit(CHAR_DATA *ch, char *argument) {
     AREA_DATA      *pArea;
     MOB_INDEX_DATA *pMob;
@@ -780,6 +806,8 @@ void medit(CHAR_DATA *ch, char *argument) {
 }
 
 /* MobProg Interpreter, called by do_mpedit. */
+// mpedit: Function: mpedit - Core Online Creation editor helper.
+// mpedit: 函式：mpedit - 核心線上動態建設（OLC）編輯器輔助程序。
 void mpedit(CHAR_DATA *ch, char *argument) {
     AREA_DATA      *pArea;
     MOB_INDEX_DATA *pMob;
@@ -843,6 +871,8 @@ void mpedit(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_aedit: Command: do_aedit - OLC system trigger command for 'aedit' execution.
+// do_aedit: 指令：do_aedit - OLC 系統觸發指令，執行 'aedit' 功能。
 void do_aedit(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       command[MAX_INPUT_LENGTH];
@@ -912,6 +942,8 @@ void do_aedit(CHAR_DATA *ch, char *argument) {
 }
 
 /* Entry point for editing room_index_data. */
+// do_redit: Command: do_redit - OLC system trigger command for 'redit' execution.
+// do_redit: 指令：do_redit - OLC 系統觸發指令，執行 'redit' 功能。
 void do_redit(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     char             command[MAX_INPUT_LENGTH];
@@ -968,6 +1000,8 @@ void do_redit(CHAR_DATA *ch, char *argument) {
 }
 
 /* Entry point for editing obj_index_data. */
+// do_oedit: Command: do_oedit - OLC system trigger command for 'oedit' execution.
+// do_oedit: 指令：do_oedit - OLC 系統觸發指令，執行 'oedit' 功能。
 void do_oedit(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     AREA_DATA      *pArea;
@@ -1034,6 +1068,8 @@ void do_oedit(CHAR_DATA *ch, char *argument) {
 }
 
 /* Entry point for editing mob_index_data. */
+// do_medit: Command: do_medit - OLC system trigger command for 'medit' execution.
+// do_medit: 指令：do_medit - OLC 系統觸發指令，執行 'medit' 功能。
 void do_medit(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     AREA_DATA      *pArea;
@@ -1099,6 +1135,8 @@ void do_medit(CHAR_DATA *ch, char *argument) {
 }
 
 /* Entry point for editing mob_prog_data. */
+// do_mpedit: Command: do_mpedit - OLC system trigger command for 'mpedit' execution.
+// do_mpedit: 指令：do_mpedit - OLC 系統觸發指令，執行 'mpedit' 功能。
 void do_mpedit(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     AREA_DATA      *pArea;
@@ -1206,6 +1244,8 @@ void do_mpedit(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// display_resets: Function: display_resets - Core Online Creation editor helper.
+// display_resets: 函式：display_resets - 核心線上動態建設（OLC）編輯器輔助程序。
 void display_resets(CHAR_DATA *ch) {
     ROOM_INDEX_DATA *pRoom;
     RESET_DATA      *pReset;
@@ -1410,6 +1450,8 @@ void display_resets(CHAR_DATA *ch) {
  Purpose:	Inserts a new reset in the given index slot.
  Called by:	do_resets(olc.c).
  ****************************************************************************/
+// add_reset: Function: add_reset - Core Online Creation editor helper.
+// add_reset: 函式：add_reset - 核心線上動態建設（OLC）編輯器輔助程序。
 void add_reset(ROOM_INDEX_DATA *room, RESET_DATA *pReset, int index) {
     RESET_DATA *reset;
     int         iReset = 0;
@@ -1445,6 +1487,8 @@ void add_reset(ROOM_INDEX_DATA *room, RESET_DATA *pReset, int index) {
     return;
 }
 
+// do_resets: Command: do_resets - OLC system trigger command for 'resets' execution.
+// do_resets: 指令：do_resets - OLC 系統觸發指令，執行 'resets' 功能。
 void do_resets(CHAR_DATA *ch, char *argument) {
     char        arg1[MAX_INPUT_LENGTH];
     char        arg2[MAX_INPUT_LENGTH];
@@ -1662,6 +1706,8 @@ void do_resets(CHAR_DATA *ch, char *argument) {
  Purpose:	Normal command to list areas and display area information.
  Called by:	interpreter(interp.c)
  ****************************************************************************/
+// do_alist: Command: do_alist - OLC system trigger command for 'alist' execution.
+// do_alist: 指令：do_alist - OLC 系統觸發指令，執行 'alist' 功能。
 void do_alist(CHAR_DATA *ch, char *argument) {
     char       buf[MAX_STRING_LENGTH];
     char       result[MAX_STRING_LENGTH * 3]; /* May need tweaking. */

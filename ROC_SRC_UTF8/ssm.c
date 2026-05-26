@@ -117,6 +117,8 @@ extern int TOGGLE;
  */
 #define MAX_FREE 1000
 
+// init_string_space: Initializes the shared string space memory heap for efficient string caching.
+// init_string_space: 初始化共享字串空間（ssm）記憶體堆疊，以進行高效的字串快取與複用。
 void init_string_space() {
     BufEntry *walk;
     int       i;
@@ -150,6 +152,8 @@ void init_string_space() {
                                            MAX_KEY_HASH);
 }
 
+// defrag_heap: Defragments the shared string space memory heap to reclaim unused string buffers.
+// defrag_heap: 對共享字串空間進行記憶體重組（Defragment），以回收未使用的字串緩衝區。
 int defrag_heap() {
     /*
      * Walk through the shared heap and merge adjacent free blocks.
@@ -337,6 +341,8 @@ char *str_dup(const char *str) {
  * strings are freed with standard free.
  * Never call free/delete externally on a shared string.
  */
+// new_free_string: Core Engine function: new_free_string - Main C routine handling game mechanics.
+// new_free_string: 核心引擎函式：new_free_string - 處理遊戲底層機制的核心 C 語言子程序。
 void new_free_string(char *point) {
     if (!(point)) {
         bug("freeing null pointer", 0);
@@ -345,6 +351,8 @@ void new_free_string(char *point) {
         (point) = NULL;
     }
 }
+// free_string: System helper: free_string - Performs cleanup or manages organization data.
+// free_string: 系統公用：free_string - 進行記憶體清理或管理公會/組織資料。
 void free_string(char *str) {
     BufEntry *ptr;
     // char buf[ MAX_STRING_LENGTH ];
@@ -574,6 +582,8 @@ char *diw_fread_string(FILE *fp, int *status) {
  * Read string into user supplied buffer.
  * Modified version of Furey's fread_string
  */
+// temp_fread_string: Core Engine function: temp_fread_string - Main C routine handling game mechanics.
+// temp_fread_string: 核心引擎函式：temp_fread_string - 處理遊戲底層機制的核心 C 語言子程序。
 void temp_fread_string(FILE *fp, char *buf) {
     char *ptr = buf;
     char  c;
@@ -656,6 +666,8 @@ char *temp_hash_find(const char *str) {
  * String is still in the linked list structure but
  * reference is kept here for quick lookup at boot time;
  */
+// temp_hash_add: Core Engine function: temp_hash_add - Main C routine handling game mechanics.
+// temp_hash_add: 核心引擎函式：temp_hash_add - 處理遊戲底層機制的核心 C 語言子程序。
 void temp_hash_add(char *str) {
     TempHash *add;
     int       len;
@@ -674,6 +686,8 @@ void temp_hash_add(char *str) {
 }
 
 /* Free the temp boot string hash table */
+// boot_done: Core Engine function: boot_done - Main C routine handling game mechanics.
+// boot_done: 核心引擎函式：boot_done - 處理遊戲底層機制的核心 C 語言子程序。
 void boot_done(void) {
     TempHash *ptr, *next;
     int       ihash;
@@ -689,6 +703,8 @@ void boot_done(void) {
     temp_string_hash = 0; /* Bug check in case someone accesses later */
 }
 
+// do_ostat: Command: do_ostat - Main execution handler for the 'ostat' player/IMM command.
+// do_ostat: 指令：do_ostat - 處理玩家或天神執行 'ostat' 指令的主控程序。
 void do_ostat(CHAR_DATA *ch, char *argument) {
     OBJ_DATA    *obj;
     CHAR_DATA   *rch;

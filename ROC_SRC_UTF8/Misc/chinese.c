@@ -39,6 +39,8 @@
 #include "ansi.h"
 #include "merc.h"
 
+// is_chinese_char: Checks if a byte is a valid Chinese character byte in Big5/UTF8.
+// is_chinese_char: 檢查位元組是否為合法的 Big5 或 UTF-8 中文字元位元組。
 bool is_chinese_char(unsigned char c, bool cFlag) {
     if (cFlag)
         return FALSE;
@@ -49,6 +51,8 @@ bool is_chinese_char(unsigned char c, bool cFlag) {
     return FALSE;
 }
 
+// is_brief: Checks if brief description mode should be used between characters.
+// is_brief: 檢查在顯示角色時是否應對特定受害者使用簡短描述模式。
 bool is_brief(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (!ch)
         return (IS_NPC(victim) ? FALSE : IS_SET(ch->act, PLR_BRIEF));
@@ -71,6 +75,8 @@ bool is_brief(CHAR_DATA *ch, CHAR_DATA *victim) {
 
     return FALSE;
 }
+// is_chinese: Checks if a Chinese-specific translation or character display rule applies.
+// is_chinese: 檢查是否對特定的受害者應用中文字元或語言顯示規則。
 bool is_chinese(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (!ch)
         return TRUE;
@@ -94,6 +100,8 @@ bool is_chinese(CHAR_DATA *ch, CHAR_DATA *victim) {
     return TRUE;
 }
 
+// strip_ansi: Strips ANSI color control escape codes from a source string into a destination buffer.
+// strip_ansi: 將來源字串中的 ANSI 著色控制碼濾除，並輸出至目標緩衝區。
 void strip_ansi(char *src, char *dup) {
     int i = 0;
     int j = 0;

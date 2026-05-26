@@ -1,3 +1,5 @@
+// gsn.h: Global Skill Numbers. Reference IDs linking raw skills/spells to internal tables.
+// gsn.h: 全局技能編號（Global Skill Numbers）。作為連線底層技能/魔法表與代碼邏輯的唯一參照 ID。
 #ifndef __ROC_GSN_H__
 #define __ROC_GSN_H__
 

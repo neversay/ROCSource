@@ -33,6 +33,8 @@ struct olc_help_type {
     char       *desc;
 };
 
+// aedit_mlist: OLC Area Editor: Handles the 'mlist' command in area editor mode.
+// aedit_mlist: OLC 區域編輯器：在區域編輯器模式下處理 'mlist' 指令。
 bool aedit_mlist(CHAR_DATA *ch, char *arg) {
     AREA_DATA      *pArea;
     MOB_INDEX_DATA *pMob;
@@ -52,6 +54,8 @@ bool aedit_mlist(CHAR_DATA *ch, char *arg) {
     return FALSE;
 }
 
+// aedit_olist: OLC Area Editor: Handles the 'olist' command in area editor mode.
+// aedit_olist: OLC 區域編輯器：在區域編輯器模式下處理 'olist' 指令。
 bool aedit_olist(CHAR_DATA *ch, char *arg) {
     AREA_DATA      *pArea;
     OBJ_INDEX_DATA *pObj;
@@ -71,6 +75,8 @@ bool aedit_olist(CHAR_DATA *ch, char *arg) {
     return FALSE;
 }
 
+// aedit_rlist: OLC Area Editor: Handles the 'rlist' command in area editor mode.
+// aedit_rlist: OLC 區域編輯器：在區域編輯器模式下處理 'rlist' 指令。
 bool aedit_rlist(CHAR_DATA *ch, char *arg) {
     AREA_DATA       *pArea;
     ROOM_INDEX_DATA *pRoom;
@@ -90,6 +96,8 @@ bool aedit_rlist(CHAR_DATA *ch, char *arg) {
     return FALSE;
 }
 
+// show_version: Function: show_version - Core Online Creation editor helper.
+// show_version: 函式：show_version - 核心線上動態建設（OLC）編輯器輔助程序。
 bool show_version(CHAR_DATA *ch, char *argument) {
     send_to_char(VERSION, ch);
     send_to_char("\n\r", ch);
@@ -136,6 +144,8 @@ const struct olc_help_type help_table[] =
  Purpose:	Displays settable flags and stats.
  Called by:	show_help(olc_act.c).
  ****************************************************************************/
+// show_flag_cmds: Function: show_flag_cmds - Core Online Creation editor helper.
+// show_flag_cmds: 函式：show_flag_cmds - 核心線上動態建設（OLC）編輯器輔助程序。
 void show_flag_cmds(CHAR_DATA *ch, const struct flag_type *flag_table) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH];
@@ -169,6 +179,8 @@ void show_flag_cmds(CHAR_DATA *ch, const struct flag_type *flag_table) {
                 (2) Adding a check for a level range.
  Called by:	show_help(olc_act.c).
  ****************************************************************************/
+// show_skill_cmds: Function: show_skill_cmds - Core Online Creation editor helper.
+// show_skill_cmds: 函式：show_skill_cmds - 核心線上動態建設（OLC）編輯器輔助程序。
 void show_skill_cmds(CHAR_DATA *ch, int tar) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH * 2];
@@ -204,6 +216,8 @@ void show_skill_cmds(CHAR_DATA *ch, int tar) {
  Purpose:	Displays settable special functions.
  Called by:	show_help(olc_act.c).
  ****************************************************************************/
+// show_spec_cmds: Function: show_spec_cmds - Core Online Creation editor helper.
+// show_spec_cmds: 函式：show_spec_cmds - 核心線上動態建設（OLC）編輯器輔助程序。
 void show_spec_cmds(CHAR_DATA *ch) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH];
@@ -232,6 +246,8 @@ void show_spec_cmds(CHAR_DATA *ch) {
  Purpose:	Displays settable mob class.
  Called by:	show_help(olc_act.c).
  ****************************************************************************/
+// show_class_cmds: Function: show_class_cmds - Core Online Creation editor helper.
+// show_class_cmds: 函式：show_class_cmds - 核心線上動態建設（OLC）編輯器輔助程序。
 void show_class_cmds(CHAR_DATA *ch) {
     char buf[MAX_STRING_LENGTH];
     char buf1[MAX_STRING_LENGTH];
@@ -260,6 +276,8 @@ void show_class_cmds(CHAR_DATA *ch) {
  Purpose:	Displays help for many tables used in OLC.
  Called by:	olc interpreters.
  ****************************************************************************/
+// show_help: Function: show_help - Core Online Creation editor helper.
+// show_help: 函式：show_help - 核心線上動態建設（OLC）編輯器輔助程序。
 bool show_help(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
@@ -333,6 +351,8 @@ bool show_help(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// check_facility: Function: check_facility - Core Online Creation editor helper.
+// check_facility: 函式：check_facility - 核心線上動態建設（OLC）編輯器輔助程序。
 bool check_facility(AREA_DATA *area, int flag) {
     int              room;
     ROOM_INDEX_DATA *proom;
@@ -345,6 +365,8 @@ bool check_facility(AREA_DATA *area, int flag) {
     return FALSE;
 }
 
+// redit_recall: OLC Room Editor: Handles the 'recall' command in room editor mode.
+// redit_recall: OLC 房間編輯器：在房間編輯器模式下處理 'recall' 指令。
 bool redit_recall(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     EDIT_ROOM(ch, pRoom);
@@ -362,6 +384,8 @@ bool redit_recall(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// redit_mlist: OLC Room Editor: Handles the 'mlist' command in room editor mode.
+// redit_mlist: OLC 房間編輯器：在房間編輯器模式下處理 'mlist' 指令。
 bool redit_mlist(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMobIndex;
     AREA_DATA      *pArea;
@@ -409,6 +433,8 @@ bool redit_mlist(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_olist: OLC Room Editor: Handles the 'olist' command in room editor mode.
+// redit_olist: OLC 房間編輯器：在房間編輯器模式下處理 'olist' 指令。
 bool redit_olist(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObjIndex;
     AREA_DATA      *pArea;
@@ -456,6 +482,8 @@ bool redit_olist(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_mshow: OLC Room Editor: Handles the 'mshow' command in room editor mode.
+// redit_mshow: OLC 房間編輯器：在房間編輯器模式下處理 'mshow' 指令。
 bool redit_mshow(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     int             value;
@@ -480,6 +508,8 @@ bool redit_mshow(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_oshow: OLC Room Editor: Handles the 'oshow' command in room editor mode.
+// redit_oshow: OLC 房間編輯器：在房間編輯器模式下處理 'oshow' 指令。
 bool redit_oshow(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     int             value;
@@ -509,6 +539,8 @@ bool redit_oshow(CHAR_DATA *ch, char *argument) {
  Purpose:	Ensures the range spans only one area.
  Called by:	aedit_vnum(olc_act.c).
  ****************************************************************************/
+// check_range: Function: check_range - Core Online Creation editor helper.
+// check_range: 函式：check_range - 核心線上動態建設（OLC）編輯器輔助程序。
 bool check_range(int lower, int upper) {
     AREA_DATA *pArea;
     int        cnt = 0;
@@ -540,6 +572,8 @@ AREA_DATA *get_vnum_area(int vnum) {
 /*
  * Area Editor Functions.
  */
+// aedit_show: OLC Area Editor: Handles the 'show' command in area editor mode.
+// aedit_show: OLC 區域編輯器：在區域編輯器模式下處理 'show' 指令。
 bool aedit_show(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       buf[MAX_STRING_LENGTH];
@@ -588,6 +622,8 @@ bool aedit_show(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// aedit_reset: OLC Area Editor: Handles the 'reset' command in area editor mode.
+// aedit_reset: OLC 區域編輯器：在區域編輯器模式下處理 'reset' 指令。
 bool aedit_reset(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
 
@@ -600,6 +636,8 @@ bool aedit_reset(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// aedit_create: OLC Area Editor: Handles the 'create' command in area editor mode.
+// aedit_create: OLC 區域編輯器：在區域編輯器模式下處理 'create' 指令。
 bool aedit_create(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
 
@@ -619,6 +657,8 @@ bool aedit_create(CHAR_DATA *ch, char *argument) {
     return TRUE; /* OLC 1.1b */
 }
 
+// aedit_identity: OLC Area Editor: Handles the 'identity' command in area editor mode.
+// aedit_identity: OLC 區域編輯器：在區域編輯器模式下處理 'identity' 指令。
 bool aedit_identity(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
 
@@ -636,6 +676,8 @@ bool aedit_identity(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_name: OLC Area Editor: Handles the 'name' command in area editor mode.
+// aedit_name: OLC 區域編輯器：在區域編輯器模式下處理 'name' 指令。
 bool aedit_name(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
 
@@ -653,6 +695,8 @@ bool aedit_name(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_file: OLC Area Editor: Handles the 'file' command in area editor mode.
+// aedit_file: OLC 區域編輯器：在區域編輯器模式下處理 'file' 指令。
 bool aedit_file(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       file[MAX_STRING_LENGTH];
@@ -694,6 +738,8 @@ bool aedit_file(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_age: OLC Area Editor: Handles the 'age' command in area editor mode.
+// aedit_age: OLC 區域編輯器：在區域編輯器模式下處理 'age' 指令。
 bool aedit_age(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       age[MAX_STRING_LENGTH];
@@ -713,6 +759,8 @@ bool aedit_age(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_recall: OLC Area Editor: Handles the 'recall' command in area editor mode.
+// aedit_recall: OLC 區域編輯器：在區域編輯器模式下處理 'recall' 指令。
 bool aedit_recall(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       room[MAX_STRING_LENGTH];
@@ -740,6 +788,8 @@ bool aedit_recall(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_security: OLC Area Editor: Handles the 'security' command in area editor mode.
+// aedit_security: OLC 區域編輯器：在區域編輯器模式下處理 'security' 指令。
 bool aedit_security(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       sec[MAX_STRING_LENGTH];
@@ -772,6 +822,8 @@ bool aedit_security(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_builder: OLC Area Editor: Handles the 'builder' command in area editor mode.
+// aedit_builder: OLC 區域編輯器：在區域編輯器模式下處理 'builder' 指令。
 bool aedit_builder(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       name[MAX_STRING_LENGTH];
@@ -821,6 +873,8 @@ bool aedit_builder(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// aedit_vnum: OLC Area Editor: Handles the 'vnum' command in area editor mode.
+// aedit_vnum: OLC 區域編輯器：在區域編輯器模式下處理 'vnum' 指令。
 bool aedit_vnum(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       lower[MAX_STRING_LENGTH];
@@ -876,6 +930,8 @@ bool aedit_vnum(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_lvnum: OLC Area Editor: Handles the 'lvnum' command in area editor mode.
+// aedit_lvnum: OLC 區域編輯器：在區域編輯器模式下處理 'lvnum' 指令。
 bool aedit_lvnum(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       lower[MAX_STRING_LENGTH];
@@ -920,6 +976,8 @@ bool aedit_lvnum(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_uvnum: OLC Area Editor: Handles the 'uvnum' command in area editor mode.
+// aedit_uvnum: OLC 區域編輯器：在區域編輯器模式下處理 'uvnum' 指令。
 bool aedit_uvnum(CHAR_DATA *ch, char *argument) {
     AREA_DATA *pArea;
     char       upper[MAX_STRING_LENGTH];
@@ -968,6 +1026,8 @@ bool aedit_uvnum(CHAR_DATA *ch, char *argument) {
 /*
  * Room Editor Functions.
  */
+// redit_show: OLC Room Editor: Handles the 'show' command in room editor mode.
+// redit_show: OLC 房間編輯器：在房間編輯器模式下處理 'show' 指令。
 bool redit_show(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     char             buf[MAX_STRING_LENGTH];
@@ -1113,6 +1173,8 @@ bool redit_show(CHAR_DATA *ch, char *argument) {
  Purpose:	Command interpreter for changing exits.
  Called by:	redit_<dir>.  This is a local function.
  ****************************************************************************/
+// change_exit: Function: change_exit - Core Online Creation editor helper.
+// change_exit: 函式：change_exit - 核心線上動態建設（OLC）編輯器輔助程序。
 bool change_exit(CHAR_DATA *ch, char *argument, int door) {
     ROOM_INDEX_DATA *pRoom;
     AREA_DATA       *pArea;
@@ -1436,6 +1498,8 @@ bool change_exit(CHAR_DATA *ch, char *argument, int door) {
     return FALSE;
 }
 
+// redit_north: OLC Room Editor: Handles the 'north' command in room editor mode.
+// redit_north: OLC 房間編輯器：在房間編輯器模式下處理 'north' 指令。
 bool redit_north(CHAR_DATA *ch, char *argument) {
     if (change_exit(ch, argument, DIR_NORTH))
         return TRUE;
@@ -1443,6 +1507,8 @@ bool redit_north(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_south: OLC Room Editor: Handles the 'south' command in room editor mode.
+// redit_south: OLC 房間編輯器：在房間編輯器模式下處理 'south' 指令。
 bool redit_south(CHAR_DATA *ch, char *argument) {
     if (change_exit(ch, argument, DIR_SOUTH))
         return TRUE;
@@ -1450,6 +1516,8 @@ bool redit_south(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_east: OLC Room Editor: Handles the 'east' command in room editor mode.
+// redit_east: OLC 房間編輯器：在房間編輯器模式下處理 'east' 指令。
 bool redit_east(CHAR_DATA *ch, char *argument) {
     if (change_exit(ch, argument, DIR_EAST))
         return TRUE;
@@ -1457,6 +1525,8 @@ bool redit_east(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_west: OLC Room Editor: Handles the 'west' command in room editor mode.
+// redit_west: OLC 房間編輯器：在房間編輯器模式下處理 'west' 指令。
 bool redit_west(CHAR_DATA *ch, char *argument) {
     if (change_exit(ch, argument, DIR_WEST))
         return TRUE;
@@ -1464,6 +1534,8 @@ bool redit_west(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_up: OLC Room Editor: Handles the 'up' command in room editor mode.
+// redit_up: OLC 房間編輯器：在房間編輯器模式下處理 'up' 指令。
 bool redit_up(CHAR_DATA *ch, char *argument) {
     if (change_exit(ch, argument, DIR_UP))
         return TRUE;
@@ -1471,6 +1543,8 @@ bool redit_up(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_down: OLC Room Editor: Handles the 'down' command in room editor mode.
+// redit_down: OLC 房間編輯器：在房間編輯器模式下處理 'down' 指令。
 bool redit_down(CHAR_DATA *ch, char *argument) {
     if (change_exit(ch, argument, DIR_DOWN))
         return TRUE;
@@ -1479,11 +1553,15 @@ bool redit_down(CHAR_DATA *ch, char *argument) {
 }
 
 /* OLC 1.1b */
+// redit_move: OLC Room Editor: Handles the 'move' command in room editor mode.
+// redit_move: OLC 房間編輯器：在房間編輯器模式下處理 'move' 指令。
 bool redit_move(CHAR_DATA *ch, char *argument) {
     interpret(ch, argument);
     return FALSE;
 }
 
+// redit_ed: OLC Room Editor: Handles the 'ed' command in room editor mode.
+// redit_ed: OLC 房間編輯器：在房間編輯器模式下處理 'ed' 指令。
 bool redit_ed(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA  *pRoom;
     EXTRA_DESCR_DATA *ed;
@@ -1613,6 +1691,8 @@ bool redit_ed(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// pplredit_create: Function: pplredit_create - Core Online Creation editor helper.
+// pplredit_create: 函式：pplredit_create - 核心線上動態建設（OLC）編輯器輔助程序。
 bool pplredit_create(CHAR_DATA *ch, char *argument) {
     AREA_DATA       *pArea;
     ROOM_INDEX_DATA *pRoom;
@@ -1663,6 +1743,8 @@ bool pplredit_create(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// redit_create: OLC Room Editor: Handles the 'create' command in room editor mode.
+// redit_create: OLC 房間編輯器：在房間編輯器模式下處理 'create' 指令。
 bool redit_create(CHAR_DATA *ch, char *argument) {
     AREA_DATA       *pArea;
     ROOM_INDEX_DATA *pRoom;
@@ -1721,6 +1803,8 @@ bool redit_create(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// redit_name: OLC Room Editor: Handles the 'name' command in room editor mode.
+// redit_name: OLC 房間編輯器：在房間編輯器模式下處理 'name' 指令。
 bool redit_name(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
 
@@ -1738,6 +1822,8 @@ bool redit_name(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// aedit_ftoggle: OLC Area Editor: Handles the 'ftoggle' command in area editor mode.
+// aedit_ftoggle: OLC 區域編輯器：在區域編輯器模式下處理 'ftoggle' 指令。
 bool aedit_ftoggle(CHAR_DATA *ch, char *argument) {
     AREA_DATA    *pArea;
     char          arg[MAX_INPUT_LENGTH];
@@ -1780,6 +1866,8 @@ bool aedit_ftoggle(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_room: OLC Room Editor: Handles the 'room' command in room editor mode.
+// redit_room: OLC 房間編輯器：在房間編輯器模式下處理 'room' 指令。
 bool redit_room(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
 
@@ -1804,6 +1892,8 @@ bool redit_room(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// redit_sector: OLC Room Editor: Handles the 'sector' command in room editor mode.
+// redit_sector: OLC 房間編輯器：在房間編輯器模式下處理 'sector' 指令。
 bool redit_sector(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     AREA_DATA       *pArea;
@@ -1827,6 +1917,8 @@ bool redit_sector(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// redit_desc: OLC Room Editor: Handles the 'desc' command in room editor mode.
+// redit_desc: OLC 房間編輯器：在房間編輯器模式下處理 'desc' 指令。
 bool redit_desc(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
 
@@ -1841,6 +1933,8 @@ bool redit_desc(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_format: OLC Room Editor: Handles the 'format' command in room editor mode.
+// redit_format: OLC 房間編輯器：在房間編輯器模式下處理 'format' 指令。
 bool redit_format(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
 
@@ -1858,6 +1952,8 @@ bool redit_format(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// redit_mreset: OLC Room Editor: Handles the 'mreset' command in room editor mode.
+// redit_mreset: OLC 房間編輯器：在房間編輯器模式下處理 'mreset' 指令。
 bool redit_mreset(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     MOB_INDEX_DATA  *pMobIndex;
@@ -1952,6 +2048,8 @@ const struct wear_type wear_table_olc[] =
                 1 = first match, 2 = second match etc.
  Called by:	oedit_reset(olc_act.c).
  ****************************************************************************/
+// wear_loc: Function: wear_loc - Core Online Creation editor helper.
+// wear_loc: 函式：wear_loc - 核心線上動態建設（OLC）編輯器輔助程序。
 int wear_loc(int bits, int count) {
     int flag;
 
@@ -1968,6 +2066,8 @@ int wear_loc(int bits, int count) {
  Purpose:	Converts a wear_loc into a bit.
  Called by:	redit_oreset(olc_act.c).
  ****************************************************************************/
+// wear_bit: Function: wear_bit - Core Online Creation editor helper.
+// wear_bit: 函式：wear_bit - 核心線上動態建設（OLC）編輯器輔助程序。
 int wear_bit(int loc) {
     int flag;
 
@@ -1979,6 +2079,8 @@ int wear_bit(int loc) {
     return 0;
 }
 
+// redit_purge: OLC Room Editor: Handles the 'purge' command in room editor mode.
+// redit_purge: OLC 房間編輯器：在房間編輯器模式下處理 'purge' 指令。
 bool redit_purge(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     OBJ_DATA        *obj, *obj_next;
@@ -2011,6 +2113,8 @@ bool redit_purge(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// redit_oreset: OLC Room Editor: Handles the 'oreset' command in room editor mode.
+// redit_oreset: OLC 房間編輯器：在房間編輯器模式下處理 'oreset' 指令。
 bool redit_oreset(CHAR_DATA *ch, char *argument) {
     ROOM_INDEX_DATA *pRoom;
     OBJ_INDEX_DATA  *pObjIndex;
@@ -2217,6 +2321,8 @@ bool redit_oreset(CHAR_DATA *ch, char *argument) {
 /*
  * Object Editor Functions.
  */
+// show_obj_values: Function: show_obj_values - Core Online Creation editor helper.
+// show_obj_values: 函式：show_obj_values - 核心線上動態建設（OLC）編輯器輔助程序。
 void show_obj_values(CHAR_DATA *ch, OBJ_INDEX_DATA *obj) {
     char buf[MAX_STRING_LENGTH];
 
@@ -2347,6 +2453,8 @@ void show_obj_values(CHAR_DATA *ch, OBJ_INDEX_DATA *obj) {
     return;
 }
 
+// set_obj_values: Function: set_obj_values - Core Online Creation editor helper.
+// set_obj_values: 函式：set_obj_values - 核心線上動態建設（OLC）編輯器輔助程序。
 bool set_obj_values(CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *argument) {
     switch (pObj->item_type) {
     default:
@@ -2677,6 +2785,8 @@ bool set_obj_values(CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *ar
     return TRUE;
 }
 
+// oedit_show: OLC Object Editor: Handles the 'show' command in object/item editor mode.
+// oedit_show: OLC 物品編輯器：在物品編輯器模式下處理 'show' 指令。
 bool oedit_show(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     char            buf[MAX_STRING_LENGTH];
@@ -2752,6 +2862,8 @@ bool oedit_show(CHAR_DATA *ch, char *argument) {
 /*
  * Need to issue warning if flag isn't valid.
  */
+// oedit_addaffect: OLC Object Editor: Handles the 'addaffect' command in object/item editor mode.
+// oedit_addaffect: OLC 物品編輯器：在物品編輯器模式下處理 'addaffect' 指令。
 bool oedit_addaffect(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     AFFECT_DATA    *pAf;
@@ -2791,6 +2903,8 @@ bool oedit_addaffect(CHAR_DATA *ch, char *argument) {
  * My thanks to Hans Hvidsten Birkeland and Noam Krendel(Walker)
  * for really teaching me how to manipulate pointers.
  */
+// oedit_delaffect: OLC Object Editor: Handles the 'delaffect' command in object/item editor mode.
+// oedit_delaffect: OLC 物品編輯器：在物品編輯器模式下處理 'delaffect' 指令。
 bool oedit_delaffect(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     AFFECT_DATA    *pAf;
@@ -2845,6 +2959,8 @@ bool oedit_delaffect(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// oedit_material: OLC Object Editor: Handles the 'material' command in object/item editor mode.
+// oedit_material: OLC 物品編輯器：在物品編輯器模式下處理 'material' 指令。
 bool oedit_material(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     OBJ_INDEX_DATA *pMat;
@@ -2879,6 +2995,8 @@ bool oedit_material(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// oedit_name: OLC Object Editor: Handles the 'name' command in object/item editor mode.
+// oedit_name: OLC 物品編輯器：在物品編輯器模式下處理 'name' 指令。
 bool oedit_name(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
 
@@ -2922,6 +3040,8 @@ bool oedit_name(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }*/
 
+// oedit_short: OLC Object Editor: Handles the 'short' command in object/item editor mode.
+// oedit_short: OLC 物品編輯器：在物品編輯器模式下處理 'short' 指令。
 bool oedit_short(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
 
@@ -2946,6 +3066,8 @@ bool oedit_short(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// oedit_long: OLC Object Editor: Handles the 'long' command in object/item editor mode.
+// oedit_long: OLC 物品編輯器：在物品編輯器模式下處理 'long' 指令。
 bool oedit_long(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
 
@@ -2970,6 +3092,8 @@ bool oedit_long(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// set_value: Function: set_value - Core Online Creation editor helper.
+// set_value: 函式：set_value - 核心線上動態建設（OLC）編輯器輔助程序。
 bool set_value(CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, char *argument, int value) {
     if (argument[0] == '\0') {
         set_obj_values(ch, pObj, -1, '\0');
@@ -2987,6 +3111,8 @@ bool set_value(CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, char *argument, int value) {
  Purpose:	Finds the object and sets its value.
  Called by:	The four valueX functions below.
  ****************************************************************************/
+// oedit_values: OLC Object Editor: Handles the 'values' command in object/item editor mode.
+// oedit_values: OLC 物品編輯器：在物品編輯器模式下處理 'values' 指令。
 bool oedit_values(CHAR_DATA *ch, char *argument, int value) {
     OBJ_INDEX_DATA *pObj;
 
@@ -2998,6 +3124,8 @@ bool oedit_values(CHAR_DATA *ch, char *argument, int value) {
     return FALSE;
 }
 
+// oedit_level: OLC Object Editor: Handles the 'level' command in object/item editor mode.
+// oedit_level: OLC 物品編輯器：在物品編輯器模式下處理 'level' 指令。
 bool oedit_level(CHAR_DATA *ch, char *argument) {
     int             level;
     int             pcost;
@@ -3037,6 +3165,8 @@ bool oedit_level(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// oedit_extra: OLC Object Editor: Handles the 'extra' command in object/item editor mode.
+// oedit_extra: OLC 物品編輯器：在物品編輯器模式下處理 'extra' 指令。
 bool oedit_extra(CHAR_DATA *ch, char *argument) {
     char            arg[MAX_INPUT_LENGTH];
     int             value;
@@ -3080,6 +3210,8 @@ bool oedit_extra(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_type: OLC Object Editor: Handles the 'type' command in object/item editor mode.
+// oedit_type: OLC 物品編輯器：在物品編輯器模式下處理 'type' 指令。
 bool oedit_type(CHAR_DATA *ch, char *argument) {
     char            arg[MAX_INPUT_LENGTH];
     int             value;
@@ -3150,6 +3282,8 @@ bool oedit_type(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_wear: OLC Object Editor: Handles the 'wear' command in object/item editor mode.
+// oedit_wear: OLC 物品編輯器：在物品編輯器模式下處理 'wear' 指令。
 bool oedit_wear(CHAR_DATA *ch, char *argument) {
     char            arg[MAX_INPUT_LENGTH];
     int             value;
@@ -3196,6 +3330,8 @@ bool oedit_wear(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_value0: OLC Object Editor: Handles the 'value0' command in object/item editor mode.
+// oedit_value0: OLC 物品編輯器：在物品編輯器模式下處理 'value0' 指令。
 bool oedit_value0(CHAR_DATA *ch, char *argument) {
     if (oedit_values(ch, argument, 0))
         return TRUE;
@@ -3203,6 +3339,8 @@ bool oedit_value0(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_value1: OLC Object Editor: Handles the 'value1' command in object/item editor mode.
+// oedit_value1: OLC 物品編輯器：在物品編輯器模式下處理 'value1' 指令。
 bool oedit_value1(CHAR_DATA *ch, char *argument) {
     if (oedit_values(ch, argument, 1))
         return TRUE;
@@ -3210,6 +3348,8 @@ bool oedit_value1(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_value2: OLC Object Editor: Handles the 'value2' command in object/item editor mode.
+// oedit_value2: OLC 物品編輯器：在物品編輯器模式下處理 'value2' 指令。
 bool oedit_value2(CHAR_DATA *ch, char *argument) {
     if (oedit_values(ch, argument, 2))
         return TRUE;
@@ -3217,6 +3357,8 @@ bool oedit_value2(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_value3: OLC Object Editor: Handles the 'value3' command in object/item editor mode.
+// oedit_value3: OLC 物品編輯器：在物品編輯器模式下處理 'value3' 指令。
 bool oedit_value3(CHAR_DATA *ch, char *argument) {
     if (oedit_values(ch, argument, 3))
         return TRUE;
@@ -3224,6 +3366,8 @@ bool oedit_value3(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_weight: OLC Object Editor: Handles the 'weight' command in object/item editor mode.
+// oedit_weight: OLC 物品編輯器：在物品編輯器模式下處理 'weight' 指令。
 bool oedit_weight(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     int             weight;
@@ -3258,6 +3402,8 @@ bool oedit_weight(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// pploedit_create: Function: pploedit_create - Core Online Creation editor helper.
+// pploedit_create: 函式：pploedit_create - 核心線上動態建設（OLC）編輯器輔助程序。
 bool pploedit_create(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     AREA_DATA      *pArea;
@@ -3321,6 +3467,8 @@ bool pploedit_create(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// oedit_oload: OLC Object Editor: Handles the 'oload' command in object/item editor mode.
+// oedit_oload: OLC 物品編輯器：在物品編輯器模式下處理 'oload' 指令。
 bool oedit_oload(CHAR_DATA *ch, char *argument) {
     OBJ_DATA       *obj;
     OBJ_INDEX_DATA *pObjIndex;
@@ -3380,6 +3528,8 @@ bool oedit_oload(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// oedit_cost: OLC Object Editor: Handles the 'cost' command in object/item editor mode.
+// oedit_cost: OLC 物品編輯器：在物品編輯器模式下處理 'cost' 指令。
 bool oedit_cost(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     int             cost;
@@ -3411,6 +3561,8 @@ bool oedit_cost(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// oedit_create: OLC Object Editor: Handles the 'create' command in object/item editor mode.
+// oedit_create: OLC 物品編輯器：在物品編輯器模式下處理 'create' 指令。
 bool oedit_create(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *pObj;
     AREA_DATA      *pArea;
@@ -3471,6 +3623,8 @@ bool oedit_create(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// oedit_ed: OLC Object Editor: Handles the 'ed' command in object/item editor mode.
+// oedit_ed: OLC 物品編輯器：在物品編輯器模式下處理 'ed' 指令。
 bool oedit_ed(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA   *pObj;
     EXTRA_DESCR_DATA *ed;
@@ -3607,6 +3761,8 @@ bool oedit_ed(CHAR_DATA *ch, char *argument) {
 /*
  * Mobile Editor Functions.
  */
+// medit_show: OLC Mobile Editor: Handles the 'show' command in mobile monster editor mode.
+// medit_show: OLC 怪物編輯器：在怪物編輯器模式下處理 'show' 指令。
 bool medit_show(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     char            buf[MAX_STRING_LENGTH];
@@ -3686,6 +3842,8 @@ bool medit_show(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// pplmedit_create: Function: pplmedit_create - Core Online Creation editor helper.
+// pplmedit_create: 函式：pplmedit_create - 核心線上動態建設（OLC）編輯器輔助程序。
 bool pplmedit_create(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     int             value;
@@ -3722,6 +3880,8 @@ bool pplmedit_create(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_create: OLC Mobile Editor: Handles the 'create' command in mobile monster editor mode.
+// medit_create: OLC 怪物編輯器：在怪物編輯器模式下處理 'create' 指令。
 bool medit_create(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     AREA_DATA      *pArea;
@@ -3791,6 +3951,8 @@ bool medit_create(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_spec: OLC Mobile Editor: Handles the 'spec' command in mobile monster editor mode.
+// medit_spec: OLC 怪物編輯器：在怪物編輯器模式下處理 'spec' 指令。
 bool medit_spec(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
 
@@ -3836,6 +3998,8 @@ bool medit_spec(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// medit_class: OLC Mobile Editor: Handles the 'class' command in mobile monster editor mode.
+// medit_class: OLC 怪物編輯器：在怪物編輯器模式下處理 'class' 指令。
 bool medit_class(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
 
@@ -3895,6 +4059,8 @@ bool medit_class(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_align: OLC Mobile Editor: Handles the 'align' command in mobile monster editor mode.
+// medit_align: OLC 怪物編輯器：在怪物編輯器模式下處理 'align' 指令。
 bool medit_align(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
 
@@ -3911,6 +4077,8 @@ bool medit_align(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_sex: OLC Mobile Editor: Handles the 'sex' command in mobile monster editor mode.
+// medit_sex: OLC 怪物編輯器：在怪物編輯器模式下處理 'sex' 指令。
 bool medit_sex(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
 
@@ -3935,6 +4103,8 @@ bool medit_sex(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_race: OLC Mobile Editor: Handles the 'race' command in mobile monster editor mode.
+// medit_race: OLC 怪物編輯器：在怪物編輯器模式下處理 'race' 指令。
 bool medit_race(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     int             race;
@@ -3970,6 +4140,8 @@ bool medit_race(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_level: OLC Mobile Editor: Handles the 'level' command in mobile monster editor mode.
+// medit_level: OLC 怪物編輯器：在怪物編輯器模式下處理 'level' 指令。
 bool medit_level(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     int             level;
@@ -3999,6 +4171,8 @@ bool medit_level(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_desc: OLC Mobile Editor: Handles the 'desc' command in mobile monster editor mode.
+// medit_desc: OLC 怪物編輯器：在怪物編輯器模式下處理 'desc' 指令。
 bool medit_desc(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
 
@@ -4013,6 +4187,8 @@ bool medit_desc(CHAR_DATA *ch, char *argument) {
     return FALSE;
 }
 
+// medit_long: OLC Mobile Editor: Handles the 'long' command in mobile monster editor mode.
+// medit_long: OLC 怪物編輯器：在怪物編輯器模式下處理 'long' 指令。
 bool medit_long(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
 
@@ -4032,6 +4208,8 @@ bool medit_long(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_short: OLC Mobile Editor: Handles the 'short' command in mobile monster editor mode.
+// medit_short: OLC 怪物編輯器：在怪物編輯器模式下處理 'short' 指令。
 bool medit_short(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
 
@@ -4049,6 +4227,8 @@ bool medit_short(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }
 
+// medit_name: OLC Mobile Editor: Handles the 'name' command in mobile monster editor mode.
+// medit_name: OLC 怪物編輯器：在怪物編輯器模式下處理 'name' 指令。
 bool medit_name(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     char            buf[MAX_STRING_LENGTH];
@@ -4094,6 +4274,8 @@ bool medit_name(CHAR_DATA *ch, char *argument) {
     return TRUE;
 }*/
 
+// medit_shop: OLC Mobile Editor: Handles the 'shop' command in mobile monster editor mode.
+// medit_shop: OLC 怪物編輯器：在怪物編輯器模式下處理 'shop' 指令。
 bool medit_shop(CHAR_DATA *ch, char *argument) {
     MOB_INDEX_DATA *pMob;
     char            command[MAX_INPUT_LENGTH];
@@ -4453,6 +4635,8 @@ MPEDIT(mpedit_program) {
     return FALSE;
 }
 
+// mprog_count: Function: mprog_count - Core Online Creation editor helper.
+// mprog_count: 函式：mprog_count - 核心線上動態建設（OLC）編輯器輔助程序。
 int mprog_count(MOB_INDEX_DATA *pMob) {
     MPROG_DATA *mprg;
     int         count;
@@ -4479,6 +4663,8 @@ MPROG_DATA *edit_mprog(CHAR_DATA *ch, MOB_INDEX_DATA *pMob) {
     return mprg;
 }
 
+// show_mprog: Function: show_mprog - Core Online Creation editor helper.
+// show_mprog: 函式：show_mprog - 核心線上動態建設（OLC）編輯器輔助程序。
 void show_mprog(CHAR_DATA *ch, MPROG_DATA *pMobProg) {
     char buf[MAX_STRING_LENGTH];
 
@@ -4491,6 +4677,8 @@ void show_mprog(CHAR_DATA *ch, MPROG_DATA *pMobProg) {
     send_to_char(buf, ch);
 }
 
+// delete_mprog: Function: delete_mprog - Core Online Creation editor helper.
+// delete_mprog: 函式：delete_mprog - 核心線上動態建設（OLC）編輯器輔助程序。
 void delete_mprog(CHAR_DATA *ch, int pnum) {
     MPROG_DATA     *mprg, *mprg_prev;
     MOB_INDEX_DATA *pMob;
@@ -4532,6 +4720,8 @@ void delete_mprog(CHAR_DATA *ch, int pnum) {
     return;
 }
 
+// oedit_mtlist: OLC Object Editor: Handles the 'mtlist' command in object/item editor mode.
+// oedit_mtlist: OLC 物品編輯器：在物品編輯器模式下處理 'mtlist' 指令。
 bool oedit_mtlist(CHAR_DATA *ch, char *argument) {
     OBJ_INDEX_DATA *mat;
     char            buf[MAX_STRING_LENGTH];

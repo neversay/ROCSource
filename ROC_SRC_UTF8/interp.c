@@ -70,6 +70,8 @@ extern const struct rcmd_type rcmd_table[];
  * The main entry point for executing commands.
  * Can be recursively called from 'at', 'order', 'force'.
  */
+// interpret: Main player command interpreter. Validates security trust and routes commands to handlers.
+// interpret: 主玩家指令解析器。驗證安全信任等級（Trust），並將指令分流至相對應的處理常式。
 void interpret(CHAR_DATA *ch, char *argument) {
     char command[MAX_INPUT_LENGTH];
     char logline[MAX_INPUT_LENGTH];
@@ -282,6 +284,8 @@ void interpret(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// ointerpret: Interprets and executes Object Program (ObjProgs) command lines.
+// ointerpret: 解析並執行物品腳本（ObjProgs）指令行。
 void ointerpret(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
     char command[MAX_INPUT_LENGTH];
     char logline[MAX_INPUT_LENGTH];
@@ -351,6 +355,8 @@ void ointerpret(OBJ_DATA *obj, CHAR_DATA *ch, char *argument) {
  * The main entry point for executing commands.
  * Can be recursively called from 'at', 'order', 'force'.
  */
+// rinterpret: Interprets and executes Room Program (RoomProgs) command lines.
+// rinterpret: 解析並執行房間腳本（RoomProgs）指令行。
 void rinterpret(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     char command[MAX_INPUT_LENGTH];
     char logline[MAX_INPUT_LENGTH];
@@ -416,6 +422,8 @@ void rinterpret(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// zact: Core Engine function: zact - Main C routine handling game mechanics.
+// zact: 核心引擎函式：zact - 處理遊戲底層機制的核心 C 語言子程序。
 void zact(const char *format, CHAR_DATA *ch, const void *arg1,
           const void *arg2, int type) {
     OBJ_DATA          *obj1 = (OBJ_DATA *)arg1;
@@ -597,6 +605,8 @@ void zact(const char *format, CHAR_DATA *ch, const void *arg1,
 /*
  * Return true if an argument is completely numeric.
  */
+// is_number: Core Engine function: is_number - Main C routine handling game mechanics.
+// is_number: 核心引擎函式：is_number - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_number(char *arg) {
     if (*arg == '\0')
         return FALSE;
@@ -615,6 +625,8 @@ bool is_number(char *arg) {
 /*
  * Given a string like 14.foo, return 14 and 'foo'
  */
+// number_argument: Core Engine function: number_argument - Main C routine handling game mechanics.
+// number_argument: 核心引擎函式：number_argument - 處理遊戲底層機制的核心 C 語言子程序。
 int number_argument(char *argument, char *arg) {
     char *pdot;
     int   number;
@@ -672,6 +684,8 @@ char *one_argument(char *argument, char *arg_first) {
     return argument;
 }
 
+// chat_social: Core Engine function: chat_social - Main C routine handling game mechanics.
+// chat_social: 核心引擎函式：chat_social - 處理遊戲底層機制的核心 C 語言子程序。
 bool chat_social(CHAR_DATA *ch, char *command, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -800,6 +814,8 @@ bool chat_social(CHAR_DATA *ch, char *command, char *argument) {
     return TRUE;
 }
 
+// do_chatemote: Command: do_chatemote - Main execution handler for the 'chatemote' player/IMM command.
+// do_chatemote: 指令：do_chatemote - 處理玩家或天神執行 'chatemote' 指令的主控程序。
 void do_chatemote(CHAR_DATA *ch, char *argument) {
     char command[MAX_INPUT_LENGTH];
 
@@ -821,6 +837,8 @@ void do_chatemote(CHAR_DATA *ch, char *argument) {
 }
 
 // add by jye 0940604  imm頻道動作
+// do_immtalkemote: Command: do_immtalkemote - Main execution handler for the 'immtalkemote' player/IMM command.
+// do_immtalkemote: 指令：do_immtalkemote - 處理玩家或天神執行 'immtalkemote' 指令的主控程序。
 void do_immtalkemote(CHAR_DATA *ch, char *argument) {
     char command[MAX_INPUT_LENGTH];
 
@@ -843,6 +861,8 @@ void do_immtalkemote(CHAR_DATA *ch, char *argument) {
 }
 
 // add by jye 0940604  imm頻道動作
+// immtalk_social: Core Engine function: immtalk_social - Main C routine handling game mechanics.
+// immtalk_social: 核心引擎函式：immtalk_social - 處理遊戲底層機制的核心 C 語言子程序。
 bool immtalk_social(CHAR_DATA *ch, char *command, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -958,6 +978,8 @@ bool immtalk_social(CHAR_DATA *ch, char *command, char *argument) {
 }
 
 // add by jye 0940604  imm頻道動作
+// immact: Core Engine function: immact - Main C routine handling game mechanics.
+// immact: 核心引擎函式：immact - 處理遊戲底層機制的核心 C 語言子程序。
 void immact(const char *format, CHAR_DATA *ch, const void *arg1,
             const void *arg2, int type) {
     OBJ_DATA          *obj1 = (OBJ_DATA *)arg1;

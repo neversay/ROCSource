@@ -5,6 +5,8 @@ extern void align_effect(CHAR_DATA *gch);
 extern bool IsPK(CHAR_DATA *ch, CHAR_DATA *victim);
 
 // Apocalypse add by whisperwind 11.13.2004
+// spell_apocalypse: Spell: spell_apocalypse - Casts the 'apocalypse' spell.
+// spell_apocalypse: 魔法：spell_apocalypse - 施展 'apocalypse' 魔法法術。
 void spell_apocalypse(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim, *victim_next;
 
@@ -97,6 +99,8 @@ void spell_apocalypse(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // dispel good modified by whisperwind 8.23.2004
+// spell_dispel_good: Spell: spell_dispel_good - Casts the 'dispel_good' spell.
+// spell_dispel_good: 魔法：spell_dispel_good - 施展 'dispel_good' 魔法法術。
 void spell_dispel_good(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -176,6 +180,8 @@ void spell_dispel_good(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // finger of death add by whisperwind 11.13.2004
+// spell_finger_of_death: Spell: spell_finger_of_death - Casts the 'finger_of_death' spell.
+// spell_finger_of_death: 魔法：spell_finger_of_death - 施展 'finger_of_death' 魔法法術。
 void spell_finger_of_death(int sn, int level, CHAR_DATA *ch, void *vo) {
     int        dam;
     int        nChance = 10;
@@ -234,6 +240,8 @@ void spell_finger_of_death(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_dark_containment: Spell: spell_dark_containment - Casts the 'dark_containment' spell.
+// spell_dark_containment: 魔法：spell_dark_containment - 施展 'dark_containment' 魔法法術。
 void spell_dark_containment(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -340,6 +348,8 @@ void spell_dark_containment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_harm: Spell: spell_harm - Casts the 'harm' spell.
+// spell_harm: 魔法：spell_harm - 施展 'harm' 魔法法術。
 void spell_harm(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -406,6 +416,8 @@ void spell_harm(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_lifesteal: Spell: spell_lifesteal - Casts the 'lifesteal' spell.
+// spell_lifesteal: 魔法：spell_lifesteal - 施展 'lifesteal' 魔法法術。
 void spell_lifesteal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        nSklv  = get_skill_level(ch, sn);
@@ -488,6 +500,8 @@ void spell_lifesteal(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_soulsteal: Spell: spell_soulsteal - Casts the 'soulsteal' spell.
+// spell_soulsteal: 魔法：spell_soulsteal - 施展 'soulsteal' 魔法法術。
 void spell_soulsteal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim  = (CHAR_DATA *)vo;
     int        dam     = 0;
@@ -615,6 +629,8 @@ void spell_soulsteal(int sn, int level, CHAR_DATA *ch, void *vo) {
  * Drain XP, MANA, HP.
  * Caster gains HP, XP.
  */
+// spell_energy_drain: Spell: spell_energy_drain - Casts the 'energy_drain' spell.
+// spell_energy_drain: 魔法：spell_energy_drain - 施展 'energy_drain' 魔法法術。
 void spell_energy_drain(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        nDamage, nHpDmg, nMpDmg, nMvDmg;
@@ -742,6 +758,8 @@ void spell_energy_drain(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // Hell Southencross add by whisperwind 10.31.2004
+// spell_hell_southencross: Spell: spell_hell_southencross - Casts the 'hell_southencross' spell.
+// spell_hell_southencross: 魔法：spell_hell_southencross - 施展 'hell_southencross' 魔法法術。
 void spell_hell_southencross(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;

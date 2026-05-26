@@ -148,6 +148,8 @@ void *alloc_mem(int sMem) {
  * Free some memory.
  * Recycle it back onto the free list for blocks of that size.
  */
+// free_mem: Safely deallocates allocated memory buffers, tracking memory usage profiles.
+// free_mem: 安全地釋放已配置的記憶體緩衝區，並追蹤記憶體使用狀況。
 void free_mem(void *pMem) {
     int iList;
     int sMem;

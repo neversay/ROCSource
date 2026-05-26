@@ -57,7 +57,7 @@ all: envy envy_logger
 envy: act skill spell misc rprg mprg oprg olc $(O_FILES) $(O_FIGHT)
 	rm -f envy2
 #	purify -cache_dir=/tmp $(CC) $(L_FLAGS) -o envy $(O_FILES)
-	$(CC) $(I_FLAGS) $(L_FLAGS) -o envy2 $(OBJS)
+	$(CC) $(I_FLAGS) -o envy2 $(OBJS) $(L_FLAGS)
 #	$(CC) $(L_FLAGS) -o envy.new $(O_FILES)
 
 envy_logger: envy_logger.cc

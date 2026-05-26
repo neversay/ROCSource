@@ -24,6 +24,8 @@ void        Show_Debug(CHAR_DATA *ch, const char *txt, int int_num);
 extern bool IsPK(CHAR_DATA *ch, CHAR_DATA *victim);
 extern int  GetWillFortressEffect(CHAR_DATA *victim);
 
+// Show_Debug: Function: Show_Debug - Magical engine helper routine.
+// Show_Debug: 函式：Show_Debug - 魔法引擎輔助處理程序。
 void Show_Debug(CHAR_DATA *ch, const char *txt, int int_num) {
     char buf[MAX_STRING_LENGTH * 2];
 
@@ -32,6 +34,8 @@ void Show_Debug(CHAR_DATA *ch, const char *txt, int int_num) {
     return;
 }
 // blindness modified by jye 6.05.2005
+// spell_blindness: Spell: spell_blindness - Casts the 'blindness' spell.
+// spell_blindness: 魔法：spell_blindness - 施展 'blindness' 魔法法術。
 void spell_blindness(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -98,6 +102,8 @@ void spell_blindness(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // paralyse modified by jye 6.06.2005
+// spell_paralyze: Spell: spell_paralyze - Casts the 'paralyze' spell.
+// spell_paralyze: 魔法：spell_paralyze - 施展 'paralyze' 魔法法術。
 void spell_paralyze(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -182,6 +188,8 @@ void spell_paralyze(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // seal magic modified by jye 6.06.2005
+// spell_seal_magic: Spell: spell_seal_magic - Casts the 'seal_magic' spell.
+// spell_seal_magic: 魔法：spell_seal_magic - 施展 'seal_magic' 魔法法術。
 void spell_seal_magic(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -237,6 +245,8 @@ void spell_seal_magic(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // charm person modified by jye 6.06.2005
+// spell_charm_person: Spell: spell_charm_person - Casts the 'charm_person' spell.
+// spell_charm_person: 魔法：spell_charm_person - 施展 'charm_person' 魔法法術。
 void spell_charm_person(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -315,6 +325,8 @@ void spell_charm_person(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // virtual swords modified by jye 6.06.2005
+// spell_virtual_swords: Spell: spell_virtual_swords - Casts the 'virtual_swords' spell.
+// spell_virtual_swords: 魔法：spell_virtual_swords - 施展 'virtual_swords' 魔法法術。
 void spell_virtual_swords(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *rch = NULL, *swd = NULL, *sor = NULL;
     CHAR_DATA *high_pp = NULL, *high_wis = NULL, *high_int = NULL;
@@ -560,6 +572,8 @@ void spell_virtual_swords(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // curse modified by jye 6.06.2005
+// spell_curse: Spell: spell_curse - Casts the 'curse' spell.
+// spell_curse: 魔法：spell_curse - 施展 'curse' 魔法法術。
 void spell_curse(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -673,6 +687,8 @@ void spell_curse(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // tardy modified by jye 6.06.2005
+// spell_tardy: Spell: spell_tardy - Casts the 'tardy' spell.
+// spell_tardy: 魔法：spell_tardy - 施展 'tardy' 魔法法術。
 void spell_tardy(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -774,6 +790,8 @@ void spell_tardy(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // mute modified by jye 6.06.2005
+// spell_mute: Spell: spell_mute - Casts the 'mute' spell.
+// spell_mute: 魔法：spell_mute - 施展 'mute' 魔法法術。
 void spell_mute(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -849,6 +867,8 @@ void spell_mute(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // poison modified by jye 6.06.2005
+// spell_poison: Spell: spell_poison - Casts the 'poison' spell.
+// spell_poison: 魔法：spell_poison - 施展 'poison' 魔法法術。
 void spell_poison(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -966,6 +986,8 @@ void spell_poison(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // disease modified by jye 6.06.2005
+// spell_disease: Spell: spell_disease - Casts the 'disease' spell.
+// spell_disease: 魔法：spell_disease - 施展 'disease' 魔法法術。
 void spell_disease(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1015,6 +1037,8 @@ void spell_disease(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // fear modified by jye 6.06.2005
+// spell_fear: Spell: spell_fear - Casts the 'fear' spell.
+// spell_fear: 魔法：spell_fear - 施展 'fear' 魔法法術。
 void spell_fear(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1053,6 +1077,8 @@ void spell_fear(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // sleep modified by jye 6.06.2005
+// spell_sleep: Spell: spell_sleep - Casts the 'sleep' spell.
+// spell_sleep: 魔法：spell_sleep - 施展 'sleep' 魔法法術。
 void spell_sleep(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1093,6 +1119,8 @@ void spell_sleep(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // sleep modified by jye 6.06.2005
+// spell_weaken: Spell: spell_weaken - Casts the 'weaken' spell.
+// spell_weaken: 魔法：spell_weaken - 施展 'weaken' 魔法法術。
 void spell_weaken(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1219,6 +1247,8 @@ void spell_weaken(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // lifeshare modified by jye 6.06.2005
+// spell_lifeshare: Spell: spell_lifeshare - Casts the 'lifeshare' spell.
+// spell_lifeshare: 魔法：spell_lifeshare - 施展 'lifeshare' 魔法法術。
 void spell_lifeshare(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1344,6 +1374,8 @@ void spell_lifeshare(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // crushing hand modified by jye 6.06.2005
+// spell_crushing_hand: Spell: spell_crushing_hand - Casts the 'crushing_hand' spell.
+// spell_crushing_hand: 魔法：spell_crushing_hand - 施展 'crushing_hand' 魔法法術。
 void spell_crushing_hand(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        sklv   = get_skill_level(ch, sn);
@@ -1458,6 +1490,8 @@ void spell_crushing_hand(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // faerie fire modified by jye 6.06.2005
+// spell_faerie_fire: Spell: spell_faerie_fire - Casts the 'faerie_fire' spell.
+// spell_faerie_fire: 魔法：spell_faerie_fire - 施展 'faerie_fire' 魔法法術。
 void spell_faerie_fire(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;

@@ -32,6 +32,8 @@ void spell_cure_blindness(int sn, int level, CHAR_DATA *ch, void *vo);
 void spell_calm(int sn, int level, CHAR_DATA *ch, void *vo);
 
 /* 修改 blood thirsty 設定 , 故移除降低補血 2022/02/21
+// GetHealUnderBloodyBerserk: Calculates heal amount adjustment when under a bloodthirsty berserk status.
+// GetHealUnderBloodyBerserk: 計算在嗜血狂暴狀態下進行治療時的治療量調整。
 int GetHealUnderBloodyBerserk(CHAR_DATA *ch, int heal)
 {
         if(IS_NPC(ch)) return heal;
@@ -44,6 +46,8 @@ int GetHealUnderBloodyBerserk(CHAR_DATA *ch, int heal)
 */
 
 // lifeshare 分配 heal 2021/11/23
+// LifeShareHeal: Calculates shared health points redistributed by Life Share spells.
+// LifeShareHeal: 計算生命分享（Life Share）魔法分配與共享的生命值。
 int LifeShareHeal(CHAR_DATA *ch, int heal) {
     CHAR_DATA *lch;
     if (!is_affected(ch, gsn_lifeshare))
@@ -59,6 +63,8 @@ int LifeShareHeal(CHAR_DATA *ch, int heal) {
     return heal;
 }
 
+// __power: Function: __power - Magical engine helper routine.
+// __power: 函式：__power - 魔法引擎輔助處理程序。
 long int __power(int x, unsigned int y) {
     int  i   = 0;
     long ret = x;
@@ -80,6 +86,8 @@ long int __power(int x, unsigned int y) {
     return ret;
 }
 
+// spell_cure_blindness: Spell: spell_cure_blindness - Casts the 'cure_blindness' spell.
+// spell_cure_blindness: 魔法：spell_cure_blindness - 施展 'cure_blindness' 魔法法術。
 void spell_cure_blindness(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        fCured = FALSE;
@@ -102,6 +110,8 @@ void spell_cure_blindness(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_calm: Spell: spell_calm - Casts the 'calm' spell.
+// spell_calm: 魔法：spell_calm - 施展 'calm' 魔法法術。
 void spell_calm(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim   = NULL;
     int        crazy    = skill_lookup("demon tremor");
@@ -174,6 +184,8 @@ void spell_calm(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_vivification: Spell: spell_vivification - Casts the 'vivification' spell.
+// spell_vivification: 魔法：spell_vivification - 施展 'vivification' 魔法法術。
 void spell_vivification(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -191,6 +203,8 @@ void spell_vivification(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_group_cure_blindness: Spell: spell_group_cure_blindness - Casts the 'group_cure_blindness' spell.
+// spell_group_cure_blindness: 魔法：spell_group_cure_blindness - 施展 'group_cure_blindness' 魔法法術。
 void spell_group_cure_blindness(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *rch, *gch;
     bool       found  = FALSE;
@@ -239,6 +253,8 @@ void spell_group_cure_blindness(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cure_critical: Spell: spell_cure_critical - Casts the 'cure_critical' spell.
+// spell_cure_critical: 魔法：spell_cure_critical - 施展 'cure_critical' 魔法法術。
 void spell_cure_critical(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -325,6 +341,8 @@ void spell_cure_critical(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cure_light: Spell: spell_cure_light - Casts the 'cure_light' spell.
+// spell_cure_light: 魔法：spell_cure_light - 施展 'cure_light' 魔法法術。
 void spell_cure_light(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        heal;
@@ -417,6 +435,8 @@ void spell_cure_light(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cure_disease: Spell: spell_cure_disease - Casts the 'cure_disease' spell.
+// spell_cure_disease: 魔法：spell_cure_disease - 施展 'cure_disease' 魔法法術。
 void spell_cure_disease(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -432,6 +452,8 @@ void spell_cure_disease(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cure_poison: Spell: spell_cure_poison - Casts the 'cure_poison' spell.
+// spell_cure_poison: 魔法：spell_cure_poison - 施展 'cure_poison' 魔法法術。
 void spell_cure_poison(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -463,6 +485,8 @@ void spell_cure_poison(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cure_serious: Spell: spell_cure_serious - Casts the 'cure_serious' spell.
+// spell_cure_serious: 魔法：spell_cure_serious - 施展 'cure_serious' 魔法法術。
 void spell_cure_serious(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        heal;
@@ -597,6 +621,8 @@ void spell_cont_heal(int sn, int level, CHAR_DATA *ch, void *vo) // continous he
     return;
 }
 
+// spell_heal: Spell: spell_heal - Casts the 'heal' spell.
+// spell_heal: 魔法：spell_heal - 施展 'heal' 魔法法術。
 void spell_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     //    int heal = UMAX( (level+get_skill_level(ch,sn)) * 5 ,
@@ -698,6 +724,8 @@ void spell_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_double_heal: Spell: spell_double_heal - Casts the 'double_heal' spell.
+// spell_double_heal: 魔法：spell_double_heal - 施展 'double_heal' 魔法法術。
 void spell_double_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -824,6 +852,8 @@ void spell_double_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_group_double_heal: Spell: spell_group_double_heal - Casts the 'group_double_heal' spell.
+// spell_group_double_heal: 魔法：spell_group_double_heal - 施展 'group_double_heal' 魔法法術。
 void spell_group_double_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *rch, *gch;
     //  modified by coconet 0520 for let gdb will be influenced by pp and wis and sklv
@@ -966,6 +996,8 @@ for( gch = ch->in_room->people; gch; gch = gch->next_in_room )
     return;
 }
 
+// spell_full_heal: Spell: spell_full_heal - Casts the 'full_heal' spell.
+// spell_full_heal: 魔法：spell_full_heal - 施展 'full_heal' 魔法法術。
 void spell_full_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -996,6 +1028,8 @@ void spell_full_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_group_full_heal: Spell: spell_group_full_heal - Casts the 'group_full_heal' spell.
+// spell_group_full_heal: 魔法：spell_group_full_heal - 施展 'group_full_heal' 魔法法術。
 void spell_group_full_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *rch, *gch;
     char       buf[MAX_INPUT_LENGTH];
@@ -1052,6 +1086,8 @@ void spell_group_full_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_full_recharge: Spell: spell_full_recharge - Casts the 'full_recharge' spell.
+// spell_full_recharge: 魔法：spell_full_recharge - 施展 'full_recharge' 魔法法術。
 void spell_full_recharge(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1065,6 +1101,8 @@ void spell_full_recharge(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_double_recharge: Spell: spell_double_recharge - Casts the 'double_recharge' spell.
+// spell_double_recharge: 魔法：spell_double_recharge - 施展 'double_recharge' 魔法法術。
 void spell_double_recharge(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        amount = 200 + level / 250;
@@ -1079,6 +1117,8 @@ void spell_double_recharge(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_mana_recharge: Spell: spell_mana_recharge - Casts the 'mana_recharge' spell.
+// spell_mana_recharge: 魔法：spell_mana_recharge - 施展 'mana_recharge' 魔法法術。
 void spell_mana_recharge(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        amount = 100 + level / 500;
@@ -1094,6 +1134,8 @@ void spell_mana_recharge(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_mass_heal: Spell: spell_mass_heal - Casts the 'mass_heal' spell.
+// spell_mass_heal: 魔法：spell_mass_heal - 施展 'mass_heal' 魔法法術。
 void spell_mass_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *gch;
     // modified by coco 0520, for let healing magic will be influenced by pp and wis
@@ -1216,6 +1258,8 @@ void spell_mass_heal(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_double_refresh: Spell: spell_double_refresh - Casts the 'double_refresh' spell.
+// spell_double_refresh: 魔法：spell_double_refresh - 施展 'double_refresh' 魔法法術。
 void spell_double_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     // 算式: [法術基礎值] * [wis effect] * [pp effect] * [sklv effect]
@@ -1271,6 +1315,8 @@ void spell_double_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_refresh: Spell: spell_refresh - Casts the 'refresh' spell.
+// spell_refresh: 魔法：spell_refresh - 施展 'refresh' 魔法法術。
 void spell_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     // 算式: [法術基礎值] * [wis effect] * [pp effect] * [sklv effect]
@@ -1324,6 +1370,8 @@ void spell_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_full_refresh: Spell: spell_full_refresh - Casts the 'full_refresh' spell.
+// spell_full_refresh: 魔法：spell_full_refresh - 施展 'full_refresh' 魔法法術。
 void spell_full_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1337,6 +1385,8 @@ void spell_full_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_group_full_refresh: Spell: spell_group_full_refresh - Casts the 'group_full_refresh' spell.
+// spell_group_full_refresh: 魔法：spell_group_full_refresh - 施展 'group_full_refresh' 魔法法術。
 void spell_group_full_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *rch, *gch;
     bool       found = FALSE;
@@ -1385,6 +1435,8 @@ void spell_group_full_refresh(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_salvation: Spell: spell_salvation - Casts the 'salvation' spell.
+// spell_salvation: 魔法：spell_salvation - 施展 'salvation' 魔法法術。
 void spell_salvation(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim;
     int        sklv   = get_skill_level(ch, sn);

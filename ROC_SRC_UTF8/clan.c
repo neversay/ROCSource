@@ -57,6 +57,8 @@ extern const struct social_type social_table[];
 
 CLAN_DATA *clan_free = NULL, *clan_list = NULL;
 
+// free_clan_data: System helper: free_clan_data - Performs cleanup or manages organization data.
+// free_clan_data: 系統公用：free_clan_data - 進行記憶體清理或管理公會/組織資料。
 void free_clan_data(CLAN_DATA *pClan) {
     free_string(pClan->name);
     free_string(pClan->whoname);
@@ -146,6 +148,8 @@ const struct clan_class cc[] =
 };
 
 // clanact modified by jye 6.13.2005
+// clanact: Core Engine function: clanact - Main C routine handling game mechanics.
+// clanact: 核心引擎函式：clanact - 處理遊戲底層機制的核心 C 語言子程序。
 void clanact(const char *format, CHAR_DATA *ch, const void *arg1,
              const void *arg2, int type) {
     OBJ_DATA          *obj1 = (OBJ_DATA *)arg1;
@@ -332,6 +336,8 @@ void clanact(const char *format, CHAR_DATA *ch, const void *arg1,
     // MOBtrigger = TRUE;
     return;
 }
+// clan_social: System helper: clan_social - Performs cleanup or manages organization data.
+// clan_social: 系統公用：clan_social - 進行記憶體清理或管理公會/組織資料。
 bool clan_social(CHAR_DATA *ch, char *command, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -428,6 +434,8 @@ bool clan_social(CHAR_DATA *ch, char *command, char *argument) {
 
     return TRUE;
 }
+// clan_members: System helper: clan_members - Performs cleanup or manages organization data.
+// clan_members: 系統公用：clan_members - 進行記憶體清理或管理公會/組織資料。
 int clan_members(CLAN_DATA *pClan) {
     int i, m = 0;
     for (i = 0; i < CLAN_LEVEL - 1; ++i)
@@ -453,6 +461,8 @@ CLAN_DATA *new_clan_data(void) {
     return pClan;
 }
 
+// clan_update: System helper: clan_update - Performs cleanup or manages organization data.
+// clan_update: 系統公用：clan_update - 進行記憶體清理或管理公會/組織資料。
 void clan_update(void) {
     FILE      *fp;
     CLAN_DATA *cn;
@@ -513,6 +523,8 @@ void clan_update(void) {
 }
 
 /* code original from Greed Mud */
+// fread_clan: Core Engine function: fread_clan - Main C routine handling game mechanics.
+// fread_clan: 核心引擎函式：fread_clan - 處理遊戲底層機制的核心 C 語言子程序。
 bool fread_clan(CLAN_DATA *pClan, FILE *fp) {
     const char *word;
     bool        fMatch = FALSE;
@@ -661,6 +673,8 @@ bool fread_clan(CLAN_DATA *pClan, FILE *fp) {
     return FALSE;
 }
 
+// old_load_clan: Core Engine function: old_load_clan - Main C routine handling game mechanics.
+// old_load_clan: 核心引擎函式：old_load_clan - 處理遊戲底層機制的核心 C 語言子程序。
 void old_load_clan(void) {
     CLAN_DATA *cn;
     FILE      *fp;
@@ -704,6 +718,8 @@ void old_load_clan(void) {
     }
 }
 
+// load_clan_file: Core Engine function: load_clan_file - Main C routine handling game mechanics.
+// load_clan_file: 核心引擎函式：load_clan_file - 處理遊戲底層機制的核心 C 語言子程序。
 bool load_clan_file(char *fn) {
     FILE      *fp;
     CLAN_DATA *pClan = NULL;
@@ -761,6 +777,8 @@ bool load_clan_file(char *fn) {
     return TRUE;
 }
 
+// load_clans: Core Engine function: load_clans - Main C routine handling game mechanics.
+// load_clans: 核心引擎函式：load_clans - 處理遊戲底層機制的核心 C 語言子程序。
 void load_clans(void) {
     FILE *fp;
     char  fn[MAX_INPUT_LENGTH];
@@ -798,6 +816,8 @@ void load_clans(void) {
     return;
 }
 
+// clan_title: System helper: clan_title - Performs cleanup or manages organization data.
+// clan_title: 系統公用：clan_title - 進行記憶體清理或管理公會/組織資料。
 void clan_title(CHAR_DATA *ch, char *title) {
     char buf[MAX_STRING_LENGTH];
 
@@ -815,6 +835,8 @@ void clan_title(CHAR_DATA *ch, char *title) {
     return;
 }
 
+// do_clanchatemote: Command: do_clanchatemote - Main execution handler for the 'clanchatemote' player/IMM command.
+// do_clanchatemote: 指令：do_clanchatemote - 處理玩家或天神執行 'clanchatemote' 指令的主控程序。
 void do_clanchatemote(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
     sprintf(buf, "chat* %s", argument);
@@ -822,6 +844,8 @@ void do_clanchatemote(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_clanchat: Command: do_clanchat - Main execution handler for the 'clanchat' player/IMM command.
+// do_clanchat: 指令：do_clanchat - 處理玩家或天神執行 'clanchat' 指令的主控程序。
 void do_clanchat(CHAR_DATA *ch, char *argument) {
     char buf[MAX_INPUT_LENGTH];
     sprintf(buf, "chat %s", argument);
@@ -829,6 +853,8 @@ void do_clanchat(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_clan: Command: do_clan - Main execution handler for the 'clan' player/IMM command.
+// do_clan: 指令：do_clan - 處理玩家或天神執行 'clan' 指令的主控程序。
 void do_clan(CHAR_DATA *ch, char *argument) {
     DESCRIPTOR_DATA *d      = descriptor_list;
     CHAR_DATA       *victim = NULL;
@@ -1914,6 +1940,8 @@ void do_clan(CHAR_DATA *ch, char *argument) {
         do_save(victim, "");
 }
 
+// do_clanrecall: Command: do_clanrecall - Main execution handler for the 'clanrecall' player/IMM command.
+// do_clanrecall: 指令：do_clanrecall - 處理玩家或天神執行 'clanrecall' 指令的主控程序。
 void do_clanrecall(CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim, *horse;
     ROOM_INDEX_DATA *location;

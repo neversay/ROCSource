@@ -68,6 +68,8 @@ DECLARE_SPEC_FUN(spec_assassin);
  * Given a name, return the appropriate spec fun.
  */
 
+// special_cast_spell: Core Engine function: special_cast_spell - Main C routine handling game mechanics.
+// special_cast_spell: 核心引擎函式：special_cast_spell - 處理遊戲底層機制的核心 C 語言子程序。
 void special_cast_spell(CHAR_DATA *ch, int sn) {
     ;
 }
@@ -75,6 +77,8 @@ void special_cast_spell(CHAR_DATA *ch, int sn) {
 /*
  * Core procedure for dragons.
  */
+// dragon: Core Engine function: dragon - Main C routine handling game mechanics.
+// dragon: 核心引擎函式：dragon - 處理遊戲底層機制的核心 C 語言子程序。
 bool dragon(CHAR_DATA *ch, char *spell_name) {
     CHAR_DATA *victim;
     int        sn;
@@ -102,6 +106,8 @@ bool dragon(CHAR_DATA *ch, char *spell_name) {
 /*
  * Special procedures for mobiles.
  */
+// spec_breath_any: Special behavior: spec_breath_any - Evaluates special actions and triggers for 'breath_any' NPCs.
+// spec_breath_any: 特殊行為：spec_breath_any - 評估與觸發 'breath_any' NPC 怪物的特殊觸發行為。
 bool spec_breath_any(CHAR_DATA *ch) {
     if (ch->position != POS_FIGHTING)
         return FALSE;
@@ -125,18 +131,26 @@ bool spec_breath_any(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_breath_acid: Special behavior: spec_breath_acid - Evaluates special actions and triggers for 'breath_acid' NPCs.
+// spec_breath_acid: 特殊行為：spec_breath_acid - 評估與觸發 'breath_acid' NPC 怪物的特殊觸發行為。
 bool spec_breath_acid(CHAR_DATA *ch) {
     return dragon(ch, "acid breath");
 }
 
+// spec_breath_fire: Special behavior: spec_breath_fire - Evaluates special actions and triggers for 'breath_fire' NPCs.
+// spec_breath_fire: 特殊行為：spec_breath_fire - 評估與觸發 'breath_fire' NPC 怪物的特殊觸發行為。
 bool spec_breath_fire(CHAR_DATA *ch) {
     return dragon(ch, "fire breath");
 }
 
+// spec_breath_frost: Special behavior: spec_breath_frost - Evaluates special actions and triggers for 'breath_frost' NPCs.
+// spec_breath_frost: 特殊行為：spec_breath_frost - 評估與觸發 'breath_frost' NPC 怪物的特殊觸發行為。
 bool spec_breath_frost(CHAR_DATA *ch) {
     return dragon(ch, "frost breath");
 }
 
+// spec_breath_gas: Special behavior: spec_breath_gas - Evaluates special actions and triggers for 'breath_gas' NPCs.
+// spec_breath_gas: 特殊行為：spec_breath_gas - 評估與觸發 'breath_gas' NPC 怪物的特殊觸發行為。
 bool spec_breath_gas(CHAR_DATA *ch) {
     /*   因毒息修改為指定目標, 所以修正毒息目標 2022/04/29
         int sn;
@@ -152,10 +166,14 @@ bool spec_breath_gas(CHAR_DATA *ch) {
     return dragon(ch, "gas breath");
 }
 
+// spec_breath_lightning: Special behavior: spec_breath_lightning - Evaluates special actions and triggers for 'breath_lightning' NPCs.
+// spec_breath_lightning: 特殊行為：spec_breath_lightning - 評估與觸發 'breath_lightning' NPC 怪物的特殊觸發行為。
 bool spec_breath_lightning(CHAR_DATA *ch) {
     return dragon(ch, "lightning breath");
 }
 
+// spec_assassin: Special behavior: spec_assassin - Evaluates special actions and triggers for 'assassin' NPCs.
+// spec_assassin: 特殊行為：spec_assassin - 評估與觸發 'assassin' NPC 怪物的特殊觸發行為。
 bool spec_assassin(CHAR_DATA *ch) {
     int        percent;
     char       arg[BUF_STRING_LENGTH];
@@ -188,6 +206,8 @@ bool spec_assassin(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_cast_adept: Special behavior: spec_cast_adept - Evaluates special actions and triggers for 'cast_adept' NPCs.
+// spec_cast_adept: 特殊行為：spec_cast_adept - 評估與觸發 'cast_adept' NPC 怪物的特殊觸發行為。
 bool spec_cast_adept(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     int        level;
@@ -266,6 +286,8 @@ bool spec_cast_adept(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_cast_water: Special behavior: spec_cast_water - Evaluates special actions and triggers for 'cast_water' NPCs.
+// spec_cast_water: 特殊行為：spec_cast_water - 評估與觸發 'cast_water' NPC 怪物的特殊觸發行為。
 bool spec_cast_water(CHAR_DATA *ch) {
     CHAR_DATA *victim;
 
@@ -327,6 +349,8 @@ bool spec_cast_water(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_cast_cleric: Special behavior: spec_cast_cleric - Evaluates special actions and triggers for 'cast_cleric' NPCs.
+// spec_cast_cleric: 特殊行為：spec_cast_cleric - 評估與觸發 'cast_cleric' NPC 怪物的特殊觸發行為。
 bool spec_cast_cleric(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -407,6 +431,8 @@ bool spec_cast_cleric(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_judge: Special behavior: spec_cast_judge - Evaluates special actions and triggers for 'cast_judge' NPCs.
+// spec_cast_judge: 特殊行為：spec_cast_judge - 評估與觸發 'cast_judge' NPC 怪物的特殊觸發行為。
 bool spec_cast_judge(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -433,6 +459,8 @@ bool spec_cast_judge(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_mage: Special behavior: spec_cast_mage - Evaluates special actions and triggers for 'cast_mage' NPCs.
+// spec_cast_mage: 特殊行為：spec_cast_mage - 評估與觸發 'cast_mage' NPC 怪物的特殊觸發行為。
 bool spec_cast_mage(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -533,6 +561,8 @@ bool spec_cast_mage(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_earth: Special behavior: spec_cast_earth - Evaluates special actions and triggers for 'cast_earth' NPCs.
+// spec_cast_earth: 特殊行為：spec_cast_earth - 評估與觸發 'cast_earth' NPC 怪物的特殊觸發行為。
 bool spec_cast_earth(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -588,6 +618,8 @@ bool spec_cast_earth(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_wind: Special behavior: spec_cast_wind - Evaluates special actions and triggers for 'cast_wind' NPCs.
+// spec_cast_wind: 特殊行為：spec_cast_wind - 評估與觸發 'cast_wind' NPC 怪物的特殊觸發行為。
 bool spec_cast_wind(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -643,6 +675,8 @@ bool spec_cast_wind(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_cold: Special behavior: spec_cast_cold - Evaluates special actions and triggers for 'cast_cold' NPCs.
+// spec_cast_cold: 特殊行為：spec_cast_cold - 評估與觸發 'cast_cold' NPC 怪物的特殊觸發行為。
 bool spec_cast_cold(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -694,6 +728,8 @@ bool spec_cast_cold(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_fire: Special behavior: spec_cast_fire - Evaluates special actions and triggers for 'cast_fire' NPCs.
+// spec_cast_fire: 特殊行為：spec_cast_fire - 評估與觸發 'cast_fire' NPC 怪物的特殊觸發行為。
 bool spec_cast_fire(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -749,6 +785,8 @@ bool spec_cast_fire(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_undead: Special behavior: spec_cast_undead - Evaluates special actions and triggers for 'cast_undead' NPCs.
+// spec_cast_undead: 特殊行為：spec_cast_undead - 評估與觸發 'cast_undead' NPC 怪物的特殊觸發行為。
 bool spec_cast_undead(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -834,6 +872,8 @@ bool spec_cast_undead(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_executioner: Special behavior: spec_executioner - Evaluates special actions and triggers for 'executioner' NPCs.
+// spec_executioner: 特殊行為：spec_executioner - 評估與觸發 'executioner' NPC 怪物的特殊觸發行為。
 bool spec_executioner(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *crime;
@@ -894,6 +934,8 @@ bool spec_executioner(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_fido: Special behavior: spec_fido - Evaluates special actions and triggers for 'fido' NPCs.
+// spec_fido: 特殊行為：spec_fido - 評估與觸發 'fido' NPC 怪物的特殊觸發行為。
 bool spec_fido(CHAR_DATA *ch) {
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
@@ -925,6 +967,8 @@ bool spec_fido(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_guard: Special behavior: spec_guard - Evaluates special actions and triggers for 'guard' NPCs.
+// spec_guard: 特殊行為：spec_guard - 評估與觸發 'guard' NPC 怪物的特殊觸發行為。
 bool spec_guard(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     CHAR_DATA *ech;
@@ -1095,6 +1139,8 @@ bool spec_guard(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_janitor: Special behavior: spec_janitor - Evaluates special actions and triggers for 'janitor' NPCs.
+// spec_janitor: 特殊行為：spec_janitor - 評估與觸發 'janitor' NPC 怪物的特殊觸發行為。
 bool spec_janitor(CHAR_DATA *ch) {
     OBJ_DATA *trash;
     OBJ_DATA *trash_next;
@@ -1123,6 +1169,8 @@ bool spec_janitor(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_mayor: Special behavior: spec_mayor - Evaluates special actions and triggers for 'mayor' NPCs.
+// spec_mayor: 特殊行為：spec_mayor - 評估與觸發 'mayor' NPC 怪物的特殊觸發行為。
 bool spec_mayor(CHAR_DATA *ch) {
     static const char *path;
     static const char  open_path[] =
@@ -1216,6 +1264,8 @@ bool spec_mayor(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// spec_poison: Special behavior: spec_poison - Evaluates special actions and triggers for 'poison' NPCs.
+// spec_poison: 特殊行為：spec_poison - 評估與觸發 'poison' NPC 怪物的特殊觸發行為。
 bool spec_poison(CHAR_DATA *ch) {
     CHAR_DATA *victim;
 
@@ -1229,6 +1279,8 @@ bool spec_poison(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_thief: Special behavior: spec_thief - Evaluates special actions and triggers for 'thief' NPCs.
+// spec_thief: 特殊行為：spec_thief - 評估與觸發 'thief' NPC 怪物的特殊觸發行為。
 bool spec_thief(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     int        gold;
@@ -1262,6 +1314,8 @@ bool spec_thief(CHAR_DATA *ch) {
 /*
  * Psionicist spec_fun by Thelonius for EnvyMud.
  */
+// spec_cast_psionicist: Special behavior: spec_cast_psionicist - Evaluates special actions and triggers for 'cast_psionicist' NPCs.
+// spec_cast_psionicist: 特殊行為：spec_cast_psionicist - 評估與觸發 'cast_psionicist' NPC 怪物的特殊觸發行為。
 bool spec_cast_psionicist(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -1342,6 +1396,8 @@ bool spec_cast_psionicist(CHAR_DATA *ch) {
     return TRUE;
 }
 
+// spec_cast_ghost: Special behavior: spec_cast_ghost - Evaluates special actions and triggers for 'cast_ghost' NPCs.
+// spec_cast_ghost: 特殊行為：spec_cast_ghost - 評估與觸發 'cast_ghost' NPC 怪物的特殊觸發行為。
 bool spec_cast_ghost(CHAR_DATA *ch) {
     CHAR_DATA *victim;
     char      *spell;
@@ -1434,6 +1490,8 @@ bool spec_cast_ghost(CHAR_DATA *ch) {
 /*
  * spec_fun to repair bashed doors by Thelonius for EnvyMud.
  */
+// spec_repairman: Special behavior: spec_repairman - Evaluates special actions and triggers for 'repairman' NPCs.
+// spec_repairman: 特殊行為：spec_repairman - 評估與觸發 'repairman' NPC 怪物的特殊觸發行為。
 bool spec_repairman(CHAR_DATA *ch) {
     EXIT_DATA       *pexit;
     EXIT_DATA       *pexit_rev;

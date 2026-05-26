@@ -1,3 +1,5 @@
+// olc.h: Online Creation system editor states, prototypes, and building data structures.
+// olc.h: 線上動態建設系統（OLC）之編輯器狀態、函式原型及地圖/怪物/物品建設資料結構。
 /***************************************************************************
  *  File: olc.h								   *
  *									   *

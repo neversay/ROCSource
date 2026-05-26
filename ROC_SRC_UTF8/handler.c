@@ -126,17 +126,23 @@ extern bool      fremove_obj(CHAR_DATA *ch, int iWear, bool fReplace);
 extern bool      GLOBAL_OBJ_UPDATE;
 extern OBJ_DATA *updating_obj;
 
+// HpMultiply_Affect: Core Engine function: HpMultiply_Affect - Main C routine handling game mechanics.
+// HpMultiply_Affect: 核心引擎函式：HpMultiply_Affect - 處理遊戲底層機制的核心 C 語言子程序。
 void HpMultiply_Affect(AFFECT_DATA *paf) {
     if (paf->location == APPLY_HIT || paf->location == APPLY_MANA || paf->location == APPLY_MOVE)
         paf->modifier *= PPL_HP_MULTIPLYER;
 }
 
+// HpDeMultiply_Affect: Core Engine function: HpDeMultiply_Affect - Main C routine handling game mechanics.
+// HpDeMultiply_Affect: 核心引擎函式：HpDeMultiply_Affect - 處理遊戲底層機制的核心 C 語言子程序。
 void HpDeMultiply_Affect(AFFECT_DATA *paf) {
     if (paf->location == APPLY_HIT || paf->location == APPLY_MANA || paf->location == APPLY_MOVE)
         paf->modifier /= PPL_HP_MULTIPLYER;
 }
 
 // 判定 hp mp mv 是否因為裝備小於 0 2023/04/10
+// CheckMaxHpMpMv: Core Engine function: CheckMaxHpMpMv - Main C routine handling game mechanics.
+// CheckMaxHpMpMv: 核心引擎函式：CheckMaxHpMpMv - 處理遊戲底層機制的核心 C 語言子程序。
 bool CheckMaxHpMpMv(CHAR_DATA *ch, AFFECT_DATA *paf) {
     if (paf->location == APPLY_HIT) {
         if (ch->max_hit + (paf->modifier * PPL_HP_MULTIPLYER) <= 0)
@@ -159,6 +165,8 @@ bool CheckMaxHpMpMv(CHAR_DATA *ch, AFFECT_DATA *paf) {
     return TRUE;
 }
 
+// IsUnderFistFight: Core Engine function: IsUnderFistFight - Main C routine handling game mechanics.
+// IsUnderFistFight: 核心引擎函式：IsUnderFistFight - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUnderFistFight(CHAR_DATA *ch) {
     OBJ_DATA *ob;
 
@@ -194,6 +202,8 @@ bool IsUnderFistFight(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// GetArmorMasteryPdrBonus: Core Engine function: GetArmorMasteryPdrBonus - Main C routine handling game mechanics.
+// GetArmorMasteryPdrBonus: 核心引擎函式：GetArmorMasteryPdrBonus - 處理遊戲底層機制的核心 C 語言子程序。
 int GetArmorMasteryPdrBonus(CHAR_DATA *ch) {
     int nPDR = 0;
     if (!IS_NPC(ch) && get_skill_percent(ch, gsn_armor_mastery) > 0) {
@@ -206,6 +216,8 @@ int GetArmorMasteryPdrBonus(CHAR_DATA *ch) {
     return nPDR;
 }
 
+// GetArmorMasteryAcBonus: Core Engine function: GetArmorMasteryAcBonus - Main C routine handling game mechanics.
+// GetArmorMasteryAcBonus: 核心引擎函式：GetArmorMasteryAcBonus - 處理遊戲底層機制的核心 C 語言子程序。
 int GetArmorMasteryAcBonus(CHAR_DATA *ch) {
     int bonus = 0;
     if (!IS_NPC(ch) && get_skill_percent(ch, gsn_armor_mastery) > 0) {
@@ -215,6 +227,8 @@ int GetArmorMasteryAcBonus(CHAR_DATA *ch) {
     return bonus;
 }
 
+// HasMageSorMaster: Core Engine function: HasMageSorMaster - Main C routine handling game mechanics.
+// HasMageSorMaster: 核心引擎函式：HasMageSorMaster - 處理遊戲底層機制的核心 C 語言子程序。
 int HasMageSorMaster(CHAR_DATA *ch) {
     /*
             if(ch->master && !IS_NPC(ch->master)){
@@ -231,6 +245,8 @@ int HasMageSorMaster(CHAR_DATA *ch) {
     return 0;
 }
 
+// GetSorGateMobLevel: Core Engine function: GetSorGateMobLevel - Main C routine handling game mechanics.
+// GetSorGateMobLevel: 核心引擎函式：GetSorGateMobLevel - 處理遊戲底層機制的核心 C 語言子程序。
 int GetSorGateMobLevel(int nMobIndex) {
     /*
             if(nMobIndex == MOB_VNUM_SOR_FLAME2 ||
@@ -264,6 +280,8 @@ int GetSorGateMobLevel(int nMobIndex) {
     return -1;
 }
 
+// IsSorGateMobFlame: Core Engine function: IsSorGateMobFlame - Main C routine handling game mechanics.
+// IsSorGateMobFlame: 核心引擎函式：IsSorGateMobFlame - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSorGateMobFlame(int nMobIndex) {
     if (nMobIndex == MOB_VNUM_SOR_FLAME0 || nMobIndex == MOB_VNUM_SOR_FLAME1 || nMobIndex == MOB_VNUM_SOR_FLAME2) {
         return TRUE;
@@ -271,6 +289,8 @@ bool IsSorGateMobFlame(int nMobIndex) {
     return FALSE;
 }
 
+// IsSorGateMobWater: Core Engine function: IsSorGateMobWater - Main C routine handling game mechanics.
+// IsSorGateMobWater: 核心引擎函式：IsSorGateMobWater - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSorGateMobWater(int nMobIndex) {
     if (nMobIndex == MOB_VNUM_SOR_WATER0 || nMobIndex == MOB_VNUM_SOR_WATER1 || nMobIndex == MOB_VNUM_SOR_WATER2) {
         return TRUE;
@@ -278,6 +298,8 @@ bool IsSorGateMobWater(int nMobIndex) {
     return FALSE;
 }
 
+// IsSorGateMobWind: Core Engine function: IsSorGateMobWind - Main C routine handling game mechanics.
+// IsSorGateMobWind: 核心引擎函式：IsSorGateMobWind - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSorGateMobWind(int nMobIndex) {
     if (nMobIndex == MOB_VNUM_SOR_WIND0 || nMobIndex == MOB_VNUM_SOR_WIND1 || nMobIndex == MOB_VNUM_SOR_WIND2) {
         return TRUE;
@@ -285,6 +307,8 @@ bool IsSorGateMobWind(int nMobIndex) {
     return FALSE;
 }
 
+// IsSorGateMobEarth: Core Engine function: IsSorGateMobEarth - Main C routine handling game mechanics.
+// IsSorGateMobEarth: 核心引擎函式：IsSorGateMobEarth - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSorGateMobEarth(int nMobIndex) {
     if (nMobIndex == MOB_VNUM_SOR_EARTH0 || nMobIndex == MOB_VNUM_SOR_EARTH1 || nMobIndex == MOB_VNUM_SOR_EARTH2) {
         return TRUE;
@@ -292,6 +316,8 @@ bool IsSorGateMobEarth(int nMobIndex) {
     return FALSE;
 }
 
+// IsSorGateMobLightning: Core Engine function: IsSorGateMobLightning - Main C routine handling game mechanics.
+// IsSorGateMobLightning: 核心引擎函式：IsSorGateMobLightning - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSorGateMobLightning(int nMobIndex) {
     if (nMobIndex == MOB_VNUM_SOR_LIGHTNING0 || nMobIndex == MOB_VNUM_SOR_LIGHTNING1 || nMobIndex == MOB_VNUM_SOR_LIGHTNING2) {
         return TRUE;
@@ -299,12 +325,16 @@ bool IsSorGateMobLightning(int nMobIndex) {
     return FALSE;
 }
 
+// IsSorGateMob: Core Engine function: IsSorGateMob - Main C routine handling game mechanics.
+// IsSorGateMob: 核心引擎函式：IsSorGateMob - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSorGateMob(int nMobIndex) {
     if (GetSorGateMobLevel(nMobIndex) > -1)
         return TRUE;
     return FALSE;
 }
 
+// IsSorGateMobByChar: Core Engine function: IsSorGateMobByChar - Main C routine handling game mechanics.
+// IsSorGateMobByChar: 核心引擎函式：IsSorGateMobByChar - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsSorGateMobByChar(CHAR_DATA *ch) {
     if (ch->pIndexData != NULL && IsSorGateMob(ch->pIndexData->vnum)) {
         return TRUE;
@@ -325,6 +355,8 @@ double SorGateMobBonus(CHAR_DATA *ch, int base) // 判定 sor mob 的數值受 m
     return (double)(base * (100 + (sklv + 1) * ch->master->pp)) / 100;
 }
 
+// IsPK: Core Engine function: IsPK - Main C routine handling game mechanics.
+// IsPK: 核心引擎函式：IsPK - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsPK(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (!IS_NPC(victim)) {
         if (!IS_NPC(ch)) {
@@ -338,6 +370,8 @@ bool IsPK(CHAR_DATA *ch, CHAR_DATA *victim) {
     return FALSE;
 }
 
+// NEW_GET_SVS: Core Engine function: NEW_GET_SVS - Main C routine handling game mechanics.
+// NEW_GET_SVS: 核心引擎函式：NEW_GET_SVS - 處理遊戲底層機制的核心 C 語言子程序。
 int NEW_GET_SVS(CHAR_DATA *ch, int type) {
     /*讓陣營影響svsSaint和svsDark的值*/
     if (type == MAGIC_SAINT) {
@@ -362,12 +396,16 @@ int NEW_GET_SVS(CHAR_DATA *ch, int type) {
 }
 int get_allow_deny_bit(CHAR_DATA *ch);
 
+// GET_SVS: Core Engine function: GET_SVS - Main C routine handling game mechanics.
+// GET_SVS: 核心引擎函式：GET_SVS - 處理遊戲底層機制的核心 C 語言子程序。
 int GET_SVS(CHAR_DATA *ch) {
     /*
             #define GET_SVS( ch )( IS_NPC( ch ) ? ch->saving_throw : 30 - get_curr_int( ch ) - \get_curr_wis( ch ) + ch->saving_throw )
     */
     return (IS_NPC(ch) ? ch->saving_throw[0] : 30 - get_curr_int(ch) - get_curr_wis(ch) + ch->saving_throw[0]) + race_table[ch->race].nature_svs[0];
 }
+// get_vrace_hrq: Core Engine function: get_vrace_hrq - Main C routine handling game mechanics.
+// get_vrace_hrq: 核心引擎函式：get_vrace_hrq - 處理遊戲底層機制的核心 C 語言子程序。
 int get_vrace_hrq(CHAR_DATA *victim, OBJ_DATA *wpn) {
     int        q = 0;
     OBJ_VRACE *ovr;
@@ -406,6 +444,8 @@ int get_vrace_hrq(CHAR_DATA *victim, OBJ_DATA *wpn) {
     return q;
 }
 
+// get_vrace_drq: Core Engine function: get_vrace_drq - Main C routine handling game mechanics.
+// get_vrace_drq: 核心引擎函式：get_vrace_drq - 處理遊戲底層機制的核心 C 語言子程序。
 int get_vrace_drq(CHAR_DATA *victim, OBJ_DATA *wpn) {
     int        q = 0;
     OBJ_VRACE *ovr;
@@ -443,6 +483,8 @@ int get_vrace_drq(CHAR_DATA *victim, OBJ_DATA *wpn) {
     }
     return q;
 }
+// get_vrace_hrp: Core Engine function: get_vrace_hrp - Main C routine handling game mechanics.
+// get_vrace_hrp: 核心引擎函式：get_vrace_hrp - 處理遊戲底層機制的核心 C 語言子程序。
 int get_vrace_hrp(CHAR_DATA *victim, OBJ_DATA *wpn) {
     int        q = 100;
     OBJ_VRACE *ovr;
@@ -480,6 +522,8 @@ int get_vrace_hrp(CHAR_DATA *victim, OBJ_DATA *wpn) {
     }
     return q;
 }
+// get_vrace_drp: Core Engine function: get_vrace_drp - Main C routine handling game mechanics.
+// get_vrace_drp: 核心引擎函式：get_vrace_drp - 處理遊戲底層機制的核心 C 語言子程序。
 int get_vrace_drp(CHAR_DATA *victim, OBJ_DATA *wpn) {
     int        q = 100;
     OBJ_VRACE *ovr;
@@ -522,6 +566,8 @@ int get_vrace_drp(CHAR_DATA *victim, OBJ_DATA *wpn) {
 /*
  * Retrieve a character's trusted level for permission checking.
  */
+// get_trust: Core Engine function: get_trust - Main C routine handling game mechanics.
+// get_trust: 核心引擎函式：get_trust - 處理遊戲底層機制的核心 C 語言子程序。
 int get_trust(CHAR_DATA *ch) {
     if (!ch)
         return 0;
@@ -537,6 +583,8 @@ int get_trust(CHAR_DATA *ch) {
         return ch->level;
 }
 
+// GET_DODGE: Core Engine function: GET_DODGE - Main C routine handling game mechanics.
+// GET_DODGE: 核心引擎函式：GET_DODGE - 處理遊戲底層機制的核心 C 語言子程序。
 int GET_DODGE(CHAR_DATA *ch) {
     int nMobIndex = 0;
     int nDodge    = 0;
@@ -562,6 +610,8 @@ int GET_DODGE(CHAR_DATA *ch) {
 /*
  * Retrieve a character's age.
  */
+// get_age: Core Engine function: get_age - Main C routine handling game mechanics.
+// get_age: 核心引擎函式：get_age - 處理遊戲底層機制的核心 C 語言子程序。
 int get_age(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return 10;
@@ -573,6 +623,8 @@ int get_age(CHAR_DATA *ch) {
        17 months/year - Kahn */
 }
 
+// get_eff_str: Core Engine function: get_eff_str - Main C routine handling game mechanics.
+// get_eff_str: 核心引擎函式：get_eff_str - 處理遊戲底層機制的核心 C 語言子程序。
 int get_eff_str(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -603,6 +655,8 @@ int get_eff_str(CHAR_DATA *ch) {
 /*
  * Retrieve character's current intelligence.
  */
+// get_eff_int: Core Engine function: get_eff_int - Main C routine handling game mechanics.
+// get_eff_int: 核心引擎函式：get_eff_int - 處理遊戲底層機制的核心 C 語言子程序。
 int get_eff_int(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -630,6 +684,8 @@ int get_eff_int(CHAR_DATA *ch) {
 /*
  * Retrieve character's current wisdom.
  */
+// get_eff_wis: Core Engine function: get_eff_wis - Main C routine handling game mechanics.
+// get_eff_wis: 核心引擎函式：get_eff_wis - 處理遊戲底層機制的核心 C 語言子程序。
 int get_eff_wis(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -658,6 +714,8 @@ int get_eff_wis(CHAR_DATA *ch) {
 /*
  * Retrieve character's current dexterity.
  */
+// get_eff_dex: Core Engine function: get_eff_dex - Main C routine handling game mechanics.
+// get_eff_dex: 核心引擎函式：get_eff_dex - 處理遊戲底層機制的核心 C 語言子程序。
 int get_eff_dex(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -685,6 +743,8 @@ int get_eff_dex(CHAR_DATA *ch) {
 /*
  * Retrieve character's current constitution.
  */
+// get_eff_con: Core Engine function: get_eff_con - Main C routine handling game mechanics.
+// get_eff_con: 核心引擎函式：get_eff_con - 處理遊戲底層機制的核心 C 語言子程序。
 int get_eff_con(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -709,6 +769,8 @@ int get_eff_con(CHAR_DATA *ch) {
     return max;
 }
 
+// get_max_str: Core Engine function: get_max_str - Main C routine handling game mechanics.
+// get_max_str: 核心引擎函式：get_max_str - 處理遊戲底層機制的核心 C 語言子程序。
 int get_max_str(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -743,6 +805,8 @@ int get_max_str(CHAR_DATA *ch) {
 /*
  * Retrieve character's current intelligence.
  */
+// get_max_int: Core Engine function: get_max_int - Main C routine handling game mechanics.
+// get_max_int: 核心引擎函式：get_max_int - 處理遊戲底層機制的核心 C 語言子程序。
 int get_max_int(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -776,6 +840,8 @@ int get_max_int(CHAR_DATA *ch) {
 /*
  * Retrieve character's current wisdom.
  */
+// get_max_wis: Core Engine function: get_max_wis - Main C routine handling game mechanics.
+// get_max_wis: 核心引擎函式：get_max_wis - 處理遊戲底層機制的核心 C 語言子程序。
 int get_max_wis(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -809,6 +875,8 @@ int get_max_wis(CHAR_DATA *ch) {
 /*
  * Retrieve character's current dexterity.
  */
+// get_max_dex: Core Engine function: get_max_dex - Main C routine handling game mechanics.
+// get_max_dex: 核心引擎函式：get_max_dex - 處理遊戲底層機制的核心 C 語言子程序。
 int get_max_dex(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -842,6 +910,8 @@ int get_max_dex(CHAR_DATA *ch) {
 /*
  * Retrieve character's current constitution.
  */
+// get_max_con: Core Engine function: get_max_con - Main C routine handling game mechanics.
+// get_max_con: 核心引擎函式：get_max_con - 處理遊戲底層機制的核心 C 語言子程序。
 int get_max_con(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -875,6 +945,8 @@ int get_max_con(CHAR_DATA *ch) {
 /*
  * Retrieve character's current strength.
  */
+// get_curr_str: Core Engine function: get_curr_str - Main C routine handling game mechanics.
+// get_curr_str: 核心引擎函式：get_curr_str - 處理遊戲底層機制的核心 C 語言子程序。
 int get_curr_str(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -922,6 +994,8 @@ int get_curr_str(CHAR_DATA *ch) {
 /*
  * Retrieve character's current intelligence.
  */
+// get_curr_int: Core Engine function: get_curr_int - Main C routine handling game mechanics.
+// get_curr_int: 核心引擎函式：get_curr_int - 處理遊戲底層機制的核心 C 語言子程序。
 int get_curr_int(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -973,6 +1047,8 @@ int get_curr_int(CHAR_DATA *ch) {
 /*
  * Retrieve character's current wisdom.
  */
+// get_curr_wis: Core Engine function: get_curr_wis - Main C routine handling game mechanics.
+// get_curr_wis: 核心引擎函式：get_curr_wis - 處理遊戲底層機制的核心 C 語言子程序。
 int get_curr_wis(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -1019,6 +1095,8 @@ int get_curr_wis(CHAR_DATA *ch) {
 /*
  * Retrieve character's current dexterity.
  */
+// get_curr_dex: Core Engine function: get_curr_dex - Main C routine handling game mechanics.
+// get_curr_dex: 核心引擎函式：get_curr_dex - 處理遊戲底層機制的核心 C 語言子程序。
 int get_curr_dex(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -1065,6 +1143,8 @@ int get_curr_dex(CHAR_DATA *ch) {
 /*
  * Retrieve character's current constitution.
  */
+// get_curr_con: Core Engine function: get_curr_con - Main C routine handling game mechanics.
+// get_curr_con: 核心引擎函式：get_curr_con - 處理遊戲底層機制的核心 C 語言子程序。
 int get_curr_con(CHAR_DATA *ch) {
     int max = 25;
     int mod;
@@ -1109,6 +1189,8 @@ int get_curr_con(CHAR_DATA *ch) {
 }
 
 // 角色體型 size 總合 2022/12/23
+// get_curr_size: Core Engine function: get_curr_size - Main C routine handling game mechanics.
+// get_curr_size: 核心引擎函式：get_curr_size - 處理遊戲底層機制的核心 C 語言子程序。
 int get_curr_size(CHAR_DATA *ch) {
     int mod;
 
@@ -1120,6 +1202,8 @@ int get_curr_size(CHAR_DATA *ch) {
 /*
  * Retrieve character's current hitroll for given weapon location
  */
+// get_hitroll: Core Engine function: get_hitroll - Main C routine handling game mechanics.
+// get_hitroll: 核心引擎函式：get_hitroll - 處理遊戲底層機制的核心 C 語言子程序。
 int get_hitroll(CHAR_DATA *ch, int wpn) {
     OBJ_DATA    *other_wield;
     AFFECT_DATA *paf;
@@ -1367,6 +1451,8 @@ int get_hitroll(CHAR_DATA *ch, int wpn) {
 /*
  * Retrieve character's current damroll for given weapon location
  */
+// get_damroll: Core Engine function: get_damroll - Main C routine handling game mechanics.
+// get_damroll: 核心引擎函式：get_damroll - 處理遊戲底層機制的核心 C 語言子程序。
 int get_damroll(CHAR_DATA *ch, int wpn) {
     OBJ_DATA    *other_wield;
     AFFECT_DATA *paf;
@@ -1425,6 +1511,8 @@ int get_damroll(CHAR_DATA *ch, int wpn) {
 /*
  * Retrieve a character's carry capacity.
  */
+// can_carry_n: Core Engine function: can_carry_n - Main C routine handling game mechanics.
+// can_carry_n: 核心引擎函式：can_carry_n - 處理遊戲底層機制的核心 C 語言子程序。
 int can_carry_n(CHAR_DATA *ch) {
     if (!IS_NPC(ch) && ch->level >= LEVEL_IMMORTAL)
         return 1000;
@@ -1443,6 +1531,8 @@ int can_carry_n(CHAR_DATA *ch) {
 /*
  * Retrieve a character's carry capacity.
  */
+// can_carry_w: Core Engine function: can_carry_w - Main C routine handling game mechanics.
+// can_carry_w: 核心引擎函式：can_carry_w - 處理遊戲底層機制的核心 C 語言子程序。
 int can_carry_w(CHAR_DATA *ch) {
     if (!IS_NPC(ch) && ch->level >= LEVEL_IMMORTAL)
         return 1000000;
@@ -1471,6 +1561,8 @@ int can_carry_w(CHAR_DATA *ch) {
  * New is_name sent in by Alander.
  */
 
+// is_name: Core Engine function: is_name - Main C routine handling game mechanics.
+// is_name: 核心引擎函式：is_name - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_name(const char *str, char *namelist) {
     char name[MAX_INPUT_LENGTH];
 
@@ -1492,6 +1584,8 @@ bool is_name(const char *str, char *namelist) {
     }
 }
 
+// is_pfxname: Core Engine function: is_pfxname - Main C routine handling game mechanics.
+// is_pfxname: 核心引擎函式：is_pfxname - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_pfxname(const char *str, char *namelist) {
     char name[MAX_INPUT_LENGTH];
 
@@ -1517,6 +1611,8 @@ bool is_pfxname(const char *str, char *namelist) {
 /*
  * Move a char out of a room.
  */
+// char_from_room: Core Engine function: char_from_room - Main C routine handling game mechanics.
+// char_from_room: 核心引擎函式：char_from_room - 處理遊戲底層機制的核心 C 語言子程序。
 void char_from_room(CHAR_DATA *ch) {
     OBJ_DATA *obj;
 
@@ -1557,6 +1653,8 @@ void char_from_room(CHAR_DATA *ch) {
     return;
 }
 
+// char_from_room2: Core Engine function: char_from_room2 - Main C routine handling game mechanics.
+// char_from_room2: 核心引擎函式：char_from_room2 - 處理遊戲底層機制的核心 C 語言子程序。
 void char_from_room2(CHAR_DATA *ch) {
     OBJ_DATA *obj;
 
@@ -1600,6 +1698,8 @@ void char_from_room2(CHAR_DATA *ch) {
 /*
  * Move a char into a room.
  */
+// char_to_room: Core Engine function: char_to_room - Main C routine handling game mechanics.
+// char_to_room: 核心引擎函式：char_to_room - 處理遊戲底層機制的核心 C 語言子程序。
 void char_to_room(CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex) {
     OBJ_DATA  *obj;
     CHAR_DATA *phorse;
@@ -1639,6 +1739,8 @@ void char_to_room(CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex) {
 /*
  * Give an obj to a char.
  */
+// obj_to_char: Core Engine function: obj_to_char - Main C routine handling game mechanics.
+// obj_to_char: 核心引擎函式：obj_to_char - 處理遊戲底層機制的核心 C 語言子程序。
 void obj_to_char(OBJ_DATA *obj, CHAR_DATA *ch) {
     if (!ch || !obj || obj->deleted)
         return;
@@ -1664,6 +1766,8 @@ void obj_to_char(OBJ_DATA *obj, CHAR_DATA *ch) {
 /*
  * Take an obj from its character.
  */
+// obj_from_char: Core Engine function: obj_from_char - Main C routine handling game mechanics.
+// obj_from_char: 核心引擎函式：obj_from_char - 處理遊戲底層機制的核心 C 語言子程序。
 void obj_from_char(OBJ_DATA *obj) {
     CHAR_DATA *ch;
 
@@ -1716,6 +1820,8 @@ void obj_from_char(OBJ_DATA *obj) {
 /*
  * Find the ac value of an obj, including position effect.
  */
+// apply_ac: Core Engine function: apply_ac - Main C routine handling game mechanics.
+// apply_ac: 核心引擎函式：apply_ac - 處理遊戲底層機制的核心 C 語言子程序。
 int apply_ac(OBJ_DATA *obj, int iWear) {
     if (obj->item_type != ITEM_ARMOR)
         return 0;
@@ -1785,6 +1891,8 @@ OBJ_DATA *get_eq_char(CHAR_DATA *ch, int iWear) {
     return NULL;
 }
 
+// get_ppl_race_bit: Core Engine function: get_ppl_race_bit - Main C routine handling game mechanics.
+// get_ppl_race_bit: 核心引擎函式：get_ppl_race_bit - 處理遊戲底層機制的核心 C 語言子程序。
 int get_ppl_race_bit(int nRace) {
     if (nRace == 35) //  WEREWOLF
         return 11;
@@ -1800,6 +1908,8 @@ int get_ppl_race_bit(int nRace) {
 /*
  * Equip a char with an obj.
  */
+// equip_char: Core Engine function: equip_char - Main C routine handling game mechanics.
+// equip_char: 核心引擎函式：equip_char - 處理遊戲底層機制的核心 C 語言子程序。
 void equip_char(CHAR_DATA *ch, OBJ_DATA *obj, int iWear) {
     AFFECT_DATA *paf;
     char         buf[MAX_STRING_LENGTH];
@@ -2059,6 +2169,8 @@ void equip_char(CHAR_DATA *ch, OBJ_DATA *obj, int iWear) {
 }
 
 // 新增不受 hp , obj_act 及 obj message 影響的 obj 裝備方式 2022/11/29
+// equip_char2: Core Engine function: equip_char2 - Main C routine handling game mechanics.
+// equip_char2: 核心引擎函式：equip_char2 - 處理遊戲底層機制的核心 C 語言子程序。
 void equip_char2(CHAR_DATA *ch, OBJ_DATA *obj, int iWear) {
     AFFECT_DATA *paf;
     char         buf[MAX_STRING_LENGTH];
@@ -2222,6 +2334,8 @@ void equip_char2(CHAR_DATA *ch, OBJ_DATA *obj, int iWear) {
 
 // get the base class
 // allow/deny bit of a advance class
+// get_allow_deny_bit: Core Engine function: get_allow_deny_bit - Main C routine handling game mechanics.
+// get_allow_deny_bit: 核心引擎函式：get_allow_deny_bit - 處理遊戲底層機制的核心 C 語言子程序。
 int get_allow_deny_bit(CHAR_DATA *ch) {
     switch (ch->pcdata->prime_attr) {
     case APPLY_STR:
@@ -2238,6 +2352,8 @@ int get_allow_deny_bit(CHAR_DATA *ch) {
 /*
  * Unequip a char with an obj.
  */
+// unequip_char: Core Engine function: unequip_char - Main C routine handling game mechanics.
+// unequip_char: 核心引擎函式：unequip_char - 處理遊戲底層機制的核心 C 語言子程序。
 void unequip_char(CHAR_DATA *ch, OBJ_DATA *obj) {
     int          ac;
     AFFECT_DATA *paf;
@@ -2312,6 +2428,8 @@ void unequip_char(CHAR_DATA *ch, OBJ_DATA *obj) {
     return;
 }
 // 新增不受 obj_act 及 obj message 影響的 obj 脫除方式 2022/11/29
+// unequip_char2: Core Engine function: unequip_char2 - Main C routine handling game mechanics.
+// unequip_char2: 核心引擎函式：unequip_char2 - 處理遊戲底層機制的核心 C 語言子程序。
 void unequip_char2(CHAR_DATA *ch, OBJ_DATA *obj) {
     int          ac;
     AFFECT_DATA *paf;
@@ -2381,6 +2499,8 @@ void unequip_char2(CHAR_DATA *ch, OBJ_DATA *obj) {
 /*
  * Count occurrences of an obj in a list.
  */
+// count_obj_list: Core Engine function: count_obj_list - Main C routine handling game mechanics.
+// count_obj_list: 核心引擎函式：count_obj_list - 處理遊戲底層機制的核心 C 語言子程序。
 int count_obj_list(OBJ_INDEX_DATA *pObjIndex, OBJ_DATA *list) {
     OBJ_DATA *obj;
     int       nMatch;
@@ -2399,6 +2519,8 @@ int count_obj_list(OBJ_INDEX_DATA *pObjIndex, OBJ_DATA *list) {
 /*
  * Move an obj out of a room.
  */
+// obj_from_room: Core Engine function: obj_from_room - Main C routine handling game mechanics.
+// obj_from_room: 核心引擎函式：obj_from_room - 處理遊戲底層機制的核心 C 語言子程序。
 void obj_from_room(OBJ_DATA *obj) {
     ROOM_INDEX_DATA *in_room;
 
@@ -2444,6 +2566,8 @@ void obj_from_room(OBJ_DATA *obj) {
 /*
  * Move an obj into a room.
  */
+// obj_to_room: Core Engine function: obj_to_room - Main C routine handling game mechanics.
+// obj_to_room: 核心引擎函式：obj_to_room - 處理遊戲底層機制的核心 C 語言子程序。
 void obj_to_room(OBJ_DATA *obj, ROOM_INDEX_DATA *pRoomIndex) {
     // obj 被 purge 掉的情況 2022/02/13
     if (obj->deleted) {
@@ -2463,6 +2587,8 @@ void obj_to_room(OBJ_DATA *obj, ROOM_INDEX_DATA *pRoomIndex) {
 /*
  * Move an object into an object.
  */
+// obj_to_obj: Core Engine function: obj_to_obj - Main C routine handling game mechanics.
+// obj_to_obj: 核心引擎函式：obj_to_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void obj_to_obj(OBJ_DATA *obj, OBJ_DATA *obj_to) {
     OBJ_DATA *top_obj;
     // obj 被 purge 掉的情況 2022/02/13
@@ -2511,6 +2637,8 @@ void obj_to_obj(OBJ_DATA *obj, OBJ_DATA *obj_to) {
 /*
  * Move an object out of an object.
  */
+// obj_from_obj: Core Engine function: obj_from_obj - Main C routine handling game mechanics.
+// obj_from_obj: 核心引擎函式：obj_from_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void obj_from_obj(OBJ_DATA *obj) {
     OBJ_DATA *obj_from;
 
@@ -2564,6 +2692,8 @@ void obj_from_obj(OBJ_DATA *obj) {
 /*
  * Extract an obj from the world.
  */
+// extract_obj: Core Engine function: extract_obj - Main C routine handling game mechanics.
+// extract_obj: 核心引擎函式：extract_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void extract_obj(OBJ_DATA *obj) {
     OBJ_DATA   *obj_content;
     OBJ_DATA   *obj_next;
@@ -2594,6 +2724,8 @@ void extract_obj(OBJ_DATA *obj) {
     return;
 }
 
+// extract_bank_obj: Core Engine function: extract_bank_obj - Main C routine handling game mechanics.
+// extract_bank_obj: 核心引擎函式：extract_bank_obj - 處理遊戲底層機制的核心 C 語言子程序。
 void extract_bank_obj(OBJ_DATA *obj) {
     AFFECT_DATA      *paf;
     AFFECT_DATA      *paf_next;
@@ -2647,6 +2779,8 @@ void extract_bank_obj(OBJ_DATA *obj) {
 /*
  * Extract a char from the world.
  */
+// extract_char: Core Engine function: extract_char - Main C routine handling game mechanics.
+// extract_char: 核心引擎函式：extract_char - 處理遊戲底層機制的核心 C 語言子程序。
 void extract_char(CHAR_DATA *ch, bool fPull) {
     int        recall;
     CHAR_DATA *wch;
@@ -3182,6 +3316,8 @@ OBJ_DATA *get_obj_type(OBJ_INDEX_DATA *pObjIndex) {
     return NULL;
 }
 
+// get_max_dura: Core Engine function: get_max_dura - Main C routine handling game mechanics.
+// get_max_dura: 核心引擎函式：get_max_dura - 處理遊戲底層機制的核心 C 語言子程序。
 int get_max_dura(OBJ_DATA *obj) {
     OBJ_INDEX_DATA *pOID = obj->pIndexData;
 
@@ -3217,6 +3353,8 @@ int get_max_dura(OBJ_DATA *obj) {
     return 1;
 }
 
+// get_curr_dura: Core Engine function: get_curr_dura - Main C routine handling game mechanics.
+// get_curr_dura: 核心引擎函式：get_curr_dura - 處理遊戲底層機制的核心 C 語言子程序。
 int get_curr_dura(OBJ_DATA *obj) {
     switch (obj->item_type) {
     case ITEM_ARMOR:
@@ -3234,6 +3372,8 @@ int get_curr_dura(OBJ_DATA *obj) {
     return 1;
 }
 
+// indestructible: Core Engine function: indestructible - Main C routine handling game mechanics.
+// indestructible: 核心引擎函式：indestructible - 處理遊戲底層機制的核心 C 語言子程序。
 bool indestructible(OBJ_DATA *obj) {
     if (get_max_dura(obj) == -1)
         return TRUE;
@@ -3242,6 +3382,8 @@ bool indestructible(OBJ_DATA *obj) {
     return FALSE;
 }
 
+// is_broken: Core Engine function: is_broken - Main C routine handling game mechanics.
+// is_broken: 核心引擎函式：is_broken - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_broken(OBJ_DATA *obj) {
     if (indestructible(obj))
         return FALSE;
@@ -3250,6 +3392,8 @@ bool is_broken(OBJ_DATA *obj) {
     return FALSE;
 }
 
+// waste_durax: Core Engine function: waste_durax - Main C routine handling game mechanics.
+// waste_durax: 核心引擎函式：waste_durax - 處理遊戲底層機制的核心 C 語言子程序。
 void waste_durax(OBJ_DATA *obj) {
     if (is_broken(obj) || indestructible(obj))
         return;
@@ -3268,6 +3412,8 @@ void waste_durax(OBJ_DATA *obj) {
     }
 }
 
+// waste_dura: Core Engine function: waste_dura - Main C routine handling game mechanics.
+// waste_dura: 核心引擎函式：waste_dura - 處理遊戲底層機制的核心 C 語言子程序。
 void waste_dura(OBJ_DATA *obj) {
     if (is_broken(obj) || indestructible(obj))
         return;
@@ -3287,6 +3433,8 @@ void waste_dura(OBJ_DATA *obj) {
     }
 }
 
+// repair_dura: Core Engine function: repair_dura - Main C routine handling game mechanics.
+// repair_dura: 核心引擎函式：repair_dura - 處理遊戲底層機制的核心 C 語言子程序。
 void repair_dura(OBJ_DATA *obj, int value) {
     if (indestructible(obj))
         return;
@@ -3532,6 +3680,8 @@ OBJ_DATA *get_room_obj(ROOM_INDEX_DATA *pRoomIndex, char *argument) {
     return NULL;
 }
 
+// count_obj_index_vnum: Core Engine function: count_obj_index_vnum - Main C routine handling game mechanics.
+// count_obj_index_vnum: 核心引擎函式：count_obj_index_vnum - 處理遊戲底層機制的核心 C 語言子程序。
 int count_obj_index_vnum(int vnum) {
     OBJ_DATA *obj;
     int       i = 0;
@@ -3606,6 +3756,8 @@ OBJ_DATA *create_money(int amount) {
  * Return # of objects which an object counts as.
  * Thanks to Tony Chamberlain for the correct recursive code here.
  */
+// get_obj_number: Core Engine function: get_obj_number - Main C routine handling game mechanics.
+// get_obj_number: 核心引擎函式：get_obj_number - 處理遊戲底層機制的核心 C 語言子程序。
 int get_obj_number(OBJ_DATA *obj) {
     int       number;
     OBJ_DATA *pobj;
@@ -3708,6 +3860,8 @@ OBJ_DATA *check_using_wp2(CHAR_DATA *ch, int dt) {
 /*
  * Return weight of an object, including weight of contents.
  */
+// get_obj_weight: Core Engine function: get_obj_weight - Main C routine handling game mechanics.
+// get_obj_weight: 核心引擎函式：get_obj_weight - 處理遊戲底層機制的核心 C 語言子程序。
 int get_obj_weight(OBJ_DATA *obj) {
     int       weight;
     OBJ_DATA *pObj;
@@ -3736,6 +3890,8 @@ int get_obj_weight(OBJ_DATA *obj) {
 /*
  * True if room is dark.
  */
+// room_is_dark: Core Engine function: room_is_dark - Main C routine handling game mechanics.
+// room_is_dark: 核心引擎函式：room_is_dark - 處理遊戲底層機制的核心 C 語言子程序。
 bool room_is_dark(ROOM_INDEX_DATA *pRoomIndex) {
     OBJ_DATA *obj;
 
@@ -3769,6 +3925,8 @@ bool room_is_dark(ROOM_INDEX_DATA *pRoomIndex) {
  */
 // 修改 room_is_private 代入值 2022/12/20
 // bool room_is_private( ROOM_INDEX_DATA *pRoomIndex )
+// room_is_private: Core Engine function: room_is_private - Main C routine handling game mechanics.
+// room_is_private: 核心引擎函式：room_is_private - 處理遊戲底層機制的核心 C 語言子程序。
 bool room_is_private(CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex) {
     CHAR_DATA *rch;
     int        count;
@@ -3825,6 +3983,8 @@ bool room_is_private(CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex) {
     return FALSE;
 }
 
+// get_wizinvis_level: Core Engine function: get_wizinvis_level - Main C routine handling game mechanics.
+// get_wizinvis_level: 核心引擎函式：get_wizinvis_level - 處理遊戲底層機制的核心 C 語言子程序。
 int get_wizinvis_level(CHAR_DATA *ch) {
     QMARK *qm;
     if (IS_NPC(ch))
@@ -3841,6 +4001,8 @@ int get_wizinvis_level(CHAR_DATA *ch) {
 /*
  * True if char can see victim.
  */
+// can_see: Core Engine function: can_see - Main C routine handling game mechanics.
+// can_see: 核心引擎函式：can_see - 處理遊戲底層機制的核心 C 語言子程序。
 bool can_see(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (!ch || !victim || victim->deleted)
         return FALSE;
@@ -3903,6 +4065,8 @@ bool can_see(CHAR_DATA *ch, CHAR_DATA *victim) {
 /*
  * True if char can see obj.
  */
+// can_see_obj: Core Engine function: can_see_obj - Main C routine handling game mechanics.
+// can_see_obj: 核心引擎函式：can_see_obj - 處理遊戲底層機制的核心 C 語言子程序。
 bool can_see_obj(CHAR_DATA *ch, OBJ_DATA *obj) {
     if (obj->deleted)
         return FALSE;
@@ -3928,6 +4092,8 @@ bool can_see_obj(CHAR_DATA *ch, OBJ_DATA *obj) {
 /*
  * True if char can drop obj.
  */
+// can_drop_obj: Core Engine function: can_drop_obj - Main C routine handling game mechanics.
+// can_drop_obj: 核心引擎函式：can_drop_obj - 處理遊戲底層機制的核心 C 語言子程序。
 bool can_drop_obj(CHAR_DATA *ch, OBJ_DATA *obj) {
     if (IS_SET(obj->extra_flags, ITEM_PERSONAL) && !IS_IMMORTAL(ch))
         return FALSE;
@@ -4339,6 +4505,8 @@ CHAR_DATA *get_char(CHAR_DATA *ch) {
         return ch;
 }
 
+// longstring: Core Engine function: longstring - Main C routine handling game mechanics.
+// longstring: 核心引擎函式：longstring - 處理遊戲底層機制的核心 C 語言子程序。
 bool longstring(CHAR_DATA *ch, char *argument) {
     if (strlen(argument) > 60) {
         send_to_char("不能超過 60 個字元.\n\r", ch);
@@ -4347,6 +4515,8 @@ bool longstring(CHAR_DATA *ch, char *argument) {
         return FALSE;
 }
 
+// authorized: Core Engine function: authorized - Main C routine handling game mechanics.
+// authorized: 核心引擎函式：authorized - 處理遊戲底層機制的核心 C 語言子程序。
 bool authorized(CHAR_DATA *ch, char *skllnm) {
     char buf[MAX_STRING_LENGTH];
 
@@ -4362,6 +4532,8 @@ bool authorized(CHAR_DATA *ch, char *skllnm) {
     return TRUE;
 }
 
+// end_of_game: Core Engine function: end_of_game - Main C routine handling game mechanics.
+// end_of_game: 核心引擎函式：end_of_game - 處理遊戲底層機制的核心 C 語言子程序。
 void end_of_game(void) {
     DESCRIPTOR_DATA *d;
     DESCRIPTOR_DATA *d_next;
@@ -4667,6 +4839,8 @@ char *qmark_lookup(const char *str) {
     return q->name;
 }
 
+// race_lookup: Core Engine function: race_lookup - Main C routine handling game mechanics.
+// race_lookup: 核心引擎函式：race_lookup - 處理遊戲底層機制的核心 C 語言子程序。
 int race_lookup(const char *race) {
     int index;
 
@@ -4678,6 +4852,8 @@ int race_lookup(const char *race) {
     return -1;
 }
 
+// affect_lookup: Character affect handler: affect_lookup - Mutates state affects (buffs/debuffs) on the character.
+// affect_lookup: 屬性影響處理：affect_lookup - 修改玩家角色身上的狀態影響（增益/減益狀態）。
 int affect_lookup(const char *affectname) {
     int index;
 
@@ -4689,6 +4865,8 @@ int affect_lookup(const char *affectname) {
     return -1;
 }
 
+// meet_req_second: Core Engine function: meet_req_second - Main C routine handling game mechanics.
+// meet_req_second: 核心引擎函式：meet_req_second - 處理遊戲底層機制的核心 C 語言子程序。
 bool meet_req_second(CHAR_DATA *ch, int sn, int attr) {
     const int attr_map[6] = {
         SECOND_ALL, SECOND_STR, SECOND_DEX, SECOND_INT,
@@ -4703,6 +4881,8 @@ bool meet_req_second(CHAR_DATA *ch, int sn, int attr) {
     return FALSE;
 }
 
+// meet_req_prime: Core Engine function: meet_req_prime - Main C routine handling game mechanics.
+// meet_req_prime: 核心引擎函式：meet_req_prime - 處理遊戲底層機制的核心 C 語言子程序。
 bool meet_req_prime(CHAR_DATA *ch, int sn, int attr) {
     const int attr_map[6] = {PRIME_ALL,
                              PRIME_STR, PRIME_DEX, PRIME_INT, PRIME_WIS, PRIME_CON};
@@ -4716,6 +4896,8 @@ bool meet_req_prime(CHAR_DATA *ch, int sn, int attr) {
     return FALSE;
 }
 
+// room_clanlv: Core Engine function: room_clanlv - Main C routine handling game mechanics.
+// room_clanlv: 核心引擎函式：room_clanlv - 處理遊戲底層機制的核心 C 語言子程序。
 int room_clanlv(ROOM_INDEX_DATA *pRoom) {
     if (IS_SET(pRoom->room_flags, ROOM_CLAN_LV3))
         return 3;
@@ -4727,6 +4909,8 @@ int room_clanlv(ROOM_INDEX_DATA *pRoom) {
         return 0;
 }
 
+// symbol_lookup: Core Engine function: symbol_lookup - Main C routine handling game mechanics.
+// symbol_lookup: 核心引擎函式：symbol_lookup - 處理遊戲底層機制的核心 C 語言子程序。
 long long int symbol_lookup(char *name) {
     SYMBOL_DATA  *pSym;
     int           letter, i = 0;
@@ -4758,6 +4942,8 @@ long long int symbol_lookup(char *name) {
     return (number > 0) ? number : -1;
 }
 
+// has_player: Core Engine function: has_player - Main C routine handling game mechanics.
+// has_player: 核心引擎函式：has_player - 處理遊戲底層機制的核心 C 語言子程序。
 bool has_player(char *arg2) {
     char  tmp[MAX_STRING_LENGTH];
     FILE *fp;
@@ -4778,6 +4964,8 @@ bool has_player(char *arg2) {
 }
 
 #ifdef HAS_ROOM_AFFECT
+// r_affect_modify: Core Engine function: r_affect_modify - Main C routine handling game mechanics.
+// r_affect_modify: 核心引擎函式：r_affect_modify - 處理遊戲底層機制的核心 C 語言子程序。
 void r_affect_modify(ROOM_INDEX_DATA *ch, R_AFFECT_DATA *paf, bool fAdd) {
     if (fAdd) {
         SET_BIT(ch->affected_by, paf->bitvector);
@@ -4791,6 +4979,8 @@ void r_affect_modify(ROOM_INDEX_DATA *ch, R_AFFECT_DATA *paf, bool fAdd) {
 /*
  * Give an affect to a char.
  */
+// affect_to_room: Character affect handler: affect_to_room - Mutates state affects (buffs/debuffs) on the character.
+// affect_to_room: 屬性影響處理：affect_to_room - 修改玩家角色身上的狀態影響（增益/減益狀態）。
 void affect_to_room(ROOM_INDEX_DATA *ch, R_AFFECT_DATA *paf) {
     R_AFFECT_DATA *paf_new;
 
@@ -4814,6 +5004,8 @@ void affect_to_room(ROOM_INDEX_DATA *ch, R_AFFECT_DATA *paf) {
 /*
  * Remove an affect from a char.
  */
+// r_affect_remove: Core Engine function: r_affect_remove - Main C routine handling game mechanics.
+// r_affect_remove: 核心引擎函式：r_affect_remove - 處理遊戲底層機制的核心 C 語言子程序。
 void r_affect_remove(ROOM_INDEX_DATA *ch, R_AFFECT_DATA *paf) {
     R_AFFECT_DATA *vaf;
     if (!ch->affected) {
@@ -4848,6 +5040,8 @@ void r_affect_remove(ROOM_INDEX_DATA *ch, R_AFFECT_DATA *paf) {
 /*
  * Strip all affects of a given sn.
  */
+// r_affect_strip: Core Engine function: r_affect_strip - Main C routine handling game mechanics.
+// r_affect_strip: 核心引擎函式：r_affect_strip - 處理遊戲底層機制的核心 C 語言子程序。
 void r_affect_strip(ROOM_INDEX_DATA *ch, int sn) {
     R_AFFECT_DATA *paf;
 
@@ -4864,6 +5058,8 @@ void r_affect_strip(ROOM_INDEX_DATA *ch, int sn) {
 /*
  * Return true if a char is affected by a spell.
  */
+// r_is_affected: Core Engine function: r_is_affected - Main C routine handling game mechanics.
+// r_is_affected: 核心引擎函式：r_is_affected - 處理遊戲底層機制的核心 C 語言子程序。
 bool r_is_affected(ROOM_INDEX_DATA *ch, int sn) {
     R_AFFECT_DATA *paf;
 
@@ -4880,6 +5076,8 @@ bool r_is_affected(ROOM_INDEX_DATA *ch, int sn) {
 /*
  * Add or enhance an affect.
  */
+// r_affect_join: Core Engine function: r_affect_join - Main C routine handling game mechanics.
+// r_affect_join: 核心引擎函式：r_affect_join - 處理遊戲底層機制的核心 C 語言子程序。
 void r_affect_join(ROOM_INDEX_DATA *ch, R_AFFECT_DATA *paf) {
     return;
 }
@@ -4906,6 +5104,8 @@ QMARK *is_qmark(CHAR_DATA *ch, char *q) {
 
 // 修為與 merc.h 相同 2023/01/14
 // bool is_flying( CHAR_DATA *victim)
+// is_flying: Core Engine function: is_flying - Main C routine handling game mechanics.
+// is_flying: 核心引擎函式：is_flying - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_flying(CHAR_DATA *ch) {
     OBJ_DATA *horse;
 
@@ -4920,6 +5120,8 @@ bool is_flying(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// free_rcall_out: System helper: free_rcall_out - Performs cleanup or manages organization data.
+// free_rcall_out: 系統公用：free_rcall_out - 進行記憶體清理或管理公會/組織資料。
 void free_rcall_out(RCALL_OUT_DATA *rm) {
     RCALL_OUT_DATA *cod, *cod_next;
     if (rm == rcall_out_list) {
@@ -4942,6 +5144,8 @@ void free_rcall_out(RCALL_OUT_DATA *rm) {
     rm->cmd   = NULL;
 }
 
+// free_call_out: System helper: free_call_out - Performs cleanup or manages organization data.
+// free_call_out: 系統公用：free_call_out - 進行記憶體清理或管理公會/組織資料。
 void free_call_out(CALL_OUT_DATA *rm) {
     CALL_OUT_DATA *cod, *cod_next;
     if (rm == call_out_list) {
@@ -4964,11 +5168,15 @@ void free_call_out(CALL_OUT_DATA *rm) {
     rm->cmd   = NULL;
 }
 
+// add_call_out: Core Engine function: add_call_out - Main C routine handling game mechanics.
+// add_call_out: 核心引擎函式：add_call_out - 處理遊戲底層機制的核心 C 語言子程序。
 void add_call_out(CALL_OUT_DATA *call) {
     call->next    = call_out_list;
     call_out_list = call;
 }
 
+// WAIT_MAGIC_STATE: Core Engine function: WAIT_MAGIC_STATE - Main C routine handling game mechanics.
+// WAIT_MAGIC_STATE: 核心引擎函式：WAIT_MAGIC_STATE - 處理遊戲底層機制的核心 C 語言子程序。
 void WAIT_MAGIC_STATE(CHAR_DATA *ch, int delay) {
     int nPerc = get_skill_percent(ch, gsn_spellcraft);
     if (nPerc > 0) {
@@ -4984,6 +5192,8 @@ void WAIT_MAGIC_STATE(CHAR_DATA *ch, int delay) {
     WAIT_STATE(ch, delay);
 }
 
+// WAIT_STATE: Core Engine function: WAIT_STATE - Main C routine handling game mechanics.
+// WAIT_STATE: 核心引擎函式：WAIT_STATE - 處理遊戲底層機制的核心 C 語言子程序。
 void WAIT_STATE(CHAR_DATA *ch, int wait) {
     if (IS_NPC(ch) && is_qmark(ch, "delayed_stun")) {
         ch->wait = 0;
@@ -5014,6 +5224,8 @@ void WAIT_STATE(CHAR_DATA *ch, int wait) {
     ch->wait = UMIN(300, ch->wait + wait);
 }
 
+// GetGeneralMobSklv: Core Engine function: GetGeneralMobSklv - Main C routine handling game mechanics.
+// GetGeneralMobSklv: 核心引擎函式：GetGeneralMobSklv - 處理遊戲底層機制的核心 C 語言子程序。
 int GetGeneralMobSklv(CHAR_DATA *ch) {
     int    moblv = 0;
     QMARK *qmark = NULL;
@@ -5033,6 +5245,8 @@ int GetGeneralMobSklv(CHAR_DATA *ch) {
     return moblv;
 }
 
+// get_skill_level: Core Engine function: get_skill_level - Main C routine handling game mechanics.
+// get_skill_level: 核心引擎函式：get_skill_level - 處理遊戲底層機制的核心 C 語言子程序。
 int get_skill_level(CHAR_DATA *ch, int sn) {
     // int moblv = 0;
     // int roomchar = 0;
@@ -5079,6 +5293,8 @@ moblv = UMIN(6,moblv);
     return (UMIN(6, ch->pcdata->learned[sn] / 1000));
 }
 
+// gain_skill_level: Core Engine function: gain_skill_level - Main C routine handling game mechanics.
+// gain_skill_level: 核心引擎函式：gain_skill_level - 處理遊戲底層機制的核心 C 語言子程序。
 int gain_skill_level(CHAR_DATA *ch, int sn, int value) {
     int nOrgSklv = get_skill_level(ch, sn);
     int nNewSklv = 0;
@@ -5122,6 +5338,8 @@ int gain_skill_level(CHAR_DATA *ch, int sn, int value) {
     return nNewSklv;
 }
 
+// gain_skill_percent: Core Engine function: gain_skill_percent - Main C routine handling game mechanics.
+// gain_skill_percent: 核心引擎函式：gain_skill_percent - 處理遊戲底層機制的核心 C 語言子程序。
 int gain_skill_percent(CHAR_DATA *ch, int sn, int value) {
     int mod = get_skill_percent(ch, sn);
     if (IS_NPC(ch))
@@ -5132,6 +5350,8 @@ int gain_skill_percent(CHAR_DATA *ch, int sn, int value) {
     return mod;
 }
 
+// skill_max_percent: Core Engine function: skill_max_percent - Main C routine handling game mechanics.
+// skill_max_percent: 核心引擎函式：skill_max_percent - 處理遊戲底層機制的核心 C 語言子程序。
 int skill_max_percent(CHAR_DATA *ch, int sn) {
     if (IS_NPC(ch))
         return 0;
@@ -5139,6 +5359,8 @@ int skill_max_percent(CHAR_DATA *ch, int sn) {
     return (((skill_table[sn].skill_level[ch->class]) / 1000));
 }
 
+// skill_preq_level: Core Engine function: skill_preq_level - Main C routine handling game mechanics.
+// skill_preq_level: 核心引擎函式：skill_preq_level - 處理遊戲底層機制的核心 C 語言子程序。
 int skill_preq_level(CHAR_DATA *ch, int sn) {
     if (IS_NPC(ch))
         return 0;
@@ -5146,6 +5368,8 @@ int skill_preq_level(CHAR_DATA *ch, int sn) {
     return (((skill_table[sn].skill_level[apply_class[ch->pcdata->prime_attr]]) / 10 % 100) - 1);
 }
 
+// skill_req_level: Core Engine function: skill_req_level - Main C routine handling game mechanics.
+// skill_req_level: 核心引擎函式：skill_req_level - 處理遊戲底層機制的核心 C 語言子程序。
 int skill_req_level(CHAR_DATA *ch, int sn) {
     if (IS_NPC(ch))
         return 0;
@@ -5153,6 +5377,8 @@ int skill_req_level(CHAR_DATA *ch, int sn) {
     return (((skill_table[sn].skill_level[ch->class]) / 10 % 100) - 1);
 }
 
+// get_skill_percent: Core Engine function: get_skill_percent - Main C routine handling game mechanics.
+// get_skill_percent: 核心引擎函式：get_skill_percent - 處理遊戲底層機制的核心 C 語言子程序。
 int get_skill_percent(CHAR_DATA *ch, int sn) {
     if (IS_NPC(ch)) {
         if (ch->pIndexData != NULL && IsSorGateMob(ch->pIndexData->vnum)) {
@@ -5168,6 +5394,8 @@ int get_skill_percent(CHAR_DATA *ch, int sn) {
     return (ch->pcdata->learned[sn] % 1000);
 }
 
+// GET_AC: Core Engine function: GET_AC - Main C routine handling game mechanics.
+// GET_AC: 核心引擎函式：GET_AC - 處理遊戲底層機制的核心 C 語言子程序。
 int GET_AC(CHAR_DATA *ch) {
     int armor;
     int bonus; // add by coconet 0703 for AM bonus
@@ -5237,6 +5465,8 @@ int GET_AC(CHAR_DATA *ch) {
 }
 
 // merit bonus skexp system developed by keelar
+// get_merit_bonus_max_skexp: Core Engine function: get_merit_bonus_max_skexp - Main C routine handling game mechanics.
+// get_merit_bonus_max_skexp: 核心引擎函式：get_merit_bonus_max_skexp - 處理遊戲底層機制的核心 C 語言子程序。
 int get_merit_bonus_max_skexp(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return 0;
@@ -5248,6 +5478,8 @@ int get_merit_bonus_max_skexp(CHAR_DATA *ch) {
     return ceil(MERIT_BONUS_MAX_SKEXP - (double)MERIT_BONUS_MAX_SKEXP * BASE_MERIT / (BASE_MERIT + merit));
 }
 
+// get_resp_bonus_max_skexp: Core Engine function: get_resp_bonus_max_skexp - Main C routine handling game mechanics.
+// get_resp_bonus_max_skexp: 核心引擎函式：get_resp_bonus_max_skexp - 處理遊戲底層機制的核心 C 語言子程序。
 int get_resp_bonus_max_skexp(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return 0;
@@ -5261,6 +5493,8 @@ int get_resp_bonus_max_skexp(CHAR_DATA *ch) {
     return resp * 1000;
 }
 
+// get_max_skill_exp: Core Engine function: get_max_skill_exp - Main C routine handling game mechanics.
+// get_max_skill_exp: 核心引擎函式：get_max_skill_exp - 處理遊戲底層機制的核心 C 語言子程序。
 int get_max_skill_exp(CHAR_DATA *ch) {
     QMARK *qm;
     int    i = 0;
@@ -5283,6 +5517,8 @@ int get_max_skill_exp(CHAR_DATA *ch) {
     return m;
 }
 
+// gain_merit: Core Engine function: gain_merit - Main C routine handling game mechanics.
+// gain_merit: 核心引擎函式：gain_merit - 處理遊戲底層機制的核心 C 語言子程序。
 void gain_merit(CHAR_DATA *ch, int merit) {
     if (IS_NPC(ch))
         return;
@@ -5304,6 +5540,8 @@ void gain_merit(CHAR_DATA *ch, int merit) {
     ch->pcdata->merit += merit;
 }
 
+// has_free_skdemote: Core Engine function: has_free_skdemote - Main C routine handling game mechanics.
+// has_free_skdemote: 核心引擎函式：has_free_skdemote - 處理遊戲底層機制的核心 C 語言子程序。
 bool has_free_skdemote(CHAR_DATA *ch) {
     if (ch->level < 43)
         return TRUE; //   skdemote free enable by toi 20130108
@@ -5325,6 +5563,8 @@ bool has_free_skdemote(CHAR_DATA *ch) {
     return FALSE;
 }
 
+// regain_skill_exp: Core Engine function: regain_skill_exp - Main C routine handling game mechanics.
+// regain_skill_exp: 核心引擎函式：regain_skill_exp - 處理遊戲底層機制的核心 C 語言子程序。
 void regain_skill_exp(CHAR_DATA *ch, int xp) {
     char buf[1000];
     if (IS_NPC(ch))
@@ -5340,6 +5580,8 @@ void regain_skill_exp(CHAR_DATA *ch, int xp) {
     }
 }
 
+// gain_skill_exp: Core Engine function: gain_skill_exp - Main C routine handling game mechanics.
+// gain_skill_exp: 核心引擎函式：gain_skill_exp - 處理遊戲底層機制的核心 C 語言子程序。
 void gain_skill_exp(CHAR_DATA *ch, int xp) {
     if (IS_NPC(ch))
         return;
@@ -5348,6 +5590,8 @@ void gain_skill_exp(CHAR_DATA *ch, int xp) {
     ch->pcdata->skexp_earned = ch->pcdata->skexp_earned + xp;
 }
 
+// get_eff_skill_exp: Core Engine function: get_eff_skill_exp - Main C routine handling game mechanics.
+// get_eff_skill_exp: 核心引擎函式：get_eff_skill_exp - 處理遊戲底層機制的核心 C 語言子程序。
 int get_eff_skill_exp(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return 0;
@@ -5357,6 +5601,8 @@ int get_eff_skill_exp(CHAR_DATA *ch) {
         return ch->pcdata->skexp_earned - ch->pcdata->skexp_used;
 }
 
+// use_skill_exp: Core Engine function: use_skill_exp - Main C routine handling game mechanics.
+// use_skill_exp: 核心引擎函式：use_skill_exp - 處理遊戲底層機制的核心 C 語言子程序。
 int use_skill_exp(CHAR_DATA *ch, int value) {
     if (IS_NPC(ch))
         return 0;
@@ -5365,12 +5611,16 @@ int use_skill_exp(CHAR_DATA *ch, int value) {
     return value;
 }
 
+// get_skill_exp: Core Engine function: get_skill_exp - Main C routine handling game mechanics.
+// get_skill_exp: 核心引擎函式：get_skill_exp - 處理遊戲底層機制的核心 C 語言子程序。
 int get_skill_exp(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return 0;
     return ch->pcdata->skexp_earned;
 }
 
+// consented: Core Engine function: consented - Main C routine handling game mechanics.
+// consented: 核心引擎函式：consented - 處理遊戲底層機制的核心 C 語言子程序。
 bool consented(CHAR_DATA *ch, OBJ_DATA *cor) {
     char  buf[MAX_INPUT_LENGTH];
     char  arg[MAX_INPUT_LENGTH];
@@ -5390,6 +5640,8 @@ bool consented(CHAR_DATA *ch, OBJ_DATA *cor) {
 
 #define ENABLE_INBORN_ABILITY 1
 
+// skill_difficulty: Core Engine function: skill_difficulty - Main C routine handling game mechanics.
+// skill_difficulty: 核心引擎函式：skill_difficulty - 處理遊戲底層機制的核心 C 語言子程序。
 int skill_difficulty(CHAR_DATA *ch, int sn) {
     int lv = get_skill_level(ch, sn);
     int cost, nRaceAbiID;
@@ -5451,6 +5703,8 @@ int skill_difficulty(CHAR_DATA *ch, int sn) {
     return 0;
 }
 
+// IS_HORSE: Core Engine function: IS_HORSE - Main C routine handling game mechanics.
+// IS_HORSE: 核心引擎函式：IS_HORSE - 處理遊戲底層機制的核心 C 語言子程序。
 bool IS_HORSE(CHAR_DATA *ch) {
     if (IS_NPC(ch))
         return FALSE;
@@ -5458,10 +5712,14 @@ bool IS_HORSE(CHAR_DATA *ch) {
     return (IS_SET(ch->act, PLR_HORSE)) ? TRUE : FALSE;
 }
 
+// check_int: Combat logic: check_int - Applies combat calculations, checks, or damage formulas.
+// check_int: 戰鬥邏輯：check_int - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_int(int i) {
     return TRUE;
 }
 
+// artifact: Core Engine function: artifact - Main C routine handling game mechanics.
+// artifact: 核心引擎函式：artifact - 處理遊戲底層機制的核心 C 語言子程序。
 int artifact(CHAR_DATA *ch, int curr_wis, int obj_percent, int bonus) {
     if (IS_NPC(ch) || IS_SET(ch->act, PLR_ARTIFACT)) {
         int arti_perc = get_skill_percent(ch, gsn_artifact);
@@ -5484,6 +5742,8 @@ int artifact(CHAR_DATA *ch, int curr_wis, int obj_percent, int bonus) {
     return 0;
 }
 
+// add_member: Core Engine function: add_member - Main C routine handling game mechanics.
+// add_member: 核心引擎函式：add_member - 處理遊戲底層機制的核心 C 語言子程序。
 void add_member(CHAR_DATA *ch, CHAR_DATA *member) {
     GROUP_DATA *pGroup = ch->group;
     if (!pGroup) {
@@ -5504,6 +5764,8 @@ void add_member(CHAR_DATA *ch, CHAR_DATA *member) {
     pGroup->members       = member;
 }
 
+// remove_member: Core Engine function: remove_member - Main C routine handling game mechanics.
+// remove_member: 核心引擎函式：remove_member - 處理遊戲底層機制的核心 C 語言子程序。
 void remove_member(CHAR_DATA *member) {
     GROUP_DATA *pGroup = member->group;
     CHAR_DATA  *next;
@@ -5547,6 +5809,8 @@ void remove_member(CHAR_DATA *member) {
     }
 }
 
+// clear_member: Core Engine function: clear_member - Main C routine handling game mechanics.
+// clear_member: 核心引擎函式：clear_member - 處理遊戲底層機制的核心 C 語言子程序。
 void clear_member(CHAR_DATA *ch) {
     CHAR_DATA  *pCh, *pCh_next;
     GROUP_DATA *pG;
@@ -5588,6 +5852,8 @@ void clear_member(CHAR_DATA *ch) {
  *
  * last update: zcecil 2004/07/04
  */
+// npc_check_skill: Core Engine function: npc_check_skill - Main C routine handling game mechanics.
+// npc_check_skill: 核心引擎函式：npc_check_skill - 處理遊戲底層機制的核心 C 語言子程序。
 bool npc_check_skill(CHAR_DATA *ch, int sn, int chance) {
     return TRUE;
 }
@@ -5597,6 +5863,8 @@ bool npc_check_skill(CHAR_DATA *ch, int sn, int chance) {
  *
  *  last update: zcecil 2004/07/04
  */
+// check_skill: Combat logic: check_skill - Applies combat calculations, checks, or damage formulas.
+// check_skill: 戰鬥邏輯：check_skill - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 bool check_skill(CHAR_DATA *ch, int sn, int chance) {
     if (IS_NPC(ch)) {
         return npc_check_skill(ch, sn, chance);
@@ -5614,6 +5882,8 @@ bool check_skill(CHAR_DATA *ch, int sn, int chance) {
  * find 表示找到幾個可以離開的出口, 若 check 不為 6
  * 那 find 值只會為 0 或 1
  */
+// check_exit: Combat logic: check_exit - Applies combat calculations, checks, or damage formulas.
+// check_exit: 戰鬥邏輯：check_exit - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int check_exit(CHAR_DATA *ch, int check) {
     int              i, door, find = 0, max_exit = 6;
     EXIT_DATA       *pexit;

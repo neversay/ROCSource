@@ -1,3 +1,5 @@
+// merc.h: The primary, core engine header containing all main structures, constants, and function prototypes.
+// merc.h: 核心引擎主標頭檔，包含 MUD 所有主要資料結構、常數定義及函式原型宣告。
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *

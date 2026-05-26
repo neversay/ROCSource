@@ -80,6 +80,8 @@ void chang_char(CHAR_DATA *ch, CHAR_DATA *victim);
 
 AUCTION_DATA *auction_list = NULL, *auc_free = NULL;
 
+// is_note_to: Checks if a note is addressed to a character.
+// is_note_to: 檢查某篇留言是否是寄給該角色的。
 bool is_note_to(CHAR_DATA *ch, NOTE_DATA *pnote) {
     if (!str_cmp(ch->name, pnote->sender))
         return TRUE;
@@ -100,6 +102,8 @@ bool is_note_to(CHAR_DATA *ch, NOTE_DATA *pnote) {
     return FALSE;
 }
 
+// note_attach: Attaches a blank note to a character for editing.
+// note_attach: 為角色附加上空白留言以便進行編輯。
 void note_attach(CHAR_DATA *ch) {
     NOTE_DATA *pnote;
 
@@ -124,6 +128,8 @@ void note_attach(CHAR_DATA *ch) {
     return;
 }
 
+// note_remove: Removes a note from the board / list.
+// note_remove: 自留言板或清單中移除指定的留言。
 void note_remove(CHAR_DATA *ch, NOTE_DATA *pnote) {
     FILE *fp;
     NOTE_DATA *prev;
@@ -208,6 +214,8 @@ void note_remove(CHAR_DATA *ch, NOTE_DATA *pnote) {
 
 /* Date stamp idea comes from Alander of ROM */
 // note modified by jye 6.06.2005
+// do_note: Command: do_note - Performs the 'note' command.
+// do_note: 指令：do_note - 執行 'note' 指令。
 void do_note(CHAR_DATA *ch, char *argument) {
     NOTE_DATA *pnote;
     char buf[MAX_STRING_LENGTH];
@@ -560,6 +568,8 @@ char *makedrunk(char *string, CHAR_DATA *ch) {
 /*
  * Generic channel function.
  */
+// talk_channel: Sends a message to a specific game communication channel.
+// talk_channel: 向特定的遊戲對話頻道發送訊息。
 void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb,
                   const char *color) {
     DESCRIPTOR_DATA *d;
@@ -698,6 +708,8 @@ void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb,
     return;
 }
 
+// do_auction: Command: do_auction - Performs the 'auction' command.
+// do_auction: 指令：do_auction - 執行 'auction' 指令。
 void do_auction(CHAR_DATA *ch, char *argument) {
     // talk_channel( ch, argument, CHANNEL_AUCTION, "拍賣",HIY );
 
@@ -905,6 +917,8 @@ void do_auction(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_chat: Command: do_chat - Performs the 'chat' command.
+// do_chat: 指令：do_chat - 執行 'chat' 指令。
 void do_chat(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch) &&
         (IS_AFFECTED(ch, AFF_SUMMONED) || IS_AFFECTED(ch, AFF_CHARM)))
@@ -921,6 +935,8 @@ void do_chat(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_bet: Command: do_bet - Performs the 'bet' command.
+// do_bet: 指令：do_bet - 執行 'bet' 指令。
 void do_bet(CHAR_DATA *ch, char *argument) {
     // talk_channel( ch, argument, CHANNEL_AUCTION, "喊價",WHT );
 
@@ -1045,11 +1061,15 @@ void do_bet(CHAR_DATA *ch, char *argument) {
 /*
  * Alander's new channels.
  */
+// do_music: Command: do_music - Performs the 'music' command.
+// do_music: 指令：do_music - 執行 'music' 指令。
 void do_music(CHAR_DATA *ch, char *argument) {
     talk_channel(ch, argument, CHANNEL_MUSIC, "【心情點播】", WHT);
     return;
 }
 
+// do_question: Command: do_question - Performs the 'question' command.
+// do_question: 指令：do_question - 執行 'question' 指令。
 void do_question(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -1058,6 +1078,8 @@ void do_question(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_answer: Command: do_answer - Performs the 'answer' command.
+// do_answer: 指令：do_answer - 執行 'answer' 指令。
 void do_answer(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -1066,6 +1088,8 @@ void do_answer(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_shout: Command: do_shout - Performs the 'shout' command.
+// do_shout: 指令：do_shout - 執行 'shout' 指令。
 void do_shout(CHAR_DATA *ch, char *argument) {
     talk_channel(ch, argument, CHANNEL_SHOUT, "喊叫", HIY);
     if (IS_NPC(ch) && (IS_AFFECTED(ch, AFF_CHARM) ||
@@ -1078,11 +1102,15 @@ void do_shout(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_yell: Command: do_yell - Performs the 'yell' command.
+// do_yell: 指令：do_yell - 執行 'yell' 指令。
 void do_yell(CHAR_DATA *ch, char *argument) {
     talk_channel(ch, argument, CHANNEL_YELL, "吶喊", HIY);
     return;
 }
 
+// do_herotalk: Command: do_herotalk - Performs the 'herotalk' command.
+// do_herotalk: 指令：do_herotalk - 執行 'herotalk' 指令。
 void do_herotalk(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -1091,6 +1119,8 @@ void do_herotalk(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_immtalk: Command: do_immtalk - Performs the 'immtalk' command.
+// do_immtalk: 指令：do_immtalk - 執行 'immtalk' 指令。
 void do_immtalk(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -1103,6 +1133,8 @@ void do_immtalk(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rumor: Command: do_rumor - Performs the 'rumor' command.
+// do_rumor: 指令：do_rumor - 執行 'rumor' 指令。
 void do_rumor(CHAR_DATA *ch, char *argument) {
 
     if (ch->level < 10) {
@@ -1116,6 +1148,8 @@ void do_rumor(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_say: Performs the 'say' command to speak to everyone in the same room.
+// do_say: 執行 'say' 指令與同房間的所有玩家說話交談。
 void do_say(CHAR_DATA *ch, char *argument) {
     if (argument[0] == '\0') {
         send_to_char("[33m要說什麼？[m\n\r", ch);
@@ -1141,6 +1175,8 @@ void do_say(CHAR_DATA *ch, char *argument) {
 }
 
 // do_tell modified by jye 6.13.2005
+// do_tell: Performs the 'tell' command to send a private message to a player.
+// do_tell: 執行 'tell' 指令向特定玩家傳送私人密語。
 void do_tell(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     DESCRIPTOR_DATA *d;
@@ -1257,6 +1293,8 @@ void do_tell(CHAR_DATA *ch, char *argument) {
 }
 
 // do_reply modified by jye 6.13.2005
+// do_reply: Performs the 'reply' command to reply to the last teller.
+// do_reply: 執行 'reply' 指令回覆最後一位傳送私人密語給你的玩家。
 void do_reply(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     DESCRIPTOR_DATA *d;
@@ -1352,6 +1390,8 @@ void do_reply(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_emote: Command: do_emote - Performs the 'emote' command.
+// do_emote: 指令：do_emote - 執行 'emote' 指令。
 void do_emote(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     char *plast;
@@ -1574,6 +1614,8 @@ const struct pose_table_type pose_table[] = {
       "[36m你用魔力把大家的褲子吸走了...不還給他們。[m",
       "[36m你的褲子被$n用魔力吸走了，$e不還給你。[m"}}};
 
+// do_pose: Command: do_pose - Performs the 'pose' command.
+// do_pose: 指令：do_pose - 執行 'pose' 指令。
 void do_pose(CHAR_DATA *ch, char *argument) {
     int level;
     int pose;
@@ -1594,6 +1636,8 @@ void do_pose(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_bug: Command: do_bug - Performs the 'bug' command.
+// do_bug: 指令：do_bug - 執行 'bug' 指令。
 void do_bug(CHAR_DATA *ch, char *argument) {
     if (argument[0] == '\0') {
         send_to_char("[33m作者們用懷疑的眼神看著你。[m\n\r", ch);
@@ -1605,6 +1649,8 @@ void do_bug(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_idea: Command: do_idea - Performs the 'idea' command.
+// do_idea: 指令：do_idea - 執行 'idea' 指令。
 void do_idea(CHAR_DATA *ch, char *argument) {
     if (argument[0] == '\0') {
         send_to_char("[33m作者們用懷疑的眼神看著你。[m\n\r", ch);
@@ -1616,6 +1662,8 @@ void do_idea(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_typo: Command: do_typo - Performs the 'typo' command.
+// do_typo: 指令：do_typo - 執行 'typo' 指令。
 void do_typo(CHAR_DATA *ch, char *argument) {
     if (argument[0] == '\0') {
         send_to_char("[33m作者們用懷疑的眼神看著你。[m\n\r", ch);
@@ -1627,12 +1675,16 @@ void do_typo(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_rent: Command: do_rent - Performs the 'rent' command.
+// do_rent: 指令：do_rent - 執行 'rent' 指令。
 void do_rent(CHAR_DATA *ch, char *argument) {
     send_to_char("[36m這裡不用付租金，你就存檔就是了。[m\n\r",
                  ch);
     return;
 }
 
+// do_qui: Command: do_qui - Performs the 'qui' command.
+// do_qui: 指令：do_qui - 執行 'qui' 指令。
 void do_qui(CHAR_DATA *ch, char *argument) {
     send_to_char(
         "[33m如果你要QUIT的話，你得把它打完全。[m\n\r", ch);
@@ -1641,6 +1693,8 @@ void do_qui(CHAR_DATA *ch, char *argument) {
 
 void fwrite_neweqbank(CHAR_DATA *ch, FILE *fp);
 void free_neweqbank(BANK_DATA *bank);
+// check_container_save: Saves the contents of a container object.
+// check_container_save: 儲存容器物品中的內容物。
 void check_container_save(CHAR_DATA *ch, OBJ_DATA *container) {
     OBJ_DATA *obj, *obj_next_content;
 
@@ -1664,6 +1718,8 @@ void check_container_save(CHAR_DATA *ch, OBJ_DATA *container) {
     }
 }
 
+// do_idlequit: Command: do_idlequit - Performs the 'idlequit' command.
+// do_idlequit: 指令：do_idlequit - 執行 'idlequit' 指令。
 void do_idlequit(CHAR_DATA *ch, char *argument) {
     DESCRIPTOR_DATA *d;
     OBJ_DATA *obj, *obj_next_content;
@@ -1834,6 +1890,8 @@ void do_idlequit(CHAR_DATA *ch, char *argument) {
 
     return;
 }
+// do_quit: Performs the 'quit' command to exit the game.
+// do_quit: 執行 'quit' 指令安全登出並退出遊戲。
 void do_quit(CHAR_DATA *ch, char *argument) {
     DESCRIPTOR_DATA *d;
     OBJ_DATA *obj, *obj_next_content;
@@ -2034,12 +2092,16 @@ void do_quit(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_suicid: Command: do_suicid - Performs the 'suicid' command.
+// do_suicid: 指令：do_suicid - 執行 'suicid' 指令。
 void do_suicid(CHAR_DATA *ch, char *argument) {
     send_to_char(
         "[33m如果你要SUICIDE的話，你得把它打完全。[m\n\r", ch);
     return;
 }
 
+// do_suicide: Command: do_suicide - Performs the 'suicide' command.
+// do_suicide: 指令：do_suicide - 執行 'suicide' 指令。
 void do_suicide(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     FILE *fp;
@@ -2113,6 +2175,8 @@ void do_suicide(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_hsuicid: Command: do_hsuicid - Performs the 'hsuicid' command.
+// do_hsuicid: 指令：do_hsuicid - 執行 'hsuicid' 指令。
 void do_hsuicid(CHAR_DATA *ch, char *argument) {
     send_to_char(
         "[33m如果你要HSUICIDE的話，你得把它打完全。[m\n\r",
@@ -2120,6 +2184,8 @@ void do_hsuicid(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_hsuicide: Command: do_hsuicide - Performs the 'hsuicide' command.
+// do_hsuicide: 指令：do_hsuicide - 執行 'hsuicide' 指令。
 void do_hsuicide(CHAR_DATA *ch, char *argument) {
     char buf[MAX_STRING_LENGTH];
     FILE *fp;
@@ -2202,6 +2268,8 @@ void do_hsuicide(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_silentsave: Command: do_silentsave - Performs the 'silentsave' command.
+// do_silentsave: 指令：do_silentsave - 執行 'silentsave' 指令。
 void do_silentsave(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -2255,6 +2323,8 @@ void do_silentsave(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_hsave: Command: do_hsave - Performs the 'hsave' command.
+// do_hsave: 指令：do_hsave - 執行 'hsave' 指令。
 void do_hsave(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -2288,6 +2358,8 @@ void do_hsave(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_save: Performs the 'save' command to save player character data.
+// do_save: 執行 'save' 指令手動儲存角色存檔資料。
 void do_save(CHAR_DATA *ch, char *argument) {
     if (IS_NPC(ch))
         return;
@@ -2327,6 +2399,8 @@ void do_save(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_dice: Command: do_dice - Performs the 'dice' command.
+// do_dice: 指令：do_dice - 執行 'dice' 指令。
 void do_dice(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     char buf[256];
@@ -2364,6 +2438,8 @@ void do_dice(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_follow: Performs the 'follow' command to follow a character.
+// do_follow: 執行 'follow' 指令跟隨指定的角色。
 void do_follow(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
@@ -2439,6 +2515,8 @@ void do_follow(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// add_follower: Adds a character as a follower to a master.
+// add_follower: 將某個角色加入成為指定主人的跟隨者。
 void add_follower(CHAR_DATA *ch, CHAR_DATA *master) {
 
     if (ch->master) {
@@ -2459,12 +2537,22 @@ void add_follower(CHAR_DATA *ch, CHAR_DATA *master) {
     return;
 }
 
+// add_rember: Adds a character to another's remember (tracking) list.
+//             Mainly used in MobProgs (e.g., mpdef_rembch) to associate a target player 
+//             with a mob for quest/combat logic, and for tracking summoners/owners.
+// add_rember: 將某個角色加入至另一個角色的記住（追蹤）清單中。
+//             主要用於怪物腳本 MobProgs（如 mpdef_rembch）以將目標玩家與 NPC 關聯以供任務/戰鬥邏輯使用，
+//             以及用於追蹤召喚者或擁有者。
 void add_rember(CHAR_DATA *ch, CHAR_DATA *pch) {
     ch->next_in_rember = pch->rembed;
     pch->rembed = ch;
     ch->rembch = pch;
 }
 
+// add_rrember: Adds a character to a room's remember list.
+//              Used in RoomProgs (e.g., def_rembch) to store player interactions in a specific room.
+// add_rrember: 將某個角色加入至房間的記住清單中。
+//              用於房間腳本 RoomProgs（如 def_rembch）以在特定房間內記錄玩家互動。
 void add_rrember(ROOM_INDEX_DATA *room, CHAR_DATA *pch) {
     room->next_in_rrember = pch->rrembed;
     pch->rrembed = room;
@@ -2472,12 +2560,18 @@ void add_rrember(ROOM_INDEX_DATA *room, CHAR_DATA *pch) {
 }
 
 // 新增 obj rember 的指令 2022/11/10
+// add_orember: Adds a character to an object's remember list.
+//              Used in ObjProgs (e.g., odef_rembch) to associate player actors with custom items.
+// add_orember: 將某個角色加入至物品的記住清單中。
+//              用於物品腳本 ObjProgs（如 odef_rembch）以將玩家與自訂物品進行關聯。
 void add_orember(OBJ_DATA *obj, CHAR_DATA *pch) {
     obj->next_in_orember = pch->orembed;
     pch->orembed = obj;
     obj->orembch = pch;
 }
 
+// add_protector: Registers a character as a protector for another.
+// add_protector: 將某個角色註冊為另一個角色的保護者。
 void add_protector(CHAR_DATA *ch, CHAR_DATA *pch) {
     if (ch->protecting == pch) {
         bugf("duplicated protecting: [%s] -> [%s]", ch->name, pch->name);
@@ -2491,6 +2585,8 @@ void add_protector(CHAR_DATA *ch, CHAR_DATA *pch) {
 }
 
 // 加入 ch 協助 pch 2021/11/20
+// add_cooperator: Registers a character as a cooperator for another.
+// add_cooperator: 將某個角色註冊為另一個角色的協力者。
 void add_cooperator(CHAR_DATA *ch, CHAR_DATA *pch) {
     if (ch->cooperating == pch) {
         bugf("duplicated cooperating: [%s] -> [%s]", ch->name, pch->name);
@@ -2504,6 +2600,8 @@ void add_cooperator(CHAR_DATA *ch, CHAR_DATA *pch) {
 }
 
 // link chars 2021/11/20
+// add_linking: Creates a psychic or magical link between two characters.
+// add_linking: 在兩個角色之間建立精神或魔法連結。
 void add_linking(CHAR_DATA *ch, CHAR_DATA *pch) {
     if (!ch) {
         bugf("there is no linking ch: [%s]", ch->name);
@@ -2519,6 +2617,8 @@ void add_linking(CHAR_DATA *ch, CHAR_DATA *pch) {
     pch->linking = ch;
 }
 
+// stop_rrember: Stops tracking a character in a room remember list.
+// stop_rrember: 停止在房間記住清單中追蹤某個角色。
 void stop_rrember(ROOM_INDEX_DATA *ch, CHAR_DATA *pch) {
     ROOM_INDEX_DATA *pch_next;
     if (pch->rrembed == ch) {
@@ -2541,6 +2641,8 @@ void stop_rrember(ROOM_INDEX_DATA *ch, CHAR_DATA *pch) {
 }
 
 // 新增 obj rember 的指令 2022/11/10
+// stop_orember: Stops tracking a character in an object remember list.
+// stop_orember: 停止在物品記住清單中追蹤某個角色。
 void stop_orember(OBJ_DATA *ch, CHAR_DATA *pch) {
     OBJ_DATA *pch_next;
     if (pch->orembed == ch) {
@@ -2562,6 +2664,8 @@ void stop_orember(OBJ_DATA *ch, CHAR_DATA *pch) {
     ch->orembch = NULL;
 }
 
+// stop_rember: Stops tracking a character in a remember list.
+// stop_rember: 停止在記住清單中追蹤某個角色。
 void stop_rember(CHAR_DATA *ch, CHAR_DATA *pch) {
     CHAR_DATA *pch_next;
     time_t lt; // Added by Razgriz 20050811
@@ -2599,6 +2703,8 @@ void stop_rember(CHAR_DATA *ch, CHAR_DATA *pch) {
 /** ch 停止保護 pch
  * last update by zcecil 2004/07/04
  */
+// stop_protecting: Stops a character from protecting another.
+// stop_protecting: 使某個角色停止保護另一個角色。
 void stop_protecting(CHAR_DATA *ch, CHAR_DATA *pch) {
     CHAR_DATA *protector, *protector_next;
     if (!ch || !pch)
@@ -2626,6 +2732,8 @@ void stop_protecting(CHAR_DATA *ch, CHAR_DATA *pch) {
 }
 
 // ch 停止協助 pch 2021/11/20
+// stop_cooperating: Stops a character from cooperating with another.
+// stop_cooperating: 使某個角色停止與另一個角色進行協力。
 void stop_cooperating(CHAR_DATA *ch, CHAR_DATA *pch) {
     CHAR_DATA *cooperator, *cooperator_next;
     if (!ch || !pch)
@@ -2653,6 +2761,8 @@ void stop_cooperating(CHAR_DATA *ch, CHAR_DATA *pch) {
 }
 
 // link chars 2021/11/20
+// stop_linking: Terminates a link between two characters.
+// stop_linking: 終止兩個角色之間的連結關係。
 void stop_linking(CHAR_DATA *ch, CHAR_DATA *pch) {
     if (!ch || !pch)
         return;
@@ -2669,12 +2779,16 @@ void stop_linking(CHAR_DATA *ch, CHAR_DATA *pch) {
 }
 
 // link chars 2021/11/20
+// remove_linking: Removes all linking associations for a character.
+// remove_linking: 清除某個角色的所有連結關係。
 void remove_linking(CHAR_DATA *ch) {
     if (!ch)
         return;
     ch->linking = NULL;
 }
 
+// remove_rrember: Removes all room remember associations for a character.
+// remove_rrember: 清除某個角色的所有房間記住關係。
 void remove_rrember(CHAR_DATA *ch) {
     ROOM_INDEX_DATA *pch, *pch_next;
 
@@ -2686,6 +2800,8 @@ void remove_rrember(CHAR_DATA *ch) {
     ch->rrembed = NULL;
 }
 
+// remove_rember: Removes all remember associations for a character.
+// remove_rember: 清除某個角色的所有記住關係。
 void remove_rember(CHAR_DATA *ch) {
     CHAR_DATA *pch, *pch_next;
 
@@ -2700,6 +2816,8 @@ void remove_rember(CHAR_DATA *ch) {
 /** 讓所有保護 ch 的人通通停止保護 ch
  *
  */
+// remove_protector: Removes all protector associations for a character.
+// remove_protector: 清除某個角色的所有保護關係。
 void remove_protector(CHAR_DATA *ch) {
     CHAR_DATA *pch, *pch_next;
 
@@ -2713,6 +2831,8 @@ void remove_protector(CHAR_DATA *ch) {
     ch->protector = NULL;
 }
 // 移除所有協助的人 2021/11/20
+// remove_cooperator: Removes all cooperator associations for a character.
+// remove_cooperator: 清除某個角色的所有協力關係。
 void remove_cooperator(CHAR_DATA *ch) {
     CHAR_DATA *pch, *pch_next;
 
@@ -2727,6 +2847,8 @@ void remove_cooperator(CHAR_DATA *ch) {
 }
 
 // ch stop follow xxx
+// stop_follower: Makes a character stop following their current master.
+// stop_follower: 使某個角色停止跟隨其目前的主人。
 void stop_follower(CHAR_DATA *ch) {
     if (!ch->master) {
         bug("Stop_follower: null master.", 0);
@@ -2761,6 +2883,8 @@ void stop_follower(CHAR_DATA *ch) {
 }
 
 // all who follow ch stop following
+// die_follower: Handles follower updates when a master or follower dies.
+// die_follower: 當主人或跟隨者死亡時處理跟隨狀態更新。
 void die_follower(CHAR_DATA *ch, char *name) {
     CHAR_DATA *fch;
 
@@ -2781,6 +2905,8 @@ void die_follower(CHAR_DATA *ch, char *name) {
     return;
 }
 
+// do_order: Command: do_order - Performs the 'order' command.
+// do_order: 指令：do_order - 執行 'order' 指令。
 void do_order(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     CHAR_DATA *och;
@@ -2943,6 +3069,8 @@ char *gr_stat_color(int cur, int max) {
 }
 
 // add by jye 0940622
+// do_show_group_info: Command: do_show_group_info - Performs the 'show_group_info' command.
+// do_show_group_info: 指令：do_show_group_info - 執行 'show_group_info' 指令。
 void do_show_group_info(CHAR_DATA *ch, char *argument) {
     char buf[BUF_STRING_LENGTH * 5];
     char no_ansi[MAX_STRING_LENGTH];
@@ -3204,6 +3332,8 @@ void do_show_group_info(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_group: Performs the 'group' command to manage or view party members.
+// do_group: 執行 'group' 指令查看或管理冒險隊伍成員。
 void do_group(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
@@ -3587,6 +3717,8 @@ gch->max_move), gch->move, NOR, gch->max_move
 /*
  * 'Split' originally by Gnort, God of Chaos.
  */
+// do_split: Command: do_split - Performs the 'split' command.
+// do_split: 指令：do_split - 執行 'split' 指令。
 void do_split(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *gch;
     char buf[MAX_STRING_LENGTH];
@@ -3668,6 +3800,8 @@ void do_split(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_gtell: Command: do_gtell - Performs the 'gtell' command.
+// do_gtell: 指令：do_gtell - 執行 'gtell' 指令。
 void do_gtell(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *gch;
     char buf[MAX_STRING_LENGTH];
@@ -3712,6 +3846,8 @@ void do_gtell(CHAR_DATA *ch, char *argument) {
 }
 
 /* Sent in by Judson Knott <jek@conga.oit.unc.edu> */
+// do_beep: Command: do_beep - Performs the 'beep' command.
+// do_beep: 指令：do_beep - 執行 'beep' 指令。
 void do_beep(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
@@ -3746,6 +3882,8 @@ void do_beep(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_talk: Command: do_talk - Performs the 'talk' command.
+// do_talk: 指令：do_talk - 執行 'talk' 指令。
 void do_talk(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
@@ -3821,6 +3959,8 @@ act( "$cfyw$n$cfwe 試著和你交談.", ch, NULL, victim, TO_VICT );
  * (2) if A ~ B then B ~ A
  * (3) if A ~ B  and B ~ C, then A ~ C
  */
+// is_same_group: Checks if two characters are in the same group.
+// is_same_group: 檢查兩個角色是否屬於同一個隊伍。
 bool is_same_group(CHAR_DATA *ach, CHAR_DATA *bch) {
     if (!ach || !bch)
         return FALSE;
@@ -3864,6 +4004,8 @@ bool is_same_group(CHAR_DATA *ach, CHAR_DATA *bch) {
     return FALSE;
 }
 
+// do_lead: Command: do_lead - Performs the 'lead' command.
+// do_lead: 指令：do_lead - 執行 'lead' 指令。
 void do_lead(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     CHAR_DATA *och;
@@ -3989,6 +4131,8 @@ void do_lead(CHAR_DATA *ch, char *argument) {
 }
 
 BATTLE_ARRAY *ba_free;
+// do_battle_array: Command: do_battle_array - Performs the 'battle_array' command.
+// do_battle_array: 指令：do_battle_array - 執行 'battle_array' 指令。
 void do_battle_array(CHAR_DATA *ch, char *argument) {
     char arg[MAX_INPUT_LENGTH];
     char cmd[MAX_INPUT_LENGTH];

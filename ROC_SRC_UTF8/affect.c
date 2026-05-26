@@ -24,6 +24,8 @@
  * Apply or remove an affect to a character.
  */
 // modified by jye 6.15.2005
+// affect_modify: Character affect handler: affect_modify - Mutates state affects (buffs/debuffs) on the character.
+// affect_modify: 屬性影響處理：affect_modify - 修改玩家角色身上的狀態影響（增益/減益狀態）。
 void affect_modify(CHAR_DATA *ch, AFFECT_DATA *paf, bool fAdd) {
     char buf[MAX_STRING_LENGTH];
     int  mod;
@@ -253,6 +255,8 @@ void affect_modify(CHAR_DATA *ch, AFFECT_DATA *paf, bool fAdd) {
 /*
  * Give an affect to a char.
  */
+// affect_to_char: Character affect handler: affect_to_char - Mutates state affects (buffs/debuffs) on the character.
+// affect_to_char: 屬性影響處理：affect_to_char - 修改玩家角色身上的狀態影響（增益/減益狀態）。
 void affect_to_char(CHAR_DATA *ch, AFFECT_DATA *paf) {
     AFFECT_DATA *paf_new;
 
@@ -272,6 +276,8 @@ void affect_to_char(CHAR_DATA *ch, AFFECT_DATA *paf) {
 /*
  * Remove an affect from a char.
  */
+// affect_remove: Character affect handler: affect_remove - Mutates state affects (buffs/debuffs) on the character.
+// affect_remove: 屬性影響處理：affect_remove - 修改玩家角色身上的狀態影響（增益/減益狀態）。
 void affect_remove(CHAR_DATA *ch, AFFECT_DATA *paf) {
     // AFFECT_DATA *vpaf;
     QMARK           *qmark      = NULL; // Added by Razgriz    20050714
@@ -325,6 +331,8 @@ void affect_remove(CHAR_DATA *ch, AFFECT_DATA *paf) {
 /*
  * Strip all affects of a given sn.
  */
+// affect_strip: Character affect handler: affect_strip - Mutates state affects (buffs/debuffs) on the character.
+// affect_strip: 屬性影響處理：affect_strip - 修改玩家角色身上的狀態影響（增益/減益狀態）。
 void affect_strip(CHAR_DATA *ch, int sn) {
     AFFECT_DATA *paf;
 
@@ -343,6 +351,8 @@ void affect_strip(CHAR_DATA *ch, int sn) {
 /*
  * Return true if a char is affected by a spell.
  */
+// is_affected: Core Engine function: is_affected - Main C routine handling game mechanics.
+// is_affected: 核心引擎函式：is_affected - 處理遊戲底層機制的核心 C 語言子程序。
 bool is_affected(CHAR_DATA *ch, int sn) {
     AFFECT_DATA *paf;
 
@@ -362,6 +372,8 @@ bool is_affected(CHAR_DATA *ch, int sn) {
  * or does not affect by this kind of apply type.
  * it return the modifier value when it matchs the input condition.
  */
+// affected_value: Core Engine function: affected_value - Main C routine handling game mechanics.
+// affected_value: 核心引擎函式：affected_value - 處理遊戲底層機制的核心 C 語言子程序。
 int affected_value(CHAR_DATA *ch, int sn, int apply_type) {
     AFFECT_DATA *paf;
 
@@ -378,6 +390,8 @@ int affected_value(CHAR_DATA *ch, int sn, int apply_type) {
 /*
  * Add or enhance an affect.
  */
+// affect_join: Character affect handler: affect_join - Mutates state affects (buffs/debuffs) on the character.
+// affect_join: 屬性影響處理：affect_join - 修改玩家角色身上的狀態影響（增益/減益狀態）。
 void affect_join(CHAR_DATA *ch, AFFECT_DATA *paf) {
     AFFECT_DATA *paf_old;
     int          nOrgDuration = -1;

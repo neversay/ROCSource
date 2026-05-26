@@ -132,6 +132,8 @@ char *stat_color1(int cur, int max) {
 }
 
 /*  毒襲修改為每下攻擊傷害 2021/11/04
+// VenomousHurt: Core Engine function: VenomousHurt - Main C routine handling game mechanics.
+// VenomousHurt: 核心引擎函式：VenomousHurt - 處理遊戲底層機制的核心 C 語言子程序。
 void VenomousHurt(CHAR_DATA *pVictim)
 {
     int nVenomDmg = affected_value(pVictim, gsn_venomous_strike, APPLY_SAVING_POISON);
@@ -173,6 +175,8 @@ void BloodThirstyStopCheck(CHAR_DATA *ch) /* blood thirsty 停止戰鬥後數值
 }
 
 // obj_fight , 於戰鬥中 obj prog 的判定 2022/05/07
+// CheckObjFight: Core Engine function: CheckObjFight - Main C routine handling game mechanics.
+// CheckObjFight: 核心引擎函式：CheckObjFight - 處理遊戲底層機制的核心 C 語言子程序。
 void CheckObjFight(CHAR_DATA *ch) {
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
@@ -189,6 +193,8 @@ void CheckObjFight(CHAR_DATA *ch) {
 }
 
 // obj_kill , 於戰鬥中 obj prog 的判定 2022/05/08
+// CheckObjKill: Core Engine function: CheckObjKill - Main C routine handling game mechanics.
+// CheckObjKill: 核心引擎函式：CheckObjKill - 處理遊戲底層機制的核心 C 語言子程序。
 void CheckObjKill(CHAR_DATA *ch) {
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
@@ -210,6 +216,8 @@ void CheckObjKill(CHAR_DATA *ch) {
  * Slightly less efficient than Merc 2.2.  Takes 10% of
  *  total CPU time.
  */
+// violence_update: Core Engine function: violence_update - Main C routine handling game mechanics.
+// violence_update: 核心引擎函式：violence_update - 處理遊戲底層機制的核心 C 語言子程序。
 void violence_update(void) {
     CHAR_DATA *ch;
     CHAR_DATA *victim;
@@ -720,6 +728,8 @@ void violence_update(void) {
 /*
  * Set position of a victim.
  */
+// update_pos: Core Engine function: update_pos - Main C routine handling game mechanics.
+// update_pos: 核心引擎函式：update_pos - 處理遊戲底層機制的核心 C 語言子程序。
 void update_pos(CHAR_DATA *victim) {
     if (!IS_NPC(victim) && victim->hit > 0 && victim->position == POS_RESTING)
         return;
@@ -756,6 +766,8 @@ void update_pos(CHAR_DATA *victim) {
 /*
  * Start fights.
  */
+// set_fighting: Core Engine function: set_fighting - Main C routine handling game mechanics.
+// set_fighting: 核心引擎函式：set_fighting - 處理遊戲底層機制的核心 C 語言子程序。
 void set_fighting(CHAR_DATA *ch, CHAR_DATA *victim) {
     // char buf [ MAX_STRING_LENGTH ];
     if (!victim || victim->deleted)
@@ -801,6 +813,8 @@ void set_fighting(CHAR_DATA *ch, CHAR_DATA *victim) {
 /* Mark by Razgriz	20050909
  * Stop fights.
  *
+// stop_fighting: Core Engine function: stop_fighting - Main C routine handling game mechanics.
+// stop_fighting: 核心引擎函式：stop_fighting - 處理遊戲底層機制的核心 C 語言子程序。
 void stop_fighting( CHAR_DATA *ch, bool fBoth )
 {
   CHAR_DATA *fch, *vch;
@@ -840,6 +854,8 @@ void stop_fighting( CHAR_DATA *ch, bool fBoth )
  * Eliminate logical bugs in old version
  * and add handle for qmark -- earthquake_stun
  */
+// stop_fighting: Core Engine function: stop_fighting - Main C routine handling game mechanics.
+// stop_fighting: 核心引擎函式：stop_fighting - 處理遊戲底層機制的核心 C 語言子程序。
 void stop_fighting(CHAR_DATA *ch, bool fBoth) {
     CHAR_DATA *tch = NULL, *fch, *vch;
     bool       fight_change;
@@ -908,6 +924,8 @@ void stop_fighting(CHAR_DATA *ch, bool fBoth) {
 /*
  * Make a corpse out of a character.
  */
+// make_corpse: Core Engine function: make_corpse - Main C routine handling game mechanics.
+// make_corpse: 核心引擎函式：make_corpse - 處理遊戲底層機制的核心 C 語言子程序。
 void make_corpse(CHAR_DATA *killer, CHAR_DATA *ch) {
     OBJ_DATA  *corpse;
     OBJ_DATA  *obj;
@@ -1087,6 +1105,8 @@ void make_corpse(CHAR_DATA *killer, CHAR_DATA *ch) {
 /*
  * Improved Death_cry contributed by Diavolo.
  */
+// death_cry: Core Engine function: death_cry - Main C routine handling game mechanics.
+// death_cry: 核心引擎函式：death_cry - 處理遊戲底層機制的核心 C 語言子程序。
 void death_cry(CHAR_DATA *ch) {
     ROOM_INDEX_DATA *was_in_room;
     char            *msg;
@@ -1209,6 +1229,8 @@ void death_cry(CHAR_DATA *ch) {
     return;
 }
 
+// init_char_data: Core Engine function: init_char_data - Main C routine handling game mechanics.
+// init_char_data: 核心引擎函式：init_char_data - 處理遊戲底層機制的核心 C 語言子程序。
 void init_char_data(CHAR_DATA *ch) {
     int i         = 0;
     int nRaceSklv = get_skill_level(ch, gsn_inborn_ability);
@@ -1289,6 +1311,8 @@ void init_char_data(CHAR_DATA *ch) {
     }
 }
 
+// raw_kill: Core Engine function: raw_kill - Main C routine handling game mechanics.
+// raw_kill: 核心引擎函式：raw_kill - 處理遊戲底層機制的核心 C 語言子程序。
 bool raw_kill(CHAR_DATA *ch, CHAR_DATA *victim) {
     AFFECT_DATA     *paf;
     CHAR_DATA       *horse;
@@ -1509,6 +1533,8 @@ bool raw_kill(CHAR_DATA *ch, CHAR_DATA *victim) {
 }
 
 // group_gain modified by jye 7.13.2005
+// group_gain: Core Engine function: group_gain - Main C routine handling game mechanics.
+// group_gain: 核心引擎函式：group_gain - 處理遊戲底層機制的核心 C 語言子程序。
 void group_gain(CHAR_DATA *ch, CHAR_DATA *victim) {
     CHAR_DATA *gch;
     CHAR_DATA *lch;
@@ -1662,6 +1688,8 @@ void group_gain(CHAR_DATA *ch, CHAR_DATA *victim) {
  * Also adjust alignment of killer.
  * Edit this function to change xp computations.
  */
+// xp_compute: Core Engine function: xp_compute - Main C routine handling game mechanics.
+// xp_compute: 核心引擎函式：xp_compute - 處理遊戲底層機制的核心 C 語言子程序。
 int xp_compute(CHAR_DATA *gch, CHAR_DATA *victim) {
     OBJ_DATA *obj;
     float     bonus;
@@ -1871,6 +1899,8 @@ int xp_compute(CHAR_DATA *gch, CHAR_DATA *victim) {
  * Disarm a creature.
  * Caller must check for successful attack.
  */
+// disarm: Core Engine function: disarm - Main C routine handling game mechanics.
+// disarm: 核心引擎函式：disarm - 處理遊戲底層機制的核心 C 語言子程序。
 void disarm(CHAR_DATA *ch, CHAR_DATA *victim) {
     OBJ_DATA *obj;
 
@@ -1994,6 +2024,8 @@ void disarm(CHAR_DATA *ch, CHAR_DATA *victim) {
  * Trip a creature.
  * Caller must check for successful attack.
  */
+// trip: Core Engine function: trip - Main C routine handling game mechanics.
+// trip: 核心引擎函式：trip - 處理遊戲底層機制的核心 C 語言子程序。
 void trip(CHAR_DATA *ch, CHAR_DATA *victim) {
     // char  buf[MAX_STRING_LENGTH];
     int mod = 100;
@@ -2061,6 +2093,8 @@ void trip(CHAR_DATA *ch, CHAR_DATA *victim) {
     return;
 }
 
+// do_kill: Command: do_kill - Main execution handler for the 'kill' player/IMM command.
+// do_kill: 指令：do_kill - 處理玩家或天神執行 'kill' 指令的主控程序。
 void do_kill(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -2139,6 +2173,8 @@ void do_kill(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_murder: Command: do_murder - Main execution handler for the 'murder' player/IMM command.
+// do_murder: 指令：do_murder - 處理玩家或天神執行 'murder' 指令的主控程序。
 void do_murder(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim = NULL;
     ;
@@ -2203,6 +2239,8 @@ void do_murder(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_flee: Command: do_flee - Main execution handler for the 'flee' player/IMM command.
+// do_flee: 指令：do_flee - 處理玩家或天神執行 'flee' 指令的主控程序。
 void do_flee(CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim;
     ROOM_INDEX_DATA *was_in;
@@ -2536,6 +2574,8 @@ CHAR_DATA *fighting_by(CHAR_DATA *ch, CHAR_DATA *victim, ROOM_INDEX_DATA *room) 
     return fch;
 }
 
+// track_hunt: Core Engine function: track_hunt - Main C routine handling game mechanics.
+// track_hunt: 核心引擎函式：track_hunt - 處理遊戲底層機制的核心 C 語言子程序。
 void track_hunt(CHAR_DATA *ch, CHAR_DATA *victim, ROOM_INDEX_DATA *was_in, int door) {
     CHAR_DATA *vch, *hch, *rch, *vch_next_in_room;
     if (!ch || !victim || !victim->in_room || !ch->in_room || !was_in)
@@ -2624,6 +2664,8 @@ void track_hunt(CHAR_DATA *ch, CHAR_DATA *victim, ROOM_INDEX_DATA *was_in, int d
     }
 }
 
+// do_sla: Command: do_sla - Main execution handler for the 'sla' player/IMM command.
+// do_sla: 指令：do_sla - 處理玩家或天神執行 'sla' 指令的主控程序。
 void do_sla(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *rch;
 
@@ -2636,6 +2678,8 @@ void do_sla(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_slay: Command: do_slay - Main execution handler for the 'slay' player/IMM command.
+// do_slay: 指令：do_slay - 處理玩家或天神執行 'slay' 指令的主控程序。
 void do_slay(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     CHAR_DATA *rch;
@@ -2674,12 +2718,16 @@ void do_slay(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_fee: Command: do_fee - Main execution handler for the 'fee' player/IMM command.
+// do_fee: 指令：do_fee - 處理玩家或天神執行 'fee' 指令的主控程序。
 void do_fee(CHAR_DATA *ch, char *argument) {
     send_to_char("如果你想要吸血，你得把它打完全。\n\r", ch);
     return;
 }
 
 /* Vampiric bite.  Feeding */
+// do_feed: Command: do_feed - Main execution handler for the 'feed' player/IMM command.
+// do_feed: 指令：do_feed - 處理玩家或天神執行 'feed' 指令的主控程序。
 void do_feed(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     char       arg[MAX_INPUT_LENGTH];
@@ -2857,6 +2905,8 @@ void do_feed(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_stake: Command: do_stake - Main execution handler for the 'stake' player/IMM command.
+// do_stake: 指令：do_stake - 處理玩家或天神執行 'stake' 指令的主控程序。
 void do_stake(CHAR_DATA *ch, char *argument) {
     CHAR_DATA  *victim;
     OBJ_DATA   *obj;
@@ -2978,6 +3028,8 @@ void use_magical_item(CHAR_DATA *ch) /*{{{*/
 
 } /*}}}*/
 
+// get_align: Core Engine function: get_align - Main C routine handling game mechanics.
+// get_align: 核心引擎函式：get_align - 處理遊戲底層機制的核心 C 語言子程序。
 int get_align(CHAR_DATA *ch) {
     if (IS_EVIL(ch))
         return 0;
@@ -2987,6 +3039,8 @@ int get_align(CHAR_DATA *ch) {
         return 2;
 }
 
+// trigger_obj_hp: Core Engine function: trigger_obj_hp - Main C routine handling game mechanics.
+// trigger_obj_hp: 核心引擎函式：trigger_obj_hp - 處理遊戲底層機制的核心 C 語言子程序。
 void trigger_obj_hp(OBJ_DATA *obj, int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = NULL;
 
@@ -3029,6 +3083,8 @@ void trigger_obj_hp(OBJ_DATA *obj, int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // show the graphy fighting prompt by Neversay 2004/June/23
 
+// show_vs_graphy: Core Engine function: show_vs_graphy - Main C routine handling game mechanics.
+// show_vs_graphy: 核心引擎函式：show_vs_graphy - 處理遊戲底層機制的核心 C 語言子程序。
 void show_vs_graphy(CHAR_DATA *ch, CHAR_DATA *victim) {
     CHAR_DATA *vch;
     char      *victim_symbol[] = {"  ", "ˍ", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█", "◆"},
@@ -3119,6 +3175,8 @@ void show_vs_graphy(CHAR_DATA *ch, CHAR_DATA *victim) {
     act(buffer, ch, NULL, victim, TO_CHAR);
 }
 
+// death_declare: Core Engine function: death_declare - Main C routine handling game mechanics.
+// death_declare: 核心引擎函式：death_declare - 處理遊戲底層機制的核心 C 語言子程序。
 void death_declare(CHAR_DATA *ch, CHAR_DATA *victim) {
     char buf[MAX_STRING_LENGTH * 2];
     if (!IS_NPC(victim) && victim->level > 3 && !IS_SET(victim->act, PLR_HORSE) && victim != ch && !IS_IMMORTAL(ch)) {
@@ -3197,6 +3255,8 @@ void death_declare(CHAR_DATA *ch, CHAR_DATA *victim) {
     }
 }
 
+// pk_kill: Core Engine function: pk_kill - Main C routine handling game mechanics.
+// pk_kill: 核心引擎函式：pk_kill - 處理遊戲底層機制的核心 C 語言子程序。
 void pk_kill(CHAR_DATA *ch, CHAR_DATA *victim) {
     AFFECT_DATA     *paf;
     CHAR_DATA       *vch, *rch;

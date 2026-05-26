@@ -62,6 +62,8 @@ GROUP_DATA *new_group(void) {
     return pGroup;
 }
 
+// free_group: System helper: free_group - Performs cleanup or manages organization data.
+// free_group: 系統公用：free_group - 進行記憶體清理或管理公會/組織資料。
 void free_group(GROUP_DATA *gd) {
     GROUP_DATA *pNext;
     if (group_list == gd) {
@@ -124,6 +126,8 @@ AUC_DATA *new_auction_data() {
     return pAuc;
 }
 
+// free_auction_data: System helper: free_auction_data - Performs cleanup or manages organization data.
+// free_auction_data: 系統公用：free_auction_data - 進行記憶體清理或管理公會/組織資料。
 void free_auction_data(AUC_DATA *pAuc) {
     pAuc->next = auc_free;
     auc_free   = pAuc;
@@ -134,6 +138,8 @@ void free_auction_data(AUC_DATA *pAuc) {
  Name:		free_reset_data
  Purpose:	Clears and deletes a reset structure.
  ****************************************************************************/
+// free_reset_data: System helper: free_reset_data - Performs cleanup or manages organization data.
+// free_reset_data: 系統公用：free_reset_data - 進行記憶體清理或管理公會/組織資料。
 void free_reset_data(RESET_DATA *pReset) {
     pReset->next = reset_free;
     reset_free   = pReset;
@@ -178,6 +184,8 @@ AREA_DATA *new_area(void) {
  Name:		free_area
  Purpose:	Clears and deletes an area structure.
  ****************************************************************************/
+// free_area: System helper: free_area - Performs cleanup or manages organization data.
+// free_area: 系統公用：free_area - 進行記憶體清理或管理公會/組織資料。
 void free_area(AREA_DATA *pArea) {
     free_string(pArea->name);
     free_string(pArea->filename);
@@ -213,6 +221,8 @@ EXIT_DATA *new_exit(void) {
     return pExit;
 }
 
+// free_exit: System helper: free_exit - Performs cleanup or manages organization data.
+// free_exit: 系統公用：free_exit - 進行記憶體清理或管理公會/組織資料。
 void free_exit(EXIT_DATA *pExit) {
     free_string(pExit->keyword);
     free_string(pExit->description);
@@ -240,6 +250,8 @@ EXTRA_DESCR_DATA *new_extra_descr(void) {
     return pExtra;
 }
 
+// free_extra_descr: System helper: free_extra_descr - Performs cleanup or manages organization data.
+// free_extra_descr: 系統公用：free_extra_descr - 進行記憶體清理或管理公會/組織資料。
 void free_extra_descr(EXTRA_DESCR_DATA *pExtra) {
     free_string(pExtra->keyword);
     free_string(pExtra->description);
@@ -288,6 +300,8 @@ ROOM_INDEX_DATA *new_room_index(void) {
     return pRoom;
 }
 
+// free_room_index: System helper: free_room_index - Performs cleanup or manages organization data.
+// free_room_index: 系統公用：free_room_index - 進行記憶體清理或管理公會/組織資料。
 void free_room_index(ROOM_INDEX_DATA *pRoom) {
     int               door;
     EXTRA_DESCR_DATA *pExtra;
@@ -365,6 +379,8 @@ R_AFFECT_DATA *new_r_affect(void) {
     return pAf;
 }
 
+// free_r_affect: System helper: free_r_affect - Performs cleanup or manages organization data.
+// free_r_affect: 系統公用：free_r_affect - 進行記憶體清理或管理公會/組織資料。
 void free_r_affect(R_AFFECT_DATA *pAf) {
     pAf->next     = r_affect_free;
     r_affect_free = pAf;
@@ -393,6 +409,8 @@ AFFECT_DATA *new_affect(void) {
     return pAf;
 }
 
+// free_affect: System helper: free_affect - Performs cleanup or manages organization data.
+// free_affect: 系統公用：free_affect - 進行記憶體清理或管理公會/組織資料。
 void free_affect(AFFECT_DATA *pAf) {
     pAf->next   = affect_free;
     affect_free = pAf;
@@ -425,6 +443,8 @@ SHOP_DATA *new_shop(void) {
     return pShop;
 }
 
+// free_shop: System helper: free_shop - Performs cleanup or manages organization data.
+// free_shop: 系統公用：free_shop - 進行記憶體清理或管理公會/組織資料。
 void free_shop(SHOP_DATA *pShop) {
     pShop->next = shop_free;
     shop_free   = pShop;
@@ -482,6 +502,8 @@ OBJ_INDEX_DATA *new_obj_index(void) {
     return pObj;
 }
 
+// free_obj_index: System helper: free_obj_index - Performs cleanup or manages organization data.
+// free_obj_index: 系統公用：free_obj_index - 進行記憶體清理或管理公會/組織資料。
 void free_obj_index(OBJ_INDEX_DATA *pObj) {
     EXTRA_DESCR_DATA *pExtra;
     AFFECT_DATA      *pAf;
@@ -646,6 +668,8 @@ CALL_OUT_DATA *new_call_out() {
     return cod;
 }
 
+// free_mob_index: System helper: free_mob_index - Performs cleanup or manages organization data.
+// free_mob_index: 系統公用：free_mob_index - 進行記憶體清理或管理公會/組織資料。
 void free_mob_index(MOB_INDEX_DATA *pMob) {
     free_string(pMob->player_name);
     free_string(pMob->short_descr);

@@ -1,3 +1,5 @@
+// macros.h: Core utility and math macros (e.g. min, max, bit checks, name matching helpers).
+// macros.h: 核心公用程式與數學運算巨集（如 min、max、位元檢查及名稱比對輔助等）。
 #ifndef __MACROS_H__
 #define __MACROS_H__
 

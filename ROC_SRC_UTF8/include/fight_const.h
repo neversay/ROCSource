@@ -1,3 +1,5 @@
+// fight_const.h: Defines constants, stances, and modes for the combat and violence systems.
+// fight_const.h: 定義戰鬥與暴力系統的相關常數、架式及戰鬥模式設定。
 #ifndef __FIGHT_CONST_H__
 #define __FIGHT_CONST_H__
 /* English Attack type table */

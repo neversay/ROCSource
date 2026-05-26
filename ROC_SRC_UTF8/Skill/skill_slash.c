@@ -47,6 +47,8 @@
 
 void LizardmanSkill(CHAR_DATA *ch, CHAR_DATA *victim, int multi);
 
+// do_empslash: Command: do_empslash - Executes a powerful EMP energy sword slash strike.
+// do_empslash: 指令：do_empslash - 施展強力的電磁脈衝（EMP）能量斬擊。
 void do_empslash(CHAR_DATA *ch, CHAR_DATA *victim) {
     int       wp;
     OBJ_DATA *obj;
@@ -438,7 +440,7 @@ void do_twin(CHAR_DATA *ch, char *argument) /*{{{*/
     }
 
     if (!IS_NPC(ch) && !check_skill(rch, gsn_twin, number_percent())) {
-        act("$N無法成功\配合你。", ch, NULL, rch, TO_CHAR);
+        act("$N無法成功配合你。", ch, NULL, rch, TO_CHAR);
         return;
     }
 
@@ -525,6 +527,8 @@ void do_twin(CHAR_DATA *ch, char *argument) /*{{{*/
 } /*}}}*/
 
 // flaming slash modified by whisperwind 2.17.2005
+// do_flaming: Command: do_flaming - Performs the 'flaming' active combat or class skill.
+// do_flaming: 指令：do_flaming - 執行 'flaming' 主動戰鬥或職業專屬技能。
 void do_flaming(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     OBJ_DATA  *obj  = NULL;
@@ -640,6 +644,8 @@ void do_flaming(CHAR_DATA *ch, char *argument) {
 }
 
 // icecore slash add by whisperwind 2.17.2005
+// do_icecore: Command: do_icecore - Performs the 'icecore' active combat or class skill.
+// do_icecore: 指令：do_icecore - 執行 'icecore' 主動戰鬥或職業專屬技能。
 void do_icecore(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     OBJ_DATA  *obj = NULL;
@@ -728,6 +734,8 @@ void do_icecore(CHAR_DATA *ch, char *argument) {
 
 // enables beholder performing magical slash under sklv 6 inborn ability, added by Keelar
 // fulgurant slash add by whisperwind 2.17.2005
+// do_fulgurant: Command: do_fulgurant - Performs the 'fulgurant' active combat or class skill.
+// do_fulgurant: 指令：do_fulgurant - 執行 'fulgurant' 主動戰鬥或職業專屬技能。
 void do_fulgurant(CHAR_DATA *ch, char *argument) {
     CHAR_DATA       *victim;
     OBJ_DATA        *obj        = NULL;
@@ -858,6 +866,8 @@ void do_fulgurant(CHAR_DATA *ch, char *argument) {
 }
 
 // storm slash modified by whisperwind 2.18.2005
+// do_storm: Command: do_storm - Performs the 'storm' active combat or class skill.
+// do_storm: 指令：do_storm - 執行 'storm' 主動戰鬥或職業專屬技能。
 void do_storm(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     OBJ_DATA  *obj  = NULL;
@@ -972,6 +982,8 @@ void do_storm(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_elemental: Command: do_elemental - Performs the 'elemental' active combat or class skill.
+// do_elemental: 指令：do_elemental - 執行 'elemental' 主動戰鬥或職業專屬技能。
 void do_elemental(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     OBJ_DATA  *obj        = NULL;
@@ -1054,6 +1066,8 @@ void do_elemental(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_sun: Command: do_sun - Performs the 'sun' active combat or class skill.
+// do_sun: 指令：do_sun - 執行 'sun' 主動戰鬥或職業專屬技能。
 void do_sun(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     OBJ_DATA  *obj  = NULL;
@@ -1163,6 +1177,8 @@ void do_sun(CHAR_DATA *ch, char *argument) {
     WAIT_STATE(ch, skill_table[gsn_sun_slash].beats);
 }
 
+// do_sprinkle: Command: do_sprinkle - Performs the 'sprinkle' active combat or class skill.
+// do_sprinkle: 指令：do_sprinkle - 執行 'sprinkle' 主動戰鬥或職業專屬技能。
 void do_sprinkle(CHAR_DATA *ch, char *argument) {
     CHAR_DATA *victim;
     OBJ_DATA  *obj = NULL;

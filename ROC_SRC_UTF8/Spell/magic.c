@@ -89,6 +89,8 @@ extern void    spell_flaming_armor_strike(int sn, int level, CHAR_DATA *ch, void
 /*
  * Lookup a skill by name.
  */
+// skill_lookup: Looks up a skill or spell SN (serial number) by its name.
+// skill_lookup: 根據名稱尋找特定技能或魔法的 SN（序號）編號。
 int skill_lookup(const char *name) {
     int   sn;
     char *tmp1, *tmp2, arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
@@ -125,6 +127,8 @@ int skill_lookup(const char *name) {
  * Utter mystical words for an sn.
  */
 // 20060508 modify by jye
+// say_spell: Formats and outputs the verbal incantation spoken when casting a spell.
+// say_spell: 格式化並輸出施法時所唸出的魔法咒語。
 void say_spell(CHAR_DATA *ch, int sn) {
     CHAR_DATA *rch;
     char      *pName;
@@ -241,6 +245,8 @@ void say_spell(CHAR_DATA *ch, int sn) {
  * Compute a saving throw.
  * Negative apply's make saving throw better.'
  */
+// saves_spell: Calculates saving throw success or failure against a magical attack.
+// saves_spell: 計算針對魔法攻擊的抗魔拯救判定（Saving Throw）是否成功。
 int saves_spell(int pp, CHAR_DATA *victim) {
     int save;
 
@@ -249,6 +255,8 @@ int saves_spell(int pp, CHAR_DATA *victim) {
     return URANGE(15, save, 500);
 }
 
+// new_saves_spell: Function: new_saves_spell - Magical engine helper routine.
+// new_saves_spell: 函式：new_saves_spell - 魔法引擎輔助處理程序。
 int new_saves_spell(int pp, CHAR_DATA *victim, int type) {
     int save;
     int nSvs = NEW_GET_SVS(victim, type);
@@ -270,6 +278,8 @@ int new_saves_spell(int pp, CHAR_DATA *victim, int type) {
 
 // add by coconet to let mag/swd's skill use this old function to count pp's effect
 // 2004/07/18
+// old_saves_spell: Function: old_saves_spell - Magical engine helper routine.
+// old_saves_spell: 函式：old_saves_spell - 魔法引擎輔助處理程序。
 int old_saves_spell(int pp, CHAR_DATA *victim, int type) {
     int save;
     int nSvs = NEW_GET_SVS(victim, type);
@@ -289,6 +299,8 @@ int old_saves_spell(int pp, CHAR_DATA *victim, int type) {
 }
 
 // add by whisperwind to let spell timer effect by svs. 9.24.2004
+// new_saves_timer: Function: new_saves_timer - Magical engine helper routine.
+// new_saves_timer: 函式：new_saves_timer - 魔法引擎輔助處理程序。
 int new_saves_timer(int pp, CHAR_DATA *victim, int type) {
     int save;
 
@@ -298,6 +310,8 @@ int new_saves_timer(int pp, CHAR_DATA *victim, int type) {
 }
 
 // add by whisperwind 2.17.2005
+// int_effect: Function: int_effect - Magical engine helper routine.
+// int_effect: 函式：int_effect - 魔法引擎輔助處理程序。
 double int_effect(CHAR_DATA *ch) {
     double effect;
     if (get_curr_int(ch) > 16)
@@ -308,6 +322,8 @@ double int_effect(CHAR_DATA *ch) {
 }
 
 // add by whisperwind 2.17.2005
+// wis_effect: Function: wis_effect - Magical engine helper routine.
+// wis_effect: 函式：wis_effect - 魔法引擎輔助處理程序。
 double wis_effect(CHAR_DATA *ch) {
     double effect;
     if (get_curr_wis(ch) > 16)
@@ -322,6 +338,8 @@ double wis_effect(CHAR_DATA *ch) {
 char *target_name;
 
 // delayed_do_cast modified by jye 6.15.2005
+// delayed_do_cast: Function: delayed_do_cast - Magical engine helper routine.
+// delayed_do_cast: 函式：delayed_do_cast - 魔法引擎輔助處理程序。
 void delayed_do_cast(CHAR_DATA *ch, char *argument) {
     void            *vo;
     OBJ_DATA        *obj;
@@ -794,6 +812,8 @@ void delayed_do_cast(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// do_cast: Command: do_cast - Performs the 'cast' magical command.
+// do_cast: 指令：do_cast - 執行 'cast' 魔法相關指令。
 void do_cast(CHAR_DATA *ch, char *argument) {
     void          *vo;
     OBJ_DATA      *obj;
@@ -1183,6 +1203,8 @@ void do_cast(CHAR_DATA *ch, char *argument) {
     return;
 }
 
+// weakness_percent: Function: weakness_percent - Magical engine helper routine.
+// weakness_percent: 函式：weakness_percent - 魔法引擎輔助處理程序。
 int weakness_percent(CHAR_DATA *ch, int sn) {
     MOB_WEAKNESS *weak;
     if (!ch->weakness)
@@ -1198,6 +1220,8 @@ int weakness_percent(CHAR_DATA *ch, int sn) {
         return weak->percent;
 }
 
+// weakness_damage: Function: weakness_damage - Magical engine helper routine.
+// weakness_damage: 函式：weakness_damage - 魔法引擎輔助處理程序。
 int weakness_damage(CHAR_DATA *ch, int sn) {
     MOB_WEAKNESS *weak;
     if (!ch->weakness)
@@ -1213,6 +1237,8 @@ int weakness_damage(CHAR_DATA *ch, int sn) {
         return weak->damage;
 }
 
+// room_cast_spell: Function: room_cast_spell - Magical engine helper routine.
+// room_cast_spell: 函式：room_cast_spell - 魔法引擎輔助處理程序。
 void room_cast_spell(int sn, int level, CHAR_DATA *victim, CHAR_DATA *ch, ROOM_INDEX_DATA *obj) {
     void *vo;
 
@@ -1279,6 +1305,8 @@ void room_cast_spell(int sn, int level, CHAR_DATA *victim, CHAR_DATA *ch, ROOM_I
 /*
  * Cast spells at targets using a magical object.
  */
+// obj_cast_spell: Function: obj_cast_spell - Magical engine helper routine.
+// obj_cast_spell: 函式：obj_cast_spell - 魔法引擎輔助處理程序。
 void obj_cast_spell(int sn, int level, CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj) {
     void *vo;
 
@@ -1477,6 +1505,8 @@ void obj_cast_spell(int sn, int level, CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DAT
  */
 
 // acid blast modified by whisperwind 8.23.2004
+// ppl_spell_acid_blast: Function: ppl_spell_acid_blast - Magical engine helper routine.
+// ppl_spell_acid_blast: 函式：ppl_spell_acid_blast - 魔法引擎輔助處理程序。
 void ppl_spell_acid_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1528,6 +1558,8 @@ void ppl_spell_acid_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_acid_blast: Spell: spell_acid_blast - Casts the 'acid_blast' spell.
+// spell_acid_blast: 魔法：spell_acid_blast - 施展 'acid_blast' 魔法法術。
 void spell_acid_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        dam;
@@ -1562,6 +1594,8 @@ void spell_acid_blast(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // modified by whisperwind 8.25.2004
 
+// spell_cause_light: Spell: spell_cause_light - Casts the 'cause_light' spell.
+// spell_cause_light: 魔法：spell_cause_light - 施展 'cause_light' 魔法法術。
 void spell_cause_light(int sn, int level, CHAR_DATA *ch, void *vo) {
     // cause 系列法術修改為無 stun 高燃費的純法術傷害技能 2022/02/06
 
@@ -1610,6 +1644,8 @@ void spell_cause_light(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cause_critical: Spell: spell_cause_critical - Casts the 'cause_critical' spell.
+// spell_cause_critical: 魔法：spell_cause_critical - 施展 'cause_critical' 魔法法術。
 void spell_cause_critical(int sn, int level, CHAR_DATA *ch, void *vo) {
     // cause 系列法術修改為無 stun 高燃費的純法術傷害技能 2022/02/06
 
@@ -1667,6 +1703,8 @@ void spell_cause_critical(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cause_serious: Spell: spell_cause_serious - Casts the 'cause_serious' spell.
+// spell_cause_serious: 魔法：spell_cause_serious - 施展 'cause_serious' 魔法法術。
 void spell_cause_serious(int sn, int level, CHAR_DATA *ch, void *vo) {
     // cause 系列法術修改為無 stun 高燃費的純法術傷害技能 2022/02/06
 
@@ -1724,6 +1762,8 @@ void spell_cause_serious(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_change_sex: Spell: spell_change_sex - Casts the 'change_sex' spell.
+// spell_change_sex: 魔法：spell_change_sex - 施展 'change_sex' 魔法法術。
 void spell_change_sex(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -1757,6 +1797,8 @@ void spell_change_sex(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // earth bind add by whisperwind 10.31.2004
+// spell_earth_bind: Spell: spell_earth_bind - Casts the 'earth_bind' spell.
+// spell_earth_bind: 魔法：spell_earth_bind - 施展 'earth_bind' 魔法法術。
 void spell_earth_bind(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim, *victim_next;
     AFFECT_DATA af;
@@ -1874,6 +1916,8 @@ void spell_earth_bind(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // soul of magma add by whisperwind 11.26.2004
+// spell_soul_of_magma: Spell: spell_soul_of_magma - Casts the 'soul_of_magma' spell.
+// spell_soul_of_magma: 魔法：spell_soul_of_magma - 施展 'soul_of_magma' 魔法法術。
 void spell_soul_of_magma(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1930,6 +1974,8 @@ void spell_soul_of_magma(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // fang of slime add by whisperwind 11.26.2004
+// spell_fang_of_slime: Spell: spell_fang_of_slime - Casts the 'fang_of_slime' spell.
+// spell_fang_of_slime: 魔法：spell_fang_of_slime - 施展 'fang_of_slime' 魔法法術。
 void spell_fang_of_slime(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -1986,6 +2032,8 @@ void spell_fang_of_slime(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // 將 room->fall 的值預設為 0 , 並改寫 fall_effect 判定 2023/01/14
+// fall_effect: Function: fall_effect - Magical engine helper routine.
+// fall_effect: 函式：fall_effect - 魔法引擎輔助處理程序。
 void fall_effect(CHAR_DATA *ch) {
     ROOM_INDEX_DATA *location;
 
@@ -2039,6 +2087,8 @@ void fall_effect(CHAR_DATA *ch) {
     return;
 }
 
+// align_effect: Function: align_effect - Magical engine helper routine.
+// align_effect: 函式：align_effect - 魔法引擎輔助處理程序。
 void align_effect(CHAR_DATA *gch) {
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
@@ -2077,6 +2127,8 @@ void align_effect(CHAR_DATA *gch) {
     }
 }
 
+// IsBeholderCanWear: Function: IsBeholderCanWear - Magical engine helper routine.
+// IsBeholderCanWear: 函式：IsBeholderCanWear - 魔法引擎輔助處理程序。
 bool IsBeholderCanWear(OBJ_DATA *obj) {
     if (obj->wear_loc == WEAR_WAIST ||
         obj->wear_loc == WEAR_LEGS ||
@@ -2089,6 +2141,8 @@ bool IsBeholderCanWear(OBJ_DATA *obj) {
     return TRUE;
 }
 
+// dm_effect: Function: dm_effect - Magical engine helper routine.
+// dm_effect: 函式：dm_effect - 魔法引擎輔助處理程序。
 void dm_effect(CHAR_DATA *ch) {
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
@@ -2126,6 +2180,8 @@ void dm_effect(CHAR_DATA *ch) {
     return;
 }
 
+// spell_earthquake: Spell: spell_earthquake - Casts the 'earthquake' spell.
+// spell_earthquake: 魔法：spell_earthquake - 施展 'earthquake' 魔法法術。
 void spell_earthquake(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *vch;
     CHAR_DATA *vch_next; // add at 2020/10/30
@@ -2288,6 +2344,8 @@ void spell_earthquake(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // modified by whisperwind 8.24.2004
+// spell_wizard_rage: Spell: spell_wizard_rage - Casts the 'wizard_rage' spell.
+// spell_wizard_rage: 魔法：spell_wizard_rage - 施展 'wizard_rage' 魔法法術。
 void spell_wizard_rage(int sn, int level, CHAR_DATA *ch, void *vo) {
     int        age;
     int        dam;
@@ -2411,6 +2469,8 @@ void spell_wizard_rage(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 /* powerball spell added by Amenda 12/26/00 */
 // modified by whisperwind 8.23.2004
+// spell_powerball: Spell: spell_powerball - Casts the 'powerball' spell.
+// spell_powerball: 魔法：spell_powerball - 施展 'powerball' 魔法法術。
 void spell_powerball(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -2476,6 +2536,8 @@ void spell_powerball(int sn, int level, CHAR_DATA *ch, void *vo) {
  * Modified by Amenda. The more group members, the more powerful spell.
  */
 
+// spell_general_purpose: Spell: spell_general_purpose - Casts the 'general_purpose' spell.
+// spell_general_purpose: 魔法：spell_general_purpose - 施展 'general_purpose' 魔法法術。
 void spell_general_purpose(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     CHAR_DATA *gch;
@@ -2648,12 +2710,16 @@ void spell_general_purpose(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_null: Spell: spell_null - Casts the 'null' spell.
+// spell_null: 魔法：spell_null - 施展 'null' 魔法法術。
 void spell_null(int sn, int level, CHAR_DATA *ch, void *vo) {
     send_to_char("那不是法術！\n\r", ch);
     return;
 }
 
 // poison explosion add by whisperwind 11.26.2004
+// spell_poison_explosion: Spell: spell_poison_explosion - Casts the 'poison_explosion' spell.
+// spell_poison_explosion: 魔法：spell_poison_explosion - 施展 'poison_explosion' 魔法法術。
 void spell_poison_explosion(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim, *victim_next;
     OBJ_DATA  *obj, *obj_next;
@@ -2771,6 +2837,8 @@ void spell_poison_explosion(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_polymorph_other: Spell: spell_polymorph_other - Casts the 'polymorph_other' spell.
+// spell_polymorph_other: 魔法：spell_polymorph_other - 施展 'polymorph_other' 魔法法術。
 void spell_polymorph_other(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -2812,6 +2880,8 @@ void spell_polymorph_other(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // shocking grasp modified by whisperwind 8.23.2004
+// spell_shocking_grasp: Spell: spell_shocking_grasp - Casts the 'shocking_grasp' spell.
+// spell_shocking_grasp: 魔法：spell_shocking_grasp - 施展 'shocking_grasp' 魔法法術。
 void spell_shocking_grasp(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -2868,6 +2938,8 @@ void spell_shocking_grasp(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_agitation: Spell: spell_agitation - Casts the 'agitation' spell.
+// spell_agitation: 魔法：spell_agitation - 施展 'agitation' 魔法法術。
 void spell_agitation(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim = (CHAR_DATA *)vo;
     static const int dam_each[] =
@@ -2894,6 +2966,8 @@ void spell_agitation(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_aura_sight: Spell: spell_aura_sight - Casts the 'aura_sight' spell.
+// spell_aura_sight: 魔法：spell_aura_sight - 施展 'aura_sight' 魔法法術。
 void spell_aura_sight(int sn, int level, CHAR_DATA *ch, void *vo) {
     sn = skill_lookup("know alignment");
 
@@ -2902,6 +2976,8 @@ void spell_aura_sight(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_awe: Spell: spell_awe - Casts the 'awe' spell.
+// spell_awe: 魔法：spell_awe - 施展 'awe' 魔法法術。
 void spell_awe(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -2914,6 +2990,8 @@ void spell_awe(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_ballistic_attack: Spell: spell_ballistic_attack - Casts the 'ballistic_attack' spell.
+// spell_ballistic_attack: 魔法：spell_ballistic_attack - 施展 'ballistic_attack' 魔法法術。
 void spell_ballistic_attack(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim = (CHAR_DATA *)vo;
     static const int dam_each[] =
@@ -2940,6 +3018,8 @@ void spell_ballistic_attack(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_biofeedback: Spell: spell_biofeedback - Casts the 'biofeedback' spell.
+// spell_biofeedback: 魔法：spell_biofeedback - 施展 'biofeedback' 魔法法術。
 void spell_biofeedback(int sn, int level, CHAR_DATA *ch, void *vo) {
     sn = skill_lookup("Sanctuary");
 
@@ -2948,6 +3028,8 @@ void spell_biofeedback(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_cell_adjustment: Spell: spell_cell_adjustment - Casts the 'cell_adjustment' spell.
+// spell_cell_adjustment: 魔法：spell_cell_adjustment - 施展 'cell_adjustment' 魔法法術。
 void spell_cell_adjustment(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -2964,6 +3046,8 @@ void spell_cell_adjustment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_control_flames: Spell: spell_control_flames - Casts the 'control_flames' spell.
+// spell_control_flames: 魔法：spell_control_flames - 施展 'control_flames' 魔法法術。
 void spell_control_flames(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim = (CHAR_DATA *)vo;
     static const int dam_each[] =
@@ -2995,6 +3079,8 @@ void spell_control_flames(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_create_sound: Spell: spell_create_sound - Casts the 'create_sound' spell.
+// spell_create_sound: 魔法：spell_create_sound - 施展 'create_sound' 魔法法術。
 void spell_create_sound(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *vch;
     char       buf1[MAX_STRING_LENGTH];
@@ -3014,6 +3100,8 @@ void spell_create_sound(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_death_field: Spell: spell_death_field - Casts the 'death_field' spell.
+// spell_death_field: 魔法：spell_death_field - 施展 'death_field' 魔法法術。
 void spell_death_field(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *vch;
     CHAR_DATA *vch_next;
@@ -3052,6 +3140,8 @@ void spell_death_field(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_detonate: Spell: spell_detonate - Casts the 'detonate' spell.
+// spell_detonate: 魔法：spell_detonate - 施展 'detonate' 魔法法術。
 void spell_detonate(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim = (CHAR_DATA *)vo;
     static const int dam_each[] =
@@ -3075,6 +3165,8 @@ void spell_detonate(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_disintegrate: Spell: spell_disintegrate - Casts the 'disintegrate' spell.
+// spell_disintegrate: 魔法：spell_disintegrate - 施展 'disintegrate' 魔法法術。
 void spell_disintegrate(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     OBJ_DATA  *obj_lose;
@@ -3116,6 +3208,8 @@ void spell_disintegrate(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_displacement: Spell: spell_displacement - Casts the 'displacement' spell.
+// spell_displacement: 魔法：spell_displacement - 施展 'displacement' 魔法法術。
 void spell_displacement(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3137,6 +3231,8 @@ void spell_displacement(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_domination: Spell: spell_domination - Casts the 'domination' spell.
+// spell_domination: 魔法：spell_domination - 施展 'domination' 魔法法術。
 void spell_domination(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3165,6 +3261,8 @@ void spell_domination(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_ectoplasmic_form: Spell: spell_ectoplasmic_form - Casts the 'ectoplasmic_form' spell.
+// spell_ectoplasmic_form: 魔法：spell_ectoplasmic_form - 施展 'ectoplasmic_form' 魔法法術。
 void spell_ectoplasmic_form(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3184,6 +3282,8 @@ void spell_ectoplasmic_form(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_ego_whip: Spell: spell_ego_whip - Casts the 'ego_whip' spell.
+// spell_ego_whip: 魔法：spell_ego_whip - 施展 'ego_whip' 魔法法術。
 void spell_ego_whip(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3214,6 +3314,8 @@ void spell_ego_whip(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_energy_containment: Spell: spell_energy_containment - Casts the 'energy_containment' spell.
+// spell_energy_containment: 魔法：spell_energy_containment - 施展 'energy_containment' 魔法法術。
 void spell_energy_containment(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3232,6 +3334,8 @@ void spell_energy_containment(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_enhanced_strength: Spell: spell_enhanced_strength - Casts the 'enhanced_strength' spell.
+// spell_enhanced_strength: 魔法：spell_enhanced_strength - 施展 'enhanced_strength' 魔法法術。
 void spell_enhanced_strength(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3250,6 +3354,8 @@ void spell_enhanced_strength(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_flesh_armor: Spell: spell_flesh_armor - Casts the 'flesh_armor' spell.
+// spell_flesh_armor: 魔法：spell_flesh_armor - 施展 'flesh_armor' 魔法法術。
 void spell_flesh_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3269,6 +3375,8 @@ void spell_flesh_armor(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_inertial_barrier: Spell: spell_inertial_barrier - Casts the 'inertial_barrier' spell.
+// spell_inertial_barrier: 魔法：spell_inertial_barrier - 施展 'inertial_barrier' 魔法法術。
 void spell_inertial_barrier(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *gch;
     AFFECT_DATA af;
@@ -3291,11 +3399,15 @@ void spell_inertial_barrier(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_inflict_pain: Spell: spell_inflict_pain - Casts the 'inflict_pain' spell.
+// spell_inflict_pain: 魔法：spell_inflict_pain - 施展 'inflict_pain' 魔法法術。
 void spell_inflict_pain(int sn, int level, CHAR_DATA *ch, void *vo) {
     magic_damage(ch, (CHAR_DATA *)vo, dice(2, 10) + level / 2, sn, WEAR_NONE);
     return;
 }
 
+// spell_intellect_fortress: Spell: spell_intellect_fortress - Casts the 'intellect_fortress' spell.
+// spell_intellect_fortress: 魔法：spell_intellect_fortress - 施展 'intellect_fortress' 魔法法術。
 void spell_intellect_fortress(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *gch;
     AFFECT_DATA af;
@@ -3317,6 +3429,8 @@ void spell_intellect_fortress(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_lend_health: Spell: spell_lend_health - Casts the 'lend_health' spell.
+// spell_lend_health: 魔法：spell_lend_health - 施展 'lend_health' 魔法法術。
 void spell_lend_health(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     int        hpch;
@@ -3346,6 +3460,8 @@ void spell_lend_health(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_levitation: Spell: spell_levitation - Casts the 'levitation' spell.
+// spell_levitation: 魔法：spell_levitation - 施展 'levitation' 魔法法術。
 void spell_levitation(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3365,6 +3481,8 @@ void spell_levitation(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_share_strength: Spell: spell_share_strength - Casts the 'share_strength' spell.
+// spell_share_strength: 魔法：spell_share_strength - 施展 'share_strength' 魔法法術。
 void spell_share_strength(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3398,6 +3516,8 @@ void spell_share_strength(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_vampiric_bite: Spell: spell_vampiric_bite - Casts the 'vampiric_bite' spell.
+// spell_vampiric_bite: 魔法：spell_vampiric_bite - 施展 'vampiric_bite' 魔法法術。
 void spell_vampiric_bite(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
     AFFECT_DATA af;
@@ -3484,6 +3604,8 @@ void spell_vampiric_bite(int sn, int level, CHAR_DATA *ch, void *vo) {
 /* Whirl wind spell added by Amenda, 12/25/00 */
 // modified by whisperwind 8.25.2004
 // modified by Chris 7.17.2005
+// spell_whirlwind: Spell: spell_whirlwind - Casts the 'whirlwind' spell.
+// spell_whirlwind: 魔法：spell_whirlwind - 施展 'whirlwind' 魔法法術。
 void spell_whirlwind(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim, *victim_next;
     double     dam;
@@ -3595,6 +3717,8 @@ void spell_whirlwind(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 /* Armageddon spell added by Amenda 2/24/01 */
+// spell_armageddon: Spell: spell_armageddon - Casts the 'armageddon' spell.
+// spell_armageddon: 魔法：spell_armageddon - 施展 'armageddon' 魔法法術。
 void spell_armageddon(int sn, int level, CHAR_DATA *ch, void *vo) {
     AFFECT_DATA af;
     CHAR_DATA  *victim = (CHAR_DATA *)vo;
@@ -3658,6 +3782,8 @@ void spell_armageddon(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // magic_missile modified by jye 6.12.2005
+// spell_magic_missile: Spell: spell_magic_missile - Casts the 'magic_missile' spell.
+// spell_magic_missile: 魔法：spell_magic_missile - 施展 'magic_missile' 魔法法術。
 void spell_magic_missile(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim;
     ROOM_INDEX_DATA *chk_room;
@@ -3798,6 +3924,8 @@ void spell_magic_missile(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_wind_screaming: Spell: spell_wind_screaming - Casts the 'wind_screaming' spell.
+// spell_wind_screaming: 魔法：spell_wind_screaming - 施展 'wind_screaming' 魔法法術。
 void spell_wind_screaming(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA       *victim = (CHAR_DATA *)vo;
     int              dam, timer; // timer add by Neversay for endless loop bug.
@@ -3855,6 +3983,8 @@ void spell_wind_screaming(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_meteor_shower: Spell: spell_meteor_shower - Casts the 'meteor_shower' spell.
+// spell_meteor_shower: 魔法：spell_meteor_shower - 施展 'meteor_shower' 魔法法術。
 void spell_meteor_shower(int sn, int level, CHAR_DATA *ch, void *vo) {
     QMARK     *qm;
     char       buf[MAX_INPUT_LENGTH];
@@ -4082,6 +4212,8 @@ void spell_meteor_shower(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 // modified by whisperwind 8.25.2004
 
+// do_cast_delay: Command: do_cast_delay - Performs the 'cast_delay' magical command.
+// do_cast_delay: 指令：do_cast_delay - 執行 'cast_delay' 魔法相關指令。
 void do_cast_delay(CHAR_DATA *ch, char *argument) {
     send_to_char("什麼？\n\r", ch);
     return;

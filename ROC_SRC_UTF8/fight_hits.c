@@ -97,6 +97,8 @@ extern char *stat_color1(int cur, int max);
 
 extern bool check_can_do_hit(CHAR_DATA *ch, CHAR_DATA *victim);
 
+// GetAttackChance: Core Engine function: GetAttackChance - Main C routine handling game mechanics.
+// GetAttackChance: 核心引擎函式：GetAttackChance - 處理遊戲底層機制的核心 C 語言子程序。
 int GetAttackChance(CHAR_DATA *ch, int nGsn, int nMod) {
     int nSklv   = get_skill_level(ch, nGsn);
     int nPerc   = get_skill_percent(ch, nGsn);
@@ -121,6 +123,8 @@ int GetAttackChance(CHAR_DATA *ch, int nGsn, int nMod) {
     return nChance;
 }
 
+// IsUsingShortWeapon: Core Engine function: IsUsingShortWeapon - Main C routine handling game mechanics.
+// IsUsingShortWeapon: 核心引擎函式：IsUsingShortWeapon - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingShortWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     if (!wield)
         return FALSE;
@@ -132,6 +136,8 @@ bool IsUsingShortWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     return TRUE;
 }
 
+// IsUsingMediumWeapon: Core Engine function: IsUsingMediumWeapon - Main C routine handling game mechanics.
+// IsUsingMediumWeapon: 核心引擎函式：IsUsingMediumWeapon - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingMediumWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     if (!wield)
         return FALSE;
@@ -147,6 +153,8 @@ bool IsUsingMediumWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     return FALSE;
 }
 
+// IsUsingLongWeapon: Core Engine function: IsUsingLongWeapon - Main C routine handling game mechanics.
+// IsUsingLongWeapon: 核心引擎函式：IsUsingLongWeapon - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingLongWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     if (!wield)
         return FALSE;
@@ -161,6 +169,8 @@ bool IsUsingLongWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     return FALSE;
 }
 
+// IsUsingHeavyWeapon: Core Engine function: IsUsingHeavyWeapon - Main C routine handling game mechanics.
+// IsUsingHeavyWeapon: 核心引擎函式：IsUsingHeavyWeapon - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingHeavyWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     if (!wield)
         return FALSE;
@@ -175,6 +185,8 @@ bool IsUsingHeavyWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     return FALSE;
 }
 
+// IsUsingMagicWeapon: Core Engine function: IsUsingMagicWeapon - Main C routine handling game mechanics.
+// IsUsingMagicWeapon: 核心引擎函式：IsUsingMagicWeapon - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingMagicWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     if (!wield)
         return FALSE;
@@ -190,6 +202,8 @@ bool IsUsingMagicWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
 }
 
 // int IsUsingLance(CHAR_DATA *ch)
+// IsUsingLance: Core Engine function: IsUsingLance - Main C routine handling game mechanics.
+// IsUsingLance: 核心引擎函式：IsUsingLance - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingLance(CHAR_DATA *ch, OBJ_DATA *wield) {
     /*OBJ_DATA *wield = NULL;
     if( get_eq_char( ch , WEAR_WIELD ) )
@@ -207,6 +221,8 @@ bool IsUsingLance(CHAR_DATA *ch, OBJ_DATA *wield) {
     return TRUE;
 }
 
+// IsUsingBowShot: Core Engine function: IsUsingBowShot - Main C routine handling game mechanics.
+// IsUsingBowShot: 核心引擎函式：IsUsingBowShot - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingBowShot(CHAR_DATA *ch, OBJ_DATA *wield) {
     OBJ_DATA *arrow = NULL;
 
@@ -226,6 +242,8 @@ bool IsUsingBowShot(CHAR_DATA *ch, OBJ_DATA *wield) {
     return 1;
 }
 
+// IsUsingGunShot: Core Engine function: IsUsingGunShot - Main C routine handling game mechanics.
+// IsUsingGunShot: 核心引擎函式：IsUsingGunShot - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingGunShot(CHAR_DATA *ch, int wpn) {
     OBJ_DATA *ammo = NULL;
     OBJ_DATA *wp   = NULL;
@@ -260,6 +278,8 @@ bool IsUsingGunShot(CHAR_DATA *ch, int wpn) {
 
 // 修改為帶入 weapon 判定 2022/12/03
 // int IsUsingKnightWeapon(CHAR_DATA *ch)
+// IsUsingKnightWeapon: Core Engine function: IsUsingKnightWeapon - Main C routine handling game mechanics.
+// IsUsingKnightWeapon: 核心引擎函式：IsUsingKnightWeapon - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingKnightWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     if (!wield)
         return FALSE;
@@ -304,6 +324,8 @@ bool IsUsingKnightWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
 
 // 修改為帶入 weapon 判定 2022/12/03
 // int IsUsingTrickyWeapon(CHAR_DATA *ch )
+// IsUsingTrickyWeapon: Core Engine function: IsUsingTrickyWeapon - Main C routine handling game mechanics.
+// IsUsingTrickyWeapon: 核心引擎函式：IsUsingTrickyWeapon - 處理遊戲底層機制的核心 C 語言子程序。
 bool IsUsingTrickyWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     if (!wield)
         return FALSE;
@@ -347,6 +369,8 @@ bool IsUsingTrickyWeapon(CHAR_DATA *ch, OBJ_DATA *wield) {
     return FALSE;
 }
 
+// GetBonusedValue_LanceMaster: Core Engine function: GetBonusedValue_LanceMaster - Main C routine handling game mechanics.
+// GetBonusedValue_LanceMaster: 核心引擎函式：GetBonusedValue_LanceMaster - 處理遊戲底層機制的核心 C 語言子程序。
 int GetBonusedValue_LanceMaster(CHAR_DATA *ch, int nPerc) {
     int nLancePerc = get_skill_percent(ch, gsn_lance_mastery);
     int nLanceSklv = get_skill_level(ch, gsn_lance_mastery);
@@ -368,6 +392,8 @@ int GetBonusedValue_LanceMaster(CHAR_DATA *ch, int nPerc) {
     return nPerc * (100 + nLanceSklv * (nLanceSklv + 4)) * (1 + nLancePerc) / 10000; // lv 6  *1.6
 }
 
+// TrickyPacingBase: Core Engine function: TrickyPacingBase - Main C routine handling game mechanics.
+// TrickyPacingBase: 核心引擎函式：TrickyPacingBase - 處理遊戲底層機制的核心 C 語言子程序。
 int TrickyPacingBase(CHAR_DATA *ch, int nPerc) {
     int nTrickyPerc = get_skill_percent(ch, gsn_tricky_pacing);
     int nTrickySklv = get_skill_level(ch, gsn_tricky_pacing);
@@ -391,6 +417,8 @@ int TrickyPacingBase(CHAR_DATA *ch, int nPerc) {
 }
 
 // 針對 artifact 的情況, 讓被 sleep 及charm 的目標會確實停止攻擊, 避免造成crash 2022/05/03
+// HitSleepCharm: Core Engine function: HitSleepCharm - Main C routine handling game mechanics.
+// HitSleepCharm: 核心引擎函式：HitSleepCharm - 處理遊戲底層機制的核心 C 語言子程序。
 bool HitSleepCharm(CHAR_DATA *ch, CHAR_DATA *victim) {
     if (!victim || (victim == NULL) || victim->deleted)
         return TRUE;
@@ -411,6 +439,8 @@ bool HitSleepCharm(CHAR_DATA *ch, CHAR_DATA *victim) {
 }
 
 // 針對 飛行武器 在發射後的dr hr apdr 屬性加成 2022/05/06
+// ShootObjAffect: Core Engine function: ShootObjAffect - Main C routine handling game mechanics.
+// ShootObjAffect: 核心引擎函式：ShootObjAffect - 處理遊戲底層機制的核心 C 語言子程序。
 int ShootObjAffect(CHAR_DATA *ch, OBJ_DATA *obj, int type) {
     AFFECT_DATA *af;
     int          number = 0;
@@ -436,6 +466,8 @@ int ShootObjAffect(CHAR_DATA *ch, OBJ_DATA *obj, int type) {
 }
 
 // 針對 飛行武器 在發射後數量計算 2023/01/04
+// ShotObjCount: Core Engine function: ShotObjCount - Main C routine handling game mechanics.
+// ShotObjCount: 核心引擎函式：ShotObjCount - 處理遊戲底層機制的核心 C 語言子程序。
 void ShotObjCount(CHAR_DATA *ch, OBJ_DATA *obj) {
     if (!ch || ch->deleted)
         return;
@@ -504,6 +536,8 @@ void ShotObjCount(CHAR_DATA *ch, OBJ_DATA *obj) {
     return;
 }
 
+// multi_hit: Core Engine function: multi_hit - Main C routine handling game mechanics.
+// multi_hit: 核心引擎函式：multi_hit - 處理遊戲底層機制的核心 C 語言子程序。
 void multi_hit(CHAR_DATA *ch, CHAR_DATA *victim, int dt) {
     int        chance1;
     int        chance2;
@@ -1375,6 +1409,8 @@ void multi_hit(CHAR_DATA *ch, CHAR_DATA *victim, int dt) {
     return;
 }
 
+// get_critical_damage: Combat logic: get_critical_damage - Applies combat calculations, checks, or damage formulas.
+// get_critical_damage: 戰鬥邏輯：get_critical_damage - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 int get_critical_damage(int dam, CHAR_DATA *ch, CHAR_DATA *victim, int dexdiff, bool fCritical, int dt, int darkraid) {
     int chance  = 0;
     int nSklv   = get_skill_level(ch, gsn_critical);
@@ -1424,6 +1460,8 @@ int get_critical_damage(int dam, CHAR_DATA *ch, CHAR_DATA *victim, int dexdiff, 
     return dam;
 }
 
+// check_reload_ammo: Combat logic: check_reload_ammo - Applies combat calculations, checks, or damage formulas.
+// check_reload_ammo: 戰鬥邏輯：check_reload_ammo - 進行戰鬥數值判定、安全檢查或傷害公式運算。
 void check_reload_ammo(CHAR_DATA *ch, OBJ_DATA *wield) {
     OBJ_DATA *ammo        = NULL;
     OBJ_DATA *reload      = NULL;
@@ -1498,6 +1536,8 @@ void check_reload_ammo(CHAR_DATA *ch, OBJ_DATA *wield) {
  * 加入中文註解 by Razgriz 20051012
  * 介面改寫 by Razgriz 20051014
  */
+// mone_hit: Core Engine function: mone_hit - Main C routine handling game mechanics.
+// mone_hit: 核心引擎函式：mone_hit - 處理遊戲底層機制的核心 C 語言子程序。
 int mone_hit(CHAR_DATA *ch, CHAR_DATA *victim, int *dt_orig, int wpn, int msg_mode, int dt_mode) {
     OBJ_DATA  *wield  = NULL;
     OBJ_DATA  *bow    = NULL;
@@ -3737,6 +3777,8 @@ if ( wield && IS_SET( wield->extra_flags, ITEM_POISONED ) && dt != 1014 ){
  * Hit one guy once.
  */
 
+// one_hit: Core Engine function: one_hit - Main C routine handling game mechanics.
+// one_hit: 核心引擎函式：one_hit - 處理遊戲底層機制的核心 C 語言子程序。
 int one_hit(CHAR_DATA *ch, CHAR_DATA *victim, int dt, int wpn) {
     CHAR_DATA *protector;
     int        gundt = -1;

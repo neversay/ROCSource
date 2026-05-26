@@ -107,6 +107,8 @@ const char *s2;
 }
 #endif
 
+// rprog_name_to_type: Converts a Room Program trigger name to its corresponding integer type code.
+// rprog_name_to_type: 將房間腳本（RoomProg）觸發器名稱轉換為相對應的整數型態代碼。
 int rprog_name_to_type(char *name) {
     if (!str_cmp(name, "room_enter"))
         return ROOM_ENTER;
@@ -132,6 +134,8 @@ int rprog_name_to_type(char *name) {
  * This procedure is responsible for reading any in_file ROOMprograms.
  */
 
+// rprog_read_programs: Parses and reads Room Programs for a specific room index.
+// rprog_read_programs: 解析並為特定房間（Room Index）讀入其所屬的房間腳本。
 void rprog_read_programs(FILE *fp, ROOM_INDEX_DATA *pRoomIndex) {
     RPROG_DATA *rprg;
     char        letter;
@@ -243,6 +247,8 @@ RPROG_DATA *rprog_file_read(char *f, RPROG_DATA *rprg, ROOM_INDEX_DATA *pRoomInd
 
 /* Snarf a MOBprogram section from the area file.
  */
+// load_roomprogs: Loads Room Program trigger files from disk.
+// load_roomprogs: 從磁碟檔案中載入房間腳本（RoomProg）觸發器定義。
 void load_roomprogs(FILE *fp) {
     ROOM_INDEX_DATA *iRoom;
     RPROG_DATA      *original;
@@ -295,6 +301,8 @@ void load_roomprogs(FILE *fp) {
     return;
 }
 
+// rprog_wordlist_check: Checks if specific keywords are present in a wordlist to trigger RoomProgs.
+// rprog_wordlist_check: 檢查特定關鍵字是否出現在字詞清單中以觸發房間腳本。
 bool rprog_wordlist_check(char *arg, ROOM_INDEX_DATA *room, CHAR_DATA *actor, int type) {
     char        temp1[MAX_STRING_LENGTH];
     char        temp2[MAX_INPUT_LENGTH];
@@ -378,6 +386,8 @@ bool rprog_wordlist_check(char *arg, ROOM_INDEX_DATA *room, CHAR_DATA *actor, in
  * Global function code and brief comments.
  */
 
+// rprog_defun_trigger: Triggers RoomProgs when custom defined triggers are fired.
+// rprog_defun_trigger: 當自訂觸發條件啟動時觸發房間腳本。
 void rprog_defun_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *txt) {
     RPROG_DATA *rprg;
     char        arg[MAX_INPUT_LENGTH];
@@ -397,6 +407,8 @@ void rprog_defun_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *txt) {
     }
 }
 
+// rprog_mask_trigger: Triggers RoomProgs when matched room mask filters are applied.
+// rprog_mask_trigger: 當套用相符的房間遮罩過濾器時觸發房間腳本。
 bool rprog_mask_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *txt) {
     RPROG_DATA *rprg;
     char        arg[MAX_INPUT_LENGTH];
@@ -522,6 +534,8 @@ bool rprog_mask_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *txt) {
     return rprog_wordlist_check(txt, room, ch, ROOM_MASK);
 }
 
+// rprog_cmd_trigger: Triggers RoomProgs when a player attempts to run a matched command word.
+// rprog_cmd_trigger: 當玩家在該房間內嘗試執行特定匹配的指令時觸發房間指令腳本。
 bool rprog_cmd_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *txt) {
     RPROG_DATA *rprg;
     char        arg[MAX_INPUT_LENGTH];
@@ -555,6 +569,8 @@ bool rprog_cmd_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, char *txt) {
     return FALSE;
 }
 
+// rprog_driver: The core driver engine that executes a list of RoomProg script commands.
+// rprog_driver: 執行房間腳本指令串的底層核心驅動引擎。
 void rprog_driver(char *com_list, ROOM_INDEX_DATA *room, CHAR_DATA *actor) {
     char       tmpcmndlst[MAX_STRING_LENGTH * 2];
     char       buf[MAX_INPUT_LENGTH];
@@ -775,6 +791,8 @@ char *rextract_if_endif(char *com_list, ROOM_INDEX_DATA *room) {
     return com_list;
 }
 
+// rprog_process_cmnd: Processes and executes an individual command line inside a RoomProg script.
+// rprog_process_cmnd: 在房間腳本內解析並執行個別指令行。
 void rprog_process_cmnd(char *cmnd, ROOM_INDEX_DATA *room, CHAR_DATA *actor, CHAR_DATA *rndm) {
     char  buf[MAX_INPUT_LENGTH];
     char  tmp[MAX_INPUT_LENGTH];
@@ -807,6 +825,8 @@ void rprog_process_cmnd(char *cmnd, ROOM_INDEX_DATA *room, CHAR_DATA *actor, CHA
     return;
 }
 
+// rprog_translate: Translates RoomProg trigger special variables (e.g. $n, $t) into formatted output strings.
+// rprog_translate: 將房間腳本觸發器的特殊變數（如 $n、$t）翻譯為格式化後的輸出字串。
 void rprog_translate(char ch, char *t, ROOM_INDEX_DATA *room, CHAR_DATA *actor, CHAR_DATA *rndm) {
     static char *he_she[]  = {"it", "he", "she"};
     static char *him_her[] = {"it", "him", "her"};
@@ -1003,6 +1023,8 @@ void rprog_translate(char ch, char *t, ROOM_INDEX_DATA *room, CHAR_DATA *actor, 
     return;
 }
 
+// rprog_trap_trigger: Triggers RoomProgs when a player triggers a door or path trap.
+// rprog_trap_trigger: 當玩家觸發門或路徑陷阱時觸發房間陷阱腳本。
 void rprog_trap_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, int door) {
     RPROG_DATA *rprg;
     char       *argument;
@@ -1025,6 +1047,8 @@ void rprog_trap_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, int door) {
     return;
 }
 
+// rprog_entry_trigger: Triggers RoomProgs when a player enters the room.
+// rprog_entry_trigger: 當玩家進入該房間時觸發房間進入腳本。
 void rprog_entry_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, int door) {
     RPROG_DATA *rprg;
     char       *argument;
@@ -1054,6 +1078,8 @@ void rprog_entry_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, int door) {
     return;
 }
 
+// rprog_leave_trigger: Triggers RoomProgs when a player leaves the room.
+// rprog_leave_trigger: 當玩家離開該房間時觸發房間離開腳本。
 void rprog_leave_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, int door) {
     RPROG_DATA *rprg;
     char       *argument;
@@ -1076,11 +1102,15 @@ void rprog_leave_trigger(ROOM_INDEX_DATA *room, CHAR_DATA *ch, int door) {
     return;
 }
 
+// rprog_rand_trigger: Periodically checks and triggers random-chance RoomProgs.
+// rprog_rand_trigger: 定期檢查並觸發隨機機率的房間腳本。
 void rprog_rand_trigger(RPROG_DATA *rprg) {
     if (number_percent() < atoi(rprg->arglist) || (atoi(rprg->arglist) >= 100))
         rprog_driver(rprg->comlist, rprg->owner, NULL);
 }
 
+// rprog_time_trigger: Triggers RoomProgs periodically based on specific in-game hour or time.
+// rprog_time_trigger: 根據特定的遊戲內時間或小時定期觸發房間時間腳本。
 void rprog_time_trigger(RPROG_DATA *rprg) {
     if (number_percent() < atoi(rprg->arglist) || (atoi(rprg->arglist) >= 100))
         rprog_driver(rprg->comlist, rprg->owner, NULL);

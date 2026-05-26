@@ -16,6 +16,8 @@ extern int get_critical_damage(int dam, CHAR_DATA *ch, CHAR_DATA *victim,
 
 // flaming slash modified by whisperwind 2.18.2005
 // flam 第一段廣域火焰波部分
+// spell_flaming_slash: Spell: spell_flaming_slash - Casts the 'flaming_slash' spell.
+// spell_flaming_slash: 魔法：spell_flaming_slash - 施展 'flaming_slash' 魔法法術。
 void spell_flaming_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     double     dam;
@@ -77,6 +79,8 @@ void spell_flaming_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // flam 第二段強化火焰坡部分
+// spell_flaming_slash2: Spell: spell_flaming_slash2 - Casts the 'flaming_slash2' spell.
+// spell_flaming_slash2: 魔法：spell_flaming_slash2 - 施展 'flaming_slash2' 魔法法術。
 void spell_flaming_slash2(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     double     dam    = (40 + level) / 2; // basic damage
@@ -134,6 +138,8 @@ void spell_flaming_slash2(int sn, int level, CHAR_DATA *ch, void *vo) {
 }
 
 // storm slash modified by whisperwind 2.18.2005
+// spell_storm_slash: Spell: spell_storm_slash - Casts the 'storm_slash' spell.
+// spell_storm_slash: 魔法：spell_storm_slash - 施展 'storm_slash' 魔法法術。
 void spell_storm_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     CHAR_DATA *vch    = (CHAR_DATA *)vo;
@@ -255,6 +261,8 @@ void spell_storm_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_fulgurant_slash: Spell: spell_fulgurant_slash - Casts the 'fulgurant_slash' spell.
+// spell_fulgurant_slash: 魔法：spell_fulgurant_slash - 施展 'fulgurant_slash' 魔法法術。
 void spell_fulgurant_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     double     dam    = (40 + level) / 2;
@@ -333,6 +341,8 @@ void spell_fulgurant_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
 
 // add by coconet 20041013
 //  modified by whisperwnd 2.18.2005
+// spell_icecore_slash: Spell: spell_icecore_slash - Casts the 'icecore_slash' spell.
+// spell_icecore_slash: 魔法：spell_icecore_slash - 施展 'icecore_slash' 魔法法術。
 void spell_icecore_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
     CHAR_DATA *vch    = (CHAR_DATA *)vo;
@@ -508,6 +518,8 @@ void spell_icecore_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_sun_slash: Spell: spell_sun_slash - Casts the 'sun_slash' spell.
+// spell_sun_slash: 魔法：spell_sun_slash - 施展 'sun_slash' 魔法法術。
 void spell_sun_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA  *vch, *vch_next;
     AFFECT_DATA af;
@@ -592,6 +604,8 @@ void spell_sun_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     }
 }
 
+// spell_elemental_slash: Spell: spell_elemental_slash - Casts the 'elemental_slash' spell.
+// spell_elemental_slash: 魔法：spell_elemental_slash - 施展 'elemental_slash' 魔法法術。
 void spell_elemental_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim     = (CHAR_DATA *)vo;
     double     dam        = 0;
@@ -738,6 +752,8 @@ void spell_elemental_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_sprinkle_slash: Spell: spell_sprinkle_slash - Casts the 'sprinkle_slash' spell.
+// spell_sprinkle_slash: 魔法：spell_sprinkle_slash - 施展 'sprinkle_slash' 魔法法術。
 void spell_sprinkle_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim = (CHAR_DATA *)vo;
 
@@ -753,6 +769,8 @@ void spell_sprinkle_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     return;
 }
 
+// spell_earth_slash: Spell: spell_earth_slash - Casts the 'earth_slash' spell.
+// spell_earth_slash: 魔法：spell_earth_slash - 施展 'earth_slash' 魔法法術。
 void spell_earth_slash(int sn, int level, CHAR_DATA *ch, void *vo) {
     CHAR_DATA *victim, *victim_next;
     double     dam;

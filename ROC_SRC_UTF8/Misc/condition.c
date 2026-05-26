@@ -2,6 +2,8 @@
 #include "merc.h"
 #include <stdio.h>
 
+// show_position_to_char: Formats and displays a character's current posture/combat position.
+// show_position_to_char: 格式化並向玩家角色顯示其目前的姿勢、體態或戰鬥位置狀態。
 bool show_position_to_char(CHAR_DATA *ch) {
     switch (ch->position) {
     case POS_DEAD:
