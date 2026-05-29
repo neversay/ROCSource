@@ -1,0 +1,1796 @@
+[area]
+name = "伊安諾遺跡"
+identity = "ianua"
+builders = "YH"
+translator = "----"
+modifier = "----"
+vnum_start = 13200
+vnum_end = 13299
+security = 1
+recall = 3001
+f_toggle = true
+
+[mobiles.13200]
+keywords = "Veterfordien-ian leader-ian antior-ian"
+short_description = "維特佛迪恩(Veterfordien)"
+long_description = "古蹟調查團的領袖(leader)正在這裡跟人討論著作業事項。\n"
+description = """
+這位身穿史卡拉貝學者服飾的高壯白髮老人就是帶領古蹟調查團的領隊。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "HOLD", "SANCTUARY"]
+alignment = 800
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 5000
+sex = "male"
+[[mobiles.13200.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if rand(100)
+	tell $n 有什麼事嗎？
+	break
+endif
+if is_qmark($n) & adv_guild_level 300002
+	if is_qmark($n) != ianua_teleport
+		look $n
+		mpcallout 1 tell $n 嗯？你是冒險者公會派來的人嗎？(yes/no)
+		mpadd_qmark $n ianua_teleport -1 0 0 0 0 1
+	endif
+else
+	tell $n 有什麼事嗎？
+endif
+"""
+[[mobiles.13200.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $I\u001B[1;32m喊道：啊....\u001B[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+"""
+
+[mobiles.13201]
+keywords = "guild mage"
+short_description = "公會法師(guild mage)"
+long_description = "一位法師(mage)在一旁靜靜地解讀遺跡的文字。\n"
+description = """
+他暗色的法袍上別著一枚史卡拉貝魔法師公會的勳章，這代表他正在執行著
+公會所付予的任務。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "HOLD", "SANCTUARY"]
+alignment = 800
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 5000
+sex = "male"
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) & adv_guild_level 300002
+	if is_qmark($n) == ianua_mage_info
+	or is_qmark($n) & ianua_info 200001
+		mpechoat $n $I 沒注意到你。
+		break
+	else
+		if is_qmark($n) & ianua_info 100001
+			tell $n 夜霄追星團(the group)...光聽名字就覺得成員都怪怪的。
+			tell $n 如果可以，我真不想接近他們。
+		else
+			tell $n 你是公會的冒險者嗎？(yes/no)
+			mpadd_qmark $n ianua_mage_info -1 0 0 0 0 1
+		endif
+	endif
+else
+	mpechoat $n $I 沒注意到你。
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p yes"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100000
+	tell $n 果然呢...你是這星期中不知道第幾個跑來觀光的冒險者了。
+	tell $n 這類消息(news)在冒險者間傳得最快了，不可能封鎖的住。
+	tell $n 更何況發現者又是嘴巴大到不行的那種人....
+	mpmod_qmark $n ianua_mage_info v0 = 1
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p no"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100000
+	tell $n 觀光客是嗎...
+	tell $n 這樣你自己隨意四處逛逛吧。
+	mpdel_qmark $n ianua_mage_info
+	mpmod_qmark $n ianua_info v1 | 1
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p news"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100001
+	mpadd_qmark self talking 2 0 0 0 0 1
+	mpcallout 1 mpdel_qmark self talking
+	tell $n 疑？你該不會什麼都不知道就自己找到這裡來了？
+	tsk $n
+	mpcallout 1 tell $n 說散步不小心逛到...那你這散步也真夠嗆了!
+	mpcallout 1 tell $n 直到前幾星期前才被人偶然發現(found)。
+	mpcallout 1 tell $n 我告訴你，這遺蹟的存在可是近千年來都沒半個人知道耶。
+	mpcallout 1 mpmod_qmark $n ianua_mage_info v0 = 2
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p found"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100002
+	tell $n 發現這裡的是一群整晚追著流星的同好。
+	tell $n 他們之中有個人追著追著在森林中迷路，不小心就發現這片遺跡。
+	tell $n 那群怪咖在公會裡還滿紅的，你應該也聽過一些他們(they)的事跡。
+	tell $n 雖然大致上都不是些好事啦....
+	shrug
+	mpmod_qmark $n ianua_mage_info v0 = 3
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p they"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_mage_info 100003
+	tell $n 我聽過的大概是跟他們組隊出任務到一半時，看到有流星劃過天際。
+	tell $n 這些人會突然著魔般的興奮地朝流星跑去，把任務跟其他隊員都拋到腦後。
+	tell $n 所以惹腦不少跟他們組過隊的人，搞到最後沒人想跟他們組隊。
+	mpcallout 2 tell $n 如果不是有任務在身，我還真不想跟他們接觸呢....
+	mpcallout 2 tell $n 總之，這個團體(the group)的成員都怪怪的。
+	mpcallout 2 tell $n 聽說這群人為此創造出了一個同好會，好像叫作夜霄追星團還啥的...
+	mpdel_qmark $n ianua_mage_info
+	mpmod_qmark $n ianua_info v0 | 1
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p the group"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) & ianua_info 100001
+	tell $n 夜霄追星團(the group)...光聽名字就覺得成員都怪怪的。
+	tell $n 如果可以，我真得不想靠近他們。
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p reward"
+script = """
+if is_qmark($n) == ianua_supplies 100003
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+	mpmod_qmark $n ianua_quest v0 | 1
+	mpmod_qmark $n ianua_supplies v0 = 4
+	tell $n 糟糕，我高興過頭了，差點忘記你報酬。
+	tell $n 這是你的報酬，多謝啦！
+	mpgold $n 500000
+	mpexp $n 5000
+	mpskillexp $n 10000
+	mpcallout 1 tell $n 我之後自己回史卡拉貝再處理也行。
+	mpcallout 1 tell $n 這件事不是很急，要是你沒空傳話也沒關係。
+	mpcallout 1 tell $n 告訴一個看起來很認真的鬍渣男說：事情跟他想的一樣，進行得很順利(success)。
+	mpcallout 1 tell $n 對了，因為我還要在這研究一段時間，方便到公會幫我傳個話嗎？
+	mpcallout 2 bow $n
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p living-testing"
+script = """
+if is_qmark($i) == talking
+	tell $n 我在忙。
+	break
+endif
+if is_qmark($n) == ianua_supplies 100006
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 7
+	understand $n
+	mpcallout 1 grin $n
+	mpcallout 1 tell $n 唉呀，居然被你發現了那也沒辦法囉～
+	mpcallout 4 tell $n 這樣我就一次說給你聽吧。
+	mpcallout 4 sigh
+	mpcallout 5 tell $n 不過接下來又碰到另一個問題(problem)了....
+	mpcallout 5 tell $n 所以呢，我也成功的找出讓這些石板運作的方法。
+	mpcallout 5 tell $n 並且在現存的記錄中也找到，有關該系統魔法的記錄。
+	mpcallout 5 tell $n 公會認為這些石板上的符號是某種系統的上古魔法。
+	mpcallout 5 tell $n 在這裡我的工作就是研究那些刻著奇怪符號的石板。
+	mpcallout 5 tell $n 你有在遺址內逛過，應該不難發現這裡存在著一些奇怪的石板吧？
+	mpcallout 5 mpdel_qmark self talking
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p problem"
+script = """
+if is_qmark($i) == talking
+	tell $n 我在忙。
+	break
+endif
+if is_qmark($n) == ianua_supplies 100007
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 8
+	tell $n 運作時我採用無機物當被受測體，並且得到很完美的結果。
+	tell $n 但這些石板的主要功能應該是被運用在活體生物上才對。
+	mpcallout 1 tell $n 沒辦法說服公會那群人，取得活體實驗許可。
+	mpcallout 1 tell $n 不過現階段還不了解這些魔法運作的原理。
+	mpcallout 2 tell $n 這套系統在短時間內也無法更進一步進行下去囉。
+	mpcallout 2 tell $n 至少要花個十幾年才有辦法作到吧！
+	mpcallout 2 tell $n 然而要完整的重現這套魔法並不是那麼容易的事。
+	mpcallout 3 tell $n 所以我們就想.....
+	mpcallout 3 tell $n 這套魔法如果能盡早運用，肯定能對世界會產生重大的變革。
+	mpcallout 5 tell $n 事件被當成實驗數據也算是對社會的一種貢獻，你說對吧？
+	mpcallout 5 tell $n 如果發生「不怕死的冒險者，擅闖遺蹟又不小心發動術式」這種意外的話。
+	mpcallout 6 look $n
+	mpcallout 7 mpoload 13202 1 floor
+	mpcallout 7 mpoload 13203 1 floor
+	mpcallout 7 mpecho $I 丟下 刻紋石塊(ectching stone).
+	mpcallout 7 mpecho $I 丟下一些錢.
+	mpcallout 8 say 錢包跟重要的實驗器材都不知道放哪了。
+	mpcallout 8 say 唉呀，人真是老了。
+	mpcallout 9 say 希望有善心人士撿到後，進到東北方的房間告訴我一聲。
+	mpcallout 9 mpdel_qmark self talking
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p report"
+script = """
+if is_qmark($i) == talking
+	tell $n 我在忙。
+	break
+endif
+if is_qmark($n) == ianua_supplies 100009
+	mpadd_qmark self talking
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+	mpmod_qmark $n ianua_quest v0 | 2
+	mpmod_qmark $n ianua_supplies v0 = 10
+	tsk $n
+	tell $n 你這突如其來的舉動讓周圍的人都看傻了眼。
+	tell $n 引發一陣不小的騷動呢。
+	tell $n 事情也順利傳入高層的耳朵了，也因此挨了一頓上頭的臭罵。
+	mpcallout 2 tell $n 也許再過一陣子就能進入實用測試(test)了呢。
+	mpcallout 2 tell $n 公會也開始注意到這東西的可行性了。
+	mpcallout 2 tell $n 一切都如計劃一樣，藉由你的事件。
+	mpcallout 3 mpskillexp $n 15000
+	mpcallout 3 bow $n 
+	mpcallout 3 mpdel_qmark self talking
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "talk_prog"
+argument = "p test"
+script = """
+if is_qmark($n) == ianua_supplies 100010
+	tell $n 實用測試就是開放一些試用者來實際操作。
+	tell $n 試用心得能夠幫忙改善操作上的問題。
+	tell $n 為了要取得大量的使用心得，應該會找冒險者公會合作吧。
+	tell $n 到時你也能去排隊試用。
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "give_prog"
+argument = "13200"
+script = """
+if is_qmark($i) == talking
+	tell $n 我在忙。
+	give $o $n
+	drop $o
+	break
+endif
+if is_qmark($n) == ianua_supplies 100002
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 3
+	mpjunk $o
+	tell $n 喔喔，補給品終於來了。
+	tell $n 還在想如果東西再不來，頂多撐個一兩天就極限了。
+	tell $n 哈，這下子再多待個半年都沒問題啦！
+	mpcallout 1 mpechoat $n 這個箱子居然裝了半年的物資難怪那麼重...看來要好好的跟他算一算運費(reward)了
+	mpcallout 1 mpdel_qmark self talking
+else
+	tell $n 感謝贊助！
+	bow $n
+	mpjunk $o
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "give_prog"
+argument = "13201"
+script = """
+if is_qmark($i) == talking
+	tell $n 我在忙。
+	give $o $n
+	drop $o
+	break
+endif
+if is_qmark($n) == ianua_supplies 100005
+	mpadd_qmark self talking
+	mpmod_qmark $n ianua_supplies v0 = 6
+	mpjunk $o
+	tell $n 給我的信？
+	mpechoat $n $I把信打開來看。
+	mpcallout 1 tell $n 哈，就算你這麼勤勞我也不會給你更多酬....
+	mpcallout 1 tell $n 沒想到你那麼熱心呀！開始只是請你傳個話而已。
+	mpcallout 2 mpechoat $n $I信看到一半突然面有難色。
+	mpcallout 3 mpskillexp $n 10000
+	mpcallout 3 mpexp $n 5000
+	mpcallout 3 mpgold $n 300000
+	mpcallout 3 tell $n 這些是給你的酬勞，謝謝。
+	mpcallout 3 mpdel_qmark self talking
+else
+	? $n
+	mpjunk $o
+endif
+"""
+[[mobiles.13201.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $I\u001B[1;32m喊道：我在史卡拉貝的同伴是不會放過你的....\u001B[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+"""
+
+[mobiles.13202]
+keywords = "archaeologist-ianua"
+short_description = "考古學家(archaeologist)"
+long_description = "一位考古學家(archaeologist)在這裡分析著古代的物件。\n"
+description = """
+他穿著一套史卡拉貝的制式學者服，且相當投入手邊的工作。看起來能徒手
+把玩著古董，讓他心情相當雀躍。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "HOLD"]
+alignment = 800
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 5000
+sex = "male"
+[[mobiles.13202.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) & adv_guild_level 300002
+
+else
+	tell $n 出土的東西可以自由參觀，但不要亂碰耶！
+endif
+"""
+[[mobiles.13202.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $I\u001B[1;32m喊道：啊....\u001B[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+"""
+
+[mobiles.13203]
+keywords = "historian-ianua"
+short_description = "歷史學家(historian)"
+long_description = "一位歷史學家(historian)在這裡研究著剛出土的物件。\n"
+description = """
+他穿著一套史卡拉貝的制式學者服，且相當滿意手邊的工作。看起來能夠從
+史書中翻找證據，讓他顯得相當興奮。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "HOLD"]
+alignment = 800
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 5000
+sex = "male"
+[[mobiles.13203.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+tell $n 書上完全沒有記載相同的內容，這是新的發現呀！
+"""
+[[mobiles.13203.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $I\u001B[1;32m喊道：啊....\u001B[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+"""
+
+[mobiles.13204]
+keywords = "archaeology-ianua student-ianua"
+short_description = "考古學院生(archaeology student)"
+long_description = "一位學生(student)在這裡研究著剛出土的物件。\n"
+description = """
+他穿著一套史卡拉貝的制式學生服，他的身體看起相當的疲憊。也許是持續
+進行重度勞力工作而造成的。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 800
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 5000
+sex = "male"
+[[mobiles.13204.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+if is_qmark($n) & adv_guild_level 300002
+	if is_qmark($n) == ianua_arstudent_info
+		tell $n 唉...整天幹這種粗活真是累死人了...
+	else
+		if is_qmark($n) & ianua_info 100002
+			tell $n 冒險者公會那邊不知道是發生什麼事了(problem)，一點音訊都沒有。
+			tell $n 如果再沒人來幫忙，繼續作下去真得會出人命呀....
+			sigh
+		else
+			tell $n 唉...整天幹這種粗活真是累死人了...
+			tell $n 我進學院可不是為了幹這種粗活(donkey work)的呀！
+			mpadd_qmark $n ianua_arstudent_info -1 0 0 0 0 1
+		endif
+	endif
+else
+	tell $n 唉...整天幹這種粗活真是累死人了...
+endif
+"""
+[[mobiles.13204.programs]]
+trigger = "talk_prog"
+argument = "p donkey work"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_arstudent_info 100000
+	mpadd_qmark self talking 2 0 0 0 0 1
+	mpcallout 1 mpdel_qmark self talking
+	tell $n 幾星期前的晚上，老師突然興奮的跑來我家。
+	tell $n 說有片新的遺蹟被人發現，要我快點收拾行李跟他出發。
+	tell $n 之後從早到晚，我都被指派著搬石頭搬文物的體力活...
+	mpcallout 1 tell $n 除非工人(worker)能快點到，不然再這樣幹下去會倒下的...
+	mpcallout 1 tell $n 但是遺跡非常大，只有幾個人不知道要搬到什麼時候呀！
+	mpcallout 1 mpmod_qmark $n ianua_arstudent_info v0 = 1
+endif
+"""
+[[mobiles.13204.programs]]
+trigger = "talk_prog"
+argument = "p worker"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) == ianua_arstudent_info 100001
+	mpadd_qmark self talking 2 0 0 0 0 1
+	mpcallout 1 mpdel_qmark self talking
+	tell $n 老師說他委託過公會的人派些強壯的戰士來作些粗活。
+	tell $n 但是都過一星期了，完全沒派半個人過來而且一點回音都沒有....
+	mpcallout 1 sigh
+	mpcallout 1 tell $n 如果再繼續這樣作下去真得會出人命呀....
+	mpcallout 1 tell $n 總之不知道公會發生什麼事了(problem)，只能期待他們快點派人來幫忙。
+	mpcallout 1 mpmod_qmark $n ianua_info v0 | 2
+	mpcallout 1 mpdel_qmark $n ianua_arstudent_info
+endif
+"""
+[[mobiles.13204.programs]]
+trigger = "talk_prog"
+argument = "problem"
+script = """
+if is_qmark($i) == talking
+	break
+endif
+if is_qmark($n) & ianua_info 100002
+	tell $n 冒險者公會那邊不知道是發生什麼事了(problem)，一點音訊都沒有。
+	tell $n 如果再沒人來幫忙，繼續作下去真得會出人命呀....
+	sigh
+endif
+"""
+[[mobiles.13204.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $I\u001B[1;32m喊道：啊....\u001B[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+"""
+
+[mobiles.13205]
+keywords = "history-ianua student-ianua"
+short_description = "歷史學院生(history student)"
+long_description = "一位學生(student)在這裡研究著剛出土的物件。\n"
+description = """
+他穿著一套史卡拉貝的制式學生服，他的臉上帶有很濃厚的倦意。看起來有
+很長一段時間沒好好休息了。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 800
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 5000
+sex = "male"
+[[mobiles.13205.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != ianua_info
+or is_qmark($n) != ianua_quest
+	mpadd_qmark $n ianua_info -1 0 0 0 0 1
+	mpadd_qmark $n ianua_quest -1 0 0 0 0 1
+endif
+yawn
+tell $n 已經三天沒睡覺了，到底還要持續幾天呀！
+"""
+[[mobiles.13205.programs]]
+trigger = "rand_prog"
+argument = "5"
+script = """
+if rand(50)
+	say 啊，不小心睡著了！快遲到啦！！
+else
+	mpecho $I緊張地看著手中的懷錶...
+endif
+"""
+[[mobiles.13205.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $I\u001B[1;32m喊道：啊....\u001B[0m
+if is_qmark($n) != skarabrae_enemy
+	mpadd_qmark $n skarabrae_enemy 200 0 0 0 1 1
+else
+	mpmod_qmark $n skarabrae_enemy timer + 200
+endif
+"""
+
+[objects.13200]
+keywords = "box guild supplies"
+short_description = "公會補給品(guild supplies)"
+long_description = "一個封有法師公會蠟印的箱子(box)被放在地上"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["999", "15", "-1", "1"]
+weight = 100
+cost = 200000
+level_limited = 0
+material = "wooden"
+souvenir = 4
+[[objects.13200.extra_descriptions]]
+keywords = "box guild supplies"
+description = """
+一個搬起來相當沉重的木箱，不知道裡面裝了什麼。
+"""
+
+[objects.13201]
+keywords = "white letter"
+short_description = "白色信件(white letter)"
+long_description = "一張用白紙書寫的信件(letter)被放在地上。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 10
+level_limited = 0
+material = "paper"
+souvenir = 4
+[[objects.13201.extra_descriptions]]
+keywords = "white letter"
+description = """
+信上寫著：
+
+    看來石板上的紋路跟書中描寫的是同種術式，這也可以解釋為什麼
+那座古老帝國的一部分會不合理的出現在不正確的地方了，但這只是一
+個沒有原因的事實。
+
+    我知道你的研究已經可以讓現存的素材正常運作了，但光只是這樣
+還不夠，我們需要的是盡快完成術式的解析，只有這樣才能夠活用這個
+古老的魔法技術，也唯有這樣才能使這項研究真正的被世人認同。
+
+    請記住，沒有原因的結果，只會淪為假說之流。
+    
+                                                    祝研究順利
+
+透過光線，你發現信件背面(backside)似乎有些什麼....
+"""
+[[objects.13201.extra_descriptions]]
+keywords = "backside"
+description = """
+你正看著一張白紙信件(letter)的背面(backside)，沒什麼特別的。
+
+\u001B[30m如果你需要實驗體(living-testing)跟我說一聲。\u001B[0m
+"""
+
+[objects.13202]
+keywords = "gold coins"
+short_description = "一堆金幣(gold coins)"
+long_description = "一堆金幣(gold coins)"
+action_description = ""
+item_type = "MONEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.13202.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+oset self v0 = 0
+oset self v0 + 1500000
+"""
+
+[objects.13203]
+keywords = "ectching-ianua stone"
+short_description = "刻紋石塊(ectching stone)"
+long_description = "一顆佈滿奇特刻紋的石頭(stone)掉在這裡"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "salt"
+souvenir = 4
+
+[objects.13204]
+keywords = "teleport stone"
+short_description = "傳送者之石(teleport stone)"
+long_description = "一顆刻有符文的石頭(stone)掉在這裡"
+action_description = ""
+item_type = "PILL"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["1", "recall", "mana recharge", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "salt"
+souvenir = 4
+[[objects.13204.programs]]
+trigger = "obj_rand"
+argument = "100"
+script = """
+if objtype($o) != 26
+	oforcer here oload 13204 1 $n target
+	purge self
+endif
+"""
+
+[rooms.13200]
+name = "伊安諾遺蹟"
+description = """
+buffer room of ianua
+"""
+flags = ["UNDERGROUND"]
+sector = "INSIDE"
+[[rooms.13200.extra_descriptions]]
+keywords = "更新履歷"
+description = """
+本區域實掛上 new room prog transfergroup，該room prog 只會對特定人物及其同group的其他人物進行傳送。
+2019/03/06
+掛上 mob及quest qmark。
+"""
+
+[rooms.13201]
+name = "森林樹徑"
+description = """
+你穿梭在森林的樹木間，身旁濃密的樹林阻擋了去路，只能隨著地面的痕跡前進
+或後退。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13201.exits.north]
+description = "森林樹徑\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13202
+[rooms.13201.exits.south]
+description = "林中小徑\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 6026
+
+[rooms.13202]
+name = "森林樹徑"
+description = """
+你穿梭在森林的樹木間，身旁濃密的樹林阻擋了去路，只能隨著地面的痕跡前進
+或後退。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13202.exits.east]
+description = "森林樹徑\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13203
+[rooms.13202.exits.south]
+description = "林中小徑\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13201
+
+[rooms.13203]
+name = "森林樹徑"
+description = """
+你穿梭在森林的樹木間，身旁濃密的樹林阻擋了去路，只能隨著地面的痕跡前進
+或後退。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13203.exits.north]
+description = "森林樹徑\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13204
+[rooms.13203.exits.west]
+description = "林中小徑\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13202
+
+[rooms.13204]
+name = "森林樹徑"
+description = """
+走出森林來到一處稀疏的林地。間歇的鳥語伴隨林間微風，讓人格外想待在陽光
+點點灑落的樹蔭下小憩。四周除了鳥鳴外，只剩下森林中的小動物在高大樹木下穿梭
+的窸窣聲能引起你注意，經驗告訴你，任意走入眼前的樹林，將會很容易迷失方向。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13204.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13205
+[rooms.13204.exits.south]
+description = "森林樹徑\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13203
+[rooms.13204.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13206
+
+[rooms.13205]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。稍微慶幸
+的是光線還能穿過樹枝照射到地面，讓白天的森林不會太過昏暗。只需要趁著天色還
+亮時穿越樹海，就不必在晚上的野林地過夜了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13205.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13206
+[rooms.13205.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13208
+[rooms.13205.exits.south]
+description = "林間空地\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13204
+[rooms.13205.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13207
+
+[rooms.13206]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。稍微慶幸
+的是光線還能穿過樹枝照射到地面，讓白天的森林不會太過昏暗。只需要趁著天色還
+亮時穿越樹海，就不必在晚上的野林地過夜了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13206.exits.east]
+description = "林間空地\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13204
+[rooms.13206.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13207
+[rooms.13206.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13209
+
+[rooms.13207]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，但不管你走多久都覺得自己在
+原地打轉。看來該接受迷路的事實，作好在森林中度過夜晚的心理準備了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13207.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13205
+[rooms.13207.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13206
+[rooms.13207.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13208
+
+[rooms.13208]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，但不管你走多久都覺得自己在
+原地打轉。看來該接受迷路的事實，作好在森林中度過夜晚的心理準備了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13208.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13207
+[rooms.13208.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13210
+[rooms.13208.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13209
+[rooms.13208.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13214
+
+[rooms.13209]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，但不管你走多久都覺得自己在
+原地打轉。看來該接受迷路的事實，作好在森林中度過夜晚的心理準備了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13209.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13206
+[rooms.13209.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13208
+[rooms.13209.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13207
+[rooms.13209.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13213
+
+[rooms.13210]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，但不管你走多久都覺得自己在
+原地打轉。看來該接受迷路的事實，作好在森林中度過夜晚的心理準備了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13210.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13206
+[rooms.13210.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13211
+[rooms.13210.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13208
+[rooms.13210.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13215
+
+[rooms.13211]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，但不管你走多久都覺得自己在
+原地打轉。看來該接受迷路的事實，作好在森林中度過夜晚的心理準備了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13211.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13209
+[rooms.13211.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13212
+[rooms.13211.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13210
+[rooms.13211.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13205
+
+[rooms.13212]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，但不管你走多久都覺得自己在
+原地打轉。看來該接受迷路的事實，作好在森林中度過夜晚的心理準備了。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13212.exits.north]
+description = "一大片草原\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13218
+[rooms.13212.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13211
+[rooms.13212.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13217
+
+[rooms.13213]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，向森林的一側望去，隱約能看
+見一座人造圍牆佇立在樹海之外，但眼前的樹林組擋了去路，你無法穿越過去。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13213.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13209
+[rooms.13213.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13214
+[rooms.13213.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13210
+
+[rooms.13214]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，向森林的一側望去，隱約能看
+見一座人造圍牆佇立在樹海之外，但眼前的樹林組擋了去路，你無法穿越過去。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13214.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13208
+[rooms.13214.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13215
+[rooms.13214.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13213
+
+[rooms.13215]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，向森林的一側望去，隱約能看
+見一座人造圍牆佇立在樹海之外，但眼前的樹林組擋了去路，你無法穿越過去。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13215.exits.east]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13210
+[rooms.13215.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13216
+[rooms.13215.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13214
+
+[rooms.13216]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，向森林的一側望去，隱約能看
+見一座人造圍牆佇立在樹海之外，但眼前的樹林組擋了去路，你無法穿越過去。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13216.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13217
+[rooms.13216.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13215
+[rooms.13216.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13213
+
+[rooms.13217]
+name = "森林中"
+description = """
+你穿梭在一片樹海之中，四周只看得見高大的樹木，使你迷失了方向。雖然光線
+能透過樹枝照射到地面，讓白天的森林不會太過昏暗，向森林的一側望去，隱約能看
+見一座人造圍牆佇立在樹海之外，但眼前的樹林組擋了去路，你無法穿越過去。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+randomize_exits = 4
+[rooms.13217.exits.north]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13212
+[rooms.13217.exits.south]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13216
+[rooms.13217.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13215
+
+[rooms.13218]
+name = "森林邊緣"
+description = """
+周圍樹木變得稀疏，你終於從森林中走出，來到一片草長及腰的原野。仔細勘查
+四周，你發現長草下有條年代久遠的石板路往東邊的小丘陵延伸而去。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.13218.exits.east]
+description = "古老的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13219
+[rooms.13218.exits.west]
+description = "一大片樹林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13212
+
+[rooms.13219]
+name = "長草的石板路"
+description = """
+你沿著古老的石板路朝向丘陵走去，周圍野草及腰是掠食者隱匿身型的好場所。
+在行進中你能看見周圍草地上躺著些毀壞的石造建材。從建築的規模看來，這地方曾
+經住有不少的居民，但時過境遷，如今只剩下荒廢的城鎮遺址。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13219.exits.north]
+description = "古老的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13220
+[rooms.13219.exits.west]
+description = "森林邊緣\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13218
+
+[rooms.13220]
+name = "丘陵上的石板路"
+description = """
+你沿著石板步道走上丘陵，山坡上吹來一陣陣強風壓低附近的野草，使周圍景物
+一覽無疑。四周依舊有許多半毀的建築物，在山坡的頂端，能看到些結構相對完整的
+石造建築，只要順著道路繼續往上爬就能到達。
+"""
+flags = ["NO_MOB"]
+sector = "HILLS"
+[rooms.13220.exits.north]
+description = "古老的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13221
+[rooms.13220.exits.south]
+description = "古老的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13219
+
+[rooms.13221]
+name = "石板路終點"
+description = """
+你順著石板路來到丘陵最高處，也是道路的終點。這裡的建築與一路上所見到的
+殘骸明顯不同，多數結構都還保持的相當完整。在你眼前有座石拱門，往內看去有座
+搭著數個小帳蓬的圓形廣場，看來有人在此活動的跡象。
+"""
+flags = ["NO_MOB"]
+sector = "HILLS"
+[rooms.13221.exits.north]
+description = "古老的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13222
+[rooms.13221.exits.south]
+description = "古老的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13220
+
+[rooms.13222]
+name = "遺跡廣場"
+description = """
+走過拱門進入廣場，眼前看到有四、五個帳篷跟幾個穿著像學者的人在鳥不拉屎
+的地方這忙進忙出，對於你突然出現打斷他們的工作似乎有些不高興。但這反而讓人
+鬆了一口氣，在荒郊野外中，遇到幾十個難伺候的學者也比碰到幾十個持刀暴徒朝你
+亂砍一番來得好。
+"""
+flags = []
+sector = "CITY"
+[rooms.13222.exits.east]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13225
+[rooms.13222.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13223
+[rooms.13222.exits.south]
+description = "古老的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13221
+[rooms.13222.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13228
+
+[rooms.13223]
+name = "遺跡廣場"
+description = """
+這裡是廣場的中心，架著幾個棚子，裡面陳列著挖掘出來的古代文物，你看到幾
+位學者正專注地分析這些骨董。從這裡能夠環視整座廣場，周邊有著數間平房，雖然
+部分的平房已經倒塌，但不難看出整座廣場是由這些平房所圍出來的。
+"""
+flags = []
+sector = "CITY"
+[rooms.13223.exits.east]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13226
+[rooms.13223.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13224
+[rooms.13223.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13222
+[rooms.13223.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13229
+[[rooms.13223.resets.mobiles]]
+vnum = 13200
+limit = 1
+
+[rooms.13224]
+name = "遺跡廣場"
+description = """
+這裡有一些學者拿著各種各樣的工具對遺址進行仔細調查，他們謹慎到甚至連地
+上的小碎石都要一顆顆拿起來檢視才肯罷休。看來你光是呆站著都有可能影響到他們
+的作業，還是盡快離開吧！
+"""
+flags = []
+sector = "CITY"
+[rooms.13224.exits.east]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13227
+[rooms.13224.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13223
+[rooms.13224.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13230
+[[rooms.13224.resets.mobiles]]
+vnum = 13204
+limit = 3
+
+[rooms.13225]
+name = "遺跡廣場"
+description = """
+這裡有一些學者拿著各種各樣的工具對遺址進行仔細調查，他們正在附近調查剛
+發現的兩間平房遺跡。如果對考古有些興趣，只要不妨礙到他們作業，稍微進去參觀
+一下也沒人會介意吧。
+"""
+flags = []
+sector = "CITY"
+[rooms.13225.exits.east]
+description = "遺跡平房\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13232
+[rooms.13225.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13226
+[rooms.13225.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13231
+[rooms.13225.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13222
+
+[rooms.13226]
+name = "遺跡廣場"
+description = """
+這裡有一些學者拿著各種各樣的工具對遺址進行仔細調查，他們謹慎到甚至連地
+上的小碎石都要一顆顆拿起來檢視才肯罷休。看來你光是呆站著都有可能影響到他們
+的作業，還是盡快離開吧！
+"""
+flags = []
+sector = "CITY"
+[rooms.13226.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13227
+[rooms.13226.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13225
+[rooms.13226.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13223
+[[rooms.13226.resets.mobiles]]
+vnum = 13205
+limit = 3
+
+[rooms.13227]
+name = "遺跡廣場"
+description = """
+這裡有一些學者拿著各種各樣的工具對遺址進行仔細調查。有幾個人正在調查剛
+發現的小屋，剩下的人正試圖修復坍塌的建築。
+"""
+flags = []
+sector = "CITY"
+[rooms.13227.exits.east]
+description = "遺跡平房\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13233
+[rooms.13227.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13226
+[rooms.13227.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13224
+
+[rooms.13228]
+name = "遺跡廣場"
+description = """
+這裡有一些學者拿著各種各樣的工具對遺址進行仔細調查，他們正在附近調查剛
+發現的兩間平房遺跡。如果對考古有些興趣，只要不妨礙到他們作業，稍微進去參觀
+一下也沒人會介意吧。
+"""
+flags = []
+sector = "CITY"
+[rooms.13228.exits.east]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13222
+[rooms.13228.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13229
+[rooms.13228.exits.south]
+description = "遺跡平房\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13234
+[rooms.13228.exits.west]
+description = "遺跡平房\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13235
+
+[rooms.13229]
+name = "遺跡廣場"
+description = """
+這裡有幾個人拿著工具對遺址進行修復的作業。你發現地面上有個近期才形成的
+大坑洞，似乎造成周邊建築嚴重毀損。還需要花費一段時間進行還原工程，才有辦法
+對這塊區域考察。
+"""
+flags = []
+sector = "CITY"
+[rooms.13229.exits.east]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13223
+[rooms.13229.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13230
+[rooms.13229.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13228
+
+[rooms.13230]
+name = "遺跡廣場"
+description = """
+這裡有少數學者拿著工具對遺址進行仔細的調查。西面的建築幾乎全毀，有幾個
+人正在想辦法進行修復。北邊則有一間剛被修復完成的平房，不知道為什麼，這棟矮
+平房內聚集的人數似乎特別多。
+"""
+flags = []
+sector = "CITY"
+[rooms.13230.exits.east]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13224
+[rooms.13230.exits.north]
+description = "遺跡平房\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13236
+[rooms.13230.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13229
+
+[rooms.13231]
+name = "古老的石屋"
+description = """
+這是一間石造的古老平房，門後連著幾階向下的樓梯，建築內的地面高度較外面
+來得低一些。走下階梯後來到一個有著圓形牆面的空間，牆壁每隔一定距離就分劃出
+一個小房間，每個房間內都放置著一片低矮的小石臺，上面刻著你看不懂的符號。
+"""
+flags = []
+sector = "CITY"
+[rooms.13231.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13225
+
+[rooms.13232]
+name = "古老的石屋"
+description = """
+這是一間石造的古老平房，門後連著幾階向下的樓梯，建築內的地面高度較外面
+來得低一些。階梯下方只有一個寬敞的空間，沒有任何的隔間。房間有著許多木質的
+人造物及土罐碎片，但年代久遠，大多都已經毀壞無法辨認用途。
+"""
+flags = []
+sector = "CITY"
+[rooms.13232.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13225
+
+[rooms.13233]
+name = "古老的石屋"
+description = """
+這是一間石造的古老平房，門後連著幾階向下的樓梯，建築內的地面高度較外面
+來得低一些。階梯下方只有一個寬敞的空間，堆放著年代久遠的雜物。大部分能搬動
+的物品都被考察人員搬出平房外了，剩下的大多是些嚴重毀損或無法搬動的東西。你
+注意到房間的一角堆放著大量被切割過的石板，上面刻著你看不懂的符號。
+"""
+flags = []
+sector = "CITY"
+[rooms.13233.exits.west]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13227
+[[rooms.13233.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if is_qmark($n) == ianua_supplies 100008
+	if is_inv_obj($n) == 13203
+		purge $n ectching-ianua
+		mod_qmark $n ianua_supplies v0 = 9
+		stun $n 20
+		echoat $n 進到房間後你的身邊發出強烈的光芒，接著一陣暈眩。
+		echoaround $n $N的身邊發出耀眼的光芒，下個瞬間連人帶光的憑空消失了。
+		callout 1 at $n echoat $n 面對讓人一頭霧水的狀況，只能回去好好的問清楚是什麼情況(report)了。
+		callout 1 at $n echoat $n 你發現周遭的景色跟原本不同了，手上的石頭也隨之破碎。
+		if rand(40)
+			transfer $n 15660
+		else
+			if rand(30)
+				transfer $n 10627
+			else
+				if rand(60)
+					transfer $n 21450
+				else
+					transfer $n 4283
+				endif
+			endif
+		endif
+	endif
+endif
+"""
+[[rooms.13233.resets.mobiles]]
+vnum = 13203
+limit = 1
+
+[rooms.13234]
+name = "古老的石屋"
+description = """
+這是一間石造的古老平房，門後連著幾階向下的樓梯，建築內的地面高度較外面
+來得低一些。階梯下方只有一個寬敞的空間，沒有任何的隔間。在房間的中央有一塊
+低矮的大石臺，上面刻著你看不懂的符號。
+"""
+flags = []
+sector = "CITY"
+[rooms.13234.exits.north]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13228
+
+[rooms.13235]
+name = "古老的石屋"
+description = """
+這是一間石造的古老平房，門後連著幾階向下的樓梯，建築內的地面高度較外面
+來得低一些。階梯下方只有一個寬敞的空間，沒有任何的隔間。在房間的中央有一塊
+低矮的大石臺，上面刻著你看不懂的符號。
+"""
+flags = []
+sector = "CITY"
+[rooms.13235.exits.east]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13228
+[[rooms.13235.resets.mobiles]]
+vnum = 13201
+limit = 1
+
+[rooms.13236]
+name = "古老的石屋"
+description = """
+這是一間石造的古老平房，門後連著幾階向下的樓梯，建築內的地面高度較外面
+來得低一些。階梯下方只有一個寬敞的空間，沒有任何的隔間。在房間的中央有一塊
+低矮的大石臺，上面刻著你看不懂的符號。
+"""
+flags = []
+sector = "CITY"
+[rooms.13236.exits.south]
+description = "圓形廣場\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 13230
+[[rooms.13236.resets.mobiles]]
+vnum = 13202
+limit = 1

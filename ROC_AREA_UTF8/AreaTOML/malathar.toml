@@ -1,0 +1,6754 @@
+[area]
+name = "瑪拉勒城"
+identity = "malathar"
+builders = "Yaegar"
+translator = "Feena"
+modifier = "Feena"
+vnum_start = 80100
+vnum_end = 80299
+security = 1
+recall = 4580
+death = 401
+f_toggle = true
+
+[mobiles.80100]
+keywords = "duke ruler stalatharata-npc"
+short_description = "史塔拉索拉塔公爵(Duke Stalatharata)"
+long_description = "瑪拉勒城領地的統治者，史塔拉索拉塔公爵(Duke Stalatharata)站在這裡。\n"
+description = """
+這位公爵是一名皮膚白晰的中年精靈，有著次等種族所沒有的溫文優雅，一股可
+見的靈氣圍繞在他的身邊，你對他高貴的風采感到敬畏。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING"]
+alignment = 1000
+level = 60
+mod_hitplus = 20000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "HALF_MAGIC", "ALY_SAN", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA"]
+[[mobiles.80100.applies]]
+type = "HITROLL"
+degree = 125
+[[mobiles.80100.applies]]
+type = "DAMROLL"
+degree = 125
+[[mobiles.80100.applies]]
+type = "SAVING_BREATH"
+degree = -50
+[[mobiles.80100.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.80100.applies]]
+type = "DODGE"
+degree = -400
+[[mobiles.80100.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.80100.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.80100.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.80100.applies]]
+type = "APPLY_ADAMAGE"
+degree = 75
+[[mobiles.80100.applies]]
+type = "APPLY_AMAGIC"
+degree = 75
+[[mobiles.80100.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+group form
+"""
+[[mobiles.80100.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell 可惡的瑪拉勒之敵！我要驅逐你！
+        mpkill $n
+else
+        if ispc($n)
+                tell $n 我以瑪拉勒統治者之名，歡迎你蒞臨此地。
+                hello $n
+        endif
+endif
+"""
+[[mobiles.80100.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100029
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 30
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        nod $n
+                        mpcallout 1 tell $n 你的事我已經聽說了，在此我得先感謝你來回奔波。
+                        mpcallout 2 tell $n 能讓向來與我們瑪拉勒不和的愛潔梅菲同意和談，你的確是傑出的人才。
+                        mpcallout 3 tell $n 不過仍然有點晚了，黑暗勢力已經接近，攻過來只是遲早的事。
+                        mpcallout 4 tell $n 你如果要離開此地的話最好快點，等到敵人進犯時再逃就太晚了。
+                        mpcallout 5 tell $n 如果你要出城，先跟奧勒塔撒拉確認一下，免得碰上敵人。
+                        mpcallout 6 wave $n
+                        mpcallout 6 mpdel_qmark self malathar_talking
+                endif
+        else
+                tell $n 我以瑪拉勒統治者之名，歡迎你蒞臨此地。
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80100.programs]]
+trigger = "talk_prog"
+argument = "report"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100042
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 43
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        say 這真是太令人意外了......
+                        gasp
+                        mpcallout 1 tell $n 我知道了，你的情報很有價值，謝謝你的協助。
+                        mpcallout 2 tell $n 我會派人去把整件事情調查清楚的，放心吧！
+                        mpcallout 3 mpgold $n 5000000
+                        mpcallout 4 wave $n
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80100.programs]]
+trigger = "give_prog"
+argument = "80190"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100042
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 43
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpjunk $o
+                        ? $n
+                        mpcallout 1 mpecho $I翻開攻擊計畫書看了看，並找來一名翻譯官。
+                        mpcallout 3 mpecho 翻譯官將內容正確無誤地翻譯出來。
+                        mpcallout 5 mpecho 沒多久，$I的臉色變了。
+                       mpcallout 6 say 敵人竟然已經佈署這麼久了，我們卻沒有妥善防備，真是失策！
+                        mpcallout 7 tell $n 做得好，不愧是托爾與漢恩他們極力推荐的人材，果然有一套。
+                        if resp($n) < 70
+                        or is_qmark($n) != enable_level_41
+                        or is_qmark($n) != sandrock_questmark 100255
+                        or is_qmark($n) !& sealevil_quest 100002
+                        or is_qmark($n) != Ageemephy_questmark 100511
+                        or is_qmark($n) != malathar_quest 200045
+                                mpcallout 8 tell $n 經過這次教訓，我們以後會更加提高警覺，不會再被敵人得逞了。
+                                mpcallout 9 tell $n 我必須好好酬謝你，勇者。
+                                mpcallout 10 mpcall malathar_hiddenpower $n
+                                mpcallout 10 mpexp $n 30000
+                                mpcallout 10 mpskillexp $n 25000
+                                mpcallout 10 mpresp $n 3
+                                mpcallout 11 tell $n 再見了！勇者！
+                                mpcallout 12 wave $n
+                        else
+                                mpcallout 8 tell $n 經過這次教訓，我們以後會更加提高警覺，不會再被敵人得逞了。
+                                mpcallout 9 mpecho $I從一旁的白金玻璃櫃中取出一個裝著戒指的精緻木盒。
+                                mpcallout 10 tell $n 請收下這枚代表榮耀與英勇的戒指，這是真正勇者的象徵！
+                                mpcallout 11 tell $n 你的名字將會永遠留在本城的紀念碑之上！
+                                mpcallout 12 mpechoat $n $I將戒指小心翼翼地交付到你手中。
+                                mpcallout 13 mpcall malathar_hiddenpower $n
+                                mpcallout 13 mpexp $n 50000
+                                mpcallout 13 mpskillexp $n 35000
+                                mpcallout 13 mpresp $n 3
+                                mpcallout 13 mpoload 80189 $n 36 target
+                                mpcallout 14 tell $n 再見了！勇者！
+                                mpcallout 15 wave $n
+                        endif
+                        mpcallout 14 mpdel_qmark self malathar_talking
+                endif
+        else
+                ? $n
+                give $o $n
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+        give $o $n
+endif
+"""
+[[mobiles.80100.programs]]
+trigger = "defun_prog"
+argument = "malathar_hiddenpower"
+script = """
+if is_qmark($n) == max_skill_exp
+        mpmod_qmark $n max_skill_exp v0 + 10
+else
+        mpadd_qmark $n max_skill_exp -1 10 0 0 0 1
+endif
+mpechoat $n 你感到自身潛在的力量覺醒了！
+"""
+[[mobiles.80100.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        say 風啊，助我粉碎敵人身上的防護！
+        mpecho $I召來一陣侵略的強風！
+        cast 2 'crushing hand' $r
+        mpnowait
+        cast 'double heal'
+        mpnowait
+        cast 'double heal'
+        mpnowait
+        cast 'double heal'
+        mpnowait
+else
+        if rand(33)
+                say 裁決之劍！
+                mpecho $I高舉武器，使出威力強大的劍法！
+                perform empslash
+                mpnowait
+        else
+                if rand(50)
+                        say 冰啊，撕裂眼前的敵人！
+                        mpecho 空氣中的水份在一瞬間凝固成堅冰！
+                        icecore
+                        mpnowait
+                else
+                        mpechoat $n 當你正忙著與$I戰鬥時，一個鬼鬼祟祟的傢伙忽然自背後捅了你一刀！
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+"""
+[[mobiles.80100.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+cast armageddon $n
+mpnowait
+"""
+
+[mobiles.80101]
+keywords = "duchess-npc wife destelandara-npc"
+short_description = "狄絲特蘭妲拉公爵夫人(Duchess Destelandara)"
+long_description = "瑪拉勒城公爵的夫人狄絲特蘭妲拉(Duchess Destelandara)傲慢地看著你。\n"
+description = """
+這位公爵夫人是一名美得過火、皮膚白晰的精靈，但卻有著和美貌不搭配的傲慢
+個性。她似乎對你的到來稍感興趣，但她那平靜無波的臉上卻連點笑容都沒有。
+除此之外，她似乎也認為你應該對她謙卑而且奉承，也許你最好鞠個躬......
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "REGENERACY"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "SANCTUARY", "INFRARED", "FLYING", "MYSTIC_MIRROR"]
+alignment = 1000
+level = 58
+mod_hitplus = 12000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_POISON", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA"]
+[[mobiles.80101.applies]]
+type = "AC"
+degree = -1000
+[[mobiles.80101.applies]]
+type = "SAVING_BREATH"
+degree = -35
+[[mobiles.80101.applies]]
+type = "SAVING_ELEMENT"
+degree = -35
+[[mobiles.80101.applies]]
+type = "DODGE"
+degree = -500
+[[mobiles.80101.applies]]
+type = "POWER_POTENTIAL"
+degree = 40
+[[mobiles.80101.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.80101.applies]]
+type = "APPLY_AMAGIC"
+degree = 150
+[[mobiles.80101.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.80101.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.80101.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+group form
+"""
+[[mobiles.80101.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell 無禮的惡徒！你是怎麼進來的！
+        mpkill $n
+else
+        if ispc($n)
+                mpechoat $n $I淡淡地望了你一眼，表情一點也沒變。
+        endif
+endif
+"""
+[[mobiles.80101.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        say 冰姬的吹息！
+        mpecho $I將右手舉到嘴邊，吹出冰寒的氣息！
+        cast 'chill touch' $r
+        mpnowait
+        cast 'chill touch' $r
+        mpnowait
+        cast 'chill touch' $r
+        mpnowait
+else
+        if rand(33)
+                say 電擊之鎚！
+                mpecho 青色的閃電朝你劈來！
+                cast 2 'call lightning'
+                mpnowait
+        else
+                if rand(50)
+                        say 龍之咆哮！
+                        mpecho $I拋出數枚威力強大的能源彈！
+                        cast 2 powerball $r
+                        mpnowait
+                        cast 2 powerball $r
+                        mpnowait
+                else
+                        mpechoat $n 當你正忙著與$I戰鬥時，一個鬼鬼祟祟的傢伙忽然自背後捅了你一刀！
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+"""
+[[mobiles.80101.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80102]
+keywords = "archmage mage tuo-npc"
+short_description = "大法師‧托爾(Archmage Tuo)"
+long_description = "公爵忠誠的半精靈顧問，大法師托爾(Archmage Tuo)站在這裡。\n"
+description = """
+儘管他是混血兒（半人半精靈），大法師托爾在這個地方仍然備受眾人尊敬。他
+是個有點老的男人，不過他仍然能將他的能力控制得很好，而且他的魔法早已經
+爐火純青，如果你運氣好的話，他也許會花點時間傳授給你一些知識。
+"""
+act_flags = ["NPC", "STAY_AREA", "TRAIN", "PRACTICE"]
+affected_flags = ["DETECT_INVIS", "DETECT_MAGIC", "SANCTUARY", "INFRARED", "PASS_DOOR", "FLAMING"]
+alignment = 1000
+level = 56
+mod_hitplus = 15000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Half-elf"
+class = ["MAGE"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_CHARM", "NO_POISON", "NO_SLEEP", "REF_MAGIC", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.80102.applies]]
+type = "INT"
+degree = 5
+[[mobiles.80102.applies]]
+type = "WIS"
+degree = 5
+[[mobiles.80102.applies]]
+type = "SAVING_BREATH"
+degree = -100
+[[mobiles.80102.applies]]
+type = "SAVING_SPELL"
+degree = -100
+[[mobiles.80102.applies]]
+type = "SAVING_EARTH"
+degree = -125
+[[mobiles.80102.applies]]
+type = "DODGE"
+degree = -250
+[[mobiles.80102.applies]]
+type = "POWER_POTENTIAL"
+degree = 35
+[[mobiles.80102.applies]]
+type = "REDUCE_MAGIC"
+degree = 1000
+[[mobiles.80102.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.80102.applies]]
+type = "APPLY_GMAGIC"
+degree = 1000
+[[mobiles.80102.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80102.programs]]
+trigger = "entry_greet_prog"
+argument = "100"
+script = """
+if is_qmark($r) == malathar_enemy
+	yell 你這個惡棍竟然還敢出現在這裡！
+	mpkill $r
+	cast curse $r
+	mpnowait
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell 你這個惡棍竟然還敢出現在這裡！
+        mpkill $n
+        cast curse $n
+        mpnowait
+else
+        if is_qmark($n) == malathar_quest 100038
+                if is_qmark($n) == malathar_quest_divine
+                        mpmod_qmark $n malathar_quest v0 = 39
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        tell $n 喔，是你啊，來得正好。
+                        mpcallout 1 hmm
+                        mpcallout 2 tell $n 看起來你已經得到了他們所謂的神力加護，有沒有用倒是另一回事。
+                        mpcallout 3 tell $n 先不提這個，之前在你去愛潔梅菲的時候......
+                        mpcallout 4 mpecho $I停了一下，似乎有點為難的樣子。
+                        mpcallout 5 tell $n 泰斯托拉特來找過我，他似乎想見你一面。
+                        mpcallout 6 tell $n 之前他一直反對靠外地人的力量與惡魔對抗，他覺得這樣有辱瑪拉勒的光榮歷史。
+                        mpcallout 7 tell $n 這次他找你可能也不會有什麼好事，不過你還是去見他一面吧。
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                else
+                        ponder $n
+                        tell $n 還沒得到神力的加護嗎？年輕人？
+                endif
+        else
+                if ispc($n)
+                        tell $n 年輕人，你好啊。
+                        nod $n
+                endif
+        endif
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100033
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 34
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        tell $n 喔，是你啊，來得真是時候。
+                        mpcallout 1 mpecho $I好像在思考什麼事的樣子。
+                        mpcallout 2 tell $n 你也看見了，上次的惡魔士兵只是敵人的先鋒部隊。
+                        mpcallout 3 tell $n 很遺憾的是......我軍的戰士們在那場戰鬥中折損慘重。
+                        mpcallout 4 tell $n 愛潔梅菲那邊雖然也派出了援兵，不過效果也很有限。
+                        mpcallout 5 tell $n 然而，他們在戰鬥結束後傳來訊息，要準備使用神的力量與敵軍對抗。
+                        mpcallout 6 tell $n 要是惡魔再次入侵，他們就要派出受到神力加護的援兵。
+                        mpcallout 7 ponder
+                        mpcallout 8 tell $n 雖然不知道這個情報是真是假，不過總比束手無策要好。
+                        mpcallout 9 tell $n 另外，對方也希望你一同去接受神力的加護。
+                        mpcallout 9 mpechoaround $n 你發現$N的表情好像有點僵硬。
+                        mpcallout 10 tell $n 你去見他們的巫女，就說是我拜託你去的。
+                        mpcallout 10 mpdel_qmark self malathar_talking
+                endif
+        else
+                tell $n 年輕人，你好啊。
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "talk_prog"
+argument = "report"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100011
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 12
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpmod_qmark $n malathar_quest v2 = 12
+                        mpforce $n follow $i
+                        mpechoat $n 你將先前發生的事告訴了$I......
+                        mpcallout 1 hmm
+                        mpcallout 2 tell $n 沒想到敵人竟然派了具有附體能力的間諜進來！我竟然沒發現！
+                        mpcallout 3 tell $n 真是太糟糕了，我必須找時間與公爵閣下談談才行。
+                        mpcallout 4 tell $n 雖然我不認識你，不過謝謝你的情報。
+                        mpcallout 5 mpexp $n 25000
+                        mpcallout 6 mpechoat $n 臨走前，你聽到$I的自言自語......
+                        mpcallout 7 mpechoat $n 「這次說什麼一定要他同意和愛潔梅菲和談才行......」
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "talk_prog"
+argument = "Ageemephy"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100012
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 13
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        mpecho $I露出一副很傷腦筋的表情。
+                        mpcallout 1 tell $n 愛潔梅菲就是我們瑪拉勒南方海洋上的一個小島，是獨立的自治區域。
+                        mpcallout 2 tell $n 那個地方的人們向來保持著對外封閉的態度，很少主動與外界接觸。
+                        mpcallout 3 tell $n 我們與他們本來是相安無事，不過啊......
+                        mpcallout 4 glare
+                        mpcallout 5 tell $n 好幾年前，我們和他們起了爭執，後來事情鬧大了，雙方就開始冷戰。
+                        mpcallout 6 tell $n 我們與他們是唇亡齒寒的關係，相信他們也有人瞭解這一點。
+                        mpcallout 7 tell $n 可是公爵閣下卻不願意承認當年的錯誤，而對方的領導人也一樣。
+                        mpcallout 8 tell $n 而現在暗黑主宰的爪牙已經進犯到這一帶了，我擔心敵人會大舉入侵。
+                        mpcallout 9 tell $n 一旦瑪拉勒不幸淪陷，下一個就輪到愛潔梅菲了。
+                        mpcallout 10 tell $n 就算不淪陷，得不到愛潔梅菲援助的瑪拉勒恐怕也得承受巨大的打擊。
+                        mpcallout 11 tell $n 因此，我說什麼一定要設法說服公爵點頭答應與他們和談！
+                        mpcallout 12 tell $n 至少我們得先表現出誠意，否則什麼都不用談了......
+                        mpcallout 13 mpecho 說著，$I朝著公爵的宮殿走去了......
+                        mpcallout 14 mpgoto 80187
+                        mpcallout 14 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "talk_prog"
+argument = "crystal"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100020
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 21
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpforce $n follow $i
+                        mpechoat $n 你將茵娜琪開出來的條件一字不漏地告訴了$I。
+                        mpcallout 1 ponder
+                        mpcallout 2 tell $n 這個條件倒還不過份，可是那枚水晶已經送去研究了。
+                        mpcallout 3 tell $n 沒辦法，拿這個去吧......
+                        mpcallout 4 mpechoat $n $I將傀儡水晶的碎片別在你的衣服上。
+                        mpcallout 5 tell $n 這是用我的魔力固定的，一般方法拿不下來。
+                        mpcallout 6 tell $n 你去向對方報上我的名字就可以了，快去吧！
+                        mpcallout 6 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "give_prog"
+argument = "80178"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100011
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 12
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpmod_qmark $n malathar_quest v2 = 12
+                        mpforce $n follow $i
+                        tell $n 啊，你的事我聽說了，做得真漂亮。
+                        mpcallout 1 tell $n 不過沒想到敵人會派間諜前來，甚至附身在工會會長身上。
+                        mpcallout 2 tell $n 看起來，暗黑勢力想進犯此地的意圖已經很明顯了。
+                        mpcallout 3 worry
+                        mpcallout 4 tell $n 我必須和公爵閣下談談才行，你辛苦了，謝謝你的幫忙。
+                        mpcallout 5 mpresp $n 2
+                        mpcallout 5 mpexp $n 20000
+                        mpcallout 5 mpskillexp $n 15000
+                        mpcallout 6 mpechoat $n 臨走前，你聽到$I的自言自語......
+                        mpcallout 7 mpechoat $n 「果然還是需要愛潔梅菲的力量才行哪......」
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                endif
+        else
+                say 喔，這真是不得了，我得好好研究研究！
+                mpgold $n 300000
+        endif
+        mpjunk $o
+else
+        mpechoat $n 別人講話時不要插嘴。
+        give $o $n
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        say 高舉著聖之火炬的八位使徒，將焚燒你的身軀！
+        mpecho $I一口氣召來八道聖火！
+        cast 2 flamestrike $n
+        mpnowait
+        cast 2 flamestrike $r
+        mpnowait
+        cast 2 flamestrike $n
+        mpnowait
+        cast 2 flamestrike $r
+        mpnowait
+else
+        if rand(33)
+                say 勇猛的戰神哪，賜予吾破敵之贊歌！
+                mpecho 一股令人反胃的氣息直撲而來！
+                cast 2 'gas breath'
+                mpnowait
+        else
+                if rand(50)
+                        yell You～～Can Not Pass～～!!
+                        mpecho $I呼喊著禁忌的咒文，使出了自身最強的魔法！
+                        cast 2 'fulgurant dance'
+                        mpnowait
+                else
+                        mpechoat $n 當你正忙著與$I戰鬥時，一個鬼鬼祟祟的傢伙忽然自背後捅了你一刀！
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+"""
+[[mobiles.80102.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80103]
+keywords = "priest lallinthenera"
+short_description = "大祭司‧拉林希拉(High Priest Lallinthera)"
+long_description = "大祭司拉林希拉(High Priest Lallinthera)站在你的面前。\n"
+description = """
+這名親切的年長精靈成為精靈之神在瑪拉勒領地的直接代表，已經有數百年的歷
+史了。他的智慧，以及他在占星學與治療方面的知識更是無人能出其右，也許他
+會替你治療。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "REGENERACY"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "CONTINUE_CURE"]
+alignment = 1000
+level = 56
+mod_hitplus = 15000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["MAGE"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_CHARM", "NO_POISON", "NO_SLEEP", "REF_MAGIC", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.80103.applies]]
+type = "INT"
+degree = 5
+[[mobiles.80103.applies]]
+type = "WIS"
+degree = 5
+[[mobiles.80103.applies]]
+type = "SAVING_BREATH"
+degree = -100
+[[mobiles.80103.applies]]
+type = "SAVING_SPELL"
+degree = -100
+[[mobiles.80103.applies]]
+type = "SAVING_EARTH"
+degree = -125
+[[mobiles.80103.applies]]
+type = "DODGE"
+degree = -250
+[[mobiles.80103.applies]]
+type = "POWER_POTENTIAL"
+degree = 35
+[[mobiles.80103.applies]]
+type = "REDUCE_MAGIC"
+degree = 1000
+[[mobiles.80103.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.80103.applies]]
+type = "APPLY_GMAGIC"
+degree = 1000
+[[mobiles.80103.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80103.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell 豈有此理，竟然有暴徒敢在這裡肆虐！
+        mpkill $n
+else
+        if ispc($n)
+                tell $n 你好，請問有什麼指教嗎？
+                nod $n
+        endif
+endif
+"""
+[[mobiles.80103.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100003
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 4
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 你好，外來的旅客......不，或許該稱呼你為勇士。
+                        mpcallout 1 tell $n 聽說你先前在城外碰到了一群邪惡生物，是嗎？
+                        mpcallout 2 mpforce $n nod
+                        mpcallout 3 sigh
+                        mpcallout 4 tell $n 果然來了，暗黑勢力(darkforce)的魔爪終於也伸往這個國家了。
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        else
+                tell $n 你好，請問有什麼指教嗎？
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80103.programs]]
+trigger = "talk_prog"
+argument = "darkforce"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100004
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 5
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 我想你應該聽過或是碰過楓紅村的卡瑪斯，以及其他地方的邪惡勢力。
+                        mpcallout 1 tell $n 同樣的，你應該也聽過他們口中所謂的「暗黑主宰」。
+                        mpcallout 2 tell $n 雖然尚未證實，不過根據我占卜的結果，這次輪到我們瑪拉勒了。
+                        mpcallout 3 tell $n 我認為那些小惡鬼斥候就是他們的先遣偵察部隊。
+                        mpcallout 4 tell $n 一但敵軍大舉入侵，我們現在的狀況(conditions)可能很難應付他們。
+                        mpcallout 5 sigh
+                        mpcallout 5 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80103.programs]]
+trigger = "talk_prog"
+argument = "conditions"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100005
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 6
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        glare
+                        mpcallout 1 ponder
+                        mpcallout 2 sigh
+                        mpcallout 3 tell $n 雖然我們城裡表面上看起來沒什麼，但是......
+                        mpcallout 4 tell $n 前陣子城內某些秘密的防禦設施被破壞了，現在才剛修好一部份。
+                        mpcallout 5 tell $n 最近又不斷有小規模的敵軍在邊境騷擾。
+                        mpcallout 6 tell $n 幽暗密林和幽暗地域一帶也不怎麼平靜的樣子。
+                        mpcallout 7 tell $n 最糟糕的是，我們和南方的愛潔梅菲島之間鬧僵了。
+                        mpcallout 8 tell $n 要是再這樣下去，我擔心瑪拉勒在不久的未來可能會成為第二個鬼鎮或是泰洛斯呀！
+                        mpcallout 9 worry
+                        mpcallout 10 mpechoat $n 根據你長年的冒險經驗，眼前這個老先生八成正在等著你的協助(help)......
+                        mpcallout 10 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80103.programs]]
+trigger = "talk_prog"
+argument = "help"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100006
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 7
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 協助？不，這是我們自己的問題，不關你的事。
+                        mpcallout 1 tell $n 不過如果你真的想協助我們，那麼請你到祭壇捐獻你的法力吧。
+                        mpcallout 2 tell $n 只要注入(pour)就可以了，不會耗損你太多的法力。
+                        mpcallout 2 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80103.programs]]
+trigger = "talk_prog"
+argument = "finish"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) != malathar_quest 100007
+        or is_qmark($n) != malathar_quest 300010
+        else
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 8
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 辛苦了，勇士。
+                        mpcallout 1 tell $n 這個東西是我們瑪拉勒的特產，請收下吧。
+                        mpcallout 2 mpechoat $n $I給了你一顆草綠色的果實，好大......
+                        mpcallout 2 mpoload 80174 $n 30 target
+                        mpcallout 3 tell $n 另外，順便給你個忠告，我懷疑城內有敵人的間諜，你可要小心。
+                        mpcallout 4 tell $n 要是間諜覺得你對他們的計畫有所威脅，他們可能會對你不利，謹記。
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80103.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        cast 2 'lightning bolt' $n
+        mpnowait
+        cast 2 'lightning bolt' $n
+        mpnowait
+        cast 2 'lightning bolt' $r
+        mpnowait
+        cast 2 'lightning bolt' $r
+        mpnowait
+else
+        if rand(33)
+                cast 2 whirlwind
+                mpnowait
+        else
+                if rand(50)
+                        cast curse $r
+                        mpnowait
+                        cast tardy $r
+                        mpnowait
+                        cast 'faerie fire' $r
+                        mpnowait
+                        cast weaken $r
+                        mpnowait
+                else
+                        mpechoat $n 當你正忙著與$I戰鬥時，一個鬼鬼祟祟的傢伙忽然自背後捅了你一刀！
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+"""
+[[mobiles.80103.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80104]
+keywords = "haan dragon platinum wyrm"
+short_description = "白金龍(Platinum Dragon)"
+long_description = "這頭被稱為漢恩的白金龍(Platinum Dragon)在這裡睡覺，牠是公爵的盟友。\n"
+description = """
+在數百年前的小惡鬼戰爭中，極強的漢恩曾經是公爵的戰馬，但現在牠的全盛期
+已經過去了，而牠現在大部份的時間都在睡覺，並且在夢中回憶過去的光榮。飛
+龍是很長壽的，而精靈的壽命更長，而現在牠與牠的主人都因為來日不多而感到
+悲傷。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "REGENERACY", "MOB_AI"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "CONTINUE_CURE"]
+alignment = 1000
+level = 57
+mod_hitplus = 35000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Dragon"
+class = ["WARRIOR", "THIEF", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_POISON", "NO_SLEEP", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "MOBAI_LV3", "NO_PARA"]
+[[mobiles.80104.applies]]
+type = "AC"
+degree = -1000
+[[mobiles.80104.applies]]
+type = "SAVING_BREATH"
+degree = -35
+[[mobiles.80104.applies]]
+type = "SAVING_SPELL"
+degree = -35
+[[mobiles.80104.applies]]
+type = "SAVING_ELEMENT"
+degree = -35
+[[mobiles.80104.applies]]
+type = "DODGE"
+degree = -400
+[[mobiles.80104.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.80104.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.80104.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 500
+[[mobiles.80104.applies]]
+type = "APPLY_GMAGIC"
+degree = 500
+[[mobiles.80104.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80104.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        cast 2 'fire breath' $n
+        mpnowait
+else
+        if ispc($n)
+                mpechoat $n 嚇！你看到一頭大得嚇人的白金龍！
+                if is_qmark($n) == malathar_quest 100013
+                        mpechoat $n 看著眼前這頭老龍，不妨問問他對瑪拉勒與愛潔梅菲島之間情勢的看法。
+                endif
+        endif
+endif
+"""
+[[mobiles.80104.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100008
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 9
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n $I緩緩張開雙眼，打量了你幾下......
+                        mpcallout 1 tell $n 找我這頭來日無多的老龍有什麼事？
+                        mpcallout 2 tell $n 沒事的話就走吧，這裡不是年輕人的遊樂場。
+                        mpcallout 3 mpechoat $n 你忽然想起大祭司提過的間諜(spy)，或許牠會有點情報也說不定？
+                        mpcallout 3 mpdel_qmark self malathar_talking
+                endif
+        else
+                mpechoat $n 牠似乎不想理你，繼續睡覺。
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80104.programs]]
+trigger = "talk_prog"
+argument = "spy"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100009
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 10
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n $I緩緩張開雙眼，打量了你幾下......
+                        mpcallout 1 tell $n 間諜？你也發現了嗎？
+                        mpcallout 2 mpecho $I的眼神似乎有點不一樣了。
+                        mpcallout 3 tell $n 從幾個月前開始，我已經注意到有股異樣的勢力盤踞在城內。
+                        mpcallout 4 tell $n 然而城內的活動並沒有什麼變化，因此我推測......
+                        mpcallout 5 tell $n 敵人可能偽裝成一般居民，或是附體於居民身上。
+                        mpcallout 6 tell $n 至於是誰......這已經超出我的能力範圍了。
+                        mpcallout 7 tell $n 如果說城內其他人也沒發現，那麼可能得借用南方島嶼的力量了......
+                        mpcallout 7 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80104.programs]]
+trigger = "talk_prog"
+argument = "Ageemephy"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100013
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 14
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n 你將先前從大法師托爾那裡聽來的東西略為描述了一遍。
+                        mpcallout 1 mpechoat $n $I緩緩張開雙眼，打量了你幾下......
+                        mpcallout 2 tell $n 你已經知道這兩個勢力的冷戰狀態，那我也不用多說了。
+                        mpcallout 3 tell $n 首先我要為你的英勇表示敬意，感謝你除去了城內那股異常的力量。
+                        mpcallout 4 tell $n 至於托爾所說的話是對的，雙方必須同心協力才能抵禦這共同的敵人。
+                        mpcallout 5 tell $n 但是，南方島嶼的狀況與瑪拉勒不同......
+                        mpcallout 6 yawn
+                        mpcallout 7 tell $n 瑪拉勒基本上是公爵獨攬大權，南方島嶼那邊卻不一樣。
+                        mpcallout 8 tell $n 除了村長與長老以外，島上的賢者、巫女、民兵隊長在島上都具有不小的影響力。
+                        mpcallout 9 tell $n 人多嘴雜，所以即使瑪拉勒有意和談，對方也不見得會有善意回應。
+                        mpcallout 10 tell $n 如果你能說服雙方，那麼鐵定是大功一件，就看你有沒有這個意願與能力了......
+                        mpcallout 11 tell $n 要是你有興趣，可以先與他們的巫女談談，就說是我漢恩(Haan)派你去的。
+                        mpcallout 11 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80104.programs]]
+trigger = "talk_prog"
+argument = "Hailock"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100026
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 27
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpechoat $n 你把之前發生的事，以及海拉克長老所說的全都告訴了$I。
+                        mpcallout 1 mpechoat $n $I緩緩張開雙眼，打量了你幾下......
+                        mpcallout 2 tell $n 比想像中的還要順利，現在就差臨門一腳了。
+                        mpcallout 3 tell $n 要是托爾勸服不了公爵，必要的時候只好靠我出馬了......
+                        mpcallout 4 tell $n 至於對方的長老所指的......應該是這個。
+                        mpcallout 5 mpechoat $n $I龍尾忽然掃過你頭上，接著一個小東西落到你的手中。
+                        mpcallout 6 mpoload 80179 $n 36 target
+                        mpcallout 6 tell $n 將這個東西交給他，他應該就明白了，假如弄丟(lost)的話再來找我。
+                        mpcallout 6 mpdel_qmark self malathar_talking
+                endif
+        endif
+        if is_qmark($n) == malathar_quest 100028
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 29
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 做得很好，另外我也有好消息，就是公爵終於答應和解了。
+                        mpcallout 1 tell $n 雖然讓他同意的手段稍微粗暴了一點......
+                        mpcallout 2 tell $n 你辛苦了，再來應該就沒你的事了。
+                        mpcallout 3 tell $n 這是給你的酬勞，感謝你這麼熱心協助。
+                        mpcallout 4 mpexp $n 50000
+                        mpcallout 4 mpskillexp $n 20000
+                        mpcallout 4 mpoload 80180 $n 36 target
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80104.programs]]
+trigger = "talk_prog"
+argument = "lost"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100027
+                if is_qmark($n) != malathar_enemy
+                        mpoload 80179 $n 36 target
+                        mpexp $n -5000
+                        mpechoat $n $I將手鐲交給了你。
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80104.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        cast 'acid breath' $r
+        mpnowait
+        cast 'fire breath' $r
+        mpnowait
+else
+        if rand(33)
+                cast 'frost breath' $r
+                mpnowait
+                cast 'lightning breath' $r
+                mpnowait
+        else
+                if rand(50)
+                        cast 2 'gas breath'
+                        mpnowait
+                else
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                endif
+        endif
+endif
+"""
+[[mobiles.80104.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80105]
+keywords = "guard elite elf elven"
+short_description = "菁英精靈衛兵(Elite Elven Guard)"
+long_description = "一名公爵旗下的菁英精靈衛兵(Elite Elven Guard)表情認真，動也不動地站在這裡。\n"
+description = """
+公爵旗下的菁英精靈衛兵是從最優秀的戰士中遴選出來的，這些戰士中有許多都
+曾參與過小惡鬼戰爭，而且他們永遠對公爵效忠。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 1000
+level = 45
+mod_hitplus = 8000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "MOBAI_LV2"]
+[[mobiles.80105.applies]]
+type = "HITROLL"
+degree = 70
+[[mobiles.80105.applies]]
+type = "DAMROLL"
+degree = 70
+[[mobiles.80105.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.80105.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.80105.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.80105.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.80105.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80105.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell $N是個可惡的罪犯！保護無辜群眾！衝啊！
+        mpkill $n
+endif
+"""
+[[mobiles.80105.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        frenzy
+        mpnowait
+        cast 2 'double heal'
+        mpnowait
+else
+        if rand(50)
+                cast curse $n
+                mpnowait
+                fulgurant
+                mpnowait
+        else
+                mpat 5 mpdis_magic self 'seal magic'
+                cast 'mystic mirror'
+                mpnowait
+        endif
+endif
+"""
+[[mobiles.80105.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 15
+        mpechoat $n $I臨死之前朝你噴出一股毒霧！
+        mpechoaround $n $I臨死之前朝$N噴出一股毒霧！
+        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+endif
+"""
+
+[mobiles.80106]
+keywords = "scout elite elf elven"
+short_description = "菁英精靈斥候(Elite Elven Scout)"
+long_description = "一名公爵旗下的菁英精靈斥候(Elite Elven Scout)以懷疑的眼光盯著你看。\n"
+description = """
+公爵旗下的菁英精靈斥候是老練的遊俠與密探，他們分成許多小組，藉以探查那
+些危險的小惡鬼與食人妖之類的敵人，這種組合同時也便於領地的邊境巡邏。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "CRITICAL", "HUNT", "TRACK", "REFLEXION"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "SNEAK", "HIDE"]
+alignment = 1000
+level = 40
+mod_hitplus = 8000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "THIEF", "SWORD", "SHOT_ARROW"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "ALY_SNEAK"]
+[[mobiles.80106.applies]]
+type = "SAVING_BREATH"
+degree = -80
+[[mobiles.80106.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.80106.applies]]
+type = "APPLY_ADAMAGE"
+degree = 75
+[[mobiles.80106.applies]]
+type = "APPLY_AMAGIC"
+degree = 75
+[[mobiles.80106.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80106.programs]]
+trigger = "entry_prog"
+argument = "100"
+script = """
+if is_qmark($r) == malathar_enemy
+        yell $R是個可惡的罪犯！保護無辜群眾！衝啊！
+        mpkill $r
+endif
+"""
+[[mobiles.80106.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell $N是個可惡的罪犯！保護無辜群眾！衝啊！
+        mpkill $n
+endif
+"""
+[[mobiles.80106.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        meteoric
+        mpnowait
+        meteoric
+        mpnowait
+else
+        if rand(50)
+                cast fireball $r
+                mpnowait
+                cast fireball $r
+                mpnowait
+                cast fireball $r
+                mpnowait
+        else
+                skilldrv multihit $n
+                skilldrv multihit $n
+        endif
+endif
+"""
+[[mobiles.80106.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 15
+        skilldrv multihit $n
+        skilldrv multihit $n
+endif
+"""
+
+[mobiles.80107]
+keywords = "guard city elf elven"
+short_description = "瑪拉勒城市守衛(Malatharan City Guard)"
+long_description = "一名忠誠的瑪拉勒城市守衛(Malatharan City Guard)在街上巡邏。\n"
+description = """
+瑪拉勒城的守衛們，以他們對仁慈公爵的忠誠心而聞名。他們穿著暗紅色與金色
+的城市戰袍，拿著鋒銳的劍與堅固的盾。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 1000
+level = 30
+mod_hitplus = 7500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "MOBAI_LV2"]
+[[mobiles.80107.applies]]
+type = "HITROLL"
+degree = 30
+[[mobiles.80107.applies]]
+type = "DAMROLL"
+degree = 30
+[[mobiles.80107.applies]]
+type = "SAVING_SPELL"
+degree = -25
+[[mobiles.80107.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.80107.applies]]
+type = "REDUCE_DAMAGE"
+degree = 25
+[[mobiles.80107.applies]]
+type = "REDUCE_MAGIC"
+degree = 25
+[[mobiles.80107.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+wear all
+"""
+[[mobiles.80107.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell $N！你這個殘暴的壞蛋！不准你進城！
+        mpkill $n
+        snare $n
+        mpnowait
+endif
+"""
+[[mobiles.80107.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        flaming
+        mpnowait
+else
+        if rand(50)
+                cast 'sun flash'
+                mpnowait
+        else
+                skilldrv multihit $n
+        endif
+endif
+"""
+[[mobiles.80107.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80108]
+keywords = "citizen elf elven"
+short_description = "瑪拉勒市民(Citizen of Malathar)"
+long_description = "一名瑪拉勒城的市民(Citizen of Malathar)悠閒地散步。\n"
+description = """
+這座城市有相當多的市民都愛好和平，他是其中一個。在這麼強力的人們，像是
+守衛、菁英衛兵、白金龍漢恩以及公爵的保護之下，市民們當然會感到安心。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 12
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80108.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80109]
+keywords = "citizen elf elven"
+short_description = "瑪拉勒市民(Citizen of Malathar)"
+long_description = "一名瑪拉勒城的市民(Citizen of Malathar)悠閒地散步。\n"
+description = """
+這座城市有相當多的市民都愛好和平，她是其中一個。在這麼強力的人們，像是
+守衛、菁英衛兵、白金龍漢恩以及公爵的保護之下，市民們當然會感到安心。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 12
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80109.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80110]
+keywords = "acolyte-npc"
+short_description = "侍祭(Acolyte)"
+long_description = "一名男性侍祭(Acolyte)站在這裡。\n"
+description = """
+這座城市的守護神的侍祭正為他的工作忙得焦頭爛額。他穿著傳統的黑色長袍，
+這個顏色代表著不幸，指的是那些被精靈之神與公爵從恐怖的小惡鬼手中救出來
+的精靈們之命運。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 15
+mod_hitplus = 5000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80110.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80111]
+keywords = "acolyte-npc"
+short_description = "女侍祭(Acolyte)"
+long_description = "一名女性侍祭(Acolyte)站在這裡。\n"
+description = """
+這座城市的守護神的侍祭正為他的工作忙得焦頭爛額。他穿著傳統的黑色長袍，
+這個顏色代表著不幸，指的是那些被精靈之神與公爵從恐怖的小惡鬼手中救出來
+的精靈們之命運。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 15
+mod_hitplus = 5000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80111.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80112]
+keywords = "guardian high elf elven"
+short_description = "瑪拉勒高階衛士(High Guardian of Malathar)"
+long_description = "這名高階衛士(High Guardian of Malathar)嚴肅地站在你的面前。\n"
+description = """
+在小惡鬼戰爭中的英勇精靈騎士，這名高階衛士曾經被他的敵人捉住，並且昏死
+過去，在被當成死屍拋棄後，他被精靈之神所拯救，神給了他神奇的力量，代價
+是他必須發誓，在有生之年全力守護城市與公爵。有著純潔心靈與勇氣的他很高
+興能這麼做，而他到目前為止仍然一直遵循著他的誓言。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT", "FLYING"]
+alignment = 1000
+level = 99
+mod_hitplus = 12000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_POISON", "ALY_SAN", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.80112.applies]]
+type = "DAMROLL"
+degree = 70
+[[mobiles.80112.applies]]
+type = "SAVING_BREATH"
+degree = -50
+[[mobiles.80112.applies]]
+type = "SAVING_ELEMENT"
+degree = -50
+[[mobiles.80112.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.80112.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.80112.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.80112.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.80112.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.80112.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 350
+[[mobiles.80112.applies]]
+type = "APPLY_GMAGIC"
+degree = 350
+[[mobiles.80112.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80112.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell 遵循與神之誓言，守護瑪拉勒城不受外敵侵犯！
+        yell 我要讓你們明白，沒有任何人能越過我的劍鋒！
+        mpkill $n
+        hunt $n
+        mpnowait
+        earth
+        mpnowait
+else
+        if ispc($n)
+                mpechoat $n 你感受到一股強者的氣勢......
+        endif
+endif
+"""
+[[mobiles.80112.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+mpat 5 cast 2 'double heal'
+if rand(25)
+        perform empslash
+        mpnowait
+        perform empslash
+        mpnowait
+else
+        if rand(33)
+                change $r
+                flaming
+                mpnowait
+                fulgurant
+                mpnowait
+        else
+                if rand(50)
+                        icecore
+                        mpnowait
+                        storm
+                        mpnowait
+                else
+                        frenzy
+                        mpnowait
+                        change $r
+                        frenzy
+                        mpnowait
+                endif
+        endif
+endif
+"""
+[[mobiles.80112.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+mpecho 殘餘的神力讓$I發動了不計後果的最後猛攻！
+skilldrv multihit $r
+skilldrv multihit $r
+skilldrv multihit $r
+skilldrv multihit $r
+"""
+
+[mobiles.80113]
+keywords = "cooshee dog pet"
+short_description = "精靈犬(Cooshee)"
+long_description = "一隻精靈犬(Cooshee)在這裡，牠是精靈們忠實的寵物與獵犬。\n"
+description = """
+這是山谷精靈們贈送給他們住在瑪拉勒城的遠親們之禮物，這種狗以忠心以及聰
+敏而聞名。精靈們把牠們當成寵物、獵犬、看門犬以及斥候犬，要是殺死或是傷
+到其中一隻，將會受到和殺死精靈同等嚴厲的懲罰，這是精靈們對牠們的愛護。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 400
+level = 10
+mod_hitplus = 5000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80113.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80114]
+keywords = "pegasus"
+short_description = "飛馬(Pegasus)"
+long_description = "一匹飛馬(Pegasus)站在這裡，牠是某些菁英衛兵忠實的座騎。\n"
+description = """
+飛馬是那些為保護公爵、為公爵而戰的高階衛士們專用的座騎。這些英挺、有翅
+膀的馬匹高貴而聰明，而且會很樂意犧牲生命以保護自己的主人。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING"]
+alignment = 500
+level = 25
+mod_hitplus = 5000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80114.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+        kick $r
+        mpnowait
+        kick $r
+        mpnowait
+        kick $r
+        mpnowait
+else
+        skilldrv multihit $r
+endif
+"""
+
+[mobiles.80115]
+keywords = "unicorn"
+short_description = "獨角獸(Unicorn)"
+long_description = "一匹獨角獸(Unicorn)站在這裡，牠是某些貴族的座騎。\n"
+description = """
+獨角獸是提供給瑪拉勒城中的貴族們當座騎使用，前提是該貴族必須要有資格配
+給僕人才行。這種野獸非常的聰明，而且牠們不會投身於沒有勝算的戰鬥，不過
+牠們不太喜歡讓牠們的主人陷入可以事先避免的死亡危機中。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["BLIND", "INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 30
+mod_hitplus = 5000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Beast"
+class = ["WARRIOR", "THIEF"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80115.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+        skilldrv multihit $r
+        skilldrv multihit $r
+else
+        bashhead
+        mpnowait
+        bashhead
+        mpnowait
+endif
+"""
+
+[mobiles.80116]
+keywords = "scout elf elven"
+short_description = "精靈斥候(Elven Scout)"
+long_description = "一名精靈斥候(Elven Scout)在這裡，準備前往邊境偵察小惡鬼們的動向。\n"
+description = """
+這些為公爵賣命的斥候由年輕的精靈組成，他們希望有朝一日能成為菁英斥候，
+不過他們更希望能在困難的邊境偵察與戰鬥任務中存活下來。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "CRITICAL", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "SNEAK", "HIDE"]
+alignment = 1000
+level = 18
+mod_hitplus = 7500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "ALY_SNEAK"]
+[[mobiles.80116.applies]]
+type = "SAVING_BREATH"
+degree = -50
+[[mobiles.80116.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.80116.applies]]
+type = "APPLY_ADAMAGE"
+degree = 35
+[[mobiles.80116.applies]]
+type = "APPLY_AMAGIC"
+degree = 35
+
+[mobiles.80117]
+keywords = "child elf elven"
+short_description = "精靈孩童(Elven child)"
+long_description = "一名精靈孩童(Elven child)在這裡玩耍。\n"
+description = """
+這個小孩在他父母家鄉的街道上快樂地嬉戲，完全不曉得他有多少族人最近剛死
+在小惡鬼們的手上。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = 400
+level = 5
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80117.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80118]
+keywords = "child elf elven"
+short_description = "精靈孩童(Elven child)"
+long_description = "一名精靈孩童(Elven child)在這裡玩耍。\n"
+description = """
+這個小孩在她父母家鄉的街道上快樂地嬉戲，完全不曉得她有多少族人最近剛死
+在小惡鬼們的手上。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = 400
+level = 5
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80118.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80119]
+keywords = "menelas-npc mage"
+short_description = "法師‧密雷拉斯(Menelas the Mage)"
+long_description = "法師密雷拉斯(Menelas the Mage)歡迎你來到他的商店。\n"
+description = """
+密雷拉斯是瑪拉勒大法師托爾過去的徒弟，他創立了一間生意相當好的商店，專
+賣魔法物品，這對喜歡魔法的精靈們來說是很受歡迎的東西。
+"""
+act_flags = ["SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80119.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80120]
+keywords = "grein-npc armorer"
+short_description = "防具舖老闆‧格里恩(Grein the Armorer)"
+long_description = "防具舖老闆格里恩(Grein the Armorer)用粗啞的聲音歡迎你來到他的防具舖。\n"
+description = """
+格里恩是小惡鬼戰爭中的老兵，低階的精靈步兵。像他那些更低階的精靈同伴們
+一樣，勇敢地為那些貴族們－－那些幾乎已經忘記這些為了拯救他們的低階步兵
+的貴族而戰。不過，格里恩已經計劃要在防具生意上，和他的兄弟托洛斯一起賺
+大錢，他兄弟在軍火方面是這個國家內最受人尊敬的幾個商人之一。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80120.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80121]
+keywords = "tolos-npc weaponsmith smith"
+short_description = "武器舖老闆‧托洛斯(Tolos the Weaponsmith)"
+long_description = "武器舖老闆托洛斯(Tolos the Weaponsmith)在你走進他的店舖時冷冷地盯著你看。\n"
+description = """
+托洛斯是格里恩的兄弟，他對他的戰友以及他戰後的待遇都沒什麼好感。不過，
+他仍然有著精靈輕視外來者的個性，不管你是什麼種族，他都會用冷漠的態度對
+待你。儘管他有這種缺點，托洛斯還是個光明正大的商人，會給你好價錢的。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80121.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80122]
+keywords = "mithara-npc herbalist healer"
+short_description = "草藥醫者‧蜜珊拉(Mithara the Herbalist)"
+long_description = "草藥醫者蜜珊拉(Mithara the Herbalist)在你走進店裡時給了你一個歡迎光臨的甜笑。\n"
+description = """
+蜜珊拉是位受人敬重的草藥學家與醫生，如果你想要買賣藥丸、草藥、藥水或是
+其他類似的東西，她都能幫你。另外，只要一點小錢，她也能幫你療傷。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80122.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80123]
+keywords = "loothala-npc cook elf"
+short_description = "廚師‧露珊拉(Loothala the fine Elven Cook)"
+long_description = "優秀的精靈廚師露珊拉(Loothala the fine Elven Cook)歡迎你光臨她的餐廳。\n"
+description = """
+<不，她不會把精靈煮來吃......>
+露珊拉所做美食與可口的點心相當有名，你在這裡可以看到任何一個老饕，除此
+之外，合理的價格也是吸引顧客前來的原因之一。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80123.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80124]
+keywords = "dyenkalas-npc grocer"
+short_description = "雜貨店老闆‧戴恩卡拉斯(Dyenkalas the Grocer)"
+long_description = "雜貨店老闆戴恩卡拉斯(Dyenkalas the Grocer)歡迎你光臨他的商店。\n"
+description = """
+戴恩卡拉斯可以滿足你在基本探險用品方面的需求，像是油燈、火把、毛毯、背
+包、袋子等等。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80124.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80125]
+keywords = "wolthan-npc blacksmith smith"
+short_description = "鐵匠‧渥森(Wolthan the Blacksmith)"
+long_description = "鐵匠渥森(Wolthan the Blacksmith)能替你修補損壞的裝備。\n"
+description = """
+渥森是個不賴的鐵匠，能幫你把壞掉的裝備修好。人們說他的收費有點昂貴，但
+是他的手藝可以說完美無缺，幾乎沒有修理失敗的紀錄。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "SMITH"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80125.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80126]
+keywords = "sage tasstellat-npc"
+short_description = "賢者‧泰斯托拉特(Tasstellat the Sage)"
+long_description = "賢者泰斯托拉特(Tasstellat the Sage)等著要鑑定你身上所有的不明物品。\n"
+description = """
+泰斯托拉特睿智而且飽學，連瑣碎的小事也不例外，身為賢者的他可以鑑定你身
+上所有的東西，不管是魔法物品或是普通物品。身為偉大的鐵修斯神後裔，他將
+他的人類血統隱藏得相當好。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "REFLEXION"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "CONTINUE_CURE"]
+alignment = 1000
+level = 50
+mod_hitplus = 12500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Human"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_POISON", "NO_SLEEP", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA"]
+[[mobiles.80126.applies]]
+type = "SAVING_BREATH"
+degree = -100
+[[mobiles.80126.applies]]
+type = "DODGE"
+degree = -300
+[[mobiles.80126.applies]]
+type = "POWER_POTENTIAL"
+degree = 35
+[[mobiles.80126.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.80126.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.80126.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80126.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+        if is_qmark($i) != malathar_talking
+                if is_qmark($n) == malathar_quest 100041
+                        if is_inv_obj($n) == 10664
+                        or is_equ_obj($n) == 10664
+                                mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                                mpmod_qmark $n malathar_quest v0 = 42
+                                mpechoat $n 你手上的聖潔水晶忽然散發出破邪的聖光！
+                                mpechoaround $n $N手上的聖潔水晶忽然散發出破邪的聖光！
+                                mpcallout 1 say 哈哈哈哈！竟然被你看穿了！那麼就讓你死吧！
+                                mpcallout 2 say 這個傢伙的靈魂與記憶已經被我消化了，再來就輪到你了！
+                                mpcallout 3 mpecho 瞬間，$I的身體開始漲大，逐漸變成一隻肥壯的巨大惡魔！
+                                mpcallout 4 mpecho 同時，他背後也出現了兩名恐怖的美麗魔女！
+                                mpcallout 5 mpecho 要是你打不過他們，那麼至少也得告知(report)公爵這個情報！
+                                mpcallout 6 mpecho 以免到時讓他們跑了，而使得公爵他們失去了反制先機！
+                                mpcallout 6 mpmload 80162
+                                mpcallout 6 mpmload 80163
+                                mpcallout 7 mpmload 80161
+                                mpcallout 8 mpgoto 5
+                                mpcallout 9 mppurge self
+                        endif
+                endif
+        endif
+endif
+"""
+[[mobiles.80126.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100039
+                if is_qmark($n) != malathar_enemy
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        mpmod_qmark $n malathar_quest v0 = 40
+                        tell $n 哼，那個最近很活躍的外地傢伙就是你啊？
+                        mpcallout 1 mpechoat $n $I似乎不怎麼把你放在眼裡的樣子。
+                        mpcallout 2 tell $n 你給我聽好，我不管你之前做了什麼事，總之我們不需要你的幫忙。
+                        mpcallout 3 tell $n 瑪拉勒的事由我們瑪拉勒自己解決，你懂了嗎？
+                        mpcallout 4 tell $n 知道的話就快點離開這裡，否則一旦被惡魔殺死就是你自己倒楣了。
+                        mpcallout 5 mpechoat $n ......還真如托爾所說的，這傢伙可真不友善啊。
+                        mpcallout 5 mpdel_qmark self malathar_talking
+                endif
+        else
+                if ispc($n)
+                        tell $n 抱歉抱歉，之前出了一點小事，物品鑑定服務暫時停止中。
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80126.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        cast 2 powerball $r
+        mpnowait
+else
+        if rand(33)
+                mpgoto self
+                cast 'mystic mirror'
+                mpnowait
+                cast 'mystic armor'
+                mpnowait
+                cast 'flaming armor'
+                mpnowait
+                mpkill $r
+        else
+                if rand(50)
+                        cast blindness $r
+                        mpnowait
+                        cast blindness $n
+                        mpnowait
+                        cast weaken $r
+                        mpnowait
+                        cast weaken $n
+                        mpnowait
+                else
+                        mpechoat $n 當你正忙著與$I戰鬥時，一個鬼鬼祟祟的傢伙忽然自背後捅了你一刀！
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+"""
+[[mobiles.80126.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80127]
+keywords = "cartograhper kas-npc"
+short_description = "地圖繪師‧卡斯(Kas the Cartographer)"
+long_description = "地圖繪師卡斯(Kas the Cartographer)歡迎你光臨他的商店，並拿了張地圖給你。\n"
+description = """
+卡斯是個擅於旅行的精靈，事實上他自認為已經探勘過了這個已知世界的每個角
+落，並且可以賣你一些他繪製的地圖。如果你持有無法理解的地圖，可以問他看
+看，或許他能夠給你一些提示。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80127.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 需要什麼嗎？
+"""
+[[mobiles.80127.programs]]
+trigger = "talk_prog"
+argument = "p restore"
+script = """
+if is_qmark($n) == myth_map_restore 100000
+	tell $n 把地圖給我，然後付 100 萬。
+	break
+endif
+if is_qmark($n) == myth_map_restore 100001
+	tell $n 付我 100 萬。
+	break
+endif
+if is_inv_obj($n) == 21262
+	mpadd_qmark $n myth_map_restore -1 0 0 0 0 1
+	mpechoat $n $I打量著你手中的地圖...
+	tell $n 這張地圖是出自迷斯卓諾的手藝，上頭的秘術只在特定地點時才起作用。
+	tell $n 不過這東西已經毀損到無法使用了。
+	tell $n 如果你想修，就先把地圖給我，再付 100 萬就行了。
+endif
+"""
+[[mobiles.80127.programs]]
+trigger = "bribe_prog"
+argument = "1000000"
+script = """
+if is_qmark($n) == myth_map_restore 100001
+	mpdel_qmark $n myth_map_restore
+	mpoload 21263 $n 1 target
+	mpechoat $n $I拿出一瓶藥水塗在地圖上，泛黃立即變成一張白紙。
+	mpechoat $n $I給了你秘術航海圖(arcane map).
+	mpcallout 1 tell $n 這樣就修好了。
+else
+	? $n
+endif
+"""
+[[mobiles.80127.programs]]
+trigger = "bribe_prog"
+argument = "10000"
+script = """
+mpechoat $n $I給了你區域地圖(map of the area).
+mpoload 80171 $n 1 target
+"""
+[[mobiles.80127.programs]]
+trigger = "give_prog"
+argument = "21262"
+script = """
+if is_qmark($n) == myth_map_restore 100000
+	tell $n 再付我 100 萬，馬上幫你修好。
+	mpmod_qmark $n myth_map_restore v0 = 1
+	mpjunk $o
+else
+	? $n
+	give $o $n
+	drop $o
+endif
+"""
+[[mobiles.80127.programs]]
+trigger = "give_prog"
+argument = "all"
+script = """
+? $n
+give $o $n
+drop $o
+"""
+[[mobiles.80127.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+	mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+	mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80128]
+keywords = "noble elf elven"
+short_description = "精靈貴族(Elven Noble)"
+long_description = "一名精靈貴族(Elven Noble)高傲地要求你尊敬他。\n"
+description = """
+自從小惡鬼戰爭之後，原本因為戰爭而變得謙遜的精靈貴族們，現在又變回了原
+本的高傲模樣。雖然他們的確是忠誠而且勇敢的市民，但他們把別人看成低等階
+級的態度，讓他們成為許多市民以及奴僕們痛恨的對象。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 30
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80128.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 20
+endif
+"""
+
+[mobiles.80129]
+keywords = "noble elf elven"
+short_description = "精靈貴族(Elven Noble)"
+long_description = "一名精靈貴族(Elven Noble)高傲地要求你尊敬她。\n"
+description = """
+自從小惡鬼戰爭之後，原本因為戰爭而變得謙遜的精靈貴族們，現在又變回了原
+本的高傲模樣。雖然他們的確是忠誠而且勇敢的市民，但他們把別人看成低等階
+級的態度，讓他們成為許多市民以及奴僕們痛恨的對象。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 30
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80129.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 20
+endif
+"""
+
+[mobiles.80130]
+keywords = "guildmaster elven rastellagnar-npc"
+short_description = "精靈工會會長(The Elven Guildmaster)"
+long_description = "精靈工會的會長瑞斯托藍加(Rastellagnar)站在這裡。\n"
+description = """
+瑞斯托藍加專門協助精靈們，以及其他好學的學徒精進他們自身在精靈魔法上的
+知識。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "PRACTICE"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 30
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80130.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+        if is_qmark($n) != malathar_quest 100011
+        or is_qmark($n) >= malathar_quest 300012
+        else
+                if is_inv_obj($n) == 10664
+                or is_equ_obj($n) == 10664
+                        mpmod_qmark $n malathar_quest v2 + 1
+                        mpechoat $n 你手上的聖潔水晶忽然散發出破邪的聖光！
+                        mpechoaround $n $N手上的聖潔水晶忽然散發出破邪的聖光！
+                        mpecho 在聖光的照耀下，$I痛苦地呼號著，剎那間強大的武裝惡魔自他體內分離而出！
+                        mpecho 在惡魔出現的瞬間，你看到$I被惡魔一腳踹下樓梯去了！
+                        mpmload 80158
+                endif
+        endif
+endif
+"""
+[[mobiles.80130.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 瑪拉勒榮光不滅......！
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80131]
+keywords = "guildmaster human julistha-npc"
+short_description = "人類工會會長(The Human Guildmistress)"
+long_description = "人類工會的會長茱莉莎(Julistha)冷漠地評估著你的實力。\n"
+description = """
+茱莉莎相當地善戰，事實上她甚至能訓練精靈們的戰鬥技術，只是精靈們卻因為
+不許其他種族在任何方面做得比他們好而出名...
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "TACTICS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 30
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Human"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80131.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 可惡的$N...史卡拉貝的市長是我拜把的...你回城就曉得了......
+if is_qmark($n) != skarabrae_enemy
+        mpadd_qmark $n skarabrae_enemy 120 1 0 0 0 1
+else
+        mpmod_qmark $n skarabrae_enemy + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80132]
+keywords = "macy-npc"
+short_description = "梅希(Macy)"
+long_description = "黑精靈工會的會長梅希(Macy)對著你微笑，想知道她偷了什麼東西嗎？:)\n"
+description = """
+梅希是有史以來最優秀的黑精靈斥候，精靈們對於她的技巧頗不能諒解，他們讓
+她留在這裡的理由，是因為她能傳授精靈們的斥候隱遁與其他類似的技巧。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 30
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Drow"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80132.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 很好...你竟敢...與深土帝國的人...為敵......
+if is_qmark($n) != drow_empire_enemy
+        mpadd_qmark $n drow_empire_enemy 120 1 0 0 0 1
+else
+        mpmod_qmark $n drow_empire_enemy + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80133]
+keywords = "guildmaster dwarf keruggan-npc"
+short_description = "克魯根(Keruggan)"
+long_description = "矮人工會的會長克魯根(Keruggan)似乎對有客人上門感到訝異。\n"
+description = """
+整體說來，精靈們並不喜歡、也不怎麼信任矮人，克魯根能在這裡營業的唯一原
+因，是因為他同時也是尤根王國派到瑪拉勒的使節。他的客人非常少，因為精靈
+認為矮人的技能原始又粗俗，但是他仍然盡其全力以賺取任何可能的利潤。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 30
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Dwarf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80133.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 尤根王國...不會放過你的......
+if is_qmark($n) != juargan_enemy
+        mpadd_qmark $n juargan_enemy 120 1 0 0 0 1
+else
+        mpmod_qmark $n juargan_enemy + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80134]
+keywords = "guildmaster fairy moredhein-npc"
+short_description = "莫瑞海恩(Moredhein)"
+long_description = "妖精工會的會長莫瑞海恩(Moredhein)站在這裡。\n"
+description = """
+妖精是這塊大陸上一支頗受敬重的種族，人們對於它們所擁有的自然知識感到敬
+佩。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 30
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "fairy"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80134.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 你殺了我...就是與...綠樹王國為敵......
+if is_qmark($n) != greenwoods_killer
+        mpadd_qmark $n greenwoods_killer 120 1 0 0 0 1
+else
+        mpmod_qmark $n greenwoods_killer + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80135]
+keywords = "guildmaster beholder bloonit-npc"
+short_description = "布羅尼特(Bloonit)"
+long_description = "眼魔工會的會長布羅尼特(Bloonit)用心靈傳訊的方式歡迎你的到來。\n"
+description = """
+布羅尼特是個神秘的人物，身上披著紫色長袍，長袍遮住了他那嚇人的觸手形嘴
+巴、發光的紫色皮膚以及球狀的黃色眼睛。不過他仍然是個極佳的導師，而他大
+部份的時間都在抑制他想吃掉你腦子的本能衝動......
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "REGENERACY"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 30
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "beholder"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80135.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 咕哇啊啊啊啊～～～
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80136]
+keywords = "guildmaster hobbit aelian-npc"
+short_description = "艾蓮(Aelian)"
+long_description = "賀比特工會的會長艾蓮(Aelian)冷酷地看著你。\n"
+description = """
+他受到精靈斥候們的敬重，因為他有著極佳的視力與速度，這是那些斥候們所沒
+有的。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "REFLEXION"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING"]
+alignment = 0
+level = 30
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "hobbit"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80136.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 你給我記住...臭小子...你就不要到賀比特一族...的故鄉......
+if is_qmark($n) != hobbitcity_killer
+        mpadd_qmark $n hobbitcity_killer 120 1 0 0 0 1
+else
+        mpmod_qmark $n hobbitcity_killer + 120
+endif
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80137]
+keywords = "servant elf elven"
+short_description = "不友善的精靈奴僕(surly Elven Servant)"
+long_description = "一名不友善的精靈奴僕(surly Elven Servant)臭著一張臉在工作。\n"
+description = """
+「倒楣的總是我，不是嗎？只不過因此我老爸不是貴族，而且又沒參加過小惡鬼
+戰爭，我就得落到清理別人噁心的廚餘，以及幫他們張羅伙食的下場......算了
+算了，一堆狗屁！」
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = 0
+level = 10
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80137.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80138]
+keywords = "servant elf elven"
+short_description = "不友善的精靈奴僕(surly Elven Servant)"
+long_description = "一名不友善的精靈奴僕(surly Elven Servant)臭著一張臉在工作。\n"
+description = """
+「倒楣的總是我，不是嗎？只不過因此我老爸不是貴族，而且又沒參加過小惡鬼
+戰爭，我就得落到清理別人噁心的廚餘，以及幫他們張羅伙食的下場......算了
+算了，一堆狗屁！」
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = 0
+level = 10
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80138.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80139]
+keywords = "owner t'kana shopkeeper pet"
+short_description = "寵物店老闆‧提卡那(T'Kana, the Pet Shop Owner)"
+long_description = "提卡那(T'Kana)熱情地歡迎你光臨他簡樸的商店。\n"
+description = """
+在許多年以前，提卡那帶著許多奇怪而神秘的寵物從遙遠的南方來到瑪拉勒城，
+而他的寵物大受歡迎，因此他決定留下來開店。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 35
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Hobbit"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80139.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell $N...我詛咒你...被恐龍咬爛...被遠古巨獸...踩扁......
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 100 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80140]
+keywords = "allertathala-npc guard captian elf"
+short_description = "奧勒塔撒拉隊長(Captain Allertathala)"
+long_description = "奧勒塔撒拉隊長(Captain Allertathala)由衷地歡迎你來到他的辦公室。\n"
+description = """
+這位隊長是一名中年精靈，他強壯的肉體是從多場戰鬥中鍛鍊出來的，另外，精
+靈們的身體也會有疤痕，我敢跟你打賭說他身上的傷疤比你現在看見的還要多。
+他的舉止高雅但是很謹慎，在跟你哈拉的同時也不忘保持警戒。他深愛他所居住
+的城市以及他所效忠的公爵，甚至可以為了保護它們而死。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "SANCTUARY", "INFRARED", "PROTECT", "FLYING"]
+alignment = 1000
+level = 52
+mod_hitplus = 18000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_CURSE", "NO_FAEFIRE", "NO_SLEEP", "ANTI_MAGIC", "REF_MAGIC", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "MOBAI_LV3", "NO_PARA"]
+[[mobiles.80140.applies]]
+type = "STR"
+degree = 5
+[[mobiles.80140.applies]]
+type = "DEX"
+degree = 5
+[[mobiles.80140.applies]]
+type = "INT"
+degree = 5
+[[mobiles.80140.applies]]
+type = "WIS"
+degree = 5
+[[mobiles.80140.applies]]
+type = "CON"
+degree = 5
+[[mobiles.80140.applies]]
+type = "AC"
+degree = -500
+[[mobiles.80140.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.80140.applies]]
+type = "DAMROLL"
+degree = 75
+[[mobiles.80140.applies]]
+type = "SAVING_BREATH"
+degree = -35
+[[mobiles.80140.applies]]
+type = "SAVING_SPELL"
+degree = -35
+[[mobiles.80140.applies]]
+type = "SAVING_LIGHTNING"
+degree = -20
+[[mobiles.80140.applies]]
+type = "SAVING_ELEMENT"
+degree = -20
+[[mobiles.80140.applies]]
+type = "DODGE"
+degree = -500
+[[mobiles.80140.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.80140.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.80140.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.80140.applies]]
+type = "APPLY_ADAMAGE"
+degree = 35
+[[mobiles.80140.applies]]
+type = "APPLY_AMAGIC"
+degree = 35
+[[mobiles.80140.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.80140.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.80140.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.80140.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != malathar_talking
+        if isnpc($n)
+        or is_qmark($n) == malathar_enemy
+        else
+                if is_qmark($n) != malathar_quest
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 這裡是精靈的國度，瑪拉勒。
+                        mpcallout 1 tell $n 只要不在城內為非作歹，我們是很歡迎外地人的。
+                        mpcallout 2 tell $n 不過最近在城外有些小麻煩(trouble)，你經過的時候可要小心點。
+                        mpcallout 3 mpadd_qmark $n malathar_quest -1 1 0 0 0 1
+                        mpcallout 3 mpdel_qmark self malathar_talking
+                else
+                        if is_qmark($n) == malathar_quest 100030
+                                if mobcount(80159) == 0
+                                        mpat $n mpmod_qmark $n malathar_quest v0 = 31
+                                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                                        mpechoat $n 你將公爵提過的事告訴了$I。
+                                        mpcallout 1 tell $n 嗯......你先來問是對的，尤其是上次你揭穿了敵軍間諜。
+                                        mpcallout 2 tell $n 在那件事之後，先前的小惡鬼部隊活動變得比較沒那麼頻繁。
+                                        mpcallout 3 tell $n 但是我們的斥候卻發現有低位惡魔出現在邊境，而且似乎不是一般的偵察隊。
+                                        mpcallout 4 tell $n 看樣子敵人的動向有所改變了......
+                                        mpcallout 5 mpforcer here echotoarea 忽然間，全城警鐘大作，空中出現一個個的黑影！
+                                        mpcallout 6 say 糟糕！敵襲！他們竟然用空降部隊？！
+                                        mpcallout 7 yell 全體戒備！不能讓敵人肆虐！
+                                        mpcallout 8 tell $n 你快點躲起來吧！敵人就要攻進來了！
+                                        mpcallout 8 mpdel_qmark self malathar_talking
+                                        mpcallout 8 mpat 80102 mpmload 80159
+                                        mpcallout 8 mpat 80105 mpmload 80159
+                                        mpcallout 8 mpat 80112 mpmload 80159
+                                        mpcallout 8 mpat 80120 mpmload 80159
+                                        mpcallout 8 mpat 80125 mpmload 80159
+                                        mpcallout 8 mpat 80131 mpmload 80159
+                                        mpcallout 8 mpat 80139 mpmload 80159
+                                        mpcallout 8 mpat 80147 mpmload 80159
+                                        mpcallout 8 mpat 80158 mpmload 80159
+                                        mpcallout 8 mpat 80165 mpmload 80159
+                                        mpcallout 8 mpat 80102 mpmload 80159
+                                        mpcallout 8 mpat 80105 mpmload 80159
+                                        mpcallout 8 mpat 80112 mpmload 80159
+                                        mpcallout 8 mpat 80120 mpmload 80159
+                                        mpcallout 8 mpat 80125 mpmload 80159
+                                        mpcallout 8 mpat 80131 mpmload 80159
+                                        mpcallout 8 mpat 80139 mpmload 80159
+                                        mpcallout 8 mpat 80147 mpmload 80159
+                                        mpcallout 8 mpat 80158 mpmload 80159
+                                        mpcallout 8 mpat 80165 mpmload 80159
+                                        mpcallout 8 mpat 80102 mpmload 80159
+                                        mpcallout 8 mpat 80105 mpmload 80159
+                                        mpcallout 8 mpat 80112 mpmload 80159
+                                        mpcallout 8 mpat 80120 mpmload 80159
+                                        mpcallout 8 mpat 80125 mpmload 80159
+                                        mpcallout 8 mpat 80131 mpmload 80159
+                                        mpcallout 8 mpat 80139 mpmload 80159
+                                        mpcallout 8 mpat 80147 mpmload 80159
+                                        mpcallout 8 mpat 80158 mpmload 80159
+                                        mpcallout 8 mpat 80165 mpmload 80159
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 80164 mpmload 80160
+                                        mpcallout 8 mpat 5 mpechotoall \u001B[1;31m【警報】：「惡魔部隊進犯瑪拉勒城！」\u001B[m
+                                else
+                                        tell $n 抱歉，我現在沒空，另外請你注意城內的敵軍！
+                                endif
+                        else
+                                tell $n 歡迎光臨，你有什麼事嗎？
+                        endif
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80140.programs]]
+trigger = "talk_prog"
+argument = "trouble"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) == malathar_quest 100001
+                if is_qmark($n) != malathar_enemy
+                        mpmod_qmark $n malathar_quest v0 = 2
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 也對，這種事應該告訴外地人，有空我派人去貼個告示。
+                        mpcallout 1 ponder
+                        mpcallout 2 tell $n 前陣子城外有一些邪惡的生物，專門騷擾路過的人。
+                        mpcallout 3 tell $n 雖然威脅性不大，不過也總不能放著不管。
+                        mpcallout 4 tell $n 總之你平常要多留意點。
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80140.programs]]
+trigger = "talk_prog"
+argument = "report"
+script = """
+if is_qmark($i) != malathar_talking
+        if is_qmark($n) != malathar_quest 100002
+        or is_qmark($n) != malathar_quest 200015
+        else
+                if is_qmark($n) != malathar_enemy
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tell $n 你說什麼？邪氣！？
+                        mpcallout 1 stare
+                        mpcallout 2 say 不可能啊......不，有可能，只是......
+                        mpcallout 3 tell $n 這樣吧，我再另外派人調查看看，謝謝你的情報。
+                        mpcallout 3 mpat $n mpmod_qmark $n malathar_quest v0 = 3
+                        mpcallout 4 mpexp $n 10000
+                        mpcallout 4 mpskillexp $n 3000
+                        mpcallout 4 thank $n
+                        mpcallout 4 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        mpechoat $n 別人講話時不要插嘴。
+endif
+"""
+[[mobiles.80140.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        yell 邪惡之徒，不准你在此地為非作歹！看我制裁你！
+        mpkill $n
+        snare $n
+else
+        if ispc($n)
+                if mobcount(80159) == 0
+                        mpcall malathar_warrior_five $n
+                else
+                        tell $n 你不趕快去避難，還在這裡幹什麼！
+                endif
+        endif
+endif
+"""
+[[mobiles.80140.programs]]
+trigger = "defun_prog"
+argument = "malathar_warrior_five"
+script = """
+if is_qmark($n) == malathar_quest 100031
+        mpmod_qmark $n malathar_quest v0 = 32
+endif
+if is_qmark($n) == malathar_quest 100032
+        mpmod_qmark $n malathar_quest v0 = 33
+        mpforcer here stun $n 20
+        if is_qmark($n) == malathar_quest 200015
+                mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                tell $n 你還活著真是太好了，敵人這次來得太突然，差點來不及應對。
+                mpcallout 1 mpecho $I似乎鬆了一口氣。
+                mpcallout 2 tell $n 我得進行準備，敵人應該會再度發動攻擊。
+                mpcallout 3 tell $n 你還是先離開吧，下次恐怕就沒有這麼好運了。
+                mpcallout 4 wave $n
+                mpcallout 4 mpdel_qmark self malathar_talking
+        else
+                if is_qmark($n) == malathar_quest 200045
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        gasp $n
+                        mpcallout 1 tell $n 真、真是令人不敢相信......
+                        mpcallout 2 mpecho $I吃驚地看著手上的報告書，似乎看到什麼神奇的東西。
+                        mpcallout 3 tell $n 沒想到所有的敵軍竟然被你一個人全滅了，真是可怕啊......
+                        mpcallout 4 ponder
+                        mpcallout 5 tell $n 那麼我想......你應該有資格接受這個東西吧......
+                        mpcallout 6 mpecho $I從桌子的夾層中取出了一枚玉石。
+                        mpcallout 7 tell $n 這個東西，我們只頒給在戰場上表現特別英勇的勇者。
+                        mpcallout 8 tell $n 現在我認為你有這個資格，請你收下吧！
+                        mpcallout 9 mpoload 80183 $n 36 target
+                        mpcallout 9 mpresp $n 3
+                        mpcallout 9 mpexp $n 10000
+                        mpcallout 9 mpskillexp $n 30000
+                        mpcallout 9 mpdel_qmark self malathar_talking
+                else
+                        mpadd_qmark self malathar_talking 10 0 0 0 0 1
+                        tsk $n
+                        mpcallout 1 tell $n 本來我是要你避難的，想不到你居然也投入戰場了。
+                        mpcallout 2 tell $n 而且還取得了相當的戰果，真是不錯。
+                        mpcallout 3 hand $n
+                        mpcallout 4 tell $n 感謝你的協助。
+                        mpcallout 5 mpresp $n 1
+                        mpcallout 5 mpexp $n 10000
+                        mpcallout 5 mpskillexp $n 17500
+                        mpcallout 5 mpdel_qmark self malathar_talking
+                endif
+        endif
+else
+        tell $n 歡迎光臨，你有什麼事嗎？
+endif
+"""
+[[mobiles.80140.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 24 0 0 0 0 1
+endif
+if rand(25)
+        frenzy
+        mpnowait
+else
+        if rand(33)
+                change $r
+                fulgurant
+                mpnowait
+                cast paralyze $n
+                mpnowait
+        else
+                if rand(50)
+                        circular
+                        mpnowait
+                        icecore
+                        mpnowait
+                else
+                        mpechoat $n 當你正忙著與$I戰鬥時，一個鬼鬼祟祟的傢伙忽然自背後捅了你一刀！
+                        mpforcer here add_affect $n tardy 1040 10 34 150 4096
+                endif
+        endif
+endif
+"""
+[[mobiles.80140.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) != malathar_enemy
+        mpadd_qmark $n malathar_enemy 200 0 0 0 0 1
+else
+        mpmod_qmark $n malathar_enemy timer + 50
+endif
+"""
+
+[mobiles.80141]
+keywords = "rabbit"
+short_description = "兔子(Rabbit)"
+long_description = "一隻可愛的小兔子(Rabbit)在這附近蹦跳著。\n"
+description = """
+「啊啊～～看看這隻好漂亮的兔子，想知道牠被我宰了吃掉後會是什麼樣嗎？」
+你這麼想的對吧？為什麼你沒看出來咧？嗯，傷害與欺騙這隻軟弱的兔子。
+小心點吧！瑪拉勒城的兔子可是很壞的。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 400
+level = 10
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80142]
+keywords = "deer"
+short_description = "高貴的鹿(noble-looking deer)"
+long_description = "一隻看起來很高貴的鹿(deer)高傲地凝視著你。\n"
+description = """
+哇喔！會被牠唬到的傻瓜至少有百分之十，把牠鋪在壁爐上不是件很棒的事嗎？
+不過我建議你小心，在這個區域的野生動物都被賦予了特殊的力量，讓牠們得以
+生存下去......
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 500
+level = 12
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80143]
+keywords = "squirrel"
+short_description = "松鼠(Squirrel)"
+long_description = "一隻看起來很凶暴的松鼠(Squirrel)正在打量著你！\n"
+description = """
+瑪拉勒的松鼠是大法師托爾在某次實驗中的產物，但是出了重大的錯誤，由於這
+個緣故，正常的人們多半不敢接近牠們。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 15
+mod_hitplus = 2500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80144]
+keywords = "stablemaster master elf"
+short_description = "馬廄主人(Stablemaster)"
+long_description = "這名馬廄主人(Stablemaster)小心翼翼地注視著你。\n"
+description = """
+這個馬廄主人的心情看起來不太好，小心別惹火他......
+"""
+act_flags = ["NPC", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 50
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80144.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80145]
+keywords = "stablehad hand elf"
+short_description = "不友善的馬夫(surly stablehand)"
+long_description = "一名不友善的馬夫(surly stablehand)沒好氣地盯著你看。\n"
+description = """
+這些半精靈孤兒在這城市裡，通常都是做著像清理馬廄、打掃公共廁所一類的卑
+微工作。他們一直沒辦法有好工作，原因是他們的言行舉止，以及身上那種連神
+都會被嚇跑的味道。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 0
+level = 15
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Half-elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80145.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80146]
+keywords = "golem"
+short_description = "巨像(Huge Golem)"
+long_description = "一尊巨大的石像(Huge Golem)擋住了你的去路。\n"
+description = """
+這個厚實的魔法物體是由大法師托爾所設計的，是相當完美的守衛，它不會感到
+疲憊、厭煩或是貪婪，也絕不會在任何形式的賄賂與壓力下屈服。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "PROTECT"]
+alignment = 0
+level = 50
+mod_hitplus = 8000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Statue"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80146.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.80146.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.80146.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == malathar_enemy
+        mpechoat $n $I忽然對你展開攻擊！
+        mpkill $n
+endif
+"""
+[[mobiles.80146.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+        frenzy
+        mpnowait
+else
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+endif
+"""
+
+[mobiles.80147]
+keywords = "librarian elf elven"
+short_description = "精靈圖書館員(Elven Librarian)"
+long_description = "一名精靈圖書館員(Elven Librarian)匆忙地跑過你身邊，將書本放回各處。\n"
+description = """
+這些熱情、工作過度的圖書館員正認真地奮戰，以求趕得上要求的進度－－將書
+本放回原處以及替數百萬冊的藏書編製目錄。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 30
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80147.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80148]
+keywords = "librarian elf elven"
+short_description = "精靈圖書館員(Elven Librarian)"
+long_description = "一名精靈圖書館員(Elven Librarian)匆忙地跑過你身邊，將書本放回各處。\n"
+description = """
+這些熱情、工作過度的圖書館員正認真地奮戰，以求趕得上要求的進度－－將書
+本放回原處以及替數百萬冊的藏書編製目錄。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 1000
+level = 30
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80148.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_enemy
+        mpmod_qmark $n malathar_enemy timer + 10
+endif
+"""
+
+[mobiles.80149]
+keywords = "griffon"
+short_description = "憤怒的獅鷲獸(Angry Griffon)"
+long_description = "一頭憤怒的獅鷲獸(Angry Griffon)向前猛衝，並開始攻擊！\n"
+description = """
+吼喔喔喔喔喔喔喔喔喔喔喔喔喔！！
+
+獅鷲獸的利爪亂刨打得你*** 鮮血直流 ***(281-330)！
+你正在噴血！
+你死了！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "PROTECT"]
+alignment = -400
+level = 50
+mod_hitplus = 5000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Beast"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80150]
+keywords = "ocelot"
+short_description = "豹貓(Ocelot)"
+long_description = "一隻豹貓(Ocelot)露出牠的爪子，並發出兇猛的狂吼聲。\n"
+description = """
+豹貓有一點像是大一號的家貓，除此之外，牠們也許可以咬斷你的脖子。
+"""
+act_flags = ["NPC", "SENTINEL", "PET"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 5
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Beast"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80151]
+keywords = "alsatian-npc dog"
+short_description = "亞爾薩斯犬(Alsatian)"
+long_description = "一條野蠻的亞爾薩斯犬(Alsatian)露出牠的尖牙咆哮著。\n"
+description = """
+有人曾說如果動物們會講話，牠們會告訴你世界上奇妙的事物，不過要是這條狗
+會講話，也許牠會說「滾蛋！」
+"""
+act_flags = ["NPC", "SENTINEL", "PET"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 8
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Beast"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80152]
+keywords = "sloth-npc"
+short_description = "三趾樹懶(Three-toed Sloth)"
+long_description = "一隻三趾樹懶(Three-toed Sloth)吊掛在這裡。\n"
+description = """
+這隻樹懶看起來完全沒有攻擊性，但要是讓牠抓狂的話，牠會宰了你！
+"""
+act_flags = ["NPC", "SENTINEL", "PET"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 11
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80153]
+keywords = "kangaroo-npc"
+short_description = "袋鼠(Kangaroo)"
+long_description = "一隻友善的袋鼠(Kangaroo)頑皮地跳過你面前。\n"
+description = """
+牠的確很頑皮，當這隻大型紅毛動物靠近你時，你相信牠不會傷害你。
+"""
+act_flags = ["NPC", "SENTINEL", "PET"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 14
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80154]
+keywords = "rhino-npc rhinoceros-npc"
+short_description = "犀牛(Rhinoceros)"
+long_description = "一頭犀牛(Rhinoceros)發出低沉的聲音經過這裡。\n"
+description = """
+牠可以刺穿你，讓你變得像羊肉串一樣。
+"""
+act_flags = ["NPC", "SENTINEL", "PET"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 17
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80155]
+keywords = "gorilla"
+short_description = "大猩猩(Huge Gorilla)"
+long_description = "一隻大猩猩(Huge Gorilla)敲著牠的胸膛，並發出威嚇的吼叫聲。\n"
+description = """
+這傢伙會為了一根香蕉而撕爛你的手臂。
+"""
+act_flags = ["NPC", "SENTINEL", "PET"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 20
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80156]
+keywords = "pegasus"
+short_description = "飛馬(Pegasus)"
+long_description = "一匹受過良好訓練的飛馬(Pegasus)乖乖地在這裡等待著。\n"
+description = """
+這頭野獸是軍需過剩品，牠的飛行時數已經超過標準，現在牠是次級商品，被用
+最低的價格出售。相信我，不要想試著去買一匹新的飛馬......
+"""
+act_flags = ["NPC", "SENTINEL", "PET"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 30
+mod_hitplus = 3500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.80157]
+keywords = "goblin scout"
+short_description = "小惡鬼斥候(goblin scout)"
+long_description = "一名穿著簡便武裝的小惡鬼(goblin)在這裡進行偵察工作。\n"
+description = """
+他平常的工作是負責偵察，偶爾騷擾一下路過的人，不過戰鬥能力卻不怎麼樣，
+說簡單點，就是雜魚......
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -350
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Goblin"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.80157.applies]]
+type = "HIT"
+degree = 4000
+[[mobiles.80157.applies]]
+type = "EXP"
+degree = -500
+[[mobiles.80157.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if ispc($n)
+        if is_qmark($n) > malathar_quest 200014
+                say 啊！是那傢伙！跑啊！
+                mpecho $I一下子就逃得無影無蹤了。
+                mpechoat $n 看樣子他大概也不敢再找你麻煩了。
+                mpechoat $n 不過你覺得這些傢伙身上帶著邪氣......去跟隊長報告一聲好了。
+                mppurge self
+        endif
+endif
+"""
+[[mobiles.80157.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if is_qmark($n) == malathar_quest 100002
+        if is_qmark($n) < malathar_quest 200015
+                mpmod_qmark $n malathar_quest v1 + 1
+        else
+                if is_qmark($n) == malathar_quest
+                        mpechoat $n 你殺得夠多了，他們大概也不敢再找你麻煩了。
+                        mpechoat $n 不過你覺得這些傢伙身上帶著邪氣......去跟隊長報告一聲好了。
+                endif
+        endif
+endif
+"""
+
+[mobiles.80158]
+keywords = "doll demon"
+short_description = "傀儡惡魔(doll demon)"
+long_description = "一名身強體壯、擁有強大魔力的惡魔(demon)憤怒地瞪著你！\n"
+description = """
+雖然他看起來十分強大，但是你發現他的眼神似乎有點渙散，彷彿被什麼控制住
+似的。無論如何，你得想辦法打倒他才行，否則操縱他的幕後主使者可能會命令
+他殺了你！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING", "CONTINUE_CURE"]
+alignment = -1000
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "NO_MUTE", "EXPERT", "SPELL_FURY"]
+[[mobiles.80158.weaknesses]]
+skill = "flamestrike"
+percent = 100
+damage = 500
+[[mobiles.80158.weaknesses]]
+skill = "dispel evil"
+percent = 100
+damage = 500
+[[mobiles.80158.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.80158.applies]]
+type = "AC"
+degree = -250
+[[mobiles.80158.applies]]
+type = "HITROLL"
+degree = 25
+[[mobiles.80158.applies]]
+type = "DAMROLL"
+degree = 25
+[[mobiles.80158.applies]]
+type = "SAVING_BREATH"
+degree = -30
+[[mobiles.80158.applies]]
+type = "SAVING_SPELL"
+degree = -30
+[[mobiles.80158.applies]]
+type = "SAVING_ELEMENT"
+degree = -30
+[[mobiles.80158.applies]]
+type = "DODGE"
+degree = 200
+[[mobiles.80158.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.80158.applies]]
+type = "APPLY_ADAMAGE"
+degree = 30
+[[mobiles.80158.applies]]
+type = "APPLY_AMAGIC"
+degree = 30
+[[mobiles.80158.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 444
+[[mobiles.80158.applies]]
+type = "APPLY_GMAGIC"
+degree = 444
+[[mobiles.80158.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 5 mpoload 80175 36
+mpat 5 mpoload 80176 36
+mpat 5 mpoload 80177 36
+mpat 5 mpoload 80178 36
+mpat 5 wear all
+mptransfer rastellagnar-npc 5
+"""
+[[mobiles.80158.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(25)
+        mpecho $I殺紅了眼！展開幾近瘋狂的猛攻！
+        frenzy
+        mpnowait
+else
+        if rand(33)
+                mpecho 一股黑暗的力量附著在$I的武器上！
+                flaming
+                mpnowait
+                earth
+                mpnowait
+        else
+                if rand(50)
+                        disarm $r
+                        get all
+                        cast tardy $r
+                        mpnowait
+                        cast 'double heal'
+                        mpnowait
+                else
+                        if inroom($i) == 80168
+                        or inroom($i) == 80167
+                        or inroom($i) == 80166
+                                mpechoat $n $I一劍將你震開！
+                                mpechoaround $n $I一劍震飛了$N！
+                                mptransfer $n 80197
+                        endif
+                endif
+        endif
+endif
+"""
+[[mobiles.80158.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpat 5 mppurge rastellagnar-npc
+mpecho $I發出痛苦的嚎叫聲後便倒了下去！
+mpecho 不如把那枚傀儡水晶拿去給這城內法力最強的人研究看看吧？
+"""
+
+[mobiles.80159]
+keywords = "demon-soldier-evil demon soldier"
+short_description = "惡魔士兵(demon soldier)"
+long_description = "一名面目猙獰的惡魔士兵(demon soldier)朝你衝了過來！\n"
+description = """
+外表看起來和一般惡魔沒有多大的不同，似乎是低位的惡魔，屬於基層的士兵階
+級。雖然實力並不突出，不過要是你本身實力太遜或是太過大意，還是有可能會
+被他給打倒的......
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "HUNT", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SNEAK", "FLYING", "PASS_DOOR"]
+alignment = -1000
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Demon"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_CRAZY", "NO_PARA"]
+[[mobiles.80159.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.80159.applies]]
+type = "HITROLL"
+degree = 25
+[[mobiles.80159.applies]]
+type = "DAMROLL"
+degree = 25
+[[mobiles.80159.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.80159.applies]]
+type = "APPLY_ADAMAGE"
+degree = 25
+[[mobiles.80159.applies]]
+type = "APPLY_AMAGIC"
+degree = 25
+[[mobiles.80159.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 5 mpoload 80181 36
+mpat 5 wear all
+"""
+[[mobiles.80159.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if area($i) != malathar
+        mpecho $I突然化成一道黑影消失無蹤。
+        mppurge self
+else
+        if race($r) != Demon
+                mpforce $r mpkill $I
+                mpkill $r
+        endif
+endif
+"""
+[[mobiles.80159.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+        if race($n) != Demon
+                mpforce $n mpkill $I
+                mpkill $n
+        endif
+else
+        hunt $n
+endif
+"""
+[[mobiles.80159.programs]]
+trigger = "entry_greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+	if race($n) != Demon
+		mpkill $n
+		yell 衝啊～～為了主宰而戰！！
+	endif
+else
+	hunt $r
+endif
+"""
+[[mobiles.80159.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if fightwith($i) == demon-soldier-evil
+        mpdis_magic $n 'polymorph other'
+        mpgoto self
+endif
+if rand(33)
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        cast whirlwind
+        yell 攻擊敵人！
+        mpforce $n yell 可惡的惡魔！
+else
+        if rand(50)
+                mptrip $n
+                skilldrv speedhit $n
+                skilldrv speedhit $n
+                yell 殺～～～
+                mpforce $n yell 死吧！邪惡之徒！
+        else
+                cast apocalypse
+                mpnowait
+                yell 突擊！突擊！
+                mpforce $n yell 保護無辜群眾！衝啊～～！
+        endif
+endif
+"""
+[[mobiles.80159.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 主...主宰...萬...萬歲......
+if mobcount(80159) <= 1
+        mpat 5 mpechotoall \u001B[1;32m【戰報】：「進犯瑪拉勒的惡魔部隊被守軍擊潰！」\u001B[m
+endif
+if is_qmark($n) == malathar_quest 100031
+        if is_qmark($n) < malathar_quest 200045
+                mpmod_qmark $n malathar_quest v1 + 1
+        else
+                if is_qmark($n) == malathar_quest 200045
+                        mpmod_qmark $n malathar_quest v0 = 32
+                endif
+        endif
+endif
+"""
+
+[mobiles.80160]
+keywords = "swordman"
+short_description = "愛潔梅菲劍士(swordman)"
+long_description = "一名年輕的劍士(swordman)被指派來此地協防。\n"
+description = """
+愛潔梅菲島出身的劍士，看起來還很年輕，雖然本身具有一定的實力，不過戰鬥
+經驗就嫌少了點......
+"""
+act_flags = ["NPC", "STAY_AREA", "HUNT", "TWO_WEAPON"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "PROTECT"]
+alignment = 1000
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Human"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_CURSE", "NO_CRAZY", "NO_PARA"]
+[[mobiles.80160.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.80160.applies]]
+type = "AC"
+degree = -250
+[[mobiles.80160.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.80160.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.80160.applies]]
+type = "DODGE"
+degree = -300
+[[mobiles.80160.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.80160.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 5 mpoload 80182 36
+mpat 5 wear all
+"""
+[[mobiles.80160.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        cast 'turn undead' $n
+        mpnowait
+        mpforcer here cast 'polymorph other' $n 40
+else
+        if rand(50)
+                storm
+                mpnowait
+                skilldrv heavyhit $n
+                skilldrv heavyhit $n
+        else
+                fulgurant
+                mpnowait
+        endif
+endif
+"""
+[[mobiles.80160.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if area($i) != malathar
+or mobcount(80159) == 0
+        mpecho $I離開了這個地方。
+        mppurge self
+else
+        if insameroom(demon-soldier-evil)
+                mpforce demon-soldier-evil mpkill $I
+                mpkill demon-soldier-evil
+                yell 該死的惡魔！接我這一劍！
+        endif
+endif
+"""
+[[mobiles.80160.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 可恨哪......！
+"""
+
+[mobiles.80161]
+keywords = "Spipa demon"
+short_description = "史畢帕(Spipa)"
+long_description = "一名極為肥壯的惡魔(Spipa)一臉囂張，以不屑的眼光盯著你。\n"
+description = """
+暗黑主宰手底下的一名軍官，負責籌劃進攻瑪拉勒的事宜，可以說是這一連串事
+件的幕後黑手。但是，這傢伙不但本身戰力低劣，腦筋其實也好不到哪裡去，真
+正辛苦的是他的手下們，除了特別擅長爭功諉過與非常耐打以外，他本身可以說
+沒有半點實力可言，看樣子黑暗勢力的一方也是有這種廢柴主管存在的......
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "CURSE", "POISON", "FLYING"]
+alignment = -1000
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Demon"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_CHARM", "NO_POISON", "NO_CRAZY"]
+[[mobiles.80161.weaknesses]]
+skill = "armageddon"
+percent = 100
+damage = 1
+[[mobiles.80161.applies]]
+type = "HIT"
+degree = 750000
+[[mobiles.80161.applies]]
+type = "REDUCE_DAMAGE"
+degree = -25
+[[mobiles.80161.applies]]
+type = "REDUCE_MAGIC"
+degree = -25
+[[mobiles.80161.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self malather_flee_check -1 75 0 0 0 1
+mpat 5 mpoload 80184 36
+mpat 5 wear all
+mpgroup self Fegass-m 1 0
+mpgroup self Entise-m 1 0
+"""
+[[mobiles.80161.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if is_qmark($i) == malather_flee_check 100001
+	rumor 潛藏在瑪拉勒城的$I已經消聲匿跡了。
+	mpat 80153 mpforcer here modrvt t0 = 250
+	mppurge self
+else
+	mpmod_qmark self malather_flee_check v0 - 1
+endif
+"""
+[[mobiles.80161.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpat 80153 mpforcer here modrvt t0 = 250
+yell 妳、妳們這兩個白痴、廢物～～竟然讓我被人給打敗了......
+mpecho $I在發出最後的怒號後就倒了下去！
+mpgreward merit $n +36 10
+mpoload 80190 13
+"""
+
+[mobiles.80162]
+keywords = "Fegass-m demon"
+short_description = "菲嘉絲(Fegass)"
+long_description = "一名外型冷豔的魔女(Fegass)看起來似乎有著滿腹牢騷。\n"
+description = """
+瑪拉勒攻擊行動總指揮官‧惡魔史畢帕的副官之一，她的工作就是替這個沒腦筋
+的主管出主意，並且擬定各種作戰計畫。不過由於史畢帕不但腦筋很差，又愛自
+作聰明，所以她的提案到後來多半會變質，讓她相當頭痛，卻又無可奈何。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING", "MANASHIELD"]
+alignment = -1000
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_CHARM", "NO_POISON", "NO_SLEEP", "REF_MAGIC", "ALY_BAR", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.80162.applies]]
+type = "INT"
+degree = 10
+[[mobiles.80162.applies]]
+type = "WIS"
+degree = 10
+[[mobiles.80162.applies]]
+type = "HIT"
+degree = 32500
+[[mobiles.80162.applies]]
+type = "SAVING_BREATH"
+degree = -35
+[[mobiles.80162.applies]]
+type = "SAVING_SPELL"
+degree = -35
+[[mobiles.80162.applies]]
+type = "SAVING_ELEMENT"
+degree = -35
+[[mobiles.80162.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.80162.applies]]
+type = "REDUCE_DAMAGE"
+degree = -30
+[[mobiles.80162.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.80162.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.80162.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.80162.applies]]
+type = "APPLY_GMAGIC"
+degree = 5000
+[[mobiles.80162.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self malather_flee_check -1 76 0 0 0 1
+mpat 5 mpoload 80185 36
+mpat 5 mpoload 80186 36
+mpat 5 wear all
+"""
+[[mobiles.80162.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if is_qmark($i) == malather_flee_check 100001
+	mppurge self
+else
+	mpmod_qmark self malather_flee_check v0 - 1
+endif
+"""
+[[mobiles.80162.programs]]
+trigger = "fight_prog"
+argument = "75"
+script = """
+if fightwith($i) / demon-soldier-evil
+        mpdis_magic $n 'polymorph other'
+        mpgoto self
+endif
+if rand(33)
+        say 你們這些人～～煩不煩啊～～～！！
+        mpecho $I平日累積的壓力化成怒火狂湧而出！
+        cast 2 'angry fire storm' $r
+        mpnowait
+        cast 2 'angry fire storm' $n
+        mpnowait
+else
+        if rand(50)
+                say 雜碎閃遠點～～！！
+                mpecho $I的表情似乎越來越不悅了......
+                cast curse $r
+                mpnowait
+                cast paralyze $r
+                mpnowait
+                cast mute $r
+                mpnowait
+        else
+                say 鬧夠了沒啊～～！！
+                mpecho $I隨手就是兩發高能量波動球！
+                cast 2 'gdouble heal'
+                mpnowait
+                cast 2 powerball $r
+                mpnowait
+        endif
+endif
+"""
+[[mobiles.80162.programs]]
+trigger = "hitprcnt_prog"
+argument = "15"
+script = """
+if rand(20)
+        cast 'sun flash'
+        mpnowait
+endif
+"""
+[[mobiles.80162.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 暗黑主宰，萬歲～～！
+mpgreward merit $n 5
+"""
+
+[mobiles.80163]
+keywords = "Entise-m demon"
+short_description = "英緹絲(Entise)"
+long_description = "一名面容冷峻的魔女(Entise)站在這裡，你覺得她好像很不高興的樣子。\n"
+description = """
+瑪拉勒攻擊行動總指揮官‧惡魔史畢帕的副官之一，她在過去是名相當強悍的戰
+士，因為在某場戰爭犯了錯誤，所以被轉調至此擔任史畢帕的護衛，不過她一點
+都不喜歡這個工作，一半原因是因為主管實在太差勁了......
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING", "FLAMING"]
+alignment = -1000
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Demon"
+class = ["WARRIOR", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_CHARM", "NO_POISON", "NO_SLEEP", "REF_MAGIC", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.80163.applies]]
+type = "STR"
+degree = 10
+[[mobiles.80163.applies]]
+type = "DEX"
+degree = 10
+[[mobiles.80163.applies]]
+type = "CON"
+degree = 10
+[[mobiles.80163.applies]]
+type = "HIT"
+degree = 32500
+[[mobiles.80163.applies]]
+type = "AC"
+degree = -250
+[[mobiles.80163.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.80163.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.80163.applies]]
+type = "DODGE"
+degree = -250
+[[mobiles.80163.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.80163.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.80163.applies]]
+type = "REDUCE_MAGIC"
+degree = -30
+[[mobiles.80163.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.80163.applies]]
+type = "APPLY_AMAGIC"
+degree = 25
+[[mobiles.80163.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 5000
+[[mobiles.80163.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.80163.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self malather_flee_check -1 76 0 0 0 1
+mpat 5 mpoload 80187 36
+mpat 5 mpoload 80188 36
+mpat 5 wear all
+"""
+[[mobiles.80163.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if is_qmark($i) == malather_flee_check 100001
+	mppurge self
+else
+	mpmod_qmark self malather_flee_check v0 - 1
+endif
+"""
+[[mobiles.80163.programs]]
+trigger = "fight_prog"
+argument = "75"
+script = """
+if fightwith($i) == demon-soldier-evil
+        mpdis_magic $n 'polymorph other'
+        mpgoto self
+endif
+if rand(33)
+        say ......風牙舞燄。
+        mpecho $I壓低身體，朝著敵人揮出強力的一劍！
+        mpat 5 mpoload 70914 36
+        mpat 5 wear sword
+        storm
+        mpnowait
+        storm
+        mpnowait
+        flaming
+        mpnowait
+        mpat 5 remove sword
+        mpat 5 mpjunk sword
+else
+        if rand(50)
+                say ...雷帝影舞。
+                mpecho 一道暗獄之雷化成了$I的兵器！
+                mpat 5 mpoload 70914 36
+                mpat 5 wear sword
+                circular
+                mpnowait
+                fulgurant
+                mpnowait
+                sprinkle
+                mpnowait
+                mpat 5 remove sword
+                mpat 5 mpjunk sword
+        else
+                say ...望月呼號。
+                mpecho 在那一瞬間，$I背後彷彿出現了一輪新月......！
+                mpat 5 mpoload 70914 36
+                mpat 5 wear sword
+                perform empslash
+                mpnowait
+                mpat 5 remove sword
+                mpat 5 mpjunk sword
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+        endif
+endif
+"""
+[[mobiles.80163.programs]]
+trigger = "hitprcnt_prog"
+argument = "15"
+script = """
+if rand(20)
+        icecore
+        mpnowait
+endif
+"""
+[[mobiles.80163.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+yell 暗黑主宰，萬歲～～！
+mpgreward merit $n 5
+"""
+
+[objects.80100]
+keywords = "sword lightbringer"
+short_description = "精靈王國之劍‧御光使者(lightbringer)"
+long_description = "精靈王國之劍‧御光使者(lightbringer)放在這裡，散發出耀目的光輝。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "45", "3"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "light matter"
+[[objects.80100.extra_descriptions]]
+keywords = "lightbringer sword"
+description = """
+御光使者是精靈之神為祂特別喜愛的君主們所打造的七把武器之一，它是在小惡鬼
+戰爭中唯一留存的一把武器，現在則被瑪拉勒的史塔拉索拉塔公爵收藏著。
+"""
+[[objects.80100.applies]]
+type = "STR"
+value = 1
+[[objects.80100.applies]]
+type = "DEX"
+value = 1
+[[objects.80100.applies]]
+type = "CON"
+value = 1
+[[objects.80100.applies]]
+type = "HITROLL"
+value = 5
+[[objects.80100.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.80100.race_combat]]
+race = "Goblin"
+hr_mod_q = 50
+hr_mod_p = 100
+dr_mod_q = 50
+dr_mod_p = 100
+[[objects.80100.race_combat]]
+race = "Hobgoblin"
+hr_mod_q = 50
+hr_mod_p = 100
+dr_mod_q = 50
+dr_mod_p = 100
+[[objects.80100.race_combat]]
+race = "Undead"
+hr_mod_q = 0
+hr_mod_p = 125
+dr_mod_q = 0
+dr_mod_p = 150
+
+[objects.80101]
+keywords = "malathar crown"
+short_description = "瑪拉勒之冠(Crown of Malathar)"
+long_description = "這頂屬於瑪拉勒城公爵的王冠(Crown)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "150", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "light matter"
+[[objects.80101.extra_descriptions]]
+keywords = "crown"
+description = """
+這頂王冠是由精靈之神為瑪拉勒的公爵們所打造的，它給予他們遠高於一般精靈
+的智能。
+"""
+[[objects.80101.applies]]
+type = "INT"
+value = 1
+[[objects.80101.applies]]
+type = "WIS"
+value = 1
+[[objects.80101.applies]]
+type = "SAVING_ELEMENT"
+value = 8
+[[objects.80101.applies]]
+type = "REDUCE_MAGIC"
+value = 10
+
+[objects.80102]
+keywords = "famous cloak"
+short_description = "高級護袍(Famous Cloak)"
+long_description = "這件屬於瑪拉勒城史塔拉索拉塔公爵的高級護袍(Famous Cloak)在你腳邊飄揚著。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "ANTI_EVIL", "VAMPIRE_BANE"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "150", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "light matter"
+spell_buffs = ["524288"]
+[[objects.80102.extra_descriptions]]
+keywords = "cloak"
+description = """
+這件護袍是由大法師托爾所設計，在一次偶然的施法中讓它變成上級品，只要沒
+有破損，它會一直飄揚著。
+"""
+[[objects.80102.applies]]
+type = "INT"
+value = -1
+[[objects.80102.applies]]
+type = "POWER_POTENTIAL"
+value = -4
+[[objects.80102.applies]]
+type = "APPLY_AMAGIC"
+value = 9
+
+[objects.80103]
+keywords = "duchess ring"
+short_description = "公爵夫人之戒(Duchess' Ring)"
+long_description = "瑪拉勒城公爵夫人的戒指(ring)丟在這裡，閃閃發光。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.80103.applies]]
+type = "INT"
+value = 1
+[[objects.80103.applies]]
+type = "WIS"
+value = 1
+
+[objects.80104]
+keywords = "duchess diadem"
+short_description = "公爵夫人之冠(Duchess' Diadem)"
+long_description = "瑪拉勒城公爵夫人的頭冠(diadem)閃耀著光芒。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.80104.applies]]
+type = "SAVING_BREATH"
+value = -3
+[[objects.80104.applies]]
+type = "SAVING_SPELL"
+value = -3
+
+[objects.80105]
+keywords = "duchess slippers"
+short_description = "公爵夫人之鞋(Duchess' Slippers)"
+long_description = "瑪拉勒城公爵夫人的便鞋(slippers)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "120", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "fiber"
+[[objects.80105.extra_descriptions]]
+keywords = "slippers"
+description = """
+這是由大法師托爾為公爵夫人特別製作的，它能提供使用者驚人的柔軟度。
+"""
+[[objects.80105.applies]]
+type = "CON"
+value = 2
+[[objects.80105.applies]]
+type = "MOVE"
+value = 50
+
+[objects.80106]
+keywords = "tuo robe"
+short_description = "托爾之袍(tuo's Robe)"
+long_description = "大法師托爾的袍子(robe)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "ANTI_EVIL", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "300", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.80106.extra_descriptions]]
+keywords = "robe"
+description = """
+據說大法師的袍子擁有自己的生命，一旦披上它的話從此就脫不下來了......
+"""
+[[objects.80106.applies]]
+type = "STR"
+value = -2
+[[objects.80106.applies]]
+type = "DEX"
+value = -2
+[[objects.80106.applies]]
+type = "INT"
+value = 2
+[[objects.80106.applies]]
+type = "WIS"
+value = 1
+[[objects.80106.applies]]
+type = "CON"
+value = -2
+[[objects.80106.applies]]
+type = "MANA"
+value = 25
+[[objects.80106.applies]]
+type = "HIT"
+value = -20
+[[objects.80106.applies]]
+type = "MOVE"
+value = -40
+[[objects.80106.applies]]
+type = "SAVING_SPELL"
+value = -3
+
+[objects.80107]
+keywords = "power gem"
+short_description = "力量寶石(Power Gem)"
+long_description = "一顆力量寶石(Power Gem)躺在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["INVIS", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 0
+level_limited = 0
+material = "gem"
+[[objects.80107.extra_descriptions]]
+keywords = "gem"
+description = """
+力量寶石是由某些老人所創造出來的，能提供他們強大的魔法能量。
+"""
+[[objects.80107.applies]]
+type = "MANA"
+value = 50
+
+[objects.80108]
+keywords = "tuo spellbook"
+short_description = "大法師托爾的魔法書(Archmage Tuo's Spellbook)"
+long_description = "大法師托爾的魔法書(Archmage Tuo's Spellbook)放在這裡。"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["40", "powerball", "poison", "acid breath"]
+weight = 50
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80108.extra_descriptions]]
+keywords = "spellbook"
+description = """
+當閱讀這本托爾的魔法書時，不受束縛的巨大魔法能量朝著你吟誦的目標而去，
+多半會讓目標受到致命的傷害。
+"""
+
+[objects.80109]
+keywords = "tuo scroll"
+short_description = "大法師托爾的應急卷軸(Archmage of Tuo's emergency Scroll)"
+long_description = "大法師托爾的應急卷軸(Archmage of Tuo's emergency Scroll)放在這裡。"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["40", "double heal", "double heal", "double heal"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80109.extra_descriptions]]
+keywords = "scroll"
+description = """
+卷軸上面寫著：「當遭到緊急危難時，朗誦這卷軸。」
+"""
+
+[objects.80110]
+keywords = "tuo wand"
+short_description = "大法師托爾的奇異法杖(Archmage Tuo's Wondrous Wand)"
+long_description = "大法師托爾的奇異法杖(Archmage Tuo's Wondrous Wand)放在這裡。"
+action_description = ""
+item_type = "WAND"
+extra_flags = ["GLOW", "ANTI_EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["40", "3", "3", "identify"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "oak"
+[[objects.80110.extra_descriptions]]
+keywords = "wand"
+description = """
+這把法杖能協助持有者瞭解自己所擁有的物品是什麼東西。
+"""
+
+[objects.80111]
+keywords = "yuul orb"
+short_description = "悠爾寶珠(Orb of Yuul)"
+long_description = "悠爾寶珠(Orb of Yuul)安置在此，閃耀著奇妙的光芒。"
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["40", "3", "3", "protection"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "crystal"
+[[objects.80111.extra_descriptions]]
+keywords = "orb"
+description = """
+精靈之神為祂的祭司們創造了這顆寶珠，讓他們能保護自己。
+"""
+
+[objects.80112]
+keywords = "priest mitre"
+short_description = "大祭司禮冠(High Priest's Mitre)"
+long_description = "大祭司拉林希拉的禮冠(Mitre)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "150", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "mithril"
+[[objects.80112.extra_descriptions]]
+keywords = "mitre"
+description = """
+這頂神秘的頭冠提供佩帶者極為有效的保護。
+"""
+[[objects.80112.applies]]
+type = "AC"
+value = -15
+
+[objects.80113]
+keywords = "holy symbol"
+short_description = "精靈之神聖標(Holy Symbol of Yaegar)"
+long_description = "一個精靈之神的聖標(Holy Symbol of Yaegar)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "150", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "diamond"
+[[objects.80113.extra_descriptions]]
+keywords = "symbol"
+description = """
+在世界中只能有一個人擁有這件物品，那個人就是精靈之神的親密好友，瑪拉勒
+城的大祭司拉林希拉，如果祂發現還有其他人身上有這件物品，祂鐵定會相當地
+驚愕......
+"""
+[[objects.80113.applies]]
+type = "WIS"
+value = 1
+[[objects.80113.applies]]
+type = "CON"
+value = 1
+[[objects.80113.applies]]
+type = "REDUCE_DAMAGE"
+value = 3
+[[objects.80113.applies]]
+type = "REDUCE_MAGIC"
+value = 4
+
+[objects.80114]
+keywords = "dragon hoard"
+short_description = "龍之秘寶(Dragon's Hoard)"
+long_description = "一堆龍所囤積的金幣(coins)堆在這裡。"
+action_description = ""
+item_type = "MONEY"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["50000", "0", "0", "0"]
+weight = 50
+cost = 50000
+level_limited = 0
+material = "gold"
+
+[objects.80115]
+keywords = "dragon scale"
+short_description = "白金龍鱗(Scale from a Platinum Dragon)"
+long_description = "這片龍鱗(scale)可以拿來做出一面完美的盾牌......"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "NODROP", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "200", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "dragon scale"
+[[objects.80115.extra_descriptions]]
+keywords = "scale"
+description = """
+這片龍鱗是從巨大的白金龍漢恩身上取得的。
+"""
+[[objects.80115.applies]]
+type = "HIT"
+value = 25
+[[objects.80115.applies]]
+type = "SAVING_BREATH"
+value = -3
+[[objects.80115.applies]]
+type = "SAVING_SPELL"
+value = -3
+
+[objects.80116]
+keywords = "treasure chest"
+short_description = "寶箱(Treasure Chest)"
+long_description = "白金龍漢恩的寶箱(Treasure Chest)，它看起來非常地重......"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["LOCK", "MAGIC"]
+wear_flags = []
+values = ["1000", "15", "80117", "0"]
+weight = 250
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80116.extra_descriptions]]
+keywords = "chest"
+description = """
+這個箱子裝有漢恩的財寶。
+"""
+
+[objects.80117]
+keywords = "wyrm key"
+short_description = "飛龍鑰匙(WyrmKey)"
+long_description = "漢恩的飛龍鑰匙(WyrmKey)躺在這裡。"
+action_description = ""
+item_type = "KEY"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+timer = 3
+material = "steel"
+[[objects.80117.extra_descriptions]]
+keywords = "key"
+description = """
+這把鑰匙是拿來開漢恩的寶箱用的。
+"""
+
+[objects.80118]
+keywords = "bone helmet"
+short_description = "雕飾華麗的白骨頭盔(Beautifully-Carved Bone Helmet)"
+long_description = "這頂頭盔(helmet)看起來棒極了！這是從龍之秘寶中找出來的東西，絕對很值錢。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "NODROP", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "100", "0"]
+weight = 50
+cost = 0
+level_limited = 0
+material = "dragon bone"
+[[objects.80118.extra_descriptions]]
+keywords = "helmet"
+description = """
+這頂頭盔是你看過最美麗的東西......
+"""
+[[objects.80118.applies]]
+type = "STR"
+value = -1
+[[objects.80118.applies]]
+type = "DEX"
+value = -1
+[[objects.80118.applies]]
+type = "INT"
+value = -1
+[[objects.80118.applies]]
+type = "WIS"
+value = -1
+[[objects.80118.applies]]
+type = "CON"
+value = -1
+[[objects.80118.applies]]
+type = "MANA"
+value = -15
+[[objects.80118.applies]]
+type = "HIT"
+value = -25
+[[objects.80118.applies]]
+type = "MOVE"
+value = -35
+[[objects.80118.applies]]
+type = "AC"
+value = 25
+[[objects.80118.applies]]
+type = "HITROLL"
+value = -3
+[[objects.80118.applies]]
+type = "DAMROLL"
+value = -3
+
+[objects.80119]
+keywords = "elite helm"
+short_description = "精緻頭盔(Elite Helm)"
+long_description = "一頂精緻的頭盔(Elite Helm)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "200", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80119.applies]]
+type = "STR"
+value = 1
+[[objects.80119.applies]]
+type = "CON"
+value = 1
+[[objects.80119.applies]]
+type = "AC"
+value = -10
+
+[objects.80120]
+keywords = "ring signet"
+short_description = "瑪拉勒識別戒指(Malatharan Signet Ring)"
+long_description = "一顆瑪拉勒識別戒指(Malatharan Signet Ring)躺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "100", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.80120.extra_descriptions]]
+keywords = "ring"
+description = """
+這顆戒指雕飾華美，上頭有著瑪拉勒公爵領地的紋章。
+"""
+[[objects.80120.applies]]
+type = "DAMROLL"
+value = 3
+[[objects.80120.applies]]
+type = "APPLY_AMAGIC"
+value = 3
+
+[objects.80121]
+keywords = "armor elite"
+short_description = "菁英衛兵護甲(Armor of an Elite Guard)"
+long_description = "菁英衛兵的護甲(Armor of an Elite Guard)躺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "200", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80121.applies]]
+type = "HITROLL"
+value = 3
+[[objects.80121.applies]]
+type = "DAMROLL"
+value = 1
+
+[objects.80122]
+keywords = "silvery leggings"
+short_description = "銀白色護腿(Silvery Leggings)"
+long_description = "一對銀白色的護腿(Silvery Leggings)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "130", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80122.applies]]
+type = "INT"
+value = 1
+[[objects.80122.applies]]
+type = "WIS"
+value = 1
+
+[objects.80123]
+keywords = "shiny steel sword"
+short_description = "閃耀鋼劍(Shiny Steel Sword)"
+long_description = "一把閃耀的鋼劍(Shiny Steel Sword)在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "POISONED", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "40", "3"]
+weight = 30
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80123.applies]]
+type = "HITROLL"
+value = 2
+[[objects.80123.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.80123.applies]]
+type = "APPLY_ADAMAGE"
+value = 20
+
+[objects.80124]
+keywords = "malathar shield"
+short_description = "瑪拉勒紋章之盾(Shield bearing the Coat of Arms of Malathar)"
+long_description = "一面鑲有瑪拉勒紋章的盾牌(Shield)在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "150", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80124.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.80124.applies]]
+type = "AC"
+value = -15
+
+[objects.80125]
+keywords = "sturdy longbow"
+short_description = "堅固長弓(sturdy longbow)"
+long_description = "一張堅固的長弓(sturdy longbow)躺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["150", "0", "0", "14"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.80125.applies]]
+type = "DEX"
+value = 2
+[[objects.80125.applies]]
+type = "HITROLL"
+value = 7
+[[objects.80125.applies]]
+type = "DAMROLL"
+value = 9
+[[objects.80125.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+
+[objects.80126]
+keywords = "sturdy arrow"
+short_description = "堅固利箭(sturdy arrow)"
+long_description = "一束堅固的利箭(sturdy arrow)躺在這裡。"
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["300", "0", "0", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80126.applies]]
+type = "MOVE"
+value = -10
+[[objects.80126.applies]]
+type = "APPLY_ADAMAGE"
+value = 8
+
+[objects.80127]
+keywords = "humble scout cloak"
+short_description = "粗糙斥候斗蓬(humble Scout's Cloak)"
+long_description = "一件粗糙的斥候斗蓬(humble Scout's Cloak)在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "175", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "cloth"
+[[objects.80127.applies]]
+type = "STR"
+value = 1
+[[objects.80127.applies]]
+type = "MOVE"
+value = 50
+
+[objects.80128]
+keywords = "dirty boots"
+short_description = "骯髒的靴子(dirty boots)"
+long_description = "一雙骯髒的靴子(dirty boots)躺在這裡，看起來很耐用。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "75", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "leather"
+[[objects.80128.extra_descriptions]]
+keywords = "boots"
+description = """
+這雙髒兮兮的靴子是瑪拉勒某個精靈斥候的，它的主人穿著它進行過數不清的任
+務，以保護精靈大陸不受小惡鬼與食人妖襲擊，它已經因此而磨損得很嚴重了。
+"""
+[[objects.80128.applies]]
+type = "DEX"
+value = 2
+[[objects.80128.applies]]
+type = "MOVE"
+value = 50
+[[objects.80128.applies]]
+type = "HITROLL"
+value = 2
+
+[objects.80129]
+keywords = "Malatharan War Banner"
+short_description = "瑪拉勒戰旗(Malatharan War Banner)"
+long_description = "一支瑪拉勒戰旗(Malatharan War Banner)放在這裡。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "24", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80129.extra_descriptions]]
+keywords = "banner"
+description = """
+瑪拉勒的精靈戰士們用這玩意兒在黑夜中照明。
+"""
+[[objects.80129.applies]]
+type = "CON"
+value = 2
+[[objects.80129.applies]]
+type = "REDUCE_DAMAGE"
+value = 5
+
+[objects.80130]
+keywords = "sturdy shield"
+short_description = "堅固盾牌(sturdy shield)"
+long_description = "一面看起來很堅固的精靈護盾(shield)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "150", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80130.applies]]
+type = "REDUCE_DAMAGE"
+value = 5
+[[objects.80130.applies]]
+type = "REDUCE_MAGIC"
+value = 2
+
+[objects.80131]
+keywords = "sturdy sword"
+short_description = "堅固長劍(sturdy sword)"
+long_description = "一把看起來很堅固的精靈長劍(sword)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "0", "3"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80131.applies]]
+type = "WIS"
+value = 1
+[[objects.80131.applies]]
+type = "HITROLL"
+value = 8
+[[objects.80131.applies]]
+type = "APPLY_AMAGIC"
+value = 12
+
+[objects.80132]
+keywords = "sturdy helm"
+short_description = "堅固頭盔(sturdy helm)"
+long_description = "一頂看起來很堅固的精靈頭盔(helm)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "150", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80132.applies]]
+type = "SAVING_BREATH"
+value = -3
+[[objects.80132.applies]]
+type = "SAVING_SPELL"
+value = -3
+
+[objects.80133]
+keywords = "sturdy breastplate"
+short_description = "堅固胸甲(sturdy breastplate)"
+long_description = "一件看起來很堅固的精靈胸甲(breastplate)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "150", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80133.applies]]
+type = "SAVING_FIRE"
+value = -4
+[[objects.80133.applies]]
+type = "SAVING_SPELL"
+value = -3
+
+[objects.80134]
+keywords = "sturdy leggings"
+short_description = "堅固護腿(sturdy leggings)"
+long_description = "一雙看起來很堅固的精靈護腿(leggings)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "150", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80134.applies]]
+type = "MOVE"
+value = -10
+
+[objects.80135]
+keywords = "acolyte mittens"
+short_description = "侍祭手套(Acolyte's Mittens)"
+long_description = "一雙精靈侍祭們用來保暖手部的絨毛手套(mitten)。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["BLESS"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "wool"
+[[objects.80135.applies]]
+type = "NONE"
+value = -3
+
+[objects.80136]
+keywords = "High Guardian's Two-Handed Sword"
+short_description = "高階衛士雙手劍(High Guardian's Two-Handed Sword)"
+long_description = "一把高階衛士所用的雙手劍(High Guardian's Two-Handed Sword)。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["200", "70", "75", "3"]
+weight = 80
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80136.extra_descriptions]]
+keywords = "sword"
+description = """
+這把巨大的武器是由偉大的精靈之神用其神秘的力量所鑄，專供為神而戰的衛士
+執行重要任務所用。
+"""
+[[objects.80136.applies]]
+type = "STR"
+value = 3
+[[objects.80136.applies]]
+type = "HITROLL"
+value = 10
+[[objects.80136.applies]]
+type = "DAMROLL"
+value = 10
+[[objects.80136.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if objval1($o) != 70
+	oset self v1 = 70
+	oset self v2 = 75
+endif
+"""
+
+[objects.80137]
+keywords = "High Guardian's Face Mask"
+short_description = "高階衛士面具(High Guardian's Face Mask)"
+long_description = "高階衛士從鐵面人那裡借來的面具(Mask)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "200", "0"]
+weight = 50
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80137.applies]]
+type = "DAMROLL"
+value = 6
+[[objects.80137.applies]]
+type = "SAVING_COLD"
+value = 5
+
+[objects.80138]
+keywords = "pet collar"
+short_description = "寵物項圈(Pet's Collar)"
+long_description = "這個項圈(collar)代表佩帶者是精靈國度中一隻忠實的寵物......"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["ANTI_EVIL", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "100", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "leather"
+[[objects.80138.extra_descriptions]]
+keywords = "collar"
+description = """
+要是你正戴著這玩意兒，所有的精靈們都會開始對你說「乖狗狗！乖狗狗！去把
+那個咬回來！」
+"""
+[[objects.80138.applies]]
+type = "AC"
+value = -10
+
+[objects.80139]
+keywords = "toy"
+short_description = "精靈孩童的玩具(Elven Child's Toy)"
+long_description = "一個精靈小孩不小心把他的玩具(toy)遺留在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.80139.applies]]
+type = "STR"
+value = 1
+
+[objects.80140]
+keywords = "wand fud"
+short_description = "挑剔者之杖(Wand of Fud)"
+long_description = "一把挑剔者之杖(wand of fud)孤獨地矗立在這裡。"
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["10", "3", "3", "create food"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "emerald"
+[[objects.80140.extra_descriptions]]
+keywords = "wand fud"
+description = """
+有人說過這種法杖可以補足一個人每日所需要的營養，據說某個國王就是靠它，
+到現在仍然存活著......
+"""
+
+[objects.80141]
+keywords = "cup water"
+short_description = "一杯水(Cup of Water)"
+long_description = "一杯水(water)幾乎快要滿出來了！"
+action_description = ""
+item_type = "WAND"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["10", "3", "3", "create water"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "liquid"
+[[objects.80141.extra_descriptions]]
+keywords = "cup water"
+description = """
+當你拿著或搖動這個杯子，會讓水潑出來，濺到地上。
+"""
+
+[objects.80142]
+keywords = "stone shield"
+short_description = "護盾晶石(Shield Stone)"
+long_description = "一塊閃閃發光的護盾晶石(shield stone)放在這裡。"
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["10", "3", "3", "shield"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "crystal"
+[[objects.80142.extra_descriptions]]
+keywords = "stone"
+description = """
+當你拿著或是揮舞這塊護盾晶石，會在你身旁創造出一面魔法的護盾。
+"""
+
+[objects.80143]
+keywords = "staff acid"
+short_description = "酸蝕法杖(Staff of Acid)"
+long_description = "一把酸蝕法杖(Staff of Acid)放在這裡。"
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["10", "3", "3", "acid blast"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "mercury"
+[[objects.80143.extra_descriptions]]
+keywords = "staff"
+description = """
+原本是被設計用來專門對付食人妖的這種法杖，對於其他種類的敵人也有良好的
+效果，賞他們一記致命的酸液吧！YEAH！
+"""
+
+[objects.80144]
+keywords = "scroll random"
+short_description = "隨機卷軸(Random Scroll)"
+long_description = "一個隨機的卷軸(scroll)！！"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["HUM", "MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["20", "blindness", "teleport", "cure blindness"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80144.extra_descriptions]]
+keywords = "scroll"
+description = """
+朗誦它，然後看看會發生什麼事吧！
+"""
+
+[objects.80145]
+keywords = "chair"
+short_description = "看起來很舒適的椅子(Comfortable-looking Chair)"
+long_description = "一張看起來很舒適的椅子(Comfortable-looking Chair)放在這裡。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 100
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.80145.extra_descriptions]]
+keywords = "chair"
+description = """
+這是某個精靈貴族或學者的休閒椅。
+"""
+
+[objects.80146]
+keywords = "ottoman"
+short_description = "軟墊凳(ottoman)"
+long_description = "一張軟墊凳(ottoman)放在這裡。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 0
+level_limited = 0
+material = "wool"
+[[objects.80146.extra_descriptions]]
+keywords = "ottoman"
+description = """
+這張軟墊凳是讓人拿來擱腳用的。
+"""
+
+[objects.80147]
+keywords = "table"
+short_description = "橡木桌(Oak Table)"
+long_description = "一張雕工精細的橡木桌(Oak Table)放在這裡。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 250
+cost = 0
+level_limited = 0
+material = "oak"
+[[objects.80147.extra_descriptions]]
+keywords = "table"
+description = """
+這張華麗的橡木桌看起來非常地笨重......
+"""
+
+[objects.80148]
+keywords = "light globe"
+short_description = "光之球體(Light Globe)"
+long_description = "一顆光球(Light Globe)在這裡躍動著。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "VAMPIRE_BANE"]
+wear_flags = ["HOLD"]
+values = ["0", "0", "24", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "light matter"
+[[objects.80148.extra_descriptions]]
+keywords = "globe"
+description = """
+這個漂亮的裝置提供這個城市夜間的照明。
+"""
+
+[objects.80149]
+keywords = "spellbook book"
+short_description = "魔法書(Spellbook)"
+long_description = "一本魔法書(Spellbook)發出奇怪的鳴聲。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["HUM", "MAGIC", "NODROP", "NOREMOVE"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80149.extra_descriptions]]
+keywords = "spellbook book"
+description = """
+喂！不要撿它！喔，天啊...太晚了...
+"""
+[[objects.80149.applies]]
+type = "INT"
+value = -2
+[[objects.80149.applies]]
+type = "WIS"
+value = -2
+[[objects.80149.applies]]
+type = "MANA"
+value = -25
+
+[objects.80150]
+keywords = "spellbook book"
+short_description = "魔法書(Spellbook)"
+long_description = "一本青銅封面的魔法書(Spellbook)放在這裡。"
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["30", "3", "3", "stone skin"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80150.extra_descriptions]]
+keywords = "book spellbook"
+description = """
+這本魔法書是某個強力的法師所擁有的，他從來沒辦法好好地使出石甲術，所以
+他把石甲術注入這本書，需要使用的時候只要揮舞就可以了。
+"""
+
+[objects.80151]
+keywords = "tattered scroll"
+short_description = "破爛卷軸(tattered scroll)"
+long_description = "這個卷軸(scroll)看起來被讀過很多次......"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["30", "invis", "bless", "armor"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80151.extra_descriptions]]
+keywords = "scroll"
+description = """
+這個捲軸被人拿過很多次，現在它的邊緣已經變得破破爛爛的了。
+"""
+
+[objects.80152]
+keywords = "old history book"
+short_description = "古老的歷史書(old history book)"
+long_description = "一本古老的歷史書(old history book)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80152.extra_descriptions]]
+keywords = "book"
+description = """
+這本有點無趣的舊書是由一個叫做吉朋的人所寫的羅馬帝國古歷史。
+"""
+
+[objects.80153]
+keywords = "old science book"
+short_description = "古老的科學書(old science book)"
+long_description = "一本古老的科學書(old science book)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80153.extra_descriptions]]
+keywords = "book"
+description = """
+這本有點無趣的舊書是由一個叫做達爾文的人所寫的科學資料。
+"""
+
+[objects.80154]
+keywords = "old geography book"
+short_description = "古老的地理書(old geography book)"
+long_description = "一本古老的地理書(old geography book)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80154.extra_descriptions]]
+keywords = "book"
+description = """
+這本有點無趣的舊書是由一個叫做托勒密的人所寫的地理資料。
+"""
+
+[objects.80155]
+keywords = "desk"
+short_description = "華麗的書桌(Ornate Desk)"
+long_description = "一張華麗的書桌(Ornate Desk)放在這裡。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["GLOW"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 10000
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.80155.extra_descriptions]]
+keywords = "desk"
+description = """
+這張書桌看起來重到很難搬動......
+"""
+
+[objects.80156]
+keywords = "antique phonograph"
+short_description = "古老的留聲機(Antique Phonograph)"
+long_description = "一種用魔法晶石來儲存聲音記錄的設備(Antique Phonograph)被放置在此。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "gem"
+[[objects.80156.extra_descriptions]]
+keywords = "phonograph"
+description = """
+賢人們留在這裡面的聲音記錄，聽起來有不少雜音......
+"""
+
+[objects.80157]
+keywords = "fountain"
+short_description = "古老的水池(Old Fountain)"
+long_description = "這個水池(Fountain)讓來到瑪拉勒城的旅客能補充儲水，已經有數百年歷史了。"
+action_description = ""
+item_type = "FOUNTAIN"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["1000", "0", "0", "0"]
+weight = 5000
+cost = 0
+level_limited = 0
+material = "stone"
+
+[objects.80158]
+keywords = "yaegar portrait"
+short_description = "精靈之神的畫像(Portrait of Yaegar)"
+long_description = "哇！多帥的人啊！多棒的畫像(Portrait)啊！"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["GLOW", "HUM", "MAGIC", "NODROP", "NOREMOVE", "PERSONAL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["30", "combat mind", "shield", "protection"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80158.extra_descriptions]]
+keywords = "portrait"
+description = """
+這是你所擁有的最棒東西！有著精靈之神簽名的畫像！
+"""
+[[objects.80158.applies]]
+type = "STR"
+value = 1
+[[objects.80158.applies]]
+type = "DEX"
+value = 1
+[[objects.80158.applies]]
+type = "INT"
+value = 1
+[[objects.80158.applies]]
+type = "WIS"
+value = 1
+[[objects.80158.applies]]
+type = "CON"
+value = 1
+
+[objects.80159]
+keywords = "sturdy backpack"
+short_description = "堅固背包(sturdy backpack)"
+long_description = "一個堅固的背包(sturdy backpack)放在這裡。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = ["TAKE", "ARROW"]
+values = ["40", "1", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "leather"
+
+[objects.80160]
+keywords = "sturdy helmet"
+short_description = "堅固頭盔(sturdy helmet)"
+long_description = "一頂堅固的精靈頭盔(sturdy helmet)被丟在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "150", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80160.applies]]
+type = "AC"
+value = -5
+
+[objects.80161]
+keywords = "waterskin"
+short_description = "皮製水袋(waterskin)"
+long_description = "一個皮製水袋(waterskin)放在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["5", "5", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "leather"
+
+[objects.80162]
+keywords = "elven girdle"
+short_description = "精靈腰帶(elven girdle)"
+long_description = "這條腰帶(girdle)能增強穿戴者的敏捷度。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "150", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "tin"
+[[objects.80162.applies]]
+type = "DEX"
+value = 1
+
+[objects.80163]
+keywords = "find elven blade"
+short_description = "精緻精靈刃(fine elven blade)"
+long_description = "一把精緻的精靈刃(fine elven blade)在這裡閃閃發光。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "0", "9"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80163.applies]]
+type = "HITROLL"
+value = 2
+[[objects.80163.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.80164]
+keywords = "find elven bow"
+short_description = "精緻精靈弓(fine elven bow)"
+long_description = "一把精緻的精靈弓(fine elven bow)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "ANTI_EVIL"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["150", "0", "0", "14"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.80164.applies]]
+type = "HITROLL"
+value = 2
+[[objects.80164.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.80165]
+keywords = "fine elven dagger"
+short_description = "精緻精靈匕(fine elven dagger)"
+long_description = "這把匕首(dagger)是件滿適合拿來背刺的武器。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "0", "11"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80165.applies]]
+type = "HITROLL"
+value = 2
+[[objects.80165.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.80166]
+keywords = "fine elven mace"
+short_description = "精緻精靈鎚(fine elven mace)"
+long_description = "這把精靈鎚(mace)受過魔法的強化。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "0", "8"]
+weight = 18
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80166.applies]]
+type = "STR"
+value = 2
+
+[objects.80167]
+keywords = "potion"
+short_description = "藥水(potion)"
+long_description = "一瓶藥水(potion)放在這裡。"
+action_description = ""
+item_type = "POTION"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["10", "heal", "cure blindness", "tardy"]
+weight = 10
+cost = 1000
+level_limited = 0
+material = "liquid"
+
+[objects.80168]
+keywords = "herb"
+short_description = "藥草(medical herb)"
+long_description = "吃下去之後，這種藥草(herb)可以讓服用者對毒素有極高的抵抗力。"
+action_description = ""
+item_type = "PILL"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "cure poison", "0", "0"]
+weight = 1
+cost = 400
+level_limited = 0
+material = "herb"
+
+[objects.80169]
+keywords = "bread"
+short_description = "精靈麵包(elven bread)"
+long_description = "一些精靈麵包(elven bread)放在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["25", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+
+[objects.80170]
+keywords = "wine"
+short_description = "精靈葡萄酒(elven wine)"
+long_description = "一些精靈葡萄酒(elven wine)放在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["5", "5", "2", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "liquid"
+
+[objects.80171]
+keywords = "map"
+short_description = "區域地圖(map of the area)"
+long_description = "這張地圖(map)描繪出瑪拉勒城周邊的地區。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.80171.extra_descriptions]]
+keywords = "map"
+description = """
+TOPFIRE
+　       |
+　       |-----------------------TROLL
+DALE-----|
+　       |
+　       |---MIRKWOOD
+　       |              ------------------MALATHAR
+　       |              |                    |
+　       ----------------                    |
+　                      |    DRUIDS          |
+　                      |      |             |
+　                      --------           OCEAN
+　
+"""
+
+[objects.80172]
+keywords = "potion brew"
+short_description = "藥酒(herbal brew)"
+long_description = "這瓶藥酒(herbal brew)能給予你極高的速度。"
+action_description = ""
+item_type = "POTION"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["10", "fly", "refresh", "combat mind"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "liquid"
+
+[objects.80173]
+keywords = "brain mind nightmare druid"
+short_description = "瀕死的德魯依(dying druid)"
+long_description = "你看見一個快要掛掉的德魯依(druid)躺在這裡，令你想靠近瞧瞧。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = []
+values = ["150", "0", "0", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "Flesh"
+[[objects.80173.extra_descriptions]]
+keywords = "druid"
+description = """
+你對這個被折磨的傢伙腦中的惡夢感到有興趣，它太過真實，你覺得你彷彿能進
+入並且湊上一腳......
+"""
+
+[objects.80174]
+keywords = "elven fruit"
+short_description = "精靈果實(elven fruit)"
+long_description = "一顆草綠色的碩大果實(elven fruit)，好像很好吃的樣子。"
+action_description = ""
+item_type = "PILL"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["30", "double heal", "double recharge", "double refresh"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+
+[objects.80175]
+keywords = "evil dragon sword"
+short_description = "邪龍劍(evil dragon sword)"
+long_description = "一把據說是用黑龍之牙打造成的邪劍(evil dragon sword)。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL", "POISONED", "PERSONAL", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "0", "3"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "dragon bone"
+[[objects.80175.applies]]
+type = "WIS"
+value = 1
+[[objects.80175.applies]]
+type = "APPLY_AMAGIC"
+value = 15
+[[objects.80175.hidden_powers]]
+spell = "dispel good"
+percent = 30
+level = 45
+event = "HP_WEAPON"
+[[objects.80175.hidden_powers]]
+spell = "harm"
+percent = 30
+level = 45
+event = "HP_WEAPON"
+[[objects.80175.hidden_powers]]
+spell = "lifesteal"
+percent = 25
+level = 35
+event = "HP_WEAPON"
+[[objects.80175.race_combat]]
+race = "Elf"
+hr_mod_q = 30
+hr_mod_p = 100
+dr_mod_q = 0
+dr_mod_p = 100
+
+[objects.80176]
+keywords = "demon bloody riband"
+short_description = "闇魔血絲(demon bloody riband)"
+long_description = "數不清的血色細絲(bloody riband)環繞成圓圈狀。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["EVIL", "ANTI_GOOD", "ANTI_NEUTRAL", "NO_SAC"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "100", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "black matter"
+[[objects.80176.applies]]
+type = "POWER_POTENTIAL"
+value = 4
+
+[objects.80177]
+keywords = "black ganoid shield"
+short_description = "黑鱗鬼盾(black ganoid shield)"
+long_description = "一面黑得發亮，邪氣四溢的可怕盾牌(shield)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "EVIL", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "300", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "scale"
+[[objects.80177.applies]]
+type = "MOVE"
+value = -35
+[[objects.80177.applies]]
+type = "REDUCE_MAGIC"
+value = 10
+
+[objects.80178]
+keywords = "doll crystal"
+short_description = "傀儡水晶(doll crystal)"
+long_description = "一顆用途不明的水晶(crystal)。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "crystal"
+
+[objects.80179]
+keywords = "peace bracelet"
+short_description = "平和手鐲(peace bracelet)"
+long_description = "一個象徵和平共處的金色手鐲(peace bracelet)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "gold"
+
+[objects.80180]
+keywords = "goldmoon circle"
+short_description = "金月之環(goldmoon circle)"
+long_description = "一個金光閃閃，相當耀眼的手鐲(goldmoon circle)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS", "ANTI_EVIL", "LORE"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "150", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.80180.applies]]
+type = "CON"
+value = 1
+[[objects.80180.applies]]
+type = "AC"
+value = -15
+
+[objects.80181]
+keywords = "demon axe"
+short_description = "惡魔巨斧(demon axe)"
+long_description = "一把黑色的巨大斧頭(demon axe)。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "DARK", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["200", "35", "50", "9"]
+weight = 30
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.80181.applies]]
+type = "HIT"
+value = 30
+[[objects.80181.applies]]
+type = "HITROLL"
+value = 8
+[[objects.80181.applies]]
+type = "DAMROLL"
+value = 8
+
+[objects.80182]
+keywords = "blessed sword"
+short_description = "聖祝長劍(blessed sword)"
+long_description = "一把受過神之祝福的長劍(blessed sword)。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["200", "0", "0", "3"]
+weight = 12
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.80182.applies]]
+type = "NONE"
+value = -5
+[[objects.80182.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+
+[objects.80183]
+keywords = "pity tears"
+short_description = "垂憐之淚(pity tears)"
+long_description = "一顆淚珠形狀的寶玉(pity tears)正閃耀著柔和的光芒。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "BLESS", "ANTI_EVIL", "VAMPIRE_BANE", "HOLY", "NO_SAC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "jade"
+souvenir = 4
+[[objects.80183.applies]]
+type = "WIS"
+value = 1
+[[objects.80183.applies]]
+type = "HITROLL"
+value = 4
+[[objects.80183.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.80183.applies]]
+type = "SAVING_ELEMENT"
+value = 1
+
+[objects.80184]
+keywords = "ice angry headdress"
+short_description = "寒冰怒火(angry of ice)"
+long_description = "一枚冰冷的頭飾(headdress)閃耀著恐怖的寒光。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "NODROP", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "130", "0"]
+weight = 2
+cost = 0
+level_limited = 0
+material = "ice"
+[[objects.80184.extra_descriptions]]
+keywords = "ice angry headdress"
+description = """
+你總覺得這個頭飾的造型好像有某種意義，不過卻又不曉得製作者想要表達些什
+麼意思......
+"""
+[[objects.80184.applies]]
+type = "DEX"
+value = 1
+[[objects.80184.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+
+[objects.80185]
+keywords = "anima ring"
+short_description = "惡靈魔戒(anima ring)"
+long_description = "一枚帶有強大邪氣的戒指(anima ring)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL", "LORE"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "200", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["MAGE", "WIZARD", "ALCHEMIST", "SORCERER"] }
+material = "black matter"
+[[objects.80185.applies]]
+type = "MANA"
+value = 35
+[[objects.80185.applies]]
+type = "AC"
+value = 20
+[[objects.80185.applies]]
+type = "APPLY_AMAGIC"
+value = 20
+
+[objects.80186]
+keywords = "snakeskin sleeves"
+short_description = "蛇皮護臂(snakeskin sleeves)"
+long_description = "一雙用某種地獄才有的毒蛇之皮做成的護臂(snakeskin sleeves)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "DARK", "MAGIC", "NODROP", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL", "POISONED"]
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "150", "0"]
+weight = 8
+cost = 0
+level_limited = 0
+material = "leather"
+[[objects.80186.applies]]
+type = "MANA"
+value = 50
+[[objects.80186.applies]]
+type = "HIT"
+value = -45
+
+[objects.80187]
+keywords = "cruel claw"
+short_description = "兇殘血爪(cruel claw)"
+long_description = "一副沾滿血跡，看起來很駭人的利爪(cruel claw)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL", "NO_SAC"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "125", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "bone"
+[[objects.80187.applies]]
+type = "CON"
+value = 1
+[[objects.80187.applies]]
+type = "APPLY_ADAMAGE"
+value = 13
+[[objects.80187.hidden_powers]]
+spell = "cause critical"
+percent = 33
+level = 50
+event = "HP_WEAPON"
+[[objects.80187.hidden_powers]]
+spell = "harm"
+percent = 33
+level = 50
+event = "HP_WEAPON"
+[[objects.80187.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+oset self v0 = 17
+"""
+[[objects.80187.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if objval0($o) != 17
+	echoat $n 裝備更新完成。
+	oforcer here oload 80187 36 $n target
+	ogoto self
+	purge self
+endif
+"""
+
+[objects.80188]
+keywords = "zeal bracer"
+short_description = "狂熱腕甲(zeal bracer)"
+long_description = "一副能給予佩帶者更強攻擊力的腕甲(zeal bracer)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "EVIL", "MAGIC", "NODROP", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "250", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.80188.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.80188.hidden_powers]]
+spell = "giant strength"
+percent = 40
+level = 60
+event = "HP_WEAR"
+
+[objects.80189]
+keywords = "destiny ring"
+short_description = "命運神戒(destiny ring)"
+long_description = "一顆蘊藏著強大力量的神奇戒指(destiny ring)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "LORE"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "333", "0"]
+weight = 0
+cost = 300000
+level_limited = 0
+material = "elemental alloy"
+souvenir = 4
+[[objects.80189.applies]]
+type = "DEX"
+value = 1
+[[objects.80189.applies]]
+type = "HITROLL"
+value = 3
+[[objects.80189.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.80189.hidden_powers]]
+spell = "detect evil"
+percent = 100
+level = 50
+event = "HP_WEAR"
+
+[objects.80190]
+keywords = "malathar fight-plan"
+short_description = "瑪拉勒攻擊計畫書(malathar fight-plan)"
+long_description = "一本用惡魔文字所寫的攻擊計畫書(malathar fight-plan)。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["10000", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "paper"

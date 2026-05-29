@@ -1,0 +1,4180 @@
+[area]
+name = "幽暗地域"
+identity = "under"
+builders = "Yaegar"
+translator = "Feena"
+modifier = "Feena"
+vnum_start = 60300
+vnum_end = 60399
+security = 1
+recall = 4580
+death = 401
+f_toggle = false
+
+[mobiles.60300]
+keywords = "umber hulk"
+short_description = "棕色巨獸(umber hulk)"
+long_description = "一頭棕色的巨獸(umber hulk)堵在你的面前！\n"
+description = """
+這是頭巨大、笨重的生物，有著粗厚的紫色外皮，在牠那張流著口水的大嘴裡，
+有著兩支突出的長牙，嘴巴上方則是許多正盯著你瞧的眼睛。這個怪東西已經殺
+了許多的探險者，希望你不會是下一個！
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "CRITICAL"]
+affected_flags = ["INFRARED", "SNEAK"]
+alignment = -1000
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Beast"
+class = ["WARRIOR", "THIEF", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_SNEAK"]
+[[mobiles.60300.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.60300.applies]]
+type = "AC"
+degree = -500
+[[mobiles.60300.applies]]
+type = "APPLY_ADAMAGE"
+degree = 30
+[[mobiles.60300.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60301]
+keywords = "riding lizard"
+short_description = "騎乘用蜥蜴(riding lizard)"
+long_description = "一隻被暗黑精靈用來騎乘的蜥蜴(lizard)不太高興地盯著你看。\n"
+description = """
+這隻爬蟲簡直像隻巨大的科摩多巨龍，除此之外，牠的背上有個皮鞍，被鱗片所
+覆蓋的頭上有著華麗的繫索。牠的眼神看起來不太高興，而且帶有惡意，不過同
+時也毫無生氣，但牠要是失控，要毀掉一個家庭應該還不成問題。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "PET"]
+affected_flags = ["INFRARED"]
+alignment = 0
+level = 28
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Lizard"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60301.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60301.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        frenzy
+        mpnowait
+else
+        change $r
+endif
+"""
+
+[mobiles.60302]
+keywords = "drow merchant"
+short_description = "暗黑精靈商人(drow merchant)"
+long_description = "一名暗黑精靈商人(drow merchant)懷疑地盯著你看。\n"
+description = """
+暗黑精靈等於是暗色皮膚的精靈，對那些你常看見，住在地表的精靈們來說，他
+們等於是邪惡的同族。另外，大部份的暗黑精靈會攻擊任何他們所看到的外來入
+侵者，而眼前這個傢伙正在猶豫，首先，他是個商人；其次，他是個暗黑精靈，
+他可不想失去任何一個可能的顧客。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "INFRARED", "PROTECT"]
+alignment = -1000
+level = 27
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Drow"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60302.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60302.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+        grin $n
+        say 有什麼賺錢的好事嗎？
+endif
+"""
+[[mobiles.60302.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        cast 2 fireball $r
+        mpnowait
+else
+        cast poison $r
+        mpnowait
+endif
+"""
+
+[mobiles.60303]
+keywords = "bugbear"
+short_description = "怪物護衛(bugbear guard)"
+long_description = "一名怪物護衛(bugbear guard)懷疑地看著你，並舉起了他的武器。\n"
+description = """
+這是個邪惡的生物，有八呎高，身上覆蓋著補釘般的灰色毛皮，像貓一般的臉上
+有著晶亮的紅色眼睛以及很大的耳朵。牠們相當具有侵略性，不過牠們現在被他
+們的主人，同時也是牠們又恨又怕的種族，暗黑精靈所掌控著。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = -1000
+level = 25
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Orc"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60303.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60303.applies]]
+type = "HITROLL"
+degree = 25
+[[mobiles.60303.applies]]
+type = "DAMROLL"
+degree = 25
+[[mobiles.60303.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+        if race($n) == Drow
+                stare $n
+                say 我討厭你這傢伙！
+        else
+                say 不要煩我，我什麼都不曉得。
+        endif
+endif
+"""
+[[mobiles.60303.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        circular
+        mpnowait
+else
+        flaming
+        mpnowait
+endif
+"""
+
+[mobiles.60304]
+keywords = "trog troglodyte"
+short_description = "穴居人奴隸(troglodyte slave)"
+long_description = "一名穴居人奴隸(troglodyte slave)發出恐嚇般的咆哮聲。\n"
+description = """
+這些最弱小的生物是幽暗地域的原住民，這些可憐的邪惡生物，就像是在地上爬
+行、全身又髒又黏的精靈，頭頂長有像是鰭的東西。他們充當守衛時通常拿著棍
+棒或是長矛，不過他們通常是被用來替他們的主人暗黑精靈扛很重的東西。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "WIMPY"]
+affected_flags = ["INFRARED"]
+alignment = -1000
+level = 16
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Troll"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60304.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60304.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+        if race($n) == Drow
+                stare $n
+                say ............
+        else
+                say ......
+        endif
+endif
+"""
+[[mobiles.60304.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        circular
+        mpnowait
+else
+        kick
+        mpnowait
+        kick
+        mpnowait
+endif
+"""
+
+[mobiles.60305]
+keywords = "displacer beast"
+short_description = "移位獸(displacer beast)"
+long_description = "一頭移位獸(displacer beast)現出身形並開始攻擊！\n"
+description = """
+這些生物很像是巨大的豹，有四根用來吸東西的觸手從腹部伸出來。牠們有能力
+扭曲獵物的知覺，這使得牠們很難對付。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "MOB_AI"]
+affected_flags = ["INVISIBLE", "INFRARED", "SNEAK", "HIDE"]
+alignment = -1000
+level = 32
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Beast"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "REF_MAGIC"]
+[[mobiles.60305.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.60305.applies]]
+type = "HITROLL"
+degree = 20
+[[mobiles.60305.applies]]
+type = "DAMROLL"
+degree = 20
+[[mobiles.60305.applies]]
+type = "DODGE"
+degree = -250
+[[mobiles.60305.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        bashhead $r
+        mpnowait
+        bashhead $r
+        mpnowait
+else
+        mpechoat $r $I試圖混淆你的知覺！
+        mpforcer here cast curse $r 40
+endif
+"""
+
+[mobiles.60306]
+keywords = "hook horror"
+short_description = "恐爪怪(hook horror)"
+long_description = "在你聽到恐怖的喀嚓聲後幾秒，一隻恐爪怪(hook horror)對你發動攻擊！\n"
+description = """
+恐爪怪是一種有鱗片的大型生物，有著一對巨大的鉗狀雙手，可以扯碎牠們敵人
+的血肉，造成嚇人的傷害。恐爪怪以爪子所發出的特有喀嚓聲而聞名，對於警覺
+性夠高的旅者來說，那是牠們即將展開攻擊的警訊。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "HUNT", "TRACK"]
+affected_flags = ["DETECT_INVIS", "INFRARED"]
+alignment = 0
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Beast"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60306.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.60306.applies]]
+type = "HITROLL"
+degree = 20
+[[mobiles.60306.applies]]
+type = "DAMROLL"
+degree = 20
+[[mobiles.60306.applies]]
+type = "APPLY_ADAMAGE"
+degree = 30
+[[mobiles.60306.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(75)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60307]
+keywords = "gnome svirfneblin"
+short_description = "深地精(Svirfneblin)"
+long_description = "一名深地精(Svirfneblin)小心謹慎地接近你。\n"
+description = """
+這些地精是那些居住在地表的地精之遠親，兩者有著許多共同的特性。他們是幽
+暗地域原住民中唯一的善良種族，但這不表示他們懦弱。他們和大地元素之間保
+持著密切的交情，當有個大地元素在你附近時，去找深地精的麻煩是很不明智的
+舉動。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY"]
+affected_flags = ["INFRARED", "PROTECT"]
+alignment = 400
+level = 22
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Gnome"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60307.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60307.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+        if race($n) == Gnome
+                say 你有什麼事嗎？
+        else
+                say 幹什麼？
+        endif
+endif
+"""
+[[mobiles.60307.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if insameroom(elemental-under)
+        mpforce elemental-under mpkill $n
+        mpforce elemental-under hunt $n
+endif
+if rand(75)
+        kick $r
+        mpnowait
+else
+        flee
+endif
+"""
+
+[mobiles.60308]
+keywords = "drow scout"
+short_description = "暗黑精靈斥候(drow scout)"
+long_description = "一名暗黑精靈斥候(drow scout)在你發現他的時候咒罵著你！\n"
+description = """
+這些斥候被用來從事偵查工作，而不是戰鬥。這個暗黑精靈因為被人發現而顯得
+很不高興，他因為還沒準備好要應付你而苦惱。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "INFRARED"]
+alignment = -1000
+level = 19
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Drow"
+class = ["WARRIOR", "THIEF"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60308.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60308.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+        say 可惡！殺了你！
+        bs $n
+        mpnowait
+endif
+"""
+[[mobiles.60308.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        say 殺了你！
+        mpgoto self
+        bs $r
+        mpnowait
+else
+        cast blindness $r
+        mpnowait
+endif
+"""
+
+[mobiles.60309]
+keywords = "nightmare"
+short_description = "夢魘(nightmare)"
+long_description = "一匹專供某些暗黑精靈貴族所騎乘的駿馬‧夢魘(nightmare)在這裡。\n"
+description = """
+這些殘暴的公馬原產於冥界，牠們散發著火燄與硫磺的熱氣，嘴巴則能任意噴出
+烈火。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["INFRARED", "PROTECT"]
+alignment = -1000
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Horse"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60309.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.60309.applies]]
+type = "APPLY_ADAMAGE"
+degree = 25
+[[mobiles.60309.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv multihit $n
+        skilldrv multihit $n
+else
+        kick
+        mpnowait
+        kick
+        mpnowait
+        kick
+        mpnowait
+endif
+"""
+
+[mobiles.60310]
+keywords = "mezzodaemon demon"
+short_description = "惡魔(Mezzodaemon)"
+long_description = "一個巨大的惡魔(Mezzodaemon)咆哮著，並發動攻擊！\n"
+description = """
+這種惡魔相當巨大，身體臃腫，有巨大的爪子與很小的翅膀，看起來似乎不可能
+承受自身的體重而飛起來，但是牠們就是有辦法做到。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "HARD_DIS", "TACTICS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING"]
+alignment = -1000
+level = 46
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.60310.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.60310.applies]]
+type = "HITROLL"
+degree = 100
+[[mobiles.60310.applies]]
+type = "SAVING_BREATH"
+degree = -50
+[[mobiles.60310.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.60310.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.60310.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.60310.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.60310.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(33)
+        cast 2 powerball
+        mpnowait
+else
+        if rand(50)
+                cast 'crushing hand' $r
+                mpnowait
+        else
+                cast 'sun flash'
+                mpnowait
+                cast 2 'angry fire storm' $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.60311]
+keywords = "piercer"
+short_description = "貫穿者(piercer)"
+long_description = "貫穿者(piercer)自你附近的天花板掉了下來。\n"
+description = """
+這些討厭鬼是相當敏銳的掠奪者，看起來很像是鐘乳石，當有人經過時，牠們會
+朝著遲鈍的傢伙落下去。
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Statue"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60311.applies]]
+type = "HIT"
+degree = 3000
+[[mobiles.60311.applies]]
+type = "HITROLL"
+degree = 30
+[[mobiles.60311.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(95)
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+else
+        mpecho $I忽然一躍而起，脫離了戰鬥，並且再次擬態成鐘乳石的模樣。
+        mppurge self
+endif
+"""
+
+[mobiles.60312]
+keywords = "lurker above"
+short_description = "潛伏者(lurker above)"
+long_description = "潛伏者(lurker above)試著包住並悶死你！\n"
+description = """
+這骯髒的怪物會吞食任何闖入牠巢穴的東西，甚至連暗黑精靈與不死生物都無法
+避免......
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY"]
+affected_flags = ["INFRARED", "FLYING"]
+alignment = 0
+level = 32
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Beast"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60312.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.60312.applies]]
+type = "SAVING_ELEMENT"
+degree = -25
+[[mobiles.60312.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60313]
+keywords = "gelatinous cube"
+short_description = "膠質怪(gelatinous cube)"
+long_description = "一隻膠質怪(gelatinous cube)在你附近滑行著。\n"
+description = """
+這個透明的物體隱藏著相當強力的酸液，可以很快地將你的血肉溶掉！
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["PROTECT"]
+alignment = 0
+level = 19
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Elementx"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60313.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60313.applies]]
+type = "POWER_POTENTIAL"
+degree = 15
+[[mobiles.60313.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        mpforcer here cast 'acid blast' $r 40
+        mpforcer here cast 'acid blast' $r 40
+else
+        mpforcer here cast poison $r 40
+        mpforcer here cast poison $r 40
+endif
+"""
+
+[mobiles.60314]
+keywords = "gray ooze"
+short_description = "灰白軟泥(gray ooze)"
+long_description = "一堆灰白色的流體(gray ooze)在你附近滑行著。\n"
+description = """
+「喔」我聽到你說的了：「好恐怖！」，嗯，你等著吧！
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["SANCTUARY", "INFRARED"]
+alignment = -1000
+level = 32
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Object"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60314.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.60314.applies]]
+type = "REDUCE_DAMAGE"
+degree = 75
+[[mobiles.60314.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60315]
+keywords = "kuotoa kuotoan scout"
+short_description = "寇濤魚人斥候(Kuotoan scout)"
+long_description = "一名寇濤魚人斥候(Kuotoan scout)咆哮著，並發動攻擊！\n"
+description = """
+這個崇拜蛇神的狂熱信徒想要消滅所有非水生的生物，像是你這種生物。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "WIMPY"]
+affected_flags = ["INFRARED"]
+alignment = -1000
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kuo-toa"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60315.applies]]
+type = "HIT"
+degree = 3000
+[[mobiles.60315.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        circular
+        mpnowait
+else
+        cast 2 'chill touch' $r
+        mpnowait
+endif
+"""
+
+[mobiles.60316]
+keywords = "earth elemental-under"
+short_description = "大地元素(earth elemental)"
+long_description = "一個大地元素(earth elemental)緩慢地移動著。\n"
+description = """
+這個泥土人處在深地精的控制之下。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT"]
+alignment = 0
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Elemental"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC"]
+[[mobiles.60316.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.60316.applies]]
+type = "HITROLL"
+degree = 30
+[[mobiles.60316.applies]]
+type = "DAMROLL"
+degree = 30
+[[mobiles.60316.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        frenzy
+        mpnowait
+else
+        kick
+        mpnowait
+        bashhead
+        mpnowait
+endif
+"""
+
+[mobiles.60317]
+keywords = "nycadaemon daemon demon"
+short_description = "惡魔(nycadaemon)"
+long_description = "一個惡魔(nycadaemon)瘋狂地笑著，並攻擊過來！\n"
+description = """
+這是個身形瘦長，有七呎高的黑皮惡魔，頭上有角，爪子很銳利。然而，牠手上
+還握著一柄看起來很邪惡的戰斧。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY", "HARD_DIS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = -1000
+level = 43
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.60317.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.60317.applies]]
+type = "HITROLL"
+degree = 100
+[[mobiles.60317.applies]]
+type = "SAVING_BREATH"
+degree = -50
+[[mobiles.60317.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.60317.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.60317.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.60317.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.60317.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(33)
+        cast 2 'lightning bolt' $r
+        mpnowait
+else
+        if rand(50)
+                cast 'seal magic' $r
+                mpnowait
+                cast curse $r
+                mpnowait
+        else
+                perform 'demon tremor'
+                mpnowait
+                perform 'demon tremor'
+                mpnowait
+                perform 'demon tremor'
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.60318]
+keywords = "ghoul"
+short_description = "食屍鬼(ghoul)"
+long_description = "一個食屍鬼(ghoul)發出狂亂的叫聲，同時開始攻擊！\n"
+description = """
+這個發狂的不死生物被某些位於遠方的暗黑精靈女祭司所控制著。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY", "HARD_DIS"]
+affected_flags = ["INFRARED"]
+alignment = -1000
+level = 19
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60318.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60318.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60319]
+keywords = "ghast"
+short_description = "厲鬼(ghast)"
+long_description = "一個厲鬼(ghast)發出狂亂的叫聲，同時開始攻擊！\n"
+description = """
+這個發狂的不死生物被某些位於遠方的暗黑精靈女祭司所控制著。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY", "HARD_DIS"]
+affected_flags = ["INFRARED"]
+alignment = -1000
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60319.applies]]
+type = "HIT"
+degree = 2500
+[[mobiles.60319.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60320]
+keywords = "jermlaine"
+short_description = "巴米精怪(jermlaine)"
+long_description = "一隻巴米精怪(jermlaine)在策劃著某些鬼把戲。\n"
+description = """
+這些和妖精有親戚關係的小傢伙們本質並不邪惡，不過他們對那些誤闖進他們巢
+穴的地表生物可是毫不留情。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY"]
+affected_flags = ["INVISIBLE", "INFRARED", "SNEAK", "HIDE"]
+alignment = 0
+level = 17
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Fairy"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_MUTE"]
+[[mobiles.60320.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60320.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        cast 2 'energy drain' $r
+        mpnowait
+else
+        cast lifesteal
+        mpnowait
+        cast soulsteal
+        mpnowait
+endif
+"""
+
+[mobiles.60321]
+keywords = "drow vampire mage"
+short_description = "暗黑精靈吸血法師(drow vampire mage)"
+long_description = "一名暗黑精靈吸血法師(drow vampire mage)對你凶惡地笑著。\n"
+description = """
+這傢伙在碰到他的女妖愛人以前，就已經夠邪惡了，現在他則是個十足的惡魔！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "HARD_DIS", "HUNT"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PASS_DOOR"]
+alignment = -1000
+level = 39
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Drow"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_DM", "NO_CHARM", "NO_POISON", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.60321.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.60321.applies]]
+type = "SAVING_BREATH"
+degree = -25
+[[mobiles.60321.applies]]
+type = "SAVING_SPELL"
+degree = -25
+[[mobiles.60321.applies]]
+type = "SAVING_ELEMENT"
+degree = -25
+[[mobiles.60321.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.60321.applies]]
+type = "APPLY_AMAGIC"
+degree = 35
+[[mobiles.60321.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(33)
+        say 把你的力量給我！
+        cast 2 'energy drain'
+        mpnowait
+else
+        if rand(50)
+                say 閃電！去吧！
+                cast 2 'chain lightning'
+                mpnowait
+        else
+                say 看招！我最強的法術！
+                cast fulgurant dance
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.60322]
+keywords = "succubus"
+short_description = "女妖(succubus)"
+long_description = "一名美麗的女性(female)對你嬌媚地笑著，並露出了尖銳的利牙......\n"
+description = """
+在這裡你看到一個令人心醉、嬌媚萬分的裸體女性。等一下，是你的幻覺嗎？還
+是說她有著小小的角與尖牙......？
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "REGENERACY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING"]
+alignment = -1000
+level = 38
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Demon"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_LORE", "NO_BLIND", "NO_CHARM", "REF_MAGIC", "SPELL_FURY"]
+[[mobiles.60322.applies]]
+type = "HIT"
+degree = 15000
+[[mobiles.60322.applies]]
+type = "DODGE"
+degree = -500
+[[mobiles.60322.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.60322.applies]]
+type = "APPLY_GMAGIC"
+degree = 1000
+[[mobiles.60322.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(33)
+        say 在焦熱的地獄中痛苦地呼號吧，呵呵呵......
+        cast 4 fireball $n
+        mpnowait
+else
+        if rand(50)
+                say 冰～霜～連～舞～
+                cast 3 'chill touch'
+                mpnowait
+        else
+                say 來吧......嘻嘻......
+                mpgoto self
+                cast charm $n
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.60323]
+keywords = "gnome slave"
+short_description = "地精奴隸(gnome slave)"
+long_description = "一名地精奴隸(gnome slave)茫然地注視著你。\n"
+description = """
+這個可憐的傢伙已經放棄一切希望了。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "WIMPY"]
+affected_flags = ["INFRARED"]
+alignment = 0
+level = 16
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Gnome"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60323.applies]]
+type = "HIT"
+degree = 2000
+[[mobiles.60323.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+        say 人生已經沒有希望了......
+endif
+"""
+
+[mobiles.60324]
+keywords = "wererat lycanthrope ratman"
+short_description = "鼠人(wererat)"
+long_description = "一名鼠人(wererat)揮舞著一把銳利的暗黑精靈劍，看起來很嚇人。\n"
+description = """
+這些殘暴的生物唯利是圖，他們為任何付得出合理價錢的種族工作。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY"]
+affected_flags = ["INFRARED", "PROTECT"]
+alignment = -400
+level = 27
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Rat"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60324.applies]]
+type = "HIT"
+degree = 3000
+[[mobiles.60324.applies]]
+type = "DAMROLL"
+degree = 20
+[[mobiles.60324.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60325]
+keywords = "drow priestess"
+short_description = "暗黑精靈女祭司(drow priestess)"
+long_description = "一名暗黑精靈女祭司(drow priestess)對著你尖叫，並向你攻擊！\n"
+description = """
+她負責代管這個前哨站，如果她沒逮到一個普通的冒險者，她的報告書上就會寫
+得很難看。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLAMING"]
+alignment = -1000
+level = 28
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Drow"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "NO_PARA"]
+[[mobiles.60325.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.60325.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.60325.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        cast 2 'song of firestorm'
+        mpnowait
+else
+        cast 2 'soul of magma'
+        mpnowait
+endif
+"""
+
+[mobiles.60326]
+keywords = "drow guard"
+short_description = "暗黑精靈守衛(drow guard)"
+long_description = "一名暗黑精靈守衛(drow guard)替他手上的十字弓裝上箭，然後開始射擊！\n"
+description = """
+這些是普通的男性暗黑精靈士兵，可以說是所謂的雜魚。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "INFRARED"]
+alignment = -1000
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Drow"
+class = ["WARRIOR", "SHOT_ARROW"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.60326.applies]]
+type = "HIT"
+degree = 3000
+[[mobiles.60326.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60327]
+keywords = "drow mage"
+short_description = "暗黑精靈法師(drow mage)"
+long_description = "一名暗黑精靈法師(drow mage)準備施展法術。\n"
+description = """
+這傢伙實際上是個貴族，魔索布萊城的第二家族‧巴瑞森德安茍的一份子，他不
+會讓他家族的名聲，因為你的脫逃而受到損害！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "INFRARED", "PROTECT"]
+alignment = -1000
+level = 25
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Drow"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "ANTI_MAGIC"]
+[[mobiles.60327.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.60327.applies]]
+type = "DODGE"
+degree = -300
+[[mobiles.60327.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.60327.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        cast 3 'ice comet'
+else
+        cast 3 'meteor shower'
+endif
+"""
+
+[mobiles.60328]
+keywords = "purple worm"
+short_description = "紫色的蟲(purple worm)"
+long_description = "一隻可怕的紫色蟲(purple worm)攻擊過來！\n"
+description = """
+這隻骯髒的生物有三十呎以上的長度，有張圓形的嘴，裡面有一排排像剃刀般的
+利牙，就像是要刺進你的身體一樣！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = 0
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Worm"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.60328.applies]]
+type = "HIT"
+degree = 15000
+[[mobiles.60328.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.60328.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.60328.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 750
+[[mobiles.60328.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[mobiles.60329]
+keywords = "drow sentry"
+short_description = "暗黑精靈哨兵(drow sentry)"
+long_description = "一名暗黑精靈哨兵(drow sentry)簡單地點了個頭，警告你最好待在往南的小路上。\n"
+description = """
+這個哨兵平常是在監視所有進城的各類生物，和那些生物比較起來，你算是少見
+的嬌小生物。實際上他並不曉得你為什麼要進城，而且他其實也不關心。他真正
+期待的是能好好玩弄他的樹精奴隸少女，然後在他結束工作後與小惡鬼在蘑菇森
+林裡打獵。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = -1000
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Drow"
+class = ["WARRIOR", "THIEF"]
+spec_flags = ["NO_CHARM", "NO_TARDY"]
+[[mobiles.60329.applies]]
+type = "HIT"
+degree = 3500
+[[mobiles.60329.applies]]
+type = "HITROLL"
+degree = 25
+[[mobiles.60329.applies]]
+type = "DAMROLL"
+degree = 25
+[[mobiles.60329.applies]]
+type = "SAVING_BREATH"
+degree = -100
+[[mobiles.60329.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if rand(50)
+        stare $n
+        say 不要亂跑！你們這些外地人真是......
+else
+        hehe
+        say 今天回家又可以好好玩弄我可愛的奴隸了，呼呼呼......
+endif
+"""
+[[mobiles.60329.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+        skilldrv heavyhit $r
+else
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+        skilldrv speedhit $r
+endif
+"""
+
+[objects.60300]
+keywords = "saddle"
+short_description = "馬鞍(riding saddle)"
+long_description = "這個馬鞍(riding saddle)是暗黑精靈拿來騎蜥蜴用的。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+[[objects.60300.applies]]
+type = "AC"
+value = -10
+
+[objects.60301]
+keywords = "drow cloak"
+short_description = "暗黑精靈斗蓬(drow cloak)"
+long_description = "一件黑色的暗黑精靈斗蓬(drow cloak)皺成一團放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.60301.applies]]
+type = "DODGE"
+value = -8
+
+[objects.60302]
+keywords = "drow boots"
+short_description = "暗黑精靈長靴(drow boots)"
+long_description = "一雙黑色的暗黑精靈長靴(drow boots)在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.60302.applies]]
+type = "WIS"
+value = 1
+
+[objects.60303]
+keywords = "drow chain chainmail"
+short_description = "暗黑精靈鍊甲(drow chainmail)"
+long_description = "一件做得很不錯的堅固鍊甲(drow chainmail)在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.60303.applies]]
+type = "AC"
+value = -15
+
+[objects.60304]
+keywords = "drow short sword"
+short_description = "暗黑精靈短劍(drow short sword)"
+long_description = "一把如同剃刀般鋒銳的堅固短劍(short sword)在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "11"]
+weight = 20
+cost = 0
+level_limited = 0
+[[objects.60304.applies]]
+type = "HITROLL"
+value = 4
+
+[objects.60305]
+keywords = "crossbow"
+short_description = "暗黑精靈十字弓(drow hand crossbow)"
+long_description = "一把暗黑精靈十字弓(drow hand crossbow)在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["100", "0", "0", "14"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60306]
+keywords = "ingot silver"
+short_description = "銀錠(silver ingot)"
+long_description = "一根不純的銀錠(silver ingot)被遺留在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 1000
+level_limited = 0
+
+[objects.60307]
+keywords = "ingot gold"
+short_description = "金錠(gold ingot)"
+long_description = "一根不純的金錠(gold ingot)被遺留在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 11
+cost = 2000
+level_limited = 0
+
+[objects.60308]
+keywords = "ingot mithril"
+short_description = "秘銀錠(mithril ingot)"
+long_description = "一根不純的秘銀錠(mithril ingot)被遺留在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 12
+cost = 3000
+level_limited = 0
+
+[objects.60309]
+keywords = "ingot adamantite"
+short_description = "精金錠(adamantite ingot)"
+long_description = "一根不純的精金錠(adamantite ingot)被遺留在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 15
+cost = 5000
+level_limited = 0
+
+[objects.60310]
+keywords = "morning star"
+short_description = "晨星(adamantite morning star)"
+long_description = "這把暗黑精靈風格的武器晨星(morning star)能提供使用者優秀的準確度。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "8"]
+weight = 20
+cost = 10000
+level_limited = 0
+[[objects.60310.applies]]
+type = "HITROLL"
+value = 7
+
+[objects.60311]
+keywords = "spear"
+short_description = "長矛(spear)"
+long_description = "這把投擲用的長矛(spear)尾端帶有倒刺。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD", "HOLD"]
+values = ["100", "0", "0", "2"]
+weight = 10
+cost = 0
+level_limited = 0
+[[objects.60311.applies]]
+type = "HITROLL"
+value = 3
+
+[objects.60312]
+keywords = "pick axe"
+short_description = "深地精十字鎬(svirfneblin pick axe)"
+long_description = "這把十字鎬(pick axe)做得相當不錯。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "7"]
+weight = 20
+cost = 0
+level_limited = 0
+[[objects.60312.applies]]
+type = "HITROLL"
+value = 2
+[[objects.60312.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.60313]
+keywords = "chain chainmail"
+short_description = "深地精鍊甲(svirfneblin chainmail)"
+long_description = "一件做得滿不錯的堅固鍊甲(chainmail)在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.60313.applies]]
+type = "HIT"
+value = 20
+
+[objects.60314]
+keywords = "earth stone"
+short_description = "大地之石(earth stone)"
+long_description = "這顆大地之石(earth stone)擁有強大的魔法力量。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.60314.applies]]
+type = "MANA"
+value = 25
+
+[objects.60315]
+keywords = "sparkling gem"
+short_description = "發光寶石(sparkling gem)"
+long_description = "一顆寶石(gem)在這裡閃閃發光。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60316]
+keywords = "mineral pill"
+short_description = "礦物藥丸(mineral pill)"
+long_description = "吃下這顆礦物藥丸(mineral pill)可以治療傷勢。"
+action_description = ""
+item_type = "PILL"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["30", "heal", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60317]
+keywords = "net"
+short_description = "網子(net)"
+long_description = "這張網子(net)能用來困住逃跑的敵人。"
+action_description = ""
+item_type = "WAND"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["20", "2", "2", "paralyze"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60318]
+keywords = "barbed trident"
+short_description = "倒刺三叉戟(barbed trident)"
+long_description = "一把倒刺三叉戟(barbed trident)被人插在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "11"]
+weight = 10
+cost = 0
+level_limited = 0
+[[objects.60318.applies]]
+type = "HITROLL"
+value = 1
+[[objects.60318.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.60319]
+keywords = "leather body harness"
+short_description = "皮吊帶(leather body harness)"
+long_description = "一條皮吊帶(leather body harness)躺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.60319.applies]]
+type = "NONE"
+value = -4
+
+[objects.60320]
+keywords = "battle axe"
+short_description = "戰斧(battle axe)"
+long_description = "一把戰斧(battle axe)躺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "EVIL", "MAGIC", "ANTI_GOOD", "POISONED"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "1"]
+weight = 35
+cost = 0
+level_limited = 0
+[[objects.60320.applies]]
+type = "DAMROLL"
+value = 10
+[[objects.60320.applies]]
+type = "APPLY_ADAMAGE"
+value = 20
+
+[objects.60321]
+keywords = "wand"
+short_description = "魔杖(wand)"
+long_description = "一把魔杖(magic wand)在這裡散發著微光。"
+action_description = ""
+item_type = "WAND"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["40", "8", "8", "frost breath"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60322]
+keywords = "jewelry"
+short_description = "昂貴珠寶(expensive jewelry)"
+long_description = "這是非常昂貴的珠寶(expensive jewelry)。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60323]
+keywords = "chest"
+short_description = "橡木箱(oak chest)"
+long_description = "一個牢固的橡木箱(oak chest)放在這裡。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = []
+values = ["100", "2", "60324", "0"]
+weight = 100
+cost = 0
+level_limited = 0
+
+[objects.60324]
+keywords = "key"
+short_description = "鑰匙(key)"
+long_description = "一把青銅鑰匙(key)躺在這裡。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60325]
+keywords = "scroll"
+short_description = "卷軸(scroll)"
+long_description = "一個卷軸(scroll)躺在這裡。"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["30", "tardy", "weaken", "poison"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60326]
+keywords = "jewelry"
+short_description = "昂貴珠寶(expensive jewelry)"
+long_description = "這是非常昂貴的珠寶(expensive jewelry)。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["30000", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60327]
+keywords = "lesser tentacle rod"
+short_description = "觸手之杖(lesser tentacle rod)"
+long_description = "一根觸手之杖(lesser tentacle rod)在這附近危險地扭動著。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "10"]
+weight = 25
+cost = 0
+level_limited = 0
+[[objects.60327.applies]]
+type = "HITROLL"
+value = 2
+[[objects.60327.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.60328]
+keywords = "drow brooch"
+short_description = "暗黑精靈胸針(drow brooch)"
+long_description = "一枚有著巴瑞森德安茍家族徽記的胸針(brooch)躺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.60328.applies]]
+type = "INT"
+value = 1
+[[objects.60328.applies]]
+type = "WIS"
+value = 1
+[[objects.60328.applies]]
+type = "MANA"
+value = 25
+
+[objects.60329]
+keywords = "key"
+short_description = "鑰匙(key)"
+long_description = "一把秘銀鑰匙(key)躺在這裡。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60330]
+keywords = "hessian sack"
+short_description = "粗麻布袋(hessian sack)"
+long_description = "這個堅固的袋子(sack)是用來裝礦石用的。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["20", "1", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[objects.60331]
+keywords = "ore"
+short_description = "礦石(ore)"
+long_description = "一些有價值的礦石(ore)放在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["500", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+
+[objects.60332]
+keywords = "portal"
+short_description = "黑暗門扉(dark portal)"
+long_description = "一扇通往暗黑精靈原鄉的黑暗門扉(dark portal)在這裡。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["GLOW", "HUM"]
+wear_flags = []
+values = ["5100", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+
+[rooms.60300]
+name = "進入幽暗地域的斜坡"
+description = """
+你慢慢地朝著你前方那片黑暗前進，碰上這片如同墨水般的黑暗，你手上的
+光源無力地搖擺著。你覺得就像是有什麼東西自四面八方擠壓著你，讓你呼吸困
+難。在驅退那股因為幽閉恐怖所帶來的作嘔感之後，你堅定自己的意志，往深處
+前進。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.60300.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60301
+[rooms.60300.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 80040
+
+[rooms.60301]
+name = "幽暗地域"
+description = """
+自你進來的北方所散發的那一小點光源，現在已經完全消失無蹤了，而且在
+你的心靈反抗這片怪異的環境時，你感到另一股令人恐懼的波動壓倒了你。就連
+矮人的礦山都沒有這個地方糟糕，這裡沒有光線，沒有聲音，只有完全的黑暗，
+除了你那越來越微弱的光源。傳說幽暗地域本身對冒險者的危害，遠高於住在地
+域的許多危險生物。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.60301.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60300
+[rooms.60301.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60302
+
+[rooms.60302]
+name = "洞窟"
+description = """
+忽然間，你進入了一處巨大洞窟，洞窟內的洞壁與天頂嵌了數百顆微小的水
+晶，你手上的光源照到它們而反射，讓你因為能見到更多光亮而減輕了些許心理
+壓力。成千上百的鐘乳石以及石筍遮蔽的你的視線，但你相當肯定你看到東邊和
+南邊有出口，你可以聽到某些像是建築的聲音自東邊傳來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60302.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60354
+[rooms.60302.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60301
+[rooms.60302.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60303
+
+[rooms.60303]
+name = "傾斜的通道"
+description = """
+這條通道非常地狹窄，當你往前走幾步，通道忽然開始往下傾斜，前方幾乎
+是垂直往下沒入黑暗之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60303.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60304
+[rooms.60303.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60302
+
+[rooms.60304]
+name = "洞窟"
+description = """
+你已經進入了另一個洞窟，它是存在於幽暗地域內的眾多洞窟其中之一。這
+個洞窟裡沒有水晶可以增加光度，你只能沿著邊緣慢慢地邊走邊摸索出口。你發
+現往東與往西的通道，以及往北與往南陡峭傾斜的通道，往北的通道往上傾斜，
+往南的通道則往下。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.60304.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60308
+[rooms.60304.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60307
+[rooms.60304.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60303
+[rooms.60304.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60305
+
+[rooms.60305]
+name = "巢穴"
+description = """
+你闖進了某些可怕野獸的巢穴，當你前進時腳下所踩碎的那些無數骷髏，證
+明了這野獸有多恐怖，你覺得你可以聽到前方傳來鼻息的聲音，而你的輕鬆感在
+聽到「某些東西」所發出來的怪聲後，最後終於被恐怖感給壓過。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60305.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60304
+[rooms.60305.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60306
+
+[rooms.60306]
+name = "棕色巨獸巢穴"
+description = """
+喔不！你已經進入了棕色巨獸的巢穴！這些頗具特色的生物以對寶石的嗜好
+而聞名，而地上有比牠們的數量更多的枯骨，你最好祈禱這巢穴的主人現在不在
+家......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60306.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60305
+
+[rooms.60307]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60307.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60304
+
+[rooms.60308]
+name = "路口"
+description = """
+你來到了一處路口，陡峭的通道在此與一條寬闊好走的東西向道路相接。你
+覺得你好像看見東邊有微弱的光芒上下跳動著，西邊則是彷彿永無止盡的黑暗。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60308.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60330
+[rooms.60308.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60304
+[rooms.60308.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60309
+
+[rooms.60309]
+name = "狹窄的通道"
+description = """
+你謹慎地沿著一條狹窄的東西向通道往前走，黑暗向兩個方向擴張而去，看
+不到任何明顯的盡頭。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60309.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60308
+[rooms.60309.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60310
+
+[rooms.60310]
+name = "路口"
+description = """
+你忽然間來到一處路口，在這裡你可以往北邊、東邊或南邊前進。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.60310.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60309
+[rooms.60310.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60311
+[rooms.60310.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60312
+
+[rooms.60311]
+name = "巢穴"
+description = """
+你進入了某些野獸的巢穴，散落在地上的骨頭，帶有霉味的空氣參雜著讓人
+幾乎無法呼吸的腐臭，證明這是野獸的巢穴。不曉得巢穴的主人在哪？
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60311.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60310
+
+[rooms.60312]
+name = "小洞窟"
+description = """
+這處洞窟最近剛發生一場小規模戰鬥，被脫去裝備的暗黑精靈屍體倒在周圍
+各處，然而這裡卻沒有其他種族的屍體，很明顯地，勝利者帶走了他們的死者。
+
+通道通往北邊、東邊和南邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60312.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60318
+[rooms.60312.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60310
+[rooms.60312.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60313
+
+[rooms.60313]
+name = "另一處路口"
+description = """
+你來到了一處路口，從這裡你可以往北邊、南邊或西邊走。你從地上的泥土
+可以辨認出數頭大型生物往西走過去的痕跡。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60313.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60312
+[rooms.60313.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60314
+[rooms.60313.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60315
+
+[rooms.60314]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60314.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60313
+
+[rooms.60315]
+name = "十字路口"
+description = """
+你來到一處十字路口，這個地方的通道寬闊到可以設置某些轉運站一類的設
+施。周圍有一些隨意搭著的帳篷，看起來擠成一團，有點亂糟糟的樣子，邊緣有
+小小的營火在燒著。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.60315.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60313
+[rooms.60315.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60317
+[rooms.60315.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60316
+[rooms.60315.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60349
+
+[rooms.60316]
+name = "貯藏洞窟"
+description = """
+這個洞窟裡面堆滿了盒子、板條箱以及其他設備，對你來說這些東西都沒什
+麼用，不過很明顯地，它們對那些停留於此的商人們來說很重要。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60316.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60315
+
+[rooms.60317]
+name = "貯藏洞窟"
+description = """
+這個洞窟裡面堆滿了盒子、板條箱以及其他設備，對你來說這些東西都沒什
+麼用，不過很明顯地，它們對那些停留於此的商人們來說很重要。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60317.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60315
+
+[rooms.60318]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60318.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60319
+[rooms.60318.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60312
+
+[rooms.60319]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60319.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60320
+[rooms.60319.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60318
+
+[rooms.60320]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60320.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60321
+[rooms.60320.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60319
+
+[rooms.60321]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60321.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60320
+[rooms.60321.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60322
+
+[rooms.60322]
+name = "另一處路口"
+description = """
+來到這個地方，你可以往北、往南或是往下穿過一個小洞穴，進入較下層的
+通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60322.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60323
+[rooms.60322.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60321
+[rooms.60322.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60338
+
+[rooms.60323]
+name = "狹窄的通道"
+description = """
+這條狹窄的通道又冷又潮濕，有可能比你之前走過的通道都還要暗。一股冰
+冷的風自東邊吹來，這在這片通風不良的環境中是很少見的，令你很不舒服地打
+了個冷顫。遠方忽然傳來某個人的尖叫聲，令你再三考慮該不該往前進。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60323.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60324
+[rooms.60323.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60322
+
+[rooms.60324]
+name = "狹窄的通道"
+description = """
+這條狹窄的通道又冷又潮濕，有可能比你之前走過的通道都還要暗。一股冰
+冷的風自東邊吹來，這在這片通風不良的環境中是很少見的，令你很不舒服地打
+了個冷顫。遠方忽然傳來某個人的尖叫聲，令你再三考慮該不該往前進。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60324.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60325
+[rooms.60324.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60323
+
+[rooms.60325]
+name = "黴菌庭園入口"
+description = """
+你忽然進入了一處寬闊、明亮（就幽暗地域的標準來說）的洞穴，長有許多
+的真菌、黴菌與苔蘚，每一種看起來都相當地漂亮。你聽到遠遠的某處傳來輕柔
+的音樂聲，強烈地引誘著你到那裡去，同時使你放鬆了些許。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.60325.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60326
+[rooms.60325.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60324
+
+[rooms.60326]
+name = "庭園中"
+description = """
+當你走在庭園中，音樂聲變得更清楚了。你看到一些古老的雕像，它們曾經
+完好，但現在已經變得斑駁污損。北邊有一扇堅固的門，音樂聲似乎是從門後傳
+過來的。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.60326.exits.north]
+description = ""
+keywords = "堅固的門"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60327
+[rooms.60326.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60325
+
+[rooms.60327]
+name = "豪華的房間"
+description = """
+你進入了某位女性的閨房中，從房內昂貴的絲綢、傢俱、織錦以及藥膏之類
+的東西可以看得出這是女貴族的房間。歌聲似乎是從北邊傳過來的，而且你同時
+聽到某個呼喚你的聲音，聲音聽起來很甜美，很友善。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.60327.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60329
+[rooms.60327.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60328
+[rooms.60327.exits.south]
+description = ""
+keywords = "堅固的門"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60326
+
+[rooms.60328]
+name = "有許多生物的房間"
+description = """
+你往北邊走去，滿心歡喜地期待著美食、好酒與其他讓你這種友善的訪客感
+到舒服的東西。忽然間一道強光閃過，原本華麗新穎的東西瞬間變成了腐敗老舊
+的模樣，被打爛的便宜衣櫃上吊掛著裂開的碎片，兩個木桶之間掛著一片厚厚的
+木板，上頭覆蓋著污損的床單。原本引誘你的幻影已經消散了，而現在你得擺平
+你眼前這個非常要命的危機。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60328.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60327
+[[rooms.60328.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if ispc($n)
+        if is_qmark($n) == malathar_quest 100023
+                echoat $n 你成功了！再來只要將魔杖拿到手，交給莫莉雅蒂就行了！
+                mod_qmark $n malathar_quest v0 = 24
+        endif
+endif
+"""
+
+[rooms.60329]
+name = "貯藏室"
+description = """
+你被你所發現的東西給嚇到了：許多瓶罐裝的血液，腐爛的屍體，衰敗的四
+肢與一袋袋的內臟器官。惡臭讓人感到相當不安，你努力地克制住嘔吐的衝動。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60329.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60327
+
+[rooms.60330]
+name = "長長的通道"
+description = """
+這條通道似乎無止盡地往前延伸，你看不到盡頭。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60330.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60331
+[rooms.60330.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60308
+
+[rooms.60331]
+name = "哨站"
+description = """
+你闖進了暗黑精靈的哨站！當你一走進來，士兵們從四面八方跑過來，發出
+警報聲，你本能反應地拿起了武器。通道往北邊與南邊而去，東邊不遠處有一扇
+鐵門擋住你的路。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60331.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 60329
+to_room = 60336
+[rooms.60331.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60332
+[rooms.60331.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60334
+[rooms.60331.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60330
+
+[rooms.60332]
+name = "戰士營房"
+description = """
+你進入了暗黑精靈士兵駐紮的營房，他們動作俐落地整裝完畢，準備保護他
+們自己。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60332.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60333
+[rooms.60332.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60331
+
+[rooms.60333]
+name = "戰士營房"
+description = """
+你進入了暗黑精靈士兵駐紮的營房，他們動作俐落地整裝完畢，準備保護他
+們自己。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60333.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60332
+
+[rooms.60334]
+name = "牧師營房"
+description = """
+你進入了待命中的暗黑精靈女祭司營房，就連暗黑精靈男性進入這裡都算是
+褻瀆的行為，外來者就更不用說了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60334.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60331
+[rooms.60334.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60335
+
+[rooms.60335]
+name = "牧師營房"
+description = """
+你進入了待命中的暗黑精靈女祭司營房，就連暗黑精靈男性進入這裡都算是
+褻瀆的行為，外來者就更不用說了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60335.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60334
+
+[rooms.60336]
+name = "鐵門內側"
+description = """
+你已經進入暗黑精靈們的警戒區域，空氣中帶著難聞的腐臭味，你無法確定
+自己是否應該繼續往前走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60336.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60337
+[rooms.60336.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 60329
+to_room = 60331
+
+[rooms.60337]
+name = "門房"
+description = """
+暗黑精靈們在此防衛通往他們城市的大門，他們可以很快地回城報告情況。
+誰都可以自由進出－－只要他能通過警戒的話......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60337.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60336
+
+[rooms.60338]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60338.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60322
+[rooms.60338.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60339
+
+[rooms.60339]
+name = "路口"
+description = """
+通道在此通往東西南北四個方向，有個小標示(sign)附著在一根石筍上。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[[rooms.60339.extra_descriptions]]
+keywords = "sign"
+description = """
+標示上寫著：
+
+「當心潛伏者！」
+"""
+[rooms.60339.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60343
+[rooms.60339.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60338
+[rooms.60339.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60340
+[rooms.60339.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60341
+
+[rooms.60340]
+name = "空房間"
+description = """
+這條通道的盡頭是個小小的空房間，這裡似乎沒有什麼有趣的東西......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60340.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60339
+
+[rooms.60341]
+name = "黑暗洞窟"
+description = """
+你進入了一個黑暗的Ｌ形洞窟，骨頭和碎石散佈在長滿了石筍的地面。你放
+輕腳步，希望可以避免扭傷腳踝。你覺得你可以聽到喀嚓聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60341.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60339
+[rooms.60341.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60342
+
+[rooms.60342]
+name = "洞窟盡頭"
+description = """
+喀嚓聲在這裡變大......變大很多。你已經闖進了恐爪怪的巢穴，最好祈禱
+沒有半隻恐爪怪離你很近。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60342.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60341
+
+[rooms.60343]
+name = "狹窄的洞窟"
+description = """
+你用自己的方法穿過一處又長又窄的東西向洞窟，洞壁上有數個裂口，小型
+生物也許可以擠進去，你認為自己不可能辦到。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60343.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60344
+[rooms.60343.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60339
+
+[rooms.60344]
+name = "狹窄的洞窟"
+description = """
+你用自己的方法穿過一處又長又窄的東西向洞窟，洞壁上有數個裂口，小型
+生物也許可以擠進去，你認為自己不可能辦到。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60344.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60345
+[rooms.60344.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60343
+
+[rooms.60345]
+name = "狹窄的洞窟"
+description = """
+你用自己的方法穿過一處又長又窄的東西向洞窟，洞壁上有數個裂口，小型
+生物也許可以擠進去，你認為自己不可能辦到。然而北邊有個相當寬的裂口，看
+起來可以穿過去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60345.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60347
+[rooms.60345.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60346
+[rooms.60345.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60344
+
+[rooms.60346]
+name = "小洞"
+description = """
+你擠進了一個沒有其他出口的小洞裡，你因為浪費時間而忍不住咒罵著，同
+時準備要離開，忽然間你聽到了細小的嘎吱聲，回頭一看卻沒看到什麼東西，到
+底發生了什麼事......？
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60346.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60345
+
+[rooms.60347]
+name = "狹窄的洞窟"
+description = """
+你已經抵達這處東西向狹長洞窟的最東邊，洞壁上有數個裂口，小型生物也
+許可以擠進去，你認為自己不可能辦到。南邊有路可以走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60347.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60348
+[rooms.60347.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60345
+
+[rooms.60348]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60348.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60347
+
+[rooms.60349]
+name = "通道轉彎處"
+description = """
+這條通道急轉向南邊，同時變寬了許多。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60349.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60315
+[rooms.60349.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60350
+
+[rooms.60350]
+name = "主要通道"
+description = """
+你剛踏上的這條通道，是幽暗地域中使用率最高的通道。各式各樣的旅人絡
+繹不絕地沿著這條通道行走，他們大部分都不太友善。你全副武裝，確定自己已
+經準備好要混入行人之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60350.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60349
+[rooms.60350.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60351
+[rooms.60350.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60353
+
+[rooms.60351]
+name = "主要通道"
+description = """
+你剛踏上的這條通道，是幽暗地域中使用率最高的通道。各式各樣的旅人絡
+繹不絕地沿著這條通道行走，他們大部分都不太友善。你全副武裝，確定自己已
+經準備好要混入行人之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60351.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60350
+[rooms.60351.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60352
+
+[rooms.60352]
+name = "主要通道"
+description = """
+你剛踏上的這條通道，是幽暗地域中使用率最高的通道。各式各樣的旅人絡
+繹不絕地沿著這條通道行走，他們大部分都不太友善。你全副武裝，確定自己已
+經準備好要混入行人之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60352.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60351
+[rooms.60352.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60359
+
+[rooms.60353]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60353.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60350
+
+[rooms.60354]
+name = "礦坑隧道"
+description = """
+你進入某個看起來像是礦坑的地方，鐵軌沿著地面往東而去，一輛裝滿一半
+礦石的金屬手推車停在軌道上。你聽到吼叫聲，以及金屬敲擊石頭的響聲自遠方
+傳來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60354.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60355
+[rooms.60354.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60302
+
+[rooms.60355]
+name = "礦坑隧道"
+description = """
+你進入某個看起來像是礦坑的地方，鐵軌沿著地面往東而去，一輛裝滿一半
+礦石的金屬手推車停在軌道上。你聽到吼叫聲，以及金屬敲擊石頭的響聲自遠方
+傳來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60355.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60356
+[rooms.60355.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60354
+
+[rooms.60356]
+name = "礦坑隧道"
+description = """
+你進入某個看起來像是礦坑的地方，鐵軌沿著地面往東而去，一輛裝滿一半
+礦石的金屬手推車停在軌道上，軌道的終點是一座大型木頭緩衝裝置。你聽到周
+圍傳來吼叫聲，以及金屬敲擊石頭的響聲。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60356.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60358
+[rooms.60356.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60357
+[rooms.60356.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60355
+
+[rooms.60357]
+name = "貯藏室"
+description = """
+牆邊堆滿了裝滿礦石的粗麻布袋，牆壁上的金屬架上有許多的開礦工具，就
+像是各式各樣的武器。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60357.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60356
+
+[rooms.60358]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60358.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60356
+
+[rooms.60359]
+name = "主要通道"
+description = """
+你剛踏上的這條通道，是幽暗地域中使用率最高的通道。各式各樣的旅人絡
+繹不絕地沿著這條通道行走，他們大部分都不太友善。你全副武裝，確定自己已
+經準備好要混入行人之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60359.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60352
+[rooms.60359.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60360
+
+[rooms.60360]
+name = "很大的洞窟"
+description = """
+這個洞窟裡的鐘乳石和石筍被清除一空，可能是為了某些你不知道的目的。
+通道往東邊、南邊和北邊延伸。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60360.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60362
+[rooms.60360.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60359
+[rooms.60360.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60361
+
+[rooms.60361]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60361.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60360
+
+[rooms.60362]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60362.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60363
+[rooms.60362.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60360
+
+[rooms.60363]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60363.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60364
+[rooms.60363.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60362
+
+[rooms.60364]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60364.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60365
+[rooms.60364.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60363
+
+[rooms.60365]
+name = "很大的洞窟"
+description = """
+這個洞窟裡的鐘乳石和石筍被清除一空，可能是為了某些你不知道的目的。
+通道往東邊、南邊和北邊延伸。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60365.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60366
+[rooms.60365.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60364
+[rooms.60365.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60373
+
+[rooms.60366]
+name = "寬闊通道"
+description = """
+你進入了一條寬闊的東西向通道中，通道幾乎呈完美的圓形。你看到有幾條
+長長的污跡，這表示有某些很大的物體被拖過這裡，也許是屍體，或是說也許這
+條通道是蛇或蟲在使用的。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60366.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60367
+[rooms.60366.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60365
+
+[rooms.60367]
+name = "路口"
+description = """
+你來到通道內的寬闊處，從這裡可以往東西南北四個方向前進。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60367.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60370
+[rooms.60367.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60368
+[rooms.60367.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60376
+[rooms.60367.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60366
+
+[rooms.60368]
+name = "石礫遍佈的通道"
+description = """
+這條通道很狹窄，相當難走，終點在正前方，看起來像是條死路。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60368.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60369
+[rooms.60368.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60367
+
+[rooms.60369]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+
+然而，你覺得如果自己願意的話，你可以像蟲一樣鑽過北面牆壁上的狹小裂
+口，雖然說你懷疑鑽過去之後還能不能再鑽回來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60369.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60343
+[rooms.60369.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60368
+
+[rooms.60370]
+name = "寬闊通道"
+description = """
+你進入了一條寬闊的東西向通道中，通道幾乎呈完美的圓形。你看到有幾條
+長長的污跡，這表示有某些很大的物體被拖過這裡，也許是屍體，或是說也許這
+條通道是蛇或蟲在使用的。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60370.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60371
+[rooms.60370.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60367
+
+[rooms.60371]
+name = "寬闊通道"
+description = """
+你進入了一條寬闊的東西向通道中，通道幾乎呈完美的圓形。你看到有幾條
+長長的污跡，這表示有某些很大的物體被拖過這裡，也許是屍體，或是說也許這
+條通道是蛇或蟲在使用的。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60371.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60372
+[rooms.60371.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60370
+
+[rooms.60372]
+name = "寬闊通道"
+description = """
+你進入了一條寬闊的東西向通道中，通道幾乎呈完美的圓形。長長的污跡在
+這裡不見了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60372.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60371
+
+[rooms.60373]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60373.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60365
+[rooms.60373.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60374
+
+[rooms.60374]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60374.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60373
+[rooms.60374.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60375
+
+[rooms.60375]
+name = "死路"
+description = """
+你發現這條通道沒走幾步就到了盡頭，這讓你感到有點沮喪。幽暗地域中像
+這樣的通道有一大堆。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60375.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60374
+
+[rooms.60376]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60376.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60377
+[rooms.60376.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60367
+
+[rooms.60377]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60377.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60378
+[rooms.60377.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60376
+
+[rooms.60378]
+name = "洞窟"
+description = """
+你進入了一個很大的洞窟中，洞裡到處都是成列的鐘乳石和石筍，東邊和西
+邊有兩個小洞窟。一條南北向的通道自這個洞窟中央穿過。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.60378.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60379
+[rooms.60378.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60377
+[rooms.60378.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60381
+[rooms.60378.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60380
+
+[rooms.60379]
+name = "洞窟"
+description = """
+這個小洞窟很明顯是某些幽暗地域生物的巢穴，當你在那些腐屍、骷髏與裝
+備破片之間行走時，你默默地祈禱那些特殊的生物現在不在家。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60379.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60378
+
+[rooms.60380]
+name = "洞窟"
+description = """
+這個小洞窟很明顯是某些幽暗地域生物的巢穴，當你在那些腐屍、骷髏與裝
+備破片之間行走時，你默默地祈禱那些特殊的生物現在不在家。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60380.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60378
+
+[rooms.60381]
+name = "長長的通道"
+description = """
+這條通道往幽暗地域深處延伸而去，同時從這裡開始變得很陡峭，往下方傾
+斜而去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60381.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60382
+[rooms.60381.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60378
+
+[rooms.60382]
+name = "洞窟"
+description = """
+幽暗地域的這一帶看起來人來人往，為數龐大的類人生物以及其他的種族從
+這裡往東邊、上方與下方走去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60382.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60384
+[rooms.60382.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60383
+[rooms.60382.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60381
+
+[rooms.60383]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60383.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60389
+[rooms.60383.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60382
+
+[rooms.60384]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60384.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60385
+[rooms.60384.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60382
+
+[rooms.60385]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60385.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60384
+[rooms.60385.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60386
+
+[rooms.60386]
+name = "小洞窟"
+description = """
+數個大型板條箱與櫃子，以及一堆被飢餓的靈吸怪吸乾腦髓的生物屍體被遺
+留在這裡。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60386.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60385
+[rooms.60386.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60388
+[rooms.60386.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60387
+
+[rooms.60387]
+name = "和緩的斜坡"
+description = """
+你發現自己正沿著斜坡路往下走向一處如同墨水般漆黑的巨大洞窟。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60387.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60386
+[rooms.60387.exits.south]
+description = "區域註解: 往南14400\n"
+keywords = ""
+locks = []
+key = -1
+to_room = -1
+
+[rooms.60388]
+name = "鼠人房間"
+description = """
+住在這個地方的，是那些為靈吸怪奴隸販子工作的鼠人守衛以及打手。你看
+到一些非常喜愛腦髓的靈吸怪，對他們來說鼠人則是最好的供應者。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60388.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60386
+
+[rooms.60389]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60389.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60390
+[rooms.60389.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60383
+
+[rooms.60390]
+name = "圍欄外"
+description = """
+你站在一處很大的洞窟裡，南邊有一扇金屬門擋住了去路，從鐵柵欄後面飄
+來恐怖的惡臭味。你不曉得這個地方到底是拿來做什麼用的，而且你也不是很想
+知道......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60390.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60392
+[rooms.60390.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60391
+[rooms.60390.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60389
+
+[rooms.60391]
+name = "食屍鬼圍欄"
+description = """
+暗黑精靈在這個地方繁殖新的食屍鬼以供軍用，首先先挑出一兩個食屍鬼，
+然後將手無寸鐵的人類奴隸扔進去，等到被扔進去的人遭到虐殺後，再讓其復活
+而成為食屍鬼。這是個有效而且低成本的繁殖系統，可惜你人在這個地方，已經
+成了食屍鬼們的目標了......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60391.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60390
+
+[rooms.60392]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60392.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60393
+[rooms.60392.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60390
+
+[rooms.60393]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60393.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60392
+[rooms.60393.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60394
+
+[rooms.60394]
+name = "曲折通道"
+description = """
+這條深入幽暗地域深處的通道彎彎曲曲、錯綜複雜，牆壁幽暗處的奇怪苔蘚
+以及地衣散發著暗淡的光芒，不過它們所提供的光源還不足以照亮通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60394.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60393
+[rooms.60394.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60395
+
+[rooms.60395]
+name = "圍欄外"
+description = """
+你站在一處很大的洞窟裡，南邊有一扇金屬門擋住了去路，從鐵柵欄後面飄
+來恐怖的惡臭味。你不曉得這個地方到底是拿來做什麼用的，而且你也不是很想
+知道......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60395.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60394
+[rooms.60395.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60396
+[rooms.60395.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60397
+
+[rooms.60396]
+name = "惡鬼圍欄"
+description = """
+暗黑精靈在這個地方繁殖新的惡鬼以供軍用，首先先挑出一兩個惡鬼，然後
+將手無寸鐵的人類奴隸扔進去，等到被扔進去的人遭到虐殺後，再讓其復活而成
+為惡鬼。這是個有效而且低成本的繁殖系統，可惜你人在這個地方，已經成了惡
+鬼們的目標了......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60396.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 60395
+
+[rooms.60397]
+name = "平坦的隧道"
+description = """
+這條通道筆直通往東方與西方，看起來好像通往某些村落，你想你最好謹慎
+地往前進......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60397.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60395
+[rooms.60397.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60398
+
+[rooms.60398]
+name = "平坦的隧道"
+description = """
+這條通道筆直通往東方與西方，看起來好像通往某些村落，你想你最好謹慎
+地往前進......
+
+正西方是一座大城市的入口。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60398.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60397
+[rooms.60398.exits.south]
+description = "休息處"
+keywords = ""
+locks = []
+key = -1
+to_room = 60399
+[rooms.60398.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = -1
+
+[rooms.60399]
+name = "休息處"
+description = """
+這是個提供給進出暗黑精靈領土首都‧魔索布萊城的旅客們所用的休息處。
+這個地方已經杳無人煙好一陣子，也許是因為此地住民令人不快的風俗習慣所造
+成的。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.60399.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 60398

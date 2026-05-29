@@ -1,0 +1,1093 @@
+[area]
+name = "區域作者勞改營地"
+identity = "areawriter"
+builders = "Reticent"
+translator = "--"
+modifier = "--"
+vnum_start = 66000
+vnum_end = 66099
+security = 1
+recall = 3001
+death = 66000
+f_toggle = false
+
+[mobiles.66000]
+keywords = "Chaos Demon-areawriter"
+short_description = "混沌惡魔(Demon of Chaos)"
+long_description = "一位負責監督幻世一切寫作事物的惡魔(Demon of Chaos) 正站在這裡監視著你。\n"
+description = """
+為了混沌幻世的將來，原本生性善良的他只好化身為一位不茍言笑的惡魔。你看他那
+天使的白色羽翼還未全部轉成烏鴉的黑色羽翼呢。當他對著你們大聲的吼叫時，其實
+他的心裡是在滴血的。而他在這裡的工作不只是負責監督而已，他還負責著你們薪資
+分發的工作呢，真是辛苦他了。
+"""
+act_flags = ["SENTINEL", "STAY_AREA", "TRAIN", "CRITICAL", "HARD_DIS", "TACTICS", "REGENERACY", "BANKER", "REFLEXION"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLAMING", "MANASHIELD", "MYSTIC_MIRROR", "MYSTIC_ARMOR", "CONTINUE_CURE"]
+alignment = 1000
+level = 200
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5000
+mod_damroll = 5000
+mod_ac = -10000
+mod_svs = -5000
+dodge = -10000
+mod_pp = 0
+gold = 1000000
+sex = "male"
+race = "demon"
+class = ["WARRIOR", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["ANTI_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "NO_PARA", "SPELL_FURY"]
+[[mobiles.66000.applies]]
+type = "HIT"
+degree = 500000
+[[mobiles.66000.applies]]
+type = "SAVING_FIRE"
+degree = -5000
+[[mobiles.66000.applies]]
+type = "SAVING_COLD"
+degree = -5000
+[[mobiles.66000.applies]]
+type = "SAVING_LIGHTNING"
+degree = -5000
+[[mobiles.66000.applies]]
+type = "SAVING_EARTH"
+degree = -5000
+[[mobiles.66000.applies]]
+type = "SAVING_WIND"
+degree = -5000
+[[mobiles.66000.applies]]
+type = "POWER_POTENTIAL"
+degree = 500
+[[mobiles.66000.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100000
+[[mobiles.66000.applies]]
+type = "REDUCE_MAGIC"
+degree = 100000
+[[mobiles.66000.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 100000
+[[mobiles.66000.applies]]
+type = "APPLY_GMAGIC"
+degree = 100000
+[[mobiles.66000.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.66000.programs]]
+trigger = "talk_prog"
+argument = "dh"
+script = """
+if isaffected($n) !& 32
+        mpforcer here add_affect $n 'detect hidden' 1130 1000 41 -50000 32
+        mpforcer here add_affect $n gian 1130 1000 42 -50000 32
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != roc_ppl_salary
+        tell $n 喝！你又熬到領薪水的日子(talk chaos salary)了。
+else
+        if is_qmark($n) == roc_ppl_salary
+                tell $n 趕快寫你的區域吧，現在不是你領薪水的時候！
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1024
+                tell $n 大約再過一天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1048
+                tell $n 大約再過兩天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1120
+                tell $n 大約再過五天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1240
+                tell $n 大約還得再過十天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1360
+                tell $n 大約還得再過十五天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1480
+                tell $n 大約還得再過二十天，你才能夠跟我領薪水。
+        else
+                tell $n 還得過二十幾天你才能夠跟我領薪水。
+        endif
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) != roc_ppl_salary
+        tell $n 喝！想不到你一來就能跟我領薪水(talk chaos salary)了。
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "talk_prog"
+argument = "salary"
+script = """
+if is_qmark($n) == roc_ppl_salary
+        tell $n 趕快寫你的區域吧，現在不是你領薪水的時候！
+        if is_qmark($n) <= roc_ppl_salary 1024
+                tell $n 大約再過一天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1048
+                tell $n 大約再過兩天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1120
+                tell $n 大約再過五天，你就可以來跟我領薪水了。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1240
+                tell $n 大約還得再過十天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1360
+                tell $n 大約還得再過十五天，你才能夠跟我領薪水。
+                break
+        endif
+        if is_qmark($n) <= roc_ppl_salary 1480
+                tell $n 大約還得再過二十天，你才能夠跟我領薪水。
+        else
+                tell $n 還得過二十幾天你才能夠跟我領薪水。
+        endif
+else
+        if level($n) <= 2
+                tell $n 你的等級必須至少到達第 3 級才能夠跟我領薪水。
+                break
+        endif
+        nod $n
+        tell $n 你可以跟我領薪水了，領完後給我快點繼續寫區域！
+        if is_qmark($n) <= 30
+                mpadd_qmark $n roc_ppl_salary 720 0 0 0 0 1
+        else
+                mpadd_qmark $n roc_ppl_salary 960 0 0 0 0 1
+        endif
+        if level($n) <= 5
+                tell $n 依照你的等級你可以領到 100000 元的金幣。
+                mpgold $n 100000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 10
+                tell $n 依照你的等級你可以領到 130000 元的金幣。
+                mpgold $n 130000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 15
+                tell $n 依照你的等級你可以領到 160000 元的金幣。
+                mpgold $n 160000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 20
+                tell $n 依照你的等級你可以領到 200000 元的金幣。
+                mpgold $n 200000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 25
+                tell $n 依照你的等級你可以領到 250000 元的金幣。
+                mpgold $n 250000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 30
+                tell $n 依照你的等級你可以領到 300000 元的金幣。
+                mpgold $n 300000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 35
+                tell $n 依照你的等級你可以領到 370000 元的金幣。
+                mpgold $n 370000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 37
+                tell $n 依照你的等級你可以領到 450000 元的金幣。
+                mpgold $n 450000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 39
+                tell $n 依照你的等級你可以領到 550000 元的金幣。
+                mpgold $n 550000
+                mpcall resp_gold $n
+                break
+        endif
+        if level($n) <= 41
+                tell $n 依照你的等級你可以領到 700000 元的金幣。
+                mpgold $n 700000
+                mpcall resp_gold $n
+                break
+        else
+                tell $n 依照你的等級你可以領到 1000000 元的金幣。
+                mpgold $n 1000000
+                mpcall resp_gold $n
+        endif
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "defun_prog"
+argument = "resp_gold"
+script = """
+if resp($n) < 0
+        break
+endif
+if resp($n) >= 1
+        if resp($n) <= 5
+                tell $n 依照你的威望值，你可以額外領到 50000 元的金幣。
+                mpgold $n 50000
+                break
+        endif
+        if resp($n) <= 10
+                tell $n 依照你的威望值，你可以額外領到 100000 元的金幣。
+                mpgold $n 100000
+                break
+        endif
+        if resp($n) <= 20
+                tell $n 依照你的威望值，你可以額外領到 200000 元的金幣。
+                mpgold $n 200000
+                break
+        endif
+        if resp($n) <= 30
+                tell $n 依照你的威望值，你可以額外領到 300000 元的金幣。
+                mpgold $n 300000
+                break
+        endif
+        if resp($n) <= 45
+                tell $n 依照你的威望值，你可以額外領到 400000 元的金幣。
+                mpgold $n 400000
+                break
+        endif
+        if resp($n) <= 60
+                tell $n 依照你的威望值，你可以額外領到 500000 元的金幣。
+                mpgold $n 500000
+                break
+        endif
+        if resp($n) <= 80
+                tell $n 依照你的威望值，你可以額外領到 700000 元的金幣。
+                mpgold $n 700000
+                break
+        endif
+        if resp($n) <= 99
+                tell $n 依照你的威望值，你可以額外領到 900000 元的金幣。
+                mpgold $n 900000
+        else
+                tell $n 依照你的威望值，你可以額外領到 1000000 元的金幣。
+                mpgold $n 1000000
+        endif
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "rand_prog"
+argument = "2"
+script = """
+if pcnum($) > 0
+        if rand(50)
+                addoil $r
+                say 若餓(hungry) 了的話，可以跟我說一聲哦！
+        else
+                sweat $r
+                say 看不到隱形或藏匿的人嗎？我可以為你解決這問題(light)！
+        endif
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "rand_prog"
+argument = "2"
+script = """
+if pcnum($) > 0
+        if rand(50)
+                say 別打混呀，專心進行你的寫作工作吧！
+        else
+                say 有什麼問題就趕緊拉個人來問吧！
+        endif
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "talk_prog"
+argument = "p go second"
+script = """
+mpechoat $n 你向 $I 申請要去勞改二營坐坐，獲得批準。
+mpechoaround $n $N 向 $I 申請要去勞改二營接受折磨獲得批準。
+mpechoaround $n 你看到 $I 將 $N 送到了勞改二營去。
+mpforcer 66001 echo 你看到 $N 被傳送到了這裡陪你們受難。
+mptransfer $n 66001
+mpforcer 66001 force $n look
+"""
+[[mobiles.66000.programs]]
+trigger = "talk_prog"
+argument = "p go third"
+script = """
+if is_qmark($n) == areawriter_go_third
+        mpechoat $n 你才剛過去休息過，回去再寫一陣子區域再來休息吧！
+        mpechoaround $n $N 向 $I 申請要去勞改三營休息，卻不被批準！
+else
+        mpadd_qmark $n areawriter_go_third 12 0 0 0 1 1
+        mpechoat $n 你向 $I 申請要去勞改三營休息清靜一下，獲得批準。
+        mpechoaround $n $N 向 $I 申請要去勞改三營休息並且偷懶一下，獲得批準。
+        mpechoaround $n 你看到 $I 將 $N 送到了勞改三營去。
+        mpforcer 66002 echo 你看到 $N 被傳送到了這裡陪你們ＱＫ。
+        mptransfer $n 66002
+        mpforcer 66002 force $n look
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "talk_prog"
+argument = "hungry"
+script = """
+if is_inv_obj($n) == 66002
+        mpechoat $n 你身上已經有一個特製米食了，真的餓了的話就快吃吧！
+else
+        mpechoat $n 當你正在喊餓的時候，你身上突然多了一個特製米食。
+        mpoload 66002 $n viclv target
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "talk_prog"
+argument = "light"
+script = """
+if isaffected($n) & 8
+if isaffected($n) & 32
+        say 明明就什麼都看的到，竟然也想跟我要法術！
+        say 給我去二營懺悔吧你！
+        mpechoat $n 你被 $I 狠狠的丟到了勞改二營去。
+        mpechoaround $n 你看到 $N 被 $I 狠狠的丟到勞改二營去懺悔～阿門～
+        mpforcer 66001 echo 你看到 $N 被丟過來二營陪你們受罪。
+        mptransfer $n 66001
+        mpforcer 66001 force $n look
+        break
+endif
+endif
+if isaffected($n) !& 8
+        say 什麼！看不到隱形？
+        say 那就讓我來為 $N \u001B[1;32m你擦亮雙眼，好讓你看得更清楚吧！！
+        mpforcer here add_affect $n 'detect invis' 1130 1000 41 -50000 8
+        mpforcer here add_affect $n 'detect invis' 1130 1000 42 -50000 8
+endif
+if isaffected($n) !& 32
+        say 看不到藏匿者？
+        say 就讓我來為 $N \u001B[1;32m你擦亮雙眼，好讓藏匿者在你眼前現形吧！！
+        mpforcer here add_affect $n 'detect hidden' 1130 1000 39 10000 32
+        mpforcer here add_affect $n 'detect hidden' 1130 1000 17 10000 32
+endif
+"""
+[[mobiles.66000.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+say 殺～殺～殺～
+c 'full heal'
+mpnowait
+frenzy
+mpnowait
+frenzy
+mpnowait
+c 'sun flash'
+mpnowait
+"""
+[[mobiles.66000.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+mpecho $I大聲說道：喝！大膽無知之徒！竟敢打我！
+c 'double heal'
+mpnowait
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+mpnoait
+"""
+
+[mobiles.66003]
+keywords = "girl Chie Matsuoka"
+short_description = "松岡千惠(Chie Matsuoka)"
+long_description = "一位綁著高馬尾的黑髮少女(girl)在這撥弄著吉他。\n"
+description = """
+眼前的少女留著一頭及腰的長髮，用大蝴蝶結紮成高馬尾，雖然穿著
+普通的紫色T恤和成套的藍色外套與牛仔褲，仍掩蓋不了她的美貌與
+一股充滿自信的英氣，特別是那堅定地朝向夢想邁進的氣勢，正是她
+之所以為這裡的AW痴心愛戀的原因。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "HOLD", "INFRARED"]
+alignment = 0
+level = 100
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ANTI_MAGIC", "NO_CRAZY"]
+[[mobiles.66003.applies]]
+type = "REDUCE_DAMAGE"
+degree = 10000
+[[mobiles.66003.applies]]
+type = "REDUCE_MAGIC"
+degree = 10000
+[[mobiles.66003.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 10000
+[[mobiles.66003.applies]]
+type = "APPLY_GMAGIC"
+degree = 10000
+[[mobiles.66003.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self awroom_xian -1 0 0 0 0 1
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+if being(xian)
+if insameroom(xian)
+        if name($n) == litespeed
+        say $n有區域的問題要問Xain喔
+        say 我對這方面不清楚
+        endif
+        if name($n) == cake
+        say $n有區域的問題要問Xain喔
+        say 我對這方面不清楚
+        endif
+        if name($n) == qwer
+        say 有事嗎？
+        say 這裡除了寫作區域的問題外請盡量保持安靜
+        endif
+else
+        say Xian現在不在這裡
+        say 需要我找他回來嗎？(back)
+endif
+else
+        say Xian現在不在線上
+        say 你還是請先離開吧
+        mptransfer $n 66000
+endif
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+if name($n) == xian
+if rand(10)
+smile
+say 怎麼了，要休息一下嗎？
+say 要聽歌嗎(song)？
+else
+if rand(11)
+say 寫區域雖然重要，課業也要顧喔
+say 聯考已經快到了
+addoil $n
+else
+if rand(14)
+say 不知道upsha跟wake的進度如何了...
+say 偶爾也要去看看他們喔
+else
+if rand(17)
+say 累了嗎？
+smile
+mpcallout 1 say 如果要出去透透氣就跟我說一聲吧(rest)
+else
+if rand(20)
+say 嗯～～嗯～～～
+mpcallout 1 say 快寫吧，我會在這陪你的
+mpcallout 2 hug $n
+else
+if rand(25)
+say 不知道skalt的翼人王國進度如何了...
+say 他答應七月九日前要交出一部份，你別忘了提醒他喔
+else
+if rand(33)
+emote 輕輕地撥弄著吉他的弦...
+say 如果imm跟ppl能和平共處就好了...
+mpcallout 1 sigh
+else
+if rand(50)
+emote 把一些光碟片打包起來...
+say 這些等到聯考完再拿出來吧
+say 現在已經沒時間玩這些了
+mpcallout 1 pat $n
+else
+emote 從吧臺拿了兩瓶啤酒...
+say 你也喝一瓶，休息一下吧
+mpcallout 1 smile
+mpcallout 2 mpechoat $n 千惠(Chie)把啤酒交給了你
+mpcallout 2 mpechoaround $n 松岡千惠(Chie Matsuoka)把啤酒交給了$N
+mpcallout 2 mpoload 3001 $n
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "song"
+script = """
+say 現在有三首歌可以聽，你想聽那一首？
+mpechoat $n 兩個夢(two dreams)
+mpechoat $n 旋轉的圓舞曲(song2)
+mpechoat $n 如果到了明天(song3)
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "p two dreams"
+script = """
+if insameroom(xian)
+if is_qmark($i) != awroom_xian_sing
+mpadd_qmark self awroom_xian_sing -1 0 0 0 0 1
+emote 調了調吉他弦，開始唱了起來...
+mpcallout 1 mpcall awroom_xian_song1a
+else
+endif
+else
+say 抱歉，如果Xian不在的話我不想唱
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "song2"
+script = """
+if insameroom(xian)
+if is_qmark($i) != awroom_xian_sing
+mpadd_qmark self awroom_xian_sing -1 0 0 0 0 1
+emote 調了調吉他弦，開始唱了起來...
+mpcallout 1 mpcall awroom_xian_song2a
+else
+endif
+else
+say 抱歉，如果Xian不在的話我不想唱
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "song3"
+script = """
+if insameroom(xian)
+if is_qmark($i) != awroom_xian_sing
+mpadd_qmark self awroom_xian_sing -1 0 0 0 0 1
+emote 調了調吉他弦，開始唱了起來...
+mpcallout 1 mpcall awroom_xian_song3a
+else
+endif
+else
+say 抱歉，如果Xian不在的話我不想唱
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "defun_prog"
+argument = "awroom_xian_song1a"
+script = """
+say 寂寞的夜晚用流下的淚滴來描繪夢的去向
+mpcallout 1 say 兩個夢，繼續摸索找尋著，即使痛苦也不會挫折
+mpcallout 2 say 一直都沒有忘記啊～相信著我倆相處過的時光
+mpcallout 4 say 街道寂靜的心跟著搖晃起來而無法克制時
+mpcallout 5 say 只有繼續相信那天的話
+mpcallout 6 say 有一天當我的願望實現時，張開眼，希望...
+mpcallout 7 say 你在身邊
+mpcallout 8 say 你能相信我的愛嗎？
+mpcallout 10 say 最後的夜，不成眠地寂靜流逝的夢的去向
+mpcallout 11 say 兩個夢想，當意識到溫柔的意義時，就忘不了
+mpcallout 12 say 任誰都會有崩潰時候而希望有你溫柔話語
+mpcallout 14 say 在夜的對岸，心到達時，就想對你告白，所以
+mpcallout 15 say 請不要跟丟了
+mpcallout 16 say 有一天當我的願望實現時，希望你在身邊
+mpcallout 17 say 我能相信你的愛嗎？
+mpcallout 19 say 街道寂靜的心也跟著搖晃起來而無法克
+mpcallout 20 say 制時，只有繼續相信那天的話
+mpcallout 21 say 有一天當我的願望實現時，張開眼，希望
+mpcallout 22 say 你在身邊
+mpcallout 23 say 你能相信我的愛嗎？
+mpcallout 23 mpdel_qmark self awroom_xian_sing
+"""
+[[mobiles.66003.programs]]
+trigger = "defun_prog"
+argument = "awroom_xian_song2a"
+script = """
+say 如果能在大樹下，開懷地唱歌～
+mpcallout 1 say 一定可以傳到，那片無垠的青空～
+mpcallout 2 say 是誰在街上吹口哨呢
+mpcallout 3 say 今天又能開始，做快樂的事了～
+mpcallout 5 say 聽到了熟悉的聲音，是她在呼喚
+mpcallout 6 say 請告訴我，歡笑的魔法吧
+mpcallout 8 say 來，歌唱吧，唱著旋轉的圓舞曲吧～
+mpcallout 9 say 把手圍成圈圈，呼喚幸福到來吧
+mpcallout 11 say 風兒吹拂的草原，小鳥的歌聲
+mpcallout 12 say 都在祝福，美麗的新嫁娘
+mpcallout 13 say 掌握著寶物的手掌～
+mpcallout 14 say 用溫柔的心，會織出幸福吧
+mpcallout 16 say 夜深人靜的時候，雖然覺得很寂寞
+mpcallout 17 say 明亮的月兒，一定會，守護著我吧～
+mpcallout 19 say 來，跳舞吧，手牽著手跳著圓舞曲
+mpcallout 20 say 像以前那樣，快樂地跳吧
+mpcallout 22 say 來，歌唱吧，唱著旋轉的圓舞曲吧～
+mpcallout 23 say 把手圍成圈圈，呼喚幸福到來吧...
+mpcallout 23 mpdel_qmark self awroom_xian_sing
+"""
+[[mobiles.66003.programs]]
+trigger = "defun_prog"
+argument = "awroom_xian_song3a"
+script = """
+say 剛開始的時候覺得非常不安～
+mpcallout 1 say 害怕不斷湧現的雲
+mpcallout 2 say 在迷霧中徬徨的我
+mpcallout 3 say 也曾有想逃的時候呢～
+mpcallout 5 say 但下過雨的大地會更堅固
+mpcallout 6 say 尋星之後會得到豐碩的成果～
+mpcallout 8 say 帶著自信向前進吧，抬頭挺胸向前走吧～
+mpcallout 9 say 為了踏上光明的道路
+mpcallout 10 say 即使有迷惘，即使會沮喪
+mpcallout 11 say 相信自己，一定作得到
+mpcallout 13 say 剛開始的時候大家都很無助
+mpcallout 14 say 看不到指路的那顆星～
+mpcallout 15 say 在黑暗中徬徨的我
+mpcallout 16 say 也會有想放棄的時候呢～
+mpcallout 18 say 但雨總是會停的
+mpcallout 19 say 在冒出嫩葉的樹蔭下會看到那顆星
+mpcallout 21 say 帶著夢想向前進吧，一直走到最後吧～
+mpcallout 22 say 總會看到彩虹的源頭
+mpcallout 23 say 雖然辛苦過，雖然跌倒過
+mpcallout 24 say 心中堅信，願望總有一天會實現的～
+mpcallout 26 say U～Ah～
+mpcallout 27 say 如果到了明天
+mpcallout 28 say 一定會有個和今天不同的開始吧
+mpcallout 30 say 帶著自信向前進吧，抬頭挺胸向前走吧～
+mpcallout 31 say 為了踏上光明的道路
+mpcallout 32 say 即使有迷惘，即使會沮喪
+mpcallout 33 say 相信自己，一定作得到...
+mpcallout 33 mpdel_qmark self awroom_xian_sing
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "rest"
+script = """
+if name($n) == xian
+if is_qmark($i) == awroom_xian
+say 你要去1/還是2/呢？
+else
+say 你已經出去過囉
+endif
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if is_qmark($i) == awroom_xian 100001
+if is_qmark($i) >= awroom_xian 200024
+if being(xian)
+mpgoto xian
+emote 沖沖忙忙地跑來
+say Xian該回去囉
+mpecho Xian跟著松岡千惠(Chie Matsuoka)離開了...
+mptransfer xian 66003
+mpgoto 66003
+mpdel_qmark self awroom_xian
+endif
+else
+mpmod_qmark self awroom_xian v1 + 1
+endif
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "1/"
+script = """
+if name($n) == xian
+if is_qmark($i) == awroom_xian
+say 別出去太久，一天後我會去接你
+wave $n
+mptransfer $n 3001
+mpmod_qmark self awroom_xian v0 = 1
+endif
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "2/"
+script = """
+if name($n) == xian
+if is_qmark($i) == awroom_xian
+say 別出去太久，一天後我會去接你
+wave $n
+mptransfer $n 4580
+mpmod_qmark self awroom_xian v0 = 1
+endif
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "talk_prog"
+argument = "back"
+script = """
+if being(xian)
+if insameroom(xian)
+else
+say 好的，我這就去找他
+emote 離開了黑貓酒吧...
+mpcallout 1 mpcall awroom_xian_back $n
+endif
+endif
+"""
+[[mobiles.66003.programs]]
+trigger = "defun_prog"
+argument = "awroom_xian_back"
+script = """
+mpgoto xian
+emote 沖沖忙忙地跑來
+say Xian有訪客找你喔，快回去吧
+mpecho Xian跟著松岡千惠(Chie Matsuoka)離開了...
+mptransfer xian 66003
+mpgoto 66003
+mpecho Xian跟著松岡千惠(Chie Matsuoka)回來了...
+"""
+
+[mobiles.66004]
+keywords = "yenzen-aw girl-aw-k"
+short_description = "Y.Z.(YenZen)"
+long_description = "一名女孩(Girl)站在這裡，似乎在想著什麼事情。\n"
+description = """
+她的長相並沒有特別的突出，卻也還算清秀，一頭俐落的短髮
+披在肩上，臉上總是帶著淺淺的微笑，雖然如此，卻又不脫稚
+氣的表情，讓人不禁想要跟她多聊幾句。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 1000
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 10000
+sex = "female"
+race = "human"
+[[mobiles.66004.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if ispc($n)
+	if name($n) == kention
+		if rand(20)
+			mpcallout 1 say 還在忙嗎？雖然你總是在寫論文，也要記得照顧身體。
+			mpcallout 2 sweat kention
+			mpcallout 3 say 如果你需要我幫你拿東西(objects)，記得告訴我。
+		else
+			if rand(50)
+				say 論文的進度完成了嗎？記得跟Li報告一下喔。
+			endif
+		endif
+	else
+	endif
+"""
+[[mobiles.66004.programs]]
+trigger = "talk_prog"
+argument = "song"
+script = """
+if ispc($n)
+		if name($n) == kention
+			say 有什麼想聽的歌嗎？
+			mpechoat $n 1000言葉(Thusand word)
+			mpechoat $n 鳥詩(Bird poem)
+			mpechoat $n 藍銅礦(Azurite)
+		endif
+	endif
+"""
+[[mobiles.66004.programs]]
+trigger = "talk_prog"
+argument = "objects"
+script = """
+if ispc($n)
+		if name($n) == kention
+			say 你需要什麼嗎？
+			mpechoat $n 一個劍神的指引(Guide of Kention)
+			mpechoat $n 一枚靈魂戒指(Soul Ring)
+			mpechoat $n 沒事，我問問而已。
+		else
+			say 對不起，只有Kention可以請我幫他拿東西。
+		endif
+	else
+	endif
+"""
+[[mobiles.66004.programs]]
+trigger = "talk_prog"
+argument = "p guide of kention"
+script = """
+if ispc($n)
+		if name($n) == kention
+			mpcallout 1 nod $n
+			mpcallout 2 say 我馬上拿給你。
+			mpcallout 3 mpechoat $n $I在身上的口袋翻找著。
+			mpcallout 4 say 記得小心使用喔。
+			mpcallout 4 give aura $n
+			mpcallout 4 mpoload 3451 1
+			mpcallout 4 say 找到了！
+		else
+			say 對不起，沒有Kention的同意，我不能把這個給你。
+			sorry $n
+		endif
+	else
+	endif
+"""
+[[mobiles.66004.programs]]
+trigger = "talk_prog"
+argument = "p soul ring"
+script = """
+if ispc($n)
+		if name($n) == kention
+			mpcallout 1 nod $n
+			mpcallout 2 say 我馬上拿給你。
+			mpcallout 3 mpechoat $n $I在身上的口袋翻找著。
+			mpcallout 4 say 記得小心使用喔。
+			mpcallout 4 give ring $n
+			mpcallout 4 mpoload 3452 1
+			mpcallout 4 say 找到了！
+		else
+			say 對不起，沒有Kention的同意，我不能把這個給你。
+			sorry $n
+		endif
+	else
+	endif
+"""
+
+[mobiles.66005]
+keywords = "girl-skalt"
+short_description = "女孩(girl)"
+long_description = "一位非常美麗的女孩(girl)在這邊替你打氣。\n"
+description = """
+她今年19歲，但也許是因為比較早出社會工作的緣故，她給你的感覺遠比實際年齡
+成熟的多了，淡淡的妝跟最近剛燙的小波浪更是讓她充滿了女人味。她也是史卡烈
+特最愛的人喔，雖然史卡烈特很想直接用平常稱呼她的方式叫她，但很可惜的是她
+的名字必須要保密^^。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_INVIS", "SANCTUARY", "PROTECT"]
+alignment = 1000
+level = 50
+mod_hitplus = 10000
+mod_mana = 1000
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -1000
+mod_svs = -100
+dodge = -1000
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Human"
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_CURSE", "NO_FAEFIRE", "NO_POISON", "NO_SLEEP", "ANTI_MAGIC", "ALY_DI", "ALY_DH"]
+        action_programs = [
+            """
+7
+stand+mpecho 女孩(girl) 伸了個懶腰
+say 天亮囉，早安....+mpecho 女孩(girl) 開始梳洗....
+""",
+            """
+8
+mpecho 女孩(girl) 輕輕地走到你身邊....+say 今天也要認真工作喔^^
+mpecho 女孩(girl) 說完就跑到一旁坐著休息了....
+""",
+            """
+22
+mpecho 女孩(girl) 慵懶的揉了揉雙眼
+say 好晚了，我先休息囉，你不要熬夜喔，對身體不好
+mpecho 女孩(girl) 慢慢回到床邊....+say 還有！別想趁我睡著時亂來喔！+sleep
+""",
+        ]
+
+[objects.66000]
+keywords = "coffee bucket"
+short_description = "神奇的水桶(Bucket)"
+long_description = "你看到西方牆邊桌上擺放著一個裝滿冰咖啡的水桶 (Bucket) 供你飲用。"
+action_description = ""
+item_type = "FOUNTAIN"
+extra_flags = []
+wear_flags = []
+values = ["-1", "-1", "12", "0"]
+weight = 20
+cost = 20000
+level_limited = 0
+[[objects.66000.extra_descriptions]]
+keywords = "coffee bucket"
+description = """
+這個水桶裡所裝的冰咖啡可以幫助你提神，且也可以止渴。比較神奇的一點是，怎麼
+一個小小的桶子，卻可以供應那麼多位區域作者飲用呢？你若覺得無聊的話，可以試
+著能不能把桶子裡的冰咖啡喝完看看，當然還是不建議你嚐試就是了，因為早在你之
+前就有人試過了，事實証明是桶子裡的冰咖啡是無限供應的。而且你若一試，吵到其
+它區域作者的話，那就皮繃緊一點吧！
+"""
+
+[objects.66001]
+keywords = "blood aw bloodstain"
+short_description = "ＡＷ之血(Blood of AW)"
+long_description = "你看到地上一灘可疑的血跡(bloodstain)......"
+action_description = ""
+item_type = "FOUNTAIN"
+extra_flags = []
+wear_flags = []
+values = ["-1", "-1", "13", "0"]
+weight = 20
+cost = 20000
+level_limited = 0
+
+[objects.66002]
+keywords = "special-rice special rice"
+short_description = "強化米食(Special Rice)"
+long_description = "一個特製給區域作者們食用的米食(Special Rice) 被放在地上。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["GLOW", "NODROP", "NOSAVE", "PERSONAL"]
+wear_flags = ["TAKE"]
+values = ["1000", "0", "30", "0"]
+weight = 1
+cost = 100000
+level_limited = 0
+material = "food"
+[[objects.66002.extra_descriptions]]
+keywords = "special rice"
+description = """
+這是為了精力消耗比一般人要快的區域作者們所特製的米食。因為他們常常會工作到
+忘了進食，長期以來是很傷身子的。一般人可是無法享用到這種特製米食的哦。
+"""
+
+[objects.66004]
+keywords = "photo frame"
+short_description = "照片(Photo)"
+long_description = "一個木製的相框(Photo Frame)擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "VAMPIRE_BANE", "HOLY"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "300", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "perfect matter"
+[[objects.66004.extra_descriptions]]
+keywords = "photo"
+description = """
+照片拍得有些模糊，拍攝者大概是用手機或是畫素比較低的相機拍出這張照片，隱約
+可以從照片中看出一位穿著白色衣服的女孩，正專心的操作著電腦，旁邊還散落著好
+幾份文件，而拍攝的地點似乎是在一個小型的辦公室當中。除此之外，相框上還刻著
+一串數字：20070809,04:48.
+"""
+
+[objects.66005]
+keywords = "refection"
+short_description = "餐點(refection)"
+long_description = "一些美味的家常餐點(refection)等著你享用。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["PERSONAL"]
+wear_flags = []
+values = ["20", "0", "-1", "0"]
+weight = 1
+cost = 1000
+level_limited = 0
+level = 1
+material = "food"
+[[objects.66005.extra_descriptions]]
+keywords = "refection"
+description = """
+這些美味的餐點可是史卡烈特最心愛的"她"親手為史卡烈特做的喔，雖然史卡烈特
+很懷疑她到底會不會做菜，不過其他人還是不准碰！
+"""
+
+[objects.66006]
+keywords = "fountain"
+short_description = "小型噴泉(fountain)"
+long_description = "一個雖然小卻很精緻的的瀑布型噴泉(fountain)在這裡潺潺的流出牛奶。"
+action_description = ""
+item_type = "FOUNTAIN"
+extra_flags = ["NO_SAC"]
+wear_flags = []
+values = ["0", "0", "10", "0"]
+weight = 1000
+cost = 1
+level_limited = 0
+level = 1
+material = "marble"
+[[objects.66006.extra_descriptions]]
+keywords = "fountain"
+description = """
+這是一個十分精緻的擺飾物，據說是依照菈司蒂當時居住地方的樣式做的。
+"""
+
+[objects.66008]
+keywords = "Angelic bracelet"
+short_description = "\u001B[1;36m天使藍銀手環\u001B[m(Angelic bracelet)"
+long_description = "一只散發神聖光芒的手環(bracelet)被放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "VAMPIRE_BANE", "HOLY"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "300", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "perfect matter"
+
+[objects.66010]
+keywords = "portal"
+short_description = "雪華城傳送門(Portal)"
+long_description = "你看到一扇通往雪華城的傳送門(Portal)在你面前開啟著。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 10000
+cost = 0
+level_limited = 0
+[[objects.66010.extra_descriptions]]
+keywords = "portal"
+description = """
+門的另一頭就是雪華城了，趕緊進去(enter)吧。
+"""
+[[objects.66010.programs]]
+trigger = "obj_command"
+argument = "enter default"
+script = """
+echoat $n 你走進去了魔法傳送門。
+echoaround $n 你看到$N走進了魔法傳送門。
+oforcer 63300 echo 你看到 $N 瞬間出現在你的面前。
+oforcer here transfer $n 63300
+oforcer 63300 force $n look
+"""

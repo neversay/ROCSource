@@ -1,0 +1,6542 @@
+[area]
+name = "魔界入口"
+identity = "daemonworldentrance"
+builders = "Bigmouth"
+translator = "Bigmouth"
+modifier = "Bigmouth"
+vnum_start = 500
+vnum_end = 599
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.554]
+keywords = "dark cluster"
+short_description = "黑暗聚集體(Dark Cluster)"
+long_description = "一團巨大的黑色物體(dark)在這裡吞噬著靠近它的一切！\n"
+description = """
+這團黑色的霧狀物體毫無節制地吞噬周遭的一切物質、光線甚至空間，並且因此而
+越來越大！如果你不能在它成長到無法收拾前解決掉它，整個空間可能都會被它破壞！
+"""
+act_flags = ["SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -1000
+level = 36
+mod_hitplus = 8000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["THIEF"]
+spec_flags = ["EXPERT"]
+[[mobiles.554.applies]]
+type = "EXP"
+degree = -5000
+[[mobiles.554.applies]]
+type = "AC"
+degree = -800
+[[mobiles.554.applies]]
+type = "HITROLL"
+degree = 35
+[[mobiles.554.applies]]
+type = "DAMROLL"
+degree = 35
+[[mobiles.554.applies]]
+type = "SAVING_SPELL"
+degree = -15
+[[mobiles.554.applies]]
+type = "SAVING_ELEMENT"
+degree = -15
+[[mobiles.554.applies]]
+type = "DODGE"
+degree = -100
+[[mobiles.554.applies]]
+type = "REDUCE_DAMAGE"
+degree = 200
+[[mobiles.554.applies]]
+type = "REDUCE_MAGIC"
+degree = 200
+[[mobiles.554.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.554.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+		mpteleport vnum 533 548
+"""
+[[mobiles.554.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpforcer here echo $I爆炸成許多黑光往四周逸散而去！
+		mpmload 555
+		mppurge self
+"""
+
+[mobiles.555]
+keywords = "dark fragment"
+short_description = "黑暗碎片(Dark Fragment)"
+long_description = "一小團晦暗不明的黑色物體(dark)在這裡蠕動著。\n"
+description = """
+這團黑色霧狀物體在這裡吸收靠近它的光線，似乎有越來越膨脹的趨勢。
+"""
+act_flags = ["SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_HIDDEN", "HOLD"]
+alignment = -1000
+level = 1
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+[[mobiles.555.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if is_qmark($i) != wererat_mob
+				mpforcer here echo $I溶入了周遭的黑暗之中！
+				mpmload 554
+				mppurge self
+		else
+				mpforcer here echo $I的體型越來越大了....
+		endif
+"""
+[[mobiles.555.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark $i wererat_mob 3 0 0 0 1 0
+		mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+		mpteleport vnum 533 548
+		mpforcer here echo 四處散落的黑暗聚集了起來！
+"""
+[[mobiles.555.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) < wererat_save 300020
+				mpechoat $n \u001B[0m\u001B[33;1m你身上來自界域封印的神聖力量將黑暗碎片溶解了！\u001B[0m
+				mpechoaround $n $N\u001B[0m\u001B[33;1m身上來自界域封印的神聖力量將黑暗碎片溶解了！\u001B[0m
+				mpmod_qmark $n wererat_save v2 + 1
+				if is_qmark($n) == wererat_save 300020
+						mpechoat $n \u001B[0m\u001B[35m附著在你身上的神聖力量已經完全耗盡了...\u001B[0m
+				endif
+				mpgreward exp $n 36 500
+				mpgreward exp $n basic 500
+				mpgreward skexp $n 36 10
+				if mobcount(555) != 1
+				or mobcount(554) != 0
+						mpoload 560 $n viclv floor
+						if rand(50)
+							mpoload 560 $n viclv floor
+						endif
+						if rand(25)
+							mpoload 560 $n viclv floor
+						endif
+				else
+						mpforcer here echotoarea 當瀰漫空間的黑暗全都消散的時候，整個空間忽然劇烈地震動起來！
+						mpoload 560 $n viclv floor
+						if rand(50)
+							mpoload 560 $n viclv floor
+						endif
+						if rand(25)
+							mpoload 560 $n viclv floor
+						endif
+						mpmload 556
+						mpforcer here modrvt 533 v0 = 1
+						mpforcer here modrvt 534 v0 = 1
+						mpforcer here modrvt 535 v0 = 1
+						mpforcer here modrvt 536 v0 = 1
+						mpforcer here modrvt 537 v0 = 1
+						mpforcer here modrvt 538 v0 = 1
+						mpforcer here modrvt 539 v0 = 1
+						mpforcer here modrvt 540 v0 = 1
+						mpforcer here modrvt 541 v0 = 1
+						mpforcer here modrvt 542 v0 = 1
+						mpforcer here modrvt 543 v0 = 1
+						mpforcer here modrvt 544 v0 = 1
+						mpforcer here modrvt 545 v0 = 1
+						mpforcer here modrvt 546 v0 = 1
+						mpforcer here modrvt 547 v0 = 1
+						mpforcer here modrvt 548 v0 = 1
+				endif
+				mppurge self
+		else
+				mpforcer here echo $I爆炸成許多黑光往四周逸散而去！
+				mpmload 555
+				mppurge self
+		endif
+"""
+
+[mobiles.556]
+keywords = "chaos cluster"
+short_description = "混沌聚集體(Chaos Cluster)"
+long_description = "扭曲的空間整個動了起來！\n"
+description = """
+這個空間的扭曲似乎已經到達了極致，所有的光線、色塊與黑色空缺都彷彿活物似
+地聚集起來，破壞周圍的一切！你敏銳的感覺到裡面似乎傳來了一股邪氣，似乎有某種
+邪惡的生物正藏身其中、操控一切，難不成....之前那些吞噬體所做的都只不過是召喚
+它的前置工作而已！？
+"""
+act_flags = ["SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 51
+mod_hitplus = 30000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "THIEF", "BLOODY"]
+spec_flags = ["EXPERT"]
+[[mobiles.556.applies]]
+type = "AC"
+degree = -1200
+[[mobiles.556.applies]]
+type = "HITROLL"
+degree = 60
+[[mobiles.556.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.556.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.556.applies]]
+type = "SAVING_ELEMENT"
+degree = -10
+[[mobiles.556.applies]]
+type = "DODGE"
+degree = -300
+[[mobiles.556.applies]]
+type = "POWER_POTENTIAL"
+degree = 40
+[[mobiles.556.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.556.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.556.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.556.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.556.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpforcer 500 echo 一陣劇烈的空間波動讓集中在一起的彩光散開了！
+		mpforcer 500 purge plane
+		mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+		mpteleport vnum 533 548
+"""
+[[mobiles.556.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+skilldrv multihit $r
+		skilldrv speedhit $r
+		skilldrv heavyhit $r
+		skilldrv multihit $r
+		if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										cast acid $r
+								else
+										cast blindness $r
+								endif
+						else
+								if rand(50)
+										cast paralyze $r
+								else
+										cast chill $r
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										cast earthquake
+								else
+										cast energy $r
+								endif
+						else
+								if rand(50)
+										cast gas
+								else
+										cast whirlwind
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										cast crushing $r
+								else
+										cast seal $r
+								endif
+						else
+								if rand(50)
+										cast lifesteal $r
+								else
+										cast chain
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										cast powerball $r
+								else
+										cast fear $r
+								endif
+						else
+								if rand(50)
+										cast mute $r
+								else
+										cast star $r
+								endif
+						endif
+				endif
+		endif
+"""
+[[mobiles.556.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpforcer here echo \u001B[0m\u001B[35m潛藏在空間夾縫裡的邪惡力量往四面八方逃逸而去！\u001B[0m
+mpat 500 mpforcer here modrvt v0 = 0
+mpoload 553 standard floor
+mpgreward exp $n 36 8000
+mpgreward exp $n basic 8000
+mpgreward skexp $n 36 160
+mpat 3840 mpmod_qmark overlord-rcall transfertime timer = 12
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpmload 557
+mpforcer 549 purge allmob
+mpat 549 mpmload 558
+mpat 5 mppurge self
+"""
+
+[mobiles.557]
+keywords = "chaos-reqwf fragment"
+short_description = "混沌碎片(Chaos Fragment)"
+long_description = "一小團混沌(chaos)在這裡飄移著。\n"
+description = """
+這團混沌碎片正在這裡飄移扭曲著，為免後患，你還是盡快把它清除掉吧！
+"""
+act_flags = ["SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -1000
+level = 1
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+[[mobiles.557.applies]]
+type = "DODGE"
+degree = 1000
+[[mobiles.557.applies]]
+type = "REDUCE_DAMAGE"
+degree = -3000
+[[mobiles.557.applies]]
+type = "REDUCE_MAGIC"
+degree = -3000
+[[mobiles.557.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpteleport vnum 533 548
+"""
+[[mobiles.557.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpmload 557
+mpexp $n 500
+if rand(15)
+	mpoload 560 $n viclv floor
+endif
+if class($n) < 5
+	mpexp $n 1000
+else
+	mpexp $n 500
+	mpskillexp $n 10
+endif
+mpat 5 mppurge self
+"""
+
+[mobiles.558]
+keywords = "Marraenoloth Yugoloth Skeleton"
+short_description = "渡引幽妖(Marraenoloth)"
+long_description = "披著朽袍壽衣的骷髏怪(Skeleton)在這裡划著一艘小船。\n"
+description = """
+這具骷髏全身都罩在一件破爛的黃色壽衣裡，除了兩個眼窩裡發出的深紅色光芒
+以外，沒有任何地方可以看出他具有生命跡象。然而，他卻提著一根長篙，撐著一艘
+小舟在這裡搖搖晃晃地飄來飄去，或許你可以向他詢問離開這裡的方法？
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = []
+alignment = 0
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+[[mobiles.558.programs]]
+trigger = "defun_prog"
+argument = "quest_end"
+script = """
+mpforcer here modrvt 533 v0 = 0
+mpforcer here modrvt 534 v0 = 0
+mpforcer here modrvt 535 v0 = 0
+mpforcer here modrvt 536 v0 = 0
+mpforcer here modrvt 537 v0 = 0
+mpforcer here modrvt 538 v0 = 0
+mpforcer here modrvt 539 v0 = 0
+mpforcer here modrvt 540 v0 = 0
+mpforcer here modrvt 541 v0 = 0
+mpforcer here modrvt 542 v0 = 0
+mpforcer here modrvt 543 v0 = 0
+mpforcer here modrvt 544 v0 = 0
+mpforcer here modrvt 545 v0 = 0
+mpforcer here modrvt 546 v0 = 0
+mpforcer here modrvt 547 v0 = 0
+mpforcer here modrvt 548 v0 = 0
+mpat 533 mpforcer here transfer pc 549
+mpat 534 mpforcer here transfer pc 549
+mpat 535 mpforcer here transfer pc 549
+mpat 536 mpforcer here transfer pc 549
+mpat 537 mpforcer here transfer pc 549
+mpat 538 mpforcer here transfer pc 549
+mpat 539 mpforcer here transfer pc 549
+mpat 540 mpforcer here transfer pc 549
+mpat 541 mpforcer here transfer pc 549
+mpat 542 mpforcer here transfer pc 549
+mpat 543 mpforcer here transfer pc 549
+mpat 544 mpforcer here transfer pc 549
+mpat 545 mpforcer here transfer pc 549
+mpat 546 mpforcer here transfer pc 549
+mpat 547 mpforcer here transfer pc 549
+mpat 548 mpforcer here transfer pc 549
+"""
+[[mobiles.558.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpgoto 549
+mpforcer 561 purge allmob
+mpforcer 562 purge allmob
+mpforcer 563 purge allmob
+mpforcer 564 purge allmob
+mpforcer 565 purge allmob
+mpforcer 566 purge allmob
+mpforcer 567 purge allmob
+mpforcer 568 purge allmob
+mpforcer 569 purge allmob
+mpforcer 570 purge allmob
+mpforcer 571 purge allmob
+mpforcer 572 purge allmob
+mpforcer 573 purge allmob
+mpforcer 574 purge allmob
+mpforcer 575 purge allmob
+mpforcer 576 purge allmob
+mpforcer 577 purge allmob
+mpmload 579
+mpmload 579
+mpmload 579
+mpmload 579
+mpmload 581
+mpmload 583
+mpmload 585
+mpmload 587
+mpmload 589
+mpmload 591
+mpmload 593
+mpmload 595
+mpmload 597
+mpcallout 60 mpcall quest_end $i
+"""
+[[mobiles.558.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != is_talk
+				mpadd_qmark $i is_talk 3 0 0 0 1 0
+				grin
+				mpcallout 1 say 看來又有生意上門了...
+				mpcallout 2 say 你也是前來這裡調查的冒險者嗎？
+				mpcallout 3 glare $n
+				mpcallout 4 chuckle
+				mpcallout 5 say 最近自不量力的冒險者還真多啊...
+				mpcallout 6 say 別誤會，派遣那些怪物來破壞封印的人不是我。
+				mpcallout 6 echoat $n $I看你神色不善的樣子，連忙搖了搖手...
+				mpcallout 7 say 我只是一個小小的商人而已。
+				mpcallout 8 glare $n
+				mpcallout 9 say 相信你正在尋找離開這裡的辦法吧？
+				mpcallout 10 say 只需要付出小小的代價，我就可以送你返回史卡拉貝城。
+				mpcallout 11 say 一點點的靈魂能量就可以了，如何？(yes/no)
+				mpcallout 12 mpdel_qmark $i is_talk
+		endif
+"""
+[[mobiles.558.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+mpechoat $n $I點了點頭，示意你坐上他的小船。
+		mpechoaround $n $I點了點頭，示意$N坐上他的小船。
+		mpforcer here echo $I揮一揮手中的長篙，小船便悠悠地向著遠方航去。
+		mpechoat $n 你覺得靈魂的一部份被抽走了...
+		mpexp $n -5000
+		mpteleport vnum 7001 7445
+		mptransfer $n
+		mpechoat $n 小船忽然消失了，你重重地摔在地上！
+		mpechoaround $n $N忽然從空中出現，重重地摔在地上！
+		mpgoto 549
+		mpforcer here echo $I划著小船，悠悠地從遠方航來。
+"""
+[[mobiles.558.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($i) != is_talk
+				mpadd_qmark $i is_talk 3 0 0 0 1 0
+				tsk $n
+				mpcallout 1 say 你就這麼想完成任務嗎？
+				mpcallout 2 ponder $n
+				mpcallout 3 say 好吧！我想我可以帶你到魔界去...
+				mpcallout 4 say 不用我說，你也應該知道，那裡可是很危險的。
+				mpcallout 5 say 而且我也不保證那幕後黑手是不是還待在那裡。
+				mpcallout 6 say 當然，這個代價就又要更昂貴一點了。
+				mpcallout 7 grin
+				mpcallout 8 say 如何？(sure)
+				mpcallout 9 mpdel_qmark $i is_talk
+		endif
+"""
+[[mobiles.558.programs]]
+trigger = "talk_prog"
+argument = "sure"
+script = """
+mpechoat $n $I點了點頭，示意你坐上他的小船。
+		mpechoaround $n $I點了點頭，示意$N坐上他的小船。
+		mpforcer here echo $I揮一揮手中的長篙，小船便悠悠地向著遠方航去。
+		mpechoat $n 你覺得靈魂的一部份被抽走了...
+		mpexp $n -10000
+		mptransfer $n 561
+		mpgoto 561
+		mpechoat $n 小船忽然消失了，你重重地摔在地上！
+		mpechoaround $n $N忽然從空中出現，重重地摔在地上！
+		mpgoto 549
+		mpforcer here echo $I划著小船，悠悠地從遠方航來。
+"""
+
+[mobiles.559]
+keywords = "rpqew-fqwere"
+short_description = "系統調整用MOB"
+long_description = "系統調整用MOB(System MOB)\n"
+description = """
+系統調整用MOB(System MOB)
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "NIGHTSTALK"]
+alignment = -100
+level = 51
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "God"
+
+[mobiles.578]
+keywords = "planeshock-wave"
+short_description = "空間震盪"
+long_description = "空間震盪\n"
+description = """
+空間震盪
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -100
+level = 51
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "God"
+[[mobiles.578.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+if pcnum($) > 0
+	mpforcer here cast shocking $r 45
+	mppurge self
+endif
+"""
+
+[mobiles.579]
+keywords = "jelly lemure-m"
+short_description = "劣魔(Lemure)"
+long_description = "一團長著扭曲人臉的果凍(Jelly)在這裡蠕動著。\n"
+description = """
+這團怪異的生命體就如一沱爛泥似的在這裡蠕動著。在它那泛青泛黃的半透明身
+體上，竟長著一副像是被象群來回踐踏過後的扭曲五官，令你感到噁心無比。這種生
+物是魔界裡應邪氣而生的最低等魔族，沒有心智與意識，也沒有任何戰鬥力可言，只
+能充作其他高等魔族的奴僕與能量供給之用。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = ["CONTINUE_CURE"]
+alignment = -1000
+level = 1
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "NO_SEALMAGIC", "NO_CRAZY", "NO_PARA", "NO_FEAR"]
+[[mobiles.579.weaknesses]]
+skill = "meteoric arrow"
+percent = 80
+damage = 80
+[[mobiles.579.weaknesses]]
+skill = "snare"
+percent = 300
+damage = 100
+[[mobiles.579.weaknesses]]
+skill = "track"
+percent = 300
+damage = 100
+[[mobiles.579.weaknesses]]
+skill = "hunt"
+percent = 300
+damage = 100
+[[mobiles.579.applies]]
+type = "HIT"
+degree = 500000
+[[mobiles.579.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+"""
+[[mobiles.579.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if mobcount(579) == 1
+				if rand(50)
+						mpoload 580 38 floor
+				endif
+				mpforcer here modrvt 577 v0 = 0
+				mpgreward exp $n 36 10000
+				mpgreward skexp $n 36 100
+		endif
+		mpforcer here echo $I如同一團被砸爛的果凍般爆散四濺！
+		mppurge self
+"""
+[[mobiles.579.programs]]
+trigger = "tick_prog"
+argument = "15"
+script = """
+if mobcount(579) < 8
+				mpmload 579
+		endif
+"""
+[[mobiles.579.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpforcer here modhmv $i 02.30000 30000 0
+"""
+
+[mobiles.581]
+keywords = "demon malebranche-m"
+short_description = "瑪煉魔(Malebranche)"
+long_description = "一隻長著巨大翅翼的惡魔(Demon)向你衝刺而來！\n"
+description = """
+這隻龐大的惡魔有著與其體型相稱的力量，同時牠還擁有閃電般的速度。當牠拍
+打起牠那同樣巨大的翅翼開始衝鋒時，沒有任何事物能夠阻擋在牠的前方！
+"""
+act_flags = ["NPC", "AGGRESSIVE", "CRITICAL", "HARD_DIS", "HUNT", "ARTIFACT", "TRACK", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 51
+mod_hitplus = 120000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["EXPERT"]
+[[mobiles.581.weaknesses]]
+skill = "meteoric arrow"
+percent = 50
+damage = 50
+[[mobiles.581.weaknesses]]
+skill = "backstab"
+percent = 300
+damage = 300
+[[mobiles.581.weaknesses]]
+skill = "circle"
+percent = 200
+damage = 300
+[[mobiles.581.weaknesses]]
+skill = "dispel evil"
+percent = 200
+damage = 300
+[[mobiles.581.weaknesses]]
+skill = "reflexion"
+percent = 150
+damage = 300
+[[mobiles.581.weaknesses]]
+skill = "throwing"
+percent = 200
+damage = 600
+[[mobiles.581.applies]]
+type = "AC"
+degree = -1000
+[[mobiles.581.applies]]
+type = "HITROLL"
+degree = 40
+[[mobiles.581.applies]]
+type = "DAMROLL"
+degree = 120
+[[mobiles.581.applies]]
+type = "SAVING_SPELL"
+degree = -30
+[[mobiles.581.applies]]
+type = "SAVING_LIGHTNING"
+degree = -80
+[[mobiles.581.applies]]
+type = "SAVING_ELEMENT"
+degree = -10
+[[mobiles.581.applies]]
+type = "DODGE"
+degree = -1000
+[[mobiles.581.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.581.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.581.applies]]
+type = "APPLY_AMAGIC"
+degree = -50
+[[mobiles.581.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.581.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.581.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 583 38
+wear all
+"""
+[[mobiles.581.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpjunk all
+		endif
+"""
+[[mobiles.581.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if isaffected($i) == seal magic
+				if rand(50)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+		if rand(40)
+				cast 'fulgurant dance'
+				cast 'chain lightning'
+				cast 'chain lightning'
+		else
+				mpechoaround $n $I朝著$N兇猛的衝撞過去！
+				mpechoat $n $I朝著你兇猛的衝撞過來！
+				skilldrv heavyhit $n
+				skilldrv heavyhit $n
+				skilldrv heavyhit $n
+				mptrip $n
+				if rand(33)
+						if isaffected($n) == pass door
+								mpechoaround $n $I的重重撞擊穿透過了$N半透明的身軀！
+								mpechoat $n $I的重重撞擊穿透了你半透明的身軀！
+						else
+								mpechoaround $n $N被撞飛了！
+								mpechoat $n 你被撞飛了！
+								if rand(50)
+										if rand(50)
+												if rand(50)
+														mpat 563 mptransfer $n
+												else
+														mpat 565 mptransfer $n
+												endif
+										else
+												if rand(50)
+														mpat 567 mptransfer $n
+												else
+														mpat 569 mptransfer $n
+												endif
+										endif
+								else
+										if rand(50)
+												if rand(50)
+														mpat 571 mptransfer $n
+												else
+														mpat 573 mptransfer $n
+												endif
+										else
+												if rand(50)
+														mpat 575 mptransfer $n
+												else
+														mpat 562 mptransfer $n
+												endif
+										endif
+								endif
+						endif
+				endif
+		endif
+"""
+
+[mobiles.583]
+keywords = "demon palrethee-m"
+short_description = "霸襲魔(Palrethee)"
+long_description = "一隻環繞熾燄的焦黑惡魔(Demon)迅速地朝你襲來！\n"
+description = """
+這隻惡魔全身環繞著高熱的熾炎，全身也彷彿被燒烤過般的焦黑一片。牠一看到
+你就迅速地朝你奔來，身上的火燄也彷彿看見食物的猛獸，高漲地燃燒起來！
+"""
+act_flags = ["NPC", "AGGRESSIVE", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLAMING"]
+alignment = -1000
+level = 51
+mod_hitplus = 100000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["EXPERT", "SPELL_FURY"]
+[[mobiles.583.weaknesses]]
+skill = "meteoric arrow"
+percent = 50
+damage = 50
+[[mobiles.583.weaknesses]]
+skill = "icecore slash"
+percent = 150
+damage = 300
+[[mobiles.583.weaknesses]]
+skill = "chill touch"
+percent = 100
+damage = 300
+[[mobiles.583.weaknesses]]
+skill = "colour spray"
+percent = 100
+damage = 300
+[[mobiles.583.weaknesses]]
+skill = "ice comet"
+percent = 100
+damage = 300
+[[mobiles.583.weaknesses]]
+skill = "dispel evil"
+percent = 100
+damage = 300
+[[mobiles.583.applies]]
+type = "AC"
+degree = -600
+[[mobiles.583.applies]]
+type = "HITROLL"
+degree = 20
+[[mobiles.583.applies]]
+type = "SAVING_SPELL"
+degree = -30
+[[mobiles.583.applies]]
+type = "SAVING_FIRE"
+degree = -300
+[[mobiles.583.applies]]
+type = "SAVING_COLD"
+degree = 40
+[[mobiles.583.applies]]
+type = "SAVING_ELEMENT"
+degree = -10
+[[mobiles.583.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.583.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.583.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.583.applies]]
+type = "APPLY_AMAGIC"
+degree = 1000
+[[mobiles.583.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.583.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.583.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+				mpoload 585 38
+		endif
+"""
+[[mobiles.583.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 585 38
+mpoload 9349 38
+wear all
+"""
+[[mobiles.583.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpmodify amdr - 800
+		if isaffected($i) & 134217728
+		else
+				mpforcer here add_affect $i 'flaming armor' 0 -1 0 0 0
+		endif
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(15)
+				cast 'song of firestorm' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'fireball' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'fire breath' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'star fire' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'burning hands' $n
+				mpnowait
+		endif
+		if rand(15)
+				cast 'high explosive' $n
+				mpnowait
+		endif
+		if rand(15)
+				flaming
+				mpnowait
+		endif
+		if rand(15)
+				cast 'angry fire storm' $n
+				mpnowait
+		endif
+		mpmodify amdr + 800
+		if isaffected($i) == seal magic
+				if rand(50)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+"""
+
+[mobiles.585]
+keywords = "chain devil-mchain"
+short_description = "鍊魔(Chain Devil)"
+long_description = "一隻全身纏滿鎖鍊(Chain)的怪物朝你蹣跚地走來。\n"
+description = """
+這隻惡魔全身包覆著漆黑的鐵鍊，若不是它那對閃爍著邪惡光芒的眼睛，你幾乎
+就要以為它是構裝生物了。這些纏身鐵鍊的另一端連著各種不同的利器，看起來殺傷
+力驚人，你得小心應付了。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 51
+mod_hitplus = 120000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["EXPERT"]
+[[mobiles.585.weaknesses]]
+skill = "meteoric arrow"
+percent = 50
+damage = 50
+[[mobiles.585.weaknesses]]
+skill = "disarm"
+percent = -300
+damage = 100
+[[mobiles.585.weaknesses]]
+skill = "barehand"
+percent = -300
+damage = 100
+[[mobiles.585.weaknesses]]
+skill = "dispel evil"
+percent = 100
+damage = 300
+[[mobiles.585.weaknesses]]
+skill = "fulgurant slash"
+percent = 150
+damage = 300
+[[mobiles.585.weaknesses]]
+skill = "thunder strike"
+percent = 100
+damage = 300
+[[mobiles.585.weaknesses]]
+skill = "lightning bolt"
+percent = 100
+damage = 300
+[[mobiles.585.weaknesses]]
+skill = "lightning breath"
+percent = 100
+damage = 300
+[[mobiles.585.weaknesses]]
+skill = "chain lightning"
+percent = 100
+damage = 300
+[[mobiles.585.applies]]
+type = "AC"
+degree = -1500
+[[mobiles.585.applies]]
+type = "HITROLL"
+degree = 80
+[[mobiles.585.applies]]
+type = "DAMROLL"
+degree = -30
+[[mobiles.585.applies]]
+type = "SAVING_SPELL"
+degree = -30
+[[mobiles.585.applies]]
+type = "SAVING_LIGHTNING"
+degree = 60
+[[mobiles.585.applies]]
+type = "SAVING_ELEMENT"
+degree = -10
+[[mobiles.585.applies]]
+type = "DODGE"
+degree = 500
+[[mobiles.585.applies]]
+type = "REDUCE_DAMAGE"
+degree = 700
+[[mobiles.585.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.585.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.585.programs]]
+trigger = "defun_prog"
+argument = "summongolem"
+script = """
+if insameroom(golem-mqwe)
+				mpforce golem-mqwe resc devil-mchain
+		else
+				mpforcer here echo $I喃喃唸道：應我而生黑暗之魂，為我而戰不滅之軀....歸來吧！
+				mpforcer here echo 鎖鍊魔像(Chain Golem)伴隨一道黑煙而出現！
+				mptransfer golem-mqwe
+				mpgroup devil-mchain golem-mqwe 1
+		endif
+"""
+[[mobiles.585.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpjunk all
+		endif
+"""
+[[mobiles.585.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+		mpteleport vnum 563 576
+		mpoload 587 38
+		wear all
+"""
+[[mobiles.585.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpat 5 wear all
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		mpcall summongolem $i
+		if rand(33)
+				mpforcer here echo $I忽然不停旋轉，化成了鎖鍊的暴風朝眾人捲來！
+				circular
+				disarm
+				mptrip all
+		else
+				skilldrv speedhit $r
+				skilldrv speedhit $r
+		endif
+"""
+
+[mobiles.587]
+keywords = "chain golem-mqwe"
+short_description = "鎖鍊魔像(Chain Golem)"
+long_description = "一隻全身纏滿鎖鍊(Chain)的怪物朝你蹣跚地走來。\n"
+description = """
+這隻鋼鐵所構成的人形雕像全身包覆著漆黑的鐵鍊，這些纏身鐵鍊的另一端連著
+各種不同的利器，看起來殺傷力驚人，你得小心應付了。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 0
+level = 51
+mod_hitplus = 120000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Statue"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["ANTI_MAGIC", "EXPERT"]
+[[mobiles.587.weaknesses]]
+skill = "meteoric arrow"
+percent = 50
+damage = 50
+[[mobiles.587.weaknesses]]
+skill = "disarm"
+percent = -300
+damage = 100
+[[mobiles.587.weaknesses]]
+skill = "barehand"
+percent = -300
+damage = 100
+[[mobiles.587.weaknesses]]
+skill = "fulgurant slash"
+percent = 150
+damage = 300
+[[mobiles.587.weaknesses]]
+skill = "thunder strike"
+percent = 100
+damage = 300
+[[mobiles.587.weaknesses]]
+skill = "lightning bolt"
+percent = 100
+damage = 300
+[[mobiles.587.weaknesses]]
+skill = "lightning breath"
+percent = 100
+damage = 300
+[[mobiles.587.weaknesses]]
+skill = "chain lightning"
+percent = 100
+damage = 300
+[[mobiles.587.applies]]
+type = "AC"
+degree = -1000
+[[mobiles.587.applies]]
+type = "HITROLL"
+degree = 80
+[[mobiles.587.applies]]
+type = "DAMROLL"
+degree = 30
+[[mobiles.587.applies]]
+type = "SAVING_LIGHTNING"
+degree = 50
+[[mobiles.587.applies]]
+type = "DODGE"
+degree = 500
+[[mobiles.587.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.587.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.587.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.587.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.587.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 587 38
+wear all
+"""
+[[mobiles.587.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if insameroom(devil-mchain)
+				mpforcer here echo $I化作一道黑煙消失了....
+				mpmload 587
+		else
+				mpgreward exp $n 36 10000
+				mpgreward skexp $n 36 100
+				mpforcer here echo $I被瓦解為一堆碎片。
+				if rand(50)
+						mpoload 588 38 floor
+				endif
+		endif
+		mppurge self
+"""
+[[mobiles.587.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpat 5 wear all
+		if rand(50)
+				mpforcer here echo $I忽然不停旋轉，化成了鎖鍊的暴風朝眾人捲來！
+				circular
+				circular
+				circular
+				circular
+				disarm
+				disarm
+				disarm
+				mptrip all
+		endif
+"""
+
+[mobiles.589]
+keywords = "lion hellcat-m"
+short_description = "地獄貓(Hellcat)"
+long_description = "一隻朦朧不清的雪白獅子(Lion)靜靜地佇立在這裡。\n"
+description = """
+這隻巨大的白色獅子其實是魔界裡特有的貓類。雖然牠的身軀與力量遠遠超乎其
+在地上世界的同類，但牠潛形匿蹤的本事卻一點也沒有比那些遠親差，甚至尤有過之
+。生於魔界長於魔界的牠對於鮮血有著特殊的渴望與追蹤本領，也因此讓牠成為了魔
+界裡頂尖的追獵手，是惡魔們樂意豢養的種物之一。
+"""
+act_flags = ["NPC", "CRITICAL", "HUNT", "TACTICS", "TRACK", "MOB_AI"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "SNEAK", "HIDE", "NIGHTSTALK"]
+alignment = 0
+level = 51
+mod_hitplus = 80000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+class = ["WARRIOR", "THIEF", "BLOODY"]
+spec_flags = ["EXPERT"]
+[[mobiles.589.weaknesses]]
+skill = "meteoric arrow"
+percent = 50
+damage = 50
+[[mobiles.589.weaknesses]]
+skill = "dispel evil"
+percent = 100
+damage = 300
+[[mobiles.589.weaknesses]]
+skill = "frenzy"
+percent = 100
+damage = 300
+[[mobiles.589.weaknesses]]
+skill = "powerball"
+percent = 100
+damage = 300
+[[mobiles.589.applies]]
+type = "AC"
+degree = -1000
+[[mobiles.589.applies]]
+type = "HITROLL"
+degree = 60
+[[mobiles.589.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.589.applies]]
+type = "SAVING_SPELL"
+degree = -30
+[[mobiles.589.applies]]
+type = "SAVING_ELEMENT"
+degree = 50
+[[mobiles.589.applies]]
+type = "DODGE"
+degree = -1200
+[[mobiles.589.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.589.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.589.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.589.applies]]
+type = "APPLY_ADAMAGE"
+degree = 300
+[[mobiles.589.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.589.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.589.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if area($i) != daemonworldentrance
+	mpteleport vnum 562 576
+endif
+"""
+[[mobiles.589.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+"""
+[[mobiles.589.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if area($i) != daemonworldentrance
+				mpgoto 5
+				mpteleport vnum 562 576
+		endif
+		if isaffected($i) & 2
+		or isaffected($i) & 32768
+		or isaffected($i) & 65536
+		or isaffected($i) & 2147483648
+		else
+				hide
+				sneak
+				mpforcer here cast 'invis' $i 50
+				nightstalk
+		endif
+		if pcnum($) > 0
+				hunt $r
+				mpkill $r
+		endif
+"""
+[[mobiles.589.programs]]
+trigger = "entry_prog"
+argument = "100"
+script = """
+if isfight($i)
+		else
+				hunt $r
+				mpkill $r
+		endif
+"""
+[[mobiles.589.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isfight($i)
+		or isnpc($n)
+		else
+				hunt $n
+				mpkill $n
+		endif
+"""
+[[mobiles.589.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if area($i) != daemonworldentrance
+				mpgoto 5
+				mpteleport vnum 562 576
+		endif
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(90)
+				mpechoat $n $I惡狠狠地朝你撲了過來！
+				mpechoaround $n $I惡狠狠地朝$N撲了過去！
+				combat howling
+				if rand(20)
+						mpforcer here cast 'fear' $n 50
+				endif
+				frenzy
+				frenzy
+				frenzy
+		else
+				mpforcer here echo $I的身影突然消失了！
+				mpgoto 5
+				hide
+				sneak
+				mpforcer here cast 'invis' $i 50
+				nightstalk
+				mpcallout 2 mpkill $n
+				mpcallout 2 mpgoto $n
+		endif
+"""
+[[mobiles.589.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpforcer here echo $I的心臟被挖了出來！
+				mpoload 591 38 floor
+		endif
+"""
+
+[mobiles.591]
+keywords = "ice devil-m"
+short_description = "冰魔(Ice Devil)"
+long_description = "一隻散發陣陣寒風的巨大惡魔(Devil)正在這裡巡邏著。\n"
+description = """
+這隻惡魔長著一對如昆蟲般的複眼與觸鬚，粗大的雙腿後跟著一根巨大的長尾。
+牠那同樣像是昆蟲的利爪與全身皆散發著極冷的溫度，將靠近的水氣都凍結成片片寒
+霜，若是太靠近的話，小心被凍結成冰雕！
+"""
+act_flags = ["NPC", "AGGRESSIVE", "HARD_DIS", "TWO_WEAPON", "ARTIFACT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "MANASHIELD"]
+alignment = -1000
+level = 51
+mod_hitplus = 100000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "SWORD"]
+spec_flags = ["EXPERT", "SPELL_FURY"]
+[[mobiles.591.weaknesses]]
+skill = "dispel evil"
+percent = 100
+damage = 300
+[[mobiles.591.weaknesses]]
+skill = "burning hands"
+percent = 100
+damage = 300
+[[mobiles.591.weaknesses]]
+skill = "flaming slash"
+percent = 150
+damage = 300
+[[mobiles.591.weaknesses]]
+skill = "flamestrike"
+percent = 100
+damage = 500
+[[mobiles.591.weaknesses]]
+skill = "flaming armor"
+percent = 100
+damage = 300
+[[mobiles.591.weaknesses]]
+skill = "fireball"
+percent = 100
+damage = 300
+[[mobiles.591.weaknesses]]
+skill = "star fire"
+percent = 100
+damage = 300
+[[mobiles.591.weaknesses]]
+skill = "disarm"
+percent = -300
+damage = 100
+[[mobiles.591.weaknesses]]
+skill = "barehand"
+percent = -300
+damage = 100
+[[mobiles.591.applies]]
+type = "AC"
+degree = -1000
+[[mobiles.591.applies]]
+type = "HITROLL"
+degree = 10
+[[mobiles.591.applies]]
+type = "DAMROLL"
+degree = 30
+[[mobiles.591.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.591.applies]]
+type = "SAVING_COLD"
+degree = -100
+[[mobiles.591.applies]]
+type = "SAVING_ELEMENT"
+degree = -30
+[[mobiles.591.applies]]
+type = "DODGE"
+degree = 200
+[[mobiles.591.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.591.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.591.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.591.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.591.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.591.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.591.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.591.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+			mpoload 593 38
+		endif
+"""
+[[mobiles.591.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 593 38
+mpoload 593 38
+wear all
+"""
+[[mobiles.591.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpat 5 wear all
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(15)
+			cast 'agglomerate descant'
+			break
+		endif
+		if rand(50)
+				cast 'chill touch' $r
+				cast 'chill touch' $r
+				icecore $r
+				cast 'lore of frost'
+		else
+				if rand(50)
+						if isaffected($i) != seal magic
+								mpechoaround $n $I的身上忽然冒出一股寒氣將$N包圍，將$N凍結成冰！
+								mpechoat $n $I的身上忽然冒出一股寒氣將你包圍，將你凍結成冰！
+								mpforcer here modhmv $n 01.1200 1200 00012501
+								mpforcer here modhmv $n 23.100 100 0
+								mpforcer here add_affect $n 'paralyze' 1151 0 28 10 0
+						endif
+				else
+						if isaffected($i) != seal magic
+								mpforcer here echo 一陣強烈寒風忽然從$I身上吹出，將你手足凍得發麻！
+								mpforcer here modhmvgroup $n 01.500 500 00012501
+								mpforcer here modhmvgroup $n 21.500 500 0
+								cast 'wind screaming' $n
+								mpnowait
+						endif
+				endif
+		endif
+		if isaffected($i) == seal magic
+				if rand(20)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+"""
+
+[mobiles.593]
+keywords = "kelvezu-m demon"
+short_description = "凱詛魔(Kelvezu)"
+long_description = "一隻惡魔(demon)在這裡微笑地向你展示牠銳利的匕首。\n"
+description = """
+這種惡魔是魔界裡最狡詐的生物之一。雖然不具備其他同類般強大的力量與魔法
+能力，但牠卻對偷襲與陷阱的藝術學有專精，往往能在牠的敵人莫名其妙的情形下就
+將匕首送入他人的喉中。此外，牠「轉進」的能力也是惡魔當中數一數二的，但在追
+擊牠的同時請千萬要小心－－別踏入牠的陷阱！
+"""
+act_flags = ["NPC", "WIMPY", "CRITICAL", "TACTICS", "REGENERACY", "MOB_AI", "REFLEXION"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "SNEAK", "HIDE", "NIGHTSTALK"]
+alignment = 0
+level = 51
+mod_hitplus = 80000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["EXPERT", "MOBAI_LV2"]
+[[mobiles.593.weaknesses]]
+skill = "empslash"
+percent = 50
+damage = 50
+[[mobiles.593.weaknesses]]
+skill = "meteoric arrow"
+percent = 50
+damage = 50
+[[mobiles.593.weaknesses]]
+skill = "dispel evil"
+percent = 100
+damage = 600
+[[mobiles.593.weaknesses]]
+skill = "magic missile"
+percent = 100
+damage = 1500
+[[mobiles.593.weaknesses]]
+skill = "circular chop"
+percent = 200
+damage = 300
+[[mobiles.593.weaknesses]]
+skill = "charge"
+percent = 150
+damage = 300
+[[mobiles.593.applies]]
+type = "AC"
+degree = -500
+[[mobiles.593.applies]]
+type = "HITROLL"
+degree = 20
+[[mobiles.593.applies]]
+type = "SAVING_SPELL"
+degree = 50
+[[mobiles.593.applies]]
+type = "SAVING_ELEMENT"
+degree = 50
+[[mobiles.593.applies]]
+type = "DODGE"
+degree = -1200
+[[mobiles.593.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.593.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.593.applies]]
+type = "APPLY_ADAMAGE"
+degree = 300
+[[mobiles.593.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.593.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.593.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 9832 38
+wear all
+"""
+[[mobiles.593.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if area($i) != daemonworldentrance
+	mpteleport vnum 562 576
+endif
+"""
+[[mobiles.593.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+				mpforcer here echo 一團霧氣從$I身上流洩而出！
+				mpoload 595 38 floor
+		endif
+"""
+[[mobiles.593.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if isaffected($i) & 2
+		or isaffected($i) & 32768
+		or isaffected($i) & 65536
+		or isaffected($i) & 2147483648
+		else
+				hide
+				sneak
+				cast 'invis'
+				nightstalk
+		endif
+		if pcnum($) > 0
+				backstab $r
+		endif
+"""
+[[mobiles.593.programs]]
+trigger = "entry_prog"
+argument = "100"
+script = """
+if isfight($i)
+		else
+				backstab $r
+		endif
+"""
+[[mobiles.593.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isfight($i)
+		or isnpc($n)
+		else
+				backstab $n
+		endif
+"""
+[[mobiles.593.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if area($i) != daemonworldentrance
+				mpgoto 5
+				mpteleport vnum 562 576
+		endif
+		if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(33)
+				untangle $i
+		endif
+		if rand(50)
+				flee
+				flee
+				flee
+				hide
+				sneak
+				cast 'invis'
+				nightstalk
+				mpcallout 5 backstab $r
+				mpcallout 5 mpgoto $n
+		else
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $n
+				skilldrv speedhit $r
+				skilldrv speedhit $r
+				skilldrv speedhit $r
+				kick
+				kick
+				kick
+				kick
+				kick
+				snare $r
+		endif
+"""
+
+[mobiles.595]
+keywords = "demon zovvut-m"
+short_description = "碩脯魔(Zovvut)"
+long_description = "一隻長有三隻眼睛的巨爪惡魔(Demon)惡狠狠地向你撲來！\n"
+description = """
+這隻臃腫不堪的惡魔像是健康不良似地渾身慘白，就連翅膀都與其他惡魔的黑色
+不同。牠肥胖的身軀讓牠在行走時總是帶起巨大的聲響，真是不知道牠是怎麼吃的？
+但千萬不要因此而小看牠，這種惡魔的第三隻眼可是具有放射邪光、吸取他人精力的
+可怕能力的！
+"""
+act_flags = ["NPC", "AGGRESSIVE", "CRITICAL", "HUNT", "REGENERACY", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 51
+mod_hitplus = 120000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["HALF_MAGIC", "EXPERT"]
+[[mobiles.595.weaknesses]]
+skill = "backstab"
+percent = 300
+damage = 500
+[[mobiles.595.weaknesses]]
+skill = "circle"
+percent = 200
+damage = 500
+[[mobiles.595.weaknesses]]
+skill = "turn undead"
+percent = 200
+damage = 500
+[[mobiles.595.weaknesses]]
+skill = "mass turn"
+percent = 200
+damage = 500
+[[mobiles.595.weaknesses]]
+skill = "dispel evil"
+percent = 200
+damage = 500
+[[mobiles.595.applies]]
+type = "AC"
+degree = -2000
+[[mobiles.595.applies]]
+type = "HITROLL"
+degree = 30
+[[mobiles.595.applies]]
+type = "DAMROLL"
+degree = 100
+[[mobiles.595.applies]]
+type = "SAVING_SPELL"
+degree = -30
+[[mobiles.595.applies]]
+type = "SAVING_ELEMENT"
+degree = -10
+[[mobiles.595.applies]]
+type = "DODGE"
+degree = 1000
+[[mobiles.595.applies]]
+type = "POWER_POTENTIAL"
+degree = 10
+[[mobiles.595.applies]]
+type = "REDUCE_DAMAGE"
+degree = 500
+[[mobiles.595.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.595.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 200
+[[mobiles.595.applies]]
+type = "APPLY_GMAGIC"
+degree = 200
+[[mobiles.595.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+"""
+[[mobiles.595.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		if rand(50)
+				mpforcer here echo $I忽然像是被掏空似的整個乾癟枯萎了！
+				mpoload 597 38 floor
+				mppurge self
+		endif
+"""
+[[mobiles.595.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(15)
+			cast 'earth bind'
+			break
+		endif
+		if rand(33)
+				mpforcer here echo $I用力踩踏著地面，造成了劇烈地震動！
+				cast 'earthquake'
+				cast 'earthquake'
+				cast 'earthquake'
+				mptrip all
+		else
+				mpforcer here echo $I的第三隻眼睛忽然放射出邪異的紅色光芒！
+				mpforcer here del_affect $n all
+				mpforcer here modhmvgroup $n 01.500 500 00000000
+				mpforcer here modhmv $i 02.3000 3000 00000000
+		endif
+		skilldrv heavyhit $n
+		skilldrv heavyhit $n
+		if isaffected($i) == seal magic
+				if rand(20)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+"""
+
+[mobiles.597]
+keywords = "lady succubus-m"
+short_description = "魅魔(Succubus)"
+long_description = "一位全身赤裸的美豔女子(Lady)在這裡讓你臉紅心跳！\n"
+description = """
+當你終於從她的美麗中回過神來後，你才驚愕地發現這位美麗女人的背後竟然生
+著一對大大的蝙蝠翅膀！看來這就是被稱為魅魔的可怕魔物了。這種惡魔擅長各種幻
+惑的法術，冒險者一個不留神就會被她勾引去攻擊自己的伙伴，除此之外牠還能夠隨
+意地穿梭空間移動，可以說是最麻煩的一種惡魔也不為過。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "REGENERACY", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 51
+mod_hitplus = 100000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "SWORD", "SHOT_ARROW"]
+spec_flags = ["HALF_MAGIC", "EXPERT", "MOBAI_LV2", "SPELL_FURY"]
+[[mobiles.597.weaknesses]]
+skill = "meteoric arrow"
+percent = 50
+damage = 50
+[[mobiles.597.weaknesses]]
+skill = "dispel evil"
+percent = 100
+damage = 600
+[[mobiles.597.weaknesses]]
+skill = "disarm"
+percent = 200
+damage = 100
+[[mobiles.597.weaknesses]]
+skill = "barehand"
+percent = 200
+damage = 100
+[[mobiles.597.weaknesses]]
+skill = "frenzy"
+percent = 150
+damage = 200
+[[mobiles.597.applies]]
+type = "AC"
+degree = -600
+[[mobiles.597.applies]]
+type = "HITROLL"
+degree = 10
+[[mobiles.597.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.597.applies]]
+type = "SAVING_ELEMENT"
+degree = -30
+[[mobiles.597.applies]]
+type = "DODGE"
+degree = -600
+[[mobiles.597.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.597.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.597.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 50
+[[mobiles.597.applies]]
+type = "APPLY_GMAGIC"
+degree = 50
+[[mobiles.597.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 0 1
+mpteleport vnum 562 576
+mpoload 13618 38
+mpoload 561 38
+mpoload 562 38
+wear all
+"""
+[[mobiles.597.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 36 10000
+		mpgreward skexp $n 36 100
+		mpgreward merit $n 41 100
+		mpjunk all
+		if rand(50)
+				mpoload 561 38
+		endif
+		if rand(50)
+				mpoload 562 38
+		endif
+"""
+[[mobiles.597.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if insameroom(lemure-m)
+				mpforcer here echo 大量的邪氣從劣魔(Lemure)的身上湧入了$I的體內！
+				mpforcer here echo $I身上的傷口忽然復原了大半！
+				mpforcer here modhmv $i 02.15000 15000 0
+		endif
+		if rand(50)
+				mpforcer here echo $I朝你嫣然一笑，你覺得你的抵抗意志開始土崩瓦解...
+				cast 'crushing hand' $n
+				if rand(33)
+						cast 'charm person' $n
+						mpgroup $i $n 1
+						change $r
+				endif
+				cast 'succubus kiss' $r
+				mpnowait
+				cast 'demon tremor' $r
+				mpnowait
+				cast 'seal magic' $r
+				mpnowait
+		else
+				meteoric $n
+				meteoric $r
+				if rand(33)
+						mpforcer here echo $I的身體忽然越來越模糊...越來越模糊...
+						mpgoto 5
+						mpteleport vnum 562 576
+				endif
+		endif
+		if isaffected($i) == seal magic
+				if rand(33)
+						mpforcer here del_affect $i 'seal magic'
+				endif
+		endif
+		if isaffected($i) == mute
+				if rand(50)
+						mpforcer here del_affect $i 'mute'
+				endif
+		endif
+"""
+
+[objects.550]
+keywords = "seal fragment-obj light"
+short_description = "封印碎片(seal fragment)"
+long_description = "一團變幻不定的金黃色光團(light)在這裡飄浮著。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "ANTI_EVIL", "HOLY", "PERSONAL"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+[[objects.550.extra_descriptions]]
+keywords = "seal fragment light"
+description = "這團不停變化的光芒正散發出純淨的神聖力量，或許它與界域的封印有關？"
+[[objects.550.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+oteleport vnum 501 532
+		if rand(50)
+				if rand(50)
+						oset self timer = 6
+				else
+						oset self timer = 7
+				endif
+		else
+				if rand(50)
+						oset self timer = 8
+				else
+						oset self timer = 9
+				endif
+		endif
+"""
+
+[objects.551]
+keywords = "plane seal-obj light"
+short_description = "不穩定的界域封印(Plane Seal)"
+long_description = "一團閃爍不定的巨大光雲(light plane)飄浮在這裡。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "NO_SAC"]
+wear_flags = []
+values = ["0", "0", "-1", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "light matter"
+[[objects.551.extra_descriptions]]
+keywords = "plane seal light"
+description = """
+這團金黃色的光雲散發出神聖的氣息。但是你在仔細地觀察( check)之後，卻可
+以在光雲的後方發現許多黑色的區塊，使得光雲看起來支離破碎地，顯得十分黯淡。
+你發現這些黑色的區塊還在不斷地蠕動、擴張，使光雲的密度越來越疏離！
+　　或許你該進入(enter)到封印的另一端去看看是怎麼回事？
+"""
+
+[objects.552]
+keywords = "plane seal light"
+short_description = "界域封印(Plane Seal)"
+long_description = "一團巨大的光繭(light plane)在這裡穩定地律動著。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "NO_SAC"]
+wear_flags = []
+values = ["0", "0", "-1", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "light matter"
+[[objects.552.extra_descriptions]]
+keywords = "plane seal light"
+description = """
+這團金黃色的光繭由四面八方集結過來的各色光線組成，在某種奇特的頻率下有
+如心臟般地律動著，並隨之散發強大的神聖氣息。由光繭上飄浮的符文來看，這大概
+就是守護史卡拉貝與魔界間通道的封印了。只要進入( enter)這個光繭，你就能夠到
+達封印的另一端，但能不能找出封印被破壞的真相、返回史卡拉貝，這又是另一回事
+了。
+"""
+
+[objects.553]
+keywords = "chaos crystal"
+short_description = "混沌結晶(Chaos Crystal)"
+long_description = "一顆五彩斑斕的不規則結晶(crystal)被丟在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "10", "20", "0"]
+weight = 25
+cost = 100000
+level_limited = 0
+material = "chaos matter"
+[[objects.553.extra_descriptions]]
+keywords = "chaos crystal"
+description = """
+這塊五彩斑斕的不規則結晶看起來堅硬無比，或許可以試著當成武器用看看？
+"""
+[[objects.553.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self value3 = 00
+								else
+										oset self value3 = 01
+								endif
+						else
+								if rand(50)
+										oset self value3 = 02
+								else
+										oset self value3 = 03
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self value3 = 04
+								else
+										oset self value3 = 05
+								endif
+						else
+								if rand(50)
+										oset self value3 = 06
+								else
+										oset self value3 = 07
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self value3 = 08
+								else
+										oset self value3 = 09
+								endif
+						else
+								if rand(50)
+										oset self value3 = 10
+								else
+										oset self value3 = 11
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self value3 = 12
+								else
+										oset self value3 = 13
+								endif
+						else
+								oset self value3 = 14
+						endif
+				endif
+		endif
+		if rand(33)
+				oset self extra + 512
+				oset self extra + 1024
+		else
+				if rand(50)
+						oset self extra + 1024
+						oset self extra + 2048
+				else
+						oset self extra + 2048
+						oset self extra + 512
+				endif
+		endif
+		if rand(50)
+				oset self extra + 64
+		endif
+		if rand(20)
+				oset self extra + 131072
+		endif
+		if rand(20)
+				oset self extra + 65536
+		endif
+		if rand(20)
+				oset self extra + 128
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						oset self weight + 20
+						oset self value1 + 7
+						oset self value2 + 11
+				else
+						oset self weight + 30
+						oset self value1 + 12
+						oset self value2 + 16
+				endif
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						oset self weight + 20
+						oset self value1 + 7
+						oset self value2 + 11
+				else
+						oset self weight + 30
+						oset self value1 + 12
+						oset self value2 + 16
+				endif
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						opset_obj_affect self -1 42 -25
+						opset_obj_affect self -1 43 25
+				else
+						oset self weight + 30
+						oset self value1 + 10
+						oset self value2 + 19
+				endif
+		endif
+		if rand(33)
+				if objval3($o) == 11
+						opset_obj_affect self -1 42 -25
+						opset_obj_affect self -1 43 25
+				else
+						oset self weight + 30
+						oset self value1 + 10
+						oset self value2 + 19
+				endif
+		endif
+"""
+
+[objects.560]
+keywords = "dark crystal-obj"
+short_description = "黑暗結晶(Dark Crystal)"
+long_description = "一顆晦暗的不規則結晶(crystal)被丟在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK", "EVIL", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "100", "0"]
+weight = 5
+cost = 100000
+level_limited = 0
+material = "black matter"
+[[objects.560.extra_descriptions]]
+keywords = "chaos crystal"
+description = """
+這塊晦暗的不規則結晶散發著暗沉的色澤，似乎帶有某種魔力。如果你恰好可以
+穿戴得下它的話，不妨試一試。
+"""
+[[objects.560.applies]]
+type = "MANA"
+value = -15
+[[objects.560.applies]]
+type = "HIT"
+value = -15
+[[objects.560.applies]]
+type = "MOVE"
+value = -15
+[[objects.560.applies]]
+type = "SAVING_SPELL"
+value = 5
+[[objects.560.applies]]
+type = "SAVING_ELEMENT"
+value = 5
+[[objects.560.applies]]
+type = "POWER_POTENTIAL"
+value = -2
+[[objects.560.applies]]
+type = "REDUCE_MAGIC"
+value = -5
+[[objects.560.applies]]
+type = "APPLY_AMAGIC"
+value = -5
+[[objects.560.programs]]
+trigger = "obj_repop"
+argument = "10"
+script = """
+if rand(40)
+				oset self extra + 512
+		endif
+		if rand(40)
+				oset self extra + 1024
+		endif
+		if rand(40)
+				oset self extra + 2048
+		endif
+		if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 2
+								else
+										oset self wear + 4
+								endif
+						else
+								if rand(50)
+										oset self wear + 16
+								else
+										oset self wear + 32
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 64
+								else
+										oset self wear + 128
+								endif
+						else
+								if rand(50)
+										oset self wear + 256
+								else
+										oset self wear + 512
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 1024
+								else
+										oset self wear + 2048
+								endif
+						else
+								if rand(50)
+										oset self wear + 4096
+								else
+										oset self wear + 16384
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 65536
+								else
+										oset self wear + 512
+								endif
+						else
+								oset self wear + 8
+						endif
+				endif
+		endif
+"""
+
+[objects.561]
+keywords = "succubus wing"
+short_description = "魅魔之翼(Succubus Wing)"
+long_description = "一對充滿魔力的翅翼(Wing)被擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["10", "0", "100", "0"]
+weight = 3
+cost = 500
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["MAGE"] }
+material = "flesh"
+souvenir = 4
+[[objects.561.applies]]
+type = "MANA"
+value = 50
+[[objects.561.applies]]
+type = "NONE"
+value = -10
+[[objects.561.applies]]
+type = "POWER_POTENTIAL"
+value = 5
+[[objects.561.applies]]
+type = "APPLY_AMAGIC"
+value = 10
+
+[objects.562]
+keywords = "evil enchantment arrow"
+short_description = "邪魅之箭(Evil Enchantment Arrow)"
+long_description = "一綑朦朧不定的暗紅色箭矢(Arrow)被擺在這裡。"
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["DARK", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["800", "100", "130", "200"]
+weight = 3
+cost = 50000
+level_limited = 0
+material = "mirage"
+souvenir = 4
+[[objects.562.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+[[objects.562.applies]]
+type = "HITROLL"
+value = 2
+[[objects.562.applies]]
+type = "DAMROLL"
+value = 3
+[[objects.562.hidden_powers]]
+spell = "harm"
+percent = 33
+level = 60
+event = "HP_ARROW"
+[[objects.562.hidden_powers]]
+spell = "harm"
+percent = 33
+level = 60
+event = "HP_ARROW"
+[[objects.562.hidden_powers]]
+spell = "vampiric bite"
+percent = 33
+level = 50
+event = "HP_ARROW"
+[[objects.562.programs]]
+trigger = "obj_rand"
+argument = "100"
+script = """
+if is_equ_obj($n) == 562
+	if objval0($o) < 800
+		if hpnum($n) > 1000
+			echoat $n $O吸取你的生命，分裂出更多的暗紅色箭矢。
+			oforcer here modhmv $n 03.10 10 0
+			oset self v0 + 100
+		else
+			echoat $n $O吸取你的生命，分裂出更多的暗紅色箭矢。
+			oforcer here modhmv $n 01.100 100 0
+			oset self v0 + 100
+		endif
+	endif
+endif
+"""
+[[objects.562.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+oset self v3 = 200
+"""
+[[objects.562.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if objval3($o) != 200
+	oforcer here oload 562 38 $n target
+	echoat $n 裝備更新完成。
+	purge self
+endif
+"""
+
+[objects.580]
+keywords = "semiopaque theca"
+short_description = "半透明肉膜(Semiopaque Theca)"
+long_description = "一沱半透明的膠狀物體(Theca)被丟在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["EVIL", "NOREMOVE", "LORE"]
+wear_flags = ["TAKE"]
+values = ["5", "0", "50", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "flesh"
+on_message = "你套上這層半透明肉膜後，一股令你作嘔的力量開始不斷湧進你的體內。"
+[[objects.580.extra_descriptions]]
+keywords = "semiopaque theca"
+description = """
+這團噁心的肉膜是劣魔死後的殘餘物，也許可以試著套在身上看看？
+"""
+[[objects.580.applies]]
+type = "SAVING_SPELL"
+value = 2
+[[objects.580.applies]]
+type = "SAVING_ELEMENT"
+value = 2
+[[objects.580.applies]]
+type = "REDUCE_DAMAGE"
+value = -3
+[[objects.580.applies]]
+type = "REDUCE_MAGIC"
+value = -3
+[[objects.580.applies]]
+type = "AC"
+value = 20
+[[objects.580.applies]]
+type = "DODGE"
+value = 20
+[[objects.580.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+if rand(50)
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 2
+								else
+										oset self wear + 4
+								endif
+						else
+								if rand(50)
+										oset self wear + 16
+								else
+										oset self wear + 32
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 64
+								else
+										oset self wear + 128
+								endif
+						else
+								if rand(50)
+										oset self wear + 256
+								else
+										oset self wear + 512
+								endif
+						endif
+				endif
+		else
+				if rand(50)
+						if rand(50)
+								if rand(50)
+										oset self wear + 1024
+								else
+										oset self wear + 2048
+								endif
+						else
+								if rand(50)
+										oset self wear + 4096
+								else
+										oset self wear + 16384
+								endif
+						endif
+				else
+						if rand(50)
+								if rand(50)
+										oset self wear + 65536
+								else
+										oset self wear + 512
+								endif
+						else
+								oset self wear + 8
+						endif
+				endif
+		endif
+"""
+[[objects.580.programs]]
+trigger = "obj_rand"
+argument = "100"
+script = """
+if is_equ_obj($n) == 580
+	modhmv $n 01.30 30 00000000
+	modhmv $n 21.30 30 00000000
+	modhmv $n 12.30 30 00000000
+endif
+"""
+
+[objects.582]
+keywords = "thunder trident"
+short_description = "雷戟(Thunder Trident)"
+long_description = "一把充滿雷電之力的三叉戟(Trident)被擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["300", "50", "60", "02"]
+weight = 50
+cost = 1000000
+level_limited = 0
+material = "gold"
+souvenir = 1
+[[objects.582.applies]]
+type = "SAVING_LIGHTNING"
+value = -11
+[[objects.582.applies]]
+type = "DAMROLL"
+value = 10
+[[objects.582.applies]]
+type = "HITROLL"
+value = 10
+[[objects.582.hidden_powers]]
+spell = "chain lightning"
+percent = 30
+level = 50
+event = "HP_WEAPON"
+
+[objects.583]
+keywords = "thunder trident"
+short_description = "雷戟(Thunder Trident)"
+long_description = "一把充滿雷電之力的三叉戟(Trident)被擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["300", "50", "60", "02"]
+weight = 50
+cost = 1000000
+level_limited = 0
+material = "gold"
+souvenir = 4
+[[objects.583.applies]]
+type = "SAVING_LIGHTNING"
+value = -13
+[[objects.583.applies]]
+type = "DAMROLL"
+value = 10
+[[objects.583.applies]]
+type = "HITROLL"
+value = 10
+[[objects.583.hidden_powers]]
+spell = "lightning bolt"
+percent = 50
+level = 60
+event = "HP_WEAPON"
+[[objects.583.hidden_powers]]
+spell = "chain lightning"
+percent = 40
+level = 50
+event = "HP_WEAPON"
+[[objects.583.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+oset self v1 = 50
+oset self v2 = 60
+"""
+[[objects.583.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if objval1($o) != 50
+	oforcer here oload 583 38 $n target
+	echoat $n 裝備更新完成。
+	purge self
+endif
+"""
+
+[objects.584]
+keywords = "palrethee flaming body"
+short_description = "霸襲魔炎軀(Palrethee Flaming Body)"
+long_description = "一團環繞著熾燄的軀殼(Body)被擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "EVIL", "MAGIC", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["13", "0", "150", "0"]
+weight = 5
+cost = 100000
+level_limited = 0
+material = "fire aura"
+souvenir = 1
+[[objects.584.applies]]
+type = "SAVING_FIRE"
+value = -2
+[[objects.584.applies]]
+type = "SAVING_COLD"
+value = 2
+[[objects.584.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+[[objects.584.applies]]
+type = "APPLY_AMAGIC"
+value = 10
+[[objects.584.hidden_powers]]
+spell = "burning hands"
+percent = 100
+level = 40
+event = "HP_WEAR"
+[[objects.584.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if is_qmark($n) != flamingbody
+				echoat $n \u001B[0m\u001B[35;1m你被一圈熊熊燃燒的火焰包圍！\u001B[0m
+				echoaround $n \u001B[0m\u001B[35;1m$N被一圈熊熊燃燒的紫色火焰包圍！\u001B[0m
+				del_affect $n 'flaming armor'
+				add_affect $n 'flaming armor' 1141 8 0 0 134217728
+				oforcer here add_qmark $n flamingbody -1 0 0 0 0 0
+		endif
+"""
+[[objects.584.programs]]
+trigger = "obj_act"
+argument = "remove"
+script = """
+del_affect $n 'flaming armor'
+"""
+
+[objects.585]
+keywords = "palrethee flaming body"
+short_description = "霸襲魔炎軀(Palrethee Flaming Body)"
+long_description = "一團環繞著熾燄的軀殼(Body)被擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "EVIL", "MAGIC", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["20", "0", "150", "0"]
+weight = 5
+cost = 100000
+level_limited = 0
+material = "fire aura"
+souvenir = 4
+[[objects.585.applies]]
+type = "SAVING_FIRE"
+value = -10
+[[objects.585.applies]]
+type = "SAVING_COLD"
+value = 3
+[[objects.585.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+[[objects.585.applies]]
+type = "APPLY_AMAGIC"
+value = 10
+[[objects.585.hidden_powers]]
+spell = "burning hands"
+percent = 100
+level = 40
+event = "HP_WEAR"
+[[objects.585.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if is_qmark($n) != flamingbody
+	echoat $n \u001B[0m\u001B[35;1m你被一圈熊熊燃燒的火焰包圍！\u001B[0m
+	echoaround $n \u001B[0m\u001B[35;1m$N被一圈熊熊燃燒的紫色火焰包圍！\u001B[0m
+	del_affect $n 'flaming armor'
+	add_affect $n 'flaming armor' 1141 8 0 0 134217728
+	oforcer here add_qmark $n flamingbody 12 0 0 0 0 0
+endif
+"""
+[[objects.585.programs]]
+trigger = "obj_act"
+argument = "remove"
+script = """
+del_affect $n 'flaming armor'
+"""
+
+[objects.586]
+keywords = "death chain"
+short_description = "死亡鎖鏈(Death Chain)"
+long_description = "一條散發出死亡氣息的鎖鍊(Chain)被擺在這裡"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["DARK", "MAGIC", "BLESS", "ANTI_GOOD", "POISONED"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["150", "72", "80", "04"]
+weight = 80
+cost = 500000
+level_limited = 0
+material = "black matter"
+souvenir = 1
+[[objects.586.applies]]
+type = "SAVING_LIGHTNING"
+value = 10
+[[objects.586.applies]]
+type = "REDUCE_MAGIC"
+value = -20
+[[objects.586.applies]]
+type = "DODGE"
+value = 20
+[[objects.586.applies]]
+type = "APPLY_ADAMAGE"
+value = 50
+[[objects.586.race_combat]]
+race = "Human"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Elf"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Dwarf"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Hobbit"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Fairy"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Gnome"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Lizardman"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Angel"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "God"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 140
+[[objects.586.race_combat]]
+race = "Demon"
+hr_mod_q = 0
+hr_mod_p = 1
+dr_mod_q = 0
+dr_mod_p = 1
+
+[objects.587]
+keywords = "death chain"
+short_description = "死亡鎖鏈(Death Chain)"
+long_description = "一條散發出死亡氣息的鎖鍊(Chain)被擺在這裡"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["DARK", "MAGIC", "BLESS", "ANTI_GOOD", "POISONED"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["150", "72", "75", "04"]
+weight = 80
+cost = 500000
+level_limited = 0
+material = "black matter"
+souvenir = 4
+[[objects.587.applies]]
+type = "SAVING_LIGHTNING"
+value = 4
+[[objects.587.applies]]
+type = "REDUCE_MAGIC"
+value = -15
+[[objects.587.applies]]
+type = "DODGE"
+value = 100
+[[objects.587.applies]]
+type = "APPLY_ADAMAGE"
+value = 50
+[[objects.587.race_combat]]
+race = "Human"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Elf"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Dwarf"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Hobbit"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Fairy"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Gnome"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Lizardman"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Angel"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "God"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 160
+[[objects.587.race_combat]]
+race = "Demon"
+hr_mod_q = 0
+hr_mod_p = 1
+dr_mod_q = 0
+dr_mod_p = 1
+
+[objects.588]
+keywords = "anti-magic metal fragment"
+short_description = "抗魔金屬碎片(anti-magic metal fragment)"
+long_description = "一小塊魔像的碎片(Fragment)被擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "MAGIC", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["15", "0", "50", "0"]
+weight = 5
+cost = 50000
+level_limited = 0
+material = "steel"
+[[objects.588.extra_descriptions]]
+keywords = "anti-magic-obn metal fragment"
+description = """
+這塊金屬是鎖鍊魔像毀壞後的產物，也許它還存留一點免疫魔法的特性在上面？
+"""
+[[objects.588.applies]]
+type = "POWER_POTENTIAL"
+value = -3
+[[objects.588.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+if rand(33)
+				opset_obj_affect self -1 24 -3
+		endif
+		if rand(33)
+				opset_obj_affect self -1 27 -2
+		endif
+		if rand(33)
+				opset_obj_affect self -1 28 -2
+		endif
+		if rand(33)
+				opset_obj_affect self -1 30 -2
+		endif
+		if rand(33)
+				opset_obj_affect self -1 31 -2
+		endif
+"""
+[[objects.588.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if rand(50)
+				if rand(50)
+						add_affect $n 'prot. from fire' 0 -1 0 0 0
+				else
+						add_affect $n 'prot. from cold' 0 -1 0 0 0
+				endif
+		else
+				if rand(50)
+						add_affect $n 'prot. from wind' 0 -1 0 0 0
+				else
+						add_affect $n 'prot. from earth' 0 -1 0 0 0
+				endif
+		endif
+"""
+[[objects.588.programs]]
+trigger = "obj_act"
+argument = "remove"
+script = """
+del_affect $n 'prot. from fire'
+		del_affect $n 'prot. from cold'
+		del_affect $n 'prot. from wind'
+		del_affect $n 'prot. from earth'
+"""
+
+[objects.590]
+keywords = "blood-seeking heart"
+short_description = "嗜血之心(blood-seeking heart)"
+long_description = "一顆地獄貓的心臟(Heart)被擺在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = ["DARK", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["200", "1", "13", "503"]
+weight = 5
+cost = 500
+level_limited = 0
+permit_classes = { type = "DENY", list = ["WARLORD"] }
+material = "flesh"
+souvenir = 1
+on_message = "你一握住這顆心臟，無盡的殘暴意識與能量就湧入了你的身體。"
+off_message = "無盡的殘暴意識與能量離開了你的身體。"
+spell_buffs = ["536870912"]
+[[objects.590.applies]]
+type = "STR"
+value = 1
+[[objects.590.applies]]
+type = "HITROLL"
+value = 2
+[[objects.590.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.590.applies]]
+type = "REDUCE_DAMAGE"
+value = -10
+[[objects.590.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+modhmv $n 01.1000 1000 00000000
+"""
+
+[objects.591]
+keywords = "blood-seeking heart"
+short_description = "嗜血之心(blood-seeking heart)"
+long_description = "一顆地獄貓的心臟(Heart)被擺在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = ["DARK", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["200", "1", "13", "503"]
+weight = 5
+cost = 500
+level_limited = 0
+permit_classes = { type = "DENY", list = ["WARLORD"] }
+material = "flesh"
+souvenir = 4
+on_message = "你一握住這顆心臟，無盡的殘暴意識與能量就湧入了你的身體。"
+off_message = "無盡的殘暴意識與能量離開了你的身體。"
+spell_buffs = ["536870912"]
+[[objects.591.applies]]
+type = "STR"
+value = 1
+[[objects.591.applies]]
+type = "HITROLL"
+value = 2
+[[objects.591.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.591.applies]]
+type = "REDUCE_DAMAGE"
+value = -10
+[[objects.591.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+modhmv $n 01.1000 1000 00000000
+"""
+
+[objects.592]
+keywords = "ice claw"
+short_description = "寒冰爪(Ice Claw)"
+long_description = "一把散發著寒冰氣息的利爪(Claw)被擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "DARK", "MAGIC", "NODROP", "ANTI_GOOD", "NOREMOVE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "5", "15", "05"]
+weight = 10
+cost = 1000000
+level_limited = 0
+permit_classes = { type = "DENY", list = ["ALCHEMIST"] }
+material = "ice"
+souvenir = 1
+[[objects.592.applies]]
+type = "SAVING_FIRE"
+value = 7
+[[objects.592.applies]]
+type = "SAVING_COLD"
+value = -13
+[[objects.592.applies]]
+type = "HITROLL"
+value = 15
+[[objects.592.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+[[objects.592.hidden_powers]]
+spell = "chill touch"
+percent = 100
+level = 41
+event = "HP_WEAR"
+[[objects.592.hidden_powers]]
+spell = "frost breath"
+percent = 20
+level = 40
+event = "HP_WEAPON"
+[[objects.592.hidden_powers]]
+spell = "frost breath"
+percent = 33
+level = 50
+event = "HP_WEAPON"
+
+[objects.593]
+keywords = "ice claw"
+short_description = "寒冰爪(Ice Claw)"
+long_description = "一把散發著寒冰氣息的利爪(Claw)被擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "DARK", "MAGIC", "NODROP", "ANTI_GOOD", "NOREMOVE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "5", "15", "05"]
+weight = 10
+cost = 1000000
+level_limited = 0
+material = "ice"
+souvenir = 4
+[[objects.593.applies]]
+type = "SAVING_FIRE"
+value = 10
+[[objects.593.applies]]
+type = "SAVING_COLD"
+value = -13
+[[objects.593.applies]]
+type = "HITROLL"
+value = 15
+[[objects.593.hidden_powers]]
+spell = "frost breath"
+percent = 50
+level = 50
+event = "HP_WEAPON"
+[[objects.593.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+oset self v1 = 22
+oset self v2 = 33
+"""
+[[objects.593.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if objval1($o) != 22
+	oforcer here oload 593 38 $n target
+	echoat $n 裝備更新完成。
+	purge self
+endif
+add_affect $n 'chill touch' 0 10 43 -60 0
+add_affect $n 'chill touch' 0 10 1 -3 0
+"""
+[[objects.593.programs]]
+trigger = "obj_act"
+argument = "remove"
+script = """
+del_affect $n 'chill touch'
+"""
+
+[objects.594]
+keywords = "night mist soul"
+short_description = "\u001B[0m\u001B[30;1m夜之魂\u001B[0m(Night Soul)"
+long_description = "一團晦暗不明的霧氣(Mist)聚集在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["HUM", "DARK", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK", "WEAR_BODY", "WEAR_HEAD", "WEAR_WAIST"]
+values = ["0", "12", "0", "0"]
+weight = 1
+cost = 100000
+level_limited = 0
+permit_races = { type = "ALLOW", list = ["ORC", "DROW", "VAMPIRE", "WEREWOLF"] }
+material = "black matter"
+souvenir = 1
+[[objects.594.extra_descriptions]]
+keywords = "night-owq mist soul"
+description = """
+這團霧氣似乎是黑夜能量集中具現化成的，也許你能想個方法去利用看看？
+"""
+[[objects.594.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+if rand(33)
+	opset_obj_affect self -1 1 2
+else
+	if rand(50)
+		opset_obj_affect self -1 2 2
+	else
+		opset_obj_affect self -1 3 2
+	endif
+endif
+"""
+[[objects.594.programs]]
+trigger = "obj_rand"
+argument = "100"
+script = """
+if is_equ_obj($n) == 594
+	if hour($) >= 18
+	or hour($) <= 6
+		if objval1($o) != 12
+			echoat $n 夜晚的力量被你身上的夜之魂緩緩吸收著...
+			oset self value1 + 1
+		endif
+	endif
+endif
+"""
+[[objects.594.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if objval1($o) >= 12
+	if hour($) >= 18
+	or hour($) <= 6
+		echoat $n 聚集在夜之魂中的夜之力湧進了你的身體！
+		del_affect $n 'sneak'
+		add_affect $n 'sneak' 0 3 18 6 0
+		add_affect $n 'sneak' 0 3 19 6 0
+		add_affect $n 'sneak' 0 3 40 6 0
+		add_affect $n 'sneak' 0 3 43 15 0
+		oset self value1 = 0
+	endif
+endif
+"""
+[[objects.594.programs]]
+trigger = "obj_act"
+argument = "remove"
+script = """
+del_affect $n 'sneak'
+"""
+
+[objects.595]
+keywords = "night mist soul"
+short_description = "\u001B[0m\u001B[30;1m夜之魂\u001B[0m(Night Soul)"
+long_description = "一團晦暗不明的霧氣(Mist)聚集在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["HUM", "DARK", "BLESS", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK", "WEAR_BODY", "WEAR_HEAD", "WEAR_WAIST"]
+values = ["0", "6", "0", "0"]
+weight = 1
+cost = 100000
+level_limited = 0
+permit_races = { type = "ALLOW", list = ["ORC", "DROW", "VAMPIRE", "WEREWOLF"] }
+material = "black matter"
+souvenir = 4
+[[objects.595.extra_descriptions]]
+keywords = "night mist soul"
+description = """
+這團霧氣似乎是黑夜凝聚而具現化的物質，從中能窺視(check)到無盡的黑夜。
+也許能想個方法來利用。
+"""
+[[objects.595.programs]]
+trigger = "obj_repop"
+argument = "100"
+script = """
+if rand(20)
+	opset_obj_affect self -1 1 2
+else
+	if rand(25)
+		opset_obj_affect self -1 2 2
+	else
+		if rand(33)
+			opset_obj_affect self -1 3 2
+		else
+			if rand(50)
+				opset_obj_affect self -1 4 2
+			else
+				opset_obj_affect self -1 5 2
+			endif
+		endif
+	endif
+endif
+"""
+[[objects.595.programs]]
+trigger = "obj_command"
+argument = "check default"
+script = """
+if objval1($o) != 6
+	echoat $n 你凝視著$O的內部，只看到一團晦暗不明的黑色。
+else
+	echoat $n 你凝視著$O的內部，似乎看見了黑夜的景色。
+endif
+"""
+[[objects.595.programs]]
+trigger = "obj_rand"
+argument = "100"
+script = """
+if is_equ_obj($n) == 595
+	if hour($) >= 18
+	or hour($) <= 6
+		if objval0($o) == 0
+			break
+		endif
+		if objval1($o) == 5
+			echoat $n 吸收足夠的夜之力後，$O的霧氣凝聚在一起。
+			oset self value1 + 1
+		endif
+		if objval1($o) == 4
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 3
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 2
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 1
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+		if objval1($o) == 0
+			echoat $n 夜晚的力量被$O緩緩吸收著...
+			oset self value1 + 1
+		endif
+	endif
+endif
+"""
+[[objects.595.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+oset self value0 = 1
+if objval1($o) >= 6
+	if hour($) >= 18
+	or hour($) <= 6
+		echoat $n 聚集在$O中的夜之力湧進了你的身體！
+		del_affect $n 'body building'
+		add_affect $n 'body building' 1000 3 18 5 0
+		add_affect $n 'body building' 1000 3 19 5 0
+		add_affect $n 'body building' 1000 3 40 4 0
+		add_affect $n 'body building' 1000 3 44 15 0
+		oset self value1 = 0
+	endif
+endif
+"""
+[[objects.595.programs]]
+trigger = "obj_act"
+argument = "remove"
+script = """
+oset self value0 = 0
+del_affect $n 'body building'
+"""
+
+[objects.596]
+keywords = "zovvut skin"
+short_description = "碩脯魔外皮(Zovvut Skin)"
+long_description = "一張慘白色的鬆垮皮件(Skin)被擺在這裡。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["EVIL", "BLESS"]
+wear_flags = ["TAKE", "WEAR_BODY", "WEAR_ABOUT"]
+values = ["70", "1", "0", "75"]
+weight = 10
+cost = 100000
+level_limited = 0
+material = "flesh"
+souvenir = 1
+[[objects.596.applies]]
+type = "CON"
+value = 1
+[[objects.596.applies]]
+type = "AC"
+value = -35
+[[objects.596.applies]]
+type = "HITROLL"
+value = 2
+[[objects.596.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.596.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+
+[objects.597]
+keywords = "zovvut skin"
+short_description = "碩脯魔外皮(Zovvut Skin)"
+long_description = "一張慘白色的鬆垮皮件(Skin)被擺在這裡。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["EVIL", "BLESS"]
+wear_flags = ["TAKE", "WEAR_BODY", "WEAR_ABOUT"]
+values = ["70", "1", "0", "75"]
+weight = 10
+cost = 100000
+level_limited = 0
+material = "flesh"
+souvenir = 4
+[[objects.597.applies]]
+type = "CON"
+value = 1
+[[objects.597.applies]]
+type = "AC"
+value = -40
+[[objects.597.applies]]
+type = "HITROLL"
+value = 2
+[[objects.597.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.597.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+
+[objects.598]
+keywords = "succubus wing"
+short_description = "魅魔之翼(Succubus Wing)"
+long_description = "一對充滿魔力的翅翼(Wing)被擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["10", "0", "100", "0"]
+weight = 3
+cost = 500
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["MAGE"] }
+material = "flesh"
+souvenir = 1
+[[objects.598.applies]]
+type = "MANA"
+value = 50
+[[objects.598.applies]]
+type = "POWER_POTENTIAL"
+value = 5
+
+[objects.599]
+keywords = "evil enchantment arrow"
+short_description = "邪魅之箭(Evil Enchantment Arrow)"
+long_description = "一綑朦朧不定的暗紅色箭矢(Arrow)被擺在這裡。"
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["DARK", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["1200", "60", "80", "120"]
+weight = 3
+cost = 50000
+level_limited = 0
+material = "mirage"
+souvenir = 1
+[[objects.599.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.599.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.599.applies]]
+type = "HITROLL"
+value = 2
+
+[rooms.500]
+name = "界域封印"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+移動(move)。各種顏色的光線從四面八方朝著此處匯聚而來，組成了一團閃爍不定的
+巨大光雲。你感到光雲裡散發出純正的神聖力量，看來這裡就是防止邪惡入侵的封印
+所在了？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.500.programs]]
+trigger = "room_defun"
+argument = "repairseal"
+script = """
+if is_inv_obj($n) == 550
+				purge $n fragment-obj
+				echoat $n 你身上的封印碎片飛進了巨大的光雲之中！
+				echoaround $n $N身上的封印碎片飛進了巨大的光雲之中！
+				if roomvalue($n500v0) < 30
+						if is_qmark($n) <= wererat_save 300015
+								mload 559
+								mod_qmark $n wererat_save v2 + 1
+								if class($n) < 5
+										force rpqew-fqwere mpexp $n 3000
+								endif
+								force rpqew-fqwere mpexp $n 3000
+								force rpqew-fqwere mpskillexp $n 60
+								purge rpqew-fqwere
+						endif
+						modrvt 500 v0 + 1
+						if roomvalue($n500v0) > 29
+								callout 1 echotoarea \u001B[0m\u001B[33;1m在奪目的光芒之後，整個空間開始依循著某種規律律動起來！\u001B[0m
+								callout 1 purge seal-obj
+								callout 1 oload 552 1 floor
+						endif
+				endif
+				rcall repairseal $n
+		endif
+"""
+[[rooms.500.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+if is_qmark($n) != wererat_save 100002
+		or level($n) < 36
+				transfer $n 3840
+		else
+				if is_qmark($n) == wererat_save 300005
+						mod_qmark $n wererat_save v2 = 6
+						add_qmark $n wererat_plane -1 0 0 0 1 0
+						echoat $n 當光芒逐漸暗淡後，你發現你已經被傳送到了一個奇特的空間裡。
+				else
+						echoaround $n $N往這裡游了過來...
+						if is_qmark($n) != wererat_plane
+							add_qmark $n wererat_plane -1 0 0 0 1 0
+						endif
+						mod_qmark $n wererat_plane v0 = 0
+						if is_qmark($n) == ismoving
+							del_qmark $n ismoving
+						endif
+				endif
+		endif
+		force $n look
+		rcall repairseal $n
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "check plane seal light"
+script = """
+if objcount(551) > 0
+				if roomvalue($n500v0) < 10
+						echoat $n 封印看起來極端的不穩定，快想辦法修好它吧！
+				else
+						if roomvalue($n500v0) < 20
+								echoat $n 封印看起來有些不穩定，快想辦法修好它吧！
+						else
+								if roomvalue($n500v0) > 29
+										echoat $n 封印看來十分穩定，或許你可以試著穿越(enter)看看了？
+								else
+										echoat $n 封印閃爍著些微不穩定的光芒，再加點勁吧！
+								endif
+						endif
+				endif
+		else
+				echoat $n 什麼？
+		endif
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "enter plane seal light"
+script = """
+if robjcount(551) > 0
+		or robjcount(552) > 0
+				if roomvalue($n500v0) > 29
+						echoat $n 你試圖前往封印的另一端。
+						echoaround $n $N試圖穿越封印，整個人消沒在光團之中...
+						echoat $n \u001B[0m\u001B[33;1m你感到封印中充沛的神聖力量湧入了你的身體。\u001B[0m
+						cast san $n 30
+						if is_qmark($n) <= wererat_save 300016
+								mod_qmark $n wererat_save v2 = 17
+								force 3899 mload 554
+								force 3899 mload 554
+						endif
+						transfer $n 533
+				else
+						echoat $n 你試圖前往封印的另一端，卻被看不見的障礙擋了回來。
+						echoaround $n $N試圖穿越封印，但不久後就又退了回來。
+						callout 1 echoat $n 看來必須想辦法把封印修復完整一點才行...
+				endif
+		else
+				echoat $n 什麼？
+		endif
+"""
+[[rooms.500.programs]]
+trigger = "room_defun"
+argument = "profra"
+script = """
+if objcount(550) < 40
+				if roomvalue($n500v0) < 30
+						force rpqew-fqwere mpoload 550
+						rcall profra rpqew-fqwere
+				endif
+		endif
+"""
+[[rooms.500.programs]]
+trigger = "room_defun"
+argument = "sealdecrease"
+script = """
+if roomvalue($n500v0) > 0
+				modrvt 500 v0 - 1
+		endif
+"""
+[[rooms.500.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		if roomvalue($n500v0) < 30
+				echo \u001B[0m\u001B[33;1m一道光芒從光團中分裂而出，流星似地往遠方逝去...\u001B[0m
+				callout 1 echo \u001B[0m\u001B[35m巨大的光雲似乎變得更加黯淡了許多...\u001B[0m
+				if rand(80)
+						rcall sealdecrease rpqew-fqwere
+				endif
+				if rand(40)
+						rcall sealdecrease rpqew-fqwere
+				endif
+				if rand(20)
+						rcall sealdecrease rpqew-fqwere
+				endif
+				if rnplayer($) > 7
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 9
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 11
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 13
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 19
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+						if rand(15)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+				if rnplayer($) > 25
+						if rand(25)
+								rcall sealdecrease rpqew-fqwere
+						endif
+						if rand(15)
+								rcall sealdecrease rpqew-fqwere
+						endif
+				endif
+		endif
+		rcall profra rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "move default"
+script = """
+echoat $n 你要移動到哪裡(exits)去？
+"""
+[[rooms.500.programs]]
+trigger = "room_mask"
+argument = "east default"
+script = """
+echoat $n 你判斷不出哪邊是東方！
+"""
+[[rooms.500.programs]]
+trigger = "room_mask"
+argument = "west default"
+script = """
+echoat $n 你判斷不出哪邊是西方！
+"""
+[[rooms.500.programs]]
+trigger = "room_mask"
+argument = "north default"
+script = """
+echoat $n 你判斷不出哪邊是北方！
+"""
+[[rooms.500.programs]]
+trigger = "room_mask"
+argument = "south default"
+script = """
+echoat $n 你判斷不出哪邊是南方！
+"""
+[[rooms.500.programs]]
+trigger = "room_mask"
+argument = "up default"
+script = """
+echoat $n 在這個沒有重力的地方，你判斷不出哪邊是上方！
+"""
+[[rooms.500.programs]]
+trigger = "room_mask"
+argument = "down default"
+script = """
+echoat $n 在這個沒有重力的地方，你判斷不出哪邊是下方！
+"""
+[[rooms.500.programs]]
+trigger = "room_mask"
+argument = "exits default"
+script = """
+echoat $n 　
+echoat $n 青與紫的電光在你的左手邊(left)交互纏繞
+echoat $n 一望無際的深藍往你的右手邊(right)延伸而去
+echoat $n 你的前方(front)閃爍著血似腥紅的暗芒
+echoat $n 銀輝色的光河橫亙在你的身後(back)
+echoat $n 你的頭頂(up)是深邃無邊的黑暗
+echoat $n 你的腳底(down)是深邃無邊的黑暗
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "move down"
+script = """
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 13 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往深邃無邊的黑暗游去...
+	echoaround $n $N滑動著雙手，往深邃無邊的黑暗游去...
+	if rand(33)
+		transfer $n 530
+		force 530 echoaround $n $N往這裡游了過來...
+	else
+		if rand(50)
+			transfer $n 531
+			force 531 echoaround $n $N往這裡游了過來...
+		else
+			transfer $n 532
+			force 532 echoaround $n $N往這裡游了過來...
+		endif
+	endif
+endif
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "move up"
+script = """
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 13 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往深邃無邊的黑暗游去...
+	echoaround $n $N滑動著雙手，往深邃無邊的黑暗游去...
+	if rand(33)
+		transfer $n 530
+		force 530 echoaround $n $N往這裡游了過來...
+	else
+		if rand(50)
+			transfer $n 531
+			force 531 echoaround $n $N往這裡游了過來...
+		else
+			transfer $n 532
+			force 532 echoaround $n $N往這裡游了過來...
+		endif
+	endif
+endif
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "move front"
+script = """
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往血似腥紅的暗芒游去...
+	echoaround $n $N滑動著雙手，往血似腥紅的暗芒游去...
+	transfer $n 529
+	force 529 echoaround $n $N往這裡游了過來...
+endif
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "move right"
+script = """
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往一望無際的深藍游去...
+	echoaround $n $N滑動著雙手，往一望無際的深藍游去...
+	transfer $n 527
+	force 527 echoaround $n $N往這裡游了過來...
+endif
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "move left"
+script = """
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往青與紫的電光游去...
+	echoaround $n $N滑動著雙手，往青與紫的電光游去...
+	transfer $n 528
+	force 528 echoaround $n $N往這裡游了過來...
+endif
+"""
+[[rooms.500.programs]]
+trigger = "room_command"
+argument = "move back"
+script = """
+if is_qmark($n) == ismoving
+	break
+endif
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+if is_qmark($n) != ismoving
+	add_qmark $n ismoving 2 0 0 0 1 0
+	echoat $n 你滑動著雙手，往銀輝色的光河游去...
+	echoaround $n $N滑動著雙手，往銀輝色的光河游去...
+	transfer $n 526
+	force 526 echoaround $n $N往這裡游了過來...
+endif
+"""
+
+[rooms.501]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.501.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+rcall radomfour rpqew-fqwere
+rcall randomtwo rpqew-fqwere
+purge rpqew-fqwere
+"""
+[[rooms.501.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+mod_qmark $n wererat_plane v0 = 1
+del_qmark $n ismoving
+"""
+
+[rooms.502]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.502.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.502.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 2
+		del_qmark $n ismoving
+"""
+
+[rooms.503]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.503.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.503.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 03
+		del_qmark $n ismoving
+"""
+
+[rooms.504]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.504.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.504.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 04
+		del_qmark $n ismoving
+"""
+
+[rooms.505]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.505.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.505.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 05
+		del_qmark $n ismoving
+"""
+
+[rooms.506]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.506.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.506.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 06
+		del_qmark $n ismoving
+"""
+
+[rooms.507]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.507.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.507.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 07
+		del_qmark $n ismoving
+"""
+
+[rooms.508]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.508.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.508.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 08
+		del_qmark $n ismoving
+"""
+
+[rooms.509]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.509.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.509.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 09
+		del_qmark $n ismoving
+"""
+
+[rooms.510]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.510.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.510.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 10
+		del_qmark $n ismoving
+"""
+
+[rooms.511]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.511.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.511.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 11
+		del_qmark $n ismoving
+"""
+
+[rooms.512]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.512.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.512.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 12
+		del_qmark $n ismoving
+"""
+
+[rooms.513]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.513.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.513.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 13
+		del_qmark $n ismoving
+"""
+
+[rooms.514]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.514.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.514.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 14
+		del_qmark $n ismoving
+"""
+
+[rooms.515]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.515.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.515.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 15
+		del_qmark $n ismoving
+"""
+
+[rooms.516]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.516.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.516.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 16
+		del_qmark $n ismoving
+"""
+
+[rooms.517]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.517.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.517.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 17
+		del_qmark $n ismoving
+"""
+
+[rooms.518]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.518.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.518.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 18
+		del_qmark $n ismoving
+"""
+
+[rooms.519]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.519.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.519.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 19
+		del_qmark $n ismoving
+"""
+
+[rooms.520]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.520.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.520.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 20
+		del_qmark $n ismoving
+"""
+
+[rooms.521]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.521.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.521.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 21
+		del_qmark $n ismoving
+"""
+
+[rooms.522]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.522.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.522.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 22
+		del_qmark $n ismoving
+"""
+
+[rooms.523]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.523.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.523.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 23
+		del_qmark $n ismoving
+"""
+
+[rooms.524]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.524.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.524.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 24
+		del_qmark $n ismoving
+"""
+
+[rooms.525]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.525.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.525.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 25
+		del_qmark $n ismoving
+"""
+
+[rooms.526]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.526.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.526.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 26
+		del_qmark $n ismoving
+"""
+
+[rooms.527]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.527.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.527.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 27
+		del_qmark $n ismoving
+"""
+
+[rooms.528]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.528.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.528.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 28
+		del_qmark $n ismoving
+"""
+
+[rooms.529]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.529.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.529.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 29
+		del_qmark $n ismoving
+"""
+
+[rooms.530]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.530.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.530.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 30
+		del_qmark $n ismoving
+"""
+
+[rooms.531]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.531.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.531.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 31
+		del_qmark $n ismoving
+"""
+
+[rooms.532]
+name = "界域裂隙"
+description = """
+你飄浮在一片黑暗的無重力空間中，失序的方向感讓你完全無法按照正常的方式
+行動。四周散布著各種顏色的雲霧、線條與閃爍的光芒，都像依循著某種規律似的朝
+著遠方延伸而去，或許你可以依此作為移動(move)的參照？
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.532.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+mload 559
+		rcall radomfour rpqew-fqwere
+		rcall randomtwo rpqew-fqwere
+		purge rpqew-fqwere
+"""
+[[rooms.532.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N往這裡游了過來...
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 32
+		del_qmark $n ismoving
+"""
+
+[rooms.533]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.533.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 545
+[rooms.533.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 540
+[rooms.533.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 547
+[rooms.533.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 537
+[[rooms.533.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.533.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+mod_qmark $n wererat_plane v0 = 33
+if is_qmark($n) == ismoving
+	del_qmark $n ismoving
+endif
+"""
+
+[rooms.534]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.534.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 538
+[rooms.534.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 545
+[rooms.534.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 539
+[rooms.534.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 547
+[[rooms.534.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+	echo 空間不停劇烈地震盪著...
+	mload 578
+endif
+"""
+[[rooms.534.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 34 0 0 1 0
+endif
+mod_qmark $n wererat_plane v0 = 34
+del_qmark $n ismoving
+"""
+
+[rooms.535]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.535.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 542
+[rooms.535.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 538
+[rooms.535.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 546
+[rooms.535.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 539
+[[rooms.535.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.535.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 35 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 35
+		del_qmark $n ismoving
+"""
+
+[rooms.536]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.536.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 540
+[rooms.536.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 542
+[rooms.536.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 537
+[rooms.536.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 546
+[[rooms.536.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.536.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 36 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 36
+		del_qmark $n ismoving
+"""
+
+[rooms.537]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.537.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 533
+[rooms.537.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 536
+[rooms.537.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 548
+[rooms.537.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 544
+[[rooms.537.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.537.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 37 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 37
+		del_qmark $n ismoving
+"""
+
+[rooms.538]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.538.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 548
+[rooms.538.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 544
+[rooms.538.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 535
+[rooms.538.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 534
+[[rooms.538.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.538.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 38 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 38
+		del_qmark $n ismoving
+"""
+
+[rooms.539]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.539.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 538
+[rooms.539.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 534
+[rooms.539.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 543
+[rooms.539.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 541
+[[rooms.539.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.539.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 39 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 39
+		del_qmark $n ismoving
+"""
+
+[rooms.540]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.540.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 543
+[rooms.540.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 541
+[rooms.540.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 533
+[rooms.540.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 536
+[[rooms.540.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.540.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 40 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 40
+		del_qmark $n ismoving
+"""
+
+[rooms.541]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.541.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 534
+[rooms.541.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 547
+[rooms.541.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 541
+[rooms.541.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 548
+[[rooms.541.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.541.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 41 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 41
+		del_qmark $n ismoving
+"""
+
+[rooms.542]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.542.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 547
+[rooms.542.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 548
+[rooms.542.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 542
+[rooms.542.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 538
+[[rooms.542.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.542.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 42 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 42
+		del_qmark $n ismoving
+"""
+
+[rooms.543]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.543.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 546
+[rooms.543.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 539
+[rooms.543.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 545
+[rooms.543.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 540
+[[rooms.543.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.543.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 43
+		del_qmark $n ismoving
+"""
+
+[rooms.544]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.544.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 537
+[rooms.544.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 546
+[rooms.544.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 538
+[rooms.544.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 545
+[[rooms.544.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.544.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 44
+		del_qmark $n ismoving
+"""
+
+[rooms.545]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.545.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 544
+[rooms.545.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 543
+[rooms.545.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 534
+[rooms.545.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 533
+[[rooms.545.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.545.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 45
+		del_qmark $n ismoving
+"""
+
+[rooms.546]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.546.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 536
+[rooms.546.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 535
+[rooms.546.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 544
+[rooms.546.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 543
+[[rooms.546.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.546.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 46
+		del_qmark $n ismoving
+"""
+
+[rooms.547]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.547.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 534
+[rooms.547.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 533
+[rooms.547.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 541
+[rooms.547.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 548
+[[rooms.547.programs]]
+trigger = "room_rand"
+argument = "33"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.547.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 47
+		del_qmark $n ismoving
+"""
+
+[rooms.548]
+name = "混沌領域"
+description = """
+你行走在一個混亂的空間之中。四周布滿著許多大大小小、形狀不定的黯淡色塊
+，有如黑洞般地將來自封印的神聖力量吸收、吞噬與轉化。光線在這裡不再是直線行
+進的，視界永遠是模糊而歪曲的，距離感也不再準確，你只能靠著碰觸與直覺在這個
+充滿空間裂縫、隱形障礙與未知怪物的地方緩慢前進。看來這個空間已經被破壞得瀕
+臨崩潰了，你想，必須快點消滅造成這一切的元兇才行。
+"""
+flags = ["UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "DESERT"
+[rooms.548.exits.east]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 547
+[rooms.548.exits.north]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 537
+[rooms.548.exits.south]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 542
+[rooms.548.exits.west]
+description = "在這混沌的空間裡，你根本無法判斷眼前的景象來自何處。"
+keywords = ""
+locks = []
+key = 0
+to_room = 538
+[[rooms.548.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if roomvalue($0) == 1
+				echo 空間不停劇烈地震盪著...
+				mload 578
+		endif
+"""
+[[rooms.548.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+echoaround $n $N突然出現在這裡！
+		force $n look
+if is_qmark($n) != wererat_plane
+	add_qmark $n wererat_plane -1 0 0 0 1 0
+endif
+		mod_qmark $n wererat_plane v0 = 48
+		del_qmark $n ismoving
+"""
+
+[rooms.549]
+name = "空間漩渦"
+description = """
+你飄浮在一個無邊無際的空間之中，四周盡是一片沒有變化的空茫。無數說不出
+色彩的線圈圍繞著此處，彷彿還緩緩旋轉著，令你感到一陣陣的頭暈目眩。你不禁閉
+上眼睛，不知怎麼辦才能夠離開這裡。
+"""
+flags = ["UNDERGROUND", "SAFE", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.549.exits.down]
+description = "遠處跟這裡沒什麼兩樣。"
+keywords = ""
+locks = []
+key = 0
+to_room = 549
+[rooms.549.exits.east]
+description = "遠處跟這裡沒什麼兩樣。"
+keywords = ""
+locks = []
+key = 0
+to_room = 549
+[rooms.549.exits.north]
+description = "遠處跟這裡沒什麼兩樣。"
+keywords = ""
+locks = []
+key = 0
+to_room = 549
+[rooms.549.exits.south]
+description = "遠處跟這裡沒什麼兩樣。"
+keywords = ""
+locks = []
+key = 0
+to_room = 549
+[rooms.549.exits.up]
+description = "遠處跟這裡沒什麼兩樣。"
+keywords = ""
+locks = []
+key = 0
+to_room = 549
+[rooms.549.exits.west]
+description = "遠處跟這裡沒什麼兩樣。"
+keywords = ""
+locks = []
+key = 0
+to_room = 549
+[[rooms.549.programs]]
+trigger = "room_enter"
+argument = "64 100"
+script = """
+if ispc($n)
+				echoat $n 周圍的空間化作了漩渦，將你捲了進去！
+				force $n look
+				mod_qmark $n wererat_save v2 = 21
+		else
+				purge chaos-reqwf
+		endif
+"""
+
+[rooms.561]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.561.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 568
+[rooms.561.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 562
+[rooms.561.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 564
+[rooms.561.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 576
+
+[rooms.562]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.562.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 567
+[rooms.562.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 562
+[rooms.562.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 563
+[rooms.562.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 575
+
+[rooms.563]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.563.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 566
+[rooms.563.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 562
+[rooms.563.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 564
+[rooms.563.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 574
+
+[rooms.564]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.564.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 565
+[rooms.564.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 563
+[rooms.564.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 564
+[rooms.564.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 573
+
+[rooms.565]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.565.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 572
+[rooms.565.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 566
+[rooms.565.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 568
+[rooms.565.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 564
+
+[rooms.566]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "NO_MOB", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.566.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 571
+[rooms.566.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 567
+[rooms.566.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 565
+[rooms.566.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 563
+
+[rooms.567]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.567.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 570
+[rooms.567.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 568
+[rooms.567.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 566
+[rooms.567.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 562
+
+[rooms.568]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.568.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 569
+[rooms.568.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 565
+[rooms.568.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 567
+[rooms.568.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 568
+
+[rooms.569]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.569.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 576
+[rooms.569.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 572
+[rooms.569.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 570
+[rooms.569.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 568
+
+[rooms.570]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.570.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 575
+[rooms.570.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 569
+[rooms.570.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 571
+[rooms.570.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 567
+
+[rooms.571]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.571.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 574
+[rooms.571.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 570
+[rooms.571.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 572
+[rooms.571.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 566
+
+[rooms.572]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.572.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 573
+[rooms.572.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 571
+[rooms.572.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 569
+[rooms.572.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 565
+
+[rooms.573]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.573.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 564
+[rooms.573.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 574
+[rooms.573.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 576
+[rooms.573.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 572
+
+[rooms.574]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.574.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 563
+[rooms.574.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 575
+[rooms.574.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 573
+[rooms.574.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 571
+
+[rooms.575]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.575.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 562
+[rooms.575.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 576
+[rooms.575.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 574
+[rooms.575.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 570
+
+[rooms.576]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+"""
+flags = ["DARK", "UNDERGROUND", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+randomize_exits = 4
+[rooms.576.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 577
+[rooms.576.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 573
+[rooms.576.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 575
+[rooms.576.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 569
+
+[rooms.577]
+name = "黑暗大地"
+description = """
+你行走在一片黑暗之中，空間像是會吸收光線似的，即使你點起最大的火把也只
+能看見模糊的輪廓，令你完全辨別不了方向。空氣是令人窒息的沉悶，還夾帶著令人
+噁心的血肉臭味。四周不時傳來令人驚懼的不明嚎叫，不知道有多少詭異的生物正躲
+藏在陰影裡蠢蠢欲動。看來此處並非久留之地，還是快點離開吧！
+　　東方隱約地透出一線光芒。
+"""
+flags = ["DARK", "UNDERGROUND", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.577.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 576
+[[rooms.577.programs]]
+trigger = "room_mask"
+argument = "east default"
+script = """
+if ispc($n)
+				echoat $n 你在黑暗中走啊走地....不知怎麼就回到史卡拉貝城聖殿了。
+				transfer $n 3001
+				force 3001 force $n look
+		endif
+"""

@@ -1,0 +1,3913 @@
+[area]
+name = "史卡拉貝西方黑森林"
+identity = "haon"
+builders = "Diku"
+translator = "Amenda"
+modifier = "Amenda"
+vnum_start = 6000
+vnum_end = 6199
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.6000]
+keywords = "john-haon lumberjack"
+short_description = "樵夫約翰(John the Lumberjack)"
+long_description = "樵夫約翰(John the Lumberjack)住在這很多年，也許你能請教他有關森林(forest)的事。\n"
+description = """
+他是一位六呎高、強壯的男人，衣服下是強壯的肌肉。他的特徵帶著努力的辛勞，
+他嚮往一個平靜安寧的普通人生活。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS"]
+alignment = 350
+level = 15
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+[[mobiles.6000.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 這個森林(forest)的事，沒人比我清楚。
+"""
+[[mobiles.6000.programs]]
+trigger = "talk_prog"
+argument = "forest"
+script = """
+nod $n
+mpcallout 1 mpcall talk_1 $n
+mpcallout 1 mpechoaround $n $I 裂開大口對 $n 笑著。
+mpcallout 2 mpcall talk_2 $n
+mpcallout 3 say 這座森林東邊的出口就是史卡拉貝城，東南方是小惡鬼的棲息地，
+mpcallout 4 say 北邊通往綠樹王國，西北邊可抵達新囤墾區(shire)，神秘的魔法高塔
+mpcallout 5 say 在森林的西邊，西南方是遠古沼澤以及人類的要塞，
+mpcallout 6 say 不過那裡我就不大清楚了....
+mpcallout 7 bow $n 
+mpcallout 7 say 我所知道的就是這些了，祝你們旅途愉快。
+mpcallout 8 wave $n 
+"""
+[[mobiles.6000.programs]]
+trigger = "defun_prog"
+argument = "talk_1"
+script = """
+say 你問對人了，史卡拉貝西方的這座森林相當廣大，
+say 要是沒有人說明，一般旅人很容易迷失。        
+"""
+[[mobiles.6000.programs]]
+trigger = "defun_prog"
+argument = "talk_2"
+script = """
+say 這座森林一般人簡稱西方黑森林，裡面都是幾千年的蒼天巨木。
+say 史卡拉貝陸上的對外交通大半都要經過這裡，所以基本上森林
+say 裡沒有太危險的動物。
+"""
+[[mobiles.6000.programs]]
+trigger = "talk_prog"
+argument = "shire"
+script = """
+say 這個郡是一個新的囤墾區。
+"""
+
+[mobiles.6002]
+keywords = "brown bear"
+short_description = "野生的熊(brown bear)"
+long_description = "一隻巨大，咖啡色野生的熊(brown bear)瞪視著你\n"
+description = """
+這是一隻大型的棕熊，有著大爪子和尖銳的牙齒。牠可一點也不像玩具櫥窗中的
+熊玩偶一樣可愛。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -50
+level = 14
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Bear"
+[[mobiles.6002.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下$I 的皮......
+	mpoload 35004 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下$I 的皮......
+	mpoload 35004 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 30
+endif
+"""
+
+[mobiles.6003]
+keywords = "ferocious rabbit"
+short_description = "兇惡的兔子(ferocious rabbit)"
+long_description = "一隻凶惡的兔子(ferocious rabbit)，他看起來比一般兔子大多了。\n"
+description = """
+一隻小型的多毛生物，有著長耳朵和大腳丫，指上長著尖銳的爪子。
+一股可怕的黑暗力量把這隻兔子從溫馴的小動物化為可怕的嗜血野獸。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -150
+level = 11
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.6003.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 cinf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35002 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35002 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+"""
+
+[mobiles.6004]
+keywords = "fallow deer"
+short_description = "悠閒的鹿(fallow deer)"
+long_description = "一隻悠閒的鹿(fallow deer)在這晃蕩。\n"
+description = """
+她是一隻祥和的梅花鹿，有著長而纖細的腿，以及一雙盯著你瞧的大大棕眸，
+看起來煞是有趣。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS"]
+alignment = 350
+level = 10
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Animal"
+[[mobiles.6004.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35001 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35001 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+"""
+
+[mobiles.6005]
+keywords = "fox"
+short_description = "狐狸(fox)"
+long_description = "一隻咖啡色的狐狸(fox)在這裡找尋兔子當晚餐。\n"
+description = """
+一隻有著紅棕色的美麗爪子和尾巴的大狐狸。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = -50
+level = 10
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.6005.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35003 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35003 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+"""
+
+[mobiles.6006]
+keywords = "traveler elf"
+short_description = "精靈旅者(elf traveler)"
+long_description = "離鄉遠遊的精靈旅者(elf traveler)，和同伴們說些你不懂的話。\n"
+description = """
+他滿面風霜，看來已經走了很長的路。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_MAGIC", "DETECT_HIDDEN", "PROTECT"]
+alignment = 800
+level = 6
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = -15
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["MAGE"]
+[[mobiles.6006.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 精靈族最喜歡綠色的森林。
+"""
+[[mobiles.6006.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if level($n) > 35
+	cast power
+else
+	cast chill
+endif
+"""
+[[mobiles.6006.programs]]
+trigger = "hitprcnt_prog"
+argument = "75"
+script = """
+if isaffected($i) & 1
+mpecho $I 喝下一罐藥水
+	mpdis_magic self blindness
+endif
+if isaffected($i) & 16777216
+	mpecho $I 喝下一罐藥水
+	mpdis_magic self 'seal magic'
+endif
+"""
+
+[mobiles.6007]
+keywords = "guide elf"
+short_description = "精靈嚮導(elf guide)"
+long_description = "有經驗的精靈嚮導(elf guide)，四處打量環境。\n"
+description = """
+他滿面風霜，看來已經走了很長的路。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_MAGIC", "DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = 800
+level = 26
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = -20
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["MAGE"]
+[[mobiles.6007.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 史卡拉貝北方的平原有個精靈山谷，我們想要到那去。
+"""
+[[mobiles.6007.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if isnpc($n)
+	break
+endif
+nod $n
+say 嗨，你好，你們也是要到史卡拉貝嗎？
+"""
+[[mobiles.6007.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if level($n) > 35
+	cast power
+else
+	c harm
+endif
+"""
+[[mobiles.6007.programs]]
+trigger = "hitprcnt_prog"
+argument = "75"
+script = """
+if isaffected($i) & 1
+	mpecho $I 喝下一罐藥水
+	mpdis_magic self blindness
+endif
+if isaffected($i) & 16777216
+	mpecho $I 喝下一罐藥水
+	mpdis_magic self 'seal magic'
+endif
+"""
+
+[mobiles.6008]
+keywords = "pixie"
+short_description = "小妖精(pixie)"
+long_description = "一隻在湖面飛翔的小妖精(pixie)，翅膀閃閃發光。\n"
+description = """
+一個可愛的小妖精，她也在看你喔！
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "PROTECT"]
+alignment = 800
+level = 26
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Pixie"
+class = ["MAGE"]
+[[mobiles.6008.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+blush
+mpecho $I 紅著臉飛走了。
+"""
+[[mobiles.6008.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+chuckle
+"""
+[[mobiles.6008.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if level($n) > 27
+	c 2 fire
+	break
+endif
+c magic
+"""
+[[mobiles.6008.programs]]
+trigger = "hitprcnt_prog"
+argument = "80"
+script = """
+if isaffected($i) & 1
+	mpecho $I 施法治癒自己的失明！
+	mpdis_magic $i blindness
+endif
+"""
+
+[mobiles.6009]
+keywords = "hermit forest"
+short_description = "森林隱者(forest hermit)"
+long_description = "森林隱者(forest hermit)坐在這裡，慈祥地招呼你過來。\n"
+description = """
+他很削瘦，但精神奕奕。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 22
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -300
+mod_svs = 0
+dodge = -200
+mod_pp = 0
+gold = -1
+sex = "male"
+[[mobiles.6009.applies]]
+type = "EXP"
+degree = -300
+[[mobiles.6009.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if is_qmark($n) != western_hermit
+		say 孩子，走過來一點....
+		say 聽馬修說最近有位上進的年輕冒險者，難道就是你嗎？(yes/no)
+	endif
+endif
+"""
+[[mobiles.6009.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) != western_hermit
+	mpadd_qmark $n western_hermit -1 1 1 1 0 1
+	say 既然是這樣，我要給你一項寶物。
+	smile $n
+	say 不過在此之前，我想看看你的能力....
+	say 黑森林西北邊有一條綠龍，如果你能打敗它，
+	say 把它的眼珠拿給我，我就認為你值得我的幫助。
+	say 我給你一點建議，注意別把 wimpy 設成零喔！
+	wave $n
+endif
+"""
+[[mobiles.6009.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+sigh
+"""
+[[mobiles.6009.programs]]
+trigger = "give_prog"
+argument = "6019"
+script = """
+if is_qmark($n) == western_hermit 300005
+	say 你已經解過此任務了.
+	drop eyeball
+	break
+endif
+if is_qmark($n) == western_hermit 100001
+	say 你確定你有見到綠龍嗎？
+	drop eyeball
+	break
+endif
+if is_qmark($n) == western_hermit
+	mpmod_qmark $n western_hermit v2 = 5
+	clap $n
+	good
+	mpjunk ball
+	mpoload 6020 18
+	give pill $n
+	mpgold $n 20000
+	if class($n) < 5
+		mpexp $n 1000
+	else
+		mpexp $n 500
+		mpmod_qmark $n western_hermit v1 = 2
+	endif
+	say 這是你的獎勵！希望能對你有所幫助。
+	wave $n
+endif
+"""
+
+[mobiles.6010]
+keywords = "minotaur"
+short_description = "年輕的牛頭人(minotaur)"
+long_description = "離鄉探險的年輕牛頭人(minotaur)，看起來有點緊張。\n"
+description = """
+他看起來有點緊張，又有點興奮。
+"""
+act_flags = ["NPC", "SENTINEL", "WIMPY", "HUNT"]
+affected_flags = ["PROTECT"]
+alignment = -100
+level = 18
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Minotaur"
+class = ["WARRIOR"]
+[[mobiles.6010.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 我的家鄉是曼拖爾城堡，在比黑森林更南方的凍原裡。
+"""
+[[mobiles.6010.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if isnpc($n)
+	break
+endif
+say 我父親說年輕人要多到外面看看，接受考驗！
+"""
+[[mobiles.6010.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if level($n) > 30
+	wear all
+	dis
+	bashhead
+	break
+endif
+"""
+
+[mobiles.6011]
+keywords = "homesicker"
+short_description = "思鄉的遊子(homesicker)"
+long_description = "思鄉的遊子(homesicker)焦急地趕路，想要早點回到故鄉。\n"
+description = """
+他既期待，又怕受傷害。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["CURSE"]
+alignment = 100
+level = 17
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+[[mobiles.6011.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if isnpc($n)
+	break
+endif
+say 史卡拉貝就快到了，但我反而近鄉情怯....
+"""
+[[mobiles.6011.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+yell 親愛的媽媽，我永遠見不到你了....
+"""
+
+[mobiles.6012]
+keywords = "exhausted trader"
+short_description = "萎頓的商人(exhausted trader)"
+long_description = "萎頓的商人(exhausted trader)無精打采，拖著腳步慢慢走。\n"
+description = """
+他很失意喔。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["CURSE"]
+alignment = 100
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+[[mobiles.6012.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 在森林北邊的綠樹王國可以合成各式的魔法捲軸喔！
+"""
+[[mobiles.6012.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if isnpc($n)
+	break
+endif
+say 倒楣透了，花那麼多天到綠樹王國，竟連一毛也沒賺到。
+groan
+"""
+
+[mobiles.6013]
+keywords = "running hobbit"
+short_description = "快步走的賀比特(running hobbit)"
+long_description = "快步走的賀比特(running hobbit)差點撞上你。\n"
+description = """
+一看就知道是急性子。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY"]
+affected_flags = ["CURSE"]
+alignment = 100
+level = 32
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Hobbit"
+[[mobiles.6013.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 相傳戴上魔戒(ring)的人會有無比的力量，但帶著戒指太久
+say 魔戒就會控制主人的意識！。
+"""
+[[mobiles.6013.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if isnpc($n)
+	break
+endif
+bow $n
+say 對不起，我趕路，我要去找爺爺撒姆爾(samuel)。
+"""
+[[mobiles.6013.programs]]
+trigger = "talk_prog"
+argument = "samuel"
+script = """
+say 啥，你不知道我爺爺！他可是魔戒之王主角之一的後代子孫耶！
+"""
+[[mobiles.6013.programs]]
+trigger = "death_prog"
+argument = "90"
+script = """
+yell 爺爺！你為何要把魔戒銷毀！？現在你孫子被人欺負了....
+"""
+[[mobiles.6013.programs]]
+trigger = "talk_prog"
+argument = "ring"
+script = """
+say 這個任務你可以到我們的家鄉賽伐斯拖普(hobbitcity)去問我爺爺。
+"""
+[[mobiles.6013.programs]]
+trigger = "talk_prog"
+argument = "hobbitcity"
+script = """
+say 那是我們賀比特的家鄉，位在莫瑞亞山脈的附近。
+"""
+
+[mobiles.6100]
+keywords = "warg vicious"
+short_description = "大野狼(vicious warg)"
+long_description = "一隻大野狼(vicious warg)生氣地向你咆哮著。\n"
+description = """
+他是一隻巨大的黑毛野狼，口水從他的大嘴滴下，他看起來非常危險，非常憤怒。
+大概是餓了吧？
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -350
+level = 23
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.6100.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+mpasound 你聽到不遠方傳來的狼嚎
+"""
+[[mobiles.6100.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 40
+endif
+"""
+
+[mobiles.6101]
+keywords = "warg ferocious"
+short_description = "大野狼(vicious warg)"
+long_description = "一隻大野狼(vicious warg)生氣地向你咆哮著。\n"
+description = """
+他是一隻巨大的黑毛野狼，口水從他的大嘴滴下，他看起來非常危險，非常憤怒。
+大概是餓了吧？
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -350
+level = 13
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.6101.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+mpasound 你聽到不遠方傳來的狼嚎
+"""
+[[mobiles.6101.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+"""
+
+[mobiles.6102]
+keywords = "wolf grey"
+short_description = "灰狼(grey wolf)"
+long_description = "一隻灰狼(grey wolf)飢餓地望著你。\n"
+description = """
+一隻大型的灰狼，正以打量的眼光看著你，舌頭不斷地舔著狼唇。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -150
+level = 17
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.6102.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+mpasound 你聽到不遠方傳來的狼嚎
+"""
+[[mobiles.6102.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+"""
+
+[mobiles.6103]
+keywords = "wolf black"
+short_description = "黑狼(black wolf)"
+long_description = "一隻很大的黑狼(black wolf)飢餓地望著你。\n"
+description = """
+一隻大型的黑狼，正以打量的眼光看著你，舌頭不斷地舔著狼唇。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -150
+level = 18
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.6103.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+mpasound 你聽到不遠方傳來的狼嚎
+"""
+[[mobiles.6103.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+	break
+endif
+if rand(40)
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpoload 35000 1
+endif
+if class($n) < 5
+	mpgreward exp $n -20 20
+endif
+"""
+
+[mobiles.6112]
+keywords = "dragon green"
+short_description = "綠龍(green dragon)"
+long_description = "一隻巨大的綠龍(green dragon)在這裡，他黃色的眼珠看來很生氣。\n"
+description = """
+一隻巨大的有翼巨蛇，全身覆滿深綠色的鱗片，雙翼上大大小小的破洞還有角
+上的細孔，訴說著他經歷過的許多惡鬥，他的動作優雅，有著龍族的氣勢。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "INFRARED"]
+alignment = -1000
+level = 33
+mod_hitplus = 800
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 50000
+sex = "neutral"
+race = "Dragon"
+class = ["WARRIOR"]
+special_function = "spec_breath_gas"
+[[mobiles.6112.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 我是龍族裡面最瘦弱的，所以才離群索居。
+"""
+[[mobiles.6112.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+or inroom($i) != 6143
+	break
+endif
+if is_qmark($n) == western_hermit
+	mpmod_qmark $n western_hermit v0 + 1
+	say 好小子，你也是為我的眼珠而來嗎？
+	star $n
+endif
+"""
+[[mobiles.6112.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpoload 6019 1
+"""
+
+[mobiles.6115]
+keywords = "Shargugh brownie"
+short_description = "森林精靈夏高(Brownie Shargugh)"
+long_description = "森林精靈夏高(Brownie Shargugh)微笑地看著你。\n"
+description = """
+這個褐髮褐眉的森林精靈只有三呎高，他穿著間雜褐色與綠色的衣服，看起
+來正在享受森林的清靜氣氛。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 13
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+[[mobiles.6115.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 這個森林很容易迷路，最好畫個地圖。
+"""
+[[mobiles.6115.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if isnpc($n)
+or is_qmark($n) == western_brownie
+	break
+endif
+say 我肚子好餓(hungry)。
+"""
+[[mobiles.6115.programs]]
+trigger = "talk_prog"
+argument = "hungry"
+script = """
+if is_qmark($n) == western_brownie
+	break
+endif
+sigh
+say 最近一直沒機會到史卡拉貝購物，每天都吃些漿果磨菇，
+say 真懷念咕嚕咕嚕野豬酒吧的烤雞(fried chicken)啊，想到就流口水。
+mpecho $I 的口水都滴出來了。
+"""
+[[mobiles.6115.programs]]
+trigger = "talk_prog"
+argument = "chicken"
+script = """
+if is_qmark($n) == western_brownie
+	break
+endif
+mpecho $I 睜大了眼睛看著 $n
+say 喔？太幸運了！你有嗎？可不可以分我一點？
+"""
+[[mobiles.6115.programs]]
+trigger = "give_prog"
+argument = "3011"
+script = """
+if is_qmark($n) == western_brownie
+	say 謝謝，不過我剛吃飽而已，還不餓。
+	give fried $n
+	break
+endif
+mpadd_qmark $n western_brownie 10 1 0 0 0 1
+say 啊，謝謝，謝謝....
+mpecho $I 迫不及待地吃起烤雞。
+eat fried
+ponder
+say 無功不受祿，我告訴你一個有用的消息做交換吧。
+say 早上我在森林南方的河堤上看到一些藍莓，這是那個孤僻的得魯伊教士(druid)
+say 最喜歡吃的，不過只有我知道那裡採得到。你如果把藍莓送給他，
+say 他應該會有好東西給你吧...
+mpoload 6016 17
+mpat 6121 drop druid
+smile $n
+"""
+[[mobiles.6115.programs]]
+trigger = "talk_prog"
+argument = "druid"
+script = """
+say 他呀，他很孤僻，自己一個人住在黑森林北邊一個樹洞裡。
+"""
+
+[mobiles.6116]
+keywords = "elder druid"
+short_description = "老德魯伊教士(elder druid)"
+long_description = "老德魯伊教士(elder druid)坐在這裡，他對你的出現很不高興。\n"
+description = """
+這個德魯伊看起來相當老了，你表面上尊敬他，但實際上你知道他只是一個
+老頑固。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["DETECT_INVIS"]
+alignment = 0
+level = 12
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+special_function = "spec_cast_cleric"
+[[mobiles.6116.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 德魯伊的哲學是和大自然和諧地共存。
+"""
+[[mobiles.6116.programs]]
+trigger = "greet_prog"
+argument = "90"
+script = """
+if isnpc($n)
+	break
+endif
+say 走開，別打擾我清修。
+"""
+[[mobiles.6116.programs]]
+trigger = "give_prog"
+argument = "6016"
+script = """
+say 呃....這...我最喜歡的森林精靈草莓！
+mpecho $I 興奮極了。
+hop
+say 太謝謝你了，要是你下次採到，請一定要送給我。
+say 這樣吧，這個捲軸給你，算是和你交換。
+mpoload 6017 17
+give scroll $n
+mpjunk strawberry
+"""
+
+[objects.6000]
+keywords = "axe lumber"
+short_description = "樵夫斧頭(lumber axe)"
+long_description = "一把樵夫斧頭(lumber axe)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "13"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "bronze"
+[[objects.6000.extra_descriptions]]
+keywords = "axe lumber"
+description = """
+一把重型的樵夫用斧，看就知道是用來砍柴用的，但是拿來砍人也不錯。
+"""
+
+[objects.6001]
+keywords = "chequered shirt"
+short_description = "格子襯衫(chequered shirt)"
+long_description = "一件格子襯衫(chequered shirt)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 2
+cost = 0
+level_limited = 0
+material = "cloth"
+[[objects.6001.extra_descriptions]]
+keywords = "shirt"
+description = """
+一件特大號的厚布襯衫。
+"""
+
+[objects.6002]
+keywords = "boots"
+short_description = "皮靴(leather boots)"
+long_description = "一雙皮靴(leather boots)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1001100", "0"]
+weight = 4
+cost = 0
+level_limited = 0
+material = "leather"
+[[objects.6002.extra_descriptions]]
+keywords = "boots"
+description = """
+一雙油煮過數次以防水的硬皮靴，看起來很樸素但很實用。
+"""
+
+[objects.6003]
+keywords = "fireplace"
+short_description = "火爐(fireplace)"
+long_description = "一個石頭搭的火爐(fireplace)在東邊牆角。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = []
+values = ["200", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "stone"
+[[objects.6003.extra_descriptions]]
+keywords = "fireplace"
+description = """
+由不同大小的石頭搭成的火爐，一顆疊著一顆，中間用石灰填滿。
+他的煙囪被設計用來將黑煙導出天花板。
+"""
+
+[objects.6005]
+keywords = "chest"
+short_description = "木箱(wooden chest)"
+long_description = "一個木箱(wooden chest)放在角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["100", "13", "6006", "0"]
+weight = 40
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.6005.extra_descriptions]]
+keywords = "chest"
+description = """
+一個堅固的箱子，以短重的木板組合而成，再以榫接合。
+這個箱子還配備了一個簡單的黃銅鎖。
+"""
+
+[objects.6006]
+keywords = "key"
+short_description = "黃銅鑰匙(brass key)"
+long_description = "一把黃銅鑰匙(brass key)。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["6005", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "brass"
+[[objects.6006.extra_descriptions]]
+keywords = "key"
+description = """
+一隻小而簡單的黃銅鑰匙，上面沒有任何數字或符號。
+"""
+
+[objects.6007]
+keywords = "coins gold"
+short_description = "金幣(gold coins)"
+long_description = "一堆金幣(gold coins)在地板上。"
+action_description = ""
+item_type = "MONEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["100", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.6007.extra_descriptions]]
+keywords = "coins"
+description = """
+一堆顯眼的金幣，看起來很有價值。
+"""
+
+[objects.6010]
+keywords = "blackberries"
+short_description = "黑莓果(blackberries)"
+long_description = "一些黑莓果(blackberries)長在附近的灌木叢上。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["10", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+[[objects.6010.extra_descriptions]]
+keywords = "blackberries"
+description = """
+一叢可口的莓果。
+"""
+
+[objects.6011]
+keywords = "mushroom"
+short_description = "蘑菇(mushroom)"
+long_description = "一顆蘑菇(mushroom)長在樹根邊。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["6", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+[[objects.6011.extra_descriptions]]
+keywords = "mushroom"
+description = """
+一顆美味的磨菇。
+"""
+
+[objects.6013]
+keywords = "water barrel"
+short_description = "水桶(barrel)"
+long_description = "一個水桶(barrel)被留在這。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["50", "50", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "wooden"
+
+[objects.6014]
+keywords = "belt elf"
+short_description = "精靈腰帶(elf belt)"
+long_description = "精靈腰帶(elf belt)靜靜地躺在這裡"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "ANTI_EVIL", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "1001100", "0"]
+weight = 5
+cost = 0
+level_limited = 35
+material = "cloth"
+[[objects.6014.applies]]
+type = "HITROLL"
+value = 3
+
+[objects.6015]
+keywords = "elf mace"
+short_description = "精靈釘頭鎚(elf mace)"
+long_description = "一把精靈釘頭鎚(mace)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC", "ANTI_EVIL", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "7"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "tin"
+[[objects.6015.extra_descriptions]]
+keywords = "mace"
+description = """
+一把精心製作的釘頭鎚。
+"""
+[[objects.6015.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.6015.applies]]
+type = "HITROLL"
+value = 3
+
+[objects.6016]
+keywords = "druid strawberry"
+short_description = "得魯伊最愛的藍莓(druid strawberry)"
+long_description = "一些得魯伊最愛的藍莓(druid strawberry)長在灌木叢裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["20", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+
+[objects.6017]
+keywords = "scroll protection"
+short_description = "加護卷軸(Scroll of protection)"
+long_description = "一個卷軸(scroll)放置在地上。"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["18", "protection", "shield", "armor"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "wool"
+
+[objects.6018]
+keywords = "necklace pixie pixy"
+short_description = "小妖精的項鍊(pixy necklace)"
+long_description = "一個小妖精的項鍊(pixy necklace)放置在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "gem"
+[[objects.6018.applies]]
+type = "DEX"
+value = 1
+[[objects.6018.applies]]
+type = "MANA"
+value = 15
+
+[objects.6019]
+keywords = "yellow eyeball"
+short_description = "黃眼珠(yellow eyeball)"
+long_description = "一顆黃眼珠(yellow eyeball)放置在地上。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "flesh"
+
+[objects.6020]
+keywords = "pill purple"
+short_description = "紫色藥丸(purple pill)"
+long_description = "一顆紫色藥丸(purple pill)放置在地上。"
+action_description = ""
+item_type = "PILL"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["10", "cure critical", "stone skin", ""]
+weight = 1
+cost = 0
+level_limited = 0
+material = "herb"
+
+[objects.6021]
+keywords = "minotaur axe"
+short_description = "牛頭人戰斧(minotaur axe)"
+long_description = "一把牛頭人戰斧(axe)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "1"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.6021.extra_descriptions]]
+keywords = "axe"
+description = """
+一把精心製作的牛頭人戰斧。
+"""
+[[objects.6021.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.6021.applies]]
+type = "HITROLL"
+value = 2
+
+[objects.6102]
+keywords = "tree opening"
+short_description = "一株龐大的樹(colossal tree)"
+long_description = "一株龐大的樹(colossal tree)長在這裡。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = []
+values = ["1000", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "juniper"
+[[objects.6102.extra_descriptions]]
+keywords = "tree"
+description = """
+一棵千年古樹，他的樹皮看起來蒼白且佈滿了爪痕，他的西邊是一個淺洞，
+好像可以潑開樹皮下去一探究竟。
+"""
+
+[objects.6103]
+keywords = "branch"
+short_description = "灰色的長樹枝(a long, grey branch)"
+long_description = "一支灰色的長樹枝(a long, grey branch)躺在地上"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "25", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "wooden"
+
+[objects.6104]
+keywords = "branch"
+short_description = "灰色的長樹枝(a long, grey branch)"
+long_description = "一支灰色的長樹枝(a long, grey branch)躺在地上"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "7"]
+weight = 30
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.6104.applies]]
+type = "HITROLL"
+value = -2
+
+[objects.6105]
+keywords = "branch"
+short_description = "灰色的長樹枝(a long, grey branch)"
+long_description = "一支灰色的長樹枝(a long, grey branch)躺在地上"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 40
+cost = 0
+level_limited = 0
+material = "wooden"
+
+[objects.6106]
+keywords = "toadstool"
+short_description = "毒蕈(toadstool)"
+long_description = "一個很大的毒蕈(toadstool)長在路邊。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["12", "0", "0", "1"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "herb"
+[[objects.6106.extra_descriptions]]
+keywords = "toadstool"
+description = """
+一顆大型的棕蕈，大約有五磅重，蕈頂覆著一層噁心的爛泥狀物，發散著病
+態的腐爛味道。看起來一點也不可口。
+"""
+
+[objects.6107]
+keywords = "toadstool"
+short_description = "毒蕈(toadstool)"
+long_description = "一個很大的毒蕈(toadstool)長在路邊。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["12", "0", "0", "1"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "herb"
+[[objects.6107.extra_descriptions]]
+keywords = "toadstool"
+description = """
+一顆大型的棕蕈，大約有五磅重，蕈頂覆著一層噁心的爛泥狀物，發散著病
+態的腐爛味道。看起來一點也不可口。
+"""
+
+[objects.6110]
+keywords = "potion yellow"
+short_description = "黃藥水(yellow potion)"
+long_description = "一罐黃藥水(yellow potion)"
+action_description = ""
+item_type = "POTION"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["15", "giant strength", "", ""]
+weight = 2
+cost = 0
+level_limited = 0
+material = "liquid"
+[[objects.6110.extra_descriptions]]
+keywords = "potion yellow"
+description = """
+一瓶深黃色的藥水，有著嗆鼻的味道。
+"""
+
+[objects.6111]
+keywords = "shield large"
+short_description = "大圓盾(large shield)"
+long_description = "一張大圓盾(large shield)被留在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1001100", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "wooden"
+[[objects.6111.extra_descriptions]]
+keywords = "shield large"
+description = """
+一面硬木盾，裡面嵌著一個鐵製把手。
+"""
+
+[objects.6112]
+keywords = "crown iron"
+short_description = "鐵皇冠(iron crown)"
+long_description = "一頂鐵皇冠(iron crown)在這。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "1001100", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.6112.extra_descriptions]]
+keywords = "crown iron"
+description = """
+一個重型的鐵製皇冠。
+"""
+
+[objects.6114]
+keywords = "ring iron"
+short_description = "鐵戒指(iron ring)"
+long_description = "一只鐵戒指(iron ring)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.6114.extra_descriptions]]
+keywords = "ring iron"
+description = """
+一個重型的鐵製指環，上面沒有任何的裝飾或雕花。
+"""
+
+[objects.6155]
+keywords = "morning star"
+short_description = "流星錘(morning star)"
+long_description = "一把流星錘(morning star)在這招灰塵。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "8"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "bronze"
+
+[objects.6156]
+keywords = "spider silk"
+short_description = "蜘蛛絲(spider silk)"
+long_description = "一團金色蜘蛛絲(spider silk)在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["15", "0", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "fiber"
+
+[rooms.6000]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6000.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6103
+[rooms.6000.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 1100
+[[rooms.6000.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if rmobcount(6000) < 1
+	break
+endif
+if hour($) == 11
+	if month($) >= 5
+		if month($) <= 11
+			if day($n) == 10
+			or day($n) == 25
+				force john-haon rumor 現在是生長的季節，森林中的生物不斷地繁衍著。
+			endif
+			if mobcount(6002) < 10
+				force 6105 mload 6002
+				force 6105 mload 6002
+				force 6117 mload 6002
+				force 6117 mload 6002
+				force 6115 mload 6002
+				force 6115 mload 6002
+				force 6106 mload 6002
+				force 6106 mload 6002
+			endif
+			if mobcount(6003) < 10
+				force 6122 mload 6003
+				force 6122 mload 6003
+				force 6123 mload 6003
+				force 6123 mload 6003
+				force 6124 mload 6003
+				force 6124 mload 6003
+				force 6015 mload 6003
+				force 6015 mload 6003
+				force 6016 mload 6003
+			endif
+			if mobcount(6004) < 10
+				force 6004 mload 6004
+				force 6004 mload 6004
+				force 6108 mload 6004
+				force 6108 mload 6004
+				force 6110 mload 6004
+				force 6110 mload 6004
+				force 6107 mload 6004
+				force 6107 mload 6004
+			endif
+			if mobcount(6005) < 10
+				force 6105 mload 6005
+				force 6105 mload 6005
+				force 6104 mload 6005
+				force 6104 mload 6005
+				force 6117 mload 6005
+				force 6117 mload 6005
+				force 6117 mload 6005
+			endif
+		endif
+	endif
+endif
+"""
+[[rooms.6000.resets.mobiles]]
+vnum = 6000
+limit = 1
+[[rooms.6000.resets.mobiles.equipment]]
+vnum = 6000
+wear_loc = "WIELD"
+[[rooms.6000.resets.mobiles.equipment]]
+vnum = 6001
+wear_loc = "BODY"
+[[rooms.6000.resets.mobiles.equipment]]
+vnum = 6002
+wear_loc = "FEET"
+
+[rooms.6001]
+name = "穿越森林的小徑"
+description = """
+你站在穿越森林的小徑。東邊是森林邊緣，西邊通往森林深處。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6001.extra_descriptions]]
+keywords = "birds insects animals"
+description = """
+Very cute little creatures, they seem to enjoy life.
+"""
+[[rooms.6001.extra_descriptions]]
+keywords = "tree trees"
+description = """
+The trees here are quite young and fresh.  They seem to accommodate many kinds
+of birds, insects and other small animals.
+"""
+[[rooms.6001.extra_descriptions]]
+keywords = "trail"
+description = """
+The forest trail winds east-west through the trees.
+"""
+[rooms.6001.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6024
+[rooms.6001.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR"]
+key = -1
+to_room = 6002
+
+[rooms.6002]
+name = "穿越森林的小徑"
+description = """
+你站在穿越森林的小徑。往西樹林越來越濃密。南邊有個小步道(path)。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6002.extra_descriptions]]
+keywords = "paths"
+description = """
+這個步道好像是住在森林裡的生物(不管他是什麼)踩出來的。
+"""
+[rooms.6002.exits.east]
+description = ""
+keywords = "柵門 door"
+locks = ["ISDOOR"]
+key = 13734
+to_room = 6001
+[rooms.6002.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6011
+[rooms.6002.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6003
+
+[rooms.6003]
+name = "穿越濃密森林的小徑"
+description = """
+你站在穿越森林的小徑，有些鳥在樹上鳴叫，東邊的光線越來越亮。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6003.extra_descriptions]]
+keywords = "tree trees"
+description = """
+The dense crowns of the mature trees leave only a fraction of the sky to be
+seen through the leaves.
+"""
+[[rooms.6003.extra_descriptions]]
+keywords = "trail"
+description = """
+The forest trail seems almost fragile compared to the massive trunks.
+"""
+[rooms.6003.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6002
+[rooms.6003.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 13700
+[rooms.6003.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6004
+
+[rooms.6004]
+name = "穿越森林的小徑"
+description = """
+你站在穿越森林的小徑。往西的樹木枝葉如此繁茂，光線好像透不進去。
+南邊有個幽暗步道。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6004.extra_descriptions]]
+keywords = "path paths"
+description = """
+The narrow path is probably used by the animals living in the forest.
+"""
+[rooms.6004.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6003
+[rooms.6004.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6005
+[rooms.6004.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6100
+
+[rooms.6005]
+name = "穿越森林的小徑"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+小徑通往南和北。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6005.extra_descriptions]]
+keywords = "tree trees"
+description = """
+The trees are mostly old beeches and oaks.
+"""
+[[rooms.6005.extra_descriptions]]
+keywords = "path paths"
+description = """
+The narrow path is probably used by the animals living in the forest.
+"""
+[rooms.6005.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6004
+[rooms.6005.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6006
+
+[rooms.6006]
+name = "穿越濃密森林的小徑"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+小徑通往南和北。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6006.extra_descriptions]]
+keywords = "tree trees"
+description = """
+The trees are mostly old beeches and oaks.
+"""
+[[rooms.6006.extra_descriptions]]
+keywords = "path paths"
+description = """
+The narrow path is probably used by the animals living in the forest.
+"""
+[rooms.6006.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6007
+[rooms.6006.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6005
+[[rooms.6006.resets.objects]]
+vnum = 6011
+
+[rooms.6007]
+name = "濃密森林裡的三叉路口"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+東邊的光線好像比較亮，小徑通往東西和南方。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6007.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6008
+[rooms.6007.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6012
+[rooms.6007.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6006
+[[rooms.6007.resets.groups]]
+leader_vnum = 6006
+follower_vnum = 1
+protect = true
+
+[rooms.6008]
+name = "林間空地"
+description = """
+你站在一個林間的空地。這的樹木好像是被人砍掉的，許多巨樹的根部(root)還
+牢牢地抓緊地面。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6008.extra_descriptions]]
+keywords = "tree trees"
+description = """
+The trees are mostly old beeches and oaks.
+"""
+[[rooms.6008.extra_descriptions]]
+keywords = "stump stumps"
+description = """
+There are more stumps than logs and some of the stumps are partly covered in
+moss.
+"""
+[[rooms.6008.extra_descriptions]]
+keywords = "root"
+description = """
+這些巨樹的根部都很粗大，上面甚至足夠當餐桌用。
+"""
+[rooms.6008.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6009
+[rooms.6008.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6011
+[rooms.6008.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6007
+
+[rooms.6009]
+name = "一個小湖"
+description = """
+你眼前突然出現一個小湖，湖水碧綠如玉。湖邊的巨樹底下還有幾張石凳，坐在
+這裡享受陰涼的夏日應該不錯。北邊有個小木屋(cabin)，煙囪還升起一縷清煙。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6009.extra_descriptions]]
+keywords = "cabin"
+description = """
+It looks simple but comfortable and the slender trees make the whole place seem
+pretty idyllic.  It's a cabin built from logs.  Wooden logs, not system logs.
+"""
+[rooms.6009.exits.north]
+description = ""
+keywords = "door wooden"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 6010
+[rooms.6009.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6014
+[rooms.6009.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6008
+[[rooms.6009.resets.mobiles]]
+vnum = 6008
+limit = 1
+[[rooms.6009.resets.mobiles.equipment]]
+vnum = 6018
+wear_loc = "NECK_1"
+
+[rooms.6010]
+name = "木屋裡面"
+description = """
+這是只有一個房間的小木屋，陳設非常簡單，只有最簡單的生活家具。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.6010.exits.south]
+description = "The wooden door leads south.\n"
+keywords = "door wooden"
+locks = ["ISDOOR"]
+key = -1
+to_room = 6009
+[[rooms.6010.resets.objects]]
+vnum = 6003
+[[rooms.6010.resets.objects]]
+vnum = 6005
+[[rooms.6010.resets.objects.contains]]
+vnum = 6007
+[[rooms.6010.resets.objects.contains]]
+vnum = 6006
+[[rooms.6010.resets.objects]]
+vnum = 6013
+
+[rooms.6011]
+name = "一條光亮的小徑"
+description = """
+這裡的光線充足，樹木又高又細，路邊長了許多野花野草。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6011.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6002
+[rooms.6011.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6008
+
+[rooms.6012]
+name = "濃密樹林裡的一個路口"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象，
+一隻松鼠跑過你的腳邊。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6012.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6013
+[rooms.6012.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6007
+[rooms.6012.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6021
+[[rooms.6012.resets.mobiles]]
+vnum = 309
+limit = 5
+
+[rooms.6013]
+name = "濃密森林裡的林道"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6013.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6014
+[rooms.6013.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6012
+[[rooms.6013.resets.objects]]
+vnum = 6011
+
+[rooms.6014]
+name = "森林裡的一個陰暗路口"
+description = """
+你站在森林的陰暗小徑，北邊光線逐漸變亮。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6014.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6015
+[rooms.6014.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6009
+[rooms.6014.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6013
+[[rooms.6014.resets.mobiles]]
+vnum = 6005
+limit = 3
+
+[rooms.6015]
+name = "濃密森林裡的林道"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6015.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6016
+[rooms.6015.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6014
+[[rooms.6015.resets.mobiles]]
+vnum = 309
+limit = 5
+
+[rooms.6016]
+name = "濃密森林裡的林道"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6016.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6015
+[rooms.6016.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6124
+[[rooms.6016.resets.objects]]
+vnum = 6011
+
+[rooms.6017]
+name = "密林河堤的一條死路"
+description = """
+你站在一條穿越森林的小徑，前面的樹長得太密而把路封死了。南邊是一條黑色
+的小河(river)，河水由東向西奔流。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6017.extra_descriptions]]
+keywords = "river"
+description = """
+The river flows fast and strong.  It is black or looks so in the gloom.
+"""
+[rooms.6017.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6123
+[[rooms.6017.resets.mobiles]]
+vnum = 309
+limit = 5
+
+[rooms.6018]
+name = "明亮森林裡的一個路口"
+description = """
+你站在明亮森林裡的一個路口，一個小步道通往東西方的濃密森林。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6018.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6124
+[rooms.6018.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6023
+[rooms.6018.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6019
+
+[rooms.6019]
+name = "森林裡的一個陰暗路口"
+description = """
+你站在森林的陰暗小徑，東邊光線逐漸變亮。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6019.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6018
+[rooms.6019.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6020
+[[rooms.6019.resets.mobiles]]
+vnum = 309
+limit = 5
+[[rooms.6019.resets.mobiles]]
+vnum = 6007
+limit = 1
+[[rooms.6019.resets.mobiles.equipment]]
+vnum = 6015
+wear_loc = "WIELD"
+[[rooms.6019.resets.mobiles.equipment]]
+vnum = 6014
+wear_loc = "WAIST"
+[[rooms.6019.resets.mobiles]]
+vnum = 6006
+limit = 2
+[[rooms.6019.resets.mobiles.equipment]]
+vnum = 6015
+wear_loc = "WIELD"
+
+[rooms.6020]
+name = "濃密森林裡的林道"
+description = """
+你站在穿越森林的小徑，濃密的枝葉使得森林好像有種曦光中的幻象。
+"""
+flags = []
+sector = "FOREST"
+[rooms.6020.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6019
+[rooms.6020.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6021
+
+[rooms.6021]
+name = "濃密森林裡的林道"
+description = """
+你站在穿越森林的小徑，西邊是個山洞(cave)的入口。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6021.extra_descriptions]]
+keywords = "cave entrance"
+description = """
+The irregular opening is eight feet wide and six feet tall.  An acrid smell
+emanates from within.
+"""
+[rooms.6021.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6020
+[rooms.6021.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6012
+[rooms.6021.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6022
+
+[rooms.6022]
+name = "山洞裡"
+description = """
+你在一個天然的山洞裡，牆壁上沾了許多穢物(debris)。空氣(air)厚重而不新鮮，
+呼吸起來很不舒服。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[[rooms.6022.extra_descriptions]]
+keywords = "air smell"
+description = """
+Kind of transparent, but quite noticeable nevertheless.
+"""
+[[rooms.6022.extra_descriptions]]
+keywords = "debris"
+description = """
+It consists mostly of gnawed bones mixed with small pieces of torn fur.
+"""
+[rooms.6022.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6021
+[[rooms.6022.resets.mobiles]]
+vnum = 6002
+limit = 2
+
+[rooms.6023]
+name = "一片小的青草地"
+description = """
+你站在森林裡某一片青草地(grass)上，長長的草長到你的膝蓋，周圍的橡樹密實
+得好像一堵牆。
+"""
+flags = []
+sector = "FIELD"
+[[rooms.6023.extra_descriptions]]
+keywords = "grass"
+description = """
+很適合動物躲藏的草地。
+"""
+[rooms.6023.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6018
+[[rooms.6023.resets.mobiles]]
+vnum = 6004
+limit = 3
+[[rooms.6023.resets.mobiles]]
+vnum = 6009
+limit = 1
+[[rooms.6023.resets.objects]]
+vnum = 6010
+
+[rooms.6024]
+name = "森林邊緣"
+description = """
+在你前方是一座茂密的森林(forest)。你身後是史卡拉貝的西城門，
+一條小徑(trail)往西深入森林裡。在森林入口處插了一張牌子(sign)。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[[rooms.6024.extra_descriptions]]
+keywords = "sign"
+description = """
+史卡拉貝西方森林是一個中型的區域，通往許多不同的地區，你最好別迷路了。
+森林裡有許多生物和裝備，還有兩個試鍊，適合十五級以上玩家組隊來冒險。這
+個區域由Amenda 編修改寫，有任何問題歡迎回報。
+"""
+[[rooms.6024.extra_descriptions]]
+keywords = "forest"
+description = """
+這是一座非常茂密的森林，兩邊都看不到盡頭。
+"""
+[[rooms.6024.extra_descriptions]]
+keywords = "trail"
+description = """
+一條小徑曲折向西通過森林。
+"""
+[rooms.6024.exits.east]
+description = "史卡拉貝的西城門\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 3052
+[rooms.6024.exits.north]
+description = "林中小徑"
+keywords = ""
+locks = []
+key = -1
+to_room = 6025
+[rooms.6024.exits.west]
+description = "小徑往西深入森林裡"
+keywords = ""
+locks = []
+key = -1
+to_room = 6001
+
+[rooms.6025]
+name = "林中小徑"
+description = """
+一處靜謐、祥和的森林小徑，南方是森林的邊緣，另一條路通向西邊。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.6025.exits.south]
+description = "森林邊緣"
+keywords = ""
+locks = []
+key = -1
+to_room = 6024
+[rooms.6025.exits.west]
+description = "林中小徑"
+keywords = ""
+locks = []
+key = -1
+to_room = 6026
+
+[rooms.6026]
+name = "林中小徑"
+description = """
+一處靜謐、祥和的森林小徑，森林中的路徑由東指向西方。北邊的樹林有被生物
+踐踏過的跡象，並且痕跡看起來還很新。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.6026.exits.east]
+description = "林中小徑"
+keywords = ""
+locks = []
+key = -1
+to_room = 6025
+[rooms.6026.exits.north]
+description = "森林樹徑"
+keywords = ""
+locks = []
+key = 0
+to_room = 13201
+[rooms.6026.exits.west]
+description = "林中小徑"
+keywords = ""
+locks = []
+key = -1
+to_room = 6027
+
+[rooms.6027]
+name = "林中小徑"
+description = """
+一處靜謐、祥和的森林小徑，往南通向森林深處，另一條往東的路則進入小徑。
+你注意到往南的路是不斷蜿蜒急遽向下的斜坡，所以無法再爬回來。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.6027.exits.east]
+description = "林中小徑"
+keywords = ""
+locks = []
+key = -1
+to_room = 6026
+[rooms.6027.exits.south]
+description = "穿越森林的小徑"
+keywords = ""
+locks = []
+key = -1
+to_room = 6002
+
+[rooms.6100]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6100.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+"""
+[[rooms.6100.extra_descriptions]]
+keywords = "trail"
+description = """
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+"""
+[rooms.6100.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6004
+[rooms.6100.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6101
+[[rooms.6100.resets.mobiles]]
+vnum = 6115
+limit = 1
+[[rooms.6100.resets.mobiles.equipment]]
+vnum = 6114
+wear_loc = "FINGER_L"
+
+[rooms.6101]
+name = "巨樹林根部的一條小路"
+description = """
+這些千年古樹(tree)越來越粗大，看起來就像一座座高塔，既使連最低的枝枒也在
+離你頭頂好幾十公尺處。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6101.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+"""
+[rooms.6101.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6100
+[rooms.6101.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 13000
+[rooms.6101.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6102
+
+[rooms.6102]
+name = "巨樹林根部的一條小路"
+description = """
+你在粗大的巨樹根部困難地行走，四週一片寂靜，除了你的喘息聲。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6102.extra_descriptions]]
+keywords = "trail"
+description = """
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+"""
+[rooms.6102.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6101
+[rooms.6102.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6103
+
+[rooms.6103]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+泥濘小徑在這轉彎，因為一株巨樹擋住了去路。四周一片靜寂，一點聲音也沒有。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6103.extra_descriptions]]
+keywords = "trees trunks"
+description = """
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+"""
+[[rooms.6103.extra_descriptions]]
+keywords = "trail"
+description = """
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+"""
+[rooms.6103.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6102
+[rooms.6103.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6108
+[rooms.6103.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6000
+[[rooms.6103.resets.objects]]
+vnum = 6102
+
+[rooms.6104]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6104.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6104.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6104.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6105
+[[rooms.6104.resets.mobiles]]
+vnum = 6102
+limit = 4
+[[rooms.6104.resets.mobiles]]
+vnum = 6102
+limit = 4
+[[rooms.6104.resets.objects]]
+vnum = 6106
+
+[rooms.6105]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+這些千年古樹(tree)越來越粗大，看起來就像一座座高塔，既使連最低的枝枒也在
+離你頭頂好幾十公尺處。你覺得這些樹木好像在暗中觀察你。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6105.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6105.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6105.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6104
+[rooms.6105.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6106
+[[rooms.6105.resets.objects]]
+vnum = 6105
+
+[rooms.6106]
+name = "濃密巨林裡的一個交口"
+description = """
+你站在濃密巨林裡的一個交口，一座座古老的樹好像灰色高塔，樹藤掛在枝枒間
+好像一條條粗繩子。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6106.extra_descriptions]]
+keywords = "path paths"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6106.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6106.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6105
+[rooms.6106.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6117
+[rooms.6106.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6107
+[[rooms.6106.resets.mobiles]]
+vnum = 6011
+limit = 1
+
+[rooms.6107]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在一條蜿蜒的林間小徑，周圍都是數十人合抱的巨樹，你覺得自己好像變成
+在地上爬的小蟲子，到處長滿苔蘚，濕氣很重。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6107.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6107.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6107.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6106
+[rooms.6107.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6108
+
+[rooms.6108]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+小徑在巨大的古木間蜿蜒，一個模糊的小岔路(trail)接了出去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6108.extra_descriptions]]
+keywords = "trail"
+description = """
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+"""
+[rooms.6108.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6103
+[rooms.6108.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6107
+[rooms.6108.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6109
+[[rooms.6108.resets.mobiles]]
+vnum = 6102
+limit = 4
+[[rooms.6108.resets.mobiles]]
+vnum = 6102
+limit = 4
+
+[rooms.6109]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在一條泥濘小徑，到處都是巨樹。四周一片靜寂，一點聲音也沒有。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6109.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6108
+[rooms.6109.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6110
+[[rooms.6109.resets.mobiles]]
+vnum = 6010
+limit = 1
+[[rooms.6109.resets.mobiles.equipment]]
+vnum = 6021
+wear_loc = "WIELD"
+
+[rooms.6110]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在一條泥濘小徑，兩旁的巨樹緊密的靠在一起好像牆一樣。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6110.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6109
+[rooms.6110.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6144
+[rooms.6110.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6111
+
+[rooms.6111]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在一條蜿蜒的小徑，古樹長得令人吃驚地巨大。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6111.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6110
+[rooms.6111.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6112
+[[rooms.6111.resets.objects]]
+vnum = 6106
+
+[rooms.6112]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在一條泥濘小徑，兩旁的巨樹緊密的靠在一起好像牆一樣，樹藤掛在枝枒間
+好像一條條粗繩子。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6112.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+These ancient trees must have been here for many, many years.  It is impossible
+to catch even a glimpse of anything above the lowest branches.
+"""
+[[rooms.6112.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems fragile and unsafe compared to the enormous trunks that loom
+around it.
+"""
+[[rooms.6112.extra_descriptions]]
+keywords = "trail"
+description = """
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+"""
+[rooms.6112.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6113
+[rooms.6112.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6111
+[rooms.6112.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6127
+[[rooms.6112.resets.mobiles]]
+vnum = 6103
+limit = 4
+[[rooms.6112.resets.mobiles]]
+vnum = 6103
+limit = 4
+
+[rooms.6113]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6113.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6113.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6113.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6114
+[rooms.6113.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6112
+[[rooms.6113.resets.objects]]
+vnum = 6103
+
+[rooms.6114]
+name = "濃密巨林裡的一個交口"
+description = """
+這裡是一個三叉路口，蒼天古木到處都是。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6114.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6115
+[rooms.6114.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6113
+[rooms.6114.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6122
+
+[rooms.6115]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6115.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6115.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6115.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6116
+[rooms.6115.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6114
+
+[rooms.6116]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6116.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6116.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6116.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6117
+[rooms.6116.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6115
+[[rooms.6116.resets.mobiles]]
+vnum = 6100
+limit = 2
+[[rooms.6116.resets.mobiles]]
+vnum = 6100
+limit = 2
+
+[rooms.6117]
+name = "濃密巨林裡的一個交口"
+description = """
+你站在林間的一個交口，四周巨樹好像無聲地觀察你。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6117.extra_descriptions]]
+keywords = "path paths"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6117.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6117.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6118
+[rooms.6117.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6106
+[rooms.6117.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6116
+
+[rooms.6118]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6118.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6118.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6118.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6119
+[rooms.6118.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6117
+[[rooms.6118.resets.mobiles]]
+vnum = 6103
+limit = 4
+[[rooms.6118.resets.mobiles]]
+vnum = 6103
+limit = 4
+
+[rooms.6119]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6119.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6119.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+You feel as if they are watching you.
+"""
+[rooms.6119.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6118
+[rooms.6119.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6120
+[[rooms.6119.resets.objects]]
+vnum = 6107
+
+[rooms.6120]
+name = "濃密、陰暗巨林間的一個河堤"
+description = """
+你站在一條穿越森林的小徑，南邊有一條向西流速很快的河(river)，河的兩岸
+(banks)都是千年古木。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6120.extra_descriptions]]
+keywords = "bank banks tree trees trunk trunks"
+description = """
+The ancient crowns of trees on both banks reach together forming a dense roof
+above the dark river.
+"""
+[[rooms.6120.extra_descriptions]]
+keywords = "river"
+description = """
+The river flows fast and strong.  It is black or looks so in the gloom.
+"""
+[rooms.6120.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6119
+[rooms.6120.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6121
+
+[rooms.6121]
+name = "密林河堤的一條死路"
+description = """
+你站在一條穿越森林的小徑，前面的樹長得太密而把路封死了。南邊是一條黑色
+的小河(river)，河水由東向西奔流。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6121.extra_descriptions]]
+keywords = "river"
+description = """
+The river flows fast and strong.  It is black or looks so in the gloom.
+"""
+[rooms.6121.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6120
+
+[rooms.6122]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6122.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6122.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6122.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6114
+[rooms.6122.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6123
+[[rooms.6122.resets.objects]]
+vnum = 6106
+
+[rooms.6123]
+name = "河堤邊的一個交口"
+description = """
+這裡是一個三叉路口，蒼天古木到處都是。南邊是一條黑色的小河(river)，河水
+由東向西奔流。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6123.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6017
+[rooms.6123.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6122
+[rooms.6123.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6125
+
+[rooms.6124]
+name = "森林裡的一個陰暗路口"
+description = """
+你站在森林的陰暗小徑，西邊光線逐漸變亮，南邊好像是什麼動物的巢穴。樹上
+釘了一塊匾額(plaque)。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.6124.extra_descriptions]]
+keywords = "plaque"
+description = """
+往南就離開史卡拉貝西方森林，到達別的區域。-- Amenda
+"""
+[rooms.6124.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6016
+[rooms.6124.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 2801
+[rooms.6124.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6018
+
+[rooms.6125]
+name = "密林河堤邊的一條小路"
+description = """
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，南邊是泛著霧氣的沼澤。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6125.extra_descriptions]]
+keywords = "path"
+description = """
+The path seems all too frail.  One of the giant roots could probably crush it
+in a single blow.
+"""
+[[rooms.6125.extra_descriptions]]
+keywords = "bank banks tree trees trunk trunks"
+description = """
+The ancient crowns of trees on both banks reach together forming a dense roof
+above the dark river.
+"""
+[[rooms.6125.extra_descriptions]]
+keywords = "river"
+description = """
+The river flows fast and strong.  It is black or looks so in the gloom.
+"""
+[rooms.6125.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6123
+[rooms.6125.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6126
+[rooms.6125.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 8301
+[[rooms.6125.resets.objects]]
+vnum = 6104
+
+[rooms.6126]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，南邊有條不太明顯的
+獸徑(trail)。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6126.extra_descriptions]]
+keywords = "trail"
+description = """
+The dark and dusty trail seems fragile compared to the massive trunks, and in
+some places, giant grey roots have broken up through its surface.
+"""
+[rooms.6126.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6127
+[rooms.6126.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6125
+[rooms.6126.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6128
+
+[rooms.6127]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，樹藤掛在枝枒間好像
+一條條粗繩子。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6127.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6112
+[rooms.6127.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6126
+[[rooms.6127.resets.mobiles]]
+vnum = 6101
+limit = 2
+[[rooms.6127.resets.mobiles]]
+vnum = 6101
+limit = 2
+
+[rooms.6128]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6128.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6126
+[rooms.6128.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6129
+[[rooms.6128.resets.mobiles]]
+vnum = 6013
+limit = 1
+
+[rooms.6129]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，這些巨樹看起來都差不多，你懷疑自己是否迷路了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6129.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6128
+[rooms.6129.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6135
+
+[rooms.6130]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在森林間的一條小徑，西邊的路完全被巨大的蜘蛛網蓋住，蜘蛛絲(wires)上
+好像還裹了一層膠。這個地方讓你覺得毛骨悚然。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6130.extra_descriptions]]
+keywords = "substance wire wires rope ropes tree trees trunk trunks"
+description = """
+The sticky substance is hanging like ropes between the ancient trees, crossing
+the path just out of reach.  It might be possible to climb one of the sticky
+trunks.
+"""
+[rooms.6130.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6144
+[rooms.6130.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6132
+[rooms.6130.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6131
+
+[rooms.6131]
+name = "蜘蛛網"
+description = """
+你走在窄窄的小徑，俯身自黏黏的繩索嚇走走過....
+
+>
+一隻很大的毒蜘蛛突然從你頭上掉下來！
+一隻很大的毒蜘蛛突然從你頭上掉下來！
+一隻很大的毒蜘蛛突然從你頭上掉下來！
+
+>
+巨大的毒蜘蛛正在刺你！你極力反抗！
+巨大的毒蜘蛛正在刺你！你中毒了！
+巨大的毒蜘蛛正在刺你！你中毒了！
+
+>
+你掉下去了！而且動彈不得！！！！
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "FOREST"
+
+[rooms.6132]
+name = "在樹上"
+description = """
+你懸掛在一株巨樹的枝椏上，上面覆蓋了一層黏黏的東西。西邊是一個很大的蜘
+蛛網(web)，掛在好幾株巨木之間，包括你這株巨樹。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "WATER_SWIM"
+[[rooms.6132.extra_descriptions]]
+keywords = "web"
+description = """
+The spider web stretches out to the west.  It looks as if it is possible to
+walk on it.
+"""
+[rooms.6132.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6130
+[rooms.6132.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6133
+
+[rooms.6133]
+name = "蜘蛛網上"
+description = """
+你小心地在蜘蛛絲上保持平衡。東邊是一個巨大的樹枝，西邊是一個樹洞(cave)，
+裡面好像堆滿蜘蛛絲。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "WATER_SWIM"
+[[rooms.6133.extra_descriptions]]
+keywords = "cave structure"
+description = """
+It covers a ground area corresponding to an irregular circle with a diameter of
+about 20 feet and is nearly 10 feet tall.  It looks very old.
+"""
+[[rooms.6133.extra_descriptions]]
+keywords = "web"
+description = """
+The immense spider web moves softly.
+"""
+[rooms.6133.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6132
+[rooms.6133.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6200
+[rooms.6133.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6134
+
+[rooms.6134]
+name = "蜘蛛女王的巢"
+description = """
+你站在一個樹洞裡，裡面有無數層蜘蛛絲。溫度和濕度都很高，使得裡面很不容
+易呼吸。牆壁上掛滿了繭(cocoons)。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "WATER_SWIM"
+[[rooms.6134.extra_descriptions]]
+keywords = "cocoons"
+description = """
+這些如同人頭大小般的繭，像是某些生物急於從裡面跑出來而呈現出爆開的狀態。
+"""
+[rooms.6134.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6133
+[[rooms.6134.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomtimer($0) == 0
+	if rnplayer($) == 0
+		if robjcount(6156) == 0
+			oload 6156 1 floor
+			modrvt t0 = 12
+		else
+			modrvt t0 = 2
+		endif
+	endif
+endif
+"""
+
+[rooms.6135]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，樹藤掛在枝枒間
+好像一條條粗繩子。在西邊不遠處可以看見一座巨大的城堡。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[[rooms.6135.extra_descriptions]]
+keywords = "tree trees trunk trunks"
+description = """
+The ancient grey giants seem to observe you silently.
+"""
+[rooms.6135.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6129
+[rooms.6135.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6136
+[rooms.6135.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 8200
+
+[rooms.6136]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你走在一條蜿蜒的小徑，古樹長得令人吃驚地巨大。一條比較特殊的寬林道通向東邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6136.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6142
+[rooms.6136.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6135
+[rooms.6136.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6137
+
+[rooms.6137]
+name = "濃密、陰暗巨林間的一條小徑的終點"
+description = """
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，在你北邊好像有一個
+灌木叢。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6137.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6136
+[rooms.6137.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 1300
+
+[rooms.6142]
+name = "巨樹林裡一個山洞的洞口"
+description = """
+你在一個很寬的林道終點，北邊是一個非常大的洞口。四周的樹幹有許多很深很
+粗的刮痕，好像是什麼東西用爪子抓出來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6142.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6143
+[rooms.6142.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6136
+
+[rooms.6143]
+name = "綠龍的洞"
+description = """
+你站在一個很大的天然山洞裡，地板上都是一些骨頭和碎肉。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6143.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6142
+[[rooms.6143.resets.mobiles]]
+vnum = 6112
+limit = 1
+[[rooms.6143.resets.mobiles.inventory]]
+vnum = 6110
+[[rooms.6143.resets.mobiles.inventory]]
+vnum = 6112
+[[rooms.6143.resets.mobiles.inventory]]
+vnum = 6111
+
+[rooms.6144]
+name = "濃密、陰暗巨林間的一條小徑"
+description = """
+你站在濃密、陰暗巨林間的一條小徑，蒼天古木到處都是，樹幹上好像覆蓋了一
+層黏黏的東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6144.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6150
+[rooms.6144.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6110
+[rooms.6144.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6130
+[[rooms.6144.resets.mobiles]]
+vnum = 6012
+limit = 1
+
+[rooms.6150]
+name = "一條窄徑"
+description = """
+這條窄徑看起來特別陰森，之前常在樹幹上看到的獸跡在這都消失了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6150.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6151
+[rooms.6150.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6144
+
+[rooms.6151]
+name = "一條窄徑"
+description = """
+這裡幾乎沒有任何野獸活動的跡象，過密的樹林使得林道陡然向東轉去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6151.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6152
+[rooms.6151.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6150
+
+[rooms.6152]
+name = "樹環"
+description = """
+這裡的樹木圍繞著中間一株巨樹環狀地生長，你看到巨樹東邊好像有一扇門。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6152.exits.east]
+description = ""
+keywords = "door"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 6153
+[rooms.6152.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR"]
+key = -1
+to_room = 6151
+
+[rooms.6153]
+name = "巨樹裡面"
+description = """
+你正在巨樹裡面行走，往下是一片黑暗，或者你可以往西離開樹洞。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6153.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 6154
+[rooms.6153.exits.west]
+description = ""
+keywords = "door"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 6152
+
+[rooms.6154]
+name = "地底的長廊"
+description = """
+這個長廊原本好像是巨樹的一條根，往南好像有個房間，你隱約聽到一些噪音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6154.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR"]
+key = -1
+to_room = 6155
+[rooms.6154.exits.up]
+description = ""
+keywords = ""
+locks = ["ISDOOR"]
+key = -1
+to_room = 6153
+
+[rooms.6155]
+name = "德魯伊祭壇"
+description = """
+這座祭壇供奉一些你不認識的神。這是一個有趣的地方，但你不會想要待太久。
+當你進入的時候，木製的祭壇好像在發光。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.6155.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR"]
+key = -1
+to_room = 6154
+[[rooms.6155.resets.mobiles]]
+vnum = 6116
+limit = 1
+[[rooms.6155.resets.mobiles.equipment]]
+vnum = 6155
+wear_loc = "WIELD"

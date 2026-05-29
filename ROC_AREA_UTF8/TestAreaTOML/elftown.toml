@@ -1,0 +1,6581 @@
+[area]
+name = "精靈之森"
+identity = "elftown"
+builders = "Amenda"
+translator = "----"
+modifier = "Bigmouth"
+vnum_start = 13600
+vnum_end = 13668
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.13600]
+keywords = "gateguard"
+short_description = "柵欄守衛(gateguard)"
+long_description = "一位精靈族的柵欄守衛(gateguard)以懷疑的目光看著你。\n"
+description = """
+他是一位金髮白皮膚的精靈，有著長長的耳朵和迷人的笑容。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 500
+level = 36
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13600.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if is_qmark($n) > kobold_cave_hero 100012
+		say 你這個地靈族派來的間諜，我是絕對不會讓你進入精靈之鎮的！
+		mpkill $n
+	endif
+	if is_inv_obj($n) == 3394
+	or is_qmark($n) > war_reward 200000
+		if is_qmark($n) > kobold_cave_hero 100012
+		else
+			say 歡迎你，我們的英雄 $N。
+			bow $n
+			unl e
+			open e
+		endif
+	else
+		say 對不起，我們村子不歡迎外人，除非你有精靈信物(token)。
+	endif
+endif
+"""
+[[mobiles.13600.programs]]
+trigger = "talk_prog"
+argument = "token"
+script = """
+if is_qmark($n) > kobold_cave_hero 100012
+	say 你這個地靈族派來的間諜，我是絕對不會讓你進入精靈之鎮的！
+	mpkill $n
+else
+	say 呃....，在一些特殊情況下，其他種族有可能贏得我們的信任，
+	say 因此我們的城市永遠歡迎他，這時候便會給他這份榮耀....
+	think
+	say 您是從史卡拉貝來的吧，你認識蒂得利特嗎(yes/no)？
+endif
+"""
+[[mobiles.13600.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+say 那我也沒辦法了....
+shrug
+"""
+[[mobiles.13600.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) > kobold_cave_hero 100012
+else
+	say 蒂得是我的好朋友，他到史卡拉貝辦事了，如果你和他很熟，
+	say 也許能夠回去找他(look for him)幫忙....
+	hmm
+	say 既然如此，麻煩你把這封信帶給他吧，省得我再走一趟。
+	mpoload 13606
+	give letter $n
+	say 我想您還不至於偷看(look)信的內容吧？
+endif
+"""
+[[mobiles.13600.programs]]
+trigger = "talk_prog"
+argument = "p look for him"
+script = """
+say 你在史卡拉貝城裡輸入 where deedrit 就找得到他了。
+"""
+
+[mobiles.13601]
+keywords = "squirrel"
+short_description = "松鼠(squirrel)"
+long_description = "一隻松鼠(squirrel)坐在樹根上好奇地看著你。\n"
+description = """
+一隻松鼠坐在樹根上好奇地看著你。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 8
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+
+[mobiles.13602]
+keywords = "fox"
+short_description = "狐狸(fox)"
+long_description = "一隻狐狸(fox)口裡叼著他的食物，輕快地跑過你的腳邊。\n"
+description = """
+一隻狐狸(fox)口裡叼著他的食物，輕快地跑過你的腳邊。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 10
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+[[mobiles.13602.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpechoaround $n $n 拿起小刀割下 $I 的皮....
+	mpoload 35003 1
+	mpgreward exp $n -20 30
+else
+	if rand(40)
+		mpechoat $n 你拿起小刀割下 $I 的皮......
+		mpechoaround $n $n 拿起小刀割下 $I 的皮....
+		mpoload 35003 1
+		mpgreward exp $n -20 30
+	endif
+endif
+"""
+
+[mobiles.13603]
+keywords = "pheasant"
+short_description = "雉雞(pheasant)"
+long_description = "一隻雉雞(pheasant)在林間跳躍著，啄食地上的甲蟲。\n"
+description = """
+一隻雉雞(pheasant)在林間跳躍著，啄食地上的甲蟲。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 6
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+
+[mobiles.13604]
+keywords = "deer"
+short_description = "梅花鹿(deer)"
+long_description = "一隻梅花鹿(deer)悠閒地在路旁漫步。\n"
+description = """
+一隻梅花鹿(deer)悠閒地在路旁漫步。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 14
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+[[mobiles.13604.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpechoaround $n $n 拿起小刀割下 $I 的皮....
+	mpoload 35001 1
+	mpgreward exp $n -20 30
+else
+	if rand(40)
+		mpechoat $n 你拿起小刀割下 $I 的皮......
+		mpechoaround $n $n 拿起小刀割下 $I 的皮....
+		mpoload 35001 1
+		mpgreward exp $n -20 30
+	endif
+endif
+"""
+
+[mobiles.13605]
+keywords = "brown bear"
+short_description = "熊(brown bear)"
+long_description = "一隻咖啡色的熊(brown bear)把爪子伸入樹幹裡找尋蜂蜜吃。\n"
+description = """
+一隻咖啡色的熊(brown bear)把爪子伸入樹幹裡找尋蜂蜜吃。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 16
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Bear"
+[[mobiles.13605.programs]]
+trigger = "death_prog"
+argument = "80"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if primeattr($n) == 2
+or class($n) == 17
+	mpechoat $n 你拿起小刀割下 $I 的皮......
+	mpechoaround $n $n 拿起小刀割下 $I 的皮....
+	mpoload 35004 1
+	mpgreward exp $n -20 30
+else
+	if rand(40)
+		mpechoat $n 你拿起小刀割下 $I 的皮......
+		mpechoaround $n $n 拿起小刀割下 $I 的皮....
+		mpoload 35004 1
+		mpgreward exp $n -20 30
+	endif
+endif
+"""
+
+[mobiles.13606]
+keywords = "bee"
+short_description = "蜜蜂(bee)"
+long_description = "一隻蜜蜂(bee)嗡嗡飛過你的耳際。\n"
+description = """
+一隻蜜蜂(bee)嗡嗡飛過你的耳際。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 3
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Insect"
+
+[mobiles.13607]
+keywords = "spider"
+short_description = "蜘蛛(spider)"
+long_description = "一隻蜘蛛(spider)在此結網。\n"
+description = """
+一隻蜘蛛(spider)在此結網。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 12
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Insect"
+
+[mobiles.13608]
+keywords = "pretty clerk"
+short_description = "美麗的櫃檯小姐(pretty clerk)"
+long_description = "美麗的櫃檯小姐(pretty clerk)親切地對你微笑，想要服務你。\n"
+description = """
+她是一位可愛的精靈族少女，大大的眼睛，濃濃的眉毛，笑起來還有一個酒窩。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "BANKER"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 500
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13608.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	smile $n
+	say 您好，有什麼地方我能效勞嗎？
+endif
+"""
+
+[mobiles.13609]
+keywords = "bow maker"
+short_description = "製弓師(bow maker)"
+long_description = "製弓師(bow maker)爽朗地笑著，要你試試他的傑作。\n"
+description = """
+製弓師(bow maker)爽朗地笑著，要你試試他的傑作。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 500
+level = 36
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13609.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	hello $n
+	say 呵呵，最好的弓箭都在這裡，請隨便看。
+endif
+"""
+[[mobiles.13609.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if rand(50)
+	say 精靈是最擅長使用弓箭的種族，
+	say 因為弓箭的主要製材都可以在我們所喜愛的森林裡找到。
+else
+	say 小心，若被敵人圍攻，弓箭的命中率會就會降低！
+endif
+"""
+
+[mobiles.13610]
+keywords = "flower boss"
+short_description = "花店老板娘(flower boss)"
+long_description = "花店老板娘(flower boss)是個花枝招展的中年婦人。\n"
+description = """
+花店老板娘(flower boss)是個花枝招展的中年婦人。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 37
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13610.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if is_qmark($n) == for_rose 100002
+		if is_inv_obj($n) == 11525
+			mppurge $n roseletter
+			mpechoat $n 你一看見她就向她說明來意，並將信封給了她。
+			mpcall elftown_rose_1 $n
+		endif
+		break
+	endif
+	mpecho $I 小心地為她的花澆水....
+endif
+"""
+[[mobiles.13610.programs]]
+trigger = "defun_prog"
+argument = "elftown_rose_1"
+script = """
+mpecho $I 仔細的把信拆開閱讀....
+        mpcallout 1 say 你稍等一下....
+        mpcallout 2 mpecho $I 開始翻閱櫃子上的藏書並且提筆開始寫起信來....
+        mpcallout 3 say 這信中所描述的種子實在是很稀有，種植的方法也很困難。
+        mpcallout 4 say 我也是剛剛翻閱我這的藏書才確定是這樣的。
+        mpcallout 5 say 這封信就麻煩你拿回去給他，
+        mpcallout 6 say 我想他看了信之後應該就知道該怎麼做了。
+        mpcallout 6 mpoload 13648 $n viclv target 
+        mpcallout 6 mpmod_qmark $n for_rose v0 = 3
+endif
+"""
+
+[mobiles.13611]
+keywords = "Carince"
+short_description = "凱因斯(Carince)"
+long_description = "捲軸店老闆凱因斯(Carince)正在整理櫃子裡的魔法捲軸。\n"
+description = """
+捲軸店老闆凱因斯(Carince)正在整理櫃子裡的魔法捲軸。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 900
+level = 42
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "MAGE", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_cast_mage"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13611.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	mpecho $I 回過頭來....
+	say 請隨便看，不必客氣。
+endif
+"""
+
+[mobiles.13612]
+keywords = "food boss"
+short_description = "小吃店老板(food boss)"
+long_description = "小吃店老板(food boss)在後面的廚房烘焙精靈族的傳統食物。\n"
+description = """
+小吃店老板(food boss)在後面的廚房烘焙精靈族的傳統食物。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 800
+level = 39
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13612.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	say 您好，請先看看目錄 <list> ，這裡一定讓您大快朵頤。
+endif
+"""
+
+[mobiles.13613]
+keywords = "tavern boss"
+short_description = "酒館老板(tavern boss)"
+long_description = "酒館老板(tavern boss)正在努力地擦拭桌椅。\n"
+description = """
+酒館老板(tavern boss)正在努力地擦拭桌椅。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 400
+level = 39
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13613.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	? $n
+	say 歐？今天來得這麼早？要點些什麼嗎？
+endif
+"""
+
+[mobiles.13614]
+keywords = "potion boss"
+short_description = "藥水店老板(potion boss)"
+long_description = "藥水店老板(potion boss)是一個滿頭銀髮的中年精靈，全身上下看起來充滿魔力。\n"
+description = """
+藥水店老板(potion boss)是一個滿頭銀髮的中年精靈，全身上下看起來充滿魔力。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 700
+level = 39
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13614.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	hello $n
+	say 歡迎，飲用藥水(quaff potion)不需經過練習，連小孩子也會！
+endif
+"""
+
+[mobiles.13615]
+keywords = "elf child"
+short_description = "精靈小孩(elf child)"
+long_description = "精靈小孩(elf child)在此嬉鬧著。\n"
+description = """
+精靈小孩(elf child)在此嬉鬧著。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 7
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13615.programs]]
+trigger = "rand_prog"
+argument = "15"
+script = """
+if ispc($r)
+	poke $r
+	hop
+endif
+"""
+
+[mobiles.13616]
+keywords = "elf adolescent"
+short_description = "精靈少年(elf adolscent)"
+long_description = "精靈少年(elf adolscent)正在和同伴聊天。\n"
+description = """
+精靈少年(elf adolscent)正在和同伴聊天。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 11
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13616.programs]]
+trigger = "greet_prog"
+argument = "40"
+script = """
+if ispc($n)
+	smile $n
+	say 歡迎你到我們森林。
+endif
+"""
+
+[mobiles.13617]
+keywords = "young elf"
+short_description = "精靈青少年(young elf)"
+long_description = "精靈青少年(young elf)正在為森林的樹修剪殘枝。\n"
+description = """
+精靈青少年(young elf)正在為森林的樹修剪殘枝。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 16
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13617.programs]]
+trigger = "greet_prog"
+argument = "45"
+script = """
+if ispc($n)
+	? $n
+	say 您好，您是第一次來到我們森林嗎(yes/no)？
+endif
+"""
+[[mobiles.13617.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+nod $n
+say 難怪，我以前從未見過您....
+bow $n
+say 無論如何，歡迎您來參觀，因為大人們都有事離開了。
+say 如果有任何有關我們(elf)或我們村子(town)的問題，
+say 我很樂意回答。
+smile $n
+"""
+[[mobiles.13617.programs]]
+trigger = "talk_prog"
+argument = "elf"
+script = """
+say 我們精靈族是愛好和平的種族，
+say 在精靈大陸上已經有好幾千年的歷史了！
+say 我們平常都待在森林裡和自然和諧地生存，
+say 這是長老們一直強調的，
+say 沒有需要我們是不會離開喜愛的森林到外面去。
+"""
+[[mobiles.13617.programs]]
+trigger = "talk_prog"
+argument = "town"
+script = """
+say 我們的城鎮雖然建築在森林裡，但都盡量和森林融合在一起。
+say 像我日常的工作就是維護村子裡樹木的健康，
+say 以及照顧和我們一起生活的小動物們。
+say 我聽說我們精靈族還有許多其他的城鎮，
+say 可惜我從未離開過這裡....
+"""
+
+[mobiles.13618]
+keywords = "fanatic-m middleage elf"
+short_description = "中年精靈(middleage elf)"
+long_description = "中年精靈(middleage elf)器宇軒昂地站在這裡。\n"
+description = """
+他就是出名的精靈費那提克(fanatic)！
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 700
+level = 40
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = -300
+mod_svs = 0
+dodge = -150
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13618.programs]]
+trigger = "talk_prog"
+argument = "seed"
+script = """
+if is_qmark($n) == ocean_annie_seed 100004
+mpmod_qmark $n ocean_annie_seed v0 = 5
+sorry $n
+say 真是抱歉，那顆種子前幾天被光明之鎮的瑪麗要走了
+mpcallout 1 say 你還是去光明之鎮找她拿吧
+endif
+"""
+[[mobiles.13618.programs]]
+trigger = "talk_prog"
+argument = "supply"
+script = """
+if being(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) >= wartime 100105
+	if is_qmark(elf-soldier-marshal) == wartime 300002
+		if is_qmark($i) == war_supply
+			say 補給品又不夠了？這麼快？
+			say 準備補給品需要時間，請稍等一下！
+		else
+			say 沒問題，補給品已經準備好了！
+			mpoload 13659
+			give supply-o $n
+			mpadd_qmark self war_supply 3 0 0 0 1 0
+			mpmod_qmark $n war_reward v0 - 1
+		endif
+	endif
+endif
+"""
+[[mobiles.13618.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.13618.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($i) == elftown_fanatic_follow
+else
+	if is_qmark($n) == elftown_entrance_quest 100004
+		if insameroom(pecker-m)
+			mpecho $I 驚訝地看著 派克(pecker)....
+			say 派克，你怎麼來了？蒂得呢？沒和你一起回來嗎？
+			mpecho .
+			mpforce pecker-m blush
+			mpforce pecker-m say 呃....伯父您好，這件事一言難盡。不過....
+			mpforce pecker-m say 蒂得有拜託這位冒險家帶一封信給您，您看了就知道....
+			mpforce pecker-m point $n
+		endif
+	endif
+endif
+"""
+[[mobiles.13618.programs]]
+trigger = "give_prog"
+argument = "3395"
+script = """
+mpjunk letter
+if is_qmark($i) == elftown_fanatic_follow
+	say 對不起，我現在很忙，晚點再找我吧。
+	give letter $n
+	break
+endif
+mpecho $I 看完信後皺著眉頭....
+say 這個孩子越來越不像話了，
+look $n
+say 這是我們的事，原本不該麻煩你的，
+say 不過現在森林裡真的人手不足，您願意幫忙我們嗎(yes/no)？
+"""
+[[mobiles.13618.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+sigh
+say 一個冒險家應該積極一點。
+say 告訴我 restart 就可以重解 quest 喔！
+"""
+[[mobiles.13618.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($i) == elftown_fanatic_follow
+	say 對不起，我現在很忙，晚點再找我吧。
+	break
+endif
+if is_qmark($n) == elftown_entrance_quest 100004
+	bow $n
+	say 非常謝謝你....
+	say 今天早上小孩子們說在村子的東北角玩耍時，
+	say 看到地靈的蹤影，麻煩你過去看看情形好嗎？
+	say 注意別漏掉任何蛛絲馬跡。
+	mpoload 13600
+	mpat 13647 unlock d
+	mpat 13647 open d
+	mpjunk gatekey
+	mpadd_qmark $n elftown_kobold_quest -1 1 0 0 0 1
+	mpdel_qmark $n elftown_entrance_quest
+	break
+endif
+if is_qmark($i) == elftown_fanatic_speech 100003
+	bow $n
+	say 太好了，有你參加，我們獲勝機率就大為提高了！
+	mpdef_rembch $n
+	mpgroup $n self 1 0
+	mpdel_qmark self elftown_fanatic_speech
+	mpadd_qmark self elftown_fanatic_follow 200 0 0 0 1 0
+	mpat elf-elder mpadd_qmark elf-elder elftown_call_kulabenn -1 1 0 0 1 1
+	say 走吧，地靈就紮營在森林東邊的出口處，
+	say 其他人已經先過去了，我們必須在來得及之前趕去支援。
+	if is_inv_obj($i) != 13600
+		mpoload 13600
+	endif
+	mpat 13651 unlock e
+	mpat 13651 open e
+	mpjunk gatekey
+	mpat 13659 mpmload 13632
+	mpat 13663 mpmload 13632
+	mpat 13664 mpmload 13632
+	mpat 13666 mpmload 13632
+	mpat 13666 mpmload 13632
+	mpcallout 2 mpat 13659 mpmload 13631
+	mpcallout 2 mpat 13662 mpmload 13631
+	mpcallout 2 mpat 13663 mpmload 13631
+	mpcallout 2 mpat 13664 mpmload 13631
+	mpcallout 2 mpat 13666 mpmload 13631
+endif
+"""
+[[mobiles.13618.programs]]
+trigger = "give_prog"
+argument = "13636"
+script = """
+if is_qmark($i) == elftown_fanatic_follow
+	say 對不起，我現在很忙，晚點再找我吧。
+	drop secret
+	break
+endif
+if is_qmark($n) == elftown_kobold_quest
+	mpecho 看過密令後，費那提克滿面憂心地遞給長老....
+	mpecho 大家都傳閱後，幾位精靈似乎展開一些爭論....
+	mpadd_qmark self elftown_fanatic_speech -1 1 0 0 0 1
+	mpdel_qmark $n elftown_kobold_quest
+	mpjunk secret
+else
+	drop secret
+endif
+"""
+[[mobiles.13618.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+drop all
+if is_qmark($i) == elftown_fanatic_speech 100001
+	mpecho 討論了一陣子，最後，似乎作成了決定....
+	mpecho 一位長老配遣了一個傳令出去，而 $I 卻走向你....
+	mpmod_qmark self elftown_fanatic_speech v0 = 2
+	break
+endif
+if is_qmark($i) == elftown_fanatic_speech 100002
+	say 為了保護森林的安全，我們剛剛已經決定對地靈發動突擊先發制人。
+	say 年輕人，你已經證明了你的機智與勇氣。
+	say 現在，精靈族正遭逢一個大危機，
+	say 你願意幫助我們，對抗地靈的大軍嗎(yes/no)？
+	mpmod_qmark self elftown_fanatic_speech v0 = 3
+	break
+endif
+if is_qmark($i) == elftown_fanatic_warning
+	say 地靈的總指揮應該是在最北邊那個大帳棚，要過去擊敗他時，
+	say 別忘加上所有防護性法術，並且把逃跑點數(wimpy)設到 500 以上確保安全。
+	mpdel_qmark self elftown_fanatic_warning
+	break
+endif
+if area($i) == elftown
+	if being($b)
+	else
+		if is_qmark($i) == elftown_fanatic_follow
+			mpdel_qmark self elftown_fanatic_follow
+		endif
+	endif
+else
+	ponder
+	say 精靈村不知道怎麼了，我得趕快回去看看！	
+	mpgoto 13639
+endif
+"""
+[[mobiles.13618.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+if is_qmark($i) == elftown_fanatic_follow
+	say 對不起，我現在很忙，晚點再找我吧。
+	break
+endif
+say OK，quest 重新開始。
+mpdel_qmark $n elftown_entrance_quest
+mpdel_qmark $n eltown_kobold_quest
+if being(pecker-m)
+	mpat pecker-m mpforce pecker-m group leave
+	mpat pecker-m mpforce pecker-m follow self
+	mpat pecker-m mpforce pecker-m mpdef_rembch null-tar
+	mpat pecker-m mpdel_qmark self elftown_pecker_follow
+	mptransfer pecker-m 3048
+endif
+group leave
+follow self
+mpgoto 13639
+"""
+[[mobiles.13618.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if isgood($n)
+or isneutral($n)
+	if isnpc($n)
+		say 唉啊，不小心攻擊到自己人了！
+		flee
+		break
+	endif
+endif
+if is_equ_obj($i) != 13638
+	wear broadsword
+endif
+disarm
+mpnowait
+yell 殺光敵人！保護我們的森林！
+if rand(50)
+	flaming
+	mpnowait
+else
+	bashhead
+	mpnowait
+endif
+if insameroom($b)
+	rescue $b
+	mpnowait
+else
+	if is_qmark($i) == elftown_fanatic_follow
+		mpdel_qmark self elftown_fanatic_follow
+	endif
+endif
+"""
+
+[mobiles.13619]
+keywords = "kobold fighter"
+short_description = "地靈戰士(kobold fighter)"
+long_description = "地靈戰士(kobold fighter)站在這裡警戒。\n"
+description = """
+地靈戰士(kobold fighter)站在這裡警戒。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -700
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = -10
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR"]
+
+[mobiles.13620]
+keywords = "kobold mage"
+short_description = "地靈魔法師(kobold mage)"
+long_description = "地靈魔法師(kobold mage)站在這裡警戒。\n"
+description = """
+地靈魔法師(kobold mage)站在這裡警戒。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["INFRARED"]
+alignment = -700
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["MAGE"]
+special_function = "spec_cast_mage"
+
+[mobiles.13621]
+keywords = "kobold cleric"
+short_description = "地靈牧師(kobold cleric)"
+long_description = "地靈牧師(kobold cleric)站在這裡警戒。\n"
+description = """
+地靈牧師(kobold cleric)站在這裡警戒。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["SANCTUARY", "INFRARED"]
+alignment = -600
+level = 31
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["MAGE"]
+special_function = "spec_cast_cleric"
+
+[mobiles.13622]
+keywords = "kobold lieutenant"
+short_description = "地靈分隊長(kobold lieutenant)"
+long_description = "地靈分隊長(kobold lieutenant)正在進行某項計畫。\n"
+description = """
+地靈分隊長(kobold lieutenant)正在進行某項計畫。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "SANCTUARY", "INFRARED"]
+alignment = -700
+level = 31
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.13622.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindess
+mpat 5 c inf
+if insameroom(pecker-m)
+	mpforce pecker-m say 地靈分隊長身上的密令很有情報價值，
+	mpforce pecker-m say 我們應該趕快拿回去交給費那提克伯父！
+endif
+"""
+
+[mobiles.13623]
+keywords = "weapon smith"
+short_description = "武器店老闆(weapon smith)"
+long_description = "武器店老闆(weapon smith)一邊哼著歌，一邊擦拭櫃子裡的武器。\n"
+description = """
+武器店老闆(weapon smith)一邊哼著歌，一邊擦拭櫃子裡的武器。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 900
+level = 47
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13623.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	say 您好，要不要試試大陸上最好的匕首？
+endif
+"""
+
+[mobiles.13624]
+keywords = "armourer"
+short_description = "護甲店老闆(armourer)"
+long_description = "護甲店老闆(armourer)是一個矮壯的精靈，渾身肌肉鼓漲。\n"
+description = """
+護甲店老闆(armourer)是一個矮壯的精靈，渾身肌肉鼓漲。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 900
+level = 49
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13624.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+if ispc($n)
+	nod $n
+	say 若要論輕型護甲，您在別家找不到更好的。
+endif
+"""
+
+[mobiles.13625]
+keywords = "elf bishop"
+short_description = "精靈祭師(elf bishop)"
+long_description = "精靈祭師(elf bishop)在這裡為所有有病痛的人服務。\n"
+description = """
+她是一位溫柔有耐心的精靈女子。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT"]
+alignment = 1000
+level = 41
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_cast_adept"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13625.programs]]
+trigger = "fight_prog"
+argument = "25"
+script = """
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+c angry
+mpnowait
+"""
+
+[mobiles.13626]
+keywords = "elf-elder"
+short_description = "精靈長老(elf-elder)"
+long_description = "精靈長老(elf-elder)正在這裡商議事情。\n"
+description = """
+精靈長老(elf-elder)正在這裡商議事情。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 700
+level = 45
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "EXPERT"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13626.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpforcer 66143 mload 66105
+mpforcer 66171 mload 66108
+mpat 66169 mpoload 66101 floor
+mpat 66170 mpoload 66102 floor
+"""
+[[mobiles.13626.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if is_qmark($i) == war_fail 1001
+	rumor 聽說精靈鎮已經從上一次的遠征失利中恢復過來了！
+endif
+"""
+[[mobiles.13626.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+	c 3 'star fire'
+	mpnowait
+else
+	c 3 powerball
+	mpnowait
+endif
+"""
+[[mobiles.13626.programs]]
+trigger = "bribe_prog"
+argument = "10000000"
+script = """
+if is_qmark($n) > kobold_cave_hero 100012
+	nod $n
+	mpechoat $n $I唸出咒文，淨化了你身上的地靈氣息！
+	mpechoaround $n $I唸出咒文，淨化了$N身上的地靈氣息！
+	mpmod_qmark $n kobold_cave_hero v0 = 0
+else
+	? $n
+	mpgold $n 10000000
+endif
+"""
+[[mobiles.13626.programs]]
+trigger = "talk_prog"
+argument = "affirm"
+script = """
+if is_qmark($n) > kobold_cave_hero 100012
+	if isgood($n)
+	or isneutral($n)
+		glare $n
+		mpcallout 1 say 你看起來不像是邪惡的人啊？
+		mpcallout 2 say 為什麼會沾染上地靈的氣息呢？
+		mpcallout 3 ponder $n
+		mpcallout 4 say 這樣吧，如果你願意付出一千萬枚金幣做為維護生命之樹的費用。
+		mpcallout 5 say 我就可以提取生命之樹的氣息淨化你身上的邪惡之氣。如何？
+	else
+		say 邪惡的地靈間諜，休想矇騙我的眼睛！
+		say 給我滾出精靈之鎮吧！
+		mptransfer $n 13600
+	endif
+endif
+"""
+[[mobiles.13626.programs]]
+trigger = "talk_prog"
+argument = "reward"
+script = """
+if is_qmark($i) == war_reward 100000
+	if groupwith($n) / elf-soldier-marshal
+		say 非常感謝您在戰爭中對精靈鎮的貢獻！
+		bow $n
+		mpechoat $n $I將獎賞遞給了你。
+		mpechoaround $n $I將獎賞遞給了$N。
+		if is_qmark($n) >= war_reward 100090
+			mpgold $n 500000
+			mpexp $n 50000
+			mpskillexp $n 2000
+			mpmerit $n 150
+		else
+			if is_qmark($n) >= war_reward 100070
+				mpgold $n 300000
+				mpexp $n 30000
+				mpskillexp $n 1500
+				mpmerit $n 75
+			else
+				if is_qmark($n) >= war_reward 100050
+					mpgold $n 200000
+					mpexp $n 20000
+					mpskillexp $n 1000
+					mpmerit $n 35
+				else
+					if is_qmark($n) >= war_reward 100025
+						mpgold $n 100000
+						mpexp $n 10000
+						mpskillexp $n 500
+						mpmerit $n 20
+					else
+						mpgold $n 50000
+						mpexp $n 5000
+						mpmerit $n 10
+					endif
+				endif
+			endif
+		endif
+		if is_qmark($n) < war_reward 200010
+			mpmod_qmark $n war_reward v1 + 1
+		endif
+		if is_qmark($n) != war_reward 300100
+			mpmod_qmark $n war_reward v2 + 1
+		endif
+	endif
+	mpmod_qmark $n war_reward v0 = 0
+	mpforce $n group leave
+endif
+if is_qmark($i) == war_reward 100001
+	if groupwith($n) / elf-soldier-marshal
+		say 非常感謝您在戰爭中對精靈鎮的貢獻！
+		bow $n
+		mpechoat $n $I將獎賞遞給了你。
+		mpechoaround $n $I將獎賞遞給了$N。
+		if is_qmark($n) >= war_reward 100090
+			mpgold $n 1000000
+			mpexp $n 100000
+			mpskillexp $n 3000
+			mpmerit $n 200
+		else
+			if is_qmark($n) >= war_reward 100070
+				mpgold $n 500000
+				mpexp $n 80000
+				mpskillexp $n 2000
+				mpmerit $n 100
+			else
+				if is_qmark($n) >= war_reward 100050
+					mpgold $n 300000
+					mpexp $n 60000
+					mpskillexp $n 1500
+					mpmerit $n 50
+				else
+					if is_qmark($n) >= war_reward 100025
+						mpgold $n 200000
+						mpexp $n 40000
+						mpskillexp $n 1000
+						mpmerit $n 25
+					else
+						mpgold $n 100000
+						mpexp $n 20000
+						mpskillexp $n 500
+						mpmerit $n 10
+					endif
+				endif
+			endif
+		endif
+		if is_qmark($n) < war_reward 200010
+			mpmod_qmark $n war_reward v1 + 1
+		endif
+		if is_qmark($n) != war_reward 300100
+			mpmod_qmark $n war_reward v2 + 2
+			if is_qmark($n) >= war_reward 300030
+				mpmod_qmark $n war_reward v2 = 100
+				rumor 由於$N\u001B[35;1m對精靈鎮的巨大貢獻，榮獲精靈長老頒發的英雄證明！
+				if primeattr($n) == 1
+					mpoload 13660 $n viclv target
+				endif
+				if primeattr($n) == 2
+					mpoload 13661 $n viclv target
+				endif
+				if primeattr($n) == 3
+					mpoload 13662 $n viclv target
+				endif
+				if primeattr($n) == 4
+					mpoload 13663 $n viclv target
+				endif
+				if primeattr($n) == 5
+					mpoload 13664 $n viclv target
+				endif
+			endif
+		endif
+	endif
+	mpmod_qmark $n war_reward v0 = 0
+	mpforce $n group leave
+endif
+"""
+[[mobiles.13626.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == elftown_final_reward
+	if being(elf-soldier-marshal)
+	or is_qmark($i) == war_fail
+	else
+		mpforcer 2 mload 13647
+		rumor 聽說精靈鎮開始籌備對地靈的反擊....
+	endif
+	bow $n
+	say 年輕人，謝謝你為我們解除這個危機，
+	say 現在我們把這個森林的寶物和護身符送給你...
+	mpechoat $n $I 將獎賞給了你....
+	mpechoaround $n $I 將獎賞給了 $n ....
+	mpdel_qmark $n elftown_final_reward
+	if level($n) < 36
+		mpoload 13643 $n 35 target
+	else
+		mpoload 13643 $n 36 target
+	endif
+	if ispc($n)
+		if class($n) == 4
+		or class($n) == 14
+		or class($n) == 18
+		or class($n) == 19
+			mpoload 13630 $n viclv target
+		endif
+		if class($n) == 0
+		or class($n) == 1
+		or class($n) == 5
+		or class($n) == 6
+		or class($n) == 7
+		or class($n) == 8
+		or class($n) == 15
+		or class($n) == 16
+			mpoload 13631 $n viclv target
+		endif
+		if class($n) == 3
+		or class($n) == 11
+		or class($n) == 12
+		or class($n) == 13
+			mpoload 13632 $n 15 target
+		endif
+		if class($n) == 2
+		or class($n) == 9
+		or class($n) == 10
+		or class($n) == 17
+			mpoload 13633 $n viclv target
+		endif
+	endif
+	say 希望你能繼續在各地行俠仗義，
+	say 有一天你將會成為整個精靈大陸的英雄！
+	wave $n
+	if is_qmark($n) != elftown_quest_over
+		mpadd_qmark $n elftown_quest_over -1 1 0 0 0 1
+		if class($n) < 5
+			mpexp $n 3500
+		else
+			mpexp $n 3000
+			mpmod_qmark $n elftown_quest_over v1 = 2
+		endif
+	endif
+	if being(pecker-m)
+		mptransfer pecker-m
+		mpforce pecker-m protect self
+		mpforce pecker-m follow self
+		mpforce pecker-m group leave
+		mpforce pecker-m mpdef_rembch null-tar
+		mpdel_qmark pecker-m elftown_pecker_follow
+		mptransfer pecker-m 3048
+	endif
+	if being(fanatic-m)
+		mptransfer fanatic-m
+		mpforce fanatic-m protect self
+		mpforce fanatic-m follow self
+		mpforce fanatic-m group leave
+		mpforce fanatic-m mpdef_rembch null-tar
+		mpdel_qmark fanatic-m elftown_fanatic_follow
+	endif
+endif
+"""
+
+[mobiles.13627]
+keywords = "old female"
+short_description = "女精靈長老(old female)"
+long_description = "女精靈長老(old female)正在這裡商議事情。\n"
+description = """
+女精靈長老(old female)正在這裡商議事情。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 700
+level = 45
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_cast_cleric"
+program_files = ["kobold_cave_elfs2.prg"]
+
+[mobiles.13628]
+keywords = "elf sentry"
+short_description = "精靈哨兵(elf sentry)"
+long_description = "精靈哨兵(elf sentry)張大了眼睛監視遠方。\n"
+description = """
+精靈哨兵(elf sentry)張大了眼睛監視遠方。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 700
+level = 35
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13628.programs]]
+trigger = "greet_prog"
+argument = "80"
+script = """
+if ispc($n)
+	nod $n
+	say 最近地靈(kobold)的舉動真叫人憂心。
+endif
+"""
+[[mobiles.13628.programs]]
+trigger = "talk_prog"
+argument = "kobold"
+script = """
+say 和我們不一樣，他們是一種醜陋、邪惡的種族，
+mpecho $I 露出嫌惡的表情....
+say 地靈大部份在地下活動，但最近卻一直騷擾我們的森林，
+say 你有看到東方的森林和平原交口處那些黑色營帳嗎？
+mpecho $I 向東方指過去....
+say 那便是地靈們的營帳，真不曉得他們聚集在那打什麼主意。
+mpecho $I 一副憂心忡忡的樣子....
+say 現在大部份的人都過去了，希望不要發生什麼事才好。
+"""
+
+[mobiles.13629]
+keywords = "elf mage"
+short_description = "精靈魔法師(elf mage)"
+long_description = "精靈魔法師(elf mage)為了保護心愛的家園奮勇作戰。\n"
+description = """
+精靈魔法師(elf mage)為了保護心愛的家園奮勇作戰。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["INFRARED"]
+alignment = 700
+level = 29
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC"]
+special_function = "spec_cast_mage"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13629.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self elftown_war_timer 24 0 0 0 1 0
+mpoload 13639
+mpat 5 wear all
+"""
+[[mobiles.13629.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if name($n) / kobold
+	mpkill $n
+endif
+"""
+[[mobiles.13629.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != elftown_war_timer
+	mppurge self
+endif
+"""
+
+[mobiles.13630]
+keywords = "elf cleric"
+short_description = "精靈牧師(elf cleric)"
+long_description = "精靈牧師(elf cleric)為了保護心愛的家園奮勇作戰。\n"
+description = """
+精靈牧師(elf cleric)為了保護心愛的家園奮勇作戰。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["SANCTUARY", "INFRARED"]
+alignment = 800
+level = 29
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC"]
+special_function = "spec_cast_cleric"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13630.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 13639
+mpat 5 wear all
+mpadd_qmark self elftown_war_timer 24 0 0 0 1 0
+"""
+[[mobiles.13630.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if name($n) / kobold
+	mpkill $n
+endif
+"""
+[[mobiles.13630.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != elftown_war_timer
+	mppurge self
+endif
+"""
+
+[mobiles.13631]
+keywords = "elf ranger"
+short_description = "精靈鬥士(elf ranger)"
+long_description = "精靈鬥士(elf ranger)為了保護心愛的家園奮勇作戰。\n"
+description = """
+精靈鬥士(elf ranger)為了保護心愛的家園奮勇作戰。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["SANCTUARY", "INFRARED"]
+alignment = 700
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13631.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 13638
+mpoload 13639
+mpat 5 wear all
+mpmload 13629
+mpgroup self mage 1 0
+mpmload 13630
+mpgroup self cleric 1 0
+if insameroom(elite-warrior)
+	mpkill elite-warrior
+endif
+mpadd_qmark self elftown_war_timer 24 0 0 0 1 0
+"""
+[[mobiles.13631.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if name($n) / kobold
+	mpkill $n
+endif
+"""
+[[mobiles.13631.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+wear all
+"""
+[[mobiles.13631.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != elftown_war_timer
+	mppurge self
+endif
+"""
+
+[mobiles.13632]
+keywords = "elite-warrior kobold elite warrior"
+short_description = "地靈菁英戰士(kobold elite warrior)"
+long_description = "地靈菁英戰士(kobold elite warrior)為了理想絕不屈服！\n"
+description = """
+地靈菁英戰士(kobold elite warrior)為了理想絕不屈服！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = -900
+level = 38
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC"]
+[[mobiles.13632.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 13637
+mpat 5 wear all
+mpmload 13635
+mpgroup self mage-kobold 1 0
+mpmload 13636
+mpgroup self cleric-kobold 1 0
+"""
+[[mobiles.13632.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if name($n) / elf
+	mpkill $n
+endif
+"""
+[[mobiles.13632.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if is_equ_obj($i) != 13637
+	wear all
+	disarm
+	mpnowait
+endif
+if rand(50)
+	skilldrv multihit $n
+endif
+"""
+[[mobiles.13632.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+yell 暗黑主宰，賜我永生！
+if mobcount(13632) <= 1
+	if is_qmark(elf-elder) == elftown_call_kulabenn
+		mpat elf-elder mpdel_qmark elf-elder elftown_call_kulabenn
+		mpat 13668 open s
+		if insameroom(fanatic-m)
+			mpadd_qmark fanatic-m elftown_fanatic_warning -1 1 0 0 0 1
+		endif
+		mpat 13665 mpmload 13634
+		mpat 13667 mpmload 13634
+		if mobcount(13633) == 0
+			mpat 13668 mpmload 13633
+		endif
+		mpecho .
+		mpat 13668 mpforce kulabenn yell \u001B[1;32m可惡，是誰破壞了我的計畫，有膽過來決一死戰！\u001B[m 
+	endif
+endif
+"""
+
+[mobiles.13633]
+keywords = "kulabenn"
+short_description = "地靈總指揮古拉邦(kulabenn)"
+long_description = "地靈總指揮古拉邦(kulabenn)驕傲地挺立著。\n"
+description = """
+地靈總指揮古拉邦(kulabenn)驕傲地挺立著。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "SANCTUARY", "INFRARED"]
+alignment = -1000
+level = 45
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -50
+mod_svs = -3
+dodge = 150
+mod_pp = 0
+gold = 50000
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT"]
+[[mobiles.13633.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 13640
+mpoload 13641
+mpoload 13642
+mpat 5 wear all
+mpoload 13600
+unlock s
+open s
+mpjunk key
+"""
+[[mobiles.13633.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	mpkill $n
+endif
+"""
+[[mobiles.13633.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+	if is_equ_obj($i) != 13640
+		wear evil-sky
+	endif
+	disarm
+	mpnowait
+	if rand(50)
+		flaming
+		mpnowait
+	endif
+endif
+if rand(30)
+	bashhead
+	mpnowait
+endif
+if hitprcnt($i) < 35
+	cackle
+	yell 黑暗主宰，賜我力量！
+	if isaffected($i) & 1
+		mpdis_magic self blindness
+	endif
+endif
+"""
+[[mobiles.13633.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) < war_reward 200010
+or is_qmark($n) != war_reward
+or rand(90)
+		mpjunk swirl-o
+endif
+mpdis_magic self blindness
+mpat 5 c inf
+mpecho .
+mpecho .
+yell 嗚 - 哇.....相信主宰會替地靈族報仇的....
+mpmod_all_qmark $n adv_book_1_main v1 | 16
+mpadd_qmark $n elftown_final_reward -1 1 0 0 0 1
+mpat 13639 mpforce elf-elder yell \u001B[1;32m謝謝你，勇者，請過來接受我們一點微薄的心意吧。\u001B[m 
+mpat 13639 mpforce elf-elder yell \u001B[1;32m兵兇戰危，也請全部的人馬上離開戰場！。\u001B[m 
+"""
+
+[mobiles.13634]
+keywords = "kobold fighter"
+short_description = "地靈戰士(kobold fighter)"
+long_description = "地靈戰士(kobold fighter)站在這裡警戒。\n"
+description = """
+地靈戰士(kobold fighter)站在這裡警戒。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -700
+level = 29
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR"]
+[[mobiles.13634.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self elftown_war_timer 24 0 0 0 1 0
+"""
+[[mobiles.13634.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if name($n) / elf
+	mpkill $n
+endif
+"""
+[[mobiles.13634.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != elftown_war_timer
+	mppurge self
+endif
+"""
+
+[mobiles.13635]
+keywords = "kobold mage-kobold"
+short_description = "地靈魔法師(kobold mage)"
+long_description = "地靈魔法師(kobold mage)站在這裡警戒。\n"
+description = """
+地靈魔法師(kobold mage)站在這裡警戒。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "INFRARED"]
+alignment = -700
+level = 27
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["MAGE"]
+special_function = "spec_cast_mage"
+[[mobiles.13635.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self elftown_war_timer 24 0 0 0 1 0
+mpolaod 13635
+mpat 5 wear all
+"""
+[[mobiles.13635.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if name($n) / elf
+	mpkill $n
+endif
+"""
+[[mobiles.13635.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != elftown_war_timer
+	mppurge self
+endif
+"""
+
+[mobiles.13636]
+keywords = "kobold cleric-kobold"
+short_description = "地靈牧師(kobold cleric)"
+long_description = "地靈牧師(kobold cleric)站在這裡警戒。\n"
+description = """
+地靈牧師(kobold cleric)站在這裡警戒。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["SANCTUARY", "INFRARED"]
+alignment = -600
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["MAGE"]
+special_function = "spec_cast_cleric"
+[[mobiles.13636.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self elftown_war_timer 24 0 0 0 1 0
+mpoload 13635
+mpat 5 wear all
+"""
+[[mobiles.13636.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if name($n) / elf
+	mpkill $n
+endif
+"""
+[[mobiles.13636.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != elftown_war_timer
+	mppurge self
+endif
+"""
+
+[mobiles.13637]
+keywords = "elf woman"
+short_description = "精靈老婦(elf woman)"
+long_description = "精靈老婦(elf woman)整天辛勤工作。\n"
+description = """
+精靈老婦(elf woman)整天辛勤工作。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 600
+level = 33
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13637.programs]]
+trigger = "greet_prog"
+argument = "20"
+script = """
+say 敏兒外出求學已經一年，不知道身體是否健康....
+worry
+"""
+[[mobiles.13637.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 百丈禪師說「一日不做，一日不食。」
+"""
+[[mobiles.13637.programs]]
+trigger = "give_prog"
+argument = "13427"
+script = """
+if is_qmark($n) == eternity_elf_homesick 100001
+	if is_qmark($i) != elftown_mother_letter
+		say 啊？敏兒的信？
+		mpecho $I 趕緊用顫抖的手拆開信來看....
+		mpmod_qmark $n eternity_elf_homesick v0 = 2
+		mpadd_qmark self elftown_mother_letter 70 0 0 0 1 0
+		mpdef_rembch $n
+		mpjunk all.letter
+	else
+		say 才剛收到一封，現在又來一封？
+		drop letter
+	endif
+else
+	drop letter
+endif
+"""
+[[mobiles.13637.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if insameroom($b)
+	if is_qmark($i) == elftown_mother_letter 100000
+		mpecho $I 邊看邊默默流淚，終於把信看完了....
+		bow
+		say 真是感謝你，勇者，可否請你稍等，待我寫個回信....
+		mpecho $I 拿出紙筆開始在旁邊的桌上寫信....
+		mpmod_qmark self elftown_mother_letter v0 = 1
+		break
+	endif
+	if is_qmark($i) == elftown_mother_letter 100001
+		mpecho $I 轉身把寫好的信交給你....
+		mpoload 13646 $b viclv target
+		say 另外，可否麻煩您將這面盾牌交給敏兒？
+		say 這是他父親的遺物，我想他現在用得著了。
+		mpoload 13647 $b 23 target
+		mpecho $I 將掛在牆上的盾牌拿下交給你....
+		if exp($b) > 500
+			mpechoat $b 遠方傳來一陣聲響「因為擔當大任，你暫時被扣除一些經驗....」
+			mpexp $b -500
+		endif
+		say 大恩不言謝了，但我會祈求大神 Zeel 庇佑您....
+		bow $b
+		mpmod_qmark self elftown_mother_letter v0 + 1
+		mpdef_rembch null-tar
+	endif
+endif
+"""
+
+[mobiles.13638]
+keywords = "elf groom"
+short_description = "精靈馬夫(elf groom)"
+long_description = "精靈馬夫(elf groom)快樂地照顧著馬。\n"
+description = """
+他是一位健壯的精靈，腿上穿著長統靴，手裡提著一桶草料正在餵馬。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 600
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+spec_flags = ["NO_CHARM", "NO_SLEEP", "EXPERT"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13638.applies]]
+type = "EXP"
+degree = -1000
+[[mobiles.13638.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 想買馬嗎？各種馬匹的特性不同。
+say 我們有：
+say          ‧速度極快的飆風馬(Speed Horse)
+say          ‧爆發力極強的神力馬(Power Horse)
+say          ‧耐力極佳的背馱馬(Constitution Horse)
+say
+say 請問你要哪一種馬匹呢？
+"""
+[[mobiles.13638.programs]]
+trigger = "talk_prog"
+argument = "p power horse"
+script = """
+if class($n) == 11
+or class($n) == 16
+	if is_qmark($n) != elftown_horse
+		mpadd_qmark $n elftown_horse -1 0 1 0 0 1
+	else
+		if is_qmark($n) != elftown_horse 200001
+			say 你原本要買其他種類的馬匹，現在改成要買神力馬。
+			mpdel_qmark $n elftown_horse
+			mpadd_qmark $n elftown_horse -1 0 1 0 0 1
+		endif
+	endif
+	say 神力馬的力量極大，可以利用他攜帶更多的東西，甚至協助你擊退強敵。
+	say 請給我 30000 元金幣購買您指定的神力馬吧！
+else
+	say 你的職業不是騎士或領主，沒有辦法購買馬匹喔！
+endif
+"""
+[[mobiles.13638.programs]]
+trigger = "talk_prog"
+argument = "p constitution horse"
+script = """
+if class($n) == 11
+or class($n) == 16
+	if is_qmark($n) != elftown_horse
+		mpadd_qmark $n elftown_horse -1 0 0 1 0 1
+	else
+		if is_qmark($n) != elftown_horse 300001
+			say 你原本要買其他種類的馬匹，現在改成要買背馱馬。
+			mpdel_qmark $n elftown_horse
+			mpadd_qmark $n elftown_horse -1 0 0 1 0 1
+		endif
+	endif
+	say 背馱馬的耐性極佳，生命力強盛，可以幫助你抵擋不少敵人的火力。
+	say 請給我 30000 元金幣購買您指定的背馱馬吧！
+else
+	say 你的職業不是騎士或領主，沒有辦法購買馬匹喔！
+endif
+"""
+[[mobiles.13638.programs]]
+trigger = "talk_prog"
+argument = "p speed horse"
+script = """
+if class($n) == 11
+or class($n) == 16
+	if is_qmark($n) != elftown_horse
+		mpadd_qmark $n elftown_horse -1 1 0 0 0 1
+	else
+		if is_qmark($n) != elftown_horse 100001
+			say 你原本要買其他種類的馬匹，現在改成要買飆風馬。
+			mpdel_qmark $n elftown_horse
+			mpadd_qmark $n elftown_horse -1 1 0 0 0 1
+		endif
+	endif
+	say 飆風馬的速度極佳，是在世界到處遊覽的最佳選擇。
+	say 請給我 30000 元金幣購買您指定的飆風馬吧！
+else
+	say 你的職業不是騎士或領主，沒有辦法購買馬匹喔！
+endif
+"""
+[[mobiles.13638.programs]]
+trigger = "bribe_prog"
+argument = "30000"
+script = """
+mpjunk all.coins
+if ispc($n)
+	if is_qmark($n) != elftown_horse
+		say 你還沒有選定你要的馬匹喔！
+		mpgold $n 30000
+		break
+	endif
+	if class($n) == 11
+	or class($n) == 16
+		if is_qmark($n) == elftown_horse 100001
+			mpmake_horse $n 13639 2 4
+			say 謝謝惠顧，歡迎再度光臨。
+			mpdel_qmark $n elftown_horse
+			break
+		endif
+		if is_qmark($n) == elftown_horse 200001
+			mpmake_horse $n 13640 1 4
+			say 謝謝惠顧，歡迎再度光臨。
+			mpdel_qmark $n elftown_horse
+			break
+		endif
+		if is_qmark($n) == elftown_horse 300001
+			mpmake_horse $n 13641 5 4
+			say 謝謝惠顧，歡迎再度光臨。
+			mpdel_qmark $n elftown_horse
+		endif
+	else
+		say 你的職業不是騎士或領主喔！
+		mpgold $n 30000
+	endif
+endif
+"""
+
+[mobiles.13639]
+keywords = "horse speed"
+short_description = "飆風馬(speed horse)"
+long_description = "飆風馬(speed horse)乖乖地站在這兒。\n"
+description = """
+這是一隻強壯的坐騎，從牠光鮮的毛色可以看出主人的用心。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 7
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = -50
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Horse"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.13640]
+keywords = "power horse"
+short_description = "神力馬(power horse)"
+long_description = "神力馬(power horse)乖乖地站在這兒。\n"
+description = """
+這是一隻強壯的坐騎，從牠光鮮的毛色可以看出主人的用心。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 4
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Horse"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.13641]
+keywords = "horse constitution-h"
+short_description = "背馱馬(constitution horse)"
+long_description = "背馱馬(constitution horse)乖乖地站在這兒。\n"
+description = """
+這是一隻強壯的坐騎，從牠光鮮的毛色可以看出主人的用心。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 7
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = -50
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Horse"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.13642]
+keywords = "light-h cavalry-h horse"
+short_description = "輕型戰馬(light cavalry horse)"
+long_description = "輕型戰馬(light cavalry horse)乖乖地站在這兒。\n"
+description = """
+這是一批輕型的戰馬，只配有馬鞍等基本騎馬工具；不過由於裝備輕巧，
+非常適合用來做來衝刺、突擊的任務。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = -400
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Horse"
+class = ["WARRIOR", "MAGE"]
+replica = 13651
+spec_flags = ["NO_CHARM"]
+program_files = ["horse.prg"]
+
+[mobiles.13643]
+keywords = "heavy-h cavalry-h horse"
+short_description = "重型戰馬(heavy cavalry horse)"
+long_description = "重型戰馬(heavy cavalry horse)乖乖地站在這兒。\n"
+description = """
+這是一批重型的戰馬，除了馬鞍等基本騎馬工具外，還配有馬匹用裝甲用
+以抵禦攻擊，適合在重重攻擊下進行衝刺、突擊的任務。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 36
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -500
+mod_svs = 0
+dodge = -200
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Horse"
+class = ["WARRIOR", "MAGE"]
+replica = 13652
+spec_flags = ["NO_CHARM"]
+program_files = ["horse.prg"]
+
+[mobiles.13644]
+keywords = "pack-h horse"
+short_description = "背馱馬(pack horse)"
+long_description = "背馱馬(pack horse)乖乖地站在這兒。\n"
+description = """
+這隻馬比你高出一個頭，支撐大身體的四隻腳都有你小腿那麼粗。這種馬也許
+跑不快，但是拖起車來絕對夠力。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 30
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -100
+mod_svs = 0
+dodge = -100
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Horse"
+replica = 13653
+spec_flags = ["NO_CHARM"]
+program_files = ["horse.prg"]
+[[mobiles.13644.applies]]
+type = "EXP"
+degree = -10000
+
+[mobiles.13645]
+keywords = "little pony"
+short_description = "小馬(little pony)"
+long_description = "一頭小馬(little pony)乖乖地站在這兒。\n"
+description = """
+這是一頭小馬，很柔順地讓你撫摸，不過牠似乎不能背太多的東西。
+"""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 10
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -100
+mod_svs = 0
+dodge = -100
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Horse"
+replica = 13654
+spec_flags = ["NO_CHARM"]
+
+[mobiles.13646]
+keywords = "elf groom"
+short_description = "精靈馬夫(elf groom)"
+long_description = "精靈馬夫(elf groom)快樂地照顧著馬。\n"
+description = """
+他是一位健壯的精靈，腿上穿著長統靴，手裡提著一桶草料正在餵馬。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 600
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+spec_flags = ["NO_CHARM", "NO_SLEEP", "EXPERT"]
+program_files = ["kobold_cave_elfs2.prg"]
+[[mobiles.13646.applies]]
+type = "EXP"
+degree = -1000
+[[mobiles.13646.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 想要買馬嗎？你可以用 list 來觀看這裡有出售什麼馬匹。
+"""
+
+[mobiles.13647]
+keywords = "elf-soldier-marshal marshal"
+short_description = "精靈遠征軍元帥(Elf Marshal)"
+long_description = "精靈遠征軍元帥(Elf Marshal)在這裡指揮著他的部隊。\n"
+description = """
+這位英武的指揮官正在這裡指揮他的部隊，胸有成竹的樣子讓你情不自禁地想
+加入(Join)他的麾下。
+"""
+act_flags = ["NPC", "SENTINEL", "CRITICAL", "HARD_DIS", "TACTICS", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 600
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "HALF_MAGIC"]
+[[mobiles.13647.applies]]
+type = "HIT"
+degree = 40000
+[[mobiles.13647.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.13647.applies]]
+type = "REDUCE_DAMAGE"
+degree = 30
+[[mobiles.13647.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.13647.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpadd_qmark self wartime -1 0 100 0 1 0
+mpgoto 2
+mpoload 13638
+mpoload 13639
+wear all
+"""
+[[mobiles.13647.programs]]
+trigger = "fight_prog"
+argument = "70"
+script = """
+if is_qmark($i) == wartime 300002
+	flaming
+endif
+"""
+[[mobiles.13647.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+mpkill kobold-soldier
+"""
+[[mobiles.13647.programs]]
+trigger = "entry_prog"
+argument = "100"
+script = """
+mpkill kobold-soldier
+if  inroom($i) == 66112
+	mpmod_qmark self wartime v2 = 2
+	mpforcer here echotoarea 周圍忽然響起隆隆的戰鼓聲，一群群的地靈戰士自山林中湧現。
+	mpat 66171 mpforce kobold-soldier-kulala mpcall godefense $i
+	mpat kobold-soldier-king mpadd_qmark kobold-soldier-king wartype -1 5 0 0 1 0
+	say 看來前方就是敵人主力了，大家快擺開陣形，準備作戰！
+	say 雖然敵人看起來非常多，但是不要害怕！
+	say 只要擊潰他們，就能夠替精靈之鎮帶來長時間的和平了！
+	say 不要畏懼、不要退縮，讓邪惡見識一下正義的勇氣吧！
+	addoil
+	mpmload 66102
+	mpmload 66102
+	mpmload 66102
+	mpforcer 66126 mload 66106
+	mpforcer 66126 mload 66107
+	mpforcer 66127 mload 66106
+	mpforcer 66127 mload 66107
+	mpforcer 66128 mload 66106
+	mpforcer 66128 mload 66107
+	mpforcer 66129 mload 66106
+	mpforcer 66129 mload 66107
+	mpforcer 66130 mload 66106
+	mpforcer 66130 mload 66107
+	mpforcer 66131 mload 66106
+	mpforcer 66131 mload 66107
+	mpforcer 66132 mload 66106
+	mpforcer 66132 mload 66107
+	mpforcer 66133 mload 66106
+	mpforcer 66133 mload 66107
+	break
+endif
+if inroom($i) == 66100
+	mpecho 旁邊的山林裡忽然冒出了一隻地靈朝你衝來！
+	mpmload 66100
+	mpforce kobold-soldier-striker bs $i
+	break
+endif
+if inroom($i) == 66117
+	say 好厚的城門啊....有什麼辦法可以攻破它呢？
+	mpcallout 1 mpforce elf-soldier-magic-master say 沒問題！這裡就看我們了！
+	mpcallout 2 mpforce elf-soldier-magic-master mpecho 精靈魔導師們一起喃喃地唸出咒語....
+	mpcallout 3 mpforce elf-soldier-magic-master mpecho 五顏六色地光芒開始聚集在精靈魔導師們的身上....
+	mpcallout 4 mpforce elf-soldier-magic-master yell 無所不在的魔法元素，匯集吧！毀滅一切阻擋我的障礙吧！
+	mpcallout 5 mpecho 強大的魔力從精靈魔導師們奔流而出，將厚重的鐵門給摧毀了！
+	mpcallout 5 mpforcer here setdoor 1 flags 121
+	mpcallout 5 mpforcer 66134 setdoor 3 flags 121
+	mpcallout 6 say 太好了！現在就讓我們繼續前進，除掉邪惡的地靈之王吧！
+	mpcallout 6 good
+	break
+endif
+"""
+[[mobiles.13647.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+yell 不～我所熱愛的精靈之鎮啊～～～
+rumor 據說精靈鎮的遠征軍在地靈大隊的反撲下潰退了！
+mpat 13639 mpadd_qmark elf-elder war_fail 24 0 0 0 1 0
+"""
+[[mobiles.13647.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+mpmod_qmark self wartime v0 + 1
+if is_qmark($i) >= wartime 100129
+	mppurge self
+endif
+if is_qmark($i) >= wartime 100105
+	break
+endif
+if is_qmark($i) == wartime 100002
+	rumor 聽說精靈鎮正在徵集有經驗的冒險者，準備遠征地靈！
+	mpgoto 13604
+endif
+if is_qmark($i) == wartime 100003
+	if mobcount(13648) < 5
+		mpmload 13648
+		mpmload 13648
+		mpmload 13648
+		mpmload 13648
+		mpmload 13648
+		mpforce elf-soldier-magic-master say 讓我們用我們的魔法助遠征軍一臂之力吧！
+		nod elf-soldier-magic-master
+		say 太好了！我們非常需要你們的力量！
+		mpgroup $i elf-soldier-magic-master 0
+		mpgroup $i 2.elf-soldier-magic-master 0
+		mpgroup $i 3.elf-soldier-magic-master 0
+		mpgroup $i 4.elf-soldier-magic-master 0
+		mpgroup $i 5.elf-soldier-magic-master 0
+	endif
+endif
+if is_qmark($i) == wartime 100004
+	if mobcount(13649) < 5
+		mpmload 13649
+		mpmload 13649
+		mpmload 13649
+		mpmload 13649
+		mpmload 13649
+		mpforce elf-soldier-ranger say 請讓我們用我們的箭術幫助遠征軍打擊地靈吧！
+		nod elf-soldier-ranger
+		say 很好！有了你們的幫助，勝算又多了幾分了！
+		mpgroup $i elf-soldier-ranger 0
+		mpgroup $i 2.elf-soldier-ranger 0
+		mpgroup $i 3.elf-soldier-ranger 0
+		mpgroup $i 4.elf-soldier-ranger 0
+		mpgroup $i 5.elf-soldier-ranger 0
+	endif
+endif
+if is_qmark($i) == wartime 100005
+	if mobcount(13650) < 2
+		mpmload 13650
+		mpmload 13650
+		mpforce elf-soldier-carrier say 我們雖然實力不足，但至少可以幫忙搬運雜物！
+		nod elf-soldier-carrier
+		say 很好！精靈鎮就是需要你們這種熱誠的心！
+		mpgroup $i elf-soldier-carrier 0
+		mpgroup $i 2.elf-soldier-carrier 0
+	endif
+endif
+if is_qmark($i) == wartime 100006
+	rumor 聽說精靈鎮的遠征軍出發了！
+	mpforcer 66109 purge allmob
+	mpforcer 66109 mload 66101
+	mpforcer 66109 mload 66101
+	mpforcer 66109 mload 66101
+	mpforcer here modrvt 66108 v0 = 1
+	mpmod_qmark self wartime v2 = 1
+endif
+if is_qmark($i) == wartime 100104
+	say 補給跟不上啊，看來還是只能撤退了。
+	sigh
+	yell 情勢不妙～暫且轉進！
+	if is_qmark($i) == wartime 300003
+		rumor 據說精靈鎮的遠征軍擊退地靈主力，但是卻在最後功虧一匱！
+		yell 還請各位來幫忙的冒險者\u001B[0m\u001B[31;1m盡快\u001B[0m\u001B[0m\u001B[33;1m找精靈長老領取我們的感謝(Reward)！
+		mpat 13639 mpadd_qmark elf-elder war_reward 24 0 0 0 1 0
+		mpecho 率領著隊伍撤退了。
+		mpmod_qmark self wartime v0 = 105
+		mpgoto 2
+	else
+		rumor 據說精靈鎮的遠征軍在地靈們的激烈抵抗下，只能無功而返！
+		mpat 13639 mpadd_qmark elf-elder war_fail 24 0 0 0 1 0
+		mpecho 率領著隊伍撤退了。
+		mppurge self
+	endif
+endif
+if is_qmark($i) <= wartime 200010
+	sigh
+	say 看來只能到此為止了。
+	yell 撤退～全軍撤退！
+	mpecho 倉皇地退走了。
+	rumor 據說精靈鎮的遠征軍在地靈大隊的反撲下潰退了！
+	mpgoto 13639 mpadd_qmark elf-elder war_fail 24 0 0 0 1 0
+	mppurge self
+endif
+if is_qmark($i) == wartime 300002
+	if is_qmark($i) >= wartime 200250
+		mpforcer here echotoarea 看似無窮無盡的地靈軍團終於開始潰退了！
+		if mobcount(13648) < 3
+		or mobcount(13649) < 3
+		or mobcount(13650) < 2
+		or notbeing(kobold-soldier-king)
+			sigh
+			say 雖然成功擊退了敵軍主力，但我方損失也過於慘重，無力擴大戰果。
+			yell 窮寇莫追，見好就收，全軍班師！
+			yell 還請各位來幫忙的冒險者\u001B[0m\u001B[31;1m盡快\u001B[0m\u001B[0m\u001B[33;1m找找精靈長老領取我們的感謝(Reward)！
+			mpgoto 13639
+			mpadd_qmark elf-elder war_reward 24 0 0 0 1 0
+			rumor 據說精靈鎮的遠征軍擊退地靈主力，獲得最終勝利！
+			mpmod_qmark self wartime v0 = 105
+			mpmod_qmark self wartime v2 = 3
+			mpgoto 2
+		else
+			yell 敵人已經潰散了，全軍集結，讓我們趁勝追擊吧！
+			mpforcer 66134 mload 66109
+			mpforcer 66134 mload 66109
+			mpforcer 66135 mload 66109
+			mpforcer 66135 mload 66109
+			mpforcer 66136 mload 66109
+			mpforcer 66136 mload 66109
+			mpforcer 66137 mload 66109
+			mpforcer 66137 mload 66109
+			mpforcer 66138 mload 66109
+			mpforcer 66138 mload 66109
+			mpforcer 66139 mload 66109
+			mpforcer 66139 mload 66109
+			mpforcer 66140 mload 66109
+			mpforcer 66140 mload 66109
+			mpforcer 66142 mload 66109
+			mpforcer 66142 mload 66109
+			mpmod_qmark self wartime v2 = 3
+		endif
+	endif
+endif
+"""
+[[mobiles.13647.programs]]
+trigger = "talk_prog"
+argument = "join"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	say 你已經在我們的隊伍之中了！
+else
+	if level($n) > 35
+		if is_qmark($r) > kobold_cave_hero 100012
+			say 你是地靈派來的間諜吧？
+			say 在長老證明(Affirm)你的清白前我是不會讓你混入隊伍的！
+		else
+			if is_qmark($i) != wartime 300003
+				nod
+				say 很好！我們正缺少像你這樣富有經驗的冒險者！
+				mpgroup $i $n 0
+				if is_qmark($n) != war_reward
+					mpadd_qmark $n war_reward -1 0 0 0 0 1
+				else
+					mpmod_qmark $n war_reward v0 = 0
+					if is_qmark($n) == war_reward 300100
+					or is_qmark($n) == war_reward 300000
+					else
+						mpmod_qmark $n war_reward v2 - 1
+					endif
+				endif
+			endif
+		endif
+	else
+		glare $n
+		say 你還太年輕了，先去歷練幾年再來參予這種危險的戰爭吧！
+	endif
+endif
+"""
+[[mobiles.13647.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if is_qmark($i) == wartime 300002
+		if is_qmark($i) > wartime 200200
+			say 現在戰況非常好，看來敵人馬上就要潰散了！
+			addoil $n
+		else
+			if is_qmark($i) >= wartime 200100
+				say 雖然敵人十分眾多，但戰況看起來仍是勢均力敵！
+				say 再接再勵吧，勇者！
+				addoil $n
+			else
+				if if is_qmark($i) > wartime 200050
+					say 情況看起來有些不妙，不過還撐得住！
+				else
+					mpecho $I緊緊皺起了眉頭
+					say 戰況不妙啊....
+					sigh
+					say 難道到這裡就不得不撤退了嗎？
+				endif
+			endif
+		endif
+	endif
+else
+	say 你是趕來加入(Join)我們遠征軍的冒險者嗎？
+endif
+"""
+[[mobiles.13647.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+mpkill kobold-soldier
+if is_qmark($i) < wartime 100008
+	if rand(20)
+		say 為了對抗地靈們的威脅，我們需要您的力量！
+		say 實力高強的英雄們，勇敢地站出來加入(Join)我們吧！
+	endif
+endif
+if is_qmark($i) == wartime 300001
+	if inroom($i) == 13604
+	or inroom($i) == 13605
+	or inroom($i) == 13606
+	or inroom($i) == 13607
+	or inroom($i) == 13659
+	or inroom($i) == 13667
+	or inroom($i) == 66101
+	or inroom($i) == 66102
+	or inroom($i) == 66104
+	or inroom($i) == 66106
+	or inroom($i) == 66109
+	or inroom($i) == 66110
+	or inroom($i) == 66111
+		if isfight($i)
+		else
+			east
+		endif
+	endif
+	if inroom($i) == 66100
+		if isfight($i)
+		else
+			say 居然會在這裡遭受突擊！
+			ponder
+			say 看來敵人已經對我們的攻擊有所準備了。
+			yell 大家加速前進，不要跟敵人多加糾纏！
+			mpcallout 1 east
+		endif
+	endif
+	if inroom($i) == 13651
+		if isfight($i)
+		else
+			mpoload 13600
+			unlock e
+			open e
+			east
+		endif
+	endif
+	if inroom($i) == 13658
+	or inroom($i) == 13658
+	or inroom($i) == 13660
+	or inroom($i) == 13664
+	or inroom($i) == 66103
+		if isfight($i)
+		else
+			north
+		endif
+	endif
+	if inroom($i) == 66105
+	or inroom($i) == 66107
+		if isfight($i)
+		else
+			south
+		endif
+	endif
+	if inroom($i) == 66108
+		if isfight($i)
+		else
+			if being(kobold-soldier-rockpusher)
+				say 該死！上面有滾石兵。
+				say 大夥快殺上去，阻止那些該死的地靈！
+				mpecho 在精靈遠征軍元帥的指揮下，大家都奮不顧身地向上爬！
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-carrier up
+				mpforce elf-soldier-carrier up
+			else
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-magic-master up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-ranger up
+				mpforce elf-soldier-carrier up
+				mpforce elf-soldier-carrier up
+				mpforce all up
+				up
+			endif
+		endif
+	endif
+endif
+if is_qmark($i) == wartime 300002
+	if rand(33)
+		yell 打倒邪惡地靈，守護精靈之鎮！
+	endif
+	if mobcount(66102) < 3
+	or area(kobold-soldier-officer) !/ KoboldCave
+		mpmload 66102
+	endif
+endif
+if is_qmark($i) == wartime 300003
+	if notbeing(kobold-soldier-king)
+		rumor 據說精靈鎮的遠征軍深入地靈洞窟，斬殺地靈之王，獲得前所未有的勝利！
+		yell 各位，地靈首惡已除，讓我們班師回精靈鎮吧！
+		yell 還請各位幫忙的冒險者\u001B[0m\u001B[31;1m盡快\u001B[0m\u001B[0m\u001B[33;1m找精靈長老領取我們的獎賞(Reward)！
+		mpgoto 13639
+		mpadd_qmark elf-elder war_reward 24 1 0 0 1 0
+		mpmod_qmark self wartime v0 = 105
+		mpgoto 2
+	endif
+	if inroom($i) == 66112
+	or inroom($i) == 66113
+	or inroom($i) == 66114
+	or inroom($i) == 66115
+	or inroom($i) == 66116
+	or inroom($i) == 66117
+	or inroom($i) == 66134
+	or inroom($i) == 66135
+		if isfight($i)
+		else
+			east
+		endif
+	endif
+	if inroom($i) == 66136
+	or inroom($i) == 66137
+	or inroom($i) == 66138
+	or inroom($i) == 66139
+	or inroom($i) == 66140
+	or inroom($i) == 66142
+		if isfight($i)
+		else
+			north
+		endif
+	endif
+endif
+"""
+[[mobiles.13647.programs]]
+trigger = "give_prog"
+argument = "13655"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if hitprcnt($i) <= 70
+		say 感謝你！
+		bow $n
+		mpecho $I喝下了精靈聖藥，治癒了身上的傷口！
+		mppurge $i $o
+		mpforcer here c 'full heal' $i 50
+		mpforcer here c 'full refresh' $i 50
+		mpmod_qmark $n war_reward v0 + 4
+	else
+		say 我現在傷勢還算輕微，把這瓶聖藥給其他人用吧！
+		give $o $n
+	endif
+endif
+"""
+
+[mobiles.13648]
+keywords = "elf-soldier-magic-master magic master"
+short_description = "精靈魔導師(Elf Magic Master)"
+long_description = "一位技藝精湛的精靈魔導師(Elf Magic Master)正站在這裡。\n"
+description = """
+這是一名身穿法師袍的精靈，他的袍色與徽章都說明了他是一名高深的施法者。
+"""
+act_flags = ["NPC", "SENTINEL", "CRITICAL", "HARD_DIS", "TACTICS", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 600
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+class = ["MAGE", "THIEF"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "HALF_MAGIC"]
+program_files = ["kobold_cave_elfs.prg"]
+[[mobiles.13648.applies]]
+type = "HIT"
+degree = 15000
+[[mobiles.13648.applies]]
+type = "POWER_POTENTIAL"
+degree = 70
+[[mobiles.13648.applies]]
+type = "REDUCE_DAMAGE"
+degree = 30
+[[mobiles.13648.applies]]
+type = "APPLY_ADAMAGE"
+degree = -50
+[[mobiles.13648.applies]]
+type = "APPLY_AMAGIC"
+degree = 300
+[[mobiles.13648.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpmodify mana + 3000
+	mpforcer here c 'full recharge' $i 50
+"""
+[[mobiles.13648.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark(elf-soldier-marshal) == wartime 300002
+	if mpnum($i) >= 100
+		if rand(50)
+			if rand(50)
+				say 看我的冰系魔法！
+				cast 3 'chill touch'
+				cast 3 'colour spray'
+			else
+				say 看我的雷系魔法！
+				cast 3 'lightning bolt'
+				cast 'chain lightning'
+			endif
+		else
+			if rand(50)
+				say 看我的炎系魔法！
+				cast 3 'fireball'
+				cast 'star fire'
+			else
+				say 看我的土系魔法！
+				cast 3 'earthquake'
+				cast 3 'acid blast'
+			endif
+		endif
+		mpforcer here modhmv $i 11.100 100
+	endif
+endif
+"""
+[[mobiles.13648.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark(elf-soldier-marshal) == wartime 300002
+	if groupwith($n) / elf-soldier-marshal
+		if hitprcnt($i) <= 70
+			say 我的受到頗嚴重的傷！
+		endif
+		if mpnum($i) <= 500
+			say 我的魔力所剩不多了！
+		endif
+		if hitprcnt($i) <= 50
+		or mpnum($i) <= 500
+			say 你有多餘的補給品可以給我嗎？
+		endif
+	else
+		say 你是趕來加入(Join)我們遠征軍的冒險者嗎？請去找元帥吧！
+	endif
+endif
+"""
+[[mobiles.13648.programs]]
+trigger = "give_prog"
+argument = "13655"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if hitprcnt($i) <= 70
+		say 太好了！這下我又能繼續戰鬥了！
+		bow $n
+		mpecho $I喝下了精靈聖藥，治癒了身上的傷口！
+		mppurge $i $o
+		mpforcer here c 'full heal' $i 50
+		mpforcer here c 'full refresh' $i 50
+		mpmod_qmark $n war_reward v0 + 4
+	else
+		say 我現在傷勢還算輕微，把這瓶聖藥給其他人用吧！
+		give $o $n
+	endif
+endif
+"""
+[[mobiles.13648.programs]]
+trigger = "give_prog"
+argument = "13656"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if mpnum($i) <= 500
+		say 太好了！這下我又能繼續戰鬥了！
+		bow $n
+		mpecho $I喝下了精靈魔藥，瞬間精神百倍！
+		mppurge $i $o
+		mpforcer here c 'full recharge' $i 50
+		mpforcer here c 'full refresh' $i 50
+		mpmod_qmark $n war_reward v0 + 7
+	else
+		say 我現在魔力仍然充裕，把這瓶魔藥給其他人用吧！
+		give $o $n
+	endif
+endif
+"""
+
+[mobiles.13649]
+keywords = "elf-soldier-ranger ranger"
+short_description = "精靈遊俠(Elf Ranger)"
+long_description = "一名靈巧的精靈遊俠(Elf Ranger)正站在這裡。\n"
+description = """
+這是一名攜弓帶箭的精靈，他擁有靈巧的步伐與銳利的眼神。
+"""
+act_flags = ["NPC", "SENTINEL", "CRITICAL", "HARD_DIS", "TACTICS", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 600
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "THIEF", "SHOT_ARROW"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "HALF_MAGIC"]
+program_files = ["kobold_cave_elfs.prg"]
+[[mobiles.13649.applies]]
+type = "HIT"
+degree = 15000
+[[mobiles.13649.applies]]
+type = "DAMROLL"
+degree = 30
+[[mobiles.13649.applies]]
+type = "DODGE"
+degree = -500
+[[mobiles.13649.applies]]
+type = "REDUCE_DAMAGE"
+degree = 30
+[[mobiles.13649.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.13649.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 13657
+	mpoload 13658
+	mpat 2 wear all
+	mpadd_qmark $i war_arrow 10 0 0 0 1 0
+"""
+[[mobiles.13649.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark(elf-soldier-marshal) == wartime 300002
+	if is_qmark($i) == war_arrow
+		say 流～星～箭～！！！
+		meteoric
+	else
+		mpat 2 remove arrow
+		mpjunk arrow
+	endif
+endif
+"""
+[[mobiles.13649.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark(elf-soldier-marshal) == wartime 300002
+	if groupwith($n) / elf-soldier-marshal
+		if hitprcnt($i) <= 70
+			say 我的受到頗嚴重的傷！
+		endif
+		if is_qmark($i) <= war_arrow 1005
+		or is_qmark($i) != war_arrow
+			say 我的箭矢所剩不多了！
+		endif
+		if hitprcnt($i) <= 50
+		or is_qmark($i) <= war_arrow 1005
+		or is_qmark($i) != war_arrow
+			say 你有多餘的補給品可以給我嗎？
+		endif
+	else
+		say 你是趕來加入(Join)我們遠征軍的冒險者嗎？請去找元帥吧！
+	endif
+endif
+"""
+[[mobiles.13649.programs]]
+trigger = "give_prog"
+argument = "13655"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if hitprcnt($i) <= 70
+		say 太好了！這下我又能繼續戰鬥了！
+		bow $n
+		mpecho $I喝下了精靈聖藥，治癒了身上的傷口！
+		mppurge $i $o
+		mpforcer here c 'full heal' $i 50
+		mpforcer here c 'full refresh' $i 50
+		mpmod_qmark $n war_reward v0 + 4
+	else
+		say 我現在傷勢還算輕微，把這瓶聖藥給其他人用吧！
+		give $o $n
+	endif
+endif
+"""
+[[mobiles.13649.programs]]
+trigger = "give_prog"
+argument = "13658"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if is_qmark($i) <= war_arrow 1005
+	or is_qmark($i) != war_arrow
+		say 太好了！這下我又能繼續戰鬥了！
+		bow $n
+		wear $o
+		if is_qmark($i) == war_arrow
+			mpmod_qmark $i war_arrow timer = 10
+		else
+			mpadd_qmark $i war_arrow 10 0 0 0 1 0
+		endif
+		mpforcer here c 'full refresh' $i 50
+		mpmod_qmark $n war_reward v0 + 7
+	else
+		say 我的箭矢數量仍然充足，把這綑箭矢給其他人吧！
+		give $o $n
+	endif
+endif
+"""
+
+[mobiles.13650]
+keywords = "elf-soldier-carrier carrier"
+short_description = "精靈運輸員(Elf Carrier)"
+long_description = "一名背滿各式補給品的精靈(Elf)正站在這裡。\n"
+description = """
+這是一名年輕的精靈，他身上背滿了各種戰用物資。
+"""
+act_flags = ["NPC", "SENTINEL", "CRITICAL", "HARD_DIS", "TACTICS", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 600
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "HALF_MAGIC"]
+program_files = ["kobold_cave_elfs.prg"]
+[[mobiles.13650.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.13650.applies]]
+type = "REDUCE_DAMAGE"
+degree = 15
+[[mobiles.13650.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 13659 30
+	mpadd_qmark self war_supply -1 30 0 0 1 0
+"""
+[[mobiles.13650.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark(elf-soldier-marshal) == wartime 300002
+	if hitprcnt($i) <= 30
+		if is_qmark($i) > war_supply 100000
+			mpecho $I喝下了一瓶精靈聖藥，治癒了身上的傷口！
+			mpforcer here c 'full heal' $i 50
+			mpforcer here c 'full refresh' $i 50
+			mpmod_qmark self war_supply v0 - 1
+		endif
+	endif
+endif
+"""
+[[mobiles.13650.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark(elf-soldier-marshal) == wartime 300002
+	if pcnum($) == 0
+	or is_qmark($i) <= war_supply 100000
+	else
+		say 如果需要補給品的話，我這裡有治療藥水(Heal)、魔力藥水(Mana)
+		say 還有箭矢(Arrow)可以供給！
+	endif
+endif
+"""
+[[mobiles.13650.programs]]
+trigger = "talk_prog"
+argument = "p heal"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if is_qmark($i) > war_supply 100000
+		if is_qmark(elf-soldier-marshal) == wartime 300002
+			ok! $n
+			mpoload 13655 30
+			give heal-o $n
+			mpmod_qmark self war_supply v0 - 1
+			mpmod_qmark $n war_reward v0 - 1
+		endif
+	else
+		say 我的補給品已經消耗光了！
+		say 能麻煩你回精靈村一趟，
+		say 向費那提克先生要更多的補給品(Supply)過來給我嗎？
+		bow $n
+	endif
+endif
+"""
+[[mobiles.13650.programs]]
+trigger = "talk_prog"
+argument = "p mana"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if is_qmark($i) > war_supply 100000
+		if is_qmark(elf-soldier-marshal) == wartime 300002
+			ok! $n
+			mpoload 13656 30
+			give recharge-o $n
+			mpmod_qmark $i war_supply v0 - 1
+			mpmod_qmark $n war_reward v0 - 1
+		endif
+	else
+		say 我的補給品已經消耗光了！
+		say 能麻煩你回精靈村一趟，
+		say 向費那提克先生要更多的補給品(Supply)過來給我嗎？
+		bow $n
+	endif
+endif
+"""
+[[mobiles.13650.programs]]
+trigger = "talk_prog"
+argument = "p arrow"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if is_qmark($i) > war_supply 100000
+		if is_qmark(elf-soldier-marshal) == wartime 300002
+			ok! $n
+			mpoload 13658 30
+			give sniper-o $n
+			mpmod_qmark $i war_supply v0 - 1
+			mpmod_qmark $n war_reward v0 - 1
+		endif
+	else
+		say 我的補給品已經消耗光了！
+		say 能麻煩你回精靈村一趟，
+		say 向費那提克先生要更多的補給品(Supply)過來給我嗎？
+		bow $n
+	endif
+endif
+"""
+[[mobiles.13650.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark(elf-soldier-marshal) == wartime 300002
+	if groupwith($n) / elf-soldier-marshal
+		if is_qmark($i) <= war_supply 100015
+			say 我身上攜帶的補給品所剩不多了！
+			say 能麻煩你回精靈村一趟，
+			say 向費那提克先生要更多的補給品(Supply)過來給我嗎？
+			bow $n
+		else
+			say 如果需要補給品的話，我這裡有治療藥水(Heal)、魔力藥水(Mana)
+			say 還有箭矢(Arrow)可以供給！
+		endif
+	else
+		say 你是趕來加入(Join)我們遠征軍的冒險者嗎？請去找元帥吧！
+	endif
+endif
+"""
+[[mobiles.13650.programs]]
+trigger = "give_prog"
+argument = "13659"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	if is_qmark(elf-soldier-marshal) == wartime 300002
+		if is_qmark($i) <= war_supply 100015
+			say 太好了！這下大家又有充足的補給品可以用了！
+			mpmod_qmark $i war_supply v0 = 30
+			mpmod_qmark $n war_reward v0 + 15
+			mppurge $i 2.supply-o
+		else
+			say 雖然我攜帶的補給品還算充足，但還是謝謝你的幫忙！
+			mpmod_qmark $n war_reward v0 + 1
+		endif
+	endif
+endif
+"""
+
+[mobiles.13651]
+keywords = "artificer apprentice goodman-elftown"
+short_description = "古德曼(Goodman)"
+long_description = "一個魔匠大師的學徒(Artificer Apprentice)在這裡替顧客修理裝備。\n"
+description = """
+他身上穿著工作服，背著許多修理工具，一臉宅男樣，看起就不討女孩子喜歡。
+"""
+act_flags = ["NPC", "SENTINEL", "SMITH"]
+affected_flags = []
+alignment = 300
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Elf"
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+        action_programs = [
+            """
+6
+wake+say 又是新的一天，要開始工作了....
+sigh
+unlock north+open north+north
+close south
+lock south
+unlock west+open west
+""",
+            """
+18
+say 下班囉！終於可以休息了....
+close west+lock west
+unlock south+open south+south
+close north
+lock north
+sleep
+""",
+        ]
+[[mobiles.13651.applies]]
+type = "HIT"
+degree = 50000
+
+[objects.13600]
+keywords = "gatekey"
+short_description = "柵欄鑰匙(gatekey)"
+long_description = "一支柵欄鑰匙(gatekey)靜靜躺在這裡"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["13603", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "iron"
+
+[objects.13602]
+keywords = "elf dagger"
+short_description = "精靈匕首(elf dagger)"
+long_description = "精靈匕首(elf dagger)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1851185", "0", "0", "11"]
+weight = 5
+cost = 0
+level_limited = 0
+level = 25
+material = "tin"
+[[objects.13602.extra_descriptions]]
+keywords = "dagger"
+description = """
+精靈匕首一般握在左手，除了攻擊，也有格檔的作用。
+"""
+[[objects.13602.applies]]
+type = "HITROLL"
+value = 9
+[[objects.13602.applies]]
+type = "AC"
+value = -5
+
+[objects.13603]
+keywords = "steel knuckle"
+short_description = "精鋼指環(steel knuckle)"
+long_description = "精鋼指環(steel knuckle)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1851185", "0", "0", "7"]
+weight = 2
+cost = 0
+level_limited = 0
+level = 20
+material = "steel"
+[[objects.13603.extra_descriptions]]
+keywords = "steel knuckle"
+description = """
+精鋼指環，被打到會內出血，也能拿來格檔敵人武器。
+"""
+[[objects.13603.applies]]
+type = "DAMROLL"
+value = 7
+[[objects.13603.applies]]
+type = "HITROLL"
+value = 2
+[[objects.13603.applies]]
+type = "AC"
+value = -5
+
+[objects.13604]
+keywords = "naginata"
+short_description = "狼牙棒(naginata)"
+long_description = "狼牙棒(naginata)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1851185", "0", "0", "8"]
+weight = 45
+cost = 0
+level_limited = 0
+level = 32
+material = "wooden"
+[[objects.13604.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.13604.applies]]
+type = "STR"
+value = 1
+
+[objects.13605]
+keywords = "supreme elf dagger"
+short_description = "特級精靈匕首(supreme elf dagger)"
+long_description = "特級精靈匕首(supreme elf dagger)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1851185", "0", "0", "11"]
+weight = 5
+cost = 150000
+level_limited = 0
+level = 25
+material = "steel"
+[[objects.13605.extra_descriptions]]
+keywords = "dagger"
+description = """
+精靈匕首一般握在左手，除了攻擊，也有格檔的作用。
+"""
+[[objects.13605.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.13605.applies]]
+type = "HITROLL"
+value = 5
+[[objects.13605.applies]]
+type = "AC"
+value = -15
+
+[objects.13606]
+keywords = "letter"
+short_description = "信(letter)"
+long_description = "一張信(letter)飄落在這。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+timer = 100
+material = "wool"
+[[objects.13606.extra_descriptions]]
+keywords = "letter"
+description = """
+蒂得，
+	你到史卡拉貝也好幾個月了，沒事的話就回來，別在外面遊蕩了。
+
+	最近森林裡發現不少地靈徘徊，我懷疑這是一個有組織的行動，
+	雖然目前還不清楚他們確實的目的，不過我的直覺一向很準的。
+
+	若事情更進一步惡化，也許會發生衝突，為防萬一，沒事的話你還是
+	先回來好了，成天在外頭亂晃也不是辦法。
+
+						父 費那提克
+"""
+
+[objects.13607]
+keywords = "sunflower"
+short_description = "向日葵(sunflower)"
+long_description = "一株向日葵(sunflower)長在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.13608]
+keywords = "chrysanthemum"
+short_description = "菊花(chrysanthemum)"
+long_description = "一株菊花(chrysanthemum)長在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["30", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.13609]
+keywords = "scroll invisibility"
+short_description = "隱身術卷軸(Scroll of Invisibility)"
+long_description = "一個卷軸(scroll)放置在地上。"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["12", "invis", "", ""]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "wool"
+[[objects.13609.extra_descriptions]]
+keywords = "scroll invisibility"
+description = """
+卷軸的外面有一個封記，上面畫著幾個魔法符號，用來將魔法力量封在卷軸裡。
+"""
+
+[objects.13610]
+keywords = "potion yellow"
+short_description = "偵測隱形藥水(Potion of yellow)"
+long_description = "一罐黃藥水(Potion of yellow)放置在地上。"
+action_description = ""
+item_type = "POTION"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["12", "detect invis", "", ""]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "liquid"
+[[objects.13610.extra_descriptions]]
+keywords = "potion yellow"
+description = """
+藥水的外面有一個封記，上面畫著幾個魔法符號，用來將魔法力量封在藥水裡。
+"""
+
+[objects.13611]
+keywords = "potion purple"
+short_description = "偵測藏匿藥水(Potion of purple)"
+long_description = "一罐紫藥水(Potion of purple)放置在地上。"
+action_description = ""
+item_type = "POTION"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["12", "detect hidden", "", ""]
+weight = 4
+cost = 0
+level_limited = 0
+level = 1
+material = "liquid"
+[[objects.13611.extra_descriptions]]
+keywords = "potion purple"
+description = """
+藥水的外面有一個封記，上面畫著幾個魔法符號，用來將魔法力量封在藥水裡。
+"""
+
+[objects.13612]
+keywords = "picture"
+short_description = "費那提克和杉本櫻子的合照(picture)"
+long_description = "費那提克和杉本櫻子的合照(picture)擺在桌上。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+[[objects.13612.extra_descriptions]]
+keywords = "picture"
+description = """
+真是一對璧人，你在心中讚嘆著....
+"""
+
+[objects.13613]
+keywords = "arrow"
+short_description = "箭(arrow)"
+long_description = "一捆箭(arrow)掉在地上."
+action_description = ""
+item_type = "ARROW"
+extra_flags = []
+wear_flags = ["TAKE", "ARROW"]
+values = ["90", "30", "40", "100"]
+weight = 15
+cost = 2500
+level_limited = 0
+level = 15
+material = "wooden"
+
+[objects.13614]
+keywords = "long bow"
+short_description = "長弓(bow)"
+long_description = "一把普通的長弓(long bow)掉在這裡."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["1851185", "0", "30", "14"]
+weight = 15
+cost = 0
+level_limited = 0
+level = 15
+material = "wooden"
+[[objects.13614.applies]]
+type = "HITROLL"
+value = 15
+[[objects.13614.applies]]
+type = "APPLY_ADAMAGE"
+value = 12
+
+[objects.13615]
+keywords = "long arrow"
+short_description = "長箭(long arrow)"
+long_description = "一捆長箭(long arrow)掉在地上."
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["500", "50", "60", "100"]
+weight = 25
+cost = 5000
+level_limited = 0
+level = 25
+material = "wooden"
+[[objects.13615.applies]]
+type = "HITROLL"
+value = 1
+
+[objects.13616]
+keywords = "heavy bow"
+short_description = "重弓(heavy bow)"
+long_description = "一把核桃木製的重弓(heavy bow)掉在這裡."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["1851185", "0", "40", "14"]
+weight = 40
+cost = 0
+level_limited = 0
+level = 30
+material = "wooden"
+[[objects.13616.applies]]
+type = "HITROLL"
+value = 2
+[[objects.13616.applies]]
+type = "DAMROLL"
+value = 13
+[[objects.13616.applies]]
+type = "APPLY_ADAMAGE"
+value = 5
+
+[objects.13617]
+keywords = "magic arrow"
+short_description = "魔法之箭(magic arrow)"
+long_description = "一捆帶有魔法的箭矢(magic arrow)掉在地上."
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["500", "0", "0", "0"]
+weight = 25
+cost = 50000
+level_limited = 0
+level = 35
+material = "crystal"
+[[objects.13617.hidden_powers]]
+spell = "cause critical"
+percent = 30
+level = 30
+event = "HP_ARROW"
+[[objects.13617.hidden_powers]]
+spell = "powerball"
+percent = 15
+level = 5
+event = "HP_ARROW"
+
+[objects.13618]
+keywords = "crossbow"
+short_description = "十字弓(crossbow)"
+long_description = "一把核桃木製的十字弓(crossbow)掉在這裡."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["1851185", "0", "35", "14"]
+weight = 25
+cost = 90000
+level_limited = 0
+level = 36
+material = "wooden"
+[[objects.13618.extra_descriptions]]
+keywords = "crossbow"
+description = """
+十字弓被譽為近代武器史上重要發明之一，它使得穿重甲的騎士漸趨沒落，
+因為就連一位未經訓練的平民也能用它射穿甲冑。
+"""
+[[objects.13618.applies]]
+type = "HITROLL"
+value = 8
+[[objects.13618.applies]]
+type = "DAMROLL"
+value = 8
+[[objects.13618.applies]]
+type = "APPLY_ADAMAGE"
+value = 7
+
+[objects.13619]
+keywords = "flour cake"
+short_description = "燕麥麵餅(flour cake)"
+long_description = "一個燕麥麵餅(flour cake)"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["27", "0", "0", "0"]
+weight = 3
+cost = 10
+level_limited = 0
+level = 1
+material = "food"
+
+[objects.13620]
+keywords = "stick bread"
+short_description = "法國麵包(stick bread)"
+long_description = "一個法國麵包(stick bread)"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["30", "0", "0", "0"]
+weight = 3
+cost = 20
+level_limited = 0
+level = 1
+material = "food"
+
+[objects.13621]
+keywords = "sausage"
+short_description = "義式香腸(sausage)"
+long_description = "一條義式香腸(sausage)"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["33", "0", "0", "0"]
+weight = 3
+cost = 80
+level_limited = 0
+level = 1
+material = "food"
+
+[objects.13622]
+keywords = "barrel beer"
+short_description = "啤酒(barrel beer)"
+long_description = "一桶啤酒(barrel beer)靜靜的放在地上。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["50", "50", "1", "0"]
+weight = 50
+cost = 500
+level_limited = 0
+level = 1
+material = "liquid"
+
+[objects.13623]
+keywords = "bottle wine"
+short_description = "瓶裝紅酒(bottle wine)"
+long_description = "一瓶紅酒(bottle wine)不知道被誰放在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["8", "8", "1", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+level = 1
+material = "liquid"
+
+[objects.13624]
+keywords = "bottle ale"
+short_description = "瓶裝麥酒(bottle ale)"
+long_description = "麥酒(bottle ale)不知道被誰放在這裡，瓶子裡的酒是棕色的。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["8", "8", "3", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+level = 1
+material = "liquid"
+
+[objects.13625]
+keywords = "bottle shandy"
+short_description = "瓶裝薑汁混酒(bottle shandy)"
+long_description = "瓶裝薑汁混酒(bottle shandy)不知道被誰放在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["8", "8", "3", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+level = 1
+material = "liquid"
+
+[objects.13626]
+keywords = "leather plate"
+short_description = "皮甲(leather plate)"
+long_description = "一件皮甲(leather plate)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1851185", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13626.applies]]
+type = "AC"
+value = -5
+
+[objects.13627]
+keywords = "leather helmet"
+short_description = "皮甲帽(leather helmet)"
+long_description = "一頂皮甲帽(leather helmet)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "1851185", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13627.applies]]
+type = "AC"
+value = -3
+
+[objects.13628]
+keywords = "leather glove"
+short_description = "皮甲手套(leather glove)"
+long_description = "一件皮甲手套(leather glove)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "1851185", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13628.applies]]
+type = "HITROLL"
+value = 1
+[[objects.13628.applies]]
+type = "AC"
+value = -2
+
+[objects.13629]
+keywords = "boots leather"
+short_description = "皮靴(leather boots)"
+long_description = "一雙皮靴(leather boots)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1851185", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13629.applies]]
+type = "MOVE"
+value = 15
+
+[objects.13630]
+keywords = "life symbol"
+short_description = "生命護符(life symbol)"
+long_description = "生命護符(life symbol)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1851185", "0"]
+weight = 5
+cost = 10000
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13630.applies]]
+type = "HIT"
+value = 10
+[[objects.13630.applies]]
+type = "CON"
+value = 1
+
+[objects.13631]
+keywords = "wisdom symbol"
+short_description = "智慧護符(wisdom symbol)"
+long_description = "智慧護符(wisdom symbol)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1851185", "0"]
+weight = 5
+cost = 10000
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13631.applies]]
+type = "MANA"
+value = 10
+[[objects.13631.applies]]
+type = "WIS"
+value = 1
+
+[objects.13632]
+keywords = "mars symbol"
+short_description = "戰神護符(mars symbol)"
+long_description = "戰神護符(mars symbol)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1851185", "0"]
+weight = 5
+cost = 10000
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13632.applies]]
+type = "DAMROLL"
+value = 1
+[[objects.13632.applies]]
+type = "HITROLL"
+value = 1
+[[objects.13632.applies]]
+type = "STR"
+value = 1
+
+[objects.13633]
+keywords = "wind symbol"
+short_description = "迅風護符(wind symbol)"
+long_description = "迅風護符(wind symbol)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1851185", "0"]
+weight = 5
+cost = 10000
+level_limited = 0
+level = 1
+material = "leather"
+[[objects.13633.applies]]
+type = "MOVE"
+value = 10
+[[objects.13633.applies]]
+type = "DEX"
+value = 1
+
+[objects.13634]
+keywords = "kobold mace"
+short_description = "地靈釘頭錘(kobold mace)"
+long_description = "地靈釘頭錘(kobold mace)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1851185", "0", "0", "8"]
+weight = 45
+cost = 0
+level_limited = 0
+level = 1
+permit_classes = { type = "DENY", list = ["SWORDSMAN", "WARLORD"] }
+material = "iron"
+[[objects.13634.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.13634.applies]]
+type = "HITROLL"
+value = 4
+
+[objects.13635]
+keywords = "kobold shield"
+short_description = "地靈黑盾(kobold shield)"
+long_description = "一張地靈黑盾(kobold shield)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1851185", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+level = 1
+material = "wooden"
+[[objects.13635.applies]]
+type = "SAVING_FIRE"
+value = 3
+[[objects.13635.applies]]
+type = "AC"
+value = -5
+
+[objects.13636]
+keywords = "secret"
+short_description = "作戰密令(secret)"
+long_description = "一張作戰密令(secret)飄落在這。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+level = 1
+material = "wool"
+[[objects.13636.extra_descriptions]]
+keywords = "secret"
+description = """
+注意，你們一定要在地道裡靜待時機，千萬不要打草驚蛇。等到接到進攻
+信號，馬上趁黑夜在城裡到處放火，務必引起精靈族最大的混亂，以掩護主力
+進攻部隊的攻堅任務。
+							總指揮 古拉邦
+"""
+
+[objects.13637]
+keywords = "great two-hand sword"
+short_description = "雙手巨劍(great two-hand sword)"
+long_description = "雙手巨劍(great two-hand sword)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["1851185", "0", "0", "1"]
+weight = 60
+cost = 20000
+level_limited = 0
+level = 1
+permit_classes = { type = "ALLOW", list = ["THIEF", "WARRIOR", "SAVANT", "BISHOP", "NINJA", "KNIGHT", "MONK", "SHAMAN", "RANGER", "WARLORD", "MARTIALMAN"] }
+material = "iron"
+[[objects.13637.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.13637.applies]]
+type = "HITROLL"
+value = 4
+
+[objects.13638]
+keywords = "elf broadsword"
+short_description = "精靈闊劍(elf broadsword)"
+long_description = "精靈闊劍(elf broadsword)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1851185", "0", "0", "3"]
+weight = 30
+cost = 18000
+level_limited = 0
+level = 1
+permit_classes = { type = "DENY", list = ["MAGE", "CLERIC", "WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+material = "iron"
+[[objects.13638.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.13638.applies]]
+type = "HITROLL"
+value = 5
+
+[objects.13639]
+keywords = "elf wood shield"
+short_description = "精靈木盾(elf wood shield)"
+long_description = "一張精靈木盾(elf wood shield)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1851185", "0"]
+weight = 10
+cost = 15000
+level_limited = 0
+level = 1
+material = "oak"
+[[objects.13639.applies]]
+type = "AC"
+value = -5
+[[objects.13639.applies]]
+type = "DEX"
+value = 1
+
+[objects.13640]
+keywords = "evil-sky sword"
+short_description = "逆天邪(evil-sky sword)"
+long_description = "逆天邪(evil-sky sword)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2851285", "0", "0", "3"]
+weight = 35
+cost = 45000
+level_limited = 0
+level = 1
+permit_classes = { type = "DENY", list = ["MAGE", "CLERIC", "WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+material = "steel"
+[[objects.13640.applies]]
+type = "DAMROLL"
+value = 6
+[[objects.13640.applies]]
+type = "HITROLL"
+value = 6
+
+[objects.13641]
+keywords = "leggings"
+short_description = "玄武腳脛(leggings)"
+long_description = "一雙玄武腳脛(leggings)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "2851285", "0"]
+weight = 10
+cost = 23000
+level_limited = 0
+level = 1
+material = "basalt"
+[[objects.13641.applies]]
+type = "DAMROLL"
+value = 1
+[[objects.13641.applies]]
+type = "HITROLL"
+value = 1
+
+[objects.13642]
+keywords = "obsidian swirl-o shield"
+short_description = "黑曜之漩(Obsidian Swirl)"
+long_description = "一面彷彿可以吸收一切的漆黑護盾(shield)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "3001300", "0"]
+weight = 1
+cost = 20000
+level_limited = 0
+level = 1
+material = "obsidian"
+[[objects.13642.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+
+[objects.13643]
+keywords = "elf leaf-crown"
+short_description = "精靈桂冠(elf leaf-crown)"
+long_description = "一頂精靈桂冠(elf leaf-crown)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "3851385", "0"]
+weight = 5
+cost = 80000
+level_limited = 0
+level = 1
+material = "ebony"
+[[objects.13643.applies]]
+type = "MANA"
+value = 20
+[[objects.13643.applies]]
+type = "WIS"
+value = 2
+
+[objects.13644]
+keywords = "rose"
+short_description = "玫瑰花(rose)"
+long_description = "一株玫瑰花(rose)長在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "0", "0"]
+weight = 1
+cost = 60
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.13645]
+keywords = "scroll remove nodrop"
+short_description = "去除物品詛咒卷軸(Scroll of remove nodrop)"
+long_description = "一個去除物品詛咒卷軸(Scroll of remove nodrop)放置在地上。"
+action_description = ""
+item_type = "SCROLL"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["20", "remove nodrop", "", ""]
+weight = 1
+cost = 27000
+level_limited = 0
+level = 1
+material = "wool"
+[[objects.13645.extra_descriptions]]
+keywords = "scroll remove nodrop"
+description = """
+卷軸的外面有一個封記，上面畫著幾個魔法符號，用來將魔法力量封在卷軸裡。
+"""
+
+[objects.13646]
+keywords = "letter"
+short_description = "慈母手中信(letter)"
+long_description = "一張慈母手中信(letter)飄落在這。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "wool"
+[[objects.13646.extra_descriptions]]
+keywords = "letter"
+description = """
+敏兒知悉：
+	我身體還很硬朗，你不要小看母親。倒是你自己，早晚多加點衣服，有錢就
+	多買點有營養的食物吃，別太節省了。
+	費那提克先生昨天才叫人送了兩大袋麵粉過來，我怎麼推辭都沒有用。這下
+	子吃個三個月都吃不完，你以後可要記得回報人家的恩情。
+	記得以你的父親為榜樣，別跌他的股。我們派崔克家代代都是英武傑出的人
+	才。
+							母 字
+附：我麻煩你的朋友將派崔克家盾帶給你
+"""
+
+[objects.13647]
+keywords = "pathric shield"
+short_description = "派崔克家盾(pathric shield)"
+long_description = "一張派崔克家盾(pathric shield)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1851185", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+level = 1
+material = "wooden"
+[[objects.13647.applies]]
+type = "HITROLL"
+value = 1
+[[objects.13647.applies]]
+type = "AC"
+value = -8
+
+[objects.13648]
+keywords = "letter"
+short_description = "密封的信(letter)"
+long_description = "一封被密封起來的信(letter)正靜靜的躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "paper"
+
+[objects.13649]
+keywords = "great sword"
+short_description = "精靈巨劍(elf great sword)"
+long_description = "精靈巨劍(elf great sword)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1851185", "0", "0", "1"]
+weight = 60
+cost = 20000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "WARRIOR", "SAVANT", "BISHOP", "NINJA", "KNIGHT", "MONK", "SHAMAN", "RANGER", "WARLORD", "MARTIALMAN"] }
+material = "iron"
+[[objects.13649.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.13649.applies]]
+type = "HITROLL"
+value = 4
+
+[objects.13650]
+keywords = "fertilizer fertilizer-elftown"
+short_description = "肥料(fertilizer)"
+long_description = "一罐園藝用的肥料(fertilizer)放置在地上。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.13651]
+keywords = "light cavalry horse"
+short_description = "輕型戰馬(light cavalry horse)"
+long_description = "輕型戰馬"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["PERSONAL"]
+wear_flags = ["TAKE"]
+values = ["-1", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.13651.extra_descriptions]]
+keywords = "light cavalry horse"
+description = """
+這是一批輕型的戰馬，只配有馬鞍等基本騎馬工具；不過由於裝備輕巧，
+非常適合用來做來衝刺、突擊的任務。
+"""
+
+[rooms.13600]
+name = "森林裡的一條道路"
+description = """
+這是一條穿越森林的道路，兩旁的樹木生長得特別青翠，林間空隙不時
+可以看到小動物嬉戲的身影，蜜蜂及甲蟲們忙碌地飛來飛去。走在這條路上，
+你覺得身心舒暢極了。路邊的樹上釘了一張牌子(sign)。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.13600.extra_descriptions]]
+keywords = "sign"
+description = """
++-------------------------------------------------+
+往前是精靈族(elf)的城鎮，他們目前遇到了一些問題，
+也許你能夠幫他們解決。
+這個區域由 Amenda 完成，適合一些新進的 level 36
+玩者冒險，有任何問題或建議歡迎回報。
+July 25,1999  Amenda
++-------------------------------------------------+
+"""
+[rooms.13600.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13601
+[rooms.13600.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 8906
+[[rooms.13600.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if hour($) == 11
+	if month($) <= 5
+		if month($) <= 11
+			if mobcount(13601) < 3
+				force 13610 mload 13601
+				force 13606 mload 13601
+			endif
+			if mobcount(13602) < 4
+				force 13608 mload 13602
+				force 13606 mload 13602
+				force 13607 mload 13602
+				force 13611 mload 13602
+			endif
+			if mobcount(13603) < 3
+				force 13628 mload 13603
+				force 13627 mload 13603
+			endif
+			if mobcount(13604) < 3
+				force 13601 mload 13604
+				force 13600 mload 13604
+			endif
+			if mobcount(13605) < 3
+				force 13611 mload 13605
+				force 13617 mload 13605
+			endif
+		endif
+	endif
+endif
+"""
+
+[rooms.13601]
+name = "森林裡的一條道路"
+description = """
+這是一條穿越森林的道路，兩旁的樹木生長得特別青翠，林間空隙不時
+可以看到小動物嬉戲的身影，蜜蜂及甲蟲們忙碌地飛來飛去。走在這條路上，
+你覺得身心舒暢極了。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13601.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13602
+[rooms.13601.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13600
+
+[rooms.13602]
+name = "森林城鎮的入口"
+description = """
+在你前面好像是一座建築在這個美麗森林裡的小鎮，可惜有個堅固的柵欄
+擋住了去路。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13602.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 13600
+to_room = 13603
+[rooms.13602.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13601
+[[rooms.13602.resets.mobiles]]
+vnum = 13600
+limit = 1
+[[rooms.13602.resets.mobiles.equipment]]
+vnum = 13649
+wear_loc = "WIELD"
+[[rooms.13602.resets.mobiles.equipment]]
+vnum = 13600
+wear_loc = "HOLD"
+
+[rooms.13603]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13603.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13604
+[rooms.13603.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13610
+[rooms.13603.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13611
+[rooms.13603.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 13602
+
+[rooms.13604]
+name = "生命之樹"
+description = """
+這大概是你見過最大的樹了，看起來就像一座山一樣。走到近處抬頭往上望，
+你連它最低的枝椏都看不清楚，整個天空都被茂密的樹葉蓋住。坐在樹旁，你覺
+得一股股旺盛的活力從你體內湧出來！
+"""
+flags = []
+sector = "FOREST"
+[rooms.13604.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13605
+[rooms.13604.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13608
+[rooms.13604.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13609
+[rooms.13604.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13639
+[rooms.13604.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13603
+[[rooms.13604.resets.mobiles]]
+vnum = 13615
+limit = 3
+
+[rooms.13605]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13605.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13606
+[rooms.13605.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13612
+[rooms.13605.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13613
+[rooms.13605.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13604
+
+[rooms.13606]
+name = "小鎮幹道"
+description = """
+這是森林小鎮裡的幹道，建築在茂密的森林裡。你身旁不時有松鼠及紅狐等小
+動物跑來跑去，完全不懼怕你的靠近。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13606.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13607
+[rooms.13606.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13626
+[rooms.13606.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13627
+[rooms.13606.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13605
+[[rooms.13606.resets.mobiles]]
+vnum = 13604
+limit = 2
+[[rooms.13606.resets.mobiles]]
+vnum = 13617
+limit = 1
+
+[rooms.13607]
+name = "小鎮幹道"
+description = """
+這是森林小鎮裡的幹道，四週的花草樹木都生長得非常健康，當然生長於此的
+昆蟲動物們也特別活潑忙碌。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13607.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13651
+[rooms.13607.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13669
+[rooms.13607.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13606
+[[rooms.13607.resets.mobiles]]
+vnum = 13606
+limit = 2
+
+[rooms.13608]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13608.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13612
+[rooms.13608.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13614
+[rooms.13608.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13604
+[rooms.13608.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13610
+[[rooms.13608.resets.mobiles]]
+vnum = 13602
+limit = 2
+
+[rooms.13609]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13609.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13613
+[rooms.13609.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13604
+[rooms.13609.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13617
+[rooms.13609.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13611
+
+[rooms.13610]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13610.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13608
+[rooms.13610.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13603
+
+[rooms.13611]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13611.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13609
+[rooms.13611.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13603
+
+[rooms.13612]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13612.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13605
+[rooms.13612.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13608
+
+[rooms.13613]
+name = "精靈鎮中心廣場"
+description = """
+這是這座美麗的森林小鎮的廣場，一整片碧綠的草坪讓你有躺下來的衝動。
+廣場周圍都是茂密的樹林，有幾條道路由廣場通入森林。在你前方的廣場中央有
+一株非常巨大的樹傲然地挺立著。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13613.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13605
+[rooms.13613.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13609
+[[rooms.13613.resets.mobiles]]
+vnum = 13616
+limit = 4
+
+[rooms.13614]
+name = "林間幹道"
+description = """
+這是森林小鎮裡的幹道，頭上茂密的森林使得你不太肯定現在的天氣狀況，
+光線雖然黯淡，但還足夠看清楚風景。一股涼風由林木間吹過來，帶來了陣陣的
+蟲鳴。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13614.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13625
+[rooms.13614.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13615
+[rooms.13614.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13608
+[rooms.13614.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13624
+[[rooms.13614.resets.mobiles]]
+vnum = 13606
+limit = 2
+
+[rooms.13615]
+name = "林間幹道"
+description = """
+這是森林小鎮裡的幹道，建築在茂密的森林裡。你身旁不時有松鼠及紅狐等小
+動物跑來跑去，完全不懼怕你的靠近。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13615.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13645
+[rooms.13615.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13616
+[rooms.13615.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13614
+[rooms.13615.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13620
+[[rooms.13615.resets.mobiles]]
+vnum = 13603
+limit = 2
+
+[rooms.13616]
+name = "苗圃"
+description = """
+這裡是精靈們培育小樹苗的地方，你看到許多不同種類的小樹被細心照顧著，
+等到適當時機精靈們會將他們移植到需要的地方。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13616.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13615
+
+[rooms.13617]
+name = "林間幹道"
+description = """
+這是森林小鎮裡的幹道，頭上茂密的森林使得你不太肯定現在的天氣狀況，
+光線雖然黯淡，但還足夠看清楚風景。一股涼風由林木間吹過來，帶來了陣陣的
+蟲鳴。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13617.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13623
+[rooms.13617.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13609
+[rooms.13617.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13618
+[rooms.13617.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13622
+
+[rooms.13618]
+name = "小鎮幹道"
+description = """
+這是森林小鎮裡的幹道，四週的花草樹木都生長得非常健康，當然生長於此的
+昆蟲動物們也特別活潑忙碌。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13618.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13617
+[rooms.13618.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13619
+[rooms.13618.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13633
+[[rooms.13618.resets.mobiles]]
+vnum = 13605
+limit = 2
+
+[rooms.13619]
+name = "河堤"
+description = """
+你前面是一條流經森林的小溪，溪水不深但很湍急。清澈的溪裡可以看到許多
+小魚及溪底的石塊。
+　　東邊有一座造型獨特的小石屋。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13619.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13671
+[rooms.13619.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13618
+
+[rooms.13620]
+name = "森林步道"
+description = """
+這是森林裡的一條步道，步道兩旁都是高聳的大樹，幾隻雲雀在樹上高興
+地唱歌，讓你不覺地也哼起一些熟悉的曲調。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13620.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13615
+[rooms.13620.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13642
+[rooms.13620.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13621
+
+[rooms.13621]
+name = "森林步道"
+description = """
+這裡的樹木都是高大的針葉林，地上掉滿了樹枝及樹葉。精靈們除了道路外並
+沒有刻意清地上的枝葉，看來是為了給住在森林裡的昆蟲們一個安適的家。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13621.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13620
+[rooms.13621.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13643
+[rooms.13621.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13644
+[[rooms.13621.resets.mobiles]]
+vnum = 13604
+limit = 2
+
+[rooms.13622]
+name = "一棟木屋"
+description = """
+這是蓋在森林裡的一棟木屋，和周圍的環境搭配得相當自然。屋裡的擺設實際
+而簡單，看來屋主也是一個樸素的人。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13622.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13617
+[[rooms.13622.resets.groups]]
+leader_vnum = 13620
+follower_vnum = 1
+protect = true
+[[rooms.13622.resets.groups]]
+leader_vnum = 13621
+follower_vnum = 1
+protect = true
+
+[rooms.13623]
+name = "銀行"
+description = """
+這裡也有大陸連鎖銀行，真叫你吃了一驚，看來銀行家們也認為精靈鎮是一個
+有發展潛力的地方。這裡的銀行和史卡拉貝的不同，所有的東西都是木製的，看
+起來儉樸多了。美麗的櫃檯小姐遞了一張說明(note)給你。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.13623.extra_descriptions]]
+keywords = "note"
+description = """
+deposit --- 存入金錢
+　　　　withdraw -- 提領現金
+"""
+[rooms.13623.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13617
+[[rooms.13623.resets.mobiles]]
+vnum = 13608
+limit = 1
+
+[rooms.13624]
+name = "一棟儉樸木屋"
+description = """
+一般精靈都過著珍惜自然的儉樸生活，而這座木屋的擺設更是簡單。除了生活
+必須的幾樣簡單家俱外，你簡直看不到其他東西。史卡拉貝就算貧民也住得比這
+裡好，你這樣想著。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13624.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13614
+
+[rooms.13625]
+name = "晨霧武器中心"
+description = """
+這是一家小巧的武器店，玻璃櫃子裡擺著老闆最自豪的匕首，後面的架子上則
+是插了許多大型武器。高大的老闆坐在櫃檯後笑瞇瞇地看著客人，他的身後有張
+佈告(note)。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.13625.extra_descriptions]]
+keywords = "note"
+description = """
+佈告上寫著：
+
+  查詢(list)：看看店裡現在有那些東西。
+  購買(buy)：跟老闆買下你看中的東西。
+  估價(value)：請老闆免費幫你看看這樣東西可以賣多少錢。
+  拍賣(sell)：把不要的東西賣給老闆。
+"""
+[rooms.13625.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13614
+[[rooms.13625.resets.mobiles]]
+vnum = 13623
+limit = 1
+[[rooms.13625.resets.mobiles.inventory]]
+vnum = 13602
+[[rooms.13625.resets.mobiles.inventory]]
+vnum = 13603
+[[rooms.13625.resets.mobiles.inventory]]
+vnum = 13604
+[[rooms.13625.resets.mobiles.inventory]]
+vnum = 13605
+
+[rooms.13626]
+name = "一棟木屋"
+description = """
+這是蓋在森林裡的一棟木屋，和周圍的環境搭配得相當自然。屋裡的擺設實際
+而簡單，看來屋主也是一個樸素的人。趁主人不在，還是快走吧。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13626.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13606
+[[rooms.13626.resets.groups]]
+leader_vnum = 13627
+follower_vnum = 1
+protect = true
+
+[rooms.13627]
+name = "森林步道"
+description = """
+這裡的樹木都是高大的針葉林，地上掉滿了樹枝及樹葉。精靈們除了道路外並
+沒有刻意清地上的枝葉，看來是為了給住在森林裡的昆蟲們一個安適的家。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13627.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13631
+[rooms.13627.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13606
+[rooms.13627.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13628
+
+[rooms.13628]
+name = "森林步道"
+description = """
+這裡的樹木都是高大的針葉林，地上掉滿了樹枝及樹葉。精靈們除了道路外並
+沒有刻意清地上的枝葉，看來是為了給住在森林裡的昆蟲們一個安適的家。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13628.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13632
+[rooms.13628.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13627
+[rooms.13628.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13629
+[[rooms.13628.resets.mobiles]]
+vnum = 13605
+limit = 2
+
+[rooms.13629]
+name = "狹窄步道"
+description = """
+步道越來越狹窄，到這裡只能讓雙人並肩通過，同時道路兩旁的樹也越來越緊
+密，好像是一堵牆一樣。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13629.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13628
+[rooms.13629.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13638
+[rooms.13629.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13630
+[[rooms.13629.resets.mobiles]]
+vnum = 13601
+limit = 2
+
+[rooms.13630]
+name = "愛羅弓箭連鎖精靈鎮分店"
+description = """
+愛羅‧費茲歐文(Iolo Fitzowen)善於製造弓箭，他的妻子葛溫妮斯(Gwenneth)
+則具有生意頭腦。他們的弓箭連鎖在大陸上的各大城鎮都有分店，不過據說
+精靈鎮的這家分店是技術最好的一家喔！也許這是因為精靈族本就是弓箭
+的愛用者吧？牆壁上有張公告(note)。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.13630.extra_descriptions]]
+keywords = "note"
+description = """
+佈告上寫著：
+
+  查詢(list)：看看店裡現在有那些東西。
+  購買(buy)：跟老闆買下你看中的東西。
+  估價(value)：請老闆免費幫你看看這樣東西可以賣多少錢。
+  拍賣(sell)：把不要的東西賣給老闆。
+"""
+[rooms.13630.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13629
+[[rooms.13630.resets.mobiles]]
+vnum = 13609
+limit = 1
+[[rooms.13630.resets.mobiles.inventory]]
+vnum = 13613
+[[rooms.13630.resets.mobiles.inventory]]
+vnum = 13614
+[[rooms.13630.resets.mobiles.inventory]]
+vnum = 13615
+[[rooms.13630.resets.mobiles.inventory]]
+vnum = 13616
+[[rooms.13630.resets.mobiles.inventory]]
+vnum = 13617
+[[rooms.13630.resets.mobiles.inventory]]
+vnum = 13618
+
+[rooms.13631]
+name = "一棟木屋"
+description = """
+這是蓋在森林裡的一棟木屋，和周圍的環境搭配得相當自然。屋裡的擺設實際
+而簡單，看來屋主也是一個樸素的人。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13631.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13627
+
+[rooms.13632]
+name = "帆影花藝坊"
+description = """
+一走進這裡你便眼睛一亮，許多漂亮的花炫麗地綻開著，空氣裡瀰漫著一股淡
+淡的清香。牆上貼著一張彩色的價目表(note)。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.13632.extra_descriptions]]
+keywords = "note"
+description = """
+佈告上寫著：
+
+  查詢(list)：看看店裡現在有那些東西。
+  購買(buy)：跟老闆買下你看中的東西。
+  估價(value)：請老闆免費幫你看看這樣東西可以賣多少錢。
+  拍賣(sell)：把不要的東西賣給老闆。
+"""
+[rooms.13632.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13628
+[[rooms.13632.resets.mobiles]]
+vnum = 13610
+limit = 1
+[[rooms.13632.resets.mobiles.inventory]]
+vnum = 13607
+[[rooms.13632.resets.mobiles.inventory]]
+vnum = 13608
+[[rooms.13632.resets.mobiles.inventory]]
+vnum = 13644
+[[rooms.13632.resets.mobiles.inventory]]
+vnum = 13650
+
+[rooms.13633]
+name = "森林步道"
+description = """
+這是森林裡的一條步道，步道兩旁都是高聳的大樹，幾隻雲雀在樹上高興地唱歌，讓你不覺地也哼起一些熟悉的曲調。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13633.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13618
+[rooms.13633.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13636
+[rooms.13633.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13634
+[[rooms.13633.resets.mobiles]]
+vnum = 13603
+limit = 2
+
+[rooms.13634]
+name = "一望無際的櫻花樹林"
+description = """
+這裡有著難以數計的櫻花。放眼遠望，盡是粉紅的櫻瓣——綻放在上方的，
+是枝頭盛開的花蕾；鋪綴在下方的，是落英積成的厚厚地毯；而飄散在你面前的
+，是片片輕緩搖落的蕾瓣。
+    		忽然吹來一陣風。捲起了，
+    		漫 天 的 粉 紅 櫻 瓣 
+    		所謂的櫻花吹雪，就是這樣的景象吧……
+南邊的林中隱匿著一棟小小木屋，屋頂積著厚厚的櫻花瓣蕾，宛然被眷埋藏
+在花堆之中。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13634.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13633
+[rooms.13634.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13635
+[rooms.13634.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 13637
+[rooms.13634.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13650
+[[rooms.13634.resets.mobiles]]
+vnum = 13602
+limit = 2
+[[rooms.13634.resets.mobiles]]
+vnum = 13616
+limit = 4
+
+[rooms.13635]
+name = "一棟木屋"
+description = """
+這是蓋在森林裡的一棟木屋，和周圍的環境搭配得相當自然。屋裡的擺設實際
+而簡單，看來屋主也是一個樸素的人。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13635.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13634
+[[rooms.13635.resets.mobiles]]
+vnum = 13615
+limit = 3
+
+[rooms.13636]
+name = "露珠捲軸小鋪"
+description = """
+精靈們深知魔法的重要性，既使是武士也會隨身攜帶一些魔法捲軸。露珠捲軸
+小鋪提供了一些冒險路途上必須的捲軸，你可以看看目錄(menu)。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.13636.extra_descriptions]]
+keywords = "menu"
+description = """
+目錄上寫著：
+
+  查詢(list)：看看店裡現在有那些東西。
+  購買(buy)：跟老闆買下你看中的東西。
+  估價(value)：請老闆免費幫你看看這樣東西可以賣多少錢。
+  拍賣(sell)：把不要的東西賣給老闆。
+"""
+[rooms.13636.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13633
+[[rooms.13636.resets.mobiles]]
+vnum = 13611
+limit = 1
+[[rooms.13636.resets.mobiles.inventory]]
+vnum = 13609
+[[rooms.13636.resets.mobiles.inventory]]
+vnum = 13645
+
+[rooms.13637]
+name = "一間木屋"
+description = """
+這是 Fanatic 和 Sakurako 的房子。雖然在精靈族中居於高位，但這住宅
+並不奢華；相反地，樸素典雅而寬敞明亮，住來十分舒適。
+    向窗外望去，幾片櫻瓣緩緩落下。被一望無際的櫻花樹林包圍，彷彿與世隔
+絕一般，使人興起一股永恆的眷戀。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13637.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 13634
+[[rooms.13637.resets.objects]]
+vnum = 13612
+
+[rooms.13638]
+name = "一棟木屋"
+description = """
+這是蓋在森林裡的一棟木屋，和周圍的環境搭配得相當自然。屋裡的擺設實際
+而簡單，看來屋主也是一個樸素的人。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13638.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13629
+[[rooms.13638.resets.mobiles]]
+vnum = 13637
+limit = 1
+
+[rooms.13639]
+name = "會議廳"
+description = """
+這是精靈們的會議廳，建築在生命之樹的一個樹洞裡，當需要討論重要的事情
+時大家便在這裡集思廣益。會議廳中央有一個很大的桌子，桌子旁擺了許多的坐
+墊，牆上還掛著一些裝飾品(ornaments)。
+"""
+flags = ["NO_MOB", "SAFE", "NO_RECALL", "SUMMON_BIT"]
+sector = "FOREST"
+[[rooms.13639.extra_descriptions]]
+keywords = "ornaments"
+description = """
+大部份都是一些精緻的木雕藝術品，表現出精靈的日常生活及文化傳統。
+"""
+[rooms.13639.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13604
+[rooms.13639.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13640
+[[rooms.13639.resets.mobiles]]
+vnum = 13618
+limit = 1
+[[rooms.13639.resets.mobiles.equipment]]
+vnum = 13638
+wear_loc = "WIELD"
+[[rooms.13639.resets.mobiles]]
+vnum = 13626
+limit = 1
+[[rooms.13639.resets.mobiles]]
+vnum = 13627
+limit = 1
+
+[rooms.13640]
+name = "神殿"
+description = """
+這是精靈們神聖的聖殿，祭壇上擺了許多牌位以及祭祀的工具。你仔細看了牌
+位，發現都是精靈的祖先以及一些自然之神。
+"""
+flags = ["NO_MOB", "SAFE", "NO_RECALL", "SUMMON_BIT"]
+sector = "FOREST"
+[rooms.13640.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13639
+[rooms.13640.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13641
+[[rooms.13640.resets.mobiles]]
+vnum = 13625
+limit = 1
+
+[rooms.13641]
+name = "瞭望塔"
+description = """
+這裡的高度雖然只有到生命之樹的一半，卻已經可以瞭望到很遠的地方。往西
+邊望去，你可以看到遙遠的史卡拉貝山頂聖殿以及一大片蒼翠的森林，東邊是一
+個開闊的草原，南邊的遠處則是一大片黃沙。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13641.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13640
+[[rooms.13641.resets.mobiles]]
+vnum = 13628
+limit = 1
+
+[rooms.13642]
+name = "楓葉小吃店"
+description = """
+店裡傳來陣陣燒烤的香味，還是坐下來吃點東西解解饞吧。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13642.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13620
+[[rooms.13642.resets.mobiles]]
+vnum = 13612
+limit = 1
+[[rooms.13642.resets.mobiles.inventory]]
+vnum = 13619
+[[rooms.13642.resets.mobiles.inventory]]
+vnum = 13620
+[[rooms.13642.resets.mobiles.inventory]]
+vnum = 13621
+
+[rooms.13643]
+name = "星河酒館"
+description = """
+看來這裡是精靈們工作一天後一同談笑歡樂，交換見聞的地方。店裡有許多橡
+木圓桌和椅子，不過現在卻沒什麼客人。
+"""
+flags = ["NO_MOB", "SAVE"]
+sector = "FOREST"
+[rooms.13643.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13621
+[[rooms.13643.resets.mobiles]]
+vnum = 13613
+limit = 1
+[[rooms.13643.resets.mobiles.inventory]]
+vnum = 13622
+[[rooms.13643.resets.mobiles.inventory]]
+vnum = 13623
+[[rooms.13643.resets.mobiles.inventory]]
+vnum = 13624
+[[rooms.13643.resets.mobiles.inventory]]
+vnum = 13625
+
+[rooms.13644]
+name = "野薑花防具"
+description = """
+精靈們一般不穿重甲，以免製造出聲響，驚嚇了森林裡膽怯的小動物。這裡販
+賣的都是一些比較輕便的護具。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13644.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13621
+[[rooms.13644.resets.mobiles]]
+vnum = 13624
+limit = 1
+[[rooms.13644.resets.mobiles.inventory]]
+vnum = 13626
+[[rooms.13644.resets.mobiles.inventory]]
+vnum = 13627
+[[rooms.13644.resets.mobiles.inventory]]
+vnum = 13628
+[[rooms.13644.resets.mobiles.inventory]]
+vnum = 13629
+
+[rooms.13645]
+name = "小鎮幹道"
+description = """
+這是森林小鎮裡的幹道，四週的花草樹木都生長得非常健康，當然生長於此的
+昆蟲動物們也特別活潑忙碌。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13645.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13646
+[rooms.13645.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13648
+[rooms.13645.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13615
+[[rooms.13645.resets.mobiles]]
+vnum = 13615
+limit = 3
+
+[rooms.13646]
+name = "森林步道"
+description = """
+道路變得比較小條，兩旁都是高聳的大樹。這裡已是森林的深處，四週慢慢安
+靜下來。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13646.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13647
+[rooms.13646.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13645
+[[rooms.13646.resets.mobiles]]
+vnum = 13601
+limit = 2
+[[rooms.13646.resets.mobiles.equipment]]
+vnum = 1317
+wear_loc = "WIELD"
+
+[rooms.13647]
+name = "林間空地"
+description = """
+這裡是步道終點，一個小小的林間空地。週遭安靜無聲，彷彿有什麼危機潛伏
+著。地上的草坪看起來不大平整....
+"""
+flags = []
+sector = "FOREST"
+[rooms.13647.exits.down]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 13600
+to_room = 13652
+[rooms.13647.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13646
+
+[rooms.13648]
+name = "苗圃"
+description = """
+這裡是精靈們培育小樹苗的地方，你看到許多不同種類的小樹被細心照顧著，
+等到適當時機精靈們會將他們移植到需要的地方。
+"""
+flags = []
+sector = "FOREST"
+[rooms.13648.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13645
+
+[rooms.13649]
+name = "馬廄"
+description = """
+這裡是精靈們飼養馬匹的地方，除了地上的乾草和馬糞，空氣中還瀰漫著一股
+馬臊味。牆上有份通知(note)。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.13649.extra_descriptions]]
+keywords = "note"
+description = """
+出售良馬！
+一匹馬只要三萬金幣。
+注意，一個人最多只允許擁有一匹馬。
+"""
+[rooms.13649.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13607
+
+[rooms.13650]
+name = "幸運草藥水專賣店"
+description = """
+精靈們深知魔法藥水在冒險旅程的重要性，所以既使是不會魔法的武士也喜歡
+攜帶一些魔力藥水，以增加自己的實力。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.13650.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13634
+[[rooms.13650.resets.mobiles]]
+vnum = 13614
+limit = 1
+[[rooms.13650.resets.mobiles.inventory]]
+vnum = 13610
+[[rooms.13650.resets.mobiles.inventory]]
+vnum = 13611
+
+[rooms.13651]
+name = "小鎮幹道終點"
+description = """
+小鎮的幹道在此終止，你前方是一座堅固的柵欄，柵欄外便是森林邊緣，面對
+著一個敞開的平原。在柵欄上有一個警告(warning)，你最好看看(look)。
+"""
+flags = []
+sector = "FOREST"
+[[rooms.13651.extra_descriptions]]
+keywords = "warning"
+description = """
+前面是地靈的營地，除非你想死，否則別再往前了！
+"""
+[rooms.13651.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 13600
+to_room = 13658
+[rooms.13651.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13607
+
+[rooms.13652]
+name = "地道"
+description = """
+這好像是一個臨時挖出來的地道，兩邊牆壁上的泥土都還很潮濕，你必須低著
+頭才能往前走。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13652.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13653
+[rooms.13652.exits.up]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 13647
+
+[rooms.13653]
+name = "地道"
+description = """
+這好像是一個臨時挖出來的地道，兩邊牆壁上的泥土都還很潮濕，你必須低著
+頭才能往前走。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13653.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13654
+[rooms.13653.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13652
+
+[rooms.13654]
+name = "地道轉角"
+description = """
+地道到這裡比較寬敞了，並且轉了一個直角。你開始懷疑為何這裡會有這個地
+道？
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13654.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13655
+[rooms.13654.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13653
+
+[rooms.13655]
+name = "地道"
+description = """
+這好像是一個臨時挖出來的地道，兩邊牆壁上的泥土都還很潮濕。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13655.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13654
+[rooms.13655.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13656
+[[rooms.13655.resets.mobiles]]
+vnum = 13619
+limit = 2
+[[rooms.13655.resets.mobiles.equipment]]
+vnum = 13634
+wear_loc = "WIELD"
+[[rooms.13655.resets.mobiles]]
+vnum = 13621
+limit = 3
+[[rooms.13655.resets.mobiles]]
+vnum = 13620
+limit = 3
+
+[rooms.13656]
+name = "地道"
+description = """
+這好像是一個臨時挖出來的地道，兩邊牆壁上的泥土都還很潮濕。
+"""
+flags = ["UNDERGROUND"]
+sector = "FOREST"
+[rooms.13656.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13657
+[rooms.13656.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13655
+[[rooms.13656.resets.mobiles]]
+vnum = 13620
+limit = 3
+[[rooms.13656.resets.mobiles]]
+vnum = 13619
+limit = 2
+[[rooms.13656.resets.mobiles.equipment]]
+vnum = 13634
+wear_loc = "WIELD"
+[[rooms.13656.resets.mobiles]]
+vnum = 13621
+limit = 3
+
+[rooms.13657]
+name = "地道終點"
+description = """
+這是地道終點的一個大房間，裡面堆了許多生活補給品，看來這裡已被當成一
+個暫時的秘密基地。
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT"]
+sector = "FOREST"
+[rooms.13657.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13656
+[[rooms.13657.resets.mobiles]]
+vnum = 13622
+limit = 1
+[[rooms.13657.resets.mobiles.equipment]]
+vnum = 13634
+wear_loc = "WIELD"
+[[rooms.13657.resets.mobiles.equipment]]
+vnum = 13635
+wear_loc = "ARMS"
+[[rooms.13657.resets.mobiles.inventory]]
+vnum = 13636
+[[rooms.13657.resets.mobiles]]
+vnum = 13620
+limit = 3
+[[rooms.13657.resets.mobiles]]
+vnum = 13621
+limit = 3
+
+[rooms.13658]
+name = "森林出口"
+description = """
+這裡是森林東邊的出口，在你面前是一片廣闊的谷地。你看到谷地裡搭起了許
+多黑色的營帳。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.13658.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13659
+[rooms.13658.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13651
+
+[rooms.13659]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13659.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13660
+[rooms.13659.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13663
+[rooms.13659.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13658
+[rooms.13659.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13661
+
+[rooms.13660]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13660.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13664
+[rooms.13660.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13659
+[[rooms.13660.resets.mobiles]]
+vnum = 13634
+limit = 2
+[[rooms.13660.resets.mobiles.equipment]]
+vnum = 13634
+wear_loc = "WIELD"
+
+[rooms.13661]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13661.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13659
+[rooms.13661.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13662
+[[rooms.13661.resets.mobiles]]
+vnum = 13634
+limit = 2
+[[rooms.13661.resets.mobiles.equipment]]
+vnum = 13634
+wear_loc = "WIELD"
+
+[rooms.13662]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13662.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13663
+[rooms.13662.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13665
+[rooms.13662.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13661
+[[rooms.13662.resets.mobiles]]
+vnum = 13636
+limit = 2
+
+[rooms.13663]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13663.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13664
+[rooms.13663.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13666
+[rooms.13663.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13659
+[rooms.13663.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13662
+[[rooms.13663.resets.mobiles]]
+vnum = 13635
+limit = 2
+[[rooms.13663.resets.mobiles.equipment]]
+vnum = 13635
+wear_loc = "ARMS"
+
+[rooms.13664]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13664.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13667
+[rooms.13664.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13660
+[rooms.13664.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13663
+[[rooms.13664.resets.mobiles]]
+vnum = 13636
+limit = 2
+
+[rooms.13665]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13665.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13666
+[rooms.13665.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13662
+
+[rooms.13666]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。你的北方有一個特別巨大的營帳，應該是地靈的指揮
+所。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13666.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13667
+[rooms.13666.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 13600
+to_room = 13668
+[rooms.13666.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13663
+[rooms.13666.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13665
+[[rooms.13666.resets.mobiles]]
+vnum = 13635
+limit = 2
+[[rooms.13666.resets.mobiles.equipment]]
+vnum = 13635
+wear_loc = "ARMS"
+
+[rooms.13667]
+name = "營地"
+description = """
+你正在地靈們的營地裡，四週搭起許多巨大的營帳，營火還在熊熊燒著，上面
+架著許多地靈獵來的動物。
+　　東邊有一條山道向著高山深處而去。
+"""
+flags = ["SUMMON_BIT"]
+sector = "FIELD"
+[rooms.13667.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66100
+[rooms.13667.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13664
+[rooms.13667.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13666
+
+[rooms.13668]
+name = "巨大營帳"
+description = """
+這一個巨大的營帳裡擺滿許多地圖和計畫書，中央有個大木桌。
+"""
+flags = ["NO_MOB", "SUMMON_BIT"]
+sector = "INSIDE"
+[rooms.13668.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 13666
+
+[rooms.13669]
+name = "精靈馬廄"
+description = """
+這裡是精靈們飼養馬匹的地方，除了地上的乾草和馬糞，空氣中還瀰漫著一股
+馬臊味。一格一格小房間內的馬匹毛色都散發一種亮麗的光澤，看起來馬夫把馬照
+顧得相當不錯，你或許可以買幾匹來當個代步工具。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.13669.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13607
+
+[rooms.13670]
+name = "精靈馬廄"
+description = """
+這裡是精靈們飼養馬匹的地方，除了地上的乾草和馬糞，空氣中還瀰漫著一股
+馬臊味。一格一格小房間內的馬匹毛色都散發一種亮麗的光澤，看起來馬夫把馬照
+顧得相當不錯，你或許可以買幾匹來當個代步工具。
+"""
+flags = []
+sector = "INSIDE"
+
+[rooms.13671]
+name = "精靈魔工坊的外面"
+description = """
+這座奇特的小石屋有著盔甲般的外型，看起來十分引人注目。門口上有張寫著
+「精靈魔工坊」大字的招牌 (signboard)，大字的下面另有數行小字，寫著這家店
+的營業項目與細節。繼續往東走就可以進去裡面了。
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.13671.extra_descriptions]]
+keywords = "signboard"
+description = """
+本店營業時間：早上六點到晚上六點。
+　　營業項目：本店提供裝備修理服務。
+　　　　　　　熟客可另行購買到府維修之服務。
+　　　　　　　本店尚且不定時收購大量鍊金與魔法材料。
+　　　　　　　其餘細節請入內洽談。
+"""
+[rooms.13671.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "BASHPROOF", "PASSPROOF"]
+key = 13665
+to_room = 13672
+[rooms.13671.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13619
+
+[rooms.13672]
+name = "精靈魔工坊"
+description = """
+這裡的四周擺滿了各種各式各樣的裝備，你看到其中有不少價值不斐的稀有魔
+法裝備，都好像不用錢似的隨意擱置。雖然你很想順手牽羊，但是這些裝備卻好像
+被特殊的魔法保護著，讓你的意圖成空。看來這裡的主人不簡單啊？
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.13672.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PASSPROOF"]
+key = 13665
+to_room = 13673
+[rooms.13672.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13674
+[rooms.13672.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "BASHPROOF", "PASSPROOF"]
+key = 13665
+to_room = 13671
+
+[rooms.13673]
+name = "學徒臥室"
+description = """
+這裡是精靈魔工坊的學徒休息的地方。除了一張桌子、兩張吊床以外，這裡就
+只有滿地的垃圾，差不多等於單身男子住處的兩倍髒亂。牆上寫一堆諸如「去死去
+死團萬歲！」、「我要女朋友！」、「從今天開始告別單身」之類的....算是勵志
+標語吧？
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.13673.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PASSPROOF"]
+key = 13665
+to_room = 13672
+
+[rooms.13674]
+name = "魔匠大師的房間"
+description = """
+這裡是被稱為「魔匠大師」的精靈－萊卡梅爾的房間。身為大魔法師、大魔匠
+師的他好像已經不用睡覺似的，房間裡看不到任何的寢具。反倒是魔法金屬、礦石
+與各式半成品擺滿了整個房間，房間的中央還擺著一個小型的魔法融爐，方便里卡
+梅爾靈感來時可以立即動手製作。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.13674.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13672

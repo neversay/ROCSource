@@ -1,0 +1,6882 @@
+[area]
+name = "巢穴貧民區"
+identity = "slum"
+builders = "Neversay"
+translator = "----"
+modifier = "----"
+vnum_start = 9400
+vnum_end = 9499
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.9400]
+keywords = "libei-slum"
+short_description = "貧民窟之王利拜(Libei)"
+long_description = "醜陋至極的貧民區之王利拜(Libei)顫抖地看著你。\n"
+description = """
+一位醜陋不堪的老頭子，握著柺杖，留著口水，顫抖地看著你，他是這個區
+域的地下統治者，也許你可以向他要一份工作(job)來作。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 1
+mod_hitplus = 700
+mod_mana = 300
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = -150
+mod_svs = 0
+dodge = -150
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Human"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9400.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell 不要欺人太甚！
+    	c 'magic missile' $n 
+  endif
+  if rand(60)
+  	say \u001B[1;36m恐---懼---的---總---和---！\u001B[0m
+  	c 2 'magic missile' $n
+  	mpechoat $n 你心中突然冒出一股莫名的恐懼！
+  	mpforce $n flee
+  	mpforce $n flee
+  	mpforce $n flee
+  endif
+"""
+[[mobiles.9400.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == slum_all_enemy
+    	say 你要為你的暴行付出代價！
+    	mpkill $n
+    	break
+  endif
+  if is_qmark($n) != slum_libei_quest
+  or is_qmark($n) == slum_libei_quest 300001
+    	mpadd_qmark $n slum_libei_quest -1 0 0 1 0 1
+    	say 歡迎光臨巢穴，冒險者，你需要工作(job)嗎？
+    	break
+  endif
+  if level($n) >= 12
+    	sigh
+    	say 女兒呀......
+  endif
+"""
+[[mobiles.9400.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != slum_libei_quest
+  	mpadd_qmark $n slum_libei_quest -1 0 0 1 0 1
+ 	say 你好呀，冒險者，想要找工作(job)嗎？
+	break
+  endif
+  if is_qmark($n) > slum_libei_quest 300001
+	say 好好努力完成任務吧。
+	break
+  endif
+  if is_qmark($n) == slum_libei_quest
+	if is_qmark($n) & slum_libei_quest 100512
+      		say 真是太感謝你了，巢穴的英雄$n。
+		break
+	endif
+	if is_qmark($n) & slum_libei_quest 100256
+	        say 啊，感謝你破除了我女兒身上的詛咒，$n。
+		break
+	endif
+	if is_qmark($n) & slum_libei_quest 100128
+	        say 謝謝你救了我唯一的寶貝，巢穴的英雄$n。
+		break
+	endif
+	if is_qmark($n) & slum_libei_quest 100002
+	        say 準備好要為我工作(job)了嗎？
+		break
+	endif
+  endif
+"""
+[[mobiles.9400.programs]]
+trigger = "talk_prog"
+argument = "job"
+script = """
+if is_qmark($n) == slum_libei_nojob
+    	say 懶惰者！等我氣消了再說吧！
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300510
+    	say 先把我交代的事情辦完再說吧。
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 100512
+    	say 啊，你已經完成我能給你的所有任務了，謝謝你了，冒險者。
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 100002
+    	if level($n) >= 12
+      		if is_qmark($n) & slum_libei_quest 100128
+        		say /*save slum1*/
+        		say /*mpmod_qmark $n slum_libei_quest v2 | 256*/
+        		say /*mpmod_qmark $n slum_libei_quest v1 | 1*/
+        		say /*remove curse use eilien's qmark*/
+        		say /*mpadd_qmark $n slum_libei_saveslum -1 1 0 0 0 1*/
+        		break
+      		endif
+      		if is_qmark($n) & slum_libei_quest 100002     
+        		mpechoat $n $I突然以嚴肅的眼光看著你。
+        		mpcallout 1 say 冒險者呀，你可知失去與獲得的痛苦？
+        		mpcallout 1 mpoload 9425 1
+        		mpcallout 2 give secret $n
+        		mpcallout 3 mpechoat $n $I低聲說：「去吧，冒險者，這個任務我只有信任你了。」
+        		mpcallout 3 mpmod_qmark $n slum_libei_quest v2 | 128
+        		mpcallout 3 mpmod_qmark $n slum_libei_quest v1 | 1
+        		mpcallout 3 mpadd_qmark $n slum_libei_eilien -1 1 0 0 0 1
+      		endif
+      		break
+    	endif
+    	say 最近年紀大了，不大愛講長篇大論......
+    	mpechoat $n $I將手伸進袖子裡，開始找東西......
+    	if rand(20)
+      		mpoload 9420 1
+      		mpmod_qmark $n slum_libei_quest v2 | 4
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	if rand(25)
+      		mpoload 9421 1
+      		mpmod_qmark $n slum_libei_quest v2 | 16
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	if rand(33)
+      		mpoload 9422 1
+      		mpmod_qmark $n slum_libei_quest v2 | 64
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	if rand(50)
+      		mpoload 9423 1
+      		mpmod_qmark $n slum_libei_quest v2 | 8
+      		mpcallout 1 mpcall job_1 $n
+		break
+    	endif
+    	mpoload 9424 1
+    	mpmod_qmark $n slum_libei_quest v2 | 32
+    	mpcallout 1 mpcall job_1 $n
+    	break
+  endif
+  mpadd_qmark $n slum_libei_quest -1 1 0 0 0 1
+  mpmod_qmark $n slum_libei_quest v2 | 2
+  mpechoat $n $I睜起一隻眼，左右打量你......
+  say 嗯，我看你資質還不錯，應該是可以託付重任的人。
+  say 這樣吧，你先到上面，找依普西隆(epsilon)，要他跟你介紹巢穴的
+  say 大略地理環境(environment)吧！
+  mpecho $I又想了一下......
+  mpcallout 1 say 如果聽完介紹，記得回來報備(complete)一聲。
+"""
+[[mobiles.9400.programs]]
+trigger = "defun_prog"
+argument = "job_1"
+script = """
+say 這封信拿去吧，裡面已經詳細交代一切了。
+      give mail $n
+      break
+"""
+[[mobiles.9400.programs]]
+trigger = "talk_prog"
+argument = "complete"
+script = """
+if is_qmark($n) & slum_libei_quest 100002
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300002
+    	if is_qmark($n) & slum_libei_quest 200002
+      		mpmod_qmark $n slum_libei_quest v0 | 2
+      		mpmod_qmark $n slum_libei_quest v1 = 0
+      		mpmod_qmark $n slum_libei_quest v2 = 0
+      		say 很好，看來你已經有替我辦事的能力與認知了，現在，如果你需要
+      		say 工作(job)，就跟我說吧。
+      		mpexp $n 200
+      		mpgold $n 3000
+    	endif
+  endif
+"""
+[[mobiles.9400.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+mpechoat $n 你跟$I取消正在進行中的任務。
+  mpechoaround $n $N跟$I取消任務。
+  if is_qmark($n) == slum_libei_deny
+    	say 不行，你重新任務的頻率太頻繁了，等一下再說吧。
+    	say 我不會雇用懶惰者的。
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300124
+    	mpmod_qmark $n slum_libei_quest v2 r 124
+	mpdel_qmark $n slum_str_quest
+	mpdel_qmark $n slum_dex_quest
+	mpdel_qmark $n slum_int_quest
+	mpdel_qmark $n slum_wis_quest
+	mpdel_qmark $n slum_con_quest
+    	mpmod_qmark $n slum_libei_quest v1 = 0
+    	mpadd_qmark $n slum_libei_deny 10 1 0 0 1 1
+    	say 好，任務重新開始。
+  endif
+  if is_qmark($n) & slum_libei_quest 300128
+    	mpmod_qmark $n slum_libei_quest v2 r 128
+	mpdel_qmark $n slum_libei_eilien
+    	say 好，那請你再重新拯救我女兒吧。
+  endif
+  if is_qmark($n) & slum_libei_quest 300512
+    	mpmod_qmark $n slum_libei_quest v2 r 256
+	mpdel_qmark $n slum_libei_saveslum
+    	say 好，請你再重新保衛巢穴一次吧。
+  endif
+"""
+[[mobiles.9400.programs]]
+trigger = "talk_prog"
+argument = "epsilon"
+script = """
+if is_qmark($n) > slum_libei_quest 100002
+    	say 你不是知道他了嗎？就是樓上那位呀。
+    	break
+  endif
+  say 在入口彈琴說故事的就是了。
+"""
+[[mobiles.9400.programs]]
+trigger = "give_prog"
+argument = "9415"
+script = """
+mpjunk signed
+  if is_qmark($n) & slum_libei_quest 300004
+  if is_qmark($n) & slum_libei_quest 200004
+  	if is_qmark($n) <= slum_str_quest 200001
+    		say 你根本沒有努力工作！
+    		say 真是可惡的欺騙者！
+    		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+    		mpmod_qmark $n slum_libei_quest v2 r 4
+    		mpmod_qmark $n slum_libei_quest v1 r 4
+    		mpdel_qmark $n slum_str_quest
+    		break
+  	endif
+    	mpechoat $n $I將信函看了一遍......
+	if is_qmark($n) !& slum_libei_quest 100004
+		mpexp $n 100
+	endif
+    	mpmod_qmark $n slum_libei_quest v0 | 4
+    	mpmod_qmark $n slum_libei_quest v2 r 4
+    	mpmod_qmark $n slum_libei_quest v1 r 4
+    	if is_qmark($n) >= slum_str_quest 200020
+    		if wis($n) >= 16
+    		or race($n) == gnome
+    			mpechoat $n 因為你高超的睿智，你得到額外的經驗值！
+    			mpexp $n 100
+    		endif
+    		if int($n) >= 16
+    		or race($n) == human
+    			mpechoat $n 因為你高超的哄抬技巧，你得到額外的薪資！
+    			mpgold 5000
+    		endif
+    	endif
+	if is_qmark($n) < slum_str_quest 200004
+      		mpexp $n 40
+      		mpgold $n 500
+  		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) < slum_str_quest 200014
+      		mpexp $n 240
+      		mpgold $n 7500
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) < slum_str_quest 200024
+      		mpexp $n 400
+      		mpgold $n 12500
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) < slum_str_quest 200032
+      		mpexp $n 560
+      		mpgold $n 22500
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+      		break
+    	endif
+    	if is_qmark($n) >= slum_str_quest 200032
+      		mpexp $n 700
+      		mpgold $n 45000
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_str_quest
+    	endif
+  endif
+  endif
+"""
+[[mobiles.9400.programs]]
+trigger = "give_prog"
+argument = "9418"
+script = """
+mpjunk signed
+  if is_qmark($n) & slum_libei_quest 300008
+  if is_qmark($n) & slum_libei_quest 200008
+  	if is_qmark($n) <= slum_dex_quest 200001
+  	  	say 你根本沒有努力工作！
+    		say 真是可惡的欺騙者！
+    		mpadd_qmark $n slum_libei_nojob 20 0 1 0 1 1
+    		mpmod_qmark $n slum_libei_quest v2 r 8
+    		mpmod_qmark $n slum_libei_quest v1 r 8
+    		mpdel_qmark $n slum_dex_quest
+    		break
+  	endif
+  	mpechoat $n $I將信函看了一遍......
+  	if is_qmark($n) !& slum_libei_quest 100008
+		mpexp $n 200
+	endif
+  	mpmod_qmark $n slum_libei_quest v0 | 8
+  	mpmod_qmark $n slum_libei_quest v2 r 8
+  	mpmod_qmark $n slum_libei_quest v1 r 8
+  	mpadd_qmark $i count_mark 2 1 0 0 0 0
+  	if is_qmark($n) & slum_libei_quest 200002
+    		mpgold $n 7500
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200004
+  	  	mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200008
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  		endif
+  	if is_qmark($n) & slum_libei_quest 200016
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200032
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($n) & slum_libei_quest 200064
+    		mpgold $n 6000
+    		mpexp $n 120
+    		mpmod_qmark $i count_mark v1 + 1
+  	endif
+  	if is_qmark($i) > count_mark 200004
+  		if wis($n) >= 15
+  		or race($n) == gnome
+  			mpechoat $n 因為你高超的睿智，你得到額外的經驗值！
+    			mpexp $n 120
+  		endif
+  		if int($n) >= 16
+    		or race($n) == human
+    			mpechoat $n 因為你高超的哄抬技巧，你得到額外的薪資！
+    			mpgold $n 6000
+    		endif
+  	endif
+  	mpdel_qmark $i count_mark
+	mpcall end_1 $n
+	mpdel_qmark $n slum_dex_quest
+  endif
+  endif
+"""
+[[mobiles.9400.programs]]
+trigger = "give_prog"
+argument = "9416"
+script = """
+mpjunk potion
+  if is_qmark($n) & slum_libei_quest 300016
+  if is_qmark($n) & slum_libei_quest 200016
+  	if is_qmark($n) <= slum_int_quest 200001
+    		mpecho $I看看手上的藥水......
+    		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+    		mpmod_qmark $n slum_libei_quest v2 r 16
+    		mpmod_qmark $n slum_libei_quest v1 r 16
+    		mpdel_qmark $n slum_int_quest
+    		mpcallout 1 say 你根本沒有努力工作！
+    		mpcallout 1 say 真是可惡的欺騙者！
+    		break
+  	endif
+  	mpecho $I舉起藥水，一飲而盡......
+  	if is_qmark($n) !& slum_libei_quest 100016
+		mpexp $n 200
+	endif
+  	mpmod_qmark $n slum_libei_quest v0 | 16
+  	mpmod_qmark $n slum_libei_quest v2 r 16
+  	mpmod_qmark $n slum_libei_quest v1 r 16
+	if is_qmark($n) > slum_int_quest 200015
+		if wis($n) >= 16
+  		or race($n) == gnome
+  			mpechoat $n 因為你高超的睿智，你得到額外的經驗值！
+    			mpexp $n 140
+  		endif
+  		if int($n) >= 19
+    		or race($n) == human
+    			mpechoat $n 因為你高超的哄抬技巧，你得到額外的薪資！
+    			mpgold $n 10000
+    		endif
+	endif
+  	if is_qmark($n) & slum_int_quest 200002
+    		mpexp $n 60
+    		mpgold $n 5000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200004
+    		mpexp $n 80
+    		mpgold $n 6000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200008
+    		mpexp $n 100
+    		mpgold $n 10000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200016
+    		mpexp $n 150
+    		mpgold $n 12500
+  	endif
+  	if is_qmark($n) & slum_int_quest 200032
+    		mpexp $n 190
+    		mpgold $n 15000
+  	endif
+  	if is_qmark($n) & slum_int_quest 200064
+    		mpexp $n 220
+    		mpgold $n 20000
+  	endif
+  	mpcall end_1 $n
+	mpdel_qmark $n slum_int_quest
+endif
+endif
+"""
+[[mobiles.9400.programs]]
+trigger = "give_prog"
+argument = "9419"
+script = """
+mpjunk mail
+  if is_qmark($n) & slum_libei_quest 300032
+  if is_qmark($n) & slum_libei_quest 200032
+    	mpecho $I看看手上信函.....
+    	if is_qmark($n) <= slum_con_quest 200001
+      		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+      		mpmod_qmark $n slum_libei_quest v2 r 32
+      		mpmod_qmark $n slum_libei_quest v1 r 32
+      		mpdel_qmark $n slum_con_quest
+      		mpcallout 1 say 你根本沒有努力工作！
+      		mpcallout 1 say 真是可惡的欺騙者！
+      		break
+    	endif
+    	if is_qmark($n) !& slum_libei_quest 100032
+		mpexp $n 200
+	endif
+    	mpmod_qmark $n slum_libei_quest v0 | 32
+    	mpmod_qmark $n slum_libei_quest v2 r 32
+    	mpmod_qmark $n slum_libei_quest v1 r 32
+    	if is_qmark($n) > slum_con_quest 200023
+		if wis($n) >= 17
+  		or race($n) == gnome
+  			mpechoat $n 因為你高超的睿智，你得到額外的經驗值！
+    			mpexp $n 120
+  		endif
+  		if int($n) >= 17
+    		or race($n) == human
+    			mpechoat $n 因為你高超的哄抬技巧，你得到額外的薪資！
+    			mpgold $n 5000
+    		endif
+	endif
+    	if is_qmark($n) <= slum_con_quest 200005
+      		mpexp $n 120
+      		mpgold $n 5000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200011
+      		mpexp $n 220
+      		mpgold $n 10000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200017
+      		mpexp $n 360
+      		mpgold $n 20000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+     	if is_qmark($n) <= slum_con_quest 200021
+      		mpexp $n 520
+      		mpgold $n 30000
+      		mpdel_qmark $n slum_con_quest
+      		mpcall end_1 $n
+      		break
+      	endif
+     	is_qmark($n) <= slum_con_quest 200027
+      		mpexp $n 700
+      		mpgold $n 40000
+    	else 
+	      	mpexp $n 740
+	      	mpgold $n 50000
+    	endif
+        mpcall end_1 $n
+        mpdel_qmark $n slum_con_quest
+      	break
+  endif
+  endif
+say 你給我這個東西作什麼？
+"""
+[[mobiles.9400.programs]]
+trigger = "give_prog"
+argument = "9417"
+script = """
+mpjunk mail
+  if is_qmark($n) & slum_libei_quest 300064
+  if is_qmark($n) & slum_libei_quest 200064
+    	mpecho $I看看手上信函.....
+    	if is_qmark($n) <= slum_wis_quest 200001
+      		mpadd_qmark $n slum_libei_nojob 20 1 0 0 1 1
+      		mpmod_qmark $n slum_libei_quest v2 r 64
+      		mpmod_qmark $n slum_libei_quest v1 r 64
+      		mpdel_qmark $n slum_wis_quest
+      		mpcallout 1 say 你根本沒有努力工作！
+      		mpcallout 1 say 真是可惡的欺騙者！
+      		break
+    	endif
+    	if is_qmark($n) !& slum_libei_quest 100064
+		mpexp $n 200
+	endif
+    	mpmod_qmark $n slum_libei_quest v0 | 64
+    	mpmod_qmark $n slum_libei_quest v2 r 64
+    	mpmod_qmark $n slum_libei_quest v1 r 64
+    	if is_qmark($n) > slum_wis_quest 200030
+		if wis($n) >= 19
+  		or race($n) == gnome
+  			mpechoat $n 因為你高超的睿智，你得到額外的經驗值！
+    			mpexp $n 200
+  		endif
+  		if int($n) >= 19
+    		or race($n) == human
+    			mpechoat $n 因為你高超的哄抬技巧，你得到額外的薪資！
+    			mpgold $n 5000
+    		endif
+	endif
+    	if is_qmark($n) <= slum_wis_quest 200021
+      		mpexp $n 120
+      		mpgold $n 5000
+      		mpcall end_1 $n
+      		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200031
+      		mpexp $n 240
+      		mpgold $n 10000
+      		mpcall end_1 $n
+		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200041
+      		mpexp $n 400
+      		mpgold $n 20000
+      		mpcall end_1 $n
+      		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200051
+      		mpexp $n 500
+      		mpgold $n 12000
+      		mpcall end_1 $n
+      		mpdel_qmark $n slum_wis_quest
+      		break
+      	endif
+    	if is_qmark($n) <= slum_wis_quest 200061
+      		mpexp $n 660
+      		mpgold $n 40000
+    	else
+      		mpexp $n 760
+      		mpgold $n 55000 
+    	endif
+    	mpcall end_1 $n
+	mpdel_qmark $n slum_wis_quest
+      	break
+  endif
+  endif
+say 你給我這個東西作什麼？
+"""
+[[mobiles.9400.programs]]
+trigger = "defun_prog"
+argument = "end_1"
+script = """
+mpmod_qmark $n slum_libei_quest v1 = 0
+    if rnad(90)
+	mpcallout 1 say 嗯，很好，任務完成了呀。
+	mpcallout 2 say 期待下次的合作。
+    else
+    	mpcallout 1 say 嗯，很好，任務完成了呀。
+    	mpcallout 2 say 喔，我手邊剛好有些東西能送你...
+    	mpcallout 3 mpechoat $n $I開始翻找起垃圾裡的東西...
+    	mpcallout 5 say 就送你這個吧！
+    	if is_qmark($n) == slum_str_quest
+    		mpoload 35005 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    	if is_qmark($n) == slum_dex_quest
+    		mpoload 35006 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    	if is_qmark($n) == slum_con_quest
+    		mpoload 35007 10
+		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf    		break
+    	endif
+    	if is_qmark($n) == slum_int_quest
+    		mpoload 35008 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    	if is_qmark($n) == slum_wis_quest
+    		mpoload 35009 10
+    		mpcallout 6 give scarf $n
+    		mpcallout 7 drop scarf
+    		break
+    	endif
+    endif
+"""
+
+[mobiles.9401]
+keywords = "eilien-slum virgin"
+short_description = "愛莉安(Eilien)"
+long_description = "一位文靜的少女(virgin)在這裡忙碌地整理家務。\n"
+description = """
+一位甜美的文靜少女，漾著甜甜的笑容望著你。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN"]
+alignment = 1000
+level = 18
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Half-elf"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+
+[mobiles.9402]
+keywords = "story-teller epsilon-slum"
+short_description = "依普西隆(epsilon)"
+long_description = "巢穴的說故事者(story-teller)在這裡喃喃唸著巢穴的故事。\n"
+description = """
+一名年老駝背的男人，坐在地上自顧自地說著故事。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "TACTICS", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 1
+mod_hitplus = 400
+mod_mana = 300
+mod_hitroll = 15
+mod_damroll = 10
+mod_ac = -150
+mod_svs = 0
+dodge = -120
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Human"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9402.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 30 0 0 0 1 1
+    	yell 啊！有人攻擊我！ 
+  endif
+"""
+[[mobiles.9402.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if level($n) >= 12
+    	if is_qmark($n) & slum_libei_quest 100512
+    	or is_qmark($n) & slum_libei_quest 300128
+    	or is_qmark($n) & slum_libei_quest 300512
+      		mpechoat $n $I說：「您好，英勇的冒險者。」
+      		bow $n
+      		break
+    	endif
+    	if is_qmark($n) >= slum_libei_quest 100003
+     		mpechoat $n $I向你說：「年輕人，利拜找你有事。」
+     		break
+    	endif
+  endif
+  if rand(40)
+    	mpechoat $n 說故事的老頭拿起曼陀玲琴，自顧自地唱起歌來......
+    	mpcallout 1 mpechoat $n 「長風呀，請聽我一歌；流水呀，可否聽見這段戀曲？」
+    	mpcallout 2 mpechoat $n 「沒有結果的愛戀是多麼地痛苦？沒有戀情的相思是多麼地無奈？」
+  endif
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+mpechoat $n $I說著「你好，冒險者，有空聽聽老頭子說故事嗎？」    
+    mpechoat $n $I說著「想聽聽這個地方的統治者--利拜(Libei)的故事嗎？」
+    mpechoat $n $I說著「還是聽聽巢穴的故事(story)呢？」
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "mission"
+script = """
+if is_qmark($n) & slum_libei_quest 300128
+    	say 這個任務呀，還沒完成！
+    	say 喂，Neversay，你還要玩家等多久？
+    	break
+  endif
+  say 你說什麼？我聽不懂。
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "way"
+script = """
+mpechoat $n $I語重心長地說：
+  	mpechoat $n 「的確有這條捷徑，就位在巢穴的最東南方，不過你要小心，那條捷徑
+  	mpechoat $n 充滿了黑幫份子佈下的陷阱和重重危機，雖然我記得我們在與黑幫的
+  	mpechoat $n 戰爭中曾清空了那條道路，並且開了直通捷徑，但你們需要盜賊敲鎖
+  	mpechoat $n 或者戰士撞門才能將那些陳舊的門破壞掉，如果你們選擇順著路走，
+  	mpechoat $n 那風險將會很大，願戰神保佑你，冒險者。」
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "job"
+script = """
+if is_qmark($n) > slum_libei_quest 100001
+    	mpechoat $n $I說著「你不是已經知道要到哪裡找了嗎？」
+    	mpechoat $n $I說著「就在下面呀！」
+    	chu
+    	break
+  endif
+  if is_qmark($n) == slum_libei_quest 300001
+    	say 喔，要找利拜(Libei)呀，往下找就對了
+    	chu
+    	break
+  endif
+  mpadd_qmark $n slum_libei_quest -1 0 0 1 0 1
+  say 你往下走，找我們的領導者利拜(Libei)談談看。
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "libei"
+script = """
+mpechoat $n $I說著「利拜呀，他是一名傳奇人物，這要從他年輕的時候開始講起----」
+  mpechoat $n $I說著「當年，巢穴還是黑幫的一部份時，他帶領一群子弟兵，戰勝了」
+  mpechoat $n $I說著「黑幫三大勢力，將巢穴從黑暗的幫派勢力中分離出來，重建了」
+  mpechoat $n $I說著「巢穴的新秩序......」
+  mpcallout 1 mpcall libei_1 $n
+  mpcallout 2 mpechoat $n $I說著「我現在只希望，巢穴能在他的帶領下，平靜地過日子，」
+  mpcallout 3 mpechoat $n $I說著「不要再有戰亂了。」
+"""
+[[mobiles.9402.programs]]
+trigger = "defun_prog"
+argument = "libei_1"
+script = """
+mpechoat $n $I說著「唉，可惜歲月催人老，如今二十年也過去了，利拜的體力也大不如前了。」
+  mpechoat $n $I說著「他有想過將這個位子傳給他與珊西利亞(Sensilia)的女兒愛莉安(Eilien)，」
+  mpechoat $n $I說著「不過黑幫好像聽到了風聲，竟然將她擄走了。」
+  mpcallout 1 mpcall eilien_1 $n
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "story"
+script = """
+say 幾百年前，當第三次衛城之役結束後，史卡拉貝就開始墮落了......
+  say 當時的難民們，因為沒有棲身之地，只好往這裡聚集，在此建立了
+  say 貧民區。
+  mpcallout 1 glare
+  mpcallout 2 mpcall story_1 $n
+  mpcallout 3 mpcall story_2 $n
+  mpcallout 4 sigh
+"""
+[[mobiles.9402.programs]]
+trigger = "defun_prog"
+argument = "story_1"
+script = """
+say 然後，黑暗的勢力染指了巢穴，將巢穴變成了毒品與淫亂的大本營
+  say 不過，二十年前在利拜(Libei)的領導下，我們終於將黑幫勢力趕出
+  say 巢穴，還巢穴居民一個安寧的生存環境。
+"""
+[[mobiles.9402.programs]]
+trigger = "defun_prog"
+argument = "story_2"
+script = """
+say 但，最近黑幫勢力又開始蠢動了，利拜為了防範未然，也開始四處
+  say 招兵買馬，看來一場惡鬥避無可避了......
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "sensilia"
+script = """
+say 珊西利亞，她是一位美麗的精靈傭兵，聽說是在一場偶然的
+   say 戰役下接受黑幫的雇用，在巢穴與利拜大打出手，後來卻與他
+   say 墜入愛河，生下了一個女兒愛莉安(Eilien)，這就是愛情的魔力呀！
+   mpcallout 1 giggle
+   mpcallout 2 mpcall sensilia_1 $n
+"""
+[[mobiles.9402.programs]]
+trigger = "defun_prog"
+argument = "sensilia_1"
+script = """
+say 可惜她在一次戰鬥中中了黑幫的暗算，慘死於奴隸市場，唉......
+  say 為了這件事，利拜大開殺戒，因此得罪了所有黑幫，以及眾黑幫
+  say 背後撐腰的黑道家族，至此以後，黑幫與巢穴就勢不兩立了......
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "eilien"
+script = """
+say 愛莉安她是我們領導者利拜(Libei)與精靈珊西利亞(Sensilia)
+  say 的女兒，你大概無法從她的外表看出她是一名半精靈！
+  say 唉，她可是全巢穴最討人喜歡的可人兒呀！
+  say 但她卻被邪惡的黑幫擄走，音訊全無......
+  mpcallout 1 mpcall eilien_1 $n
+"""
+[[mobiles.9402.programs]]
+trigger = "defun_prog"
+argument = "eilien_1"
+script = """
+if is_qmark($n) & slum_libei_quest 100128
+    	mpechoat $n $I說著「還好您將她從奴隸市場救了回來，要不然她將會重演跟她」
+    	mpechoat $n $I說著「母親一樣的悲劇呀！」
+    	mpechoat $n $I說著「唉，不過她受的驚嚇太大，利拜為了她的安全，將她安置」
+    	mpechoat $n $I說著「在大宅內，不讓她到處走動，不過這也好......畢竟現在」
+    	mpechoat $n $I說著「黑幫的勢力太過猖獗，還是小心為上。」
+  else
+    	mpechoat $n $I說著「現在她生死不明，利拜還在尋找可以深入險境拯救她的勇」
+    	mpechoat $n $I說著「士，只可惜遍尋不著，唉。」
+    	sigh
+  endif
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "environment"
+script = """
+say 我想想......
+mpcall environment_x $n
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) == slum_libei_quest 300003
+      	if is_qmark($n) == slum_libei_quest 200000
+        	say 我話都還沒說完就急著回答呀！
+        	break
+      	endif
+      	mpmod_qmark $n slum_libei_quest v1 | 3
+      	mpmod_qmark $n slum_libei_quest v0 | 1
+      	mpechoat $n $I說著「很好，回去向利拜報備吧，巢穴需要多幾個像你一樣的人手。」
+    endif
+"""
+[[mobiles.9402.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+mpechoat $n $I說著「那我再重複一遍.....」
+  mpcall environment_x $n
+"""
+[[mobiles.9402.programs]]
+trigger = "defun_prog"
+argument = "environment_x"
+script = """
+mpechoat $n $I說著：「說到巢穴呀，最主要的道路就是\u001B[1;35m破爛大街\u001B[0m了，在破爛大街的起點，」
+  mpechoat $n $I說著：「就是鼎鼎有名的「\u001B[1;35m眾生之歸\u001B[0m」廢棄場，往東走則是\u001B[1;35m貧民區碼頭\u001B[0m，」
+  mpechoat $n $I說著：「碼頭往北就是\u001B[1;35m巢穴倉庫\u001B[0m，以及\u001B[1;35m碼頭瞭望台\u001B[0m。」
+  mpcallout 1 mpcall environment_1 $n
+  if is_qmark($n) & slum_libei_quest 300001
+    	mpcallout 2 mpmod_qmark $n slum_libei_quest v1 | 1
+    	mpcallout 2 mpechoat $n $I說著：「怎樣，大概瞭解了吧？(yes/no)」
+  endif
+"""
+[[mobiles.9402.programs]]
+trigger = "defun_prog"
+argument = "environment_1"
+script = """
+mpechoat $n $I說著：「順著街道往北走，就是赫赫有名的\u001B[1;35m頹廢酒吧\u001B[0m，在那裡往北走，」
+  mpechoat $n $I說著：「你可以看到一棟大宅院，那是利拜為了他的女兒愛莉安(Eilien)所」
+  mpechoat $n $I說著：「蓋的大宅。再往北走，就是這裡了，再北就沒有什麼值得介紹的了。」
+"""
+
+[mobiles.9403]
+keywords = "goods keeper-slum"
+short_description = "倉庫管理員(goods keeper)"
+long_description = "盡責的倉庫管理員(goods keeper)打著懷疑的眼光望著你。\n"
+description = """
+一位強壯的男子，手中拿著一本簿子，辛勤地記載每日的進出貨物。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT"]
+alignment = 0
+level = 1
+mod_hitplus = 400
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = -200
+mod_svs = 0
+dodge = -100
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Human"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9403.programs]]
+trigger = "greet_prog"
+argument = "60"
+script = """
+if hour($) > 8
+    	if hour($) < 21
+      		say 唉，真是一年比一年懶的該死奴隸(slave)......
+      		break
+    	endif
+  endif
+  mpecho $I緊張地東張西望，似乎在為什麼東西把風。
+"""
+[[mobiles.9403.programs]]
+trigger = "fight_prog"
+argument = "80"
+script = """
+if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell 啊！有人攻擊我！ 
+  endif
+"""
+[[mobiles.9403.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 唉，現在倉庫改建的進度嚴重落後，真是要命......
+"""
+[[mobiles.9403.programs]]
+trigger = "give_prog"
+argument = "9420"
+script = """
+if is_qmark($n) & slum_libei_quest 100004
+  	mpadd_qmark $n slum_str_quest -1 1 1 0 0 1
+  	say 嗯，你又來啦，好，我不用多說(hint)了，直接去作吧。
+  	say 做完了就說一聲(complete)。
+  	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300004
+  	mpecho $I將信函從頭到尾仔細看了一遍......
+  	mpjunk mail
+  	mpadd_qmark $n slum_str_quest -1 1 1 0 0 1
+  	mpcallout 1 say 嗯，老爺子要你來找我做工是吧，好。
+  	mpcallout 2 mpecho $I翻開手上的簿子，仔細尋找可以讓你作的工作。
+  	mpcallout 3 mpcall job_1 $n
+  	mpcallout 4 say 不過要小心，最近那邊常常有怪聲出現，可能有某種東西躲在裡面。
+  	mpcallout 5 say 如果完成了或不想作了，記得來跟我講一聲(complete)。
+  	break
+  endif
+  say 你給我這個東西作什麼？
+  give mail $n
+"""
+[[mobiles.9403.programs]]
+trigger = "defun_prog"
+argument = "job_1"
+script = """
+say 好吧，我們這邊在改建新倉庫，正好缺搬磚頭(brick)工人，你就下去
+  say 幫我們找(search)幾塊上來\u001B[1;31m交給我\u001B[0m好了，我想\u001B[1;31m三十塊磚\u001B[0m就夠了。
+"""
+[[mobiles.9403.programs]]
+trigger = "give_prog"
+argument = "9429"
+script = """
+mpjunk brick
+  if is_qmark($n) & slum_libei_quest 300004
+    	if is_qmark($n) >= slum_str_quest 200001
+      		mpmod_qmark $n slum_str_quest v1 + 1
+      		if is_qmark($n) > slum_str_quest 200030
+        		say 很好。這樣就夠了(complete)，辛苦你了。
+        		nod $n
+        		break
+      		endif
+      		say 很好，再多搬幾塊上來吧。
+      		break
+    	endif
+  endif
+  say 你給我這個東西作什麼？
+"""
+[[mobiles.9403.programs]]
+trigger = "talk_prog"
+argument = "complete"
+script = """
+if is_qmark($n) & slum_libei_quest 200004
+    	say 你不是早就完成了？
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300004
+    	if is_qmark($n) <= slum_str_quest 200001
+      		say 胡說！你根本還沒做完！
+      		break
+    	endif
+    	mpoload 9415 1
+	mpmod_qmark $n slum_libei_quest v1 | 4
+    	if is_qmark($n) <= slum_str_quest 200010
+      		say 啊，做完啦？
+      		tsk $n
+      		mpgold $n 2500
+      		say 現在的年輕人真是吃不了苦，才搬沒幾塊磚就受不了了。
+      		mpechoat $n $I將紅色信函簽了名。
+      		mpcallout 1 give signed $n
+      		mpcallout 1 say 回去把這封信交給利拜就可以了。
+      		break
+    	endif
+    	if is_qmark($n) <= slum_str_quest 200030
+      		say 嗯，做完啦。
+      		nod
+      		mpgold $n 4000
+      		say 你這傢伙還不錯，至少比這些「終身免薪勞工」要努力。
+      		mpechoat $n $I將紅色信函簽了名。
+      		mpcallout 1 give signed $n
+      		mpcallout 1 say 回去把這封信交給利拜就可以了。
+      		break
+    	else
+      	say 很好，你做得非常好！
+      	good $n
+      	mpgold $n 5500
+      	giggle
+      	say 像你這樣的年輕人不多了，如何，有沒有意思來我這邊工作？
+      	mpechoat $n $I將紅色信函簽了名。
+      	mpcallout 1 give signed $n
+      	mpcallout 1 say 回去把這封信交給利拜就可以了。
+      	break
+    endif
+  endif
+  say 你說啥？我聽不懂。
+"""
+[[mobiles.9403.programs]]
+trigger = "talk_prog"
+argument = "hint"
+script = """
+if is_qmark($n) & slum_libei_quest 300004
+  	say 你忘了任務內容了？
+  	sigh
+  	mpcallout 1 mpcall job_1 $n
+endif
+"""
+[[mobiles.9403.programs]]
+trigger = "talk_prog"
+argument = "slave"
+script = """
+say 啊？我有說過「奴隸」這個字嗎？
+  ? $n
+  say 你聽錯了吧，我說的是「終生免薪勞工」吧！
+"""
+[[mobiles.9403.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+mpjunk mail
+mpjunk brick
+drop all
+"""
+
+[mobiles.9404]
+keywords = "merchant-slum"
+short_description = "羊毛商人(merchant of fleece)"
+long_description = "略顯臃腫的羊毛商人(merchant of fleece)無聊地喝著酒。\n"
+description = """
+一位上了年紀，滿臉風霜皺紋的肥胖羊毛商人。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "MOB_AI", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "PROTECT"]
+alignment = 200
+level = 1
+mod_hitplus = 350
+mod_mana = 200
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = -150
+mod_svs = 0
+dodge = -100
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Human"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9404.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell 啊！有人攻擊我！ 
+  endif
+"""
+[[mobiles.9404.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == slum_woman_damage
+	mpmod_qmark $n slum_libei_quest v2 r 8
+	mpdel_qmark $n slum_dex_quest
+	mpdel_qmark $n slum_woman_damage
+	say 你這個白癡！白癡！
+	angry $n
+	mpcallout 1 say 我不是叫你不要傷害他們了嗎？你是耳聾啦！
+	mpcallout 2 say 滾！你給我滾得遠遠的！
+	mpcallout 2 mpechoat $n $i將你一路罵出酒吧......
+	mpcallout 3 mpforce $n w
+	break
+  endif
+  if rand(50)
+    	say 真是可惡的娘們......
+    	mpecho $I用力放下手上酒杯。
+  endif
+"""
+[[mobiles.9404.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 唉，都是那些娘們，讓我的羊毛生意損失慘重......
+"""
+[[mobiles.9404.programs]]
+trigger = "give_prog"
+argument = "9423"
+script = """
+mpjunk mail
+  if is_qmark($n) & slum_libai_quest 100008
+  	mpadd_qmark $n slum_dex_quest -1 1 1 0 0 1
+    	say 喔，又是你呀，正好最近那些娘們又開始明知故犯了。
+    	say 你就再幫我一次吧(hint)！
+    	say 老規矩，做完了就說一聲(complete)。
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300008 
+  	mpadd_qmark $n slum_dex_quest -1 1 1 0 0 1
+    	mpechoat $n $I將信函快速地讀了一遍。
+    	mpcallout 1 say 利拜他還真是有求必應。
+    	mpcallout 2 look $n
+    	mpcallout 3 mpcall job_1 $n
+    	mpcallout 4 mpcall job_2 $n
+    	mpcallout 5 mpcall job_3 $n
+    	mpcallout 6 mpcall job_4 $n
+    	break
+  endif
+say 你給我這個東西作什麼？
+"""
+[[mobiles.9404.programs]]
+trigger = "defun_prog"
+argument = "job_1"
+script = """
+say 喂！你，你應該知道我的工作吧？
+  say 我是專門將羊毛拿給當地婦女紡織，然後收集成品布料的包商，
+  say 不過我最近發現有些人會將原料偷省起來，另作用途，真是可惡！
+"""
+[[mobiles.9404.programs]]
+trigger = "defun_prog"
+argument = "job_2"
+script = """
+say 你！你幫我沿著破爛大街，到每個有\u001B[1;37m紡織機\u001B[0m的家裡尋找她們偷工
+  say 減料的證據！\u001B[1;37m(search fleece)\u001B[0m
+  mpecho $I頓了一下。
+"""
+[[mobiles.9404.programs]]
+trigger = "defun_prog"
+argument = "job_3"
+script = """
+say 不過要記得，千萬\u001B[1;37m別傷害她們其中任何一個\u001B[0m，我要的是找尋她們
+  say 的罪證，不是要她們死！她們死了可就沒人可以替我織布了。
+  say 如果你認為已經抓完了，就來跟我報備一下(complete)吧。
+  hmm
+  say 對了，還有一件事......
+"""
+[[mobiles.9404.programs]]
+trigger = "defun_prog"
+argument = "job_4"
+script = """
+say 她們都有自己的日常作息，如果你在她們在家的時候去當然抓不到什麼證據，
+  say 如果想知道她們的日常行程，就跟我講一聲(help)吧！
+"""
+[[mobiles.9404.programs]]
+trigger = "give_prog"
+argument = "all"
+script = """
+if is_qmark($n) != slum_dex_quest
+    	say 你給我這個東西作什麼？
+	drop all
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300008
+    	if vnum($o) == 9444
+      		if is_qmark($n) & slum_dex_quest 200002
+        		say 你已經給過我一次了，再找其他人的證據吧。
+			mpjunk fleece
+        		break
+      		endif
+      		say 哈哈，我早就料到愛麗斯這娘們會作這種事了！
+      		cackle
+      		mpmod_qmark $n slum_dex_quest v1 | 2
+		mpjunk fleece
+      	endif
+   	if vnum($o) == 9445
+      		if is_qmark($n) & slum_dex_quest 200004
+        		say 你已經給過我一次了，再找其他人的證據吧。
+			mpjunk fleece
+        		break
+      		endif
+      		say 哼！原來雷歐娜蒂這娘們也會幹這種事，真是令我大開眼界！
+      		angry
+      		mpmod_qmark $n slum_dex_quest v1 | 4
+		mpjunk fleece
+   	endif
+    	if vnum($o) == 9446
+      		if is_qmark($n) & slum_dex_quest 200008
+        		say 你已經給過我一次了，再找其他人的證據吧。
+			mpjunk fleece
+        		break
+      		endif
+      		say 嘖嘖！沒想到卡琳這麼可愛的娘們也會幹這種事！
+      		tsk
+      		mpmod_qmark $n slum_dex_quest v1 | 8
+		mpjunk fleece
+	endif
+    	if vnum($o) == 9447
+      		if is_qmark($n) & slum_dex_quest 200016
+        		say 你已經給過我一次了，再找其他人的證據吧。
+			mpjunk fleece
+        		break
+      		endif
+      		say 這......連辛吉娃也會幹這種事？
+      		glare
+      		mpmod_qmark $n slum_dex_quest v1 | 16
+		mpjunk fleece
+      	endif
+    	if vnum($o) == 9448
+      		if is_qmark($n) & slum_dex_quest 200032
+        		say 你已經給過我一次了，再找其他人的證據吧。
+			mpjunk fleece
+        		break
+      		endif
+      		say 疑？我倒是沒想到妮秀蔻這娘們也會幹這種事！
+      		hmm
+      		mpmod_qmark $n slum_dex_quest v1 | 32
+		mpjunk fleece
+      	endif
+    	if vnum($o) == 9449
+      		if is_qmark($n) & slum_dex_quest 200064
+        		say 你已經給過我一次了，再找其他人的證據吧。
+			mpjunk fleece
+        		break
+      		endif
+      		say 太好了！原來康蓓妮這娘們也會幹這種事！
+      		grin
+      		mpmod_qmark $n slum_dex_quest v1 | 64
+		mpjunk fleece
+      	endif
+    	if is_qmark($n) == slum_dex_quest 200127
+      		say 喔，你已經幫我找到夠多的證據了，可以結束了(complete)。
+      		break
+    	endif
+  endif
+"""
+[[mobiles.9404.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+mpjunk all.fleece
+drop all
+"""
+[[mobiles.9404.programs]]
+trigger = "talk_prog"
+argument = "complete"
+script = """
+if is_qmark($n) & slum_libei_quest 200008
+    	say 你不是早就完成了？
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300008
+    	if is_qmark($n) == slum_woman_damage
+      		mpmod_qmark $n slum_libei_quest v2 r 8
+		mpdel_qmark $n slum_dex_quest
+      		mpdel_qmark $n slum_woman_damage
+      		say 你這個白癡！白癡！
+      		angry $n
+      		mpcallout 1 say 我不是叫你不要傷害他們了嗎？你是耳聾啦！
+      		mpcallout 2 say 滾！你給我滾得遠遠的！
+      		mpcallout 2 mpechoat $n $i將你一路罵出酒吧......
+      		mpcallout 3 mpforce $n w
+      		break
+    	endif
+    	if is_qmark($n) <= slum_dex_quest 200001
+      		say 騙鬼！你根本沒有給我任何東西！
+      		break
+    	endif
+    	say 很好！
+    	mpmod_qmark $n slum_libei_quest v1 | 8
+    	if is_qmark($n) & slum_dex_quest 200002
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200004
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200008
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200016
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200032
+      		mpgold $n 1200
+    	endif
+    	if is_qmark($n) & slum_dex_quest 200064
+      		mpgold $n 1200
+    	endif
+      	say 這樣的獎賞不錯吧！
+      	mpoload 9418
+      	mpechoat $n $I將紫色信函簽了名。
+      	mpcallout 1 give signed $n
+      	mpcallout 2 say 回去把這封信交給利拜就可以了。
+      	break
+  endif
+  say 你在說什麼呀？
+"""
+[[mobiles.9404.programs]]
+trigger = "talk_prog"
+argument = "hint"
+script = """
+if is_qmark($n) & slum_libei_quest 300008
+ 	say 好，那我再說一遍......
+ 	mpcallout 1 mpcall job_2 $n
+ 	mpcallout 2 mpcall job_3 $n
+ 	mpcallout 3 mpcall job_4 $n
+endif
+"""
+[[mobiles.9404.programs]]
+trigger = "talk_prog"
+argument = "help"
+script = """
+if is_qmark($n) & slum_libei_quest 300008
+	mpdel_qmark $n slum_libei_womancycle
+	mpechoat $n $I低聲告訴你每個家庭主婦的作息時間......
+	mpcallout 1 mpechoat $n 你慢慢記下每個人的作息時間......
+	if int($n) < 13
+		mpcallout 2 mpadd_qmark $n slum_libei_womancycle 12 1 0 0 1 0
+		mpcallout 2 mpechoat $n 你記下來了，以你的智力大概能記住半天。
+		break
+	endif
+	if int($n) < 20
+		mpcallout 2 mpadd_qmark $n slum_libei_womancycle 24 1 0 0 1 0
+		mpcallout 2 mpechoat $n 你記下來了，以你的智力大概能記住一天。
+		break
+	endif
+	if int($n) < 25
+		mpcallout 2 mpadd_qmark $n slum_libei_womancycle 48 1 0 0 1 0
+		mpcallout 2 mpechoat $n 你記下來了，以你的智力大概能記住兩天。
+		break
+	endif
+	mpcallout 2 mpadd_qmark $n slum_libei_womancycle -1 1 0 0 1 0
+	mpcallout 2 mpechoat $n 你記下來了，你超人的腦力讓你永不忘懷，除非死亡或離去。
+endif
+say 啥？你要我幫你什麼？
+"""
+
+[mobiles.9405]
+keywords = "Midia-slum old witch-slum"
+short_description = "老巫婆(old witch)"
+long_description = "醜陋、老態龍鍾的巫婆(old witch)，在這裡瞇著眼看你。\n"
+description = """
+一位年紀大得你猜不出來的老太婆，拿著棒子攪動鍋爐中的濃湯。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN"]
+alignment = 200
+level = 16
+mod_hitplus = 0
+mod_mana = 150
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Human"
+class = ["MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM"]
+[[mobiles.9405.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell 啊！有人攻擊我！ 
+  endif
+"""
+[[mobiles.9405.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 唉呀，最近藥材的供應量太少了......
+"""
+[[mobiles.9405.programs]]
+trigger = "talk_prog"
+argument = "herb"
+script = """
+say 不知道怎麼分辨藥材？
+  say 可以看看(read)旁邊陶罐上的圖片(paint)呀！
+  chu $n
+"""
+[[mobiles.9405.programs]]
+trigger = "talk_prog"
+argument = "complete"
+script = """
+if is_qmark($n) & slum_libei_quest 200016
+    	say 你不是調過藥了嗎？
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300016
+    	if is_qmark($n) <= slum_int_quest 200001
+      		say 你根本還沒有給我任何藥材呀！
+      		break
+    	endif
+    	mpecho $I開始拿大棒子攪動鍋子......
+    	mpoload 9416 1
+    	mpmod_qmark $n slum_libei_quest v1 | 16
+    	mpcallout 1 mpecho 突然轟的一聲！鍋子冒出陣陣濃煙......
+    	mpcallout 2 say 咳、咳、咳！
+	mpcallout 3 give potion $n
+    	mpcallout 3 mpecho $I將一個空水袋加滿鍋中的藥水。
+    	mpcallout 4 say 把這瓶藥水拿給利拜吧。
+  endif
+"""
+[[mobiles.9405.programs]]
+trigger = "give_prog"
+argument = "9421"
+script = """
+mpjunk mail
+  if is_qmark($n) & slum_libei_quest 300016
+  	mpadd_qmark $n slum_int_quest -1 1 1 0 0 1
+    	if is_qmark($n) & slum_libei_quest 100016
+      		mpechoat $n $I打開信函，簡略地讀了一下......
+      		say 啊，利拜老病又復發啦，這麼快......
+      		say 可惜我這邊藥材還沒補貨。
+      		say 幫老婆子一下吧，我想你應該知道怎麼做(hint)。
+      		say 做好了記得說一聲(complete)。
+      		break
+    	endif
+    	mpechoat $n $I打開$O，簡略地讀了一下......
+    	mpcallout 1 say 唉呀，他老毛病又犯了，真是歲月不饒人呀！
+    	mpcallout 1 sigh
+    	mpcallout 2 mpecho $I將陶罐掀開，往裡面瞧一瞧......
+    	mpcallout 2 hmm
+    	mpcallout 3 mpcall job_1 $n
+    	mpcallout 4 mpcall job_2 $n
+    	mpcallout 5 say 如果覺得採夠了，那就講一聲吧(complete)。
+    	break
+  endif
+  say 你給我這個東西作什麼？
+"""
+[[mobiles.9405.programs]]
+trigger = "defun_prog"
+argument = "job_1"
+script = """
+say 唉呀，藥草剛好用完了，真是糟糕呀，在這個緊要關頭用完......
+  hmm $n
+"""
+[[mobiles.9405.programs]]
+trigger = "defun_prog"
+argument = "job_2"
+script = """
+if sex($n) <= 1
+    	say 小伙子呀，你幫我一個忙吧......
+  else
+    	say 小姑娘，幫老太婆一個忙吧......
+  endif
+  say 幫我到街上\u001B[1;37m採(dig)草藥(herb)\u001B[0m，如果你夠聰明，應該能找到不少
+  say 有用的藥材才對。
+"""
+[[mobiles.9405.programs]]
+trigger = "talk_prog"
+argument = "hint"
+script = """
+if is_qmark($n) & slum_libei_quest 300016
+  	say 嗯......
+  	mpcallout 1 mpcall job_2 $n
+endif
+"""
+[[mobiles.9405.programs]]
+trigger = "give_prog"
+argument = "all"
+script = """
+if is_qmark($n) < slum_int_quest 200001
+    	say 你給我這個東西作什麼？
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300016
+    	if vnum($o) == 9402
+      		if is_qmark($n) & slum_int_quest 200002
+        		say 這個藥材你之前給過了呀......
+        		break
+      		endif
+      		if int($n) <= 8
+        		if rand(50)
+          			say 不對，雖然長得很像，這個植物不是藥用材料。
+          			break
+        		endif
+      		endif
+      		say 很好！這個藥材不錯......
+      		mpmod_qmark $n slum_int_quest v1 | 2
+      		mpcallout 1 mpecho $I將$O投進鍋子中......
+      		mpcallout 2 mpecho 鍋子開始冒泡......
+      	endif
+    	if vnum($o) == 9403
+      		if is_qmark($n) & slum_int_quest 200004
+        		say 這個藥材你之前給過了呀......
+        		break
+      		endif
+      		if int($n) < 12
+        		if rand(60)
+          			say 不對，這條枯藤不夠乾，不能作藥用材料。
+          			break
+        		endif
+      		endif
+      		say 很好！這個藥材不錯......
+      		mpmod_qmark $n slum_int_quest v1 | 4
+      		mpcallout 1 mpecho $I將$O投進鍋子中......
+      		mpcallout 2 mpecho 鍋子開始冒煙......
+    	endif
+    	if vnum($o) == 9405
+      		if is_qmark($n) & slum_int_quest 200008
+        		say 這個藥材你之前給過了呀......
+        		break
+      		endif
+      		if int($n) < 15
+        		if rand(60)
+          			say 不對，這顆草藥雖然很像，但這是不能作藥用材料的那種。
+          			break
+        		endif
+      		endif
+      		say 很好！這個藥材不錯......
+      		mpmod_qmark $n slum_int_quest v1 | 8
+      		mpcallout 1 mpecho $I將$O投進鍋子中......
+      		mpcallout 2 mpecho 鍋子開始滾沸......
+    	endif
+    	if vnum($o) == 9409
+      		if is_qmark($n) & slum_int_quest 200016
+        		say 這個藥材你之前給過了呀......
+        		break
+      		endif
+      		if int($n) < 18
+        		if rand(60)
+          			say 不對，這草藥雖然很像，但這是不能作藥用材料的那種。
+          			break
+        		endif
+      		endif
+      		say 很好！這個藥材不錯......
+      		mpmod_qmark $n slum_int_quest v1 | 16
+      		mpcallout 1 mpecho $I將$O投進鍋子中......
+      		mpcallout 2 mpecho 鍋子開始顫動......
+     	endif
+     	if vnum($o) == 9410
+      		if is_qmark($n) & slum_int_quest 200032
+        		say 這個藥材你之前給過了呀......
+        		break
+      		endif
+      		if int($n) < 20
+        		if rand(60)
+          			say 不對，這草藥雖然很像，但這是不能作藥用材料的那種。
+          			break
+        		endif
+      		endif
+      		say 啊，這個藥材很稀有，實在是不可多得呀。
+      		mpmod_qmark $n slum_int_quest v1 | 32
+      		mpcallout 1 mpecho $I將$O投進鍋子中......
+      		mpcallout 2 mpecho 鍋子開始抖動......
+    	endif
+    	if vnum($o) == 9411
+      		if is_qmark($n) & slum_int_quest 200064
+		        say 這個藥材你之前給過了呀......
+        		break
+      		endif
+      		if int($n) < 22
+        		if rand(60)
+          			say 不對，這顆草藥雖然很像，但這是不能作藥用材料的那種。
+          			break
+        		endif
+      		endif
+      		say 太好了！這個藥材可以大大增強藥的效力！
+      		mpmod_qmark $n slum_int_quest v1 | 64
+      		mpcallout 1 mpecho $I將$O投進鍋子中......
+      		mpcallout 2 mpecho 鍋子開始蹦蹦跳......
+    	endif
+    	if is_qmark($n) == slum_int_quest 200127
+      		say 必要藥材已經收集完了，可以開始作藥了(complete)。
+    	endif
+  endif
+"""
+[[mobiles.9405.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+mpjunk all.herb
+  drop all
+"""
+
+[mobiles.9406]
+keywords = "manager-slum"
+short_description = "廢棄場管理者(manager of junk-yard)"
+long_description = "一位全身散發強烈臭味的廢棄場管理者(manager)站在這裡。\n"
+description = """
+一位穿著破帆布縫成的衣服，頭戴爛帽子的老傢伙，窮極無聊地坐在地上。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "MOB_AI", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "PROTECT"]
+alignment = 200
+level = 1
+mod_hitplus = 350
+mod_mana = 200
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -150
+mod_svs = 0
+dodge = -100
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Human"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9406.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell 啊！有人攻擊我！ 
+  endif
+"""
+[[mobiles.9406.programs]]
+trigger = "rand_prog"
+argument = "30"
+script = """
+say 嘿嘿，人總有回歸此地的一天呀！
+"""
+[[mobiles.9406.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 噁，這臭味可真讓人心曠神怡呀！
+"""
+[[mobiles.9406.programs]]
+trigger = "talk_prog"
+argument = "hint"
+script = """
+if is_qmark($n) & slum_libei_quest 300032
+  	say 你的記性比我還差！
+  	sigh
+  	mpcallout 1 mpcall job_1 $n
+  	mpcallout 2 mpcall job_2 $n
+endif
+"""
+[[mobiles.9406.programs]]
+trigger = "defun_prog"
+argument = "job_1"
+script = """
+say 嗯，老大交代我要你到北邊的廢棄場裡\u001B[1;37m挖「蕈類」(dig fungus)\u001B[0m，
+  say 那你就去乖乖找吧，越多越好。
+"""
+[[mobiles.9406.programs]]
+trigger = "defun_prog"
+argument = "job_2"
+script = """
+say 啥？你問我挖那個作什麼？你難道不知道好孩子要少問問題嗎？
+  grin $n
+"""
+[[mobiles.9406.programs]]
+trigger = "talk_prog"
+argument = "complete"
+script = """
+if is_qmark($n) & slum_libei_quest 200032
+    	say 你不是做完了嗎？
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300032
+    	if is_qmark($n) <= slum_con_quest 200001
+      		say 哼，你根本沒有作任何工作！
+      		break
+    	endif
+    	mpmod_qmark $n slum_libei_quest v1 | 32
+    	if is_qmark($n) <= slum_con_quest 200007
+      		say 這樣的量有點少了......
+      		mpgold $n 2000
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200013
+      		say 這樣的量差不多夠了。
+      		mpgold $n 3000
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200019
+      		say 嗯，你的收穫量蠻多的嘛！
+      		mpgold $n 4000
+      		mpcall end_1 $n
+      		break
+      	endif
+    	if is_qmark($n) <= slum_con_quest 200025
+      		say 今天可真是大豐收呀！
+      		mpgold $n 5000
+    	else
+      		say 太棒了，我作了這麼久管理員還沒一次見過這個多的貨！
+      		mpgold $n 7000
+    	endif
+    	mpcall end_1 $n
+      	break
+  endif
+  say 你在說什麼呀？
+"""
+[[mobiles.9406.programs]]
+trigger = "defun_prog"
+argument = "end_1"
+script = """
+mpoload 9419 1
+    mpecho $I拿起了一枝爛羽毛筆，在信函上面簽了一個龍飛鳳舞的名字。
+    mpcallout 1 give signed $n
+    mpcallout 2 say 好了，回去把這封信拿給利拜就可以了。
+"""
+[[mobiles.9406.programs]]
+trigger = "give_prog"
+argument = "9424"
+script = """
+mpjunk mail
+  if is_qmark($n) & slum_libei_quest 100032
+    	mpadd_qmark $n slum_con_quest -1 1 1 0 0 1
+    	say 哈，你又來啦！很好很好，我這邊人手缺得很呀！
+    	say 你應該知道怎麼工作了吧(hint)？
+    	say 如果做完了別忘了說一聲(complete)。
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300032
+    	mpechoat $n $I將信函大略讀了一下。
+    	mpadd_qmark $n slum_con_quest -1 1 1 0 0 1
+    	mpcallout 1 mpcall job_1 $n
+    	mpcallout 2 mpcall job_2 $n
+    	mpcallout 3 say 對了，廢棄場那邊越深入可是越毒的，體質不好的自己保重。
+    	mpcallout 4 say 如果你覺得挖得夠多，就可以叫停了(complete)。
+  endif  
+"""
+[[mobiles.9406.programs]]
+trigger = "give_prog"
+argument = "9428"
+script = """
+mpjunk fungus
+  if is_qmark($n) & slum_libei_quest 300032
+    	if is_qmark($n) < slum_con_quest 200001
+      		say 你給我這個東西作什麼？
+      		break
+    	endif
+    	say 嗯，很好！
+    	mpmod_qmark $n slum_con_quest v1 + 2
+    	if is_qmark($n) >= slum_con_quest 200027
+      		say 嗯～～我想這樣就夠多了(complete)。
+    	endif
+    break
+  endif
+  say 這是什麼東西呀？ 
+"""
+[[mobiles.9406.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+mpjunk gill
+drop all
+"""
+
+[mobiles.9407]
+keywords = "representative-slum"
+short_description = "談判者(representative)"
+long_description = "老練精明的職業談判者(representative)憤怒地站在這裡。\n"
+description = """
+你看到一位滿臉大鬍鬚的紅髮中年人站在這裡，以懷疑的眼光打量你。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -100
+level = 1
+mod_hitplus = 300
+mod_mana = 0
+mod_hitroll = 6
+mod_damroll = 6
+mod_ac = -120
+mod_svs = 0
+dodge = -100
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Human"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9407.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != slum_all_enemy
+    	mpadd_qmark $n slum_all_enemy 40 0 0 0 1 1
+    	yell 啊！有人攻擊我！ 
+  endif
+"""
+[[mobiles.9407.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 可惡的黑幫！竟敢把我趕出來！
+"""
+[[mobiles.9407.programs]]
+trigger = "talk_prog"
+argument = "hint"
+script = """
+if is_qmark($n) & slum_libei_quest 300064
+  	mpcall job_3 $n
+  	mpcallout 1 mpcall job_4 $n
+endif
+"""
+[[mobiles.9407.programs]]
+trigger = "talk_prog"
+argument = "wis"
+script = """
+say 所謂智慧(wis)，就是你待人處事能力的總和，當你的智慧越高，你談判和
+say 討價還價的能力也越高。所以，如果你自覺智慧不夠，可別來接這個任務。
+say 如果你生得孔武有力，你可以試試看強硬的立場；相反地，如果你是屬於
+say 智慧型的人物，那你可以試著用分析的立場來對付他。
+"""
+[[mobiles.9407.programs]]
+trigger = "talk_prog"
+argument = "strong man"
+script = """
+say 他應該在\u001B[1;37m馬戲團的觀眾席\u001B[0m那邊，監視著我們手下。
+"""
+[[mobiles.9407.programs]]
+trigger = "give_prog"
+argument = "9422"
+script = """
+mpjunk mail
+  if is_qmark($n) & slum_libei_quest 100064
+  	mpadd_qmark $n slum_wis_quest -1 1 1 0 0 1
+    	say 啊，你來的剛好，那個傢伙竟然再度關閉協商大門，
+    	say 我們正好需要一個密使來當作溝通橋樑，就你來吧！
+    	say 我想你應該知道他在哪裡了吧(hint)？
+    	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300064
+    	mpecho $I專心地看完手上的信函。
+    	mpadd_qmark $n slum_wis_quest -1 1 1 0 0 1
+    	mpcallout 1 hmm
+    	mpcallout 1 say 嘖，利拜怎麼老是派這種臨時工給我......
+    	mpcallout 2 say 好，你知道我的工作是什麼嗎？
+    	mpcallout 3 mpcall job_1 $n
+    	mpcallout 4 mpcall job_2 $n
+    	mpcallout 5 mpcall job_3 $n
+    	mpcallout 6 mpcall job_4 $n
+    	break
+  endif
+"""
+[[mobiles.9407.programs]]
+trigger = "defun_prog"
+argument = "job_1"
+script = """
+say 沒錯，我是一名談判專家，負責為巢穴牟取最大利益。
+  say 最近北邊那個馬戲團來我們這裡公演，賺進大把銀子，
+  say 但我們卻得不到任何利益！因為全給黑幫佔去了，真是可惡！
+  angry
+"""
+[[mobiles.9407.programs]]
+trigger = "defun_prog"
+argument = "job_2"
+script = """
+say 更可惡的是，他們竟然關閉協商大門，把我這個專家趕了出來！
+  say 真是目中無人呀！我可是史卡拉貝大學院畢業的高材生呀！
+  mpechoat $n 你突然明白他為什麼會被趕出來了
+"""
+[[mobiles.9407.programs]]
+trigger = "defun_prog"
+argument = "job_3"
+script = """
+say 唉，你！你幫我進馬戲團，找一個\u001B[1;37m彪形大漢(strong man)\u001B[0m，
+  say 傳達我的憤怒與不滿！
+  hmm
+"""
+[[mobiles.9407.programs]]
+trigger = "defun_prog"
+argument = "job_4"
+script = """
+say 北邊有一條便道可以直接進馬戲團，你就從那邊進去吧。
+  say 不過\u001B[1;37m可別傷害他\u001B[0m，我們不想「現在」跟黑幫打起來，懂嗎？
+"""
+[[mobiles.9407.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) != slum_libei_quest
+	break
+  endif
+  if is_qmark($n) & slum_libei_quest 300064
+    if is_qmark($n) == slum_representative_nojob
+      	say 天哪！利拜竟然派了一個只懂拳頭的白癡過來！
+      	say 啊！你把我多時的心血全部搞砸了！
+      	say 你給我滾回去吃老米飯吧你！
+      	mpmod_qmark $n slum_libei_quest v1 r 64
+      	mpmod_qmark $n slum_libei_quest v2 r 64
+      	mpdel_qmark $n slum_wis_quest
+      	mpadd_qmark $n slum_libei_nojob 25 1 0 0 1 1
+      	mpcallout 1 mpechoat $n $I完全不顧形象地大罵你，將你罵下瞭望台......
+      	mpcallout 2 mpforce $n d
+      	break
+    endif
+    mpdel_qmark $n slum_strong_notalk
+    if is_qmark($n) & slum_wis_quest 232768
+      	mpmod_qmark $n slum_libei_quest v1 | 64
+      	mpechoat $n \u001B[1;37m你將對方的話傳給了$I聽，他閉起眼苦思......\u001B[0m
+      	mpmod_qmark $n slum_wis_quest v1 r 65025
+      	mpoload 9417 1
+      	if is_qmark($n) >= slum_wis_quest 200060
+        	mpcallout 1 say 哈哈，他果然早就技窮了，只會用這種騙小孩的手段耍賴，這下我們勝算大增！
+        	mpgold $n 10000
+      	else
+        	mpcallout 1 say 唉，黑幫勢力會這麼強盛不是沒有原因的，這下要與利拜好好商討對策了。
+        	mpgold $n 5000
+      	endif
+      	mpcallout 1 mpecho $I拿起隨身羽筆，在信封上簽名。
+      	mpcallout 2 give signed $n
+      	mpcallout 2 say 把這封信拿給利拜就行了。
+	mpcallout 3 c 2 'cure critical' $n
+      	break
+    endif
+    if is_qmark($n) & slum_wis_quest 208192
+      	mpmod_qmark $n slum_wis_quest v1 | 16384
+      	mpechoat $n 你詳述了對方的反應......
+      	mpcallout 1 say 哈，他果然技窮了，很好！
+      	mpcallout 2 mpechoaround $n $I突然靠在$N耳旁，對$e說悄悄話。
+      	mpcallout 2 mpcall secret_2 $n
+      	mpcallout 3 dance
+	mpcallout 4 c 'cure critical' $n
+      	break
+    endif
+    if is_qmark($n) & slum_wis_quest 202048
+      	mpmod_qmark $n slum_wis_quest v1 | 4096
+      	mpechoaround $n $N將黑幫代言人的話老老實實地講給談判專家聽。
+      	mpechoat $n 你將黑幫代言人的話老老實實地講給談判專家聽。
+      	say 嗯..............
+      	hmm
+      	mpcallout 1 say 哼，你再去跟他談一次，我猜他講不出新花樣的。
+      	mpcallout 2 c 2 'cure critical' $n
+	break
+    endif
+    if is_qmark($n) & slum_wis_quest 200512
+      	mpmod_qmark $n slum_wis_quest v1 | 1024
+      	mpechoaround $n $N將黑幫代言人的話老老實實地講給談判專家聽。
+      	mpechoat $n 你將黑幫代言人的話老老實實地講給談判專家聽。
+      	say 可惡的黑幫混混，以為先佔了地盤就如此猖狂！
+      	say 哼，不過現在不是意氣用事的時候......
+      	mpechoat $n $I突然靠在你耳旁。
+      	mpechoaround $n $I突然靠在$N耳旁，對$e說悄悄話。
+      	mpcallout 1 mpcall secret_1 $n
+      	mpcallout 2 say 去吧，把我的訊息傳達給那些混混！
+      	mpcallout 3 c 2 'cure critical' $n
+	break
+    endif
+  endif
+"""
+[[mobiles.9407.programs]]
+trigger = "defun_prog"
+argument = "secret_1"
+script = """
+mpechoat $n $I悄悄說：「其實，現在老大並不想與他們起衝突，但是我們也」
+  mpechoat $n $I悄悄說：「不能失了威風，所以你必須在強硬與退讓之間取平」
+  mpechoat $n $I悄悄說：「衡點，這就要靠你的智慧(wis)了......」
+"""
+[[mobiles.9407.programs]]
+trigger = "defun_prog"
+argument = "secret_2"
+script = """
+mpechoat $n $I悄悄說：「現在，我們離勝利不遠了，繼續向他施壓，
+  mpechoat $n 直到他受不了為止！到時候我們就為巢穴立下大功了！」
+  dance
+"""
+
+[mobiles.9408]
+keywords = "worker-slum"
+short_description = "碼頭工人(worker)"
+long_description = "辛勤工作的碼頭工人(worker)在這裡努力地搬運貨物。\n"
+description = """
+一位被拔掉翅膀，被人類當作奴隸的小精靈。
+"""
+act_flags = ["NPC", "SENTINEL", "NO_PAR", "IGNORE_NO_MOB"]
+affected_flags = ["PROTECT"]
+alignment = 300
+level = 7
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Fairy"
+class = []
+        action_programs = [
+            """
+6
+mpgoto 9434+mpecho 碼頭工人(worker)無精打采地來到這裡。
+say 上工了......
+""",
+            """
+20
+mpecho 碼頭工人(worker)無精打采地回到倉庫......+mpgoto 9423+mpecho 碼頭工人(worker)無精打采地來到這裡。
+mpecho 碼頭工人(worker)向倉庫管理員簽到，然後各自回家......
+mpgoto 9400
+""",
+        ]
+[[mobiles.9408.weaknesses]]
+skill = "backstab"
+percent = 250
+damage = 100
+[[mobiles.9408.weaknesses]]
+skill = "weaken"
+percent = 200
+damage = 100
+
+[objects.9400]
+keywords = "key"
+short_description = "大宅鑰匙(key)"
+long_description = "一把生鐵製的鑰匙(key)躺在這兒。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["9417", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "iron"
+
+[objects.9402]
+keywords = "red flower herb"
+short_description = "泛粉紅小點的花(red flower)"
+long_description = "一朵帶粉紅小點的花(red flower)躺在這兒。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "40", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.9403]
+keywords = "black rattan herb"
+short_description = "通體黑色的枯藤(black rattan)"
+long_description = "一枝黑色的枯藤(black rattan)躺在這兒。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "40", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.9405]
+keywords = "purple herb"
+short_description = "矮小的紫斑野草(purple herb)"
+long_description = "一株矮小不起眼的紫斑草(purple herb)躺在這兒。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "40", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.9409]
+keywords = "golden herb"
+short_description = "金黃色長草(golden herb)"
+long_description = "一株金黃色的單子葉長草(golden herb)靜靜地躺在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "40", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.9410]
+keywords = "bloody herb"
+short_description = "血紅色草藥(bloody herb)"
+long_description = "一株血紅色的草藥(bloody herb)躺在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "50", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.9411]
+keywords = "blue flower herb"
+short_description = "藍色小花(blue flower)"
+long_description = "一朵稀有的藍色小花(blue flower)躺在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "0", "50", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.9415]
+keywords = "signed red mail"
+short_description = "簽過名的紅色信函(red mail)"
+long_description = "一個簽著潦草姓名的信函(red mail)，上面還新添了一些密語，好像是你工作的評語。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+
+[objects.9416]
+keywords = "black potion"
+short_description = "黑色感冒藥水(black potion)"
+long_description = "一瓶黑漆漆的藥水(black potion)躺在這裡。"
+action_description = ""
+item_type = "POTION"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["1", "poison", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "liquid"
+
+[objects.9417]
+keywords = "signed black mail"
+short_description = "簽過名的黑色信函(black mail)"
+long_description = "一個簽著端正姓名的信函(black mail)，上面還新添了一些密語，好像是你工作的評語。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+
+[objects.9418]
+keywords = "signed purple mail"
+short_description = "簽過名的紫色信函(purple mail)"
+long_description = "一個簽著細密姓名的信函(purple mail)，上面還新添了一些密語，好像是你工作的評語。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+
+[objects.9419]
+keywords = "signed gray mail"
+short_description = "簽過名的灰色信函(gray mail)"
+long_description = "一個簽著醜陋姓名的信函(gray mail)，上面還新添了一些密語，好像是你工作的評語。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+
+[objects.9420]
+keywords = "red mail"
+short_description = "紅色信函(red mail)"
+long_description = "一封紅色的信函(red mail)，上面寫著一些字(words)。\n"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+[[objects.9420.extra_descriptions]]
+keywords = "mail words"
+description = """
+.
+		\u001B[1;31m拿著這封信，到\u001B[1;37m廢墟倉庫\u001B[1;31m，找\u001B[1;37m倉庫管理員，\u001B[0m
+		\u001B[1;31m將這封信拿給他看，他會知道怎麼作的。\u001B[0m
+		\u001B[1;36m切記，力量不是一切\u001B[0m
+				\u001B[1;31m祝。打工順利\u001B[0m  巢穴之王利拜
+
+下面則是一堆你看不懂的奇怪符號，可能是他們之間的密語吧。
+"""
+
+[objects.9421]
+keywords = "yellow mail"
+short_description = "黃色信函(yellow mail)"
+long_description = "一封黃色的信函(yellow mail)，上面寫著一些字(words)。\n"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+[[objects.9421.extra_descriptions]]
+keywords = "mail words"
+description = """
+.
+		\u001B[1;33m咳、咳！最近天氣不穩定，病情又開始惡化了，我要你\u001B[0m
+		\u001B[1;33m拿著這封信，到\u001B[1;37m老巫婆的茅屋\u001B[1;33m，找\u001B[1;37m老巫婆，\u001B[0m
+		\u001B[1;33m將這封信拿給她看，叫她配個藥給我吃吃。\u001B[0m
+		\u001B[1;36m知識能帶給人更強大的優勢，切記\u001B[0m
+				\u001B[1;33m祝。打工順利\u001B[0m  巢穴之王利拜
+
+下面則是一堆你看不懂的奇怪符號，可能是他們之間的密語吧。
+"""
+
+[objects.9422]
+keywords = "black mail"
+short_description = "黑色信函(black mail)"
+long_description = "一封黑色的信函(black mail)，上面寫著一些字(words)。\n"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+[[objects.9422.extra_descriptions]]
+keywords = "mail words"
+description = """
+.
+		\u001B[1;30m跟黑暗勢力的對抗是我最厭惡的工作，只不過我\u001B[0m
+		\u001B[1;30m無法逃避。				    \u001B[0m
+		\u001B[1;30m拿著這封信，到\u001B[1;37m碼頭瞭望台\u001B[1;30m，找\u001B[1;37m談判者，\u001B[0m
+		\u001B[1;30m將這封信拿給他看，他會知道怎麼作的。\u001B[0m
+		\u001B[1;36m睿智是對抗邪惡的最大本錢\u001B[0m
+				\u001B[1;33m祝。打工順利\u001B[0m  巢穴之王利拜
+
+下面則是一堆你看不懂的奇怪符號，可能是他們之間的密語吧。
+"""
+
+[objects.9423]
+keywords = "purple mail"
+short_description = "紫色信函(purple mail)"
+long_description = "一封紫色的信函(puple mail)，上面寫著一些字(words)。\n"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+[[objects.9423.extra_descriptions]]
+keywords = "mail words"
+description = """
+.
+		\u001B[1;35m拿著這封信，到\u001B[1;37m頹廢酒吧\u001B[1;35m，找\u001B[1;37m羊毛商人，\u001B[0m
+		\u001B[1;35m將這封信拿給他看，他會知道怎麼作的。\u001B[0m
+		\u001B[1;36m敏捷帶來意想不到的利益。\u001B[0m
+				\u001B[1;35m祝。打工順利\u001B[0m  巢穴之王利拜
+
+下面則是一堆你看不懂的奇怪符號，可能是他們之間的密語吧。
+"""
+
+[objects.9424]
+keywords = "gray mail"
+short_description = "灰色信函(gray mail)"
+long_description = "一封灰色的信函(gray mail)，上面寫著一些字(words)。\n"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "paper"
+[[objects.9424.extra_descriptions]]
+keywords = "mail words"
+description = """
+.
+		\u001B[37m拿著這封信，到\u001B[1m眾生之歸\u001B[0;37m，找\u001B[1;37m廢棄場管理者，\u001B[0m
+		\u001B[37m將這封信拿給他看，他會知道怎麼作的。\u001B[0m
+		\u001B[1;36m年輕人的體力是我等黃昏之人最羨慕的。\u001B[0m
+				\u001B[37m祝。打工順利\u001B[0m  巢穴之王利拜
+
+下面則是一堆你看不懂的奇怪符號，可能是他們之間的密語吧。
+"""
+
+[objects.9425]
+keywords = "secret mail"
+short_description = "秘密信函(secret mail)"
+long_description = "一封用蠟封過的信函(secret mail)，上面寫著一些字(words)。\n"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+timer = 20
+material = "paper"
+[[objects.9425.extra_descriptions]]
+keywords = "mail words"
+description = """
+.
+		仔細看著，冒險者，我現在要交付你一件非常重要的任務，
+		你必須幫我完成，而且不能洩漏出去，這張紙看完後記得
+		銷毀，以確保機密不會外流。
+		你看見了一行\u001B[1;37m機密文字(secret)\u001B[0m，似乎有些東西寫在上面。
+"""
+[[objects.9425.extra_descriptions]]
+keywords = "secret"
+description = """
+.
+		你或許知道我有一個女兒，叫做\u001B[1;37m愛莉安(Eilien)\u001B[0m，她不久前
+		被邪惡的黑幫所劫走，下落不明。
+		我猜測他們會將我的女兒當作談判籌碼，來威脅我。
+		\u001B[1;37m你必須潛入黑幫，幫我查出愛莉安目前被囚禁在何處\u001B[0m，讓我
+		們能有所準備，並且做出計畫，再去拯救她。
+		有一條\u001B[1;37m捷徑(way)\u001B[0m可以通往黑幫的第二區域----惡魔幫的核
+		心，我相信愛莉安最有可能被囚禁在惡魔幫的\u001B[1;37m大宅院(yard)\u001B[0m
+		中，你可以先從這幾方面著手調查，如果你有什麼疑問，請
+		直接向我的心腹\u001B[1;37m依普西隆(Epsilon)詢問(mission)\u001B[0m。
+		還有，路途兇險，最好多找幾名志同道合者同行。
+"""
+
+[objects.9427]
+keywords = "mushroom"
+short_description = "磨菇(mushroom)"
+long_description = "一棵看起來可以生吃的磨菇(mushroom)躺在這裡。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "40", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "food"
+
+[objects.9428]
+keywords = "gill fungus"
+short_description = "香蕈(gill fungus)"
+long_description = "一株發散著誘人香味的蕈類(gill fungus)躺在這兒。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "50", "1"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "herb"
+
+[objects.9429]
+keywords = "brick"
+short_description = "磚頭(brick)"
+long_description = "一塊沈重的磚頭(brick)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+level = 1
+material = "stone"
+
+[objects.9430]
+keywords = "goods"
+short_description = "走私貨(goods)"
+long_description = "一包沈重的走私貨(goods)放在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["1500", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+level = 1
+material = "fiber"
+
+[objects.9444]
+keywords = "fleece alice"
+short_description = "愛麗斯家的羊毛(fleece of alice)"
+long_description = "愛麗斯家私藏的羊毛(fleece)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 20
+material = "wool"
+
+[objects.9445]
+keywords = "fleece leonady"
+short_description = "雷歐娜蒂家的羊毛(fleece of leonady)"
+long_description = "雷歐娜蒂家私藏的羊毛(fleece)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 20
+material = "wool"
+
+[objects.9446]
+keywords = "fleece carlin"
+short_description = "卡琳家的羊毛(fleece of carlin)"
+long_description = "卡琳家私藏的羊毛(fleece)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 20
+material = "wool"
+
+[objects.9447]
+keywords = "fleece thingiwa"
+short_description = "辛吉娃家的羊毛(fleece of thingiwa)"
+long_description = "辛吉娃家私藏的羊毛(fleece)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 20
+material = "wool"
+
+[objects.9448]
+keywords = "fleece nischoco"
+short_description = "妮秀蔻家的羊毛(fleece of nischoco)"
+long_description = "妮秀蔻家私藏的羊毛(fleece)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 20
+material = "wool"
+
+[objects.9449]
+keywords = "fleece compeny"
+short_description = "康蓓妮家的羊毛(fleece of compeny)"
+long_description = "康蓓妮家私藏的羊毛(fleece)躺在這裡。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 20
+material = "wool"
+
+[objects.9451]
+keywords = "key gate"
+short_description = "閘門鑰匙(key of gate)"
+long_description = "一把閘門鑰匙(key of gate)躺在這裡。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["9451", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+level = 1
+material = "bronze"
+
+[rooms.9400]
+name = "巢穴貧民區暫存區"
+description = """
+這裡堆滿了各式雜物和垃圾，地上淺坑積滿死水，角落鼠屍爛得發蛆，
+令人昏眩的惡臭無所不在，這裡是貧民區的隱密角落，不管你在這裡做什麼
+都沒有人會注意。
+    另外，你在不遠處的廢物堆中看到了一張紙條(note)，似乎寫了些什麼。
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.9400.extra_descriptions]]
+keywords = "note"
+description = """
+此房間為設計給各種物件、mob作為暫存用，沒事的請快離開。
+                                                  Neversay
+"""
+
+[rooms.9401]
+name = "巢穴--貧民區(slum)的入口"
+description = """
+你來到一處與史卡拉貝城完全不同的混亂世界。髒亂、無序、簡窳的街
+道一路延伸進去，空氣充滿陳腐的臭味，泥土地棄滿果皮和動物內臟。三兩
+遊民從你身旁經過，肩擔油得發黑的布袋，匆匆消失彼方。這裡是巢穴貧民
+區，史卡拉貝混亂之源。
+    你南邊的史卡拉貝河灘不時駛來一艘小船(vessel)，看起來頗為神秘；
+街道兩旁的石板屋常有居民走動，好不熱鬧。
+    你低頭一看，腳下似乎踩著了一張紙條(note)。
+"""
+flags = ["NO_MOB"]
+sector = "CITY"
+[[rooms.9401.extra_descriptions]]
+keywords = "vessel"
+description = """
+那幾艘小船似乎載了大量重物，幾乎沉進水裡。
+"""
+[[rooms.9401.extra_descriptions]]
+keywords = "note"
+description = """
+這個區域是由Neversay在Nov,7,2001建立的，用以替代原本的生化工廠，
+統一ROC風格。
+"""
+[rooms.9401.exits.east]
+description = "破爛大街街口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9402
+[rooms.9401.exits.west]
+description = "史卡拉貝街道"
+keywords = ""
+locks = []
+key = -1
+to_room = 3046
+[[rooms.9401.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) == 10
+	echo 遠方駛來一群雙桅帆船......
+  	callout 1 echo 一名水手登上船頭，大喊：「到貨啦！漁船讓道！」
+  	callout 3 echo 河上帆船群緩緩駛離......
+  endif
+  if hour($) == 21
+  	echo 你看到幾艘雙桅帆船遠遠駛來......
+  	callout 3 echo 河上帆船群緩緩駛離，往下游而去......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 23
+  		echo 你看到一艘小黑船迅捷地往上游划去。
+  	endif
+  	if hour($) == 8
+  		echo 你看到一艘小黑船快速地駛向下游。
+  	endif
+  endif
+  if hour($) > 9
+  	echoat $n 你聽到街道的紛擾，有如潮水般湧來。
+  	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+
+[rooms.9402]
+name = "破爛大街街口"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街往東西方延伸而去，泥地街道兩
+旁堆滿各種噁心的堆積物(junk)，一些奇形異狀的植物(plant)從硬化的土
+地裡抽芽成長、發散惡臭。南邊是一間老舊的半穴居石屋，更南則可看見史
+卡拉貝河的浩涾河水朝西奔去，以及逆流而上的小船(vessel)；北方則是一
+座巨大的垃圾山，幾乎比房子還高。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9402.extra_descriptions]]
+keywords = "vessel"
+description = """
+那幾艘小船似乎載了大量重物，整艘船幾乎沉進水裡。
+"""
+[[rooms.9402.extra_descriptions]]
+keywords = "junk"
+description = """
+那堆垃圾裡沒什麼值錢的東西。
+"""
+[[rooms.9402.extra_descriptions]]
+keywords = "plant"
+description = """
+那幾叢奇怪的植物中似乎有一兩棵是很好的魔法藥材(herb)。
+"""
+[[rooms.9402.extra_descriptions]]
+keywords = "herb"
+description = """
+這裡有一株泛粉紅小點的花，你似乎可以將它拔出來(dig herb)。
+"""
+[rooms.9402.exits.east]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9403
+[rooms.9402.exits.north]
+description = "垃圾場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9427
+[rooms.9402.exits.south]
+description = "一般住家"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9444
+[rooms.9402.exits.west]
+description = "貧民區入口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9401
+[[rooms.9402.programs]]
+trigger = "room_command"
+argument = "dig herb"
+script = """
+if robjcount(9402) >= 2
+	echoat $n 這裡的藥材似乎被你採完了。
+	break
+  endif
+  if rand(70)
+      	oload 9402 1 $n floor
+      	echoat $n 你從地上拔出一株泛粉紅小點的花。
+      	echoaround $n $n從地上拔出一株泛粉紅小點的花。
+      	break
+  endif
+  echoat $n 你找了一會兒，卻什麼也沒找到。
+"""
+[[rooms.9402.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) == 11
+    	echo 你看到一群雙桅帆船遠遠駛來......
+    	callout 1 echo 一名水手登上船頭，大喊：「到貨啦！漁船讓道！」
+    	callout 3 echo 河上帆船群緩緩駛離......
+  endif
+  if hour($) == 20
+    	echo 你看到幾艘雙桅帆船遠遠駛來......
+    	callout 3 echo 河上帆船群緩緩駛離，往下游而去......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 0
+  	  	echo 你看到一艘小黑船迅捷地往上游划去。
+  	endif
+  	if hour($) == 7
+  	  	echo 你看到一艘小黑船快速地駛向下游。
+  	endif
+  endif
+  if hour($) > 9
+    	echoat $n 你聽到街道的紛擾，有如潮水般湧來。
+    	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+
+[rooms.9403]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街往東西方延伸而去，泥地街道兩
+旁堆滿各種噁心的堆積物(junk)，一些奇形異狀的植物(plant)從硬化的土
+地裡抽芽成長、發散惡臭。南邊是一間老舊的半穴居石屋，更南則可看見史
+卡拉貝河的浩涾河水朝西奔去，以及逆流而上的小船(vessel)；北邊則是一
+間簡陋的木築旅館，上面掛著小牌子(board)，裡面傳來一陣炒蠶豆的香味。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9403.extra_descriptions]]
+keywords = "vessel"
+description = """
+那幾艘小船似乎載了大量重物，整艘船幾乎沉進水裡。
+"""
+[[rooms.9403.extra_descriptions]]
+keywords = "junk"
+description = """
+北邊的垃圾泥坑積滿了噁心的廚餘和蠟淚。
+"""
+[[rooms.9403.extra_descriptions]]
+keywords = "plant"
+description = """
+那幾叢奇怪的植物中似乎有一兩棵是不錯的魔法藥材(herb)。
+"""
+[[rooms.9403.extra_descriptions]]
+keywords = "herb"
+description = """
+這裡有一株通體黑色的枯藤，你似乎可以將它拔出來(dig herb)。
+"""
+[[rooms.9403.extra_descriptions]]
+keywords = "board"
+description = """
+你看到牌子上畫了一個駝背的老人，無力地走著路。
+"""
+[rooms.9403.exits.east]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9404
+[rooms.9403.exits.north]
+description = "頹廢旅店"
+keywords = ""
+locks = []
+key = -1
+to_room = 9441
+[rooms.9403.exits.south]
+description = "一般住家"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9445
+[rooms.9403.exits.west]
+description = "破爛大街街口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9402
+[[rooms.9403.programs]]
+trigger = "room_command"
+argument = "dig herb"
+script = """
+if robjcount(9403) >= 2
+        echoat $n 這裡的藥材似乎被你採完了。
+        break
+  endif
+  if int($n) >= 12
+  or is_qmark($n) == slum_witch_herb  
+    	if rand(60)
+      		oload 9403 1 $n floor
+      		echoat $n 你從地上拔出一枝黑色枯藤。
+      		echoaround $n $n從地上拔出一枝黑色枯藤。
+      		break
+    	endif
+    	echoat $n 你找了一會兒，卻什麼也沒找到。
+    	break
+  endif
+  echoat $n 你無法判斷這叢植物那一株能拔起來作藥。
+"""
+[[rooms.9403.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+echo 垃圾發出一陣陣的臭味，噁----
+"""
+[[rooms.9403.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) == 12
+    	echo 你看到一群雙桅帆船遠遠駛來......
+    	callout 1 echo 一名水手登上船頭，大喊：「到貨啦！漁船讓道！」
+    	callout 3 echo 河上帆船群緩緩駛離......
+  endif 
+  if hour($) == 19
+    	echo 你看到幾艘雙桅帆船遠遠駛來......
+    	callout 3 echo 河上帆船群緩緩駛離，往下游而去......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 1
+    		echo 你看到一艘小黑船迅捷地往上游划去。
+  	endif
+  	if hour($) == 6
+  	  	echo 你看到一艘小黑船快速地駛向下游。
+  	endif
+  endif
+  if rand(50)
+    	echoat $n 垃圾堆的臭味燻得你快吐了。
+    	break
+  endif
+  if hour($) > 9
+    	echoat $n 你聽到街道的紛擾，有如潮水般湧來。
+    	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+
+[rooms.9404]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街往東西方延伸而去，一些奇形異
+狀的植物(plant)從硬化的土地裡抽芽成長、發散惡臭。南邊是一間老舊的
+半穴居石屋，更南則可看見史卡拉貝河的浩涾河水朝西奔去，以及逆流而上
+的小船(vessel)；北邊是一間草草搭建成的茅屋(cottage)，裡面飄來一種
+你說不出的嗆鼻味道。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9404.extra_descriptions]]
+keywords = "vessel"
+description = """
+那幾艘小船似乎載了大量重物，整艘船幾乎沉進水裡。
+"""
+[[rooms.9404.extra_descriptions]]
+keywords = "plant"
+description = """
+那幾叢奇怪的植物中似乎有一兩棵是不錯的魔法藥材(herb)。
+"""
+[[rooms.9404.extra_descriptions]]
+keywords = "herb"
+description = """
+這裡有一株通體黑色的枯藤，你似乎可以將它拔出來(dig herb)。
+"""
+[[rooms.9404.extra_descriptions]]
+keywords = "cottage"
+description = """
+那間茅屋像快倒下似的，搖搖晃晃，有時會有一陣煙從裡面飄出。
+"""
+[rooms.9404.exits.east]
+description = "破爛大街與走私碼頭交口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9405
+[rooms.9404.exits.north]
+description = "巫婆小屋"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9437
+[rooms.9404.exits.south]
+description = "一般住家"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9446
+[rooms.9404.exits.west]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9403
+[[rooms.9404.programs]]
+trigger = "room_command"
+argument = "dig herb"
+script = """
+if robjcount(9403) >= 2
+        echoat $n 這裡的藥材似乎被你採完了。
+        break
+  endif
+  if int($n) >= 12
+  or is_qmark($n) == slum_witch_herb
+    	if rand(60)
+      		oload 9403 1 $n floor
+      		echoat $n 你從地上拔出一枝黑色枯藤。
+      		echoaround $n $n從地上拔出一枝黑色枯藤。
+      		break
+    	endif
+    	echoat $n 你找了一會兒，卻什麼也沒找到。
+    	break
+  endif
+  echoat $n 你無法判斷這叢植物那一株能拔起來作藥。
+"""
+[[rooms.9404.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) == 13
+    	echo 你看到幾艘雙桅帆船遠遠駛來......
+    	callout 1 echo 一名水手登上船頭，大喊：「到貨啦！漁船讓道！」
+    	callout 3 echo 河上帆船群緩緩駛離......
+  endif
+  if hour($) == 18
+    	echo 你看到幾艘雙桅帆船遠遠駛來......
+    	callout 3 echo 河上帆船群緩緩駛離，往下游而去......
+  endif
+  if mobcount(9429) > 0
+  	if hour($) == 2
+    		echo 你看到一艘小黑船迅捷地往上游划去。
+  	endif
+  	if hour($) == 5
+  	  	echo 你看到一艘小黑船快速地駛向下游。
+  	endif
+  endif
+  if rand(50)
+    	echo 一陣煙從北邊的小茅屋中吹出。
+    	break
+  endif
+  if hour($) > 9
+    	echoat $n 你聽到街道的紛擾，有如潮水般湧來。
+    	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+
+[rooms.9405]
+name = "破爛大街與走私碼頭交口"
+description = """
+東西向的破爛大街與南北向的走私碼頭卸貨道在此交會，來往的搬運工
+和車駕幾乎塞住了所有的路。北方通往碼頭的監視瞭望臺，南方則是人潮聚
+集的貧民區生命線--走私碼頭，更南方你可以看到密密麻麻的小船(vessel)
+停靠在岸上。在不經意的一瞥中，你發現在街道的角落有一叢植物(plant)
+辛苦地生長著。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9405.extra_descriptions]]
+keywords = "vessel"
+description = """
+那幾艘小船似乎載了大量重物，整艘船幾乎沉進水裡。
+"""
+[[rooms.9405.extra_descriptions]]
+keywords = "plant"
+description = """
+那叢努力生存的植物中似乎有一兩棵是不錯的魔法藥材(herb)。
+"""
+[[rooms.9405.extra_descriptions]]
+keywords = "herb"
+description = """
+這裡有幾顆矮小的紫斑野草，你似乎可以將它拔出來(dig herb)。
+"""
+[rooms.9405.exits.east]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9406
+[rooms.9405.exits.north]
+description = "走私碼頭卸貨道"
+keywords = ""
+locks = []
+key = -1
+to_room = 9434
+[rooms.9405.exits.south]
+description = "走私碼頭卸貨道"
+keywords = ""
+locks = []
+key = -1
+to_room = 9438
+[rooms.9405.exits.west]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9404
+[[rooms.9405.programs]]
+trigger = "room_command"
+argument = "dig default"
+script = """
+echoat $n 你要拔什麼？
+"""
+[[rooms.9405.programs]]
+trigger = "room_command"
+argument = "dig herb"
+script = """
+if robjcount(9405) >= 2
+	echoat $n 這裡的藥材似乎被你採完了。
+	break
+endif
+if int($n) >= 15
+or is_qmark($n) == slum_witch_herb
+	if rand(50)
+		oload 9405 1 $n floor
+		echoat $n 你從地上拔出一顆紫斑野草。
+		echoaround $n $n從地上拔出一顆紫斑野草。
+		break
+	endif
+	echoat $n 你找了一會兒，卻什麼也沒找到。
+	break
+endif
+echoat $n 你無法判斷這叢植物那一株能拔起來作藥。
+"""
+[[rooms.9405.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) == 14
+	echo 你看到幾艘雙桅帆船遠遠駛來......
+	callout 1 echo 一名水手登上船頭，大喊：「到貨啦！漁船讓道！」
+	callout 2 echo 帆船群緩緩靠岸，準備卸貨。
+endif
+if hour($) > 14
+	if hour($) <= 16
+		echo 水手和搬運工成群結隊搬運貨物，經過你身邊。
+		callout 1 echo 一群搬運工擔著重物走過。
+		break
+	endif
+endif
+if hour($) == 17
+	echo 遠方帆船群起帆，離開港口了.....
+	break
+endif
+if mobcount(9429) > 0
+	if hour($) == 3
+		echo 你看到一艘小黑船迅捷地靠岸。
+		callout 1 echo 一群工人鬼鬼祟祟地登上小船......
+		callout 2 echo 一群工人神經兮兮地搬著貨物進倉庫。
+		break
+	endif
+	if hour($) == 4
+		echo 你看到一艘小黑船快速地駛離港口，往下游而去。
+		break
+	endif
+endif
+if rand(50)
+	echoat $n 一陣涼風吹來......
+	break
+endif
+if hour($) > 9
+	echoat $n 你聽到街道的紛擾，有如潮水般湧來。
+	break
+endif
+echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+
+[rooms.9406]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街往東西方延伸而去，泥地街道兩
+旁堆滿各種噁心的堆積物(junk)，發散著濃烈惡臭。南邊可看見史卡拉貝河
+的浩涾河水朝西奔去；北邊則是一間老舊的倉庫，大門緊閉。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9406.extra_descriptions]]
+keywords = "junk"
+description = """
+那堆垃圾似乎幾百天沒人清理了，腐爛四散的動物肢體發散噁心的臭味。
+"""
+[rooms.9406.exits.east]
+description = "破爛大街轉角"
+keywords = ""
+locks = []
+key = -1
+to_room = 9407
+[rooms.9406.exits.north]
+description = "廢墟倉庫"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9423
+[rooms.9406.exits.west]
+description = "破爛大街與走私碼頭交口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9405
+[[rooms.9406.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+echo 垃圾發出一陣陣的臭味，噁----
+"""
+[[rooms.9406.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if rand(60)
+    	echo 垃圾堆的臭味燻得你快吐了。
+    	break
+  endif
+  if hour($) > 9
+    	echo 你聽到街道的紛擾，有如潮水般湧來。
+    	break
+  endif
+  echo 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+
+[rooms.9407]
+name = "破爛大街轉角"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街在這邊往西方和北方延伸而去。
+你可以聽見南邊聲勢浩大的流水衝擊河岸洗衣石時產生的巨響，東方則是一
+片深沈而恐怖的陰暗，似乎有人在那盯著你的一舉一動。
+"""
+flags = []
+sector = "CITY"
+[rooms.9407.exits.east]
+description = "太暗看不清楚"
+keywords = ""
+locks = []
+key = -1
+to_room = 9451
+[rooms.9407.exits.north]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9408
+[rooms.9407.exits.south]
+description = "洗衣處"
+keywords = ""
+locks = []
+key = -1
+to_room = 9443
+[rooms.9407.exits.west]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9406
+[[rooms.9407.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if rand(40)
+    	echo 你隱約聽到南方傳來的浪濤聲。
+    	callout 1 echo 嘩啦！嘩啦！
+  endif
+  if hour($) > 9
+    	echoat $n 你聽到街道的紛擾，有如潮水般湧來。
+    	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+
+[rooms.9408]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街朝南北延伸而去。這裡的地面殘
+留著當年史卡拉貝第二次衛城之役時的城牆遺跡(ruin)，但附近的行人行色
+匆匆，誰也無心多加留意。倒是東邊的酒吧(bar)人來人往，熱鬧許多，疲
+憊的你或許可以在裡面得到一刻小歇。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9408.extra_descriptions]]
+keywords = "ruin"
+description = """
+這段當年大戰最激烈的戰場，如今只剩下一小段殘存牆基供人憑弔，你可以
+在垃圾塵土掩埋的穢物堆中看到一塊牌子，寫著：
+                      謹紀念    第二次衛城之役的英雄們
+"""
+[[rooms.9408.extra_descriptions]]
+keywords = "bar"
+description = """
+酒吧外面的牌子畫著一棟半倒的磨坊，還有一杯溢出來的麥酒。
+"""
+[rooms.9408.exits.east]
+description = "半傾倒酒吧"
+keywords = ""
+locks = []
+key = -1
+to_room = 9421
+[rooms.9408.exits.north]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9409
+[rooms.9408.exits.south]
+description = "破爛大街轉角"
+keywords = ""
+locks = []
+key = -1
+to_room = 9407
+[[rooms.9408.programs]]
+trigger = "room_rand"
+argument = "30"
+script = """
+if pcnum($) > 0
+    	echo 一陣淒涼之風吹過殘牆腳。
+    	break
+endif
+"""
+[[rooms.9408.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) < 9
+  or hour($) > 20
+    	echo 你聽到鼎沸的人聲從酒吧裡傳出。
+    	break
+  endif
+  echoat $n 你聽到街道的紛擾，有如潮水般湧來。
+"""
+
+[rooms.9409]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街在這裡轉了個彎，由南朝東延伸
+而去。這裡的地面依稀還有古大理石城牆的殘跡，三兩運布車從彼端轤轤走
+來，悠閒地趕著馬駕，消失在街道另一端，一股寧靜的感覺籠罩著你。
+    古城牆另一邊生長著一片如同雜草般的植物(plant)，微風吹過，就如同
+遠方史卡拉貝河的黃昏浪紋一樣，粼光閃閃。你的北邊是一棟美輪美奐的大
+宅(house)，巨大木閘重重包圍，似乎是什麼權貴住的地方。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9409.extra_descriptions]]
+keywords = "plant"
+description = """
+一整片隨風搖曳的金黃色長草，你似乎能在裡面發現一些特殊的藥草(herb)。
+"""
+[[rooms.9409.extra_descriptions]]
+keywords = "herb"
+description = """
+你發現一兩株長得特別好的黃金色長草，似乎可以將它拔出來(dig herb)。
+"""
+[[rooms.9409.extra_descriptions]]
+keywords = "house"
+description = """
+你看見宅院門口有幾名武裝守衛駐守，驅趕所有接近的人。
+"""
+[rooms.9409.exits.east]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9410
+[rooms.9409.exits.north]
+description = "大理石豪宅的入口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9417
+[rooms.9409.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9408
+[[rooms.9409.programs]]
+trigger = "room_command"
+argument = "dig herb"
+script = """
+if robjcount(9409) >= 2
+        echoat $n 這裡的藥材似乎被你採完了。
+        break
+  endif
+  if int($n) >= 18
+  or is_qmark($n) == slum_witch_herb
+    	if rand(40)
+      		oload 9409 1 $n floor
+      		echoat $n 你從地上拔出一顆金黃色長草。
+      		echoaround $n $n從地上拔出一顆金黃色長草。
+      		break
+    	endif
+    	echoat $n 你找了一會兒，卻什麼也沒找到。
+    	break
+  endif
+  echoat $n 你無法判斷這叢植物那一株能拔起來作藥。
+"""
+[[rooms.9409.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) > 9
+  	echo 幾輛運布車從你身邊經過。
+  	break
+endif
+echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+[[rooms.9409.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+echo 一陣淒涼之風吹過殘牆腳。
+"""
+
+[rooms.9410]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街在這裡朝西方與北方延伸開來，
+泥濘的街道替路上的垃圾著上赭紅的外衣，連路邊的植物(plant)也染成血
+紅色了。你看到東邊有一處大型垃圾組合成的洞穴(hole)，猶如死魚的氣味
+從洞深處傳來，臭得讓你不禁別過頭。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9410.extra_descriptions]]
+keywords = "plant"
+description = """
+幾叢血紅植物散佈在洞口附近，其中幾株(herb)看起來特別鮮豔。
+"""
+[[rooms.9410.extra_descriptions]]
+keywords = "herb"
+description = """
+這株植物紅得宛如活人的鮮血，似乎可以將它拔起來作藥(dig herb)。
+"""
+[[rooms.9410.extra_descriptions]]
+keywords = "hole"
+description = """
+巨大的垃圾洞穴讓你想到某些野獸張口怒吼的樣子，由外觀看，裡面似乎是
+緩緩向下緩降，再裡面卻黑得讓你看不見底，只有更靠近才能看清了。
+"""
+[rooms.9410.exits.east]
+description = "太暗了看不清楚"
+keywords = ""
+locks = []
+key = -1
+to_room = 9414
+[rooms.9410.exits.north]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9411
+[rooms.9410.exits.west]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9409
+[[rooms.9410.programs]]
+trigger = "room_command"
+argument = "dig herb"
+script = """
+if robjcount(9410) >= 2
+        echoat $n 這裡的藥材似乎被你採完了。
+        break
+  endif
+  if int($n) >= 20
+  or is_qmark($n) == slum_witch_herb
+    	if rand(40)
+      		oload 9410 1 $n floor
+      		echoat $n 你從地上拔出一株血紅色草藥。
+      		echoaround $n $n從地上拔出一株血紅色草藥。
+      		break
+    	endif
+    	echoat $n 你找了一會兒，卻什麼也沒找到。
+    	break
+  endif
+  echoat $n 你無法判斷這叢植物那一株能拔起來作藥。
+"""
+[[rooms.9410.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) > 9
+    	echo 幾名行人神色匆匆地走過。
+    	break
+  endif
+  echoat $n 街上冷冷清清，皆無人聲。
+"""
+[[rooms.9410.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+if rand(40)
+  	echo 從洞裡傳來一陣惡臭。
+  	break
+endif
+echo 洞穴中傳來一陣模模糊糊的聲音，有如泥潭大口吞噬的下嚥聲。
+callout 1 echo "噁------嗚------噁！"
+"""
+
+[rooms.9411]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街沿著古城牆的遺跡，往南北方延
+伸而去，街道的東邊是一棟大門緊閉、幾乎塌陷的老舊石板屋，幾叢雜草
+(herb)雜亂地長在廢棄的門窗、石縫上，使得這屋子更顯荒涼。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9411.extra_descriptions]]
+keywords = "herb"
+description = """
+這叢雜草似乎有些名堂，你突然很想動手找找看(dig herb)。
+"""
+[rooms.9411.exits.east]
+description = "無人居住的住家"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9450
+[rooms.9411.exits.north]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9412
+[rooms.9411.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9410
+[[rooms.9411.programs]]
+trigger = "room_command"
+argument = "dig herb"
+script = """
+if robjcount(9411) >= 2
+        echoat $n 這裡的藥材似乎被你採完了。
+        break
+  endif
+  if int($n) >= 22
+  or is_qmark($n) == slum_witch_herb
+    	if rand(30)
+      		oload 9411 1 $n floor
+      		echoat $n 你從地上拔出一朵藍色小花。
+      		echoaround $n $n從地上拔出一朵藍色小花。
+      		break
+    	endif
+    	echoat $n 你找了一會兒，卻什麼也沒找到。
+    	break
+  endif
+  echoat $n 你無法判斷這叢植物那一株能拔起來作藥。
+"""
+[[rooms.9411.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) > 9
+    	echo 幾名行人神色匆匆地走過。
+    	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+[[rooms.9411.programs]]
+trigger = "room_rand"
+argument = "40"
+script = """
+echo 一陣淒涼之風吹過殘牆腳。
+"""
+
+[rooms.9412]
+name = "破爛大街"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街沿著古城牆(ruin)的遺跡，往南
+北方延伸而去。東邊是一棟亂石堆砌成的小屋子，裡面傳來織布機的操作聲
+和換錠的刷刷聲。你可以看到西方遠處有一棟華廈佇立在那，與一般貧民住
+宅大不相同。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9412.extra_descriptions]]
+keywords = "ruin"
+description = """
+這段牆基損毀地非常嚴重，幾乎只剩腳下踏的基石(stone)而已。
+"""
+[[rooms.9412.extra_descriptions]]
+keywords = "stone"
+description = """
+你發現這些基石上面佈滿刀痕與箭簇痕，有些竟然是新添上的。
+"""
+[rooms.9412.exits.east]
+description = "一般住家"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9449
+[rooms.9412.exits.north]
+description = "破爛大街街底"
+keywords = ""
+locks = []
+key = -1
+to_room = 9413
+[rooms.9412.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9411
+[[rooms.9412.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) > 9
+    	echo 幾名行人神色匆匆地走過。
+    	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+[[rooms.9412.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+echo 一陣淒涼之風吹過殘牆腳。
+"""
+
+[rooms.9413]
+name = "破爛大街街底"
+description = """
+史卡拉貝貧民區的主要街道--破爛大街就到此為止，你的腳踩在泥濘的
+地上，幾乎拔不出來。北邊是一棟普通的石板住宅，東方是一棟略顯老舊的
+石屋，而屋子的茅草屋頂(roof)似乎破了一個洞。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9413.extra_descriptions]]
+keywords = "roof"
+description = """
+這個屋頂的洞破了很久，卻沒人來修。
+"""
+[rooms.9413.exits.east]
+description = "屋頂破洞的住家"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9448
+[rooms.9413.exits.north]
+description = "靠近馬戲團的住家"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9447
+[rooms.9413.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9412
+[[rooms.9413.programs]]
+trigger = "room_enter"
+argument = "15 30"
+script = """
+if hour($) > 9
+    	echo 幾名行人神色匆匆地走過。
+    	break
+  endif
+  echoat $n 街上冷冷清清，除了遠方幾聲狗吠，皆無人聲。
+"""
+[[rooms.9413.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+if hour($) > 7
+  	if rand(60)
+    		echo 從西方傳來一陣歡呼聲，似乎是大馬戲團正在表演。
+    		break
+  	endif
+endif
+echo 一陣淒涼之風吹過殘牆腳。
+"""
+
+[rooms.9414]
+name = "陰暗巢穴的入口"
+description = """
+你踏著滿地的廢木石屑，進入一間充滿腐臭味的洞穴，冷風從亂石堆成
+的破牆灌進來，吹得你直打哆嗦。西方是洞穴的出口，可以回到破爛大街，
+在你下方還有一個深坑，一股濃烈的惡臭從裡面傳來，你可以從洞穴通往地
+底更深處。你還注意到了垃圾堆的角落縮著一名老人，口中喃喃有詞。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.9414.exits.down]
+description = "太暗了看不清楚"
+keywords = ""
+locks = []
+key = -1
+to_room = 9415
+[rooms.9414.exits.west]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9410
+[[rooms.9414.programs]]
+trigger = "room_rand"
+argument = "10"
+script = """
+echo 你聞到一股極其恐怖的味道，讓你有股想逃出去的衝動。
+"""
+[[rooms.9414.programs]]
+trigger = "room_enter"
+argument = "15 40"
+script = """
+echoat $n 你聽到一聲狂嘯從洞裡傳來，你無法判斷是不是洞穴自然產生的聲音。
+"""
+
+[rooms.9415]
+name = "巢穴地下"
+description = """
+你來到了洞穴的底部，污水從壁面滲透流下，沾得你的腳都是腥水。
+刺鼻的死屍臭與熟肉的香味混合在一起，幾乎讓你待不下去，你只想快快離
+開這裡。你注意到北方還能再往裡面更深入，上方則是你掉下來的地方，牆
+上搭著一座老舊的木梯，讓你能爬回上面。
+    你發現牆壁上有許多極難發現小洞(hole)，似乎有所玄機。
+"""
+flags = ["DARK", "NO_MOB", "UNDERGROUND", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.9415.extra_descriptions]]
+keywords = "hole"
+description = """
+這些洞像是人挖出來的，裡面有些亮亮的金屬在閃爍。
+"""
+[rooms.9415.exits.north]
+description = "太暗了看不清楚"
+keywords = ""
+locks = []
+key = -1
+to_room = 9416
+[rooms.9415.exits.up]
+description = "太暗了看不清楚"
+keywords = ""
+locks = []
+key = -1
+to_room = 9414
+[[rooms.9415.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+if rand(30)
+  	echo 咯咯咯咯------喀啦。
+  	break
+endif
+if rand(60)
+  	echo 你聽到一股模糊的囈語從北方傳來。
+endif
+echo 「女兒呀......」
+"""
+
+[rooms.9416]
+name = "巢穴最深處"
+description = """
+你來到垃圾洞穴的最深處，毀車、爛布、廢紡織機堆成狹小牆壁支撐著
+其上山一般重的各式垃圾。污水從隙縫中潺潺流出，在你腳下形成一道小河
+，散發著飯後廚餘的味道。你可以往南走離開這個鬼地方，不過在你離開之
+前，你看到車輪拼成的木頭座位上坐著一塊人形黑影，似乎不是死人屍骸，
+你可以再靠近一點，看清那到底是什麼。
+"""
+flags = ["DARK", "NO_MOB", "UNDERGROUND", "SAFE", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.9416.exits.south]
+description = "太暗了看不清楚"
+keywords = ""
+locks = []
+key = -1
+to_room = 9415
+[[rooms.9416.programs]]
+trigger = "room_rand"
+argument = "10"
+script = """
+if rand(40)
+  	echo 一隻老鼠從你腳下衝過去。
+  	break
+endif
+echo 「吱------吱吱！」
+"""
+
+[rooms.9417]
+name = "大理石豪宅的入口"
+description = """
+這裡是貧民區最豪華的宅院(house)，華麗程度絕對不輸史卡拉貝城內
+任何一棟富豪建築，不過，為何有人將房子蓋在治安混亂的貧民區？
+    你注意到豪宅的木閘大門是鎖著的，豪宅周圍佈下了數名身材高大的武
+裝警衛，冷森森的長矛豎在一旁，警告不得有人擅自接近。
+"""
+flags = ["NO_MOB", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.9417.extra_descriptions]]
+keywords = "house"
+description = """
+一間純白大理石蓋成的宅院，連最外面的圍牆也是大理石蓋成的，奇怪的是
+，這附近連一點垃圾也看不到，與貧民區的髒亂風格大相逕庭。
+"""
+[rooms.9417.exits.north]
+description = "豪宅中庭"
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHED"]
+key = 9400
+to_room = 9418
+[rooms.9417.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9409
+[[rooms.9417.programs]]
+trigger = "room_enter"
+argument = "4 100"
+script = """
+if isnpc($n)
+  	if vnum($n) == 9400
+  	or vnum($n) == 9423
+  	or vnum($n) == 9425
+  	or vnum($n) == 9428 
+    		break
+  	endif
+  	force $n s
+  	break
+endif
+if ispc($n)
+  	if is_qmark($n) & slum_libei_quest 100128
+    		force guard-slum mpcall open $n
+    		break 
+  	endif
+  	echoat $n \u001B[1;36m警衛「喂」的一聲叫住你，將你趕了回去。\u001B[0m
+  	force $n s
+endif
+"""
+[[rooms.9417.programs]]
+trigger = "room_leave"
+argument = "15 100"
+script = """
+modrvt d0 | 6
+ echo 警衛將門關上。
+"""
+
+[rooms.9418]
+name = "豪宅中庭"
+description = """
+這裡是大門與宅院本體間的透天中庭，芳香的泥土味讓你身心為之一暢
+，引水道流進來的活水圍繞著中庭，灌溉綠意盎然的綠色植物(plant)與鮮
+花。你在一個角落發現一個小苗圃，上面種了幾株精緻小巧的紫花，在園圃
+的前方還放了一個牌子(board)，上面寫了一些字。你可以往南離開這片世
+外仙境，回到骯髒的貧民區，也可以順著中庭旁的大理石樓梯往上走進宅院。
+"""
+flags = ["NO_MOB", "NO_TELEPORT_IN"]
+sector = "CITY"
+[[rooms.9418.extra_descriptions]]
+keywords = "board"
+description = """
+牌子上面的字娟秀極了，絕對是出於教養良好的女孩之手：
+
+                愛莉安的小小園圃，獻給爸爸。
+"""
+[rooms.9418.exits.south]
+description = "大理石豪宅的入口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9417
+[rooms.9418.exits.up]
+description = "豪宅大廳"
+keywords = ""
+locks = []
+key = -1
+to_room = 9419
+[[rooms.9418.programs]]
+trigger = "room_enter"
+argument = "15 80"
+script = """
+if rand(30)
+    	echoat $n 你看見一隻小松鼠從你腳下鑽過。
+    	break
+  endif
+  if rand(50)
+    	echoat $n 一陣涼風吹來，讓百花搖曳不止，有如翩翩纖舞。
+    	break
+  endif
+  echoat $n 幾隻蝴蝶從你頭上舞過。
+"""
+
+[rooms.9419]
+name = "豪宅大廳"
+description = """
+一道微風從敞開的石窗灌進，這裡隔絕了貧民區的喧囂與髒亂，只留下
+典雅的寧靜和品味，落落大方的擺設和簡單的家具讓此處充滿令人安心的氣
+氛，你可以從石窗遠眺整個貧民區的景緻(survey view)，你也可以循著樓
+梯往下走，或是往北進入另一個房間。
+"""
+flags = ["NO_MOB", "INDOORS", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.9419.exits.down]
+description = "豪宅中庭"
+keywords = ""
+locks = []
+key = -1
+to_room = 9418
+[rooms.9419.exits.north]
+description = "愛莉安的閨房"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9420
+[[rooms.9419.programs]]
+trigger = "room_command"
+argument = "survey view"
+script = """
+if month($) <= 3
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;37m你看到遠方街上猶有細雪，春夜的寒意讓你不禁縮著脖子吐氣，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;31m火紅的太陽掛在黃昏的垂幕上，映著春天怒放的鮮花，十分美麗。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;32m你看到遠方街上熙熙攘攘，活潑的春天氣氛也傳進了宅院。\u001B[0m
+  	endif
+	break
+endif
+if month($) <= 8
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;36m你看到遠方街上籠罩一層薄霧，夏天的暑熱消散一空，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;31m火紅的夕陽掛在黃昏的垂幕上，驚人的熱氣讓你滿臉大汗。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;32m你看到遠方街上熱鬧非凡，夏天的氣息讓萬物欣欣向榮。\u001B[0m
+  	endif
+	break
+endif
+if month($) <= 12
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;36m你看到遠方秋風吹起，冷夜寒星讓街道顯得空曠寂寞，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;33m圓扁的太陽緩緩降入群山間，微寒的秋日讓你感傷莫名。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;36m你看到遠方街上眾人事務繁忙，忙著儲糧過冬。\u001B[0m
+	ebdif
+	break
+endif
+  if hour($) <= 5
+  or hour($) >= 21
+    	echoat $n \u001B[1;37m你看到街上大雪剛停，大雪夜的寒意讓你不禁縮著脖子吐氣，\u001B[0m
+    	rcall moon $n
+	break
+  endif
+  if hour($) > 16
+        echoat $n \u001B[1;31m凜冽的冬風將黃昏的垂陽吹得毫無熱度，只看到微弱的紅火降下大地。\u001B[0m
+	break
+  endif
+  if hour($) > 5
+    	echoat $n \u001B[1;37m你看到遠方街上眾人皆裹著大衣厚服而行，毫無暖意的太陽晾在天空。\u001B[0m
+  endif
+"""
+[[rooms.9419.programs]]
+trigger = "room_defun"
+argument = "moon"
+script = """
+if day($) == 0
+    	echoat $n \u001B[1;36m天空灑滿銀星，不見紅月。\u001B[0m
+	break
+  endif
+  if day($) <= 11
+    	echoat $n \u001B[1;31m你也看到上弦月掛在夜空中，散發著淒冷的紅光。\u001B[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n \u001B[1;31m你也看到美麗的滿月掛在夜空中，散發著飽滿的紅暈。\u001B[0m
+	break
+  endif
+  	echoat $n \u001B[1;31m你也看到下弦月懸在夜空中，散發著詭異的紅光。\u001B[0m
+	break
+"""
+
+[rooms.9420]
+name = "愛莉安(Eilien)的閨房"
+description = """
+這房間只有一張床、一個茶桌、一瓶花和一個書櫃，顯得十分清爽。
+在這房間中，你聞到一股混雜少女體香的淡淡花草香；桌上則放了一本精裝
+詩集(poems)，似乎是她自己寫的，牆上掛的肖像(picture)也是，可見房間
+的主人品味十分高雅。
+"""
+flags = ["NO_MOB", "INDOORS", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.9420.extra_descriptions]]
+keywords = "poems"
+description = """
+這本詩集上的字跡十分娟秀、纖細，每頁都題了一首詩，可惜你看不懂。
+"""
+[[rooms.9420.extra_descriptions]]
+keywords = "picture"
+description = """
+肖像的筆風十分柔弱，畫的是一名白髮蒼蒼的老者，你一看就知道是貧民區
+老大利拜的像，但在繪者精妙的筆法下，利拜的面孔顯得沒那麼恐怖了。作
+者在畫下面署名﹔
+　　　　　　　　　爸爸的畫　　　愛你的女兒愛莉安
+"""
+[rooms.9420.exits.south]
+description = "豪宅大廳"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9419
+[[rooms.9420.programs]]
+trigger = "room_rand"
+argument = "15"
+script = """
+echo 一陣清風從窗子吹進來。
+"""
+
+[rooms.9421]
+name = "半傾倒酒吧"
+description = """
+你進入一間狹窄、酒氣沖天及髒亂的小酒吧，一些無業遊民聚集在這裡
+喝酒聊天，有些人則在酒吧看板(read board)上找工作。酒保殷勤地為羊毛
+布商人倒酒，對無業遊民和你則是理都不理。往西可以離開酒吧，你也可以
+往下走，進入存酒的地窖。
+"""
+flags = ["INDOORS", "SAFE", "AUCTION"]
+sector = "INSIDE"
+[rooms.9421.exits.down]
+description = "太暗了看不清楚"
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = -1
+to_room = 9422
+[rooms.9421.exits.west]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9408
+[[rooms.9421.programs]]
+trigger = "room_mask"
+argument = "read board"
+script = """
+if ispc($n)
+  echoaround $n $n注意地看著一則廣告。
+  echoat $n 陳舊、沾滿酒漬的板子上寫了好幾十則的應徵廣告，在一個角落你瞄到了一
+  echoat $n 則很特殊的廣告：
+  echoat $n .                       徵巢穴之僕，意者洽貧民窟老大
+  force bartender-slum say 疑，你好像想找工作吧？你可以到酒吧北邊的「巢穴」找
+  force bartender-slum say 說故事的老頭要(talk)工作(job)。
+  add_qmark $n slum_libei_quest -1 0 0 1 0 1
+endif
+"""
+[[rooms.9421.programs]]
+trigger = "room_enter"
+argument = "63 80"
+script = """
+if rand(30)
+    	echoat $n 酒吧吵雜的噪音傳進你耳裡。
+    	break
+  endif
+  echoat $n 你進來時酒吧安靜了一會兒，然後回復吵鬧。
+"""
+
+[rooms.9422]
+name = "半傾倒酒吧地下酒窖"
+description = """
+滿室的酒味衝鼻而來，幾乎讓你當場醉倒，一陣調適後，你終於習慣了
+這股氣味。這裡有滿室的置酒架和酒桶(beer)，其中幾個的栓沒塞穩，葡萄
+酒汁滲出來，在地上積成一個小淺池。在裡面移動你要非常小心，以免採到
+酒池或撞翻酒桶。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[[rooms.9422.extra_descriptions]]
+keywords = "beer"
+description = """
+有幾個酒桶的拴子鬆了，你似乎可以將它拔開，吸上幾口(suck beer)
+"""
+[rooms.9422.exits.up]
+description = "半傾倒酒吧"
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = -1
+to_room = 9421
+[[rooms.9422.programs]]
+trigger = "room_enter"
+argument = "63 80"
+script = """
+echoat $n 一股濃烈的酒香衝進你的鼻子裡。
+"""
+[[rooms.9422.programs]]
+trigger = "room_command"
+argument = "suck beer"
+script = """
+if ispc($n)
+  	echoat $n 你拔掉塞子，猛力吸一口再拴回塞子，嗯～～酒是酸的。
+  	echoaround $n $n拔掉酒桶拴子，偷偷吸了一口。
+	oload 3000 1 $n floor
+  	force $n drink beer
+  	force $n drink beer
+  	purge barrel
+  	c poison $n viclv
+endif
+"""
+
+[rooms.9423]
+name = "廢墟倉庫"
+description = """
+你來到一間繁忙髒亂的倉庫，發霉的老舊木板牆掛著好幾把鑰匙，快散
+架的書桌上放著一卷名冊(book)，桌後的管理員無趣地翻動書頁打發時間。
+西邊與南邊是倉庫的出口，另有一個向下的樓梯通向儲貨室。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "CITY"
+[[rooms.9423.extra_descriptions]]
+keywords = "book"
+description = """
+你看到一堆名字列在其上，大部分是小精靈姓氏，你發現名冊的封面寫著：
+
+                           「終身免費勞工」名簿。
+"""
+[rooms.9423.exits.down]
+description = "廢墟倉庫地下樓"
+keywords = ""
+locks = []
+key = -1
+to_room = 9424
+[rooms.9423.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9406
+[rooms.9423.exits.west]
+description = "走私碼頭卸貨道"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9434
+[[rooms.9423.programs]]
+trigger = "room_enter"
+argument = "63 70"
+script = """
+if ispc($n)
+	echoat $n 你聽到搬運工努力搬運貨物的呼喝聲。
+  endif
+"""
+
+[rooms.9424]
+name = "廢墟倉庫地下樓"
+description = """
+你來到廢墟倉庫的儲貨室，幾隻熄滅的火把插在石壁上，似乎很久沒有
+點過了。沿樓梯往上你可以回到倉庫一樓，南邊看起來像一扇黑沉沉的門。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9424.exits.south]
+description = "倉庫鐵門"
+keywords = ""
+locks = []
+key = -1
+to_room = 9425
+[rooms.9424.exits.up]
+description = "廢墟倉庫"
+keywords = ""
+locks = []
+key = -1
+to_room = 9423
+[[rooms.9424.programs]]
+trigger = "room_enter"
+argument = "63 100"
+script = """
+if is_qmark($n) & slum_libei_quest 300004
+    	if is_qmark($n) > slum_str_quest 200024
+      		echoat $n 一隻鼠人突然從陰影處跑了出來，開始攻擊你！
+      		mload 9428
+      		force wererat-slum mpkill $n
+      		break
+    	endif
+  endif
+  if rand(40)
+  	echoat $n 你看到一道黑影從腳下竄過。
+  	break
+  endif
+  echoat $n 「吱吱～～吱！」  
+"""
+
+[rooms.9425]
+name = "倉庫鐵門"
+description = """
+你看見一扇巨大鐵門立在眼前，隔絕倉儲室與走道。你可以往北到運輸
+走道上，或打開鐵門繼續往下走。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9425.exits.down]
+description = "倉庫最底層"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9426
+[rooms.9425.exits.north]
+description = "廢墟倉庫地下樓"
+keywords = ""
+locks = []
+key = -1
+to_room = 9424
+
+[rooms.9426]
+name = "倉庫最底層"
+description = """
+這裡堆滿了各種物資，包括建築材料(building)、民生物資(civil)和
+待輸出的商業貨品(goods)，整間地下倉庫散發著霉味、腥水味和腐爛味，
+似乎有幾十年沒清理了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[[rooms.9426.extra_descriptions]]
+keywords = "building"
+description = """
+你看見一大堆木材、灰泥和磚頭，如果你有什麼需要的話，可以仔細找找看
+(search brick)。
+"""
+[[rooms.9426.extra_descriptions]]
+keywords = "civil"
+description = """
+你看到一大倉麥粉和雜糧，以及零碎的民生用品堆在一起，如果你有需要的
+話，可以仔細找找看(search food)。
+"""
+[[rooms.9426.extra_descriptions]]
+keywords = "goods"
+description = """
+佔了半個倉庫的羊毛原料和布料成品井然有序地堆放在一起，上面還蓋了防
+塵的保護毛皮，再用鐵閘鎖在最裡面，顯然這批貨物非常重要，不過敏銳的
+你發現了羊毛布下還藏了一些異物，似乎就是傳聞中的走私黑貨？
+"""
+[rooms.9426.exits.up]
+description = "倉庫鐵門"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9425
+[[rooms.9426.programs]]
+trigger = "room_command"
+argument = "search brick"
+script = """
+if robjcount(9429) <= 3
+  	if is_qmark($n) & slum_libei_quest 300004
+    		oload 9429 1 $n floor
+		echoaround $n $n 找到了幾塊磚頭。
+    		echoat $n 你找到了幾塊沈重的磚頭。
+    		break
+  	endif
+endif
+echoat $n 你一無所獲。
+"""
+[[rooms.9426.programs]]
+trigger = "room_command"
+argument = "search food"
+script = """
+if rand(40)
+    	oload 3009 1 $n victim
+	echoaround $n $n找到了幾塊食物。
+    	echoat $n 你找到了幾塊有點過期的食物。
+    	break
+endif
+echoat $n 唉呀！你受傷了！
+c 'cause light' $n
+"""
+[[rooms.9426.programs]]
+trigger = "room_command"
+argument = "search good"
+script = """
+echoat $n 你一無所獲。
+"""
+[[rooms.9426.programs]]
+trigger = "room_rand"
+argument = "30"
+script = """
+if robjcount(9430) > 0
+	purge goods
+  	echo 走私貨消失了。
+endif
+"""
+
+[rooms.9427]
+name = "眾生之歸廢棄場入口"
+description = """
+你一踏進這裡，一股強烈的屍臭瀰天而來，差點把你燻暈過去！
+這裡的道路被廢棄的破車和家具佔滿，亂石縫也被爛帆和破網、羊皮塞滿。
+這裡是貧民區萬眾萬物的最終歸處--眾生之歸廢棄場，在這裡你可以看到各
+種各樣的廢棄物，甚至是流浪漢的屍體。
+往南你可以離開這個鬼地方，往北則是更深入。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.9427.exits.north]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9428
+[rooms.9427.exits.south]
+description = "破爛大街街口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9402
+[[rooms.9427.programs]]
+trigger = "room_enter"
+argument = "15 60"
+script = """
+echoat $n 你聞到一股恐怖的臭味撲鼻而來。
+"""
+
+[rooms.9428]
+name = "眾生之歸廢棄場"
+description = """
+你進入了一處堆積車船的廢棄場，幾幅破網掛在車軛上，隨風飄盪，淒
+涼異常，你還看到一些無用的大型家具裡面長滿了蕈類(fungus)。你可以向
+南走回到廢棄場的入口，也可往其他兩個方向繼續深入。
+"""
+flags = []
+sector = "FIELD"
+[[rooms.9428.extra_descriptions]]
+keywords = "fungus"
+description = """
+這堆蕈似乎可以拔起來(dig fungus)。
+"""
+[rooms.9428.exits.east]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9431
+[rooms.9428.exits.north]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9429
+[rooms.9428.exits.south]
+description = "眾生之歸廢棄場入口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9427
+[[rooms.9428.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+echo 你聽到狂風吹過破網的尖銳聲音。
+"""
+[[rooms.9428.programs]]
+trigger = "room_command"
+argument = "dig fungus"
+script = """
+if con($n) < 22
+   	if rand(30)
+    		c 'cause light' $n viclv
+    		echoat $n 你被可怕的毒氣所傷！
+   	endif
+  endif
+  if rand(30)
+    	oload 9427 1 $n floor
+    	echoat $n 你發現一顆可食用的蕈類！
+	echoaround $n $n發現一顆可食用的蕈類！ 
+    	break
+  endif
+  if rand(20)
+    	oload 9428 1 $n floor
+    	echoat $n 你發現一顆奇形怪狀、花紋斑斕的蕈類。
+	echoaround $n $n發現一顆奇形怪狀、花紋斑斕的蕈類。
+    	break
+  endif
+  echoat $n 你什麼也沒找到。
+"""
+
+[rooms.9429]
+name = "眾生之歸廢棄場"
+description = """
+你進入一處堆放舊家具的垃圾山中，堆疊數層的崎嶇垃圾路中，你必須
+小心地前進才不至於跌倒。越深入廢棄場，噁心的臭味越濃，快淹滿你的鼻
+腔了。在你腳下不遠處，你發現一群叢生的蕈類(fungus)，西方是另一座垃
+圾山，北邊則是一處發散惡臭的平地，南方朝向廢棄場的入口。
+"""
+flags = []
+sector = "FIELD"
+[[rooms.9429.extra_descriptions]]
+keywords = "fungus"
+description = """
+這堆蕈似乎可以拔起來(dig fungus)。
+"""
+[rooms.9429.exits.east]
+description = "眾生之歸毒液坑"
+keywords = ""
+locks = []
+key = -1
+to_room = 9432
+[rooms.9429.exits.north]
+description = "眾生之歸毒液坑"
+keywords = ""
+locks = []
+key = -1
+to_room = 9430
+[rooms.9429.exits.south]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9428
+[[rooms.9429.programs]]
+trigger = "room_rand"
+argument = "15"
+script = """
+echo 前方的垃圾山崩塌了，一堆垃圾滾到你腳下。
+"""
+[[rooms.9429.programs]]
+trigger = "room_command"
+argument = "dig fungus"
+script = """
+if con($n) < 22
+	if rand(50)
+    		c 'cause light' $n viclv
+    		echoat $n 你被可怕的毒氣所傷！
+	endif
+  endif
+  if rand(25)
+    	oload 9427 1 $n floor
+    	echoat $n 你發現一顆可食用的蕈類！
+	echoaround $n $n發現一顆可食用的蕈類！
+    	break
+  endif
+  if rand(30)
+    	oload 9428 1 $n floor
+    	echoat $n 你發現一顆奇形怪狀、花紋斑斕的蕈類。
+	echoaround $n $n發現一顆奇形怪狀、花紋斑斕的蕈類。
+    	break
+  endif
+  echoat $n 你什麼也沒找到。
+"""
+
+[rooms.9430]
+name = "眾生之歸毒液坑"
+description = """
+你踏著滿地泥水和排泄物來到這，令人窒息的臭味讓你只想拔腿就跑，
+但你還是耐著性子慢慢探索。這裡是貧民區簡陋排水道系統的最終匯集區，
+穢物與老鼠屍流滿地。你在一團穢物中發現一大叢茂盛的蕈類(fungus)，似
+乎可以找到不錯的蕈類。南邊是一處巨大的垃圾山，東邊則是一座池塘。
+"""
+flags = []
+sector = "FIELD"
+[[rooms.9430.extra_descriptions]]
+keywords = "fungus"
+description = """
+這堆蕈似乎可以拔起來(dig fungus)。
+"""
+[rooms.9430.exits.east]
+description = "眾生之歸毒液池"
+keywords = ""
+locks = []
+key = -1
+to_room = 9433
+[rooms.9430.exits.south]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9429
+[[rooms.9430.programs]]
+trigger = "room_rand"
+argument = "30"
+script = """
+echo 你聞到一股極臭的味道，似乎是各種排泄物的混合物。
+"""
+[[rooms.9430.programs]]
+trigger = "room_command"
+argument = "dig fungus"
+script = """
+if con($n) < 22
+	if rand(60)
+    		c 'cause serious' $n viclv
+    		echoat $n 你被可怕的毒氣所傷！
+	endif
+  endif
+  if rand(15)
+    	oload 9427 1 $n floor
+    	echoat $n 你發現一顆可食用的蕈類！
+	echoaround $n $n發現一顆可食用的蕈類！
+    	break
+  endif
+  if rand(55)
+    	oload 9428 1 $n floor
+    	echoat $n 你發現一顆奇形怪狀、花紋斑斕的蕈類。
+	echoaround $n $n發現一顆奇形怪狀、花紋斑斕的蕈類。 
+    	break
+  endif
+  echoat $n 你什麼也沒找到。
+"""
+
+[rooms.9431]
+name = "眾生之歸廢棄場"
+description = """
+你進入一處堆放舊家具的垃圾山中，堆疊數層的崎嶇垃圾路中，你必須
+小心地前進才不至於跌倒。越深入廢棄場，噁心的臭味越濃，快淹滿你的鼻
+腔了。在你腳下不遠處，你發現一群叢生的蕈類(fungus)。你抬頭一望，發
+現北邊是一處平地，西方則朝向廢棄場的入口。
+"""
+flags = []
+sector = "FIELD"
+[[rooms.9431.extra_descriptions]]
+keywords = "fungus"
+description = """
+這堆蕈似乎可以拔起來(dig fungus)。
+"""
+[rooms.9431.exits.north]
+description = "眾生之歸毒液坑"
+keywords = ""
+locks = []
+key = -1
+to_room = 9432
+[rooms.9431.exits.west]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9428
+[[rooms.9431.programs]]
+trigger = "room_command"
+argument = "dig fungus"
+script = """
+if con($n) < 22
+	if rand(30)
+    		c 'cause light' $n viclv
+    		echoat $n 你被可怕的毒氣所傷！
+	endif
+  endif
+  if rand(20)
+    	oload 9427 1 $n floor
+    	echoat $n 你發現一顆可食用的蕈類！
+	echoaround $n $n發現一顆可食用的蕈類！
+    	break
+  endif
+  if rand(30)
+    	oload 9428 1 $n floor
+    	echoat $n 你發現一顆奇形怪狀、花紋斑斕的蕈類。
+	echoaround $n $n發現一顆奇形怪狀、花紋斑斕的蕈類。
+    	break
+  endif
+  echoat $n 你什麼也沒找到。
+"""
+
+[rooms.9432]
+name = "眾生之歸毒液坑"
+description = """
+你踏著滿地泥水和排泄物來到這，令人窒息的臭味讓你只想拔腿就跑，
+但你還是耐著性子慢慢探索。這裡是貧民區簡陋排水道系統的最終匯集區，
+穢物與老鼠屍流滿地，甚至可以發現死亡已久的流浪漢屍體。你在一團穢物
+中發現一大叢茂盛的蕈類(fungus)，似乎可以找到不錯的蕈類。南邊與西邊
+都是巨大的垃圾山，北邊則是一座池塘。
+"""
+flags = []
+sector = "FIELD"
+[[rooms.9432.extra_descriptions]]
+keywords = "fungus"
+description = """
+這堆蕈似乎可以拔起來(dig fungus)。
+"""
+[rooms.9432.exits.north]
+description = "眾生之歸毒液池"
+keywords = ""
+locks = []
+key = -1
+to_room = 9433
+[rooms.9432.exits.south]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9431
+[rooms.9432.exits.west]
+description = "眾生之歸廢棄場"
+keywords = ""
+locks = []
+key = -1
+to_room = 9428
+[[rooms.9432.programs]]
+trigger = "room_command"
+argument = "dig fungus"
+script = """
+if con($n) < 22
+	if rand(60)
+    		c 'cause serious' $n viclv
+    		echoat $n 你被可怕的毒氣所傷！
+	endif
+  endif
+  if rand(15)
+    	oload 9427 1 $n floor
+    	echoat $n 你發現一顆可食用的蕈類！
+	echoaround $n $n發現一顆可食用的蕈類！ 
+    	break
+  endif
+  if rand(55)
+    	oload 9428 1 $n floor
+    	echoat $n 你發現一顆奇形怪狀、花紋斑斕的蕈類。
+	echoaround $n $n發現一顆奇形怪狀、花紋斑斕的蕈類。
+    	break
+  endif
+  echoat $n 你什麼也沒找到。
+"""
+
+[rooms.9433]
+name = "眾生之歸毒液池"
+description = """
+你來到眾生之歸廢棄場的最深處，眼前是一片匯集所有污水流所形成的
+大池塘。垃圾、糞便、爛木和無名浮屍在池塘中打轉、冒泡，散發死亡的惡
+臭，你終於知道為何這裡叫做眾生之歸的原因了。在池塘四周長滿了茂盛的
+蕈類(fungus)，隨著腐爛的風搖曳起舞，還有幾百隻老鼠穿梭其中，看得你
+頭皮發麻。
+"""
+flags = []
+sector = "FIELD"
+[[rooms.9433.extra_descriptions]]
+keywords = "fungus"
+description = """
+這堆蕈似乎可以拔起來(dig fungus)。
+"""
+[rooms.9433.exits.south]
+description = "眾生之歸毒液坑"
+keywords = ""
+locks = []
+key = -1
+to_room = 9432
+[rooms.9433.exits.west]
+description = "眾生之歸毒液坑"
+keywords = ""
+locks = []
+key = -1
+to_room = 9430
+[[rooms.9433.programs]]
+trigger = "room_command"
+argument = "dig fungus"
+script = """
+if con($n) <= 21
+	if rand(90)
+    		c 'cause serious' $n viclv
+	endif
+	if rand(30)
+    		c 'poison' $n viclv
+    		echoat $n 你被可怕的毒氣所傷！
+	endif
+  endif
+  if rand(80)
+    	oload 9428 1 $n floor
+    	echoat $n 你發現一顆奇形怪狀、花紋斑斕的蕈類。
+    	echoaround $n $n發現一顆奇形怪狀、花紋斑斕的蕈類。 
+	break
+  endif
+  echoat $n 你什麼也沒找到。
+"""
+[[rooms.9433.programs]]
+trigger = "room_rand"
+argument = "50"
+script = """
+if hour($) > 14
+    	if hour($) < 18
+      		echo 你見到烏鴉乘著黃昏的薄暮飛到屍體上啄食屍肉。
+      		callout 1 echo 你聽見烏鴉淒厲的叫聲：「啞～～啞！」
+    	endif
+  endif
+"""
+
+[rooms.9434]
+name = "走私碼頭卸貨道"
+description = """
+這裡是碼頭卸貨道的最末端，你可以看見搬運工人日夜不停地運輸貨
+品，將沈重的木箱扛進東邊的倉庫裡。往南望去可以見到繁忙的運貨碼頭，
+上方則是木樁搭成的瞭望高塔，你可以攀著木梯上去。隔著一道牆，你望見
+了北邊馬戲團的大帳棚頂緣。
+"""
+flags = []
+sector = "CITY"
+[rooms.9434.exits.east]
+description = "廢墟倉庫"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9423
+[rooms.9434.exits.south]
+description = "破爛大街與走私碼頭交口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9405
+[rooms.9434.exits.up]
+description = "走私碼頭瞭望臺"
+keywords = ""
+locks = []
+key = -1
+to_room = 9435
+[[rooms.9434.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+if hour($) > 7
+    echo 從西方傳來一陣歡呼聲，似乎是大馬戲團正在表演。
+endif
+"""
+
+[rooms.9435]
+name = "走私碼頭瞭望臺"
+description = """
+你小心翼翼地沿著樓梯爬上木架的瞭望台，向下一望，見到貧民區的全
+景(survey view)。扶穩欄杆，你看見南方港口出入繁忙的小帆船，還有遠
+方滔滔不絕的史卡拉貝河，舒爽的涼風直讓你想乘風飛起。在瞭望台的角落
+你見到一位強壯的男人站在臺邊緣，似乎在處理什麼事情。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.9435.exits.down]
+description = "走私碼頭卸貨道"
+keywords = ""
+locks = []
+key = -1
+to_room = 9434
+[rooms.9435.exits.north]
+description = "通往馬戲團的走道"
+keywords = ""
+locks = []
+key = -1
+to_room = 9436
+[[rooms.9435.programs]]
+trigger = "room_command"
+argument = "survey view"
+script = """
+if month($) <= 3
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;37m你看到遠方街上猶有細雪，春夜的寒意讓你不禁縮著脖子吐氣，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;31m火紅的太陽掛在黃昏的垂幕上，映著春天怒放的鮮花，十分美麗。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;32m你看到遠方街上熙熙攘攘，活潑的春天氣氛也散佈到瞭望臺上。\u001B[0m
+  	endif
+  	break
+endif
+if month($) <= 8
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;36m你看到遠方街上籠罩一層薄霧，夏天的暑熱消散一空，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;31m火紅的夕陽掛在黃昏的垂幕上，驚人的熱氣讓你滿臉大汗。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;32m你看到遠方街上熱鬧非凡，夏天的氣息讓萬物欣欣向榮。\u001B[0m
+  	endif
+  	break
+endif
+if month($) <= 12
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;36m你看到遠方秋風吹起，冷夜寒星讓街道顯得空曠寂寞，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;33m圓扁的太陽緩緩降入群山間，微寒的秋日讓你感傷莫名。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;36m你看到遠方街上眾人事務繁忙，忙著儲糧過冬。\u001B[0m
+  	endif
+  	break
+endif
+if hour($) <= 5
+or hour($) >= 21
+    	echoat $n \u001B[1;37m你看到街上大雪剛停，大雪夜的寒意讓你不禁縮著脖子吐氣，\u001B[0m
+    	rcall moon $n
+	break
+endif
+if hour($) > 16
+        echoat $n \u001B[1;31m凜冽的冬風將黃昏的垂陽吹得毫無熱度，只看到微弱的紅火降下大地。\u001B[0m
+	break
+endif
+if hour($) > 5
+    	echoat $n \u001B[1;37m你看到遠方街上眾人皆裹著大衣厚服而行，毫無暖意的太陽晾在天空。\u001B[0m
+endif
+"""
+[[rooms.9435.programs]]
+trigger = "room_rand"
+argument = "5"
+script = """
+echo 你聽到工人運送貨物的呼喝聲從下方傳來。
+"""
+[[rooms.9435.programs]]
+trigger = "room_defun"
+argument = "moon"
+script = """
+if day($) == 0
+    	echoat $n \u001B[1;36m天空灑滿銀星，不見紅月。\u001B[0m
+	break
+  endif
+  if day($) <= 11
+    	echoat $n \u001B[1;31m你也看到上弦月掛在夜空中，散發著淒冷的紅光。\u001B[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n \u001B[1;31m你也看到美麗的滿月掛在夜空中，散發著飽滿的紅暈。\u001B[0m
+	break
+  endif
+  echoat $n \u001B[1;31m你也看到下弦月懸在夜空中，散發著詭異的紅光。\u001B[0m
+  break
+"""
+
+[rooms.9436]
+name = "通往馬戲團的走道"
+description = """
+你站在瞭望台的邊緣，聽著呼呼的風聲吹過，舉目一望，史卡拉貝城的
+城牆、大道一覽無遺，更遠方的山頂神殿也在景界之中，正下方則是熱鬧的
+大馬戲團。你感覺到一陣心曠神怡，快樂地直想跳下去。
+    你發現腳下有一段繩索，似乎可以偷偷溜下去，從帳棚的破洞中進入馬
+戲團，往南可以回到瞭望臺。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.9436.exits.down]
+description = "在空中的表演平台上"
+keywords = ""
+locks = []
+key = -1
+to_room = 4427
+[rooms.9436.exits.south]
+description = "走私碼頭瞭望臺"
+keywords = ""
+locks = []
+key = -1
+to_room = 9435
+[[rooms.9436.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+echo 你聽到一陣陣歡呼聲從下方的帳棚之內傳來。
+"""
+
+[rooms.9437]
+name = "老巫婆的茅屋"
+description = """
+你走進一間充滿刺鼻藥水味的小茅屋中，屋子中央架了一鍋熱騰騰的濃
+湯，裡面漂著幾十支老鼠尾巴和蜥蜴乾，直看得你想吐。你發現地上擺了好
+幾罈陶罐，上面畫了各種奇怪的圖案(paint)，還有幾匹曬乾的植物，不過
+你認不出那是什麼東西，在角落，你看見一名老婦人一邊哼著歌，一邊忙碌
+地整理藥材。往南走可以離開這裡，回到破爛大街。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[[rooms.9437.extra_descriptions]]
+keywords = "paint"
+description = """
+你一點也看不懂上面畫些什麼。
+"""
+[rooms.9437.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9404
+[[rooms.9437.programs]]
+trigger = "room_rand"
+argument = "10"
+script = """
+if rand(50)
+    	echo 咕嚕，咕嚕！
+    	break
+  endif
+  echo 鍋子裡煮的湯突然冒出一陣濃煙，讓你嚇了一跳。
+"""
+[[rooms.9437.programs]]
+trigger = "room_mask"
+argument = "read paint"
+script = """
+if is_qmark($n) & slum_libei_quest 300016
+    	echoat $n 你仔細地端詳這些陶罐上的圖片，漸漸瞭解原來這是
+    	echoat $n 各種草藥的圖畫，你開始賣力記憶這些圖畫......
+    	callout 1 echoat $n 你慢慢記住了這些圖畫......
+    	callout 2 add_qmark $n slum_witch_herb 15 1 0 0 1 0
+    	callout 2 echoat $n 你完全記住了，你暫時能分辨這些草藥的樣子了。
+    	break
+  endif
+echoat $n 你一點也看不懂上面畫些什麼。    
+"""
+
+[rooms.9438]
+name = "走私碼頭卸貨道"
+description = """
+這裡是貧民區最繁忙的   碼頭卸貨道，你看到南方艘艘片帆緩緩進港，忙
+碌的工人像螞蟻一般爬上爬下，從船腹挖出貨物，經由這條大道運進北邊倉
+庫裡，你可以循著道路往北回到破爛大街，或者往南到渡碼頭，你也發現地
+面(ground)似乎有些奇怪。
+"""
+flags = []
+sector = "CITY"
+[[rooms.9438.extra_descriptions]]
+keywords = "ground"
+description = """
+你發現這裡的地板有一個鐵拉環，好像可以拉開一個縫！
+"""
+[rooms.9438.exits.down]
+description = "走私碼頭地下駁口"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9440
+[rooms.9438.exits.north]
+description = "破爛大街與走私碼頭交口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9405
+[rooms.9438.exits.south]
+description = "走私碼頭接駁口"
+keywords = ""
+locks = []
+key = -1
+to_room = 9439
+
+[rooms.9439]
+name = "走私碼頭接駁口"
+description = """
+你看到浩浩蕩蕩的史卡拉貝河由東奔流向西，許多巨大的三桅帆船停靠
+在不遠方的維芬港中，而一些較小的船隻則繼續逆流而上，停泊在貧民區碼
+頭。你聽到船上的水手努力吆喝，還有搬運工擔負重物的呼喝，往北，你可
+以回到碼頭運貨道。
+"""
+flags = []
+sector = "CITY"
+[rooms.9439.exits.north]
+description = "走私碼頭卸貨道"
+keywords = ""
+locks = []
+key = -1
+to_room = 9438
+[[rooms.9439.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if hour($) == 14
+    	echo 你看到幾艘雙桅帆船遠遠駛來......
+    	callout 1 echo 一名水手登上船頭，大喊：「到貨啦！漁船讓道！」
+    	callout 2 echo 帆船群緩緩靠岸，準備卸貨。
+    	callout 3 echo 船錨從船弦丟了下來，船版撤了下來，船口開了。
+    	callout 3 makedoor 2 船艙甲板 board 1 -1 9452
+    	callout 3 force 9452 echo 船版撤下來了，你到達貧民區港口了。
+    	break
+  endif
+  if hour($) > 14
+	if hour($) <= 16
+	  	echo 水手和搬運工從船上搬下一箱又一箱的貨物，經過你身邊。
+	  	callout 1 echo 一群搬運工擔著重物走過。
+	  	callout 2 echo 「嘿修--嘿修--」
+	  	break
+	endif
+  endif
+  if hour($) == 17
+  	deldoor 2
+  	echo 遠方帆船群起帆，離開港口了.....
+   	force 9452 echo 船版收回來了，你準備離開貧民區港口了。
+  	break
+  endif
+  if hour($) ==3
+    	echo 你看到一艘小黑船迅捷地靠岸，放下暗門。
+    	makedoor 2 黑暗的小船版 board 1 -1 9454
+    	callout 1 echo 一群工人鬼鬼祟祟地登上小船......
+    	callout 2 echo 一群工人神經兮兮地搬著貨物進倉庫。
+    	break
+  endif
+  if hour($) ==4
+    	echo 你看到一艘小黑船快速地駛離港口，往下游而去。
+    	deldoor 2
+    	break
+  endif
+"""
+[[rooms.9439.programs]]
+trigger = "room_enter"
+argument = "63 70"
+script = """
+if rand(60)
+    	echo 你聽到史卡拉貝河的河濤轟轟流過。
+    	break
+  endif
+  echo 你看見幾隻河雁悠悠地滑翔過水面，消逸遠方。
+"""
+
+[rooms.9440]
+name = "走私碼頭地下駁口"
+description = """
+你順著梯子爬下來，來到一間陰暗潮濕的暗室，河濤沖擊的聲音有如巨
+浪震得你雙耳發鳴，要摀著耳朵才能忍受住。你發現房間的側壁有一條狹窄
+的木製通道，船隻似乎可以從這裡將艙中物偷偷運過來，而且，你也發現北
+邊有一道生鏽的鐵門，不過打不開。如果你有船，往南可以到史卡拉貝河，
+往上你可以回到碼頭。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND"]
+sector = "CITY"
+[rooms.9440.exits.south]
+description = "河上"
+keywords = ""
+locks = []
+key = -1
+to_room = 3204
+[rooms.9440.exits.up]
+description = "走私碼頭卸貨道"
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = -1
+to_room = 9438
+[[rooms.9440.programs]]
+trigger = "room_rand"
+argument = "20"
+script = """
+echo 震耳欲聾的河濤衝進你耳裡。  
+"""
+
+[rooms.9441]
+name = "頹廢旅店"
+description = """
+這間旅店彷彿快倒閉了一樣，斑駁的木牆掛著幾張羊皮，傾倒木桌上，
+骯髒的陶杯盛著滿滿的蠅屍，看得你倒盡胃口。店主人在櫃臺後無聊地織著
+毛巾，一旁的酒桶破了個小洞，麥酒香味飄了滿店都是。你可以沿著樓梯上
+二樓休息，也可以往南離開這間破舊的旅店。
+"""
+flags = ["NO_MOB", "INDOORS", "SAFE", "SAVE"]
+sector = "INSIDE"
+[rooms.9441.exits.south]
+description = "破爛大街"
+keywords = ""
+locks = []
+key = -1
+to_room = 9403
+
+[rooms.9442]
+name = "旅店二樓"
+description = """
+破舊客棧的二樓充滿潮濕的霉氣，木板牆髒得連霉菌都長出來的，伸手
+一沾滿手黑污，你懷疑這間旅館的主人是否有在努力打掃。透過半毀的窗戶
+，你可以傾著上半身向外瞭望(survey view)，看看大街的景色，也可以沿
+著樓梯向下走。
+"""
+flags = ["NO_MOB", "SAFE", "SUMMON_BIT", "SAVE", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.9442.exits.down]
+description = "頹廢旅店"
+keywords = ""
+locks = []
+key = -1
+to_room = 9441
+[[rooms.9442.programs]]
+trigger = "room_rand"
+argument = "30"
+script = """
+modhmv pc 04.5 10 00000000
+    	modhmv pc 14.5 10 00000000
+    	modhmv pc 24.5 10 00000000
+    	echo 經過充分的休息，你感覺狀況更好了！
+  if rand(50)
+   	callout 1 echo 一隻老鼠從牆腳破洞鑽了出來，迅速消失在另一邊......
+    	break
+  endif
+  callout 1 echo 一陣霉氣撲面而來......
+"""
+[[rooms.9442.programs]]
+trigger = "room_command"
+argument = "survey view"
+script = """
+if month($) <= 3
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;37m你看到遠方街上猶有細雪，春夜的寒意讓你不禁縮著脖子吐氣，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;31m火紅的太陽掛在黃昏的垂幕上，映著春天怒放的鮮花，十分美麗。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;32m你看到遠方街上熙熙攘攘，活潑的春天氣氛也傳進了旅店房間。\u001B[0m
+  	endif
+  	break
+endif
+if month($) <= 8
+  	if hour($) <= 5
+  	or hour($) >=21
+    		echoat $n \u001B[1;36m你看到遠方街上籠罩一層薄霧，夏天的暑熱消散一空，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;31m火紅的夕陽掛在黃昏的垂幕上，驚人的熱氣讓你滿臉大汗。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;32m你看到遠方街上熱鬧非凡，夏天的氣息讓萬物欣欣向榮。\u001B[0m
+	endif
+  	break
+endif
+if month($) <= 12
+  	if hour($) <= 5
+  	or hour($) >= 21
+    		echoat $n \u001B[1;36m你看到遠方秋風吹起，冷夜寒星讓街道顯得空曠寂寞，\u001B[0m
+    		rcall moon $n
+		break
+  	endif
+        if hour($) > 16
+                echoat $n \u001B[1;33m圓扁的太陽緩緩降入群山間，微寒的秋日讓你感傷莫名。\u001B[0m
+		break
+        endif
+  	if hour($) > 5
+    		echoat $n \u001B[1;36m你看到遠方街上眾人事務繁忙，忙著儲糧過冬。\u001B[0m
+  	endif
+  	break
+endif
+  if hour($) <= 5
+  or hour($) >= 21
+    	echoat $n \u001B[1;37m你看到街上大雪剛停，大雪夜的寒意讓你不禁縮著脖子吐氣，\u001B[0m
+    	rcall moon $n
+	break
+  endif
+  if hour($) > 16
+        echoat $n \u001B[1;31m凜冽的冬風將黃昏的垂陽吹得毫無熱度，只看到微弱的紅火降下大地。\u001B[0m
+	break
+  endif
+  if hour($) > 5
+    	echoat $n \u001B[1;37m你看到遠方街上眾人皆裹著大衣厚服而行，毫無暖意的太陽晾在天空。\u001B[0m
+  endif
+"""
+[[rooms.9442.programs]]
+trigger = "room_defun"
+argument = "moon"
+script = """
+if day($) == 0
+    	echoat $n \u001B[1;36m天空灑滿銀星，不見紅月。\u001B[0m
+	break
+  endif
+  if day($) <= 11
+    	echoat $n \u001B[1;31m你也看到上弦月掛在夜空中，散發著淒冷的紅光。\u001B[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n \u001B[1;31m你也看到美麗的滿月掛在夜空中，散發著飽滿的紅暈。\u001B[0m
+	break
+  endif
+  echoat $n \u001B[1;31m你也看到下弦月懸在夜空中，散發著詭異的紅光。\u001B[0m
+"""
+
+[rooms.9443]
+name = "洗衣處"
+description = """
+你來到一處大石累疊的河灘，湍急的史卡拉貝河在這裡形成一泓小灣，
+鵝卵石和巨岩星佈河面，有些巨大到可以躺在上面曬太陽。你看見河岸旁放
+著幾枝洗衣槌，似乎是平常婦人來洗衣的地方。往北你可以離開這裡。
+"""
+flags = []
+sector = "CITY"
+[rooms.9443.exits.north]
+description = "破爛大街轉角"
+keywords = ""
+locks = []
+key = -1
+to_room = 9407
+[[rooms.9443.programs]]
+trigger = "room_enter"
+argument = "15 70"
+script = """
+if rand(60)
+    	echoat $n 你聽到史卡拉貝河的河濤轟轟流過。
+    	break
+  endif
+  echoat $n 你看見幾隻河雁悠悠地翔過水面，消逸遠方。
+"""
+
+[rooms.9444]
+name = "陰暗的鄰河住家"
+description = """
+你來到一處挖了半層樓深的坑，然後用石板砌成的半穴居房屋，潮濕的
+味道四處瀰漫，混合著羊毛的味道，讓你很想打噴嚏。這裡除了一台紡紗機
+和幾件便宜的家具櫥櫃外，並沒有其他值得你注意的東西。南邊的窗戶半開
+著，你可以看見滔滔河水向西流。往北可以離開這間小屋。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9444.exits.north]
+description = "破爛大街街口"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9402
+[[rooms.9444.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if is_qmark($n) == slum_libei_womancycle
+if being(Alice-slum)
+	echoat $n 就你所記得的，愛麗斯的會在早上七點與下午十四點之間離開這裡。
+	echoat $n 另外，她也會在晚上十九點與半夜二十三點之間離開房屋。
+endif
+endif
+if rand(70)
+	echoat $n 你聽到史卡拉貝河的河濤轟轟作響。
+	callout 1 echoat $n 轟喀！轟喀！
+endif
+"""
+[[rooms.9444.programs]]
+trigger = "room_rand"
+argument = "60"
+script = """
+if is_qmark($r) == slum_libei_womancycle
+if being(Alice-slum)
+	if hour($) == 6
+		echoat $r \u001B[1;33m你有預感愛麗斯要出門了。\u001B[0m
+	endif
+	if hour($) == 13
+		echoat $r \u001B[1;33m你有預感愛麗斯要回家了。\u001B[0m
+	endif
+	if hour($) == 18
+		echoat $r \u001B[1;33m你有預感愛麗斯要出門了。\u001B[0m
+	endif
+	if hour($) == 23
+		echoat $r \u001B[1;33m你有預感愛麗斯要回家了。\u001B[0m
+	endif
+endif
+endif
+"""
+[[rooms.9444.programs]]
+trigger = "room_command"
+argument = "search fleece"
+script = """
+if robjcount(9444) > 0
+	echoat $n 你找不到任何可疑物品。
+	break
+  endif
+  if rmobcount(9416) > 0
+    	echoat $n 愛麗斯在家，你無法下手尋找。
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+"""
+[[rooms.9444.programs]]
+trigger = "room_defun"
+argument = "find"
+script = """
+echoat $n 你好像找到什麼東西了。
+      oload 9444 1 $n floor
+      break
+"""
+[[rooms.9444.programs]]
+trigger = "room_defun"
+argument = "nofind"
+script = """
+echoat $n 你一無所獲。
+  echoaround $n $n找了找四周，卻一無所獲。
+"""
+
+[rooms.9445]
+name = "充滿霉味的鄰河住家"
+description = """
+你來到一處挖了半層樓深的坑，然後用石板砌成的半穴居房屋，潮濕的
+味道四處瀰漫，混合著羊毛的味道，讓你很想打噴嚏。這裡除了一台紡紗機
+和幾件便宜的家具櫥櫃外，並沒有其他值得你注意的東西。南邊的窗戶半開
+著，你可以看見滔滔河水向西流。往北可以離開這間小屋。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9445.exits.north]
+description = "破爛大街"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9403
+[[rooms.9445.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if is_qmark($n) == slum_libei_womancycle
+if being(Leonady-slum)
+	echoat $n 就你所知，雷歐娜蒂會在中午十一點到下午十七點之間離開這裡。
+endif
+endif
+if rand(70)
+	echo 你聽到史卡拉貝河的河濤轟轟作響。
+	callout 1 echo 轟喀！轟喀！
+endif
+"""
+[[rooms.9445.programs]]
+trigger = "room_rand"
+argument = "60"
+script = """
+if is_qmark($r) == slum_libei_womancycle
+if being(Leonady-slum)
+	if hour($) == 10
+		echoat $r \u001B[1;33m你有預感雷歐娜蒂要出門了。\u001B[0m
+	endif
+	if hour($) == 16
+		echoat $r \u001B[1;33m你有預感雷歐娜蒂要回家了。\u001B[0m
+	endif
+endif
+endif
+"""
+[[rooms.9445.programs]]
+trigger = "room_command"
+argument = "search fleece"
+script = """
+if robjcount(9445) > 0
+        echoat $n 你找不到任何可疑物品。
+        break
+  endif
+  if rmobcount(9417) > 0
+    	echoat $n 雷歐娜蒂在家，你無法下手尋找。
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+"""
+[[rooms.9445.programs]]
+trigger = "room_defun"
+argument = "find"
+script = """
+echoat $n 你好像找到什麼東西了。
+      oload 9445 1 $n floor
+      break
+"""
+[[rooms.9445.programs]]
+trigger = "room_defun"
+argument = "nofind"
+script = """
+echoat $n 你一無所獲。
+  echoaround $n $n找了找四周，卻一無所獲。
+"""
+
+[rooms.9446]
+name = "通風不良的鄰河住家"
+description = """
+你來到一處挖了半層樓深的坑，然後再用石板砌成的半穴居房屋，潮濕
+的味道四處瀰漫，混合著羊毛的味道，讓你很想打噴嚏。這裡除了一台紡紗
+機和幾件便宜的家具櫥櫃外，並沒有其他值得你注意的東西。南邊的窗戶半
+開著，你可以看見滔滔河水向西流。往北可以離開這間小屋。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9446.exits.north]
+description = "破爛大街"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9404
+[[rooms.9446.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if is_qmark($n) == slum_libei_womancycle
+if being(Carlin-slum)
+	echoat $n 就你所知，卡琳會在八點到十四點之間離開這裡。
+endif
+endif
+if rand(70)
+    echo 你聽到史卡拉貝河的河濤轟轟作響。
+    callout 1 echo 轟喀！轟喀！
+endif
+"""
+[[rooms.9446.programs]]
+trigger = "room_rand"
+argument = "60"
+script = """
+if is_qmark($r) == slum_libei_womancycle
+if being(Carlin-slum)
+	if hour($) == 7
+		echoat $r \u001B[1;33m你有預感卡琳要出門了。\u001B[0m
+	endif
+	if hour($) == 13
+		echoat $r \u001B[1;33m你有預感卡琳要回家了。\u001B[0m
+	endif
+	if hour($) == 19
+		echoat $r \u001B[1;33m你有預感卡琳要出門了。\u001B[0m
+	endif
+	if hour($) == 2
+		echoat $r \u001B[1;33m你有預感卡琳要回家了。\u001B[0m
+	endif
+endif
+endif
+"""
+[[rooms.9446.programs]]
+trigger = "room_command"
+argument = "search fleece"
+script = """
+if robjcount(9446) > 0
+        echoat $n 你找不到任何可疑物品。
+        break
+  endif
+  if rmobcount(9418) >0
+    	echoat $n 卡琳在家，你無法下手尋找。
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+"""
+[[rooms.9446.programs]]
+trigger = "room_defun"
+argument = "find"
+script = """
+echoat $n 你好像找到什麼東西了。
+      oload 9446 1 $n floor
+      break
+"""
+[[rooms.9446.programs]]
+trigger = "room_defun"
+argument = "nofind"
+script = """
+echoat $n 你一無所獲。
+  echoaround $n $n找了找四周，卻一無所獲。
+"""
+
+[rooms.9447]
+name = "靠近馬戲團的住家"
+description = """
+你來到一處挖了半層樓深的坑，然後再用石板砌成的半穴居房屋，潮濕
+的味道四處瀰漫，混合著羊毛的味道，讓你很想打噴嚏。這裡除了一台紡紗
+機和幾件便宜的家具櫥櫃外，並沒有其他值得你注意的東西。你聽到陣陣的
+歡呼聲從不遠處隱隱透來，這附近似乎有什麼熱鬧的活動。往南你可以離開
+這間簡陋的小屋。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9447.exits.south]
+description = "破爛大街街底"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9413
+[[rooms.9447.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if is_qmark($n) == slum_libei_womancycle
+if being(Thingiwa-slum)
+	echoat $n 就你所知，辛吉娃會在十一點到十七點之間離開這裡。
+endif
+endif
+  if rand(60)
+  if hour($) > 7
+    	if hour($) < 20
+      		echoat $n 你聽到不遠處馬戲團的歡呼聲透過牆壁傳了進來。
+    	endif
+  endif
+  endif
+"""
+[[rooms.9447.programs]]
+trigger = "room_rand"
+argument = "60"
+script = """
+if is_qmark($r) == slum_libei_womancycle
+if being(Thingiwa-slum)
+	if hour($) == 10
+		echoat $r \u001B[1;33m你有預感辛吉娃要出門了。\u001B[0m
+	endif
+	if hour($) == 16
+		echoat $r \u001B[1;33m你有預感辛吉娃要回家了。\u001B[0m
+	endif
+endif
+endif
+"""
+[[rooms.9447.programs]]
+trigger = "room_command"
+argument = "search fleece"
+script = """
+if robjcount(9447) > 0
+        echoat $n 你找不到任何可疑物品。
+        break
+  endif
+  if rmobcount(9419) > 0
+    	echoat $n 辛吉娃在家，你無法下手尋找。
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+"""
+[[rooms.9447.programs]]
+trigger = "room_defun"
+argument = "find"
+script = """
+echoat $n 你好像找到什麼東西了。
+      oload 9447 1 $n floor
+      break
+"""
+[[rooms.9447.programs]]
+trigger = "room_defun"
+argument = "nofind"
+script = """
+echoat $n 你一無所獲。
+  echoaround $n $n找了找四周，卻一無所獲。
+"""
+
+[rooms.9448]
+name = "屋頂破洞的住家"
+description = """
+你來到一處挖了半層樓深的坑，然後再用石板砌成的半穴居房屋，潮濕
+的味道四處瀰漫，混合著羊毛的味道，讓你很想打噴嚏。這裡除了一台紡紗
+機和幾件便宜的家具櫥櫃外，並沒有其他值得你注意的東西。不過你發現這
+家的屋頂破了一個洞，茅草骨架整個露了出來。往西你可以離開這間小屋。
+"""
+flags = ["NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9448.exits.west]
+description = "破爛大街街底"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9413
+[[rooms.9448.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if is_qmark($n) == slum_libei_womancycle
+if being(Nischoco-slum)
+	echoat $n 就你所知，妮秀蔻會在早上十點與下午十七點之間離開這裡。
+endif
+endif
+"""
+[[rooms.9448.programs]]
+trigger = "room_rand"
+argument = "60"
+script = """
+if is_qmark($r) == slum_libei_womancycle
+if being(Nischoco-slum)
+	if hour($) == 9
+		echoat $r \u001B[1;33m你有預感妮秀蔻要出門了。\u001B[0m
+	endif
+	if hour($) == 16
+		echoat $r \u001B[1;33m你有預感妮秀蔻要回家了。\u001B[0m
+	endif
+endif
+endif
+"""
+[[rooms.9448.programs]]
+trigger = "room_command"
+argument = "search fleece"
+script = """
+if robjcount(9448) > 0
+        echoat $n 你找不到任何可疑物品。
+        break
+  endif
+  if rmobcount(9420) > 0
+    	echoat $n 妮秀蔻在家，你無法下手尋找。
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+"""
+[[rooms.9448.programs]]
+trigger = "room_defun"
+argument = "find"
+script = """
+echoat $n 你好像找到什麼東西了。
+      oload 9448 1 $n floor
+      break
+"""
+[[rooms.9448.programs]]
+trigger = "room_defun"
+argument = "nofind"
+script = """
+echoat $n 你一無所獲。
+  echoaround $n $n找了找四周，卻一無所獲。
+"""
+
+[rooms.9449]
+name = "石頭堆成的住家"
+description = """
+你來到一處挖了半層樓深的坑，然後再用石板砌成的半穴居房屋，潮濕
+的味道四處瀰漫，混合著羊毛的味道，讓你很想打噴嚏。這裡除了一台紡紗
+機和幾件便宜的家具櫥櫃外，並沒有其他值得你注意的東西。往西你可以離
+開這間房屋。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[rooms.9449.exits.west]
+description = "破爛大街"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9412
+[[rooms.9449.programs]]
+trigger = "room_enter"
+argument = "100"
+script = """
+if is_qmark($n) == slum_libei_womancycle
+if being(Compeny-slum)
+	echoat $n 就你所知，康蓓妮會在早上八點與下午十六點之間離開這裡。
+endif
+endif
+"""
+[[rooms.9449.programs]]
+trigger = "room_rand"
+argument = "60"
+script = """
+if is_qmark($r) == slum_libei_womancycle
+if being(Compeny-slum)
+	if hour($) == 7
+		echoat $r \u001B[1;33m你有預感康蓓妮要出門了。\u001B[0m
+	endif
+	if hour($) == 15
+		echoat $r \u001B[1;33m你有預感康蓓妮要回家了。\u001B[0m
+	endif
+endif
+endif
+"""
+[[rooms.9449.programs]]
+trigger = "room_command"
+argument = "search fleece"
+script = """
+if robjcount(9449) > 0
+        echoat $n 你找不到任何可疑物品。
+        break
+  endif
+  if rmobcount(9421) > 0
+    	echoat $n 康蓓妮在家，你無法下手尋找。
+    	break
+  endif
+  if dex($n) <= 10
+    	if rand(15)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 13
+    	if rand(25)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 16
+    	if rand(35)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 20
+    	if rand(50)
+      		rcall find $n
+    	endif
+    	rcall nofind $n
+    	break
+  endif
+  if dex($n) <= 24
+    	if rand(70)
+      		rcall find $n
+    	endif
+	rcall nofind $n
+    	break
+  endif
+  if dex($n) == 25
+      	rcall find $n
+  endif
+"""
+[[rooms.9449.programs]]
+trigger = "room_defun"
+argument = "find"
+script = """
+echoat $n 你好像找到什麼東西了。
+      oload 9449 1 $n floor
+      break
+"""
+[[rooms.9449.programs]]
+trigger = "room_defun"
+argument = "nofind"
+script = """
+echoat $n 你一無所獲。
+  echoaround $n $n找了找四周，卻一無所獲。
+"""
+
+[rooms.9450]
+name = "久無人居的住家"
+description = """
+你來到一處挖了半層樓深的坑，然後再用石板砌成的半穴居房屋，潮濕
+的味道四處瀰漫，破舊的家具和毀壞的櫥櫃無助地頹靠在牆上，似乎只要動
+一下就會塌掉，地上散著屋頂飄落的茅草，滿室的蜘蛛網訴說她的陳舊與荒
+廢。你並沒有發現任何有價值的東西，不過老桌子上的一封信(letter)引起
+了你的注意。往西你可以離開這間荒廢的小屋。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND"]
+sector = "INSIDE"
+[[rooms.9450.extra_descriptions]]
+keywords = "letter"
+description = """
+這封信似乎是很久以前寫的，細秀的泰洛斯書法都有點褪色了：
+
+		往事如風，回憶如夢。
+				--Hana
+"""
+[rooms.9450.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 9411
+
+[rooms.9451]
+name = "通往黑幫地帶的關卡"
+description = """
+你來到一條暗巷的巷口，破敗的大門(gate)用鎖鍊捆住門把，不讓任何
+人輕易通過。門前站了數名警衛，只要有人靠近，便是一陣粗魯的問候語，
+然後用手上武器趕人。這裡好像是某種要地一樣，黑暗肅殺的氣氛籠罩著你
+，讓你不禁感到一陣寒顫。往西你可以離開這裡。
+"""
+flags = ["DARK"]
+sector = "CITY"
+[rooms.9451.exits.east]
+description = "危險暗巷西端"
+keywords = "gate"
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 9451
+to_room = 9455
+[rooms.9451.exits.west]
+description = "破爛大街轉角"
+keywords = ""
+locks = []
+key = -1
+to_room = 9407
+[[rooms.9451.programs]]
+trigger = "room_enter"
+argument = "8 100"
+script = """
+if is_qmark($n) & slum_libei_quest 100128
+  or is_qmark($n) & slum_libei_quest 300128
+    	force guard-slum say 您好！
+	modrvt d1 r 6
+	echoat $n 守衛恭敬地列在兩旁，等你進入。
+	echoaround $n 守衛恭敬地列在兩旁，等$n進入。
+	break  
+  endif
+  echoat $n \u001B[1;36m守衛將你趕了回去。\u001B[0m
+  force $n w
+"""
+[[rooms.9451.programs]]
+trigger = "room_enter"
+argument = "2 100"
+script = """
+if is_qmark($n) & slum_libei_quest 100128
+  or is_qmark($n) & slum_libei_quest 300128
+    	force guard-slum say 您好！
+  else
+  	echoat $n 守衛以狐疑的眼光打量你。
+  endif
+"""
+[[rooms.9451.programs]]
+trigger = "room_leave"
+argument = "15 100"
+script = """
+if pcnum($) > 1
+  	break
+  else
+	if exitinfo($1) == 1
+  		echo 守衛將門關了起來。
+  		modrvt d1 | 6
+  	endif
+  endif
+"""
+
+[rooms.9452]
+name = "雙桅帆船的甲板"
+description = """
+這裡是史卡拉貝雙桅帆船的甲板，略顯陳舊的甲板和剝落的紅漆見證了
+這艘船過往的光榮，往下是船艙，往上是船桅的瞭望臺，不過你沒有勇氣爬
+上去。抬頭一望，可以看到河岸的風景(survey view)，站在船弦邊緣，你
+可以清楚探見劃破河浪的痕跡。
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.9452.exits.down]
+description = "船艙底"
+keywords = ""
+locks = []
+key = -1
+to_room = 9453
+[[rooms.9452.programs]]
+trigger = "room_enter"
+argument = "63 100"
+script = """
+if is_qmark($n) & slum_libei_quest 100768
+ or is_qmark($n) & slum_libei_quest 300768
+   	echoat $n 船長看你上來，默默點頭。
+   	break
+ endif
+ if ispc($n)
+  	if hour($) >= 14
+    		if hour($) <= 17
+      			echoat $n 一名大漢走過來，說：「沒事的別在這裡擾亂我們的作業！」
+			echoat $n \u001B[1;36m他將你趕了下去。\u001B[0m
+      			echoaround $n 一名大漢走過來，將$n趕了下去。
+      			transfer $n 9439
+      			break
+    		endif
+  	endif
+  	if hour($) >= 3
+    		if hour($) <= 5
+      			echoat $n 一名大漢走過來，說：「沒事的別在這裡擾亂我們的作業！」
+      			echoat $n \u001B[1;36m他將你趕了下去。\u001B[0m
+      			echoaround $n 一名大漢走過來，將$n趕了下去。
+      			transfer $n 9439
+    		endif
+  	endif
+ endif
+"""
+[[rooms.9452.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if hour($) == 14
+    	echo 雙桅帆船群緩緩靠向史卡拉貝貧民區的港口......
+    	echo 一名水手大喊：「到岸啦，準備卸貨！」
+    	force 9453 echo 一名水手大喊：「到岸啦，準備卸貨！」
+    	echo 水手將船版降了下去，讓港口工人上來搬運。
+	makedoor 0 貧民區港口 door 0 0 9439
+	break
+  endif
+  if hour($) == 15
+  or hour($) == 16
+    	echo 你看見搬運工上船來，忙著將貨物搬下去。
+    	break
+  endif
+  if hour($) == 17
+    	echo 水手將船錨收了上來。
+    	echo 一陣騷亂，水手們將船帆升了起來。
+    	echo 一名水手大喊：「準備啟航啦！」
+    	force 9453 echo 一名水手大喊：「準備啟航啦！」
+    	echo 雙桅帆船群緩緩駛離史卡拉貝貧民區港口......
+	deldoor 0
+    	break
+  endif
+  if hour($) == 2
+    	echo 雙桅帆船群緩緩靠向望鄉港港阜。
+    	echo 一名水手大喊：「到岸啦，準備裝貨！」
+    	force 9453 echo 一名水手大喊：「到岸啦，準備裝貨！」
+    	echo 水手將船版降了下去，讓港口工人搬貨上來。
+    	break
+  endif
+  if hour($) == 3
+  or hour($) == 4
+    	echo 你看見搬運工忙著將貨物搬上來。
+    	break
+  endif
+  if hour($) == 5
+    	echo 水手將船錨收了上來。
+    	echo 一陣騷亂，水手們將船帆升了起來。
+    	echo 一名水手大喊：「準備啟航啦！」
+    	force 9453 echo 一名水手大喊：「準備啟航啦！」
+    	echo 雙桅帆船群緩緩駛離望鄉港。
+    	break
+  endif
+  if rand(50)
+    	echo 船沿著史卡拉貝河航行著，四周壯麗的風光盡收眼底。
+    	break
+  endif
+  echo 幾隻不知名的水鳥悠悠飛過船弦左右，再倏忽飛離。
+"""
+[[rooms.9452.programs]]
+trigger = "room_command"
+argument = "survey view"
+script = """
+if hour($) == 0
+  or hour($) == 1
+    	echoat $n \u001B[1;33m這艘船順著史卡拉貝河航行，兩旁原始的黑森林不時傳來騷動聲。\u001B[0m
+    	break
+  endif
+  if hour($) >= 14
+    	if hour($) <= 17
+      		echoat $n \u001B[1;36m這艘船目前停泊在史卡拉貝貧民區，眼前的景象是一片髒亂。\u001B[0m
+      		break
+    	endif
+      	echoat $n \u001B[1;33m這艘船順著史卡拉貝河航行，兩旁原始的黑森林不時傳來騷動聲。\u001B[0m
+      	break
+  endif
+  if hour($) >= 2
+    	if hour($) <= 5
+      		echoat $n \u001B[1;31m這艘船目前停泊在望鄉港，深夜散發紅暈的大地只能讓你看到城鎮大概的輪廓。\u001B[0m
+      		rcall moon $n
+    		break
+    	endif
+  endif
+  echoat $n \u001B[1;33m這艘船沿著史卡拉貝河逆流而上，兩旁原始的黑森林不時傳來騷動聲。\u001B[0m
+"""
+[[rooms.9452.programs]]
+trigger = "room_defun"
+argument = "moon"
+script = """
+if day($) <= 11
+    	echoat $n \u001B[1;31m你也看到上弦月掛在夜空中，散發著淒冷的紅光。\u001B[0m
+	break
+  endif
+  if day($) <= 23
+    	echoat $n \u001B[1;31m你也看到美麗的滿月掛在夜空中，散發著飽滿的紅暈。\u001B[0m
+	break
+  endif
+  echoat $n \u001B[1;31m你也看到下弦月懸在夜空中，散發著詭異的紅光。\u001B[0m
+  break
+"""
+
+[rooms.9453]
+name = "船艙底"
+description = """
+一處狹小、混亂，堆滿貨物雜物的船艙，你可以聽見河浪拍打木板的聲
+音，還有木板嘎嘎作響，好像快要解體的聲音，不過比起事物繁忙的甲板，
+倒是清靜多了，你可以在這裡好好休息準備，等待終站到來。
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.9453.exits.up]
+description = "甲板"
+keywords = ""
+locks = []
+key = -1
+to_room = 9452
+[[rooms.9453.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+modhmv pc 04.3 12 00000000
+    	modhmv pc 14.3 12 00000000
+    	modhmv pc 24.3 12 00000000
+    	echo 經過充分的休息，你感覺狀況更好了！  
+"""
+
+[rooms.9454]
+name = "小黑船的船艙"
+description = """
+一間狹窄、黑暗的船艙，你聞到一股香味，好像是數十種香料混和在一
+起的味道，不過細心的你還在其中聞到了一股令人迷醉的異味，似乎是某種
+史卡拉貝所不允許的禁藥？或許動手找找看(search goods)能有所發現。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.9454.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if rmobcount(9429) != 0
+  if hour($) == 3
+  	echo 船艙北邊的密門開了。
+  	makedoor 0 貧民區港口 door 0 0 9439
+  endif
+  if hour($) == 4
+  	echo 船艙北邊的密門關了起來。
+  	deldoor 0
+  endif
+endif
+"""
+
+[rooms.9455]
+name = "危險暗巷西端"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往北邊進入暗巷，也可以往西回到巢穴貧民區。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9455.exits.east]
+description = "危險暗巷"
+keywords = "door"
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = -1
+to_room = 9458
+[rooms.9455.exits.north]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9456
+[rooms.9455.exits.west]
+description = "通往黑幫地帶的關卡"
+keywords = "gate"
+locks = []
+key = -1
+to_room = 9451
+[[rooms.9455.programs]]
+trigger = "room_enter"
+argument = "63 100"
+script = """
+if rand(80)
+	modhmv $n 03.3 6 12000001 
+	echoat $n 唉呀，你被暗處的機關劃傷了！
+	if ispc($n)
+		echoaround $n $n被機關劃傷了。
+	else
+		echoaround $n $N被機關劃傷了。
+	endif
+endif
+if exitinfo($1) & 4
+  if wis($n) >= 13
+	echoat $n 你發現東邊有一道鎖住的舊門。
+	if int($n) >= 16
+		echoat $n 似乎可以用魔法轟開(knock east)。
+		break
+	endif
+	if dex($n) >= 16
+		echoat $n 似乎可以撬開(knock east)。
+		break
+	endif
+	if str($n) >= 16
+		echoat $n 似乎可以撞開(knock east)。
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n 且經過你的分析，這道門很容易被\u001B[1;35m魔法\u001B[0m破壞。
+	endif
+  endif
+endif
+"""
+[[rooms.9455.programs]]
+trigger = "room_command"
+argument = "knock east"
+script = """
+if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n 你試圖使用魔法轟開這道門......
+	echoaround $n $n試圖使用魔法轟開這道門......
+	callout 1 echoat $n \u001B[1;35m你手上開始聚集一道純粹的魔法能量。\u001B[0m
+	callout 1 echoaround $n \u001B[1;35m$n手上開始聚集一道純粹的魔法能量。\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你的魔法能量狠狠地轟開了這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9458 modrvt d3 == 1
+		callout 2 force 9458 echo 西邊的門被轟開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n 你試圖撬開這道門......
+	echoaround $n $n試圖撬開這道門......
+	if rand(70)
+		callout 1 echoat $n \u001B[1;37m你成功地將門撬開！\u001B[0m
+		callout 1 echoaround $n $n將門撬開了。
+		callout 1 modrvt d1 == 1
+		callout 1 force 9458 modrvt d3 == 1
+		callout 1 force 9458 echo 西邊的門好像被撬開了。
+	else
+		callout 1 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n 你退後兩三步，準備撞開這道門......
+	echoaround $n $n退後兩三步，準備撞開這道門......
+	callout 1 echoat $n \u001B[1;31m你開始往前猛衝！\u001B[0m
+	callout 1 echoaround $n \u001B[1;31m$n開始往前猛衝！\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你用力撞開這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9458 modrvt d3 == 1
+		callout 2 force 9458 echo 西邊的門被撞開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+"""
+[[rooms.9455.programs]]
+trigger = "room_defun"
+argument = "cool"
+script = """
+if int($n) >= 16
+	echoaround $n $n的開門魔法對這道門造成了
+else
+	echoaround $n $n的猛力一撞對這道門造成了
+endif
+	echoaround $n .               \u001B[5;1;31m化  成  齎  粉\u001B[0m
+        echoaround $n .                    \u001B[5;1;31m灰  飛  湮  滅\u001B[0m的傷害！
+	echo \u001B[1;37m門被打開了！\u001B[0m
+"""
+
+[rooms.9456]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往東走，也可以往南走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9456.exits.east]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9457
+[rooms.9456.exits.south]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9455
+[[rooms.9456.programs]]
+trigger = "room_enter"
+argument = "63 80"
+script = """
+c 'cause light' $n 15
+  c poison $n 10
+  echoat $n 你被暗處的毒氣所傷！
+"""
+
+[rooms.9457]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往南走，也可以往西走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9457.exits.south]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9458
+[rooms.9457.exits.west]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9456
+[[rooms.9457.programs]]
+trigger = "room_rand"
+argument = "50"
+script = """
+if pcnum($) > 0
+  	c 'cause critical' $r 25
+	if ispc($r)
+  		echo $r被暗處的擲刀所傷！
+  	else
+  		echo $R被暗處的擲刀所傷！
+  	endif
+  endif
+"""
+
+[rooms.9458]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往北走，也可以往南走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9458.exits.east]
+description = "危險暗巷"
+keywords = "door"
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = -1
+to_room = 9465
+[rooms.9458.exits.north]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9457
+[rooms.9458.exits.south]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9459
+[rooms.9458.exits.west]
+description = "危險暗巷"
+keywords = "door"
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = -1
+to_room = 9455
+[[rooms.9458.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if rand(80)
+	modhmv $n 03.7 15 12000001 
+	echoat $n 唉呀，你被暗處的機關劃傷了！
+	if ispc($n)
+		echoaround $n $n被機關劃傷了。
+	else
+		echoaround $n $N被機關劃傷了。
+	endif
+endif
+if exitinfo($3) & 4
+  if wis($n) >= 13
+	echoat $n 你發現西邊有一道鎖住的舊門。
+	if int($n) >= 16
+		echoat $n 似乎可以用魔法轟開(knock west)。
+		rcall eastdoor $n
+		break
+	endif
+	if dex($n) >= 16
+		echoat $n 似乎可以撬開(knock west)。
+		rcall eastdoor $n
+		break
+	endif
+	if str($n) >= 16
+		echoat $n 似乎可以撞開(knock west)。
+		rcall eastdoor $n
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n 且經過你的分析，這道門很容易被\u001B[1;35m魔法\u001B[0m破壞。
+	endif
+  endif
+endif
+"""
+[[rooms.9458.programs]]
+trigger = "room_command"
+argument = "knock west"
+script = """
+if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n 你試圖使用魔法轟開這道門......
+	echoaround $n $n試圖使用魔法轟開這道門......
+	callout 1 echoat $n \u001B[1;35m你手上開始聚集一道純粹的魔法能量。\u001B[0m
+	callout 1 echoaround $n \u001B[1;35m$n手上開始聚集一道純粹的魔法能量。\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你的魔法能量狠狠地轟開了這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9455 modrvt d1 == 1
+		callout 2 force 9455 echo 東邊的門被轟開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n 你試圖撬開這道門......
+	echoaround $n $n試圖撬開這道門......
+	if rand(70)
+		callout 1 echoat $n \u001B[1;37m你成功地將門撬開！\u001B[0m
+		callout 1 echoaround $n $n將門撬開了。
+		callout 1 modrvt d3 == 1
+		callout 1 force 9455 modrvt d1 == 1
+		callout 1 force 9455 echo 東邊的門被撬開了！
+	else
+		callout 1 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n 你退後兩三步，準備撞開這道門......
+	echoaround $n $n退後兩三步，準備撞開這道門......
+	callout 1 echoat $n \u001B[1;31m你開始往前猛衝！\u001B[0m
+	callout 1 echoaround $n \u001B[1;31m$n開始往前猛衝！\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你用力撞開這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9455 modrvt d1 == 1
+		callout 2 force 9455 echo 東邊的門被撞開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+"""
+[[rooms.9458.programs]]
+trigger = "room_command"
+argument = "knock east"
+script = """
+if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n 你試圖撬開這道門......
+	echoaround $n $n試圖撬開這道門......
+	if rand(70)
+		callout 1 echoat $n \u001B[1;37m你成功地將門撬開！\u001B[0m
+		callout 1 echoaround $n $n將門撬開了。
+		callout 1 modrvt d1 == 1
+		callout 1 force 9465 modrvt d3 == 1
+		callout 1 force 9465 echo 西邊的門被撬開了！
+	else
+		callout 1 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n 你試圖使用魔法轟開這道門......
+	echoaround $n $n試圖使用魔法轟開這道門......
+	callout 1 echoat $n \u001B[1;35m你手上開始聚集一道純粹的魔法能量。\u001B[0m
+	callout 1 echoaround $n \u001B[1;35m$n手上開始聚集一道純粹的魔法能量。\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你的魔法能量狠狠地轟開了這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9465 modrvt d3 == 1
+		callout 2 force 9465 echo 西邊的門被轟開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n 你退後兩三步，準備撞開這道門......
+	echoaround $n $n退後兩三步，準備撞開這道門......
+	callout 1 echoat $n \u001B[1;31m你開始往前猛衝！\u001B[0m
+	callout 1 echoaround $n \u001B[1;31m$n開始往前猛衝！\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你用力撞開這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d1 == 1
+		callout 2 force 9465 modrvt d3 == 1
+		callout 2 force 9465 echo 西邊的門被撞開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+"""
+[[rooms.9458.programs]]
+trigger = "room_defun"
+argument = "eastdoor"
+script = """
+if exitinfo($1) & 4
+  if wis($n) >= 13
+	echoat $n 你發現東邊有一道鎖住的舊門。
+	if dex($n) >= 16
+		echoat $n 似乎可以撬開(knock east)。
+		break
+	endif
+	if int($n) >= 16
+		echoat $n 似乎可以用魔法轟開(knock east)。
+		break
+	endif
+	if str($n) >= 16
+		echoat $n 似乎可以撞開(knock east)。
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n 且經過你的分析，這道門很容易被\u001B[1;33m撬開\u001B[0m。
+	endif
+  endif
+endif
+"""
+[[rooms.9458.programs]]
+trigger = "room_defun"
+argument = "cool"
+script = """
+if int($n) >= 16
+	echoaround $n $n的開門魔法對這道門造成了
+else
+	echoaround $n $n的猛力一撞對這道門造成了
+endif
+	echoaround $n .               \u001B[5;1;31m化  成  齎  粉\u001B[0m
+        echoaround $n .                   \u001B[5;1;31m灰  飛  湮  滅\u001B[0m的傷害！
+	echo \u001B[1;37m門被打開了！\u001B[0m
+"""
+
+[rooms.9459]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往北走，也可以往西走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9459.exits.north]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9458
+[rooms.9459.exits.west]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9460
+[[rooms.9459.programs]]
+trigger = "room_enter"
+argument = "63 80"
+script = """
+modhmv 23.8 15 00000000
+	echoat $n 你感覺身上的精力流失大半，似乎是暗巷的\u001B[1;30m黑暗魔法\u001B[0m所至！
+"""
+
+[rooms.9460]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往東走，也可以往南走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9460.exits.east]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9459
+[rooms.9460.exits.south]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9461
+[[rooms.9460.programs]]
+trigger = "room_enter"
+argument = "15 75"
+script = """
+echoat $n 遠方傳來一聲慘叫。	
+"""
+[[rooms.9460.programs]]
+trigger = "room_leave"
+argument = "15 60"
+script = """
+c curse $n 10
+"""
+
+[rooms.9461]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往北走，也可以往東走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9461.exits.east]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9462
+[rooms.9461.exits.north]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9460
+[[rooms.9461.programs]]
+trigger = "room_enter"
+argument = "15 80"
+script = """
+c 'chill touch' $n 10
+ echoat $n 你被一股凍氣圍繞！
+"""
+
+[rooms.9462]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往東走，也可以往西走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9462.exits.east]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9463
+[rooms.9462.exits.west]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9461
+[[rooms.9462.programs]]
+trigger = "room_enter"
+argument = "63 60"
+script = """
+modhmv all 03.2 3 00000000
+  if int($n) > 20
+  	echoat $n 遠處傳來一陣對話，你只聽清楚\u001B[1;30m「死......」\u001B[0m這個音。
+  else
+	echoat $n 遠方傳來一陣模糊的對話，不過你聽不清楚。
+  endif
+"""
+
+[rooms.9463]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往北走，也可以往西走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9463.exits.north]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9464
+[rooms.9463.exits.west]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9462
+[[rooms.9463.programs]]
+trigger = "room_enter"
+argument = "63 40"
+script = """
+c 'acid blast' $r 14
+  echoat $r 你被突如其來的潑酸潑到！
+  echoaround $r $r被不明來源的酸液侵蝕！
+"""
+
+[rooms.9464]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往北走，也可以往南走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9464.exits.north]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9465
+[rooms.9464.exits.south]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9463
+[[rooms.9464.programs]]
+trigger = "room_enter"
+argument = "15 60"
+script = """
+echoat $n \u001B[1;30m當你一進來，四面八方飛來各種奇異黑蟲！\u001B[0m
+  if con($n) <= 13
+	c poison $n 5
+	echoat $n 你被蚊蟲叮咬，似乎中毒了！
+  	echoaround $n $n被蚊蟲叮咬，似乎中毒了！
+  	break
+  endif
+  if dex($n) <= 13
+  	c blind $n 5
+  	echoat $n 黑蟲的體液侵入你的眼中，讓你什麼也看不到！
+  	break
+  endif
+  if str($n) <= 13
+  	c 'cause serious' $n 15
+  	echoat $n 蚊蟲刺穿了你的皮膚，好痛！
+  endif
+"""
+
+[rooms.9465]
+name = "危險暗巷"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往東走，也可以往南走。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9465.exits.east]
+description = "危險暗巷東端"
+keywords = ""
+locks = []
+key = -1
+to_room = 9466
+[rooms.9465.exits.south]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9464
+[rooms.9465.exits.west]
+description = "危險暗巷"
+keywords = "door"
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = -1
+to_room = 9458
+[[rooms.9465.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if rand(80)
+	modhmv $n 03.7 15 12000001 
+	echoat $n 唉呀，你被暗處的機關劃傷了！
+	if ispc($n)
+		echoaround $n $n被機關劃傷了。
+	else
+		echoaround $n $N被機關劃傷了。
+	endif
+  endif
+if exitinfo($3) & 4
+  if wis($n) >= 13
+	echoat $n 你發現西邊有一道鎖住的舊門。
+	if dex($n) >= 16
+		echoat $n 似乎可以撬開(knock west)。
+		break
+	endif
+	if int($n) >= 16
+		echoat $n 似乎可以用魔法轟開(knock west)。
+		break
+	endif
+	if str($n) >= 16
+		echoat $n 似乎可以撞開(knock west)。
+		break
+	endif
+	if wis($n) >= 19
+		echoat $n 且經過你的分析，這道門很容易被\u001B[1;35m撬開\u001B[0m。
+	endif
+  endif
+endif
+"""
+[[rooms.9465.programs]]
+trigger = "room_command"
+argument = "knock west"
+script = """
+if dex($n) >= 18
+  	modhmv $n 23.5 8 00000000
+	echoat $n 你試圖撬開這道門......
+	echoaround $n $n試圖撬開這道門......
+	if rand(70)
+		callout 1 echoat $n \u001B[1;37m你成功地將門撬開！\u001B[0m
+		callout 1 echoaround $n $n將門撬開了。
+		callout 1 modrvt d3 == 1
+		callout 1 force 9458 modrvt d1 == 1
+		callout 1 force 9458 echo 東邊的門被撬開了！
+	else
+		callout 1 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if int($n) >= 18
+  	modhmv $n 13.5 8 00000000
+	echoat $n 你試圖使用魔法轟開這道門......
+	echoaround $n $n試圖使用魔法轟開這道門......
+	callout 1 echoat $n \u001B[1;35m你手上開始聚集一道純粹的魔法能量。\u001B[0m
+	callout 1 echoaround $n \u001B[1;35m$n手上開始聚集一道純粹的魔法能量。\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你的魔法能量狠狠地轟開了這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9458 modrvt d1 == 1
+		callout 2 force 9458 echo 東邊的門被轟開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+  if str($n) >= 18
+  	modhmv $n 03.5 8 00000000
+	echoat $n 你退後兩三步，準備撞開這道門......
+	echoaround $n $n退後兩三步，準備撞開這道門......
+	callout 1 echoat $n \u001B[1;31m你開始往前猛衝！\u001B[0m
+	callout 1 echoaround $n \u001B[1;31m$n開始往前猛衝！\u001B[0m
+	if rand(70)
+		callout 2 echoat $n \u001B[1;37m你用力撞開這道門！\u001B[0m
+		callout 2 rcall cool $n
+		callout 2 modrvt d3 == 1
+		callout 2 force 9458 modrvt d1 == 1
+		callout 2 force 9458 echo 東邊的門被撞開了！
+	else
+		callout 2 echoat $n 你失敗了！
+	endif
+	break
+  endif
+"""
+[[rooms.9465.programs]]
+trigger = "room_defun"
+argument = "cool"
+script = """
+if int($n) >= 16
+	echoaround $n $n的開門魔法對這道門造成了
+else
+	echoaround $n $n的猛力一撞對這道門造成了
+endif
+	echoaround $n .               \u001B[5;1;31m化  成  齎  粉\u001B[0m
+        echoaround $n .                   \u001B[5;1;31m灰  飛  湮  滅\u001B[0m的傷害！
+	echo \u001B[1;37m門被打開了！\u001B[0m
+"""
+
+[rooms.9466]
+name = "危險暗巷東端"
+description = """
+這是一處黑暗，狹小的巷子，你可以聞到一股危險的氣氛。
+你可以往東走，進入黑幫區域，也可以往西走，深入暗巷。
+"""
+flags = ["DARK", "SUMMON_BIT"]
+sector = "CITY"
+[rooms.9466.exits.east]
+description = "陰暗街道入口"
+keywords = ""
+locks = []
+key = -1
+to_room = 2164
+[rooms.9466.exits.west]
+description = "危險暗巷"
+keywords = ""
+locks = []
+key = -1
+to_room = 9465
+[[rooms.9466.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+echoat $n 遠方傳來空洞呼號的鬼鳴。
+  if rand(50)
+  	if primeattr($n) == 3
+  	or primeattr($n) == 4
+		c mute $n 10
+ 		echoat $n 你聽到鬼鳴中飄盪著一句話：「死吧......」
+ 	endif
+  endif
+"""

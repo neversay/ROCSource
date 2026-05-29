@@ -1,0 +1,6418 @@
+[area]
+name = "{36 42} 名劍山莊"
+identity = "swordcottage"
+builders = "Kention"
+translator = "Kention"
+modifier = ""
+vnum_start = 64101
+vnum_end = 64300
+security = 1
+recall = 3001
+death = 3001
+f_toggle = false
+
+[mobiles.64101]
+keywords = "Jwo ho sin young man"
+short_description = "卓鶴山(Jwo ho sin)"
+long_description = "一個年輕人(Young man)在這裡迎接山莊的客人。\n"
+description = """
+他頭戴青皮帽，身穿長袍馬掛，負責引導初入名劍山莊的各路
+英雄好漢。他滿臉笑容的和你打恭作揖。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 800
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.64101.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.64101.programs]]
+trigger = "talk_prog"
+argument = "p hair dress"
+script = """
+if is_qmark($n) == swordcottage 200001
+		say 這個...我也不太清楚
+		say 你可以去問問別人。
+	else
+		say 什麼髮飾？
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "tick_prog"
+argument = "10"
+script = """
+if is_qmark($i) > swordcottage_enter 100001
+		mpmod_qmark $i swordcottage_enter v0 - 1
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 名劍山莊不歡迎你，請回吧
+	else
+		mpechoat $n $I恭敬的向你鞠躬
+		tell $n 歡迎光臨名劍山莊，有什麼問題請儘管吩咐．
+			if is_qmark($i) != swordcottage_enter
+				mpadd_qmark $i swordcottage_enter -1 0 0 0 0 1
+			endif
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答你的問題，你請回吧
+	else
+		tell $n 請問有什麼問題？
+		mpechoat $n －－－請問我能進去嗎(Enter)？
+		mpechoat $n －－－請問莊主在哪裡(where)？
+		mpechoat $n －－－關於名劍山莊的問題(About)
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "talk_prog"
+argument = "enter"
+script = """
+if is_qmark($n) != swordcottage_killer
+			if is_qmark($i) > swordcottage_enter 100006
+				tell $n 對不起，山莊內的客人已滿，我沒辦法讓您進去。
+				sorry $n
+			else
+					if resp($n) > 30
+						if sex($n) == 2
+							tell $n 好的，名劍山莊非常歡迎像您這樣有名的俠女
+							mpechoat $n $I打開門讓你進去。
+							mpechoaround $n $I打開門讓$n進去。
+							mptransfer $n 64151
+							mpmod_qmark $i swordcottage_enter v0 + 1
+						else
+							tell $n 好的，名劍山莊非常歡迎像您這樣有名的俠客
+							mpechoat $n $I打開門讓你進去。
+							mpechoaround $n $I打開門讓$n進去。
+							mptransfer $n 64151
+							mpmod_qmark $i swordcottage_enter v0 + 1
+						endif
+					else
+						mpechoat $n $I仔細的打量你...
+						mpechoaround $n $I仔細的打量$n...
+						tell $n 對不起，我恐怕沒辦法讓您進去。
+						tell $n 名劍山莊只歡迎有名的俠客或是俠女，$n您請回吧。
+					endif			
+			endif
+	else
+		tell $n 名劍山莊不歡迎您，請回吧。
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "talk_prog"
+argument = "where"
+script = """
+if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		tell $n 只要往前一直走，莊主就在大廳裡面．
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "talk_prog"
+argument = "about"
+script = """
+if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		tell $n 想知道什麼嗎？
+		mpechoat $n －－－名劍山莊的由來(From)？
+		mpechoat $n －－－名劍山莊的莊主(Master)？
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "talk_prog"
+argument = "from"
+script = """
+if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		mpechoat $n $I說著：名劍山莊原本只是一個普通的山莊，後來因為第
+		mpechoat $n $I說著：三任莊主喜好劍術，於是便改名為名劍山莊，同
+		mpechoat $n $I說著：時廣邀英雄劍俠到山莊內作客。現在的莊主則是
+		mpechoat $n $I說著：第六任莊主，但是卻因為沒有兒子，而打算招贅
+		mpechoat $n $I說著：一名年輕人來挑起大業。
+		mpechoat $n $I說著：大致上就是這個樣子了。
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "talk_prog"
+argument = "master"
+script = """
+if is_qmark($n) == swordcottage_killer
+	or is_qmark($n) == castsword
+		tell $n 我無法回答您的問題，您請回吧。
+	else
+		mpechoat $n $I說著：現任莊主秦徹生先生是第六任莊主，現在就在大
+		mpechoat $n $I說著：廳裡面，您可以去拜訪他。
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		yell 嗚啊！！$n在名劍山莊行兇阿！！
+	else
+		mpadd_all_qmark $n swordcottage_killer 200 0 0 0 1
+	endif
+"""
+[[mobiles.64101.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+say 名劍山莊不歡迎鬧事的人！
+	mpechoat $n $I一揮手，一陣強大的風把你推了出去！
+	mpechoaround $n $n被$I推了出去！
+	mptransfer $n 64121
+	mpnowait
+"""
+
+[mobiles.64102]
+keywords = "chin-mob cher sen-swordcottage"
+short_description = "秦徹生(Chin cher sen)"
+long_description = "莊主秦徹生(Chin cher sen)神采奕奕的站在這裡。\n"
+description = """
+他就是掌管整個名劍山莊的莊主-秦徹生(Chin cher sen)，
+江湖上傳言他能在雨中舞劍而身上不沾半點雨滴。除了高超
+的劍術，秦徹生也以素有正義感而聞名．但是早年喪妻的他
+，似乎正為了唯一的女兒，秦映月的婚事而煩惱著．
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 55
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_POISON", "NO_CRAZY"]
+[[mobiles.64102.applies]]
+type = "HIT"
+degree = 60000
+[[mobiles.64102.applies]]
+type = "REDUCE_DAMAGE"
+degree = 70
+[[mobiles.64102.applies]]
+type = "REDUCE_MAGIC"
+degree = 70
+[[mobiles.64102.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.64102.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.64102.programs]]
+trigger = "tick_prog"
+argument = "10"
+script = """
+if is_qmark($i) != swordcottage_hairdress
+		say 怎麼會不見了呢...
+		sigh
+	endif
+"""
+[[mobiles.64102.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == swordcottage_killer
+	tell $n 你還不離開嗎？那我就送你一程吧！
+	mpkill $n
+else
+	nod $n
+	tell $n 久仰大名，歡迎來到名劍山莊
+endif
+"""
+[[mobiles.64102.programs]]
+trigger = "talk_prog"
+argument = "disappear"
+script = """
+if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+	else
+		if is_qmark($n) == castsword
+			say 這件事情跟鑄劍谷的人沒有關係。
+			mpechoat $n $I把頭別過去，似乎不想理你。
+			mpechoaround $n $I把頭別過去，似乎不想理$n。
+		else
+			if is_qmark($i) != swordcottage_hairdress
+				if is_qmark($n) == swordcottage
+					tell $n 其實是我髮妻(wife)留下來的髮飾(hair dress)被我弄丟了。
+					tell $n 雖然找了不少地方，可是就是找不到。
+					sigh
+					mpmod_qmark $n swordcottage v2 = 1
+				else
+					tell $n 其實是我髮妻(wife)留下來的髮飾(hair dress)被我弄丟了。
+					tell $n 雖然找了不少地方，可是就是找不到。
+					sigh
+					mpadd_qmark $n swordcottage -1 0 0 1 0 1
+				endif
+			else
+				您的什麼東西掉了嗎？
+			endif
+		endif
+	endif
+"""
+[[mobiles.64102.programs]]
+trigger = "talk_prog"
+argument = "p hair dress"
+script = """
+if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+else
+	if is_qmark($n) == swordcottage 300001
+		if is_qmark($i) != swordcottage_hairdress
+			tell $n 是一個暗紅色的髮飾，不知道掉在哪了
+		else
+			tell $n 我已經托人在莊內尋找，不勞您費心。
+		endif
+	endif
+endif
+"""
+[[mobiles.64102.programs]]
+trigger = "talk_prog"
+argument = "p gin-ming"
+script = """
+if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+	else
+	if is_qmark($n) == jd_liu 100001
+		mpechoat $n 你將柳敬明託付的事情告訴$I
+		gasp $n
+		tell $n 您認識敬明？我也找他找了許久，但一直沒有消息。
+		tell $n 但你說當年雲風與秋雨一起到山莊排解紛爭，我卻不記得有這回事
+		tell $n 當年僅有秋雨上山來找我，他同時告訴我雲風有事不能到來，請他代為致歉
+		tell $n 但...怎麼會有這種事？
+		ponder
+		tell $n 如果你所說的屬實，那麼務必先找出雲風失蹤的地方。
+		tell $n 李總管確實告訴我，當時雲風沒有踏入山莊
+		tell $n 或許他在上山莊的路上有事...或是失蹤了？
+		tell $n 麻煩您跑一趟，在來山莊的路上找找。
+		tell $n 我趁這段時間問一下李總管當時的詳細狀況。也問問秋雨。
+		tell $n 麻煩您了
+		bow $n
+		mpmod_qmark $n jd_liu v0 = 2
+		mpechoat $n 你覺得山下那座土堆實在太可疑了...要再去調查一次嗎？
+	else
+		tell $n 敬明阿！好久沒看到他了，不知道他近況如何...
+	endif
+	endif
+"""
+[[mobiles.64102.programs]]
+trigger = "give_prog"
+argument = "11144"
+script = """
+if is_qmark($n) == jd_liu 100003
+		mpechoat $n $I顫抖著手讀完這封信
+		tell $n 我知道了，我馬上讓秋雨過來一趟，請他好好說明
+		tell $n 這封信麻煩您帶去給敬明，讓他知道這件事吧...唉。
+		mpat 64137 mptransfer chen-swordcottage 64247
+		give letter $n
+	else
+		?
+		tell $n 你給我這個做什麼？
+		drop letter
+	endif
+"""
+[[mobiles.64102.programs]]
+trigger = "talk_prog"
+argument = "p where is chow-yu"
+script = """
+if is_qmark($n) == swordcottage_killer
+		say 你這兇手！還敢問我事情！
+		mpkill $n
+else
+	if is_qmark($n) == jd_liu 100004
+		tell $n 說來慚愧，秋雨一聽到我要找他，馬上離開了山莊，也來不及攔住他
+		tell $n 看來這件事是真的了，希望少俠能為敬名報這殺父之仇。
+		bow $n
+		tell $n 我猜秋雨應該會回到他認為最隱密的地方，也許是當初少俠發現雲風遺書的地方
+		tell $n 請少俠跑這最後一趟，替武林去除這個敗類吧！
+		tell $n 願劍神Kention保佑你。
+		mpmod_qmark $n jd_liu v0 = 5
+	else
+		tell 你找秋雨嗎？他應該在客房裡阿。
+	endif
+endif
+"""
+[[mobiles.64102.programs]]
+trigger = "talk_prog"
+argument = "wife"
+script = """
+if is_qmark($n) == castsword
+		say 這件事情跟鑄劍谷的人沒有關係。
+		mpechoat $n $I把頭別過去，似乎不想理你。
+		mpechoaround $n $I把頭別過去，似乎不想理$n。
+	else
+		if is_qmark($n) == swordcottage_killer
+			say 你這兇手！還敢問我事情！
+			mpkill $n
+		else
+			if is_qmark($n) == swordcottage 300001
+				if is_qmark($i) == swordcottage_talking
+					mpechoat $n $I現在正在跟別人說話。
+				else
+					if is_qmark($i) != swordcottage_hairdress
+						if resp($n) > 65
+							mpcallout 1 mpadd_qmark self swordcottage_talking
+							mpcallout 1 mpechoat $n $I說著：既然您問起了，事情是這樣的...
+							mpcallout 1 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 2 mpechoat $n $I說著：十幾年前，我受友人所託，出海前往另一個島
+							mpcallout 3 mpechoat $n $I說著：到達該島之後，我發現當地居民與我族衣著，習慣皆不相同
+							mpcallout 4 mpechoat $n $I說著：恰巧那位友人必須留在島上一段時間，希望留我作伴
+							mpcallout 5 mpechoat $n $I說著：正好家中無事，我也不加推辭，就留在該島練劍
+							mpcallout 5 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 6 mpechoat $n $I說著：在練劍的同時，我認識了一位當地的少女
+							mpcallout 7 mpechoat $n $I說著：她經常送一些食物以及水過來給我，並且在旁邊看著我練劍
+							mpcallout 8 mpechoat $n 你好像覺得這種劇情很耳熟...
+							mpcallout 8 mpechoaround $n $n露出一點不可置信的表情
+							mpcallout 9 mpechoat $n $I苦笑著說：是的，後來的事情您應該也猜到了
+							mpcallout 10 mpechoat $n $I說著：我後來與那位少女相戀，並且結了婚
+							mpcallout 11 mpechoat $n $I說著：但這也是一切不幸的開始...
+							mpcallout 11 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 12 mpechoat $n $I說著：她有了身孕之後，我常常出外狩獵一些牲畜給她補身子
+							mpcallout 13 mpechoat $n $I說著：同時也託不斷來回的船隻幫我捎一些藥品回來
+							mpcallout 14 mpechoat $n $I說著：但是她仍然不幸過世，就在她生映月的那天晚上
+							mpcallout 15 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 16 mpechoat $n $I說著：因為難產，流血過多，因而死亡...
+							mpcallout 17 mpechoat $n $I說著：我當時悲憤難耐，便一劍劈開了島上的大石
+							mpcallout 18 mpechoat $n $I說著：後來友人勸我回來家鄉，一方面是該繼承家業，另一方面也是看我整日愁靡...
+							mpcallout 18 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 19 mpechoat $n $I說著：於是我在當地建立了一間石室，將我的配劍置入
+							mpcallout 20 mpechoat $n $I說著：也算是為了紀念亡妻
+							mpcallout 21 mpechoat $n $I說著：當時她留給我的，就只剩這個髮飾
+							mpcallout 21 mpechoaround $n $I似乎在跟$n討論什麼...
+							mpcallout 22 mpechoat $n $I仔細的打量你...
+							mocallout 22 mpechoaround $I仔細的看了看$n...
+							mpcallout 23 mpechoat $n $I說著：少俠聲名遠播，不知是否可以委託您幫我找回這個髮飾？(yes/no)
+							mpcallout 23 mpdel_qmark self swordcottage_talking
+						else
+							tell $n 她在十數年前便已過世，只留下映月與我相依為命．
+							glare
+							tell $n 十年生死兩茫茫...
+							sigh
+							tell $n 不勞您多費心，我自己再找找便是。
+						endif
+					else
+						tell $n 她在十數年前便已過世，只留下映月與我相依為命．
+						glare
+						tell $n 十年生死兩茫茫...
+						sigh
+					endif
+				endif
+			else
+				tell $n 她在十數年前便已過世，只留下映月與我相依為命．
+				glare
+				tell $n 十年生死兩茫茫...
+				sigh
+			endif
+		endif
+	endif
+"""
+[[mobiles.64102.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($i) != swordcottage_hairdress
+	tell $n 那就有勞您了
+	bow
+	tell $n 也許您可以問問李總管，他對莊內的情況比較熟悉。
+	tell $n 願劍神Kention保佑你。
+	mpmod_qmark $n swordcottage v2 = 2
+	mpadd_qmark $i swordcottage_hairdress	200 0 0 0 0 -1
+endif
+"""
+[[mobiles.64102.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpmod_all_qmark $n swordcottage_killer timer = -1
+		say 映月，你爹..沒辦法..再..照顧你..了..
+		mpecho 碰的一聲，$I倒地不起。
+		rumor 名劍山莊莊主$I被$n殺害了！名劍山莊下令永久通緝$n！
+	else
+		mpadd_all_qmark $n swordcottage_killer -1 0 0 0 0 1
+		rumor 名劍山莊莊主$I被$n殺害了！名劍山莊下令永久通緝$n！
+	endif
+"""
+[[mobiles.64102.programs]]
+trigger = "give_prog"
+argument = "64135"
+script = """
+if is_qmark($n) == swordcottage_killer
+			say 你這兇手！還敢來見我！
+			mpkill $n
+			mpjunk hair
+		else
+				if is_qmark($n) == swordcottage 300003
+					tell $n 太好了！沒想到您真的找到了！
+					mpjunk hair
+					tell $n 真是太感謝你了。
+					bow $n
+					tell $n 一些微薄的謝禮，希望您能收下。
+					mpoload 64138 $n viclv target
+					mpexp $n 10000
+					mpmod_qmark $n swordcottage v2 = 4
+				else
+					tell $n 這似乎不是你找到的吧？
+					drop hair
+					tell $n 請那位找到的先生來見我，我會好好的酬謝他。
+				endif
+		endif
+"""
+[[mobiles.64102.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+wear sword
+yell \u001B[1;31m焱日天劍\u001B[0m 
+flaming
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+"""
+[[mobiles.64102.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+wear sword
+yell \u001B[1;34m流風劍舞\u001B[0m 
+storm
+mpnowait
+earth
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+"""
+[[mobiles.64102.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+"""
+[[mobiles.64102.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+wear sword
+yell \u001B[1;36m絢目劍花\u001B[0m 
+mpat 5 c 'cure blind'
+c virtual
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c 'dispel magic' self
+mpat 5 c sanc
+mpnowait
+"""
+[[mobiles.64102.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+wear sword
+yell \u001B[1;32m劍霸天下\u001B[0m 
+perf emp
+mpnowait
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+"""
+
+[mobiles.64103]
+keywords = "uen chun lon-swordcottage"
+short_description = "雲從龍(uen chun lon)"
+long_description = "雲從龍(uen chun lon)腰繫長劍，神采奕奕的站在一旁。\n"
+description = """
+他是莊主早年認識的故交，雖然跟莊主歲差10年，卻不減兩
+人情誼，據說在某次山賊劫村時，秦徹生與素未謀面的他一
+同擊退山賊，後來便應秦徹生的邀請到山莊內做客．
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 53
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_POISON", "NO_CRAZY"]
+[[mobiles.64103.applies]]
+type = "HIT"
+degree = 30000
+[[mobiles.64103.applies]]
+type = "REDUCE_DAMAGE"
+degree = 40
+[[mobiles.64103.applies]]
+type = "REDUCE_MAGIC"
+degree = 40
+[[mobiles.64103.applies]]
+type = "APPLY_ADAMAGE"
+degree = 70
+[[mobiles.64103.applies]]
+type = "APPLY_AMAGIC"
+degree = 70
+[[mobiles.64103.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == castsword
+		tell $n 你是鑄劍谷的人吧？
+		tell $n 莊主不太喜歡鑄劍谷的人，跟他說話可得當心點。
+	else
+		if is_qmark($n) == swordcottage_killer
+			say 抱歉，莊主不歡迎你，我只好請你出去摟。
+			mpkill $n
+		else
+			say 是訪客阿，請好好享受山莊的風景吧。
+			say 這麼說起來，我也是訪客呢！哈哈哈！
+		endif
+	endif
+"""
+[[mobiles.64103.programs]]
+trigger = "talk_prog"
+argument = "underwear"
+script = """
+say 那種東西的話...我不太清楚喔。
+	shrug
+"""
+[[mobiles.64103.programs]]
+trigger = "talk_prog"
+argument = "p hair dress"
+script = """
+if is_qmark($n)　== swordcottage 200001
+		tell $n 髮飾阿。
+		tell $n 對不起，這種小東西我通常不會注意的。
+		mpechoat $n $I對著你苦笑著。
+		mpechoaround $n $I對著$n苦笑著。
+	else
+		say 髮飾？你想要的話也許可以去附近的村子買吧。
+	endif
+"""
+[[mobiles.64103.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+	if is_qmark($n) == swordcottage_killer
+		mpecho $I 狠狠的瞪了你一眼，然後頹然倒地。
+	else
+		mpecho $I 狠狠的瞪了你一眼，然後頹然倒地。
+		mpadd_all_qmark $n swordcottage_killer 200 0 0 0 0 1
+	endif
+"""
+[[mobiles.64103.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+wear sword
+yell \u001B[1;32m劍霸天下\u001B[0m 
+perf emp
+mpnowait
+perf emp
+mpnowait
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+mpnowait
+"""
+
+[mobiles.64104]
+keywords = "Lee-mob ie ven"
+short_description = "李逸凡(Lee ie ven)"
+long_description = "總管李逸凡(Lee ie ven)在這裡忙著處理事情。\n"
+description = """
+某次秦徹生在山上練劍不慎受傷，後來承蒙李逸凡相救，秦
+徹生便邀請他至山莊做總管。名義上雖然是總管，實際上他
+對秦徹生的了解比誰都還要深．
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.64104.programs]]
+trigger = "talk_prog"
+argument = "p hair dress"
+script = """
+if is_qmark($n) == swordcottage_killer
+	mpecho $I說著：謝謝您的關心，不過我們可以自己解決。
+else
+	if is_qmark($n) >= swordcottage 300001
+		if rand(50)
+			tell $n 之前好像在哪邊看到過...
+			tell $n 莊主常去練習場練劍，之前也到過存劍室除去妖魔，也許你可以到這兩個地方找找。
+			tell $n 但存劍室現在被莊主封起來了，一般人不能進去，您要進去務必小心。
+			tell $n 對莊主來說，那可是最珍貴的寶物哪。
+		else
+			say 我想想，好像有看過...
+			say 可是我不太記得，讓我再想想，麻煩您過點時間再過來問我一次
+			sigh
+	else
+		say 什麼髮飾？
+	endif
+endif
+"""
+[[mobiles.64104.programs]]
+trigger = "greet_prog"
+argument = "10"
+script = """
+say 這可怎麼辦阿，那頭蛟龍(Chiao)實在是...
+"""
+[[mobiles.64104.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == swordcottage_killer
+	tell $n 名劍山莊不歡迎你，請回吧。
+else
+	tell $n 歡迎來到名劍山莊。
+	tell $n 提醒您，存劍室內有不明妖魔出現，請不要太靠近。
+	tell $n 如果您成功打倒妖魔，請拿著證據回來，莊內有薄禮致贈。
+	tell $n 願劍神Kention保佑您的平安。
+	bow $n
+endif
+"""
+[[mobiles.64104.programs]]
+trigger = "talk_prog"
+argument = "chiao"
+script = """
+if is_qmark($i) != swordcottage_talk
+	if is_qmark($n) != swordcottage_killer
+		if is_qmark($n) >= swordcottage 200001
+			tell $n 謝謝您的幫忙，我們不會忘記的。
+			break
+		else	
+				mpadd_qmark $i swordcottage_talk
+				mpcallout 1 tell $n 是這樣子的，最近有僕人發現連接山莊的那個湖泊出現蛟龍。
+				mpcallout 2 tell $n 出現蛟龍還不打緊，但是我們發現牠有兇猛的攻擊性，名劍山莊不少僕人家畜都被牠咬傷。
+				mpcallout 3 mpechoat $n －－我可以幫忙嗎？(Help)
+				mpcallout 3 mpechoat $n －－那真是太遺憾了(Sorry)
+				mpcallout 3 tell $n 所以我現在很傷腦筋阿...
+				mpdel_qmark $i swordcottage_talk
+		endif
+	else
+		mpecho $I說著：謝謝您的關心，不過我們可以自己解決。
+	endif
+else
+		mpechoat $n 別人在說話，不要插嘴比較好。
+endif
+"""
+[[mobiles.64104.programs]]
+trigger = "talk_prog"
+argument = "sorry"
+script = """
+say 希望有辦法可以趕走牠。
+	sigh
+"""
+[[mobiles.64104.programs]]
+trigger = "talk_prog"
+argument = "help"
+script = """
+if is_qmark($i) != swordcottage_talk
+	if is_qmark($n) != swordcottage_killer
+		if is_qmark($n) == swordcottage
+			if is_qmark($n) < swordcottage 200001
+			else	
+				if is_qmark($n) == swordcottage
+					mpcallout 1 mpadd_qmark $i swordcottage_talk
+					mpcallout 1 tell $n 你願意幫忙？那真是太好了！
+					mpcallout 2 tell $n 蛟龍就在山莊後面的湖泊裡。
+					mpcallout 3 tell $n 你殺死蛟龍之後，就來跟我回報吧(report)！
+					mpcallout 3 mpmod_qmark $n swordcottage v1 = 1
+					mpcallout 4 tell $n 願劍神Kention保佑你。
+					mpcallout 4 tell $n 那就麻煩你了！
+					mpcallout 4 mpdel_qmark $i swordcottage_talk
+				else
+					mpcallout 1 mpadd_qmark $i swordcottage_talk
+					mpcallout 1 tell $n 你願意幫忙？那真是太好了！
+					mpcallout 2 tell $n 蛟龍就在山莊後面的湖泊裡。
+					mpcallout 3 tell $n 你殺死蛟龍之後，就來跟我回報吧(report)！
+					mpcallout 3 mpadd_qmark $n swordcottage -1 0 1 0 0 1
+					mpcallout 4 tell $n 願劍神Kention保佑你。
+					mpcallout 4 say 那就麻煩你了！
+					mpcallout 4 mpdel_qmark $i swordcottage_talk
+				endif	
+			endif
+		endif
+	else
+		mpecho $I說著：謝謝您的關心，不過我們可以自己解決。
+	endif
+else
+		mpechoat $n 別人在說話，不要插嘴比較好。
+endif
+"""
+[[mobiles.64104.programs]]
+trigger = "talk_prog"
+argument = "report"
+script = """
+if is_qmark($n) == swordcottage 200003
+		tell $n 真是辛苦您了。
+		tell $n 這就當做給您的報酬吧，小意思，請笑納。
+		mpskillexp $n 10000
+		mpgold $n 100000
+		mpmod_qmark $n swordcottage v1 = 7
+		break
+	else
+		if is_qmark($n) == swordcottage 200006
+			tell $n 原來...看來是我們沒有好好約束自己的長工。
+			tell $n 造成您的困擾真是抱歉，也感謝您圓滿的解決這次的事情
+			tell $n 這是一點小意思，請笑納。
+			mpgold $n 100000
+			mpmod_qmark $n swordcottage v1 = 7
+			break
+		endif
+	say 你要跟我回報什麼？
+	endif
+"""
+[[mobiles.64104.programs]]
+trigger = "talk_prog"
+argument = "p strange"
+script = """
+if is_qmark($n) == swordcottage 200002
+		tell $n 奇怪的地方？你是說蛟龍逗留的原因嗎？
+		tell $n 這麼說來，我的確聽過山莊內長工們的耳語...
+		tell $n 說是其中一個長工偷了蛟龍的夜明珠(light orb)，所以蛟龍才不斷作亂
+		tell $n 但我認為這只是傳言而已。
+		mpmod_qmark $n swordcottage v1 = 4
+	else
+		tell $n 有什麼奇怪的地方嗎？
+	endif
+"""
+[[mobiles.64104.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+yell $n在名劍山莊濫殺無辜阿！
+	if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+"""
+[[mobiles.64104.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if insameroom(sen-swordcottage)
+		say 莊主！有敵人入侵！
+		mpforce sen-swordcottage mpkill $n
+	else
+		$I迅速的逃跑了！
+		mpgoto 64190
+	endif
+"""
+
+[mobiles.64105]
+keywords = "Bie wu chae-swordcottage"
+short_description = "白無缺(Bie wu chae)"
+long_description = "白無缺(Bie wu chae)在這裡若有所思的踱步。\n"
+description = """
+秦徹生一生收了數十名弟子，但是他也曾經說過，最滿意的
+便是白無缺這個大弟子。無缺自小喪失雙親，路過的莊主便
+將他攜回莊內撫養長大，同時傳授與他劍法，根據莊內的謠
+傳，他也是莊主內定的女婿．
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_POISON", "NO_CRAZY"]
+[[mobiles.64105.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.64105.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.64105.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.64105.applies]]
+type = "APPLY_ADAMAGE"
+degree = 40
+[[mobiles.64105.applies]]
+type = "APPLY_AMAGIC"
+degree = 40
+[[mobiles.64105.programs]]
+trigger = "talk_prog"
+argument = "p hair dress"
+script = """
+if is_qmark($n) == castsword
+		mpecho $I露出不太高興的表情。
+		say 鑄劍谷掉了的髮飾都在名劍山莊嗎？
+	else
+		if is_qmark($n) == swordcottage 300001
+			tell $n 師母的髮飾？
+			ponder
+			tell $n 我也不太清楚。如果是師父請您幫的忙，希望您在莊內幫忙找找看。
+			tell $n 萬事拜託了。
+		else
+			tell $n 什麼髮飾？
+		endif
+	endif
+"""
+[[mobiles.64105.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == swordcottage_killer
+	tell $n 請您馬上離開名劍山莊！
+	mpkill $n
+else
+	nod $n
+	tell $n 是客人嗎？歡迎來到名劍山莊，我是莊主的弟子。
+	smile $n
+endif
+"""
+[[mobiles.64105.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+mpecho $I死前用盡全身力氣施展最後一招劍技！
+storm slash
+mpnowait
+storm slash
+mpnowait
+mpecho 劍技一完，$I也跟著倒地不起。
+if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+"""
+[[mobiles.64105.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+wear sword
+yell \u001B[1;31m焱日天劍\u001B[0m 
+flaming
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+"""
+[[mobiles.64105.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+wear sword
+yell \u001B[1;32m劍霸天下\u001B[0m 
+perf emp
+mpnowait
+mpat 5 c 'double heal'
+"""
+
+[mobiles.64106]
+keywords = "sho ji yum-swordcottage"
+short_description = "蕭紫雲(Sho ji yum)"
+long_description = "蕭紫雲(Sho ji yum)在這裡專心練劍。\n"
+description = """
+紫雲自幼就嚮往練武，正巧他的雙親也與秦徹生為故交，便
+將他送至名劍山莊內．雖然身為二弟子多少受了一點委屈，
+不過他仍然潛心練劍，期望有一天能夠跟自己的師兄一較高
+下．
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 46
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_POISON", "NO_CRAZY"]
+[[mobiles.64106.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.64106.applies]]
+type = "REDUCE_DAMAGE"
+degree = 30
+[[mobiles.64106.applies]]
+type = "REDUCE_MAGIC"
+degree = 30
+[[mobiles.64106.applies]]
+type = "APPLY_ADAMAGE"
+degree = 40
+[[mobiles.64106.applies]]
+type = "APPLY_AMAGIC"
+degree = 40
+[[mobiles.64106.programs]]
+trigger = "talk_prog"
+argument = "p hair dress"
+script = """
+if is_qmark($n) == castsword
+		mpecho $I臉色變的很難看。
+		say 你懷疑是我們偷的嗎？別隨便來這誣賴人！
+		mpechoat $n 看他一臉火大的樣子，快點走比較好。
+	else
+		if is_qmark($n) == swordcottage 300001
+			tell $n 師母的？啊啊，我不知道耶。
+			mpecho $I抓了抓頭。
+			tell $n 我對找東西最不擅長了。現在滿腦子想的都是怎麼除去藏劍室的妖魔。
+		else
+			tell $n 什麼髮飾？
+		endif
+	endif
+"""
+[[mobiles.64106.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == swordcottage_killer
+	tell $n 快滾吧！
+	mpkill $n
+else
+	nod $n
+	tell $n 是新的訪客阿，歡迎來到名劍山莊。
+endif
+"""
+[[mobiles.64106.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 cast 'detect inv'
+mpat 5 cast 'detect hidden'
+mpat 5 cast inf
+mpmod_all_qmark $n swordcottage_killer timer +50
+mpecho $I死前用盡全身力氣施展最後一招劍技！
+flaming
+mpnowait
+flaming
+mpnowait
+mpecho 劍技一完，$I也跟著倒地不起。
+	if is_qmark($n) != swordcottage_killer
+		mpadd_all_qmark $n swordcottage_killer 100 0 0 0 0 1
+	else
+		if is_qmark($n) != swordcottage_killer -1
+			mpmod_all_qmark $n swordcottage_killer timer +100
+		endif
+	endif
+"""
+[[mobiles.64106.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+wear sword
+yell \u001B[1;34m流風劍舞\u001B[0m 
+storm
+mpnowait
+earth
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c protection
+"""
+[[mobiles.64106.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+mpat 5 c vivi
+mpat 5 c 'cure blind'
+"""
+[[mobiles.64106.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+wear sword
+yell \u001B[1;36m絢目劍花\u001B[0m 
+mpat 5 c 'cure blind'
+c virtual
+mpnowait
+mpat 5 c 'double heal'
+mpat 5 c 'dispel magic' self
+mpat 5 c sanc
+mpnowait
+"""
+
+[mobiles.64107]
+keywords = "chin-swordcottage in yo"
+short_description = "秦映月(chin in yo)"
+long_description = "秦映月(chin in yo)站在這邊，臉上露出微笑的表情。\n"
+description = """
+蓄著及腰的長髮，映月有著亮麗的外表跟甜美的笑容，身
+為名劍山莊莊主的寶貝女兒，秦映月背負著必須嫁給劍術
+高超劍客的使命，最佳的人選自然是她的兩個師兄，不過
+她本人似乎並不怎麼擔心這個問題。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 38
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "half-elf"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM"]
+        action_programs = [
+            """
+8
+mpgoto self+wake
+say 又是新的一天呢。
+mpecho 映月伸了個懶腰
+mpecho 映月緩緩走出房間。
+mpgoto 64206
+""",
+            """
+19
+say 差不多該休息了呢。
+mpecho 映月緩緩走回自己的房間
+mpgoto 64215
+rest
+""",
+        ]
+[[mobiles.64107.applies]]
+type = "HIT"
+degree = 30000
+[[mobiles.64107.applies]]
+type = "REDUCE_DAMAGE"
+degree = 70
+[[mobiles.64107.applies]]
+type = "REDUCE_MAGIC"
+degree = 70
+[[mobiles.64107.applies]]
+type = "APPLY_ADAMAGE"
+degree = 70
+[[mobiles.64107.applies]]
+type = "APPLY_AMAGIC"
+degree = 70
+
+[objects.64100]
+keywords = "chu tin sword-jdsword"
+short_description = "\u001B[1;34m鑄頂劍\u001B[0m(chu tin sword)"
+long_description = "一柄沉重的巨劍(Sword)被插在這邊的地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "LORE"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["200", "40", "50", "3"]
+weight = 50
+cost = 0
+level_limited = 0
+material = "obsidian"
+[[objects.64100.extra_descriptions]]
+keywords = "chu"
+description = """
+傳聞名匠歐冶子在山上尋找礦材，無意間發現巨大的金屬，於是
+將整塊金屬雕琢打磨成劍，如同玄蘇劍一般劍身漆黑，重量卻較
+玄蘇劍重上十倍，全長共六呎五吋，揮舞這把巨劍能破山裂石，
+後為鑄劍生列為七大名劍之一。
+"""
+[[objects.64100.extra_descriptions]]
+keywords = "tin"
+description = """
+傳聞名匠歐冶子在山上尋找礦材，無意間發現巨大的金屬，於是
+將整塊金屬雕琢打磨成劍，如同玄蘇劍一般劍身漆黑，重量卻較
+玄蘇劍重上十倍，全長共六呎五吋，揮舞這把巨劍能破山裂石，
+後為鑄劍生列為七大名劍之一。
+"""
+[[objects.64100.extra_descriptions]]
+keywords = "sword"
+description = """
+傳聞名匠歐冶子在山上尋找礦材，無意間發現巨大的金屬，於是
+將整塊金屬雕琢打磨成劍，如同玄蘇劍一般劍身漆黑，重量卻較
+玄蘇劍重上十倍，全長共六呎五吋，揮舞這把巨劍能破山裂石，
+後為鑄劍生列為七大名劍之一。
+"""
+[[objects.64100.applies]]
+type = "HITROLL"
+value = -8
+[[objects.64100.applies]]
+type = "DAMROLL"
+value = 20
+[[objects.64100.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+
+[objects.64101]
+keywords = "sword gen shi"
+short_description = "\u001B[1;33m顓頊劍\u001B[0m(Sword of gen shi)"
+long_description = "一把泛著黃色光亮的短劍(Sword)被放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["80", "5", "15", "3"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "dragon bone"
+[[objects.64101.extra_descriptions]]
+keywords = "gen"
+description = """
+傳說顓頊具有斬殺妖魔的力量，歐冶子就根據這項傳說，運用稀有
+的龍骨混合黃銅，製作出了妖魔所畏懼的顓頊劍，並且以龍血在其
+上寫上咒文，將除魔的力量封在劍中。顓頊劍本身細短，彷彿匕首
+一般，但劍身卻隱隱透露出一種壓魄力。
+"""
+[[objects.64101.extra_descriptions]]
+keywords = "shi"
+description = """
+傳說顓頊具有斬殺妖魔的力量，歐冶子就根據這項傳說，運用稀有
+的龍骨混合黃銅，製作出了妖魔所畏懼的顓頊劍，並且以龍血在其
+上寫上咒文，將除魔的力量封在劍中。顓頊劍本身細短，彷彿匕首
+一般，但劍身卻隱隱透露出一種壓魄力。
+"""
+[[objects.64101.extra_descriptions]]
+keywords = "sword"
+description = """
+傳說顓頊具有斬殺妖魔的力量，歐冶子就根據這項傳說，運用稀有
+的龍骨混合黃銅，製作出了妖魔所畏懼的顓頊劍，並且以龍血在其
+上寫上咒文，將除魔的力量封在劍中。顓頊劍本身細短，彷彿匕首
+一般，但劍身卻隱隱透露出一種壓魄力。
+"""
+[[objects.64101.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.64101.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+[[objects.64101.applies]]
+type = "AC"
+value = -10
+[[objects.64101.applies]]
+type = "REDUCE_DAMAGE"
+value = -10
+
+[objects.64102]
+keywords = "sword devil winner"
+short_description = "\u001B[1;37m勝邪劍\u001B[0m(Sword of devil winner)"
+long_description = "一把透著銀光的劍(Sword)被放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "5", "15", "3"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "platinum"
+[[objects.64102.extra_descriptions]]
+keywords = "sword"
+description = """
+歐冶子窮其一生鑄劍，但是他生前常說，生平最滿意的就是這把勝
+邪劍，既然名為勝邪，這把劍也就曾在劍客手上斬妖無數，劍身筆
+挺且長，劍鋒尖銳，似乎可以斬斷所有的東西一般。後來被鑄劍生
+評為七大名劍之一。
+"""
+[[objects.64102.extra_descriptions]]
+keywords = "devil"
+description = """
+歐冶子窮其一生鑄劍，但是他生前常說，生平最滿意的就是這把勝
+邪劍，既然名為勝邪，這把劍也就曾在劍客手上斬妖無數，劍身筆
+挺且長，劍鋒尖銳，似乎可以斬斷所有的東西一般。後來被鑄劍生
+評為七大名劍之一。
+"""
+[[objects.64102.extra_descriptions]]
+keywords = "winner"
+description = """
+歐冶子窮其一生鑄劍，但是他生前常說，生平最滿意的就是這把勝
+邪劍，既然名為勝邪，這把劍也就曾在劍客手上斬妖無數，劍身筆
+挺且長，劍鋒尖銳，似乎可以斬斷所有的東西一般。後來被鑄劍生
+評為七大名劍之一。
+"""
+[[objects.64102.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+[[objects.64102.applies]]
+type = "STR"
+value = 1
+[[objects.64102.applies]]
+type = "HITROLL"
+value = 5
+[[objects.64102.applies]]
+type = "DAMROLL"
+value = 5
+
+[objects.64103]
+keywords = "gen chin sword"
+short_description = "\u001B[1;35m純鈞劍\u001B[0m(Chin gen sword)"
+long_description = "純鈞劍(Chin gen sword)被插在這邊的地上"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "80", "90", "3"]
+weight = 120
+cost = 0
+level_limited = 0
+material = "basalt"
+[[objects.64103.extra_descriptions]]
+keywords = "gen"
+description = """
+嚴格來說，純鈞劍並不是歐冶子打造的，歐冶子只是將山上一塊
+酷似劍型的石塊搬下山後稍微磨鑄而成，因為材料單純，整把劍
+的顏色一體成型，與鑄頂劍非常類似，但較鑄頂劍更重而鈍，後
+來被鑄劍生評為七大名劍之一。
+"""
+[[objects.64103.extra_descriptions]]
+keywords = "chin"
+description = """
+嚴格來說，純鈞劍並不是歐冶子打造的，歐冶子只是將山上一塊
+酷似劍型的石塊搬下山後稍微磨鑄而成，因為材料單純，整把劍
+的顏色一體成型，與鑄頂劍非常類似，但較鑄頂劍更重而鈍，後
+來被鑄劍生評為七大名劍之一。
+"""
+[[objects.64103.extra_descriptions]]
+keywords = "sword"
+description = """
+嚴格來說，純鈞劍並不是歐冶子打造的，歐冶子只是將山上一塊
+酷似劍型的石塊搬下山後稍微磨鑄而成，因為材料單純，整把劍
+的顏色一體成型，與鑄頂劍非常類似，但較鑄頂劍更重而鈍，後
+來被鑄劍生評為七大名劍之一。
+"""
+[[objects.64103.applies]]
+type = "HITROLL"
+value = -10
+[[objects.64103.applies]]
+type = "DAMROLL"
+value = 10
+
+[objects.64104]
+keywords = "sword dragon spring"
+short_description = "龍泉寶劍(Sword of Dragon spring)"
+long_description = "一把刻著龍紋的劍(Sword)被放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["120", "0", "0", "3"]
+weight = 10
+cost = 0
+level_limited = 0
+[[objects.64104.applies]]
+type = "HITROLL"
+value = 5
+[[objects.64104.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.64104.applies]]
+type = "STR"
+value = -1
+
+[objects.64110]
+keywords = "bamboo"
+short_description = "竹子(Bamboo)"
+long_description = "一根竹子(Bamboo)被插在這裡．"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["20", "0", "0", "3"]
+weight = 10
+cost = 20
+level_limited = 0
+material = "wooden"
+[[objects.64110.applies]]
+type = "DEX"
+value = 1
+[[objects.64110.applies]]
+type = "HITROLL"
+value = 2
+[[objects.64110.applies]]
+type = "DAMROLL"
+value = -1
+
+[objects.64111]
+keywords = "Cloth"
+short_description = "布衣(Cloth)"
+long_description = "一件布衣(Cloth)被丟在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "40", "0"]
+weight = 8
+cost = 200
+level_limited = 0
+material = "Cloth"
+[[objects.64111.extra_descriptions]]
+keywords = "Cloth"
+description = """
+一件普通的布衣。
+"""
+[[objects.64111.applies]]
+type = "AC"
+value = -5
+
+[objects.64112]
+keywords = "Silk Cloth"
+short_description = "絲衣(Silk Cloth)"
+long_description = "一件手工製成的絲衣(Silk Cloth)被放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "64", "0"]
+weight = 5
+cost = 500
+level_limited = 0
+material = "Fiber"
+[[objects.64112.extra_descriptions]]
+keywords = "Silk"
+description = """
+這一件衣服的質感相當的好，應該是用高級的蠶絲作成的。
+"""
+[[objects.64112.extra_descriptions]]
+keywords = "Cloth"
+description = """
+這一件衣服的質感相當的好，應該是用高級的蠶絲作成的。
+"""
+[[objects.64112.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+[[objects.64112.applies]]
+type = "AC"
+value = 10
+
+[objects.64113]
+keywords = "Boots"
+short_description = "布靴(Boots)"
+long_description = "一雙布靴(Boots)被放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "80", "0"]
+weight = 5
+cost = 100
+level_limited = 0
+[[objects.64113.extra_descriptions]]
+keywords = "Boots\n一雙很普通的布製靴子。\n"
+description = """
+A
+17 -8
+X Cloth"""
+
+[objects.64114]
+keywords = "pink cloth"
+short_description = "粉紅色外衣(Pink cloth)"
+long_description = "一件粉紅色的女性內衣(Pink Cloth)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "50", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "fiber"
+[[objects.64114.applies]]
+type = "SEX"
+value = 2
+
+[objects.64115]
+keywords = "underwear-white"
+short_description = "純白色內衣(Underwear)"
+long_description = "一件純白色的女性內衣(underwear)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "50", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "fiber"
+[[objects.64115.applies]]
+type = "AC"
+value = 30
+[[objects.64115.applies]]
+type = "DODGE"
+value = -20
+
+[objects.64116]
+keywords = "cloth"
+short_description = "馬褂(cloth)"
+long_description = "一件黑色的馬褂(Cloth)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "70", "0"]
+weight = 7
+cost = 0
+level_limited = 0
+material = "fiber"
+[[objects.64116.applies]]
+type = "AC"
+value = -20
+
+[objects.64117]
+keywords = "Long Gwon"
+short_description = "長袍(Long Gwon)"
+long_description = "一件長袍(Long Gwon)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["PERSONAL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "80", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "Fiber"
+[[objects.64117.extra_descriptions]]
+keywords = "long"
+description = """
+一件手工精美的男用長袍。
+"""
+[[objects.64117.extra_descriptions]]
+keywords = "Gwon"
+description = """
+一件手工精美的男用長袍。
+"""
+
+[objects.64118]
+keywords = "Clean Forst Sword"
+short_description = "青霜劍(Clean Forst Sword)"
+long_description = "一把相當銳利的劍(Sword)被放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["120", "0", "0", "3"]
+weight = 10
+cost = 2000
+level_limited = 0
+material = "Emerald"
+[[objects.64118.extra_descriptions]]
+keywords = "Clean"
+description = """
+老鐵匠運用山上的霜水所打造而成的劍。
+"""
+[[objects.64118.extra_descriptions]]
+keywords = "Forst"
+description = """
+老鐵匠運用山上的霜水所打造而成的劍。
+"""
+[[objects.64118.extra_descriptions]]
+keywords = "Sword"
+description = """
+老鐵匠運用山上的霜水所打造而成的劍。
+"""
+[[objects.64118.applies]]
+type = "HITROLL"
+value = 6
+[[objects.64118.applies]]
+type = "DAMROLL"
+value = 8
+[[objects.64118.applies]]
+type = "INT"
+value = 1
+
+[objects.64119]
+keywords = "wood sword"
+short_description = "木劍(Wood Sword)"
+long_description = "一把木劍(Wood Sword)被放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["50", "0", "0", "3"]
+weight = 3
+cost = 200
+level_limited = 0
+level = 1
+material = "wood"
+[[objects.64119.applies]]
+type = "STR"
+value = 1
+
+[objects.64120]
+keywords = "iron sword"
+short_description = "鐵劍(Iron Sword)"
+long_description = "一把鐵劍(Iron Sword)被放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["70", "0", "0", "3"]
+weight = 10
+cost = 2000
+level_limited = 0
+material = "iron"
+[[objects.64120.applies]]
+type = "HITROLL"
+value = 3
+[[objects.64120.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.64121]
+keywords = "Long Gwon"
+short_description = "黑色長袍(Long Gwon)"
+long_description = "一件黑色長袍(Long Gwon)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["PERSONAL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "80", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "Fiber"
+[[objects.64121.extra_descriptions]]
+keywords = "long"
+description = """
+一件手工精美的男用黑色長袍。
+"""
+[[objects.64121.extra_descriptions]]
+keywords = "Gwon"
+description = """
+一件手工精美的男用黑色長袍。
+"""
+
+[objects.64130]
+keywords = "moon art glass"
+short_description = "\u001B[1;36m琉璃月飾\u001B[0m(Art glass of moon)"
+long_description = "一個上弦月外型的飾品(Art glass)被放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_NECK", "HOLD"]
+values = ["0", "0", "30", "0"]
+weight = 1
+cost = 30000
+level_limited = 0
+material = "crystal"
+[[objects.64130.extra_descriptions]]
+keywords = "moon"
+description = """
+這是一個用琉璃製成的項鍊，琉璃的色彩讓整
+個項鍊都散發出不同的光亮。
+"""
+[[objects.64130.extra_descriptions]]
+keywords = "art"
+description = """
+這是一個用琉璃製成的項鍊，琉璃的色彩讓整
+個項鍊都散發出不同的光亮。
+"""
+[[objects.64130.extra_descriptions]]
+keywords = "glass"
+description = """
+這是一個用琉璃製成的項鍊，琉璃的色彩讓整
+個項鍊都散發出不同的光亮。
+"""
+[[objects.64130.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.64130.applies]]
+type = "APPLY_AMAGIC"
+value = 7
+[[objects.64130.applies]]
+type = "INT"
+value = 1
+[[objects.64130.applies]]
+type = "CON"
+value = -1
+
+[objects.64131]
+keywords = "Water bracer"
+short_description = "在水一方(Water bracer)"
+long_description = "一個淺藍色的護腕(bracer)被放在這。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "BLESS"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "60", "0"]
+weight = 5
+cost = 20000
+level_limited = 0
+material = "ice"
+[[objects.64131.applies]]
+type = "STR"
+value = 1
+[[objects.64131.applies]]
+type = "DAMROLL"
+value = 3
+[[objects.64131.applies]]
+type = "CON"
+value = -2
+
+[objects.64132]
+keywords = "chaio scale"
+short_description = "蛟龍鱗(Chaio Scale)"
+long_description = "一塊巨大的蛟龍鱗片(Chaio Scale)被放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "60", "0"]
+weight = 40
+cost = 20000
+level_limited = 0
+material = "dragon scale"
+[[objects.64132.applies]]
+type = "CON"
+value = 3
+[[objects.64132.applies]]
+type = "DEX"
+value = -1
+[[objects.64132.applies]]
+type = "AC"
+value = -30
+[[objects.64132.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+
+[objects.64133]
+keywords = "chaio tooth"
+short_description = "蛟龍牙(Chaio Tooth)"
+long_description = "一根巨大的蛟龍牙齒(Chaio Tooth)被擺在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["90", "26", "30", "2"]
+weight = 30
+cost = 30000
+level_limited = 0
+material = "bone"
+[[objects.64133.applies]]
+type = "DAMROLL"
+value = 12
+[[objects.64133.applies]]
+type = "HITROLL"
+value = -3
+
+[objects.64134]
+keywords = "light orb"
+short_description = "夜明珠(Light orb)"
+long_description = "一顆珍貴的夜明珠(Light orb)被放在這邊。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 1
+cost = 4000000
+level_limited = 0
+[[objects.64134.applies]]
+type = "WIS"
+value = 1
+
+[objects.64135]
+keywords = "hair dress"
+short_description = "髮飾(Hair dress)"
+long_description = "一個暗紅色的髮飾(Hair dress)被放在這邊。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 300
+level_limited = 0
+material = "ebony"
+[[objects.64135.applies]]
+type = "WIS"
+value = 1
+[[objects.64135.applies]]
+type = "INT"
+value = 1
+
+[objects.64136]
+keywords = "south mountain bamboo"
+short_description = "南山之竹(South Mountain Bamboo)"
+long_description = "一隻碧綠晶瑩的竹子(Bamboo)被放在這裡"
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["10", "5", "75", "10"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "jade"
+[[objects.64136.extra_descriptions]]
+keywords = "south"
+description = """
+這是一根用玉雕刻而成的竹子，相當的逼真
+"""
+[[objects.64136.extra_descriptions]]
+keywords = "mountain"
+description = """
+這是一根用玉雕刻而成的竹子，相當的逼真
+"""
+[[objects.64136.extra_descriptions]]
+keywords = "bamboo"
+description = """
+這是一根用玉雕刻而成的竹子，相當的逼真
+"""
+[[objects.64136.applies]]
+type = "HITROLL"
+value = 1
+[[objects.64136.applies]]
+type = "APPLY_AMAGIC"
+value = 3
+
+[objects.64137]
+keywords = "leaf leggings"
+short_description = "薄葉西殘(Leaf Leggings)"
+long_description = "一雙枯黃色的脛甲(leggings)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "50", "0"]
+weight = 7
+cost = 0
+level_limited = 0
+material = "wood"
+[[objects.64137.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+[[objects.64137.applies]]
+type = "DEX"
+value = 1
+[[objects.64137.applies]]
+type = "REDUCE_DAMAGE"
+value = -5
+[[objects.64137.applies]]
+type = "REDUCE_MAGIC"
+value = -5
+
+[objects.64138]
+keywords = "moon light gloves"
+short_description = "月明松下(Moon Light Gloves)"
+long_description = "一雙光亮的手套(gloves)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["100", "0", "40", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "feather"
+[[objects.64138.applies]]
+type = "HITROLL"
+value = 2
+[[objects.64138.applies]]
+type = "APPLY_AMAGIC"
+value = 6
+
+[objects.64139]
+keywords = "drunken moon silver bell bow"
+short_description = "\u001B[1;37m殤月銀鈴\u001B[0m(Drunken moon - Silver bell bow)"
+long_description = "一把繫著銀色鈴鐺的長弓被擱在這邊"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "NODROP", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "HOLY"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["70", "0", "0", "14"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.64139.extra_descriptions]]
+keywords = "drunken"
+description = """
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+"""
+[[objects.64139.extra_descriptions]]
+keywords = "moon"
+description = """
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+"""
+[[objects.64139.extra_descriptions]]
+keywords = "silver"
+description = """
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+"""
+[[objects.64139.extra_descriptions]]
+keywords = "bell"
+description = """
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+"""
+[[objects.64139.extra_descriptions]]
+keywords = "bow"
+description = """
+這把長弓的末端用絲絹繫著兩顆銀色的鈴鐺，當你拿起弓的時候，
+鈴鐺聲清脆的響起，相當悅耳。
+"""
+[[objects.64139.applies]]
+type = "HITROLL"
+value = 12
+[[objects.64139.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+[[objects.64139.applies]]
+type = "SAVING_ELEMENT"
+value = -2
+[[objects.64139.applies]]
+type = "REDUCE_DAMAGE"
+value = -7
+[[objects.64139.applies]]
+type = "REDUCE_MAGIC"
+value = -7
+
+[objects.64140]
+keywords = "jade rohan"
+short_description = "玉羅漢(Jade Rohan)"
+long_description = "一個雕工精湛的玉羅漢(Jade Rohan)被放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_NECK", "HOLD"]
+values = ["0", "0", "30", "0"]
+weight = 1
+cost = 30000
+level_limited = 0
+material = "jade"
+[[objects.64140.extra_descriptions]]
+keywords = "jade"
+description = """
+這是柳敬明(Liu Gin-ming)託付給你的東西，
+是柳雲風(Liu Yun-fon)的遺物。
+"""
+[[objects.64140.extra_descriptions]]
+keywords = "rohan"
+description = """
+這是柳敬明(Liu Gin-ming)託付給你的東西，
+是柳雲風(Liu Yun-fon)的遺物。
+"""
+[[objects.64140.applies]]
+type = "HITROLL"
+value = 2
+[[objects.64140.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+
+[objects.64160]
+keywords = "beef"
+short_description = "牛肉(Beef)"
+long_description = "一塊冷掉的牛肉被放在這邊。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 300
+level_limited = 0
+material = "flesh"
+
+[objects.64161]
+keywords = "bacon"
+short_description = "醃肉(Bacon)"
+long_description = "一塊醃好的肉(Bacon)被放在這邊。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 300
+level_limited = 0
+material = "flesh"
+
+[objects.64162]
+keywords = "cold rice"
+short_description = "冷飯(Cold rice)"
+long_description = "一碗冷飯(Cold Rice)被擺在這邊。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 300
+level_limited = 0
+material = "food"
+
+[objects.64163]
+keywords = "firewood"
+short_description = "木柴(Firewood)"
+long_description = "一捆木柴(Firewood)被放在這邊。"
+action_description = ""
+item_type = "ARROW"
+extra_flags = []
+wear_flags = ["TAKE", "ARROW"]
+values = ["30", "0", "0", "0"]
+weight = 30
+cost = 150
+level_limited = 0
+level = 1
+material = "wood"
+[[objects.64163.applies]]
+type = "DEX"
+value = -1
+[[objects.64163.applies]]
+type = "STR"
+value = 1
+
+[objects.64164]
+keywords = "zombie head"
+short_description = "僵屍頭(Zombie head)"
+long_description = "一顆僵屍頭(Zombie head)被扔在這邊。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "fresh"
+
+[objects.64180]
+keywords = "pluto remind book"
+short_description = "普魯多的提醒(Pluto's remind)"
+long_description = "一本光亮的書(Book)被放在這裡"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["999", "80", "100", "3"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+
+[objects.64181]
+keywords = "amenda romantic necklace"
+short_description = "風中傳奇的浪漫(Amenda's romantic)"
+long_description = "一個閃耀著紅色光芒的項鍊(necklace)被放在這"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+
+[objects.64182]
+keywords = "zcecil support necklace"
+short_description = "影子的暗中支持(Zcecil's support)"
+long_description = "一個黑色的項鍊(necklace)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+
+[objects.64183]
+keywords = "reticent angry cape"
+short_description = "織夢者的憤怒(reticent's angry)"
+long_description = "一件大紅色的斗篷(cape)在這裡發出異樣的壓迫感"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64183.applies]]
+type = "DAMROLL"
+value = 500
+[[objects.64183.applies]]
+type = "APPLY_ADAMAGE"
+value = 500
+
+[objects.64184]
+keywords = "Faraway plan ring"
+short_description = "法拉威的計畫(Faraway's plan)"
+long_description = "一個深藍色的戒指(Ring)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64184.applies]]
+type = "STR"
+value = 10
+[[objects.64184.applies]]
+type = "DEX"
+value = 10
+
+[objects.64185]
+keywords = "adol yell bracer"
+short_description = "亞特魯的呼喊(Adol's yell)"
+long_description = "一個像是在吶喊的手環放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64185.applies]]
+type = "POWER_POTENTIAL"
+value = 200
+
+[objects.64186]
+keywords = "feena laugh bracer"
+short_description = "菲娜的嘲笑(Feena's laugh)"
+long_description = "一個刻有笑容的手環(bracer)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64186.applies]]
+type = "POWER_POTENTIAL"
+value = 500
+
+[objects.64187]
+keywords = "jye hard work gloves"
+short_description = "傑伊的苦工(Jye's hard work)"
+long_description = "一對異常靈敏的手套(gloves)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64187.applies]]
+type = "HITROLL"
+value = 500
+
+[objects.64188]
+keywords = "xian big dog head"
+short_description = "席安的大狗頭(Xian's big dog head)"
+long_description = "一個大型的狗頭(Dog head)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64188.applies]]
+type = "AC"
+value = -500
+
+[objects.64189]
+keywords = "zeel adjudicate light"
+short_description = "方提修的審判(Zeel's adjudicate)"
+long_description = "一陣強烈的光芒(light)漂浮在這邊"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64189.applies]]
+type = "SAVING_SPELL"
+value = -500
+
+[objects.64190]
+keywords = "neversay pen"
+short_description = "子不語的筆(Neversay's pen)"
+long_description = "一隻筆(pen)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64190.applies]]
+type = "INT"
+value = 10
+[[objects.64190.applies]]
+type = "WIS"
+value = 10
+
+[objects.64191]
+keywords = "whisperwind saying ring"
+short_description = "風鈴的低語(Whisperwind's saying)"
+long_description = "一個似乎在訴說什麼的戒指(ring)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64191.applies]]
+type = "STR"
+value = 10
+[[objects.64191.applies]]
+type = "DEX"
+value = 10
+
+[objects.64192]
+keywords = "kention thinking arm"
+short_description = "三等生的思考(kention's thinking)"
+long_description = "一個深藍色的護臂(arm)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+[[objects.64192.applies]]
+type = "POWER_POTENTIAL"
+value = 500
+
+[objects.64193]
+keywords = "amethyst fantasy shoes"
+short_description = "紫水晶的夢幻(Amethyst's fantasy)"
+long_description = "一雙接近透明的紫色鞋子(Shoes)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "amethyst"
+[[objects.64193.applies]]
+type = "DODGE"
+value = -1000
+
+[objects.64194]
+keywords = "snarl  belt"
+short_description = "史納爾的愚笨(Snarl's foolish)"
+long_description = "一環黑色狀的帶子(belt)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "aura"
+
+[objects.64195]
+keywords = "get gallant leggings"
+short_description = "蓋特的風流(Get's gallant)"
+long_description = "一雙鮮豔的紅色脛甲(leggings)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "ruby"
+
+[objects.64196]
+keywords = "slay paper"
+short_description = "史雷的文稿(Slay's paper)"
+long_description = "一份文稿(paper)被放在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "paper"
+
+[objects.64197]
+keywords = "coconet protect armor"
+short_description = "椰子神的守護(Coconet's protect)"
+long_description = "一個堅固而後重的圓殼(Armor)被丟在這邊"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "99", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "obsidian"
+
+[objects.64198]
+keywords = "asla create arrow"
+short_description = "阿斯拉的創造(Asla's create)"
+long_description = "一把尖銳的箭矢(Arrow)被放在這裡"
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["10", "5", "75", "10"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+
+[rooms.64101]
+name = "山路入口"
+description = """
+你踏上了通往名劍山莊的曲折山路，陡峭的階梯十分高聳，
+以往要拜訪名劍山莊的客人都必須經過這條道路－當然你也不例
+外。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64101.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64102
+[rooms.64101.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 11151
+
+[rooms.64102]
+name = "山路"
+description = """
+你踏上了通往名劍山莊的曲折山路，陡峭的階梯十分高聳，
+路旁的花草長的十分茂密，以往要拜訪名劍山莊的客人都必須經
+過這條道路－當然你也不例外。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64102.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64103
+[rooms.64102.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64101
+
+[rooms.64103]
+name = "山路"
+description = """
+你踏上了通往名劍山莊的曲折山路，陡峭的階梯十分高聳，
+雖然你覺得走了一段時間，可是名劍山莊似乎還很遠。以往要拜
+訪名劍山莊的客人都必須經過這條道路－當然你也不例外。東方
+有一座高聳的土堆，上面有一些古老的腳印，不知道是哪邊的小
+孩爬上去過玩。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64103.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64102
+[rooms.64103.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64104
+[[rooms.64103.programs]]
+trigger = "room_command"
+argument = "climb up"
+script = """
+if is_qmark($n) == jd_liu 100002
+	or if is_qmark($n) == jd_liu 100006
+		echoat $n 彷彿有人在後面推你一把一般，你輕鬆的爬過了土堆
+		echoaround $n $n好像被人給丟過去一般，消失在土堆的另外一邊！
+		transfer $n 64246
+	else
+    echoat $n 你嘗試爬上這座土堆，可是卻摔了下來
+    echoaround $n $n嘗試爬上土堆，可是卻摔了下來
+endif
+"""
+
+[rooms.64104]
+name = "半山腰"
+description = """
+這裡是通往名劍山莊的曲折山路，陡峭的階梯十分高聳，四
+周的樹林也越來越茂密，雖然你覺得走了一段時間，可是名劍山
+莊似乎還很遠。通路通往東方和西方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64104.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64103
+[rooms.64104.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64105
+
+[rooms.64105]
+name = "半山腰"
+description = """
+這裡是通往名劍山莊的曲折山路，陡峭的階梯十分高聳，四
+周的樹林也越來越茂密雖然你覺得走了一段時間，可是名劍山莊
+似乎還很遠。通路通往東方和北方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64105.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64104
+[rooms.64105.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64106
+
+[rooms.64106]
+name = "山路半途"
+description = """
+這裡是通往名劍山莊的路途，你站在山腰間的一小塊空地上
+，雖然你覺得走了一段時間，可是名劍山莊似乎還很遠。前方的
+道路通往北方跟南方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64106.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64107
+[rooms.64106.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64105
+
+[rooms.64107]
+name = "半山腰"
+description = """
+這裡是通往名劍山莊的曲折山路，陡峭的階梯十分高聳，雖
+然你覺得走了一段時間，可是名劍山莊似乎還很遠。道路通往東
+方和南方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64107.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64108
+[rooms.64107.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64106
+
+[rooms.64108]
+name = "接近山頂的路"
+description = """
+你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。接下來的路通往西方和
+南方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64108.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64109
+[rooms.64108.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64107
+
+[rooms.64109]
+name = "接近山頂的路"
+description = """
+你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。山頂的路通往北方和南
+方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64109.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64108
+[rooms.64109.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64110
+
+[rooms.64110]
+name = "接近山頂的路"
+description = """
+你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。雖然視野慢慢開闊起來
+，不過不知道你還有沒有心情欣賞？
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64110.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64109
+[rooms.64110.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64111
+
+[rooms.64111]
+name = "接近山頂的路"
+description = """
+你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。雖然視野慢慢開闊起來
+，不過不知道你還有沒有心情欣賞？通路通往東方和西方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64111.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64110
+[rooms.64111.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64112
+
+[rooms.64112]
+name = "山頂"
+description = """
+你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。附近的登山者也越來越
+少，你開始懷疑山莊的食物到底是請誰背上去的？
+
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64112.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64111
+[rooms.64112.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64113
+
+[rooms.64113]
+name = "山頂"
+description = """
+你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。附近的登山者也越來越
+少，你開始懷疑山莊的食物到底是請誰背上去的？通路通往北方
+和南方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64113.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64114
+[rooms.64113.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64112
+
+[rooms.64114]
+name = "山頂"
+description = """
+你踏上了通往名劍山莊的曲折山路，山路越來越陡峭，自己
+的步伐似乎也有變慢的趨勢。據說這條山路便是考驗進入名劍山
+莊的客人是否具有足夠的能力而設置的。附近的登山者也越來越
+少，你開始懷疑山莊的食物到底是請誰背上去的？通路通往東方
+和南方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64114.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64115
+[rooms.64114.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64113
+
+[rooms.64115]
+name = "山頂"
+description = """
+你踏上了通往名劍山莊的曲折山路，山莊就在眼前了，快加
+把勁登上去吧。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64115.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64116
+[rooms.64115.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64114
+
+[rooms.64116]
+name = "山頂"
+description = """
+你踏上了通往名劍山莊的曲折山路，山莊就在眼前了，快加
+把勁登上去吧。通路通往北方和南方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64116.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64115
+[rooms.64116.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64117
+
+[rooms.64117]
+name = "山巔"
+description = """
+快接近頂端的風景相當的迷人，四周都是高聳的綠樹以及野
+花，不過往前看還可以，如果要往下看，先確定自己有足夠的膽
+量吧．
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64117.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64116
+[rooms.64117.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64118
+
+[rooms.64118]
+name = "山巔"
+description = """
+快接近頂端的風景相當的迷人，四周都是高聳的綠樹以及野
+花，不過往前看還可以，如果要往下看，先確定自己有足夠的膽
+量吧．通路通往東方和西方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64118.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64117
+[rooms.64118.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64119
+
+[rooms.64119]
+name = "山巔"
+description = """
+快接近頂端的風景相當的迷人，四周都是高聳的綠樹以及野
+花，不過往前看還可以，如果要往下看，先確定自己有足夠的膽
+量吧．通路通往東方和北方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64119.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64118
+[rooms.64119.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64120
+
+[rooms.64120]
+name = "山巔"
+description = """
+快接近頂端的風景相當的迷人，四周變成耐寒的松樹以及綠
+草，地上似乎還有冰雪初融的痕跡．
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64120.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64121
+[rooms.64120.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64119
+
+[rooms.64121]
+name = "山巔"
+description = """
+快接近頂端的風景相當的迷人，四周變成耐寒的松樹以及綠
+草，地上似乎還有冰雪初融的痕跡．山莊的大門在北方。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64121.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64122
+[rooms.64121.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64120
+
+[rooms.64122]
+name = "名劍山莊入口"
+description = """
+爬上名劍山莊之後，你身後的視野瞬間開闊了起來，從這個
+地方還能夠遙望清河鎮呢。你面前高達三丈多的巨大牌坊，上面
+清清楚楚寫著四個大字－
+
+		名	劍	山	莊
+		
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64122.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64121
+[[rooms.64122.resets.mobiles]]
+vnum = 64101
+limit = 1
+[[rooms.64122.resets.mobiles.equipment]]
+vnum = 64116
+wear_loc = "BODY"
+
+[rooms.64123]
+name = "走道"
+description = """
+一條單純的走廊，南邊通往一個房間，東邊則繼續延伸。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64123.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64127
+[rooms.64123.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64124
+
+[rooms.64124]
+name = "僕人房"
+description = """
+這邊是名劍山莊的僕人所居住的房間，裡面收拾的相當整齊
+，不過山莊的僕人收入大概不錯，幾件衣服都是用相當高等的料
+子做成的。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64124.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64123
+[rooms.64124.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64125
+
+[rooms.64125]
+name = "僕人房"
+description = """
+這邊是名劍山莊的僕人所居住的房間，裡面收拾的相當整齊
+，看起來大概也沒什麼特別的地方。南邊通往一間小型的房間。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64125.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64124
+[rooms.64125.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64126
+
+[rooms.64126]
+name = "僕人房倉庫"
+description = """
+這邊是名劍山莊的僕人所使用的倉庫，裡面收拾的相當整齊
+擺放著一些日常的雜物，不過還是沒什麼特別的地方。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64126.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64125
+
+[rooms.64127]
+name = "走道"
+description = """
+一條單純的走廊，南邊通往一個房間，西邊和東邊則繼續延
+伸。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64127.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64131
+[rooms.64127.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64128
+[rooms.64127.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64123
+[[rooms.64127.resets.mobiles]]
+vnum = 64110
+limit = 2
+[[rooms.64127.resets.mobiles.equipment]]
+vnum = 64111
+wear_loc = "BODY"
+[[rooms.64127.resets.mobiles.equipment]]
+vnum = 64113
+wear_loc = "FEET"
+
+[rooms.64128]
+name = "廚師的房間"
+description = """
+這邊是名劍山莊的僕人所居住的房間，不過從這裡面擺放的
+廚具來看，這邊應該是廚師們的房間吧。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64128.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64127
+[rooms.64128.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64129
+
+[rooms.64129]
+name = "廚師的房間"
+description = """
+廚師有偷吃的習慣嗎？這邊的桌子都有點油膩，地板上還可
+以看到幾根吃剩的骨頭..。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64129.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64128
+[rooms.64129.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64130
+
+[rooms.64130]
+name = "廚師的倉庫"
+description = """
+看來就算糧倉空了，這群廚師也不會餓到，因為這間倉庫堆
+滿了個是各樣的口糧還有酒，真是有些糟糕的廚師....
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64130.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64129
+
+[rooms.64131]
+name = "通道"
+description = """
+這裡附近都是房間，專門為了居住在名劍山莊內的弟子以及
+僕人所建造的，四周也擺放了一些花盆作為擺飾，感覺起來相當
+的典雅。西邊通往僕人房，東邊繼續通往走道，南邊可以前往弟
+子的房間。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64131.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64135
+[rooms.64131.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64132
+[rooms.64131.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64127
+
+[rooms.64132]
+name = "弟子房間"
+description = """
+這邊是名劍山莊的學徒跟弟子所居住的房間，因為鄰近僕人
+房，所以也收拾的相當乾淨。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64132.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64131
+[rooms.64132.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64133
+[[rooms.64132.resets.mobiles]]
+vnum = 64110
+limit = 2
+[[rooms.64132.resets.mobiles.equipment]]
+vnum = 64111
+wear_loc = "BODY"
+[[rooms.64132.resets.mobiles.equipment]]
+vnum = 64113
+wear_loc = "FEET"
+
+[rooms.64133]
+name = "弟子房間"
+description = """
+這邊是名劍山莊的學徒跟弟子所居住的房間，因為鄰近僕人
+房，所以也收拾的相當乾淨。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64133.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64132
+[rooms.64133.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64134
+
+[rooms.64134]
+name = "倉庫"
+description = """
+這邊是名劍山莊的學徒跟弟子所使用的倉庫，裡面放著許許
+多多的道具跟材料，當然還有一些不會腐壞的食材。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64134.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64133
+[[rooms.64134.resets.mobiles]]
+vnum = 64108
+limit = 1
+[[rooms.64134.resets.mobiles.equipment]]
+vnum = 64111
+wear_loc = "BODY"
+
+[rooms.64135]
+name = "通道"
+description = """
+這裡附近都是房間，專門為了居住在名劍山莊內的弟子以及
+僕人所建造的，四周也擺放了一些花盆作為擺飾，感覺起來相當
+的典雅。西邊是通道，東邊也繼續通往走道，南邊可以前往弟子
+的房間。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64135.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64139
+[rooms.64135.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64136
+[rooms.64135.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64131
+
+[rooms.64136]
+name = "客房"
+description = """
+這邊是名劍山莊的客人所使用的房間，名劍山莊在外聲名
+遠播，有不少訪客前來拜訪，有時候莊主也會請他們留宿一晚
+，所以這幾間客房也常常被使用。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64136.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64135
+[rooms.64136.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64137
+
+[rooms.64137]
+name = "客房"
+description = """
+這邊是名劍山莊的客人所使用的房間，名劍山莊在外聲名
+遠播，有不少訪客前來拜訪，有時候莊主也會請他們留宿一晚
+，所以這幾間客房也常常被使用。
+"""
+flags = ["INDOORS", "SAFE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64137.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64136
+[rooms.64137.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64138
+[[rooms.64137.resets.mobiles]]
+vnum = 64138
+limit = 1
+
+[rooms.64138]
+name = "倉庫"
+description = """
+這裡放著棉被和枕頭，還有幾張床單，是拿來替換的。不過
+有些床單已經發霉了，大概是僕人沒有注意到吧。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64138.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64137
+
+[rooms.64139]
+name = "通道"
+description = """
+這裡附近都是房間，專門為了居住在名劍山莊內的弟子以及
+僕人所建造的，四周也擺放了一些花盆作為擺飾，感覺起來相當
+的典雅。西邊是通道，南邊可以回到走廊。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64139.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64140
+[rooms.64139.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64135
+
+[rooms.64140]
+name = "走廊"
+description = """
+這裡是通往房間的走廊，走廊的外圍還種了相當多的花草
+作為景觀裝飾。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64140.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64139
+[rooms.64140.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64141
+
+[rooms.64141]
+name = "走廊"
+description = """
+這裡是通往房間的走廊，走廊的外圍還種了相當多的花草
+作為景觀裝飾。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64141.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64144
+[rooms.64141.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64140
+[rooms.64141.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64142
+
+[rooms.64142]
+name = "迴廊"
+description = """
+這裡只是一個迴廊，無法通往任何地方。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64142.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64141
+
+[rooms.64143]
+name = "廣場"
+description = """
+你站在名劍山莊廣場的西北角，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64143.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64146
+[rooms.64143.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64144
+
+[rooms.64144]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的西方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。西方可以通往一棟較大的建築物。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64144.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64147
+[rooms.64144.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64143
+[rooms.64144.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64145
+[rooms.64144.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64141
+[[rooms.64144.resets.mobiles]]
+vnum = 64110
+limit = 2
+[[rooms.64144.resets.mobiles.equipment]]
+vnum = 64111
+wear_loc = "BODY"
+[[rooms.64144.resets.mobiles.equipment]]
+vnum = 64113
+wear_loc = "FEET"
+
+[rooms.64145]
+name = "廣場"
+description = """
+你站在名劍山莊廣場的西南角，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64145.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64148
+[rooms.64145.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64144
+
+[rooms.64146]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64146.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64149
+[rooms.64146.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64147
+[rooms.64146.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64143
+
+[rooms.64147]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64147.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64150
+[rooms.64147.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64146
+[rooms.64147.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64148
+[rooms.64147.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64144
+
+[rooms.64148]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64148.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64151
+[rooms.64148.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64147
+[rooms.64148.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64145
+
+[rooms.64149]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的北方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。北方較遠處有一棟巨大的建築物。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64149.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64152
+[rooms.64149.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64193
+[rooms.64149.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64150
+[rooms.64149.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64146
+
+[rooms.64150]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64150.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64153
+[rooms.64150.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64149
+[rooms.64150.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64151
+[rooms.64150.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64147
+
+[rooms.64151]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的南方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。南方是你過來的入口。
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64151.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64154
+[rooms.64151.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64150
+[rooms.64151.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64122
+[rooms.64151.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64148
+
+[rooms.64152]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64152.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64155
+[rooms.64152.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64153
+[rooms.64152.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64149
+
+[rooms.64153]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64153.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64156
+[rooms.64153.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64152
+[rooms.64153.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64154
+[rooms.64153.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64150
+
+[rooms.64154]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的中央，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64154.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64157
+[rooms.64154.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64153
+[rooms.64154.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64151
+
+[rooms.64155]
+name = "廣場"
+description = """
+你站在名劍山莊廣場的東北方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64155.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64156
+[rooms.64155.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64152
+[[rooms.64155.resets.mobiles]]
+vnum = 64135
+limit = 3
+[[rooms.64155.resets.mobiles.equipment]]
+vnum = 64120
+wear_loc = "WIELD"
+
+[rooms.64156]
+name = "廣場"
+description = """
+你正站在名劍山莊廣場的東方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。東方可以通往一棟較大的建築物。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64156.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64160
+[rooms.64156.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64155
+[rooms.64156.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64157
+[rooms.64156.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64153
+
+[rooms.64157]
+name = "廣場"
+description = """
+你站在名劍山莊廣場的東南方，這裡相當的遼闊，平常除
+了一些典禮聚會，是不會有什麼人在這邊聚集的，有的只是三
+三兩兩的弟子跟訪客而已。東方可以通往一棟較大的建築物。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64157.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64156
+[rooms.64157.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64154
+[[rooms.64157.resets.mobiles]]
+vnum = 64133
+limit = 4
+[[rooms.64157.resets.mobiles.equipment]]
+vnum = 64120
+wear_loc = "WIELD"
+
+[rooms.64158]
+name = "練習場"
+description = """
+這裡是名劍山莊的練習場西南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "PK"]
+sector = "INSIDE"
+[rooms.64158.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64162
+[rooms.64158.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64159
+
+[rooms.64159]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的西方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64159.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64163
+[rooms.64159.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64158
+[rooms.64159.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64160
+
+[rooms.64160]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的西方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64160.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64164
+[rooms.64160.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64159
+[rooms.64160.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64161
+[rooms.64160.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64156
+
+[rooms.64161]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的西南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64161.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64165
+[rooms.64161.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64160
+
+[rooms.64162]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的正北方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64162.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64166
+[rooms.64162.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64163
+[rooms.64162.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64158
+
+[rooms.64163]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的正中央，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64163.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64167
+[rooms.64163.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64162
+[rooms.64163.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64164
+[rooms.64163.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64159
+
+[rooms.64164]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的正中央，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64164.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64168
+[rooms.64164.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64163
+[rooms.64164.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64165
+[rooms.64164.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64160
+
+[rooms.64165]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的正南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64165.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64169
+[rooms.64165.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64164
+[rooms.64165.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64161
+
+[rooms.64166]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的東北方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。東方有一扇門。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64166.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64170
+[rooms.64166.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64167
+[rooms.64166.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64162
+
+[rooms.64167]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的東方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64167.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64166
+[rooms.64167.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64168
+[rooms.64167.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64163
+[[rooms.64167.resets.mobiles]]
+vnum = 64109
+limit = 3
+[[rooms.64167.resets.mobiles.equipment]]
+vnum = 64120
+wear_loc = "WIELD"
+[[rooms.64167.resets.mobiles.equipment]]
+vnum = 64111
+wear_loc = "BODY"
+
+[rooms.64168]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的東方，這個練習場主要是提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64168.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64167
+[rooms.64168.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64169
+[rooms.64168.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64164
+
+[rooms.64169]
+name = "練習場"
+description = """
+這裡是名劍山莊練習場的東南方，這個練習場主要提供山
+莊的弟子以及希望過招的訪客使用，莊主本人也常常在這個地
+方指導自己的弟子。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.64169.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64168
+[rooms.64169.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64165
+[[rooms.64169.resets.mobiles]]
+vnum = 64109
+limit = 3
+[[rooms.64169.resets.mobiles.equipment]]
+vnum = 64120
+wear_loc = "WIELD"
+[[rooms.64169.resets.mobiles.equipment]]
+vnum = 64111
+wear_loc = "BODY"
+
+[rooms.64170]
+name = "柴房"
+description = """
+這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "PK"]
+sector = "CITY"
+[rooms.64170.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64174
+[rooms.64170.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64171
+[rooms.64170.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64166
+
+[rooms.64171]
+name = "柴房"
+description = """
+這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64171.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64175
+[rooms.64171.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64170
+
+[rooms.64172]
+name = "存劍室"
+description = """
+如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡的灰塵跟
+雜物特別多，據說有怪物侵入後，莊主便下令將這個房間暫時
+的封鎖，所以有很長一段時間沒有人打理了。這間房間的地板
+有些輕微破損。
+"""
+flags = ["NO_MOB", "INDOORS", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64172.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64176
+[rooms.64172.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64173
+[[rooms.64172.programs]]
+trigger = "room_command"
+argument = "search default"
+script = """
+if roomvalue($0) == 1
+        if is_qmark($n) == swordcottage 300002
+               callout 1 echoat $n 你在這邊到處亂挖...
+               callout 1 echoaround $n $N在這邊到處亂挖
+               callout 2 echoat $n 你找到一個暗紅色的髮飾...
+               callout 2 echoaround $n $N挖出一個暗紅色的髮飾...
+               callout 2 oload 64135 15 floor
+               call out 2 modrvt v0 = 2
+               callout 2 mod_qmark $n swordcottage v2 = 3
+        else
+                echoat $n 你的雙手沾滿灰塵。
+                echoaround $n $N挖出一堆灰塵。
+        endif
+else
+        echoat $n 這裡好像有人進來過。
+        echoaround $n $n四處張望了一下。
+endif
+"""
+[[rooms.64172.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if rnplayer($) == 0
+        if roomvalue($0) == 2
+                purge all.hair
+                modrvt v0 = 0
+        endif
+endif
+"""
+[[rooms.64172.resets.mobiles]]
+vnum = 64132
+limit = 1
+
+[rooms.64173]
+name = "存劍室"
+description = """
+如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡四周的東
+西特別多，據說有怪物侵入後，莊主便下令將這個房間暫時的
+封鎖，所以有很長一段時間沒有人打理了。
+"""
+flags = ["NO_MOB", "INDOORS", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64173.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64177
+[rooms.64173.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64172
+[[rooms.64173.programs]]
+trigger = "room_command"
+argument = "search around"
+script = """
+if roomvalue($0) == 0
+		echoat $n 你在這邊仔細的摸索著...
+		echoaround $n $n在這邊仔細的搜索著...
+			if rand(70)
+				echoat $n 你摸到一把木劍...
+				echoaround $n $n摸到一把木劍...
+				oload 64119 1 floor
+        			modrvt v0 = 1
+			else
+				echoat $n 你摸到一把鐵劍...
+				echoaround $n $n摸到一把鐵劍...
+				oload 64120 36 floor
+        			modrvt v0 = 1
+			endif
+	else
+		echoat $n 你什麼都沒找到
+		echoaround $n $n好像什麼都沒找到
+	endif
+"""
+[[rooms.64173.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if rnplayer($) == 0
+        if roomvalue($0) == 1
+                purge all.sword
+                modrvt v0 = 0
+        endif
+endif
+"""
+
+[rooms.64174]
+name = "柴房"
+description = """
+這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64174.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64175
+[rooms.64174.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64170
+
+[rooms.64175]
+name = "柴房"
+description = """
+這裡是存放名劍山莊柴火的地方。地上有著大大小小的木
+柴。名劍山莊因為位處高地，冬天時候相當寒冷，加上炊食也
+必須使用木材，因此這裡的木材囤積的特別多。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64175.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64174
+[rooms.64175.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64176
+[rooms.64175.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64171
+
+[rooms.64176]
+name = "存劍室"
+description = """
+如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡的灰塵跟
+雜物特別多，據說有怪物侵入後，莊主便下令將這個房間暫時
+的封鎖，所以有很長一段時間沒有人打理了。
+"""
+flags = ["NO_MOB", "INDOORS", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64176.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64175
+[rooms.64176.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64177
+[rooms.64176.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64172
+
+[rooms.64177]
+name = "存劍室"
+description = """
+如同名子所敘述的，這裡就是專門擺放劍的地方，四周各
+式各樣的劍擺放著，不過看起來都是相當普通的劍，銳利的劍
+雖然有，卻沒有所謂的寶劍，是被收起來了嗎？這裡的灰塵跟
+雜物特別多，據說有怪物侵入後，莊主便下令將這個房間暫時
+的封鎖，所以有很長一段時間沒有人打理了。
+"""
+flags = ["NO_MOB", "INDOORS", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64177.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64176
+[rooms.64177.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64173
+
+[rooms.64178]
+name = "無缺的房間"
+description = """
+這裡是白無缺的房間，牆壁上掛著一把白色的劍作
+為裝飾，床鋪靠在一旁的牆邊，整體看起來相當舒適。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64178.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64181
+[rooms.64178.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64179
+
+[rooms.64179]
+name = "走廊"
+description = """
+北邊跟南邊都各自通往一個房間，西邊的牆壁上則
+掛了一把劍當裝飾。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64179.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64182
+[rooms.64179.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64178
+[rooms.64179.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64180
+
+[rooms.64180]
+name = "紫雲的房間"
+description = """
+這邊是蕭紫雲的房間，大概跟無缺的房間也沒什麼不同。
+只是把裝飾用的劍改成了幾張畫。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64180.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64183
+[rooms.64180.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64179
+
+[rooms.64181]
+name = "無缺的房間"
+description = """
+這裡是白無缺的房間，房間中央放置了一張桌子，上面擺
+放著茶壺跟杯子，還有一張棋盤。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64181.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64182
+[rooms.64181.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64178
+
+[rooms.64182]
+name = "走廊"
+description = """
+北邊跟南邊都各自通往一個房間，東邊可以回到大廳。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64182.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64185
+[rooms.64182.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64181
+[rooms.64182.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64183
+[rooms.64182.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64179
+
+[rooms.64183]
+name = "紫雲的房間"
+description = """
+這邊是蕭紫雲的房間，除了桌子之外，牆上還多了幾
+張畫，大概是他的收藏吧。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64183.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64182
+[rooms.64183.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64180
+
+[rooms.64184]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的西北方。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64184.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64187
+[rooms.64184.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64185
+
+[rooms.64185]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。西方通往一個長廊，東方則回到大廳正中央。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64185.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64188
+[rooms.64185.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64184
+[rooms.64185.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64186
+[rooms.64185.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64182
+
+[rooms.64186]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的西南方。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64186.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64189
+[rooms.64186.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64185
+
+[rooms.64187]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。莊主
+就在你的右手邊。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64187.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64190
+[rooms.64187.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64188
+[rooms.64187.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64184
+
+[rooms.64188]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。右手
+邊可以回到大廳正中央。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64188.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64191
+[rooms.64188.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64187
+[rooms.64188.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64189
+[rooms.64188.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64185
+
+[rooms.64189]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。右邊
+通往門口。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64189.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64192
+[rooms.64189.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64188
+[rooms.64189.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64186
+[[rooms.64189.resets.mobiles]]
+vnum = 64105
+limit = 1
+[[rooms.64189.resets.mobiles.equipment]]
+vnum = 64118
+wear_loc = "WIELD"
+[[rooms.64189.resets.mobiles.equipment]]
+vnum = 64117
+wear_loc = "BODY"
+
+[rooms.64190]
+name = "名劍山莊大廳中央"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，前方擺了一
+張太師椅，牆壁上則掛著一把打造精美的寶劍，雖然名劍
+山莊以劍當作裝飾品，不過這把劍似乎並不是為了裝飾而
+打造出來的？
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64190.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64194
+[rooms.64190.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64208
+[rooms.64190.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64191
+[rooms.64190.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64187
+[[rooms.64190.resets.mobiles]]
+vnum = 64102
+limit = 1
+[[rooms.64190.resets.mobiles.equipment]]
+vnum = 64100
+wear_loc = "WIELD"
+[[rooms.64190.resets.mobiles.equipment]]
+vnum = 64121
+wear_loc = "BODY"
+[[rooms.64190.resets.mobiles.equipment]]
+vnum = 64131
+wear_loc = "WRIST_L"
+[[rooms.64190.resets.mobiles]]
+vnum = 64103
+limit = 1
+[[rooms.64190.resets.mobiles.equipment]]
+vnum = 64104
+wear_loc = "WIELD"
+[[rooms.64190.resets.mobiles.equipment]]
+vnum = 64117
+wear_loc = "BODY"
+
+[rooms.64191]
+name = "名劍山莊大廳中央"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，兩旁有著高
+聳的柱子，柱子上用細功雕上了細緻的圖畫。前方不遠處
+似乎就是莊主的位置。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64191.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64195
+[rooms.64191.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64190
+[rooms.64191.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64192
+[rooms.64191.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64188
+
+[rooms.64192]
+name = "名劍山莊大廳中央"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，兩旁有著高
+聳的柱子，柱子上用細功雕上了細緻的圖畫。身後則是你
+過來的竹林走道。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64192.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64196
+[rooms.64192.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64191
+[rooms.64192.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64193
+[rooms.64192.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64189
+[[rooms.64192.resets.mobiles]]
+vnum = 64104
+limit = 1
+[[rooms.64192.resets.mobiles.equipment]]
+vnum = 64116
+wear_loc = "BODY"
+
+[rooms.64193]
+name = "竹林走道"
+description = """
+這裡是一條長長的走道，旁邊種滿了竹子(Bamboo)，
+後面是你過來的廣場，前方則是大廳。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[[rooms.64193.extra_descriptions]]
+keywords = "bamboo"
+description = """
+一排一排的竹子長在這邊，你想剪一點帶回去嗎？
+"""
+[rooms.64193.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64192
+[rooms.64193.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64149
+[[rooms.64193.programs]]
+trigger = "room_command"
+argument = "cut p bamboo"
+script = """
+if roomvalue($0) == 0
+		echoat $n 你剪下了一把竹子
+		echoaround $n $n剪下了一把竹子
+		oload 64110 1 floor
+		modrvt v0 = 1
+	else
+		echoat $n 竹子都快被拔光了！
+	endif
+"""
+[[rooms.64193.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if rnplayer($) == 0
+        if roomvalue($0) == 1
+                purge all.bamboo
+                modrvt v0 = 0
+        endif
+endif
+"""
+
+[rooms.64194]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。莊主
+就在你的左手邊。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64194.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64197
+[rooms.64194.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64195
+[rooms.64194.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64190
+
+[rooms.64195]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。左手
+邊回到大廳的正中央。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64195.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64198
+[rooms.64195.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64194
+[rooms.64195.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64196
+[rooms.64195.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64191
+
+[rooms.64196]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，地板上舖著
+紅地毯，附近則擺放著幾張椅子提供客人休息使用。左邊
+是你進來的門口，右邊跟前方則繼續延伸。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64196.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64199
+[rooms.64196.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64195
+[rooms.64196.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64192
+
+[rooms.64197]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的東北方。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64197.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64198
+[rooms.64197.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64194
+
+[rooms.64198]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。東方通往飯廳。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64198.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64201
+[rooms.64198.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64197
+[rooms.64198.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64199
+[rooms.64198.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64195
+[[rooms.64198.resets.mobiles]]
+vnum = 64106
+limit = 1
+[[rooms.64198.resets.mobiles.equipment]]
+vnum = 64118
+wear_loc = "WIELD"
+[[rooms.64198.resets.mobiles.equipment]]
+vnum = 64117
+wear_loc = "BODY"
+
+[rooms.64199]
+name = "名劍山莊大廳"
+description = """
+這裡是名劍山莊莊主引見客人用的大廳，四周掛滿了
+各式各樣的劍，除了裝飾之外，大概還有那麼一點炫燿的
+意味吧。這裡是大廳的東南方，擺放著幾個花瓶當裝飾。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64199.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64198
+[rooms.64199.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64196
+
+[rooms.64200]
+name = "飯廳"
+description = """
+這裡是莊內僕人用餐的地方，現在也還有三三兩兩
+的僕人在這裡吃冷飯。或許你可以跟他們要一碗？
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64200.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64201
+[[rooms.64200.resets.mobiles]]
+vnum = 64111
+limit = 1
+[[rooms.64200.resets.mobiles.equipment]]
+vnum = 64111
+wear_loc = "BODY"
+[[rooms.64200.resets.mobiles.equipment]]
+vnum = 64113
+wear_loc = "FEET"
+
+[rooms.64201]
+name = "飯廳"
+description = """
+這裡是莊主招待客人的飯廳，莊主如果要跟客人聚
+餐，就會會在這邊用餐，不過，因為現在不是用餐時間
+，桌子上面並沒有菜餚。右方可以通往廚房，左邊則回
+到大廳。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64201.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64204
+[rooms.64201.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64200
+[rooms.64201.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64202
+[rooms.64201.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64198
+
+[rooms.64202]
+name = "飯廳"
+description = """
+這裡是莊主平常吃飯的地方，比較起招待客人的餐
+廳，這裡顯得樸素的多，但是可惜的是－－仍然沒有菜
+餚。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64202.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64201
+
+[rooms.64203]
+name = "糧倉"
+description = """
+因為山莊位處高處，平常除了山莊的僕人會種菜之外
+，稻米以及其他的食品則需要委託他人從山下運上來，但
+是如天色不佳就會耽誤時間，因此這邊通常都會放著不少
+的儲備糧食。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64203.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64204
+
+[rooms.64204]
+name = "廚房"
+description = """
+莊主不只對劍挑剔，對食物也有獨特的要求，所以山
+莊的廚師都是外聘高明的師父來掌廚的。左邊可以回到餐
+廳。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64204.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64203
+[rooms.64204.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64205
+[rooms.64204.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64201
+
+[rooms.64205]
+name = "廚房"
+description = """
+這裡擺滿各是各樣的碗盤廚具，還有幾個僕人在這邊
+洗碗，碗盤都是上等的瓷器，當然也是從山下運上來的。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64205.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64204
+
+[rooms.64206]
+name = "石山"
+description = """
+你爬上山莊後院的石山，四周佈滿了浮萍，晚上的時候
+如有星光，這裡更顯得浪漫無比。西邊通往山莊的水池。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64206.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64207
+[rooms.64206.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64218
+[[rooms.64206.resets.mobiles]]
+vnum = 64107
+limit = 1
+[[rooms.64206.resets.mobiles.equipment]]
+vnum = 64130
+wear_loc = "NECK_1"
+[[rooms.64206.resets.mobiles.equipment]]
+vnum = 64112
+wear_loc = "BODY"
+
+[rooms.64207]
+name = "迴廊"
+description = """
+這裡是山莊後院的迴廊，左方可以通往石山，右方則回
+到走廊。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64207.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64208
+[rooms.64207.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64206
+
+[rooms.64208]
+name = "走廊"
+description = """
+這裡是山莊後院的走廊，左右方可以通往迴廊，後方是
+你過來的小門，前方似乎是莊主家人的房間。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64208.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64209
+[rooms.64208.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64212
+[rooms.64208.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64190
+[rooms.64208.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64207
+
+[rooms.64209]
+name = "迴廊"
+description = """
+這裡是山莊後院的迴廊，左方可以回到走廊，右方則通
+往一個房間。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64209.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64210
+[rooms.64209.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64208
+
+[rooms.64210]
+name = "祭壇"
+description = """
+這裡是莊內的祭壇，正中央擺著劍神Kention的神像
+，劍神像的左手拿著一卷書，右手則拿著一把劍，不過
+你目光一轉，發現就在劍神像的斜後方擺著一尊拿著奇
+怪武器的女神像，女神像的表情則有如冰雪一般冷漠，
+而武器的前端正好頂在劍神像背後，這有什麼特別的含
+意嗎？
+"""
+flags = ["INDOORS", "SAFE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_SWIM"
+[rooms.64210.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64209
+[[rooms.64210.resets.mobiles]]
+vnum = 64150
+limit = 1
+
+[rooms.64211]
+name = "走廊"
+description = """
+這邊的牆壁仍然使用劍來當裝飾，但是四週的擺設明顯
+高級了起來，前方通往莊主的房間，右方可以回到走廊。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64211.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64212
+[rooms.64211.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64214
+
+[rooms.64212]
+name = "走廊"
+description = """
+這邊的牆壁仍然使用劍來當裝飾，但是四週的擺設明顯
+高級了起來，你面前的牆壁意外的沒有任何的裝飾品，而且
+粉刷的特別乾淨。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64212.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64213
+[rooms.64212.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64208
+[rooms.64212.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64211
+
+[rooms.64213]
+name = "走廊"
+description = """
+這邊的牆壁仍然使用劍來當裝飾，但是四週的擺設明顯
+高級了起來，前方通往映月的房間，左方可以回到走廊。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64213.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64215
+[rooms.64213.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64212
+
+[rooms.64214]
+name = "莊主的房間"
+description = """
+這個房間出乎意外的樸素，除了家具之外沒有任何其他
+的擺設，原本的雙人床上只剩下一個枕頭，看起來更顯得孤
+寂。
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64214.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64211
+
+[rooms.64215]
+name = "映月的房間"
+description = """
+你闖入了映月的房間裡面，四周百滿了各式各樣的裝飾
+品，梳妝台上也放著一面大銅鏡，桌上當然有女孩子家的胭
+脂跟梳子，一旁的櫃子雖然沒有開著，不過你猜想那大概是
+衣櫃吧？
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64215.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64213
+[[rooms.64215.programs]]
+trigger = "room_command"
+argument = "search p underwear"
+script = """
+if is_qmark($n) == swordcottage 100004
+		if insameroom(chin-swordcottage)
+			echoat $n 主人還在你怎麼偷！
+		else
+			echoat $n 在東翻西找之後，你找出一件內衣...
+			echoaround $n $N在翻箱倒櫃之後，好像發現了什麼...
+			mod_qmark $n swordcottage v0 = 5
+			oload 64114 36 floop
+		endif
+	else
+		echoat $n 你想幹什麼壞事啊？
+	endif
+"""
+
+[rooms.64216]
+name = "藏劍室"
+description = """
+這裡存放的果真是好劍，不但重量恰當，外型也相當的
+優雅，不過為什麼會特意藏在這種地方呢？
+"""
+flags = ["INDOORS", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64216.exits.down]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64217
+
+[rooms.64217]
+name = "黑暗的通路"
+description = """
+你打開了藏劍室裡面黑暗的通路，這裡相當的狹小，最
+多只能通過兩個人，通道持續往前方延伸。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64217.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64243
+[rooms.64217.exits.up]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 64216
+
+[rooms.64218]
+name = "湖泊邊緣"
+description = """
+這個水池，或許應該說湖泊，並不是山莊所造，而是建立
+山莊之時把它納入山莊的範圍內，整個湖泊相當的廣大，往東
+可以回到石山，往西則是湖泊。
+"""
+flags = ["SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "FIELD"
+[rooms.64218.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64206
+[rooms.64218.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64219
+
+[rooms.64219]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64219.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64228
+[rooms.64219.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64220
+[rooms.64219.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64222
+
+[rooms.64220]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64220.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64229
+[rooms.64220.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64221
+[rooms.64220.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64223
+[rooms.64220.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64219
+
+[rooms.64221]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64221.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64230
+[rooms.64221.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64218
+[rooms.64221.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64224
+[rooms.64221.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64220
+
+[rooms.64222]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64222.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64231
+[rooms.64222.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64223
+[rooms.64222.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64219
+[rooms.64222.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64225
+
+[rooms.64223]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64223.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64232
+[rooms.64223.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64224
+[rooms.64223.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64220
+[rooms.64223.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64226
+[rooms.64223.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64222
+
+[rooms.64224]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64224.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64233
+[rooms.64224.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64221
+[rooms.64224.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64227
+[rooms.64224.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64223
+
+[rooms.64225]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64225.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64234
+[rooms.64225.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64226
+[rooms.64225.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64222
+
+[rooms.64226]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64226.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64235
+[rooms.64226.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64227
+[rooms.64226.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64223
+[rooms.64226.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64225
+
+[rooms.64227]
+name = "湖泊"
+description = """
+這裡是湖泊的正上方，湖裡的水相當清澈，看的見有許多
+的魚蝦。雖然如此，你總感覺到這個湖泊散發著一股異樣的壓
+迫力...
+"""
+flags = ["NO_MOB", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "WATER_NOSWIM"
+[rooms.64227.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64239
+[rooms.64227.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64224
+[rooms.64227.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64226
+
+[rooms.64228]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64228.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64237
+[rooms.64228.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64229
+[rooms.64228.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64231
+[rooms.64228.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64219
+
+[rooms.64229]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64229.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64238
+[rooms.64229.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64230
+[rooms.64229.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64232
+[rooms.64229.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64220
+[rooms.64229.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64228
+
+[rooms.64230]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND"]
+sector = "UNDERWATER"
+[rooms.64230.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64233
+[rooms.64230.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64221
+[rooms.64230.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64229
+
+[rooms.64231]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64231.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64239
+[rooms.64231.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64232
+[rooms.64231.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64228
+[rooms.64231.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64234
+[rooms.64231.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64222
+
+[rooms.64232]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64232.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64240
+[rooms.64232.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64233
+[rooms.64232.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64229
+[rooms.64232.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64235
+[rooms.64232.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64223
+[rooms.64232.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64231
+
+[rooms.64233]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64233.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64230
+[rooms.64233.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64236
+[rooms.64233.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64224
+[rooms.64233.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64232
+
+[rooms.64234]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64234.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64235
+[rooms.64234.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64231
+[rooms.64234.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64225
+[[rooms.64234.resets.mobiles]]
+vnum = 64137
+limit = 5
+
+[rooms.64235]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64235.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64236
+[rooms.64235.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64232
+[rooms.64235.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64226
+[rooms.64235.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64234
+
+[rooms.64236]
+name = "水底"
+description = """
+這裡是湖泊的水中，四處都是魚，光線在這邊也還算明亮，
+只是異樣的壓迫感越來越沉重...
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64236.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64233
+[rooms.64236.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64227
+[rooms.64236.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64235
+
+[rooms.64237]
+name = "深水"
+description = """
+你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT"]
+sector = "UNDERWATER"
+[rooms.64237.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64238
+[rooms.64237.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64239
+[rooms.64237.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64228
+
+[rooms.64238]
+name = "深水"
+description = """
+你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64238.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64240
+[rooms.64238.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64232
+[rooms.64238.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64239
+
+[rooms.64239]
+name = "深水"
+description = """
+你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64239.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64240
+[rooms.64239.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64237
+[rooms.64239.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64231
+
+[rooms.64240]
+name = "深水"
+description = """
+你潛進更深的水中，光線在這邊慢慢的消失了，四周的魚
+群也慢慢的減少，只剩下那個奇怪的感覺殘存著。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64240.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64241
+[rooms.64240.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64238
+[rooms.64240.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64232
+[rooms.64240.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64239
+
+[rooms.64241]
+name = "洞窟前"
+description = """
+你在一個巨大的洞窟前面，那種異樣的感覺就在眼前了。
+洞窟看起來很小，大概只有一個人能進去。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64241.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64242
+[rooms.64241.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64240
+
+[rooms.64242]
+name = "洞窟"
+description = """
+天啊！出現在你面前的是一頭巨大的蛟龍！這下可以解釋
+為什麼這邊幾乎沒有魚的存在，因為都被當成食物了！
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.64242.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64241
+[[rooms.64242.resets.mobiles]]
+vnum = 64120
+limit = 1
+[[rooms.64242.resets.mobiles.equipment]]
+vnum = 64132
+wear_loc = "BODY"
+[[rooms.64242.resets.mobiles.equipment]]
+vnum = 64133
+wear_loc = "WIELD"
+
+[rooms.64243]
+name = "黑暗的通路"
+description = """
+這一條潮濕的通路應該不是天然形成的，四周的牆壁還有
+挖掘的痕跡，是不是什麼時候留下來的秘密通道呢？
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64243.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64244
+[rooms.64243.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64217
+
+[rooms.64244]
+name = "死路"
+description = """
+通道在這裡停住，眼前只剩下一大堆崩落的岩石，看來是
+無法再往前走了，不知道有什麼方法可以過去？用爬的嗎？
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64244.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64243
+[[rooms.64244.programs]]
+trigger = "room_command"
+argument = "climb"
+script = """
+echoat $n 你到處爬呀爬也爬不到那邊去，這洞窟就這麼大而已阿？
+	echoaround $n $n像壁虎一樣在落石上到處亂爬。
+	echo 落石的後面傳來一陣聲音：這裡還沒有辦法過去，快回去吧。
+"""
+
+[rooms.64245]
+name = "通路的另一頭"
+description = """
+你從落石處爬了過來，要回去也只能爬回去。前方通往一
+個遼闊的平台。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64245.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64245
+[[rooms.64245.programs]]
+trigger = "room_command"
+argument = "climb"
+script = """
+echoat $n 你順著落石爬了回去
+	echoaround $n $n順著落石爬了回去
+	transfer $n 64245
+"""
+
+[rooms.64246]
+name = "小徑"
+description = """
+你爬過土坡後發現一條非常隱密的小徑，左手邊
+是你來的土堆，右邊的山壁上有個僅能容納一人的洞
+穴，裡面還有些許的惡臭。
+"""
+flags = ["NO_MOB", "PRIVATE"]
+sector = "CITY"
+[rooms.64246.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64247
+[rooms.64246.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64103
+[[rooms.64246.programs]]
+trigger = "room_command"
+argument = "climb up"
+script = """
+echoat $n 彷彿有人在後面推你一把一般，你輕鬆的爬過了土堆
+		echoaround $n $n好像被人給丟過去一般，消失在土堆的另外一邊！
+		transfer $n 64103
+"""
+
+[rooms.64247]
+name = "黑暗的洞穴"
+description = """
+你踏入洞穴，驚見洞穴內有一具枯骨！枯骨的手
+腳皆被鐵鍊鎖死在牆上，胸前的肋骨則是碎了一大塊
+，彷彿死前還被嚴刑拷打過！四周非常的凌亂，除了
+骨頭，還有一些布片跟紙張的碎片。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "CITY"
+[rooms.64247.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 64246
+[[rooms.64247.programs]]
+trigger = "room_command"
+argument = "search p around"
+script = """
+if is_qmark($n) == jd_liu 100002
+		echoat $n 你把地上的布跟骨頭翻開來...
+		echoat 在骨頭的下面你發現一封封皮老舊的信！
+		oload 11144 36 floor
+		mod_qmark $n jd_liu v0 = 3
+	else
+		你只發現一堆骨頭而已。
+	endif
+"""

@@ -1,0 +1,1990 @@
+[area]
+name = "火蠑螈聚落"
+identity = "firenewt"
+builders = "Nirrad"
+translator = "Pluto"
+modifier = "Pluto"
+vnum_start = 2900
+vnum_end = 2931
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.2901]
+keywords = "black mountain goat"
+short_description = "公黑山羊(mountain goat)"
+long_description = "一隻雄性黑山羊(mountain goat)站在這邊。\n"
+description = """
+這隻山羊看起來很餓而且正在找尋食物。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS"]
+affected_flags = []
+alignment = -100
+level = 42
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = -2
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+spec_flags = ["HALF_MAGIC", "EXPERT"]
+[[mobiles.2901.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if ispc($n)
+	mpechoat $n 性情暴躁的 $I 忽然往你衝了過來....
+	mpechoaround $n 性情暴躁的 $I 忽然往 $n 衝了過去....
+	hunt $n
+	mpnowait
+	bashhead
+	mpnowait
+endif
+"""
+[[mobiles.2901.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+kick
+mpnowait
+"""
+[[mobiles.2901.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpgreward exp $n -38 200
+mpgreward exp $n basic 200
+"""
+
+[mobiles.2902]
+keywords = "black mountain ewe"
+short_description = "母黑山羊(mountain ewe)"
+long_description = "一隻雌性黑山羊(mountain ewe)站在這邊。\n"
+description = """
+這隻母山羊正在四處吃草。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = -100
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Animal"
+spec_flags = ["HALF_MAGIC", "EXPERT"]
+[[mobiles.2902.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+kick
+mpnowait
+"""
+[[mobiles.2902.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpgreward exp $n -38 100
+mpgreward exp $n basic 100
+"""
+
+[mobiles.2903]
+keywords = "black mountain kid"
+short_description = "小山羊(mountain kid)"
+long_description = "一隻小山羊(mountain kid)站在這邊。\n"
+description = """
+這隻小山羊跟它的同類正玩得很愉快。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = -100
+level = 39
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = -5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+spec_flags = ["HALF_MAGIC", "EXPERT"]
+[[mobiles.2903.programs]]
+trigger = "fight_prog"
+argument = "15"
+script = """
+kick
+mpnowait
+bashhead
+mpnowait
+"""
+[[mobiles.2903.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpgreward exp $n -38 50
+mpgreward exp $n basic 50
+"""
+
+[mobiles.2904]
+keywords = "fire newt worker"
+short_description = "火蠑螈工人(fire newt worker)"
+long_description = "一隻火蠑螈工人(fire newt worker)站在這邊。\n"
+description = """
+這隻火蠑螈工人看起來工作的相當熱與吃力。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "HARD_DIS"]
+affected_flags = []
+alignment = -400
+level = 38
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Lizardman"
+class = ["WARRIOR"]
+spec_flags = ["HALF_MAGIC", "EXPERT"]
+[[mobiles.2904.applies]]
+type = "HIT"
+degree = 1000
+[[mobiles.2904.applies]]
+type = "REDUCE_DAMAGE"
+degree = -300
+[[mobiles.2904.applies]]
+type = "REDUCE_MAGIC"
+degree = -200
+[[mobiles.2904.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	gasp $n
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) == Lizardman
+		if is_qmark($i) != firenewt_quest
+			mpadd_qmark self firenewt_quest 1 0 0 0 1 0
+			say 原來是同類啊！你好。
+		endif
+	else
+		say 你是誰？來做什麼？
+		mpkill $n
+	endif
+endif
+"""
+[[mobiles.2904.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+skilldrv multihit $n
+skilldrv multihit $r
+"""
+[[mobiles.2904.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpgreward exp $n -38 100
+mpgreward exp $n basic 100
+"""
+
+[mobiles.2905]
+keywords = "fire newt guard"
+short_description = "火蠑螈守衛(fire newt guard)"
+long_description = "一隻火蠑螈守衛(fire newt guard)站在這邊。\n"
+description = """
+這隻火蠑螈守衛看到你的侵入覺得你不能活著回去。
+"""
+act_flags = ["NPC", "STAY_AREA", "HARD_DIS", "HUNT", "TACTICS"]
+affected_flags = []
+alignment = -450
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -10
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Lizardman"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "EXPERT"]
+[[mobiles.2905.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.2905.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) == Lizardman
+		sm $n
+	else
+		say 你是誰？
+		hunt $n
+		mpnowait
+	endif
+endif
+"""
+[[mobiles.2905.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if is_equ_obj($i) != 2905
+	wear axe
+	disarm
+	mpnowait
+endif
+if rand(60)
+	kick
+	mpnoait
+else
+	bashhead
+	mpnowait
+endif
+"""
+[[mobiles.2905.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpgreward exp $n -38 200
+mpgreward exp $n basic 200
+"""
+
+[mobiles.2906]
+keywords = "fire newt worker leader"
+short_description = "火蠑螈工頭(fire newt leader)"
+long_description = "一隻火蠑螈工頭(fire newt worker leader)站在這邊。\n"
+description = """
+這隻火蠑螈工頭看起來工作的相當熱與吃力。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS"]
+alignment = -400
+level = 41
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -10
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Lizardman"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC"]
+[[mobiles.2906.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.2906.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入啊！
+		if rmobcount(2904) > 0
+			mpgroup self worker 1 0
+			mpforce worker mpkill $n
+		endif
+	endif
+endif
+"""
+[[mobiles.2906.programs]]
+trigger = "rand_prog"
+argument = "30"
+script = """
+if rmobcount(2904) > 0
+	say 快！加快進度！
+	mpforce worker say 是！
+endif
+"""
+[[mobiles.2906.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+skilldrv multihit $n
+skilldrv multihit $n
+skilldrv multihit $r
+"""
+[[mobiles.2906.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpgreward exp $n -36 300
+mpgreward exp $n basic 300
+"""
+
+[mobiles.2907]
+keywords = "fire newt guard captain"
+short_description = "火蠑螈守衛隊長(fire newt guard captain)"
+long_description = "一隻火蠑螈守衛隊長(fire newt guard captain)站在這邊。\n"
+description = """
+這隻火蠑螈就是統領整個火蠑螈守衛的隊長。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -450
+level = 42
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = -5
+mod_ac = -20
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Lizardman"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "EXPERT"]
+program_files = ["firenewt_groupexp.prg"]
+[[mobiles.2907.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.2907.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入，全體戒備！
+		hunt $n
+		mpnowait
+	endif
+else
+	if vnum($n) == 2912
+		bow leader-firenewt
+		say 首領好！
+		mpforce leader-firenewt nod
+	endif
+endif
+"""
+[[mobiles.2907.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(15)
+	if is_equ_obj($i) != 2904
+		wear sword
+		disarm
+		mpnowait
+	endif
+endif
+if rand(50)
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+else
+	if is_equ_obj($i) != 2904
+		wear sword
+		if rand(30)
+			circular
+			mpnowait
+		else
+			earth
+			mpnowait
+		endif
+	endif
+endif
+"""
+[[mobiles.2907.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 600
+mpgreward exp $n basic 600
+"""
+
+[mobiles.2908]
+keywords = "fire newt mother"
+short_description = "火蠑螈媽媽(fire newt mother)"
+long_description = "一隻火蠑螈媽媽(fire newt mother)站在這邊。\n"
+description = """
+這隻火蠑螈媽媽正在照顧它的小孩。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -400
+level = 38
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Lizardman"
+class = ["MAGE"]
+spec_flags = ["HALF_MAGIC", "EXPERT"]
+[[mobiles.2908.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.2908.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if rmobcount(2909) > 0
+		say 你是來傷害我們的嗎？我不會讓你得逞的。
+	else
+		if race($n) != Lizardman
+			say 就是你殺了我的家人！
+			mpkill $n
+		endif
+	endif
+endif
+"""
+
+[mobiles.2909]
+keywords = "fire newt baby"
+short_description = "火蠑螈寶寶(fire newt baby)"
+long_description = "一隻火蠑螈寶寶(fire newt baby)在這邊慢慢的爬行。\n"
+description = """
+這隻火蠑螈寶寶正在學習怎麼在爬行。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = []
+alignment = -350
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Lizardman"
+spec_flags = ["HALF_MAGIC", "EXPERT"]
+[[mobiles.2909.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.2909.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic blindness
+mpat 5 c inf
+yell 啊....！
+if rmobcount(2908) > 0
+	mpechoat $n 火蠑螈媽媽(fire newt mother) 悲憤莫名的向你攻了過來....
+	mpechoaround $n 火蠑螈媽媽(fire newt mother) 悲憤莫名的向 $n 攻了過去....
+	mpforce mother mpkill $n
+endif
+"""
+
+[mobiles.2910]
+keywords = "fire newt sergeant"
+short_description = "火蠑螈士官(fire newt sergeant)"
+long_description = "一隻火蠑螈士官(fire newt sergeant)正在巡視這個區域。\n"
+description = """
+這隻火蠑螈發現了你並不屬於這個區域該出現的生物。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "HARD_DIS", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -500
+level = 44
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = -10
+mod_ac = -30
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Lizardman"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "EXPERT"]
+program_files = ["firenewt_groupexp.prg"]
+[[mobiles.2910.applies]]
+type = "HIT"
+degree = 7000
+[[mobiles.2910.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入，全體戒備！
+		hunt $n
+		mpnowait
+	endif
+else
+	if vnum($n) == 2912
+		bow leader-firenewt
+		say 首領好！
+		mpforce leader-firenewt nod
+	endif
+endif
+"""
+[[mobiles.2910.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(20)
+	if is_equ_obj($i) != 2907
+		wear pick
+		disarm
+		mpnowait
+	endif
+endif
+if rand(60)
+	bashhead
+	mpnowait
+else
+	if is_equ_obj($i) != 2907
+		wear pick
+		if rand(10)
+			circular
+			mpnowait
+		else
+			earth
+			mpnowait
+		endif
+	endif
+endif
+"""
+[[mobiles.2910.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 400
+mpgreward exp $n basic 400
+"""
+
+[mobiles.2911]
+keywords = "fire newt general"
+short_description = "火蠑螈將軍(fire newt general)"
+long_description = "一隻火蠑螈將軍(fire newt general)站在這邊。\n"
+description = """
+這隻火蠑螈將軍對你冽出邪惡的笑容。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -700
+level = 45
+mod_hitplus = -1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 8
+mod_ac = -30
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Lizardman"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "EXPERT"]
+program_files = ["firenewt_groupexp.prg"]
+[[mobiles.2911.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.2911.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpmload 2910
+mpgroup self sergeant 1 0
+mpmload 2907
+mpgroup self captain 1 0
+"""
+[[mobiles.2911.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if class($n) < 5
+		say 小伙子，羽翼未豐就來這邊不覺得危險了點嗎？
+		break
+	endif
+	if race($n) != Lizardman
+		yell 敵人侵入，全體戒備！
+		hunt $n
+		mpnowait
+	endif
+else
+	if vnum($n) == 2912
+		bow leader-firenewt
+		say 首領好！
+		mpforce leader-firenewt nod
+	endif
+endif
+"""
+[[mobiles.2911.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_equ_obj($i) != 2907
+	wear pick
+	mpnowait
+endif
+if rand(20)
+	if rmobcount(2907) > 0
+		say 隊長，攻擊 $r ！
+		mpforce captain mpgoto self
+		mpforce captain hunt $r
+		mpforce captain skilldrv multihit $r
+	endif
+	if rmobcount(2910) > 0
+		say 士官，攻擊 $r ！
+		mpforce sergeant mpgoto self
+		mpforce sergeant hunt $r
+		mpforce sergeant skilldrv multihit $r
+	endif
+endif
+if rand(20)
+	if class($n) < 5
+		mpecho $I 忽然吐出了火焰....
+		c fireball
+		mpnowait
+	endif
+else
+	yell $n ！去死！
+	skilldrv multihit $n
+endif
+"""
+[[mobiles.2911.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpcall firenewt_groupexp $n
+mpgreward exp $n -38 1000
+mpgreward exp $n basic 1000
+"""
+
+[mobiles.2912]
+keywords = "leader-firenewt fire newt leader"
+short_description = "火蠑螈首領(fire newt leader)"
+long_description = "一隻火蠑螈首領(fire newt leader)站在這邊。\n"
+description = """
+他就是火蠑螈聚落的首領，比起其他火蠑螈，他有著更加強壯的肌肉與精銳的眼神。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "HARD_DIS", "HUNT", "TACTICS", "IGNORE_NO_MOB"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = -1000
+level = 50
+mod_hitplus = -1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = -10
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Lizardman"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "EXPERT"]
+program_files = ["firenewt_groupexp.prg"]
+        action_programs = [
+            """
+6
+mpcall firenewt_leader_schedule_1
+""",
+            """
+8
+mpcall firenewt_leader_schedule_2
+""",
+        ]
+[[mobiles.2912.applies]]
+type = "HIT"
+degree = 10000
+
+[objects.2901]
+keywords = "horns"
+short_description = "犄角(horns)"
+long_description = "一對犄角(horns)放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "11"]
+weight = 2
+cost = 0
+level_limited = 0
+material = "bone"
+
+[objects.2902]
+keywords = "bucket milk"
+short_description = "牛奶桶子(milk bucket)"
+long_description = "一個裝牛奶的桶子(milk bucket)放在這邊。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["20", "10", "10", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "wooden"
+
+[objects.2903]
+keywords = "shovel"
+short_description = "剷子(shovel)"
+long_description = "一支鏟子(shovel)放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "7"]
+weight = 2
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.2904]
+keywords = "short sword"
+short_description = "短劍(short sword)"
+long_description = "一把短劍(short sword)放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "11"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.2905]
+keywords = "hand axe"
+short_description = "掌中斧(hand axe)"
+long_description = "一把掌中斧(hand axe)放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "3"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.2906]
+keywords = "chainmail"
+short_description = "鎖鍊甲(chainmail)"
+long_description = "一副鎖鍊甲(chainmail)放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.2907]
+keywords = "pick"
+short_description = "鋤頭(pick)"
+long_description = "一支鋤頭(pick)放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "3"]
+weight = 2
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.2911]
+keywords = "broad axe"
+short_description = "闊斧(broad axe)"
+long_description = "一把闊斧(broad axe)放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "3"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.2911.applies]]
+type = "STR"
+value = 2
+[[objects.2911.applies]]
+type = "HITROLL"
+value = 1
+[[objects.2911.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.2911.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+
+[objects.2912]
+keywords = "leather suit"
+short_description = "皮製襯衫(leather suit)"
+long_description = "一套皮製襯衫(leather suit)放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["4", "0", "100", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "leather"
+[[objects.2912.applies]]
+type = "DEX"
+value = 1
+
+[objects.2913]
+keywords = "mace"
+short_description = "釘頭鎚(mace)"
+long_description = "一支釘頭鎚(mace)放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "6"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.2913.applies]]
+type = "HITROLL"
+value = 2
+[[objects.2913.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.2914]
+keywords = "potion"
+short_description = "橘色藥水(orange potion)"
+long_description = "一罐橘色藥水(orange potion)放在這邊。"
+action_description = ""
+item_type = "POTION"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["10", "", "curse", "heal"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "liquid"
+
+[objects.2915]
+keywords = "egg newt"
+short_description = "蠑螈蛋(newt egg)"
+long_description = "一顆蠑螈蛋(newt egg)放在這邊。"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["10", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "flesh"
+
+[rooms.2900]
+name = "黑曜石山丘"
+description = """
+你看到在你面前是一個好像會發光的山丘。這裡的植物非常的稀少。這個山
+丘往南邊與東邊繼續的延伸下去，你在這邊的地上看到一張紙條(note)。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.2900.extra_descriptions]]
+keywords = "note"
+description = """
+本區域的改編乃基於 ROC 中級區域與任務過少的原因而予以改編，
+希望能夠適當補充玩家於等級 31 - 35 過程幾乎無法自力升級的斷
+層。
+
+				  闇之冥王星  普魯多(Pluto)
+				  		 2002/12/03
+"""
+[rooms.2900.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4785
+[rooms.2900.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 2901
+
+[rooms.2901]
+name = "黑曜石山丘"
+description = """
+你看到在你面前是一個好像會發光的山丘(hill)。這裡的植物非常的稀少。
+這個山丘往南邊與東邊繼續的延伸下去。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.2901.extra_descriptions]]
+keywords = "hills"
+description = """
+這個山丘閃爍著會發光的亮黑色。
+"""
+[rooms.2901.exits.north]
+description = "You see some hills to the north.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2900
+[rooms.2901.exits.south]
+description = "You see some more hills to the south.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2902
+[[rooms.2901.resets.mobiles]]
+vnum = 2917
+limit = 1
+
+[rooms.2902]
+name = "黑曜石山丘"
+description = """
+你看到在你面前是一個好像會發光的山丘(hill)。這裡的植物非常的稀少。
+這個山丘往南邊與東邊繼續的延伸下去。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.2902.extra_descriptions]]
+keywords = "hills"
+description = """
+這個山丘閃爍著會發光的黑色。
+"""
+[rooms.2902.exits.east]
+description = "You see the side of the mountain to the east.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2903
+[rooms.2902.exits.north]
+description = "You see some hills to the north.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2901
+
+[rooms.2903]
+name = "在山丘上"
+description = """
+這座山(mountain)相當的高而且似乎已經存在很久很久的時間了。由許多天
+然災害造成的裂縫、山崩可以看出來。
+"""
+flags = []
+sector = "HILLS"
+[[rooms.2903.extra_descriptions]]
+keywords = "mountain"
+description = """
+這座山看起來應該是火山爆發之後岩漿流下來冷卻結晶而成。
+"""
+[rooms.2903.exits.south]
+description = "The mountain continues.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2904
+[rooms.2903.exits.west]
+description = "You see some hills to the west.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2902
+[[rooms.2903.resets.mobiles]]
+vnum = 2901
+limit = 2
+[[rooms.2903.resets.mobiles.equipment]]
+vnum = 2901
+wear_loc = "WIELD"
+
+[rooms.2904]
+name = "在山丘上"
+description = """
+這座山相當的高而且似乎存在很久很久的時間了。你看到不遠的山頂有一些
+黑煙(smoke)由山頂冉冉升起。
+"""
+flags = []
+sector = "HILLS"
+[[rooms.2904.extra_descriptions]]
+keywords = "smoke"
+description = """
+這陣黑煙很像是火山冒出來的氣體。
+"""
+[rooms.2904.exits.north]
+description = "You see mountains to the north.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2903
+[rooms.2904.exits.south]
+description = "The mountain continues.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2905
+[[rooms.2904.resets.mobiles]]
+vnum = 2901
+limit = 2
+[[rooms.2904.resets.mobiles.equipment]]
+vnum = 2901
+wear_loc = "WIELD"
+[[rooms.2904.resets.mobiles]]
+vnum = 2902
+limit = 2
+[[rooms.2904.resets.mobiles.inventory]]
+vnum = 2902
+[[rooms.2904.resets.mobiles]]
+vnum = 2902
+limit = 2
+[[rooms.2904.resets.mobiles.inventory]]
+vnum = 2902
+[[rooms.2904.resets.mobiles]]
+vnum = 2903
+limit = 6
+[[rooms.2904.resets.mobiles]]
+vnum = 2903
+limit = 6
+[[rooms.2904.resets.mobiles]]
+vnum = 2903
+limit = 6
+[[rooms.2904.resets.mobiles]]
+vnum = 2903
+limit = 6
+[[rooms.2904.resets.mobiles]]
+vnum = 2903
+limit = 6
+[[rooms.2904.resets.mobiles]]
+vnum = 2903
+limit = 6
+
+[rooms.2905]
+name = "在山頂上"
+description = """
+你終於到達山頂了。你可以看到更多的黑煙由此處冒出來。所有的黑煙好像
+都是由南方的那個洞中冒出來的。
+"""
+flags = ["NO_MOB"]
+sector = "HILLS"
+[[rooms.2905.extra_descriptions]]
+keywords = "top of mountain"
+description = """
+The top of the mountain is a large area with a hole in the middle.
+"""
+[rooms.2905.exits.north]
+description = "You see the side of the mountain to the north.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2904
+[rooms.2905.exits.south]
+description = "You see a hole to the south. It looks like an entrance.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2906
+[[rooms.2905.resets.mobiles]]
+vnum = 2915
+limit = 1
+
+[rooms.2906]
+name = "進入山中的入口"
+description = """
+所有的黑煙都是由這個洞裡頭冒出來的。而且似乎有一條路可以通往這裡頭。
+"""
+flags = ["NO_MOB"]
+sector = "HILLS"
+[rooms.2906.exits.down]
+description = "You can see down inside the mountain.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2910
+[rooms.2906.exits.east]
+description = "You see the top of the mountain to the east.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2907
+[rooms.2906.exits.north]
+description = "You see the top of the mountain to the north.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2905
+[rooms.2906.exits.south]
+description = "You see the top of the mountain to the south.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2909
+[rooms.2906.exits.west]
+description = "You see the top of the mountain to the west.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2908
+
+[rooms.2907]
+name = "在山頂上"
+description = """
+你正站在這座山的山頂上。這座山看起來似乎被某種生物給破壞過了。
+"""
+flags = ["NO_MOB"]
+sector = "HILLS"
+[rooms.2907.exits.west]
+description = "You see the entrance to the mountain to the west.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2906
+
+[rooms.2908]
+name = "在山頂上"
+description = """
+你正站在這座山的山頂上。在地上有一些不自然的人為破壞痕跡，你開始為
+此感到有些不尋常。
+"""
+flags = ["NO_MOB"]
+sector = "HILLS"
+[rooms.2908.exits.east]
+description = "You see the entrance to the mountain to the north.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2906
+
+[rooms.2909]
+name = "在山頂上"
+description = """
+你正站在這座山的山頂上，而且你可以往北繼續走下去。
+"""
+flags = ["NO_MOB"]
+sector = "HILLS"
+[rooms.2909.exits.north]
+description = "You see the entrance to the mountain to the north.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2906
+
+[rooms.2910]
+name = "在山裡頭"
+description = """
+你站在這座山的裡面。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2910.exits.down]
+description = "The shaft continues down.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2913
+[rooms.2910.exits.east]
+description = "You see guard barracks.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2911
+[rooms.2910.exits.up]
+description = "Entrance to the mountain.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2906
+[rooms.2910.exits.west]
+description = "You see guard barracks.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2912
+[[rooms.2910.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2910.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.2911]
+name = "守衛室"
+description = """
+你站在一個裡頭有床鋪、桌子與火蠑螈的房間。他們正在他們房間的牆壁上
+作畫，畫的內容是描述他們戰鬥的場景。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2911.exits.west]
+description = "You see the dark tunnel shaft.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2910
+[[rooms.2911.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2911.resets.mobiles.equipment]]
+vnum = 2904
+wear_loc = "WIELD"
+[[rooms.2911.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2911.resets.mobiles.equipment]]
+vnum = 2904
+wear_loc = "WIELD"
+[[rooms.2911.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2911.resets.mobiles.equipment]]
+vnum = 2904
+wear_loc = "WIELD"
+
+[rooms.2912]
+name = "守衛室"
+description = """
+你站在一個裡頭有床鋪、桌子與火蠑螈的房間。他們正在他們房間的牆壁上
+作畫，畫的內容是敘述他們火蠑螈族偉大的首領。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2912.exits.east]
+description = "You see the shaft in the mountain.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2910
+[[rooms.2912.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2912.resets.mobiles.equipment]]
+vnum = 2905
+wear_loc = "WIELD"
+[[rooms.2912.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2912.resets.mobiles.equipment]]
+vnum = 2904
+wear_loc = "WIELD"
+[[rooms.2912.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2912.resets.mobiles.equipment]]
+vnum = 2905
+wear_loc = "WIELD"
+
+[rooms.2913]
+name = "在山裡面"
+description = """
+你站在這座山的裡頭。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2913.exits.down]
+description = "The shaft continues down.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2916
+[rooms.2913.exits.north]
+description = "You see a large storage room.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2914
+[rooms.2913.exits.south]
+description = "You see workers' quarters.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2915
+[rooms.2913.exits.up]
+description = "You see the dark mountain shaft.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2910
+
+[rooms.2914]
+name = "儲藏室"
+description = """
+這個房間中沒有什麼特別的物品。只有一些箱子與火蠑螈工人在裡面。也有
+一些亂丟的垃圾都堆在這個房間中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2914.exits.south]
+description = "You see the dark mountain shaft.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2913
+[[rooms.2914.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2914.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2914.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.2915]
+name = "工人的住處"
+description = """
+你現在正站在火蠑螈工人的住處。有一些工人還在裡面休息。房間裡頭十分
+的雜亂而且沒有一件東西你感興趣的。或許是昨晚他們在這邊開慶祝會把所有的
+東西都給搞亂了吧！
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2915.exits.north]
+description = "You see the dark mountain shaft.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2913
+[[rooms.2915.resets.mobiles]]
+vnum = 2906
+limit = 4
+[[rooms.2915.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+[[rooms.2915.resets.mobiles]]
+vnum = 2906
+limit = 4
+[[rooms.2915.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+[[rooms.2915.resets.mobiles]]
+vnum = 2906
+limit = 4
+[[rooms.2915.resets.mobiles]]
+vnum = 2906
+limit = 4
+[[rooms.2915.resets.objects]]
+vnum = 2906
+
+[rooms.2916]
+name = "在山的底部"
+description = """
+你正站在這座山的底部。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2916.exits.north]
+description = "You see the dark tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2917
+[rooms.2916.exits.up]
+description = "You see the mountain shaft.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2913
+[[rooms.2916.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2916.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.2917]
+name = "通道"
+description = """
+你站在一個空氣十分乾燥、黑暗的通道中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2917.exits.north]
+description = "You see a bend in the tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2918
+[rooms.2917.exits.south]
+description = "You see the bottom of the shaft.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2916
+[[rooms.2917.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2917.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2917.resets.mobiles.equipment]]
+vnum = 2904
+wear_loc = "WIELD"
+
+[rooms.2918]
+name = "通道的轉彎處"
+description = """
+你站在一個黑暗的通道中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2918.exits.east]
+description = "The tunnel continues into the dark.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2919
+[rooms.2918.exits.south]
+description = "You see that the tunnel leads back.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2917
+[[rooms.2918.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2918.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+[[rooms.2918.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2918.resets.mobiles.equipment]]
+vnum = 2904
+wear_loc = "WIELD"
+
+[rooms.2919]
+name = "通道"
+description = """
+你站在一個通道中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2919.exits.east]
+description = "You see a small fire newt house.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2920
+[rooms.2919.exits.north]
+description = "The tunnel continues into the dark.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2921
+[rooms.2919.exits.west]
+description = "You see a bend in the tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2918
+[[rooms.2919.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2919.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+[[rooms.2919.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2919.resets.mobiles.equipment]]
+vnum = 2905
+wear_loc = "WIELD"
+
+[rooms.2920]
+name = "火蠑螈的住所"
+description = """
+你站在火蠑螈的住所裡面。有一隻火蠑螈媽媽正在裡頭照顧它的小孩。這個
+房間擠滿了許多火蠑螈寶寶，而且他們看起來好像都很無聊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2920.exits.west]
+description = "You see the dark tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2919
+[[rooms.2920.resets.mobiles]]
+vnum = 2908
+limit = 2
+[[rooms.2920.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2920.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2920.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2920.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2920.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2920.resets.mobiles]]
+vnum = 2909
+limit = 12
+
+[rooms.2921]
+name = "通道"
+description = """
+你站在一個通道中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2921.exits.north]
+description = "The tunnel continues on.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2923
+[rooms.2921.exits.south]
+description = "The dark tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2919
+[rooms.2921.exits.west]
+description = "You see a fire newt house.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2922
+[[rooms.2921.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2921.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2921.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2921.resets.mobiles.equipment]]
+vnum = 2905
+wear_loc = "WIELD"
+
+[rooms.2922]
+name = "火蠑螈之住所"
+description = """
+你站在火蠑螈的住所裡面。有一隻火蠑螈媽媽正在跟它的小孩玩。這個房間
+中一些火蠑螈寶寶竟然尿尿在房間裡面，真是噁心...！
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2922.exits.east]
+description = "You see the dark tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2921
+[[rooms.2922.resets.mobiles]]
+vnum = 2908
+limit = 2
+[[rooms.2922.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2922.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2922.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2922.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2922.resets.mobiles]]
+vnum = 2909
+limit = 12
+[[rooms.2922.resets.mobiles]]
+vnum = 2909
+limit = 12
+
+[rooms.2923]
+name = "通道"
+description = """
+你站在一個通道中。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "FIELD"
+[rooms.2923.exits.east]
+description = "You see a fire newt temple.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2927
+[rooms.2923.exits.south]
+description = "You see the dark tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2921
+[rooms.2923.exits.west]
+description = "You see the entrance to the town hall.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2924
+[[rooms.2923.resets.mobiles]]
+vnum = 2904
+limit = 10
+[[rooms.2923.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+[[rooms.2923.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2923.resets.mobiles.equipment]]
+vnum = 2904
+wear_loc = "WIELD"
+[[rooms.2923.resets.mobiles]]
+vnum = 2905
+limit = 6
+[[rooms.2923.resets.mobiles]]
+vnum = 2907
+limit = 2
+[[rooms.2923.resets.mobiles.equipment]]
+vnum = 2905
+wear_loc = "WIELD"
+[[rooms.2923.resets.mobiles]]
+vnum = 2907
+limit = 2
+[[rooms.2923.resets.mobiles.equipment]]
+vnum = 2905
+wear_loc = "WIELD"
+
+[rooms.2924]
+name = "通往市政廳的入口"
+description = """
+你站在火蠑螈族群「市政廳」的入口。這個房間相當大而且華麗。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2924.exits.east]
+description = "You see the dark tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2923
+[rooms.2924.exits.west]
+description = "You see a waiting room. \n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2925
+[[rooms.2924.resets.mobiles]]
+vnum = 2910
+limit = 2
+[[rooms.2924.resets.mobiles.equipment]]
+vnum = 2906
+wear_loc = "BODY"
+[[rooms.2924.resets.mobiles.equipment]]
+vnum = 2907
+wear_loc = "WIELD"
+
+[rooms.2925]
+name = "候傳室"
+description = """
+你站在市政廳的候傳室裡面。有一扇巨大的門在你的西邊。這間房間的牆壁
+上畫著一些有關這個火蠑螈村落的歷史。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2925.exits.east]
+description = "You see the entrance to the town hall.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2924
+[rooms.2925.exits.west]
+description = "You see a large office.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2926
+[[rooms.2925.resets.mobiles]]
+vnum = 2911
+limit = 4
+[[rooms.2925.resets.mobiles.equipment]]
+vnum = 2906
+wear_loc = "BODY"
+[[rooms.2925.resets.mobiles.equipment]]
+vnum = 2907
+wear_loc = "WIELD"
+[[rooms.2925.resets.mobiles]]
+vnum = 2911
+limit = 4
+[[rooms.2925.resets.mobiles.equipment]]
+vnum = 2906
+wear_loc = "BODY"
+[[rooms.2925.resets.mobiles.equipment]]
+vnum = 2907
+wear_loc = "WIELD"
+
+[rooms.2926]
+name = "首領的辦公室"
+description = """
+你站在火蠑螈首領的辦公室中。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "FIELD"
+[rooms.2926.exits.east]
+description = "You see the waiting room.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2925
+[[rooms.2926.resets.mobiles]]
+vnum = 2912
+limit = 1
+[[rooms.2926.resets.mobiles.equipment]]
+vnum = 2911
+wear_loc = "WIELD"
+[[rooms.2926.resets.mobiles.equipment]]
+vnum = 2912
+wear_loc = "BODY"
+
+[rooms.2927]
+name = "在神殿外"
+description = """
+你站在火蠑螈神殿的外面。這個神殿有著雄偉的拱型結構與尖塔。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2927.exits.east]
+description = "You see the entrance to the fire newt temple.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2928
+[rooms.2927.exits.west]
+description = "You see the dark tunnel.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2923
+[[rooms.2927.resets.mobiles]]
+vnum = 2910
+limit = 2
+[[rooms.2927.resets.mobiles.equipment]]
+vnum = 2906
+wear_loc = "BODY"
+[[rooms.2927.resets.mobiles.equipment]]
+vnum = 2907
+wear_loc = "WIELD"
+
+[rooms.2928]
+name = "神殿的入口"
+description = """
+你站在進入神殿的入口前。這座神殿十分的乾淨。整個座位排列的十分的整
+齊，禮拜室的空間也相當的大。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2928.exits.east]
+description = "You see the door, that leads to the inside of the temple.\n"
+keywords = "door"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 2929
+[rooms.2928.exits.west]
+description = "You see the outside of the temple.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 2927
+[[rooms.2928.resets.mobiles]]
+vnum = 2911
+limit = 4
+[[rooms.2928.resets.mobiles.equipment]]
+vnum = 2906
+wear_loc = "BODY"
+[[rooms.2928.resets.mobiles.equipment]]
+vnum = 2907
+wear_loc = "WIELD"
+[[rooms.2928.resets.mobiles]]
+vnum = 2911
+limit = 4
+[[rooms.2928.resets.mobiles.equipment]]
+vnum = 2906
+wear_loc = "BODY"
+[[rooms.2928.resets.mobiles.equipment]]
+vnum = 2907
+wear_loc = "WIELD"
+
+[rooms.2929]
+name = "神殿的內部"
+description = """
+你站在火蠑螈神殿的內部。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2929.exits.down]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 2930
+[rooms.2929.exits.west]
+description = ""
+keywords = "door"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 2928
+[[rooms.2929.programs]]
+trigger = "room_command"
+argument = "play flute"
+script = """
+if is_equ_obj($n) == 1372
+or is_equ_obj($n) == 5217
+or is_equ_obj($n) == 5311
+	if rmobcount(2916) > 0
+		if is_qmark(kid-firenewt) == firenewt_quest 100000
+			if is_equ_obj($n) == 1372
+				echoat $n 你開始吹奏 金色魔笛(golden flute) ....
+				mod_qmark kid-firenewt firenewt_quest v0 = 1
+			endif
+			if is_equ_obj($n) == 5217
+			or is_equ_obj($n) == 5311
+				echoat $n 你開始吹奏 銀笛(silver flute) ....
+				mod_qmark kid-firenewt firenewt_quest v0 = 2
+			endif
+			purge $n flute
+			echoat $n 身上的笛子忽然消失了....
+			force kid-firenewt mpgroup $n self 1 1
+			force $n protect kid-firenewt
+			force kid-firenewt mpdef_rembch $n
+		else
+			echoat $n 這隻羊已經不受你的控制了。
+		endif
+	else
+		echoat $n 這裡沒有任何的羊隻。
+	endif
+else
+	if is_inv_obj($n) == 1372
+	or is_inv_obj($n) == 5217
+	or is_inv_obj($n) == 5311
+		echoat $n 你必須將笛子裝備起來。
+	else
+		echoat $n 你身上並沒有任何笛子。
+	endif
+endif
+"""
+[[rooms.2929.resets.mobiles]]
+vnum = 2913
+limit = 1
+[[rooms.2929.resets.mobiles.equipment]]
+vnum = 2913
+wear_loc = "WIELD"
+
+[rooms.2930]
+name = "門前的房間"
+description = """
+你站在一扇大門之前。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FIELD"
+[rooms.2930.exits.east]
+description = "You see two large doors.\n"
+keywords = "doors"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 2931
+[rooms.2930.exits.up]
+description = "You see the inside of the temple.\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 2929
+[[rooms.2930.resets.mobiles]]
+vnum = 2914
+limit = 2
+[[rooms.2930.resets.mobiles.inventory]]
+vnum = 2914
+[[rooms.2930.resets.mobiles]]
+vnum = 2914
+limit = 2
+[[rooms.2930.resets.mobiles.inventory]]
+vnum = 2914
+
+[rooms.2931]
+name = "育嬰室"
+description = """
+你站在一個放著許多蛋的房間。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "FIELD"
+[rooms.2931.exits.west]
+description = "You see two large doors.\n"
+keywords = "doors"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 2930
+[[rooms.2931.resets.objects]]
+vnum = 2915

@@ -1,0 +1,4788 @@
+[area]
+name = "死亡谷"
+identity = "dead"
+builders = "Rex"
+translator = "Pluto"
+modifier = "Pluto"
+vnum_start = 8930
+vnum_end = 9099
+security = 1
+recall = 4580
+death = 401
+
+[mobiles.9000]
+keywords = "ephraim lord dead"
+short_description = "死亡之王 - 艾佛瑞(Ephraim - Lord of Death)"
+long_description = "艾佛瑞(Ephraim) - 死亡谷的主宰，是人們心中的夢魘。\n"
+description = """
+他是人人懼怕的死亡之王，控制著人們的懼怕與驚恐。
+"""
+act_flags = ["NPC", "SENTINEL", "PRACTICE", "CRITICAL", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = -1000
+level = 60
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 30
+mod_damroll = -50
+mod_ac = 700
+mod_svs = -50
+dodge = -1000
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "BLOODY"]
+spec_flags = ["NO_BLIND", "HALF_MAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.9000.applies]]
+type = "SAVING_BREATH"
+degree = -100
+[[mobiles.9000.applies]]
+type = "SAVING_EARTH"
+degree = -50
+[[mobiles.9000.applies]]
+type = "SAVING_WIND"
+degree = -50
+[[mobiles.9000.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9000.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == dead_enemy
+	say 曾經擊敗過我的 $n ，竟然又來送死了！
+	grin $n
+	c sleep $n
+	mpnowait
+	c 3 whirlwind
+	mpnowait
+	break
+endif
+if ispc($n)
+	tell $n 歡迎來到你的人生最終路途，只是我很驚訝你能夠到達這邊。
+	tell $n 或許我應該要高興，或許你可以加入我們死亡谷的行列。
+	tell $n 或是....享受死亡的歡愉！
+endif
+"""
+[[mobiles.9000.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != dead_enemy
+	mpadd_all_qmark $n dead_enemy 500 0 0 0 1 1
+endif
+if hitprcnt($i) < 70
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+if hitprcnt($i) < 50
+	mpat 5 c 'double heal'
+	mpnowait
+endif
+if hitprcnt($i) < 30
+	mpat 5 c 3 'double heal'
+	mpnowait
+endif
+say 死吧！你必須迎接死亡之路....！
+if rand(40)
+	c 'demon tremor'
+	mpnowait
+endif
+if ispc($r)
+	if rand(20)
+		c curse $r
+		mpnowait
+		c curse $r
+		mpnowait
+	endif
+	if rand(20)
+		c poison $r
+		mpnowait
+		c blindness $r
+		mpnowait
+	endif
+	if rand(40)
+		if rand(50)
+			c lifesteal $r
+			mpnowait
+			c lifesteal $r
+			mpnowait
+		else
+			c soulsteal $r
+			mpnowait
+			c soulsteal $r
+			mpnowait
+		endif
+	endif
+	if rand(50)
+		c 'energy drain' $r
+		mpnowait
+		c 'energy drain' $r
+		mpnowait
+	else
+		c powerball $r
+		mpnowait
+	endif
+endif
+if rand(30)
+	if mobcount(9021) > 0
+		if insameroom(guardian-dead)
+			if is_qmark($i) != dead_ephraim_groupfight
+				mpadd_qmark self dead_ephraim_groupfight -1 0 0 0 1 0
+				yell 我的死亡守衛，請過來幫助我啊！
+				mpgroup self guardian-dead 1 0
+				mpforce guardian-dead rescue ephraim
+			endif
+		else
+			yell 我的死亡守衛，請過來幫助我啊！
+			mptransfer guardian-dead
+			mpgroup self guardian-dead 1 0
+			mpforce guardian-dead rescue ephraim
+		endif
+	endif
+endif
+if isaffected($i) & 16777216
+	mpdis_magic self 'seal magic'
+	yell 封鎖魔法對我來說是沒有用的！哈....哈....！
+	c 'seal magic' $r
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	if hitprcnt($i) < 30
+		c sanctuary
+		mpnowait
+	endif
+endif
+if isaffected($i) & 268435456
+	mpdis_magic self paralyze
+endif
+"""
+[[mobiles.9000.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+shout 死亡是永恆的，就憑你 $n 是沒有辦法殺死我的....！
+tell $n 我會再去找你，你永遠不能擺脫死亡的....！
+if is_qmark($n) != dead_enemy
+	mpadd_all_qmark $n dead_enemy 500 0 0 0 1 1
+endif
+if is_qmark($n) == dead_echo
+	mpecho $I 的身體緩緩的消失了....。
+	mpecho 一把光芒萬丈的劍漸漸的浮現出來....！
+	mpdel_qmark $n dead_echo
+	mpoload 9011 38 floor
+	mppurge self
+endif
+if pcnum($) > 20
+	mpgreward exp $n 30 5000
+else
+	if pcnum($) > 15
+		mpgreward exp $n 30 5500
+	else
+		if pcnum($) > 10
+			mpgreward exp $n 30 6000
+		else
+			if pcnum($) > 5
+				mpgreward exp $n 30 6500
+			else
+				mpgreward exp $n 30 7000
+			endif
+		endif
+	endif
+endif
+"""
+
+[mobiles.9001]
+keywords = "ghost"
+short_description = "浮游靈(wandering ghost)"
+long_description = "浮游靈(wandering ghost)飄浮在這邊到處找替身。\n"
+description = """
+他已經是快要死亡的精靈了。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = 0
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Ghost"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9001.applies]]
+type = "EXP"
+degree = 100
+[[mobiles.9001.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+c 'magic missile'
+mpnowait
+"""
+
+[mobiles.9002]
+keywords = "vampire"
+short_description = "吸血鬼(vampire)"
+long_description = "萬人皆懼的吸血鬼(vampire)正朝向你飛過來。\n"
+description = """
+他看起來好像很餓，會不會是把你當作晚餐了？
+"""
+act_flags = ["NPC", "AGGRESSIVE", "HARD_DIS"]
+affected_flags = []
+alignment = -700
+level = 42
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Vampire"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9002.applies]]
+type = "EXP"
+degree = 110
+[[mobiles.9002.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+c 'lightning bolt'
+mpnowait
+"""
+
+[mobiles.9003]
+keywords = "skeleton"
+short_description = "骷髏(skeleton)"
+long_description = "這具可憐的骷髏(skeleton)正在找尋替身再生。\n"
+description = """
+他的外型看起來生前應該是人類，但是他已經死了。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -700
+level = 41
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9003.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9004]
+keywords = "necri-dead"
+short_description = "耐克瑞(Necri)"
+long_description = "耐克瑞(Necri)，死亡之王的身邊忠僕。\n"
+description = """
+他是一隻全身雪白，你從未見過的古怪生物。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "HARD_DIS", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -900
+level = 51
+mod_hitplus = 1500
+mod_mana = 0
+mod_hitroll = 20
+mod_damroll = -10
+mod_ac = 250
+mod_svs = -3
+dodge = -256
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.9004.applies]]
+type = "EXP"
+degree = -500
+[[mobiles.9004.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if inroom($i) == 9059
+	if insameroom(shore-dead)
+		mpadd_qmark self dead_shore_relife 30 0 0 0 1 1
+		mpgroup shore-dead self 0 1
+	endif
+endif
+"""
+[[mobiles.9004.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+if isaffected($i) & 16777216
+	mpdis_magic self all
+	c 'seal magic' $r
+	mpnowait
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	if hitprcnt($i) < 30
+		c sanctuary
+		mpnowait
+	endif
+endif
+if isaffected($i) & 268435456
+	mpdis_magic self paralyze
+endif
+"""
+[[mobiles.9004.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if rand(50)
+	c powerball
+	mpnowait
+else
+	c 'demon tremor'
+	mpnowait
+endif
+"""
+[[mobiles.9004.programs]]
+trigger = "hitprcnt_prog"
+argument = "30"
+script = """
+if rand(50)
+	c 3 powerball $r
+	mpnowait
+else
+	c 3 fireball
+	mpnowait
+endif
+"""
+[[mobiles.9004.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($i) != dead_shore_relife
+	if pcnum($) > 15
+		mpgreward exp $n 30 1000
+	else
+		if pcnum($) > 10
+			mpgreward exp $n 30 1200
+		else
+			if pcnum($) > 5
+				mpgreward exp $n 30 1400
+			else
+				mpgreward exp $n 30 1600
+			endif
+		endif
+	endif
+endif
+"""
+
+[mobiles.9005]
+keywords = "undead warrior"
+short_description = "不死戰士(undead warrior)"
+long_description = "一隻身軀殘缺不全的不死戰士(undead warrior)在這邊。\n"
+description = """
+他是死亡谷的居民。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -200
+level = 46
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9005.applies]]
+type = "EXP"
+degree = 60
+
+[mobiles.9006]
+keywords = "undead magi"
+short_description = "不死法師(undead magi)"
+long_description = "不死法師(undead magi)四周環繞著闇黑的魔力。\n"
+description = """
+他是不死族的其中一份子。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -410
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+special_function = "spec_cast_mage"
+[[mobiles.9006.applies]]
+type = "EXP"
+degree = 80
+[[mobiles.9006.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+c colour
+mpnowait
+"""
+
+[mobiles.9007]
+keywords = "undead priest"
+short_description = "不死牧師(undead priest)"
+long_description = "不死牧師(undead priest)正在尋找可以超渡的對象。\n"
+description = """
+不死牧師的力量來源來自於死亡之王。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -420
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+special_function = "spec_cast_cleric"
+[[mobiles.9007.applies]]
+type = "EXP"
+degree = 85
+[[mobiles.9007.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+c harm
+mpnowait
+"""
+
+[mobiles.9008]
+keywords = "shore-dead guardian"
+short_description = "索爾(Shore)"
+long_description = "索爾(Shore) - 死亡谷的守衛。\n"
+description = """
+他身體的一部份是人類，但是他看起來更像是鬼魂。索爾為死亡之王看守死亡谷的入口。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -800
+level = 50
+mod_hitplus = 1500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = -10
+mod_ac = 300
+mod_svs = 0
+dodge = -50
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Ghost"
+class = ["WARRIOR", "MAGE", "THIEF", "BLOODY"]
+spec_flags = ["EXPERT"]
+[[mobiles.9008.applies]]
+type = "EXP"
+degree = -500
+[[mobiles.9008.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9008.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+or isimmort($n)
+	break
+endif
+hunt $n
+mpnowait
+c fireball $n
+mpnowait
+"""
+[[mobiles.9008.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+c 'demon tremor'
+mpnowait
+c heal
+mpnowait
+if rand(50)
+	if insameroom(necri)
+		mpgroup necri self 0 1
+		mpforce necry protect shore
+	else
+		if is_qmark($i) == dead_Summon_Necri
+			if is_qmark($i) < dead_Summon_Necri 100005
+  				say 耐克瑞(Necri)，前來幫助我吧！
+  				mptransfer necri
+  				mpgroup necry self 0 1
+  				mpforce necri protect shore
+   				mpforce necri mpkill $n
+   				mpmod_qmark self dead_Summon_Necri v0 + 1
+   			else
+   				say 耐克瑞(Necri)，前來幫助我吧！
+   				mpecho 雖然$I這麼喊叫著，卻不見耐克瑞(Necri)前來幫忙...
+   			endif
+   		else
+   			mpadd_qmark self dead_Summon_Necri -1 0 0 0 1 1
+   		  	say 耐克瑞(Necri)，前來幫助我吧！
+  			mptransfer necri
+  			mpgroup necry self 0 1
+  			mpforce necri protect shore
+   			mpforce necri mpkill $n
+   		endif
+   	endif
+endif
+"""
+[[mobiles.9008.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+yell 你能夠擊敗我，但是永遠無法擊敗「死亡」！
+yell 因為那是所有生物的命運，哈哈哈哈！
+mpforcer 9059 modrvt t0 = 30
+if is_qmark($i) != dead_shore_relife
+	if pcnum($) > 15
+        	mpgreward exp $n 30 1200
+	else
+        	if pcnum($) > 10
+                	mpgreward exp $n 30 1500
+        	else
+                	if pcnum($) > 5
+                        	mpgreward exp $n 30 1800
+                	else
+                        	mpgreward exp $n 30 2000
+			endif
+                endif
+        endif
+endif
+"""
+
+[mobiles.9009]
+keywords = "skeleton drake"
+short_description = "骷髏龍(Skeleton Drake)"
+long_description = "死亡谷中最可怕的生物 - 骷髏龍(Skeleton Drake)站在這邊。\n"
+description = """
+雖然這只是一具骷髏，但是這隻龍生前似乎有著許多可怕的魔法技巧。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -1000
+level = 54
+mod_hitplus = 1500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 100
+mod_svs = -3
+dodge = -105
+mod_pp = 15
+gold = -1
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["EXPERT"]
+special_function = "spec_breath_frost"
+[[mobiles.9009.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+skilldrv multihit $n
+"""
+[[mobiles.9009.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if pcnum($) > 15
+	mpgreward exp $n 30 300
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 400
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 500
+		else
+			mpgreward exp $n 30 600
+		endif
+	endif
+endif
+"""
+
+[mobiles.9010]
+keywords = "spirit"
+short_description = "靈魂(spirit)"
+long_description = "一具可憐的靈魂(spirit)在這邊飄游。\n"
+description = """
+你幾乎不能看出這具靈魂的外型。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = 0
+level = 40
+mod_hitplus = 5
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 1
+dodge = 3
+mod_pp = 7
+gold = 0
+sex = "neutral"
+race = "Ghost"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9010.applies]]
+type = "EXP"
+degree = 80
+[[mobiles.9010.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+c 'lightning bolt'
+mpnowait
+"""
+
+[mobiles.9011]
+keywords = "servant undead"
+short_description = "不死奴僕(undead servant)"
+long_description = "不死奴僕(undead servant)忽然向你伸出他的舌頭。\n"
+description = """
+不死奴僕當死亡之王有需要的時候，就必須立刻為其服務。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -700
+level = 47
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = -20
+mod_ac = 150
+mod_svs = -3
+dodge = -204
+mod_pp = 15
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+special_function = "spec_cast_mage"
+[[mobiles.9011.applies]]
+type = "EXP"
+degree = 100
+[[mobiles.9011.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+c flamestrike
+mpnowait
+c 'lightning bolt'
+mpnowait
+"""
+
+[mobiles.9012]
+keywords = "dark dweller"
+short_description = "黑暗居民(dark dweller)"
+long_description = "黑暗居民(dark dweller)口中喃喃唸著你聽不懂的語言。\n"
+description = """
+當你看到他們，忽然他們就變成了一團煙霧，然後包圍著你。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = []
+alignment = 0
+level = 47
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 0
+mod_ac = 0
+mod_svs = -10
+dodge = -205
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Ghost"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+special_function = "spec_cast_mage"
+
+[mobiles.9013]
+keywords = ""
+short_description = "艾佛瑞魔音(Echo of Ephraim)"
+long_description = "你聽到死亡之王艾佛瑞在黑暗中的魔音(Echo of Ephraim)。\n"
+description = """
+你完全不知到艾佛瑞在哪裡，你只能夠被這些魔音給吸引，往死亡大地更黑暗、更可怕的
+內地而去。在黑暗中你似乎可以看到巨大的身軀就在你眼前，那是死亡之王嗎？
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "HIDE", "MUTE"]
+alignment = -1000
+level = 55
+mod_hitplus = 1000
+mod_mana = -1000
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Element"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+special_function = "spec_cast_adept"
+[[mobiles.9013.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9013.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if pcnum($) > 0
+	if rand(50)
+		mpkill $r
+	else
+		c powerball $r
+		mpnowait
+	endif
+endif
+"""
+[[mobiles.9013.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == dead_echo
+else
+	mpadd_qmark $n dead_echo -1 0 0 0 0 1
+endif
+if pcnum($) > 15
+	mpgreward exp $n 30 500
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 600
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 700
+		else
+			mpgreward exp $n 30 800
+		endif
+	endif
+endif
+mpechoat $n 圍繞在你身邊討厭的魔音終於消失了。
+mppurge self
+"""
+
+[mobiles.9014]
+keywords = "undead mercenary"
+short_description = "不死傭兵(undead mercenary)"
+long_description = "不死傭兵(undead mercenary)可以說是不死家族中最具戰鬥性的。\n"
+description = """
+他看起來十分的好戰。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED"]
+alignment = -200
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 10
+mod_ac = 0
+mod_svs = -10
+dodge = -200
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+special_function = "spec_cast_mage"
+[[mobiles.9014.applies]]
+type = "EXP"
+degree = 60
+
+[mobiles.9015]
+keywords = "black flame"
+short_description = "黑火(black flame)"
+long_description = "有一把有生命且發出黑色光芒的火焰(flame)在這邊飄浮著。\n"
+description = """
+他發出了黑色的光芒。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = 0
+level = 51
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 10
+mod_ac = 100
+mod_svs = -3
+dodge = -250
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Element"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+special_function = "spec_breath_fire"
+[[mobiles.9015.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9015.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if rand(30)
+	c 3 fireball
+	mpnowait
+endif
+if rand(30)
+	c 3 flamestrike
+	mpnowait
+else
+	c 3 'burning hands'
+	mpnowait
+endif
+"""
+[[mobiles.9015.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if pcnum($) > 15
+        mpgreward exp $n 30 300
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 350
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+"""
+
+[mobiles.9016]
+keywords = "undead necromancer"
+short_description = "不死咒術師(undead necromancer)"
+long_description = "不死咒術師(undead necromancer)對你使用了他的黑暗法術。\n"
+description = """
+他擁有所有與死亡相關法術的力量。
+"""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = ["DETECT_INVIS", "INFRARED"]
+alignment = -520
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = -10
+dodge = -200
+mod_pp = 23
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+special_function = "spec_cast_mage"
+[[mobiles.9016.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9017]
+keywords = "tyr"
+short_description = "泰爾(Tyr)"
+long_description = "泰爾(Tyr) - 曾經是龍族大王之一，已經在過去的戰爭中死去。\n"
+description = """
+你最好不要攻擊他....！
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 55
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = 100
+mod_svs = 5
+dodge = 400
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Dragon"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT"]
+[[mobiles.9017.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9017.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+if rand(50)
+	c paralyze
+	mpnowait
+else
+	c 'lighning bolt'
+	mpnowait
+endif
+"""
+[[mobiles.9017.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9018) != 0
+or mobcount(9019) != 0
+	mpecho $I 身上的龍骨戰甲(dragon armor)忽然消失了....！
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+"""
+
+[mobiles.9018]
+keywords = "yalak"
+short_description = "雅拉克(Yalak)"
+long_description = "雅拉克(Yalak) - 曾經是龍族大王之一，正在這邊孵蛋。\n"
+description = """
+雅拉克曾經也是龍族大王之一。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 56
+mod_hitplus = 2500
+mod_mana = 0
+mod_hitroll = 20
+mod_damroll = 10
+mod_ac = -100
+mod_svs = 3
+dodge = 180
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Dragon"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_CURSE", "HALF_MAGIC", "EXPERT"]
+[[mobiles.9018.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9018.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if rand(20)
+	c parylyze
+	mpnowait
+endif
+if rand(30)
+	c heal
+	mpnowait
+endif
+if rand(40)
+	c fireball
+	mpnowait
+endif
+"""
+[[mobiles.9018.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9017) != 0
+or mobcount(9019) != 0
+	mpecho $I 身上的龍骨戰甲(dragon armor)忽然消失了....！
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+"""
+
+[mobiles.9019]
+keywords = "illian"
+short_description = "伊立安(Illian)"
+long_description = "伊立安(Illian) - 曾經是龍族大王之一，有著特殊的自然魔法。\n"
+description = """
+他擁有最純正的自然魔法，你應該可以感受得到。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 56
+mod_hitplus = 2000
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = -100
+mod_svs = 3
+dodge = 100
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Dragon"
+class = ["MAGE", "BLOODY"]
+spec_flags = ["NO_CURSE", "HALF_MAGIC", "EXPERT"]
+[[mobiles.9019.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9019.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if rand(20)
+	c paralyze
+	mpnowait
+endif
+if rand(30)
+	c fireball
+	mpnowait
+endif
+if rand(40)
+	c 'double heal'
+	mpnowait
+endif
+"""
+[[mobiles.9019.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if mobcount(9018) != 0
+or mobcount(9017) != 0
+	mpecho $I 身上的龍骨戰甲(dragon armor)忽然消失了....！
+	mpjunk dragon
+endif
+if pcnum($) > 15
+        mpgreward exp $n 30 200
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 300
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 400
+                else
+                        mpgreward exp $n 30 500
+                endif
+        endif
+endif
+"""
+
+[mobiles.9020]
+keywords = "dracos king lich"
+short_description = "巫妖之王 - 卓克(Dracos the Lich King)"
+long_description = "巫妖之王 - 卓克(Dracos the Lich King)正靜靜的看著你的到來。\n"
+description = """
+他真的非常可怕！想要試試看嗎？
+"""
+act_flags = ["NPC", "SENTINEL", "PRACTICE"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -1000
+level = 60
+mod_hitplus = 0
+mod_mana = 2000
+mod_hitroll = 10
+mod_damroll = 0
+mod_ac = 300
+mod_svs = -10
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Undead"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT", "NO_CRAZY"]
+[[mobiles.9020.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9020.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(50)
+	grin
+	c powerball
+	mpnowait
+	c 'demon tremor'
+	mpnowait
+else
+	c 'double heal'
+	mpnowait
+	c heal
+	mpnowait
+endif
+if rand(50)
+	grin
+	if ispc($r)
+		c 3 'energy drain' $r
+		mpnowait
+	endif
+		if rand(50)
+			c soulsteal $r
+			mpnowait
+		else
+			c lifesteal $r
+			mpnowait
+		endif
+	endif
+endif
+"""
+[[mobiles.9020.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+if hitprcnt($i) < 30
+	mpecho $I 的身體忽然開始扭曲，似乎開始變形了。
+	mpecho $I 你感到他對你的攻勢越來越猛烈。
+	skilldrv multihit $n
+	skilldrv multihit $n
+	skilldrv heavyhit $n
+	if rand(30)
+		say 死亡谷的死氣，幫助我恢復戰鬥力吧！
+		mpat 5 c 2 'double heal'
+		mpnowait
+	endif
+	if hitprcnt($i) < 50
+		c 'double heal'
+		mpnowait
+		c powerball
+		mpnowait
+		c fireball
+		mpnowait
+	endif
+endif
+"""
+[[mobiles.9020.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if rand(50)
+	c fireball
+	mpnowait
+endif
+if rand(50)
+	c flamestrike
+	mpnowait
+endif
+if rand(50)
+	c 3 'burning hands'
+	mpnowait
+endif
+"""
+[[mobiles.9020.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if pcnum($) > 15
+        mpgreward exp $n 30 1000
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 1500
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 2000
+                else
+                        mpgreward exp $n 30 3000
+                endif
+        endif
+endif
+"""
+
+[mobiles.9021]
+keywords = "guardian-dead guardian death"
+short_description = "死亡守衛(Guardian of Death)"
+long_description = "死亡之王最器重的幽靈 - 死亡守衛(Guardian of Death)。\n"
+description = """
+他幾乎擁有每一種職業的技能。
+"""
+act_flags = ["NPC", "SENTINEL", "WIMPY", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "REGENERACY", "REFLEXION"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = -1000
+level = 50
+mod_hitplus = 5000
+mod_mana = 0
+mod_hitroll = 30
+mod_damroll = 10
+mod_ac = 200
+mod_svs = -3
+dodge = -150
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "SHOT_ARROW", "BLOODY"]
+spec_flags = ["NO_BLIND", "HALF_MAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.9021.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9021.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+if rand(20)
+	mpoload 2436
+	wear sword
+	flaming
+	mpnowait
+	flaming
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(25)
+	mpoload 2436
+	wear sword
+	earth
+	mpnowait
+	earth
+	mpnowait
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(33)
+	mpoload 2436
+	wear sword
+	circular
+	mpnowait
+	circular
+	mpnowait
+	remove sword
+	mpjunk sword
+	wear slasher
+endif
+if rand(40)
+	mpoload 3020
+	wear dagger
+	mpdef_rembch $n
+	mpgoto $n
+	bs $n
+	mpnowait
+	remove dagger
+	mpjunk dagger
+	mpdef_rembch null-tar
+	wear slasher
+else
+	mpoload 1705
+	mpoload 1702
+	rem slasher
+	wear bow
+	wear arrow
+	met
+	mpnowait
+	met
+	mpnowait
+	remove bow
+	mpjunk bow
+	remove arrow
+	mpjunk arrow
+	wear slasher
+endif
+"""
+[[mobiles.9021.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+skilldrv multihit $n
+"""
+[[mobiles.9021.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) <= dead_guardian 100005
+	mpecho 你看到 $I 手上的那把劍飛到空中，然後忽然消失了....。
+	mpjunk all.slasher
+	if is_qmark($n) == dead_guardian
+		mpmod_qmark $n dead_guardian v0 + 1
+	else
+		mpadd_qmark $n dead_guardian -1 1 0 0 0 1
+	endif
+else
+	mpecho 你看到 $I 手上的那把劍飛到空中，卻又掉了下來....。
+	mpdel_qmark $n dead_guardian v0 - 5
+endif
+if pcnum($) > 15
+	mpgreward exp $n 30 1000
+else
+	if pcnum($) > 10
+		mpgreward exp $n 30 1500
+	else
+		if pcnum($) > 5
+			mpgreward exp $n 30 2000
+		else
+			mpgreward exp $n 30 3000
+		endif
+	endif
+endif
+"""
+
+[mobiles.9022]
+keywords = "unfortunate soul poorsoul"
+short_description = "不幸之靈(unfortunate soul)"
+long_description = ""
+description = ""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = []
+alignment = 0
+level = 46
+mod_hitplus = -10
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "male"
+race = "Ghost"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9022.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9023]
+keywords = "skeleton fighter"
+short_description = "骷髏戰士(skeleton fighter)"
+long_description = "一個骷髏戰士(skeleton fighter)站在這邊。\n"
+description = """
+他生前是第一流的戰士，死了之後戰技卻繼續保持了下來。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -500
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9023.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9024]
+keywords = "zombie"
+short_description = "僵屍(zombie)"
+long_description = "一具僵屍(zombie)站在這邊。\n"
+description = """
+你看到一隻不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -600
+level = 41
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9024.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9025]
+keywords = "ghoul"
+short_description = "餓鬼(ghoul)"
+long_description = "一隻餓鬼(ghoul)站在這邊。\n"
+description = """
+你看到一隻不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -600
+level = 43
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9025.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9026]
+keywords = "wight"
+short_description = "人形鬼(wight)"
+long_description = "一隻人形鬼(wight)站在這邊。\n"
+description = """
+你看到一隻不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -600
+level = 43
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9026.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9027]
+keywords = "wraith"
+short_description = "幽靈(wraith)"
+long_description = "一具幽靈(wraith)在這邊飄浮。\n"
+description = """
+你看到一隻不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -700
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Ghost"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9027.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9028]
+keywords = "mummy"
+short_description = "木乃伊(mummy)"
+long_description = "一具木乃伊(mummy)在這邊站在。\n"
+description = """
+你看到一隻不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -700
+level = 47
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Mummy"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9028.applies]]
+type = "EXP"
+degree = 50
+
+[mobiles.9029]
+keywords = "spectre"
+short_description = "游靈(spectre)"
+long_description = "一具游靈(spectre)在這邊飄浮。\n"
+description = """
+你看到一隻不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -700
+level = 49
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+class = ["MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9029.applies]]
+type = "EXP"
+degree = 80
+[[mobiles.9029.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9029.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+c flamestrike
+mpnowait
+"""
+
+[mobiles.9030]
+keywords = "vampire"
+short_description = "吸血鬼(vampire)"
+long_description = "一隻人人懼怕的吸血鬼(vampire)站在這邊。\n"
+description = """
+你看到一隻巨大的不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -800
+level = 51
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Vampire"
+spec_flags = ["NO_BLIND", "NO_CHARM", "HALF_MAGIC", "EXPERT"]
+[[mobiles.9030.applies]]
+type = "EXP"
+degree = 130
+[[mobiles.9030.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9030.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+feed
+feed
+feed
+if rand(40)
+	c 'energy drain'
+	mpnowait
+endif
+"""
+
+[mobiles.9031]
+keywords = "phantom-dead"
+short_description = "幻影(phantom)"
+long_description = "一陣幻影(phantom)在這邊飄游。\n"
+description = """
+你看到一隻巨大的不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -800
+level = 43
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Phantom"
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9031.applies]]
+type = "EXP"
+degree = 60
+
+[mobiles.9032]
+keywords = "haunt"
+short_description = "生息(haunt)"
+long_description = "可怕的生物生息(haunt)在這邊飄游。\n"
+description = """
+你看到一隻巨大的不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -800
+level = 47
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9032.applies]]
+type = "EXP"
+degree = 100
+[[mobiles.9032.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9032.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+c 'lightning bolt'
+mpnowait
+"""
+
+[mobiles.9033]
+keywords = "spirit"
+short_description = "靈魂(Spirit)"
+long_description = "可怕的靈魂(spirit)在這邊飄游。\n"
+description = """
+你看到一隻巨大的不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -900
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Ghost"
+class = ["MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9033.applies]]
+type = "EXP"
+degree = 70
+[[mobiles.9033.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+c ice
+"""
+
+[mobiles.9034]
+keywords = "nightshade"
+short_description = "夢魘(Nightshade)"
+long_description = "夢魘(Nightshade)在這邊影響你的神智。\n"
+description = """
+你看到一隻可怕的不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -900
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Phantom"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT"]
+[[mobiles.9034.applies]]
+type = "EXP"
+degree = 80
+[[mobiles.9034.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9034.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+c fireball
+mpnowait
+"""
+
+[mobiles.9035]
+keywords = "lich"
+short_description = "巫妖(Lich)"
+long_description = "一隻巫妖(lich)在這邊。\n"
+description = """
+你看到一隻可怕的不死生物。
+"""
+act_flags = ["NPC", "TACTICS"]
+affected_flags = []
+alignment = -900
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Undead"
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.9035.applies]]
+type = "EXP"
+degree = 120
+[[mobiles.9035.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9035.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if ispc($r)
+	grin
+	c 'energy drain' $r
+	mpnowait
+endif
+"""
+
+[mobiles.9036]
+keywords = "sharissa"
+short_description = "撒麗莎(Sharissa)"
+long_description = "撒麗莎(Sharissa)在這邊站著。\n"
+description = """
+撒麗莎，死亡谷人類之母在這邊等待著她可以幫助的對象。或許你可以向她請求一些協助。
+"""
+act_flags = ["NPC", "SENTINEL", "TACTICS", "REGENERACY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT", "SNEAK", "FLYING", "FLAMING"]
+alignment = 1000
+level = 60
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 20
+mod_damroll = -20
+mod_ac = 900
+mod_svs = -10
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+class = ["WARRIOR", "MAGE", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_CHARM", "HALF_MAGIC", "EXPERT", "NO_CRAZY"]
+[[mobiles.9036.weaknesses]]
+skill = "magic missile"
+percent = 1000
+damage = 300
+[[mobiles.9036.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.9036.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+if rand(30)
+	say 太陽啊！發生明亮的光芒來幫助我作戰吧！
+	c 'sun flash'
+	mpnowait
+endif
+if rand(50)
+	say 火啊！燃燒起萬丈的火焰，將敵人的屍骨焚燬吧！
+	c 'angry fire storm'
+	mpnowait
+endif
+if rand(30)
+	say 水啊！請鎮靜敵人的心智，讓他們無法作戰吧！
+	c calm
+	mpnowait
+	c calm
+	mpnowait
+endif
+"""
+[[mobiles.9036.programs]]
+trigger = "hitprcnt_prog"
+argument = "50"
+script = """
+if rand(70)
+	c 'double heal'
+	mpnowait
+else
+	c 3 'double heal'
+	mpnowait
+endif
+if isaffected($i) !& 128
+	c sanctuary
+	mpnowait
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+	mpnowait
+endif
+"""
+[[mobiles.9036.programs]]
+trigger = "talk_prog"
+argument = "help"
+script = """
+if being($b)
+	if insameroom($b)
+		break
+	endif
+endif
+ponder
+say 好的，我還有一些力量可以幫助你....。
+say 請你稍等一下....。
+mpdef_rembch $n
+mpadd_qmark self dead_quest -1 0 0 0 0 1
+"""
+[[mobiles.9036.programs]]
+trigger = "rand_prog"
+argument = "35"
+script = """
+if insameroom($b)
+	if is_qmark($b) == dead_quest 100000
+		say 試著去存在吧....！試著去拯救我的子民吧....！
+		say 試著去擊敗無盡的邪惡....！
+		mpmod_qmark self dead_quest v0 = 1
+		break
+	endif
+	if is_qmark($b) == dead_quest 100001
+		mpecho $I 緩緩的升起她的右手....。
+		mpecho 當 $I 舉起她的右手時，似乎這個空間已經完全沒有了聲音....。
+		mpmod_qmark self dead_quest v0 = 2
+		break
+	endif
+	if is_qmark($b) == dead_quest 100002
+		mpechoat $b 忽然有一道白光將你帶離了死亡谷....。
+		mpechoaround $b 忽然有一道白光將 $b 帶離了這裡。
+		mptransfer $b 4580
+		mpdel_qmark self dead_quest
+		mpdef_rembch null-tar
+	endif
+endif
+"""
+[[mobiles.9036.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if pcnum($) > 15
+        mpgreward exp $n 30 500
+else
+        if pcnum($) > 10
+                mpgreward exp $n 30 900
+        else
+                if pcnum($) > 5
+                        mpgreward exp $n 30 1200
+                else
+                        mpgreward exp $n 30 1500
+                endif
+        endif
+endif
+"""
+
+[objects.9000]
+keywords = "fountain oath"
+short_description = "詛咒之泉(Fountain of Oath)"
+long_description = "詛咒之泉(Fountain of Oath)在這邊。"
+action_description = ""
+item_type = "FOUNTAIN"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "1"]
+weight = 10000
+cost = 0
+level_limited = 0
+material = "stone"
+
+[objects.9001]
+keywords = "dark sphere"
+short_description = "闇黑天球(dark sphere)"
+long_description = "闇黑天球(dark sphere)飄浮在這邊。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = []
+values = ["10000", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "black matter"
+[[objects.9001.extra_descriptions]]
+keywords = "dark sphere"
+description = """
+闇黑天球擁有無盡的魔力可以儲藏你身上的所有金錢與裝備。
+"""
+
+[objects.9002]
+keywords = "ankh life"
+short_description = "生命之符(Ankh of Life)"
+long_description = "一個小型護符(ankh)激射出強勁的生命力(life)。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "MAGIC", "BLESS", "REMOVE_NODROP", "LORE", "NO_SAC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "168", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "paper"
+[[objects.9002.applies]]
+type = "HIT"
+value = 50
+[[objects.9002.hidden_powers]]
+spell = "sanctuary"
+percent = 30
+level = 10
+event = "HP_WEAR"
+
+[objects.9003]
+keywords = "fountain water"
+short_description = "聖泉(holy fountain)"
+long_description = "聖泉(holy fountain)裏的水，散發出水晶般的光芒。"
+action_description = ""
+item_type = "FOUNTAIN"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 500
+cost = 3000
+level_limited = 0
+material = "stone"
+
+[objects.9004]
+keywords = "death scythe"
+short_description = "死神鐮刀(Scythe of Death)"
+long_description = "一把巨大黑色的鐮刀(scythe)在地上發出嗡嗡的聲響。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["300", "0", "0", "1"]
+weight = 30
+cost = 500000
+level_limited = 0
+material = "steel"
+souvenir = 1
+[[objects.9004.applies]]
+type = "DAMROLL"
+value = 9
+[[objects.9004.applies]]
+type = "HITROLL"
+value = 9
+[[objects.9004.applies]]
+type = "CON"
+value = -5
+[[objects.9004.applies]]
+type = "APPLY_ADAMAGE"
+value = 20
+[[objects.9004.hidden_powers]]
+spell = "curse"
+percent = 5
+level = 40
+event = "HP_WEAR"
+[[objects.9004.race_combat]]
+race = "Human"
+hr_mod_q = 20
+hr_mod_p = 100
+dr_mod_q = 20
+dr_mod_p = 100
+[[objects.9004.race_combat]]
+race = "Gnome"
+hr_mod_q = 30
+hr_mod_p = 100
+dr_mod_q = 30
+dr_mod_p = 100
+[[objects.9004.race_combat]]
+race = "Dwarf"
+hr_mod_q = 10
+hr_mod_p = 100
+dr_mod_q = 10
+dr_mod_p = 100
+[[objects.9004.race_combat]]
+race = "Elf"
+hr_mod_q = 10
+hr_mod_p = 100
+dr_mod_q = 10
+dr_mod_p = 100
+[[objects.9004.race_combat]]
+race = "Orc"
+hr_mod_q = 10
+hr_mod_p = 100
+dr_mod_q = 10
+dr_mod_p = 100
+[[objects.9004.race_combat]]
+race = "Lizardman"
+hr_mod_q = 10
+hr_mod_p = 100
+dr_mod_q = 10
+dr_mod_p = 100
+[[objects.9004.race_combat]]
+race = "Demon"
+hr_mod_q = 0
+hr_mod_p = 50
+dr_mod_q = 0
+dr_mod_p = 30
+[[objects.9004.race_combat]]
+race = "Undead"
+hr_mod_q = 0
+hr_mod_p = 50
+dr_mod_q = 0
+dr_mod_p = 30
+[[objects.9004.race_combat]]
+race = "Ghost"
+hr_mod_q = 0
+hr_mod_p = 50
+dr_mod_q = 0
+dr_mod_p = 30
+
+[objects.9005]
+keywords = "judgement book"
+short_description = "審判之書(Book of Judgement)"
+long_description = "一本發出巨大能量的書本(book)被放在這邊。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 20
+cost = 300000
+level_limited = 0
+material = "paper"
+[[objects.9005.applies]]
+type = "DODGE"
+value = -10
+[[objects.9005.applies]]
+type = "MANA"
+value = 50
+
+[objects.9006]
+keywords = "death ring"
+short_description = "死亡之戒(Ring of Death)"
+long_description = "一只散發著可怕能量的戒指(ring)被丟棄在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "DARK", "EVIL", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "100", "0"]
+weight = 5
+cost = 300000
+level_limited = 0
+material = "bone"
+[[objects.9006.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.9006.applies]]
+type = "APPLY_ADAMAGE"
+value = 4
+
+[objects.9007]
+keywords = "evil bracelet"
+short_description = "邪光護肘(evil bracelet)"
+long_description = "一副發出白色光芒的護肘(bracelet)被丟棄在地上."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "100", "0"]
+weight = 5
+cost = 50000
+level_limited = 0
+material = "bone"
+[[objects.9007.applies]]
+type = "STR"
+value = 1
+[[objects.9007.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.9007.applies]]
+type = "DODGE"
+value = 5
+
+[objects.9008]
+keywords = "dragon armor"
+short_description = "龍骨戰甲(dragon armor)"
+long_description = "一套由龍(dragon)的骨頭所製成的護甲(armor)放在這裡."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "MAGIC", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 20
+cost = 70000
+level_limited = 0
+material = "dragon bone"
+[[objects.9008.applies]]
+type = "CON"
+value = 1
+[[objects.9008.applies]]
+type = "AC"
+value = -20
+[[objects.9008.applies]]
+type = "DODGE"
+value = 10
+[[objects.9008.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.9009]
+keywords = "cult sash"
+short_description = "邪龍束腰(cult sash)"
+long_description = "一條上頭畫滿各式龍肖像的束腰(sash)被丟在地上."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "100", "0"]
+weight = 20
+cost = 50000
+level_limited = 0
+material = "fiber"
+[[objects.9009.applies]]
+type = "AC"
+value = 5
+[[objects.9009.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.9009.applies]]
+type = "DODGE"
+value = 20
+
+[objects.9010]
+keywords = "black sword dark slasher"
+short_description = "黑劍 - 闇琉天破(black sword - Dark Slasher)"
+long_description = "一把發散著闇黑色光芒的黑劍(black sword)浮在半空之中."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["400", "0", "0", "3"]
+weight = 20
+cost = 200000
+level_limited = 0
+material = "steel"
+[[objects.9010.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+[[objects.9010.applies]]
+type = "REDUCE_MAGIC"
+value = 10
+[[objects.9010.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+[[objects.9010.applies]]
+type = "HITROLL"
+value = 5
+[[objects.9010.applies]]
+type = "DAMROLL"
+value = 7
+[[objects.9010.applies]]
+type = "NONE"
+value = 200
+[[objects.9010.hidden_powers]]
+spell = "curse"
+percent = 20
+level = 50
+event = "HP_WEAPON"
+
+[objects.9011]
+keywords = "light sword sunshine breaker"
+short_description = "光劍 - 破嵐萬丈(light sword - Sunshine Breaker)"
+long_description = "一把發散著萬丈光芒(light)的劍(sword)浮在半空之中."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["500", "0", "0", "1"]
+weight = 20
+cost = 300000
+level_limited = 0
+material = "mithril"
+[[objects.9011.applies]]
+type = "HITROLL"
+value = 2
+[[objects.9011.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.9011.applies]]
+type = "APPLY_ADAMAGE"
+value = 20
+[[objects.9011.applies]]
+type = "NONE"
+value = 200
+[[objects.9011.hidden_powers]]
+spell = "sun flash"
+percent = 30
+level = 30
+event = "HP_WEAPON"
+[[objects.9011.race_combat]]
+race = "Undead"
+hr_mod_q = 40
+hr_mod_p = 100
+dr_mod_q = 30
+dr_mod_p = 100
+[[objects.9011.race_combat]]
+race = "Ghost"
+hr_mod_q = 30
+hr_mod_p = 100
+dr_mod_q = 40
+dr_mod_p = 100
+[[objects.9011.race_combat]]
+race = "Demon"
+hr_mod_q = 30
+hr_mod_p = 100
+dr_mod_q = 15
+dr_mod_p = 100
+[[objects.9011.race_combat]]
+race = "Human"
+hr_mod_q = 0
+hr_mod_p = 20
+dr_mod_q = 0
+dr_mod_p = 20
+[[objects.9011.race_combat]]
+race = "Orc"
+hr_mod_q = 0
+hr_mod_p = 30
+dr_mod_q = 0
+dr_mod_p = 30
+[[objects.9011.race_combat]]
+race = "Lizardman"
+hr_mod_q = 0
+hr_mod_p = 30
+dr_mod_q = 0
+dr_mod_p = 30
+
+[objects.9012]
+keywords = "staff holy dragon"
+short_description = "光龍之杖(staff of holy dragon)"
+long_description = "一根上頭雕有維妙維肖龍(dragon)雕像的木杖(staff)放在這裡."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["400", "0", "0", "7"]
+weight = 15
+cost = 100000
+level_limited = 0
+material = "ebony"
+[[objects.9012.applies]]
+type = "INT"
+value = 1
+[[objects.9012.applies]]
+type = "WIS"
+value = 1
+[[objects.9012.applies]]
+type = "HITROLL"
+value = 2
+[[objects.9012.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.9012.hidden_powers]]
+spell = "lightning bolt"
+percent = 40
+level = 40
+event = "HP_WEAPON"
+[[objects.9012.race_combat]]
+race = "Undead"
+hr_mod_q = 30
+hr_mod_p = 100
+dr_mod_q = 30
+dr_mod_p = 100
+[[objects.9012.race_combat]]
+race = "Ghost"
+hr_mod_q = 20
+hr_mod_p = 100
+dr_mod_q = 20
+dr_mod_p = 100
+[[objects.9012.race_combat]]
+race = "Demon"
+hr_mod_q = 40
+hr_mod_p = 100
+dr_mod_q = 15
+dr_mod_p = 100
+[[objects.9012.race_combat]]
+race = "Human"
+hr_mod_q = 0
+hr_mod_p = 20
+dr_mod_q = 0
+dr_mod_p = 20
+[[objects.9012.race_combat]]
+race = "Orc"
+hr_mod_q = 0
+hr_mod_p = 30
+dr_mod_q = 0
+dr_mod_p = 30
+[[objects.9012.race_combat]]
+race = "Lizardman"
+hr_mod_q = 0
+hr_mod_p = 30
+dr_mod_q = 0
+dr_mod_p = 30
+
+[objects.9013]
+keywords = "dodging cape"
+short_description = "閃躲披風(dodging cape)"
+long_description = "一襲亮紅色的披風(cape)被放置在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "300", "0"]
+weight = 5
+cost = 10000
+level_limited = 0
+material = "fiber"
+[[objects.9013.applies]]
+type = "DODGE"
+value = -20
+
+[objects.9014]
+keywords = "rusty sword"
+short_description = "鏽蝕的劍(rusty sword)"
+long_description = "一把已經生了鏽的長劍(sword)."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["NODROP", "NOREMOVE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["200", "0", "0", "1"]
+weight = 9
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.9014.applies]]
+type = "HITROLL"
+value = -2
+[[objects.9014.applies]]
+type = "AGE"
+value = 3
+
+[objects.9015]
+keywords = "rusty shield"
+short_description = "鏽蝕的盾(rusty shield)"
+long_description = "一個生鏽的鐵盾(shield), 上面還有著尖刺."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["NODROP", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "200", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.9015.applies]]
+type = "DAMROLL"
+value = 1
+[[objects.9015.applies]]
+type = "HITROLL"
+value = -2
+
+[objects.9016]
+keywords = "magical belt"
+short_description = "魔力腰帶(magical belt)"
+long_description = "一條具有魔力的腰帶(belt)被放置在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "170", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "cloth"
+[[objects.9016.applies]]
+type = "MANA"
+value = 5
+[[objects.9016.applies]]
+type = "INT"
+value = 2
+
+[objects.9017]
+keywords = "magical coif"
+short_description = "魔力頭巾(magical coif)"
+long_description = "一條具有魔力的頭巾(coif)被放置在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "150", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "cloth"
+[[objects.9017.applies]]
+type = "MANA"
+value = 5
+[[objects.9017.applies]]
+type = "WIS"
+value = 2
+
+[objects.9018]
+keywords = "magical robe"
+short_description = "魔力長袍(magical robe)"
+long_description = "一襲具有魔力的長袍(robe)被放置在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "170", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "fiber"
+[[objects.9018.applies]]
+type = "WIS"
+value = 2
+[[objects.9018.applies]]
+type = "INT"
+value = 1
+
+[objects.9019]
+keywords = "death scythe"
+short_description = "死神鐮刀(Scythe of Death)"
+long_description = "一把巨大黑色的鐮刀(scythe)在地上發出嗡嗡的聲響。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["300", "35", "40", "1"]
+weight = 30
+cost = 500000
+level_limited = 0
+material = "steel"
+[[objects.9019.applies]]
+type = "AC"
+value = 100
+[[objects.9019.applies]]
+type = "HITROLL"
+value = 15
+[[objects.9019.applies]]
+type = "DAMROLL"
+value = 15
+[[objects.9019.applies]]
+type = "APPLY_ADAMAGE"
+value = 25
+[[objects.9019.hidden_powers]]
+spell = "curse"
+percent = 10
+level = 45
+event = "HP_WEAR"
+[[objects.9019.race_combat]]
+race = "Human"
+hr_mod_q = 20
+hr_mod_p = 120
+dr_mod_q = 20
+dr_mod_p = 120
+[[objects.9019.race_combat]]
+race = "Gnome"
+hr_mod_q = 30
+hr_mod_p = 120
+dr_mod_q = 30
+dr_mod_p = 120
+[[objects.9019.race_combat]]
+race = "Dwarf"
+hr_mod_q = 20
+hr_mod_p = 120
+dr_mod_q = 20
+dr_mod_p = 120
+[[objects.9019.race_combat]]
+race = "Elf"
+hr_mod_q = 20
+hr_mod_p = 120
+dr_mod_q = 20
+dr_mod_p = 120
+[[objects.9019.race_combat]]
+race = "Orc"
+hr_mod_q = 20
+hr_mod_p = 120
+dr_mod_q = 20
+dr_mod_p = 120
+[[objects.9019.race_combat]]
+race = "Lizardman"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 120
+[[objects.9019.race_combat]]
+race = "Demon"
+hr_mod_q = 0
+hr_mod_p = 50
+dr_mod_q = 0
+dr_mod_p = 30
+[[objects.9019.race_combat]]
+race = "Undead"
+hr_mod_q = 0
+hr_mod_p = 50
+dr_mod_q = 0
+dr_mod_p = 30
+[[objects.9019.race_combat]]
+race = "Ghost"
+hr_mod_q = 0
+hr_mod_p = 50
+dr_mod_q = 0
+dr_mod_p = 30
+
+[rooms.9000]
+name = "死亡谷的入口"
+description = """
+.
+                              死  亡  谷
+    你現在正在死亡的大地上, 這是死亡之王(Lords of Death)的領域。即使你認為你可以獨
+自找到離開的路，耐克瑞(Necri) 還是會將你的靈魂撕裂。如果你想在這裡生存，那麼加入死
+亡之王的行列，作為死亡之王忠誠的僕人，或許可以倖免於難。當然，你也必需要証明你的確
+有足夠的資格，可以接受死亡之王的幫助....。
+有些文字(word)虛無飄渺的浮在這裡....。
+"""
+flags = ["DARK", "NO_MOB", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "MOUNTAIN"
+[[rooms.9000.extra_descriptions]]
+keywords = "word"
+description = """
+如果你的等級低於 36，奉勸你不要接近這邊。
+一旦進入死亡谷，將沒有可以回頭的地方。
+或許你可以找到能夠回到人間的出口。
+"""
+[rooms.9000.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9006
+[rooms.9000.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 4659
+[[rooms.9000.programs]]
+trigger = "room_enter"
+argument = "4 100"
+script = """
+if ispc($n)
+	if level($n) < 36
+		echoat $n 前頭一團包含強大力量的死氣，將你推了回來....。
+		transfer $n 4659
+	else
+		echoat $n 前頭的死氣，讓你感到不甚舒服....。
+		if rand(10)
+			echoat $n 你覺得你似乎被詛咒了....。
+			add_affect $n curse 0 30 18 -10 1024
+			break
+		endif
+		if rand(10)
+			if race($n) == vampire
+				break
+			else
+				echoat $n 你覺得你似乎中毒了....。
+				add_affect $n poison 0 30 1 -3 4096
+			endif
+			break
+		endif
+		if rand(10)
+			echoat $n 你覺得你似乎不甚安穩了....。
+			if rand(50)
+				add_affect $n 'faerie fire' 0 30 17 50 256
+			endif
+			break
+		endif
+		if rand(5)
+			echoat $n 你覺得你似乎全身麻痺了....。
+			add_affect $n  paralyze 0 3 17 -100 268435456
+		endif
+	endif
+endif
+"""
+[[rooms.9000.resets.mobiles]]
+vnum = 9036
+limit = 1
+[[rooms.9000.resets.mobiles.equipment]]
+vnum = 9012
+wear_loc = "WIELD"
+[[rooms.9000.resets.mobiles.equipment]]
+vnum = 9002
+wear_loc = "LIGHT"
+[[rooms.9000.resets.objects]]
+vnum = 3135
+
+[rooms.9001]
+name = "詛咒之泉"
+description = """
+這裡，就是被譽為世界四大魔泉之一的「詛咒之泉」。在遠古的時候，死亡之王對其所注
+入的魔力讓這裡成為各式各樣冒險者最喜歡前來冒險的地方之一。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "INSIDE"
+[rooms.9001.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9003
+[rooms.9001.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9002
+[rooms.9001.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9004
+[rooms.9001.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9005
+[[rooms.9001.resets.mobiles]]
+vnum = 9013
+limit = 1
+[[rooms.9001.resets.objects]]
+vnum = 9000
+[[rooms.9001.resets.objects]]
+vnum = 9001
+
+[rooms.9002]
+name = "吸血鬼的暗夜之殿"
+description = """
+這裡就是吸血鬼的暗夜之殿。這裡自遠古以來就被吸血鬼當作祭祀的地方。你看到此處到
+處飄浮著可怕的不死生物。
+"""
+flags = ["DARK", "SAFE", "NO_RECALL", "SUMMON_BIT"]
+sector = "INSIDE"
+[rooms.9002.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9001
+
+[rooms.9003]
+name = "巫妖的闇黑之殿"
+description = """
+這裡就是巫妖的闇黑之殿。這裡自遠古以來就被巫妖當作研究可怕魔法的地方。你看到此
+處到處飄浮著可怕的不死生物。
+"""
+flags = ["DARK", "SAFE", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "INSIDE"
+[rooms.9003.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9001
+
+[rooms.9004]
+name = "鬼魂的闇黑之殿"
+description = """
+這裡就是鬼魂的闇黑之殿。這裡自遠古以來就被鬼魂當作研究可怕魔法的地方。你看到此
+處到處飄浮著可怕的不死生物。
+"""
+flags = ["DARK", "SAFE", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "INSIDE"
+[rooms.9004.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9001
+
+[rooms.9005]
+name = "索命者的幽暗之殿"
+description = """
+這裡就是索命者的幽暗之殿。這裡自遠古以來就被索命者當作研究可怕魔法的地方。你看到此
+處到處飄浮著可怕的不死生物。
+"""
+flags = ["DARK", "SAFE", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT", "NO_TELEPORT_IN", "PK"]
+sector = "INSIDE"
+[rooms.9005.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 9001
+
+[rooms.9006]
+name = "死亡之路"
+description = """
+你看到此處到處飄浮著可怕的不死生物。
+"""
+flags = ["DARK", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "MOUNTAIN"
+[rooms.9006.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9007
+[[rooms.9006.programs]]
+trigger = "room_enter"
+argument = "4 100"
+script = """
+if ispc($n)
+	echoat $n 當你進入這裡的時候，你發現南邊的出口已經消失。
+	echoat $n 你只能夠自求多福，因為你將無法回到你的世界中。
+endif
+"""
+[[rooms.9006.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9006.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9006.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9006.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+[[rooms.9006.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9006.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9006.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9007]
+name = "死亡大地"
+description = """
+此地不死生物所發出的死亡梵音在你的耳際圍繞著。。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9007.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9009
+[rooms.9007.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9006
+[[rooms.9007.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9007.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9007.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9007.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+[[rooms.9007.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9007.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9007.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9008]
+name = "死亡大地"
+description = """
+你看到此處到處飄浮著可怕的不死生物。有一些正在忙著自己的工作，但是大部分都是漫
+無目的到處飄游。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9008.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9009
+[rooms.9008.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9011
+[[rooms.9008.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9008.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9008.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9008.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+[[rooms.9008.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9008.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9008.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9009]
+name = "亡者之門入口"
+description = """
+你是不是死了？不然你怎麼會在這邊？
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9009.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9010
+[rooms.9009.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9012
+[rooms.9009.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9007
+[rooms.9009.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9008
+[[rooms.9009.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9009.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9009.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9009.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9010]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9010.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9020
+[rooms.9010.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9013
+[rooms.9010.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9009
+[[rooms.9010.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9010.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9010.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9010.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9011]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9011.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9012
+[rooms.9011.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9014
+[rooms.9011.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9008
+[[rooms.9011.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9011.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9011.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9011.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9012]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9012.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9013
+[rooms.9012.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9015
+[rooms.9012.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9009
+[rooms.9012.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9011
+[[rooms.9012.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9012.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9012.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9012.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9013]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9013.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9028
+[rooms.9013.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9016
+[rooms.9013.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9010
+[rooms.9013.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9012
+[[rooms.9013.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9013.resets.mobiles]]
+vnum = 9003
+limit = 20
+[[rooms.9013.resets.mobiles.equipment]]
+vnum = 9014
+wear_loc = "WIELD"
+[[rooms.9013.resets.mobiles.equipment]]
+vnum = 9015
+wear_loc = "SHIELD"
+
+[rooms.9014]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9014.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9015
+[rooms.9014.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9017
+[rooms.9014.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9011
+[rooms.9014.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9037
+[[rooms.9014.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9014.resets.mobiles]]
+vnum = 9012
+limit = 15
+
+[rooms.9015]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9015.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9016
+[rooms.9015.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9018
+[rooms.9015.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9012
+[rooms.9015.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9014
+[[rooms.9015.resets.mobiles]]
+vnum = 9001
+limit = 16
+[[rooms.9015.resets.mobiles]]
+vnum = 9012
+limit = 15
+[[rooms.9015.resets.mobiles]]
+vnum = 9012
+limit = 15
+
+[rooms.9016]
+name = "死亡大地"
+description = """
+你看到此處到處飄浮著可怕的不死生物。有一些正在忙著自己的工作，但是大部分都是漫
+無目的到處飄游。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9016.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9019
+[rooms.9016.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9013
+[rooms.9016.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9015
+[[rooms.9016.resets.mobiles]]
+vnum = 9001
+limit = 16
+
+[rooms.9017]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9017.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9018
+[rooms.9017.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9053
+[rooms.9017.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9014
+[[rooms.9017.resets.mobiles]]
+vnum = 9001
+limit = 16
+
+[rooms.9018]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9018.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9019
+[rooms.9018.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9015
+[rooms.9018.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9017
+[[rooms.9018.resets.mobiles]]
+vnum = 9001
+limit = 16
+
+[rooms.9019]
+name = "死亡大地"
+description = """
+這裡就是人類死亡後靈體居住的地方。但是他們看起來並非十分友善，你最好小心一點。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9019.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9054
+[rooms.9019.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9016
+[rooms.9019.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9018
+[[rooms.9019.resets.mobiles]]
+vnum = 9001
+limit = 16
+
+[rooms.9020]
+name = "小徑"
+description = """
+你注意到有一條小徑沒入東邊被黑雲所籠罩的黑暗當中。你可以感受到由東邊所傳來的巨
+大能量來源。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9020.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9021
+[rooms.9020.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9010
+[[rooms.9020.resets.mobiles]]
+vnum = 9001
+limit = 16
+
+[rooms.9021]
+name = "闇黑之路"
+description = """
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑比黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9021.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9022
+[rooms.9021.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9023
+[rooms.9021.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9020
+
+[rooms.9022]
+name = "闇黑之路"
+description = """
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑被黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9022.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9024
+[rooms.9022.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9021
+[[rooms.9022.resets.mobiles]]
+vnum = 9001
+limit = 16
+
+[rooms.9023]
+name = "闇黑之路"
+description = """
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑被黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9023.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9024
+[rooms.9023.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9021
+[rooms.9023.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9025
+
+[rooms.9024]
+name = "闇黑之路"
+description = """
+即使使用了光源，你還是不能清楚的看到任何的東西。這條被黑雲所籠罩的小徑被黑暗還
+要黑。在裡頭你可以聽到強大力量所發出的低鳴聲。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9024.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9022
+[rooms.9024.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9026
+[rooms.9024.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9023
+[[rooms.9024.resets.mobiles]]
+vnum = 9005
+limit = 10
+[[rooms.9024.resets.mobiles]]
+vnum = 9006
+limit = 10
+[[rooms.9024.resets.mobiles]]
+vnum = 9007
+limit = 10
+[[rooms.9024.resets.mobiles]]
+vnum = 9010
+limit = 15
+
+[rooms.9025]
+name = "最闇之路"
+description = """
+你的光源在這裡完全沒有用了。只有經過魔法加持的光源才能夠照亮你身邊的一小部分。
+你感覺到這裡已經荒廢很久了，但是由於之前的黑暗，因此你直到現在才發現。你感覺到東邊
+有著巨大的能量。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9025.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9026
+[rooms.9025.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9023
+[[rooms.9025.resets.mobiles]]
+vnum = 9005
+limit = 10
+[[rooms.9025.resets.mobiles]]
+vnum = 9006
+limit = 10
+[[rooms.9025.resets.mobiles]]
+vnum = 9007
+limit = 10
+[[rooms.9025.resets.mobiles]]
+vnum = 9010
+limit = 15
+[[rooms.9025.resets.mobiles]]
+vnum = 9010
+limit = 15
+
+[rooms.9026]
+name = "最闇之路"
+description = """
+你的光源在這裡完全沒有用了。只有經過魔法加持的光源才能夠照亮你身邊的一小部分。
+你感覺到這裡已經荒廢很久了，但是由於之前的黑暗，因此你直到現在才發現。你感覺到東邊
+有著巨大的能量。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9026.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9027
+[rooms.9026.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9024
+[rooms.9026.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9025
+
+[rooms.9027]
+name = "遺忘之殿"
+description = """
+這裡就是遺忘之殿。龍族之王、命運騎士等偉大的靈魂都飄浮在這邊。
+"""
+flags = ["INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9027.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9026
+[[rooms.9027.resets.mobiles]]
+vnum = 9005
+limit = 10
+[[rooms.9027.resets.mobiles]]
+vnum = 9006
+limit = 10
+[[rooms.9027.resets.mobiles]]
+vnum = 9007
+limit = 10
+[[rooms.9027.resets.mobiles]]
+vnum = 9012
+limit = 15
+[[rooms.9027.resets.mobiles]]
+vnum = 9017
+limit = 1
+[[rooms.9027.resets.mobiles.equipment]]
+vnum = 9008
+wear_loc = "BODY"
+[[rooms.9027.resets.mobiles]]
+vnum = 9018
+limit = 1
+[[rooms.9027.resets.mobiles.equipment]]
+vnum = 9008
+wear_loc = "BODY"
+[[rooms.9027.resets.mobiles]]
+vnum = 9019
+limit = 1
+[[rooms.9027.resets.mobiles.equipment]]
+vnum = 9008
+wear_loc = "BODY"
+
+[rooms.9028]
+name = "小徑"
+description = """
+這條小徑十分的黑暗，你無法辨識任何東西。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9028.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9029
+[rooms.9028.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9013
+
+[rooms.9029]
+name = "小徑"
+description = """
+這裡還是一樣的黑暗。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9029.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9030
+[rooms.9029.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9028
+[[rooms.9029.resets.mobiles]]
+vnum = 9005
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9006
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9007
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9014
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9014
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9014
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9014
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9016
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9016
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9016
+limit = 10
+[[rooms.9029.resets.mobiles]]
+vnum = 9016
+limit = 10
+
+[rooms.9030]
+name = "小徑"
+description = """
+在黑暗中你無法看到任何的東西。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9030.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9031
+[rooms.9030.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9033
+[rooms.9030.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9029
+
+[rooms.9031]
+name = "小徑"
+description = """
+在黑暗中你無法看到任何的東西。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9031.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9032
+[rooms.9031.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9034
+[rooms.9031.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9030
+
+[rooms.9032]
+name = "小徑"
+description = """
+在黑暗中你無法看到任何的東西。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9032.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9035
+[rooms.9032.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9031
+
+[rooms.9033]
+name = "小徑"
+description = """
+在黑暗中你無法看到任何的東西。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9033.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9034
+[rooms.9033.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9030
+
+[rooms.9034]
+name = "小徑"
+description = """
+除了黑暗還是黑暗，沒有其他東西。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9034.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9035
+[rooms.9034.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9031
+[rooms.9034.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9033
+[[rooms.9034.resets.mobiles]]
+vnum = 9010
+limit = 15
+[[rooms.9034.resets.mobiles]]
+vnum = 9010
+limit = 15
+
+[rooms.9035]
+name = "小徑"
+description = """
+你似乎可以感覺到一些超自然的東西。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9035.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9036
+[rooms.9035.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9032
+[rooms.9035.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9034
+[[rooms.9035.resets.mobiles]]
+vnum = 9010
+limit = 15
+[[rooms.9035.resets.mobiles]]
+vnum = 9010
+limit = 15
+
+[rooms.9036]
+name = "死亡之井"
+description = """
+這口井散發出十分奇怪的味道。
+"""
+flags = ["DARK", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9036.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9035
+[[rooms.9036.programs]]
+trigger = "room_enter"
+argument = "16 50"
+script = """
+if rand(50)
+	echoat $n 進入了這口井中，你感到不是很舒服....。
+	modhmv pc 03.7 18 0
+else
+	echoat $n 進入了這口井中，你似乎感到死氣侵襲了你的身體....。
+	if rand(50)
+		add_affect $n poison 0 30 1 -2 4096
+	else
+		add_affect $n curse 0 45 18 -5 1024
+	endif
+endif
+"""
+[[rooms.9036.resets.mobiles]]
+vnum = 9009
+limit = 4
+[[rooms.9036.resets.mobiles]]
+vnum = 9010
+limit = 15
+
+[rooms.9037]
+name = "爬行小徑"
+description = """
+你感受到強大的魔力已經漸漸接近。你開始感到害怕。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "MOUNTAIN"
+[rooms.9037.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9014
+[rooms.9037.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9038
+[[rooms.9037.resets.mobiles]]
+vnum = 9012
+limit = 15
+
+[rooms.9038]
+name = "爬行小徑"
+description = """
+你感受到強大的魔力已經漸漸接近。你開始感到害怕。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "MOUNTAIN"
+[rooms.9038.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9037
+[rooms.9038.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9042
+
+[rooms.9039]
+name = "逃出生天"
+description = """
+有可能嗎？你竟然可以看到陽光？
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[[rooms.9039.extra_descriptions]]
+keywords = "living path1"
+description = ""
+[rooms.9039.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9040
+[rooms.9039.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9059
+
+[rooms.9040]
+name = "逃出生天"
+description = """
+有可能嗎？你竟然可以看到陽光？
+"""
+flags = ["DARK", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[[rooms.9040.extra_descriptions]]
+keywords = "living path2"
+description = ""
+[rooms.9040.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9041
+[rooms.9040.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9059
+
+[rooms.9041]
+name = "逃出生天"
+description = """
+有可能嗎？你竟然可以看到陽光？
+"""
+flags = ["DARK", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[[rooms.9041.extra_descriptions]]
+keywords = "living path3"
+description = ""
+[rooms.9041.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9043
+[rooms.9041.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9059
+
+[rooms.9042]
+name = "燃燒地獄"
+description = """
+到處都是燃燒的烈火！你幾乎無法忍受這裡的熱度。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "MOUNTAIN"
+[rooms.9042.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9038
+[rooms.9042.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9045
+[[rooms.9042.programs]]
+trigger = "room_enter"
+argument = "15 100"
+script = """
+if ispc($n)
+	if level($n) < 36
+		break
+	else
+		echoat $n 前頭的死氣，讓你感到不甚舒服....。
+		if rand(10)
+			echoat $n 你覺得你似乎被詛咒了....。
+			add_affect $n curse 0 30 18 -10 1024
+			break
+		endif
+		if rand(10)
+			echoat $n 你覺得你似乎中毒了....。
+			add_affect $n poison 0 30 1 -3 4096
+			break
+		endif
+		if rand(10)
+			echoat $n 你覺得你似乎不甚安穩了....。
+			if rand(50)
+				add_affect $n 'faerie fire' 0 30 17 50 256
+			endif
+			break
+		endif
+		if rand(5)
+			echoat $n 你覺得你似乎全身麻痺了....。
+			add_affect $n paralyze 0 3 17 -100 268435456
+		endif
+	endif
+endif
+"""
+[[rooms.9042.resets.mobiles]]
+vnum = 9002
+limit = 10
+
+[rooms.9043]
+name = "逃出生天"
+description = """
+有可能嗎？你竟然可以看到陽光？
+"""
+flags = ["DARK", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[[rooms.9043.extra_descriptions]]
+keywords = "living path4"
+description = ""
+[rooms.9043.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9044
+[rooms.9043.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9059
+
+[rooms.9044]
+name = "逃出生天"
+description = """
+有可能嗎？你竟然可以看到陽光？
+"""
+flags = ["DARK", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[[rooms.9044.extra_descriptions]]
+keywords = "living path5"
+description = ""
+[rooms.9044.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9060
+[rooms.9044.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9059
+
+[rooms.9045]
+name = "巫妖之王"
+description = """
+他生前曾經是最偉大的咒術師，但是現在則是死亡之王的伙伴，巫妖之王 - 卓克。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9045.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9042
+[[rooms.9045.resets.mobiles]]
+vnum = 9002
+limit = 10
+[[rooms.9045.resets.mobiles]]
+vnum = 9002
+limit = 10
+[[rooms.9045.resets.mobiles]]
+vnum = 9002
+limit = 10
+[[rooms.9045.resets.mobiles]]
+vnum = 9002
+limit = 10
+[[rooms.9045.resets.mobiles]]
+vnum = 9020
+limit = 1
+[[rooms.9045.resets.mobiles.equipment]]
+vnum = 9007
+wear_loc = "WRIST_L"
+[[rooms.9045.resets.mobiles.equipment]]
+vnum = 9009
+wear_loc = "WAIST"
+
+[rooms.9046]
+name = "根據地的入口"
+description = """
+你現在站在死亡之王根據地的入口之前。小心，他們對你是絕對不會客氣的。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "FOREST"
+[rooms.9046.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9053
+[rooms.9046.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9048
+[[rooms.9046.resets.mobiles]]
+vnum = 9011
+limit = 8
+[[rooms.9046.resets.mobiles]]
+vnum = 9011
+limit = 8
+[[rooms.9046.resets.mobiles]]
+vnum = 9011
+limit = 8
+
+[rooms.9047]
+name = "在根據地之中"
+description = """
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9047.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9048
+[rooms.9047.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9049
+
+[rooms.9048]
+name = "在根據地之中"
+description = """
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9048.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9050
+[rooms.9048.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9046
+[rooms.9048.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9047
+[[rooms.9048.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9048.resets.mobiles.equipment]]
+vnum = 9016
+wear_loc = "ABOUT"
+[[rooms.9048.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9048.resets.mobiles.equipment]]
+vnum = 9017
+wear_loc = "HEAD"
+[[rooms.9048.resets.mobiles]]
+vnum = 9011
+limit = 8
+[[rooms.9048.resets.mobiles]]
+vnum = 9011
+limit = 8
+
+[rooms.9049]
+name = "在根據地之中"
+description = """
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9049.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9050
+[rooms.9049.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9047
+[[rooms.9049.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9049.resets.mobiles.equipment]]
+vnum = 9018
+wear_loc = "BODY"
+[[rooms.9049.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9049.resets.mobiles.equipment]]
+vnum = 9017
+wear_loc = "HEAD"
+
+[rooms.9050]
+name = "在根據地之中"
+description = """
+雖然在你身邊總是圍繞著一股恐懼、可怕的氣氛，但是你可以感受到一股更重要的東西在
+根據地的深處。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9050.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9051
+[rooms.9050.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9048
+[rooms.9050.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9049
+[[rooms.9050.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9050.resets.mobiles.equipment]]
+vnum = 9016
+wear_loc = "ABOUT"
+[[rooms.9050.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9050.resets.mobiles.equipment]]
+vnum = 9018
+wear_loc = "BODY"
+[[rooms.9050.resets.mobiles]]
+vnum = 9015
+limit = 10
+[[rooms.9050.resets.mobiles]]
+vnum = 9015
+limit = 10
+
+[rooms.9051]
+name = "最終之路"
+description = """
+走上樓梯之後，小徑開始轉彎而進入黑暗之爭，你可以感受到在黑暗之後隱藏的可怕的邪
+惡魔法。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9051.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9052
+[rooms.9051.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9050
+[[rooms.9051.resets.mobiles]]
+vnum = 9015
+limit = 10
+[[rooms.9051.resets.mobiles]]
+vnum = 9015
+limit = 10
+[[rooms.9051.resets.mobiles]]
+vnum = 9021
+limit = 1
+[[rooms.9051.resets.mobiles.equipment]]
+vnum = 9013
+wear_loc = "ABOUT"
+[[rooms.9051.resets.mobiles.equipment]]
+vnum = 9010
+wear_loc = "WIELD_2"
+
+[rooms.9052]
+name = "死亡之王"
+description = """
+呈現在你面前的，就是死亡大殿。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9052.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9051
+[[rooms.9052.resets.mobiles]]
+vnum = 9000
+limit = 1
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9019
+wear_loc = "WIELD"
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9005
+wear_loc = "HOLD"
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9006
+wear_loc = "FINGER_R"
+[[rooms.9052.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9018
+wear_loc = "BODY"
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9016
+wear_loc = "ABOUT"
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9017
+wear_loc = "HEAD"
+[[rooms.9052.resets.mobiles]]
+vnum = 9004
+limit = 8
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9018
+wear_loc = "BODY"
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9016
+wear_loc = "ABOUT"
+[[rooms.9052.resets.mobiles.equipment]]
+vnum = 9017
+wear_loc = "HEAD"
+
+[rooms.9053]
+name = "黑暗小徑的深處"
+description = """
+在你的西邊是一個巨大的根據地，或許你可以進入觀察一番。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9053.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9054
+[rooms.9053.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9017
+[rooms.9053.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9046
+
+[rooms.9054]
+name = "黑暗小徑"
+description = """
+你無法分辨任何東西，
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9054.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9055
+[rooms.9054.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9019
+[rooms.9054.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9053
+
+[rooms.9055]
+name = "在死亡中行走"
+description = """
+你正行走在死亡軍團的道路上。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9055.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9056
+[rooms.9055.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9057
+[rooms.9055.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9054
+[[rooms.9055.resets.mobiles]]
+vnum = 9010
+limit = 15
+[[rooms.9055.resets.mobiles]]
+vnum = 9010
+limit = 15
+
+[rooms.9056]
+name = "在死亡中行走"
+description = """
+你正行走在死亡軍團的道路上。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9056.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9058
+[rooms.9056.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9055
+[[rooms.9056.resets.mobiles]]
+vnum = 9005
+limit = 10
+[[rooms.9056.resets.mobiles]]
+vnum = 9006
+limit = 10
+[[rooms.9056.resets.mobiles]]
+vnum = 9007
+limit = 10
+
+[rooms.9057]
+name = "在死亡中行走"
+description = """
+你正行走在死亡軍團的道路上。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9057.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9058
+[rooms.9057.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9055
+[[rooms.9057.resets.mobiles]]
+vnum = 9011
+limit = 8
+[[rooms.9057.resets.mobiles]]
+vnum = 9011
+limit = 8
+
+[rooms.9058]
+name = "在死亡中行走"
+description = """
+你正行走在死亡軍團的道路上。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9058.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9059
+[rooms.9058.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9056
+[rooms.9058.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9057
+[[rooms.9058.resets.mobiles]]
+vnum = 9005
+limit = 10
+[[rooms.9058.resets.mobiles]]
+vnum = 9006
+limit = 10
+[[rooms.9058.resets.mobiles]]
+vnum = 9007
+limit = 10
+[[rooms.9058.resets.mobiles]]
+vnum = 9012
+limit = 15
+
+[rooms.9059]
+name = "黑暗甬道"
+description = """
+這條甬道通往東邊，而且越來越亮！你可以感覺到往東可以通往生天。
+"""
+flags = ["DARK", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "HILLS"
+[rooms.9059.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9058
+[[rooms.9059.programs]]
+trigger = "room_enter"
+argument = "8 100"
+script = """
+if is_qmark($n) != mage_envoy_quest 100016
+	break
+endif
+if insameroom(shore-dead)
+	force shore-dead yell 沒用的！血債血還，無論誰來，我都要他嚐嚐我們所受的冤屈！
+	mod_qmark $n mage_envoy_quest v0 = 17
+endif
+"""
+[[rooms.9059.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if pcnum($) > 0
+	if mobcount(9008) == 0
+		if roomvalue($0) == 0
+			echo 當 死亡谷守衛 - 索爾(Shore) 消失之後，
+			echo 忽然東邊出現了一個出口，而且遠遠的可以看到人間的亮光。
+			echo 遠方傳來一陣聲響「快啊！不然出口就要消失了....！」
+			makedoor 1 東邊一片漆黑 door 1 0 9039
+			modrvt v0 = 1
+			break
+		endif
+		if roomvalue($0) == 1
+			echo 由於死亡谷與人間打開了一個出口，
+			echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9039 echo 由於死亡谷與人間打開了一個出口，
+			force 9039 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9040 echo 由於死亡谷與人間打開了一個出口，
+			force 9040 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9041 echo 由於死亡谷與人間打開了一個出口，
+			force 9041 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9043 echo 由於死亡谷與人間打開了一個出口，
+			force 9043 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			force 9044 echo 由於死亡谷與人間打開了一個出口，
+			force 9044 echo 空間忽然開始劇烈震動，你幾乎都快站不穩了。
+			modrvt v0 = 2
+			break
+		endif
+		if roomvalue($0) == 2
+			echo 索爾(Shore) 接受死亡谷的死氣後，再度復活了。
+			echo 索爾(Shore) 關閉了死亡谷前往人間的通道。
+			if roomtimer($0) > 0
+				mload 9008
+				add_qmark shore-dead dead_shore_relife 30 0 0 0 1 1
+			else
+				mload 9008
+			endif
+			mload 9004
+			mload 9004
+			deldoor 1
+			modrvt v0 = 0
+		endif
+	else
+		if roomvalue($0) == 0
+			break
+		else
+			modrvt v0 = 0
+		endif
+	endif
+endif
+if roomtimer($0) == 0
+if mobcount(9008) == 0
+	mload 9008
+endif
+endif
+"""
+
+[rooms.9060]
+name = "逃出生天"
+description = """
+有可能嗎？你竟然可以看到陽光？這裡有一口井，偶爾會發出奇怪的光線。
+"""
+flags = ["DARK", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "INSIDE"
+[rooms.9060.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9059
+[[rooms.9060.programs]]
+trigger = "room_rand"
+argument = "30"
+script = """
+if hasdoor(5)
+	if roomvalue($0) == 0
+		echo 通往陰間的通道消失了....
+		deldoor 5
+		force 9001 echo 通往人世的通道消失了....
+		force 9001 deldoor 4
+	endif
+endif
+if pcnum($) > 0
+	if rand(50)
+		echo 這口井忽然發出一陣強烈的光線....。
+		echo 瞬間你不知道你已經到了何處？
+		transfer all 9070
+	else
+		echo 忽然一陣劇烈的震動....
+		echo 下方忽然出現了一個通道....
+		makedoor 5 通往陰間的通道 passage 0 0 9001
+		force 9001 makedoor 4 通往人世的通道 passage 0 0 9006
+		modrvt v0 = 1
+		modrvt timer = 24
+	endif
+endif
+"""
+
+[rooms.9070]
+name = "死亡之井"
+description = """
+這口井是通往死亡大地的井，你知道嗎？
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9070.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9071
+
+[rooms.9071]
+name = "被召喚了"
+description = """
+你似乎被死亡之氣給召喚了！你漸漸的失去你自己的意識。你的靈魂在空間與時間的狹縫
+中被拋擲。在你的腦中只有死亡之氣給你的唯一訊息。那就是「殺！殺！殺！」。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "WATER_SWIM"
+[rooms.9071.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 9072
+
+[rooms.9072]
+name = "聖泉之殿"
+description = """
+這裡是傳說中的「聖泉之殿」。相傳生命終了的主教會被天神呵護至
+此，藉著聖泉的神秘力量，浸洗心靈而獲得重生。你看到石柱上刻著一些
+古老字句(carvings)。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "SAFE", "NO_RECALL", "SUMMON_BIT", "SAVE", "NO_TELEPORT_OUT"]
+sector = "CITY"
+[[rooms.9072.extra_descriptions]]
+keywords = "carvings"
+description = """
+你看不懂這古老的語言，但不知為何，卻能理解字句的意義：
+　
+「主啊！我要\u001B[1;37m洗手表明無辜\u001B[0m，才來繞著你的祭壇行走；
+  好使我發出稱謝的聲音，述說你一切奇妙的作為。 」
+                                  -- 詩篇 26:6-
+　
+ "I\u001B[1;37m wash 'my hands'\u001B[0m in innocence, and go about your alter, O LORD,
+  proclaiming aloud your praise and telling of all your wonderful deeds."
+                                                    --Psalm 26:6-7
+"""
+[[rooms.9072.programs]]
+trigger = "room_enter"
+argument = "32 100"
+script = """
+if rand(90)
+	echoat $n 忽然一股十分強大的力量將你推了回來....。
+	transfer $n 9071
+endif
+"""
+[[rooms.9072.programs]]
+trigger = "room_command"
+argument = "wash p my hands"
+script = """
+if ispc($n)
+	echoat $n 遠方傳來一陣奇怪的聲響「我已經聽見你對我的呼喚！」
+	echoat $n 遠方傳來一陣奇怪的聲響「我來領你離開這死亡世界吧！」
+	echoaround $n 一陣閃光之後， $n 忽然不見了....。
+	echoat $n 你被傳送回到光明之鎮的聖殿了....。
+	transfer $n 4580
+endif
+"""

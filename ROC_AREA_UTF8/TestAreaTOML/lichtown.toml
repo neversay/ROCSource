@@ -1,0 +1,4194 @@
+[area]
+name = "{36 42} 巫妖之塔"
+identity = "lichtown"
+builders = "Ryzen"
+translator = "Feena"
+modifier = "Feena"
+vnum_start = 12300
+vnum_end = 12399
+security = 1
+recall = 4580
+death = 401
+f_toggle = true
+
+[mobiles.12302]
+keywords = "ghost wandering"
+short_description = "遊魂(Wandering Ghost)"
+long_description = "一個鬼魂(ghost)在這附近遊蕩，在生與死之間的領域穿梭著。\n"
+description = """
+外表像是一抹烏影，這個鬼魂看起來彷彿有生命似的，它有著人類的外型，不過
+樣子仍然是靈體。直到被毀滅，升天為止，否則這個靈魂永遠無法安眠。
+"""
+act_flags = ["NPC", "STAY_AREA", "TACTICS", "NO_PAR"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "CONTINUE_CURE"]
+alignment = -200
+level = 40
+mod_hitplus = 13000
+mod_mana = 3000
+mod_hitroll = 35
+mod_damroll = 40
+mod_ac = 0
+mod_svs = 1
+dodge = -150
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Ghost"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12302.applies]]
+type = "EXP"
+degree = 500
+[[mobiles.12302.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.12302.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.12302.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12302.applies]]
+type = "APPLY_ADAMAGE"
+degree = 200
+[[mobiles.12302.applies]]
+type = "APPLY_AMAGIC"
+degree = 200
+[[mobiles.12302.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12302.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        cast lifesteal $r
+        mpnowait
+else
+        if rand(50)
+                cast 2 fireball $r
+                mpnowait
+        else
+                cast weaken $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12303]
+keywords = "wraith wicked"
+short_description = "邪惡幽魂(Wicked Wraith)"
+long_description = "一個看起來很邪惡的幽魂(wraith)凝視著你，讓你不自覺地打了個冷顫。\n"
+description = """
+這個幽魂在你面前緩緩飄移著，正在尋找下一個可供吞噬的靈魂。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "TACTICS", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MYSTIC_MIRROR", "CONTINUE_CURE"]
+alignment = -1000
+level = 49
+mod_hitplus = 31000
+mod_mana = 0
+mod_hitroll = 40
+mod_damroll = 80
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 100
+gold = -1
+sex = "neutral"
+race = "Ghost"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "REF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12303.applies]]
+type = "EXP"
+degree = 4500
+[[mobiles.12303.applies]]
+type = "POWER_POTENTIAL"
+degree = 40
+[[mobiles.12303.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.12303.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.12303.applies]]
+type = "APPLY_ADAMAGE"
+degree = 250
+[[mobiles.12303.applies]]
+type = "APPLY_AMAGIC"
+degree = 250
+[[mobiles.12303.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12303.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        cast 'energy drain' $r
+        mpnowait
+else
+        if rand(50)
+                cast curse $r
+                mpnowait
+        else
+                cast 2 powerball $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12304]
+keywords = "ghastly spectre"
+short_description = "幽靈(spectre)"
+long_description = "一個可怕的幽靈(spectre)潛藏在陰影附近。\n"
+description = """
+這個死了很久的靈體，現在只是個渴求你鮮血的邪惡之物而已。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "TACTICS", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLAMING", "CONTINUE_CURE"]
+alignment = -800
+level = 47
+mod_hitplus = 29000
+mod_mana = 0
+mod_hitroll = 45
+mod_damroll = 50
+mod_ac = 0
+mod_svs = 2
+dodge = 20
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Ghost"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12304.applies]]
+type = "EXP"
+degree = 3500
+[[mobiles.12304.applies]]
+type = "POWER_POTENTIAL"
+degree = 35
+[[mobiles.12304.applies]]
+type = "REDUCE_DAMAGE"
+degree = 120
+[[mobiles.12304.applies]]
+type = "REDUCE_MAGIC"
+degree = 120
+[[mobiles.12304.applies]]
+type = "APPLY_ADAMAGE"
+degree = 220
+[[mobiles.12304.applies]]
+type = "APPLY_AMAGIC"
+degree = 220
+[[mobiles.12304.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12304.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        cast 'call lightning'
+        mpnowait
+else
+        if rand(50)
+                cast blindness $r
+                mpnowait
+        else
+                cast whirlwind
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12305]
+keywords = "ghoul"
+short_description = "食屍鬼(ghoul)"
+long_description = "一個食屍鬼(ghoul)正站在這裡咀嚼著一根老舊的骨頭。\n"
+description = """
+一種討人厭、和僵屍很像的不死生物，不過比僵屍要兇悍許多。它帶著一根老舊
+的手臂骨，不停地啃食著，撕扯吞食著骨頭上的最後一塊肉。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "TACTICS", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MANASHIELD", "CONTINUE_CURE"]
+alignment = -950
+level = 51
+mod_hitplus = 42000
+mod_mana = 0
+mod_hitroll = 55
+mod_damroll = 25
+mod_ac = 0
+mod_svs = 0
+dodge = -300
+mod_pp = 0
+gold = 5000
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "ALY_BAR", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12305.applies]]
+type = "EXP"
+degree = 5500
+[[mobiles.12305.applies]]
+type = "POWER_POTENTIAL"
+degree = 45
+[[mobiles.12305.applies]]
+type = "REDUCE_DAMAGE"
+degree = 200
+[[mobiles.12305.applies]]
+type = "REDUCE_MAGIC"
+degree = 200
+[[mobiles.12305.applies]]
+type = "APPLY_ADAMAGE"
+degree = 300
+[[mobiles.12305.applies]]
+type = "APPLY_AMAGIC"
+degree = 300
+[[mobiles.12305.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12305.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        cast lifesteal $r
+        mpnowait
+else
+        if rand(50)
+                skilldrv heavyhit $n
+                skilldrv heavyhit $n
+                skilldrv heavyhit $n
+        else
+                cast 'faerie fire' $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12306]
+keywords = "demon lemure lowest"
+short_description = "劣魔(lemure)"
+long_description = "一名低位的惡魔(demon)慢吞吞地往前走著。\n"
+description = """
+一名劣魔步履蹣跚地向前走著，它的形體讓它沒辦法再移動得更快了。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "TACTICS", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "CONTINUE_CURE"]
+alignment = -600
+level = 40
+mod_hitplus = 14000
+mod_mana = 0
+mod_hitroll = 35
+mod_damroll = 50
+mod_ac = 0
+mod_svs = 1
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12306.applies]]
+type = "EXP"
+degree = 1000
+[[mobiles.12306.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.12306.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.12306.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12306.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.12306.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.12306.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12306.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        cast soulsteal $r
+        mpnowait
+else
+        if rand(50)
+                cast 2 'acid blast' $r
+                mpnowait
+        else
+                frenzy
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12307]
+keywords = "nupperibo demon obese"
+short_description = "食嬰魔(nupperibo)"
+long_description = "一名痴肥的惡魔(demon)在這附近漫無目標地遊蕩著。\n"
+description = """
+比低位惡魔高一個階級的就是這種令人作嘔的食嬰魔，它相當巨大、痴肥，樣子
+相當惹人厭，全身都是左搖右晃的肥油。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "TACTICS", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "CONTINUE_CURE"]
+alignment = -700
+level = 42
+mod_hitplus = 15000
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 100
+mod_ac = -500
+mod_svs = 0
+dodge = 100
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12307.applies]]
+type = "EXP"
+degree = 1500
+[[mobiles.12307.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.12307.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.12307.applies]]
+type = "REDUCE_MAGIC"
+degree = 300
+[[mobiles.12307.applies]]
+type = "APPLY_ADAMAGE"
+degree = 500
+[[mobiles.12307.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.12307.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12307.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        cast 2 fireball $r
+        mpnowait
+else
+        if rand(50)
+                cast 'double heal'
+                mpnowait
+        else
+                cast 'seal magic' $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12308]
+keywords = "spinagon demon"
+short_description = "針刺魔(spinagon)"
+long_description = "一隻像是小鬼的惡魔(demon)以它皮革般的翅膀飛過你面前。\n"
+description = """
+針刺魔看起來非常像是大一號的小鬼，它那皮革般的巨大翅膀，讓它得以在握著
+它那奇怪長矛的狀況下飛行。它所攜帶的長矛附有刀刃，能讓最難纏的戰士陷入
+要命的苦戰。
+"""
+act_flags = ["SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "TACTICS", "MOB_AI", "REFLEXION", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "CONTINUE_CURE"]
+alignment = -1000
+level = 48
+mod_hitplus = 29000
+mod_mana = 0
+mod_hitroll = 65
+mod_damroll = 120
+mod_ac = 0
+mod_svs = 0
+dodge = -400
+mod_pp = 0
+gold = 5000
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "MOBAI_LV3", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12308.applies]]
+type = "EXP"
+degree = 3500
+[[mobiles.12308.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.12308.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.12308.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12308.applies]]
+type = "APPLY_ADAMAGE"
+degree = 500
+[[mobiles.12308.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.12308.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12308.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        circular
+        mpnowait
+else
+        if rand(50)
+                bashhead $r
+                mpnowait
+                bashhead $r
+                mpnowait
+        else
+                cast tardy $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12309]
+keywords = "ghoul lord"
+short_description = "食屍鬼之王(ghoul lord)"
+long_description = "食屍鬼之王(ghoul lord)站在這裡，準備好要把你撕成碎片。\n"
+description = """
+它和一般的食屍鬼很像，但是卻足足高了兩呎，有著非常怪異的外表。當它看見
+你的同時，它用它那像蛇一般的長舌舔了舔自己那長有鱗片的嘴唇。
+"""
+act_flags = ["NPC", "SENTINEL", "PET", "CRITICAL", "TACTICS", "MOB_AI", "REFLEXION", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "CURSE", "POISON", "FLAMING", "MYSTIC_ARMOR", "CONTINUE_CURE"]
+alignment = -1000
+level = 57
+mod_hitplus = 300000
+mod_mana = 0
+mod_hitroll = 95
+mod_damroll = 150
+mod_ac = 0
+mod_svs = 42
+dodge = 10
+mod_pp = 0
+gold = 80000
+sex = "male"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "MOBAI_LV3", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12309.applies]]
+type = "EXP"
+degree = 20000
+[[mobiles.12309.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.12309.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.12309.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12309.applies]]
+type = "APPLY_ADAMAGE"
+degree = 800
+[[mobiles.12309.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.12309.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12309.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(15)
+        say 宰了你們！
+        frenzy
+        mpnowait
+else
+        if rand(50)
+                say 死吧！
+                cast 3 'lightning bolt' $r
+                mpnowait
+        else
+                say 撕爛你！
+                cast 2 'energy drain' $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12310]
+keywords = "dragon deep black"
+short_description = "深幽之龍(Deep Dragon)"
+long_description = "一頭黑色的深幽之龍(Deep Dragon)正在這裡打盹。\n"
+description = """
+有著閃耀的鱗片與鋒銳的利爪，深幽之龍是個很強的敵手。牠似乎是剛外出狩獵
+過，因為牠現在看起來非常疲累，至少你現在可以在牠殺死你之前先對牠發動第
+一擊。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "TACTICS", "MOB_AI", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLAMING", "MYSTIC_ARMOR", "CONTINUE_CURE"]
+alignment = -800
+level = 60
+mod_hitplus = 350000
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 100
+mod_ac = 0
+mod_svs = 0
+dodge = 300
+mod_pp = 0
+gold = 20000
+sex = "male"
+race = "Dragon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "SPELL_FURY", "NO_FEAR"]
+special_function = "spec_breath_lightning"
+[[mobiles.12310.applies]]
+type = "EXP"
+degree = 30000
+[[mobiles.12310.applies]]
+type = "POWER_POTENTIAL"
+degree = 60
+[[mobiles.12310.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.12310.applies]]
+type = "REDUCE_MAGIC"
+degree = 300
+[[mobiles.12310.applies]]
+type = "APPLY_ADAMAGE"
+degree = 600
+[[mobiles.12310.applies]]
+type = "APPLY_AMAGIC"
+degree = 600
+[[mobiles.12310.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12310.programs]]
+trigger = "fight_prog"
+argument = "80"
+script = """
+if rand(20)
+	c 'earth bind'
+	break
+endif
+if rand(25)
+	c 'wail of tempest'
+	break
+endif
+if rand(33)
+        say 愚者！還想挑起無謂的紛爭嗎？！
+        mpecho $I張嘴噴出了猛烈的龍燄！
+        cast 2 'gas breath'
+        mpnowait
+else
+        if rand(50)
+                say 膽敢冒犯吾......就用你的性命來謝罪！
+                mpecho $I抬起頭呼喚狂嵐的力量！
+                cast 2 whirlwind
+                mpnowait
+        else
+                say 不堪一擊！
+                mpecho 尖銳的龍爪彷彿撕裂了大氣！
+                frenzy
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12311]
+keywords = "beast undead"
+short_description = "不死野獸(Undead Beast)"
+long_description = "一頭奇怪的不死野獸(Undead Beast)正在這裡覓食。\n"
+description = """
+一頭很大的不死野獸站在這裡，許多骨頭刺穿它那粗糙的皮膚露在外面，看起來
+就像是一根根的長矛似的。它的皮膚已經爛得差不多了，肋骨與內臟器官因此而
+暴露在外頭，噁！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "TACTICS", "MOB_AI", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MYSTIC_MIRROR", "CONTINUE_CURE"]
+alignment = -900
+level = 53
+mod_hitplus = 160000
+mod_mana = 0
+mod_hitroll = 90
+mod_damroll = 150
+mod_ac = 0
+mod_svs = 0
+dodge = 10
+mod_pp = 0
+gold = 5000
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "REF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12311.applies]]
+type = "EXP"
+degree = 15000
+[[mobiles.12311.applies]]
+type = "POWER_POTENTIAL"
+degree = 45
+[[mobiles.12311.applies]]
+type = "REDUCE_DAMAGE"
+degree = 350
+[[mobiles.12311.applies]]
+type = "REDUCE_MAGIC"
+degree = 200
+[[mobiles.12311.applies]]
+type = "APPLY_ADAMAGE"
+degree = 800
+[[mobiles.12311.applies]]
+type = "APPLY_AMAGIC"
+degree = -200
+[[mobiles.12311.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12311.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(20)
+	if isaffected($i) / mute
+		mpecho 你看到$I的禁言術被$I破除了。
+		mpforcer here del_affect $i mute
+	endif
+endif
+if rand(20)
+	if isaffected($i) / paralyze
+		mpforcer here del_affect $i paralyze
+	endif
+endif
+"""
+[[mobiles.12311.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(15)
+	frenzy
+endif
+if rand(33)
+        skilldrv speedhit $n
+        skilldrv speedhit $n
+        skilldrv speedhit $n
+else
+        if rand(50)
+                cast 2 'shocking grasp' $r
+                mpnowait
+                get all
+        else
+                bashhead
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12312]
+keywords = "cleric holy"
+short_description = "神聖牧師(Holy Cleric)"
+long_description = "一名牧師(cleric)正在這裡尋找他失散的同伴們。\n"
+description = """
+一名信奉遠古傳說神祇Ryzen的牧師，他似乎在這座洞窟裡迷路了。從他告訴你
+的話來判斷，他和他的伙伴們是在一場與不死生物的戰鬥中被打散的。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "TACTICS", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "CONTINUE_CURE"]
+alignment = 800
+level = 50
+mod_hitplus = 60000
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 50
+mod_ac = 0
+mod_svs = 0
+dodge = -200
+mod_pp = 0
+gold = 5000
+sex = "male"
+race = "Gnome"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+special_function = "spec_cast_cleric"
+[[mobiles.12312.applies]]
+type = "EXP"
+degree = 5000
+[[mobiles.12312.applies]]
+type = "POWER_POTENTIAL"
+degree = 60
+[[mobiles.12312.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.12312.applies]]
+type = "REDUCE_MAGIC"
+degree = 300
+[[mobiles.12312.applies]]
+type = "APPLY_ADAMAGE"
+degree = -100
+[[mobiles.12312.applies]]
+type = "APPLY_AMAGIC"
+degree = 400
+[[mobiles.12312.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12312.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 淨化之歌！
+        cast convalesce
+        mpnowait
+else
+        if rand(50)
+                say 破魔之光！
+                cast 'mass turn'
+                mpnowait
+                cast 2 'dispel evil' $r
+                mpnowait
+        else
+                say 神之能量！
+                cast 2 powerball $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12313]
+keywords = "knight"
+short_description = "武裝騎士(Well Armed Knight)"
+long_description = "一名穿著華麗裝甲的騎士(knight)站在這裡尋找失去的同伴們。\n"
+description = """
+這名年輕人穿著裝甲，佩帶著高階騎士的劍，他的裝甲上頭繪有一頭巨大的藍龍
+圖案。他握著他的銀色長劍，這樣似乎能讓他安心一點。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HARD_DIS", "TACTICS", "TRACK", "NO_PAR"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "CONTINUE_CURE"]
+alignment = 1000
+level = 41
+mod_hitplus = 38000
+mod_mana = 0
+mod_hitroll = 30
+mod_damroll = 60
+mod_ac = 0
+mod_svs = 0
+dodge = -100
+mod_pp = 0
+gold = 50000
+sex = "male"
+race = "Human"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12313.applies]]
+type = "EXP"
+degree = 1200
+[[mobiles.12313.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.12313.applies]]
+type = "REDUCE_DAMAGE"
+degree = 250
+[[mobiles.12313.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12313.applies]]
+type = "APPLY_ADAMAGE"
+degree = 400
+[[mobiles.12313.applies]]
+type = "APPLY_AMAGIC"
+degree = -100
+[[mobiles.12313.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12313.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpat 5 wear all
+if rand(33)
+        say 可惡！你是惡魔的爪牙對吧？！
+        perform empslash
+        mpnowait
+else
+        if rand(50)
+                say 可惡的邪惡生物，披著人皮的惡魔！
+                earth
+                mpnowait
+                flaming
+                mpnowait
+        else
+                say 再靠過來我就斬了你！
+                fulgurant
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12314]
+keywords = "halfling thief"
+short_description = "半身人盜賊(Halfling Thief)"
+long_description = "一名半身人盜賊(Halfling Thief)在附近探頭探腦，尋找某些值得偷取的東西。\n"
+description = """
+在與他的冒險伙伴們走散之後，這個矮小的麻煩製造機現在就只是到處跑，尋找
+可以用來「充實」他錢包的東西。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "REGENERACY", "REFLEXION", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "CONTINUE_CURE"]
+alignment = -400
+level = 46
+mod_hitplus = 56000
+mod_mana = 0
+mod_hitroll = 30
+mod_damroll = 120
+mod_ac = 0
+mod_svs = 0
+dodge = -300
+mod_pp = 0
+gold = 12000
+sex = "male"
+race = "Halfling"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12314.applies]]
+type = "EXP"
+degree = 4000
+[[mobiles.12314.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.12314.applies]]
+type = "REDUCE_DAMAGE"
+degree = 500
+[[mobiles.12314.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12314.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.12314.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.12314.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12314.programs]]
+trigger = "fight_prog"
+argument = "25"
+script = """
+mpgoto self
+bs $r
+"""
+[[mobiles.12314.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 喔呀喔呀～～
+        cast blindness $r
+else
+        if rand(50)
+                say 嘖，怎麼可以讓你逮到！
+                snare $r
+                untangle
+        else
+                say 看招！
+                skilldrv multihit $n
+                skilldrv multihit $n
+                skilldrv multihit $n
+        endif
+endif
+"""
+
+[mobiles.12315]
+keywords = "powerful enchantress"
+short_description = "強力的女巫(Powerful Enchantress)"
+long_description = "一名力量強大的女巫(enchantress)正在附近尋找她的同伴。\n"
+description = """
+一名美麗的女巫正在附近遊蕩，尋找她那些在之前一場戰鬥中失散的伙伴們。她
+對於自己的魔法有著極高的自信，手上戴著一枚華麗的戒指。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HARD_DIS", "TACTICS", "TRACK", "REGENERACY", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MYSTIC_MIRROR", "CONTINUE_CURE"]
+alignment = 600
+level = 46
+mod_hitplus = 57000
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 0
+dodge = 100
+mod_pp = 0
+gold = 10000
+sex = "female"
+race = "Elf"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "REF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+special_function = "spec_cast_mage"
+[[mobiles.12315.applies]]
+type = "EXP"
+degree = 4500
+[[mobiles.12315.applies]]
+type = "POWER_POTENTIAL"
+degree = 40
+[[mobiles.12315.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.12315.applies]]
+type = "REDUCE_MAGIC"
+degree = 300
+[[mobiles.12315.applies]]
+type = "APPLY_ADAMAGE"
+degree = -200
+[[mobiles.12315.applies]]
+type = "APPLY_AMAGIC"
+degree = 400
+[[mobiles.12315.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12315.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 風象～～雷擊陣！
+        cast whirlwind
+        cast 'call lightning'
+else
+        if rand(50)
+                say 龍王～～冰河破！
+                cast 'frost breath' $r
+                c 'glacier strike'
+        else
+                say 綠燄～～衝擊波！
+                c 'green breath'
+                cast 'crushing hand' $r
+        endif
+endif
+"""
+
+[mobiles.12316]
+keywords = "Nartoria-lich"
+short_description = "那托里亞(Nartoria)"
+long_description = "蒼之流浪者那托里亞(Nartoria)站在這裡思考著下一步的行動。\n"
+description = """
+肉體派的巨漢，彷彿能一拳殺熊似的，孔武有力的模樣與發達的肌肉是他最大的
+特徵，身為地精竟然還這麼高大威猛也真是太稀奇了。他的頭髮剪得很短，皮膚
+十分黝黑，散發著健康的氣息。他的身份是某個秘密教派出身的六名特使之一，
+在這六人之中他可以算是最「粗勇」的一位。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "GILLS", "CONTINUE_CURE"]
+alignment = 1000
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Gnome"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_POISON", "NO_SLEEP", "ALY_DI", "ALY_DH", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.12316.weaknesses]]
+skill = "armageddon"
+percent = 100
+damage = 1
+[[mobiles.12316.weaknesses]]
+skill = "lightning bolt"
+percent = 100
+damage = 1
+[[mobiles.12316.weaknesses]]
+skill = "powerball"
+percent = 100
+damage = 1
+[[mobiles.12316.applies]]
+type = "STR"
+degree = 10
+[[mobiles.12316.applies]]
+type = "CON"
+degree = 10
+[[mobiles.12316.applies]]
+type = "HIT"
+degree = 75000
+[[mobiles.12316.applies]]
+type = "HITROLL"
+degree = 125
+[[mobiles.12316.applies]]
+type = "DAMROLL"
+degree = 125
+[[mobiles.12316.applies]]
+type = "SAVING_BREATH"
+degree = -20
+[[mobiles.12316.applies]]
+type = "SAVING_SPELL"
+degree = -15
+[[mobiles.12316.applies]]
+type = "POWER_POTENTIAL"
+degree = 35
+[[mobiles.12316.applies]]
+type = "REDUCE_DAMAGE"
+degree = 500
+[[mobiles.12316.applies]]
+type = "APPLY_ADAMAGE"
+degree = 35
+[[mobiles.12316.applies]]
+type = "APPLY_AMAGIC"
+degree = 35
+[[mobiles.12316.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 2500
+[[mobiles.12316.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 5 mpoload 12313 36
+mpat 5 mpoload 12314 36
+mpat 5 mpoload 12315 36
+mpat 5 wear all
+"""
+[[mobiles.12316.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(25)
+        say 空鏡縛鎖！
+        mpechoat $n 一道強光閃過，你感到身體似乎變重了......
+        mpechoaround $n 只見一道強光閃過，卻又不像是光爆，到底發生什麼事了？！
+        mpoload 12312 $n 5 target
+        mpforcer here add_affect $n 'poison' 1140 10 19 -25 4096
+else
+        if rand(33)
+                say 以指為劍，電裂斬擊！
+                mpecho $I兩指併攏，一道雷光自他的指尖爆出，他就這麼使出了劍技！ 
+                mpat 5 mpoload 70914 36
+                mpat 5 wear sword
+                fulgurant
+                mpnowait
+                fulgurant
+                mpnowait
+                mpat 5 remove sword
+                mpat 5 mpjunk sword
+        else
+                if rand(50)
+                        say 蒼緋音速拳！
+                        mpecho $I連續揮出十數拳！好、好快！
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv speedhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                        skilldrv heavyhit $r
+                else
+                        say 秘‧龜甲綑綁技！
+                        mpechoat $n $I不曉得從哪裡弄出一條繩索，在一瞬間把你給綁了起來！Ｎｏ！
+                        mpechoaround $n $N被一條突然出現的繩子給綁住了！不過這綁得真是有點SM的味道......
+                        mpforcer here add_affect $n 'paralyze' 0040 3 39 200 268435456
+                endif
+        endif
+endif
+"""
+[[mobiles.12316.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpgreward exp $n 36 10000
+mpat 12300 mpforcer here modrvt t0 = 120
+if race($n) == Gnome
+        mpskillexp $n 200
+endif
+"""
+
+[mobiles.12350]
+keywords = "Death Knight"
+short_description = "死亡騎士(Death Knight)"
+long_description = "一名不死的骷髏騎士(knight)把守在這個房間。\n"
+description = """
+死亡騎士是個很強悍的敵手，是由某個強力的死靈師所召喚而來的，它們在過去
+的全盛時期可是最有名望的騎士們。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "REGENERACY", "NO_PAR"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "CONTINUE_CURE"]
+alignment = -750
+level = 40
+mod_hitplus = 14000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 80
+mod_ac = 0
+mod_svs = 45
+dodge = 10
+mod_pp = 0
+gold = 8000
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ANTI_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12350.applies]]
+type = "EXP"
+degree = 1500
+[[mobiles.12350.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.12350.applies]]
+type = "REDUCE_DAMAGE"
+degree = 250
+[[mobiles.12350.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12350.applies]]
+type = "APPLY_ADAMAGE"
+degree = 400
+[[mobiles.12350.applies]]
+type = "APPLY_AMAGIC"
+degree = -200
+[[mobiles.12350.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12350.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(25)
+        frenzy
+        mpnowait
+else
+        if rand(50)
+                disarm $r
+                mpnowait
+                cast 2 blindness $r
+                mpnowait
+        else
+                cast 2 'chill touch' $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.12351]
+keywords = "torturer inquisitor"
+short_description = "地獄審判官(The Inquisitor)"
+long_description = "這名審判官(Inquisitor)正在這裡準備各式各樣的刑具。\n"
+description = """
+這個邪惡的傢伙看起來像個僵屍，不過行為卻比僵屍邪惡許多。它使用它的魔力
+讓那些正被它所刑求的受害者繼續存活下去。不過，身為地獄審判官的他怎麼會
+在這裡呢？
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "REGENERACY", "NO_PAR"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLAMING", "CONTINUE_CURE"]
+alignment = -1000
+level = 50
+mod_hitplus = 100000
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 100
+mod_ac = 0
+mod_svs = 0
+dodge = 10
+mod_pp = 0
+gold = 80000
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "HALF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12351.applies]]
+type = "EXP"
+degree = 25000
+[[mobiles.12351.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.12351.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.12351.applies]]
+type = "REDUCE_MAGIC"
+degree = 300
+[[mobiles.12351.applies]]
+type = "APPLY_ADAMAGE"
+degree = 300
+[[mobiles.12351.applies]]
+type = "APPLY_AMAGIC"
+degree = 300
+[[mobiles.12351.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12351.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(20)
+	c 'apocalypse'
+endif
+if rand(15)
+	c 'hell southerncross'
+	break
+endif
+if rand(20)
+	c 'demon tremor'
+endif
+if rand(33)
+        cast mute $r
+        cast paralyze $r
+endif
+if rand(20)
+	cast 'star fire' $r
+endif
+cast disease $r
+"""
+
+[mobiles.12352]
+keywords = "demon minor"
+short_description = "小惡魔(Minor Demon)"
+long_description = "一名被火燄圍繞的小惡魔(demon)站在這裡。\n"
+description = """
+一名看起來帶有攻擊性的惡魔站在火盆的火燄中，它好像是被召喚過來的，而且
+對此相當憤怒。它用來當成武器的長爪與尖牙令你開始考慮該不該用最快速度逃
+離它的身邊。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "REGENERACY", "MOB_AI", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "FLAMING", "CONTINUE_CURE"]
+alignment = -1000
+level = 50
+mod_hitplus = 58000
+mod_mana = 0
+mod_hitroll = 85
+mod_damroll = 30
+mod_ac = 0
+mod_svs = 0
+dodge = 10
+mod_pp = 0
+gold = 8000
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12352.applies]]
+type = "EXP"
+degree = 6500
+[[mobiles.12352.applies]]
+type = "POWER_POTENTIAL"
+degree = 40
+[[mobiles.12352.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.12352.applies]]
+type = "REDUCE_MAGIC"
+degree = 200
+[[mobiles.12352.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.12352.applies]]
+type = "APPLY_AMAGIC"
+degree = 400
+[[mobiles.12352.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12352.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(35)
+        mpgoto self
+        cast 'flaming armor'
+else
+        if rand(20)
+                cast 'wind screaming' $r
+        else
+		if rand(30)
+			c 'phlogistic verse'
+		else
+			c 'demon tremor'
+		endif
+        endif
+endif
+"""
+
+[mobiles.12353]
+keywords = "demon major"
+short_description = "大惡魔(Major Demon)"
+long_description = "一名大惡魔(demon)飄浮在火燄之中。\n"
+description = """
+一名看起來極為邪惡的巨大惡魔飄浮在火燄之中，它有著翅膀、尾巴、利爪、尖
+牙，所有惡魔該有的東西它全部都有。黑色皮膚上的鱗片因為火光而閃閃發亮，
+眼中燃燒的火燄誘惑著你的靈魂，你覺得自己離死神不遠了。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "REGENERACY", "MOB_AI", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLAMING", "CONTINUE_CURE"]
+alignment = -1000
+level = 65
+mod_hitplus = 140000
+mod_mana = 0
+mod_hitroll = 150
+mod_damroll = 40
+mod_ac = 0
+mod_svs = 0
+dodge = -150
+mod_pp = 0
+gold = 80000
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "SPELL_FURY", "NO_FEAR"]
+special_function = "spec_cast_undead"
+[[mobiles.12353.applies]]
+type = "EXP"
+degree = 28000
+[[mobiles.12353.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.12353.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.12353.applies]]
+type = "REDUCE_MAGIC"
+degree = 300
+[[mobiles.12353.applies]]
+type = "APPLY_ADAMAGE"
+degree = 200
+[[mobiles.12353.applies]]
+type = "APPLY_AMAGIC"
+degree = 500
+[[mobiles.12353.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12353.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(35)
+        mpgoto self
+        cast 'flaming armor'
+        cast 'sun flash'
+else
+        if rand(60)
+                cast 2 whirlwind
+        else
+		if rand(40)
+			c 'hell southerncross'
+		else
+			c 'demon tremor'
+		endif
+        endif
+endif
+"""
+
+[mobiles.12354]
+keywords = "lich lord myzelak"
+short_description = "巫妖之王‧密茲雷克(Myzelak the Lich Lord)"
+long_description = "巫妖之王‧密茲雷克(Myzelak the Lich Lord)正站在它的王座旁邊。\n"
+description = """
+邪惡的化身，密茲雷克在生前為了獲得死後的生命，耗費多年時光使自身的魔力
+更加完美。而它所努力的結果現在就站在你面前：一具看起來像是個巫師的腐敗
+肉體。密茲雷克現在則是將時間花在尋找終結所有生命的方法上。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "REGENERACY", "MOB_AI", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MANASHIELD", "MYSTIC_MIRROR", "CONTINUE_CURE"]
+alignment = -1000
+level = 75
+mod_hitplus = 500000
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 50
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1000000
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "REF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "MOBAI_LV3", "SPELL_FURY", "NO_FEAR"]
+special_function = "spec_cast_mage"
+[[mobiles.12354.applies]]
+type = "EXP"
+degree = 55000
+[[mobiles.12354.applies]]
+type = "POWER_POTENTIAL"
+degree = 80
+[[mobiles.12354.applies]]
+type = "REDUCE_DAMAGE"
+degree = 250
+[[mobiles.12354.applies]]
+type = "REDUCE_MAGIC"
+degree = 250
+[[mobiles.12354.applies]]
+type = "APPLY_ADAMAGE"
+degree = 500
+[[mobiles.12354.applies]]
+type = "APPLY_AMAGIC"
+degree = 500
+[[mobiles.12354.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 800
+[[mobiles.12354.applies]]
+type = "APPLY_GMAGIC"
+degree = 800
+[[mobiles.12354.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpat 12360 mpoload 12301
+mpat 12360 unlock closet-lt
+mpat 12360 open closet-lt
+mpat 12360 mpoload 12364
+mpat 12360 mpoload 12365
+mpat 12360 put tunic-lt closet-lt
+mpat 12360 put waterwalking-lt closet-lt
+mpat 12360 close closet-lt
+mpat 12360 lock closet-lt
+mpat 12360 mpoload 12359 41
+mpat 12360 mpoload 12360 41
+mpat 12360 wear all
+"""
+[[mobiles.12354.programs]]
+trigger = "fight_prog"
+argument = "60"
+script = """
+if rand(25)
+        say 來，儘管放馬過來，本王會讓你明白何謂力量的差距！
+        mpecho $I釋放出強大的能量，一股恐怖的氣息充斥在空氣中！
+        cast 'virtual sword'
+else
+	if rand(20)
+		say 到冥府懺悔去吧！愚昧的勇者！
+		c 'finger of death' $r
+	endif
+	if rand(40)
+		mpecho $I開始凝聚亡靈力量，傷勢逐漸回復。
+		c 2 'double heal'
+	else
+        	if rand(70)
+                	say 有所覺悟了嗎，勇者閣下？
+                	mpecho $I從手中釋放出強力的雷光！
+                	cast 'fulgurant dance'
+			cast 'wail of tempest'
+        	else
+                	say 那麼，本王就賜予你死亡之禮！
+                	mpecho $I灼熱的氣息伴隨著耀眼的火光迎面而來！
+			cast 'phlogistic verse'
+                	cast 2 'fire breath' $r
+		endif
+        endif
+endif
+"""
+[[mobiles.12354.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if mobcount(12354) == 1
+        mpmod_all_qmark $n lichtown_qmark v0 | 1
+        mpmod_qmark $n lichtown_qmark v1 | 1
+        mpat 12367 mpforcer here modrvt t0 = 500
+endif
+"""
+
+[mobiles.12355]
+keywords = "dracolich mount dragon"
+short_description = "骸骨龍(The Dracolich)"
+long_description = "密茲雷克的座騎，古代的骸骨龍(The Dracolich)。\n"
+description = """
+密茲雷克的座騎骸骨龍矗立在你的面前，當它向你咆哮時，它空無一物的眼眶中
+閃耀著火紅的光輝。這頭不死龍相當地殘暴，也許現在你應該在自己死掉前先逃
+跑才對。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "REGENERACY", "MOB_AI", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "FLAMING", "CONTINUE_CURE"]
+alignment = -1000
+level = 60
+mod_hitplus = 300000
+mod_mana = 0
+mod_hitroll = 60
+mod_damroll = 100
+mod_ac = -800
+mod_svs = 30
+dodge = -300
+mod_pp = 0
+gold = 80000
+sex = "neutral"
+race = "Dragon"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12355.applies]]
+type = "EXP"
+degree = 35000
+[[mobiles.12355.applies]]
+type = "POWER_POTENTIAL"
+degree = 45
+[[mobiles.12355.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.12355.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12355.applies]]
+type = "APPLY_ADAMAGE"
+degree = 800
+[[mobiles.12355.applies]]
+type = "APPLY_AMAGIC"
+degree = -200
+[[mobiles.12355.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 1000
+[[mobiles.12355.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12355.programs]]
+trigger = "fight_prog"
+argument = "70"
+script = """
+if rand(25)
+        cast 3 'gas breath'
+        mpnowait
+else
+        if rand(60)
+                cast poison $r
+		cast paralyze $r
+                cast mute $r
+		cast 'agglomerate descant'
+        else
+		c 'banshee wail'
+		cast 'ghosts celebration'
+		c 'sand tide'
+		c 'succubus kiss'
+		c 'glacier strike'
+        endif
+endif
+"""
+
+[mobiles.12356]
+keywords = "elite death knight"
+short_description = "菁英死亡騎士(Elite Death Knight)"
+long_description = "一名菁英死亡騎士(Elite Death Knight)發出醜惡的狂笑聲，並攻擊過來。\n"
+description = """
+一具很大的骷髏就在你的面前，它握著一把嚴重生銹的古老長劍，帶著一面應該
+是用龍的鱗片所做成的大型黑色盾牌。它看起來與你之前所碰過的死亡騎士們非
+常類似，只不過它的體積大上許多，而且似乎更強悍。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "REGENERACY", "MOB_AI", "REFLEXION", "NO_PAR"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MYSTIC_ARMOR", "CONTINUE_CURE"]
+alignment = -900
+level = 70
+mod_hitplus = 100000
+mod_mana = 0
+mod_hitroll = 100
+mod_damroll = 80
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 80000
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_DM", "NO_LORE", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "ALY_INF", "NO_TARDY", "EXPERT", "NO_CRAZY", "SPELL_FURY", "NO_FEAR"]
+[[mobiles.12356.applies]]
+type = "EXP"
+degree = 30000
+[[mobiles.12356.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.12356.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.12356.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.12356.applies]]
+type = "APPLY_ADAMAGE"
+degree = 400
+[[mobiles.12356.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.12356.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+"""
+[[mobiles.12356.programs]]
+trigger = "fight_prog"
+argument = "60"
+script = """
+if rand(33)
+        storm
+        mpnowait
+        storm
+        mpnowait
+else
+        if rand(50)
+                flaming
+                mpnowait
+                flaming
+                mpnowait
+        else
+                circular
+                mpnowait
+                circular
+                mpnowait
+        endif
+endif
+"""
+
+[objects.12300]
+keywords = "girdle giant strength"
+short_description = "巨力束帶(girdle of giant strength)"
+long_description = "一條閃閃發光的金剛石束帶(girdle)飄浮在這裡。"
+action_description = "adamantite"
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "200", "0"]
+weight = 3
+cost = 200000
+level_limited = 0
+material = "obsidian"
+[[objects.12300.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.12300.applies]]
+type = "STR"
+value = 3
+
+[objects.12301]
+keywords = "bone key carved"
+short_description = "骨製鑰匙(carved bone key)"
+long_description = "一把用某個巨人的指骨雕成的小鑰匙(bone key)放在這裡。"
+action_description = ""
+item_type = "KEY"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 25000
+level_limited = 0
+material = "bone"
+
+[objects.12302]
+keywords = "leggings speed"
+short_description = "疾速脛甲(leggings of speed)"
+long_description = "一套閃閃發光的皮製護脛(leggings)放在這裡。"
+action_description = "silver"
+item_type = "ARMOR"
+extra_flags = ["GLOW", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "VAMPIRE_BANE", "HOLY"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "150", "0"]
+weight = 1
+cost = 100000
+level_limited = 0
+material = "leather"
+[[objects.12302.applies]]
+type = "DODGE"
+value = -10
+[[objects.12302.applies]]
+type = "DEX"
+value = 2
+
+[objects.12303]
+keywords = "armor ornate plate"
+short_description = "華麗胸甲(ornate breast plate)"
+long_description = "一件上頭有著黃金鏤刻的白銀胸甲(breast plate)。"
+action_description = "silver"
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "VAMPIRE_BANE", "HOLY"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "250", "0"]
+weight = 13
+cost = 120000
+level_limited = 0
+material = "silver"
+[[objects.12303.applies]]
+type = "CON"
+value = 1
+[[objects.12303.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.12303.applies]]
+type = "HITROLL"
+value = 1
+
+[objects.12304]
+keywords = "ring magic"
+short_description = "魔法指環(ring of magic)"
+long_description = "一枚上頭有著魔力符文的發光戒指(ring)放在這裡。"
+action_description = "mithril"
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "LORE"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "150", "0"]
+weight = 1
+cost = 100000
+level_limited = 0
+material = "mithril"
+[[objects.12304.applies]]
+type = "MANA"
+value = 50
+[[objects.12304.applies]]
+type = "INT"
+value = 2
+[[objects.12304.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+[[objects.12304.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+
+[objects.12305]
+keywords = "sheath wrist"
+short_description = "影消腕套(concealable wrist sheath)"
+long_description = "一個用來收藏匕首的大型腕套(wrist sheath)放在這裡。"
+action_description = "leather"
+item_type = "CONTAINER"
+extra_flags = ["MAGIC", "ANTI_EVIL", "LORE"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["10", "0", "0", "-5"]
+weight = 2
+cost = 50000
+level_limited = 0
+material = "leather"
+[[objects.12305.applies]]
+type = "AC"
+value = -10
+[[objects.12305.applies]]
+type = "DEX"
+value = 1
+[[objects.12305.applies]]
+type = "DAMROLL"
+value = 1
+[[objects.12305.applies]]
+type = "HITROLL"
+value = 1
+
+[objects.12306]
+keywords = "spinagon spear"
+short_description = "針刺魔長矛(Spinagon's spear)"
+long_description = "一把附有銳利邪刃的長矛(spear)。"
+action_description = "mithril"
+item_type = "WEAPON"
+extra_flags = ["DARK", "EVIL", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL", "POISONED"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "7"]
+weight = 30
+cost = 63000
+level_limited = 0
+material = "mithril"
+[[objects.12306.applies]]
+type = "DAMROLL"
+value = 6
+[[objects.12306.applies]]
+type = "HITROLL"
+value = 6
+[[objects.12306.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+
+[objects.12307]
+keywords = "rulership rod"
+short_description = "支配者之杖(Rod of Rulership)"
+long_description = "一把上頭刻有命令文句的棍棒(rod)飄浮在這裡。"
+action_description = "adamantite"
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE", "NO_SAC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["15", "0", "200", "0"]
+weight = 5
+cost = 500000
+level_limited = 0
+material = "law matter"
+[[objects.12307.applies]]
+type = "WIS"
+value = 3
+[[objects.12307.applies]]
+type = "HIT"
+value = 100
+[[objects.12307.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+
+[objects.12308]
+keywords = "collar bloody"
+short_description = "血染項圈(bloody collar)"
+long_description = "沾染了某頭死亡野獸鮮血的項圈(bloody collar)放在這裡。"
+action_description = "gold"
+item_type = "ARMOR"
+extra_flags = ["HUM", "MAGIC", "NODROP", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "300", "0"]
+weight = 7
+cost = 80000
+level_limited = 0
+material = "gold"
+[[objects.12308.applies]]
+type = "STR"
+value = 1
+[[objects.12308.applies]]
+type = "DEX"
+value = -1
+[[objects.12308.applies]]
+type = "HITROLL"
+value = -2
+[[objects.12308.applies]]
+type = "DAMROLL"
+value = 5
+
+[objects.12310]
+keywords = "vial holy water"
+short_description = "聖水之瓶(vial of holy water)"
+long_description = "一個裝有聖水的發光瓶子(vial)被遺留在這裡。"
+action_description = "glass"
+item_type = "POTION"
+extra_flags = ["MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "VAMPIRE_BANE", "HOLY"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["55", "bless", "heal", ""]
+weight = 1
+cost = 60000
+level_limited = 0
+material = "glass"
+
+[objects.12311]
+keywords = "sword silver longsword long"
+short_description = "白銀長劍(silver longsword)"
+long_description = "一把寫滿了神秘戰鬥符文的白銀長劍(silver longsword)放在這裡。"
+action_description = "silver"
+item_type = "WEAPON"
+extra_flags = ["HUM", "INVIS", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "VAMPIRE_BANE", "HOLY", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["200", "0", "0", "3"]
+weight = 4
+cost = 135000
+level_limited = 0
+material = "silver"
+[[objects.12311.applies]]
+type = "HITROLL"
+value = 5
+[[objects.12311.applies]]
+type = "DAMROLL"
+value = 15
+[[objects.12311.applies]]
+type = "WIS"
+value = 1
+
+[objects.12312]
+keywords = "sky bind"
+short_description = "蒼之縛鎖(bind of sky)"
+long_description = "一種沒什麼特別的用途，不過卻很重的魔法物品(magical object)。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["GLOW", "HUM", "INVIS", "MAGIC", "NODROP", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 0
+level_limited = 0
+material = "light matter"
+
+[objects.12313]
+keywords = "cloud cloak"
+short_description = "雲煙斗篷(cloud cloak)"
+long_description = "一件藍底白紋，上面繡有奇怪符號的斗篷(cloud cloak)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "180", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "sapphire"
+[[objects.12313.applies]]
+type = "HITROLL"
+value = 3
+[[objects.12313.applies]]
+type = "DAMROLL"
+value = -3
+[[objects.12313.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+
+[objects.12314]
+keywords = "sibylline necklace"
+short_description = "神諭鍊墜(sibylline necklace)"
+long_description = "一條散發著驅邪之力的項鍊(sibylline necklace)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "150", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "maplestone matter"
+[[objects.12314.applies]]
+type = "CON"
+value = 1
+[[objects.12314.applies]]
+type = "DODGE"
+value = -15
+
+[objects.12315]
+keywords = "fuliginous leggings"
+short_description = "幽光戰脛(fuliginous leggings)"
+long_description = "一雙顏色如同煤灰般昏暗的堅固脛甲(fuliginous leggings)。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "300", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["WIZARD", "SWORDSMAN", "SHAMAN", "LORD", "RANGER"] }
+material = "obsidian"
+[[objects.12315.applies]]
+type = "WIS"
+value = 2
+[[objects.12315.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+
+[objects.12350]
+keywords = "black mace"
+short_description = "古老黑色鎚子(old black mace)"
+long_description = "一把古老的黑色鐵鎚(mace)被安置在這裡。"
+action_description = "iron"
+item_type = "WEAPON"
+extra_flags = ["HUM", "EVIL", "NODROP", "ANTI_GOOD", "ANTI_NEUTRAL", "POISONED"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "0", "7"]
+weight = 25
+cost = 100000
+level_limited = 0
+material = "iron"
+[[objects.12350.applies]]
+type = "CON"
+value = 3
+[[objects.12350.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+
+[objects.12351]
+keywords = "glowing skull"
+short_description = "燃燒的頭骨(flaming Skull)"
+long_description = "一顆人類的頭骨(skull)飄浮在這裡，在青藍色的火燄中輪廓分明。"
+action_description = "stone"
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "DARK", "MAGIC", "NODROP", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE", "NO_SAC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "999", "0"]
+weight = 5
+cost = 100000
+level_limited = 0
+material = "bone"
+[[objects.12351.applies]]
+type = "INT"
+value = 2
+[[objects.12351.applies]]
+type = "MANA"
+value = -25
+[[objects.12351.applies]]
+type = "HIT"
+value = -25
+[[objects.12351.applies]]
+type = "MOVE"
+value = -25
+[[objects.12351.applies]]
+type = "HITROLL"
+value = 2
+[[objects.12351.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.12351.programs]]
+trigger = "obj_act"
+argument = "wear"
+script = """
+if objextra(self,v0) == 0
+	opmodvt self used = 2
+	opmodvt self v0 = 1
+	oset self extra | 4194304
+endif
+"""
+
+[objects.12352]
+keywords = "wand golden"
+short_description = "金色之杖(golden wand)"
+long_description = "一把小型的金色之杖(golden wand)被放在寶藏堆之中。"
+action_description = "gold"
+item_type = "WAND"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["50", "10", "10", "shield"]
+weight = 3
+cost = 50000
+level_limited = 0
+material = "gold"
+
+[objects.12353]
+keywords = "staff crystal"
+short_description = "水晶之杖(crystal staff)"
+long_description = "一把綺麗的水晶之杖(crystal wand)被放在寶藏堆之中。"
+action_description = "stone"
+item_type = "STAFF"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["70", "5", "5", "heal"]
+weight = 10
+cost = 80000
+level_limited = 0
+material = "crystal"
+
+[objects.12354]
+keywords = "garnet ring"
+short_description = "石榴石戒指(garnet ring)"
+long_description = "一顆很小的石榴石戒指(garnet ring)被放在寶藏堆之中。"
+action_description = "gold"
+item_type = "TREASURE"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 900
+level_limited = 0
+material = "garnet"
+[[objects.12354.applies]]
+type = "DAMROLL"
+value = 3
+[[objects.12354.applies]]
+type = "MANA"
+value = 50
+[[objects.12354.applies]]
+type = "INT"
+value = 2
+[[objects.12354.applies]]
+type = "HITROLL"
+value = 2
+
+[objects.12355]
+keywords = "bracer night"
+short_description = "闇夜護腕(Bracer of the Night)"
+long_description = "一個生銹的黑色護腕(black bracer)放在這裡。"
+action_description = "adamantite"
+item_type = "ARMOR"
+extra_flags = ["HUM", "MAGIC", "NODROP", "ANTI_GOOD", "ANTI_NEUTRAL", "LORE"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "200", "0"]
+weight = 5
+cost = 150000
+level_limited = 0
+material = "black matter"
+[[objects.12355.applies]]
+type = "HITROLL"
+value = 2
+[[objects.12355.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.12355.applies]]
+type = "CON"
+value = 1
+
+[objects.12356]
+keywords = "amulet night"
+short_description = "闇夜護符(Amulet of the Night)"
+long_description = "一枚古老的護符(amulet)放在這裡，閃爍著不自然的藍色光芒。"
+action_description = "silver"
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "NODROP", "ANTI_GOOD", "ANTI_NEUTRAL", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "200", "0"]
+weight = 3
+cost = 200000
+level_limited = 0
+material = "water aura"
+[[objects.12356.applies]]
+type = "INT"
+value = 1
+[[objects.12356.applies]]
+type = "WIS"
+value = 1
+[[objects.12356.applies]]
+type = "MANA"
+value = 25
+[[objects.12356.applies]]
+type = "APPLY_AMAGIC"
+value = 10
+
+[objects.12357]
+keywords = "ancient longsword sword"
+short_description = "古代長劍(Ancient Longsword)"
+long_description = "一把古老的長劍(longswords)飄浮在這裡，散發出淡淡的光輝。"
+action_description = "adamantite"
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE", "POISONED", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["300", "0", "0", "3"]
+weight = 25
+cost = 250000
+level_limited = 0
+material = "chaos matter"
+[[objects.12357.applies]]
+type = "DAMROLL"
+value = 30
+[[objects.12357.applies]]
+type = "HITROLL"
+value = -10
+
+[objects.12358]
+keywords = "black scale dragon"
+short_description = "黑龍之鱗(black dragon scale)"
+long_description = "一片黑色的龍鱗(black dragon scale)，似乎是從哪條龍身上扯下來的。"
+action_description = "adamantite"
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "MAGIC", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["15", "0", "500", "0"]
+weight = 30
+cost = 120000
+level_limited = 0
+material = "dragon scale"
+[[objects.12358.applies]]
+type = "STR"
+value = 2
+[[objects.12358.applies]]
+type = "HITROLL"
+value = 1
+[[objects.12358.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.12359]
+keywords = "hell sword wraith"
+short_description = "獄界幽魂(Hell's Wraith)"
+long_description = "這把劍(sword)據說是在地獄深處熔鑄而成的，波浪形的刃鋒讓它看起來像是一\n把大型的波狀短劍，雖然說它有點不好拿，但它的殺傷力卻強到令人難以置信。"
+action_description = "adamantite"
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE", "POISONED", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["500", "85", "95", "3"]
+weight = 160
+cost = 500000
+level_limited = 0
+material = "black matter"
+[[objects.12359.applies]]
+type = "DEX"
+value = 1
+[[objects.12359.applies]]
+type = "STR"
+value = 1
+[[objects.12359.applies]]
+type = "HITROLL"
+value = 5
+[[objects.12359.applies]]
+type = "DAMROLL"
+value = 5
+
+[objects.12360]
+keywords = "robes sorceror"
+short_description = "法師長袍(sorceror's robes)"
+long_description = "黑色的長袍(black robe)掩蓋了月光與星光。"
+action_description = "unknown"
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "150", "0"]
+weight = 10
+cost = 300000
+level_limited = 0
+[[objects.12360.applies]]
+type = "INT"
+value = 3
+[[objects.12360.applies]]
+type = "MANA"
+value = 150
+
+[objects.12361]
+keywords = "infinity scroll"
+short_description = "無盡卷軸(Infinity Scroll)"
+long_description = "這個古老的卷軸(scroll)據說能解開所有的問題（不幸的是，你剛剛才殺了看得\n懂這個卷軸的最後一個生物）。"
+action_description = "silver"
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "MAGIC", "NODROP", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "100", "0"]
+weight = 4
+cost = 750000
+level_limited = 0
+material = "silver"
+[[objects.12361.applies]]
+type = "HITROLL"
+value = 2
+[[objects.12361.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.12361.applies]]
+type = "DEX"
+value = -2
+[[objects.12361.applies]]
+type = "STR"
+value = -2
+[[objects.12361.applies]]
+type = "WIS"
+value = 2
+[[objects.12361.applies]]
+type = "INT"
+value = 2
+[[objects.12361.applies]]
+type = "HIT"
+value = 50
+[[objects.12361.applies]]
+type = "MANA"
+value = 50
+
+[objects.12362]
+keywords = "silvery potion"
+short_description = "銀色藥水(silvery potion)"
+long_description = "一瓶銀色的藥水(silvery potion)被遺留在書桌上。"
+action_description = "glass"
+item_type = "POTION"
+extra_flags = ["GLOW", "MAGIC", "ANTI_GOOD", "NOREMOVE"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["40", "invis", "detect invis", "detect magic"]
+weight = 2
+cost = 10000
+level_limited = 0
+material = "glass"
+
+[objects.12363]
+keywords = "key golden"
+short_description = "金色鎖匙(golden key)"
+long_description = "一把金色的鎖匙(golden key)被放在一本書裡面。"
+action_description = "gold"
+item_type = "KEY"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 5000
+level_limited = 0
+material = "gold"
+
+[objects.12364]
+keywords = "boots water walking waterwalking waterwalking-lt"
+short_description = "水蜘蛛(boots of waterwalking)"
+long_description = "一雙上頭畫著魚，有點老舊的皮靴(boots)放在櫥櫃裡面。"
+action_description = "mithril"
+item_type = "BOAT"
+extra_flags = ["MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 100000
+level_limited = 0
+material = "mithril"
+[[objects.12364.applies]]
+type = "HITROLL"
+value = 2
+[[objects.12364.applies]]
+type = "DEX"
+value = 1
+[[objects.12364.applies]]
+type = "AC"
+value = -5
+
+[objects.12365]
+keywords = "thieve's tunic tunic-lt"
+short_description = "盜賊罩衫(Thieve's Tunic)"
+long_description = "一件有著許多口袋的黑色襯衫(shirt)。"
+action_description = "adamantite"
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "200", "0"]
+weight = 15
+cost = 90000
+level_limited = 0
+material = "hawk feather"
+[[objects.12365.applies]]
+type = "HITROLL"
+value = 1
+[[objects.12365.applies]]
+type = "DEX"
+value = 3
+
+[objects.12366]
+keywords = "paper blank"
+short_description = "空白紙片(blank piece of paper)"
+long_description = "一張沒什麼價值的空白紙片(paper)被放在架子上。"
+action_description = "paper"
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 2000
+level_limited = 0
+material = "paper"
+
+[objects.12367]
+keywords = "chair wooden"
+short_description = "大型木椅(large wooden chair)"
+long_description = "一張很大的木頭椅子(large wooden chair)放在桌子的上座處。"
+action_description = "wood"
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 30
+cost = 50000
+level_limited = 0
+material = "wood"
+
+[objects.12368]
+keywords = "table dining"
+short_description = "巨大的餐桌(huge dining table)"
+long_description = "一張巨大的餐桌(huge dining table)。"
+action_description = "wood"
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 100
+cost = 10000
+level_limited = 0
+material = "wood"
+
+[objects.12369]
+keywords = "book shelf bookshelf"
+short_description = "古老的木頭書架(old wooden bookshelf)"
+long_description = "一具古老的木頭書架(old wooden bookshelf)安置在東邊的牆上。"
+action_description = "wood"
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = []
+values = ["10", "0", "0", "0"]
+weight = 200
+cost = 10000
+level_limited = 0
+material = "wood"
+
+[objects.12370]
+keywords = "desk mahogany"
+short_description = "大型桃花心木書桌(large mahogany desk)"
+long_description = "一張很大的桃花心木書桌(mahogany desk)放在西牆牆邊。"
+action_description = "wood"
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = []
+values = ["999", "15", "12363", "0"]
+weight = 40
+cost = 15000
+level_limited = 0
+material = "wood"
+
+[objects.12371]
+keywords = "closet closet-lt"
+short_description = "櫥櫃(closet)"
+long_description = "一個很大的櫥櫃(closet)嵌在牆壁裡面。"
+action_description = "stone"
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = []
+values = ["999", "15", "12301", "0"]
+weight = 40
+cost = 99900
+level_limited = 0
+material = "wood"
+
+[objects.12372]
+keywords = "grimoire"
+short_description = "強力的魔法書(powerful grimoire)"
+long_description = "一本擁有強大力量的古代魔法書(grimoire)引誘你去翻開它。"
+action_description = "leather"
+item_type = "CONTAINER"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = []
+values = ["100", "0", "0", "50"]
+weight = 40
+cost = 50000
+level_limited = 0
+material = "leather"
+
+[objects.12373]
+keywords = "cross obsidian large"
+short_description = "巨大的黑曜石十字架(large obsidian cross)"
+long_description = "一個巨大的黑曜石十字架(large obsidian cross)。"
+action_description = "stone"
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 200
+cost = 1000000
+level_limited = 0
+material = "obsidian"
+[[objects.12373.extra_descriptions]]
+keywords = "obsidian large cross"
+description = """
+本區域「巫妖之塔」是由Ryzen為高等級的角色所設計的，建議的等級是36到42
+級，任何等級低於這個範圍的玩家，個人強烈建議最好不要到這裡來，因為有不
+少具有攻擊性的怪物存在。
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　by Ryzen
+
+*註:本區域為Feena 所翻譯與改編。Reticent調整強度與大幅度調整原始設定。
+"""
+
+[rooms.12300]
+name = "地下洞窟入口"
+description = """
+你站在詛咒洞窟的入口，在那陰暗的通道之中到底有什麼生物在等著你，這
+你只能用猜的了。這裡有兩條深入洞窟的通道，分別通往東邊與西邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12300.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12302
+[rooms.12300.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12373
+[rooms.12300.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12301
+[[rooms.12300.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomtimer($0) == 0
+        if rnplayer($) == 0
+                if mobcount(12316) == 0
+                        mload 12316
+                endif
+        endif
+endif
+"""
+
+[rooms.12301]
+name = "越來越暗的通道"
+description = """
+黑暗似乎是來自於這條陰暗通道的牆壁，讓人很難看清楚牆壁細微的部份。
+這裡每個出口都通往更黑暗的地方。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12301.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12308
+[rooms.12301.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12300
+[rooms.12301.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12303
+[[rooms.12301.resets.mobiles]]
+vnum = 12302
+limit = 10
+
+[rooms.12302]
+name = "越來越暗的通道"
+description = """
+寬廣的洞窟在你面前延伸開來，這裡一共有三個出口，每個出口都通往黑暗
+之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12302.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12311
+[rooms.12302.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12304
+[rooms.12302.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12300
+
+[rooms.12303]
+name = "通道轉彎處"
+description = """
+通道在這裡稍微轉了個方向，兩邊都通往黑暗之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12303.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12301
+[rooms.12303.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12305
+
+[rooms.12304]
+name = "通道轉彎處"
+description = """
+通道在這裡拐了個大彎，你可以往南邊或是北邊走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12304.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12302
+[rooms.12304.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12306
+
+[rooms.12305]
+name = "越來越暗的通道"
+description = """
+越來越陰暗的數條通道在你面前延伸開來，出口通往下方、東邊與北邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12305.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12324
+[rooms.12305.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12307
+[rooms.12305.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12303
+
+[rooms.12306]
+name = "越來越暗的通道"
+description = """
+眼前這三條暗得要命的通道讓人打從心底發毛，瞬間，你忽然失去平衡，差
+點就要滑倒在某個潮溼的東西上頭，將光源拿近地面一照後，你發現那是一灘鮮
+血！出口通往下方、北邊與南邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12306.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12314
+[rooms.12306.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12304
+[rooms.12306.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12307
+
+[rooms.12307]
+name = "通道轉彎處"
+description = """
+這條陰暗的通道繼續往北邊與西邊延伸。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12307.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12306
+[rooms.12307.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12305
+
+[rooms.12308]
+name = "越來越暗的通道"
+description = """
+你站在一座階梯的底端，在這麼昏暗的通道中你根本沒辦法看清楚細微的地
+方，不過你還是能看出南邊有路可以走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12308.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12309
+[rooms.12308.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12301
+
+[rooms.12309]
+name = "越來越暗的通道"
+description = """
+你站在一條有兩個方向可以走的黑暗通道內，兩個方向都通往黑暗之中。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12309.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12308
+[rooms.12309.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12310
+
+[rooms.12310]
+name = "通道盡頭"
+description = """
+這條陰暗的通道忽然在這裡終止了，唯一的出路就只能掉頭往東走回去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12310.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12309
+
+[rooms.12311]
+name = "越來越暗的通道"
+description = """
+一段階梯往上沒入黑暗之中，這裡還有一條往東通往黑暗處的小通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12311.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12312
+[rooms.12311.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12302
+
+[rooms.12312]
+name = "越來越暗的通道"
+description = """
+暗得要命的洞窟在你面前延展開來，讓周圍的一切事物都染上了些許的神秘
+色彩。你可以往西或是往南離開這裡。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12312.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12313
+[rooms.12312.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12311
+
+[rooms.12313]
+name = "通道盡頭"
+description = """
+你已經抵達了這條通道的盡頭，這裡什麼東西也沒有，一堵石牆擋住了你的
+去路，看樣子你現在只能回頭往北走了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12313.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12312
+
+[rooms.12314]
+name = "昏暗的洞窟"
+description = """
+你站在一處很大的洞窟裡面，洞窟往南邊和東邊延伸。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12314.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12315
+[rooms.12314.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12316
+[rooms.12314.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12306
+
+[rooms.12315]
+name = "洞窟內"
+description = """
+洞窟從這裡開始變得較為狹小，上方的洞壁以相當銳利的角度往地面接近，
+讓你在通過這裡時不得不低頭彎腰才行。一條小通道通往南邊，洞窟則繼續往西
+延伸。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12315.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12317
+[rooms.12315.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12314
+
+[rooms.12316]
+name = "洞窟內"
+description = """
+這個巨大的洞窟終止於此，洞頂離地面有著相當長的距離，你幾乎不可能看
+到洞頂。你凝視著眼前這片黑暗，思考著會有什麼奇怪的生物正躲在陰暗之中。
+唯一的出口在你的北邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12316.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12314
+
+[rooms.12317]
+name = "越來越暗的通道"
+description = """
+這條小通道蜿蜒通往其他黑暗的通道中，讓你完全不曉得自己詳細的所在位
+置，這條通道通往北邊與南邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12317.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12315
+[rooms.12317.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12318
+
+[rooms.12318]
+name = "通道分支"
+description = """
+這條通道在這裡分成三個方向，你可以往北、往東或往西走。
+"""
+flags = ["DARK"]
+sector = "INSIDE"
+[rooms.12318.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12320
+[rooms.12318.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12317
+[rooms.12318.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12319
+
+[rooms.12319]
+name = "通道分支"
+description = """
+這條通道在這裡再度分成三個方向，通往南邊、下方與東邊。
+"""
+flags = ["DARK"]
+sector = "INSIDE"
+[rooms.12319.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12332
+[rooms.12319.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12318
+[rooms.12319.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12321
+
+[rooms.12320]
+name = "越來越暗的通道"
+description = """
+這條陰暗的通道繼續朝南邊與西邊延伸，你發現當黑暗包圍著你的靈魂時，
+自己正拼命祈求著那失落的光明。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12320.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12322
+[rooms.12320.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12318
+
+[rooms.12321]
+name = "越來越暗的通道"
+description = """
+一片漆黑......
+"""
+flags = ["DARK"]
+sector = "INSIDE"
+[rooms.12321.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12323
+[rooms.12321.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12319
+[rooms.12321.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12339
+
+[rooms.12322]
+name = "越來越暗的通道"
+description = """
+洞窟在你面前延展開來，有好幾次你發現自己正在同樣幾個地方繞圈圈，每
+個地方看起來和其他地方似乎沒有多少差別。出口通往北邊、下方和西邊。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12322.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12336
+[rooms.12322.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12320
+[rooms.12322.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12323
+
+[rooms.12323]
+name = "通道轉彎處"
+description = """
+這條窄小黑暗的通道在這裡轉了個大彎，你只能選擇往東邊或是西邊走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12323.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12322
+[rooms.12323.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12321
+
+[rooms.12324]
+name = "越來越暗的通道"
+description = """
+當你踏入這條通道，你發現洞窟繼續延展而去。你手上的照明工具讓你可以
+看清這附近一些細微的東西，像是小石頭之類的，不過你沒找到什麼值得一提的
+東西。你可以沿著這條通道往西而去，或是由階梯往上返回主通道去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12324.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12305
+[rooms.12324.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12325
+
+[rooms.12325]
+name = "越來越暗的通道"
+description = """
+這裡就像其他所有的通道一樣，一種單調無聊的感覺正開始影響你的心靈。
+黑暗，無盡的黑暗讓你巴不得能看到光明，離開這些狹窄的通道，即使只是一瞬
+間也好。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12325.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12324
+[rooms.12325.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12326
+
+[rooms.12326]
+name = "通道轉彎處"
+description = """
+你來到這條通道的某個銳利的轉彎處，往東和往北的出口均通往一片黑暗。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12326.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12325
+[rooms.12326.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12327
+
+[rooms.12327]
+name = "通道轉彎處"
+description = """
+這條陰暗的通道在這裡轉了個彎，你可以往北或往南走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12327.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12328
+[rooms.12327.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12326
+
+[rooms.12328]
+name = "一座階梯"
+description = """
+你來到一座階梯的頂端，你聽到好像是什麼人在階梯底處移動的聲音，不過
+往下看卻只見到一片黑暗，根本看不到有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12328.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12329
+[rooms.12328.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12327
+
+[rooms.12329]
+name = "階梯底"
+description = """
+階梯往上延伸通往一條較高的通道，附近看得到的出口只有往上與往北這兩
+個方向。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12329.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12330
+[rooms.12329.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12328
+
+[rooms.12330]
+name = "越來越暗的通道"
+description = """
+又是另一條黑暗的通道，這裡似乎有無數條像這樣的黑暗通道。低沉的咆哮
+聲自東邊傳來，看起來那個聲音的主人似乎不怎麼高興。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12330.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12331
+[rooms.12330.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12329
+
+[rooms.12331]
+name = "死路"
+description = """
+這個地方看和其他地方似乎沒有多大不同，除了看起來像是某些動物的巢穴
+以外。許多骨頭散落在房間各處，讓你被絆倒好幾次。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12331.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12330
+
+[rooms.12332]
+name = "漆黑的通道"
+description = """
+當你踏入這條通道時，腐爛屍體的惡臭朝你猛然襲來，通道不遠處有著微弱
+的光線，不過你覺得不管是什麼生物住在這種地方，大概也不會友善到哪裡去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12332.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12333
+[rooms.12332.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12319
+
+[rooms.12333]
+name = "漆黑的通道"
+description = """
+你越深入通道，那股味道就變得越來越重，一股自通道深處傳來的污穢笑聲
+令你不由自主地開始懷疑自己的勇氣到底能撐多久。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12333.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12332
+[rooms.12333.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12334
+
+[rooms.12334]
+name = "漆黑的通道"
+description = """
+當你踏入這個地方時，首先引起你注意的是那些肉片，看起來似乎是剛從哪
+具身體上撕下來的。不遠處傳來恐怖的死亡哀嚎，讓你確定這些肉片全都是從某
+個活人的身上硬生生撕扯下來的。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12334.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12333
+[rooms.12334.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12335
+
+[rooms.12335]
+name = "食屍鬼之王的巢穴"
+description = """
+一個恐怖的傢伙站在不遠處的牆邊，正在啃食著某個人類的屍體。灑落在這
+個地方的鮮血數量讓你差點不支昏迷，你忽然非常想以全速逃離那個怪物和它的
+晚餐。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12335.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12334
+
+[rooms.12336]
+name = "漆黑的通道"
+description = """
+另一條陰暗的通道引領你穿越這座洞窟，轉彎處有著微弱的亮光。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12336.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12337
+[rooms.12336.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12322
+
+[rooms.12337]
+name = "水晶洞窟"
+description = """
+這個洞窟的洞壁覆蓋著一層透明的水晶物質，一股自西邊射來的微弱光輝讓
+這裡變得閃閃發光，閃耀的亮光讓你差點就要瞎掉了。你可以繼續往西朝光輝的
+來源處走去，或是往北走回通道裡去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12337.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12336
+[rooms.12337.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12338
+
+[rooms.12338]
+name = "龍穴"
+description = """
+水晶般的物質覆蓋著這座洞窟的牆壁，你手上的光源在這裡反射映照出美麗
+的色彩。不幸的是，你手上的光源也照到了一頭沉睡中的龍，也許你可以在牠注
+意到你之前悄悄地溜出去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12338.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12337
+
+[rooms.12339]
+name = "越來越暗的通道"
+description = """
+你所在的這條通道是從主通道中分支出來的，它朝南方延伸而去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12339.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12321
+[rooms.12339.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12340
+
+[rooms.12340]
+name = "越來越暗的通道"
+description = """
+這條通道在這裡稍微轉了個彎，讓你可以往西或往北走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12340.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12339
+[rooms.12340.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12341
+
+[rooms.12341]
+name = "通道盡頭"
+description = """
+通道在這裡忽然往下傾斜，往下方望去你只看得到一片陰暗，當你往洞窟深
+處而去，那股邪惡的力量就變得越來越強大。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12341.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12342
+[rooms.12341.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12340
+
+[rooms.12342]
+name = "寬廣的洞窟"
+description = """
+一處寬廣的洞窟朝東方延伸而去，石筍和其他各式各樣的石塊散佈在周圍，
+讓這裡變得相當難走。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12342.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12343
+[rooms.12342.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12341
+
+[rooms.12343]
+name = "寬廣的洞窟"
+description = """
+這座洞窟繼續往你的東西兩邊延伸而去，偶爾會有一些帶著美麗色彩的石頭
+引起了你的注意，讓你的目光停留在上頭好一陣子。幸運的是，好像沒有什麼生
+物埋伏於此，等待你的注意力被自然之美吸引時突襲你。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12343.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12344
+[rooms.12343.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12342
+
+[rooms.12344]
+name = "洞窟盡頭"
+description = """
+當你進入這一帶，那些自然生成的石塊讓你停下了腳步。在這片迷宮中無盡
+的黑暗讓你覺得自己跟瞎掉沒什麼兩樣。邪惡的力量變得更加強大了，你應該是
+離它越來越近了。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12344.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12345
+[rooms.12344.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12343
+
+[rooms.12345]
+name = "昏暗的通道"
+description = """
+你快要承受不住那股恐怖的邪惡力量了，耳朵聽得到從不遠處傳來的痛苦哀
+號聲，洞窟繼續往南延伸，但也許你會先死在這裡，該繼續往前嗎？
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12345.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12346
+[rooms.12345.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12344
+
+[rooms.12346]
+name = "昏暗的通道"
+description = """
+不遠處的通道似乎正傳來急流的水聲，你每走一步，那股襲擊著你靈魂的邪
+惡力量就變得越來越強烈。你覺得自己正繃得緊緊的，覺得也許地獄之王就在轉
+角之後等著你。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12346.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12347
+[rooms.12346.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12345
+
+[rooms.12347]
+name = "通道轉彎處"
+description = """
+那股急流的水聲變得更大聲了，也許前方有著一條溪流或是小河。這一帶的
+洞窟因為某道污穢光輝的關係而顯得較為明亮，雖然說能再度見到光明是好事，
+但現在你開始覺得自己寧可待在黑暗之中還比較好一點。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12347.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12348
+[rooms.12347.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12346
+
+[rooms.12348]
+name = "昏暗的通道"
+description = """
+光輝自這附近的洞壁照向前方，不過這是一道不太自然又有點古怪的光輝。
+那股流水聲現在變得比剛才更大聲了，你覺得那條小河應該就在前方不遠處。你
+可以繼續往南穿過洞窟，或是掉頭往北方走回去。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12348.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12347
+[rooms.12348.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12349
+
+[rooms.12349]
+name = "洞窟盡頭"
+description = """
+恭喜！你終於找到了冥河與地獄的入口，我非常確信那些看門的惡魔們應該
+會很想把你當成晚餐給吃掉。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12349.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12348
+[rooms.12349.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 65201
+
+[rooms.12350]
+name = "塔前"
+description = """
+你站在一座巨大的黑色高塔前方，當你盯著它那由黑曜石組成的塔壁時，靈
+魂深處不禁泛起一股難以招架的恐懼感。塔壁泛著一股死亡與邪惡的氣息，讓你
+覺得自己相當微不足道。而北邊的大門在你踏入此地時，便已經自動關閉。所以
+你只能往西邊的拱道繼續走去。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.12350.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12351
+[[rooms.12350.programs]]
+trigger = "room_enter"
+argument = "511 100"
+script = """
+if is_qmark($n) != lichtown_qmark
+        add_qmark $n lichtown_qmark -1 0 0 0 0 1
+endif
+"""
+
+[rooms.12351]
+name = "拱門下方"
+description = """
+你上方的牆壁緩緩消失，取而代之的是從黑暗中某處所浮現的拱門。牆壁上
+懸掛著糾結成一團的有刺藤蔓，你發現自己正處於最讓人頭大的地帶。西邊有著
+火把所散發出的昏黃光芒，北邊你聽到了只能用醜惡兩個字來形容的咆哮聲。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12351.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12350
+[rooms.12351.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12352
+[rooms.12351.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12353
+
+[rooms.12352]
+name = "骸骨龍巢穴"
+description = """
+你發現自己正位在一個堆滿了寶藏與魔法器具的地方，看起來可真驚人。有
+個實在很少見的東西吸引了你的目光，它好像是個巨大的騎乘用具，包括了一個
+巨大的馬鞍。就在你驚訝這馬鞍到底是用在什麼座騎上的同時，你猛然發現一頭
+可怕的骸骨龍正矗立在你面前。唯一的出口在南方，位於拱道的下方。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12352.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12351
+
+[rooms.12353]
+name = "入口大廳"
+description = """
+一張很大的地毯覆蓋著這個房間的地面，地毯上的圖案描述人類和半人類的
+聯軍被恐怖的不死軍團屠殺的記載。火把插在牆壁上，牆上掛著許多在很久以前
+的戰爭中所用到的古老盾牌、武器與魔法道具。這裡有兩個出口，分別通往南邊
+和西邊，從這裡你是不可能看得到那兩個方向有什麼東西的。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12353.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12351
+[rooms.12353.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12354
+[rooms.12353.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12356
+
+[rooms.12354]
+name = "餐廳"
+description = """
+這個地方看起來曾經被當成餐廳使用，桌上有著一層很厚的灰塵，顯示這裡
+已經不會再有人使用了。往西通往廚房，往北通往大廳。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12354.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12353
+[rooms.12354.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12355
+
+[rooms.12355]
+name = "廚房"
+description = """
+當腐敗食物的惡臭襲來的同時，你反射性地捏住了自己的鼻子，同時往最近
+的出口飛奔，巴不得能吸點新鮮的空氣。往北是一座階梯，東邊是餐廳，南邊則
+有一間門扉敞開的儲藏室。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12355.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12354
+[rooms.12355.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12356
+[rooms.12355.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12369
+
+[rooms.12356]
+name = "階梯底"
+description = """
+一段階梯蜿蜒向上沒入黑暗之中，從階梯上方傳來一股強大的邪惡感。你可
+以往南走向廚房，東邊是入口大廳，或是你也可以往上前往未知的領域。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12356.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12353
+[rooms.12356.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12355
+[rooms.12356.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12357
+
+[rooms.12357]
+name = "階梯上"
+description = """
+階梯往上與往下都是沒入一片黑暗之中，東邊的房間入口有著火光閃動。這
+附近整個地方似乎都不太對勁，靜得讓人害怕，這比你以前聽過的死前哀號還來
+得恐怖。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12357.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12356
+[rooms.12357.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12362
+[rooms.12357.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12358
+
+[rooms.12358]
+name = "階梯上"
+description = """
+你繼續在階梯上走著，仔細聽聽，你覺得自己好像聽到什麼聲音，感覺似乎
+是咒罵聲與痛苦靈魂的尖叫聲，聲音是從南邊和東邊傳來的。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12358.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12357
+[rooms.12358.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12365
+[rooms.12358.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12363
+[rooms.12358.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12359
+
+[rooms.12359]
+name = "階梯頂"
+description = """
+你來到了階梯的頂端，往南和往東是很長的走廊，階梯往下沒入黑暗中。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12359.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12358
+[rooms.12359.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12368
+[rooms.12359.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12366
+
+[rooms.12360]
+name = "巫妖的書房"
+description = """
+這個小房間到處都是書本與卷軸，上頭有著許多的眉批與標記。幾盞油燈安
+置在房間周圍，提供這座塔的主人照明之用。一張很大的書桌放在西牆的附近，
+南邊牆壁內則嵌著一個櫥櫃。想離開這裡似乎只能往東回到圖書室去。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12360.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12361
+
+[rooms.12361]
+name = "圖書室"
+description = """
+即使是在看過這間圖書室的第一個房間後，你仍然對眼前這個房間感到無比
+訝異，房間到處都是擺滿了卷軸的架子。各式各樣的桌子陳列在牆邊，讓在這裡
+進行研究的人們有個閱讀書籍的地方。圖書室繼續往北擴張，西邊有一個小拱門
+通往一處書房。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12361.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12362
+[rooms.12361.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12360
+
+[rooms.12362]
+name = "圖書室"
+description = """
+這間圖書室裡的書櫃體積還真是嚇人，它們占去了整面北牆和東牆，收藏在
+此的藏書也頗令人驚訝。圖書室繼續往南擴張，你也可以往西回到階梯上。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12362.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12361
+[rooms.12362.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12357
+
+[rooms.12363]
+name = "召喚之間"
+description = """
+你腳下的石地上畫了許多很潦草的符文與五芒星，房間的正中央有個很大的
+金色火爐。唯一的出口在北方，通往階梯；東邊則是拷問室。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12363.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12364
+[rooms.12363.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12358
+
+[rooms.12364]
+name = "拷問室"
+description = """
+各式各樣的刑具零亂地散落在房間各處，在東邊的牆壁上掛著三具腐爛的軀
+體，每具軀體的腸子都已拖到地上了。你對眼前這些倒楣的傢伙們泛起了一絲同
+情心，直到心中升起一股怒火，恨不得替這些死者報仇為止。往北與往西的出口
+均通往召喚之間。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12364.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12365
+[rooms.12364.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12363
+
+[rooms.12365]
+name = "召喚之間"
+description = """
+你腳下的石地上畫了許多很潦草的符文與五芒星，房間的正中央有個很大的
+銀色火盆正噴出火燄。唯一的出口在西方，通往階梯；南邊則是拷問室。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12365.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12364
+[rooms.12365.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12358
+
+[rooms.12366]
+name = "大廳"
+description = """
+你站在一座裝潢華美的寬敞大廳裡，往北走可以回到階梯，一扇很大的雙開
+門在你的東邊。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12366.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 12367
+[rooms.12366.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12359
+
+[rooms.12367]
+name = "巫妖的王座室"
+description = """
+一進入這個房間，你的目光頓時被東邊牆壁旁的那張白骨王座吸引了，而且
+王座的主人正坐在上頭。這個房間裝潢得相當華麗，古老的魔法書籍與卷軸讓你
+的目光移開了一小段時間，直到巫妖之王對你發動攻擊為止。房間的出口在北邊
+與西邊。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12367.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 12368
+[rooms.12367.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 12366
+[[rooms.12367.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if pcnum($) == 0
+	if roomtimer($0) == 0
+		if mobcount(12354) == 0
+			mload 12354
+		endif
+	endif
+endif
+"""
+
+[rooms.12368]
+name = "大廳"
+description = """
+你站在一座裝潢華美的寬敞大廳裡，往西走可以回到階梯，一扇很大的雙開
+門在你的南邊。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12368.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 12367
+[rooms.12368.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12359
+
+[rooms.12369]
+name = "儲藏室"
+description = """
+這個房間似乎是廚房的儲藏室，南邊那扇舊門的絞鏈被敲開了，露出一條通
+往地面的古老斜坡通道。你可以往北回到廚房，或是往南鑽進那條漆黑的通道。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12369.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12355
+[rooms.12369.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12370
+
+[rooms.12370]
+name = "坑洞上方"
+description = """
+牆壁上的巨大火把閃耀著明亮的火光，你前面的地板不見了，留下一個很大
+的坑洞。你可以往北進入儲藏室內，或者是沿著繩梯往下進入黑暗的坑洞之中。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12370.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12371
+[rooms.12370.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12369
+
+[rooms.12371]
+name = "坑洞下方"
+description = """
+你站在坑洞的下方，周圍暗得像是瀝青的顏色一般，你唯一能分辨出來的東
+西就只有往南的那條通道。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12371.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12372
+[rooms.12371.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12370
+
+[rooms.12372]
+name = "黑暗通道"
+description = """
+你站在一條古老的陰暗通道裡面，光線自南邊照進這個地方，你可以考慮往
+北退回坑洞之中，或是往南朝著光線來源處而去。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.12372.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12371
+[rooms.12372.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12373
+
+[rooms.12373]
+name = "地下洞窟前"
+description = """
+你終於找到了這個傳說中的地方，這裡就是詛咒洞窟的入口。地面上有個很
+大的坑洞，帶有魔力的雕像與法杖圍繞在坑洞周圍，讓這附近成為得以免受遊魂
+侵擾的安全地帶。據說任何人想要深入地獄領域，唯一的途徑就是穿過位於你下
+方那個洞窟內的迷宮。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.12373.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12300
+[rooms.12373.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 12372

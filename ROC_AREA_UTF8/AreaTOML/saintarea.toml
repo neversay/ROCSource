@@ -1,0 +1,6206 @@
+[area]
+name = "聖域"
+identity = "saintarea"
+builders = "Asla"
+translator = "----"
+modifier = "----"
+vnum_start = 9301
+vnum_end = 9391
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.9301]
+keywords = "saintarea register"
+short_description = "聖域居民(saintarea register)"
+long_description = "一位在聖域周圍居住的聖域居民(saintarea register)站在這裡.\n"
+description = """
+在聖域的小宇宙籠罩之下, 每一位的聖域居民都有著強健的體魄.
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA"]
+affected_flags = []
+alignment = 0
+level = 14
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+class = ["WARRIOR"]
+[[mobiles.9301.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 聽說通過十二宮考驗的人可以得到很好的獎品ㄟ...
+"""
+
+[mobiles.9302]
+keywords = "smith iliate"
+short_description = "伊利亞德(Iliate)"
+long_description = "神匠伊利亞德(smith Iliate)正蹲在火邊打著燒紅的鐵塊.\n"
+description = """
+傳說中的神匠, 在他手裡打造出了無數的神兵利器. 而聖鬥士的聖衣
+若有破損, 也都是由他來負責修復.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "PROTECT"]
+alignment = 700
+level = 34
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 3000
+sex = "male"
+race = "God"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_breath_fire"
+[[mobiles.9302.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if rand(70)
+        say 各位是來聖域冒險的嗎?
+else
+        say 唉, 雙子座的聖衣還沒修好....
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "rand_prog"
+argument = "15"
+script = """
+if is_qmark($i) == work_delay
+  mpecho $I正拿著鐵鎚揮汗工作.
+else
+  break
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == saintarea_quest_geminimask
+or level($n) < 20
+or rand(60)
+        break
+endif
+say 當年卡諾和薩卡共同守護雙子聖衣之時
+say 我將聖衣分成兩部分...
+say 現在是把聖衣回歸原狀的時候了, 你能幫我嗎(yes/no)?
+mpadd_qmark $n saintarea_quest_geminimask -1 0 0 0 0 1
+"""
+[[mobiles.9302.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) == saintarea_quest_geminimask 100000
+        mpmod_qmark $n saintarea_quest_geminimask v0 = 1
+        nod $n
+        say 你把雙子座的聖衣拿來給我吧
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($n) == saintarea_quest_geminimask 100000
+        mpdel_qmark $n saintarea_quest_geminimask
+        say 好吧, 那就請您自己逛逛吧
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "give_prog"
+argument = "9316"
+script = """
+if is_qmark($n) == saintarea_quest_geminimask 100001
+        mpjunk helmet
+        mpmod_qmark $n saintarea_quest_geminimask v1 = 1
+        if is_qmark($n) == saintarea_quest_geminimask 300001
+                mpmod_qmark $n saintarea_quest_geminimask v0 = 2
+                say 好啊, 你真的都拿回來了....看我的....
+                mpecho \u001B[1;31m叮-----鏘-----叮-----鏘-----叮-----鏘\u001B[m
+                mpoload 9317 $n viclv target
+                mpechoat $n $I 把 雙面幻盔(gemini helmet) 給你.
+                mpechoaround $n $I 把 雙面幻盔(gemini helmet) 給了 $n.
+                if class($n) < 5
+                        mpexp $n 1000
+                endif
+                mpexp $n 2000
+                say 好了, 這才是雙子座最強的聖衣
+                mpechoat $n $I狂笑著：我是最厲害的神匠啦...哈哈哈哈...
+        else
+                say 嗯, 這是薩卡的善之盔, 卡諾的惡之盔呢?
+        endif
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "give_prog"
+argument = "9318"
+script = """
+if is_qmark($n) == saintarea_quest_geminimask 100001
+        mpjunk helmet
+        mpmod_qmark $n saintarea_quest_geminimask v2 = 1
+        if is_qmark($n) == saintarea_quest_geminimask 200001
+                mpmod_qmark $n saintarea_quest_geminimask v0 = 2
+                say 好啊, 你真的都拿回來了....看我的....
+                mpecho \u001B[1;31m叮-----鏘-----叮-----鏘-----叮-----鏘\u001B[m
+                mpoload 9317 $n viclv target
+                mpechoat $n $I 把 雙面幻盔(gemini helmet) 給你.
+                mpechoaround $n $I 把 雙面幻盔(gemini helmet) 給了 $n.
+                if class($n) < 5
+                        mpexp $n 1000
+                endif
+                mpexp $n 2000
+                say 好了, 這才是雙子座最強的聖衣
+                mpechoat $n $I狂笑著：我是最厲害的神匠啦...哈哈哈哈...
+        else
+                say 嗯, 這是卡諾的惡之盔, 薩卡的善之盔呢?
+        endif
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "talk_prog"
+argument = "inlay"
+script = """
+if is_qmark($n) == saintarea_perseus 100004
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  mpecho 你向$I說出事情的經過...
+  ponder
+  say 知道是知道啦...不過美杜莎之首這種危險物品要加工的話...
+  say 得先拿個東西給他包(pack)起來才行...
+  say 你去問問穆吧, 他對處理這些事情蠻拿手的...
+else
+  break
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "give_prog"
+argument = "9356"
+script = """
+if is_qmark($n) == saintarea_perseus 100014
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  nod
+  mpjunk box
+  say 把盾牌也拿來吧, 我幫你鑲上去.
+else
+  if is_qmark($n) == saintarea_perseus 100015
+    nod
+    mpadd_qmark $n work_delay 12 0 0 0 0 1
+    mpmod_qmark $n saintarea_perseus v0 + 1
+    mpjunk box
+    say 工作時間需要12小時, 請稍後再來取貨(get).
+  else
+    break
+  endif
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "give_prog"
+argument = "9352"
+script = """
+if is_qmark($n) == saintarea_perseus 100014
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  nod
+  mpjunk shield
+  say 把美杜莎的頭也拿來吧, 我幫你鑲上去.
+else
+  if is_qmark($n) == saintarea_perseus 100015
+    mpmod_qmark $n saintarea_perseus v0 + 1
+    nod
+    mpjunk shield
+    mpadd_qmark $n work_delay 12 0 0 0 0 1
+    say 工作時間需要12小時, 請稍後再來取貨(get).
+  else
+    break
+  endif
+endif
+"""
+[[mobiles.9302.programs]]
+trigger = "talk_prog"
+argument = "get"
+script = """
+if is_qmark($n) == work_delay
+  say 工作尚在進行中, 請稍後再來.
+else
+  if is_qmark($n) == saintarea_perseus 100016
+    mpmod_qmark $n saintarea_perseus v0 + 1
+    nod
+    say 我沒想到結合之後力量變的這麼強....
+    mpechoat $n $I把蛇髮女之盾給了你.
+    mpechoaround $I把蛇髮女之盾給了$N
+    mpoload 9357 $n target
+  else
+    break
+  endif
+endif
+"""
+
+[mobiles.9303]
+keywords = "animal"
+short_description = "畜牲(animal)"
+long_description = "一隻畜牲(animal)正向你咆哮著.\n"
+description = """
+這是六道輪迴中最低的一層, 通常只有罪孽很深的生命才會被轉生到這裡.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 0
+level = 13
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+race = "Animal"
+spec_flags = ["NO_CHARM"]
+[[mobiles.9303.programs]]
+trigger = "rand_prog"
+argument = "30"
+script = """
+mpecho $I向你撲了過來.
+mpkill $r
+"""
+[[mobiles.9303.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpechoat $n $I將你傳送到餓鬼道了!
+mptransfer $n 9369
+"""
+
+[mobiles.9304]
+keywords = "hungry ghost"
+short_description = "餓鬼(hungry ghost)"
+long_description = "一個肚子扁扁的餓鬼(hungry ghost)向你乞討著食物.\n"
+description = """
+通常被轉生成餓鬼, 都是在上輩子不珍惜食物. 才會在此生接受沒有食物的
+懲罰. 他們的咽喉有如針般不能容納食物, 而且當食物放進嘴裡時食物會化
+為一團火焰炙燒著.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "FAERIE_FIRE"]
+alignment = -800
+level = 18
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Hobgoblin"
+spec_flags = ["NO_CHARM"]
+[[mobiles.9304.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if rand(50)
+        beggar
+else
+        say 我要吃..吃..吃...哇啊...
+        mpkill $n
+endif
+"""
+[[mobiles.9304.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpechoat $n $I 將你傳送到地獄道了!
+mptransfer $n 9371
+"""
+
+[mobiles.9305]
+keywords = "hell ghost"
+short_description = "地獄惡鬼(hell ghost)"
+long_description = "被放逐到地獄的惡鬼(hell ghost)正惡狠狠的向你攻擊\n"
+description = """
+有的人因為造孽太深, 所以被驅逐到地獄接受酷刑, 當刑滿才能脫離.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = -1000
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Undead"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9305.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+say 我要...殺了你!!!!
+mpkill $n
+"""
+[[mobiles.9305.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpechoat $n $I 將你傳送到人道了!
+mptransfer $n 9373
+"""
+
+[mobiles.9306]
+keywords = "human"
+short_description = "人(human)"
+long_description = "一個人類(human)正向你微笑著.\n"
+description = """
+他就是輪迴的重心, 人. 你必須將他打倒, 才能繼續你的輪迴之旅.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 0
+level = 11
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_mage"
+[[mobiles.9306.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+smile $n
+"""
+[[mobiles.9306.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpecho $I 大喊「啊..............！」
+mpechoat $n $I 將你傳送到阿修羅道了！
+mptransfer $n 9375
+"""
+
+[mobiles.9307]
+keywords = "ashura"
+short_description = "阿修羅(ashura)"
+long_description = "一位長相凶惡的阿修羅(ashura)正不懷好意地瞧著你.\n"
+description = """
+男的十分醜陋, 女的美艷動人, 這就是阿修羅的特徵. 通常阿修羅
+已經算是輪迴圈中蠻高的等級了. 不過阿修羅生性凶殘, 你要小心
+他不分青紅皂白的攻擊你.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["SNEAK", "HIDE"]
+alignment = -1000
+level = 26
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Ogre"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_poison"
+[[mobiles.9307.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+say 哼......小子不要命啦....
+"""
+[[mobiles.9307.programs]]
+trigger = "greet_prog"
+argument = "70"
+script = """
+say 老子看你就不爽, 去死吧!
+assault $n
+"""
+[[mobiles.9307.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpecho $I 大聲叫道「可惡的傢伙啊........！」
+mpechoat $n $I 將你傳送到天道了!
+mptransfer $n 9377
+"""
+
+[mobiles.9308]
+keywords = "andromeda shun"
+short_description = "[安德羅美達]瞬(shun)"
+long_description = "青銅聖鬥士之一的瞬(Andromeda Shun)正凝視著你.\n"
+description = """
+仙女座的聖鬥士瞬, 擁有著全體聖鬥士中唯一的攻防一體武器「星雲
+鎖鏈」, 鎖鏈所形成的防護壁連黃金聖鬥士都很難打破.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["SANCTUARY"]
+alignment = 1000
+level = 16
+mod_hitplus = 400
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -50
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2000
+sex = "female"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_mage"
+
+[mobiles.9309]
+keywords = "hercules"
+short_description = "[武仙]海克力斯(hercules)"
+long_description = "一位充滿陽剛之氣的神祇海克力斯(Hercules)正端坐在你的面前.\n"
+description = """
+和英仙帕修斯並稱雙仙的英雄人物, 他曾經受到雅典娜的幫助而完成
+十二項艱鉅的任務.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "TACTICS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 20
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -50
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2000
+sex = "male"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9309.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+look $n
+say 你想聽聽我的英雄事蹟嗎(yes/no)?
+"""
+[[mobiles.9309.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+smile
+say 這就要從我生出來那時開始啦.
+mpechoat $n $I說：我雖然是宙斯的兒子, 不過卻不受到希拉(hera)的寵愛.
+mpechoat $n $I說：我被貶下凡間, 開始了十二項任務(mission)
+"""
+[[mobiles.9309.programs]]
+trigger = "talk_prog"
+argument = "hera"
+script = """
+mpechoat $n $I說：希拉是個善妒的女人, 對和她對立的人都懷有妒意.
+mpechoat $n $I說：在我剛出生的時候, 她就設計要讓我過著不幸的一生.
+mpechoat $n $I說：她讓我發狂, 後來又指派我去做十二項任務.
+"""
+[[mobiles.9309.programs]]
+trigger = "talk_prog"
+argument = "mission"
+script = """
+nod
+mpechoat $n $I說：我完成的任務有：
+mpechoat $n $I說：(1)降服里米亞(limia)  (2)擊殺九頭龍(hydra)
+mpechoat $n $I說：(3)凱特利亞鹿(deer)   (4)愛里圖曼山的野豬(boar)
+mpechoat $n $I說：(5)清理畜欄(clean)    (6)史丁巴羅斯之鳥(bird)
+mpechoat $n $I說：(7)克里特島公牛(bull) (8)迪奧美德斯的母馬(horse)
+mpechoat $n $I說：(9)亞馬遜腰帶(belt)   (10)格里奧尼斯公牛(ox)
+mpechoat $n $I說：(11)採集金蘋果(apple) (12)降服地獄犬(dog)
+mpechoat $n $I說：你想聽哪一個呢?
+"""
+[[mobiles.9309.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+sigh
+say 不想聽嗎...那算了...
+"""
+[[mobiles.9309.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+flameslash
+"""
+
+[mobiles.9310]
+keywords = "pegasus seiya"
+short_description = "[佩加薩斯]星矢(seiya)"
+long_description = "一位洋溢著朝氣的青銅聖鬥士星矢(Pegasus Seiya)正站在你的面前.\n"
+description = """
+他是青銅聖鬥士中第一位被神所認可的, 這代表著他的確是一個嚴守
+紀律並且武功超絕的聖鬥士.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 600
+level = 20
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -50
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1500
+sex = "neutral"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9310.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 我要誓死捍衛聖域!
+"""
+[[mobiles.9310.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+mpecho                  \u001B[1;32m/ 飛 ** 馬 ** 流 ** 星 ** 拳 \\\u001B[m
+frenzy
+"""
+
+[mobiles.9311]
+keywords = "phonix ikki"
+short_description = "[菲尼克斯]一輝(ikki)"
+long_description = "傳說中的不死鳥一輝(Phonix Ikki)坐在這裡.\n"
+description = """
+根據遙遠的傳說, 鳳凰在六百年的壽命終了時, 會將自己的身軀燃
+起熊熊烈火, 燃燒三天三夜之後, 他便會自火中重生. 所以擁有鳳
+凰座聖衣的一輝, 比其他聖鬥士有著更強的耐力和韌性.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "WIMPY"]
+affected_flags = ["INVISIBLE", "CHANGE_SEX", "SNEAK"]
+alignment = -300
+level = 15
+mod_hitplus = 300
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1500
+sex = "male"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9311.programs]]
+trigger = "fight_prog"
+argument = "25"
+script = """
+mpecho              \u001B[1;31m鳳～翼～天～翔\u001B[m
+c 'faerie fire'
+c 3 'burning hand'
+"""
+
+[mobiles.9312]
+keywords = "perseus"
+short_description = "帕修斯(perseus)"
+long_description = "手持美杜莎之首的英仙帕修斯(Perseus)雄糾糾的站在這裡.\n"
+description = """
+和海克力斯齊名的英雄人物, 他曾經得諸神之助斬殺了為害人間的
+蛇髮女妖和海神所派的海怪, 還迎娶了安德羅美達公主, 被傳為一
+段佳話.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "PROTECT"]
+alignment = 300
+level = 18
+mod_hitplus = 400
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -50
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 900
+sex = "female"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9312.programs]]
+trigger = "talk_prog"
+argument = "words"
+script = """
+if is_qmark($n) == saintarea_perseus 100003
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  say 我曾經答應過女神, 在斬殺美杜莎之後, 要顯耀他的榮光
+  say 我想過將美杜莎的頭顱鑲嵌(inlay)在女神賜與我的盾牌之上
+  say 但是我試了好久, 都沒有辦法成功....
+  sigh
+  mpecho 你心想: 聖域中還有誰可以幫助他呢?
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_perseus 100017
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  app $n
+  say 我就知道你能幫我解決問題...
+  say 接下來你可以幫我把這面盾牌送給女神嗎?
+  say 要找女神的話, 去找山頂神殿的祭司要求會面(meet).
+else
+  smile $n
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+if is_qmark($n) < saintarea_perseus 100018
+  say 沒有辦法完成是嗎...只好重頭開始了...
+  sigh
+  mpdel_qmark $n saintarea_perseus
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "give_prog"
+argument = "9355"
+script = """
+if is_qmark($n) == saintarea_perseus 100013
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  nod
+  say 是要把美杜莎之首放進這個盒子是吧?
+  mpecho $I將美杜莎之首放進盒子裡.
+  mpoload 9352
+  mpoload 9356
+  give box $n
+  give shield $n
+  mpjunk all
+  say 一切拜託你了!
+else
+  mpjunk box
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == saintarea_perseus
+else
+	smile
+	mpechoat $n $I說：孩子, 你想聽聽我和安德羅美達的故事嗎(yes/no)?
+	mpadd_qmark $n saintarea_perseus -1 0 0 0 0 1
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) == saintarea_perseus 100000
+  nod
+  mpechoat $n $I說：這就要從我去誅殺美杜莎(medusa)開始了...
+  mpmod_qmark $n saintarea_perseus v0 + 1
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "talk_prog"
+argument = "medusa"
+script = """
+if is_qmark($n) == saintarea_perseus 100001
+  ponder
+  mpcallout 1 say 我終於得以砍下他的頭.
+  mpcallout 1 say 我受託前往除掉這個怪物, 藉由許多神祇的幫助,
+  mpcallout 1 say 美杜莎是個蛇髮女妖, 被他凝視的人通通會變成石像.
+  mpcallout 2 say 不可思議的是, 這些噴出來的鮮血竟然變成了一匹飛馬!
+  mpcallout 2 say 當我砍下那邪惡的頭時, 他體內的鮮血驟然噴發出來.
+  mpcallout 3 smile
+  mpcallout 3 say 我便騎著這匹飛馬返回祖國(return).
+  mpmod_qmark $n saintarea_perseus v0 + 1
+else
+ say 美杜莎的頭顱, 是我砍下來的!
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "talk_prog"
+argument = "return"
+script = """
+if is_qmark($n) == saintarea_perseus 100002
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  mpcallout 1 say 她正被鐵鍊團團捆縛在海岸旁的懸崖下.
+  mpcallout 1 say 當我回途經一個位在海邊的小國時, 我見到了安德羅美達(andromada).
+  mpcallout 2 say 被綑綁在這邊作為活人獻祭. 話聲一落, 海裡突然衝出一隻怪物.
+  mpcallout 2 say 我解開了她的鎖鏈, 原來她是被她的父母為了平息海神的怒氣.
+  mpcallout 3 say 經過一番惡鬥, 我終於將寶劍深深刺入他的心窩. 了結了他的生命.
+  mpcallout 3 say 他惡狠狠的向我撲來. 我舉起斬殺美杜莎的寶劍開始與其周旋.
+  mpcallout 4 smile
+  mpcallout 4 say 安德羅美達不願意再留在這個國家, 於是我便帶著她回到我的故鄉.
+  mpcallout 5 say 不過我還得完成我的誓言(words)....
+endif
+"""
+[[mobiles.9312.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+sigh
+say 不想聽嗎...那算了...
+"""
+[[mobiles.9312.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(80)
+  say 宙斯神賜我神力!
+  c li
+else
+  zap $n
+endif
+"""
+
+[mobiles.9313]
+keywords = "draco shiru"
+short_description = "[龍星座]紫龍(shiru)"
+long_description = "來自神秘東方世界的紫龍(Draco Shiru)和善的望著你.\n"
+description = """
+繼承了擁有被譽為最強之盾的龍座聖衣, 紫龍比其他的聖鬥士更來的
+冷靜, 不過沉默寡言並不代表他不堪一擊, 他的廬山昇龍霸可以將大
+瀑布打至逆流.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL"]
+affected_flags = ["DETECT_INVIS"]
+alignment = 400
+level = 20
+mod_hitplus = 800
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -50
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "neutral"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9313.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if rand(70)
+        say 廬    山    昇    龍    霸
+        c 'dispel magic'
+        c 3 'shocking grasp'
+else
+        say 廬    山    龍    飛    翔
+        c fireball
+        c 'lightning bolt'
+endif
+"""
+
+[mobiles.9314]
+keywords = "god"
+short_description = "天神(god)"
+long_description = "一位慈祥的天神(god)正靜靜的望著你.\n"
+description = """
+輪迴中最高的等級, 只有積善很久的人才能升上這裡.
+不過在輪迴的背後, 操控輪迴的是?!
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SNEAK"]
+alignment = 1000
+level = 23
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "God"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_cleric"
+[[mobiles.9314.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+smile $n
+"""
+[[mobiles.9314.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+say 把我殺了吧, 這樣你就可以脫出輪迴了
+"""
+[[mobiles.9314.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == saintarea_quest_main 100013
+        mpdis_magic self blindness
+        mpmod_qmark $n saintarea_quest_main v0 = 14
+        mpechoat $n $I 說「不要以為輪迴祇是這樣而已.....。」
+        mpechoat $n $I 把你傳送回處女宮了!
+        mptransfer $n 9334
+endif
+"""
+
+[mobiles.9315]
+keywords = "aries mu"
+short_description = "[白羊座]穆(mu)"
+long_description = "白羊宮的守護者穆(Aries Mu)正堆滿笑容的迎接你的到來.\n"
+description = """
+你看到一位和藹的黃金聖鬥士, 他就是白羊座的聖鬥士穆. 不過可別
+小看他的力量, 他的終極星光可以在一瞬間將敵人傳送到世界的另一端
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2000
+sex = "male"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_cast_cleric"
+[[mobiles.9315.programs]]
+trigger = "talk_prog"
+argument = "pack"
+script = """
+if is_qmark($n) == saintarea_perseus 100005
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  say 喔...要包覆美杜莎之首啊...
+  ponder
+  say 最好的方法還是弄個盒子把它裝在裡面吧!
+  say 我是可以幫你做盒子啦, 但是材料就要自己去找囉!
+  say 你要幫我拿一個黑色背包(black backpack)
+  say 一條祕銀條(bar of mithril), 還有一張巨人硬皮(troll skin).
+  wave $n
+else
+  break
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "give_prog"
+argument = "15019"
+script = """
+mpjunk backpack
+if is_qmark($n) == saintarea_perseus 100006
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  say 辛苦了, 我還要一根祕銀條(bar of mithril)和一張巨人硬皮(troll skin).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100008
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  say 辛苦了, 我還要一張巨人硬皮(troll skin).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100010
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  say 辛苦了, 我還要一根祕銀條(bar of mithril).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100012
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  say 辛苦了, 我現在就把盒子做給你.
+  say 把這個盒子交給帕修斯, 他會知道該怎麼做的.
+  mpoload 9355
+  give box $n
+  smile $n
+  wave $n
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "give_prog"
+argument = "1312"
+script = """
+mpjunk bar
+if is_qmark($n) == saintarea_perseus 100006
+  mpmod_qmark $n saintarea_perseus v0 + 2
+  say 辛苦了, 我還要一個黑色背包(black backpack)和一張巨人硬皮(troll skin).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100007
+  mpmod_qmark $n saintarea_perseus v0 + 2
+  say 辛苦了, 我還要一張巨人硬皮(troll skin).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100010
+  mpmod_qmark $n saintarea_perseus v0 + 2
+  say 辛苦了, 我還要一個黑色背包(black backpack).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100011
+  mpmod_qmark $n saintarea_perseus v0 + 2
+  say 辛苦了, 我現在就把盒子做給你.
+  say 把這個盒子交給帕修斯, 他會知道該怎麼做的.
+  mpoload 9355
+  give box $n
+  smile $n
+  wave $n
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "give_prog"
+argument = "2802"
+script = """
+mpjunk skin
+if is_qmark($n) == saintarea_perseus 100006
+  mpmod_qmark $n saintarea_perseus v0 + 4
+  say 辛苦了, 我還要一根祕銀條(bar of mithril)和一個黑色背包(black backpack).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100008
+  mpmod_qmark $n saintarea_perseus v0 + 4
+  say 辛苦了, 我還要一個黑色背包(black backpack)
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100007
+  mpmod_qmark $n saintarea_perseus v0 + 4
+  say 辛苦了, 我還要一根祕銀條(bar of mithril).
+  wave $n
+endif
+if is_qmark($n) == saintarea_perseus 100009
+  mpmod_qmark $n saintarea_perseus v0 + 4
+  say 辛苦了, 我現在就把盒子做給你.
+  say 把這個盒子交給帕修斯, 他會知道該怎麼做的.
+  mpoload 9355
+  give box $n
+  smile $n
+  wave $n
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) != saintarea_quest_main
+        smile $n
+        mpechoat $n $I 說 '歡迎來到黃金十二宮的白羊宮'
+        mpechoat $n $I 說 '你已經準備好接受考驗了嗎(yes/no)'
+        mpadd_qmark $n saintarea_quest_main -1 0 0 0 0 1
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) == saintarea_quest_main 100000
+        nod $n
+        mpechoat $n $I 說 '請問聖鬥士的三樣美德除了力量和勇氣之外還有什麼?'
+        mpmod_qmark $n saintarea_quest_main v0 = 1
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($n) == saintarea_quest_main 100000
+        mpechoat $n $I 說 '你是來純觀光的是吧, 那就祝你旅途愉快～'
+        wave $n
+        mpdel_qmark $n saintarea_quest_main
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "talk_prog"
+argument = "真實 reality"
+script = """
+if is_qmark($n) == saintarea_quest_main 100001
+        smile $n
+        mpmod_qmark $n saintarea_quest_main v0 = 2
+        mpechoat $n $I 說 '很好, 你已經通過了白羊宮的試煉'
+        mpechoat $n $I 說 '這是白羊宮的信物, 請妥善保存'
+        mpoload 9301
+        give aries $n
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if rand(50)
+        say 我可以提供你醫療上的幫助
+        say 只要對我說一聲(talk aries help)就可以了.
+else
+        say 我們收費絕對物美價廉, 童叟無欺...
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "talk_prog"
+argument = "help"
+script = """
+smile $n
+        mpechoat $n $I 對你說：白羊宮提供冒險者下列的服務
+        mpechoat $n (1)治療 (2)護體 (3)護盾 (4)解毒
+        mpechoat $n ＄700    ＄500    ＄1000   ＄800
+        mpechoat $n (5)全復 (6)聖光 (7)破魔 (8)巨力
+        mpechoat $n ＄5000   ＄2000   ＄1500   ＄1200
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "5000"
+script = """
+cast 'full heal' $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "2000"
+script = """
+cast san $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "1500"
+script = """
+cast 'dispel magic' $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "1200"
+script = """
+cast 'giant strength' $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "1000"
+script = """
+cast shield $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "800"
+script = """
+cast 'cure poison' $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "700"
+script = """
+cast 'cure serious' $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "bribe_prog"
+argument = "500"
+script = """
+cast armor $n
+        mpjunk coins
+"""
+[[mobiles.9315.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+mpdis_magic self blindness
+say ---- 終 極 星 光 ----
+mpechoat $n 你一陣暈眩, 已經被傳送走了.
+if rand(50)
+        if rand(60)
+                mptransfer $n 9801
+        else
+                mptransfer $n 9301
+        endif
+else
+        if rand(50)
+                mptransfer $n 3556
+        else
+                mptransfer $n 3001
+        endif
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+if is_qmark($n) < saintarea_quest_main 100040
+        mpechoat $n $I說：好吧, 就讓一切都從頭來!
+        mpdel_qmark $n saintarea_quest_main
+endif
+"""
+[[mobiles.9315.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+mpjunk all
+"""
+
+[mobiles.9316]
+keywords = "taurus aldebaran"
+short_description = "[金牛座]阿爾迪巴朗(aldebaran)"
+long_description = "金牛宮的守護者阿爾迪巴朗(Taurus Aldebaran)正不屑的看著你.\n"
+description = """
+一位以勇力見長的聖鬥士, 他的得意技「巨型號角」可以將一整群的
+野牛吹上天空.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 500
+level = 23
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9316.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100002
+        mpechoat $n $I 說 '你已經通過白羊宮啦'
+        think
+        mpechoat $n $I 說 '不過我不像穆那麼好心, 你可要自求多福'
+        mpechoat $n $I 說 '要過我這關先把穆的信物交來'
+endif
+"""
+[[mobiles.9316.programs]]
+trigger = "give_prog"
+argument = "9301"
+script = """
+if is_qmark($n) == saintarea_quest_main 100002
+        mpmod_qmark $n saintarea_quest_main v0 = 3
+        mpjunk aries
+        hmm
+        mpechoat $n $I問你:你知道金牛是誰的化身嗎?
+else
+        mpechoat $n $I不屑的說:小子, 不要想投機取巧.
+        give aries $n
+endif
+"""
+[[mobiles.9316.programs]]
+trigger = "talk_prog"
+argument = "宙斯 zeus"
+script = """
+if is_qmark($n) == saintarea_quest_main 100003
+        smile $n
+        mpechoat $n $I 說 '很好, 下一個問題是宙斯是為了誰化身金牛?'
+        mpmod_qmark $n saintarea_quest_main v0 = 4
+else
+        say 你說的是宙斯神嗎, 他是雅典娜的父親啊!
+endif
+"""
+[[mobiles.9316.programs]]
+trigger = "talk_prog"
+argument = "歐羅巴 europa"
+script = """
+if is_qmark($n) == saintarea_quest_main 100004
+        mpmod_qmark $n saintarea_quest_main v0 = 5
+        pat $n
+        mpechoat $n $I 說 '好小子, 這關就算你過了'
+        mpechoat $n $I 說 '這是金牛宮的信物, 好好收著'
+        mpoload 9302
+        give taurus $n
+        tell $n 下一關的薩卡也不好惹, 你要好自為之.
+else
+        say 歐羅巴公主是宙斯神的一個情婦...
+endif
+"""
+[[mobiles.9316.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+say ---巨     型        號     角---
+        c 'faerie fire'
+        c whirlwind
+"""
+
+[mobiles.9317]
+keywords = "gemini-saintarea saga"
+short_description = "[雙子座]薩卡(saga)"
+long_description = "雙子宮的守護者薩卡(Gemini Saga)不懷好意地看著你.\n"
+description = """
+薩卡是一個雙重性格的人, 雖然他的心地善良, 不過潛藏在他內心深
+處的邪惡之面控制他時, 他就變成了一個邪惡的魔鬼, 這大概就是雙
+子的宿命吧.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 22
+mod_hitplus = 300
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -100
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR", "MAGE", "THIEF"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9317.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100005
+        smile $n
+        mpechoat $n $I向你說：辛苦了, 阿爾迪巴朗那關不好闖吧.
+        mpechoat $n 好好休息一下, 等到認為可以闖我這關的時候把信物交給卡諾.
+endif
+"""
+[[mobiles.9317.programs]]
+trigger = "talk_prog"
+argument = "ok"
+script = """
+if is_qmark($n) == saintarea_quest_main 100006
+        mpmod_qmark $n saintarea_quest_main v0 = 7
+        mpechoat $n $I 說 '好, 只要你能在迷宮中找到我, 就算你通過了試驗'
+        mpechoat $n $I 說 '找到我之後, 把這面令牌給我'
+        mpoload 9345
+        give mark $n
+        mptransfer $n 9363
+        mpgoto 9366
+else
+        pat $n
+        say 一切都沒事啦, ok, ok....
+endif
+"""
+[[mobiles.9317.programs]]
+trigger = "give_prog"
+argument = "9345"
+script = """
+mpjunk mark
+if is_qmark($n) == saintarea_quest_main 100007
+        mpmod_qmark $n saintarea_quest_main v0 = 8
+        say 很好, 你已經順利通過了雙子宮的考驗.
+        mptransfer $n 9326
+        mpgoto 9326
+        say 這是你應得的東西, 收下吧.
+        mpoload 9303
+        give gemini $n
+else
+        say 你從哪裡拿到這種東西的????
+endif
+"""
+[[mobiles.9317.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+heroslash
+"""
+[[mobiles.9317.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+grin
+mpecho            \u001B[1;33m[魔]\u001B[1;31m[皇]\u001B[1;35m[幻]\u001B[1;36m[朧]\u001B[1;32m[拳]\u001B[m
+c para
+c sho
+"""
+
+[mobiles.9318]
+keywords = "gemini-saintarea kano"
+short_description = "[雙子座]卡諾(kano)"
+long_description = "薩卡的弟弟卡諾(Gemini Kano), 和薩卡一同守護雙子宮.\n"
+description = """
+自從被雅典娜(Athena)赦免之後, 卡諾已經成為聖域中對雅典娜完全
+忠誠的聖鬥士之一了, 他和薩卡同為雙子座聖鬥士, 一招「魔皇粉星
+拳」擁有將所有粒子粉碎的可怕威力.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "HARD_DIS", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PASS_DOOR"]
+alignment = -1000
+level = 22
+mod_hitplus = 300
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -100
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR", "MAGE", "THIEF"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9318.programs]]
+trigger = "give_prog"
+argument = "9302"
+script = """
+if is_qmark($n) == saintarea_quest_main 100005
+        mpmod_qmark $n saintarea_quest_main v0 = 6
+        mpjunk taurus
+        smile $n
+        mpechoat $n $I 說 '嗯...雙子宮的考驗是智慧'
+        mpechoat $n $I 說 '你認為可以開始的時候和薩卡說聲ok'
+else
+        say 無緣無故拿這給我幹嘛?
+        give taurus $n
+endif
+"""
+[[mobiles.9318.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+flameslash
+"""
+[[mobiles.9318.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+mpecho           \u001B[1;4;31m!! [魔 皇 粉 星 拳] !!\u001B[m
+c 3 magic
+c harm
+"""
+
+[mobiles.9319]
+keywords = "cancer deathmask"
+short_description = "[巨蟹座]迪斯馬斯克(deathmask)"
+long_description = "巨蟹宮的守護者迪斯馬斯克(Cancer Deathmask)正準備向你攻擊!!\n"
+description = """
+迪斯馬斯克是一個會使用「積屍氣冥界波」的邪惡角色, 而且他對
+敵人決不心軟, 必致敵人於死地, 而且會將死者的臉皮剝下, 讓死
+者沒有辦法投胎轉世, 打倒他吧! 邪惡的迪斯馬斯克!
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 19
+mod_hitplus = 200
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2000
+sex = "male"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9319.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100008
+        grin $n
+        mpechoat $n $I 說 '你已經一腳踏入棺材啦....哈哈哈....'
+        mpechoat $n $I 說 '不過念在你還走的出薩卡的迷宮, 我就行個方便吧'
+        mpechoat $n $I 說 '先把薩卡給你的東西給我'
+endif
+"""
+[[mobiles.9319.programs]]
+trigger = "give_prog"
+argument = "9303"
+script = """
+if is_qmark($n) == saintarea_quest_main 100008
+        mpmod_qmark $n saintarea_quest_main v0 = 9
+        mpjunk gemini
+        grin
+        mpecho $I一聲狂笑：哈哈哈哈哈哈哈哈哈哈.............
+        mpecho $I對你說：你去地獄和冥王泡茶吧.............
+        mpkill $n
+endif
+"""
+[[mobiles.9319.programs]]
+trigger = "fight_prog"
+argument = "25"
+script = """
+if rand(60)
+        cast fireball
+else
+        bashhead
+endif
+"""
+[[mobiles.9319.programs]]
+trigger = "hitprcnt_prog"
+argument = "15"
+script = """
+mpecho 　   \u001B[1;30m!!!「 積  屍  氣  冥  界  波 」!!!\u001B[m
+        cast earthquake
+        cast poison
+        cast fireball
+        cast 'faerie fire'
+        cast 2 magic
+"""
+[[mobiles.9319.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == saintarea_quest_main 100009
+        mpmod_qmark $n saintarea_quest_main v0 = 10
+        say 好小子, 竟然可以把我打入冥界........
+        yell 我會回來的!! 可惡的 $n !!!
+        c 2 ma
+        mpoload 9304 floor
+else
+        say 我不會放過你的.....
+        c curse $n
+endif
+"""
+
+[mobiles.9320]
+keywords = "leo aiolia"
+short_description = "[獅子座]愛奧里亞(aiolia)"
+long_description = "獅子宮的守護者愛奧里亞(Leo Aiolia)正對著你微笑.\n"
+description = """
+當你面對著他時, 你彷彿感覺到一股王者的霸氣向你襲來. 沒錯,
+這就是獅子座的特性. 傳說獅子座的聖衣是以宙斯的血煉成的,
+因此獅子座的聖鬥士都擁有操控雷電的力量.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 600
+level = 23
+mod_hitplus = 800
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = -50
+mod_svs = -5
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9320.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100010
+        look $n
+        mpechoat $n $I 說 '你把迪斯馬斯克給作掉了?'
+        ponder
+        mpechoat $n $I 說 '...它還真是罪有應得'
+        mpechoat $n $I 說 '把他的遺物給我吧, 這樣你才能接受獅子的考驗'
+endif
+"""
+[[mobiles.9320.programs]]
+trigger = "give_prog"
+argument = "9304"
+script = """
+if is_qmark($n) == saintarea_quest_main 100010
+        mpmod_qmark $n saintarea_quest_main v0 = 11
+        mpjunk cancer
+        think
+        mpechoat $n $I 說 '受到宙斯之血浸濡的獅子聖衣啊...'
+        mpechoat $n $I 說 '請給予吾面前之人勇氣之試煉!'
+        think
+        mpechoat $n $I 說 '宙斯神下了旨意, 請你去取金色獅皮. 你準備好了嗎?'
+        mpechoat $n $I 說 '如果準備好了, 請和我說 ok'
+else
+        say 你是用不當的手法拿到信物的喔.....?
+        drop cancer
+endif
+"""
+[[mobiles.9320.programs]]
+trigger = "talk_prog"
+argument = "ok"
+script = """
+if is_qmark($n) == saintarea_quest_main 100011
+        nod
+        mpechoat $n $I 說 '準備好囉, 我就把你傳送到里米亞的所在地'
+        mptransfer $n 9379
+endif
+"""
+[[mobiles.9320.programs]]
+trigger = "give_prog"
+argument = "9342"
+script = """
+mpjunk skin
+if is_qmark($n) == saintarea_quest_main 100011
+        mpmod_qmark $n saintarea_quest_main v0 = 12
+        smile
+        yell 恭喜$n已經通過了獅子宮的考驗.
+        mpechoat $n $I 說 '這是獅子宮的信物, 好好收著啊'
+        mpoload 9305
+        give leo $n
+else
+        say 你怎麼會有這件獅皮???
+endif
+"""
+[[mobiles.9320.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+if rand(30)
+        say \u001B[1;33m「 狂  飆  閃  電  拳 」\u001B[m
+        cast 3 'lightning bolt'
+else
+        say \u001B[1;33m「 閃  電  戰  鬥  拳 」\u001B[m
+        cast 'lightning bolt'
+endif
+"""
+
+[mobiles.9321]
+keywords = "virgo shaka"
+short_description = "[處女座]沙加(shaka)"
+long_description = "處女宮的守護者沙加(Virgo Shaka)正向你微微笑著.\n"
+description = """
+在你面前的聖鬥士, 是被人譽為"最接近神的男人"的處女座沙加,
+傳說中沙加是釋迦轉世, 不過沙加的必殺絕技"天舞寶輪"可以將
+人的六感斷絕, "天魔降伏"則是強力的破壞技.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 26
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "female"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_cast_cleric"
+[[mobiles.9321.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100012
+        smile $n
+        mpechoat $n $I 說 '能通過重重考驗來到這裡, 也真是辛苦你了'
+        if hitprcnt($n) < 100
+                c heal $n
+        endif
+        mpechoat $n $I 說 '不過我這一關也是不好惹的'
+        mpechoat $n $I 說 '如果你已經有了覺悟, 就把獅子之石給我'
+endif
+if is_qmark($n) == saintarea_quest_main 100014
+        mpmod_qmark $n saintarea_quest_main v0 = 15
+        smile
+        mpoload 9306
+        give virgo $n
+        say 拿去吧....好自為之
+endif
+"""
+[[mobiles.9321.programs]]
+trigger = "give_prog"
+argument = "9305"
+script = """
+if is_qmark($n) == saintarea_quest_main 100012
+        mpjunk leo
+        mpmod_qmark $n saintarea_quest_main v0 = 13
+        mpechoat $n $I的聲音在你耳邊響起: 去經歷六道輪迴的考驗吧!
+        mptransfer $n 9368
+endif
+"""
+[[mobiles.9321.programs]]
+trigger = "fight_prog"
+argument = "25"
+script = """
+mpecho ～～天魔降伏～～天魔降伏～～天魔降伏～～天魔降伏～～天魔降伏～～
+        c 'dispel magic'
+        c fireball
+        c heal
+"""
+[[mobiles.9321.programs]]
+trigger = "hitprcnt_prog"
+argument = "15"
+script = """
+mpecho ---Ooo\u001B[1;31m天\u001B[m o \u001B[1;32m舞\u001B[m o \u001B[1;34m寶\u001B[m o \u001B[1;35m輪\u001B[mooO---
+mpecho $I手中出現了一個圓輪, 一陣強光閃過....
+        c blindness
+        c weaken
+        c 'faerie fire'
+        c 'seal magic'
+        c para
+"""
+
+[mobiles.9322]
+keywords = "libra dohko"
+short_description = "[天秤座]童虎(dohko)"
+long_description = "天秤宮的主人童虎(Libra Dohko)凝望著你.\n"
+description = """
+所有的聖鬥士中, 只有天秤擁有武器, 而其他的黃金聖鬥士也可以
+向天秤商借武器來使用. 天秤座童虎據說已經超過兩百歲, 他同時
+也是紫龍的師傅.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 0
+level = 22
+mod_hitplus = 800
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9322.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100015
+        smile $n
+        mpechoat $n $I 說 '能通過沙加的六道輪迴, 想必你的實力已有一定的程度'
+        mpechoat $n $I 說 '不過在這裡, "力量"並不代表絕對'
+        mpechoat $n $I 說 '聖鬥士除了勇氣力量真實三要素以外, 還要有"智慧"才行'
+        mpechoat $n $I 說 '有把握的話就把處女宮信物給我, 沒有的話就請回吧'
+endif
+"""
+[[mobiles.9322.programs]]
+trigger = "give_prog"
+argument = "9306"
+script = """
+if is_qmark($n) == saintarea_quest_main 100015
+        mpmod_qmark $n saintarea_quest_main v0 = 16
+        nod $n
+        mpechoat $n $I 說 '你應該知道, 我來自舊大陸一個叫做"中國"的地方'
+        mpechoat $n $I 說 '中國文化博大精深, 其中又以天文學最為發達'
+        mpechoat $n $I 說 '就考考你一些基本的概念吧'
+        think
+        mpechoat $n $I 說 '古人分全天為三垣二十八宿, 三垣中最靠近北辰的是哪一個?'
+        mpechoat $n $I 說 '(1)紫微垣, (2)太微垣, (3)天市垣 (請說號碼)'
+endif
+"""
+[[mobiles.9322.programs]]
+trigger = "talk_prog"
+argument = "p east dragon"
+script = """
+if is_qmark($n) == saintarea_quest_main 100017
+        mpmod_qmark $n saintarea_quest_main v0 = 18
+        mpechoat $n $I 說 '又答對了, 真是不簡單'
+        mpechoat $n $I 說 '這是最後的問題了, 中國負責觀測星象的官名是?'
+        mpechoat $n $I 說 '(1)太子少傅, (2)欽天監, (3)監星 (請說號碼)'
+endif
+"""
+[[mobiles.9322.programs]]
+trigger = "talk_prog"
+argument = "1"
+script = """
+if is_qmark($n) == saintarea_libra_wrong
+        say 別瞎猜了, 先去思考一下吧...
+        break
+endif
+if is_qmark($n) == saintarea_quest_main 100016
+        mpmod_qmark $n saintarea_quest_main v0 = 17
+        emote 微微頷首.
+        mpechoat $n $I 說 '不錯嘛, 小夥子識的不少'
+        mpechoat $n $I 說 '下一個問題聽著, 你所處的天秤宮屬於四神方位的哪一個?'
+endif
+if is_qmark($n) == saintarea_quest_main 100018
+        mpechoat $n $I 說 '你答錯了, 去好好反省一下再來找(talk)我吧'
+        mpadd_qmark $n saintarea_libra_wrong 12 0 0 0 1 1
+endif
+"""
+[[mobiles.9322.programs]]
+trigger = "talk_prog"
+argument = "2"
+script = """
+if is_qmark($n) == saintarea_libra_wrong
+        say 別瞎猜了, 先去思考一下吧...
+        break
+endif
+if is_qmark($n) == saintarea_quest_main 100016
+        mpechoat $n $I 說 '你答錯了, 去好好反省一下再來找(talk)我吧'
+        mpadd_qmark $n saintarea_libra_wrong 12 0 0 0 1 1
+endif
+if is_qmark($n) == saintarea_quest_main 100018
+        mpmod_qmark $n saintarea_quest_main v0 = 20
+        clap $n
+        say 你已經通過我的考驗, 把信物收好, 往下一關去吧!
+        mpoload 9307
+        give libra $n
+endif
+"""
+[[mobiles.9322.programs]]
+trigger = "talk_prog"
+argument = "3"
+script = """
+if is_qmark($n) == saintarea_libra_wrong
+        say 別瞎猜了, 先去思考一下吧...
+        break
+endif
+if is_qmark($n) == saintarea_quest_main 100016
+or is_qmark($n) == saintarea_quest_main 100018
+        mpechoat $n $I 說 '你答錯了, 去好好反省一下再來找(talk)我吧'
+        mpadd_qmark $n saintarea_libra_wrong 12 0 0 0 1 1
+endif
+"""
+[[mobiles.9322.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == saintarea_libra_wrong
+        say 請先去思考一下剛剛的問題吧
+        break
+endif
+if is_qmark($n) == saintarea_quest_main 100016
+        mpechoat $n $I 說 '全天分為三垣二十八宿, 三垣中最靠近北辰的是哪一個?'
+        mpechoat $n $I 說 '(1)紫微垣, (2)太微垣, (3)天市垣 (請說號碼)'
+endif
+if is_qmark($n) == saintarea_quest_main 100018
+        mpechoat $n $I 說 '中國負責觀測星象的官名是?'
+        mpechoat $n $I 說 '(1)太子少傅, (2)欽天監, (3)監星 (請說號碼)'
+endif
+"""
+[[mobiles.9322.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+say >>>>>廬--山--百--龍--霸<<<<<
+c shock
+if hitprcnt($i) > 50
+        frenzy
+else
+        cast heal
+        skilldrv multihit $n
+endif
+"""
+
+[mobiles.9323]
+keywords = "scorpio miro"
+short_description = "[天蠍座]米羅(miro)"
+long_description = "天蠍宮的守護者米羅(Scorpio Miro)坐在椅子上休息.\n"
+description = """
+天蠍座的聖鬥士米羅, 渾身散發出一種神秘的氣息. 他的絕技"深紅
+磁針"可以在百萬分之一秒內向對手發出如同天蠍座星圖的攻擊, 當
+第十五針刺出的時候, 也就是對手魂歸西天之時.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "CRITICAL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -300
+level = 18
+mod_hitplus = 400
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_poison"
+[[mobiles.9323.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100020
+        mpmod_qmark $n saintarea_quest_main v0 = 21
+        smile
+        mpechoat $n $I稱許你的表現
+        mpechoat $n $I 說 '好小子, 來杯紅酒吧!'
+        mpoload 9335
+        give claret $n
+        nod $n
+        mpechoat $n $I 說 '你已經是近十年中能闖到天蠍宮的第一人, 不過, 也到此為止!'
+        mpechoat $n $I 說 '接下來的路程凶險重重, 要全身而退是不可能的事'
+        mpechoat $n $I 說 '聽我的話, 回去吧!'
+        mpechoat $n $I手一揮, 將你推出了天蠍宮之外.
+        mpforce $n w
+        break
+endif
+if is_qmark($n) == saintarea_quest_main 100021
+        mpmod_qmark $n saintarea_quest_main v0 = 22
+        mpechoat $n $I 說 '怎麼又回來了, 回去回去, 不要跟自己的生命開玩笑'
+        mpechoat $n $I手一揮, 將你推出了天蠍宮之外.
+        mpforce $n w
+endif
+if is_qmark($n) == saintarea_quest_main 100022
+        sigh
+        say 你真的那麼想過考驗嗎? (yes/no)
+endif
+"""
+[[mobiles.9323.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) == saintarea_quest_main 100022
+        mpmod_qmark $n saintarea_quest_main v0 = 23
+        nod $n
+        mpechoat $n $I 說 '凡是不能不勞而獲, 想要過我這關的話還是要付出一點代價'
+        mpechoat $n $I 吟起了一首詩："人生不相見, 動如參與商"
+        mpechoat $n $I 說 '這首詩是哪一位詩人所寫?'
+endif
+"""
+[[mobiles.9323.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($n) == saintarea_quest_main 100022
+        mpechoat $n $I 說 '那你就快點回去吧, 別再繼續往前了'
+        mpechoat $n $I手一揮, 將你推出了天蠍宮之外.
+        mpforce $n w
+endif
+"""
+[[mobiles.9323.programs]]
+trigger = "talk_prog"
+argument = "杜甫"
+script = """
+if is_qmark($n) == saintarea_quest_main 100023
+        mpmod_qmark $n saintarea_quest_main v0 = 24
+        nod
+        mpechoat $n $I 說 '那麼"動如參與商"中代表天蠍座的是哪一個?'
+        mpechoat $n $I 說 '回答參請答 1, 回答商請答 2'
+endif
+"""
+[[mobiles.9323.programs]]
+trigger = "talk_prog"
+argument = "2"
+script = """
+if is_qmark($n) == saintarea_quest_main 100024
+        mpmod_qmark $n saintarea_quest_main v0 = 25
+        nod
+        mpechoat $n $I 說 '好吧, 你可以過去了. 不過先把童虎的徽章給我'
+endif
+"""
+[[mobiles.9323.programs]]
+trigger = "talk_prog"
+argument = "1"
+script = """
+if is_qmark($n) == saintarea_quest_main 100024
+        mpechoat $n $I 說 '你看看, 連這你都會答錯, 再往下走可是凶多吉少'
+endif
+"""
+[[mobiles.9323.programs]]
+trigger = "give_prog"
+argument = "9307"
+script = """
+if is_qmark($n) == saintarea_quest_main 100025
+        mpmod_qmark $n saintarea_quest_main v0 = 26
+        mpjunk libra
+        mpoload 9308
+        give scorpio $n
+else
+        give libra $n
+        say 我並不需要這個..
+endif
+"""
+[[mobiles.9323.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+mpecho $I遙望遠方.
+        say 我最喜歡\u001B[1;31m杜甫\u001B[m的詩了..你呢??
+        smile $n
+"""
+[[mobiles.9323.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+say －\u001B[31m深----紅----磁----針\u001B[m－
+c poison
+skilldrv multihit $n
+"""
+
+[mobiles.9324]
+keywords = "sagittarius aiolos"
+short_description = "[射手座]愛奧洛斯(aiolos)"
+long_description = "正氣凜然的射手座聖鬥士愛奧洛斯(Sagittarius Aiolos)向你微笑著.\n"
+description = """
+看他的神氣, 就可以想像他是一個模範的聖鬥士. 他是愛奧利亞的哥哥
+不過並沒有愛奧利亞的隨性, 他行事中庸, 一舉一動中都表現出一股英
+氣勃勃的氣態.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 21
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR", "SHOT_ARROW"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9324.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100026
+        smile
+        mpechoat $n $I很高興的說 '你終於來了, 神明降下的救世主'
+        mpechoat $n $I說 '來吧, 把米羅的信物給我'
+endif
+"""
+[[mobiles.9324.programs]]
+trigger = "give_prog"
+argument = "9308"
+script = """
+if is_qmark($n) == saintarea_quest_main 100026
+        mpmod_qmark $n saintarea_quest_main v0 = 27
+        nod $n
+        mpechoat $n $I感性的說 '世界重任就在你的肩上了'
+        mpechoat $n $I說 '拿去吧, 我並不想為難你'
+        mpjunk scorpio
+        mpoload 9309
+        give sagittarius $n
+endif
+"""
+[[mobiles.9324.programs]]
+trigger = "rand_prog"
+argument = "5"
+script = """
+say \u001B[1;31m勇氣\u001B[m, \u001B[1;33m力量\u001B[m, \u001B[1;35m真實\u001B[m.
+"""
+[[mobiles.9324.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+say 雅典娜啊! 讓我的箭替你洗滌罪惡吧!
+meteoric
+c ref
+"""
+
+[mobiles.9325]
+keywords = "capricorn shura"
+short_description = "[山羊座]修羅(shura)"
+long_description = "山羊座聖鬥士修羅(Capricorn Shura)冷冷的看著你.\n"
+description = """
+一位專修空手戰技的聖鬥士, 他最著名的絕技就是鋒利無比的手刀.
+他的手刀被喻為"切割大地的聖劍", 可見他驚人的威力. 而且他的性
+子不怎麼好, 沒事還是別招惹他來的好.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "CRITICAL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 700
+level = 23
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9325.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100027
+        mpechoat $n $I 說 '喔......呵.......呵.......'
+        mpechoat $n $I 說 '把愛奧洛斯的東西拿來吧'
+endif
+"""
+[[mobiles.9325.programs]]
+trigger = "give_prog"
+argument = "9309"
+script = """
+if is_qmark($n) == saintarea_quest_main 100027
+        mpmod_qmark $n saintarea_quest_main v0 = 28
+        mpjunk sagittarius
+        mpechoat $n $I 說 '我不想為難你, 拿去吧..'
+        mpoload 9310
+        give capricorn $n
+endif
+"""
+[[mobiles.9325.programs]]
+trigger = "give_prog"
+argument = "9310"
+script = """
+if is_qmark($n) == saintarea_quest_main 100029
+        mpmod_qmark $n saintarea_quest_main v0 = 30
+        mpechoat $n $I向你說：嗯, 你通過了真實的試煉了
+        give capricorn $n
+else
+        ?
+        mpechoat $n $I 說 '這是我的信物啊, 你就拿去吧'
+        give capricorn $n
+endif
+"""
+[[mobiles.9325.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+yell 可惡的入侵者! 讓聖劍將你切成兩半吧!
+c 'faerie fire'
+c earthquake
+skilldrv heavyhit $n
+skilldrv multihit $n
+"""
+
+[mobiles.9326]
+keywords = "aquarius camus"
+short_description = "[水瓶座]卡謬(camus)"
+long_description = "冷漠如冰的水瓶宮之主卡謬(Aquarius Camus)靜靜著望著你.\n"
+description = """
+冰河之師, 在西伯利亞修行凍氣的聖鬥士. 他的凍氣可以將溫度降到
+絕對零度, 連黃金聖衣都可以冰凍. 超強絕技"曙光女神之寬恕"可以
+在一瞬間就將人冰凍起來.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 18
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "female"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9326.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(40)
+        say ～～冰凍拳～～
+        c 'chill touch'
+        c colo
+else
+        say ！！！ａｕｒｕｒａ ｅｘｅｃｕｔｉｏｎ！！！
+        cast 2 'chill touch'
+        cast para
+endif
+"""
+[[mobiles.9326.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100028
+        smile
+        say 歡迎來到凍氣的國度～～
+        mpechoat $n $I 說 '要參加凍氣旅行團的人請將山羊宮信物給我, 謝謝'
+endif
+"""
+[[mobiles.9326.programs]]
+trigger = "give_prog"
+argument = "9310"
+script = """
+if is_qmark($n) == saintarea_quest_main 100028
+        mpmod_qmark $n saintarea_quest_main v0 = 29
+        mpecho $I拿起了山羊宮信物仔細端詳著.
+        mpechoat $n $I 說 '這是贗品啊...拿回去拿回去...'
+        give capricorn $n
+endif
+if is_qmark($n) == saintarea_quest_main 100030
+        mpmod_qmark $n saintarea_quest_main v0 = 31
+        mpecho $I拿起了山羊宮信物仔細端詳著.
+        nod
+        mpjunk capricorn
+        mpechoat $n $I 說 '所謂聖鬥士的凍氣. 可以達到將黃金聖衣冰凍的程度'
+        mpechoat $n $I 說 '要能將黃金聖衣冰凍, 必須要達到絕對零度才行'
+        mpechoat $n $I 說 '那麼絕對零度指的是攝氏零下多少度?'
+        mpechoat $n $I 說 '你只要回答出整數部分即可'
+endif
+"""
+[[mobiles.9326.programs]]
+trigger = "talk_prog"
+argument = "273"
+script = """
+if is_qmark($n) == saintarea_quest_main 100031
+        mpmod_qmark $n saintarea_quest_main v0 = 32
+        nod
+        mpechoat $n $I 說 '可是連身為黃金聖鬥士的我'
+        mpechoat $n $I 說 '也很難每次都打出絕對零度的凍氣'
+        mpechoat $n $I 說 '頂多是跟宇宙背景溫度一樣而已'
+        mpechoat $n $I 說 '對了, 所謂宇宙背景溫度是多少K呢?'
+endif
+"""
+[[mobiles.9326.programs]]
+trigger = "talk_prog"
+argument = "3"
+script = """
+if is_qmark($n) == saintarea_quest_main 100032
+        mpmod_qmark $n saintarea_quest_main v0 = 33
+        clap
+        mpechoat $n $I很興奮的說:沒想到你連這個都知道, 實在不簡單.
+        mpechoat $n $I說 '哪, 這是我的信物, 你可以到最後的雙魚宮去了'
+        mpoload 9311
+        give aquarius $n
+endif
+"""
+
+[mobiles.9327]
+keywords = "pisces aphrodite"
+short_description = "[雙魚座]阿波羅迪(aphrodite)"
+long_description = "雙魚宮的主人阿波羅迪(Pisces Aphrodite)正細心地栽種他的玫瑰.\n"
+description = """
+望著他的面龐, 你很難相信他是個不折不扣的男人. 一頭金色的長髮
+加上潔白的肌膚, 讓人不禁懷疑起他的身分. 阿波羅迪有著栽種玫瑰
+的嗜好, 他的殺招也由玫瑰衍生而來. 可說是集力量和美麗於一身的
+聖鬥士.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 500
+level = 22
+mod_hitplus = 300
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9327.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100033
+        mpmod_qmark $n saintarea_quest_main v0 = 34
+        smile $n
+        mpechoat $n $I說 '來到這裡啦, 呵呵...'
+        mpechoat $n $I說 '聽我唱一首歌吧'
+        mpadd_qmark self saintarea_psong 10 0 0 0 1 0
+endif
+if is_qmark($n) == saintarea_pisces_delay
+        mpechoat $n 沒有禮貌的傢伙, 不要讓我看到你!
+        mpforce $n s
+endif
+"""
+[[mobiles.9327.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) == saintarea_psong 100003
+        smile $n
+        mpmod_qmark self saintarea_psong v0 + 1
+        mpecho $I說： '我唱的好不好聽?' (yes/no)
+endif
+if is_qmark($i) == saintarea_psong 100002
+        mpecho $I唱道：'賜下神聖之力, 給予心地純潔的人'
+        mpmod_qmark self saintarea_psong v0 + 1
+endif
+if is_qmark($i) == saintarea_psong 100001
+        mpecho $I唱道：'是光與熱的故鄉, 庇佑萬物的神祇啊'
+        mpmod_qmark self saintarea_psong v0 + 1
+endif
+if is_qmark($i) == saintarea_psong 100000
+        mpecho $I清了清喉嚨唱道： '遙遠的日出之地啊'
+        mpmod_qmark self saintarea_psong v0 + 1
+endif
+"""
+[[mobiles.9327.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) == saintarea_pisces_delay
+        break
+endif
+if is_qmark($n) == saintarea_quest_main 100034
+        if is_qmark($i) == saintarea_psong 100004
+                mpmod_qmark $n saintarea_quest_main v0 = 35
+                mpdel_qmark self saintarea_psong
+                smile
+                mpechoat $n $I很高興的對你說：終於有人了解我的歌聲了!
+                mpechoat $n $I說 '把卡謬的信物拿來吧, 你已經通過了雙魚宮'
+        endif
+endif
+"""
+[[mobiles.9327.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($n) == saintarea_quest_main 100034
+        mpadd_qmark $n saintarea_pisces_delay 60 0 0 0 1 1
+        mpechoat $n $I十分生氣, 把你趕出了雙魚宮.
+        mpforce $n s
+endif
+"""
+[[mobiles.9327.programs]]
+trigger = "give_prog"
+argument = "9311"
+script = """
+if is_qmark($n) == saintarea_quest_main 100035
+        mpjunk all.bottle
+        mpmod_qmark $n saintarea_quest_main v0 = 36
+        mpoload 9312
+        give pisces $n
+        mpechoat $n $I 說 '你已經完成了十二宮的考驗'
+        mpechoat $n $I 說 '現在你可以拿這個去面見教皇了'
+        wave $n
+else
+        ?
+        drop bottle
+endif
+"""
+[[mobiles.9327.programs]]
+trigger = "fight_prog"
+argument = "25"
+script = """
+mpecho $I自懷中取出了一朵鮮紅色的玫瑰射向你的心窩.
+cast 'faerie fog'
+cast whirlwind
+"""
+
+[mobiles.9328]
+keywords = "guard"
+short_description = "教皇廳守衛(guard)"
+long_description = "捍衛教皇廳的守衛(guard)正凝視著你.\n"
+description = """
+要能成為教皇身邊的守衛, 必須通過許多的考核, 是聖鬥士中除了
+黃金聖鬥士外最高的榮譽.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "WIMPY", "ARTIFACT"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SNEAK"]
+alignment = 1000
+level = 16
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+special_function = "spec_guard"
+[[mobiles.9328.programs]]
+trigger = "greet_prog"
+argument = "80"
+script = """
+if isgood($n)
+        smile $n
+        say 歡迎到聖域來!
+else
+        mpechoat $n $I惡狠狠的瞪著你.
+endif
+"""
+[[mobiles.9328.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if rand(50)
+        say 啊, 我真高興可以到這裡來擔任守衛的工作!
+        say 這是多麼榮譽的事啊!!
+        smile
+else
+        mpecho $I在你耳邊偷偷的說：最近教皇的心情不怎麼好哩.
+        mpecho $I說：老是在廳裡自言自語的.
+endif
+"""
+
+[mobiles.9329]
+keywords = "saint priest"
+short_description = "聖殿祭司(saint priest)"
+long_description = "長相和藹的聖殿祭司(saint priest)靜靜的站在聖壇前面.\n"
+description = """
+你看到的是一位白髮蒼蒼的矮小老者. 不過別小看他, 他就是負責
+祭祀雅典娜的首席祭司, 在聖域裡享有崇高的地位. 不過他並沒有
+指揮聖鬥士們的權力.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 24
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1500
+sex = "male"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+special_function = "spec_cast_adept"
+[[mobiles.9329.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if rand(70)
+        say 唉, 距離上次聖戰已有兩百九十年了.
+else
+        say 不知道海神波士頓(positon)
+        say 和冥王黑帝斯(hades)會不會捲土重來?
+        sigh
+endif
+"""
+[[mobiles.9329.programs]]
+trigger = "talk_prog"
+argument = "positon"
+script = """
+mpechoat $n $I向你說：喔, 海神是個想要淹沒大地的神祇.
+mpechoat $n $I說：不過自從被女神封印住之後, 他的野心也就無從施展了.
+mpechoat $n $I說：頂頭大大Asla正在考慮把他放出來哩, 希望他要慎重考慮啊!
+"""
+[[mobiles.9329.programs]]
+trigger = "talk_prog"
+argument = "hades"
+script = """
+mpechoat $n $I輕聲道：'黑帝斯想要把人間改造成地獄....
+mpechoat $n $I說：女神也知道這一點, 所以不惜以自己的神血封印黑帝斯.
+mpechoat $n $I說：但是封印的效力只有三百年. 所以和冥王的一戰是非打不可.
+sigh
+"""
+[[mobiles.9329.programs]]
+trigger = "give_prog"
+argument = "9313"
+script = """
+mpjunk stone
+if is_qmark($n) == saintarea_quest_main 100037
+        mpmod_qmark $n saintarea_quest_main v0 = 38
+        mpechoat $n $I 說 '我知道了. 女神降下過神諭, 要通過十二宮的人到神前去'
+        mpechoat $n $I 說 '我這就用女神傳下的召喚術送你一程吧. 你做好準備了嗎?'
+        mpechoat $n $I 說 '如果好了就和我說 ok 吧'
+else
+        mpechoat $n $I十分不解的說：你怎麼會有這個許可?
+        mpechoat $n $I 說 '年輕人, 凡事要腳踏實地啊! 不要老是投機取巧..'
+endif
+"""
+[[mobiles.9329.programs]]
+trigger = "talk_prog"
+argument = "ok"
+script = """
+if is_qmark($n) == saintarea_quest_main 100038
+        mpmod_qmark $n saintarea_quest_main v0 = 39
+        nod
+        mpechoat $n \u001B[1;35m$I緩緩舉起了法杖, 口中念著咒語：\u001B[m
+        mpechoat $n $I口中念著:偉大的雅典娜女神啊...請汝賜與神聖之力...
+        mpechoat $n $I口中念著:助予喚來天界之風降臨於此!
+        mpechoat $n \u001B[1;36m你腳下的魔法陣發出微弱光芒.....突然間一陣狂風將你捲上了天空...\u001B[m
+        mptransfer $n 9360
+endif
+"""
+[[mobiles.9329.programs]]
+trigger = "talk_prog"
+argument = "meet"
+script = """
+if is_qmark($n) == saintarea_perseus 100018
+  say 女神已經知道你要來了, 勇者啊...
+  say 就讓我替你服務吧....
+  mpecho $I舉起法杖, 地上的魔法陣發出強光..
+  mptransfer $n 9360
+else
+  break
+endif
+"""
+[[mobiles.9329.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+c 2 fireball
+"""
+
+[mobiles.9330]
+keywords = "victory nike"
+short_description = "勝利女神(nike)"
+long_description = "全身閃耀著黃金色光芒的勝利女神(nike)正肅穆的看著你.\n"
+description = """
+伴隨在雅典娜身邊的神祇, 能帶給雅典娜勝利的契機.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "PROTECT", "FLYING"]
+alignment = 1000
+level = 22
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1200
+sex = "female"
+race = "God"
+class = ["WARRIOR", "MAGE"]
+[[mobiles.9330.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_perseus 100018
+  mpmod_qmark $n saintarea_perseus v0 + 1
+  smile
+  mpcallout 1 say 我就是當年替女神送神盾給帕修斯的使者.
+  mpcallout 1 say 帕修斯完成了使命, 彰顯了女神的榮光.
+  mpcallout 2 say 替他完成最後任務的你, 也應獲得獎賞.
+  mpcallout 2 say 這面盾牌, 就當作是獎賞吧!
+  mpcallout 3 say 你的幫助使女神十分高興, 女神吩咐我把這個交給你.
+  mpcallout 3 mpoload 9359
+  mpcallout 4 give necklace $n
+  mpcallout 5 drop necklace
+  mpcallout 5 mpexp $n 2500
+  mpcallout 5 mpresp $n 1
+  mpcallout 5 wave $n
+else
+  break
+endif
+"""
+[[mobiles.9330.programs]]
+trigger = "talk_prog"
+argument = "return"
+script = """
+nod
+say 好的，我這就送你下去。
+mptransfer $n 9359
+"""
+[[mobiles.9330.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if rand(50)
+        say 光明並非正義, 黑暗並非邪惡. 是正是邪, 自在人心.
+else
+        say 百戰之師, 不敗之身, 日落之城, 非人之地.
+endif
+"""
+[[mobiles.9330.programs]]
+trigger = "fight_prog"
+argument = "80"
+script = """
+if rand(60)
+        if rand(70)
+                c 'lightning bolt'
+        else
+                c fireball
+        endif
+else
+        if rand(50)
+                c 'faerie fire'
+        else
+                c whirlwind
+        endif
+endif
+"""
+
+[mobiles.9331]
+keywords = "goddess athena"
+short_description = "女神雅典娜(Athena)"
+long_description = "儀態優美的雅典娜女神(Athena)凝望著你.\n"
+description = """
+她就是全體聖鬥士信仰的對象, 雅典娜. 當你看到她的時候, 你也
+不禁被她的氣勢所攝, 但是並沒有壓迫的感覺, 可見女神的小宇宙
+已經是收發自如了.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "PROTECT", "FLYING"]
+alignment = 1000
+level = 38
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1200
+sex = "female"
+race = "God"
+class = ["WARRIOR", "MAGE", "THIEF"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.9331.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == saintarea_quest_main 100039
+        smile $n
+        mpechoat $n 女神柔和的聲音在你耳中響起：你終於來了, 取得神認可的人.
+        mpechoat $n 你將可以在三種美德中選擇一種作為你的獎勵.
+        mpechoat $n 是力量(power), 勇氣(brave), 還是真實(reality)?
+endif
+"""
+[[mobiles.9331.programs]]
+trigger = "talk_prog"
+argument = "power"
+script = """
+if is_qmark($n) == saintarea_quest_main 100039
+        nod
+        mpechoat $n $I 把 小宇宙之戒(ring of cosmos) 給你.
+        mpechoaround $n $I 把 小宇宙之戒(ring of cosmos) 給了 $n.
+        mpoload 9328 $n 20 target
+        if class($n) < 5
+                mpexp $n 1250
+        endif
+        mpexp $n 2500
+        mpmod_qmark $n saintarea_quest_main v0 = 40
+        shout \u001B[1;33m$n 通過了聖域十二宮的考驗!\u001B[m
+        mplog $n got ring of cosmos
+endif
+"""
+[[mobiles.9331.programs]]
+trigger = "talk_prog"
+argument = "brave"
+script = """
+if is_qmark($n) == saintarea_quest_main 100039
+        nod
+        mpechoat $n $I 把 勝利女神像(victory statue) 給你.
+        mpechoaround $n $I 把 勝利女神像(victory statue) 給了 $n.
+        mpoload 9330 $n 15 target
+        if class($n) < 5
+                mpexp $n 1250
+        endif
+        mpexp $n 2500
+        mpmod_qmark $n saintarea_quest_main v0 = 40
+        shout \u001B[1;33m$n 通過了聖域十二宮的考驗!\u001B[m
+        mplog $n got victory statue
+endif
+"""
+[[mobiles.9331.programs]]
+trigger = "talk_prog"
+argument = "reality"
+script = """
+if is_qmark($n) == saintarea_quest_main 100039
+        nod
+        mpechoat $n $I 把 雅典娜神盾(athena shield) 給你.
+        mpechoaround $n $I 把 雅典娜神盾(athena shield) 給了 $n.
+        mpoload 9331 $n 30 target
+        if class($n) < 5
+                mpexp $n 1250
+        endif
+        mpexp $n 2500
+        mpmod_qmark $n saintarea_quest_main v0 = 40
+        shout \u001B[1;33m$n 通過了聖域十二宮的考驗!\u001B[m
+        mplog $n got athena shield
+endif
+"""
+[[mobiles.9331.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+mpdis_magic self blindness
+wear saintsword
+if rand(60)
+        perform emp
+else
+        flameslash
+endif
+"""
+
+[mobiles.9332]
+keywords = "ales"
+short_description = "教皇亞列斯(ales)"
+long_description = "統馭著全體聖鬥士的教皇亞列斯(Ales)正看著你的到來.\n"
+description = """
+所有聖鬥士的領袖, 也是雅典娜在地上的代言人. 擁有著無上的權力
+和地位, 不過他似乎有些奇怪, 不知道是否和近日聖域的力量波動有
+關連...
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 0
+level = 33
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 10000
+sex = "male"
+class = ["WARRIOR", "MAGE", "THIEF"]
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.9332.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if rand(30)
+        look $n
+endif
+if is_qmark($n) == saintarea_quest_main 100036
+        if rand(50)
+                smile $n
+                mpechoat $n $I和善的向你說：歡迎你, 通過十二宮的勇者.
+                mpechoat $n $I說:我以雅典娜之名授與你擁有神聖力量的印石.
+                mpechoat $n $I說:把阿波羅迪的認可交給我吧.
+        else
+                angry $n
+                say 誰允許你進入教皇廳!
+                mpkill $n
+        endif
+endif
+"""
+[[mobiles.9332.programs]]
+trigger = "hitprcnt_prog"
+argument = "70"
+script = """
+if is_qmark($n) == saintarea_quest_main 100036
+        mpgoto 5
+        mpgoto 9357
+        mpdis_magic self blindness
+        mpechoat $n $I 雙手抱頭, 在地上滾來滾去.
+        mpechoat $n $I 說「啊......呃......你是......？」
+        mpechoat $n $I 說「請原諒我的失態, 將阿波羅迪的信物給我。」
+        mpechoat $n $I 說「我將給你進入神殿的許可。」
+else
+        grin $n
+        mpecho $I 冷冷的說「敢來惹我, 去死吧！」
+        cast powerball
+endif
+"""
+[[mobiles.9332.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+wear saintsword
+if rand(20)
+        perform empslash
+else
+        flameslash
+endif
+"""
+[[mobiles.9332.programs]]
+trigger = "give_prog"
+argument = "9312"
+script = """
+if is_qmark($n) == saintarea_quest_main 100036
+        mpmod_qmark $n saintarea_quest_main v0 = 37
+        nod
+        mpoload 9313
+        mpjunk pisces
+        give stone $n
+endif
+"""
+
+[mobiles.9333]
+keywords = "troubadour"
+short_description = "吟遊詩人(troubadour)"
+long_description = "全身穿的破破爛爛的吟遊詩人(troubadour)站在這裡.\n"
+description = """
+他看起來像是走遍了很多地方, 看來也有一定的學識.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 600
+level = 18
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+class = ["MAGE"]
+special_function = "spec_cast_cleric"
+[[mobiles.9333.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if rand(60)
+        smile $n
+else
+        smile
+        say 好心的先生小姐們, 賞我點錢吧.
+        begger
+endif
+"""
+[[mobiles.9333.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != saintarea_sasong
+        if rand(30)
+                mpecho $I開始彈起了五弦琴：
+                mpecho $I唱道：「聖戰一去三百載, 烈士一去不復還」
+                mpecho $I唱道：「海皇冥王舉兵來, 女神降生抗災患」
+        endif
+        break
+endif
+if is_qmark($i) == saintarea_sasong 100003
+        mpecho $I唱道：「送君一曲終歸無, 蒼天茫茫夕色暮」
+        mpdel_qmark self saintarea_sasong
+endif
+if is_qmark($i) == saintarea_sasong 100002
+        mpecho $I唱道：「凡地非為神祇住, 虔心祈求能致務」
+        mpmod_qmark self saintarea_sasong v0 + 1
+endif
+if is_qmark($i) == saintarea_sasong 100001
+        mpecho $I唱道：「切記旅途危機伏, 步步為營性命顧」
+        mpmod_qmark self saintarea_sasong v0 + 1
+endif
+if is_qmark($i) == saintarea_sasong 100000
+        mpecho $I唱道：「君此當往女神處, 應尋十二宮之路」
+        mpmod_qmark self saintarea_sasong v0 + 1
+endif
+"""
+[[mobiles.9333.programs]]
+trigger = "bribe_prog"
+argument = "1000"
+script = """
+mpjunk coins
+        bow $n
+        say 多謝你一番好心.
+        mpechoat $n $I撥起了五弦琴...
+        mpadd_qmark self saintarea_sasong 10 0 0 0 1 0
+"""
+
+[mobiles.9334]
+keywords = "adventurer"
+short_description = "冒險者(adventurer)"
+long_description = "一位風塵僕僕的冒險者(adventurer)正坐在酒吧中喝酒.\n"
+description = """
+一個想要上十二宮的冒險者, 因為常常失敗, 所以一個人躲在酒吧裡
+喝悶酒, 順便對想要向十二宮挑戰的人建議一番.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "WIMPY"]
+affected_flags = ["SNEAK"]
+alignment = 300
+level = 18
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 100
+sex = "male"
+[[mobiles.9334.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if rand(60)
+        say 聽說十二宮的守護者個個身懷絕藝...要硬拼上去看來是不可能了
+        sigh
+else
+        say 通過十二宮考驗的人可以獲得女神所給的獎賞...
+endif
+"""
+
+[mobiles.9335]
+keywords = "owner"
+short_description = "酒吧主人(owner)"
+long_description = "黃金酒吧的主人(owner)正靜靜地站在吧台後面.\n"
+description = """
+黃金酒吧的創始人, 聽說他以前也是聖鬥士出身, 當年老的時候因為懷念
+聖域, 所以回到聖域來開設了這間酒吧, 服務來往的旅客.
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 600
+level = 29
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2000
+sex = "male"
+class = ["WARRIOR"]
+[[mobiles.9335.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+smile $n
+        say 要來一杯本店特製的黃金佳釀嗎?
+"""
+[mobiles.9335.shop]
+buy_types = ["POTION", "DRINK_CON"]
+profit_buy = 120
+profit_sell = 60
+open_hour = 0
+close_hour = 23
+
+[mobiles.9336]
+keywords = "leo limia"
+short_description = "獅子里米亞(limia)"
+long_description = "里米亞森林的王者獅子里米亞(limia)向你狠狠的撲過來.\n"
+description = """
+一隻凶殘的獅子, 不過他身上的毛皮可是稀世珍寶.
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "SANCTUARY"]
+alignment = -1000
+level = 22
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+class = ["WARRIOR"]
+[[mobiles.9336.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+mpecho 吼～～～～～
+assault $n
+"""
+[[mobiles.9336.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) == saintarea_quest_main 100011
+        mpdis_magic self blindness
+        mpecho $I 的獅皮被你狠狠的剝了下來.
+        mpoload 9342 $n 15 target
+        mpecho 一陣迅風把你送回了獅子宮.
+        mptransfer $n 9332
+endif
+"""
+
+[objects.9301]
+keywords = "aries pass horn"
+short_description = "白羊信物(Aries horn)"
+long_description = "一隻鑲有白羊符號的羊角(horn)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "bone"
+
+[objects.9302]
+keywords = "taurus pass horn"
+short_description = "金牛信物(taurus horn)"
+long_description = "一支泛著黃金色的牛角(horn)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "gold"
+
+[objects.9303]
+keywords = "gemini card pass"
+short_description = "雙子信物(gemini card)"
+long_description = "一面印有\"薩卡\"的名牌(card)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.9304]
+keywords = "cancer pass claw"
+short_description = "巨蟹信物(cancer claw)"
+long_description = "一把透著陰森氣息的巨螯(claw)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "bone"
+
+[objects.9305]
+keywords = "leo pass"
+short_description = "獅子信物(leo)"
+long_description = "一個畫著獅子圖像的徽章(leo)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "gold"
+
+[objects.9306]
+keywords = "virgo pass"
+short_description = "處女信物(virgo)"
+long_description = "一串加持過的佛珠(virgo)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "ebony"
+
+[objects.9307]
+keywords = "libra pass scale"
+short_description = "天秤信物(libra scale)"
+long_description = "一柄小小的圓秤(scale)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.9308]
+keywords = "scorpio pass needle"
+short_description = "天蠍信物(scorpio needle)"
+long_description = "一隻泛紅的細針(needle)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "steel"
+
+[objects.9309]
+keywords = "sagittarius pass arrow"
+short_description = "射手信物(sagittarius arrow)"
+long_description = "一隻小小的黃色弓箭(arrow)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "ebony"
+
+[objects.9310]
+keywords = "capricorn pass statue"
+short_description = "魔羯信物(capricorn statue)"
+long_description = "一個看起來十分奇怪的雕像(statue)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "stone"
+
+[objects.9311]
+keywords = "aquarius pass bottle "
+short_description = "水瓶信物(aquarius bottle)"
+long_description = "一個小型的水瓶, 裡面裝滿了水(bottle)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "glass"
+
+[objects.9312]
+keywords = "picture pisces pass"
+short_description = "雙魚信物(pisces picture)"
+long_description = "一個用玫瑰花織成的雙魚圖像(picture)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "herb"
+
+[objects.9313]
+keywords = "saint pass stone"
+short_description = "雅典娜之石(saint stone)"
+long_description = "一顆晶瑩剔透的寶石(stone)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "crystal"
+
+[objects.9314]
+keywords = "aries leggings"
+short_description = "牡羊脛甲(aries leggings)"
+long_description = "一雙閃耀著黃金色光芒的脛甲(leggings)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "2251225", "0"]
+weight = 8
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.9314.applies]]
+type = "WIS"
+value = 1
+[[objects.9314.applies]]
+type = "CON"
+value = 1
+
+[objects.9315]
+keywords = "taurus boots"
+short_description = "狂牛靴(taurus boots)"
+long_description = "一雙以堅韌的牛皮製成的靴子(boots)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "2251225", "0"]
+weight = 7
+cost = 0
+level_limited = 0
+material = "leather"
+[[objects.9315.applies]]
+type = "AC"
+value = -2
+[[objects.9315.applies]]
+type = "DAMROLL"
+value = 1
+
+[objects.9316]
+keywords = "helmet good"
+short_description = "善之盔(helmet good)"
+long_description = "一頂帶有微笑面具的頭盔(helmet)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "bronze"
+
+[objects.9317]
+keywords = "helmet gemini"
+short_description = "雙面幻盔(gemini helmet)"
+long_description = "一頂擁有雙子座真正力量的雙面幻盔(gemini helmet)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "ANTI_GOOD", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "2251225", "0"]
+weight = 7
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.9317.extra_descriptions]]
+keywords = "gemini mask"
+description = """
+正如你所看到的, 這頂頭盔的一面是哭臉. 一面是笑臉, 十分的詭異.
+"""
+[[objects.9317.applies]]
+type = "INT"
+value = 1
+[[objects.9317.applies]]
+type = "CON"
+value = 1
+[[objects.9317.applies]]
+type = "HIT"
+value = 15
+[[objects.9317.applies]]
+type = "NONE"
+value = -2
+[[objects.9317.applies]]
+type = "NONE"
+value = -2
+
+[objects.9318]
+keywords = "helmet evil"
+short_description = "惡之盔(helmet evil)"
+long_description = "一頂透著邪惡氣息的頭盔(helmet)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "bronze"
+
+[objects.9319]
+keywords = "cancer shell"
+short_description = "巨蟹蛻殼(cancer shell)"
+long_description = "一副從魔蟹身上除下來的蟹殼, 具有良好的防魔能力(shell cancer)."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "INVIS", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "2251225", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "bone"
+[[objects.9319.applies]]
+type = "SAVING_SPELL"
+value = -1
+[[objects.9319.applies]]
+type = "SAVING_FIRE"
+value = -2
+[[objects.9319.applies]]
+type = "SAVING_COLD"
+value = -2
+[[objects.9319.applies]]
+type = "NONE"
+value = -3
+
+[objects.9320]
+keywords = "leo gloves"
+short_description = "王者護手(leo gloves)"
+long_description = "一副散發出皇者氣息的手套, 是獅子座愛奧里亞的護手(gloves)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.9320.applies]]
+type = "HITROLL"
+value = 2
+[[objects.9320.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.9321]
+keywords = "virgo necklace"
+short_description = "千佛墬鍊(virgo necklace)"
+long_description = "一條經過處女座沙加以千佛力加持的水晶墬鍊(necklace)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "INVIS", "MAGIC", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "2251225", "0"]
+weight = 2
+cost = 0
+level_limited = 0
+material = "crystal"
+[[objects.9321.applies]]
+type = "INT"
+value = 1
+[[objects.9321.applies]]
+type = "WIS"
+value = 1
+[[objects.9321.applies]]
+type = "MANA"
+value = 15
+
+[objects.9322]
+keywords = "libra bracelet"
+short_description = "平等手鐲(libra bracelet)"
+long_description = "一個刻著天秤圖形的手鐲(bracelet)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "ANTI_GOOD", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "ebony"
+[[objects.9322.applies]]
+type = "STR"
+value = -1
+[[objects.9322.applies]]
+type = "INT"
+value = 1
+[[objects.9322.applies]]
+type = "WIS"
+value = -1
+[[objects.9322.applies]]
+type = "CON"
+value = 1
+
+[objects.9323]
+keywords = "arrow sagittarius"
+short_description = "射手之箭(arrow sagittarius)"
+long_description = "擁有神力的射手之箭(arrow)"
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["105", "0", "0", "0"]
+weight = 7
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.9323.extra_descriptions]]
+keywords = "arrow"
+description = """
+閃閃發光的銀色長箭, 是射手座的專用武器.
+"""
+
+[objects.9324]
+keywords = "bow sagittarius"
+short_description = "射手之弓(bow sagittarius)"
+long_description = "一把蘊含神力的射手之弓(bow)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["2251225", "0", "0", "14"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.9324.extra_descriptions]]
+keywords = "bow"
+description = """
+一把神奇的弓, 據說是從上次聖戰遺留下來的神器.
+"""
+[[objects.9324.applies]]
+type = "HITROLL"
+value = 5
+[[objects.9324.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.9325]
+keywords = "capricorn plate"
+short_description = "魔羯戰甲(capricorn plate)"
+long_description = "一件飾有魔羯符號的盔甲(plate)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "2251225", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.9325.extra_descriptions]]
+keywords = "plate"
+description = """
+傳說這是牧羊神潘恩的衣物.
+"""
+[[objects.9325.applies]]
+type = "CON"
+value = 1
+[[objects.9325.applies]]
+type = "DAMROLL"
+value = 1
+
+[objects.9326]
+keywords = "aquarius cape"
+short_description = "水濂披風(aquarius cape)"
+long_description = "卡謬的隨身衣物(cape), 兼有保暖和保護的功能"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "INVIS"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "2251225", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "ice"
+[[objects.9326.applies]]
+type = "MOVE"
+value = 15
+[[objects.9326.applies]]
+type = "SAVING_COLD"
+value = -3
+
+[objects.9327]
+keywords = "tail pisces"
+short_description = "雙魚繫帶(tail pisces)"
+long_description = "一條鑲有雙魚圖形的腰帶(tail)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "2251225", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "fiber"
+[[objects.9327.extra_descriptions]]
+keywords = "tail"
+description = """
+一條附有魔法力量的腰帶.
+"""
+[[objects.9327.applies]]
+type = "AC"
+value = -3
+
+[objects.9328]
+keywords = "ring cosmos"
+short_description = "小宇宙之戒(ring of cosmos)"
+long_description = "一只蘊含強大小宇宙能量的戒指(ring)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "INVIS", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "diamond"
+[[objects.9328.extra_descriptions]]
+keywords = "ring cosmos"
+description = """
+當你戴上它時, 你似乎感覺到你的力量提昇了不少.
+"""
+[[objects.9328.applies]]
+type = "MANA"
+value = 10
+[[objects.9328.applies]]
+type = "HIT"
+value = 30
+[[objects.9328.applies]]
+type = "WIS"
+value = 1
+[[objects.9328.applies]]
+type = "CON"
+value = 1
+
+[objects.9329]
+keywords = "arm hercules"
+short_description = "海克力斯之臂(arm hercules)"
+long_description = "一副擁有大力神海克力斯神力的護臂(arm hercules)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "2251225", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.9329.extra_descriptions]]
+keywords = "arm hercules"
+description = """
+海克力斯當年就是穿著這副護臂打遍天下, 完成十二項不可能的任務.
+"""
+[[objects.9329.applies]]
+type = "STR"
+value = 1
+[[objects.9329.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.9330]
+keywords = "victory statue"
+short_description = "勝利女神像(victory statue)"
+long_description = "手持桂冠, 象徵光榮戰勝的勝利女神像(victory statue)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "perfect matter"
+[[objects.9330.extra_descriptions]]
+keywords = "victory statue"
+description = """
+這是雅典娜身邊的勝利女神Nike以神力凝聚而成的雕像, 據說有帶
+給持有者勝利的力量.
+"""
+[[objects.9330.applies]]
+type = "STR"
+value = 2
+[[objects.9330.applies]]
+type = "INT"
+value = 2
+[[objects.9330.hidden_powers]]
+spell = "bless"
+percent = 70
+level = 25
+event = "HP_WEAR"
+
+[objects.9331]
+keywords = "athena shield"
+short_description = "雅典娜神盾(athena shield)"
+long_description = "一面靈光閃爍的雅典娜神盾(athena shield)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "2251225", "0"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "perfect matter"
+[[objects.9331.extra_descriptions]]
+keywords = "athena shield"
+description = """
+伴隨雅典娜出生的盾牌, 在天界中享有極高的稱譽. 上面附有雅典娜
+的神血可以抵抗外來的法術攻擊.
+"""
+[[objects.9331.applies]]
+type = "AC"
+value = -8
+[[objects.9331.applies]]
+type = "SAVING_SPELL"
+value = -8
+
+[objects.9332]
+keywords = "snow blade"
+short_description = "雪斬(snow blade)"
+long_description = "一把透出陣陣寒氣的長刀(blade)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2251225", "0", "0", "1"]
+weight = 13
+cost = 0
+level_limited = 0
+material = "ice"
+[[objects.9332.applies]]
+type = "CON"
+value = -1
+[[objects.9332.applies]]
+type = "SAVING_COLD"
+value = -3
+[[objects.9332.hidden_powers]]
+spell = "chill touch"
+percent = 40
+level = 15
+event = "HP_WEAPON"
+
+[objects.9333]
+keywords = "phoenix armor"
+short_description = "不死鳥炎軀(phoenix armor)"
+long_description = "一件以鳳凰羽毛織成的羽衣(phoenix armor)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "2251225", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "phoenix feather"
+souvenir = 1
+[[objects.9333.applies]]
+type = "SAVING_FIRE"
+value = -5
+[[objects.9333.applies]]
+type = "SAVING_COLD"
+value = 3
+[[objects.9333.applies]]
+type = "HIT"
+value = 20
+
+[objects.9334]
+keywords = "chains andromeda"
+short_description = "星雲鎖鏈(chains of Andromeda)"
+long_description = "仙女座聖衣最令人驚嘆的攻防一體的鎖鏈(chains)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "INVIS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["225", "0", "0", "4"]
+weight = 25
+cost = 1000
+level_limited = 0
+material = "iron"
+[[objects.9334.extra_descriptions]]
+keywords = "chains andromeda"
+description = """
+一副緊緊纏繞的鎖鏈.
+"""
+[[objects.9334.applies]]
+type = "AC"
+value = -6
+[[objects.9334.applies]]
+type = "HITROLL"
+value = 1
+
+[objects.9335]
+keywords = "claret"
+short_description = "紅酒(claret)"
+long_description = "一瓶頂級的十二年紅酒(claret)"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["8", "8", "1", "0"]
+weight = 10
+cost = 20
+level_limited = 0
+material = "liquid"
+
+[objects.9336]
+keywords = "golden drink"
+short_description = "黃金佳釀(golden drink)"
+long_description = "一瓶聖域特製的藥酒(drink)放在地上."
+action_description = ""
+item_type = "POTION"
+extra_flags = ["GLOW", "HUM"]
+wear_flags = ["TAKE"]
+values = ["25", "sanctuary", "armor", "cure critical"]
+weight = 2
+cost = 10000
+level_limited = 0
+level = 30
+material = "liquid"
+[[objects.9336.extra_descriptions]]
+keywords = "golden drink"
+description = """
+一瓶聖域特製的藥酒, 據說有強本固元的效果.
+"""
+
+[objects.9337]
+keywords = "pagasus wing"
+short_description = "飛馬之翼(pagasus wing)"
+long_description = "飛馬座聖衣的翅膀(wing)部分."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "INVIS"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "2251225", "0"]
+weight = 6
+cost = 0
+level_limited = 0
+material = "feather"
+[[objects.9337.extra_descriptions]]
+keywords = "pagasus wing"
+description = """
+飛馬的翅膀有讓人飛起來的能力.
+"""
+[[objects.9337.applies]]
+type = "DEX"
+value = 1
+[[objects.9337.hidden_powers]]
+spell = "fly"
+percent = 100
+level = 10
+event = "HP_WEAR"
+
+[objects.9338]
+keywords = "saint fire"
+short_description = "聖域之焰(saint fire)"
+long_description = "一盞象徵聖域熊熊燃燒的油燈(fire)"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "brass"
+[[objects.9338.applies]]
+type = "DAMROLL"
+value = 1
+[[objects.9338.applies]]
+type = "HITROLL"
+value = 1
+[[objects.9338.applies]]
+type = "HIT"
+value = 10
+
+[objects.9339]
+keywords = "scorpio needle dagger"
+short_description = "蝎尾針(scorpio needle)"
+long_description = "一把細長的匕首(dagger), 就像是蠍子的尾刺一樣."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["EVIL", "INVIS", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2251225", "0", "0", "11"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "bone"
+[[objects.9339.hidden_powers]]
+spell = "poison"
+percent = 25
+level = 15
+event = "HP_WEAPON"
+
+[objects.9340]
+keywords = "scorpio ring"
+short_description = "刺蝎戒指(scorpio ring)"
+long_description = "鑲有一顆紅寶石的戒指(ring)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "ruby"
+[[objects.9340.applies]]
+type = "HITROLL"
+value = 2
+
+[objects.9341]
+keywords = "medusa head"
+short_description = "美杜莎之首(medusa head)"
+long_description = "三魔女中的美杜莎的首級(head)"
+action_description = ""
+item_type = "WAND"
+extra_flags = ["HUM", "DARK", "INVIS", "MAGIC", "NODROP"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["18", "3", "3", "paralyze"]
+weight = 9
+cost = 0
+level_limited = 0
+material = "flesh"
+
+[objects.9342]
+keywords = "limia's skin"
+short_description = "里米亞的皮(limia's skin)"
+long_description = "里米亞的皮(limia's skin)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 6
+cost = 0
+level_limited = 0
+material = "wool"
+
+[objects.9343]
+keywords = "saintsword sword"
+short_description = "聖劍(saint sword)"
+long_description = "一把閃耀著神聖光芒的聖劍(saint sword)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "INVIS", "MAGIC", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2251225", "0", "0", "3"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "platinum"
+[[objects.9343.hidden_powers]]
+spell = "bless"
+percent = 25
+level = 20
+event = "HP_WEAR"
+
+[objects.9344]
+keywords = "saint fire sword"
+short_description = "聖火劍(saint fire sword)"
+long_description = "一把燃燒著火焰的劍(fire sword)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2251225", "0", "0", "3"]
+weight = 11
+cost = 0
+level_limited = 0
+material = "fire"
+[[objects.9344.hidden_powers]]
+spell = "burning hand"
+percent = 33
+level = 12
+event = "HP_WEAPON"
+
+[objects.9345]
+keywords = "mark"
+short_description = "時空印記(mark)"
+long_description = "兩面刻著雙子座的印記(mark)"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "wooden"
+
+[objects.9346]
+keywords = "draco shield"
+short_description = "龍星盾(draco shield)"
+long_description = "一面擁有高級防護能力的盾牌(shield)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "INVIS"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "2251225", "0"]
+weight = 8
+cost = 0
+level_limited = 0
+material = "dragon scale"
+[[objects.9346.applies]]
+type = "AC"
+value = -10
+
+[objects.9347]
+keywords = "fire hammer"
+short_description = "火錘(fire hammer)"
+long_description = "一把打鐵用的錘子(hammer)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2251225", "0", "0", "8"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.9347.applies]]
+type = "HITROLL"
+value = 1
+[[objects.9347.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.9348]
+keywords = "holy staff"
+short_description = "聖杖(holy staff)"
+long_description = "一把擁有治療能力的法杖(staff)"
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["20", "12", "12", "cure critical"]
+weight = 4
+cost = 0
+level_limited = 0
+material = "ebony"
+
+[objects.9349]
+keywords = "flame sword"
+short_description = "火炎劍(flame sword)"
+long_description = "一把燃燒著火焰的劍(flame sword)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2251225", "0", "0", "3"]
+weight = 12
+cost = 0
+level_limited = 0
+material = "fire"
+[[objects.9349.hidden_powers]]
+spell = "burning hand"
+percent = 33
+level = 12
+event = "HP_WEAPON"
+
+[objects.9350]
+keywords = "bousy 7steps"
+short_description = "七步醉(7steps bousy)"
+long_description = "一瓶隱隱透出濃郁香氣的酒, 酒瓶上寫著七步醉(7steps bousy)"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = ["DARK"]
+wear_flags = ["TAKE"]
+values = ["20", "20", "7", "0"]
+weight = 3
+cost = 900
+level_limited = 0
+material = "liquid"
+
+[objects.9351]
+keywords = "goddess bless"
+short_description = "女神的祝福(goddess bless)"
+long_description = "一瓶周圍圍繞著聖光(bless)的麥酒. "
+action_description = ""
+item_type = "POTION"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["36", "giant strength", "heal", "refresh"]
+weight = 8
+cost = 180000
+level_limited = 0
+level = 32
+material = "liquid"
+[[objects.9351.extra_descriptions]]
+keywords = "godness bless"
+description = """
+經過女神祝福(goddess bless)過的麥酒, 可以有效恢復身體狀況.
+"""
+
+[objects.9352]
+keywords = "shield"
+short_description = "帕修斯之盾(perseus shield)"
+long_description = "一面閃耀著光芒的盾牌(shield)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "2251225", "0"]
+weight = 12
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.9352.extra_descriptions]]
+keywords = "perseus shield"
+description = """
+帕修斯用來抵擋美杜莎致命視線的盾牌.
+"""
+[[objects.9352.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.9352.applies]]
+type = "SAVING_SPELL"
+value = -2
+
+[objects.9353]
+keywords = "flying boots"
+short_description = "飛天神鞋(flying boots)"
+long_description = "一雙帶著羽毛的鞋子(boots)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "feather"
+spell_buffs = ["AFF_FLYING"]
+[[objects.9353.applies]]
+type = "DEX"
+value = 1
+
+[objects.9354]
+keywords = "cap"
+short_description = "帕修斯之帽(perseus cap)"
+long_description = "一頂類似狗頭形狀的皮帽(cap)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "2251225", "0"]
+weight = 7
+cost = 0
+level_limited = 0
+material = "leather"
+[[objects.9354.hidden_powers]]
+spell = "invis"
+percent = 100
+level = 10
+event = "HP_WEAR"
+
+[objects.9355]
+keywords = "black box"
+short_description = "黑盒子(black box)"
+long_description = "一個漆黑卻隱隱透出魔力的盒子(box)."
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["DARK", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+
+[objects.9356]
+keywords = "box"
+short_description = "裝有美杜莎之首的盒子(box)"
+long_description = "一個裝有美杜莎之首的盒子(box)"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["DARK", "MAGIC"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "chaos matter"
+
+[objects.9357]
+keywords = "shield medusa"
+short_description = "蛇髮女之盾(medusa shield)"
+long_description = "一面鑲有蛇髮女頭顱, 充滿神祕力量的盾牌(shield)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "INVIS", "MAGIC", "ANTI_EVIL", "HOLY", "PERSONAL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "4501450", "0"]
+weight = 30
+cost = 10000
+level_limited = 0
+material = "perfect matter"
+[[objects.9357.applies]]
+type = "AC"
+value = -5
+[[objects.9357.applies]]
+type = "SAVING_SPELL"
+value = -3
+[[objects.9357.applies]]
+type = "DODGE"
+value = 4
+[[objects.9357.applies]]
+type = "STR"
+value = 2
+
+[objects.9358]
+keywords = "crystal necklace"
+short_description = "水晶項鍊(crystal necklace)"
+long_description = "一個晶瑩剔透的水晶項鍊(crystal necklace)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS", "HOLY"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "crystal"
+souvenir = 1
+[[objects.9358.applies]]
+type = "MANA"
+value = 30
+[[objects.9358.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.9358.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+
+[objects.9359]
+keywords = "crystal necklace"
+short_description = "水晶項鍊(crystal necklace)"
+long_description = "一個晶瑩剔透的水晶項鍊(crystal necklace)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "2251225", "0"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "crystal"
+[[objects.9359.applies]]
+type = "MANA"
+value = 30
+[[objects.9359.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.9359.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+
+[objects.9360]
+keywords = "phoenix armor"
+short_description = "不死鳥炎軀(phoenix armor)"
+long_description = "一件以鳳凰羽毛織成的羽衣(phoenix armor)"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "2251225", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "phoenix feather"
+[[objects.9360.applies]]
+type = "SAVING_FIRE"
+value = -1
+[[objects.9360.applies]]
+type = "HIT"
+value = 20
+
+[rooms.9301]
+name = "聖域入口"
+description = """
+當你一踏進這裡, 就感到有一股強大且溫和的力量包圍身旁.
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.9301.exits.north]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9302
+
+[rooms.9302]
+name = "時漏廣場"
+description = """
+踏入聖域, 你第一眼看到的是一座宏偉的火時鐘(clock), 除此之外
+是來來往往的人群. 這裡就是聖域最著名的時漏廣場.
+"""
+flags = []
+sector = "CITY"
+[[rooms.9302.extra_descriptions]]
+keywords = "clock"
+description = """
+聖域的著名地標, 上面刻著黃道十二宮的圖案. 據說只有在十分緊急
+的事情發生的時候, 教皇才會下令點燃火時鐘. 上面刻著聖鬥士應有
+的三樣美德：\u001B[1;31m勇氣(brave)\u001B[m, \u001B[1;33m力量(power)\u001B[m, \u001B[1;35m真實(reality)\u001B[m.
+"""
+[rooms.9302.exits.east]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9303
+[rooms.9302.exits.north]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9308
+[rooms.9302.exits.south]
+description = "聖域入口處\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9301
+[rooms.9302.exits.west]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9304
+
+[rooms.9303]
+name = "聖域大街"
+description = """
+聖域裡最繁華的地方, 自從三百年前的聖戰將聖域破壞殆盡之後,
+經過三個世紀的重建, 聖域又恢復了以往的繁盛.
+"""
+flags = []
+sector = "CITY"
+[rooms.9303.exits.north]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9307
+[rooms.9303.exits.west]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9302
+
+[rooms.9304]
+name = "聖域大街"
+description = """
+聖域裡最繁華的地方, 自從三百年前的聖戰將聖域破壞殆盡之後,
+經過三個世紀的重建, 聖域又恢復了以往的繁盛.
+"""
+flags = []
+sector = "CITY"
+[rooms.9304.exits.east]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9302
+[rooms.9304.exits.north]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9309
+[[rooms.9304.resets.mobiles]]
+vnum = 9301
+limit = 5
+
+[rooms.9305]
+name = "聖域警備處"
+description = """
+雖說聖域中有黃金聖鬥士嚴加把守, 不過也僅限於十二宮的範圍,
+其他的週邊地區就得由較低級的白銀及青銅聖鬥士負責維持地方治
+安, 而這裡就是統籌調度的警備處.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9305.exits.west]
+description = "聚會所\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9306
+[[rooms.9305.resets.mobiles]]
+vnum = 9308
+limit = 1
+[[rooms.9305.resets.mobiles.equipment]]
+vnum = 9334
+wear_loc = "WIELD"
+[[rooms.9305.resets.mobiles]]
+vnum = 9311
+limit = 1
+[[rooms.9305.resets.mobiles.equipment]]
+vnum = 9360
+wear_loc = "BODY"
+
+[rooms.9306]
+name = "聚會所"
+description = """
+捍衛女神的聖鬥士平常散居世界各地, 只有遇到聖域有狀況發生時
+才會齊聚到聖域來, 這個聚會所就是提供他們集會的地方.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9306.exits.east]
+description = "聖域警備處\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9305
+[rooms.9306.exits.west]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9307
+[[rooms.9306.resets.mobiles]]
+vnum = 9310
+limit = 1
+[[rooms.9306.resets.mobiles.equipment]]
+vnum = 9337
+wear_loc = "ABOUT"
+[[rooms.9306.resets.mobiles]]
+vnum = 9313
+limit = 1
+[[rooms.9306.resets.mobiles.equipment]]
+vnum = 9346
+wear_loc = "SHIELD"
+
+[rooms.9307]
+name = "聖域大街"
+description = """
+聖域裡最繁華的地方, 自從三百年前的聖戰將聖域破壞殆盡之後,
+經過三個世紀的重建, 聖域又恢復了以往的繁盛.
+"""
+flags = []
+sector = "CITY"
+[rooms.9307.exits.east]
+description = "聚會所\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9306
+[rooms.9307.exits.north]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9311
+[rooms.9307.exits.south]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9303
+[rooms.9307.exits.west]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9308
+
+[rooms.9308]
+name = "聖域大街"
+description = """
+聖域裡最繁華的地方, 自從三百年前的聖戰將聖域破壞殆盡之後,
+經過三個世紀的重建, 聖域又恢復了以往的繁盛.
+"""
+flags = []
+sector = "CITY"
+[rooms.9308.exits.east]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9307
+[rooms.9308.exits.north]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9312
+[rooms.9308.exits.south]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9302
+[rooms.9308.exits.west]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9309
+
+[rooms.9309]
+name = "聖域大街"
+description = """
+聖域裡最繁華的地方, 自從三百年前的聖戰將聖域破壞殆盡之後,
+經過三個世紀的重建, 聖域又恢復了以往的繁盛.
+"""
+flags = []
+sector = "CITY"
+[rooms.9309.exits.east]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9308
+[rooms.9309.exits.north]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9313
+[rooms.9309.exits.south]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9304
+[rooms.9309.exits.west]
+description = "雙仙殿\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9310
+[[rooms.9309.resets.groups]]
+leader_vnum = 9312
+follower_vnum = 1
+protect = true
+
+[rooms.9310]
+name = "雙仙殿"
+description = """
+武仙海克力斯, 英仙帕修斯. 這兩位曾經受到雅典娜庇佑而獲得勝利
+的英雄被聖域人視為除了雅典娜外的守護神而被祭祀於此. 雄偉的建
+築襯托出兩位英雄的英武蓋世.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9310.exits.east]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9309
+[[rooms.9310.resets.mobiles]]
+vnum = 9309
+limit = 1
+[[rooms.9310.resets.mobiles.equipment]]
+vnum = 9329
+wear_loc = "ARMS"
+[[rooms.9310.resets.mobiles.equipment]]
+vnum = 9344
+wear_loc = "WIELD"
+[[rooms.9310.resets.mobiles]]
+vnum = 9312
+limit = 1
+[[rooms.9310.resets.mobiles.equipment]]
+vnum = 9341
+wear_loc = "HOLD"
+[[rooms.9310.resets.mobiles.equipment]]
+vnum = 9344
+wear_loc = "WIELD"
+[[rooms.9310.resets.mobiles.equipment]]
+vnum = 9352
+wear_loc = "SHIELD"
+[[rooms.9310.resets.mobiles.equipment]]
+vnum = 9353
+wear_loc = "FEET"
+[[rooms.9310.resets.mobiles.equipment]]
+vnum = 9354
+wear_loc = "HEAD"
+
+[rooms.9311]
+name = "雅典娜市集"
+description = """
+以守護聖域的雅典娜為名的繁華市街, 平日遊人如織, 是整個聖域最
+熱鬧的地方.
+"""
+flags = []
+sector = "CITY"
+[rooms.9311.exits.north]
+description = "十二宮入口\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9316
+[rooms.9311.exits.south]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9307
+[rooms.9311.exits.west]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9312
+
+[rooms.9312]
+name = "雅典娜市集"
+description = """
+以守護聖域的雅典娜為名的繁華市街, 平日遊人如織, 是整個聖域最
+熱鬧的地方.
+"""
+flags = []
+sector = "CITY"
+[rooms.9312.exits.east]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9311
+[rooms.9312.exits.north]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9315
+[rooms.9312.exits.south]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9308
+[rooms.9312.exits.west]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9313
+[[rooms.9312.resets.mobiles]]
+vnum = 9301
+limit = 5
+
+[rooms.9313]
+name = "雅典娜市集"
+description = """
+以守護聖域的雅典娜為名的繁華市街, 平日遊人如織, 是整個聖域最
+熱鬧的地方.
+"""
+flags = []
+sector = "CITY"
+[rooms.9313.exits.east]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9312
+[rooms.9313.exits.north]
+description = "神匠屋\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9314
+[rooms.9313.exits.south]
+description = "聖域大街\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9309
+
+[rooms.9314]
+name = "神匠屋"
+description = """
+被人譽為神匠的伊利亞德住所, 從四邊牆所懸掛的刀劍可了解他打造
+武器防具的技巧舉世無雙. 不過在他的鑄鐵生涯中出現了一個遺憾,
+連他自己都很不願意提起.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9314.exits.east]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9315
+[rooms.9314.exits.south]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9313
+[[rooms.9314.resets.mobiles]]
+vnum = 9302
+limit = 1
+[[rooms.9314.resets.mobiles.equipment]]
+vnum = 9347
+wear_loc = "WIELD"
+
+[rooms.9315]
+name = "雅典娜市集"
+description = """
+以守護聖域的雅典娜為名的繁華市街, 平日遊人如織, 是整個聖域最
+熱鬧的地方.
+"""
+flags = []
+sector = "CITY"
+[rooms.9315.exits.south]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9312
+[rooms.9315.exits.west]
+description = "神匠屋\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9314
+
+[rooms.9316]
+name = "十二宮入口"
+description = """
+走上這裡, 整個聖域已經拋在後邊, 只有火時鐘還依稀可辨. 再往
+前走, 就正式進入黃金十二宮的範圍.
+"""
+flags = ["NO_MOB"]
+sector = "CITY"
+[rooms.9316.exits.east]
+description = "往白羊宮的寬敞大道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9317
+[rooms.9316.exits.south]
+description = "雅典娜市集\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9311
+
+[rooms.9317]
+name = "往白羊宮的寬敞大道"
+description = """
+這裡也算是聖域一個遊覽的勝地, 所以道路也修築地十分寬敞, 南邊
+是十二宮範圍內唯一的一家酒吧, 提供來往遊人休憩的場所.
+"""
+flags = []
+sector = "CITY"
+[rooms.9317.exits.north]
+description = "白羊宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9319
+[rooms.9317.exits.south]
+description = "黃金酒吧\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9318
+[rooms.9317.exits.west]
+description = "十二宮入口\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9316
+[[rooms.9317.resets.groups]]
+leader_vnum = 9318
+follower_vnum = 1
+protect = true
+
+[rooms.9318]
+name = "黃金酒吧"
+description = """
+十二宮範圍內唯一的一家商店, 許多想要向十二宮挑戰的冒險者都會
+在這裡交換情報, 而這裡的黃金佳釀更是大受好評, 幾乎上十二宮的
+人都會隨身帶著幾瓶保持體力.
+"""
+flags = ["AUCTION", "SAVE"]
+sector = "INSIDE"
+[rooms.9318.exits.north]
+description = "往白羊宮的寬敞大道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9317
+[[rooms.9318.resets.mobiles]]
+vnum = 9333
+limit = 1
+[[rooms.9318.resets.mobiles]]
+vnum = 9334
+limit = 1
+[[rooms.9318.resets.mobiles]]
+vnum = 9335
+limit = 1
+[[rooms.9318.resets.mobiles.inventory]]
+vnum = 9336
+[[rooms.9318.resets.mobiles.inventory]]
+vnum = 9350
+[[rooms.9318.resets.mobiles.inventory]]
+vnum = 9351
+
+[rooms.9319]
+name = "白羊宮前"
+description = """
+十二宮的第一個屏障, 白羊宮. 樸實的建築使人心情開朗.
+"""
+flags = []
+sector = "CITY"
+[rooms.9319.exits.south]
+description = "往白羊宮的寬敞大道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9317
+[rooms.9319.exits.west]
+description = "白羊宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9320
+
+[rooms.9320]
+name = "白羊宮"
+description = """
+當你踏進白羊宮時, 一股強大但柔和的小宇宙向你席捲而來. 你不禁
+嚇了一跳, 原來黃金聖鬥士的力量如此驚人.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9320.exits.east]
+description = "白羊宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9319
+[rooms.9320.exits.north]
+description = "往金牛宮的寬敞大道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9321
+[[rooms.9320.resets.mobiles]]
+vnum = 9315
+limit = 1
+[[rooms.9320.resets.mobiles.equipment]]
+vnum = 9314
+wear_loc = "LEGS"
+
+[rooms.9321]
+name = "往金牛宮的寬敞大道"
+description = """
+稍微有點坡度的道路, 往前繼續走可以到達金牛宮.
+"""
+flags = []
+sector = "CITY"
+[rooms.9321.exits.south]
+description = "白羊宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9320
+[rooms.9321.exits.west]
+description = "金牛宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9322
+
+[rooms.9322]
+name = "金牛宮前"
+description = """
+站在金牛宮的外頭, 一股剛猛的氣勢向你席捲而來. 整個金牛宮也
+給人一種窒息的感覺.
+"""
+flags = []
+sector = "CITY"
+[rooms.9322.exits.east]
+description = "往金牛宮的寬敞大道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9321
+[rooms.9322.exits.west]
+description = "金牛宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9323
+
+[rooms.9323]
+name = "金牛宮"
+description = """
+進入宮內, 那種高壓的氣勢更為強大, 簡直要把你壓的透不過氣來.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9323.exits.east]
+description = "金牛宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9322
+[rooms.9323.exits.west]
+description = "往雙子宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9324
+[[rooms.9323.resets.mobiles]]
+vnum = 9316
+limit = 1
+[[rooms.9323.resets.mobiles.equipment]]
+vnum = 9315
+wear_loc = "FEET"
+
+[rooms.9324]
+name = "往雙子宮的石板路"
+description = """
+連闖兩關後, 你踏上往雙子宮的石板路. 沿途清風徐徐, 令人感到
+十分舒暢.
+"""
+flags = []
+sector = "CITY"
+[rooms.9324.exits.east]
+description = "金牛宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9323
+[rooms.9324.exits.north]
+description = "雙子宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9325
+
+[rooms.9325]
+name = "雙子宮前"
+description = """
+雙子宮是十二宮中一個十分奇特的建築, 它具有兩個相連的屋頂,
+蘊涵著雙子"兩命一體"的精神.
+"""
+flags = []
+sector = "CITY"
+[rooms.9325.exits.east]
+description = "雙子宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9326
+[rooms.9325.exits.south]
+description = "往雙子宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9324
+
+[rooms.9326]
+name = "雙子宮"
+description = """
+雙子宮內掛滿了來自世界各地的雙胞胎照片, 不過最引人注目的是
+位在中央的那座雙子雕像(statue).
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.9326.extra_descriptions]]
+keywords = "statue"
+description = """
+這是雙子座的雕像, 是卡斯托和波拉克斯這對臠生兄弟死生同命的
+精神象徵.
+"""
+[rooms.9326.exits.east]
+description = "往巨蟹宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9327
+[rooms.9326.exits.west]
+description = "雙子宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9325
+[[rooms.9326.resets.mobiles]]
+vnum = 9317
+limit = 1
+[[rooms.9326.resets.mobiles.equipment]]
+vnum = 9316
+wear_loc = "HEAD"
+[[rooms.9326.resets.mobiles.equipment]]
+vnum = 9344
+wear_loc = "WIELD"
+[[rooms.9326.resets.mobiles]]
+vnum = 9318
+limit = 1
+[[rooms.9326.resets.mobiles.equipment]]
+vnum = 9318
+wear_loc = "HEAD"
+[[rooms.9326.resets.mobiles.equipment]]
+vnum = 9349
+wear_loc = "WIELD"
+
+[rooms.9327]
+name = "往巨蟹宮的石板路"
+description = """
+走出雙子宮, 你快步走在石板路上. 前面的巨蟹宮正透出陣陣詭異
+的邪氣, 讓人渾身不自在.
+"""
+flags = []
+sector = "CITY"
+[rooms.9327.exits.east]
+description = "巨蟹宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9328
+[rooms.9327.exits.west]
+description = "雙子宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9326
+
+[rooms.9328]
+name = "巨蟹宮前"
+description = """
+站在巨蟹宮的前面, 一股陰森的鬼氣迎面撲來使人心驚膽跳. 令人
+重新評估是否要闖入這被稱為"積尸氣"的恐怖地方.
+"""
+flags = []
+sector = "CITY"
+[rooms.9328.exits.east]
+description = "巨蟹宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9329
+[rooms.9328.exits.west]
+description = "往巨蟹宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9327
+
+[rooms.9329]
+name = "巨蟹宮"
+description = """
+一進來, 你就為你身旁的景象感到噁心不已. 四壁上都懸掛著死者
+的面孔. 剎那間, 你好似聽到了死者來自黃泉的悲泣...
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9329.exits.east]
+description = "往獅子宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9330
+[rooms.9329.exits.west]
+description = "巨蟹宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9328
+[[rooms.9329.resets.mobiles]]
+vnum = 9319
+limit = 1
+[[rooms.9329.resets.mobiles.equipment]]
+vnum = 9319
+wear_loc = "BODY"
+
+[rooms.9330]
+name = "往獅子宮的石板路"
+description = """
+擺脫了巨蟹宮的陰霾, 燦爛的陽光又回到你身邊. 往前走就是王者
+之宮--獅子宮了.
+"""
+flags = []
+sector = "CITY"
+[rooms.9330.exits.east]
+description = "獅子宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9331
+[rooms.9330.exits.west]
+description = "巨蟹宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9329
+
+[rooms.9331]
+name = "獅子宮前"
+description = """
+走到獅子宮的前方, 便感到有一股王者的霸氣縈繞著獅子宮. 讓人
+不禁生出敬畏之感.
+"""
+flags = []
+sector = "CITY"
+[rooms.9331.exits.north]
+description = "獅子宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9332
+[rooms.9331.exits.west]
+description = "往獅子宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9330
+[[rooms.9331.resets.groups]]
+leader_vnum = 9330
+follower_vnum = 1
+protect = true
+
+[rooms.9332]
+name = "獅子宮"
+description = """
+宮內的擺設十分樸實無華, 不過卻隱約透出一種不可侵犯的氣息,
+難道這就是獅子座聖鬥士的特性?
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9332.exits.south]
+description = "獅子宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9331
+[rooms.9332.exits.west]
+description = "往處女宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9333
+[[rooms.9332.resets.mobiles]]
+vnum = 9320
+limit = 1
+[[rooms.9332.resets.mobiles.equipment]]
+vnum = 9320
+wear_loc = "HANDS"
+
+[rooms.9333]
+name = "往處女宮的石板路"
+description = """
+走到這裡已經是半山腰了. 望著聖域入口依然熊熊燃燒著的火時鐘
+你也鼓起了勇氣繼續向前走.
+"""
+flags = []
+sector = "CITY"
+[rooms.9333.exits.east]
+description = "獅子宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9332
+[rooms.9333.exits.west]
+description = "處女宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9334
+
+[rooms.9334]
+name = "處女宮前"
+description = """
+你彷彿來到了一座佛寺! 整個處女宮給人的印象就像是一座莊嚴的佛寺.
+仔細一看, 這裡的建築和前面幾宮並沒有什麼差異, 原來聖鬥士的精神
+力可以將他附近化為他心中的意象.
+"""
+flags = []
+sector = "CITY"
+[rooms.9334.exits.east]
+description = "往處女宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9333
+[rooms.9334.exits.west]
+description = "處女宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9335
+
+[rooms.9335]
+name = "處女宮"
+description = """
+終於走進了處女宮. 只見守護者沙加站在中央, 散發出神聖的光芒, 讓
+你不禁以為佛陀正站在你的面前...
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9335.exits.east]
+description = "處女宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9334
+[rooms.9335.exits.west]
+description = "往天秤宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9336
+[[rooms.9335.resets.mobiles]]
+vnum = 9321
+limit = 1
+[[rooms.9335.resets.mobiles.equipment]]
+vnum = 9321
+wear_loc = "NECK_1"
+[[rooms.9335.resets.groups]]
+leader_vnum = 9333
+follower_vnum = 1
+protect = true
+
+[rooms.9336]
+name = "往天秤宮的石板路"
+description = """
+走出了處女宮, 整個十二宮的行程也完成了一半, 繼續努力吧, 成功
+就在不遠的彼端.
+"""
+flags = []
+sector = "CITY"
+[rooms.9336.exits.east]
+description = "處女宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9335
+[rooms.9336.exits.west]
+description = "天秤宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9337
+
+[rooms.9337]
+name = "天秤宮前"
+description = """
+天秤宮象徵一切的標準, 所以整棟天秤宮蓋的十分對稱.
+"""
+flags = []
+sector = "CITY"
+[rooms.9337.exits.east]
+description = "往天秤宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9336
+[rooms.9337.exits.west]
+description = "天秤宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9338
+
+[rooms.9338]
+name = "天秤宮"
+description = """
+走進天秤宮, 你好似走進了一個掛滿星辰的夜空, 四周的牆壁都被繪上
+星座的圖案.還有一個放在地上的四方神鼎(fourgod urn). 看來天秤宮
+的主人除了武功高強之外, 對於天文還滿有興趣的.
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.9338.extra_descriptions]]
+keywords = "fourgod urn"
+description = """
+一個滿是銅銹的大鼎, 上面刻著:
+\u001B[1;32m東方蒼龍(east dragon)\u001B[m
+\u001B[1;31m南方朱雀(south phonix)\u001B[m
+\u001B[1;37m西方白虎(west tiger)\u001B[m
+\u001B[1;30m北方玄武(north tursnake)\u001B[m
+"""
+[rooms.9338.exits.east]
+description = "天秤宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9337
+[rooms.9338.exits.north]
+description = "往天蠍宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9339
+[[rooms.9338.resets.mobiles]]
+vnum = 9322
+limit = 1
+[[rooms.9338.resets.mobiles.equipment]]
+vnum = 9322
+wear_loc = "WRIST_L"
+
+[rooms.9339]
+name = "往天蠍宮的石板路"
+description = """
+走出天秤宮, 你往山下望去, 宏偉的聖域城已經縮成一個小小的方塊,
+而你竟然還可以遙遙的望見遠方的海岸, 你的心胸更加的開闊了～
+"""
+flags = []
+sector = "CITY"
+[rooms.9339.exits.east]
+description = "天蠍宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9340
+[rooms.9339.exits.south]
+description = "天秤宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9338
+
+[rooms.9340]
+name = "天蠍宮前"
+description = """
+走近天蠍宮, 你觀察到它散發出一種奇異的氣息, 可是又說不出是哪
+一種的詭異...看來天蠍聖鬥士也不是個簡單的角色.
+"""
+flags = []
+sector = "CITY"
+[rooms.9340.exits.east]
+description = "天蠍宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9341
+[rooms.9340.exits.west]
+description = "往天蠍宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9339
+
+[rooms.9341]
+name = "天蠍宮"
+description = """
+你鼓起勇氣踏入了天蠍宮, 只見四周都掛滿了世界各地的名酒佳釀.
+嗯嗯～看到這裡你的心也跟著癢了起來, 要不要來一杯呢??
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9341.exits.east]
+description = "往射手宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9342
+[rooms.9341.exits.west]
+description = "天蠍宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9340
+[[rooms.9341.resets.mobiles]]
+vnum = 9323
+limit = 1
+[[rooms.9341.resets.mobiles.equipment]]
+vnum = 9339
+wear_loc = "WIELD"
+[[rooms.9341.resets.mobiles.equipment]]
+vnum = 9340
+wear_loc = "FINGER_L"
+
+[rooms.9342]
+name = "往射手宮的石板路"
+description = """
+歷盡艱辛的通過天蠍宮, 你如釋重負的走在往射手宮的石板路上.
+不管如何, 旅程已經完成了三分之二, 堅持下去吧!
+"""
+flags = []
+sector = "CITY"
+[rooms.9342.exits.east]
+description = "射手宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9343
+[rooms.9342.exits.west]
+description = "天蠍宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9341
+
+[rooms.9343]
+name = "射手宮前"
+description = """
+你緩緩步到射手宮的面前, 映入眼簾的射手宮屋頂上是一個擎弓仰
+天的人馬像, 使你的精神抖擻起來. 不錯, 我們也應該如此不畏艱
+難的走下去!
+"""
+flags = []
+sector = "CITY"
+[rooms.9343.exits.north]
+description = "射手宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9344
+[rooms.9343.exits.west]
+description = "往射手宮的石板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9342
+
+[rooms.9344]
+name = "射手宮"
+description = """
+有人說聖鬥士的性格會影響到他週遭的環境, 射手宮就是這樣的一個
+例子. 整間射手宮帶給人的感覺舒服極了, 就像是愛奧洛斯給人的感
+覺一樣.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9344.exits.east]
+description = "往摩羯宮的木板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9345
+[rooms.9344.exits.south]
+description = "射手宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9343
+[[rooms.9344.resets.mobiles]]
+vnum = 9324
+limit = 1
+[[rooms.9344.resets.mobiles.equipment]]
+vnum = 9323
+wear_loc = "ARROW"
+[[rooms.9344.resets.mobiles.equipment]]
+vnum = 9324
+wear_loc = "TWO_HAND"
+
+[rooms.9345]
+name = "往摩羯宮的木板路"
+description = """
+走出了射手宮, 往魔羯宮的道路慢慢的變窄了, 大概是因為平常很少
+人經過的原因, 連道路都改成是比較簡陋的木板路, 這個聖域實在是
+糟糕的很....
+"""
+flags = []
+sector = "CITY"
+[rooms.9345.exits.east]
+description = "摩羯宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9346
+[rooms.9345.exits.west]
+description = "射手宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9344
+
+[rooms.9346]
+name = "摩羯宮前"
+description = """
+道路到了魔羯宮之前突然寬闊起來, 延伸成一個廣場. 廣場上豎立著
+一面標示(sign).
+"""
+flags = []
+sector = "CITY"
+[[rooms.9346.extra_descriptions]]
+keywords = "sign"
+description = """
+本區正處於整修中, 因施工所造成的道路封閉請大家多與配合.
+
+                                        聖域營繕處  啟
+"""
+[rooms.9346.exits.north]
+description = "摩羯宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9347
+[rooms.9346.exits.west]
+description = "往摩羯宮的木板路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9345
+
+[rooms.9347]
+name = "摩羯宮"
+description = """
+你發覺你好像闖入了一個奇異的地方, 這裡四處都是魔羯座的壁畫.
+不過魔羯本來就是個蠻奇異的星座, 所以也不用太過於在意, 你該
+煩惱的是該如何通過魔羯宮吧.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9347.exits.south]
+description = "摩羯宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9346
+[rooms.9347.exits.west]
+description = "往水瓶宮的泥土路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9348
+[[rooms.9347.resets.mobiles]]
+vnum = 9325
+limit = 1
+[[rooms.9347.resets.mobiles.equipment]]
+vnum = 9325
+wear_loc = "BODY"
+
+[rooms.9348]
+name = "往水瓶宮的泥土路"
+description = """
+路越來越難走了, 四旁的雜草也開始湮沒道路, 不過為了要得到女
+神的認可, 再難走的路也要走下去.
+"""
+flags = []
+sector = "CITY"
+[rooms.9348.exits.east]
+description = "摩羯宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9347
+[rooms.9348.exits.west]
+description = "水瓶宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9349
+
+[rooms.9349]
+name = "水瓶宮前"
+description = """
+走了這麼久, 你突然感到一陣清涼, 原來你已經走到了水瓶宮的前面
+水瓶座一向以冷凍技術傲視群倫, 今日一試果然名不虛傳.
+"""
+flags = []
+sector = "CITY"
+[rooms.9349.exits.east]
+description = "往水瓶宮的泥土路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9348
+[rooms.9349.exits.north]
+description = "水瓶宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9350
+
+[rooms.9350]
+name = "水瓶宮"
+description = """
+走進水瓶宮, 那股凍氣發揮的更凌厲了, 幾乎都讓你凍的說不出話來.
+你忽然想到忘了多加一件衣服...哈..哈啾!
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9350.exits.north]
+description = "往雙魚宮的雜草路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9351
+[rooms.9350.exits.south]
+description = "水瓶宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9349
+[[rooms.9350.resets.mobiles]]
+vnum = 9326
+limit = 1
+[[rooms.9350.resets.mobiles.equipment]]
+vnum = 9326
+wear_loc = "ABOUT"
+
+[rooms.9351]
+name = "往雙魚宮的雜草路"
+description = """
+這裡已經是人跡罕至的地方了, 道路自然也難走起來. 不過目的地
+已經快到了, 你就堅持下去吧!
+"""
+flags = []
+sector = "CITY"
+[rooms.9351.exits.south]
+description = "水瓶宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9350
+[rooms.9351.exits.west]
+description = "雙魚宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9352
+
+[rooms.9352]
+name = "雙魚宮前"
+description = """
+終於到了最後的一宮, 雙魚宮. 據說雙魚宮中種有許多中稀奇的玫瑰,
+是雙魚聖鬥士阿波羅迪的寶貝.
+"""
+flags = []
+sector = "CITY"
+[rooms.9352.exits.east]
+description = "往雙魚宮的雜草路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9351
+[rooms.9352.exits.north]
+description = "雙魚宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9353
+
+[rooms.9353]
+name = "雙魚宮"
+description = """
+走進雙魚宮就看到滿地的玫瑰花! 讓你的心情一下好轉過來, 不過記得
+玫瑰也是阿波羅迪用來對付敵人的工具, 所以小心點吧.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9353.exits.south]
+description = "雙魚宮前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9352
+[rooms.9353.exits.west]
+description = "通往教皇廳的道路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9354
+[[rooms.9353.resets.mobiles]]
+vnum = 9327
+limit = 1
+[[rooms.9353.resets.mobiles.equipment]]
+vnum = 9327
+wear_loc = "WAIST"
+
+[rooms.9354]
+name = "通往教皇廳的道路"
+description = """
+出了雙魚宮, 就是往教皇廳的路了, 四周種滿了阿波羅迪最鍾愛的
+皇家玫瑰.
+"""
+flags = []
+sector = "CITY"
+[rooms.9354.exits.east]
+description = "雙魚宮\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9353
+[rooms.9354.exits.up]
+description = "凌天之階\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9355
+
+[rooms.9355]
+name = "凌天之階"
+description = """
+陡峭的一千階階梯, 讓你感到手腳發軟, 還是認命的爬吧.
+"""
+flags = []
+sector = "CITY"
+[rooms.9355.exits.down]
+description = "通往教皇廳的道路\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9354
+[rooms.9355.exits.up]
+description = "教皇廳前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9356
+
+[rooms.9356]
+name = "教皇廳前"
+description = """
+通過了十二宮的考驗, 你終於可以站在聖域的最高點望著整個聖域城.
+前面就是教皇的房間了, 如果你想要通過聖鬥士的考驗的話, 就趕快
+過去吧!
+"""
+flags = []
+sector = "CITY"
+[rooms.9356.exits.down]
+description = "凌天之階\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9355
+[rooms.9356.exits.north]
+description = "教皇廳\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9357
+[[rooms.9356.resets.mobiles]]
+vnum = 9328
+limit = 1
+[[rooms.9356.resets.mobiles.equipment]]
+vnum = 9344
+wear_loc = "WIELD"
+
+[rooms.9357]
+name = "教皇廳"
+description = """
+教皇的房間, 是聖域最高的行政中心, 也是教皇生活起居所在的地方.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9357.exits.north]
+description = "通往聖殿的長廊\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9358
+[rooms.9357.exits.south]
+description = "教皇廳前\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9356
+[[rooms.9357.resets.mobiles]]
+vnum = 9332
+limit = 1
+[[rooms.9357.resets.mobiles.equipment]]
+vnum = 9343
+wear_loc = "WIELD"
+
+[rooms.9358]
+name = "通往聖殿的長廊"
+description = """
+一條長長的走道, 通往祭祀雅典娜的聖殿. 走道的兩旁有全天八十八
+星座的壁畫, 十分壯觀.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9358.exits.north]
+description = "雅典娜聖殿\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9359
+[rooms.9358.exits.south]
+description = "教皇廳\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9357
+
+[rooms.9359]
+name = "雅典娜聖殿"
+description = """
+這裡是聖域最神聖的地方, 除了一年一度的雅典娜慶典之外, 一般
+的時候是不開放的, 這裡除了供奉著雅典娜女神的神像外, 還保存著幾
+次聖戰的遺物.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9359.exits.south]
+description = "通往聖殿的長廊\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9358
+[[rooms.9359.resets.mobiles]]
+vnum = 9329
+limit = 1
+[[rooms.9359.resets.mobiles.equipment]]
+vnum = 9348
+wear_loc = "HOLD"
+
+[rooms.9360]
+name = "雅典娜神廟"
+description = """
+雅典娜女神在天界的住處, 不是凡人所可以進入的. 只有被女神所認可
+的人才被獲准謁見女神.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9360.exits.north]
+description = "雅典娜神廟\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9361
+
+[rooms.9361]
+name = "雅典娜神廟"
+description = """
+雅典娜女神在天界的住處, 不是凡人所可以進入的. 只有被女神所認可
+的人才被獲准謁見女神.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9361.exits.north]
+description = "雅典娜之殿\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9362
+[rooms.9361.exits.south]
+description = "雅典娜神廟\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9360
+
+[rooms.9362]
+name = "雅典娜之殿"
+description = """
+你進入了雅典娜女神的住處, 只見兩側並排著一整排的盔甲刀劍,
+但是在入口處卻豎立了一面象徵和平的神盾. 看來女神也並不是一
+味的好戰成性.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9362.exits.south]
+description = "雅典娜神廟\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9361
+[[rooms.9362.resets.mobiles]]
+vnum = 9330
+limit = 1
+[[rooms.9362.resets.mobiles.equipment]]
+vnum = 9343
+wear_loc = "WIELD"
+[[rooms.9362.resets.mobiles]]
+vnum = 9331
+limit = 1
+[[rooms.9362.resets.mobiles.equipment]]
+vnum = 9343
+wear_loc = "WIELD"
+
+[rooms.9363]
+name = "異次元"
+description = """
+被強大的力量扭曲之後所形成的時空裂縫.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9363.exits.down]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+[rooms.9363.exits.east]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+[rooms.9363.exits.north]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9365
+[rooms.9363.exits.south]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+[rooms.9363.exits.up]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+[rooms.9363.exits.west]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+
+[rooms.9364]
+name = "異次元"
+description = """
+被強大的力量扭曲之後所形成的時空裂縫.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9364.exits.down]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9365
+[rooms.9364.exits.east]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9365
+[rooms.9364.exits.north]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+[rooms.9364.exits.south]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+[rooms.9364.exits.up]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+[rooms.9364.exits.west]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+
+[rooms.9365]
+name = "異次元"
+description = """
+被強大的力量扭曲之後所形成的時空裂縫.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9365.exits.down]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9366
+[rooms.9365.exits.east]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+[rooms.9365.exits.north]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+[rooms.9365.exits.south]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9366
+[rooms.9365.exits.up]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+[rooms.9365.exits.west]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9365
+
+[rooms.9366]
+name = "異次元"
+description = """
+被強大的力量扭曲之後所形成的時空裂縫.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9366.exits.down]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+[rooms.9366.exits.east]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9364
+[rooms.9366.exits.north]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+[rooms.9366.exits.south]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9366
+[rooms.9366.exits.up]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9363
+[rooms.9366.exits.west]
+description = "異次元\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9365
+
+[rooms.9367]
+name = "畜生道"
+description = """
+六道輪迴的最底層, 這裡到處充斥著動物的嚎叫聲.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9367.exits.north]
+description = "畜牲道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9368
+
+[rooms.9368]
+name = "畜牲道"
+description = """
+六道輪迴的最底層, 這裡到處充斥著動物的嚎叫聲.
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[[rooms.9368.resets.mobiles]]
+vnum = 9303
+limit = 1
+
+[rooms.9369]
+name = "餓鬼道"
+description = """
+你來到了一個貧瘠的地方, 到處寸草不生. 原來這裡已是六道輪迴的餓鬼道.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9369.exits.east]
+description = "餓鬼道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9370
+
+[rooms.9370]
+name = "餓鬼道"
+description = """
+你來到了一個貧瘠的地方, 到處寸草不生. 原來這裡已是六道輪迴的餓鬼道.
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[[rooms.9370.resets.mobiles]]
+vnum = 9304
+limit = 1
+
+[rooms.9371]
+name = "地獄道"
+description = """
+熾熱的火燄環繞在你的身旁, 四周都是惡行惡狀的惡鬼.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9371.exits.up]
+description = "地獄道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9372
+
+[rooms.9372]
+name = "地獄道"
+description = """
+熾熱的火燄環繞在你的身旁, 四周都是惡行惡狀的惡鬼.
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[[rooms.9372.resets.mobiles]]
+vnum = 9305
+limit = 1
+
+[rooms.9373]
+name = "人道"
+description = """
+到了這裡, 你總算可以鬆了一口氣. 這裡是人界, 六道輪迴中比重最
+大的一個部份, 你的心情也稍微的開朗起來.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9373.exits.south]
+description = "人道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9374
+
+[rooms.9374]
+name = "人道"
+description = """
+到了這裡, 你總算可以鬆了一口氣. 這裡是人界, 六道輪迴中比重最
+大的一個部份, 你的心情也稍微的開朗起來.
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[[rooms.9374.resets.mobiles]]
+vnum = 9306
+limit = 1
+
+[rooms.9375]
+name = "阿修羅道"
+description = """
+你到了一個詭異的地方, 周圍不斷的有光影環繞. 還不時傳來令人
+毛骨悚然的鬼哭聲.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9375.exits.down]
+description = "阿修羅道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9376
+
+[rooms.9376]
+name = "阿修羅道"
+description = """
+你到了一個詭異的地方, 周圍不斷的有光影環繞. 還不時傳來令人
+毛骨悚然的鬼哭聲.
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[[rooms.9376.resets.mobiles]]
+vnum = 9307
+limit = 1
+
+[rooms.9377]
+name = "天道"
+description = """
+你終於到了六道輪迴的最頂層, 天道. 諸天神佛圍繞在你的身旁,
+讓你的心靈感到一片清明.
+"""
+flags = []
+sector = "INSIDE"
+[rooms.9377.exits.north]
+description = "天道\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9378
+
+[rooms.9378]
+name = "天道"
+description = """
+你終於到了六道輪迴的最頂層, 天道. 諸天神佛圍繞在你的身旁,
+讓你的心靈感到一片清明.
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[[rooms.9378.resets.mobiles]]
+vnum = 9314
+limit = 1
+
+[rooms.9379]
+name = "里米亞森林"
+description = """
+一片陰暗的森林, 據說在森林的深處棲息著兇猛的獅子---里米亞.
+"""
+flags = []
+sector = "FOREST"
+[rooms.9379.exits.east]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9380
+[rooms.9379.exits.north]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9380
+[rooms.9379.exits.south]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9381
+[rooms.9379.exits.west]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9379
+
+[rooms.9380]
+name = "里米亞森林"
+description = """
+一片陰暗的森林, 據說在森林的深處棲息著兇猛的獅子---里米亞.
+"""
+flags = []
+sector = "FOREST"
+[rooms.9380.exits.east]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9382
+[rooms.9380.exits.north]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9379
+[rooms.9380.exits.south]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9381
+[rooms.9380.exits.west]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9383
+
+[rooms.9381]
+name = "里米亞森林"
+description = """
+一片陰暗的森林, 據說在森林的深處棲息著兇猛的獅子---里米亞.
+"""
+flags = []
+sector = "FOREST"
+[rooms.9381.exits.east]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9380
+[rooms.9381.exits.north]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9379
+[rooms.9381.exits.south]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9382
+[rooms.9381.exits.west]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9382
+
+[rooms.9382]
+name = "里米亞森林"
+description = """
+一片陰暗的森林, 據說在森林的深處棲息著兇猛的獅子---里米亞.
+"""
+flags = []
+sector = "FOREST"
+[rooms.9382.exits.east]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9380
+[rooms.9382.exits.north]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9379
+[rooms.9382.exits.south]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9382
+[rooms.9382.exits.west]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9381
+
+[rooms.9383]
+name = "里米亞森林"
+description = """
+一片陰暗的森林, 據說在森林的深處棲息著兇猛的獅子---里米亞.
+"""
+flags = []
+sector = "FOREST"
+[rooms.9383.exits.east]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9382
+[rooms.9383.exits.north]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9380
+[rooms.9383.exits.south]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9382
+[rooms.9383.exits.west]
+description = "里米亞森林\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9384
+
+[rooms.9384]
+name = "里米亞森林"
+description = """
+你終於闖進了里米亞的巢穴, 不過, 里米亞會那麼簡單就讓進門的
+獵物跑走嗎? ...grin...
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[[rooms.9384.resets.mobiles]]
+vnum = 9336
+limit = 1
+
+[rooms.9390]
+name = "旅店中"
+description = """
+你正置身於一個朦朧幽暗的房間裡, 這裡的氣氛讓你感覺十分的不自在.
+你眼前站著一位神秘的吉普賽女巫. 她對你輕聲說道 '你想探索一個未知的新世界嗎?
+進入水晶球中, 去找尋你的新使命吧.'  你彷彿能從水晶球中看到一個小型的宇宙,
+它也似乎能夠把你包容在其中.
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.9390.exits.down]
+description = "神奇的水晶球中, 正散發著小宇宙的力量, 好像要把你吸進去一樣.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9391
+[rooms.9390.exits.west]
+description = "一片被濃霧包圍著的森林.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 1306
+
+[rooms.9391]
+name = "水晶球中"
+description = """
+你輕輕觸碰了水晶球一下, 瀰朦中, 你發現你已經置身在水晶球中了,
+四周都是浩瀚無盡的宇宙, 閃耀著點點星光, 你發現已經沒有回到旅店的出口了,
+只有一道神奇的銀河道路通往北方.
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.9391.exits.north]
+description = "通往聖域的銀河.\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 9301

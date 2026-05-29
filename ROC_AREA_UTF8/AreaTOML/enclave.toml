@@ -1,0 +1,3755 @@
+[area]
+name = "暗黑精靈領地"
+identity = "enclave"
+builders = "Ceran"
+translator = "Feena"
+modifier = "Feena"
+vnum_start = 21700
+vnum_end = 21799
+security = 1
+recall = 4580
+death = 401
+f_toggle = false
+
+[mobiles.21700]
+keywords = "drow patroller-npc"
+short_description = "暗黑精靈巡邏兵(drow patroller)"
+long_description = "一名深色皮膚的精靈(drow)因為你闖入這片領地而發出尖銳的叫聲！\n"
+description = """
+這名深色皮膚的精靈用盡全力守護著他族人們最新的領地，他不會允許任何低賤
+的種族在領地內自由活動，或是與廢墟內的貴族們親近。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -1000
+level = 37
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 25
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 10
+dodge = 5
+mod_pp = 0
+gold = 3000
+sex = "male"
+race = "drow"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM"]
+[[mobiles.21700.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.21700.applies]]
+type = "EXP"
+degree = 500
+[[mobiles.21700.applies]]
+type = "DODGE"
+degree = -250
+[[mobiles.21700.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.21700.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 燃燒吧！火燄！
+        cast 2 fireball $r
+        mpnowait
+else
+        if rand(50)
+                say 看招！
+                mpecho $I從懷中掏出酸液潑過來！
+                mpforcer here cast 'acid blast' $n 40
+                mpforcer here cast 'acid blast' $n 40
+        else
+                mpdis_magic $r fly
+                mptrip $r
+        endif
+endif
+"""
+[[mobiles.21700.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if resp($n) > 80
+        yell 危險人物$N入侵！危險人物$N入侵！全體注意！注意！
+        hunt $n
+endif
+"""
+
+[mobiles.21701]
+keywords = "drider"
+short_description = "蛛化精靈(drider)"
+long_description = "一隻有著人形軀體的肥大蜘蛛(spider)垂吊在你上方！\n"
+description = """
+這個生物有著令人厭惡的肥大蜘蛛外表，但卻有著精靈的模樣。那些奉獻自己的
+肉體給蜘蛛女王的暗黑精靈，得到的則是讓自己的身體變得更像蜘蛛。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "FLYING"]
+alignment = -950
+level = 43
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 25
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 10
+dodge = 10
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "drow"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_CHARM", "NO_POISON"]
+[[mobiles.21701.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.21701.applies]]
+type = "EXP"
+degree = 750
+[[mobiles.21701.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.21701.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.21701.applies]]
+type = "SAVING_ELEMENT"
+degree = -25
+[[mobiles.21701.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 不用多說！死吧！
+        cast 2 'acid blast' $r
+        mpnowait
+else
+        if rand(50)
+                say 入侵者，獻出你的靈魂吧！
+                cast soulsteal $r
+                mpnowait
+        else
+                mpecho 毒液噴了過來！
+                cast poison $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.21702]
+keywords = "spider daemon"
+short_description = "蜘蛛惡魔(spider daemon)"
+long_description = "一隻節肢生物(chitinous creature)狂暴地衝下通道！\n"
+description = """
+這隻帶有黏性的生物具有厚重的外殼，以及剃刀般鋒銳的爪子。扣除牠腳部末端
+恐怖的利爪與那幾乎和劍一樣又長又利的尖嘴之外，牠看起來很像蜘蛛。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "CURSE"]
+alignment = -1000
+level = 45
+mod_hitplus = 0
+mod_mana = 1
+mod_hitroll = 25
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "demon"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_CHARM", "NO_SLEEP", "NO_SEALMAGIC"]
+[[mobiles.21702.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.21702.applies]]
+type = "EXP"
+degree = 750
+[[mobiles.21702.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.21702.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.21702.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.21702.applies]]
+type = "APPLY_AMAGIC"
+degree = 40
+[[mobiles.21702.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.21702.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 1200
+[[mobiles.21702.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        mpecho $I快速揮舞著牠銳利得嚇人的爪子，簡直像是刀光連閃似的！
+        frenzy
+        mpnowait
+else
+        if rand(50)
+                say 惡魔咆哮！
+                cast 'shocking grasp' $r
+                mpnowait
+                cast 'shocking grasp' $r
+                mpnowait
+                cast 'shocking grasp' $r
+                mpnowait
+                cast 'shocking grasp' $r
+                mpnowait
+        else
+                cast blindness $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.21703]
+keywords = "beast demon"
+short_description = "正在成形的惡魔(forming demon)"
+long_description = "一頭野獸(beast)正試著要前往物質界。\n"
+description = """
+這個大惡魔正試著前往物質界，但是它所創造的空間裂隙仍然很不穩定，只能勉
+強維持它形影的存在而已。在黑暗精靈還沒將這恐怖的惡魔完整召喚出來之前，
+也許現在是個解決它的大好機會。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLAMING"]
+alignment = -1000
+level = 54
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 25
+dodge = 10
+mod_pp = 0
+gold = 20000
+sex = "neutral"
+race = "demon"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_LORE", "NO_CHARM", "NO_FAEFIRE", "ALY_SAN", "NO_SEALMAGIC", "SPELL_FURY"]
+[[mobiles.21703.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.21703.applies]]
+type = "EXP"
+degree = 3000
+[[mobiles.21703.applies]]
+type = "HITROLL"
+degree = 125
+[[mobiles.21703.applies]]
+type = "DAMROLL"
+degree = 125
+[[mobiles.21703.applies]]
+type = "SAVING_SPELL"
+degree = -70
+[[mobiles.21703.applies]]
+type = "DODGE"
+degree = -300
+[[mobiles.21703.applies]]
+type = "POWER_POTENTIAL"
+degree = 15
+[[mobiles.21703.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.21703.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.21703.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 喔喔喔喔～～走開！休想擋我的路！
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+        skilldrv heavyhit $n
+else
+        if rand(50)
+                say 可惡，你們一定要阻撓我嗎？！
+                cast lifesteal $r
+                mpnowait
+                cast lifesteal $r
+                mpnowait
+        else
+                say 惡魔力量解放30%！
+                perform 'demon tremor'
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.21704]
+keywords = "drow priestess"
+short_description = "暗黑精靈女祭司(drow priestess)"
+long_description = "一名狂怒的深色皮膚女子(woman)正口吐白沫！\n"
+description = """
+這名被指派到這片領地的高階女祭司並不想看到外地人來拜訪她，她整天忙著設
+法除掉像是羅剎鬼與眼魔等等像你這麼討厭的種族。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLYING", "FLAMING"]
+alignment = -1000
+level = 53
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 10
+dodge = 10
+mod_pp = 0
+gold = 15000
+sex = "female"
+race = "drow"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "REF_MAGIC", "ALY_SAN", "NO_TARDY", "NO_MUTE", "NO_SEALMAGIC", "NO_CRAZY", "SPELL_FURY"]
+[[mobiles.21704.applies]]
+type = "HIT"
+degree = 28000
+[[mobiles.21704.applies]]
+type = "EXP"
+degree = 12500
+[[mobiles.21704.applies]]
+type = "AC"
+degree = -500
+[[mobiles.21704.applies]]
+type = "SAVING_BREATH"
+degree = -40
+[[mobiles.21704.applies]]
+type = "SAVING_SPELL"
+degree = -40
+[[mobiles.21704.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.21704.applies]]
+type = "REDUCE_DAMAGE"
+degree = 120
+[[mobiles.21704.applies]]
+type = "REDUCE_MAGIC"
+degree = 30
+[[mobiles.21704.applies]]
+type = "APPLY_AMAGIC"
+degree = 35
+[[mobiles.21704.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        yell 偉大的蜘蛛女王，請您將這班愚蠢又低劣的可憐蟲徹底消滅吧！
+        yell 冰燄衝擊波！
+        mpecho 冰與火的能源波同時朝你轟了過來！
+        cast 'phlogistic verse'
+        mpnowait
+        cast 'agglomerate descant'
+        mpnowait
+else
+        if rand(50)
+                yell 共鳴吧！我與黑暗的力量！
+                yell 暗光惡靈之劍！
+                mpecho 你覺得$I身前似乎出現一把肉眼看不到的利劍！
+                cast lifesteal $r
+                mpnowait
+                cast soulsteal $r
+                mpnowait
+                cast 'energy drain' $r
+                mpnowait
+        else
+                yell 就憑你們嗎？不自量力的東西！
+                yell 閃蒼牙！
+                mpecho 巨大的重力毫無預警地打在你的身上！
+                mpforcer here modhmv pc 23.100 100 0
+        endif
+endif
+"""
+
+[mobiles.21705]
+keywords = "medusa"
+short_description = "蛇髮女妖(Medusa)"
+long_description = "一名有著活生生蛇髮的恐怖醜老太婆(hag)想對上你的視線。\n"
+description = """
+在這個醜老太婆周圍的石像似乎暗示你大事不妙了。她淡黃綠色的眼睛發出了強
+光，並揚起她頭上那群扭動個不停的蛇朝你咬了過來。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY", "CRITICAL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "SNEAK"]
+alignment = -880
+level = 53
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 10
+dodge = 10
+mod_pp = 0
+gold = 8000
+sex = "female"
+race = "demon"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_DM", "NO_CHARM", "NO_POISON", "ALY_DI", "ALY_DH", "NO_SEALMAGIC", "NO_PARA"]
+[[mobiles.21705.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.21705.applies]]
+type = "EXP"
+degree = 8000
+[[mobiles.21705.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.21705.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.21705.applies]]
+type = "SAVING_SPELL"
+degree = -120
+[[mobiles.21705.applies]]
+type = "DODGE"
+degree = -300
+[[mobiles.21705.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.21705.applies]]
+type = "APPLY_ADAMAGE"
+degree = 30
+[[mobiles.21705.applies]]
+type = "APPLY_AMAGIC"
+degree = 30
+[[mobiles.21705.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 300
+[[mobiles.21705.applies]]
+type = "APPLY_GMAGIC"
+degree = 300
+[[mobiles.21705.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 看著我的眼睛......對......就是這樣......
+        mpforcer here cast paralyze $r 40
+        mpnowait
+else
+        if rand(50)
+                say 勇猛至極的雷光啊，擊打在你們的身上啊！
+                cast 'fulgurant dance'
+                mpnowait
+        else
+                cast 'full heal'
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.21706]
+keywords = "drow warrior"
+short_description = "暗黑精靈戰士(drow warrior)"
+long_description = "一名暗黑精靈戰士(drow warrior)在通道上搜尋入侵者。\n"
+description = """
+從這名暗黑精靈走路的模樣來看，誰都能明白他在這個地方是很適合的。這片領
+地是錫拉這個地區中力量最強的一帶，他相信自己將因此而得到回報。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "WIMPY", "HUNT", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = -1000
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 25
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "drow"
+class = ["WARRIOR", "MAGE", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_POISON", "HALF_MAGIC", "NO_MUTE", "NO_SEALMAGIC", "NO_PARA"]
+[[mobiles.21706.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.21706.applies]]
+type = "EXP"
+degree = 2000
+[[mobiles.21706.applies]]
+type = "HITROLL"
+degree = 75
+[[mobiles.21706.applies]]
+type = "DAMROLL"
+degree = 75
+[[mobiles.21706.applies]]
+type = "DODGE"
+degree = -800
+[[mobiles.21706.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        earth
+        mpnowait
+        bashhead $r
+        mpnowait
+else
+        if rand(50)
+                disarm $r
+                mpnowait
+                storm
+                mpnowait
+        else
+                cast 'sun flash'
+                mpnowait
+                icecore
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.21707]
+keywords = "spider"
+short_description = "喀答作響的蜘蛛(clicking spider)"
+long_description = "一隻有馬那麼大的蜘蛛(spider)正發出喀答聲響朝你快速爬過來。\n"
+description = """
+這隻巨蜘蛛站起來差不多到你的頭那麼高，牠那毛茸茸的長腳支撐著牠那膨脹的
+球狀腹部。當牠接近時你可以聽到很清楚的咖答聲逐漸靠近......你瞭解到那個
+聲音是來自牠那岩石般堅硬的門牙。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "WIMPY", "HUNT", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -800
+level = 47
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "animal"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP"]
+[[mobiles.21707.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.21707.applies]]
+type = "EXP"
+degree = 750
+[[mobiles.21707.applies]]
+type = "HITROLL"
+degree = 35
+[[mobiles.21707.applies]]
+type = "DAMROLL"
+degree = 35
+[[mobiles.21707.applies]]
+type = "SAVING_SPELL"
+degree = -25
+[[mobiles.21707.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.21707.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.21707.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.21707.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        frenzy
+        mpnowait
+else
+        if rand(50)
+                skilldrv speedhit $r
+                skilldrv speedhit $r
+                skilldrv speedhit $r
+                skilldrv speedhit $r
+        else
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+        endif
+endif
+"""
+
+[mobiles.21708]
+keywords = "demon spider"
+short_description = "惡魔蜘蛛(demon spider)"
+long_description = "一隻龐大的人面蜘蛛(spider)正在這裡結網。\n"
+description = """
+在暗黑精靈的宗教崇拜中，比較駭人的一種是在他們最為虔敬的儀式中變化成蜘
+蛛。這名暗黑精靈很久之前就奉獻出他原本的類人肉體，換得他所崇拜的對象，
+蜘蛛。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -1000
+level = 53
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = 9000
+sex = "male"
+race = "demon"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_DM", "NO_CHARM", "NO_SLEEP", "EXPERT"]
+[[mobiles.21708.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.21708.applies]]
+type = "EXP"
+degree = 1200
+[[mobiles.21708.applies]]
+type = "HITROLL"
+degree = 60
+[[mobiles.21708.applies]]
+type = "DAMROLL"
+degree = 60
+[[mobiles.21708.applies]]
+type = "SAVING_BREATH"
+degree = -25
+[[mobiles.21708.applies]]
+type = "SAVING_ELEMENT"
+degree = -20
+[[mobiles.21708.applies]]
+type = "DODGE"
+degree = -250
+[[mobiles.21708.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.21708.applies]]
+type = "APPLY_ADAMAGE"
+degree = 35
+[[mobiles.21708.applies]]
+type = "APPLY_AMAGIC"
+degree = 35
+[[mobiles.21708.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 500
+[[mobiles.21708.applies]]
+type = "APPLY_GMAGIC"
+degree = 500
+[[mobiles.21708.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say Ya horosho stari malenky koshka!
+        cast 'angry fire storm' $r
+        mpnowait
+        cast 'angry fire storm' $r
+        mpnowait
+else
+        if rand(50)
+                say Du bist das hundchen!
+                cast 'polymorph other' $r
+                mpnowait
+                cast 'change sex' $r
+                mpnowait
+        else
+                say Naces pendejo, mueres pendejo!
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+                skilldrv heavyhit $r
+        endif
+endif
+"""
+
+[mobiles.21709]
+keywords = "drow anti anti-paladin"
+short_description = "暗黑精靈邪惡遊俠(dark-elven antipaladin)"
+long_description = "一名高貴的暗黑精靈(drow)以不屑的眼光鄙視著你。\n"
+description = """
+暗黑精靈的首席家族曾派遣一部份最優秀的人才到這裡開闢新的領地，這名邪惡
+遊俠象徵著暗黑精靈中最極端的典型，集憎惡、力量與黑暗於一身。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL", "HUNT", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 54
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 10
+dodge = 20
+mod_pp = 0
+gold = 10000
+sex = "male"
+race = "drow"
+class = ["WARRIOR", "MAGE", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_POISON", "NO_SLEEP", "HALF_MAGIC", "NO_MUTE", "NO_SEALMAGIC", "NO_PARA"]
+[[mobiles.21709.applies]]
+type = "HIT"
+degree = 15000
+[[mobiles.21709.applies]]
+type = "EXP"
+degree = 2000
+[[mobiles.21709.applies]]
+type = "AC"
+degree = -300
+[[mobiles.21709.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.21709.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.21709.applies]]
+type = "SAVING_SPELL"
+degree = -30
+[[mobiles.21709.applies]]
+type = "DODGE"
+degree = -150
+[[mobiles.21709.applies]]
+type = "POWER_POTENTIAL"
+degree = 20
+[[mobiles.21709.applies]]
+type = "REDUCE_DAMAGE"
+degree = 80
+[[mobiles.21709.applies]]
+type = "REDUCE_MAGIC"
+degree = 80
+[[mobiles.21709.applies]]
+type = "APPLY_ADAMAGE"
+degree = 40
+[[mobiles.21709.applies]]
+type = "APPLY_AMAGIC"
+degree = 40
+[[mobiles.21709.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 350
+[[mobiles.21709.applies]]
+type = "APPLY_GMAGIC"
+degree = 350
+[[mobiles.21709.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        say 為了暗黑精靈，為了首席家族的榮耀！
+        cast 'chill touch' $r
+        mpnowait
+        cast 'chill touch' $r
+        mpnowait
+        cast 'chill touch' $r
+        mpnowait
+else
+        if rand(50)
+                say 擊滅敵人！
+                cast 'gas breath'
+                mpnowait
+                cast 'energy drain' $r
+                mpnowait
+                cast 'energy drain' $r
+                mpnowait
+        else
+                say 暗黑精靈，榮光永存！
+                mpgoto self
+                bs $r
+                mpnowait
+                mpgoto self
+                bs $r
+                mpnowait
+        endif
+endif
+"""
+
+[mobiles.21710]
+keywords = "vampire dark-elf drow nosferatu prince"
+short_description = "諾斯費拉圖(Nosferatu)"
+long_description = "一名烏木色皮膚的精靈(drow)以火紅色的眼睛注視著你的靈魂！\n"
+description = """
+這名暗黑精靈曾經到過地獄深處，歸來後便脫胎換骨了。晉見蜘蛛女王使他成為
+更高等的存在，首席家族中在這一帶實力最強的暗黑精靈。在打敗羅剎族後，且
+眼魔族妥協並贊成的情況下，他命令那最後的黑暗精靈，擴建那蓋在原來廢墟之
+上的新領地。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MANASHIELD", "MYSTIC_MIRROR"]
+alignment = -1000
+level = 55
+mod_hitplus = 0
+mod_mana = 1
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = 10000
+sex = "neutral"
+race = "drow"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD", "SHOT_ARROW", "BLOODY"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_POISON", "NO_SLEEP", "HALF_MAGIC", "ALY_DI", "ALY_DH", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.21710.applies]]
+type = "HIT"
+degree = 40000
+[[mobiles.21710.applies]]
+type = "EXP"
+degree = 18000
+[[mobiles.21710.applies]]
+type = "AC"
+degree = -400
+[[mobiles.21710.applies]]
+type = "HITROLL"
+degree = 100
+[[mobiles.21710.applies]]
+type = "DAMROLL"
+degree = 100
+[[mobiles.21710.applies]]
+type = "SAVING_BREATH"
+degree = -35
+[[mobiles.21710.applies]]
+type = "SAVING_SPELL"
+degree = -20
+[[mobiles.21710.applies]]
+type = "SAVING_ELEMENT"
+degree = -30
+[[mobiles.21710.applies]]
+type = "DODGE"
+degree = -400
+[[mobiles.21710.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.21710.applies]]
+type = "REDUCE_DAMAGE"
+degree = 35
+[[mobiles.21710.applies]]
+type = "REDUCE_MAGIC"
+degree = 35
+[[mobiles.21710.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.21710.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.21710.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 500
+[[mobiles.21710.applies]]
+type = "APPLY_GMAGIC"
+degree = 500
+[[mobiles.21710.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+        yell 闇之十字星，抹消這群廢物的存在確率吧！
+        mpecho 喔，不愧是到地獄深處「留學」過的傢伙，連招式都這麼難懂......
+        mpecho 不對啊啊啊啊～～現在不是考慮這種事的時候啦！
+        cast 'hell southerncross'
+        mpnowait
+else
+        if rand(50)
+                yell 感覺到了嗎......這至高無上的力量！
+                mpecho 四周的氣氛忽然變得相當陰森......
+                invoke
+                mpnowait
+                mpforcer here modhmv pc 13.30 30 0
+                mpforcer here modhmv pc 23.30 30 0
+        else
+                yell 最後一擊！霸王雷牙燄斷劍！
+                mpecho $I身旁的雷光如同蛛網般交錯，接著他的腳邊冒出了熔岩般的烈焰！
+                mpecho 在其霸氣引導下，雷與火交融成劍的形狀，一擊劈下！
+                mpat 5 mpoload 70914 36
+                mpat 5 wear sword
+                fulgurant
+                mpnowait
+                perform empslash
+                mpnowait
+                flaming
+                mpnowait
+                mpat 5 remove sword
+                mpat 5 mpjunk sword
+        endif
+endif
+"""
+[[mobiles.21710.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+if race($n) != Drow
+or resp($n) < 70
+else
+        mpoload 21719 36
+endif
+if is_qmark($n) == enclave_quest 100005
+or is_qmark($n) == enclave_quest 100006
+        shout 愚蠢的$N！你的所作所為將會助長黑暗勢力！
+        shout 可恨的黑暗主宰，我絕對不會被你蠱惑的！
+        mpmod_qmark $n enclave_quest v0 = 6
+        mpoload 21724 1
+endif
+"""
+
+[mobiles.21711]
+keywords = "black drow predator"
+short_description = "暗黑精靈掠食者(drow predator)"
+long_description = "某個黑暗的物體(something)從陰影中衝了出來！\n"
+description = """
+他是個暗黑精靈，但卻極為扭曲與畸形，從幽冥中出現，與暗黑精靈們的貴族戰
+鬥，對生命極為渴求。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "TRACK", "REGENERACY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -1000
+level = 56
+mod_hitplus = 0
+mod_mana = 1
+mod_hitroll = 50
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 10
+mod_pp = 0
+gold = 100
+sex = "neutral"
+race = "drow"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_CHARM", "NO_POISON"]
+[[mobiles.21711.applies]]
+type = "HIT"
+degree = 150000
+[[mobiles.21711.applies]]
+type = "EXP"
+degree = 8000
+[[mobiles.21711.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.21711.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpat 5 mpdis_magic self blindness
+mpat 5 mpdis_magic self poison
+mpat 5 mpdis_magic self mute
+mpat 5 mpdis_magic self 'seal magic'
+mpat 5 mpdis_magic self paralyze
+if rand(20)
+        if is_qmark($n) != enclave_quest_shield
+                 say 禁斷奧義......
+                 cast 'finger of death' $n
+                 mpnowait
+        else
+                if is_qmark($n) > enclave_quest_shield 100001
+                        mpechoat $n $I對你使出了最極惡的法術，死亡之指！
+                        mpechoat $n 然而你身上的紫燄之盾代替你承受了這一擊，$I的法術被抵消了！
+                        mpechoaround $n $I對$N使出死亡之指，但是被抵消了！
+                        mpechoat $n 在此同時，你發現紫燄之盾的燄光似乎黯淡了些許......
+                        mpmod_qmark $n enclave_quest_shield v0 - 1
+                else
+                        if is_qmark($n) == enclave_quest_shield 100001
+                                mpechoat $n $I對你使出了最極惡的法術，死亡之指！
+                                mpechoat $n 然而你身上的紫燄之盾代替你承受了這一擊，$I的法術被抵消了！
+                                mpechoaround $n $I對$N使出死亡之指，但是被抵消了！
+                                mpechoat $n 忽然一聲清脆的響聲，你身上的紫燄之盾破碎了！
+                                mpechoaround $n $I身上的燄光消失了！
+                                mpdel_qmark $n enclave_quest_shield
+                        endif
+                endif
+        endif
+endif
+"""
+[[mobiles.21711.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpecho 在$I倒下去的同時，你忽然覺得這一帶怪怪的，可能有必要搜索一下。
+"""
+
+[mobiles.21712]
+keywords = "Mephia woman"
+short_description = "梅菲雅(Mephia)"
+long_description = "看起來有點鬼鬼祟祟的女性(woman)正躲在陰暗處。\n"
+description = """
+雖然說她也是暗黑精靈，但是她給人的感覺似乎與這個地方有點格格不入，不過
+一時間也說不上到底是哪裡不對勁，至於她為什麼會出現在這裡也是個問題，但
+是至少不是來玩的。她對你沒有敵意，不過聽說她是個很容易記恨的人，最好不
+要隨便惹她生氣，否則你可能得花個三五百萬才能讓她原諒你了。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "MANASHIELD"]
+alignment = 1000
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Drow"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_LORE", "NO_BLIND", "NO_CHARM", "NO_POISON", "ALY_INVIS", "NO_MUTE", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.21712.applies]]
+type = "HIT"
+degree = 15000
+[[mobiles.21712.applies]]
+type = "SAVING_BREATH"
+degree = -120
+[[mobiles.21712.applies]]
+type = "SAVING_SPELL"
+degree = -120
+[[mobiles.21712.applies]]
+type = "SAVING_ELEMENT"
+degree = -120
+[[mobiles.21712.applies]]
+type = "DODGE"
+degree = -900
+[[mobiles.21712.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.21712.applies]]
+type = "APPLY_AMAGIC"
+degree = 120
+[[mobiles.21712.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 1000
+[[mobiles.21712.applies]]
+type = "APPLY_GMAGIC"
+degree = 1000
+[[mobiles.21712.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpat 5 mpoload 21720 38
+mpat 5 mpoload 21721 38
+mpat 5 mpoload 21722 38
+mpat 5 mpoload 21723 38
+mpat 5 wear all
+"""
+[[mobiles.21712.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpat 5 mpdis_magic self blindness
+mpat 5 mpdis_magic self poison
+mpat 5 mpdis_magic self mute
+mpat 5 mpdis_magic self 'seal magic'
+mpat 5 mpdis_magic self paralyze
+if rand(25)
+        cast 2 apocalypse
+        mpnowait
+else
+        if rand(33)
+                cast 'wail of tempest'
+                mpnowait
+        else
+                if rand(50)
+                        mpecho $I吸收你的體力使出攻擊技！
+                        mpforcer here modhmv pc 23.100 100 0
+                else
+                        cast 'seal magic' $r
+                        mpnowait
+                        cast paralyze $r
+                        mpnowait
+                endif
+        endif
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) != enclave_quest
+        mpadd_qmark $n enclave_quest -1 0 0 0 0 1
+else
+        if is_qmark($n) & enclave_quest 300001
+                mpechoat $n 你發現$I似乎在瞪你......
+        else
+                if is_qmark($i) != enclave_talking
+                        if is_qmark($n) == enclave_quest 100003
+                                mpadd_qmark self enclave_talking 10 0 0 0 0 1
+                                mpechoat $n 你將找到的東西交給了$I。
+                                mpcallout 1 tell $n 嗯，這個很像是......慘了，狀況不太妙。
+                                mpcallout 2 tell $n 看樣子咱們得先做好心理準備，那小丫頭可能已經死了。
+                                mpcallout 3 tell $n 不過這還不能確定，從這東西上頭殘留的靈氣迴路痕跡判斷......
+                                mpcallout 4 tell $n 那小丫頭可能被拖到諾斯費拉圖那邊去了。
+                                mpcallout 5 tell $n 所以，宰掉那傢伙的重責大任就交給你了，我還有其他事得確認。
+                                mpcallout 6 tell $n 唉呀，別露出那種表情，傭金我會分你一半的啦。
+                                mpcallout 7 tell $n 順便還可以借你個好東西，只要有這玩意兒理論上保證你絕對打得倒他。
+                                mpcallout 8 mpechoat $n ......她說的那玩意兒是啥？
+                                mpcallout 8 mpmod_qmark $n enclave_quest v0 = 4
+                                mpcallout 8 mpdel_qmark self enclave_talking
+                        endif
+                else
+                        mpechoat $n 雖然你急著將你的新發現告訴$N，不過她正在忙，等會兒再來吧。
+                endif
+        endif
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self all
+mpat 5 cast 'detect hidden'
+mpat 5 cast 'detect invis'
+mpat 5 cast infravision
+mpmod_all_qmark $n enclave_quest v2 | 1
+mpat 21714 mpforcer here modrvt t0 = 120
+"""
+[[mobiles.21712.programs]]
+trigger = "bribe_prog"
+argument = "3000000"
+script = """
+mpjunk all.coins
+if is_qmark($n) & enclave_quest 300001
+        mpechoat $n 收下你的錢之後，$I揮了揮手要你離開。
+        mpechoat $n 不過她的表情似乎變得比較柔和了。
+        mpmod_qmark $n enclave_quest v2 r 1
+else
+        tell $n 你突然給我錢幹麼？有什麼企圖？
+        mpgold $n 3000000
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "give_prog"
+argument = "21724"
+script = """
+if is_qmark($i) != enclave_talking
+        if is_qmark($n) !& enclave_quest 300001
+                if is_qmark($n) == enclave_quest 100006
+                        mpadd_qmark self enclave_talking 10 0 0 0 0 1
+                        tell $n 人沒找到，卻找到了這個東西嗎？
+                        mpcallout 1 tell $n 算了，反正最麻煩的傢伙已經被你殺死，我要找人也方便得多。
+                        mpcallout 2 tell $n 照我們約好的，這是你的份，謝啦。
+                        mpcallout 2 mpcall magic_object $n
+                        mpcallout 2 mpdel_qmark self enclave_talking
+                else
+                        give $o $n
+                endif
+        else
+                drop $o
+        endif
+else
+        mpechoat $n 插嘴不好，不要插嘴。
+        give $o $n
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "defun_prog"
+argument = "magic_object"
+script = """
+mpmod_qmark $n enclave_quest v0 = 7
+if is_qmark($n) == max_skill_exp
+        mpmod_qmark $n max_skill_exp v0 + 2
+else
+        mpadd_qmark $n max_skill_exp -1 2 0 0 0 1
+endif
+mpechoat $n 你感到自身潛在的力量覺醒了！
+if rand(50)
+        mpoload 21725 $n 37 target
+else
+        mpoload 21726 $n 37 target
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) != enclave_talking
+        if is_qmark($n) !& enclave_quest 300001
+                if rand(50)
+                        tell $n 嗯......看起來你不是諾斯費拉圖的手下，很好。
+                        tell $n 我來這邊這麼多天了，難得碰到幾個探險者。
+                        tell $n 諾斯費拉圖那傢伙不曉得在這裡策劃什麼陰謀，要小心。
+                else                
+                        tell $n 這一帶的邪惡之氣有日趨增強的趨勢，真是麻煩。
+                        tell $n 在更深的地方一定有什麼奇怪的東西在。
+                        tell $n 這工作實在不好做啊，回去要跟雇主溝通才行。
+                endif
+        else
+                tell $n 滾！
+        endif
+else
+        mpechoat $n 插嘴不好，不要插嘴。
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "talk_prog"
+argument = "job"
+script = """
+if is_qmark($i) != enclave_talking
+        if is_qmark($n) != enclave_quest
+                mpadd_qmark $n enclave_quest -1 0 0 0 0 1
+        else
+                if is_qmark($n) != enclave_quest 100000
+                or is_qmark($n) & enclave_quest 300001
+                else
+                        mpadd_qmark self enclave_talking 10 0 0 0 0 1
+                        tell $n 我是個傭兵，最近剛接了個Case。
+                        mpcallout 1 tell $n 有個有錢的傢伙，他孫女還是啥的被綁架了。
+                        mpcallout 2 tell $n 聽說被綁到這個地方來，所以他出錢請我潛進這裡把人救回去。
+                        mpcallout 3 tell $n 不過目前有個小小的問題得先擺平，但繼續這樣拖下去也不行......
+                        mpcallout 3 mpmod_qmark $n enclave_quest v0 = 1
+                        mpcallout 3 mpdel_qmark self enclave_talking
+                endif
+        endif
+else
+        mpechoat $n 插嘴不好，不要插嘴。
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "talk_prog"
+argument = "problem"
+script = """
+if is_qmark($i) != enclave_talking
+        if is_qmark($n) != enclave_quest 100001
+        or is_qmark($n) & enclave_quest 300001
+        else
+                mpadd_qmark self enclave_talking 10 0 0 0 0 1
+                tell $n 在離這裡不遠的地方，有個很麻煩的對手。
+                mpcallout 1 tell $n 他會使用一擊必殺的法術，要是中招就有可能當場倒地。
+                mpcallout 2 tell $n 雖然我有辦法抵擋，但也只能擋個幾次。
+                mpcallout 3 tell $n 偏偏那混蛋又耐打到不行，跟他打了幾次，每次都打不贏。
+                mpcallout 4 tell $n 至於為什麼要跟他打，是因為上次好像看到他身後有個小女孩的身影。
+                mpcallout 5 tell $n 不管那是不是雇主要找的人，至少得確認一下......嗯，等等......
+                mpcallout 6 mpecho $I好像想到什麼，開始盯著你看。
+                mpcallout 7 tell $n 嗯，你看起來好像是那種可以烙一票兄弟姊妹來助拳的人。
+                mpcallout 8 tell $n 打個商量如何？我幫你施展那種抵抗法術，你帶人去把那傢伙痛揍一頓。
+                mpcallout 9 tell $n 哎呀，我不會讓你做白工的啦，事成之後會讓你撈點油水的，怎樣？
+                mpcallout 9 mpmod_qmark $n enclave_quest v0 = 2
+                mpcallout 9 mpdel_qmark self enclave_talking
+        endif
+else
+        mpechoat $n 插嘴不好，不要插嘴。
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($i) != enclave_talking
+        if is_qmark($n) !& enclave_quest 300001
+                mpadd_qmark self enclave_talking 10 0 0 0 0 1
+                tell $n 那麼我就幫你施展這個法術，立刻就好。
+                mpdel_qmark $n enclave_quest_shield
+                mpadd_qmark $n enclave_quest_shield -1 12 0 0 0 1
+                mpcallout 1 say ........................「紫燄之盾」。
+                mpcallout 2 mpechoat $n 一道淡紫色的燄光瞬間籠罩了你的身體！
+                mpcallout 2 mpechoaround $n 一道淡紫色的燄光瞬間籠罩了$N！
+                mpcallout 3 tell $n 好啦，這樣就可以讓那傢伙的殺人法術失效了......
+                mpcallout 4 tell $n 不過還是要提醒你，這個護盾是有抵擋次數限制的，大概挨個十二發就會碎了。
+                mpcallout 5 tell $n 所以你要在護盾破碎前把他斃了，否則......不用我說了吧？
+                mpcallout 6 tell $n 你有朋友願意去幫你的，也可以來找我。
+                mpcallout 6 mpdel_qmark self enclave_talking
+        else
+                tell $n 滾！
+        endif
+else
+        mpechoat $n 插嘴不好，不要插嘴。
+endif
+"""
+[[mobiles.21712.programs]]
+trigger = "talk_prog"
+argument = "what"
+script = """
+if is_qmark($i) != enclave_talking
+        if is_qmark($n) !& enclave_quest 300001
+                if is_qmark($n) == enclave_quest 100004
+                        mpadd_qmark self enclave_talking 10 0 0 0 0 1
+                        tell $n 這是秘密武器，所以我只能借給你半天，而且只能借你一次。
+                        tell $n 如果你很不幸地不能拿，那麼我也沒輒了。
+                        mpcallout 1 mpmod_qmark $n enclave_quest v0 = 5
+                        mpcallout 1 mpechoat $n 說話的同時，你發現一把劍正在你的手中成形！
+                        mpcallout 2 mpechoat $n 然而當你看著這把劍，你突然有個莫名其妙的感想......
+                        mpcallout 2 mpoload 21727 $n 1 target
+                        mpcallout 3 mpechoat $n 「某電鋸魔要是再這麼惡搞下去，總有一天會遭天譴」
+                        mpcallout 4 mpechoat $n 雖然不曉得自己為什麼突然會有這麼奇怪的感想，但是現在管不了那麼多。
+                        mpcallout 4 mpdel_qmark self enclave_talking
+                endif
+        else
+                tell $n 滾！
+        endif
+else
+        mpechoat $n 插嘴不好，不要插嘴。
+endif
+"""
+
+[objects.21700]
+keywords = "libram demonomican"
+short_description = "惡魔聖契(Demonomican libram)"
+long_description = "一張難以言喻的邪惡聖契(libram)在地上腐爛著。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "MAGIC", "NODROP", "ANTI_GOOD", "NOREMOVE", "VAMPIRE_BANE"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "100", "0"]
+weight = 10
+cost = 4000
+level_limited = 0
+[[objects.21700.applies]]
+type = "STR"
+value = 1
+[[objects.21700.applies]]
+type = "INT"
+value = 1
+[[objects.21700.applies]]
+type = "WIS"
+value = -2
+[[objects.21700.applies]]
+type = "MANA"
+value = 50
+[[objects.21700.applies]]
+type = "HIT"
+value = 50
+[[objects.21700.applies]]
+type = "HITROLL"
+value = 1
+[[objects.21700.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.21700.applies]]
+type = "SAVING_BREATH"
+value = -10
+[[objects.21700.applies]]
+type = "SAVING_SPELL"
+value = -10
+
+[objects.21701]
+keywords = "spider-spun cloak"
+short_description = "蛛絲斗蓬(spider-spun cloak)"
+long_description = "一片用蜘蛛絲織成的斗蓬(cloak)被扔在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "flesh"
+[[objects.21701.applies]]
+type = "DEX"
+value = 1
+[[objects.21701.applies]]
+type = "MOVE"
+value = 30
+[[objects.21701.applies]]
+type = "AC"
+value = -7
+
+[objects.21702]
+keywords = "spider-skin spider leggings legs"
+short_description = "蜘蛛皮護脛(spider-skin leggings)"
+long_description = "一雙樸素的蜘蛛皮護脛(spider legs)被丟在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "flesh"
+[[objects.21702.applies]]
+type = "DEX"
+value = 3
+[[objects.21702.applies]]
+type = "HIT"
+value = 35
+[[objects.21702.applies]]
+type = "MOVE"
+value = 50
+[[objects.21702.applies]]
+type = "HITROLL"
+value = -1
+[[objects.21702.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.21703]
+keywords = "battlearmor armor plate drow"
+short_description = "暗黑精靈戰甲(drow battlearmor)"
+long_description = "一件堅固的深色板甲(plate armor)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 15
+cost = 25800
+level_limited = 0
+material = "obsidian"
+[[objects.21703.applies]]
+type = "STR"
+value = 1
+[[objects.21703.applies]]
+type = "AC"
+value = -10
+[[objects.21703.applies]]
+type = "DAMROLL"
+value = 4
+
+[objects.21704]
+keywords = "gloves dark-elf dark-elven skin"
+short_description = "暗黑精靈皮手套(gloves of the dark-elven skin)"
+long_description = "一雙黑檀木色的皮造手套(gloves)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "100", "0"]
+weight = 8
+cost = 0
+level_limited = 0
+material = "flesh"
+[[objects.21704.applies]]
+type = "WIS"
+value = 2
+[[objects.21704.applies]]
+type = "SAVING_ELEMENT"
+value = 3
+[[objects.21704.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+
+[objects.21705]
+keywords = "helm dark-elf dark-elven battle"
+short_description = "暗黑精靈戰盔(dark-elven battle helm)"
+long_description = "一頂戰鬥用頭盔(helm)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "100", "0"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "obsidian"
+[[objects.21705.applies]]
+type = "MANA"
+value = -20
+[[objects.21705.applies]]
+type = "HITROLL"
+value = 3
+
+[objects.21706]
+keywords = "sleeves drow battle"
+short_description = "暗黑精靈戰臂(drow battle sleeves)"
+long_description = "一副深色的護臂(sleeves)被遺留在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "100", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "obsidian"
+[[objects.21706.applies]]
+type = "STR"
+value = 1
+[[objects.21706.applies]]
+type = "DEX"
+value = 2
+
+[objects.21707]
+keywords = "boot dark-elf dark-elven"
+short_description = "暗黑精靈長靴(dark-elven boots)"
+long_description = "一雙黑曜石顏色的長靴(boots)被遺留在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "100", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "obsidian"
+[[objects.21707.applies]]
+type = "SAVING_BREATH"
+value = -4
+[[objects.21707.applies]]
+type = "DODGE"
+value = 12
+[[objects.21707.applies]]
+type = "APPLY_ADAMAGE"
+value = 5
+
+[objects.21708]
+keywords = "leggings dark-elven dark-elf"
+short_description = "暗黑精靈護腿(dark-elven leggings)"
+long_description = "一雙黑曜石顏色的護腿(leggings)被遺留在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "100", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "obsidian"
+[[objects.21708.applies]]
+type = "DEX"
+value = 2
+[[objects.21708.applies]]
+type = "HIT"
+value = -20
+[[objects.21708.applies]]
+type = "AC"
+value = 30
+
+[objects.21709]
+keywords = "hatred hate"
+short_description = "憎恨晶體(Hate)"
+long_description = "由純粹的憎恨(Hate)所凝聚成的結晶放在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["DARK", "EVIL", "BLESS", "ANTI_GOOD", "LORE"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.21709.applies]]
+type = "SAVING_FIRE"
+value = -5
+[[objects.21709.applies]]
+type = "SAVING_LIGHTNING"
+value = -5
+
+[objects.21710]
+keywords = "dark something"
+short_description = "黑暗(dark)"
+long_description = "些許的黑暗(dark)在這裡。"
+action_description = ""
+item_type = "WAND"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "NODROP", "ANTI_GOOD", "NOREMOVE"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["50", "3", "3", "gas breath"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.21710.applies]]
+type = "MANA"
+value = 30
+[[objects.21710.applies]]
+type = "HIT"
+value = 30
+
+[objects.21711]
+keywords = "hair snakes wig"
+short_description = "蛇之髮(snakes wig)"
+long_description = "一群被編織在頭上的活蛇(snakes)遺留在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "DARK", "EVIL", "MAGIC", "ANTI_GOOD", "NOREMOVE"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "100", "0"]
+weight = 6
+cost = 23000
+level_limited = 0
+material = "flesh"
+[[objects.21711.applies]]
+type = "INT"
+value = 1
+[[objects.21711.applies]]
+type = "MANA"
+value = 20
+[[objects.21711.applies]]
+type = "SAVING_SPELL"
+value = 8
+[[objects.21711.applies]]
+type = "HITROLL"
+value = 1
+[[objects.21711.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.21712]
+keywords = "drow necklace templars bone"
+short_description = "暗黑精靈武士項鍊(necklace of the drow templars)"
+long_description = "一串骨頭項鍊(bone necklace)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "DARK", "EVIL", "MAGIC", "NODROP", "ANTI_GOOD", "NOREMOVE", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "100", "0"]
+weight = 14
+cost = 9900
+level_limited = 0
+material = "bone"
+[[objects.21712.applies]]
+type = "HITROLL"
+value = 2
+[[objects.21712.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.21712.applies]]
+type = "MOVE"
+value = -20
+
+[objects.21713]
+keywords = "drow longsword"
+short_description = "暗黑精靈長劍(drow longsword)"
+long_description = "一把用深色材質做成的劍(sword)放在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "3"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "obsidian"
+[[objects.21713.applies]]
+type = "HITROLL"
+value = 1
+[[objects.21713.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.21714]
+keywords = "stone black"
+short_description = "黑色石頭(black stone)"
+long_description = "一塊奇怪的黑色石頭(black stone)被扔在地上。"
+action_description = ""
+item_type = "WAND"
+extra_flags = ["HUM", "MAGIC"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["51", "1", "1", "fireball"]
+weight = 5
+cost = 900
+level_limited = 0
+
+[objects.21715]
+keywords = "belt"
+short_description = "皮帶(belt)"
+long_description = "一條樣子普普通通的皮帶(belt)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 34000
+level_limited = 0
+material = "silk"
+[[objects.21715.applies]]
+type = "HITROLL"
+value = 1
+[[objects.21715.applies]]
+type = "DAMROLL"
+value = 1
+
+[objects.21716]
+keywords = "demonkind demon-marked key"
+short_description = "惡魔印記之鑰(demon-marked key)"
+long_description = "一把惡魔樣子的鑰匙(key)被人丟在這裡。"
+action_description = ""
+item_type = "KEY"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "bone"
+
+[objects.21717]
+keywords = "altar bloodstone"
+short_description = "血髓石祭壇(bloodstone altar)"
+long_description = "一座血髓石祭壇(bloodstone altar)立在這裡。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["NOSAVE"]
+wear_flags = []
+values = ["1000", "14", "21716", "0"]
+weight = 1000
+cost = 0
+level_limited = 0
+
+[objects.21718]
+keywords = "spider-shaped kris blade"
+short_description = "蛛形短刀(spider-shaped kris)"
+long_description = "一把波浪狀，外型像蜘蛛的銳利短刀(kris)放在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["DARK", "EVIL", "MAGIC", "NODROP", "ANTI_GOOD", "NOREMOVE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "11"]
+weight = 30
+cost = 26680
+level_limited = 0
+material = "ebony"
+[[objects.21718.applies]]
+type = "HITROLL"
+value = 3
+[[objects.21718.applies]]
+type = "DAMROLL"
+value = -3
+[[objects.21718.applies]]
+type = "AC"
+value = -15
+[[objects.21718.applies]]
+type = "SAVING_SPELL"
+value = -5
+
+[objects.21719]
+keywords = "calamity wing"
+short_description = "災殃之翼(calamity wing)"
+long_description = "一對帶著不祥氣息與色彩，形狀可怖的羽翼(wing)漂浮於此。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "ANTI_GOOD", "POISONED", "NO_SAC"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["0", "0", "125", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+permit_races = { type = "ALLOW", list = ["DROW"] }
+material = "black matter"
+[[objects.21719.applies]]
+type = "SAVING_BREATH"
+value = 5
+[[objects.21719.applies]]
+type = "SAVING_SPELL"
+value = 5
+[[objects.21719.applies]]
+type = "DODGE"
+value = -15
+
+[objects.21720]
+keywords = "sun lightball"
+short_description = "太陽光球(sun lightball)"
+long_description = "將數日的陽光收集凝聚而成的照明光球(sun lightball)漂在半空中。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL", "HOLY"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "light matter"
+[[objects.21720.applies]]
+type = "REDUCE_DAMAGE"
+value = 7
+
+[objects.21721]
+keywords = "pearl ring"
+short_description = "華珠之戒(pearl ring)"
+long_description = "一顆鑲著名貴珍珠的戒指(pearl ring)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["BLESS", "LORE"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "75", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "gem"
+[[objects.21721.applies]]
+type = "DEX"
+value = 2
+
+[objects.21722]
+keywords = "Inertya armour"
+short_description = "依娜緹雅鎧甲(Inertya armour)"
+long_description = "一件據說是從某個古代王家墓穴中挖出來的白色鎧甲(armour)掛在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "MAGIC", "BLESS", "ANTI_EVIL", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "300", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "platinum"
+[[objects.21722.applies]]
+type = "DODGE"
+value = 50
+[[objects.21722.applies]]
+type = "POWER_POTENTIAL"
+value = 4
+[[objects.21722.applies]]
+type = "REDUCE_MAGIC"
+value = -10
+
+[objects.21723]
+keywords = "alloy saber"
+short_description = "合金軍刀(alloy saber)"
+long_description = "一把用特殊合金打造成的軍刀(saber)插在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "POISONED"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["150", "0", "0", "1"]
+weight = 22
+cost = 0
+level_limited = 0
+material = "metal"
+[[objects.21723.applies]]
+type = "DAMROLL"
+value = 10
+[[objects.21723.applies]]
+type = "SAVING_WIND"
+value = -5
+[[objects.21723.race_combat]]
+race = "Arachnid"
+hr_mod_q = 20
+hr_mod_p = 150
+dr_mod_q = 0
+dr_mod_p = 120
+[[objects.21723.race_combat]]
+race = "Bachi"
+hr_mod_q = 0
+hr_mod_p = 110
+dr_mod_q = 25
+dr_mod_p = 130
+
+[objects.21724]
+keywords = "old bracelet"
+short_description = "古老的手環(old bracelet)"
+long_description = "一個看起來很古舊的精緻手環(old bracelet)被扔在此地。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "80", "0"]
+weight = 2
+cost = 0
+level_limited = 0
+timer = 12
+material = "gold"
+
+[objects.21725]
+keywords = "silver scabbard"
+short_description = "銀牙劍鞘(silver scabbard)"
+long_description = "一副用白銀打造而成的劍鞘(silver scabbard)掛在你面前。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "BLESS", "ANTI_NEUTRAL", "NO_SAC"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["0", "0", "125", "0"]
+weight = 7
+cost = 0
+level_limited = 0
+permit_classes = { type = "DENY", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+material = "silver"
+[[objects.21725.applies]]
+type = "CON"
+value = 1
+[[objects.21725.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+
+[objects.21726]
+keywords = "tide bracer"
+short_description = "潮浪護腕(tide bracer)"
+long_description = "一個帶著大海氣息的護腕(tide bracer)擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "ANTI_EVIL", "LORE"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "125", "0"]
+weight = 4
+cost = 0
+level_limited = 0
+material = "sapphire"
+[[objects.21726.applies]]
+type = "STR"
+value = 2
+[[objects.21726.applies]]
+type = "REDUCE_MAGIC"
+value = 7
+[[objects.21726.hidden_powers]]
+spell = "breathe water"
+percent = 30
+level = 35
+event = "HP_WEAR"
+
+[objects.21727]
+keywords = "eternity sword level5 soul-link"
+short_description = "永遠神劍第五位‧魂鍊(eternity sword soul-link)"
+long_description = "一把造型相當奇特的劍(sword)擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC", "BLESS", "NOSAVE", "PERSONAL", "LORE", "NO_SAC"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["-1", "100", "100", "3"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 12
+material = "unreal matter"
+[[objects.21727.applies]]
+type = "HITROLL"
+value = 1250
+[[objects.21727.applies]]
+type = "DAMROLL"
+value = 1250
+[[objects.21727.applies]]
+type = "REDUCE_DAMAGE"
+value = 300
+[[objects.21727.applies]]
+type = "REDUCE_MAGIC"
+value = 300
+[[objects.21727.programs]]
+trigger = "obj_rand"
+argument = "100"
+script = """
+if area($n) != enclave
+        echoat $n 你手中的神劍消失了！
+        purge self
+endif
+"""
+
+[rooms.21700]
+name = "荒涼的洞穴外"
+description = """
+一股強勁的寒風吹拂著你的身體，吹進地上那個裂開的大洞裡面。你頭頂上
+的廢墟使得下面一片陰暗，什麼都看不到。你唯一知道的是有某些聽起來讓人頭
+皮發麻的叫聲正從裡面傳來。淡灰色的光芒穿過上方的廢墟，灑落一地。
+"""
+flags = ["DARK", "NO_MOB"]
+sector = "MOUNTAIN"
+[rooms.21700.exits.down]
+description = "只看得到瀝青般漆黑的顏色。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21701
+[rooms.21700.exits.up]
+description = ""
+keywords = "巨大的石塊"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21485
+
+[rooms.21701]
+name = "荒涼的洞穴內"
+description = """
+這個洞又暗又窄，強勁得嚇人的冷風不斷地從上方灌進來。一小堆被扯爛、
+打碎的骨頭被丟在這裡，看起來跟垃圾沒什麼兩樣。往上有個通往外面的洞口，
+西邊則堆了一些乾燥的骨頭，稍微擋住了通道。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.21701.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21700
+[rooms.21701.exits.west]
+description = "西邊堆了一些乾燥的骨頭，稍微擋住了通道。\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21702
+
+[rooms.21702]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。一堆骨頭被人堆
+積在東邊，稍微擋住了那邊的陰暗房間。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21702.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21701
+[rooms.21702.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21703
+[rooms.21702.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21711
+
+[rooms.21703]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21703.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21702
+[rooms.21703.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21704
+[[rooms.21703.resets.mobiles]]
+vnum = 21700
+limit = 8
+
+[rooms.21704]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21704.exits.east]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21703
+[rooms.21704.exits.west]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21705
+
+[rooms.21705]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21705.exits.east]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21704
+[rooms.21705.exits.west]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21706
+
+[rooms.21706]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21706.exits.east]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21705
+[rooms.21706.exits.south]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21707
+
+[rooms.21707]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。某個人在東邊堆
+了一堆骨頭，稍微擋住了東邊那個房間。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21707.exits.east]
+description = "陰暗的房間，一堆骨頭擋住了部份的視野。\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21712
+[rooms.21707.exits.north]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21706
+[rooms.21707.exits.south]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21708
+
+[rooms.21708]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21708.exits.east]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21709
+[rooms.21708.exits.north]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21707
+
+[rooms.21709]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21709.exits.east]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21710
+[rooms.21709.exits.west]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21708
+
+[rooms.21710]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21710.exits.east]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21711
+[rooms.21710.exits.west]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21709
+
+[rooms.21711]
+name = "陰暗的通道"
+description = """
+這條通道似乎是某棟古老建築物的一部份，你四周除了黑暗還是黑暗，同時
+充斥著痛苦的號叫聲，不遠處還傳來像是肌肉正被切碎的聲音。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21711.exits.north]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21702
+[rooms.21711.exits.west]
+description = "陰暗的通道。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21710
+
+[rooms.21712]
+name = "崩塌的房間"
+description = """
+這個房間已經崩塌得一塌糊塗了，而且磨損得比想像中還嚴重許多。在你腳
+下的洞穴傳來惡魔般的呼喊與詭異的吼叫聲。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21712.exits.down]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21713
+[rooms.21712.exits.west]
+description = "陰暗的房間，一堆骨頭擋住了部份的視野。\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21707
+
+[rooms.21713]
+name = "領地入口"
+description = """
+這裡除了黑暗之外別無他物，空氣中還帶著一股腐臭味。你四周被牆壁給圍
+住，黑暗彷彿附著在你的靈魂上。這裡有條通往上方的路，你也可以選擇往西邊
+進入領地。
+ """
+flags = ["DARK", "NO_MOB", "INDOORS"]
+sector = "INSIDE"
+[rooms.21713.exits.up]
+description = "上頭有個陰暗的房間。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21712
+[rooms.21713.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21726
+
+[rooms.21714]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21714.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21715
+[[rooms.21714.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomtimer($0) == 0
+        if rnplayer($) == 0
+                if mobcount(21712) == 0
+                        mload 21712
+                endif
+        endif
+endif
+"""
+
+[rooms.21715]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21715.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21714
+[rooms.21715.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21716
+
+[rooms.21716]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21716.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21717
+[rooms.21716.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21715
+
+[rooms.21717]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21717.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21724
+[rooms.21717.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21721
+[rooms.21717.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21716
+[rooms.21717.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21720
+
+[rooms.21718]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21718.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21719
+
+[rooms.21719]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21719.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21720
+[rooms.21719.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21718
+
+[rooms.21720]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21720.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21717
+[rooms.21720.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21719
+
+[rooms.21721]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21721.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21722
+[rooms.21721.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21717
+
+[rooms.21722]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21722.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21721
+[rooms.21722.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21723
+
+[rooms.21723]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21723.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21722
+
+[rooms.21724]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21724.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21725
+[rooms.21724.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21717
+
+[rooms.21725]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21725.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21726
+[rooms.21725.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21724
+
+[rooms.21726]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。東邊有一條小小的通道。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21726.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21713
+[rooms.21726.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21727
+[rooms.21726.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21725
+
+[rooms.21727]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21727.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21728
+[rooms.21727.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21726
+
+[rooms.21728]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21728.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21732
+[rooms.21728.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21727
+[rooms.21728.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21729
+
+[rooms.21729]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21729.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21728
+[rooms.21729.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21730
+
+[rooms.21730]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21730.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21731
+[rooms.21730.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21729
+
+[rooms.21731]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21731.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21730
+
+[rooms.21732]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21732.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21733
+[rooms.21732.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21728
+
+[rooms.21733]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21733.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21743
+[rooms.21733.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21734
+[rooms.21733.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21732
+
+[rooms.21734]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21734.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21735
+[rooms.21734.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21733
+
+[rooms.21735]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21735.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21736
+[rooms.21735.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21734
+
+[rooms.21736]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21736.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21737
+[rooms.21736.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21735
+
+[rooms.21737]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21737.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21738
+[rooms.21737.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21742
+[rooms.21737.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21741
+[rooms.21737.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21736
+
+[rooms.21738]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21738.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21739
+[rooms.21738.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21737
+
+[rooms.21739]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21739.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21740
+[rooms.21739.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21738
+
+[rooms.21740]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21740.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21739
+
+[rooms.21741]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21741.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21737
+
+[rooms.21742]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21742.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21737
+
+[rooms.21743]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21743.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21744
+[rooms.21743.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21733
+
+[rooms.21744]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21744.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21745
+[rooms.21744.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21743
+
+[rooms.21745]
+name = "更為黑暗的領地"
+description = """
+黑暗纏繞著你的靈魂，牆壁彷彿正朝你逼近而來。某種生物在某個地方發出
+痛苦的吼叫聲，伴隨著撕裂肌肉的聲音一併傳了過來。有點密集的蜘蛛網擋住了
+通往東邊的通道，南邊那條模糊的小徑的屋頂也有許多的蜘蛛網掛在屋頂上頭。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21745.exits.east]
+description = "蜘蛛網似乎擋住了某些東西。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21746
+[rooms.21745.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21744
+[rooms.21745.exits.south]
+description = "有點密集的蜘蛛網像瀑布般垂掛著。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21748
+
+[rooms.21746]
+name = "太暗了什麼都看不到！"
+description = """
+你什麼東西都看不見，黑暗幾乎是這裡唯一的事物。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21746.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21747
+[rooms.21746.exits.west]
+description = "蜘蛛網似乎擋住了某些東西。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21745
+
+[rooms.21747]
+name = "太暗了什麼都看不到！"
+description = """
+你什麼東西都看不見，黑暗幾乎是這裡唯一的事物。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21747.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21746
+[[rooms.21747.programs]]
+trigger = "room_command"
+argument = "search default"
+script = """
+if ispc($n)
+        if insameroom(predator)
+                echoat $n ......你先擺平掠食者再來考慮這件事吧。
+        else
+                if is_qmark($n) == enclave_quest 100002
+                        echoat $n 你根本就沒看到什麼小女孩的影子，倒是看到幾具小孩體型的骷髏。
+                        echoat $n 然而，其中一具骷髏身旁的東西引起了你的注意力。
+                        echoat $n 你撿起了這個奇形怪狀的東西，心想把它拿回去給梅菲雅(Mephia)看看好了。
+                        mod_qmark $n enclave_quest v0 = 3
+                else
+                        echoat $n 你什麼都沒找到。
+                endif
+        endif
+endif
+"""
+
+[rooms.21748]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21748.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21745
+[rooms.21748.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21749
+
+[rooms.21749]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21749.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21750
+[rooms.21749.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21748
+[rooms.21749.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21754
+
+[rooms.21750]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21750.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21751
+[rooms.21750.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21749
+
+[rooms.21751]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21751.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21750
+[rooms.21751.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21752
+
+[rooms.21752]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21752.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21751
+[rooms.21752.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21753
+
+[rooms.21753]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21753.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21752
+
+[rooms.21754]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21754.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21749
+[rooms.21754.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21755
+
+[rooms.21755]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21755.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21754
+[rooms.21755.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21756
+
+[rooms.21756]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21756.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21755
+[rooms.21756.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21757
+
+[rooms.21757]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21757.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21761
+[rooms.21757.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21756
+[rooms.21757.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21766
+[rooms.21757.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21758
+
+[rooms.21758]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21758.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21757
+[rooms.21758.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21759
+
+[rooms.21759]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21759.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21758
+[rooms.21759.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21760
+
+[rooms.21760]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21760.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21759
+
+[rooms.21761]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21761.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21762
+[rooms.21761.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21757
+
+[rooms.21762]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21762.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21763
+[rooms.21762.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21761
+
+[rooms.21763]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21763.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21762
+[rooms.21763.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21764
+
+[rooms.21764]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21764.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21765
+[rooms.21764.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21763
+
+[rooms.21765]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲。地面上被挖出一個邊緣參
+差不齊的大洞。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21765.exits.down]
+description = "朝這個方向看只看得到黑暗。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21769
+[rooms.21765.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21764
+
+[rooms.21766]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21766.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21757
+[rooms.21766.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21767
+
+[rooms.21767]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21767.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21766
+[rooms.21767.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21768
+
+[rooms.21768]
+name = "蛛網遍佈的領地通道"
+description = """
+屋頂和牆壁到處都是又黏又密集的蜘蛛網，似乎想把你當蟲子般給捉住。黑
+暗使得這些蜘蛛網很難被看見，而你整個人很快就被包在這些巧奪天工的蛛網裡
+面，大小有你手掌那麼大的「小」蜘蛛在你周圍爬來爬去，但牠們好像對你沒什
+麼興趣。另外，你可以聽到周圍傳來很大聲的喀答聲......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21768.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21767
+
+[rooms.21769]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21769.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21770
+[rooms.21769.exits.up]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 21765
+
+[rooms.21770]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21770.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21771
+[rooms.21770.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21781
+[rooms.21770.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 21769
+
+[rooms.21771]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21771.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21772
+[rooms.21771.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21770
+
+[rooms.21772]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......北邊有一大片密集
+的蜘蛛網，就像鐵那麼的硬。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21772.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21774
+[rooms.21772.exits.north]
+description = "結實而密集的蜘蛛網。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21773
+[rooms.21772.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21771
+
+[rooms.21773]
+name = "巨大的蜘蛛網"
+description = """
+通道在此擴張開來，眼前是個編織在巨大無底洞上頭的大型蜘蛛網，蜘蛛網
+朝四面八方延展而去，幾乎沒有地方可以碰。各種尺寸的大蜘蛛因為你的入侵而
+在蜘蛛網上頭爬來爬去，不遠處則有個被數隻巨大毛腿撐起來的球體。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21773.exits.south]
+description = "又大又粗的蜘蛛網擋住了道路。\n"
+keywords = "蜘蛛網"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21772
+
+[rooms.21774]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21774.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21775
+[rooms.21774.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21772
+
+[rooms.21775]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......東邊牆壁上有一扇
+很大的黑色門扉。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21775.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = "黑色門扉"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21776
+[rooms.21775.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21774
+[rooms.21775.exits.south]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21778
+
+[rooms.21776]
+name = "王座室"
+description = """
+一座很大的硬橡膠王座嵌在東邊的牆壁裡面，俯瞰著這個房間，散落在王座
+周圍的是好幾打的屍體，屍體有大有小，不過全都被撕裂扯碎了。周圍淨是一股
+邪惡的靈氣，你覺得自己的靈魂彷彿萎縮了一般。西邊有扇門。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21776.exits.east]
+description = ""
+keywords = "王座"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 21777
+[rooms.21776.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = "黑色門扉"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21775
+
+[rooms.21777]
+name = "祭壇之間"
+description = """
+黑暗而死寂，這個房間極為安靜，簡直就像是用某種手法與這個區域其他的
+地帶分離開來似的。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21777.exits.west]
+description = ""
+keywords = "王座"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 21776
+
+[rooms.21778]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21778.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21775
+[rooms.21778.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21779
+
+[rooms.21779]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21779.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21778
+[rooms.21779.exits.west]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21781
+
+[rooms.21781]
+name = "領地深處"
+description = """
+一股輕柔的寒風沙沙地吹過這條通道，只見你手中的光源閃爍不定，然後便
+熄滅了，只留下一片逐漸向四周擴張的黑暗。你周圍惡魔般的哭號聲越來越強，
+同時你覺得有某種邪惡的事物正從你背後的通道接近中......
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.21781.exits.east]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21779
+[rooms.21781.exits.north]
+description = "太暗了什麼都看不到。\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 21770

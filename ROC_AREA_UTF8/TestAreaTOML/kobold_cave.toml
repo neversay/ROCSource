@@ -1,0 +1,6241 @@
+[area]
+name = "地靈洞窟"
+identity = "KoboldCave"
+builders = "Bigmouth"
+translator = "----"
+modifier = "----"
+vnum_start = 66100
+vnum_end = 66199
+security = 1
+recall = 3001
+death = 66184
+f_toggle = false
+
+[mobiles.66100]
+keywords = "kobold-soldier-striker striker"
+short_description = "地靈突擊隊(Kobold Striker)"
+long_description = "一隻身穿叢林迷彩裝的地靈(Kobold)朝著你衝了過來！\n"
+description = """
+一隻身穿叢林迷彩裝的地靈忽然從旁邊的山林裡冒出，並且向你衝鋒而來！
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HUNT", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SNEAK", "HIDE"]
+alignment = -700
+level = 33
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "BLOODY"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66100.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.66100.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66100.applies]]
+type = "HITROLL"
+degree = 30
+[[mobiles.66100.applies]]
+type = "APPLY_ADAMAGE"
+degree = 30
+[[mobiles.66100.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66103 1
+	mpat 2 wear all
+"""
+[[mobiles.66100.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+	berserk
+	frenzy
+else
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+	skilldrv speedhit $n
+endif
+"""
+[[mobiles.66100.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) == wartime 300003
+	mpecho $I退走了。
+	mppurge self
+endif
+"""
+[[mobiles.66100.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk sword-kobold
+endif
+mpgreward exp $n 30 500
+if rand(20)
+	mpmod_qmark $n war_reward v0 + 1
+endif
+"""
+
+[mobiles.66101]
+keywords = "kobold-soldier-rockpusher rockpusher"
+short_description = "地靈滾石兵(Kobold Rockpusher)"
+long_description = "一隻地靈(Kobold)正在這裡不斷地推落石頭，阻止敵人前進！\n"
+description = """
+這隻地靈在這裡推動著一顆顆落石，以阻止下方的敵人攻上來！
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -700
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66101.applies]]
+type = "HIT"
+degree = 30000
+[[mobiles.66101.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66101.applies]]
+type = "SAVING_SPELL"
+degree = -100
+[[mobiles.66101.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.66101.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+mpoload 3103
+"""
+[[mobiles.66101.programs]]
+trigger = "fight_prog"
+argument = "33"
+script = """
+q potion
+mpforcer here c 3 'double heal' $i 50
+"""
+[[mobiles.66101.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if notbeing(elf-soldier-marshal)
+or inroom($i) != 66109
+	mpecho $I退走了。
+	if mobcount(66101) == 1
+		mpforcer here modrvt 66108 v0 = 0
+	endif
+	mppurge self
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+	mpecho $I倉皇地逃走了！
+	if mobcount(66101) == 1
+		mpforcer here modrvt 66108 v0 = 0
+	endif
+	mppurge self
+endif
+"""
+[[mobiles.66101.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if mobcount(66101) == 1
+	mpforcer here modrvt 66108 v0 = 0
+endif
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+"""
+
+[mobiles.66102]
+keywords = "kobold-soldier-officer officer"
+short_description = "地靈士官(Kobold Officer)"
+long_description = "一隻地靈(Kobold)正在這裡命令其他地靈展開攻擊！\n"
+description = """
+這名地靈看起來跟其他地靈沒什麼不同，但他卻顯然擁有指揮其他地靈的權力
+。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY", "CRITICAL", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -700
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "THIEF"]
+spec_flags = ["NO_BLIND", "NO_SLEEP", "ALY_DI", "ALY_DH", "NO_PARA"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66102.applies]]
+type = "HIT"
+degree = 30000
+[[mobiles.66102.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66102.applies]]
+type = "AC"
+degree = -400
+[[mobiles.66102.applies]]
+type = "SAVING_SPELL"
+degree = -100
+[[mobiles.66102.applies]]
+type = "DODGE"
+degree = -400
+[[mobiles.66102.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.66102.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.66102.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.66102.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.66102.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpgoto 2
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+"""
+[[mobiles.66102.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+mpforcer here c 'full heal' $i 40
+if mobcount(66103) < 20
+	mpecho 在$I的命令下，一名地靈戰士朝著你衝了過來！
+	mpmload 66103
+endif
+"""
+[[mobiles.66102.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) == wartime 300003
+	mpecho $I退走了。
+	mppurge self
+endif
+if mobcount(66103) < 20
+	mpecho 在$I的命令下，一名地靈戰士朝著你衝了過來！
+	mpmload 66103
+endif
+mpforce $r vis
+mpforce $r vis sneak
+"""
+[[mobiles.66102.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+untangle $i
+flee
+"""
+[[mobiles.66102.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+mpmload 66102
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+"""
+
+[mobiles.66103]
+keywords = "kobold-soldier-fighter fighter"
+short_description = "地靈戰士(Kobold Fighter)"
+long_description = "一隻地靈(Kobold)正在這裡與精靈遠征軍戰鬥。\n"
+description = """
+這名地靈手持簡陋的武器，像是完全不怕死似地衝鋒著。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL"]
+affected_flags = []
+alignment = -700
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66103.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.66103.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66103.applies]]
+type = "AC"
+degree = -100
+[[mobiles.66103.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66103.applies]]
+type = "DODGE"
+degree = -100
+[[mobiles.66103.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.66103.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66103 1
+mpat 2 wear all
+"""
+[[mobiles.66103.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if mobcount(13647) == 0
+	mpecho $I退走了。
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I退走了。
+	mppurge self
+endif
+"""
+[[mobiles.66103.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) > war_reward 200004
+or rand(67)
+	mpjunk sword-kobold
+endif
+mpgreward exp $n 30 500
+if rand(10)
+	mpmod_qmark $n war_reward v0 + 1
+	mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 1
+endif
+"""
+
+[mobiles.66104]
+keywords = "kobold-soldier-elite-fighter elite fighter"
+short_description = "地靈菁英戰士(Kobold Elite Fighter)"
+long_description = "一隻菁英的地靈戰士(Kobold)正在這裡與精靈遠征軍戰鬥。\n"
+description = """
+這名強壯地靈的戰鬥技巧看來十分精湛，最好不要與他正面戰鬥。
+"""
+act_flags = ["NPC", "STAY_AREA", "HUNT", "TACTICS"]
+affected_flags = ["SANCTUARY"]
+alignment = -700
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "EXPERT"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66104.applies]]
+type = "HIT"
+degree = 50000
+[[mobiles.66104.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66104.applies]]
+type = "AC"
+degree = -300
+[[mobiles.66104.applies]]
+type = "HITROLL"
+degree = 100
+[[mobiles.66104.applies]]
+type = "DAMROLL"
+degree = 20
+[[mobiles.66104.applies]]
+type = "DODGE"
+degree = -400
+[[mobiles.66104.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.66104.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66105 1
+mpgoto 2
+wear all
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+"""
+[[mobiles.66104.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+skilldrv multihit
+if rand(50)
+	wear greatsword-kobold
+	perform empslash
+else
+	circular
+	circular
+	circular
+endif
+"""
+[[mobiles.66104.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk greatsword-kobold
+endif
+mpgreward exp $n 30 1500
+mpmod_qmark $n war_reward v0 + 3
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+"""
+[[mobiles.66104.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if mobcount(13647) == 0
+	mpecho $I退走了。
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I退走了。
+	mppurge self
+endif
+"""
+
+[mobiles.66105]
+keywords = "kobold-soldier-king king sarreitar"
+short_description = "薩瑞塔爾(Sarreitar)"
+long_description = "地靈之王薩瑞塔爾(Sarreitar)正在這裡注視著你的到來。\n"
+description = """
+這名頭戴王冠、手握權杖的地靈看起來深不可測。在他眼裡懾人光芒的注視下
+，你情不自禁地就想要聽從他的吩咐，難道這就是所謂的王霸之氣？不管怎麼
+樣，身處他人國度的你，最好不要違逆他的命令比較好。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "ARTIFACT", "TACTICS", "REGENERACY", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "MANASHIELD"]
+alignment = -700
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "ALY_SAN", "ALY_DI", "ALY_DH", "NO_SEALMAGIC", "EXPERT"]
+[[mobiles.66105.applies]]
+type = "HIT"
+degree = 400000
+[[mobiles.66105.applies]]
+type = "AC"
+degree = -500
+[[mobiles.66105.applies]]
+type = "HITROLL"
+degree = 100
+[[mobiles.66105.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.66105.applies]]
+type = "SAVING_SPELL"
+degree = -50
+[[mobiles.66105.applies]]
+type = "DODGE"
+degree = -500
+[[mobiles.66105.applies]]
+type = "POWER_POTENTIAL"
+degree = 70
+[[mobiles.66105.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.66105.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.66105.applies]]
+type = "APPLY_AMAGIC"
+degree = 150
+[[mobiles.66105.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66113
+mpoload 66112
+mpat 2 wear all
+"""
+[[mobiles.66105.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpjunk all
+if notbeing(elf-soldier-marshal)
+	rumor 聽說地靈之王薩瑞塔爾被$N\u001B[35;1m暗殺了！
+else
+	mpgreward exp $n 30 35000
+	mpmod_qmark $n war_reward v0 + 30
+	if rand(33)
+		mpoload 66113 36
+	endif
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "defun_prog"
+argument = "goback"
+script = """
+if isfight($i)
+else
+	mpgoto 66143
+	close down
+	lock down
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if notbeing(elf-soldier-marshal)
+	if is_qmark($i) == wartype
+		mpdel_qmark self wartype
+	endif
+else
+	if is_qmark($i) == wartype
+		if is_qmark($i) == wartype 100005
+			mpmod_qmark self wartype v0 = 0
+			if mobcount(66104) > 1
+			or mobcount(66136) > 1
+			or mobcount(66137) > 3
+			or mobcount(66138) > 3
+			else
+				if rand(50)
+					if rand(50)
+						mpmload 66104
+						mpmload 66104
+						mpmload 66104
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+					else
+						mpmload 66136
+						mpmload 66136
+						mpmload 66136
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+						mpmload 66137
+					endif
+				else
+					if rand(50)
+						mpmload 66136
+						mpmload 66136
+						mpmload 66136
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+					else
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66138
+						mpmload 66104
+						mpmload 66104
+						mpmload 66104
+					endif
+				endif
+			endif
+		else
+			mpmod_qmark self wartype v0 + 1
+		endif
+	endif
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if pcnum($) > 0
+	if is_inv_obj($i) != 66100
+		mpoload 66100 1
+	endif
+endif
+if inroom($i) != 66143
+	mpcallout 30 mpcall goback $i
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "fight_prog"
+argument = "33"
+script = """
+if inroom($i) == 66143
+	say 護駕～護駕～
+	if rmobcount(66109) < 5
+		mpmload 66109
+		mpgroup $i kobold-soldier-shielder 1
+	endif
+	if rmobcount(66110) < 3
+		mpmload 66110
+		mpgroup $i kobold-soldier-priest 0
+	endif
+endif
+if hitprcnt($i) < 50
+	if notbeing(doll-kobold)
+	or insameroom(doll-kobold)
+	else
+		yell 自地獄重生、挾毀滅之力的邪龍之偶啊....
+		yell 在吾汝共主的名義下令汝前來，護衛吾吧！
+		mpecho 一道煙霧過去，一隻巨大的龍忽然出現！
+		mptransfer doll-kobold
+		mpgroup $i doll-kobold 1
+	endif
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if rand(40)
+	circular
+	circular
+else
+	say 這就是違逆我的下場！
+	c soulsteal $r
+	c 3 lifesteal $r
+	c 3 energy $r
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if inroom($i) == 66170
+	say 竟然被你發現了！受死吧！
+	mpkill $n
+	break
+endif
+if is_qmark($i) == istalk
+or isnpc($n)
+	break
+endif
+if is_qmark($n) !& kobold_cave_hero 300001
+or is_qmark($n) & kobold_cave_hero 300512
+or is_qmark($n) > kobold_cave_hero 200005
+or is_qmark($n) != kobold_cave_hero
+	look $n
+else
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	glare $n
+	mpcallout 1 say 你就是最近幫助我們斬殺精靈、建功無數的外來者啊？
+	mpcallout 2 say 果然一表人材，一看就知道不同凡響！很好！
+	mpcallout 3 ponder
+	mpcallout 4 say 不過，人不可貌相，你的能力還是得試過後才能知道。
+	mpcallout 5 mpecho $I露出意味不明的詭異笑容....！？
+	mpcallout 6 say 是這樣的，我這裡正好有一件事情需要你的幫忙。
+	mpcallout 7 say 雖然我們地靈也算是人材濟濟，但這件事還是由外族人來比較適合。
+	mpcallout 8 say 當然，我也不會虧待你的。如何？(yes/no)
+	mpcallout 8 mpmod_qmark $n kobold_cave_hero v2 | 2
+	mpcallout 8 mpmod_qmark $n kobold_cave_hero v2 r 1
+	mpcallout 8 mpdel_qmark self istalk
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($i) == istalk
+	tell $n 我正在忙，請稍等一下。
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300002
+	if is_qmark($n) != kobold_cave_hero 200100
+	or is_qmark($n) <= kobold_cave_hero 200006
+		mpadd_qmark self istalk -1 0 0 0 1 0
+		mpmod_qmark $n kobold_cave_hero v2 r 2
+		say 是這樣的，我發現我們地靈裡出了一位叛徒。
+		mpcallout 1 say 如果公開處置掉他的話，恐怕會動搖士氣。
+		mpcallout 2 say 因此我只是找個藉口將他趕出了軍隊。
+		mpcallout 3 say 但是若放著他不管，又怕他再做出什麼對地靈不利的事。
+		mpcallout 4 say 所以，希望你前去祕密處決掉他。
+		mpcallout 5 say 他的名字叫做：贊錢拉龜斯田目但他。
+		mpcallout 6 say 一切就拜託你了！
+		mpcallout 6 mpmod_qmark $n kobold_cave_hero v2 | 4
+		mpcallout 6 mpdel_qmark self istalk
+	else
+		mpadd_qmark self istalk -1 0 0 0 1 0
+		mpechoat $n 正當你想要答應薩瑞塔爾時，外面忽然跑來了一名地靈遞給了薩瑞塔爾一張紙。
+		mpmod_qmark $n kobold_cave_hero v2 | 512
+		mpcallout 1 say 啊！不好意思，我發現這件事已經不用人幫忙了！
+		mpcallout 2 say 真是抱歉，讓你白跑一趟了！
+		mpcallout 3 wave $n
+		mpcallout 3 mpdel_qmark self istalk
+	endif
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($i) == istalk
+	tell $n 我正在忙，請稍等一下。
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300002
+	mpmod_qmark $n kobold_cave_hero v2 r 2
+	say 好吧！既然如此，那我也不勉強你。
+	mpcallout 1 shrug
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "talk_prog"
+argument = "report"
+script = """
+if is_qmark($i) == istalk
+	tell $n 我正在忙，請稍等一下。
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300008
+	mpmod_qmark $n kobold_cave_hero v2 r 8
+	good $n
+	say 沒想到你這麼快就有好消息了！
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 say 看來委託你做這種事情還真是大材小用啊？
+	mpcallout 2 ponder
+	mpcallout 3 mpgold $n 1000000
+	mpcallout 3 say 這是你的獎賞，請先收下吧！
+	mpcallout 4 say 如果你沒事的話，我這裡倒還有一件事需要你的協助(help)....
+	mpcallout 4 mpmod_qmark $n kobold_cave_hero v2 | 16
+	mpcallout 4 mpdel_qmark self istalk
+"""
+[[mobiles.66105.programs]]
+trigger = "talk_prog"
+argument = "help"
+script = """
+if is_qmark($i) == istalk
+	tell $n 我正在忙，請稍等一下。
+	break
+endif
+if is_qmark($n) & kobold_cave_hero 300016
+	mpmod_qmark $n kobold_cave_hero v2 r 16
+	say 眾所皆知，我們地靈乃是上古巨龍流傳下來的後裔....
+	mpechoat $n 你心想：有這回事嗎！？
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 say 然而，像牠們這麼偉大的存在，平時極少有空理會我們的生活。
+	mpcallout 2 say 如今，我們與精靈一族的決戰已經到了生死存亡的關頭。
+	mpcallout 3 say 雖然我們擁有無比的信心，但如果能夠祈求我們遠祖的幫助，
+	mpcallout 4 say 就能夠用更少的犧牲來獲得更偉大的勝利！
+	mpcallout 5 say 祭祀祈禱的準備工作我早究已經吩咐手下去完成了，
+	mpcallout 6 say 但是，現在還缺少最後的三樣物品，才能夠進行祭祀。
+	mpcallout 7 say 這些材料分別是：純淨的龍晶、龍心的結晶以及龍之魂魄的凝聚體。
+	mpcallout 8 say 不知英雄您是否能幫忙我前去尋找呢？
+	mpcallout 8 mpmod_qmark $n kobold_cave_hero v2 | 32
+	mpcallout 8 mpdel_qmark self istalk
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "defun_prog"
+argument = "solvequest"
+script = """
+if is_qmark($n) !& kobold_cave_hero 300064
+or is_qmark($n) !& kobold_cave_hero 300128
+or is_qmark($n) !& kobold_cave_hero 300256
+or is_qmark($n) != kobold_cave_hero
+else
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 applaud $n
+	mpcallout 2 say 沒想到你一個人就把所有剩下的材料找齊了。
+	mpcallout 3 say 實在太了不起了。
+	mpcallout 4 glare $n
+	mpcallout 5 say 雖然你是個外族人，但是卻為我們地靈做了這麼多事。
+	mpcallout 6 ponder
+	mpcallout 7 say 我決定冊封你為地靈族的英雄，並且廣為宣傳你的功蹟！
+	mpcallout 8 say 另外，這雙手套就送給你，作為你這次的獎賞吧！
+	mpcallout 9 mpechoat $n $I將一雙手套交給了你。
+	mpcallout 9 mpechoaround $n $I將一雙手套交給了$N。
+	mpcallout 9 mpoload 66114 $n 36 target
+	mpcallout 9 mpmod_qmark $n kobold_cave_hero v2 | 512
+	mpcallout 10 grin
+	mpcallout 10 say 就這樣，我趕著去進行儀式，不送了。
+	mpcallout 11 mpforce all south
+	mpcallout 11 mpecho $I將在場的人通通趕出了王座室。
+	if notbeing(doll-kobold)
+		mpcallout 12 close down
+		mpcallout 12 down
+		mpcallout 12 open down
+		mpcallout 12 unlock down
+		mpcallout 12 mpoload 66100 1
+		mpcallout 13 down
+		mpcallout 14 say 終於湊齊了製作邪龍魂所需要的原料了。
+		mpcallout 15 grin
+		mpcallout 15 say 這下子，我手中的力量就能更多了。
+		mpcallout 16 say 主宰庇佑，助我功成！
+		mpcallout 17 mpecho $I開始將手裡的材料依序擺上祭壇....
+		mpcallout 18 mpecho $I跪拜下來，向著某個不知名的邪神緩緩祈禱。
+		mpcallout 19 mpecho 邪異的紅色光芒從祭壇上發散出來，鑽入了龍的屍骸中。
+		mpcallout 20 mpecho 在紅色光芒彷彿有生命的操控下，龍晶、龍心與龍魂緩緩地融入了龍屍之中。
+		mpcallout 21 mpgroup $i doll-kobold 1
+		mpcallout 21 mppurge dragon-koboldobj
+		mpcallout 21 mpecho 龍的屍骸彷彿活過來似地動了起來！
+		mpcallout 21 mpmload 66134
+		mpcallout 22 say 成功了！成功了！邪龍偶製作成功了！
+		mpcallout 22 cackle
+		mpcallout 23 sweat
+		mpcallout 23 say 嗯....也該回去了，不然上面有是有人闖進來就糟了。
+		mpcallout 24 mpjunk key
+		mpcallout 24 avert
+		mpcallout 24 lock down
+		mpcallout 24 close down
+		mpcallout 24 up
+		mpcallout 24 open up
+		mpcallout 24 up
+		mpcallout 24 mpdel_qmark self istalk
+	endif
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "give_prog"
+argument = "63099"
+script = """
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300064
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say 我收到純淨龍晶了！
+	mpmod_qmark $n kobold_cave_hero v2 | 64
+	mpcall solvequest $n
+	mpjunk $o
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "give_prog"
+argument = "5263"
+script = """
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300128
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say 我收到龍心結晶了！
+	mpmod_qmark $n kobold_cave_hero v2 | 128
+	mpcall solvequest $n
+	mpjunk $o
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "give_prog"
+argument = "32133"
+script = """
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300256
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say 我收到龍之魂了！
+	mpmod_qmark $n kobold_cave_hero v2 | 256
+	mpcall solvequest $n
+	mpjunk $o
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "give_prog"
+argument = "32166"
+script = """
+if is_qmark($n) !& kobold_cave_hero 300032
+or is_qmark($n) & kobold_cave_hero 300256
+or is_qmark($n) != kobold_cave_hero
+	?
+	drop $o
+else
+	good $n
+	say 我收到龍之魂了！
+	mpmod_qmark $n kobold_cave_hero v2 | 256
+	mpcall solvequest $n
+	mpjunk $o
+endif
+"""
+[[mobiles.66105.programs]]
+trigger = "give_prog"
+argument = "all"
+script = """
+?
+drop $o
+"""
+
+[mobiles.66106]
+keywords = "kobold-soldier-shooter shooter"
+short_description = "地靈射手(Kobold Shooter)"
+long_description = "一隻地靈(Kobold)正在這裡操縱著弩砲向下方射擊。\n"
+description = """
+這隻地靈看起來比其他的地靈要高大許多，也只有他這種壯碩的體格有辦法操
+作巨大的弩砲，進行射擊。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -700
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "THIEF"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66106.applies]]
+type = "HIT"
+degree = 30000
+[[mobiles.66106.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66106.applies]]
+type = "REDUCE_DAMAGE"
+degree = 200
+[[mobiles.66106.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if mobcount(13647) == 0
+	mpecho $I退走了。
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	if insameroom(kobold-soldier-ballista)
+	else
+		mpecho $I退走了。
+		mppurge self
+	endif
+endif
+"""
+[[mobiles.66106.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+wear all
+if rand(50)
+	if dex($n) >= 20
+		mpechoat $n 忽然拎起一塊大石頭朝你面上砸過來，但被你靈巧地閃過了！
+		mpechoaround $n 忽然拎起一塊大石頭朝$N面上砸過去，但被$N靈巧地閃過了！
+		break
+	endif
+	mpechoat $n 忽然拎起一塊大石頭砸在你的面上，將你砸的頭暈目眩！
+	mpechoaround $n 忽然拎起一塊大石頭砸在$N的面上，將$N砸的頭暈目眩！
+	mpforcer here stun $n 10
+	if rand(50)
+		mpechoat $n 你在頭暈目眩之下不小心從崖壁上墜落下去了！
+		mpechoaround $n $N從崖壁上掉了下去！
+		if inroom($i) == 66126
+			mptransfer $n 66118
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66127
+			mptransfer $n 66119
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66128
+			mptransfer $n 66120
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66129
+			mptransfer $n 66121
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66130
+			mptransfer $n 66122
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66131
+			mptransfer $n 66123
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66132
+			mptransfer $n 66124
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+		if inroom($i) == 66133
+			mptransfer $n 66125
+			mpforcer 66118 echoaround $n $N從崖壁上掉了下來！
+			mpforcer 66118 modhmv $n 01.250 500 10100001
+		endif
+	endif
+endif
+"""
+
+[mobiles.66107]
+keywords = "kobold-soldier-ballista ballista"
+short_description = "地靈弩砲(Kobold Ballista)"
+long_description = "一輛地靈打造的弩砲(Ballista)被擺在這裡。\n"
+description = """
+這輛弩砲看來是專為這邊的地型而設計的，十二隻腳柱牢牢地刺入崖壁，使得
+它難以移動。而精鋼打造的軀殼則讓它難以被破壞，除了硬碰硬的慢慢把它砸
+壞以外，或許你還可以想辦法摸索出它結構上的弱點，將它解體(Disable)？
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = []
+alignment = 0
+level = 1
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Object"
+class = ["WARRIOR", "THIEF"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.66107.applies]]
+type = "HIT"
+degree = 100000
+[[mobiles.66107.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66107.applies]]
+type = "DODGE"
+degree = 1000
+[[mobiles.66107.applies]]
+type = "REDUCE_DAMAGE"
+degree = 200
+[[mobiles.66107.programs]]
+trigger = "defun_prog"
+argument = "shotone"
+script = """
+if pcnum($) > 0
+	if rand(50)
+		mpdef_rembch $r
+		mpcall shottwo $b
+	else
+		mpcall shottwo elf-soldier
+	endif
+else
+	mpcall shottwo elf-soldier
+endif
+"""
+[[mobiles.66107.programs]]
+trigger = "defun_prog"
+argument = "shottwo"
+script = """
+mpechoat $n 一支弩箭忽然從崖壁上飛來，射中了你！
+mpechoaround $n 一支弩箭忽然從崖壁上飛來，射中了$N！
+mpforcer here modhmv $n 01.250 250 10100001
+"""
+[[mobiles.66107.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpforcer here modrvt v0 = 1
+"""
+[[mobiles.66107.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if mobcount(13647) == 0
+	mpecho $I退走了。
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mppurge self
+endif
+if insameroom(kobold-soldier-shooter)
+	mpecho 地靈射手操縱著弩砲向著崖下射擊！
+	if rand(50)
+		if rand(50)
+			if rand(67)
+				mpat 66112 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66113 mpcall shotone $i
+				else
+					mpat 66114 mpcall shotone $i
+				endif
+			endif
+		else
+			if rand(67)
+				mpat 66115 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66118 mpcall shotone $i
+				else
+					mpat 66119 mpcall shotone $i
+				endif
+			endif
+		endif
+	else
+		if rand(50)
+			if rand(67)
+				mpat 66120 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66121 mpcall shotone $i
+				else
+					mpat 66122 mpcall shotone $i
+				endif
+			endif
+		else
+			if rand(67)
+				mpat 66123 mpcall shotone $i
+			else
+				if rand(50)
+					mpat 66124 mpcall shotone $i
+				else
+					mpat 66125 mpcall shotone $i
+				endif
+			endif
+		endif
+	endif
+else
+	if rand(5)
+		mpecho 一名地靈悄悄地爬了上來....
+		mpmload 66106
+		mpforce kobold-soldier-shooter mpkill $r
+	endif
+endif
+"""
+[[mobiles.66107.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+mpgoto self
+"""
+[[mobiles.66107.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpforcer here modrvt v0 = 0
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 6
+"""
+
+[mobiles.66108]
+keywords = "kobold-soldier-kulala kulala"
+short_description = "古拉拉(Kulala)"
+long_description = "一隻英氣逼人的女地靈(Kobold)正站在守護她的家園。\n"
+description = """
+古拉拉是地靈中有名的女英雄，據說她的實力甚至比她的哥哥－古拉邦更為強
+悍。但是由於她反對地靈之王薩瑞塔爾的對外擴張政策，因此始終不得重用。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "REGENERACY", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "FLAMING"]
+alignment = 0
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Kobold"
+class = ["WARRIOR", "THIEF", "SWORD", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "EXPERT", "MOBAI_LV2"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66108.applies]]
+type = "HIT"
+degree = 50000
+[[mobiles.66108.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66108.applies]]
+type = "AC"
+degree = -500
+[[mobiles.66108.applies]]
+type = "HITROLL"
+degree = 80
+[[mobiles.66108.applies]]
+type = "DAMROLL"
+degree = 40
+[[mobiles.66108.applies]]
+type = "DODGE"
+degree = -500
+[[mobiles.66108.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.66108.applies]]
+type = "REDUCE_DAMAGE"
+degree = 50
+[[mobiles.66108.applies]]
+type = "REDUCE_MAGIC"
+degree = 50
+[[mobiles.66108.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.66108.applies]]
+type = "APPLY_AMAGIC"
+degree = 50
+[[mobiles.66108.programs]]
+trigger = "defun_prog"
+argument = "godefense"
+script = """
+mpecho $I往東走去。
+mpgoto 66116
+mpmload 66109
+mpgroup $i kobold-soldier-shielder 1
+mpmload 66109
+mpgroup $i kobold-soldier-shielder 1
+mpmload 66110
+mpgroup $i kobold-soldier-shielder 0
+mpmload 66110
+mpgroup $i kobold-soldier-shielder 0
+yell 堅守崗位，守護我們的家園！
+"""
+[[mobiles.66108.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66106
+mpoload 66107
+mpoload 66108
+wear all
+"""
+[[mobiles.66108.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+yell 不～～
+if is_qmark($n) < war_reward 200010
+or is_qmark($n) != war_reward
+or notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) >= wartime 100105
+	mpjunk bramble-o
+	mpjunk bomber-o
+	mpjunk rosefinch-o
+else
+	if rand(90)
+		mpjunk bramble-o
+		mpjunk bomber-o
+		mpjunk rosefinch-o
+	else
+		if rand(33)
+			mpjunk bramble-o
+			mpjunk bomber-o
+		else
+			if rand(50)
+				mpjunk bomber-o
+				mpjunk rosefinch-o
+			else
+				mpjunk rosefinch-o
+				mpjunk bramble-o
+			endif
+		endif
+	endif
+endif
+if being(elf-soldier-marshal)
+	mpgreward exp $n 30 35000
+	mpmod_qmark $n war_reward v0 + 20
+	mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 50
+endif
+"""
+[[mobiles.66108.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if inroom($i) == 66116
+	if notbeing(elf-soldier-marshal)
+	or is_qmark(elf-soldier-marshal) == wartime 300003
+		mpecho $I看了看周圍的戰場。
+		sigh
+		say 罷了～罷了～
+		say 事已至此，我又還能做些什麼呢？
+		say 就讓薩瑞塔爾自己去面對他恣意妄為的後果吧。
+		mpecho $I帶著部下轉身離開了。
+		mppurge kobold-soldier-shielder
+		mppurge kobold-soldier-shielder
+		mppurge kobold-soldier-priest
+		mppurge kobold-soldier-priest
+		mpgoto 66171
+	else
+		if rand(33)
+			yell 堅守崗位，守護我們的家園！
+		endif
+	endif
+else
+	if pcnum($) < 1
+	or is_qmark($i) != isqmark
+	else
+		if rand(33)
+			if rand(50)
+				if rand(50)
+					say 哥哥受命出征，不知道現在情況怎麼了....
+					glare
+				else
+					say 自從地靈之王薩瑞塔爾靠著神祕的助力坐上王位以來，
+					say 國內一直採取對外擴張的策略，難道他不知道兵兇戰危，傷人亦可傷己嗎？
+					sigh
+					say 和平日子恐怕不會持續太久了啊....
+				endif
+			else
+				mpecho $I看了看一份新送達的簡報。
+				if rand(50)
+					say 徵兵！又要徵兵！
+					say 薩瑞塔爾想要我們全民皆兵嗎？
+					say 長久以往，不是立國之道啊！
+				else
+					say 精靈族也開始整兵備戰了嗎？
+					say 再這樣下去，戰火總有一天會延燒到這裡的....
+					glare
+				endif
+			endif
+		endif
+	endif
+endif
+if is_qmark($r) != kobold_cave_hero
+or is_qmark($r) <= kobold_cave_hero 100012
+	mpkill $r
+endif
+"""
+[[mobiles.66108.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+	say 日月星辰大地菁華，匯集我身，助我擊退來犯之敵吧！
+	sun
+	sun
+	earth
+	mptrip $n
+	mptrip $r
+	mptrip elf-soldier
+else
+	say 水火風雷四大元素，聽我命令，助我擊退來犯之敵吧！
+	sprinkle $n
+	icecore $n
+	flaming $n
+	storm
+	fulgurant $n
+endif
+"""
+[[mobiles.66108.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) != kobold_cave_hero 200020
+or notbeing(kobold-soldier-king)
+	if rand(50)
+		if rand(50)
+			say 哥哥受命出征，不知道現在情況怎麼了....
+			glare
+		else
+			say 自從地靈之王薩瑞塔爾靠著神祕的助力坐上王位以來，
+			say 國內一直採取對外擴張的策略，難道他不知道兵兇戰危，傷人亦可傷己嗎？
+			sigh
+			say 和平日子恐怕不會持續太久了啊....
+		endif
+	else
+		mpecho $I看了看一份新送達的簡報。
+		if rand(50)
+			say 徵兵！又要徵兵！
+			say 薩瑞塔爾想要我們全民皆兵嗎？
+			say 長久以往，不是立國之道啊！
+		else
+			say 精靈族也開始整兵備戰了嗎？
+			say 再這樣下去，戰火總有一天會延燒到這裡的....
+			glare
+		endif
+	endif
+else
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpat assassin-kobold mppurge assassin-kobold
+	say 已經說服夠多的警備隊員了嗎？很好！
+	mpcallout 1 say 現在就讓我們前去逼迫薩瑞塔爾退位吧！
+	mpcallout 2 mpgroup $i $n 0
+	mpcallout 3 mpgroup self guard 1
+	mpcallout 3 mpmload 66133
+	mpcallout 3 mpgroup self guard 1
+	mpcallout 3 mpmload 66133
+	mpcallout 3 mpecho 一群地靈聽到消息，趕來加入了古拉拉的隊伍。
+	mpcallout 3 east
+	mpcallout 4 mpgroup self guard 1
+	mpcallout 4 mpmload 66133
+	mpcallout 4 mpgroup self guard 1
+	mpcallout 4 mpmload 66133
+	mpcallout 4 mpecho 一群地靈聽到消息，趕來加入了古拉拉的隊伍。
+	mpcallout 4 east
+	mpcallout 5 mpgroup self guard 1
+	mpcallout 5 mpmload 66133
+	mpcallout 5 mpgroup self guard 1
+	mpcallout 5 mpmload 66133
+	mpcallout 5 mpecho 一群地靈聽到消息，趕來加入了古拉拉的隊伍。
+	mpcallout 5 north
+	mpcallout 6 mpgroup self guard 1
+	mpcallout 6 mpmload 66133
+	mpcallout 6 mpgroup self guard 1
+	mpcallout 6 mpmload 66133
+	mpcallout 6 mpecho 一群地靈聽到消息，趕來加入了古拉拉的隊伍。
+	mpcallout 6 north
+	mpcallout 7 mpgroup self guard 1
+	mpcallout 7 mpmload 66133
+	mpcallout 7 mpgroup self guard 1
+	mpcallout 7 mpmload 66133
+	mpcallout 7 mpecho 一群地靈聽到消息，趕來加入了古拉拉的隊伍。
+	mpcallout 7 mpforce kobold-soldier-king mpgoto kobold-soldier-king
+	mpcallout 7 north
+	mpcallout 8 mpforce kobold-soldier-king say 還不快點退下！
+	mpcallout 8 mpforce kobold-soldier-king say 你..你們這麼多人過來這裡想做什麼！？
+	mpcallout 9 say 我認為你已經沒有資格再當國王了！
+	mpcallout 9 say 薩瑞塔爾，你與邪神勾結、意圖出賣地靈的所作所為已經曝光了！
+	mpcallout 10 mpforce kobold-soldier-king say 什..什麼？不可能！知情的人早就被我殺光了，妳怎麼知道的？
+	mpcallout 11 mpforce guard say 下臺啦下臺啦！
+	mpcallout 11 mpforce guard say 太過份了！
+	mpcallout 11 mpforce guard say 國王居然想要出賣我們....
+	mpcallout 11 mpforce guard say 所以這事是真的了囉？
+	mpcallout 11 mpecho 周圍的地靈們開始竊竊私語....
+	mpcallout 12 mpforce kobold-soldier-king mpecho 薩瑞塔爾臉色一變，為了自己的一時失口後悔不已。
+	mpcallout 13 mpforce kobold-soldier-king say 哼！就算被你們知道了，那也算不了什麼！
+	mpcallout 14 mpforce kobold-soldier-king say 既然我的背後靠山是邪神，難道我還會怕你們這些弱小的地靈嗎！
+	mpcallout 15 mpforce kobold-soldier-king yell 萬能的邪神啊！請助我一臂之力，誅滅這些叛徒吧！
+	mpcallout 16 mpforce kobold-soldier-king mpecho 空間忽然產生劇烈的震動，讓在場的動人立足不穩、動彈不得！
+	mpcallout 16 mpforcer here stun $n 5
+	mpcallout 17 mpforcer here echo 一股邪惡的氣息不知從何而來，漫延了整個空間！
+	mpcallout 18 mpforcer here echo 不明人物 \u001B[0m\u001B[32;1m說著「沒用的東西！把你那沒價值的靈魂交出來吧！」\u001B[0m
+	mpcallout 18 mpforcer here echo 不明人物 \u001B[0m\u001B[32;1m說著「哼！連一群愚昧的地靈都處理不了，還敢找我幫擦屁股。」\u001B[0m
+	mpcallout 19 mpforce kobold-soldier-king mpecho 薩瑞塔爾忽然面目扭曲，整個身體逐漸乾枯縮小....
+	mpcallout 19 mpforce kobold-soldier-king say 怎..怎麼會！呃..啊..嗚哇哇哇哇哇！！！
+	mpcallout 20 mppurge kobold-soldier-king
+	mpcallout 20 mpforcer here echo 失去支撐的王冠掉落到了地上。
+	mpcallout 20 mpmod_qmark $n kobold_cave_hero v2 | 512
+	mpcallout 20 mpmod_qmark $n kobold_cave_hero v1 = 21
+	mpcallout 20 mpoload 66112 36 floor
+	mpcallout 20 mpforcer here echo 在瞬息之間，薩瑞塔爾的身體就被頭頂的王冠給吸收了！
+	mpcallout 21 mpforcer here echo 隨著薩瑞塔爾的消失，空間的震動終於停歇....
+	mpcallout 22 sigh
+	mpcallout 23 say 這也算是自作自受吧？
+	mpcallout 24 say 這次的事件，多虧了英雄您了！
+	mpcallout 24 mpechoat $n $I轉過身來看向你。
+	mpcallout 24 mpechoaround $n $I轉過身來看向$N。
+	mpcallout 26 say 不過如今百廢待興，能夠回報您的也只有我們誠摯的謝意了！
+	mpcallout 27 yell 我宣布：$N\u001B[0m\u001B[33;1m從今天開始便是地靈族的英雄！
+	mpcallout 27 mpresp $n 2
+	mpcallout 27 bow $n
+	mpcallout 28 mpgoto 66171
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mppurge guard
+	mpcallout 28 mpdel_qmark self istalk
+	mpcallout 28 mpecho 在一名地靈領命後，聚起來的地靈逐漸散去，結束了這場騷動。
+endif
+"""
+[[mobiles.66108.programs]]
+trigger = "talk_prog"
+argument = "protect"
+script = """
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200005
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpechoat $n 你將贊錢拉龜斯田目但他的發現告知了古拉拉....
+	mpcallout 1 say ........！？
+	mpcallout 2 say 居然有這種事....這不是在出賣我們地靈的未來嗎？
+	mpcallout 3 ponder
+	if notbeing(kobold-soldier-king)
+		mpcallout 4 say 不過薩瑞塔爾現在也死了，我們就不需要再追究了！
+		mpcallout 4 mpdel_qmark self istalk
+	else
+		mpcallout 4 say 我知道了，我會祕密派人去保護他的。
+		mpcallout 5 say 如果這事如實，那不能不管，非得推翻薩瑞塔爾現在的統治不可。
+		mpcallout 6 say 不過，畢竟事關重大，我無法確定是不是有心人對國王的栽贓。
+		mpcallout 7 say 能否請英雄您前去仔細調查，確認一下呢？(Yes/No)
+		mpcallout 7 mpmod_qmark $n kobold_cave_hero v1 = 6
+		mpcallout 7 mpdel_qmark self istalk
+	endif
+endif
+"""
+[[mobiles.66108.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200006
+	say 太好了！那一切就拜託你了。
+	mpcallout 1 mpmod_qmark $n kobold_cave_hero v1 = 7
+endif
+"""
+[[mobiles.66108.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200006
+	say 好吧，那我也沒辦法勉強你。
+	mpcallout 1 mpmod_qmark $n kobold_cave_hero v1 = 100
+endif
+"""
+[[mobiles.66108.programs]]
+trigger = "talk_prog"
+argument = "report"
+script = """
+if is_qmark($i) == istalk
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200008
+	say 什麼！？王座底下竟然有那種東西....
+	mpadd_qmark self istalk -1 0 0 0 1 0
+	mpcallout 1 say 看樣子薩瑞塔爾的背後的確有邪惡勢力的存在。
+	mpcallout 2 say 再讓他把持著權力，他肯定會將地靈拖入戰爭的深淵的。
+	mpcallout 3 say 但是，現在卻有一堆頭腦不清楚只想著建功立業的地靈支持著他。
+	mpcallout 4 ponder
+	mpcallout 5 say 能否請您幫忙告知城中的警備隊員真相，說服他們幫忙我推翻薩瑞塔爾呢？
+	mpcallout 6 say 如果可以的話，盡可能不要動用武力比較好。
+	mpcallout 6 mpmod_qmark $n kobold_cave_hero v1 = 9
+	mpcallout 7 addoil $n
+	mpcallout 7 mpdel_qmark self istalk
+	mpmload 66132
+	mpforce assassin-kobold mpdef_rembch $n
+	mpforce assassin-kobold mpgoto 2
+endif
+"""
+
+[mobiles.66109]
+keywords = "kobold-soldier-shielder shielder"
+short_description = "地靈盾衛(Kobold Shielder)"
+long_description = "這隻地靈(Kobold)正在這裡守護著地靈的領土。\n"
+description = """
+這隻地靈高舉一張厚厚的盾牌，像一堵牆似的擋住了你的去路。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 0
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "THIEF"]
+spec_flags = ["NO_BLIND", "NO_SLEEP", "ALY_DI", "ALY_DH"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66109.applies]]
+type = "HIT"
+degree = 40000
+[[mobiles.66109.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66109.applies]]
+type = "AC"
+degree = -1500
+[[mobiles.66109.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66109.applies]]
+type = "DAMROLL"
+degree = 25
+[[mobiles.66109.applies]]
+type = "SAVING_SPELL"
+degree = -100
+[[mobiles.66109.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.66109.applies]]
+type = "APPLY_ADAMAGE"
+degree = 150
+[[mobiles.66109.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66104
+mpoload 66103 36
+mpat 2 wear all
+"""
+[[mobiles.66109.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if being(elf-soldier-marshal)
+or isfight($i)
+else
+	mppurge self
+endif
+"""
+[[mobiles.66109.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(95)
+	mpjunk shield-koboldcave
+endif
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 1500
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 3
+"""
+
+[mobiles.66110]
+keywords = "kobold-soldier-priest priest"
+short_description = "地靈祭司(Kobold Priest)"
+long_description = "這隻地靈(Kobold)正在為他的同胞恢復精力。\n"
+description = """
+這名地靈不停喃喃唸著禱文，但配上其矮小骯髒的外表一看，就一點也不會讓
+你有神聖的感覺了。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 0
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Kobold"
+spec_flags = ["NO_BLIND", "NO_SLEEP", "ALY_DI", "ALY_DH", "NO_MUTE", "NO_SEALMAGIC"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66110.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66109 1
+mpat 2 wear all
+"""
+[[mobiles.66110.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk rod-kobold
+endif
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 1500
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 3
+"""
+[[mobiles.66110.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if being(elf-soldier-marshal)
+or isfight($i)
+else
+	mppurge self
+endif
+"""
+[[mobiles.66110.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+c 'gfull heal'
+"""
+
+[mobiles.66111]
+keywords = "kobold-soldier-drillmaster drillmaster"
+short_description = "地靈教官(Kobold Drillmaster)"
+long_description = "一隻地靈(Kobold)正在這裡監督著新兵的訓練。\n"
+description = """
+一隻地靈(Kobold)正在這裡監督著新兵的訓練。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HUNT", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -700
+level = 36
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "THIEF"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66111.applies]]
+type = "HIT"
+degree = 20000
+[[mobiles.66111.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66111.applies]]
+type = "SAVING_SPELL"
+degree = -100
+[[mobiles.66111.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.66111.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpgreward exp $n 30 2500
+mpmod_qmark $n war_reward v0 + 5
+"""
+[[mobiles.66111.programs]]
+trigger = "rand_prog"
+argument = "33"
+script = """
+if mobcount(13647) == 0
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+	if is_qmark(elf-soldier-marshal) < wartime 100105
+		say 敵人攻進來了！大家快點出去協防！快～快～！
+		if inroom(elf-soldier-marshal) == 66143
+		or inroom(elf-soldier-marshal) == 66142
+		or inroom(elf-soldier-marshal) == 66140
+			mpforce kobold-soldier-soldier mpcall northdef $i
+		else
+			mpforce kobold-soldier-soldier mpcall southdef $i
+		endif
+		if rmobcount(66112) < 4
+			mpmload 66112
+		endif
+	endif
+else
+	if rand(25)
+		say 立正！抬頭！挺胸！縮小腹！報數！
+		say 揮刀！一下！兩下！三下！
+		if inroom($i) == 66144
+			mpcallout 1 ponder
+			mpcallout 2 say 奇怪？怎麼好像少了一個....
+		endif
+	endif
+endif
+"""
+
+[mobiles.66112]
+keywords = "kobold-soldier-soldier soldier"
+short_description = "地靈步卒(Kobold Soldier)"
+long_description = "一隻地靈(Kobold)正在這裡揮舞著簡陋的兵器。\n"
+description = """
+一隻地靈(Kobold)正在這裡揮舞著簡陋的兵器。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL"]
+affected_flags = []
+alignment = -700
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66112.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.66112.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66112.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66112.applies]]
+type = "APPLY_ADAMAGE"
+degree = 20
+[[mobiles.66112.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66103
+mpat 2 wear all
+"""
+[[mobiles.66112.programs]]
+trigger = "defun_prog"
+argument = "northdef"
+script = """
+if inroom($n) == 66144
+	west
+else
+	east
+endif
+n
+n
+n
+"""
+[[mobiles.66112.programs]]
+trigger = "defun_prog"
+argument = "southdef"
+script = """
+if inroom($n) == 66144
+	west
+else
+	east
+endif
+s
+s
+s
+w
+w
+"""
+[[mobiles.66112.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpjunk all
+mpgreward exp $n 30 500
+if rand(50)
+	mpmod_qmark $n war_reward v0 + 1
+endif
+"""
+
+[mobiles.66113]
+keywords = "female kobold"
+short_description = "女地靈(Female Kobold)"
+long_description = "一名女性的地靈(Female Kobold)正在這裡閒逛。\n"
+description = """
+一名女性的地靈(Female Kobold)正在這裡閒逛。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+[[mobiles.66113.applies]]
+type = "EXP"
+degree = 200
+
+[mobiles.66114]
+keywords = "male kobold"
+short_description = "男地靈(Male Kobold)"
+long_description = "一名男性的地靈(Male Kobold)正在這裡閒逛。\n"
+description = """
+一名男性的地靈(Male Kobold)正在這裡閒逛。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+[[mobiles.66114.applies]]
+type = "EXP"
+degree = 200
+
+[mobiles.66115]
+keywords = "kobold child"
+short_description = "地靈小孩(Kobold Child)"
+long_description = "一名地靈小孩(Kobold Child)正在這裡玩耍。\n"
+description = """
+一名地靈小孩(Kobold Child)正在這裡玩耍。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "WIMPY", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 10
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+[[mobiles.66115.applies]]
+type = "EXP"
+degree = 100
+
+[mobiles.66116]
+keywords = "kobold blacksmith"
+short_description = "地靈鐵匠(Kobold Blacksmith)"
+long_description = "一名地靈鐵匠(Kobold Blacksmith)正在這裡揮汗如雨地工作著。\n"
+description = """
+一名地靈鐵匠(Kobold Blacksmith)正在這裡揮汗如雨地工作著。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+[[mobiles.66116.applies]]
+type = "EXP"
+degree = 300
+
+[mobiles.66117]
+keywords = "kobold miner"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66117.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66117.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $n $I臨死前的慘叫迴響在礦坑中....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n 你不禁擔心這是否會嚇跑你要暗殺的目標。
+else
+	mpechoat $n 你不禁擔心這是否會嚇到人。
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho 地靈礦工聽到慘叫後顫抖了一下，之後便迅速地從某個密穴逃走了....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+"""
+
+[mobiles.66118]
+keywords = "kobold gateguard"
+short_description = "地靈門衛(Kobold Gateguard)"
+long_description = "一名地靈族的守門衛士(Gateguard)在這裡用著懷疑的眼神盯著你。\n"
+description = """
+一名地靈族的守門衛士(Gateguard)在這裡用著懷疑的眼神盯著你。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -700
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM", "NO_SLEEP"]
+[[mobiles.66118.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66118.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if being(elf-soldier-marshal)
+	mpecho $I退走了。
+	mppurge self
+endif
+"""
+[[mobiles.66118.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	if is_qmark($n) != kobold_cave_hero
+	or is_qmark($n) <= kobold_cave_hero 100012
+		if is_qmark($n) > war_reward 200000
+		or race($n) == elf
+			stare $n
+			if is_qmark($n) & kobold_cave_hero 300512
+				say 投靠精靈的叛徒....滾開！
+			else
+				say 精靈族的敵人啊....滾開！
+			endif
+			if race($n) != elf
+				mpcallout 1 mpechoat $n 或許你可以向他解釋(Explain)你並不是精靈族的人？
+			endif
+		else
+			if is_qmark($n) != kobold_cave_hero
+			or is_qmark($n) == kobold_cave_hero 100000
+				if isgood($n)
+					stare $n
+				endif
+				say 外族人，你沒有進入(Enter)這裡的資格，走開！
+			else
+				say 你答應帶來的精靈人頭呢？數量還不夠喔....
+			endif
+		endif
+	else
+		salute $n
+		if is_qmark($n) & kobold_cave_hero 300512
+			say 地靈族的英雄，歡迎您！
+		else
+			say 地靈族的朋友，歡迎您！
+		endif
+		tell $n 如果你想要進入(Enter)地靈洞窟的話，告訴我就可以了。
+	endif
+endif
+"""
+[[mobiles.66118.programs]]
+trigger = "talk_prog"
+argument = "explain"
+script = """
+if is_qmark($n) != kobold_cave_hero
+or is_qmark($n) == kobold_cave_hero 100000
+	mpechoat $n 你努力地向門衛解釋你並非精靈族的人....
+	mpechoaround $n $N努力地向門衛解釋他並非精靈族的人....
+	if race($n) == elf
+	or isgood($n)
+		mpcallout 1 say 少來！我的眼睛可沒瞎。
+		mpcallout 2 mpechoat $n $I看起來一點也不相信你。
+		mpcallout 2 mpechoaround $n $I看起來一點也不相信$N。
+	else
+		if is_qmark($n) > war_reward 200000
+			ponder $n
+			mpcallout 1 say 這樣啊？也許是我認錯人了吧....
+			mpcallout 2 say 但是職責所在，我也不能隨便放身份不明的人進去。
+			mpcallout 3 say 這樣吧，你從西邊的精靈鎮帶一百顆精靈族的人頭過來。
+			mpcallout 4 say 我就可以將你視為我們的朋友。
+			mpcallout 4 mpmod_qmark $n kobold_cave_hero v0 = 1
+			mpcallout 4 mpmod_qmark $n kobold_cave_hero v1 = 45
+			mpcallout 4 mpadd_qmark $n kobold_cave_hero -1 1 45 0 0 1
+		endif
+	endif
+endif
+"""
+[[mobiles.66118.programs]]
+trigger = "talk_prog"
+argument = "enter"
+script = """
+if is_qmark($n) != kobold_cave_hero
+or is_qmark($n) == kobold_cave_hero 100000
+	if is_qmark($n) > war_reward 200000
+	or race($n) == elf
+		stare $n
+		if is_qmark($n) & kobold_cave_hero 300512
+			say 投靠精靈的叛徒....滾開！
+		else
+			say 精靈族的敵人啊....滾開！
+		endif
+		if race($n) != elf
+			mpcallout 1 mpechoat $n 或許你可以向他解釋(Explain)你並不是精靈族的人？
+		endif
+	else
+		say 只有地靈族的朋友，才能進入這裡。
+		mpcallout 1 ponder $n
+		if level($n) > 35
+			mpcallout 2 say 你看起來也算有點能力，夠格與我們為友。
+			if isevil($n)
+				mpcallout 3 say 這樣吧，你從西邊的精靈鎮帶十顆精靈族的人頭過來。
+				mpcallout 4 say 我就可以將你視為我們的朋友。
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v0 = 1
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v1 = 0
+				mpcallout 4 mpadd_qmark $n kobold_cave_hero -1 1 0 0 0 1
+			else
+				mpcallout 3 say 這樣吧，你從西邊的精靈鎮帶二十顆精靈族的人頭過來。
+				mpcallout 4 say 我就可以將你視為我們的朋友。
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v0 = 1
+				mpcallout 4 mpmod_qmark $n kobold_cave_hero v1 = 5
+				mpcallout 4 mpadd_qmark $n kobold_cave_hero -1 1 5 0 0 1
+			endif
+		else
+			mpcallout 2 say 你的能力太弱了，不夠格與我們為友。
+			mpcallout 3 wave $n
+		endif
+	endif
+else
+	if is_qmark($n) < kobold_cave_hero 100013
+	or is_qmark($n) != kobold_cave_hero
+	else
+		nod $n
+		mpechoat $n $I迅速地打開門讓你進去。
+		mpechoaround $n $I迅速地打開門讓$N進去。
+		mptransfer $n 66134
+	endif
+endif
+"""
+[[mobiles.66118.programs]]
+trigger = "give_prog"
+argument = "13668"
+script = """
+if is_qmark($n) != kobold_cave_hero
+or is_qmark($n) == kobold_cave_hero 100000
+or is_qmark($n) > kobold_cave_hero 100012
+	? $n
+	drop $o
+else
+	mpjunk $o
+	good $n
+	if is_qmark($n) <= kobold_cave_hero 100013
+		mpmod_qmark $n kobold_cave_hero v0 + 1
+	endif
+	if is_qmark($n) <= kobold_cave_hero 200000
+	or is_qmark($n) != kobold_cave_hero 100003
+	else
+		mpmod_qmark $n kobold_cave_hero v0 = 1
+		mpmod_qmark $n kobold_cave_hero v1 - 1
+	endif
+	if is_qmark($n) == kobold_cave_hero 100011
+		mpmod_qmark $n war_reward v1 = 0
+		mpmod_qmark $n kobold_cave_hero v0 = 13
+		mpcallout 1 gasp $n
+		mpcallout 2 say 太棒了！你真是一位強大的冒險者！
+		mpcallout 3 say 地靈族交了你這個朋友了！
+		mpcallout 4 say 如果你想進入(Enter)我們洞窟的話，只要跟我說一聲就好了。
+	endif
+endif
+"""
+[[mobiles.66118.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+say 就算你殺了我，你也無法踏進地靈洞窟一步的！
+"""
+
+[mobiles.66119]
+keywords = "kobold youth"
+short_description = "地靈青年(Kobold Youth)"
+long_description = "一名地靈青年(Kobold Youth)在立志要從軍報國。\n"
+description = """
+一名地靈青年(Kobold Youth)閱讀著徵兵文書，眼裡閃爍著熱血的光輝。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+[[mobiles.66119.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66119.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if rand(50)
+	say 那些精靈實在太可惡了！
+else
+	say 我也要去從軍，殺光西邊的那些精靈！
+endif
+"""
+[[mobiles.66119.programs]]
+trigger = "rand_prog"
+argument = "10"
+script = """
+if pcnum($) > 0
+	if rand(50)
+		say 那些精靈實在太可惡了！
+	else
+		say 我也要去從軍，殺光西邊的那些精靈！
+	endif
+endif
+"""
+
+[mobiles.66120]
+keywords = "kobold officer flack"
+short_description = "地靈宣傳官(Kobold Flack)"
+long_description = "一名地靈軍官(Kobold Officer)正在這裡鼓動其他地靈參軍。\n"
+description = """
+一名地靈軍官(Kobold Officer)正在這裡鼓動其他地靈參軍。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -700
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66120.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66120.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if pcnum($) > 0
+	if rand(50)
+		if rand(50)
+			say 加入榮耀的部隊，勦滅萬惡的精靈！
+			say 你還在等什麼呢，同樣身為崇高地靈的同志們？
+		else
+			say 現在起，只要帶來一顆精靈的人頭，
+			say 就有機會立刻加入部隊，直升尉官喔！
+		endif
+	else
+		if rand(50)
+			say 你們知道嗎？西邊精靈鎮的精靈們吃完飯都不刷牙的！
+			say 更過份的是，當我們大軍到來時，他們竟然屢次反抗。
+			say 多麼無恥的種族啊！快來加入部隊，消滅他們吧！
+		else
+			say 十萬地靈十萬軍，寸金難買地靈心！
+			say 同胞們，地靈們要站起來啦！
+		endif
+	endif
+endif
+"""
+[[mobiles.66120.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 現在起，只要帶來一顆精靈的人頭，
+say 就有機會立刻加入部隊，直升尉官喔！
+look $n
+say 呃....就算是外族人，也是可以得到我們的獎勵的。
+"""
+[[mobiles.66120.programs]]
+trigger = "give_prog"
+argument = "13668"
+script = """
+if race($n) == elf
+	break
+endif
+mpjunk $o
+good $n
+mpgold $n 10000
+if rand(20)
+	if is_qmark($n) >= kobold_cave_hero 100029
+	or is_qmark($n) > kobold_cave_hero 300000
+	or is_qmark($n) != kobold_cave_hero
+	else
+		mpmod_qmark $n kobold_cave_hero v0 + 1
+		if is_qmark($n) == kobold_cave_hero 100029
+			mpmod_qmark $n kobold_cave_hero v0 = 30
+			mpmod_qmark $n kobold_cave_hero v2 | 1
+			mpcallout 1 ponder $n
+			mpcallout 2 tell $n 這位外族的英雄，您屠戮精靈的事蹟已經傳遍大街小巷了。
+			mpcallout 3 tell $n 偉大的地靈王已經聽說了您，希望能夠見您一面。
+			mpcallout 4 tell $n 請您立刻前去謁見吧！
+		endif
+	endif
+endif
+"""
+
+[mobiles.66121]
+keywords = "dire-mob wolf-kobold"
+short_description = "大型兇暴狼(Dire Wolf)"
+long_description = "一匹野性十足的大型兇暴狼(Wolf)正在這裡尋找獵物。\n"
+description = """
+一匹野性十足的大型兇暴狼正在這裡尋找獵物。牠的身材簡直跟馬差不多大！
+"""
+act_flags = ["NPC", "SENTINEL", "WIMPY", "CRITICAL", "HUNT", "TRACK", "REGENERACY", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SNEAK", "HIDE"]
+alignment = -700
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+class = ["WARRIOR", "THIEF", "BLOODY"]
+[[mobiles.66121.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.66121.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66121.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.66121.programs]]
+trigger = "rand_prog"
+argument = "10"
+script = """
+if pcnum($) > 0
+	if race($r) != werewolf
+		mpechoat $r $I突然張開巨口向你咬來....！
+		mpechoaround $r $I突然張開巨口向$R咬去....！
+		mpkill $r
+	else
+		if rand(33)
+			mpechoat $b $I在你身上不停地聞聞嗅嗅，一副很親熱的樣子。
+			mpechoaround $b $I在$B身上不停地聞聞嗅嗅，一副很親熱的樣子。
+			mpmload 66139
+			mpforce dire-mob2 follow $n
+			mpgroup $n dire-mob2
+			mpforce dire-mob2 mpdef_rembch $n
+			mppurge self
+		endif
+	endif
+endif
+"""
+[[mobiles.66121.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if race($n) != werewolf
+	mpechoat $n $I突然張開巨口向你咬來....！
+	mpechoaround $n $I突然張開巨口向$N咬去....！
+	mpkill $n
+else
+	if rand(33)
+		mpechoat $b $I在你身上不停地聞聞嗅嗅，一副很親熱的樣子。
+		mpechoaround $b $I在$B身上不停地聞聞嗅嗅，一副很親熱的樣子。
+		mpmload 66139
+		mpforce dire-mob2 follow $n
+		mpgroup $n dire-mob2
+		mpforce dire-mob2 mpdef_rembch $n
+		mppurge self
+	endif
+endif
+"""
+[[mobiles.66121.programs]]
+trigger = "entry_prog"
+argument = "100"
+script = """
+if pcnum($) > 0
+	if race($r) != werewolf
+		mpechoat $r $I突然張開巨口向你咬來....！
+		mpechoaround $r $I突然張開巨口向$R咬去....！
+		mpkill $r
+	else
+		if rand(33)
+			mpechoat $b $I在你身上不停地聞聞嗅嗅，一副很親熱的樣子。
+			mpechoaround $b $I在$B身上不停地聞聞嗅嗅，一副很親熱的樣子。
+			mpmload 66139
+			mpforce dire-mob2 follow $n
+			mpgroup $n dire-mob2
+			mpforce dire-mob2 mpdef_rembch $n
+			mppurge self
+		endif
+	endif
+endif
+"""
+[[mobiles.66121.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(20)
+	frenzy
+endif
+"""
+
+[mobiles.66122]
+keywords = "resting kobold"
+short_description = "休息中的地靈(Resting Kobold)"
+long_description = "一名地靈士兵(Kobold)正在這裡休息。\n"
+description = """
+一名地靈士兵(Kobold)正在這裡休息。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL"]
+affected_flags = []
+alignment = -700
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.66122.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.66122.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66122.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66122.applies]]
+type = "APPLY_ADAMAGE"
+degree = 20
+[[mobiles.66122.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+sleep
+"""
+[[mobiles.66122.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if pcnum($) > 0
+	if rand(80)
+		?
+		yawn
+		mpcallout 10 sleep
+	else
+		if is_qmark($r) <= kobold_cave_hero 100012
+		or is_qmark($r) > kobold_cave_hero 200000
+		or is_qmark($r) > kobold_cave_hero 300000
+		or is_qmark($r) != kobold_cave_hero
+		else
+			?
+			yawn
+			mpcallout 1 say ..........
+			mpcallout 2 say ！？
+			mpcallout 3 say 糟了！我都忘記我表弟已經不在，沒人叫我起床了。
+			mpcallout 4 say ..........
+			mpcallout 5 sleep
+			mpcallout 5 say 算了，還是繼續睡吧！
+			mpcallout 5 mpmod_qmark $r kobold_cave_hero v1 = 1
+		endif
+	endif
+endif
+"""
+[[mobiles.66122.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) <= kobold_cave_hero 100012
+or is_qmark($n) == kobold_cave_hero 200001
+or is_qmark($n) > kobold_cave_hero 300000
+or is_qmark($n) != kobold_cave_hero
+	if is_qmark($n) == kobold_cave_hero 200001
+		say 我表弟名字叫贊錢拉龜斯田目但他，以前都是他叫我起床的。
+		mpcallout 1 say 後來他不知道犯了什麼錯，被趕出軍隊了。
+		mpcallout 2 say 只是不知道為什麼，從那時候起他就一副畏首畏尾的樣子。
+		mpcallout 3 say 不知道在怕什麼(something)？
+		mpcallout 4 say 他現在似乎是跑到礦坑去當個礦工了。
+		mpcallout 5 sleep
+		mpcallout 5 yawn
+		mpcallout 5 say .....反正這也不關我的事，我還是繼續睡吧！
+		if is_qmark($n) !& kobold_cave_hero 300512
+			mpcallout 5 mpmod_qmark $n kobold_cave_hero v1 = 2
+		endif
+	else
+		?
+		yawn
+		mpcallout 10 sleep
+	endif
+else
+	?
+	yawn
+	mpcallout 1 say ..........
+	mpcallout 2 say ！？
+	mpcallout 3 say 糟了！我都忘記我表弟已經不在，沒人叫我起床了。
+	mpcallout 4 say ..........
+	mpcallout 5 sleep
+	mpcallout 5 say 算了，還是繼續睡吧！
+	mpcallout 5 mpmod_qmark $n kobold_cave_hero v1 = 1
+endif
+"""
+
+[mobiles.66123]
+keywords = "resting kobold"
+short_description = "休息中的地靈(Resting Kobold)"
+long_description = "一名地靈士兵(Kobold)正在這裡休息。\n"
+description = """
+一名地靈士兵(Kobold)正在這裡休息。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL"]
+affected_flags = []
+alignment = -700
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.66123.applies]]
+type = "HIT"
+degree = 8000
+[[mobiles.66123.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66123.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66123.applies]]
+type = "APPLY_ADAMAGE"
+degree = 20
+[[mobiles.66123.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+sleep
+"""
+[[mobiles.66123.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if pcnum($) > 0
+	?
+	yawn
+	sleep
+endif
+"""
+[[mobiles.66123.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+?
+yawn
+sleep
+"""
+
+[mobiles.66124]
+keywords = "kobold miner-uuddllrrabab"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字－贊錢拉龜斯田目但他的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66124.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.66124.applies]]
+type = "HITROLL"
+degree = 30
+[[mobiles.66124.applies]]
+type = "DAMROLL"
+degree = 30
+[[mobiles.66124.applies]]
+type = "APPLY_ADAMAGE"
+degree = 30
+[[mobiles.66124.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if notbeing(kobold-soldier-king)
+	mppurge self
+endif
+if pcnum($) > 0
+	if is_qmark($r) & kobold_cave_hero 300004
+		look $r
+		fear
+		say 你一定是刺客！來殺我的刺客！
+		help!
+		mpecho $I趁著他的叫喊擾亂到你的心神時，迅速從某處密穴逃走了....
+		mppurge self
+	endif
+endif
+"""
+[[mobiles.66124.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+		yell 救命啊～有刺客！有人要殺我啊～～
+		help!
+	endif
+"""
+[[mobiles.66124.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+yell 不！我不想死～我不想死啊～～～
+if is_qmark($n) & kobold_cave_hero 300004
+	mpmod_qmark $n kobold_cave_hero v2 r 4
+	mpmod_qmark $n kobold_cave_hero v2 | 8
+	mpechoat $n 看來你已經完成任務，可以去回報了(Report)。
+endif
+"""
+[[mobiles.66124.programs]]
+trigger = "talk_prog"
+argument = "something"
+script = """
+if is_qmark($n) == kobold_cave_hero 200002
+	fear
+	mpcallout 1 say 我..我什麼都沒看到！什麼都沒聽到！
+	mpcallout 2 leave
+	mpmod_qmark $n kobold_cave_hero v1 = 3
+	mpmload 66131
+	break
+endif
+if is_qmark($n) == kobold_cave_hero 200003
+	if is_qmark($i) != beassed
+		forget
+		leave
+		break
+	else
+		mpecho $I一副驚魂未定的樣子，好像還未從剛才的刺殺中回復過來。
+		mpcallout 1 say 沒想到即使我緊守祕密，他(He)還是不肯放過我....
+		mpcallout 1 mpmod_qmark $n kobold_cave_hero v1 = 4
+		mpcallout 2 glare
+		mpcallout 3 say 難不成要我離鄉背井才肯罷休嗎？
+		mpcallout 4 sigh
+	endif
+endif
+"""
+[[mobiles.66124.programs]]
+trigger = "talk_prog"
+argument = "he"
+script = """
+if is_qmark($n) == kobold_cave_hero 200004
+	say 他....就是地靈之王－薩瑞塔爾！
+	mpcallout 1 say 之前，我在回家時不小心迷了路....
+	mpcallout 2 say 結果在一處隱密的地方窺見了薩瑞塔爾與某位「使者」的會面。
+	mpcallout 3 say 那位使者似乎是由某個被稱為「主宰」的傢伙派來的，
+	mpcallout 4 say 目的是賜給薩瑞塔爾某種力量，讓牠率領地靈發動戰爭，
+	mpcallout 5 say 藉此消耗這個大陸上所有種族的力量。
+	mpcallout 6 say 我知道這件事之後，一直很小心，從來沒有跟人透露過。
+	mpcallout 7 say 怎麼還是被發現了呢？
+	mpcallout 8 sigh
+	mpcallout 9 say 這下子，叫我該如何是好呢？
+	mpcallout 10 mpechoat $n 你心想：這裡有誰是可以庇佑(Protect)他不被薩瑞塔爾加害的呢？
+	mpcallout 10 mpmod_qmark $n kobold_cave_hero v1 = 5
+endif
+"""
+
+[mobiles.66125]
+keywords = "kobold miner-uuddllrraba"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字－贊錢拉龜斯田目但也的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66125.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66125.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $n $I臨死前的慘叫迴響在礦坑中....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n 你不禁擔心這是否會嚇跑你要暗殺的目標。
+else
+	mpechoat $n 你不禁擔心這是否會嚇到人。
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho 地靈礦工聽到慘叫後顫抖了一下，之後便迅速地從某個密穴逃走了....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+"""
+
+[mobiles.66126]
+keywords = "kobold miner-uuddllrraba"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字－贊賤拉龜斯田目但他的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66126.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66126.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $n $I臨死前的慘叫迴響在礦坑中....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n 你不禁擔心這是否會嚇跑你要暗殺的目標。
+else
+	mpechoat $n 你不禁擔心這是否會嚇到人。
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho 地靈礦工聽到慘叫後顫抖了一下，之後便迅速地從某個密穴逃走了....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+"""
+
+[mobiles.66127]
+keywords = "kobold miner-uuddllrraba"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字－贊錢啦龜斯田目但他的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66127.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66127.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $n $I臨死前的慘叫迴響在礦坑中....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n 你不禁擔心這是否會嚇跑你要暗殺的目標。
+else
+	mpechoat $n 你不禁擔心這是否會嚇到人。
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho 地靈礦工聽到慘叫後顫抖了一下，之後便迅速地從某個密穴逃走了....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+"""
+
+[mobiles.66128]
+keywords = "kobold miner-uuddllrraba"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字－贊錢拉龜撕田目但他的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66128.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66128.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $n $I臨死前的慘叫迴響在礦坑中....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n 你不禁擔心這是否會嚇跑你要暗殺的目標。
+else
+	mpechoat $n 你不禁擔心這是否會嚇到人。
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho 地靈礦工聽到慘叫後顫抖了一下，之後便迅速地從某個密穴逃走了....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+"""
+
+[mobiles.66129]
+keywords = "kobold miner-uuddllrraba"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字－贊錢拉龜斯田日但他的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66129.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66129.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $n $I臨死前的慘叫迴響在礦坑中....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n 你不禁擔心這是否會嚇跑你要暗殺的目標。
+else
+	mpechoat $n 你不禁擔心這是否會嚇到人。
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho 地靈礦工聽到慘叫後顫抖了一下，之後便迅速地從某個密穴逃走了....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+"""
+
+[mobiles.66130]
+keywords = "kobold miner-uuddllrraba"
+short_description = "地靈礦工(Kobold Miner)"
+long_description = "一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著。\n"
+description = """
+一名地靈礦工(Kobold Miner)正在這裡辛苦地挖掘著，他的胸前貼著寫著他的
+名字－贊錢拉龜斯田目旦他的名牌。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "NO_PAR"]
+affected_flags = []
+alignment = -300
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66130.applies]]
+type = "EXP"
+degree = 200
+[[mobiles.66130.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpecho $n $I臨死前的慘叫迴響在礦坑中....
+if is_qmark($n) & kobold_cave_hero 300004
+	mpechoat $n 你不禁擔心這是否會嚇跑你要暗殺的目標。
+else
+	mpechoat $n 你不禁擔心這是否會嚇到人。
+endif
+if rand(50)
+	mpat miner-uuddllrrabab mpecho 地靈礦工聽到慘叫後顫抖了一下，之後便迅速地從某個密穴逃走了....
+	mpat miner-uuddllrrabab mppurge miner-uuddllrrabab
+endif
+"""
+
+[mobiles.66131]
+keywords = "kobold assassin"
+short_description = "地靈刺客(Kobold Assassin)"
+long_description = "一個蒙著面的地靈(Kobold)正準備偷襲他的目標。\n"
+description = """
+一個蒙著面的地靈(Kobold)正準備偷襲他的目標。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = []
+alignment = -300
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+spec_flags = ["NO_CHARM"]
+[[mobiles.66131.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpgoto 2
+mpoload 66103 35
+wear all
+mpadd_qmark self gotarget 1 0 0 0 1 0
+"""
+[[mobiles.66131.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+if is_qmark($i) != gotarget
+	mpgoto miner-uuddllrrabab
+	mpadd_qmark miner-uuddllrrabab beassed -1 0 0 0 1 0
+	mpecho 角落的陰影裡突然跳出了一名蒙著面的地靈！
+	mpkill miner-uuddllrrabab
+endif
+"""
+[[mobiles.66131.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+if rand(50)
+		mpecho $I眼見一擊不中，立即遁走！
+		mpgoto 2
+	endif
+"""
+[[mobiles.66131.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpat miner-uuddllrrabab mpadd_qmark miner-uuddllrrabab beassed -1 0 0 0 1 0
+"""
+
+[mobiles.66132]
+keywords = "kobold assassin-kobold"
+short_description = "地靈刺客(Kobold Assassin)"
+long_description = "一個蒙著面的地靈(Kobold)正準備偷襲他的目標。\n"
+description = """
+一個蒙著面的地靈(Kobold)正準備偷襲他的目標。
+"""
+act_flags = ["NPC", "SENTINEL", "WIMPY", "CRITICAL", "HARD_DIS", "HUNT", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -300
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "THIEF"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_DI", "ALY_DH", "EXPERT"]
+[[mobiles.66132.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66132.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpoload 66103
+mpat 2 wear all
+mpadd_qmark self gotarget 1 0 0 0 1 0
+"""
+[[mobiles.66132.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+if is_qmark($i) != gotarget
+	mpgoto $b
+	mpecho 角落的陰影裡突然跳出了一名蒙著面的地靈！
+	bs $b
+	mpgoto $b
+	bs $b
+	mpgoto $b
+	bs $b
+	mpkill $b
+endif
+"""
+[[mobiles.66132.programs]]
+trigger = "fight_prog"
+argument = "33"
+script = """
+mpecho $I眼見一擊不中，立即遁走！
+mpgoto 2
+"""
+[[mobiles.66132.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpjunk all
+mpmload 66132
+mpforce assassin-kobold mpdef_rembch $n
+mpforce assassin-kobold mpgoto 2
+"""
+
+[mobiles.66133]
+keywords = "kobold guard"
+short_description = "警備隊隊員(Kobold Guard)"
+long_description = "一名地靈(Kobold)正在這裡維持治安。\n"
+description = """
+一名地靈(Kobold)正在這裡維持治安。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "HUNT"]
+affected_flags = []
+alignment = -700
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_DI", "ALY_DH", "EXPERT"]
+[[mobiles.66133.applies]]
+type = "EXP"
+degree = 300
+[[mobiles.66133.applies]]
+type = "HITROLL"
+degree = 10
+[[mobiles.66133.applies]]
+type = "APPLY_ADAMAGE"
+degree = 20
+[[mobiles.66133.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if pcnum($) > 0
+	if fightwith($r) / kobold
+		if isfight($i)
+		else
+			yell 愚蠢的狂徒$R\u001B[0m\u001B[33;1m，竟敢在此攻擊吾輩地靈！
+			mpkill $r
+		endif
+	endif
+endif
+"""
+[[mobiles.66133.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpjunk sword-kobold
+"""
+[[mobiles.66133.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) < kobold_cave_hero 200009
+or is_qmark($n) == kobold_cave_hero 200020
+or is_qmark($n) != kobold_cave_hero
+or is_qmark($n) & kobold_cave_hero 300512
+else
+	if notbeing(assassin-kobold)
+		mpmload 66132
+		mpforce assassin-kobold mpdef_rembch $n
+		mpforce assassin-kobold mpgoto 2
+	endif
+	if is_qmark($i) != questtalked
+		mpadd_qmark self questtalked -1 0 0 0 1 0
+		mpechoat $n 你將薩瑞塔爾的所作所為告訴了$I....
+		mpcallout 1 say 你說什麼？地靈王在暗地裡接觸邪神的力量？
+		if rand(50)
+			mpcallout 2 say 這樣不是很好嗎？
+			mpcallout 3 say 有了邪神的力量，想必就能夠更快的消滅西邊那群精靈吧？
+		else
+			mpcallout 2 say 這有什麼關係呢？
+			mpcallout 3 say 不是有句話嗎？善神邪神，能幫助我們的就是好神！
+		endif
+		mpcallout 4 mpforce $n -
+		mpcallout 5 mpechoat $n 你將此事的利弊得失仔仔細細地對$I分析。
+		mpcallout 5 mpechoaround $n $N將此事的利弊得失仔仔細細地對$I分析。
+		if int($n) > 19
+		or wis($n) > 19
+			if rand(80)
+				mpcallout 6 say 唔唔....原來如此！原來如此！
+				mpcallout 7 say 雖然我還是搞不太清楚啦！
+				mpcallout 8 say 總之只要幫助古拉拉小姐推翻薩瑞塔爾就好了是吧？
+				mpcallout 8 mpmod_qmark $n kobold_cave_hero v1 + 1
+				if is_qmark($n) == kobold_cave_hero 200009
+					mpcallout 9 mpechoat $n 你終於說服一個人了！
+				else
+					if is_qmark($n) == kobold_cave_hero 200019
+						mpcallout 9 mpechoat $n 你覺得你說服的人數差不多已經夠了，回去找古拉拉吧！
+						mpcallout 9 mpmod_qmark $n kobold_cave_hero v1 = 20
+					else
+						mpcallout 9 mpechoat $n 你又說服一個人了！
+					endif
+				endif
+			else
+				mpcallout 6 say 你到底在說什麼啊？我根本聽不懂！
+				mpcallout 7 say 總之你是在說地靈王的壞話是吧？
+				mpcallout 8 mpkill $n
+				mpcallout 8 yell 你這個間諜，死來！
+			endif
+		else
+			if rand(40)
+				mpcallout 6 say 唔唔....原來如此！原來如此！
+				mpcallout 7 say 雖然我還是搞不太清楚啦！
+				mpcallout 8 say 總之只要幫助古拉拉小姐推翻薩瑞塔爾就好了是吧？
+				mpcallout 8 mpmod_qmark $n kobold_cave_hero v1 + 1
+				if is_qmark($n) == kobold_cave_hero 200009
+					mpcallout 9 mpechoat $n 你終於說服一個人了！
+				else
+					if is_qmark($n) == kobold_cave_hero 200019
+						mpcallout 9 mpechoat $n 你覺得你說服的人數差不多已經夠了，回去找古拉拉吧！
+						mpcallout 9 mpmod_qmark $n kobold_cave_hero v1 = 20
+					else
+						mpcallout 9 mpechoat $n 你又說服一個人了！
+					endif
+				endif
+			else
+				mpcallout 6 say 你到底在說什麼啊？我根本聽不懂！
+				mpcallout 7 say 總之你是在說地靈王的壞話是吧？
+				mpcallout 8 mpkill $n
+				mpcallout 8 yell 你這個間諜，死來！
+			endif
+		endif
+	else
+		say 你已經對我說過這件事了！
+	endif
+endif
+"""
+
+[mobiles.66134]
+keywords = "evil dragon doll-kobold"
+short_description = "邪龍偶(Evil Dragon Doll)"
+long_description = "一隻散發著邪氣的巨龍(Dragon)幾乎快把這裡的空間給佔滿了！\n"
+description = """
+一隻散發著邪氣的巨龍(Dragon)幾乎快把這裡的空間給佔滿了！
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "CRITICAL", "HUNT", "TACTICS", "REGENERACY", "MOB_AI", "REFLEXION"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -1000
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Dragon"
+class = ["WARRIOR", "MAGE", "THIEF", "BLOODY"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_CURSE", "NO_POISON", "NO_SLEEP", "ANTI_MAGIC", "ALY_DI", "ALY_DH", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "NO_PARA", "SPELL_FURY"]
+[[mobiles.66134.applies]]
+type = "HITROLL"
+degree = 100
+[[mobiles.66134.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.66134.applies]]
+type = "SAVING_EARTH"
+degree = -50
+[[mobiles.66134.applies]]
+type = "SAVING_WIND"
+degree = -30
+[[mobiles.66134.applies]]
+type = "POWER_POTENTIAL"
+degree = 40
+[[mobiles.66134.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.66134.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self enable_fight_tick -1 0 0 0 1 0
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.66134.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if being(kobold-soldier-king)
+	mpecho 失去了製造者的控制，邪龍偶分崩離析了....
+	mppurge self
+	break
+endif
+if inroom($i) != 66170
+	if isfight($i)
+	else
+		mpgoto 66170
+	endif
+endif
+"""
+[[mobiles.66134.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+mpecho $I雙翼一展，帶起一陣旋風衝向$N！
+cast 3 'whirlwind' $n
+frenzy $n
+mpforcer here cast fear $n 50
+"""
+[[mobiles.66134.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+mpecho 一團團令人作嘔的屍氣從$I的身上漫延開來！
+cast 3 'gas breath'
+mpechoat $r 你神智一陣恍惚，不由自主地便朝著$I走去。
+mpechoaround $r $R忽然像是活死人般地朝著$I走去。
+mptransfer $r $i
+mpforce $r autocombat
+mpforce $r mpkill $i
+"""
+[[mobiles.66134.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+mpecho $I巨嘴一張，強烈的能量洪量便從其中湧出！
+cast 'fire breath' $n
+cast 'frost breath' $n
+cast 'lightning breath' $n
+"""
+[[mobiles.66134.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if notbeing(elf-soldier-marshal)
+or is_qmark(elf-soldier-marshal) >= wartime 100105
+	mpecho 一顆光球從$I分崩離析的軀體中飄了出來！
+	mpoload 66110 36 floor
+endif
+"""
+
+[mobiles.66135]
+keywords = "elf-soldier-nurse nurse"
+short_description = "精靈護士(Elf Nurse)"
+long_description = "一名身穿白袍的精靈護士(Nurse)正在這裡救治傷兵。\n"
+description = """
+一名身穿白袍的精靈護士正在這裡救治傷兵。你可以向她索回你的裝備(EQ)。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_HIDDEN", "SANCTUARY", "SNEAK"]
+alignment = 500
+level = 60
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+[[mobiles.66135.programs]]
+trigger = "talk_prog"
+argument = "eq"
+script = """
+if groupwith($n) / elf-soldier-marshal
+	say 好的！請稍等一下。
+	cast 'grave robber' $n
+	cast 'detect invis' $n
+endif
+"""
+
+[mobiles.66136]
+keywords = "kobold-soldier-berserker berserker"
+short_description = "地靈狂暴戰士(Kobold Berserker)"
+long_description = "一隻威猛無匹地靈戰士(Kobold)正在這裡與精靈遠征軍戰鬥。\n"
+description = """
+這名兇暴的地靈看起來威勢十足，足以粉碎一切擋在他眼前的敵人。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HUNT"]
+affected_flags = ["SANCTUARY"]
+alignment = -700
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["EXPERT"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66136.applies]]
+type = "HIT"
+degree = 50000
+[[mobiles.66136.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66136.applies]]
+type = "AC"
+degree = 500
+[[mobiles.66136.applies]]
+type = "HITROLL"
+degree = 30
+[[mobiles.66136.applies]]
+type = "DAMROLL"
+degree = 60
+[[mobiles.66136.applies]]
+type = "SAVING_ELEMENT"
+degree = -50
+[[mobiles.66136.applies]]
+type = "REDUCE_DAMAGE"
+degree = -200
+[[mobiles.66136.applies]]
+type = "REDUCE_MAGIC"
+degree = 200
+[[mobiles.66136.applies]]
+type = "APPLY_ADAMAGE"
+degree = 300
+[[mobiles.66136.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66105 36
+mpgoto 2
+wear all
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+"""
+[[mobiles.66136.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+berserk
+frenzy
+"""
+[[mobiles.66136.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk greatsword-kobold
+endif
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 2000
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+"""
+[[mobiles.66136.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if mobcount(13647) == 0
+	mpecho $I退走了。
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I退走了。
+	mppurge self
+endif
+"""
+
+[mobiles.66137]
+keywords = "kobold-soldier-heavy-fighter fighter"
+short_description = "地靈重裝戰士(Kobold Heavy Fighter)"
+long_description = "一隻身穿重甲的地靈(Kobold)正在這裡防禦精靈遠征軍的攻勢。\n"
+description = """
+這名身穿重甲的地靈看起來精於防禦技巧，且善於糾纏敵人。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "HUNT"]
+affected_flags = ["SANCTUARY"]
+alignment = -700
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["EXPERT"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66137.applies]]
+type = "HIT"
+degree = 70000
+[[mobiles.66137.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66137.applies]]
+type = "AC"
+degree = -2000
+[[mobiles.66137.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66137.applies]]
+type = "DAMROLL"
+degree = 30
+[[mobiles.66137.applies]]
+type = "SAVING_ELEMENT"
+degree = 50
+[[mobiles.66137.applies]]
+type = "REDUCE_DAMAGE"
+degree = 3000
+[[mobiles.66137.applies]]
+type = "REDUCE_MAGIC"
+degree = -3000
+[[mobiles.66137.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.66137.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 66103
+mpoload 66115
+mpgoto 2
+wear all
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+"""
+[[mobiles.66137.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if isaffected($n) !& 64
+	mpechoat $n $I施展出精湛的戰鬥技巧，將你牢牢纏住，脫身不得！
+	mpechoaround $n $I施展出精湛的戰鬥技巧，將$N牢牢纏住，脫身不得！
+	mpforcer here add_affect $n 'snare' 0 1 39 100 64
+endif
+change $r
+"""
+[[mobiles.66137.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpjunk sword-kobold
+if is_qmark($n) < war_reward 200005
+or is_qmark($n) != war_reward
+or rand(67)
+	mpjunk kobold-obj-ha
+endif
+mpgreward exp $n 30 2000
+mpmod_qmark $n war_reward v0 + 3
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+"""
+[[mobiles.66137.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if mobcount(13647) == 0
+	mpecho $I退走了。
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I退走了。
+	mppurge self
+endif
+"""
+
+[mobiles.66138]
+keywords = "kobold-soldier-sorcerer sorcerer"
+short_description = "地靈術士(Kobold Sorcerer)"
+long_description = "一隻地靈術士(Kobold)正在這裡施法攻擊精靈遠征軍。\n"
+description = """
+這名地靈術士不停施展各種邪惡的詛咒，讓他的敵人變得虛弱。
+"""
+act_flags = ["NPC", "STAY_AREA", "REGENERACY", "MOB_AI"]
+affected_flags = ["SANCTUARY", "MANASHIELD"]
+alignment = -700
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Kobold"
+class = ["MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "EXPERT"]
+program_files = ["kobold_cave_kobs.prg"]
+[[mobiles.66138.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.66138.applies]]
+type = "EXP"
+degree = -2000
+[[mobiles.66138.applies]]
+type = "AC"
+degree = -500
+[[mobiles.66138.applies]]
+type = "DODGE"
+degree = -200
+[[mobiles.66138.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.66138.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpgoto 2
+if rand(33)
+	mpteleport vnum 66112 66115
+else
+	mpteleport vnum 66118 66125
+endif
+mpmodify mana + 10000
+mpforcer here c 'full recharge' $i 50
+"""
+[[mobiles.66138.programs]]
+trigger = "fight_prog"
+argument = "70"
+script = """
+mpechoat $r $I喃喃地唸出邪惡的咒文，一道黑霧應聲朝你附著而來！
+mpechoaround $r $I喃喃地唸出邪惡的咒文，一道黑霧應聲朝$R附著而去！
+mpforcer here add_affect $r 'curse' 1140 1 18 -5 1024
+mpforcer here add_affect $r 'curse' 1140 1 19 -5 1024
+if rand(50)
+	cast 3 colour $r
+	cast weaken $r
+else
+	cast tardy $r
+endif
+cast 3 harm $r
+"""
+[[mobiles.66138.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpmod_qmark $n war_reward v0 + 3
+mpgreward exp $n 30 2000
+mpat elf-soldier-marshal mpmod_qmark elf-soldier-marshal wartime v1 + 5
+"""
+[[mobiles.66138.programs]]
+trigger = "rand_prog"
+argument = "100"
+script = """
+if mobcount(13647) == 0
+	mpecho $I退走了。
+	mppurge self
+	break
+endif
+if is_qmark(elf-soldier-marshal) == wartime 300003
+or notbeing(elf-soldier-marshal)
+	mpecho $I退走了。
+	mppurge self
+endif
+"""
+
+[mobiles.66139]
+keywords = "dire-mob2 wolf-kobold"
+short_description = "大型兇暴狼(Dire Wolf)"
+long_description = "一匹野性十足的大型兇暴狼(Wolf)正在這裡尋找獵物。\n"
+description = """
+一匹野性十足的大型兇暴狼正在這裡尋找獵物。牠的身材簡直跟馬差不多大！
+"""
+act_flags = ["NPC", "SENTINEL", "WIMPY", "CRITICAL", "HUNT", "TRACK", "REGENERACY", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SNEAK", "HIDE"]
+alignment = -700
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+class = ["WARRIOR", "THIEF", "BLOODY"]
+replica = 66111
+[[mobiles.66139.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.66139.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.66139.applies]]
+type = "APPLY_ADAMAGE"
+degree = 50
+[[mobiles.66139.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if being($b)
+	if insameroom($b)
+	else
+		mpgoto $b
+	endif
+else
+	mppurge self
+endif
+"""
+[[mobiles.66139.programs]]
+trigger = "rand_prog"
+argument = "10"
+script = """
+mpechoat $b $I在你身上不停地聞聞嗅嗅，一副很親熱的樣子。
+mpechoaround $b $I在$B身上不停地聞聞嗅嗅，一副很親熱的樣子。
+"""
+[[mobiles.66139.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if rand(33)
+	mpechoat $b $I在你身上不停地聞聞嗅嗅，一副很親熱的樣子。
+	mpechoaround $b $I在$B身上不停地聞聞嗅嗅，一副很親熱的樣子。
+endif
+"""
+[[mobiles.66139.programs]]
+trigger = "entry_prog"
+argument = "100"
+script = """
+if rand(33)
+	mpechoat $b $I在你身上不停地聞聞嗅嗅，一副很親熱的樣子。
+	mpechoaround $b $I在$B身上不停地聞聞嗅嗅，一副很親熱的樣子。
+endif
+"""
+[[mobiles.66139.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(20)
+	frenzy
+endif
+"""
+
+[objects.66100]
+keywords = "iron key"
+short_description = "鐵鑰匙(Iron Key)"
+long_description = "一把鑰匙(Key)被擺在這裡。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["66141", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.66101]
+keywords = "treasure gold coins"
+short_description = "金銀財寶(treasure of gold coins)"
+long_description = "大量的金銀財寶(treasure of gold coins)被堆放在這裡。"
+action_description = ""
+item_type = "MONEY"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["1000000", "0", "0", "0"]
+weight = 100
+cost = 1000000
+level_limited = 0
+material = "gold"
+
+[objects.66102]
+keywords = "giant dragon-koboldobj corpse"
+short_description = "巨龍屍骸(Giant Dragon Corpse)"
+long_description = "一具龐大的巨龍屍體(Giant Dragon Corpse)被擺在這裡。"
+action_description = ""
+item_type = "CORPSE_NPC"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 200
+cost = 0
+level_limited = 0
+material = "flesh"
+
+[objects.66103]
+keywords = "asperate short sword-kobold"
+short_description = "粗糙的短劍(Asperate Short Sword)"
+long_description = "一柄作工粗糙的短劍被擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["0301030", "13", "15", "11"]
+weight = 3
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.66104]
+keywords = "giant steel tower shield-koboldcave"
+short_description = "巨型精鋼塔盾(Giant Steel Tower Shield)"
+long_description = "一面巨大的精鋼塔盾被擺在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["25", "0", "5001500", "0"]
+weight = 130
+cost = 100000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["WARRIOR", "KNIGHT", "SWORDSMAN", "WARLORD"] }
+material = "steel"
+[[objects.66104.applies]]
+type = "REDUCE_DAMAGE"
+value = 18
+
+[objects.66105]
+keywords = "kobold greatsword-kobold"
+short_description = "地靈巨劍(kobold greatsword)"
+long_description = "一柄對地靈而言十分巨大的雙手劍(Greatsword)被擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["EVIL", "ANTI_GOOD"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["1501150", "38", "68", "3"]
+weight = 80
+cost = 10000
+level_limited = 0
+material = "steel"
+[[objects.66105.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.66106]
+keywords = "platinum bramble-o shield"
+short_description = "白金之棘(Platinum Bramble)"
+long_description = "一張尖銳如棘的閃耀白盾(shield)靜靜的擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "3001300", "0"]
+weight = 5
+cost = 20000
+level_limited = 0
+material = "platinum"
+[[objects.66106.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+[[objects.66106.applies]]
+type = "APPLY_ADAMAGE"
+value = 20
+
+[objects.66107]
+keywords = "shock earth bomber-o"
+short_description = "撼地轟(Shock Earth Bomber)"
+long_description = "一柄足以引動地脈的大劍正插在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "ANTI_GOOD", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["5001500", "40", "40", "3"]
+weight = 50
+cost = 1000000
+level_limited = 0
+material = "earth aura"
+[[objects.66107.applies]]
+type = "HITROLL"
+value = -10
+[[objects.66107.applies]]
+type = "DAMROLL"
+value = 20
+[[objects.66107.applies]]
+type = "POWER_POTENTIAL"
+value = 4
+[[objects.66107.applies]]
+type = "APPLY_ADAMAGE"
+value = 30
+[[objects.66107.hidden_powers]]
+spell = "earthquake"
+percent = 50
+level = 50
+event = "HP_WEAPON"
+
+[objects.66108]
+keywords = "rosefinch-o cloak"
+short_description = "朱雀翼袍(Rosefinch Cloak)"
+long_description = "一襲豔紅如火的羽毛罩袍擺放在此處。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "BLESS", "ANTI_GOOD", "ANTI_EVIL", "VAMPIRE_BANE"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 1000000
+level_limited = 0
+material = "phoenix feather"
+[[objects.66108.applies]]
+type = "REDUCE_DAMAGE"
+value = -5
+[[objects.66108.applies]]
+type = "REDUCE_MAGIC"
+value = -5
+[[objects.66108.applies]]
+type = "SAVING_FIRE"
+value = -3
+[[objects.66108.applies]]
+type = "APPLY_AMAGIC"
+value = 30
+
+[objects.66109]
+keywords = "kobold rod-kobold"
+short_description = "地靈祭祀權杖(Kobold Rod)"
+long_description = "一柄地靈使用的法杖被擺在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "NODROP"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "5", "5", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.66109.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+[[objects.66109.applies]]
+type = "APPLY_AMAGIC"
+value = 10
+
+[objects.66110]
+keywords = "evil dragon hatred soul"
+short_description = "邪龍怨魂(Evil Dragon Hatred Soul)"
+long_description = "一顆死去巨龍怨氣(Hatred)的凝聚體在這裡飄浮著。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "EVIL", "BLESS", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+permit_races = { type = "DENY", list = ["ORC", "VAMPIRE"] }
+material = "dark aura"
+souvenir = 4
+[[objects.66110.applies]]
+type = "DAMROLL"
+value = 6
+[[objects.66110.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+
+[objects.66111]
+keywords = "dire wolf-kobold"
+short_description = "大型兇暴狼(Dire Wolf)"
+long_description = "野性十足的兇暴狼"
+action_description = ""
+item_type = "TRASH"
+extra_flags = ["PERSONAL"]
+wear_flags = ["TAKE"]
+values = ["100", "2168", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+[[objects.66111.applies]]
+type = "DAMROLL"
+value = 3
+[[objects.66111.applies]]
+type = "APPLY_ADAMAGE"
+value = 15
+
+[rooms.66100]
+name = "山道入口"
+description = """
+你正踏在山道的入口。這條山道既十分狹窄，也不太平整，更沒有圍欄之類的防
+護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去了！
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66100.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66101
+[rooms.66100.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 13667
+[[rooms.66100.programs]]
+trigger = "room_enter"
+argument = "63"
+script = """
+if $n == elf-soldier-marshal
+	echo !
+endif
+"""
+
+[rooms.66101]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這個山道除了狹窄以外，還十分崎嶇不平，也沒有
+圍欄之類的防護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去
+了！
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66101.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66102
+[rooms.66101.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66100
+
+[rooms.66102]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這個山道除了狹窄以外，還十分崎嶇不平，也沒有
+圍欄之類的防護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去
+了！
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66102.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66103
+[rooms.66102.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66101
+
+[rooms.66103]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這個山道除了狹窄以外，還十分崎嶇不平，也沒有
+圍欄之類的防護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去
+了！
+　　山道持續地向上延伸，並在此處向北轉折。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66103.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66104
+[rooms.66103.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66102
+
+[rooms.66104]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這個山道除了狹窄以外，還十分崎嶇不平，也沒有
+圍欄之類的防護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去
+了！
+　　山道持續地向上延伸，並且開始蜿蜒起來。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66104.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66105
+[rooms.66104.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66103
+
+[rooms.66105]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這個山道除了狹窄以外，還十分崎嶇不平，也沒有
+圍欄之類的防護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去
+了！
+　　山道持續蜿蜿蜒蜒地向上延伸。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66105.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66106
+[rooms.66105.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66104
+
+[rooms.66106]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這個山道除了狹窄以外，還十分崎嶇不平，也沒有
+圍欄之類的防護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去
+了！
+　　山道持續蜿蜿蜒蜒地向上延伸。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66106.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66107
+[rooms.66106.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66105
+
+[rooms.66107]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這個山道除了狹窄以外，還十分崎嶇不平，也沒有
+圍欄之類的防護措施，就像是被野獸自然而然踩出來的獸徑一般。小心點，別摔下去
+了！
+　　山道持續蜿蜿蜒蜒地向上延伸，前方不遠處似乎就到盡頭了。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66107.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66108
+[rooms.66107.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66106
+
+[rooms.66108]
+name = "狹窄的山道"
+description = """
+你正走在一條狹窄的山道上。這條崎嶇的山道在此處已經到了盡頭，但你在山壁
+上發現了許多細小的踏腳洞，上面有著許多某種小形生物攀爬過的痕跡。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66108.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66107
+[rooms.66108.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66109
+[[rooms.66108.programs]]
+trigger = "room_mask"
+argument = "up default"
+script = """
+echoat $n 你踩著狹小踏腳洞努力向上攀去....
+echoaround $n $N踩著狹小踏腳洞努力向上攀去....
+if roomvalue($n66108v0) == 1
+	if dex($n) < 20
+		if dex($n) < 17
+			if rand(90)
+				echoat $n 山頂忽然掉下一塊巨大的落石，將你砸了下來！
+				echoaround $n 山頂忽然掉下一塊巨大的落石，將$N砸了下來！
+				modhmv $n 01.500 1000 10100001
+			else
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N從山崖下攀上來了。
+			endif
+		else
+			if rand(95)
+				echoat $n 山頂忽然掉下一塊巨大的落石，將你砸了下來！
+				echoaround $n 山頂忽然掉下一塊巨大的落石，將$N砸了下來！
+				modhmv $n 01.500 1000 10100001
+			else
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N從山崖下攀上來了。
+			endif
+		endif
+	else
+		if dex($n) < 24
+			if rand(70)
+				echoat $n 山頂忽然掉下一塊巨大的落石，將你砸了下來！
+				echoaround $n 山頂忽然掉下一塊巨大的落石，將$N砸了下來！
+				modhmv $n 01.500 1000 10100001
+			else
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N從山崖下攀上來了。
+			endif
+		else
+			if rand(50)
+				echoat $n 山頂忽然掉下一塊巨大的落石，將你砸了下來！
+				echoaround $n 山頂忽然掉下一塊巨大的落石，將$N砸了下來！
+				modhmv $n 01.500 1000 10100001
+			else
+				echoat $n 山頂忽然掉下一塊巨大的落石砸向你，但被你以敏捷到不可思議的身法躲了過去！
+				echoaround $n 山頂忽然掉下一塊巨大的落石砸向$N，但被$N以敏捷到不可思議的身法躲了過去！
+				transfer $n 66109
+				force 66109 force $n look
+				force 66109 echoaround $n $N從山崖下攀上來了。
+			endif
+		endif
+	endif
+else
+	transfer $n 66109
+	force 66109 force $n look
+	force 66109 echoaround $n $N從山崖下攀上來了。
+endif
+"""
+[[rooms.66108.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if roomchar($) > 0
+	if roomvalue($n66108v0) == 1
+		if dex($r) < 18
+		or rand(33)
+			echoat $r 山頂忽然掉下一塊巨大的落石，砸得你頭破血流！
+			echoaround $r 山頂忽然掉下一塊巨大的落石，砸得$R頭破血流！
+			modhmv $r 01.250 500 10100001
+		else
+			echoat $r 山頂忽然掉下一塊巨大的落石砸向你，但被你以敏捷的身法躲了過去！
+			echoaround $r 山頂忽然掉下一塊巨大的落石砸向你，但被$R以敏捷的身法躲了過去！
+		endif
+	endif
+endif
+"""
+
+[rooms.66109]
+name = "狹窄的山道"
+description = """
+你好不容易爬到了山頂，狹窄的山道又從此處開始出現，並且朝著東邊向著山下
+延伸。你可以從這裡望見遠處有一條長長的峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66109.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66108
+[rooms.66109.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66110
+
+[rooms.66110]
+name = "山道"
+description = """
+你正走在一條山道上。山道的兩旁逐漸高起成為峭壁，並且逐漸向兩旁散開，使
+得山道越來越寬敞，也越來越好走了。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66110.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66111
+[rooms.66110.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66109
+
+[rooms.66111]
+name = "山道"
+description = """
+你正走在一條山道上。山道的兩旁逐漸高起成為峭壁，並且逐漸向兩旁散開，使
+得山道越來越寬敞，也越來越好走了。
+"""
+flags = ["NO_MOB"]
+sector = "MOUNTAIN"
+[rooms.66111.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66112
+[rooms.66111.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66110
+
+[rooms.66112]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。這裡的南北兩側是高高的崖壁，西邊則是山道，往東則繼續深入峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66112.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66113
+[rooms.66112.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66118
+[rooms.66112.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66122
+[rooms.66112.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66111
+
+[rooms.66113]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。這裡的南北兩側是高高的崖壁，西邊則是山道，往東則繼續深入峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66113.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66114
+[rooms.66113.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66119
+[rooms.66113.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66123
+[rooms.66113.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66112
+
+[rooms.66114]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。這裡的南北兩側是高高的崖壁，西邊則是山道，往東則繼續深入峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66114.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66115
+[rooms.66114.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66120
+[rooms.66114.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66124
+[rooms.66114.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66113
+
+[rooms.66115]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。這裡的南北兩側是高高的崖壁，西邊則是山道，往東則繼續深入峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66115.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66116
+[rooms.66115.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66121
+[rooms.66115.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66125
+[rooms.66115.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66114
+
+[rooms.66116]
+name = "峽谷"
+description = """
+你正走在一條幽森的峽谷中。兩側的崖壁從此處開始收攏，並且在東邊不遠處交
+會，使得道路又開始變得狹窄起來。看來馬上就到達這條路的盡頭了。
+"""
+flags = ["NO_MOB"]
+sector = "MOUNTAIN"
+[rooms.66116.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66117
+[rooms.66116.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66115
+
+[rooms.66117]
+name = "洞口前"
+description = """
+南北兩側的山壁在東邊重新合攏，阻斷了往東的去路。但是你注意到山壁上有一
+處小小的山洞，被兩塊粗糙厚重的鐵疙瘩緊密地遮掩起來。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66117.exits.east]
+description = "這兩塊鐵疙瘩上面有著像是鑰匙孔的東西，如果這是城門的話，大概很難攻破吧？\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 0
+to_room = 66134
+[rooms.66117.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66116
+[[rooms.66117.resets.mobiles]]
+vnum = 66118
+limit = 1
+
+[rooms.66118]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的北邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66118.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66119
+[rooms.66118.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66112
+
+[rooms.66119]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的北邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66119.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66120
+[rooms.66119.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66113
+[rooms.66119.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66118
+
+[rooms.66120]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的北邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66120.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66121
+[rooms.66120.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66114
+[rooms.66120.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66119
+
+[rooms.66121]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的北邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66121.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66115
+[rooms.66121.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66120
+
+[rooms.66122]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的南邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66122.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66123
+[rooms.66122.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66112
+
+[rooms.66123]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的南邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66123.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66124
+[rooms.66123.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66113
+[rooms.66123.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66122
+
+[rooms.66124]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的南邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66124.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66125
+[rooms.66124.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66114
+[rooms.66124.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66123
+
+[rooms.66125]
+name = "寬敞的峽谷"
+description = """
+你正走在一條寬敞的峽谷中。這裡地勢平坦、道路筆直，比起之前的山道要好走
+許多。你的南邊是高高崖壁，如果你身手敏捷的話，或許可以試著向上攀登 (Climb)
+看看，但如果不小心跌下來的話，應該會很痛吧....
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66125.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66115
+[rooms.66125.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66124
+
+[rooms.66126]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66126.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66118
+
+[rooms.66127]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66127.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66119
+
+[rooms.66128]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66128.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66120
+
+[rooms.66129]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66129.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66121
+
+[rooms.66130]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66130.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66122
+
+[rooms.66131]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66131.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66123
+
+[rooms.66132]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66132.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66124
+
+[rooms.66133]
+name = "峭壁上"
+description = """
+這裡的山壁不知道被什麼人挖出了一塊落腳之處，往下可以重新回到峽谷。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.66133.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66125
+
+[rooms.66134]
+name = "骯髒狹小的洞穴"
+description = """
+你身在一個漆黑狹小的洞穴裡，周圍盡是垃圾與地靈的排泄物。這裡的通道顯然
+完全是照著地靈的身材量身開闢的，令你走起來十分難受。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66134.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66135
+[rooms.66134.exits.west]
+description = "這兩塊鐵疙瘩上面有著像是鑰匙孔的東西，如果這是城門的話，大概很難攻破吧？\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 0
+to_room = 66134
+
+[rooms.66135]
+name = "洞穴通道"
+description = """
+你身在一個漆黑狹小的洞穴裡，周圍盡是垃圾與地靈的排泄物。這裡的通道顯然
+完全是照著地靈的身材量身開闢的，令你走起來十分難受。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66135.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66136
+[rooms.66135.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66117
+
+[rooms.66136]
+name = "洞穴通道的交叉口"
+description = """
+你身在一個漆黑狹小的洞穴裡，周圍盡是垃圾與地靈的排泄物。這裡的通道顯然
+完全是照著地靈的身材量身開闢的，令你走起來十分難受。
+　　四面都是洞穴的分支，東邊、西邊與南邊的通道看起來都十分狹窄，只有北邊的
+通道看來有經過人為開鑿的痕跡，顯得寬敞許多。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66136.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66147
+[rooms.66136.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66137
+[rooms.66136.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66146
+[rooms.66136.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66135
+
+[rooms.66137]
+name = "洞穴通道"
+description = """
+這裡的通道顯得寬敞許多，像是曾被人為開鑿拓寬過。除此之外，通道的兩旁牆
+壁上繪滿了許多原始圖騰，但是都其醜無比，讓你完全看不出來是在畫些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66137.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66138
+[rooms.66137.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66136
+
+[rooms.66138]
+name = "洞穴通道"
+description = """
+這裡的通道顯得寬敞許多，像是曾被人為開鑿拓寬過。除此之外，通道的兩旁牆
+壁上繪滿了許多原始圖騰，但是都其醜無比，讓你完全看不出來是在畫些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66138.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66139
+[rooms.66138.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66137
+
+[rooms.66139]
+name = "洞穴通道的交叉口"
+description = """
+這裡的通道顯得寬敞許多，像是曾被人為開鑿拓寬過。除此之外，通道的兩旁牆
+壁上繪滿了許多原始圖騰，但是都其醜無比，讓你完全看不出來是在畫些什麼。
+　　東邊與西邊傳來了喧囂的聲音，不時有全副武裝的地靈進進出出，看起來是地靈
+的兵營所在？
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66139.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66144
+[rooms.66139.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66140
+[rooms.66139.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66138
+[rooms.66139.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66145
+
+[rooms.66140]
+name = "洞穴通道"
+description = """
+這裡的通道顯得寬敞許多，像是曾被人為開鑿拓寬過。除此之外，通道的兩旁牆
+壁上繪滿了許多原始圖騰，你注意到上面的許多圖案都是在畫一種奇怪的生物，看起
+來就像是長了翅膀後的....大蜥蝪？
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66140.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66142
+[rooms.66140.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66139
+
+[rooms.66141]
+name = "密道"
+description = """
+這是一條密道，由乾淨整潔的螺旋型階梯組合而成，不知道是做什麼用的？東邊
+有一扇堅固的鐵門，但階梯仍然繼續往下延伸。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66141.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66170
+[rooms.66141.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF"]
+key = 66100
+to_room = 66169
+[rooms.66141.exits.up]
+description = ""
+keywords = "Secret-Door"
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF"]
+key = 66100
+to_room = 66143
+
+[rooms.66142]
+name = "王座前通道"
+description = """
+這裡的通道不僅寬敞，還顯得金碧輝煌，只是不知道這些金子倒底是鑲上去的還
+是漆上去的。再往前走，就是地靈的王座室了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66142.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66143
+[rooms.66142.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66140
+
+[rooms.66143]
+name = "王座"
+description = """
+這裡的空間簡直大的嚇人，不知道身材矮小的地靈要這麼大的空間做什麼。一條
+紅褐色的編織地毯一直從金色的王座延伸到門口，看起來非常豪華。但是等你仔細一
+聞，卻隱約嗅到了刺鼻的血腥味從上面傳來，難道這地毯的顏色不是用顏料染的，而
+是大量血液乾掉後的痕跡？
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66143.exits.down]
+description = "你在地毯下發現了一扇密門！\n"
+keywords = "Secret-Door"
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF"]
+key = 66100
+to_room = 66141
+[rooms.66143.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66142
+
+[rooms.66144]
+name = "軍營"
+description = """
+無數拿著簡陋武器的地靈們群聚在此處，在教官的指令下一遍又一遍地練習攻擊
+動作。如果是被這樣的人山人海攻擊，就算是劍聖也撐不了多久吧？你不禁重新衡量
+起這些看似弱小的地靈的實力。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66144.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66182
+[rooms.66144.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66139
+[[rooms.66144.resets.mobiles]]
+vnum = 66111
+limit = 2
+[[rooms.66144.resets.mobiles]]
+vnum = 66112
+limit = 6
+
+[rooms.66145]
+name = "軍營"
+description = """
+無數拿著簡陋武器的地靈們群聚在此處，在教官的指令下一遍又一遍地練習攻擊
+動作。如果是被這樣的人山人海攻擊，就算是劍聖也撐不了多久吧？你不禁重新衡量
+起這些看似弱小的地靈的實力。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66145.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66139
+[rooms.66145.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66171
+[[rooms.66145.resets.mobiles]]
+vnum = 66111
+limit = 2
+[[rooms.66145.resets.mobiles]]
+vnum = 66112
+limit = 6
+
+[rooms.66146]
+name = "洞穴通道"
+description = """
+你身在一個漆黑狹小的洞穴裡，周圍盡是垃圾與地靈的排泄物。這裡的通道顯然
+完全是照著地靈的身材量身開闢的，令你走起來十分難受。
+　　一條狹小的地道斜斜地通向下層。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66146.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66148
+[rooms.66146.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66136
+
+[rooms.66147]
+name = "洞穴通道"
+description = """
+你身在一個漆黑狹小的洞穴裡，周圍盡是垃圾與地靈的排泄物。這裡的通道顯然
+完全是照著地靈的身材量身開闢的，令你走起來十分難受。
+　　一條狹小的地道斜斜地通向下層。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66147.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66149
+[rooms.66147.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66136
+
+[rooms.66148]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+　　一條狹小的地道斜斜地通向上層。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66148.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66150
+[rooms.66148.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66146
+
+[rooms.66149]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+　　一條狹小的地道斜斜地通向上層。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66149.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66147
+[rooms.66149.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66150
+
+[rooms.66150]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66150.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66149
+[rooms.66150.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66157
+[rooms.66150.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66148
+[rooms.66150.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66151
+[[rooms.66150.resets.mobiles]]
+vnum = 66113
+limit = 10
+[[rooms.66150.resets.mobiles]]
+vnum = 66114
+limit = 10
+[[rooms.66150.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66150.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66151]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66151.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66150
+[rooms.66151.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66158
+[rooms.66151.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66159
+[rooms.66151.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66152
+[[rooms.66151.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66151.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66152]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66152.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66151
+[rooms.66152.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66153
+[rooms.66152.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66160
+[rooms.66152.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66161
+[[rooms.66152.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66152.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66153]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66153.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66158
+[rooms.66153.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66154
+[rooms.66153.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66152
+[rooms.66153.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66162
+[[rooms.66153.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66153.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66154]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66154.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66155
+[rooms.66154.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66164
+[rooms.66154.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66153
+[rooms.66154.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66163
+[[rooms.66154.resets.mobiles]]
+vnum = 66119
+limit = 2
+[[rooms.66154.resets.mobiles]]
+vnum = 66119
+limit = 2
+[[rooms.66154.resets.mobiles]]
+vnum = 66120
+limit = 1
+[[rooms.66154.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66154.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66155]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66155.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66156
+[rooms.66155.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66165
+[rooms.66155.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66158
+[rooms.66155.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66154
+[[rooms.66155.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66155.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66156]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66156.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66167
+[rooms.66156.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66166
+[rooms.66156.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66157
+[rooms.66156.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66155
+[[rooms.66156.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66156.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66157]
+name = "地穴幹道"
+description = """
+這裡是這個洞窟裡眾多地靈所使用的主要幹道。雖然通道挖得相當寬闊，但是無
+數來往的地靈們卻讓此處比上層的通道顯得更加擁擠。除此之外，地上還鋪著一層厚
+厚的穢物，散發出來的臭味讓你完全無法不敢它們原來是些什麼。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66157.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66168
+[rooms.66157.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66156
+[rooms.66157.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66150
+[rooms.66157.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66158
+[[rooms.66157.resets.mobiles]]
+vnum = 66133
+limit = 16
+[[rooms.66157.resets.mobiles.equipment]]
+vnum = 66103
+wear_loc = "WIELD"
+
+[rooms.66158]
+name = "鍛造場"
+description = """
+這個大廣場的中央建造起幾座大型的熔爐，有許多地靈的工匠正在旁邊忙碌，打
+造出一堆粗糙的武器。雖然熔爐產生的煙霧與熱氣大多經由特別設計的管路排到山洞
+之外，但仍有許多外洩了出來，使得這裡的空氣無比糟糕。
+　　數個洞穴通向地底更深處，許多鐵礦原石正源源不絕地從其中被運送出來。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66158.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66172
+[rooms.66158.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66157
+[rooms.66158.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66155
+[rooms.66158.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66151
+[rooms.66158.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66153
+[[rooms.66158.resets.mobiles]]
+vnum = 66116
+limit = 5
+
+[rooms.66159]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66159.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66151
+[[rooms.66159.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66160]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66160.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66152
+[[rooms.66160.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66161]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66161.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66152
+[[rooms.66161.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66162]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66162.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66153
+[[rooms.66162.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66163]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66163.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66154
+[[rooms.66163.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66164]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66164.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66154
+[[rooms.66164.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66165]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66165.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66155
+[[rooms.66165.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66166]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66166.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66156
+[[rooms.66166.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66167]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66167.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66156
+[[rooms.66167.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66168]
+name = "居住區"
+description = """
+這串緊連小洞穴裡擠滿了一群群的地靈，讓你不禁困惑，這麼多生物當初是怎麼
+擠進來的呢？在這麼擁擠且骯髒的環境裡，你就連一刻也不想多待，但看這些地靈的
+樣子，好似如此生活很久了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66168.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66157
+[[rooms.66168.resets.mobiles]]
+vnum = 66115
+limit = 50
+
+[rooms.66169]
+name = "藏寶庫"
+description = """
+這裡面堆滿了大量的金銀財寶。真不知道是怎麼蒐集而來的？
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66169.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF"]
+key = 66100
+to_room = 66141
+
+[rooms.66170]
+name = "邪神祭壇"
+description = """
+這裡是一座華麗的祭壇，牆上、天花板與祭壇上繪製著許多可怕魔物的圖騰，精
+美的不像是地靈的手藝。這麼豪華的神壇為什麼會建造在這個隱密的所在呢？
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66170.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66141
+[[rooms.66170.programs]]
+trigger = "room_enter"
+argument = "16 100"
+script = """
+if is_qmark($n) == kobold_cave_hero 200007
+	echoat $n 沒想到王座的底下竟然藏著崇拜邪神的祭壇！
+	echoat $n 看來你該把這件事回報(Report)給古拉拉知道。
+	mod_qmark $n kobold_cave_hero v1 = 8
+endif
+"""
+
+[rooms.66171]
+name = "指揮官室"
+description = """
+這裡是一間整齊且乾淨的房間，寸許的空間中擺滿著各式兵器、鎧甲與軍用地圖
+。看來這裡是某位地靈高級軍官的房間？
+　　東邊是回到軍營的路。
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66171.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66145
+
+[rooms.66172]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+　　上方的出口傳來了光亮與熱氣。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66172.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66173
+[rooms.66172.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66158
+
+[rooms.66173]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66173.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66174
+[rooms.66173.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66172
+
+[rooms.66174]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66174.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66179
+[rooms.66174.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66175
+[rooms.66174.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66173
+[[rooms.66174.resets.mobiles]]
+vnum = 66117
+limit = 5
+[[rooms.66174.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+[[rooms.66174.resets.mobiles]]
+vnum = 66127
+limit = 1
+[[rooms.66174.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.66175]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66175.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66174
+[rooms.66175.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66176
+[[rooms.66175.resets.mobiles]]
+vnum = 66126
+limit = 1
+[[rooms.66175.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.66176]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66176.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66175
+[rooms.66176.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66177
+[rooms.66176.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66178
+
+[rooms.66177]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66177.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66176
+[[rooms.66177.resets.mobiles]]
+vnum = 66124
+limit = 1
+[[rooms.66177.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.66178]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66178.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66176
+[[rooms.66178.resets.mobiles]]
+vnum = 66125
+limit = 1
+[[rooms.66178.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.66179]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66179.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66181
+[rooms.66179.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66180
+[rooms.66179.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66174
+[[rooms.66179.resets.mobiles]]
+vnum = 66130
+limit = 1
+[[rooms.66179.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.66180]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66180.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66179
+[[rooms.66180.resets.mobiles]]
+vnum = 66129
+limit = 1
+[[rooms.66180.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.66181]
+name = "礦坑"
+description = """
+這裡是又小又黑的礦坑通道，你必須努力縮成一團才能勉強從這裡通過。這裡的
+牆上充滿挖掘的痕跡，許多地靈礦工正努力地為這些牆添上更多的痕跡。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "PRIVATE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66181.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66179
+[[rooms.66181.resets.mobiles]]
+vnum = 66128
+limit = 1
+[[rooms.66181.resets.mobiles.equipment]]
+vnum = 2903
+wear_loc = "WIELD"
+
+[rooms.66182]
+name = "營房"
+description = """
+這裡是地靈士兵的住處，一排排的吊床自入口延伸到牆角處，不知道有多少床位。
+由於軍營空間有限、兵員數量過多，地靈採取的是休息與訓練兩般輪換的制度，因此雖
+然外面喊聲震天，此刻這裡仍然睡滿了地靈。
+"""
+flags = ["INDOORS", "UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66182.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66144
+[[rooms.66182.resets.mobiles]]
+vnum = 66122
+limit = 1
+[[rooms.66182.resets.mobiles]]
+vnum = 66123
+limit = 2
+
+[rooms.66183]
+name = "隱密的精靈營地"
+description = """
+這裡是精靈遠征軍為了安置戰場上受到重傷或不幸死亡的軍士所建立的營地，由於
+是建立在地靈出沒的範圍中，所以使用了特別法術隱藏起來。如果你想找回你的裝備，
+可以向這裡的護士詢問。當你休息好了之後，別忘了繼續踏上戰場再度奮戰！
+"""
+flags = ["NO_MOB", "SAFE", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66183.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 66100
+[[rooms.66183.resets.mobiles]]
+vnum = 66135
+limit = 1
+
+[rooms.66184]
+name = "死亡瞬間"
+description = """
+你已經死了，上方發出一道光芒，爬上去能重返現世。
+"""
+flags = ["NO_MOB", "SAFE", "NO_RECALL", "SUMMON_BIT", "NO_TELEPORT_OUT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.66184.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 3054
+[[rooms.66184.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if pcnum($) > 0
+	if roomvalue($0) >= 1
+		if roomvalue($0) == 2
+			modrvt v0 = 0
+			deldoor 4
+			makedoor 4 有一道光茫 0 0 0 3054
+			break
+		endif
+		if mobcount(13647) > 0
+			deldoor 4
+			makedoor 4 有一道光茫 0 0 0 66183
+		else
+			modrvt v0 = 0
+			deldoor 4
+			makedoor 4 有一道光茫 0 0 0 3054
+		endif
+	endif
+endif
+"""

@@ -1,0 +1,3552 @@
+[area]
+name = "迷斯卓諾森林"
+identity = "mythforest"
+builders = "Ceran"
+translator = "Feena"
+modifier = "Feena Phiroe"
+vnum_start = 21151
+vnum_end = 21260
+security = 1
+recall = 4580
+death = 401
+f_toggle = false
+
+[mobiles.21200]
+keywords = "scout man"
+short_description = "迷斯卓諾斥侯(scout of Myth Drannor)"
+long_description = "一個躲在樹林中的男子(man)正透過林間的縫隙盯著你瞧。\n"
+description = """
+這個男子是個標準的斥侯，他觀察森林中是否有入侵者，並防止邪惡勢力突破森
+林的邊界。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 1000
+level = 25
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Half-elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.21200.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.21200.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isevil($n)
+	say 邪惡之人！休想通過此地！
+	mpkill $n
+	hunt $n
+endif
+"""
+[[mobiles.21200.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+	snare $n
+	mpnowait
+else
+	if rand(50)
+		cast 'acid blast'
+		mpnowait
+	else
+		cast poison $n
+		mpnowait
+	endif
+endif
+"""
+
+[mobiles.21201]
+keywords = "giant spider"
+short_description = "巨蜘蛛(giant spider)"
+long_description = "一隻巨大的蜘蛛(giant spider)從你腳邊的雜草中竄出。\n"
+description = """
+這隻肥大的蜘蛛和一匹小馬一樣大，當牠爬過地面時，那細長的腳不斷抽動著。
+"""
+act_flags = ["NPC", "STAY_AREA", "ARTIFACT"]
+affected_flags = ["DETECT_HIDDEN", "INFRARED", "SNEAK", "HIDE"]
+alignment = 0
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 3
+mod_damroll = 9
+mod_ac = 3
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Arachnid"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.21201.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.21201.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.21201.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpoload 21202
+mpat 5 wear all
+mpadd_qmark self silk_count -1 0 0 0 0 1
+"""
+[[mobiles.21201.programs]]
+trigger = "greet_prog"
+argument = "15"
+script = """
+if ispc($r)
+	if is_qmark($i) < silk_count 100009
+		mpmod_qmark self silk_count v0 + 1
+	endif
+	mpechoat $r $I朝你射出一道金色的蛛絲。
+	mpechoaround $r $I朝$R射出一道金色的蛛絲。
+	snare $r
+	mpnowait
+endif
+"""
+[[mobiles.21201.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(50)
+	if rand(70)
+		mptrip $r
+		mpnowait
+	else
+		if is_qmark($i) < silk_count 100008
+			mpmod_qmark self silk_count v0 + 1
+		endif
+		mpechoat $r $I朝你射出一道金色的蛛絲。
+		mpechoaround $r $I朝$R射出一道金色的蛛絲。
+		snare $r
+		mpnowait
+	endif
+else
+	if rand(50)
+		change $r
+		skilldrv speedhit $r
+		skilldrv speedhit $r
+	else
+		untangle
+		flee
+	endif
+endif
+"""
+[[mobiles.21201.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpjunk tooth-myfsp
+if is_qmark($i) > silk_count 100001
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100002
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100003
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100004
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100005
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100006
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100007
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100008
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100009
+	mpoload 6156 1
+endif
+if is_qmark($i) > silk_count 100010
+	mpoload 6156 1
+endif
+"""
+
+[mobiles.21202]
+keywords = "treant tree"
+short_description = "樹精(treant)"
+long_description = "一棵大樹(tree)張開了它的眼睛，以鄙夷的眼光注視著你。\n"
+description = """
+眼前這個生物具有莊嚴的感覺與純粹的力量，它那對深褐色的眼睛正以輕視的眼
+光注視著你。
+"""
+act_flags = ["NPC", "STAY_AREA", "HUNT", "TRACK"]
+affected_flags = ["INFRARED"]
+alignment = 0
+level = 46
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 25
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Giant"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "HALF_MAGIC"]
+[[mobiles.21202.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.21202.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.21202.applies]]
+type = "DAMROLL"
+degree = 50
+[[mobiles.21202.applies]]
+type = "POWER_POTENTIAL"
+degree = 25
+[[mobiles.21202.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+	say 見識樹精的力量！
+	frenzy
+	mpnowait
+else
+	if rand(50)
+		cast fear $r
+		mpnowait
+		cast tardy $r
+		mpnowait
+		cast poison $r
+		mpnowait
+	else
+		cast 'energy drain' $r
+		mpnowait
+	endif
+endif
+"""
+
+[mobiles.21203]
+keywords = "darkened beast"
+short_description = "暗黑野獸(darkened beast)"
+long_description = "一頭巨大的深色野獸(beast)在森林中尋找獵物。\n"
+description = """
+這種生物就像是隻大型的黑狗，但是牠的尾巴上頭有尖刺，而且眼睛是可怕的紅
+色。牠不斷發出兇猛憎惡的吠叫聲。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_MAGIC", "INFRARED"]
+alignment = -1000
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 6
+mod_damroll = 12
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Beast"
+class = ["WARRIOR", "BLOODY"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.21203.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.21203.applies]]
+type = "HITROLL"
+degree = 100
+[[mobiles.21203.applies]]
+type = "DAMROLL"
+degree = 100
+[[mobiles.21203.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.21203.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if rand(33)
+	mptrip $r
+	mpnowait
+else
+	if rand(50)
+		skilldrv speedhit $n
+		skilldrv speedhit $n
+		skilldrv speedhit $n
+		skilldrv speedhit $n
+	else
+		flee
+	endif
+endif
+"""
+
+[mobiles.21204]
+keywords = "elf skeleton"
+short_description = "精靈骸骨(elven skeleton)"
+long_description = "一具古代精靈的骸骨(skeleton)在你面前站了起來！\n"
+description = """
+這是一個死了很久的精靈戰士，他發過誓要永遠守護迷斯卓諾城，雖然他死了但
+是誓言仍然存在著，而現在他永遠站在這裡守衛這座荒城的大門口。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "TRACK"]
+affected_flags = ["DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = -1000
+level = 50
+mod_hitplus = 0
+mod_mana = 1
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR", "MAGE", "THIEF"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_CURSE"]
+[[mobiles.21204.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.21204.applies]]
+type = "HITROLL"
+degree = 60
+[[mobiles.21204.applies]]
+type = "DAMROLL"
+degree = 70
+[[mobiles.21204.applies]]
+type = "DODGE"
+degree = -300
+[[mobiles.21204.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.21204.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+wear sword
+if rand(33)
+	perform empslash
+	mpnowait
+	perform empslash
+	mpnowait
+else
+	if rand(50)
+		storm
+		mpnowait
+		storm
+		mpnowait
+	else
+		earth
+		mpnowait
+		earth
+		mpnowait
+	endif
+endif
+"""
+
+[mobiles.21205]
+keywords = "shade"
+short_description = "森林陰影(forest shade)"
+long_description = "一抹冰冷虛幻的影子(shadow)在樹林間飄移著。\n"
+description = """
+當這抹陰影轉過來盯著你的時候，一股冰冷的恐懼感襲向全身。在它閃動的身形
+中可以看到青藍色的眼睛，不過看起來幾乎就像不存在似的。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "HUNT"]
+affected_flags = ["DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "INFRARED"]
+alignment = -1000
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Phantom"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM"]
+[[mobiles.21205.applies]]
+type = "HIT"
+degree = 5000
+[[mobiles.21205.applies]]
+type = "SAVING_SPELL"
+degree = -20
+[[mobiles.21205.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.21205.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+wear sword
+if rand(33)
+	cast powerball $r
+	mpnowait
+else
+	if rand(50)
+		cast blindness $r
+		mpnowait
+		cast disease $r
+		mpnowait
+	else
+		cast 'lightning bolt'
+		mpnowait
+		cast 'lightning bolt'
+		mpnowait
+	endif
+endif
+"""
+
+[mobiles.21206]
+keywords = "ancient dragon turtle"
+short_description = "上古龜龍(ancient dragon turtle)"
+long_description = "巨大的龜龍(dragon turtle)朝你衝了過來。\n"
+description = """
+這隻龜龍像艄戰船一樣大，雖然在陸地移動緩慢，但在水中敏捷得跟刺蝟一樣。
+可怕的是，它似乎是肉食性動物。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "POLYMORPH", "WATERWALK", "GILLS"]
+alignment = 0
+level = 60
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 10
+mod_ac = 0
+mod_svs = 1
+dodge = 1
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "drake"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "NO_POISON", "NO_SLEEP", "ALY_SAN", "ALY_DI", "ALY_DH", "NO_MUTE", "NO_SEALMAGIC", "NO_PARA"]
+[[mobiles.21206.weaknesses]]
+skill = "hit attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "slice attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "slash attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "whip attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "claw attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "grep attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "bite attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "pierce attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "chop attack"
+percent = 100
+damage = 30
+[[mobiles.21206.weaknesses]]
+skill = "crush attack"
+percent = 100
+damage = 300
+[[mobiles.21206.weaknesses]]
+skill = "angry fire storm"
+percent = 100
+damage = 50
+[[mobiles.21206.weaknesses]]
+skill = "powerball"
+percent = 100
+damage = 200
+[[mobiles.21206.weaknesses]]
+skill = "high explosive"
+percent = 100
+damage = 250
+[[mobiles.21206.weaknesses]]
+skill = "bashhead"
+percent = 500
+damage = 300
+[[mobiles.21206.applies]]
+type = "STR"
+degree = 5
+[[mobiles.21206.applies]]
+type = "DEX"
+degree = 5
+[[mobiles.21206.applies]]
+type = "INT"
+degree = 5
+[[mobiles.21206.applies]]
+type = "WIS"
+degree = 5
+[[mobiles.21206.applies]]
+type = "CON"
+degree = 5
+[[mobiles.21206.applies]]
+type = "HIT"
+degree = 800000
+[[mobiles.21206.applies]]
+type = "AC"
+degree = -3000
+[[mobiles.21206.applies]]
+type = "HITROLL"
+degree = 50
+[[mobiles.21206.applies]]
+type = "DAMROLL"
+degree = 300
+[[mobiles.21206.applies]]
+type = "SAVING_SPELL"
+degree = -20
+[[mobiles.21206.applies]]
+type = "SAVING_FIRE"
+degree = -200
+[[mobiles.21206.applies]]
+type = "SAVING_COLD"
+degree = -200
+[[mobiles.21206.applies]]
+type = "SAVING_LIGHTNING"
+degree = 40
+[[mobiles.21206.applies]]
+type = "SAVING_EARTH"
+degree = -30
+[[mobiles.21206.applies]]
+type = "SAVING_WIND"
+degree = -30
+[[mobiles.21206.applies]]
+type = "NONE"
+degree = -50
+[[mobiles.21206.applies]]
+type = "POWER_POTENTIAL"
+degree = 30
+[[mobiles.21206.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.21206.applies]]
+type = "APPLY_ADAMAGE"
+degree = 300
+[[mobiles.21206.applies]]
+type = "APPLY_GPHYSICAL"
+degree = 6000
+[[mobiles.21206.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self enable_fight_tick -1 0 0 0 0 1
+mpadd_qmark self disable_round_hit -1 0 0 0 0 1
+"""
+[[mobiles.21206.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = ""
+[[mobiles.21206.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = ""
+
+[objects.21200]
+keywords = "rust iron sword"
+short_description = "生銹的鐵劍(rusted iron sword)"
+long_description = "一把生銹的鐵劍(iron sword)放在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "3"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "iron"
+[[objects.21200.applies]]
+type = "HITROLL"
+value = -2
+[[objects.21200.applies]]
+type = "DAMROLL"
+value = -2
+
+[objects.21201]
+keywords = "cloth tunic forest green"
+short_description = "森林綠罩衫(forest green tunic)"
+long_description = "一件淺綠色的罩衫(green tunic)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "100", "0"]
+weight = 25
+cost = 0
+level_limited = 0
+material = "cloth"
+[[objects.21201.applies]]
+type = "DAMROLL"
+value = 1
+[[objects.21201.applies]]
+type = "MOVE"
+value = 25
+[[objects.21201.applies]]
+type = "DEX"
+value = 1
+
+[objects.21202]
+keywords = "tooth-myfsp"
+short_description = "毒牙(fangs)"
+long_description = "一雙毒牙(fangs)掉在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "10"]
+weight = 0
+cost = 0
+level_limited = 0
+timer = 1
+material = "bone"
+[[objects.21202.hidden_powers]]
+spell = "poison"
+percent = 50
+level = 10
+event = "HP_WEAPON"
+[[objects.21202.hidden_powers]]
+spell = "poison"
+percent = 30
+level = 10
+event = "HP_WEAPON"
+[[objects.21202.hidden_powers]]
+spell = "paralyze"
+percent = 5
+level = 10
+event = "HP_WEAPON"
+
+[objects.21203]
+keywords = "jaw-myfsp"
+short_description = "強健的顎(jaw)"
+long_description = "一雙強健的顎(jaw)掉在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["100", "0", "0", "10"]
+weight = 0
+cost = 0
+level_limited = 0
+timer = 1
+material = "bone"
+
+[objects.21204]
+keywords = "dragon tortoise shell"
+short_description = "龍龜甲(dragon tortoise shell)"
+long_description = "一片龍龜的背甲(shell)掉在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "bone"
+
+[objects.21205]
+keywords = "dragon tortoise shell"
+short_description = "龍龜甲(dragon tortoise shell)"
+long_description = "一片龍龜的背甲(shell)掉在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
+material = "bone"
+
+[rooms.21151]
+name = "迷斯卓諾森林"
+description = """
+buffer room of mythforest
+"""
+flags = ["UNDERGROUND", "SUMMON_BIT", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[[rooms.21151.extra_descriptions]]
+keywords = "更新履歷"
+description = """
+2020/5/26
+區域向前拓展 49 格 從 21200 變為 21151 。
+2020/5/27
+vnum 21205 往北通往2253, 尚無找到連接處
+變更為同通往mythforest擴張區 21152
+"""
+
+[rooms.21152]
+name = "林間泥土小徑的終點"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動發出的聲音。小徑到此中斷，往南可以原路返回，
+東邊能看見一座湖泊，北邊則是一片原始樹林。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21152.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21153
+[rooms.21152.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21161
+[rooms.21152.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21205
+
+[rooms.21153]
+name = "迷斯卓諾森林湖岸"
+description = """
+這是座被森林包圍的內陸湖，樹木隨風磨擦的沙沙聲，像樹陰下有人在竊竊
+私語，風停後又恢復死寂，讓人無法安心。在岸邊的泥地上不時能發現些巨大的
+掌印，不知道是什麼生物留下的。混濁的綠色湖水飄散出些許腐敗的臭味，就算
+氣溫炎熱，也不會有人想跳入湖泊裡消暑。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21153.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21152
+
+[rooms.21154]
+name = "森林內陸湖底"
+description = """
+混濁的湖水阻擋光線進入水面下，讓你看不清前後左右的景物。當你試著浮
+出水面時，發現湖面似乎有股不明的力量阻止你離開。現在只能祈禱在耗盡肺裡
+最後一絲氧氣前，能找出離開的方法。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.21154.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21157
+[rooms.21154.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21155
+
+[rooms.21155]
+name = "森林內陸湖底"
+description = """
+混濁的湖水阻擋光線進入水面下，讓你看不清前後左右的景物。當你試著浮
+出水面時，發現湖面似乎有股不明的力量阻止你離開。現在只能祈禱在耗盡肺裡
+最後一絲氧氣前，能找出離開的方法。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.21155.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21158
+[rooms.21155.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21154
+[rooms.21155.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21156
+
+[rooms.21156]
+name = "森林內陸湖底"
+description = """
+混濁的湖水阻擋光線進入水面下，讓你看不清前後左右的景物。當你試著浮
+出水面時，發現湖面似乎有股不明的力量阻止你離開。現在只能祈禱在耗盡肺裡
+最後一絲氧氣前，能找出離開的方法。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.21156.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21159
+[rooms.21156.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21155
+
+[rooms.21157]
+name = "森林內陸湖底"
+description = """
+混濁的湖水阻擋光線進入水面下，讓你看不清前後左右的景物。當你試著浮
+出水面時，發現湖面似乎有股不明的力量阻止你離開。現在只能祈禱在耗盡肺裡
+最後一絲氧氣前，能找出離開的方法。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.21157.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21158
+[rooms.21157.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21154
+
+[rooms.21158]
+name = "森林內陸湖底"
+description = """
+混濁的湖水阻擋光線進入水面下，讓你看不清前後左右的景物。當你試著浮
+出水面時，發現湖面似乎有股不明的力量阻止你離開。現在只能祈禱在耗盡肺裡
+最後一絲氧氣前，能找出離開的方法。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.21158.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21157
+[rooms.21158.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21159
+[rooms.21158.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21155
+
+[rooms.21159]
+name = "森林內陸湖底"
+description = """
+混濁的湖水阻擋光線進入水面下，讓你看不清前後左右的景物。當你試著浮
+出水面時，發現湖面似乎有股不明的力量阻止你離開。現在只能祈禱在耗盡肺裡
+最後一絲氧氣前，能找出離開的方法。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.21159.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21158
+[rooms.21159.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21156
+
+[rooms.21160]
+name = "湖底通道"
+description = """
+這是條巨大的水底通道，很難想像在湖底居然有這麼一個空間存在。你發現
+可以從這裡返回湖面。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_TELEPORT_IN"]
+sector = "UNDERWATER"
+[rooms.21160.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21155
+[rooms.21160.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21153
+
+[rooms.21161]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21161.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21162
+[rooms.21161.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21167
+[rooms.21161.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21164
+[rooms.21161.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21163
+
+[rooms.21162]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21162.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21163
+[rooms.21162.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21168
+[rooms.21162.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21165
+[rooms.21162.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21161
+
+[rooms.21163]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21163.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21161
+[rooms.21163.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21169
+[rooms.21163.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21166
+[rooms.21163.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21162
+
+[rooms.21164]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21164.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21165
+[rooms.21164.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21161
+[rooms.21164.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21167
+[rooms.21164.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21166
+
+[rooms.21165]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21165.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21166
+[rooms.21165.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21162
+[rooms.21165.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21168
+[rooms.21165.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21164
+
+[rooms.21166]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21166.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21164
+[rooms.21166.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21163
+[rooms.21166.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21169
+[rooms.21166.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21165
+
+[rooms.21167]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21167.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21168
+[rooms.21167.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21164
+[rooms.21167.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21161
+[rooms.21167.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21169
+
+[rooms.21168]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21168.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21169
+[rooms.21168.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21165
+[rooms.21168.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21162
+[rooms.21168.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21167
+
+[rooms.21169]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林內，那些曾經令人喜愛的精靈們，現在早已遠
+離墮落的迷斯卓諾城。周圍翠綠的樹木，顯示出這片樹林還沒被邪惡的力量完全
+腐化。森林朝四面八方延伸出去很難看清周圍有些什麼，待在這有種不自在感，
+像被人隨時監視著。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21169.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21167
+[rooms.21169.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21166
+[rooms.21169.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21163
+[rooms.21169.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21168
+
+[rooms.21170]
+name = "森林中的村落"
+description = """
+你正走在一條狹窄、幾乎沒人保養過的泥土小徑，周圍的樹又粗又密，在你
+四周造出令人發寒的陰影。往東的小徑通往森林中，往西則有個看起來像是哨站
+之類的建築物。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21170.exits.north]
+description = "接往遺族之村\n"
+keywords = ""
+locks = []
+key = 0
+to_room = -1
+[rooms.21170.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21152
+
+[rooms.21171]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。地面有條獸徑往南方的坡地下延伸而去，在
+那有片稀疏的林間地，北邊能回到森林中。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21171.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21256
+[rooms.21171.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21172
+
+[rooms.21172]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21172.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21173
+[rooms.21172.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21176
+
+[rooms.21173]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21173.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21174
+[rooms.21173.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21177
+[rooms.21173.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21172
+
+[rooms.21174]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21174.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21175
+[rooms.21174.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21178
+[rooms.21174.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21173
+
+[rooms.21175]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21175.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21179
+[rooms.21175.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21174
+
+[rooms.21176]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21176.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21177
+[rooms.21176.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21172
+
+[rooms.21177]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21177.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21178
+[rooms.21177.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21173
+[rooms.21177.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21176
+
+[rooms.21178]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21178.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21179
+[rooms.21178.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21174
+[rooms.21178.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21177
+
+[rooms.21179]
+name = "森林狩獵場"
+description = """
+你站在一片光線能照進來的稀疏樹林。周圍倒塌的樹木顯示出，這片林間地
+並非自然形成，而是遭受疏伐後產生的結果。從樹幹的斷面能發現，樹木顯然不
+是受到利器砍伐，更像是被某種巨大的力量攔腰撞斷。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21179.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21175
+[rooms.21179.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21178
+
+[rooms.21180]
+name = "暗黑野獸的巢穴"
+description = """
+你站在一個大型的洞穴中。地面遍佈獵物的白骨，當中肯定有不少是跟你一
+樣進入森林的冒險者，只是他們比較不幸，儼然成為了野獸口中的佳餚。你查覺
+洞穴上方有個透光的小開口，也許爬上去就能離開這個鬼地方了。
+"""
+flags = ["DARK", "INDOORS", "UNDERGROUND", "NO_RECALL", "NO_TELEPORT_IN"]
+sector = "FOREST"
+[rooms.21180.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21156
+
+[rooms.21200]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你正走在一條狹窄、幾乎沒人保養過的泥土小徑，周圍的樹又粗又密，在你
+四周造出令人發寒的陰影。往東的小徑通往森林中，往西則有個看起來像是哨站
+之類的建築物。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21200.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21201
+[rooms.21200.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21106
+
+[rooms.21201]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往東邊和西邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21201.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21202
+[rooms.21201.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21200
+
+[rooms.21202]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往南邊和西邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21202.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21203
+[rooms.21202.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21201
+
+[rooms.21203]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。你四周都是更加陰鬱的森林，有條
+小徑指向北邊和東邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21203.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21204
+[rooms.21203.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21202
+[rooms.21203.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+[rooms.21203.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+
+[rooms.21204]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑繼續往東邊和西邊延伸。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21204.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21205
+[rooms.21204.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21204.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+[rooms.21204.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21203
+[[rooms.21204.resets.mobiles]]
+vnum = 21200
+limit = 4
+
+[rooms.21205]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑繼續往東邊和西邊延伸。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21205.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21206
+[rooms.21205.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21152
+[rooms.21205.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+[rooms.21205.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21204
+
+[rooms.21206]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑繼續往東邊和西邊延伸。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21206.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21207
+[rooms.21206.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+[rooms.21206.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+[rooms.21206.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21205
+
+[rooms.21207]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑繼續往東邊和西邊延伸。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21207.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21208
+[rooms.21207.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+[rooms.21207.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+[rooms.21207.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21206
+
+[rooms.21208]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑繼續往南邊和西邊延伸。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21208.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21231
+[rooms.21208.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21230
+[rooms.21208.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21209
+[rooms.21208.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21207
+
+[rooms.21209]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往北邊、東邊和南邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21209.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21210
+[rooms.21209.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21208
+[rooms.21209.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21220
+[rooms.21209.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+
+[rooms.21210]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。你四周都是更加陰鬱的森林，有條
+小徑指向東邊和西邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21210.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21211
+[rooms.21210.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21210.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21238
+[rooms.21210.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21209
+
+[rooms.21211]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。你四周都是更加陰鬱的森林，有條
+小徑指向東邊和西邊。你可以看到巨大的石造廢墟矗立在南邊的樹林間。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21211.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21212
+[rooms.21211.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+[rooms.21211.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21224
+[rooms.21211.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21210
+
+[rooms.21212]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。你四周都是更加陰鬱的森林，有條
+小徑指向東邊和西邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21212.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21213
+[rooms.21212.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21212.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21212.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21211
+
+[rooms.21213]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往南邊和西邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21213.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+[rooms.21213.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21213.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21214
+[rooms.21213.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21212
+
+[rooms.21214]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往北邊和東邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21214.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21215
+[rooms.21214.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21213
+[rooms.21214.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21238
+[rooms.21214.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+
+[rooms.21215]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往東邊和西邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21215.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21216
+[rooms.21215.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21242
+[rooms.21215.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21238
+[rooms.21215.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21214
+
+[rooms.21216]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往南邊和西邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21216.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21216.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21216.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21217
+[rooms.21216.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21215
+
+[rooms.21217]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑通往北邊和南邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21217.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21231
+[rooms.21217.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21216
+[rooms.21217.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21218
+[rooms.21217.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21230
+
+[rooms.21218]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。西邊你約略可以看出有些石造廢墟
+座落在樹林間。小徑通往北邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21218.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21218.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21217
+[rooms.21218.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21218.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21219
+
+[rooms.21219]
+name = "石造廢墟前方"
+description = """
+你發現自己正站在一座古老城市的斷垣殘壁之間，由年老矮人們的巧手精雕
+細琢出來的石塊橫躺在地面，寒色的陰影似乎覆蓋了一切事物。某些生物模糊的
+身影似乎正從廢墟的內部竄出，而你周圍的森林則是一片昏暗寂靜。一條狹窄的
+小徑往東通往森林裡，你也可以往西朝迷斯卓諾的遺跡走去。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21219.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21218
+[rooms.21219.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21305
+
+[rooms.21220]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑往北邊與南邊穿過陰暗的森林
+之間。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21220.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21220.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21209
+[rooms.21220.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21221
+[rooms.21220.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+
+[rooms.21221]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。小徑往北邊與南邊穿過陰暗的森林
+之間。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21221.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21221.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21220
+[rooms.21221.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21222
+[rooms.21221.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+
+[rooms.21222]
+name = "崎嶇不平的林間泥土小徑"
+description = """
+你發現自己位於一條濃密森林之間的狹窄小路上，這條路看起來不常有人走
+過，上頭的天空被許多樹葉給遮蔽住。在周圍的樹影間，你看到模糊的身影，同
+時還聽到灌木叢中有生物活動所發出的聲音。你可以看到東邊有些石造廢墟，小
+徑則通往北邊。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21222.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21223
+[rooms.21222.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21221
+[rooms.21222.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+[rooms.21222.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+
+[rooms.21223]
+name = "石造廢墟前方"
+description = """
+你發現自己正站在一座古老城市的斷垣殘壁之間，由年老矮人們的巧手精雕
+細琢出來的石塊橫躺在地面，寒色的陰影似乎覆蓋了一切事物。某些生物模糊的
+身影似乎正從廢墟的內部竄出，而你周圍的森林則是一片昏暗寂靜。一條狹窄的
+小徑往西通往森林裡，你也可以往北朝迷斯卓諾的遺跡走去。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21223.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21300
+[rooms.21223.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21222
+
+[rooms.21224]
+name = "石造廢墟前方"
+description = """
+你發現自己正站在一座古老城市的斷垣殘壁之間，由年老矮人們的巧手精雕
+細琢出來的石塊橫躺在地面，寒色的陰影似乎覆蓋了一切事物。某些生物模糊的
+身影似乎正從廢墟的內部竄出，而你周圍的森林則是一片昏暗寂靜。一條狹窄的
+小徑往北通往森林裡，你也可以往南朝迷斯卓諾的遺跡走去。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21224.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21211
+[rooms.21224.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21312
+
+[rooms.21225]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21225.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+[rooms.21225.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21237
+[rooms.21225.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21231
+[rooms.21225.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21203
+
+[rooms.21226]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21226.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+[rooms.21226.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21238
+[rooms.21226.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21232
+[rooms.21226.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21225
+
+[rooms.21227]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21227.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21228
+[rooms.21227.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21227.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21233
+[rooms.21227.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+
+[rooms.21228]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21228.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21229
+[rooms.21228.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21252
+[rooms.21228.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21234
+[rooms.21228.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+
+[rooms.21229]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21229.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21230
+[rooms.21229.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21241
+[rooms.21229.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+[rooms.21229.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21228
+
+[rooms.21230]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21230.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21225
+[rooms.21230.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21242
+[rooms.21230.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21230.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21229
+
+[rooms.21231]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21231.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21232
+[rooms.21231.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21225
+[rooms.21231.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21237
+[rooms.21231.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21204
+
+[rooms.21232]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21232.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21233
+[rooms.21232.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+[rooms.21232.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21238
+[rooms.21232.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21231
+
+[rooms.21233]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21233.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21234
+[rooms.21233.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+[rooms.21233.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21233.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21232
+
+[rooms.21234]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21234.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+[rooms.21234.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21228
+[rooms.21234.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21240
+[rooms.21234.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21233
+
+[rooms.21235]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21235.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21235.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21229
+[rooms.21235.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21241
+[rooms.21235.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21234
+
+[rooms.21236]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21236.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21241
+[rooms.21236.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21230
+[rooms.21236.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21242
+[rooms.21236.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+
+[rooms.21237]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "FOREST"
+[rooms.21237.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21238
+[rooms.21237.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21231
+[rooms.21237.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21248
+[rooms.21237.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21206
+
+[rooms.21238]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21238.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+[rooms.21238.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21232
+[rooms.21238.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21226
+[rooms.21238.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21237
+
+[rooms.21239]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21239.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21240
+[rooms.21239.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21233
+[rooms.21239.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21227
+[rooms.21239.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21238
+
+[rooms.21240]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21240.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21241
+[rooms.21240.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21234
+[rooms.21240.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21228
+[rooms.21240.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21239
+
+[rooms.21241]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21241.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21242
+[rooms.21241.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21235
+[rooms.21241.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21229
+[rooms.21241.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21240
+
+[rooms.21242]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21242.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21240
+[rooms.21242.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21236
+[rooms.21242.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21230
+[rooms.21242.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21241
+
+[rooms.21243]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21243.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21244
+[rooms.21243.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21255
+[rooms.21243.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21249
+[rooms.21243.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21209
+
+[rooms.21244]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21244.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21245
+[rooms.21244.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21256
+[rooms.21244.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21250
+[rooms.21244.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21243
+
+[rooms.21245]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21245.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21246
+[rooms.21245.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21257
+[rooms.21245.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21251
+[rooms.21245.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21244
+
+[rooms.21246]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "FOREST"
+[rooms.21246.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21247
+[rooms.21246.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21258
+[rooms.21246.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21252
+[rooms.21246.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21245
+
+[rooms.21247]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21247.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21248
+[rooms.21247.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21259
+[rooms.21247.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21253
+[rooms.21247.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21246
+
+[rooms.21248]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21248.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21258
+[rooms.21248.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21237
+[rooms.21248.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21254
+[rooms.21248.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21247
+
+[rooms.21249]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21249.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21250
+[rooms.21249.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21243
+[rooms.21249.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21255
+[rooms.21249.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21213
+
+[rooms.21250]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21250.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21251
+[rooms.21250.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21244
+[rooms.21250.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21256
+[rooms.21250.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21249
+
+[rooms.21251]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21251.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21252
+[rooms.21251.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21245
+[rooms.21251.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21257
+[rooms.21251.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21250
+
+[rooms.21252]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "FOREST"
+[rooms.21252.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21253
+[rooms.21252.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21246
+[rooms.21252.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21258
+[rooms.21252.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21251
+
+[rooms.21253]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21253.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21254
+[rooms.21253.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21247
+[rooms.21253.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21259
+[rooms.21253.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21252
+
+[rooms.21254]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21254.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21247
+[rooms.21254.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21248
+[rooms.21254.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21260
+[rooms.21254.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21253
+
+[rooms.21255]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21255.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21256
+[rooms.21255.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21249
+[rooms.21255.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21243
+[rooms.21255.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21217
+
+[rooms.21256]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。森林朝四面八方延伸很難看清周圍，但南方
+的地面上有條明顯的獸徑。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21256.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21257
+[rooms.21256.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21250
+[rooms.21256.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21171
+[rooms.21256.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21255
+
+[rooms.21257]
+name = "迷斯卓諾森林深處"
+description = """
+這裡是邪惡的迷斯卓諾森林深處，在這片受詛咒的森林中，那些可愛、友善
+的生物們早已不復存，昔日大地的美景也消失殆盡。理應迴盪在樹林間的蟲鳴鳥
+叫，現在也僅剩野獸的陣陣低吼聲。這片森林朝四面八方延伸出去，讓人很難看
+清楚周圍有什麼東西。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "FOREST"
+[rooms.21257.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21258
+[rooms.21257.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21251
+[rooms.21257.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21245
+[rooms.21257.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21256
+
+[rooms.21258]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["NO_MOB", "INDOORS"]
+sector = "FOREST"
+[rooms.21258.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21259
+[rooms.21258.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21252
+[rooms.21258.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21246
+[rooms.21258.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21257
+
+[rooms.21259]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21259.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21260
+[rooms.21259.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21253
+[rooms.21259.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21247
+[rooms.21259.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21258
+
+[rooms.21260]
+name = "迷斯卓諾森林之中"
+description = """
+你正站在陰暗的迷斯卓諾森林之中，那些曾經令人喜愛的精靈們，現在早已
+變得邪惡而扭曲，這片大地的美景幾乎全消失了。周圍的樹木似乎帶著不祥的預
+兆，彷彿正隱約威脅著你，而灌木叢裡則到處都是飛奔竄逃的小動物。這片森林
+朝四面八方延伸出去，讓人很難看清楚周圍有什麼東西。
+"""
+flags = ["INDOORS"]
+sector = "FOREST"
+[rooms.21260.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21244
+[rooms.21260.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21254
+[rooms.21260.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21248
+[rooms.21260.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 21259

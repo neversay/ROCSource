@@ -1,0 +1,1644 @@
+[area]
+name = "煉獄"
+identity = "purgator"
+builders = "Envy"
+translator = "Pluto"
+modifier = "Pluto"
+vnum_start = 400
+vnum_end = 599
+security = 1
+recall = 401
+death = 401
+f_toggle = true
+
+[mobiles.401]
+keywords = "dead reaper"
+short_description = "死神(Reaper of the Dead)"
+long_description = "死神(Reaper of the Dead)在此等著決定你的命運。\n"
+description = """
+他看起來似乎並不介意在這裡陪你過一輩子。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "PRACTICE", "CRITICAL", "HARD_DIS", "HUNT", "TWO_WEAPON", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT", "POLYMORPH", "FLYING", "PASS_DOOR", "MYSTIC_ARMOR"]
+alignment = -1000
+level = 70
+mod_hitplus = 20000
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 30
+mod_ac = 1000
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "God"
+class = ["WARRIOR", "MAGE", "SWORD"]
+spec_flags = ["NO_DM", "REF_MAGIC", "ALY_SAN", "EXPERT", "MOBAI_LV2"]
+[[mobiles.401.applies]]
+type = "POWER_POTENTIAL"
+degree = 50
+[[mobiles.401.applies]]
+type = "REDUCE_DAMAGE"
+degree = 100
+[[mobiles.401.applies]]
+type = "REDUCE_MAGIC"
+degree = 100
+[[mobiles.401.applies]]
+type = "APPLY_ADAMAGE"
+degree = 100
+[[mobiles.401.applies]]
+type = "APPLY_AMAGIC"
+degree = 100
+[[mobiles.401.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if isfight($i)
+	break
+else
+	if hitprcnt($i) < 70
+		say 命運的巨輪開始轉動....。
+		say 因業的漁網籠罩一切....。
+		mpecho 一陣奇怪的閃光，籠罩在 $I 的身上....。
+		mpat 5 c 'full heal'
+	endif
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "talk_prog"
+argument = "return"
+script = """
+if ispc($n)
+	if is_qmark($n) == purgator_dead
+		tell $n 踏上輪迴的時間未到，你必須再等一會兒。
+	else
+		tell $n 輪迴的號角已經響起，你可以回到人間了。
+		mpechoat $n $I 已經將你傳送回光明之鎮的聖殿了....。
+		mpecho $I 將 $n 傳送走了....。
+		mptransfer $n 4580
+		wave $n
+	endif
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "talk_prog"
+argument = "grave"
+script = """
+if ispc($n)
+	c grave $n
+        mpnowait
+        c 'detect invis' $n 
+	if is_qmark($n) != purgator_dead
+		mpadd_qmark $n purgator_dead 5 0 0 0 0 1
+	else
+		mpmod_qmark $n purgator_dead timer + 1
+	endif
+	tell $n 想回(return)到人間嗎？
+	mpnowait
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if ispc($n)
+	tell $n 通過了煉獄之道，進入了審判之間，你應該獲得你應得的獎賞。
+	tell $n 有需要的話，儘管告訴我吧(talk reaper grave)。
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.401.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if class($n) == 10
+	c 'star fire' $n
+	mpnowait
+	c para
+	mpnowait
+	mpat 5 c 3 double
+	mpnowait
+endif
+c 'energy drain' $n
+mpnowait
+c curse $n
+mpnowait
+c poison $n
+mpnowait
+mpat 5 c 2 double
+mpnowait
+"""
+[[mobiles.401.programs]]
+trigger = "rand_prog"
+argument = "40"
+script = """
+if hitprcnt($i) <= 10
+	if is_qmark($i) != purgator_dead_fullheal
+		mpadd_qmark $i purgator_dead_fullheal 100 0 0 0 1 0
+	else
+		if is_qmark($i) <= purgator_dead_fullheal 100002
+			c 'full heal'
+			mpmod_qmark $i purgator_dead_fullheal v0 + 1
+		endif
+	endif
+	break
+endif
+if hitprcnt($i) <= 30
+	mpat 5 c 'double heal'
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if class($n) == 10
+	c 'star fire' $n
+	mpnowait
+	c para
+	mpnowait
+	mpat 5 c 3 double
+	mpnowait
+	break
+endif
+if class($n) == 14
+        c 3 fireball $n
+        mpnowait
+endif
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv heavyhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+skilldrv speedhit $n
+if hitprcnt($i) <= 10
+	if is_qmark($i) != purgator_dead_fullheal
+		mpadd_qmark $i purgator_dead_fullheal 100 0 0 0 1 0
+	else
+		if is_qmark($i) <= purgator_dead_fullheal 100002
+			c 'full heal'
+			mpmod_qmark $i purgator_dead_fullheal v0 + 1
+		endif
+	endif
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "fight_prog"
+argument = "60"
+script = """
+if hitprcnt($i) < 20
+	c 'double heal'
+	mpnowait
+	c heal
+	mpnowait
+	mpat 5 invoke
+endif
+if hitprcnt($i) < 50
+	if rand(30)
+		c 'double heal'
+		mpnowait
+		c flamestrike
+	else
+		c 'double heal'
+		mpnowait
+		c fireball
+	endif
+	mpnowait
+endif
+if hitprcnt($i) < 80
+	if rand(30)
+		c 'double heal'
+	else
+		c heal
+	endif
+	mpnowait
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mplog killed by $n
+if rand(99)
+        mpjunk all
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "hurt_prog"
+argument = "60"
+script = """
+if is_qmark($i) != reaper_magic_missile
+    mpadd_qmark $i reaper_magic_missile -1 1 0 0 0 1
+    mpat 5 c full
+    mpnowait
+    else
+        if is_qmark($i) < reaper_magic_missile 100003
+            mpmod_qmark $i reaper_magic_missile v0 + 1
+            mpat 5 c 2 double
+            mpnowait
+        else
+            mpdel_qmark $i reaper_magic_missile
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c 2 'double heal'
+                mpnowait
+                c 3 whirl 
+                mpnowait
+                c 3 'magic missile' $n
+                mpnowait
+        endif
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "hurt_prog"
+argument = "58"
+script = """
+if is_qmark($i) != reaper_lightning
+    mpadd_qmark $i reaper_lightning -1 1 0 0 0 1
+    mpat 5 c full
+    mpnowait
+    else
+        if is_qmark($i) < reaper_lightning 100003
+            mpmod_qmark $i reaper_lightning v0 + 1
+            mpat 5 c 3 double
+            mpnowait
+        else
+            mpdel_qmark $i reaper_lightning
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c full
+                mpnowait
+                c 3 whirl 
+                mpnowait
+                c 3 lightning $n
+                mpnowait
+        endif
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "hurt_prog"
+argument = "137"
+script = """
+if is_qmark($i) != reaper_frenzy
+    mpadd_qmark $i reaper_frenzy -1 1 0 0 0 1
+    mpat 5 c full
+    mpnowait
+    else
+        if is_qmark($i) < reaper_frenzy 100003
+            mpmod_qmark $i reaper_frenzy v0 + 1
+            mpat 5 c 3 double
+            mpnowait
+        else
+            mpdel_qmark $i reaper_frenzy
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c full
+                mpnowait
+                frenzy $n
+                mpnowait
+        endif
+endif
+"""
+[[mobiles.401.programs]]
+trigger = "hurt_prog"
+argument = "101"
+script = """
+if is_qmark($i) != reaper_circle
+     mpadd_qmark $i reaper_circle -1 1 0 0 0 1
+     mpnowait
+     mpat 5 c heal
+     mpnowait
+     else
+        if is_qmark($i) < reaper_circle 100003
+            mpmod_qmark $i reaper_circle v0 + 1
+            mpat 5 c 2 double
+            mpnowait
+        else
+                mpdel_qmark $i reaper_circle
+                sigh $n
+                say 別以為這招會有用！
+                mpat 5 c 2 'double heal'
+                mpnowait
+                c 3 whirl 
+                mpnowait
+                c 'magic missile' $n
+                mpnowait
+        endif     
+endif
+"""
+
+[mobiles.402]
+keywords = "lost soul"
+short_description = "迷失的靈魂(lost soul)"
+long_description = "一個迷失的靈魂(lost soul)四處飄遊。\n"
+description = """
+又是一個無法找到出口的靈魂迷失在這裡。你也最好不要再浪費時間，如果不想跟他一樣
+就趕緊找到出口。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 0
+level = 10
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Mist"
+
+[objects.401]
+keywords = "tear potion drop"
+short_description = "精靈之淚(elves' tear)"
+long_description = "這一顆精靈之淚(elves' tear)看起來晶瑩剔透。"
+action_description = ""
+item_type = "POTION"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE"]
+values = ["1", "detect invis", "", ""]
+weight = 5
+cost = 0
+level_limited = 0
+level = 1
+material = "gem"
+
+[objects.402]
+keywords = "cloak reaper dead"
+short_description = "死神斗蓬(Cloak of Dead Reaper)"
+long_description = "一襲黑色又破爛的斗蓬(cloak)，實在不知道有什麼用處。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["EVIL", "MAGIC", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "50", "0"]
+weight = 10
+cost = 500000
+level_limited = 0
+permit_races = { type = "DENY", list = ["HUMAN", "ELF", "GNOME"] }
+material = "fiber"
+[[objects.402.applies]]
+type = "HITROLL"
+value = 3
+[[objects.402.applies]]
+type = "HIT"
+value = -100
+[[objects.402.applies]]
+type = "SAVING_BREATH"
+value = -5
+
+[objects.403]
+keywords = "daemon ring"
+short_description = "魔戒(Daemon Ring)"
+long_description = "一只能夠發出無限魔力的戒指(ring)被丟棄在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "MAGIC", "NODROP", "ANTI_GOOD", "ANTI_NEUTRAL", "NOREMOVE", "LORE"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "999", "0"]
+weight = 2
+cost = 500000
+level_limited = 0
+material = "perfect matter"
+[[objects.403.extra_descriptions]]
+keywords = "daemon ring"
+description = """
+這一只戒指，聽說能夠提供所有者無限的魔力。但是使用者卻要付出
+自己寶貴的生命成為戒指魔力的來源。
+"""
+[[objects.403.applies]]
+type = "INT"
+value = 1
+[[objects.403.applies]]
+type = "WIS"
+value = 1
+[[objects.403.applies]]
+type = "CON"
+value = -5
+[[objects.403.applies]]
+type = "MANA"
+value = 100
+[[objects.403.applies]]
+type = "HIT"
+value = -100
+[[objects.403.applies]]
+type = "MOVE"
+value = 50
+
+[objects.404]
+keywords = "diaphragm judgement"
+short_description = "審判光圈(Diaphragm Judgement)"
+long_description = "一圈發出能夠看透你心坎的奇異光圈(Diaphragm)被放在此處。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "ANTI_GOOD", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 10
+cost = 200000
+level_limited = 0
+material = "aura"
+[[objects.404.extra_descriptions]]
+keywords = "diaphragm judgement"
+description = """
+在這道光圈前面，沒有人可以逃過死亡的審判。因業決定了生命的走向，沒有人能
+夠阻擋輪迴巨輪的轉動。
+"""
+[[objects.404.applies]]
+type = "INT"
+value = 2
+[[objects.404.applies]]
+type = "MANA"
+value = 50
+[[objects.404.applies]]
+type = "DAMROLL"
+value = 6
+
+[rooms.401]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你最好趕緊找到你的屍體吧！
+"""
+flags = []
+sector = "INSIDE"
+randomize_exits = 6
+[rooms.401.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 410
+[rooms.401.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 410
+
+[rooms.402]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.402.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 414
+[rooms.402.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 403
+[rooms.402.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 406
+[rooms.402.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 410
+[rooms.402.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 414
+[rooms.402.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 405
+
+[rooms.403]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.403.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 415
+[rooms.403.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 404
+[rooms.403.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 407
+[rooms.403.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 411
+[rooms.403.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 415
+[rooms.403.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 402
+
+[rooms.404]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.404.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 416
+[rooms.404.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 405
+[rooms.404.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 408
+[rooms.404.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 412
+[rooms.404.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 416
+[rooms.404.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 403
+
+[rooms.405]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.405.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 417
+[rooms.405.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 402
+[rooms.405.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 409
+[rooms.405.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 413
+[rooms.405.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 417
+[rooms.405.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 404
+
+[rooms.406]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.406.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 418
+[rooms.406.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 407
+[rooms.406.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 410
+[rooms.406.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 402
+[rooms.406.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 418
+[rooms.406.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 409
+
+[rooms.407]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.407.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 419
+[rooms.407.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 408
+[rooms.407.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 411
+[rooms.407.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 403
+[rooms.407.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 419
+[rooms.407.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 406
+[[rooms.407.resets.mobiles]]
+vnum = 402
+limit = 3
+
+[rooms.408]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.408.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 420
+[rooms.408.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 409
+[rooms.408.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 412
+[rooms.408.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 404
+[rooms.408.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 420
+[rooms.408.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 407
+
+[rooms.409]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.409.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 421
+[rooms.409.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 406
+[rooms.409.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 413
+[rooms.409.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 405
+[rooms.409.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 421
+[rooms.409.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 408
+
+[rooms.410]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+randomize_exits = 6
+[rooms.410.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 401
+[rooms.410.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 411
+[rooms.410.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 402
+[rooms.410.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 406
+[rooms.410.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 401
+[rooms.410.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 413
+
+[rooms.411]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.411.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 423
+[rooms.411.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 412
+[rooms.411.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 403
+[rooms.411.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 407
+[rooms.411.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 423
+[rooms.411.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 410
+
+[rooms.412]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.412.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 424
+[rooms.412.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 413
+[rooms.412.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 404
+[rooms.412.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 408
+[rooms.412.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 424
+[rooms.412.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 411
+
+[rooms.413]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.413.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 425
+[rooms.413.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 410
+[rooms.413.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 405
+[rooms.413.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 409
+[rooms.413.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 425
+[rooms.413.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 412
+
+[rooms.414]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+
+你看到一座告示牌(sign)放在這邊
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.414.extra_descriptions]]
+keywords = "sign"
+description = """
+這座告示牌的內容如下：
+
+經歷了千辛萬苦，你終於到達了這裡。給你一點提示，想要找到你的屍體，再往
+北走兩步。
+
+                                		闇之冥王星普魯多(Pluto)
+"""
+[rooms.414.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 402
+[rooms.414.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 415
+[rooms.414.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 418
+[rooms.414.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 402
+[rooms.414.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 417
+
+[rooms.415]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.415.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 403
+[rooms.415.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 416
+[rooms.415.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 419
+[rooms.415.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 423
+[rooms.415.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 403
+[rooms.415.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 414
+
+[rooms.416]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.416.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 404
+[rooms.416.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 417
+[rooms.416.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 420
+[rooms.416.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 424
+[rooms.416.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 404
+[rooms.416.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 415
+
+[rooms.417]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.417.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 405
+[rooms.417.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 414
+[rooms.417.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 421
+[rooms.417.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 425
+[rooms.417.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 405
+[rooms.417.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 416
+
+[rooms.418]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.418.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 406
+[rooms.418.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 419
+[rooms.418.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 422
+[rooms.418.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 414
+[rooms.418.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 406
+[rooms.418.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 421
+
+[rooms.419]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.419.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 407
+[rooms.419.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 420
+[rooms.419.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 423
+[rooms.419.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 415
+[rooms.419.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 407
+[rooms.419.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 418
+
+[rooms.420]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.420.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 408
+[rooms.420.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 421
+[rooms.420.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 424
+[rooms.420.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 416
+[rooms.420.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 408
+[rooms.420.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 419
+
+[rooms.421]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+
+你看到一座告示牌(sign)放在這邊。
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.421.extra_descriptions]]
+keywords = "sign"
+description = """
+這做告示牌的內容如下：
+
+經歷了千辛萬苦，你終於到達了這裡。給你一點提示，想要找到你的屍體，再往
+北走一步。
+
+                                		闇之冥王星普魯多(Pluto)
+"""
+[rooms.421.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 409
+[rooms.421.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 418
+[rooms.421.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 425
+[rooms.421.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 417
+[rooms.421.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 409
+[rooms.421.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 420
+
+[rooms.422]
+name = "煉獄"
+description = """
+這個地方看起來與其他空間不太一樣。不知什麼原因，你覺得你已經接近煉獄的盡頭。
+不要再浪費任何時間了，因為你赤裸的身體已經開始感到疲累與寒冷。更重要的，你那尚未
+取回的屍體似乎已經開始腐爛。
+
+這邊有一座告示牌(sign)。
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.422.extra_descriptions]]
+keywords = "sign"
+description = """
+往北走去吧！
+
+	闇之冥王星普魯多(Pluto)
+"""
+[rooms.422.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 423
+[rooms.422.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 426
+[rooms.422.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 418
+
+[rooms.423]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.423.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 411
+[rooms.423.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 424
+[rooms.423.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 415
+[rooms.423.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 419
+[rooms.423.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 411
+[rooms.423.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 422
+
+[rooms.424]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.424.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 412
+[rooms.424.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 425
+[rooms.424.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 416
+[rooms.424.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 420
+[rooms.424.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 412
+[rooms.424.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 423
+
+[rooms.425]
+name = "煉獄"
+description = """
+整個空間充斥著白色的煙霧。沒有人能夠告訴跟你說你在哪？這裡是什麼地方？你
+可以聽到遠處傳來陣陣的尖叫與呼喊聲。你感到十分的寒冷、飢餓而且絕望。
+你看到一座告示牌(sign)放在這邊。
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.425.extra_descriptions]]
+keywords = "sign"
+description = """
+這做告示牌的內容如下：
+
+經歷了千辛萬苦，你終於到達了這裡。給你一點提示，想要找到你的屍體，再往
+西走三步。
+
+                                		闇之冥王星普魯多(Pluto)
+"""
+[rooms.425.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 413
+[rooms.425.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 417
+[rooms.425.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 421
+[rooms.425.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 413
+[rooms.425.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 424
+[[rooms.425.resets.mobiles]]
+vnum = 402
+limit = 3
+
+[rooms.426]
+name = "煉獄"
+description = """
+太好了！你終於找到可以通往審判之間。往東走去，你可以看到許多堆積如山的屍首。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.426.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 427
+
+[rooms.427]
+name = "審判之間"
+description = """
+在這裡你必須面對你最後的審判。你的命運將取決於你在人世間的因業。祈求上蒼吧！
+或許你可求得一些上天的恩賜，讓你的屍體能夠保存完整的回來。
+
+一座告示牌(sign)放置在這邊。
+"""
+flags = ["SAFE"]
+sector = "INSIDE"
+[[rooms.427.extra_descriptions]]
+keywords = "sign"
+description = """
+告示牌上面寫著：
+
+請記得拿走你屍體裡頭的隱形裝備。如果你忘記拿走了隱形的裝備，造成屍體消失的時候
+連帶隱形裝備一同消失，你只能自嘆倒楣。千萬別說我沒有警告你。
+
+							闇之冥王星普魯多(Pluto)
+"""
+[[rooms.427.resets.mobiles]]
+vnum = 401
+limit = 1
+[[rooms.427.resets.mobiles.equipment]]
+vnum = 403
+wear_loc = "FINGER_L"
+[[rooms.427.resets.mobiles.equipment]]
+vnum = 402
+wear_loc = "ABOUT"
+[[rooms.427.resets.mobiles.equipment]]
+vnum = 404
+wear_loc = "LIGHT"
+[[rooms.427.resets.mobiles.inventory]]
+vnum = 401

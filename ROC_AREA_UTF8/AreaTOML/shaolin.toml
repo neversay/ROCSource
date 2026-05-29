@@ -1,0 +1,2716 @@
+[area]
+name = "少林寺"
+identity = "shaolin"
+builders = "Boom"
+translator = "Pluto"
+modifier = "Pluto"
+vnum_start = 20100
+vnum_end = 20199
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.20101]
+keywords = "monk child"
+short_description = "小和尚(monk child)"
+long_description = "一個小和尚(monk child)在這裡掃地.\n"
+description = """
+他只是一個年輕孩子，當然身材不如你高大。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY"]
+affected_flags = []
+alignment = 500
+level = 7
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+spec_flags = ["NO_CHARM"]
+[[mobiles.20101.programs]]
+trigger = "tick_prog"
+argument = "80"
+script = """
+mpecho $I嘀嘀咕咕的說著：那邊一定有什麼...那個地方(place)一定怪怪的。
+	curse
+"""
+[[mobiles.20101.programs]]
+trigger = "talk_prog"
+argument = "place"
+script = """
+if is_qmark($n) != shaolin_quest
+		mpadd_qmark $n shaolin_quest -1 0 0 0 0 1
+		say 啊？你說那個地方是哪裡？
+		ponder
+		say 還不是那個放有花瓶的地方。那個地方老是有奇怪的聲音傳出來。
+		say 雖然長老說沒什麼，我還是覺得怪怪的，改天一定要去搜一下。
+	else
+		say 我不是告訴過你了嗎？放花瓶的地方！
+		say 就是客房外面那個小佛堂！
+		anger $n
+	endif
+"""
+[[mobiles.20101.programs]]
+trigger = "talk_prog"
+argument = "prison"
+script = """
+if is_qmark($n) == shaolin_quest 100001
+		say 監獄？你在開玩笑吧？長老不會允許這種事的啦～不然你去問他～
+		shr
+	else
+		say 啥監獄？
+	endif
+"""
+[[mobiles.20101.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 施主有什麼事嗎？
+"""
+
+[mobiles.20102]
+keywords = "nun female prisoner"
+short_description = "被囚禁的尼姑(imprisoned nun)"
+long_description = "一個被囚禁的尼姑(imprisoned nun)躲在牆角裏發抖.\n"
+description = """
+從她的服裝看來，她好像是個尼姑，不過為什麼會
+被囚禁在這邊呢？
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA"]
+affected_flags = []
+alignment = 0
+level = 21
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "female"
+special_function = "spec_cast_cleric"
+
+[mobiles.20103]
+keywords = "disciple"
+short_description = "首座弟子(disciple)"
+long_description = "羅漢堂首座的嫡傳弟子(disciple)在這裡練習新的打鬥技巧.\n"
+description = """
+他是少林寺許多習武弟子之一，看他的架式，你覺
+得他很有成功的希望。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "WIMPY"]
+affected_flags = []
+alignment = 100
+level = 17
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+class = ["WARRIOR"]
+
+[mobiles.20104]
+keywords = "monk"
+short_description = "和尚(monk)"
+long_description = "小心!一個和尚(monk)在這裡練習打鬥技巧.\n"
+description = """
+為了避免被他誤傷，最好跟他保持一點距離。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = []
+alignment = 201
+level = 11
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+
+[mobiles.20105]
+keywords = "monk guard"
+short_description = "武鬥僧(monk guard)"
+long_description = "武鬥僧(monk guard)在這裡用兇狠的目光看著你!\n"
+description = """
+他看起來兇猛而孔武有力，你不會想跟他打吧？
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -100
+level = 13
+mod_hitplus = 200
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = -50
+mod_pp = 0
+gold = 0
+sex = "male"
+class = ["WARRIOR"]
+special_function = "spec_cast_mage"
+[[mobiles.20105.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == shaolin_quest 100000
+		say 你怎麼進來的？算了，那不重要，這個牢房(prison)不是你該來的。
+		mpmod_qmark $n shaolin_quest v0 = 1
+		mpecho $I 把你趕了出去...
+		mpechoat $n 你覺得事情不單純...少林寺有監獄？
+		mptransfer $n 20126
+		mpforcer 20126 force $n look
+	else
+		mpkill $n
+	endif
+"""
+[[mobiles.20105.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+say 劫獄啊！
+		if is_qmark($n) == shaolin_quest 100002
+		mpecho 從$I的身上掉出一串鑰匙(Keys)！
+		mpoload 20140 36 floor
+	else
+		mpecho 從$I的身上掉出一串鑰匙(Keys)！
+		mpoload 20131 36 floor
+	endif
+"""
+
+[mobiles.20106]
+keywords = "demon"
+short_description = "心魔(inner demon)"
+long_description = "你的心魔(inner demon)在這裡顯現出來並向你攻擊!\n"
+description = """
+這張臉孔看起來非常眼熟....啊！不就是你自己的
+臉嗎？這個怪物似乎變成了你的樣子，而且他似乎
+想取代原本的主人....
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = -201
+level = 22
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Undead"
+class = ["WARRIOR"]
+special_function = "spec_cast_mage"
+
+[mobiles.20107]
+keywords = "evil monk"
+short_description = "惡僧(evil monk)"
+long_description = "這個惡僧(evil monk)忽然在你面前跳了出來把你嚇了一跳!\n"
+description = """
+他看起來跟這裡其他的和尚一樣，事實上，他似乎
+比其他人更不友善一點。而且他似乎不太喜歡你的
+長相...
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -300
+level = 17
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+class = ["WARRIOR"]
+special_function = "spec_poison"
+
+[mobiles.20108]
+keywords = "wood wooden monk man machine"
+short_description = "初等木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。不過這具木人好像有一點破爛....
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 30
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = -10
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+[[mobiles.20108.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+mpecho $I 一腳朝你踢來！
+	kick
+"""
+[[mobiles.20108.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20138 mpmload 20119
+	mptransfer $n 20138
+	mpforcer 20138 force $n look
+	mppurge $i
+"""
+
+[mobiles.20109]
+keywords = "monk warrior"
+short_description = "資深武鬥僧(monk warrior)"
+long_description = "這位資深的武鬥僧(monk warrior)在此昂首闊步的走著.\n"
+description = """
+跟許多經驗老道的戰士討厭菜鳥一樣，他相當的看
+不起眼前的你。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY"]
+affected_flags = ["PROTECT"]
+alignment = 201
+level = 25
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+class = ["WARRIOR"]
+special_function = "spec_cast_mage"
+
+[mobiles.20110]
+keywords = "luohan Luohan bronze monk"
+short_description = "羅漢(Luohan)"
+long_description = "這位羅漢(Luohan)一動也不動的坐在這裡守著木人巷.\n"
+description = """
+渾身古銅色的皮膚象徵著他已經習得少林寺部分最
+高深的武功，他正守著通往木人巷的路。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["SANCTUARY", "PROTECT"]
+alignment = 500
+level = 28
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Giant"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+special_function = "spec_cast_mage"
+[[mobiles.20110.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 施主要入木人巷嗎？(yes/no)
+"""
+[[mobiles.20110.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+mpechoat $n $I將你送進了木人巷
+	mpat 20114 mpmload 20108
+	mptransfer $n 20114
+	mpforcer 20114 force $n look
+"""
+[[mobiles.20110.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+nod
+	mpecho $I又恢復沉默不語...
+"""
+
+[mobiles.20111]
+keywords = "Wuhua wuhua monk"
+short_description = "無花和尚(Wuhua)"
+long_description = "一個面容凶惡的和尚(Monk)正惡狠狠的瞪著你！\n"
+description = """
+像許多走火入魔的武僧，他迫不及待想襲擊你。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -1000
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_poison"
+[[mobiles.20111.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == shaolin_quest 100002
+		say 好久了...我終於又聞到活人的氣味了...
+		grin
+		mpechoat $n $I 忽然從你身邊跑走(escape)了！
+		mpmod_qmark $n shaolin_quest v0 = 3
+		mpechoat $n 這下該怎麼辦呢...先去告訴方丈好了？
+		mppurge self
+	else
+		say 滾滾滾！別打擾老子！
+		mpkill $n
+	endif
+"""
+
+[mobiles.20112]
+keywords = "master librarian monk books"
+short_description = "羅漢堂藏經閣長老(Master of Books)"
+long_description = "羅漢堂藏經閣長老(Master of Books)在這裡閱讀閣內的經典.\n"
+description = """
+他其中一隻手握著燭臺以便閱讀架上的經典，藉
+著燭光的反射，你可以看到他的眼神中充滿了智
+慧，當然還包括歲月的痕跡。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["SANCTUARY", "PROTECT"]
+alignment = 500
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_cleric"
+[[mobiles.20112.programs]]
+trigger = "talk_prog"
+argument = "prison"
+script = """
+if is_qmark($n) == shaolin_quest 100001
+		say 老納並不清楚。
+		avert $n
+	else
+		say 什麼監獄？
+	endif
+"""
+
+[mobiles.20113]
+keywords = "master monk drunken"
+short_description = "酒醉的長老(Drunken Master)"
+long_description = "一位喝醉酒的長老(Drunken Master)睡在這裡.\n"
+description = """
+唔，一個僧侶應該這樣做嗎？
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY"]
+affected_flags = ["SANCTUARY", "PROTECT"]
+alignment = 250
+level = 37
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+class = ["WARRIOR"]
+special_function = "spec_cast_mage"
+
+[mobiles.20114]
+keywords = "master monk trainer"
+short_description = "羅漢堂傳功長老(Master Trainer)"
+long_description = "羅漢堂傳功長老(Master Trainer)在這裡研究著少林武功.\n"
+description = """
+他身上散發出一股驚人的魄力，但又技巧性的控
+制住那股力量，不知道你要多久才能達到他的修
+為。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY"]
+affected_flags = ["INVISIBLE", "SANCTUARY", "PROTECT"]
+alignment = 500
+level = 39
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_mage"
+[[mobiles.20114.programs]]
+trigger = "talk_prog"
+argument = "prison"
+script = """
+if is_qmark($n) == shaolin_quest 100001
+		say 老納並不清楚。
+		avert $n
+	else
+		say 什麼監獄？
+	endif
+"""
+
+[mobiles.20115]
+keywords = "abbot Abbot monk"
+short_description = "羅漢堂首座(Abbot of Luohan)"
+long_description = "羅漢堂的方丈(Abbot of Luohan)向你微微點頭.\n"
+description = """
+他有著與年齡完全不搭配的力量跟健康，帶給別
+人相當深刻的印像。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY"]
+affected_flags = ["SANCTUARY", "PROTECT", "FLYING"]
+alignment = 800
+level = 50
+mod_hitplus = 500
+mod_mana = 100
+mod_hitroll = 20
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 30
+dodge = 150
+mod_pp = 0
+gold = 0
+sex = "male"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2"]
+special_function = "spec_breath_fire"
+[[mobiles.20115.programs]]
+trigger = "talk_prog"
+argument = "prison"
+script = """
+if is_qmark($n) == shaolin_quest 100001
+		mpmod_qmark $n shaolin_quest v0 = 2
+		gasp $n
+		mpcallout 1 say 施主知道了？
+		mpcallout 2 say 那裡關著犯戒的僧尼，是以不願外人介入。
+		mpcallout 3 say 少林寺10年前的恥辱阿...
+		mpcallout 4 sigh
+		mpcallout 5 say 總之因為某個不能被釋放的人...唉，老納不能再多說了。
+		mpcallout 6 say 施主也請不要繼續過問...。
+	else
+		say 什麼監獄？
+	endif
+"""
+[[mobiles.20115.programs]]
+trigger = "talk_prog"
+argument = "escape"
+script = """
+if is_qmark($n) == shaolin_quest 100003
+		mpmod_qmark $n shaolin_quest v0 = 4
+		say 老納曾經告訴過施主，請施主不要多管的...
+		say 寺院的大門已經被我們封鎖了，無花唯一可能逃跑的地方...
+		say 只剩下木人巷了。
+		say 既然是施主所造成，老納希望可以讓施主來解決。
+		say 就麻煩施主入木人巷去追捕無花吧！
+		say 木人巷就在佛堂大廳往下的祕門裡，施主請保重。
+		say 要打開木人巷，只要跟那邊的守門羅漢交談就可以了。
+		wave $n
+	else
+		say 誰逃走了？
+	endif
+"""
+[[mobiles.20115.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == shaolin_quest 200002
+		mpechoat $n $I一看到你身上被撕破的衣擺，深深的嘆了口氣。
+		say 我大概知道前因後果了，一切都是緣分，施主也請不要掛心。
+		say 這是給您的一份謝禮。
+		mpexp $n 10000
+		mpmod_qmark $n shaolin_quest v1 = 3
+	endif
+"""
+[[mobiles.20115.programs]]
+trigger = "talk_prog"
+argument = "report"
+script = """
+if is_qmark($n) == shaolin_quest 200001
+		say 老納替少林寺以及施主您自己說聲謝謝。
+		say 這是一點小小的謝禮。
+		mpskillexp $n 2000
+		mpmod_qmark $n shaolin_quest v1 = 3
+	else
+		say　你要跟我回報什麼？
+	endif
+"""
+[[mobiles.20115.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+if is_qmark($n) == shaolin_quest
+		if is_qmark($n) <= shaolin_quest 100005
+			say 好吧，這也是緣分。
+			sigh
+			mpdel_qmark $n shaolin_quest
+		endif
+	else
+		say 重新什麼？
+	endif
+"""
+
+[mobiles.20116]
+keywords = "Jinshen jinshen"
+short_description = "金身羅漢(Jinshen)"
+long_description = "一具金身羅漢(Jinshen)坐在這裡一動也不動.\n"
+description = """
+從頭到腳被金色所包圍的身體，象徵著少林寺的
+武學巔峰。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+special_function = "spec_breath_any"
+[[mobiles.20116.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+say 大力金剛腿！
+	mpecho $I 忽然連續朝你踢出幾腳！
+	kick
+	mpnowait
+	kick
+	mpnowait
+	kick
+	mpnowait
+"""
+[[mobiles.20116.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	say ...過關！
+	mpecho $I 將你推往下一個房間！
+	mpecho $I的身影緩緩的消失在黑暗中...
+	mpat 20146 mpmload 20127
+	mptransfer $n 20146
+	mpforcer 20146 force $n look
+	mppurge $i
+"""
+
+[mobiles.20117]
+keywords = "guest visitor"
+short_description = "香客(visiting guest)"
+long_description = "一位前來寺廟上香的香客(visitor)站在這裡.\n"
+description = """
+從他的儀容跟衣著來看，他應該相當的富有。
+"""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA", "WIMPY"]
+affected_flags = []
+alignment = 50
+level = 13
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+special_function = "spec_thief"
+
+[mobiles.20118]
+keywords = "old man"
+short_description = "瘋癲的老人(crazy old man)"
+long_description = "一個瘋癲的老人(crazy old man)坐在這裡對你傻笑.\n"
+description = """
+他坐在空地上，傻笑著對你說：我看到你了，
+喀啦欣尼，你會死！我知道你的名子，喀啦欣
+尼，我會抓到你的！哈哈哈哈！
+他大概瘋了吧....
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = 0
+level = 12
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+
+[mobiles.20119]
+keywords = "wood wooden-first1 monk man machine"
+short_description = "初等木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。跟前面的木人比，這具看起來比較不
+破了....
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20119.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+mpecho $I 忽然朝你的頭打了過來！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20119.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20139 mpmload 20120
+	mptransfer $n 20139
+	mpforcer 20139 force $n look
+	mppurge $i
+"""
+
+[mobiles.20120]
+keywords = "wood wooden-first2 monk man machine"
+short_description = "初等木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。跟前面的木人比，這具看起來好很多
+了。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20120.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+mpecho $I 忽然朝你展開猛攻！
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20120.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20140 mpmload 20121
+	mptransfer $n 20140
+	mpforcer 20140 force $n look
+	mppurge $i
+"""
+
+[mobiles.20121]
+keywords = "wood wooden-second1 monk man machine"
+short_description = "中階木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來製作相當精良，相對
+的威力也提升不少。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 25
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = -5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20121.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+mpecho $I 忽然朝你踢了過來！
+	kick
+	mpnowait
+	kick
+	mpnowait
+"""
+[[mobiles.20121.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20141 mpmload 20122
+	mptransfer $n 20141
+	mpforcer 20141 force $n look
+	mppurge $i
+"""
+
+[mobiles.20122]
+keywords = "wood wooden-second2 monk man machine"
+short_description = "中階木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來製作相當精良，相對
+的威力也提升不少。這具看起來比前面那具更堅固
+一點。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 25
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20122.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+mpecho $I 忽然朝你的頭打了過來！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20122.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20142 mpmload 20123
+	mptransfer $n 20142
+	mpforcer 20142 force $n look
+	mppurge $i
+"""
+
+[mobiles.20123]
+keywords = "wood wooden-second3 monk man machine"
+short_description = "中階木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來製作相當精良，相對
+的威力也提升不少。這具看起非常的堅固。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 25
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20123.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+mpecho $I 忽然朝你展開猛攻！
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20123.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20143 mpmload 20124
+	mptransfer $n 20143
+	mpforcer 20143 force $n look
+	mppurge $i
+"""
+
+[mobiles.20124]
+keywords = "wood wooden-high1 monk man machine"
+short_description = "高級木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來非常的強悍。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = -5
+mod_damroll = -5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20124.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+mpecho $I 忽然朝你踢了過來！
+	kick
+	mpnowait
+	kick
+	mpnowait
+"""
+[[mobiles.20124.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20144 mpmload 20125
+	mptransfer $n 20144
+	mpforcer 20144 force $n look
+	mppurge $i
+"""
+
+[mobiles.20125]
+keywords = "wood wooden-high2 monk man machine"
+short_description = "高級木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人看起來非常的強悍，而且更
+加敏捷。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20125.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+mpecho $I 忽然朝你的頭打了過來！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20125.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20145 mpmload 20126
+	mptransfer $n 20145
+	mpforcer 20145 force $n look
+	mppurge $i
+"""
+
+[mobiles.20126]
+keywords = "wood wooden-high3 monk man machine"
+short_description = "高級木人(wooden man)"
+long_description = "機器操縱的木人(wooden man)忽然向你展開攻擊!\n"
+description = """
+藉由精密的機械跟技術，這種木人能夠代替真人陪
+你練習武藝。這具木人的動作簡直跟真人一樣！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 0
+level = 35
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Robot"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20126.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+mpecho $I 忽然朝你展開猛攻！
+	kick
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20126.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	mpecho $I 忽然發出一陣機械的聲音，慢慢退回一旁的隱藏隔間內。
+	mpecho 你被機關推往下一個房間！
+	mpat 20115 mpmload 20116
+	mptransfer $n 20115
+	mpforcer 20115 force $n look
+	mppurge $i
+"""
+
+[mobiles.20127]
+keywords = "Jinshen-1 jinshen"
+short_description = "金身羅漢(Jinshen)"
+long_description = "一具金身羅漢(Jinshen)坐在這裡一動也不動.\n"
+description = """
+從頭到腳被金色所包圍的身體，象徵著少林寺的
+武學巔峰。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20127.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+say 少林羅漢拳！
+	mpecho $I 忽然連續打了你幾拳！
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20127.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	say ...過關！
+	mpecho $I 將你推往下一個房間！
+	mpecho $I的身影緩緩的消失在黑暗中...
+	mpat 20147 mpmload 20128
+	mptransfer $n 20147
+	mpforcer 20147 force $n look
+	mppurge $i
+"""
+
+[mobiles.20128]
+keywords = "Jinshen-2 jinshen"
+short_description = "金身羅漢(Jinshen)"
+long_description = "一具金身羅漢(Jinshen)坐在這裡一動也不動.\n"
+description = """
+從頭到腳被金色所包圍的身體，象徵著少林寺的
+武學巔峰。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = 1000
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20128.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+say 少林必殺技！
+	mpecho $I 忽然從暗處掏出一把武器！
+	mpoload 20139
+	wear chair
+	mpecho $I 瘋狂的毆打你！
+	fre
+	mpnowait
+	mpat 5 remove chair
+	mpjunk chair
+"""
+[[mobiles.20128.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+	mpat 5 c inf
+	say ...過關！
+	mpecho $I 將你推往下一個房間！
+	mpecho $I的身影緩緩的消失在黑暗中...
+	mpecho $I 臨走前往你身上塞了一把武器？
+	mpoload 20139 $n viclv target
+		if is_qmark($n) == shaolin_quest 100004
+			if mobcount(20129) == 0
+				mpat 20148 mpmload 20129
+				mptransfer $n 20148
+				mpforcer 20148 force $n look
+				mppurge $i
+			else
+				mptransfer $n 20148
+				mpforcer 20148 force $n look
+				mppurge $i
+			endif
+		else
+			mptransfer $n 20116
+			mpforcer 20116 force $n look
+		endif
+"""
+
+[mobiles.20129]
+keywords = "wuhua-quest monk"
+short_description = "無花和尚(Wuhua)"
+long_description = "無花和尚(Wuhua)正惡狠狠的瞪著你！\n"
+description = """
+看來他正打算從這邊逃走！
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = -1000
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "human"
+class = ["WARRIOR"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "ALY_DI", "ALY_DH"]
+[[mobiles.20129.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == shaolin_quest 100004
+		say 該死的追兵！
+		ponder
+		grin $n
+		say 不如我們打個商量吧。
+		say 我跟你無冤無仇，你放走我，我給你個寶物怎麼樣？(yes/no)
+	else
+		mpkill $n
+	endif
+"""
+[[mobiles.20129.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if is_qmark($n) == shaolin_quest 100004
+		say 成交！
+		mpmod_qmark $n shaolin_quest v0 = 6
+		mpmod_qmark $n shaolin_quest v1 = 2
+		mpecho $I 給了你一顆晶瑩的珠子...
+		mpoload 20105 $n viclv target
+		say 還有...
+		mpecho $I把你的衣服給扯破了一塊！
+		say 這樣方丈就不會說什麼了。
+		wave $n
+		mpecho $I領著你走出洞穴，之後消失在你的視線外...
+		mptransfer $n 20116
+		mppurge self
+	endif
+"""
+[[mobiles.20129.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($n) == shaolin_quest 100004
+		say 那就沒得選了。
+		shrug
+		mpmod_qmark $n shaolin_quest v0 = 5
+		mpkill $n
+	endif
+"""
+[[mobiles.20129.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != shaolin_quest 100005
+	say 你打我幹嘛？！
+	mpgoto self
+endif
+"""
+[[mobiles.20129.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+say 大力金剛掌！
+	slap $n
+	slap $n
+	bashhead
+	mpnowait
+	bashhead
+	mpnowait
+"""
+[[mobiles.20129.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+say 大力金剛腿！
+	mpecho $I 忽然朝你踢了過來！
+	kick
+	mpnowait
+	kick
+	mpnowait
+"""
+[[mobiles.20129.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) == shaolin_quest 100005
+		yell 我不甘心啊！
+		mpmod_qmark $n shaolin_quest v1 = 1
+		mpecho $I 死的時候把你給撞出房間了！
+		mpecho 你覺得可以去回報(report)方丈了...
+		mptransfer $n 20116
+		mpforcer 20116 force $n look
+		mppurge self
+	else
+		yell 嗚啊！
+		mpecho $I 死的時候把你給撞出房間了！
+		mptransfer $n 20116
+	endif
+"""
+
+[objects.20101]
+keywords = "candle lighted"
+short_description = "燭台(lighted candle)"
+long_description = "一座燭台(lighted candle)放在此處用來照亮房間."
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["NODROP"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+
+[objects.20102]
+keywords = "candle lighted"
+short_description = "燭台(lighted candle)"
+long_description = "一座燭台(lighted candle)放在此處用來照亮房間."
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+[[objects.20102.extra_descriptions]]
+keywords = "candle"
+description = """
+一座燭臺，上面插著一根蠟燭．
+"""
+[[objects.20102.extra_descriptions]]
+keywords = "lighted"
+description = """
+一座燭臺，上面插著一根蠟燭．
+"""
+
+[objects.20103]
+keywords = "candle lighted"
+short_description = "燭台(lighted candle)"
+long_description = "一座燭台(lighted candle)放在此處用來照亮房間."
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+[[objects.20103.extra_descriptions]]
+keywords = "candle"
+description = """
+一座燭臺，上面的蠟燭被拔走了。
+"""
+[[objects.20103.extra_descriptions]]
+keywords = "lighted"
+description = """
+一座燭臺，上面的蠟燭被拔走了。
+"""
+
+[objects.20104]
+keywords = "candle candle-shaolin"
+short_description = "蠟燭(Candle)"
+long_description = "一根蠟燭被擺在這邊"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "100", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.20104.extra_descriptions]]
+keywords = "candle"
+description = """
+這根蠟燭可以拿來插(insert)在空的燭臺(holder)上面。
+"""
+[[objects.20104.programs]]
+trigger = "obj_command"
+argument = "insert holder"
+script = """
+if is_inv_obj($n) == 26539
+		echoat $n 你把蠟燭插在燭臺的上面。
+		echoaround $n $n把蠟燭插在燭臺的上面。
+		oset holder-thoran v2 = 51
+		purge self
+	else
+		if is_equ_obj($n) == 26539
+			say 燭臺還在你手上阿，先脫下來吧？
+		else
+			say 你要把蠟燭塞到哪邊去？
+		endif
+	endif
+"""
+
+[rooms.20101]
+name = "上山的階梯"
+description = """
+彎曲的階梯沿著山勢往山上而去。你隱約的看到山頂上有一座廟。而往南可以
+回到剛剛登陸的沙灘。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.20101.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 247
+[rooms.20101.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20102
+
+[rooms.20102]
+name = "往少林寺的路"
+description = """
+在辛苦的攀爬了許久，終於快到達了山頂。在你面前有一塊非常大的匾額，上頭寫
+著「少林寺羅漢堂」。有另外一條路通往西邊。
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.20102.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20101
+[rooms.20102.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20106
+[rooms.20102.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20103
+
+[rooms.20103]
+name = "山旁的小徑"
+description = """
+這條小徑幾乎被野草給淹沒了，在這裡小徑繼續往北而去，往東可以回到剛剛的路上。
+"""
+flags = ["DARK"]
+sector = "MOUNTAIN"
+[rooms.20103.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20102
+[rooms.20103.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20104
+
+[rooms.20104]
+name = "山頂上的廟"
+description = """
+一座小廟座落在山腰上。這個地方似乎已經廢棄很久了。在你的西邊，有一塊大岩
+石嵌進山壁(stone boulder)當中。往南可以回到剛剛的小徑上。
+"""
+flags = ["DARK"]
+sector = "FOREST"
+[[rooms.20104.extra_descriptions]]
+keywords = "stone boulder"
+description = """
+上面寫著：你必須要面對你的心魔。
+"""
+[rooms.20104.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20103
+[rooms.20104.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20105
+
+[rooms.20105]
+name = "黑暗的洞穴"
+description = """
+在小徑的盡頭是一個黑暗的洞穴，在洞穴裡頭有一面奇怪的鏡子。四處都有奇怪
+的黑影，似乎想要將你拉入鏡子當中。你看到鏡子中反射的人影，的確是你，但是面
+目猙獰，並不像現在的你。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.20105.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20104
+[[rooms.20105.resets.mobiles]]
+vnum = 20106
+limit = 1
+
+[rooms.20106]
+name = "少林羅漢堂的入口"
+description = """
+你站在少林寺羅漢堂的入口，此地是少林寺總本寺的前院，許多想要接受少林寺
+武功訓練的和尚都必須在羅漢堂接受基本的武術訓練。往北可以進入少林寺，在你面
+前有一個巨大的匾額(plaque)。
+"""
+flags = []
+sector = "CITY"
+[[rooms.20106.extra_descriptions]]
+keywords = "plaque wall sign"
+description = """
+|=========================================|
+|                                         |
+|          少 林 寺 羅 漢 堂              |
+|                                         |
+|=========================================|
+"""
+[rooms.20106.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20102
+[rooms.20106.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20107
+
+[rooms.20107]
+name = "羅漢堂的前庭"
+description = """
+前庭上都是堅硬的石板，四周花草扶疏、鳥語花香，不禁讓你心曠神怡。
+"""
+flags = []
+sector = "CITY"
+[rooms.20107.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20113
+[rooms.20107.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20119
+[rooms.20107.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20106
+[rooms.20107.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20108
+
+[rooms.20108]
+name = "前庭的一角"
+description = """
+跟前庭一樣，這裡種滿了各式的花草。地上由堅硬的石板所覆蓋。往東可以回
+到前庭上。
+"""
+flags = []
+sector = "CITY"
+[rooms.20108.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20107
+[rooms.20108.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20111
+[rooms.20108.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20112
+[rooms.20108.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20109
+
+[rooms.20109]
+name = "用膳房"
+description = """
+這裡是羅漢堂和尚們用餐的地方。裡頭除了用餐的桌椅外什麼都沒有。你聽到南邊
+有一些奇怪的聲響。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20109.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20108
+[rooms.20109.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20110
+[[rooms.20109.resets.mobiles]]
+vnum = 20101
+limit = 2
+
+[rooms.20110]
+name = "廚房"
+description = """
+由於濃厚的饅頭香味讓你不由自主的進到廚房裡頭。廚房牆壁上掛滿了瓶瓶罐罐的
+東西。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20110.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20109
+[[rooms.20110.resets.objects]]
+vnum = 20106
+
+[rooms.20111]
+name = "和尚的臥鋪"
+description = """
+這裡是和尚們休息睡覺的地方。這邊沒有什麼特別的，除非你現在想要休息。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20111.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20108
+[[rooms.20111.resets.mobiles]]
+vnum = 20109
+limit = 1
+[[rooms.20111.resets.mobiles.equipment]]
+vnum = 20120
+wear_loc = "BODY"
+[[rooms.20111.resets.mobiles.equipment]]
+vnum = 20118
+wear_loc = "FEET"
+[[rooms.20111.resets.mobiles.equipment]]
+vnum = 20119
+wear_loc = "ABOUT"
+[[rooms.20111.resets.mobiles.equipment]]
+vnum = 20125
+wear_loc = "SHIELD"
+[[rooms.20111.resets.mobiles.equipment]]
+vnum = 20114
+wear_loc = "WIELD"
+[[rooms.20111.resets.mobiles.inventory]]
+vnum = 20106
+
+[rooms.20112]
+name = "和尚的臥鋪"
+description = """
+這裡是提供剛剛進入羅漢堂年輕和尚的臥鋪。這邊沒有什麼特別的。
+
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20112.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20108
+
+[rooms.20113]
+name = "前庭的一角"
+description = """
+跟前庭一樣，這裡種滿了各式的花草。地上由堅硬的石板所覆蓋。往西可以回
+到前庭上。南邊跟北邊傳來呼喊的聲音。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20113.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20118
+[rooms.20113.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20117
+[rooms.20113.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20107
+
+[rooms.20114]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20115]
+name = "羅漢房"
+description = """
+這個房間裡站立著傳說中的少林羅漢，他們準備測驗欲離開少林的僧侶是否有
+足夠的武藝。在面對他們之前，最好做好心理準備。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20116]
+name = "秘密的洞穴"
+description = """
+你身後的門忽然關上，看來無法回頭了。唯一的通路指向南方。 
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.20116.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20101
+
+[rooms.20117]
+name = "訓練房"
+description = """
+這裡是武僧訓練精進自己武藝的地方。武器則陳列在訓練房的兩旁以供取用。
+"""
+flags = []
+sector = "CITY"
+[rooms.20117.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20113
+[[rooms.20117.resets.mobiles]]
+vnum = 20104
+limit = 1
+[[rooms.20117.resets.mobiles.equipment]]
+vnum = 20116
+wear_loc = "WIELD"
+[[rooms.20117.resets.mobiles]]
+vnum = 20104
+limit = 1
+[[rooms.20117.resets.mobiles.equipment]]
+vnum = 20116
+wear_loc = "WIELD"
+
+[rooms.20118]
+name = "訓練房"
+description = """
+這裡是武僧訓練精進自己武藝的地方。武器則陳列在訓練房的兩旁以供取用。
+"""
+flags = []
+sector = "CITY"
+[rooms.20118.exits.south]
+description = "A side court.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 20113
+[[rooms.20118.resets.mobiles]]
+vnum = 20103
+limit = 3
+
+[rooms.20119]
+name = "佛堂大廳"
+description = """
+這是一間巨大的佛堂，上面供奉著臥佛像，四周的牆壁金碧輝煌，讓你目不暇
+給。正前方有一張巨大的石桌，上面擺滿了貢果。東邊跟西邊都可以到旁廳，
+南邊則離開大廳。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20119.exits.down]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20136
+[rooms.20119.exits.east]
+description = "A side hall.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 20126
+[rooms.20119.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20107
+[rooms.20119.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20120
+
+[rooms.20120]
+name = "佛堂旁廳"
+description = """
+這個旁廳同樣祭祀著一些佛像，四周都有通路通往別的地方。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20120.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20119
+[rooms.20120.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20124
+[rooms.20120.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20121
+[rooms.20120.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20123
+[rooms.20120.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20122
+
+[rooms.20121]
+name = "長老的房間"
+description = """
+這個房間除了桌椅跟床鋪之外，什麼也沒有，可以說是非常的樸素
+。大概也沒什麼可以拿的。不過最好不要讓長老知道你待在他的房
+間裡。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20121.exits.north]
+description = "A side hall.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 20120
+[[rooms.20121.programs]]
+trigger = "room_command"
+argument = "pull candle"
+script = """
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+"""
+[[rooms.20121.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+"""
+[[rooms.20121.resets.mobiles]]
+vnum = 20113
+limit = 1
+[[rooms.20121.resets.mobiles.equipment]]
+vnum = 20118
+wear_loc = "LEGS"
+[[rooms.20121.resets.mobiles.equipment]]
+vnum = 20119
+wear_loc = "ABOUT"
+[[rooms.20121.resets.mobiles.inventory]]
+vnum = 20109
+[[rooms.20121.resets.objects]]
+vnum = 20102
+
+[rooms.20122]
+name = "長老的房間"
+description = """
+這個房間除了桌椅跟床鋪之外，什麼也沒有，可以說是非常的樸素
+。大概也沒什麼可以拿的。不過最好不要讓長老知道你待在他的房
+間裡。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20122.exits.east]
+description = "A side hall.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 20120
+[[rooms.20122.programs]]
+trigger = "room_command"
+argument = "pull candle"
+script = """
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+"""
+[[rooms.20122.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+"""
+[[rooms.20122.resets.mobiles]]
+vnum = 20114
+limit = 1
+[[rooms.20122.resets.mobiles.equipment]]
+vnum = 20118
+wear_loc = "LEGS"
+[[rooms.20122.resets.mobiles.equipment]]
+vnum = 20119
+wear_loc = "ABOUT"
+[[rooms.20122.resets.mobiles.equipment]]
+vnum = 20125
+wear_loc = "SHIELD"
+[[rooms.20122.resets.mobiles.equipment]]
+vnum = 20114
+wear_loc = "WIELD"
+[[rooms.20122.resets.objects]]
+vnum = 20102
+
+[rooms.20123]
+name = "方丈的房間"
+description = """
+這個房間跟長老的房間一樣，除了桌椅跟床鋪之外，什麼也沒有，
+。大概也沒什麼可以拿的。不過最好不要讓方丈知道你待在他的房
+間裡。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20123.exits.down]
+description = "A side hall.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 20120
+[[rooms.20123.programs]]
+trigger = "room_command"
+argument = "pull candle"
+script = """
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+"""
+[[rooms.20123.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+"""
+[[rooms.20123.resets.mobiles]]
+vnum = 20115
+limit = 1
+[[rooms.20123.resets.mobiles.equipment]]
+vnum = 20121
+wear_loc = "CARRY"
+[[rooms.20123.resets.mobiles.equipment]]
+vnum = 20122
+wear_loc = "NECK_2"
+[[rooms.20123.resets.mobiles.equipment]]
+vnum = 20123
+wear_loc = "CARRY"
+[[rooms.20123.resets.objects]]
+vnum = 20102
+
+[rooms.20124]
+name = "藏經閣"
+description = """
+這裡存放著少林寺所有的武功精要，據說沒有人能學完少林寺所有
+的功夫，但是這邊你也沒辦法拿到什麼，因為長老正在旁邊看著你
+。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20124.exits.east]
+description = ""
+keywords = "bookshelf"
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 20125
+[rooms.20124.exits.south]
+description = "A side hall.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 20120
+[[rooms.20124.resets.mobiles]]
+vnum = 20112
+limit = 1
+[[rooms.20124.resets.mobiles.equipment]]
+vnum = 20118
+wear_loc = "LEGS"
+[[rooms.20124.resets.mobiles.equipment]]
+vnum = 20119
+wear_loc = "ABOUT"
+[[rooms.20124.resets.mobiles.inventory]]
+vnum = 20101
+[[rooms.20124.resets.mobiles.inventory]]
+vnum = 20111
+
+[rooms.20125]
+name = "秘密的房間"
+description = """
+你發現了一間藏有寶藏的房間。這裡的寶藏不禁讓你搓著手盤算著
+，可以賣多少錢。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.20125.exits.west]
+description = "The Library.\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 20124
+[[rooms.20125.resets.objects]]
+vnum = 20107
+[[rooms.20125.resets.objects]]
+vnum = 20110
+
+[rooms.20126]
+name = "佛堂旁廳"
+description = """
+這個旁廳同樣祭祀著一些佛像，四周都有通路通往別的地方。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20126.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20128
+[rooms.20126.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20129
+[rooms.20126.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20127
+[rooms.20126.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20130
+[rooms.20126.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20119
+[[rooms.20126.programs]]
+trigger = "room_command"
+argument = "search around"
+script = """
+if is_qmark($n) == shaolin_quest
+		echoat $n 你不小心觸發機關，跌入一個密門中！
+		transfer $n 20149
+	endif
+"""
+[[rooms.20126.resets.objects]]
+vnum = 20138
+
+[rooms.20127]
+name = "客房"
+description = """
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20127.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20126
+[[rooms.20127.programs]]
+trigger = "room_command"
+argument = "pull candle"
+script = """
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+"""
+[[rooms.20127.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+"""
+[[rooms.20127.resets.mobiles]]
+vnum = 20117
+limit = 2
+[[rooms.20127.resets.mobiles.inventory]]
+vnum = 20106
+[[rooms.20127.resets.objects]]
+vnum = 20102
+
+[rooms.20128]
+name = "客房"
+description = """
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20128.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20126
+[[rooms.20128.programs]]
+trigger = "room_command"
+argument = "pull candle"
+script = """
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+"""
+[[rooms.20128.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+"""
+[[rooms.20128.resets.mobiles]]
+vnum = 20101
+limit = 2
+[[rooms.20128.resets.objects]]
+vnum = 20102
+
+[rooms.20129]
+name = "客房"
+description = """
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20129.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20126
+[[rooms.20129.resets.objects]]
+vnum = 20136
+
+[rooms.20130]
+name = "客房"
+description = """
+這間房間是為了來到少林寺的客人所準備的。一張桌子跟幾
+張椅子擺放在房間的正中央，寄宿在僧院的好處就是乾淨而
+且整齊，雖然相當的簡陋。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.20130.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 20126
+[[rooms.20130.programs]]
+trigger = "room_command"
+argument = "pull candle"
+script = """
+if roomvalue($0) == 1
+        echoat $n 這裡已經沒蠟燭了，你還想要拔什麼？
+else
+        echoat $n 你偷偷地將寺中的蠟燭藏在懷裡。
+        echoaround $n $N鬼鬼祟祟地東張西望，不知道在幹什麼。
+        purge 20102
+        oload 20103
+        oload 20104 viclv $n target
+        modrvt v0 = 1
+        modrvt t0 = 1
+endif
+"""
+[[rooms.20130.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+if roomvalue($0) == 0
+        if robjcount(20102) == 0
+                if robjcount(20103) > 0
+                        purge 20103
+                        oload 20102
+                else
+                        oload 20102
+                endif
+        else
+                if robjcount(20103) > 0
+                        purge 20103
+                endif
+        endif
+endif
+"""
+[[rooms.20130.resets.objects]]
+vnum = 20102
+
+[rooms.20131]
+name = "地牢"
+description = """
+你進到一個地牢內部，四周都是黑色的鐵欄，地上還帶有一
+點腐臭的味道。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.20131.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 20131
+to_room = 20133
+[rooms.20131.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 20131
+to_room = 20135
+[rooms.20131.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 20140
+to_room = 20134
+[rooms.20131.exits.up]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "PICKPROOF"]
+key = -1
+to_room = 20149
+[rooms.20131.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 20131
+to_room = 20132
+[[rooms.20131.resets.mobiles]]
+vnum = 20105
+limit = 1
+[[rooms.20131.resets.mobiles.equipment]]
+vnum = 20120
+wear_loc = "BODY"
+[[rooms.20131.resets.mobiles.equipment]]
+vnum = 20125
+wear_loc = "SHIELD"
+[[rooms.20131.resets.mobiles.equipment]]
+vnum = 20113
+wear_loc = "WIELD"
+[[rooms.20131.resets.mobiles]]
+vnum = 20105
+limit = 1
+[[rooms.20131.resets.mobiles.equipment]]
+vnum = 20120
+wear_loc = "BODY"
+[[rooms.20131.resets.mobiles.equipment]]
+vnum = 20125
+wear_loc = "SHIELD"
+[[rooms.20131.resets.mobiles.equipment]]
+vnum = 20113
+wear_loc = "WIELD"
+[[rooms.20131.resets.mobiles.inventory]]
+vnum = 20131
+
+[rooms.20132]
+name = "監牢"
+description = """
+這邊看起來相當的黑暗陰沉，大概是這間寺廟裡最不乾淨的地方吧。 
+"""
+flags = ["DARK", "INDOORS", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.20132.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 20131
+to_room = 20131
+[[rooms.20132.resets.mobiles]]
+vnum = 20107
+limit = 2
+[[rooms.20132.resets.mobiles.equipment]]
+vnum = 20119
+wear_loc = "ABOUT"
+
+[rooms.20133]
+name = "囚牢"
+description = """
+血腥和屍塊是你在這邊看到唯一的景象。就像其他的監獄一樣，你在
+期待什麼嗎?
+"""
+flags = ["DARK", "INDOORS", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.20133.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 20131
+to_room = 20131
+
+[rooms.20134]
+name = "無花的監牢"
+description = """
+過去十年，這邊都是鎖著的，因為他對男人跟女人所犯下的罪行....
+無花，一個肉慾的墮落和尚。你無法想像十年之後他會怎麼對付你
+"""
+flags = ["DARK", "INDOORS", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.20134.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 20131
+to_room = 20131
+[[rooms.20134.resets.mobiles]]
+vnum = 20111
+limit = 1
+[[rooms.20134.resets.mobiles.equipment]]
+vnum = 20117
+wear_loc = "HOLD"
+
+[rooms.20135]
+name = "女性監牢"
+description = """
+女性監牢？在少林寺？到底有什麼用處呢？不過從地板上的血跡跟
+發臭的味道來判斷，還是不要多問的好。
+"""
+flags = ["DARK", "INDOORS", "NO_TELEPORT_IN"]
+sector = "INSIDE"
+[rooms.20135.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 20131
+to_room = 20131
+[[rooms.20135.resets.mobiles]]
+vnum = 20102
+limit = 3
+[[rooms.20135.resets.mobiles.equipment]]
+vnum = 20112
+wear_loc = "WIELD"
+[[rooms.20135.resets.mobiles.inventory]]
+vnum = 20124
+[[rooms.20135.resets.mobiles.inventory]]
+vnum = 20115
+
+[rooms.20136]
+name = "神秘的房間"
+description = """
+看起來你上面的門已經被封死了。這裡是資深的僧侶測試他們自己
+武藝的地方，那些金身羅漢將成為武僧的對手。
+"""
+flags = ["DARK", "NO_MOB", "INDOORS", "PRIVATE"]
+sector = "INSIDE"
+[rooms.20136.exits.east]
+description = ""
+keywords = "工作房"
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 20136
+to_room = 20137
+[[rooms.20136.resets.mobiles]]
+vnum = 20110
+limit = 1
+[[rooms.20136.resets.mobiles.inventory]]
+vnum = 20115
+
+[rooms.20137]
+name = "工作坊"
+description = """
+一張長長的工作桌在房間的中央，四處還有打鐵的痕跡。
+"""
+flags = ["DARK", "INDOORS", "PRIVATE"]
+sector = "INSIDE"
+[rooms.20137.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 20136
+to_room = 20136
+[[rooms.20137.resets.objects]]
+vnum = 20137
+[[rooms.20137.resets.objects.contains]]
+vnum = 20108
+[[rooms.20137.resets.objects.contains]]
+vnum = 20107
+
+[rooms.20138]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20139]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20140]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人似乎比前面更為精良一些。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20141]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人似乎比前面更為精良一些。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20142]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人似乎比前面更為精良一些。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20143]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人看起來非常強悍。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20144]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人看起來非常強悍。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20145]
+name = "木人巷"
+description = """
+這條巷子充滿了機關跟精巧手工製造而成的木人，是專門為了少林弟子而設計
+的，由於具有殺傷力，因此沒有修行完整的僧侶來這邊可能會喪命。這裡的木
+人看起來非常強悍。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20146]
+name = "羅漢房"
+description = """
+這個房間裡站立著傳說中的少林羅漢，他們準備測驗欲離開少林的僧侶是否有
+足夠的武藝。在面對他們之前，最好做好心理準備。這裡的羅漢似乎比之前的
+更強壯一點...
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20147]
+name = "羅漢房"
+description = """
+這個房間裡站立著傳說中的少林羅漢，他們準備測驗欲離開少林的僧侶是否有
+足夠的武藝。在面對他們之前，最好做好心理準備。這裡的羅漢非常的強壯..
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20148]
+name = "隧道的盡頭"
+description = """
+這裡是通過試練的武僧所休息的地方。南邊通往出口。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+
+[rooms.20149]
+name = "幽暗的地道"
+description = """
+這個地道不但潮濕，而且陰暗，往上或往下都有出口。
+"""
+flags = ["DARK", "INDOORS"]
+sector = "INSIDE"
+[rooms.20149.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 20131
+[rooms.20149.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 20126

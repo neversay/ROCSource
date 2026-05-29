@@ -1,0 +1,8466 @@
+[area]
+name = "盜賊要塞"
+identity = "bandit"
+builders = "Pax"
+translator = "Pluto"
+modifier = "Coconet"
+vnum_start = 4000
+vnum_end = 4199
+security = 1
+recall = 4580
+f_toggle = true
+
+[mobiles.4000]
+keywords = "chief-bandit bandit chief"
+short_description = "盜賊頭頭(Bandit Chief)"
+long_description = "盜賊頭頭(bandit chief)正高貴的坐在這裡。\n"
+description = """
+他看起來沒什麼特別的。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "PRACTICE", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "MOB_AI", "REFLEXION"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT", "SNEAK", "HIDE", "DARK_RAID"]
+alignment = -1000
+level = 60
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 30
+mod_damroll = -80
+mod_ac = 1000
+mod_svs = 0
+dodge = -500
+mod_pp = 50
+gold = -1
+sex = "neutral"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "HALF_MAGIC", "ALY_HIDE", "ALY_SNEAK", "EXPERT", "NO_CRAZY", "MOBAI_LV2"]
+special_function = "spec_assassin"
+practice_skills = "circle darkraid track nightstalk assassination reflexion *untangle 'deadly strike' escape morphing backstab sneak\n 'enhanced damage' 'tricky pacing' scan dodge hide critical 'dart mastery'"
+transfer_classes = "assassin ninja ranger"
+[[mobiles.4000.applies]]
+type = "REDUCE_DAMAGE"
+degree = 250
+[[mobiles.4000.applies]]
+type = "REDUCE_MAGIC"
+degree = 250
+[[mobiles.4000.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self bandit_chief_heal -1 20 20 20 1 0
+"""
+[[mobiles.4000.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_equ_obj($i) != 4004
+	wear bronze-dagger
+endif
+if is_equ_obj($i) != 4056
+	wear assassination-dagger
+endif
+if is_qmark($n) == bandit_enemy
+	if hitprcnt($i) > 50
+		if rand(20)
+			bs $n
+			mpnowait
+		else
+			assa $n
+			mpnowait
+			flee
+			flee
+			flee
+		endif
+	else
+		if rand(50)
+			assa $n
+			mpnowait
+			flee
+			flee
+			flee
+		else
+			bs $n
+			mpnowait
+		endif
+	endif
+	break
+endif
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_thief_exam
+		say 小子，沒有經過我的認定你只能夠稱為普通的盜賊。
+		mpcallout 1 say 如果想要成為真正的盜賊，最好向我好好請教一下。
+		mpcallout 1 mpadd_qmark $n bandit_thief_exam -1 1 0 0 0 1
+		break
+	endif
+else
+	say 職業不是盜賊的你，能夠走到我面前來已經算是不錯了。
+	mpcallout 1 say 說吧！有什麼問題或要求，如果我能夠辦到一定儘量幫助你。
+endif
+if is_qmark($n) == bandit_thief_exam 100005
+	if class($n) == 10
+		say 你來了啊！我的得力助手....
+		mpcallout 1 mpechoat $n $I 仔細打量著你....
+		mpcallout 1 mpechoaround $n $I 仔細打量著 $n ....
+		mpcallout 2 say 看來自從你上次離開至今，又長進了不少。
+		mpcallout 3 gig
+		mpcallout 4 say 我想你應該有能力挑戰進一步的試練。
+		mpcallout 5 say 通過的話，還可以學到新的技能！如果你夠小心的話。
+		mpcallout 6 chuckle
+		mpcallout 7 say 怎樣！想不想試試啊(sure/not sure)？
+		break
+	endif
+endif
+if is_qmark($n) >= bandit_thief_exam 100006
+	if class($n) == 10
+		say 如果你想再次回去修練(discipline)，就告訴我一聲。
+	endif
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) == bandit_thief_exam 100001
+		say 我給你幾個任務，看看你是否有資格能夠接受我們的盜賊試煉。
+		say 你有足夠的勇氣與技巧接受嗎(yes/no)？
+		break
+	endif
+endif
+if class($n) == 10
+	if is_qmark($n) == bandit_thief_exam 100005
+		say 看來你已經逐漸的成長茁壯了，那麼該是接受最後試練的時候了，
+		say 最後的試練，你必須利用你所有曾經學會或是即將學會的技能，
+		say 去達到最後的這項修練。如果你準備好，就請告訴我(sure)。
+	endif
+endif
+if is_qmark($n) == bandit_thief_exam 100006
+	say 看來你是失敗了，別灰心。如果準備好了，想要再試一次，
+	say 那就再跟我說一下吧(discipline)。
+endif
+if is_qmark($n) == bandit_thief_exam 100007
+	say 你又來了呀，想要進去試煉再提升你的實力嗎(discipline)？
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) == bandit_thief_exam 100001
+		if is_qmark($n) == thief_quest_list 100000
+			mpmod_qmark $n bandit_thief_exam v0 = 2
+			say 很好，這邊的任務可不是像在史卡拉貝那種小兒科的任務。
+			mpcallout 1 say 想要加入我們，沒有一定的實力是不行的。
+			mpcallout 2 say 當然，如果有幸成為我們的一員！
+			mpcallout 3 say 能夠享受的利益是遠比一般盜賊公會好的多。
+			mpcallout 4 hmm $n
+			mpcallout 5 say 既然你有心想要加入，我就先給你一個任務，
+			mpcallout 6 say 看看你的實力能不能符合我的要求吧。
+			mpcallout 7 hmm $n
+			mpcallout 8 say 最近我珍藏的一批珠寶竟然莫名的消失了，
+			mpcallout 9 say 看來應該是要塞裡面的內賊所為，這件事情我尚未處理。
+			mpcallout 10 say 不過你既然有心想加入，我看就當做你的考驗吧！
+			mpcallout 11 say 你去把我遭竊的珠寶找回來。
+			 mpcallout 12 mpat 4120 mpmload 4049
+			mpcallout 13 say 拿回來後直接把東西給我吧。
+			mpcallout 14 say 至於那個可惡的叛徒，他如果願意主動拿出來就算了。
+			mpcallout 15 say 不願意的話，你就替我教訓教訓他吧！
+			mpcallout 16 wave
+		else
+			mpcallout 1 mpechoat $n $I 不屑的看了你一眼....
+			mpcallout 1 mpechoaround $n $I 不屑的看了 $n 一眼....
+			mpcallout 2 say 連史卡拉貝那種小兒科任務都還沒完全解決的人，
+			mpcallout 3 say 我是不會要的。你去多磨練自己吧！
+		endif
+	endif
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+if is_qmark($n) ==bandit_thief_exam 100000
+	say 看來你是膽怯了。
+	mpcallout 1 say 等你有了足夠的勇氣與技巧的時候，再來找我吧！
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "p not sure"
+script = """
+if is_qmark($n) == bandit_thief_exam 100005
+	ponder $n
+	mpcallout 1 say 既然你尚心存顧忌！就先去鍛鍊鍛鍊自己吧！
+	mpcallout 2 say 我就不逼你了！
+	mpcallout 3 wave $n
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "p sure"
+script = """
+if class($n) == 10
+	if is_qmark($n) == bandit_thief_exam 100005
+      		gig
+      		mpmod_qmark $n bandit_thief_exam v0 = 6
+                mpcallout 1 say 很好很好！我果然沒看錯人，
+                mpcallout 2 say 我這就送你過去！
+                mpcallout 3 mpcall set_guardian
+                mpcallout 4 mpecho 你聽到一陣奇怪的喀喀聲，似乎是機關運作的聲響。
+                mpcallout 5 mptransfer $n 4152
+                mpcallout 6 mpat 4152 mpechoat $n 機關運作的喀喀聲停止後，你被送到了一間密室。
+	endif
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "defun_prog"
+argument = "set_guardian"
+script = """
+mpat 4155 mppurge guardian-bandit
+mpat 4155 mpmload 4054
+mpat 4159 mppurge guardian-bandit
+mpat 4159 mpmload 4055
+mpat 4160 mppurge guardian-bandit
+mpat 4160 mpmload 4056
+mapt 4161 mppurge guardian-bandit
+mpat 4161 mpmload 4057
+mpat 4162 mppurge guardian-bandit
+mpat 4162 mpmload 4058
+mpat 4163 mppurge guardian-bandit
+mpat 4163 mpmload 4059
+mpat 4164 mppurge guardian-bandit
+mpat 4164 mpmload 4060
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "discipline"
+script = """
+if class($n) == 10
+      if is_qmark($n) == bandit_thief_exam 100007
+                say 沒問題，我這就送你過去！
+                mptransfer $n 4152
+               	mpcall dis_guardian
+                mpcall set_guardian
+      endif
+      if is_qmark($n) == bandit_thief_exam 100006
+      		sm $n
+                mpcallout 1 say 很好！你的確很努力，
+                mpcallout 2 say 我這就送你過去！
+                mpcallout 3 mpcall dis_guardian
+                mpcallout 4 mpcall set_guardian
+                mpcallout 4 mpechoat $n 你聽到一陣奇怪的喀喀聲，似乎是機關運作的聲響。
+                mpcallout 5 mptransfer $n 4152
+                mpcallout 6 mpat 4152 mpechoat $n 機關運作的喀喀聲停止後，你被送到了一間密室。
+      endif
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "defun_prog"
+argument = "dis_guardian"
+script = """
+mpat 4155 mppurge guardian-bandit
+mpat 4159 mppurge guardian-bandit
+mpat 4160 mppurge guardian-bandit
+mpat 4161 mppurge guardian-bandit
+mpat 4162 mppurge guardian-bandit
+mpat 4163 mppurge guardian-bandit
+mpat 4164 mppurge guardian-bandit
+"""
+[[mobiles.4000.programs]]
+trigger = "give_prog"
+argument = "4067"
+script = """
+if is_qmark($n) == bandit_thief_exam 100003
+        if is_qmark($n) != bandit_thief_jewel
+                mpadd_qmark $n bandit_thief_jewel -1 1 0 0 0 1
+                mpjunk all.jewel
+                say 我收到珠寶了。
+        else
+                if is_qmark($n) == bandit_thief_jewel 100002
+                        mpjunk all.jewel
+                        say 沒錯都齊了。
+                        say 你合格了，恭喜你成為我們的一員(member)。
+	        mpechoat $n 你心想 ：「該問問成員該有的優待吧？」
+                        mpmod_qmark $n bandit_thief_exam v0 = 4
+                        mpdel_qmark $n bandit_thief_jewel
+                else
+                        say 我不需要這個，你已經給過了。
+                        drop jewel
+                endif
+        endif
+else
+        say 你給我這做什麼？
+        drop jewel
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "give_prog"
+argument = "4068"
+script = """
+if is_qmark($n) == bandit_thief_exam 100003
+        if is_qmark($n) != bandit_thief_jewel
+                mpadd_qmark $n bandit_thief_jewel -1 2 0 0 0 1
+                mpjunk all.jewel
+                say 我收到珠寶了。
+        else
+                if is_qmark($n) == bandit_thief_jewel 100001
+                        mpjunk all.jewel
+                        say 沒錯都齊了。
+                        say 你合格了，恭喜你成為我們的一員(member)。
+	        mpechoat $n 你心想 ：「該問問成員該有的優待吧？」
+                        mpmod_qmark $n bandit_thief_exam v0 = 4
+                        mpdel_qmark $n bandit_thief_jewel
+                else
+                        say 我不需要這個，你已經給過了。
+                        drop jewel
+                endif
+        endif
+else
+        say 你給我這做什麼？
+        drop jewel
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "defun_prog"
+argument = "resp_check"
+script = """
+say 你可以向我學習盜賊新技能：「解除陷阱」了
+mpadd_qmark $n untangle -1 1 0 0 0 1
+if resp($n) >= 8
+	mpoload 4065 $n viclv target
+	break
+endif
+if resp($n) >= 5
+	mpoload 4064 $n viclv target
+	break
+endif
+if resp($n) >= 3
+	mpoload 4063 $n viclv target
+	break
+endif
+if resp($n) >= 0
+	mpoload 4062 $n viclv target
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "member"
+script = """
+if is_qmark($n) == bandit_thief_exam 100004
+	mpcallout 1 mpechoat $n $I仔細地打量你。
+	mpcallout 2 say 依照你的能力，我給你我們的證明。
+	mpcallout 3 mpcall resp_check $n
+	mpcallout 4 mpechoat $n $I 把盜賊的守則給了你。
+	mpmod_qmark $n bandit_thief_exam v0 = 5
+else
+	say 你還不夠格啊！
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+if is_qmark($n) == bandit_thief_exam
+	if is_qmark($n) == bandit_thief_exam 100005
+		mpechoat $n 「遠處傳來一陣聲音：你已經完成本任務了！」
+		break
+	else
+		mpmod_qmark $n bandit_thief_exam v0 = 1
+		mpechoat $n 「遠處傳來一陣聲音：你的任務重新開始了！」
+	endif
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if hitprcnt($i) < 30
+	if is_qmark($i) > bandit_chief_heal 300001
+		mpecho \u001B[1;33m$I 吃下了一顆\u001B[0m\u001B[1;36m青色藥丸\u001B[0m\u001B[1;33m....\u001B[0m
+		mpat 5 c 3 'doubl heal'
+		mpmod_qmark self bandit_chief_heal v2 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 300001
+			yell 糟糕！我身上已經沒有\u001B[1;36m青色藥丸\u001B[0m了！
+			mpmod_qmark self bandit_chief_heal v2 = 0
+		endif
+	endif
+endif
+if hitprcnt($i) < 50
+	if is_qmark($i) > bandit_chief_heal 200001
+		mpecho \u001B[1;33m$I 吃下了一顆\u001B[0m\u001B[1;31m紅色藥丸\u001B[0m\u001B[1;33m....\u001B[0m
+		mpat 5 c 2 'double heal'
+		mpmod_qmark self bandit_chief_heal v1 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 200001
+			yell 糟糕！我身上已經沒有\u001B[1;31m紅色藥丸\u001B[0m了！
+			mpmod_qmark self bandit_chief_heal v1 = 0
+		endif
+	endif
+endif
+if hitprcnt($i) < 70
+	if is_qmark($i) > bandit_chief_heal 100001
+		mpecho \u001B[1;33m$I 吃下了一顆\u001B[0m白色藥丸\u001B[1;34m....\u001B[0m
+		mpat 5 c 'double heal'
+		mpmod_qmark self bandit_chief_heal v0 - 1
+		mpnowait
+	else
+		if is_qmark($i) == bandit_chief_heal 100001
+			yell 糟糕！我身上已經沒有\u001B[1;37m白色藥丸\u001B[0m了！
+			mpmod_qmark self bandit_chief_heal v0 = 0
+		endif
+	endif
+endif
+if is_equ_obj($i) != 4004
+	wear bronze-dagger
+endif
+if is_equ_obj($i) != 4056
+	wear assassination-dagger
+endif
+if rand(80)
+	disarm
+	mpnowait
+	yell $n 死吧！看我的背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	mpdef_rembch null-tar
+endif
+if rand(50)
+	disarm
+	mpnowait
+	yell $n 死吧！看我的連續背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	if insameroom($b)
+		mpgoto $b
+		bs $b
+		mpnowait
+	endif
+	mpdef_rembch null-tar
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "kill_prog"
+argument = "100"
+script = """
+if ispc($n)
+	mpget $n 3 0
+endif
+"""
+[[mobiles.4000.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	shout 我竟然會被身為盜賊的人所擊敗，我不甘心....！
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	shout $n 我會記住你的，今後你將會被我的屬下所追殺....！
+endif
+"""
+
+[mobiles.4001]
+keywords = "prince-bandit bandit prince"
+short_description = "盜賊王子(Bandit Prince)"
+long_description = "英俊的盜賊王子(bandit prince)有些事情要拜託你。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "PRACTICE", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "MOB_AI", "REFLEXION"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT", "SNEAK", "HIDE"]
+alignment = -1000
+level = 50
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 20
+mod_damroll = -30
+mod_ac = 500
+mod_svs = 0
+dodge = -700
+mod_pp = 30
+gold = -1
+sex = "neutral"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "ALY_HIDE", "ALY_SNEAK", "EXPERT", "NO_CRAZY", "MOBAI_LV2"]
+[[mobiles.4001.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.4001.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.4001.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+if being(princess-bandit)
+else
+	mpmload 4002
+endif
+if insameroom(princess-bandit)
+else
+	mptransfer princess-bandit
+	mpforce princess-bandit mpat 5 c 'full heal'
+endif
+mpgroup princess-bandit self 1 0
+"""
+[[mobiles.4001.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+mpcall bandit_prince_heal $n
+if is_equ_obj($i) != 4060
+	wear poisonous-dagger
+endif
+if rand(50)
+	disarm
+	mpnowait
+	yell $n 死吧！看我的背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	mpdef_rembch null-tar
+endif
+if rand(30)
+	disarm
+	mpnowait
+	yell $n 看我的連續背刺....！
+	mpdef_rembch $n
+	mpgoto $b
+	bs $b
+	mpnowait
+	if insameroom($b)
+		mpgoto $b
+		bs $b
+		mpnowait
+	endif
+	mpdef_rembch null-tar
+endif
+"""
+[[mobiles.4001.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+mpcall bandit_prince_heal
+"""
+[[mobiles.4001.programs]]
+trigger = "defun_prog"
+argument = "bandit_prince_heal"
+script = """
+if insameroom(princess-bandit)
+	if isaffected($i) & 1
+		mpforce princess-bandit c 'cure blindness' prince-bandit
+	endif
+	if isaffected($i) !& 128
+		mpforce princess-bandit c sanc prince-bandit
+	endif
+	if isaffected($i) & 1024
+		mpforce princess-bandit c 'remove curse' prince-bandit
+	endif
+	if isaffected($i) & 4096
+		mpforce princess-bandit c 'cure poison' prince-bandit
+	endif
+	if isaffected($i) & 268435456
+		mpforce princess-bandit c vivi prince-bandit
+	endif
+	if hitprcnt($i) < 30
+		mpforce princess-bandit c 3 'double heal' prince-bandit
+		break
+	endif
+	if hitprcnt($i) < 50
+		mpforce princess-bandit c 2 'double heal' prince-bandit
+		break
+	endif
+	if hitprcnt($i) < 70
+		mpforce princess-bandit c 'double heal' prince-bandit
+	endif
+endif
+"""
+[[mobiles.4001.programs]]
+trigger = "kill_prog"
+argument = "100"
+script = """
+if ispc($n)
+	mpget $n 3 0
+endif
+"""
+[[mobiles.4001.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell 我竟然會被身為盜賊的人所擊敗，我不甘心....！
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell $n 我會記住你的，我的父王將為我報仇....！
+endif
+"""
+
+[mobiles.4002]
+keywords = "princess-bandit bandit princess"
+short_description = "盜賊公主(Bandit Princess)"
+long_description = "美麗的盜賊公主(bandit princess)靜靜的看著你。\n"
+description = """
+她身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "PRACTICE", "CRITICAL", "HARD_DIS", "HUNT", "TACTICS", "TRACK", "MOB_AI", "REFLEXION"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT", "SNEAK", "HIDE"]
+alignment = -1000
+level = 50
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 20
+mod_damroll = -30
+mod_ac = 500
+mod_svs = 0
+dodge = -400
+mod_pp = 30
+gold = -1
+sex = "neutral"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "ALY_HIDE", "ALY_SNEAK", "NO_MUTE", "NO_SEALMAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2", "NO_PARA"]
+[[mobiles.4002.applies]]
+type = "REDUCE_DAMAGE"
+degree = 150
+[[mobiles.4002.applies]]
+type = "REDUCE_MAGIC"
+degree = 150
+[[mobiles.4002.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpoload 4114
+mpoload 4115
+mpoload 4116
+mpat 5 wear all
+"""
+[[mobiles.4002.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if is_qmark($n) != bandit_enemy
+	mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+endif
+if ispc($r)
+	if rand(25)
+		c blindness $r
+	else
+		if rand(33)
+			c 3 poison $r
+		else
+			if rand(50)
+				c 3 curse $r
+			else
+				c crush $r
+			endif
+		endif
+	endif
+endif
+mpcall bandit_princess_heal $n
+"""
+[[mobiles.4002.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+mpcall bandit_princess_heal
+"""
+[[mobiles.4002.programs]]
+trigger = "defun_prog"
+argument = "bandit_princess_heal"
+script = """
+if mobcount(4001) > 0
+	if insameroom(prince-bandit)
+	else
+		yell 請王子回到我身邊幫助我擊退外敵！
+		mpecho \u001B[1;33m盜賊王子(Bandit Prince) 忽然出現了！\u001B[0m
+		mptransfer prince-bandit
+	endif
+endif
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if isaffected($i) !& 128
+	c sanc
+endif
+if isaffected($i) & 1024
+	c 'remove curse'
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+endif
+if hitprcnt($i) < 30
+	c 3 'gdouble heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 50
+	c 2 'gdouble heal'
+	mpnowait
+	break
+endif
+if hitprcnt($i) < 30
+	c 'gdouble heal'
+	mpnowait
+endif
+"""
+[[mobiles.4002.programs]]
+trigger = "kill_prog"
+argument = "100"
+script = """
+if ispc($n)
+	mpget $n 3 0
+endif
+"""
+[[mobiles.4002.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell 我竟然會被身為盜賊的人所擊敗，我不甘心....！
+else
+	if is_qmark($n) != bandit_enemy
+		mpadd_all_qmark $n bandit_enemy -1 0 0 0 1 1
+	endif
+	yell $n 我會記住你的，我的父王將為我報仇....！
+endif
+"""
+
+[mobiles.4003]
+keywords = "smugglar"
+short_description = "偷渡者(smugglar)"
+long_description = "這個偷渡者(smugglar)正在找尋可以犧牲的對象。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -300
+level = 37
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+class = ["WARRIOR"]
+spec_flags = ["EXPERT"]
+
+[mobiles.4004]
+keywords = "scout"
+short_description = "斥候(scout)"
+long_description = "斥候(scout)在這裡守護著出入口。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN"]
+alignment = -350
+level = 38
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+class = ["WARRIOR"]
+spec_flags = ["EXPERT"]
+
+[mobiles.4005]
+keywords = "veteran bandit"
+short_description = "老練的盜賊(veteran bandit)"
+long_description = "老練的盜賊(veteran bandit)正要向你攻擊過來。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["AGGRESSIVE", "WIMPY"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = -700
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+spec_flags = ["EXPERT"]
+
+[mobiles.4006]
+keywords = "scarry thug"
+short_description = "可怕的刺客(scarry thug)"
+long_description = "一個臉上面露兇狠表情的可怕刺客(scarry thug)站在這裡。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["FAERIE_FIRE"]
+alignment = -600
+level = 38
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4007]
+keywords = "thief"
+short_description = "小賊(thief)"
+long_description = "一個小賊(thief)在這裡到處閒晃。\n"
+description = ""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = []
+alignment = -300
+level = 38
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4008]
+keywords = "bandit guard"
+short_description = "盜賊守衛(bandit guard)"
+long_description = "盜賊守衛(bandit guard)站在這裡。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 43
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4009]
+keywords = "brigand"
+short_description = "土匪(brigand)"
+long_description = "你看到一個土匪(brigand)站在這邊。\n"
+description = ""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN"]
+alignment = -250
+level = 46
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4010]
+keywords = "gangster"
+short_description = "歹徒(gangster)"
+long_description = "一個歹徒(gangster)站在這邊。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 38
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4011]
+keywords = "scoundrel"
+short_description = "惡棍(scoundrel)"
+long_description = "一個惡棍(scoundrel)正在把玩自己身上那把血腥的匕首。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -500
+level = 41
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4012]
+keywords = "scamp"
+short_description = "流氓(scamp)"
+long_description = "一個流氓(scamp)在這邊試著要幹掉你。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -400
+level = 41
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4013]
+keywords = "burglar"
+short_description = "竊賊(burglar)"
+long_description = "一個竊賊(burglar)站在這邊。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -300
+level = 36
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4014]
+keywords = "scavenger"
+short_description = "清道夫(scavenger)"
+long_description = "一個清道夫(scavenger)正在清理地上的垃圾。\n"
+description = ""
+act_flags = ["NPC", "SCAVENGER", "STAY_AREA"]
+affected_flags = []
+alignment = -100
+level = 38
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4015]
+keywords = "wicked bandog"
+short_description = "惡犬(bandog)"
+long_description = "一頭被繩子拴住的惡犬(bandog)正在找尋晚餐。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY"]
+affected_flags = []
+alignment = -50
+level = 36
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "Animal"
+
+[mobiles.4016]
+keywords = "bandit leader"
+short_description = "盜賊隊長(Bandit Leader)"
+long_description = "盜賊隊長(bandit leader)看到你立刻呼喊其他士兵前來。\n"
+description = ""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -750
+level = 40
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2"]
+
+[mobiles.4017]
+keywords = "rogue"
+short_description = "強盜(rogue)"
+long_description = "一個面貌醜惡的強盜(rogue)妄想著你身上的錢財。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -300
+level = 36
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4018]
+keywords = "beggar"
+short_description = "乞丐(beggar)"
+long_description = "可憐的乞丐(beggar)希望你能給他一點錢。\n"
+description = ""
+act_flags = ["NPC", "SCAVENGER", "WIMPY"]
+affected_flags = []
+alignment = -50
+level = 34
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4019]
+keywords = "keith-bandit foreman keith"
+short_description = "凱司(Keith)"
+long_description = "領班 - 凱司(Keith)靜靜的坐在這裡。\n"
+description = """
+他坐在酒店裡頭與其他冒險者聊天，不過你似乎發現他的眼神有些慧黠。此外他的手上拿
+著一把特別的鑰匙(key)。
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 0
+level = 47
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 30
+mod_damroll = -50
+mod_ac = 0
+mod_svs = 0
+dodge = 200
+mod_pp = 0
+gold = 0
+sex = "neutral"
+class = ["WARRIOR", "THIEF", "SWORD"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT", "NO_CRAZY", "MOBAI_LV2"]
+[[mobiles.4019.applies]]
+type = "REDUCE_DAMAGE"
+degree = 200
+[[mobiles.4019.applies]]
+type = "REDUCE_MAGIC"
+degree = 200
+[[mobiles.4019.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpmload 4065
+"""
+[[mobiles.4019.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	if resp($n) > 10
+		say 這不就是在史卡拉貝大名鼎鼎的 $n 嗎？
+	else
+		if resp($n) > 5
+			say 這不就是遠近馳名的 $n 嗎？
+		else
+			say 喔！原來是盜賊同志 $n 啊？
+		endif
+	enidif
+	say 怎麼？有什麼事情嗎？
+else
+	say 嗨！你好，有什麼事情需要我的幫忙嗎？
+endif
+"""
+[[mobiles.4019.programs]]
+trigger = "talk_prog"
+argument = "key"
+script = """
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	say 我手上的鑰匙啊？那是....有些特殊用途(for some purpose)的。
+	gigi
+else
+	say 鑰匙？不過是件裝飾品而已？
+	say 我說怎麼，你是在質問我還是拷問我嗎？
+	angry
+endif
+"""
+[[mobiles.4019.programs]]
+trigger = "talk_prog"
+argument = "p for some purpose"
+script = """
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	say 原來雖然是同志，卻不知道這件事情啊？
+	mpechoat $n $I 偷偷地在你耳朵旁說了些話....
+	mpechoaround $n $I 偷偷地在 $n 耳朵旁說了些話....
+	tell $n 其實這邊就是盜賊要塞(bandit keep)的入口啊！
+else
+	say $n 你在說些什麼呀？我完全聽不懂。
+endif
+"""
+[[mobiles.4019.programs]]
+trigger = "talk_prog"
+argument = "p bandit keep"
+script = """
+if is_qmark($i) == bandit_talking
+	break
+endif
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	mpadd_qmark self bandit_talking
+	gasp $n
+	mpechoat $n $I 將你偷偷拉到房間一旁....
+	mpechoaround $n $I 將 $n 偷偷拉到房間一旁....
+	mpcallout 1 tell $n 你怎麼知道盜賊要塞這件事的....？
+	mpcallout 2 tell $n 算了，我不逼問你了....，
+	mpcallout 3 tell $n 但是盜賊要塞的入口位於此處....，
+	mpcallout 4 tell $n 是我們盜賊共同的秘密....，
+	mpcallout 5 tell $n 如果你答應信守承諾(promise)....，
+	mpcallout 6 tell $n 不將這項秘密說出去....，
+	mpcallout 7 tell $n 我可以答應為你開門。
+	mpcallout 7 mpdel_qmark self bandit_talking
+else
+	say $n 你在說些什麼呀？我完全聽不懂。
+endif
+"""
+[[mobiles.4019.programs]]
+trigger = "talk_prog"
+argument = "promise"
+script = """
+if class($n) == 2
+or class($n) == 9
+or class($n) == 10
+or class($n) == 17
+	good $n
+	mpechoat $n $I 偷偷地將一把鑰匙交給了你....
+	mpechoaround $n $I 不知道塞了什麼東西給 $n ....
+	mpoload 4000 $n viclv target
+	tell $n 這把鑰匙可以打開此處往下通往盜賊要塞的門，
+	tell $n 前往該處接受更多盜賊的訓練吧！
+endif
+"""
+[[mobiles.4019.programs]]
+trigger = "fight_prog"
+argument = "100"
+script = """
+if insameroom(wizard-bandit)
+	mpforce wizard-bandit rescue keith-bandit
+else
+	if insameroom(ninja-bandit)
+		mpforce ninja-bandit rescue keith-bandit
+	endif
+endif
+"""
+
+[mobiles.4020]
+keywords = "waiter-bandit waiter"
+short_description = "侍者(waiter)"
+long_description = "侍者(waiter)正忙著招待參觀的人潮。\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 34
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4021]
+keywords = "spider"
+short_description = "劇毒蜘蛛(venomous spider)"
+long_description = "一隻含有劇毒的蜘蛛(venomous spider)在這裡。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = []
+alignment = -50
+level = 37
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+race = "Arachnid"
+
+[mobiles.4022]
+keywords = "small viper"
+short_description = "小毒蛇(small viper)"
+long_description = "一條小毒蛇(small viper)在這裡。\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = -50
+level = 36
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+race = "Snake"
+
+[mobiles.4023]
+keywords = "serpent"
+short_description = "弄蛇人(serpent)"
+long_description = "一個弄蛇人(serpent)坐在這邊向你噴出劇毒的毒煙。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -50
+level = 37
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+
+[mobiles.4024]
+keywords = "snake"
+short_description = "蛇(snake)"
+long_description = "一條蛇(snake)在草地上滑行。\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 36
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+race = "Snake"
+
+[mobiles.4025]
+keywords = "maggots"
+short_description = "蛆(maggots)"
+long_description = "你看到一些蛆(maggots)在這邊。\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = -10
+level = 36
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = 0
+sex = "neutral"
+race = "Worm"
+
+[mobiles.4026]
+keywords = "wasp"
+short_description = "黃蜂(wasps)"
+long_description = "一隻黃蜂(wasps)在你耳邊嗡嗡的叫。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -50
+level = 14
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "Insect"
+
+[mobiles.4027]
+keywords = "toad"
+short_description = "蟾蜍(toad)"
+long_description = "一隻巨大的蟾蜍(toad)向你發出奇怪的叫聲。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -50
+level = 14
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "Insect"
+
+[mobiles.4028]
+keywords = "lizard"
+short_description = "蜥蜴(lizard)"
+long_description = "一頭小蜥蜴(lizard)從你的腳邊滑行過去。\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = -10
+level = 25
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "Lizardman"
+
+[mobiles.4029]
+keywords = "toxic worm"
+short_description = "毒蟲(toxic worm)"
+long_description = "一頭毒蟲(toxic worm)靜靜的躺在草地上，應該沒有危險才對。\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = -10
+level = 22
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "Worm"
+
+[mobiles.4030]
+keywords = "reaper"
+short_description = "收割者(horrible reaper)"
+long_description = "一個辛勤工作的收割者(reaper)在這邊。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = []
+alignment = -300
+level = 25
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 3
+dodge = 5
+mod_pp = 5
+gold = -1
+sex = "neutral"
+
+[mobiles.4031]
+keywords = "Razorman Jailor"
+short_description = "獄卒 - 剃刀(Razorman the Jailor)"
+long_description = "獄卒 - 剃刀(razorman the jailor)坐在這邊，跟他打交道的結果只有死！\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["SLEEP"]
+alignment = -700
+level = 31
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4032]
+keywords = "old man oldman"
+short_description = "老人(oldman)"
+long_description = "一個瀕死的老人(oldman)靜靜的躺在這邊。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["SLEEP"]
+alignment = -10
+level = 11
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4033]
+keywords = "giant troll"
+short_description = "巨大的洞穴巨人(giant troll)"
+long_description = "一頭巨大的洞穴巨人(giant troll)被囚禁在這邊。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["CURSE"]
+alignment = 100
+level = 38
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "Troll"
+
+[mobiles.4034]
+keywords = "thug"
+short_description = "刺客(thug)"
+long_description = "一個刺客(thug)站在這邊。\n"
+description = ""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = []
+alignment = -300
+level = 17
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4035]
+keywords = "bandit soldier"
+short_description = "盜賊士兵(bandit soldier)"
+long_description = "一個強壯的盜賊士兵(bandit soldier)在這邊等待上級的命令。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -300
+level = 21
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4036]
+keywords = "scavenger"
+short_description = "清道夫(scavenger)"
+long_description = "清道夫(scavenger)正在清理這間休息室。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 19
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4037]
+keywords = "prince"
+short_description = "英俊王子(handsome prince)"
+long_description = "英俊的王子(handsome prince)對你古怪的一笑。\n"
+description = ""
+act_flags = ["NPC", "AGGRESSIVE"]
+affected_flags = []
+alignment = -750
+level = 39
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+spec_flags = ["EXPERT"]
+
+[mobiles.4038]
+keywords = "bandit"
+short_description = "盜賊(bandit)"
+long_description = "一個盜賊(bandit)在這邊用奇怪的眼光看著你。\n"
+description = ""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = []
+alignment = -300
+level = 19
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4039]
+keywords = "bandit guard"
+short_description = "盜賊守衛(bandit guard)"
+long_description = "一個盜賊守衛(bandit guard)在這邊。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 17
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4040]
+keywords = "bandit guard"
+short_description = "盜賊守衛(bandit guard)"
+long_description = "一個盜賊守衛(bandit guard)在這邊。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 19
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4041]
+keywords = "bandit guard"
+short_description = "盜賊守衛(bandit guard)"
+long_description = "一個盜賊守衛(bandit guard)在這邊看守著。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 20
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4042]
+keywords = "bandit guard"
+short_description = "盜賊守衛(bandit guard)"
+long_description = "一個盜賊守衛(bandit guard)在這邊。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 20
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4043]
+keywords = "bandit guard"
+short_description = "盜賊守衛(bandit guard)"
+long_description = "一個盜賊守衛(bandit guard)在這邊。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE"]
+affected_flags = []
+alignment = -500
+level = 18
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4044]
+keywords = "scout"
+short_description = "斥候(scout)"
+long_description = "斥候(scout)在這裡守護著出入口。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN"]
+alignment = -350
+level = 20
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4045]
+keywords = "scout"
+short_description = "斥候(scout)"
+long_description = "斥候(scout)在這裡守護著出入口。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN"]
+alignment = -350
+level = 20
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4046]
+keywords = "scout"
+short_description = "斥候(scout)"
+long_description = "斥候(scout)在這裡守護著出入口。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN"]
+alignment = -350
+level = 19
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4047]
+keywords = "scout"
+short_description = "斥候(scout)"
+long_description = "斥候(scout)在這裡守護著出入口。\n"
+description = """
+他身上並沒有什麼特別的。
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA"]
+affected_flags = ["DETECT_HIDDEN"]
+alignment = -350
+level = 19
+mod_hitplus = 1
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+
+[mobiles.4048]
+keywords = "free swordman"
+short_description = "閒晃的劍客(free swordman)"
+long_description = "一個劍術精湛的劍客(swordman)待在街上閒晃。\n"
+description = """
+他是一個劍術十分精湛的劍客，但是卻成天無所事事的在街上閒晃。
+"""
+act_flags = ["NPC", "STAY_AREA", "WIMPY", "CRITICAL", "HARD_DIS", "HUNT", "TWO_WEAPON", "TRACK", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "PROTECT", "POLYMORPH"]
+alignment = 300
+level = 70
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_DM", "NO_BLIND", "NO_CHARM", "HALF_MAGIC", "EXPERT"]
+special_function = "spec_guard"
+[[mobiles.4048.applies]]
+type = "HIT"
+degree = 50000
+[[mobiles.4048.applies]]
+type = "HITROLL"
+degree = 120
+[[mobiles.4048.applies]]
+type = "DAMROLL"
+degree = 150
+[[mobiles.4048.applies]]
+type = "DODGE"
+degree = -200
+[[mobiles.4048.applies]]
+type = "POWER_POTENTIAL"
+degree = 60
+[[mobiles.4048.applies]]
+type = "REDUCE_DAMAGE"
+degree = 300
+[[mobiles.4048.applies]]
+type = "REDUCE_MAGIC"
+degree = 300
+[[mobiles.4048.applies]]
+type = "APPLY_ADAMAGE"
+degree = 150
+[[mobiles.4048.applies]]
+type = "APPLY_AMAGIC"
+degree = 150
+[[mobiles.4048.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpat 5 mpoload 4061
+mpat 5 wear all
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+mpadd_qmark self delayed_stun -1 0 0 0 1 0
+mpadd_qmark self free_swordman_mist -1 0 0 0 1 0
+"""
+[[mobiles.4048.programs]]
+trigger = "tick_prog"
+argument = "100"
+script = """
+if is_qmark($i) > free_swordman_mist 100150
+	break
+endif
+if is_qmark($i) == free_swordman_mist
+	mpmod_qmark self free_swordman_mist v0 + 1
+endif
+if is_qmark($i) > free_swordman_skara 100080
+	break
+endif
+if is_qmark($i) == free_swordman_skara
+	mpmod_qmark self free_swordman_skara v0 + 1
+endif
+"""
+[[mobiles.4048.programs]]
+trigger = "tick_prog"
+argument = "30"
+script = """
+if is_qmark($i) >= free_swordman_mist 100150
+	mpdel_qmark self free_swordman_mist
+	say 在光明之鎮上走真無聊，
+	mpcallout 1 say 到史卡拉貝城去看看好了。
+	mpcallout 2 mpadd_qmark self free_swordman_skara -1 0 0 0 1 0
+	mpcallout 2 mpecho $I來了。
+	mpcallout 2 mpgoto 3049
+	mpcallout 2 mpecho $I離開了這裡。
+endif
+"""
+[[mobiles.4048.programs]]
+trigger = "tick_prog"
+argument = "30"
+script = """
+if is_qmark($i) >= free_swordman_skara 100080
+	mpdel_qmark self free_swordman_skara
+	hmm
+	mpcallout 1 say 還是再回光明之鎮一趟好了。
+	mpcallout 2 mpadd_qmark self free_swordman_mist -1 0 0 0 1 0
+	mpcallout 2 mpecho $I來了。
+	mpcallout 2 mpgoto 4522
+	mpcallout 2 mpecho $I離開了這裡。
+endif
+"""
+[[mobiles.4048.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if rand(30)
+	circular
+	mpnowait
+else
+	perform empslash
+	mpnowait
+endif
+if rand(30)
+	flaming
+	mpnowait
+else
+	icecore
+	mpnowait
+endif
+"""
+[[mobiles.4048.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+say 憑你這種三腳貓的技巧，也想來跟我挑戰？
+skilldrv multihit $n
+skilldrv heavyhit $n
+skilldrv speedhit $n
+if rand(50)
+	if hitprcnt($i) < 70
+		c heal
+	endif
+	if hitprcnt($i) < 30
+		c 'double heal'
+	endif
+endif
+"""
+[[mobiles.4048.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if isaffected($i) & 1
+	c 'cure blindness'
+endif
+if isaffected($i) & 4096
+	c 'cure poison'
+endif
+if isaffected($i) & 8388608
+	grin
+	mpdis_magic self mute
+	say 禁言術對我來說是沒有用的。
+	mpecho $I 身上的禁言術消失了....。
+endif
+if isaffected($i) & 16777216
+	shake
+	say 你無法封鎖我身上的魔法。
+	mpdis_magic self 'seal magic'
+	mpecho $I 身上的封鎖魔法失效了....。
+endif
+if isaffected($i) & 268435456
+	say 麻痺術怎麼可能對我有效呢？
+	mpdis_magic self paralyze
+	mpecho $I 的身體再度又能夠活動自如....。
+endif
+"""
+
+[mobiles.4049]
+keywords = "sneaky man"
+short_description = "鬼鬼祟祟的人(sneaky man)"
+long_description = "一個鬼鬼祟祟的人(sneaky man)在這裡張望著。\n"
+description = """
+他身上好像帶了些什麼。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "HOLD", "INFRARED", "HIDE"]
+alignment = -350
+level = 30
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "human"
+class = ["THIEF"]
+[[mobiles.4049.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) == bandit_thief_exam 100002
+      mpcallout 1 say 我是那麼沒骨氣的人嘛！
+      mpcallout 2 say 就憑你三兩句話就要我把東西交給你！
+      mpcallout 3 say 未免太小看人了吧！
+      mpcallout 4 say 要就放馬過來。
+      mpmod_qmark $n bandit_thief_exam v0 = 3
+ endif
+"""
+[[mobiles.4049.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpat 5 mpoload 4036
+ 	mpat 5 mpoload 4037
+ 	mpat 5 mpoload 4038
+ 	mpat 5 mpoload 4039
+ 	mpat 5 wear all
+"""
+[[mobiles.4049.programs]]
+trigger = "defun_prog"
+argument = "fleeaway"
+script = """
+mpecho 正當你想再扁他一拳時，$I把東西往地上一丟就跑了。
+        mpoload 4067 floor
+"""
+[[mobiles.4049.programs]]
+trigger = "fight_prog"
+argument = "75"
+script = """
+if is_qmark($n) == bandit_thief_exam 100003
+        if hitprcnt($i) <= 65
+                 if is_qmark($n) != bandit_thief_jeweldrop
+                        mpadd_qmark self bandit_thief_jeweldrop -1 0 0 0 0 1
+                        mpcallout 1 goto $i
+                        mpcallout 2 say 別..別..別再打了。
+                        mpcallout 3 say 我投降了！你們好心點停手吧，再打會出人命的！
+                        mpcallout 4 say 東西我還你們就是了！
+                        mpcallout 5 say 不過一部分我已經賣了。
+                        mpcallout 6 say 賣到了黑市，那個商人住在垃圾場附近。
+                        mpcallout 7 mpcall fleeaway
+                        mpcallout 8 mpat 5 mppurge self
+                endif
+        endif
+endif
+"""
+
+[mobiles.4050]
+keywords = "merchant"
+short_description = "黑市交易商(merchant)"
+long_description = "一個偷偷摸摸的商人(merchant)試圖躲避你的視線。\n"
+description = """
+他身上好像帶了些什麼。
+"""
+act_flags = ["NPC", "STAY_AREA", "CRITICAL", "TACTICS"]
+affected_flags = ["DETECT_HIDDEN", "HOLD", "INFRARED"]
+alignment = -350
+level = 28
+mod_hitplus = 10000
+mod_mana = 0
+mod_hitroll = 1
+mod_damroll = 1
+mod_ac = 1
+mod_svs = 1
+dodge = 1
+mod_pp = 1
+gold = -1
+sex = "neutral"
+race = "human"
+class = ["THIEF"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.4050.applies]]
+type = "REDUCE_DAMAGE"
+degree = 500
+[[mobiles.4050.applies]]
+type = "AC"
+degree = -500
+[[mobiles.4050.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_equ_obj($n) == 4066
+        say 你好！今天想賣點什麼？
+        if is_qmark($n) == bandit_thief_exam 100003
+                mpjunk all
+                mpoload 4068 35
+        endif
+else
+        say 大膽！敢闖進來！
+        mpkill $n
+endif
+"""
+
+[mobiles.4051]
+keywords = "dog-bandit dog"
+short_description = "看門狗(dog)"
+long_description = "一條看門狗(dog)正對著你狂吠。\n"
+description = """
+它的利牙上卡著不知是誰的血肉。
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "CRITICAL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = -350
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT"]
+
+[mobiles.4052]
+keywords = "bodyguard-bandit bodyguard"
+short_description = "保鑣(bodyguard)"
+long_description = "一個強壯的保鑣(bodyguard)在這守護著他的主人。\n"
+description = """
+他確確實實是個大塊頭。
+"""
+act_flags = ["NPC", "AGGRESSIVE", "STAY_AREA", "TACTICS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = -350
+level = 40
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+class = ["WARRIOR", "SWORD", "BLOODY"]
+spec_flags = ["NO_CHARM", "HALF_MAGIC", "EXPERT"]
+        action_programs = [
+            """
+8
+wake+w+w
+mpgoto 4104
+""",
+            """
+16
+wake+e+e
+mpgoto 4150
+rest
+""",
+        ]
+
+[objects.4000]
+keywords = "key-bandit cellar key"
+short_description = "牢房鑰匙(cellar key)"
+long_description = "一把牢房鑰匙(cellar key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4001]
+keywords = "brambles crown"
+short_description = "荊棘之冠(brambles crown)"
+long_description = "荊棘之冠(brambles crown)被放在地面上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "100", "0"]
+weight = 20
+cost = 80000
+level_limited = 0
+level = 36
+material = "ebony"
+souvenir = 1
+[[objects.4001.applies]]
+type = "DEX"
+value = 2
+[[objects.4001.applies]]
+type = "HITROLL"
+value = 3
+[[objects.4001.applies]]
+type = "DODGE"
+value = -10
+
+[objects.4002]
+keywords = "bronze staff"
+short_description = "青銅手杖(bronze staff)"
+long_description = "一把青銅手杖(bronze staff)被丟棄在角落。"
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["15", "10", "10", "armor"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "bronze"
+[[objects.4002.applies]]
+type = "STR"
+value = 2
+[[objects.4002.applies]]
+type = "DAMROLL"
+value = 1
+
+[objects.4003]
+keywords = "plate mail"
+short_description = "鎧甲(plate mail)"
+long_description = "一副鎧甲(plate mail)被放在地板上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 10000
+level_limited = 0
+material = "iron"
+
+[objects.4004]
+keywords = "bronze-dagger bronze dagger"
+short_description = "青銅匕首(bronze dagger)"
+long_description = "一把青銅匕首(bronze dagger)被小心翼翼的放置在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "11"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "bronze"
+
+[objects.4005]
+keywords = "sharp dagger"
+short_description = "尖銳匕首(sharp dagger)"
+long_description = "一把尖銳匕首(sharp dagger)被丟棄在地面上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "11"]
+weight = 1
+cost = 2500
+level_limited = 0
+material = "steel"
+
+[objects.4006]
+keywords = "hard leather"
+short_description = "堅硬皮甲(hard leather)"
+long_description = "一套堅硬的皮甲(hard leather)放置在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 500
+level_limited = 0
+material = "leather"
+
+[objects.4007]
+keywords = "mace"
+short_description = "釘頭錘(mace)"
+long_description = "一把釘頭錘(mace)被丟在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "7"]
+weight = 3
+cost = 500
+level_limited = 0
+material = "iron"
+
+[objects.4008]
+keywords = "morning star"
+short_description = "流星錘(morning star)"
+long_description = "一把流星錘(morning star)放置在地板上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "8"]
+weight = 7
+cost = 700
+level_limited = 0
+material = "iron"
+
+[objects.4009]
+keywords = "spear"
+short_description = "長矛(spear)"
+long_description = "一把長矛(spear)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "2"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "iron"
+
+[objects.4010]
+keywords = "boomerang"
+short_description = "迴力標(boomerang)"
+long_description = "一把迴力標(boomerang)被放置在地板上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "9"]
+weight = 2
+cost = 700
+level_limited = 0
+material = "bone"
+
+[objects.4011]
+keywords = "small axe"
+short_description = "小斧頭(small axe)"
+long_description = "一把小斧頭被放置在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "1"]
+weight = 4
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4012]
+keywords = "leather jacket"
+short_description = "皮夾克(leather jacket)"
+long_description = "一套皮夾克(leather jacket)被放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "leather"
+
+[objects.4013]
+keywords = "chain mail"
+short_description = "鍊甲(chain mail)"
+long_description = "一套鍊甲(chain mail)被放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 8
+cost = 2500
+level_limited = 0
+material = "iron"
+
+[objects.4014]
+keywords = "helm"
+short_description = "頭盔(helm)"
+long_description = "一面頭盔(helm)被放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "1001100", "0"]
+weight = 3
+cost = 700
+level_limited = 0
+material = "iron"
+
+[objects.4015]
+keywords = "gauntlets"
+short_description = "手套(gauntlets)"
+long_description = "一副手套(gauntlets)被放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 500
+level_limited = 0
+material = "leather"
+
+[objects.4016]
+keywords = "leather boots"
+short_description = "皮靴(leather boots)"
+long_description = "一雙皮靴(leather boots)放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 500
+level_limited = 0
+material = "leather"
+
+[objects.4017]
+keywords = "buckler"
+short_description = "小圓盾(buckler)"
+long_description = "一面小圓盾(buckler)被放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1001100", "0"]
+weight = 3
+cost = 1000
+level_limited = 0
+material = "wooden"
+
+[objects.4018]
+keywords = "heavy club"
+short_description = "沈重木棒(heavy club)"
+long_description = "一根沈重的木棒(heavy club)被丟棄在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "7"]
+weight = 1
+cost = 2000
+level_limited = 0
+material = "wooden"
+
+[objects.4019]
+keywords = "broom"
+short_description = "掃帚(broom)"
+long_description = "一把掃帚(broom)在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "13"]
+weight = 1
+cost = 100
+level_limited = 0
+material = "wooden"
+
+[objects.4020]
+keywords = "thief's dagger"
+short_description = "盜賊匕首(thief's dagger)"
+long_description = "一把盜賊匕首(thief's dagger)被放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "11"]
+weight = 1
+cost = 500
+level_limited = 0
+material = "iron"
+[[objects.4020.applies]]
+type = "HITROLL"
+value = 2
+[[objects.4020.applies]]
+type = "DEX"
+value = 1
+
+[objects.4021]
+keywords = "nice fur clothe"
+short_description = "高級毛衣(nice fur clothes)"
+long_description = "一套高級毛衣(nice fur clothes)被小心的放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "wool"
+
+[objects.4022]
+keywords = "sweater"
+short_description = "毛線衣(sweater)"
+long_description = "一件毛線衣(sweater)被丟棄在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 300
+level_limited = 0
+material = "wool"
+
+[objects.4023]
+keywords = "a small dark sword"
+short_description = "闇黑劍(dark sword)"
+long_description = "一把小型的闇黑劍(dark sword)放置在這邊。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["1001100", "0", "0", "3"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4024]
+keywords = "scale mail"
+short_description = "鱗甲(scale mail)"
+long_description = "一套鱗甲(scale mail)被丟棄在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 5000
+level_limited = 0
+material = "scale"
+
+[objects.4025]
+keywords = "long spear"
+short_description = "長矛(long spear)"
+long_description = "一把長矛(long spear)在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "2"]
+weight = 1
+cost = 2500
+level_limited = 0
+material = "iron"
+
+[objects.4026]
+keywords = "snake dagger"
+short_description = "黃銅蛇型匕首(snake dagger)"
+long_description = "一把蛇型的黃銅匕首(snake dagger)被放置在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "11"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "brass"
+
+[objects.4027]
+keywords = "brass hammer"
+short_description = "黃銅錘(brass hammer)"
+long_description = "一把巨大的黃銅錘(brass hammer)被放在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "7"]
+weight = 1
+cost = 3500
+level_limited = 0
+material = "brass"
+
+[objects.4029]
+keywords = "short sword"
+short_description = "黃銅短劍(short sword)"
+long_description = "一把黃銅短劍(short sword)被丟棄在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "11"]
+weight = 1
+cost = 800
+level_limited = 0
+material = "brass"
+
+[objects.4030]
+keywords = "bowl"
+short_description = "碗(bowl)"
+long_description = "一個碗(bowl)被放在地板上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 50
+level_limited = 0
+material = "stone"
+
+[objects.4031]
+keywords = "long sword"
+short_description = "黃銅長劍(long sword)"
+long_description = "一把黃銅長劍(long sword)被丟在地板上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "2"]
+weight = 2
+cost = 1000
+level_limited = 0
+material = "brass"
+
+[objects.4032]
+keywords = "bandit sword"
+short_description = "盜賊之劍(bandit sword)"
+long_description = "一把盜賊之劍(bandit sword)被放置在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "2"]
+weight = 1
+cost = 1000
+level_limited = 0
+material = "iron"
+
+[objects.4034]
+keywords = "chair"
+short_description = "椅子(chair)"
+long_description = "一把椅子(chair)被放在這邊。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 250
+level_limited = 0
+material = "wooden"
+
+[objects.4035]
+keywords = "working skirt"
+short_description = "工作裙(working skirt)"
+long_description = "一套骯髒的工作裙(working skirt)放置在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 300
+level_limited = 0
+material = "cloth"
+
+[objects.4036]
+keywords = "nice fur cloak"
+short_description = "高級毛斗蓬(nice fur cloak)"
+long_description = "一襲高級毛斗蓬(nice fur cloak)被小心的放置這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "wool"
+
+[objects.4037]
+keywords = "nice fur boots"
+short_description = "高級毛靴子(nice fur boots)"
+long_description = "一雙高級毛靴子(nice fur boots)被小心的放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "wool"
+
+[objects.4038]
+keywords = "nice fur sleeves"
+short_description = "高級毛護臂(nice fur sleeves)"
+long_description = "一副高級毛護臂(nice fur sleeves)被小心的放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "wool"
+
+[objects.4039]
+keywords = "nice fur gloves"
+short_description = "高級毛手套(nice fur gloves)"
+long_description = "一副高級毛手套(nice fur gloves)被小心的放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "wool"
+
+[objects.4040]
+keywords = "metal helm"
+short_description = "金屬頭盔(metal helm)"
+long_description = "一面金屬頭盔(metal helm)被放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "tin"
+
+[objects.4041]
+keywords = "ring mail"
+short_description = "鎖子甲(ring mail)"
+long_description = "一套鎖子甲(ring mail)被放在地板上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 1000
+level_limited = 0
+material = "iron"
+
+[objects.4042]
+keywords = "leather boots"
+short_description = "皮靴子(pair of leather boots)"
+long_description = "一雙皮靴子(leather boots)放置在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 500
+level_limited = 0
+material = "leather"
+
+[objects.4043]
+keywords = "shiny dagger"
+short_description = "發光匕首(shiny dagger)"
+long_description = "一把漂亮的匕首(dagger)在這裡閃閃發亮。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "11"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "brass"
+
+[objects.4044]
+keywords = "black coat"
+short_description = "黑色斗蓬(black coat)"
+long_description = "一襲黑色的斗蓬(black coat)放在地板上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 5000
+level_limited = 0
+material = "cloth"
+
+[objects.4045]
+keywords = "copper dagger"
+short_description = "銅匕首(copper dagger)"
+long_description = "一把銅製匕首(copper dagger)被丟棄在這邊。"
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["1001100", "0", "0", "11"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "bronze"
+
+[objects.4046]
+keywords = "copper helm"
+short_description = "銅頭盔(copper helm)"
+long_description = "一面銅製頭盔(copper helm)被丟棄在地板上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 4500
+level_limited = 0
+material = "bronze"
+
+[objects.4047]
+keywords = "broom big heavy"
+short_description = "大掃帚(big broom)"
+long_description = "一隻大掃帚(big broom)被放在角落。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "13"]
+weight = 4
+cost = 1000
+level_limited = 0
+material = "wooden"
+
+[objects.4048]
+keywords = "dish"
+short_description = "盤子(dish)"
+long_description = "一面盤子(dish)被丟棄在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 250
+level_limited = 0
+material = "glass"
+
+[objects.4049]
+keywords = "iron key"
+short_description = "鐵鑰匙(iron key)"
+long_description = "一把鐵鑰匙(iron key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4050]
+keywords = "bronze key"
+short_description = "青銅鑰匙(bronze key)"
+long_description = "一把青銅鑰匙(bronze key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "bronze"
+
+[objects.4051]
+keywords = "A big key"
+short_description = "大鑰匙(big key)"
+long_description = "一把大鑰匙(big key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4052]
+keywords = "a small key"
+short_description = "小鑰匙(small key)"
+long_description = "一把小鑰匙(small key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4053]
+keywords = "Jail key"
+short_description = "監獄鑰匙(Jail key)"
+long_description = "一把監獄鑰匙(jail key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4054]
+keywords = "room key"
+short_description = "房間鑰匙(room key)"
+long_description = "一把房間鑰匙(room key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "iron"
+
+[objects.4055]
+keywords = "ruby key"
+short_description = "紅寶石鑰匙(ruby key)"
+long_description = "一把紅寶石鑰匙(ruby key)被丟棄在這邊。"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 1
+level_limited = 0
+material = "ruby"
+
+[objects.4056]
+keywords = "assassination-dagger assassination dagger"
+short_description = "暗殺匕首(assassination dagger)"
+long_description = "一把泛著黑色光芒的匕首(dagger)被丟棄在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["DARK", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["500", "0", "0", "11"]
+weight = 5
+cost = 500000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "steel"
+[[objects.4056.applies]]
+type = "DEX"
+value = 1
+[[objects.4056.applies]]
+type = "CON"
+value = 1
+[[objects.4056.applies]]
+type = "DODGE"
+value = -25
+[[objects.4056.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.4056.applies]]
+type = "HITROLL"
+value = 5
+[[objects.4056.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+
+[objects.4057]
+keywords = "oryx vest"
+short_description = "飛羚皮甲(oryx vest)"
+long_description = "一件輕的幾乎可以浮在空中的皮甲(vest)被丟棄在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "4001400", "0"]
+weight = 1
+cost = 500000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "feather"
+souvenir = 1
+[[objects.4057.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+[[objects.4057.applies]]
+type = "DODGE"
+value = -30
+[[objects.4057.applies]]
+type = "SAVING_SPELL"
+value = 5
+[[objects.4057.applies]]
+type = "DAMROLL"
+value = -2
+[[objects.4057.applies]]
+type = "HITROLL"
+value = -2
+
+[objects.4058]
+keywords = "solar cloak"
+short_description = "光之護袍(solar cloak)"
+long_description = "一件發出萬丈光芒的袍子(cloak)被擺放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "BLESS", "HOLY"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "3001300", "0"]
+weight = 5
+cost = 100000
+level_limited = 0
+permit_classes = { type = "DENY", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER"] }
+material = "fiber"
+[[objects.4058.applies]]
+type = "DODGE"
+value = -10
+[[objects.4058.applies]]
+type = "SAVING_ELEMENT"
+value = -3
+[[objects.4058.applies]]
+type = "SAVING_SPELL"
+value = -4
+[[objects.4058.applies]]
+type = "AC"
+value = -10
+[[objects.4058.applies]]
+type = "HIT"
+value = 100
+[[objects.4058.applies]]
+type = "MANA"
+value = -50
+
+[objects.4059]
+keywords = "flying shoes"
+short_description = "飛翔之靴(shoes of flying)"
+long_description = "一雙輕的幾乎可以浮起來的靴子(shoes)被擺放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "BLESS", "HOLY"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "5001500", "0"]
+weight = 5
+cost = 100000
+level_limited = 0
+permit_classes = { type = "DENY", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER"] }
+material = "feather"
+[[objects.4059.applies]]
+type = "DODGE"
+value = -10
+[[objects.4059.applies]]
+type = "HITROLL"
+value = 1
+[[objects.4059.applies]]
+type = "DEX"
+value = 2
+
+[objects.4060]
+keywords = "poisonous-dagger poisonous dagger"
+short_description = "猛毒匕首(poisonous dagger)"
+long_description = "一把泛著綠色光芒的匕首(dagger)被丟棄在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["DARK", "MAGIC", "BLESS", "POISONED"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["8001800", "0", "0", "11"]
+weight = 5
+cost = 500000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "iron"
+[[objects.4060.applies]]
+type = "REDUCE_MAGIC"
+value = 3
+[[objects.4060.applies]]
+type = "REDUCE_DAMAGE"
+value = 3
+[[objects.4060.applies]]
+type = "DAMROLL"
+value = 1
+[[objects.4060.applies]]
+type = "HITROLL"
+value = 2
+[[objects.4060.applies]]
+type = "APPLY_ADAMAGE"
+value = 10
+[[objects.4060.hidden_powers]]
+spell = "poison"
+percent = 20
+level = 50
+event = "HP_WEAR"
+
+[objects.4061]
+keywords = "heavy iron sword"
+short_description = "重型鐵劍(heavy iron sword)"
+long_description = "一把重達數十公斤的黑色鐵劍(iron sword)被丟棄在這邊。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["400", "30", "50", "3"]
+weight = 25
+cost = 30000
+level_limited = 0
+material = "dark iron"
+[[objects.4061.applies]]
+type = "AC"
+value = -20
+[[objects.4061.applies]]
+type = "HITROLL"
+value = 5
+[[objects.4061.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.4061.applies]]
+type = "APPLY_ADAMAGE"
+value = 25
+
+[objects.4062]
+keywords = "Rules Thief"
+short_description = "盜賊的守則(Rules of Thief)"
+long_description = "盜賊所需要注意的事項(rules)被放在這邊。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 4
+cost = 30000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "stone"
+[[objects.4062.extra_descriptions]]
+keywords = "rules"
+description = """
+一片薄薄的石版，上面刻了一些字。
+"""
+[[objects.4062.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+[[objects.4062.applies]]
+type = "DODGE"
+value = -10
+
+[objects.4063]
+keywords = "Rules Thief"
+short_description = "盜賊的守則(Rules of Thief)"
+long_description = "盜賊所需要注意的事項(rules)被放在這邊。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 2
+cost = 30000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "bronze"
+[[objects.4063.extra_descriptions]]
+keywords = "rules"
+description = """
+一件青銅圓柱雕刻，上面刻了一些字。
+"""
+[[objects.4063.applies]]
+type = "POWER_POTENTIAL"
+value = 1
+[[objects.4063.applies]]
+type = "DODGE"
+value = -17
+
+[objects.4064]
+keywords = "Rules Thief"
+short_description = "盜賊的守則(Rules of Thief)"
+long_description = "盜賊所需要注意的事項(rules)被放在這邊。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 1
+cost = 30000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "ebony"
+[[objects.4064.extra_descriptions]]
+keywords = "rules"
+description = """
+一件黑檀木圓柱雕刻，上面刻了一些字。
+"""
+[[objects.4064.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.4064.applies]]
+type = "DODGE"
+value = -20
+[[objects.4064.applies]]
+type = "INT"
+value = 1
+
+[objects.4065]
+keywords = "Rules Thief"
+short_description = "盜賊的守則(Rules of Thief)"
+long_description = "盜賊所需要注意的事項(rules)被放在這邊。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "PERSONAL"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "-1", "0"]
+weight = 0
+cost = 30000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "ebony"
+spell_buffs = ["AFF_SNEAK"]
+[[objects.4065.extra_descriptions]]
+keywords = "rules"
+description = """
+一件黑檀木圓柱雕刻，上面刻了一些字。
+"""
+[[objects.4065.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.4065.applies]]
+type = "DODGE"
+value = -25
+[[objects.4065.applies]]
+type = "INT"
+value = 1
+
+[objects.4066]
+keywords = "cloak"
+short_description = "長袍(cloak)"
+long_description = "一件堆滿灰塵的袍子(cloak)被丟在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "1001100", "0"]
+weight = 5
+cost = 10
+level_limited = 0
+material = "fiber"
+[[objects.4066.extra_descriptions]]
+keywords = "cloak"
+description = """
+袍子的上頭繡了一些花紋，看起來像是某種組織的標誌。
+"""
+
+[objects.4067]
+keywords = "jewel"
+short_description = "珠寶(jewel)"
+long_description = "一些閃爍著光芒的珠寶子(jewel)被遺忘在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 10
+level_limited = 0
+material = "diamond"
+[[objects.4067.extra_descriptions]]
+keywords = "jewel"
+description = """
+散發著迷人的光輝，你的視線幾乎離不開它了。
+"""
+
+[objects.4068]
+keywords = "jewel"
+short_description = "珠寶(jewel)"
+long_description = "一些閃爍著光芒的珠寶子(jewel)被遺忘在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 10
+level_limited = 0
+material = "amethyst"
+[[objects.4068.extra_descriptions]]
+keywords = "jewel"
+description = """
+散發著迷人的光輝，你的視線幾乎離不開它了。
+"""
+
+[objects.4069]
+keywords = "chest"
+short_description = "破舊的箱子(chest)"
+long_description = "一口破舊的箱子(chest)在屋子的角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["100", "13", "0", "0"]
+weight = 20
+cost = 1000
+level_limited = 0
+material = "ebony"
+[[objects.4069.extra_descriptions]]
+keywords = "chest"
+description = """
+破舊的外表下，似乎帶著歷史的秘密。
+"""
+
+[objects.4070]
+keywords = "slate-a"
+short_description = "破碎的石板(slate)"
+long_description = "一塊破碎的石板(slate)被丟在一旁。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4070.extra_descriptions]]
+keywords = "slate"
+description = """
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：\u001B[1;17m└ \u001B[m。
+"""
+
+[objects.4071]
+keywords = "dusty statueb"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4071.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，雖然有部分殘缺，不過尚能分辨原本
+是個人像。只見它舉著唯一僅剩的右手指向南方，也就是你來的方向。
+基座不知是否因為年代久遠而有些鬆動，彷彿可以旋轉一般？
+"""
+
+[objects.4072]
+keywords = "dusty statuea"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4072.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，雖然有部分殘缺，不過尚能分辨原本
+是個人像。旋轉停止後，它的手指向了北方。
+"""
+
+[objects.4073]
+keywords = "immaterial legging"
+short_description = "無形戰甲(immaterial legging)"
+long_description = "一件腳脛(legging)被丟棄在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "BLESS", "ANTI_EVIL", "HOLY"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "1001100", "0"]
+weight = 5
+cost = 15000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "SAVANT", "ASSASSIN", "NINJA", "SWORDSMAN", "SORCERER", "LORD", "RANGER"] }
+material = "glass"
+souvenir = 1
+[[objects.4073.extra_descriptions]]
+keywords = "immaterial legging"
+description = """
+它幾乎透明到你會忽略它的存在，因光線角度的不同而有著不同顏色。
+"""
+[[objects.4073.applies]]
+type = "INT"
+value = 2
+[[objects.4073.applies]]
+type = "CON"
+value = -1
+[[objects.4073.applies]]
+type = "AC"
+value = 10
+[[objects.4073.applies]]
+type = "DODGE"
+value = -20
+[[objects.4073.applies]]
+type = "SAVING_FIRE"
+value = -5
+
+[objects.4074]
+keywords = "wings bluesky"
+short_description = "青空之翼(wings of bluesky)"
+long_description = "青空之翼(wings of bluesky)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "BLESS", "HOLY", "PERSONAL"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "1201120", "0"]
+weight = 1
+cost = 15000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "feather"
+[[objects.4074.extra_descriptions]]
+keywords = "wings bluesky"
+description = """
+一件製作精美的長袍，長袍的外側繡著一對翅膀。
+"""
+[[objects.4074.applies]]
+type = "SAVING_ELEMENT"
+value = -1
+[[objects.4074.applies]]
+type = "DODGE"
+value = -30
+[[objects.4074.applies]]
+type = "REDUCE_MAGIC"
+value = 5
+[[objects.4074.hidden_powers]]
+spell = "fly"
+percent = 25
+level = 36
+event = "HP_WEAR"
+
+[objects.4075]
+keywords = "boots whitecloud"
+short_description = "白雲之靴(boots of whitecloud)"
+long_description = "白雲之靴(boots of whitecloud)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1001100", "0"]
+weight = 3
+cost = 25000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "KNIGHT", "RANGER"] }
+material = "dragon scale"
+souvenir = 1
+[[objects.4075.extra_descriptions]]
+keywords = "boots whitecloud"
+description = """
+一雙製作精美的長靴，長靴的外側繡著一些雲形圖?。
+"""
+[[objects.4075.applies]]
+type = "CON"
+value = 1
+[[objects.4075.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.4075.applies]]
+type = "DODGE"
+value = -30
+
+[objects.4076]
+keywords = "deepblue hands"
+short_description = "深藍之手(deepblue hands)"
+long_description = "深藍之手(deepblue hands)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "1501150", "0"]
+weight = 3
+cost = 45000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "KNIGHT", "RANGER"] }
+material = "ice"
+souvenir = 1
+[[objects.4076.extra_descriptions]]
+keywords = "deepblue hands"
+description = """
+一雙深藍色的手套，有著極為美麗的藍色。
+"""
+[[objects.4076.applies]]
+type = "DEX"
+value = 1
+[[objects.4076.applies]]
+type = "HIT"
+value = -10
+[[objects.4076.applies]]
+type = "HITROLL"
+value = 2
+[[objects.4076.applies]]
+type = "DODGE"
+value = -30
+
+[objects.4077]
+keywords = "deepgreen woods"
+short_description = "碧綠之木(deepgreen woods)"
+long_description = "碧綠之木(deepgreen woods)擺在地上。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "1501150", "0"]
+weight = 2
+cost = 45000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "SAVANT", "BISHOP", "ASSASSIN", "NINJA", "KNIGHT", "RANGER"] }
+material = "ebony"
+souvenir = 1
+[[objects.4077.extra_descriptions]]
+keywords = "deepgreen woods"
+description = """
+一塊顏色鮮豔的木雕品。
+"""
+[[objects.4077.applies]]
+type = "INT"
+value = 2
+[[objects.4077.applies]]
+type = "AGE"
+value = 10
+[[objects.4077.applies]]
+type = "AC"
+value = 5
+[[objects.4077.applies]]
+type = "DODGE"
+value = -25
+
+[objects.4078]
+keywords = "ring wind"
+short_description = "風之戒(ring of wind)"
+long_description = "風之戒(ring of wind)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "BLESS"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 50000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "SAVANT", "ASSASSIN", "NINJA", "SORCERER", "LORD", "RANGER"] }
+material = "jade"
+souvenir = 1
+[[objects.4078.extra_descriptions]]
+keywords = "ring wind"
+description = """
+一只綠色的戒指，上頭刻著舞動的線條。
+"""
+[[objects.4078.applies]]
+type = "DEX"
+value = 2
+[[objects.4078.applies]]
+type = "DODGE"
+value = -25
+
+[objects.4079]
+keywords = "bracer water"
+short_description = "水之鐲(bracer of water)"
+long_description = "水之鐲(bracer of water)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "BLESS", "HOLY"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "1501150", "0"]
+weight = 3
+cost = 50000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "SAVANT", "ASSASSIN", "NINJA", "LORD", "RANGER"] }
+material = "ice"
+souvenir = 1
+[[objects.4079.extra_descriptions]]
+keywords = "bracer water"
+description = """
+一只閃爍著藍光的手鐲，有著波浪紋的浮雕。
+"""
+[[objects.4079.applies]]
+type = "WIS"
+value = 1
+[[objects.4079.applies]]
+type = "SAVING_FIRE"
+value = -2
+[[objects.4079.applies]]
+type = "INT"
+value = 1
+[[objects.4079.applies]]
+type = "DODGE"
+value = -20
+
+[objects.4080]
+keywords = "amulet fire"
+short_description = "火之符(amulet of fire)"
+long_description = "火之符(amulet of fire)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "EVIL"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1001100", "0"]
+weight = 2
+cost = 80000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "LORD", "RANGER"] }
+material = "fire"
+souvenir = 1
+[[objects.4080.extra_descriptions]]
+keywords = "amulet fire"
+description = """
+一條火紅色的護符，雕刻成火焰的形狀。
+"""
+[[objects.4080.applies]]
+type = "MANA"
+value = -26
+[[objects.4080.applies]]
+type = "HITROLL"
+value = 4
+[[objects.4080.applies]]
+type = "DAMROLL"
+value = -2
+[[objects.4080.applies]]
+type = "DODGE"
+value = -18
+
+[objects.4081]
+keywords = "chest"
+short_description = "破舊的箱子(chest)"
+long_description = "一口破舊的箱子(chest)在屋子的角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["100", "13", "0", "0"]
+weight = 20
+cost = 1000
+level_limited = 0
+material = "ebony"
+[[objects.4081.extra_descriptions]]
+keywords = "chest"
+description = """
+破舊的外表下，似乎帶著歷史的秘密。
+"""
+
+[objects.4082]
+keywords = "chest"
+short_description = "破舊的箱子(chest)"
+long_description = "一口破舊的箱子(chest)在屋子的角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["100", "13", "0", "0"]
+weight = 20
+cost = 1000
+level_limited = 0
+material = "ebony"
+[[objects.4082.extra_descriptions]]
+keywords = "chest"
+description = """
+破舊的外表下，似乎帶著歷史的秘密。
+"""
+
+[objects.4083]
+keywords = "chest"
+short_description = "破舊的箱子(chest)"
+long_description = "一口破舊的箱子(chest)在屋子的角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["100", "13", "0", "0"]
+weight = 20
+cost = 1000
+level_limited = 0
+material = "ebony"
+[[objects.4083.extra_descriptions]]
+keywords = "chest"
+description = """
+破舊的外表下，似乎帶著歷史的秘密。
+"""
+
+[objects.4084]
+keywords = "chest"
+short_description = "破舊的箱子(chest)"
+long_description = "一口破舊的箱子(chest)在屋子的角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["100", "13", "0", "0"]
+weight = 20
+cost = 1000
+level_limited = 0
+material = "ebony"
+[[objects.4084.extra_descriptions]]
+keywords = "chest"
+description = """
+破舊的外表下，似乎帶著歷史的秘密。
+"""
+
+[objects.4085]
+keywords = "chest"
+short_description = "破舊的箱子(chest)"
+long_description = "一口破舊的箱子(chest)在屋子的角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["100", "13", "0", "0"]
+weight = 20
+cost = 1000
+level_limited = 0
+material = "ebony"
+[[objects.4085.extra_descriptions]]
+keywords = "chest"
+description = """
+破舊的外表下，似乎帶著歷史的秘密。
+"""
+
+[objects.4086]
+keywords = "chest"
+short_description = "破舊的箱子(chest)"
+long_description = "一口破舊的箱子(chest)在屋子的角落。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["HUM"]
+wear_flags = []
+values = ["100", "13", "0", "0"]
+weight = 20
+cost = 1000
+level_limited = 0
+material = "ebony"
+[[objects.4086.extra_descriptions]]
+keywords = "chest"
+description = """
+破舊的外表下，似乎帶著歷史的秘密。
+"""
+
+[objects.4087]
+keywords = "slate-b"
+short_description = "破碎的石板(slate)"
+long_description = "一塊破碎的石板(slate)被丟在一旁。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4087.extra_descriptions]]
+keywords = "slate"
+description = """
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：\u001B[1;17m└ \u001B[m。
+"""
+
+[objects.4088]
+keywords = "dusty statueb"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4088.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一怪異
+的地方就是在基座的上面似乎有兩個手印(hands)的浮雕，而手印中
+指則指向上方。基座上面佈滿了灰塵，唯一乾淨的地方就只有這手印
+而以，難道這手印常常被人家按過嗎？
+"""
+
+[objects.4089]
+keywords = "dusty statuea"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4089.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一怪異
+的地方就是基座的上面似乎有一個手印的浮雕，壓下了手印之後，這
+手印的中指似乎指向了下方。
+"""
+
+[objects.4090]
+keywords = "slate-c"
+short_description = "破碎的石板(slate)"
+long_description = "一塊破碎的石板(slate)被丟在一旁。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4090.extra_descriptions]]
+keywords = "slate"
+description = """
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：\u001B[1;17m└ \u001B[m。
+"""
+
+[objects.4091]
+keywords = "slate-d"
+short_description = "破碎的石板(slate)"
+long_description = "一塊破碎的石板(slate)被丟在一旁。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4091.extra_descriptions]]
+keywords = "slate"
+description = """
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：\u001B[1;17m└ \u001B[m。
+"""
+
+[objects.4092]
+keywords = "slate-e"
+short_description = "破碎的石板(slate)"
+long_description = "一塊破碎的石板(slate)被丟在一旁。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4092.extra_descriptions]]
+keywords = "slate"
+description = """
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：\u001B[1;17m└ \u001B[m。
+"""
+
+[objects.4093]
+keywords = "slate-f"
+short_description = "破碎的石板(slate)"
+long_description = "一塊破碎的石板(slate)被丟在一旁。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4093.extra_descriptions]]
+keywords = "slate"
+description = """
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：\u001B[1;17m└ \u001B[m。
+"""
+
+[objects.4094]
+keywords = "slate-g"
+short_description = "破碎的石板(slate)"
+long_description = "一塊破碎的石板(slate)被丟在一旁。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4094.extra_descriptions]]
+keywords = "slate"
+description = """
+這塊石板似乎是一整塊石板的一部分，形狀類似一個三角形，直角旁的
+那兩邊都是的俐落的直線，而對應直角的那邊卻是雜亂無規則的。
+石版的底部有個這樣的記號：\u001B[1;17m└ \u001B[m。
+"""
+
+[objects.4095]
+keywords = "dusty statueb"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4095.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一不同
+於其他雕像的地方是在基座上面似乎有個按鈕，基座上面除了按鈕
+(button)之外似乎都十分的乾淨。這是怎麼一回事呢？
+"""
+
+[objects.4096]
+keywords = "dusty statuea"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4096.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，唯一不同
+的地方是在基座的上面似乎有個按鈕，感覺上這按鈕似乎才剛被人按
+過。
+"""
+
+[objects.4097]
+keywords = "dusty statueb"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4097.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，奇怪的是
+在這基座上面怎麼有個突兀的三角形(triangle)，這三角形上面一點
+灰塵都沒有像是剛被移動過，難不成這三角形有什麼機關嗎？
+"""
+
+[objects.4098]
+keywords = "dusty statuea"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4098.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整，奇怪的是
+這基座上面似乎有個被移動過的三角形，難道這基座有什麼秘密嗎？
+"""
+
+[objects.4099]
+keywords = "dusty statueb"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4099.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整。比起其他
+雕像來說，這雕像的基座上面實在是太普通了，沒有任何怪異的地方
+。不過雕像的手上，怎麼有著一個明亮的水晶球，看起來就讓人好想
+觸摸一下！
+"""
+
+[objects.4100]
+keywords = "dusty statuea"
+short_description = "佈滿灰塵的雕像(dusty statue)"
+long_description = "佈滿灰塵的雕像(statue)擺在房間的正中央。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = ["MAGIC"]
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 1000
+level_limited = 0
+material = "stone"
+[[objects.4100.extra_descriptions]]
+keywords = "statue"
+description = """
+石雕像被鑲在一塊圓形的基座上，基座看起來十分的完整。比起其他
+雕像來說，這雕像的基座實在是太普通了。不過這雕像手上的水晶球
+似乎又被觸摸過的痕跡！
+"""
+
+[objects.4101]
+keywords = "dark skirt"
+short_description = "闇黑榴裙(dark skirt)"
+long_description = "一襲黝黑的裙子(skirt)被棄置在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "DARK", "EVIL", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "400", "0"]
+weight = 5
+cost = 200000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+souvenir = 1
+[[objects.4101.applies]]
+type = "INT"
+value = 1
+[[objects.4101.applies]]
+type = "HIT"
+value = 25
+
+[objects.4102]
+keywords = "wonder light gloves"
+short_description = "奇光護手(gloves of wonder light)"
+long_description = "一套發出奇特光芒的手套(gloves)被擺放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "INVIS", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "200", "0"]
+weight = 5
+cost = 200000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+souvenir = 1
+[[objects.4102.applies]]
+type = "WIS"
+value = 1
+[[objects.4102.applies]]
+type = "HIT"
+value = 20
+
+[objects.4103]
+keywords = "colour girth"
+short_description = "七彩護腰(colour girth)"
+long_description = "一條發出七彩光芒的護腰(girth)被放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "INVIS", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "150", "0"]
+weight = 5
+cost = 200000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+souvenir = 1
+[[objects.4103.applies]]
+type = "DODGE"
+value = 1
+[[objects.4103.applies]]
+type = "HIT"
+value = 30
+
+[objects.4104]
+keywords = "hard wood"
+short_description = "堅硬木材(hard wood)"
+long_description = "一片堅硬的木料(hard wood)被放在地上。"
+action_description = ""
+item_type = "FURNITURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 50
+cost = 0
+level_limited = 0
+
+[objects.4105]
+keywords = "brambles crown"
+short_description = "荊棘之冠(brambles crown)"
+long_description = "荊棘之冠(brambles crown)被放在地面上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "100", "0"]
+weight = 20
+cost = 80000
+level_limited = 0
+level = 36
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "ebony"
+[[objects.4105.applies]]
+type = "DEX"
+value = 2
+[[objects.4105.applies]]
+type = "HITROLL"
+value = 2
+[[objects.4105.applies]]
+type = "DODGE"
+value = -15
+
+[objects.4106]
+keywords = "immaterial legging"
+short_description = "無形戰甲(immaterial legging)"
+long_description = "一件腳脛(legging)被丟棄在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "BLESS", "ANTI_EVIL", "HOLY"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "1001100", "0"]
+weight = 5
+cost = 15000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "glass"
+[[objects.4106.extra_descriptions]]
+keywords = "immaterial legging"
+description = """
+它幾乎透明到你會忽略它的存在，因光線角度的不同而有著不同顏色。
+"""
+[[objects.4106.applies]]
+type = "INT"
+value = 2
+[[objects.4106.applies]]
+type = "CON"
+value = -1
+[[objects.4106.applies]]
+type = "AC"
+value = 15
+[[objects.4106.applies]]
+type = "DODGE"
+value = -20
+[[objects.4106.applies]]
+type = "SAVING_FIRE"
+value = -5
+
+[objects.4107]
+keywords = "boots whitecloud"
+short_description = "白雲之靴(boots of whitecloud)"
+long_description = "白雲之靴(boots of whitecloud)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1001100", "0"]
+weight = 3
+cost = 25000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "dragon scale"
+[[objects.4107.extra_descriptions]]
+keywords = "boots whitecloud"
+description = """
+一雙製作精美的長靴，長靴的外側繡著一些雲形圖?。
+"""
+[[objects.4107.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.4107.applies]]
+type = "DODGE"
+value = -30
+
+[objects.4108]
+keywords = "deepblue hands"
+short_description = "深藍之手(deepblue hands)"
+long_description = "深藍之手(deepblue hands)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "1501150", "0"]
+weight = 3
+cost = 45000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "ice"
+[[objects.4108.extra_descriptions]]
+keywords = "deepblue hands"
+description = """
+一雙深藍色的手套，有著極為美麗的藍色。
+"""
+[[objects.4108.applies]]
+type = "DEX"
+value = 1
+[[objects.4108.applies]]
+type = "HIT"
+value = -10
+[[objects.4108.applies]]
+type = "HITROLL"
+value = 2
+[[objects.4108.applies]]
+type = "DODGE"
+value = -20
+
+[objects.4109]
+keywords = "oryx vest"
+short_description = "飛羚皮甲(oryx vest)"
+long_description = "一件輕的幾乎可以浮在空中的皮甲(vest)被丟棄在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_NEUTRAL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "4001400", "0"]
+weight = 1
+cost = 500000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["THIEF", "ASSASSIN", "NINJA", "RANGER"] }
+material = "feather"
+[[objects.4109.applies]]
+type = "POWER_POTENTIAL"
+value = 3
+[[objects.4109.applies]]
+type = "DODGE"
+value = -30
+[[objects.4109.applies]]
+type = "SAVING_SPELL"
+value = 5
+[[objects.4109.applies]]
+type = "DAMROLL"
+value = -2
+[[objects.4109.applies]]
+type = "HITROLL"
+value = -2
+
+[objects.4110]
+keywords = "amulet fire"
+short_description = "火之符(amulet of fire)"
+long_description = "火之符(amulet of fire)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["HUM", "EVIL", "LORE"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "1001100", "0"]
+weight = 2
+cost = 80000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "fire"
+[[objects.4110.extra_descriptions]]
+keywords = "amulet fire"
+description = """
+一條火紅色的護符，雕刻成火焰的形狀。
+"""
+[[objects.4110.applies]]
+type = "MANA"
+value = -26
+[[objects.4110.applies]]
+type = "HITROLL"
+value = 4
+[[objects.4110.applies]]
+type = "DAMROLL"
+value = -2
+[[objects.4110.applies]]
+type = "DODGE"
+value = -16
+
+[objects.4111]
+keywords = "deepgreen woods"
+short_description = "碧綠之木(deepgreen woods)"
+long_description = "碧綠之木(deepgreen woods)擺在地上。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "1501150", "0"]
+weight = 2
+cost = 45000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "ebony"
+[[objects.4111.extra_descriptions]]
+keywords = "deepgreen woods"
+description = """
+一塊顏色鮮豔的木雕品。
+"""
+[[objects.4111.applies]]
+type = "INT"
+value = 1
+[[objects.4111.applies]]
+type = "AGE"
+value = 10
+[[objects.4111.applies]]
+type = "AC"
+value = 5
+[[objects.4111.applies]]
+type = "DODGE"
+value = -25
+
+[objects.4112]
+keywords = "ring wind"
+short_description = "風之戒(ring of wind)"
+long_description = "風之戒(ring of wind)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "BLESS", "LORE"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "1001100", "0"]
+weight = 1
+cost = 50000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "jade"
+[[objects.4112.extra_descriptions]]
+keywords = "ring wind"
+description = """
+一只綠色的戒指，上頭刻著舞動的線條。
+"""
+[[objects.4112.applies]]
+type = "DEX"
+value = 2
+[[objects.4112.applies]]
+type = "DODGE"
+value = -25
+
+[objects.4113]
+keywords = "bracer water"
+short_description = "水之鐲(bracer of water)"
+long_description = "水之鐲(bracer of water)擺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC", "BLESS", "HOLY", "LORE"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "1501150", "0"]
+weight = 3
+cost = 50000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["NINJA"] }
+material = "ice"
+[[objects.4113.extra_descriptions]]
+keywords = "bracer water"
+description = """
+一只閃爍著藍光的手鐲，有著波浪紋的浮雕。
+"""
+[[objects.4113.applies]]
+type = "WIS"
+value = 1
+[[objects.4113.applies]]
+type = "SAVING_FIRE"
+value = -2
+[[objects.4113.applies]]
+type = "INT"
+value = 1
+[[objects.4113.applies]]
+type = "DODGE"
+value = -16
+
+[objects.4114]
+keywords = "dark skirt"
+short_description = "闇黑榴裙(dark skirt)"
+long_description = "一襲黝黑的裙子(skirt)被棄置在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "DARK", "EVIL", "MAGIC"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "400", "0"]
+weight = 5
+cost = 200000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+[[objects.4114.applies]]
+type = "INT"
+value = 1
+[[objects.4114.applies]]
+type = "HIT"
+value = 25
+[[objects.4114.applies]]
+type = "HITROLL"
+value = 2
+[[objects.4114.applies]]
+type = "APPLY_AMAGIC"
+value = 4
+
+[objects.4115]
+keywords = "wonder light gloves"
+short_description = "奇光護手(gloves of wonder light)"
+long_description = "一套發出奇特光芒的手套(gloves)被擺放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "INVIS", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "200", "0"]
+weight = 5
+cost = 200000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER", "LORD"] }
+[[objects.4115.applies]]
+type = "WIS"
+value = 1
+[[objects.4115.applies]]
+type = "HIT"
+value = 20
+[[objects.4115.applies]]
+type = "HITROLL"
+value = 3
+[[objects.4115.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+
+[objects.4116]
+keywords = "colour girth"
+short_description = "七彩護腰(colour girth)"
+long_description = "一條發出七彩光芒的護腰(girth)被放在這邊。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "INVIS", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_WAIST"]
+values = ["0", "0", "150", "0"]
+weight = 5
+cost = 200000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["MAGE", "CLERIC", "WIZARD", "ALCHEMIST", "SAVANT", "BISHOP", "SORCERER"] }
+[[objects.4116.applies]]
+type = "HITROLL"
+value = 7
+[[objects.4116.applies]]
+type = "APPLY_AMAGIC"
+value = 5
+
+[rooms.4000]
+name = "在酒店之下"
+description = """
+這裡放置著一堆酒桶與食物。很明顯的這裡是酒店儲藏食物的地方，但是很奇怪的這
+裡有一條老舊的甬道通往東邊。
+"""
+flags = ["DARK"]
+sector = "WATER_SWIM"
+[rooms.4000.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4001
+[rooms.4000.exits.up]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 4000
+to_room = 4069
+
+[rooms.4001]
+name = "廢棄的甬道"
+description = """
+當你進入這一條老舊狹小的甬道時，你發現裡頭其實非常乾淨，顯示這條甬道經常有
+人在使用。
+"""
+flags = ["DARK"]
+sector = "WATER_SWIM"
+[rooms.4001.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4002
+[rooms.4001.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4000
+
+[rooms.4002]
+name = "廢棄的甬道"
+description = """
+當你進入這一條老舊狹小的甬道時，你發現裡頭其實非常乾淨，顯示這條甬道經常有
+人在使用。
+"""
+flags = ["DARK"]
+sector = "WATER_SWIM"
+[rooms.4002.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4070
+[rooms.4002.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4001
+
+[rooms.4005]
+name = "站在高山上"
+description = """
+站在這邊你覺得心曠神怡，你同時可以遠遠的看到光明之鎮內鎮民活動的狀況。
+"""
+flags = ["NO_MOB"]
+sector = "CITY"
+[rooms.4005.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4665
+[rooms.4005.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4041
+
+[rooms.4041]
+name = "田園小道"
+description = """
+路上寂靜，景色優美，在這裡你看到許多動物。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.4041.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4042
+[rooms.4041.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4005
+
+[rooms.4042]
+name = "田園小道"
+description = """
+路上寂靜，景色優美，在這裡你看到許多動物。
+"""
+flags = ["NO_MOB"]
+sector = "FIELD"
+[rooms.4042.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4043
+[rooms.4042.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4041
+
+[rooms.4043]
+name = "交叉路口"
+description = """
+你現在站在一個路口上。你看到北方有一片森林，那裡有一條通往黑森林的小徑。
+"""
+flags = ["NO_MOB", "SAFE"]
+sector = "FIELD"
+[rooms.4043.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4044
+[rooms.4043.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4042
+
+[rooms.4044]
+name = "陰暗的小路"
+description = """
+這裡樹木非常茂盛，步行小道穿過這片美麗的森林。
+"""
+flags = []
+sector = "FOREST"
+[rooms.4044.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4045
+[rooms.4044.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4043
+
+[rooms.4045]
+name = "陰暗的小路"
+description = """
+你站在一條陰暗的小道上。這裡的空氣還算不錯。
+"""
+flags = []
+sector = "FOREST"
+[rooms.4045.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4046
+[rooms.4045.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4044
+
+[rooms.4046]
+name = "陰暗的小路"
+description = """
+小道延伸到這裡轉向東邊而去。
+"""
+flags = []
+sector = "FOREST"
+[rooms.4046.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4047
+[rooms.4046.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4045
+
+[rooms.4047]
+name = "闇黑森林"
+description = """
+所有景物看來更可怕了，而且一些奇怪的雜音從黑森林的深處傳來。
+"""
+flags = []
+sector = "FOREST"
+[rooms.4047.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4048
+[rooms.4047.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4046
+
+[rooms.4048]
+name = "闇黑森林"
+description = """
+你在這裡只能夠勉強看到通往東邊與西邊的路。
+"""
+flags = []
+sector = "FOREST"
+[rooms.4048.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4054
+[rooms.4048.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4047
+
+[rooms.4054]
+name = "森林小路的盡頭"
+description = """
+終於你看到東方有一些亮光，這裡一定是這條長路的終點。
+"""
+flags = ["NO_MOB"]
+sector = "FOREST"
+[rooms.4054.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4055
+[rooms.4054.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4048
+
+[rooms.4055]
+name = "廢棄廣場的入口"
+description = """
+走了這段穿過森林的暗路之後，突然到了一個廣場，你被強烈的光芒照的幾乎
+張不開眼睛。
+"""
+flags = []
+sector = "CITY"
+[rooms.4055.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4056
+[rooms.4055.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4058
+[rooms.4055.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4054
+
+[rooms.4056]
+name = "廢棄的廣場"
+description = """
+你站在荒廢廣場的南側，一個奇怪的想法穿過你的心中，你很納悶這裡從前是什麼樣子。
+難道是一個像現在的史卡拉貝城一樣繁榮的城市嗎？
+"""
+flags = []
+sector = "CITY"
+[rooms.4056.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4057
+[rooms.4056.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4059
+[rooms.4056.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4055
+[[rooms.4056.resets.mobiles]]
+vnum = 4022
+limit = 2
+[[rooms.4056.resets.mobiles]]
+vnum = 4022
+limit = 2
+
+[rooms.4057]
+name = "廢棄的廣場"
+description = """
+你站在一個毀掉的噴泉旁，你看到北方不遠處有一座醜陋高大的建築物。你隱約地聽到遠
+處傳來陣陣吵雜聲。
+"""
+flags = []
+sector = "CITY"
+[rooms.4057.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4060
+[rooms.4057.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4056
+[[rooms.4057.resets.mobiles]]
+vnum = 4025
+limit = 1
+[[rooms.4057.resets.mobiles]]
+vnum = 4026
+limit = 2
+[[rooms.4057.resets.mobiles]]
+vnum = 4026
+limit = 2
+
+[rooms.4058]
+name = "廢棄的廣場"
+description = """
+清風由西方吹來。你能看到西邊遠處有一個美麗的小山坡。
+"""
+flags = []
+sector = "CITY"
+[rooms.4058.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4059
+[rooms.4058.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4061
+[rooms.4058.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4055
+
+[rooms.4059]
+name = "廢棄的廣場"
+description = """
+你現在靠近廣場的中央。到處都是垃圾、餿掉的食物和死屍。
+"""
+flags = []
+sector = "CITY"
+[rooms.4059.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4060
+[rooms.4059.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4062
+[rooms.4059.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4056
+[rooms.4059.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4058
+
+[rooms.4060]
+name = "廢棄的廣場"
+description = """
+這裡有一棵大樹。在樹影之下，你往上看想知道這棵樹到底多高。但是你看不到樹頂，
+只看到透過葉影的陽光。等會...，你能勉強從樹裡看到某些東西。
+"""
+flags = []
+sector = "CITY"
+[rooms.4060.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4057
+[rooms.4060.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4059
+
+[rooms.4061]
+name = "廢棄的廣場"
+description = """
+你現在站在廣場的西側。這裡除了一些醜陋的動物以外，什麼都沒有。
+"""
+flags = []
+sector = "CITY"
+[rooms.4061.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4062
+[rooms.4061.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4064
+[rooms.4061.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4058
+
+[rooms.4062]
+name = "廢棄的廣場"
+description = """
+你站在一個毀掉的噴泉旁，而且你看到東方有一座醜陋的建築物。你聽到屋中傳來陣陣
+雜聲。而當你從一個小洞窺視裡面的時候，你看到許多人在那賭博、喝酒、甚至打架鬧事。
+"""
+flags = []
+sector = "CITY"
+[rooms.4062.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 4063
+[rooms.4062.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4065
+[rooms.4062.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4059
+[rooms.4062.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4061
+[[rooms.4062.resets.mobiles]]
+vnum = 4027
+limit = 2
+[[rooms.4062.resets.mobiles]]
+vnum = 4027
+limit = 2
+[[rooms.4062.resets.mobiles]]
+vnum = 4024
+limit = 1
+[[rooms.4062.resets.mobiles]]
+vnum = 4028
+limit = 1
+
+[rooms.4063]
+name = "酒店"
+description = """
+這個酒吧毫無秩序的吵著。而且你能看到侍者在群桌中穿梭，服務客人。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4063.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4068
+[rooms.4063.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 4062
+
+[rooms.4064]
+name = "廢棄的廣場"
+description = """
+這裡是廣場的東北邊。這裡的東西看起來都讓人不太舒服。在黑暗的角落裏，你可以看到
+一些正在緩緩爬行的噁心爬蟲類。
+"""
+flags = []
+sector = "CITY"
+[rooms.4064.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4065
+[rooms.4064.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4061
+[[rooms.4064.resets.mobiles]]
+vnum = 4025
+limit = 1
+
+[rooms.4065]
+name = "廢棄的廣場"
+description = """
+你看到北方有一座雄偉的山。往南的路通往廣場中央，從這裡你看到東邊有一株很醜的樹
+(tree)，而這裡有一些看起來能當作建材的良木。
+"""
+flags = []
+sector = "HILLS"
+[[rooms.4065.extra_descriptions]]
+keywords = "tree"
+description = """
+這些樹木的外型雖然很醜，但是質地卻是相當的堅硬，是拿來當建材的好材料。
+"""
+[rooms.4065.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4066
+[rooms.4065.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4062
+[rooms.4065.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4064
+[[rooms.4065.programs]]
+trigger = "room_command"
+argument = "hack tree"
+script = """
+if roomvalue($0) >= 3
+	echoat $n 你已經將這邊的木材給砍光了，
+	echoat $n 需要過一段時間才能長出來。
+	break
+endif
+echoat $n 你嘗試要砍下這棵樹樹枝....
+echoaround $n $n 嘗試要砍下這棵樹的樹枝....
+if str($n) < 22
+	callout 1 echoat $n 你的力量不夠，無法砍斷這棵質地堅硬的樹。
+	callout 1 echoaround $n $n 用盡了力氣仍無法砍斷這棵樹。
+else
+	callout 1 modrvt v0 + 1
+	callout 1 modrvt t0 = 36
+	callout 1 echoat $n 你用力將這棵樹的樹枝給砍斷了....
+	callout 1 echoaround $n $n 用力將這棵樹的樹枝給砍斷了....
+	callout 1 oload 4104 5 floor
+endif
+"""
+[[rooms.4065.resets.mobiles]]
+vnum = 4023
+limit = 1
+
+[rooms.4066]
+name = "廢棄的廣場"
+description = """
+你看到一棵大樹在灌木叢的中央。這棵樹真的非常非常的大，你可以看到樹上有許多
+蜘蛛在上頭爬行。忽然你感覺到有一陣黑影在你眼前閃過，但是當你注意到的時候，黑影
+已經不見。
+"""
+flags = []
+sector = "CITY"
+[rooms.4066.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4065
+[[rooms.4066.resets.mobiles]]
+vnum = 4021
+limit = 3
+[[rooms.4066.resets.mobiles]]
+vnum = 4030
+limit = 1
+
+[rooms.4067]
+name = "角落"
+description = """
+酒店的北側，沒有一間房間有位置能讓你坐下，因為這邊的人太多了，你最好小心喝醉酒
+的酒客或忽然對你發動攻擊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4067.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4068
+[[rooms.4067.resets.mobiles]]
+vnum = 4067
+limit = 1
+
+[rooms.4068]
+name = "走進酒店"
+description = """
+你走在總是有一堆遊手好閒的人聚集的酒店。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4068.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4067
+[rooms.4068.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4069
+[rooms.4068.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4063
+[[rooms.4068.resets.mobiles]]
+vnum = 4020
+limit = 3
+[[rooms.4068.resets.mobiles.equipment]]
+vnum = 4047
+wear_loc = "WIELD"
+[[rooms.4068.resets.mobiles.equipment]]
+vnum = 4035
+wear_loc = "WAIST"
+[[rooms.4068.resets.mobiles]]
+vnum = 4020
+limit = 3
+[[rooms.4068.resets.mobiles.equipment]]
+vnum = 4047
+wear_loc = "WIELD"
+[[rooms.4068.resets.mobiles.equipment]]
+vnum = 4035
+wear_loc = "WAIST"
+
+[rooms.4069]
+name = "角落"
+description = """
+你看到一些人在這裡玩鬧、喝酒、賭博。在角落你看到一個強壯的人站在酒窖的門上。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4069.exits.down]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "BASHPROOF", "PICKPROOF", "PASSPROOF"]
+key = 4000
+to_room = 4000
+[rooms.4069.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4068
+[[rooms.4069.programs]]
+trigger = "room_trap"
+argument = "32 100"
+script = """
+if is_inv_obj($n) == 4000
+	echoat $n 當你打開了這扇門，身上的鑰匙也跟著消失....
+	echoaround $n 當 $n 打開了這扇門，手上的鑰匙忽然消失了....
+	purge $n key-bandit
+endif
+"""
+[[rooms.4069.resets.mobiles]]
+vnum = 4019
+limit = 1
+[[rooms.4069.resets.mobiles.equipment]]
+vnum = 4035
+wear_loc = "WAIST"
+[[rooms.4069.resets.mobiles.equipment]]
+vnum = 4000
+wear_loc = "HOLD"
+[[rooms.4069.resets.objects]]
+vnum = 4034
+
+[rooms.4070]
+name = "在甬道之上"
+description = """
+當你走上甬道之後，新鮮的空氣讓你感到十分的舒暢。你十分驚訝走出甬道後所看到的
+一切。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4070.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4002
+[rooms.4070.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4071
+
+[rooms.4071]
+name = "盜賊要塞"
+description = """
+一條小路通至入口，在入口的上面有一塊招牌寫著：
+
+
+                  [ 盜  賊  要  塞 ]
+
+
+你注意到旁邊擺著一塊招牌(sign)。
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.4071.extra_descriptions]]
+keywords = "sign"
+description = """
+.
+這裡只歡迎盜賊同志們！
+若有其他族群的人擅入此處，只有死！
+"""
+[rooms.4071.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4072
+[rooms.4071.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4070
+[[rooms.4071.resets.mobiles]]
+vnum = 4015
+limit = 2
+[[rooms.4071.resets.mobiles]]
+vnum = 4015
+limit = 2
+
+[rooms.4072]
+name = "走進盜賊要塞裡頭"
+description = """
+在這你看到廣大的盜賊要塞。北方是強盜居住的區域，東邊你看到一條寬廣的大街。而當
+你往西方看的時候，那裡有一個小牌樓。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4072.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4113
+[rooms.4072.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4073
+[rooms.4072.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4082
+[rooms.4072.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4071
+
+[rooms.4073]
+name = "大道"
+description = """
+站在大道上，你聽到身邊的人發出的呼喊聲和噪音。在這樣可怕的氣氛下，你覺得相當不
+自在。這裡的房子又舊又髒，而住在裡面的人也是。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4073.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4074
+[rooms.4073.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4072
+
+[rooms.4074]
+name = "大道"
+description = """
+這條大道持續向北邊延伸，如果你的職業不是盜賊的話，在這邊冒險是相當有趣的事情，
+不是嗎？
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4074.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4075
+[rooms.4074.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4073
+
+[rooms.4075]
+name = "住宅區"
+description = """
+這個地方是給盜賊居住的。很明顯的這裡面積相當遼闊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4075.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4074
+[rooms.4075.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4076
+
+[rooms.4076]
+name = "住宅區"
+description = """
+這個地方是給盜賊居住的。很明顯的這裡面積相當遼闊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4076.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4075
+[rooms.4076.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4077
+[rooms.4076.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4079
+[[rooms.4076.resets.mobiles]]
+vnum = 4038
+limit = 5
+[[rooms.4076.resets.mobiles.equipment]]
+vnum = 4032
+wear_loc = "WIELD"
+[[rooms.4076.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4076.resets.mobiles]]
+vnum = 4038
+limit = 5
+[[rooms.4076.resets.mobiles.equipment]]
+vnum = 4032
+wear_loc = "WIELD"
+[[rooms.4076.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4077]
+name = "盜賊的家"
+description = """
+你站在盜賊的家裡頭，裡面有幾個盜賊住在裡面。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4077.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4078
+[rooms.4077.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4076
+[[rooms.4077.resets.mobiles]]
+vnum = 4038
+limit = 5
+[[rooms.4077.resets.mobiles.equipment]]
+vnum = 4032
+wear_loc = "WIELD"
+[[rooms.4077.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4077.resets.mobiles]]
+vnum = 4038
+limit = 5
+[[rooms.4077.resets.mobiles.equipment]]
+vnum = 4032
+wear_loc = "WIELD"
+[[rooms.4077.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4078]
+name = "臥室"
+description = """
+這間臥室裡，在角落有一個骯髒的床鋪，上頭有一些花朵裝飾。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4078.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4077
+[[rooms.4078.resets.mobiles]]
+vnum = 4038
+limit = 5
+[[rooms.4078.resets.mobiles.equipment]]
+vnum = 4032
+wear_loc = "WIELD"
+[[rooms.4078.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4079]
+name = "田園小道"
+description = """
+這條田園小道向東延伸而去。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4079.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4076
+[rooms.4079.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4080
+
+[rooms.4080]
+name = "公園"
+description = """
+哇！這是你看過風景最差的公園了。從來沒有看過這麼骯髒的公園。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4080.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4079
+[rooms.4080.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4081
+
+[rooms.4081]
+name = "垃圾場"
+description = """
+哇！這裡真是有夠....臭的！你真不敢相信盜賊們怎麼有辦法住在這邊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4081.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4080
+[rooms.4081.exits.up]
+description = ""
+keywords = ""
+locks = ["ISDOOR"]
+key = 0
+to_room = 4101
+
+[rooms.4082]
+name = "大道"
+description = """
+在進入這個大強盜窩之後，一條寬廣的街道進入你的視線之中。你能確定你並不受這裡
+歡迎而且這裡的東西都帶有一絲邪氣。道路通往北邊與南邊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4082.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4072
+[rooms.4082.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4083
+
+[rooms.4083]
+name = "安靜的大廳"
+description = """
+這個大廳十分的安靜，在這裡沒有看到任何一個人。當你繼續往前前進，你聽到大廳的某
+處傳來一些說話的聲音。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4083.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4082
+[rooms.4083.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4084
+
+[rooms.4084]
+name = "小型拱廊"
+description = """
+這裡是一個小型的拱廊，看起來蠻有趣的。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4084.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4083
+[rooms.4084.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4085
+[[rooms.4084.resets.mobiles]]
+vnum = 4013
+limit = 3
+[[rooms.4084.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4084.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4084.resets.mobiles]]
+vnum = 4013
+limit = 3
+[[rooms.4084.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4084.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4084.resets.mobiles]]
+vnum = 4013
+limit = 3
+[[rooms.4084.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4084.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4085]
+name = "長廊"
+description = """
+這裡是一條整齊、清潔且舒適的長廊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4085.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4084
+[rooms.4085.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4086
+
+[rooms.4086]
+name = "長廊"
+description = """
+這裡是一條整齊、清潔且舒適的長廊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4086.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4085
+[rooms.4086.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4089
+
+[rooms.4089]
+name = "長廊"
+description = """
+這裡是一條整齊、清潔且舒適的長廊。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4089.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4086
+[rooms.4089.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4090
+
+[rooms.4090]
+name = "巨大的拱廊"
+description = """
+一座巨大的拱廊在你面前延伸開來，像是通往一個重要的地方。南邊有一道巨大的門。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4090.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4089
+[rooms.4090.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4049
+to_room = 4092
+[[rooms.4090.resets.mobiles]]
+vnum = 4004
+limit = 2
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4042
+wear_loc = "FEET"
+[[rooms.4090.resets.mobiles]]
+vnum = 4044
+limit = 2
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4042
+wear_loc = "FEET"
+[[rooms.4090.resets.mobiles]]
+vnum = 4044
+limit = 2
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4090.resets.mobiles.equipment]]
+vnum = 4042
+wear_loc = "FEET"
+[[rooms.4090.resets.mobiles.inventory]]
+vnum = 4049
+
+[rooms.4091]
+name = "斥候室"
+description = """
+斥候待在這邊等候有緊急事故時可以立即出來處理。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4091.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4092
+[[rooms.4091.resets.mobiles]]
+vnum = 4045
+limit = 3
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4042
+wear_loc = "FEET"
+[[rooms.4091.resets.mobiles]]
+vnum = 4045
+limit = 3
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4091.resets.mobiles.equipment]]
+vnum = 4042
+wear_loc = "FEET"
+[[rooms.4091.resets.mobiles.inventory]]
+vnum = 4050
+
+[rooms.4092]
+name = "走進盜賊要塞總部"
+description = """
+在總部之內滿滿都是斥候、守衛與資深的殺手。這個地方屬於一個邪惡的盜賊，職業不是
+盜賊的人在這邊千萬要小心。北邊是一道巨大的門。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4092.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4093
+[rooms.4092.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4049
+to_room = 4090
+[rooms.4092.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4094
+[rooms.4092.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4091
+
+[rooms.4093]
+name = "斥候室"
+description = """
+斥候待在這邊等候有緊急事故時可以立即出來處理。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4093.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4092
+
+[rooms.4094]
+name = "通道"
+description = """
+這個地方沒什麼特別的，只是純粹用來通行。南邊有一道鎖住的大門。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4094.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4092
+[rooms.4094.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4050
+to_room = 4096
+
+[rooms.4095]
+name = "辦公室"
+description = """
+這裡是一間辦公室，裡頭有許多事務與文件需要處理。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4095.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4096
+[[rooms.4095.resets.mobiles]]
+vnum = 4006
+limit = 1
+[[rooms.4095.resets.mobiles.equipment]]
+vnum = 4043
+wear_loc = "WIELD"
+[[rooms.4095.resets.mobiles.equipment]]
+vnum = 4044
+wear_loc = "BODY"
+
+[rooms.4096]
+name = "守衛室"
+description = """
+強而有力的守衛在這邊預防任何危險勢力的侵入。北邊有一道鎖住的大門。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4096.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4097
+[rooms.4096.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4050
+to_room = 4094
+[rooms.4096.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "PICKPROOF"]
+key = 4050
+to_room = 4098
+[rooms.4096.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4095
+[[rooms.4096.resets.mobiles]]
+vnum = 4039
+limit = 1
+[[rooms.4096.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4096.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4096.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4096.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4097]
+name = "盜賊頭頭的房間"
+description = """
+當你進入這間房間的時候，你注意到這間房間與其他房間有著很大的不同。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4097.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4096
+[[rooms.4097.resets.mobiles]]
+vnum = 4036
+limit = 1
+[[rooms.4097.resets.mobiles.equipment]]
+vnum = 4047
+wear_loc = "WIELD"
+[[rooms.4097.resets.mobiles.inventory]]
+vnum = 4051
+
+[rooms.4098]
+name = "守衛室"
+description = """
+強而有力的守衛在這邊預防任何危險勢力的侵入。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4098.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "PICKPROOF"]
+key = 4050
+to_room = 4096
+[rooms.4098.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "BASHPROOF", "PICKPROOF"]
+key = 4502
+to_room = 4100
+[[rooms.4098.resets.mobiles]]
+vnum = 4040
+limit = 1
+[[rooms.4098.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4098.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4098.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4098.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4099]
+name = "會議室"
+description = """
+當你走進這間房間的時候，你看到房間的正中央有一面巨大的桌子，桌子的周圍坐滿了人
+。看見那些滿臉驚訝表情的人們，你知道你挑錯時間了。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4099.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4100
+[[rooms.4099.resets.mobiles]]
+vnum = 4005
+limit = 2
+[[rooms.4099.resets.mobiles.equipment]]
+vnum = 4026
+wear_loc = "WIELD"
+[[rooms.4099.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4099.resets.mobiles.equipment]]
+vnum = 4016
+wear_loc = "FEET"
+
+[rooms.4100]
+name = "會議室"
+description = """
+當你走進這間房間的時候，你看到房間的正中央有一面巨大的桌子，桌子的周圍坐滿了人
+。看見那些滿臉驚訝表情的人們，你知道你挑錯時間了。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4100.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4111
+[rooms.4100.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4098
+[rooms.4100.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4112
+[rooms.4100.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4099
+[[rooms.4100.resets.mobiles]]
+vnum = 4005
+limit = 2
+[[rooms.4100.resets.mobiles.equipment]]
+vnum = 4026
+wear_loc = "WIELD"
+[[rooms.4100.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4100.resets.mobiles.equipment]]
+vnum = 4016
+wear_loc = "FEET"
+
+[rooms.4101]
+name = "空蕩蕩的房間"
+description = """
+這間房間裡面什麼都沒有，看起來十分的普通....。
+"""
+flags = ["DARK", "NO_MOB"]
+sector = "INSIDE"
+[rooms.4101.exits.down]
+description = ""
+keywords = ""
+locks = ["ISDOOR"]
+key = 0
+to_room = 4081
+[rooms.4101.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4102
+[rooms.4101.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4103
+
+[rooms.4102]
+name = "空蕩蕩的房間"
+description = """
+這間房間裡面什麼都沒有，看起來十分的普通....。不過牆上卻
+貼了一張紙(paper)。
+"""
+flags = ["DARK"]
+sector = "INSIDE"
+[[rooms.4102.extra_descriptions]]
+keywords = "paper"
+description = """
+開飯時間：每天早上四點到八點，十六點到二十點。
+"""
+[rooms.4102.exits.east]
+description = "東邊看起來是一間休息室。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 4150
+[rooms.4102.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4101
+[rooms.4102.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4104
+
+[rooms.4103]
+name = "空蕩蕩的房間"
+description = """
+這間房間裡面什麼都沒有，看起來十分的普通....。
+"""
+flags = ["DARK"]
+sector = "INSIDE"
+[rooms.4103.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4101
+[rooms.4103.exits.north]
+description = "那裡好像有著秘密，竟然有守衛特地看守。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 4104
+[rooms.4103.exits.west]
+description = "西邊是一間破舊的更衣室。\n"
+keywords = ""
+locks = []
+key = 0
+to_room = 4151
+
+[rooms.4104]
+name = "有守衛的房間"
+description = """
+有著警衛戒備的房間，看起來背面的門後應該有些秘密。一靠近門口守衛便警戒起來，
+看來不是受到這裡的主人所邀請的客人，或是她們的夥伴，是很難進去的。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4104.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4102
+[rooms.4104.exits.north]
+description = "雖然門關著，但是依稀可以聽到裡面好像在進行一些交易。\n"
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 0
+to_room = 4105
+[rooms.4104.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4103
+
+[rooms.4105]
+name = "黑市交易所"
+description = """
+這裡是要把贓物脫手的好地方，價格或許低了點，但是卻不會惹上麻煩。
+當然，除非你當場被逮個正著。牆上貼了一張佈告(note)。
+"""
+flags = []
+sector = "INSIDE"
+[[rooms.4105.extra_descriptions]]
+keywords = "note"
+description = """
+除非會員否則一概不出售任何物品。
+"""
+[rooms.4105.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 0
+to_room = 4104
+[[rooms.4105.resets.mobiles]]
+vnum = 4050
+limit = 1
+[[rooms.4105.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4105.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4105.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4105.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4111]
+name = "會議室"
+description = """
+當你走進這間房間的時候，你看到房間的正中央有一面巨大的桌子，桌子的周圍坐滿了人
+。看見那些滿臉驚訝表情的人們，你知道你挑錯時間了。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4111.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4100
+[[rooms.4111.resets.mobiles]]
+vnum = 4041
+limit = 2
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4111.resets.mobiles]]
+vnum = 4041
+limit = 2
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4111.resets.mobiles]]
+vnum = 4037
+limit = 1
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4005
+wear_loc = "WIELD"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4021
+wear_loc = "BODY"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4036
+wear_loc = "ABOUT"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4037
+wear_loc = "FEET"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4038
+wear_loc = "ARMS"
+[[rooms.4111.resets.mobiles.equipment]]
+vnum = 4039
+wear_loc = "HANDS"
+
+[rooms.4112]
+name = "盜賊頭頭的房間"
+description = """
+你看到這邊房間裝飾著許多奢侈的裝飾品。很明顯的，這間房間屬於盜賊頭頭所有。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4112.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4100
+[[rooms.4112.resets.mobiles]]
+vnum = 4000
+limit = 1
+[[rooms.4112.resets.mobiles.equipment]]
+vnum = 4105
+wear_loc = "HEAD"
+[[rooms.4112.resets.mobiles.equipment]]
+vnum = 4004
+wear_loc = "WIELD"
+[[rooms.4112.resets.mobiles.equipment]]
+vnum = 4056
+wear_loc = "WIELD_2"
+[[rooms.4112.resets.mobiles.equipment]]
+vnum = 4109
+wear_loc = "BODY"
+
+[rooms.4113]
+name = "大道"
+description = """
+站在大道上，你聽到身邊的人發出的呼喊聲和噪音。在這樣可怕的氣氛下，你覺得相當不
+快。這裡的房子又舊又髒，而住在裡面的人也是。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4113.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4114
+[rooms.4113.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4072
+
+[rooms.4114]
+name = "大道"
+description = """
+在進入這個盜賊要塞之後，一條寬廣的街道進入你的視線之中。你能確定你並不受這裡
+歡迎而且這裡的東西都帶有一絲邪氣。道路通往東邊與西邊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4114.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4115
+[rooms.4114.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4113
+[[rooms.4114.resets.mobiles]]
+vnum = 4003
+limit = 4
+[[rooms.4114.resets.mobiles.equipment]]
+vnum = 4007
+wear_loc = "WIELD"
+[[rooms.4114.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4114.resets.mobiles]]
+vnum = 4014
+limit = 2
+[[rooms.4114.resets.mobiles.equipment]]
+vnum = 4019
+wear_loc = "WIELD"
+[[rooms.4114.resets.mobiles.equipment]]
+vnum = 4022
+wear_loc = "BODY"
+[[rooms.4114.resets.mobiles]]
+vnum = 4014
+limit = 2
+[[rooms.4114.resets.mobiles.equipment]]
+vnum = 4019
+wear_loc = "WIELD"
+[[rooms.4114.resets.mobiles.equipment]]
+vnum = 4022
+wear_loc = "BODY"
+
+[rooms.4115]
+name = "大道"
+description = """
+在進入這個盜賊要塞之後，一條寬廣的街道進入你的視線之中。你能確定你並不受這裡
+歡迎而且這裡的東西都帶有一絲邪氣。道路通往東邊與西邊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4115.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4116
+[rooms.4115.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4114
+[[rooms.4115.resets.mobiles]]
+vnum = 4003
+limit = 4
+[[rooms.4115.resets.mobiles.equipment]]
+vnum = 4007
+wear_loc = "WIELD"
+[[rooms.4115.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4115.resets.mobiles]]
+vnum = 4003
+limit = 4
+[[rooms.4115.resets.mobiles.equipment]]
+vnum = 4007
+wear_loc = "WIELD"
+[[rooms.4115.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4115.resets.mobiles]]
+vnum = 4003
+limit = 4
+[[rooms.4115.resets.mobiles.equipment]]
+vnum = 4007
+wear_loc = "WIELD"
+[[rooms.4115.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4116]
+name = "大道"
+description = """
+道路仍然持續向東邊延伸，你看到有兩棟建築在你的北邊與南邊。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4116.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4119
+[rooms.4116.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4117
+[rooms.4116.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4118
+[rooms.4116.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4115
+
+[rooms.4117]
+name = "小房子"
+description = """
+在這棟小房子裏你只能夠看到破舊的家具。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4117.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4116
+[[rooms.4117.resets.mobiles]]
+vnum = 4010
+limit = 3
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4031
+wear_loc = "WIELD"
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4117.resets.mobiles]]
+vnum = 4010
+limit = 3
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4031
+wear_loc = "WIELD"
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4117.resets.mobiles]]
+vnum = 4010
+limit = 3
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4031
+wear_loc = "WIELD"
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4117.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4118]
+name = "倒塌的建築"
+description = """
+這棟建築已經毀壞很久了，但是你卻仍可以看到有人住在裡頭。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4118.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4116
+[[rooms.4118.resets.mobiles]]
+vnum = 4007
+limit = 2
+[[rooms.4118.resets.mobiles.equipment]]
+vnum = 4020
+wear_loc = "WIELD"
+[[rooms.4118.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4118.resets.mobiles]]
+vnum = 4007
+limit = 2
+[[rooms.4118.resets.mobiles.equipment]]
+vnum = 4020
+wear_loc = "WIELD"
+[[rooms.4118.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4119]
+name = "大道"
+description = """
+這條路在這邊到達盡頭了。你看到東邊有寬廣的出口。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4119.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4120
+[rooms.4119.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4116
+
+[rooms.4120]
+name = "擁擠的廣場"
+description = """
+許多盜賊都集合到這邊來。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4120.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4124
+[rooms.4120.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4121
+[rooms.4120.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4125
+[rooms.4120.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4119
+
+[rooms.4121]
+name = "小巷子"
+description = """
+這條小巷子往北邊延伸而去。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4121.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4122
+[rooms.4121.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4120
+
+[rooms.4122]
+name = "陰暗小巷"
+description = """
+當你在這條小巷子中繼續前進時，你發覺這裡越來越暗了。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4122.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4123
+[rooms.4122.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4121
+
+[rooms.4123]
+name = "陰暗的角落"
+description = """
+在這條小巷中的陰暗角落你感到十分的不安。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4123.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4122
+[[rooms.4123.resets.mobiles]]
+vnum = 4009
+limit = 4
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4008
+wear_loc = "WIELD"
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4123.resets.mobiles]]
+vnum = 4009
+limit = 4
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4008
+wear_loc = "WIELD"
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4123.resets.mobiles]]
+vnum = 4009
+limit = 4
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4008
+wear_loc = "WIELD"
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4123.resets.mobiles]]
+vnum = 4009
+limit = 4
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4008
+wear_loc = "WIELD"
+[[rooms.4123.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4124]
+name = "擁擠的廣場"
+description = """
+許多盜賊都集合到這裡來。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4124.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4126
+[rooms.4124.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4120
+[[rooms.4124.resets.mobiles]]
+vnum = 4017
+limit = 3
+[[rooms.4124.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4124.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4124.resets.mobiles]]
+vnum = 4017
+limit = 3
+[[rooms.4124.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4124.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+[[rooms.4124.resets.mobiles]]
+vnum = 4017
+limit = 3
+[[rooms.4124.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4124.resets.mobiles.equipment]]
+vnum = 4012
+wear_loc = "BODY"
+
+[rooms.4125]
+name = "擁擠的廣場"
+description = """
+許多盜賊都集合到這裡來。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4125.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4126
+[rooms.4125.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4120
+[[rooms.4125.resets.mobiles]]
+vnum = 4014
+limit = 2
+[[rooms.4125.resets.mobiles.equipment]]
+vnum = 4019
+wear_loc = "WIELD"
+[[rooms.4125.resets.mobiles.equipment]]
+vnum = 4022
+wear_loc = "BODY"
+
+[rooms.4126]
+name = "擁擠的廣場"
+description = """
+許多盜賊都集合到這裡來。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4126.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4127
+[rooms.4126.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4124
+[rooms.4126.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4125
+[[rooms.4126.resets.mobiles]]
+vnum = 4035
+limit = 3
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4013
+wear_loc = "BODY"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4014
+wear_loc = "HEAD"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4009
+wear_loc = "WIELD"
+[[rooms.4126.resets.mobiles]]
+vnum = 4035
+limit = 3
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4013
+wear_loc = "BODY"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4014
+wear_loc = "HEAD"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4009
+wear_loc = "WIELD"
+[[rooms.4126.resets.mobiles]]
+vnum = 4035
+limit = 3
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4013
+wear_loc = "BODY"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4014
+wear_loc = "HEAD"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4009
+wear_loc = "WIELD"
+[[rooms.4126.resets.mobiles]]
+vnum = 4016
+limit = 3
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4013
+wear_loc = "BODY"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4126.resets.mobiles.equipment]]
+vnum = 4025
+wear_loc = "WIELD"
+
+[rooms.4127]
+name = "後街"
+description = """
+從這邊可以從吵雜的廣場通往安靜的小路。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4127.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4128
+[rooms.4127.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4126
+
+[rooms.4128]
+name = "狹窄的小路"
+description = """
+由廣場傳過來的吵雜聲已經越來越小了。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4128.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4127
+[rooms.4128.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4129
+[[rooms.4128.resets.mobiles]]
+vnum = 4018
+limit = 2
+[[rooms.4128.resets.mobiles.equipment]]
+vnum = 4030
+wear_loc = "WIELD"
+[[rooms.4128.resets.mobiles]]
+vnum = 4018
+limit = 2
+[[rooms.4128.resets.mobiles.equipment]]
+vnum = 4030
+wear_loc = "WIELD"
+
+[rooms.4129]
+name = "狹窄的小路"
+description = """
+由廣場傳過來的吵雜聲已經越來越小了。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4129.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4128
+[rooms.4129.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4130
+
+[rooms.4130]
+name = "小房子"
+description = """
+有一棟小房子在這邊，看起來真是小的可愛。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4130.exits.down]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4051
+to_room = 4131
+[rooms.4130.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4129
+[[rooms.4130.resets.mobiles]]
+vnum = 4011
+limit = 2
+[[rooms.4130.resets.mobiles.equipment]]
+vnum = 4045
+wear_loc = "WIELD"
+[[rooms.4130.resets.mobiles.equipment]]
+vnum = 4046
+wear_loc = "HEAD"
+[[rooms.4130.resets.mobiles.equipment]]
+vnum = 4013
+wear_loc = "BODY"
+[[rooms.4130.resets.mobiles]]
+vnum = 4011
+limit = 2
+[[rooms.4130.resets.mobiles.equipment]]
+vnum = 4045
+wear_loc = "WIELD"
+[[rooms.4130.resets.mobiles.equipment]]
+vnum = 4046
+wear_loc = "HEAD"
+[[rooms.4130.resets.mobiles.equipment]]
+vnum = 4013
+wear_loc = "BODY"
+
+[rooms.4131]
+name = "基礎"
+description = """
+整個房間裡充滿了潮濕的空氣與悶熱的感覺，苔蘚、毛皮覆蓋了四周的牆壁。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4131.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4132
+[rooms.4131.exits.up]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4051
+to_room = 4130
+
+[rooms.4132]
+name = "基礎"
+description = """
+整個房間裡充滿了潮濕的空氣與悶熱的感覺，苔蘚、毛皮覆蓋了四周的牆壁。
+"""
+flags = ["NO_MOB"]
+sector = "INSIDE"
+[rooms.4132.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4133
+[rooms.4132.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4131
+
+[rooms.4133]
+name = "巨大的門"
+description = """
+當你靜靜的走進這邊房間，你看到東邊有一扇巨大的門。這扇門真的又高又大。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4133.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4052
+to_room = 4134
+[rooms.4133.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4132
+[[rooms.4133.resets.mobiles]]
+vnum = 4046
+limit = 2
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4042
+wear_loc = "FEET"
+[[rooms.4133.resets.mobiles.inventory]]
+vnum = 4052
+[[rooms.4133.resets.mobiles]]
+vnum = 4046
+limit = 2
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4015
+wear_loc = "HANDS"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4041
+wear_loc = "BODY"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4029
+wear_loc = "WIELD"
+[[rooms.4133.resets.mobiles.equipment]]
+vnum = 4042
+wear_loc = "FEET"
+
+[rooms.4134]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4134.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4135
+[rooms.4134.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4052
+to_room = 4133
+
+[rooms.4135]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。南邊有一道巨大的門。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4135.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 4136
+[rooms.4135.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4053
+to_room = 4137
+[rooms.4135.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4134
+
+[rooms.4136]
+name = "辦公室"
+description = """
+在你面前是一張又大又堅固的桌子。垃圾、雜物或是一些沒吃完的食物都被丟在房間的角
+落。依照你的判斷，這裡應該是獄卒的辦公室。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4136.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 4135
+[[rooms.4136.resets.mobiles]]
+vnum = 4031
+limit = 1
+[[rooms.4136.resets.mobiles.equipment]]
+vnum = 4027
+wear_loc = "WIELD"
+[[rooms.4136.resets.mobiles.equipment]]
+vnum = 4013
+wear_loc = "BODY"
+[[rooms.4136.resets.mobiles.equipment]]
+vnum = 4014
+wear_loc = "HEAD"
+[[rooms.4136.resets.mobiles.inventory]]
+vnum = 4053
+
+[rooms.4137]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4137.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4053
+to_room = 4135
+[rooms.4137.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4138
+[[rooms.4137.resets.mobiles]]
+vnum = 4008
+limit = 3
+[[rooms.4137.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4137.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4137.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4137.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4138]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4138.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4139
+[rooms.4138.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4137
+
+[rooms.4139]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4139.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4143
+[rooms.4139.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4138
+[[rooms.4139.resets.mobiles]]
+vnum = 4042
+limit = 2
+[[rooms.4139.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4139.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4139.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4139.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4139.resets.mobiles.inventory]]
+vnum = 4054
+
+[rooms.4141]
+name = "密室"
+description = """
+你進入了一間陰暗的小房間，房間小到只能夠勉強擠進兩個人。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4141.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4142
+[[rooms.4141.resets.mobiles]]
+vnum = 4001
+limit = 1
+[[rooms.4141.resets.mobiles.equipment]]
+vnum = 4058
+wear_loc = "ABOUT"
+[[rooms.4141.resets.mobiles.equipment]]
+vnum = 4059
+wear_loc = "FEET"
+[[rooms.4141.resets.mobiles.equipment]]
+vnum = 4060
+wear_loc = "WIELD"
+
+[rooms.4142]
+name = "牢房"
+description = """
+這是給犯人住的牢房。在這間牢房中你只能夠看到一張床鋪與一些簡單的家具。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4142.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4141
+[rooms.4142.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4107
+to_room = 4143
+[[rooms.4142.resets.mobiles]]
+vnum = 4032
+limit = 1
+
+[rooms.4143]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4143.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4145
+[rooms.4143.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4054
+to_room = 4142
+[rooms.4143.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4054
+to_room = 4144
+[rooms.4143.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4139
+
+[rooms.4144]
+name = "牢房"
+description = """
+這是給犯人住的牢房。在這間牢房中你只能夠看到一張床鋪與一些簡單的家具。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4144.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4107
+to_room = 4143
+[[rooms.4144.resets.mobiles]]
+vnum = 4006
+limit = 1
+[[rooms.4144.resets.mobiles.equipment]]
+vnum = 4043
+wear_loc = "WIELD"
+[[rooms.4144.resets.mobiles.equipment]]
+vnum = 4044
+wear_loc = "BODY"
+
+[rooms.4145]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4145.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4147
+[rooms.4145.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4143
+[[rooms.4145.resets.mobiles]]
+vnum = 4008
+limit = 3
+[[rooms.4145.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4145.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4145.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4145.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4146]
+name = "牢房"
+description = """
+這是給犯人住的牢房。在這間牢房中你只能夠看到一張床鋪與一些簡單的家具。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4146.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4107
+to_room = 4147
+[[rooms.4146.resets.mobiles]]
+vnum = 4033
+limit = 1
+
+[rooms.4147]
+name = "監獄"
+description = """
+你在一間昏暗的房間中。唯一的照明就是牆壁上的火把。在裡頭偶爾可以聽到由黑暗一端
+傳來的可怕尖叫聲。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4147.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4054
+to_room = 4146
+[rooms.4147.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4054
+to_room = 4148
+[rooms.4147.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4145
+
+[rooms.4148]
+name = "空房間"
+description = """
+這一間房間裡頭相當乾淨，不像其他監獄的房間。
+"""
+flags = []
+sector = "INSIDE"
+[rooms.4148.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 4107
+to_room = 4147
+[rooms.4148.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED"]
+key = 0
+to_room = 4149
+[[rooms.4148.resets.mobiles]]
+vnum = 4043
+limit = 2
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4148.resets.mobiles]]
+vnum = 4043
+limit = 2
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4148.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4149]
+name = "儲藏室"
+description = """
+厚厚的一層灰塵覆蓋在房間的地面上。這一間房間是用來儲存一些裝備。
+"""
+flags = ["DARK", "NO_MOB"]
+sector = "INSIDE"
+[rooms.4149.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4148
+
+[rooms.4150]
+name = "休息室"
+description = """
+這裡有一張小桌子，幾張椅子。沒太多的裝飾，不過從地上的食物殘渣看來，
+守衛們大概都在這裡用餐。
+"""
+flags = ["DARK"]
+sector = "INSIDE"
+[rooms.4150.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4102
+[[rooms.4150.resets.mobiles]]
+vnum = 4052
+limit = 2
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+[[rooms.4150.resets.mobiles]]
+vnum = 4052
+limit = 2
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4017
+wear_loc = "SHIELD"
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4018
+wear_loc = "WIELD"
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4024
+wear_loc = "BODY"
+[[rooms.4150.resets.mobiles.equipment]]
+vnum = 4040
+wear_loc = "HEAD"
+
+[rooms.4151]
+name = "更衣室"
+description = """
+這裡有一個衣櫃，不過門卻壞了一半。地上散佈了一些鏡子的碎片，房間角落
+堆著一些箱子(box)，有件衣服被箱子押到只露出一角。
+"""
+flags = ["DARK"]
+sector = "INSIDE"
+[[rooms.4151.extra_descriptions]]
+keywords = "box"
+description = """
+這個箱子似乎可以移開(move)。
+"""
+[rooms.4151.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4103
+[[rooms.4151.programs]]
+trigger = "room_command"
+argument = "move box"
+script = """
+if robjcount(4066) == 0
+   echo 你找到一件堆滿灰塵的長袍。
+   oload 4066 5 $n floor
+ endif
+"""
+
+[rooms.4152]
+name = "試練的入口"
+description = """
+這是試練的起點，任何想學到更高級技巧的忍者都要經過這一關。唯一的出口指向
+北方，黯淡的火光使你看不清前方的狀況。在你視線所及的地方都是一層單調的灰色，
+灰濛濛的一片使你的視線迷失在模糊的空中。
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4152.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4153
+
+[rooms.4153]
+name = "精進之路"
+description = """
+火光在灰色的基調中閃爍著，孤獨而徬徨。微弱的火苗鬥不過滿溢的黑暗，陰影於
+是在四週灑落。你直覺有股視線正盯著你瞧....
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[[rooms.4153.extra_descriptions]]
+keywords = "elder"
+description = """
+不起眼的老人(elder) - 人類(Human):
+不起眼的外表下，隱隱透露出他經過多年鍛鍊的事實。
+
+不起眼的老人(elder)\u001B[1;20m健康狀況良好。\u001B[m
+
+他身上穿著：
+< 光  源 > (\u001B[1;16m發光\u001B[m)盜賊的守則(Rules of Thief)
+<主要武器> 暗殺匕首(assassination dagger)
+<次要武器> 暗殺匕首(assassination dagger)
+
+        什麼都沒有。
+
+你不禁心想：「他真的是一位老人？還是一位忍者？」
+"""
+[rooms.4153.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4154
+[rooms.4153.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4152
+[[rooms.4153.resets.mobiles]]
+vnum = 4053
+limit = 1
+
+[rooms.4154]
+name = "封印的石碑"
+description = """
+一座石碑直立在空地中央，四周散佈著幾簇火盆，熊熊的火焰令人尚可分辨週遭的
+環境。東西兩邊由於光線不夠明亮看起來像是消失在黑暗之中，而北方不遠處似乎有個
+人影在晃動，而南方....？
+
+    你心想：「南方不就是我剛剛來的地方嘛，鎮定鎮定！不要被一點小事嚇傻了！」
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4154.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4158
+[rooms.4154.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4155
+[rooms.4154.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4153
+[rooms.4154.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4157
+[[rooms.4154.programs]]
+trigger = "room_time"
+argument = "100"
+script = """
+echo 你覺得身體恢復的速度稍微加快了！
+    modhmv pc 04.3 6 00000000
+    modhmv pc 14.2 4 00000000
+    modhmv pc 24.4 8 00000000
+"""
+[[rooms.4154.programs]]
+trigger = "room_enter"
+argument = "31 100"
+script = """
+if is_qmark($n) == bandit_thief_exam 100007
+	echoat $n 一陣閃光之後，你被傳送到了火影之間。
+	transfer $n 4165
+	at 4165 force $n look
+	at 4165 echoat $n 玩家請注意，打火影時屍體可能會被清掉，
+	at 4165 echoat $n 這是正常情形哦，所以打前請多三思才好。
+	break
+endif
+if is_qmark($n) == bandit_thief_exam 100006
+if is_inv_obj($n) == 4070
+if is_inv_obj($n) == 4087
+if is_inv_obj($n) == 4090
+if is_inv_obj($n) == 4091
+if is_inv_obj($n) == 4092
+if is_inv_obj($n) == 4093
+if is_inv_obj($n) == 4094
+			purge $n slate-a
+			purge $n slate-b
+			purge $n slate-c
+			purge $n slate-d
+			purge $n slate-e
+			purge $n slate-f
+			purge $n slate-g
+			echoat $n 當你一踏進這裡，你身上的七個石版忽然發出一陣耀眼的光茫。
+			echoat $n 等到你再清醒過來的時候，你已經被傳送到這個房間了。
+			mod_qmark $n bandit_thief_exam v0 = 7
+			transfer $n 4165
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+endif
+"""
+
+[rooms.4155]
+name = "守護者之間"
+description = """
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4155.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4154
+[[rooms.4155.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if robjcount(4071) > 0
+             if robjcount(4072) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+"""
+[[rooms.4155.programs]]
+trigger = "room_command"
+argument = "turn statue"
+script = """
+if robjcount(4071) > 0
+           callout 1 echo 「隨著石像的轉動，北面一道密門也漸漸打開。」
+           callout 2 makedoor 0 一座石門緩緩上升 stone 0 0 4156
+           callout 3 purge statueb
+           callout 4 oload 4072 1 floor
+        else
+           if robjcount(4072) > 0
+              callout 1 deldoor 0
+              callout 2 echo 「隨著石像的轉動，北面的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4071 1 floor
+           endif
+        endif
+"""
+[[rooms.4155.resets.objects]]
+vnum = 4071
+
+[rooms.4156]
+name = "隱藏的密室"
+description = """
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.4156.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4155
+[[rooms.4156.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if rand(30)
+     echo 「突然傳出一陣喀喀聲」
+     callout 3 deldoor 2
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除南邊的陷阱了。
+  endif
+"""
+[[rooms.4156.programs]]
+trigger = "room_mask"
+argument = "untangle south"
+script = """
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+"""
+[[rooms.4156.resets.objects]]
+vnum = 4069
+[[rooms.4156.resets.objects.contains]]
+vnum = 4070
+
+[rooms.4157]
+name = "石碑的西邊"
+description = """
+站在這裡往東方看去，仍可以看到石碑的影子。環顧四週，都覺得有股眼神在盯著
+你看。看來要小心點才是.....
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4157.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4154
+[rooms.4157.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4159
+[rooms.4157.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4161
+[rooms.4157.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4160
+
+[rooms.4158]
+name = "石碑的東邊"
+description = """
+站在這裡往西方看去，仍可以看到石碑的影子。環顧四週，都覺得有股眼神在盯著
+你看。看來要小心點才是.....
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4158.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4163
+[rooms.4158.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4162
+[rooms.4158.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4164
+[rooms.4158.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4154
+
+[rooms.4159]
+name = "守護者之間"
+description = """
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4159.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4157
+[[rooms.4159.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if robjcount(4088) > 0
+             if robjcount(4089) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+"""
+[[rooms.4159.programs]]
+trigger = "room_command"
+argument = "pull hands"
+script = """
+if robjcount(4088) > 0
+           callout 1 echo 「隨著你壓下手印，下面一道密門也漸漸打開。」
+           callout 2 makedoor 5 一座石門緩緩上升 stone 0 0 4171
+           callout 3 purge statueb
+           callout 4 oload 4089 1 floor
+           break
+        else
+           if robjcount(4089) > 0
+              callout 1 deldoor 5
+              callout 2 echo 「隨著手印的浮起，下面的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4088 1 floor
+              break
+           endif
+        endif
+"""
+[[rooms.4159.resets.objects]]
+vnum = 4088
+
+[rooms.4160]
+name = "守護者之間"
+description = """
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4160.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4157
+[[rooms.4160.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if robjcount(4095) > 0
+             if robjcount(4096) > 0
+                  deldoor 0
+                  purge statuea
+             endif
+        endif
+"""
+[[rooms.4160.programs]]
+trigger = "room_command"
+argument = "push button"
+script = """
+if robjcount(4095) > 0
+           callout 1 echo 「隨著你壓下按鈕，北方一道密門也漸漸打開。」
+           callout 2 makedoor 0 一座石門緩緩上升 stone 0 0 4170
+           callout 3 purge statueb
+           callout 4 oload 4096 1 floor
+           break
+        else
+           if robjcount(4096) > 0
+              callout 1 deldoor 0
+              callout 2 echo 「隨著你壓下按鈕，北方的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4095 1 floor
+              break
+           endif
+        endif
+"""
+[[rooms.4160.resets.objects]]
+vnum = 4095
+
+[rooms.4161]
+name = "守護者之間"
+description = """
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4161.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4157
+[[rooms.4161.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if robjcount(4098) > 0
+             if robjcount(4097) > 0
+                  deldoor 3
+                  purge statuea
+             endif
+        endif
+"""
+[[rooms.4161.programs]]
+trigger = "room_command"
+argument = "move triangle"
+script = """
+if robjcount(4097) > 0
+           callout 1 echo 「隨著你移動三角形，左方一道密門也漸漸打開。」
+           callout 2 makedoor 3 一座石門緩緩上升 stone 0 0 4169
+           callout 3 purge statueb
+           callout 4 oload 4098 1 floor
+           break
+        else
+           if robjcount(4098) > 0
+              callout 1 deldoor 3
+              callout 2 echo 「隨著你移動三角形，左方的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4097 1 floor
+              break
+           endif
+        endif
+"""
+[[rooms.4161.resets.objects]]
+vnum = 4097
+
+[rooms.4162]
+name = "守護者之間"
+description = """
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，東邊有一
+道門大剌剌地開著！
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4162.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4166
+[rooms.4162.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4158
+
+[rooms.4163]
+name = "守護者之間"
+description = """
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4163.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED"]
+key = 0
+to_room = 4167
+[rooms.4163.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4158
+
+[rooms.4164]
+name = "守護者之間"
+description = """
+幾支火把簡單插在四週牆壁的架子上，是這裡唯一的裝飾。往四周一看，看不到什
+麼特別的東西，不過火光卻微微地晃動？
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4164.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4158
+[[rooms.4164.programs]]
+trigger = "room_rand"
+argument = "100"
+script = """
+if robjcount(4099) > 0
+             if robjcount(4100) > 0
+                  deldoor 3
+                  purge statuea
+             endif
+        endif
+"""
+[[rooms.4164.programs]]
+trigger = "room_command"
+argument = "touch crystal ball"
+script = """
+if robjcount(4099) > 0
+           callout 1 echo 「隨著你碰觸水晶球，上方一道密門也漸漸打開。」
+           callout 2 makedoor 4 一座石門緩緩上升 stone 0 0 4168
+           callout 3 purge statueb
+           callout 4 oload 4100 1 floor
+        else
+           if robjcount(4100) > 0
+              callout 1 deldoor 4
+              callout 2 echo 「隨著你碰觸水晶球，左方的石門漸漸關閉。」
+              callout 3 purge statuea
+              callout 4 oload 4099 1 floor
+           endif
+        endif
+"""
+[[rooms.4164.resets.objects]]
+vnum = 4099
+
+[rooms.4165]
+name = "火影之間"
+description = """
+一面潑墨山水畫掛在南面的牆壁上，另外有一扇五呎的屏風展開在東面矮桌旁。除
+此之外沒有什麼東西吸引你的注意，房間裡唯一在動的東西，就只有那盞擺在矮桌上的
+油燈了。
+"""
+flags = ["INDOORS", "NO_RECALL", "SAVE"]
+sector = "INSIDE"
+[rooms.4165.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4154
+[[rooms.4165.resets.mobiles]]
+vnum = 4061
+limit = 1
+
+[rooms.4166]
+name = "隱藏的密室"
+description = """
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.4166.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4162
+[[rooms.4166.programs]]
+trigger = "room_defun"
+argument = "aftershoot_deldoor"
+script = """
+if rand(60)
+     echo 「地板忽然下沉了一些」
+     callout 3 deldoor 3
+     callout 4 echo 「喔喔！看來你又觸動了機關！」
+     callout 5 echo 你發現你可能要自力救濟自行解除西邊的陷阱了。
+  endif
+"""
+[[rooms.4166.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+echo 「一陣風聲劃破原本的沉默」
+     echo 「咻....」
+     callout 1 echoat $n 「你發現你被一支暗箭射中」
+     callout 1 modhmv $n 03.20 30 00000001
+     callout 2 rcall aftershoot_deldoor
+"""
+[[rooms.4166.programs]]
+trigger = "room_mask"
+argument = "untangle west"
+script = """
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，西邊的門打開了......
+		callout 1 makedoor 3 一座石門緩緩上升 stone 0 0 4162
+		callout 1 at 4162 makedoor 1 打開的門 stone 0 0 4166
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，西邊的門打開了......
+		callout 1 makedoor 3 一座石門緩緩上升 stone 0 0 4162
+		callout 1 at 4162 makedoor 1 打開的門 stone 0 0 4166
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+"""
+[[rooms.4166.resets.objects]]
+vnum = 4081
+[[rooms.4166.resets.objects.contains]]
+vnum = 4087
+
+[rooms.4167]
+name = "隱藏的密室"
+description = """
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.4167.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4163
+[[rooms.4167.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if rand(40)
+     echo 「突然傳出一陣喀喀聲」
+     callout 3 deldoor 0
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除北邊的陷阱了。
+  endif
+"""
+[[rooms.4167.programs]]
+trigger = "room_mask"
+argument = "untangle north"
+script = """
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，北邊的門打開了......
+		callout 1 makedoor 0 一座石門緩緩上升 stone 0 0 4163
+		callout 1 at 4163 makedoor 2 門 stone 7 0 4167
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，北邊的門打開了......
+		callout 1 makedoor 0 一座石門緩緩上升 stone 0 0 4163
+		callout 1 at 4163 makedoor 2 門 stone 7 0 4167
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+"""
+[[rooms.4167.resets.objects]]
+vnum = 4082
+[[rooms.4167.resets.objects.contains]]
+vnum = 4090
+
+[rooms.4168]
+name = "隱藏的密室"
+description = """
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.4168.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4164
+[[rooms.4168.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if rand(50)
+     echo 「突然傳出一陣喀喀聲」
+     callout 1 deldoor 5
+     callout 2 at 4164 deldoor 4
+     callout 2 at 4164 purge statue
+     callout 3 at 4164 oload 4099 1 floor
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除下方的陷阱了。
+  endif
+"""
+[[rooms.4168.programs]]
+trigger = "room_mask"
+argument = "untangle down"
+script = """
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，下方的門打開了......
+		callout 1 makedoor 5 一座石門緩緩上升 stone 0 0 4164
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，下方的門打開了......
+		callout 1 makedoor 5 一座石門緩緩上升 stone 0 0 4164
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+"""
+[[rooms.4168.resets.objects]]
+vnum = 4083
+[[rooms.4168.resets.objects.contains]]
+vnum = 4091
+
+[rooms.4169]
+name = "隱藏的密室"
+description = """
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.4169.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4161
+[[rooms.4169.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if rand(30)
+     echo 「突然傳出一陣喀喀聲」
+     callout 1 deldoor 1
+     callout 2 at 4161 deldoor 3
+     callout 2 at 4161 purge statue
+     callout 3 at 4161 oload 4097 1 floor
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除東邊的陷阱了。
+  endif
+"""
+[[rooms.4169.programs]]
+trigger = "room_mask"
+argument = "untangle east"
+script = """
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，東邊的門打開了......
+		callout 1 makedoor 1 一座石門緩緩上升 stone 0 0 4161
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，東邊的門打開了......
+		callout 1 makedoor 1 一座石門緩緩上升 stone 0 0 4161
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+"""
+[[rooms.4169.resets.objects]]
+vnum = 4084
+[[rooms.4169.resets.objects.contains]]
+vnum = 4092
+
+[rooms.4170]
+name = "隱藏的密室"
+description = """
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.4170.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4160
+[[rooms.4170.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if rand(30)
+     echo 「突然傳出一陣喀喀聲」
+     callout 1 deldoor 2
+     callout 2 at 4160 deldoor 0
+     callout 2 at 4160 purge statue
+     callout 3 at 4160 oload 4095 1 floor
+     callout 4 echo 「喔喔！看來你是觸動了機關了！」
+     callout 5 echo 你發現你可能要自力救濟自行解除南邊的陷阱了。
+  endif
+"""
+[[rooms.4170.programs]]
+trigger = "room_mask"
+argument = "untangle south"
+script = """
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4160
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，南邊的門打開了......
+		callout 1 makedoor 2 一座石門緩緩上升 stone 0 0 4160
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+"""
+[[rooms.4170.resets.objects]]
+vnum = 4085
+[[rooms.4170.resets.objects.contains]]
+vnum = 4093
+
+[rooms.4171]
+name = "隱藏的密室"
+description = """
+灰塵佈滿了整個空間，牆上掛著蜘蛛網，看來已經有段時日沒有人進來過了。唯一
+吸引你注意的是一口破舊的箱子。
+"""
+flags = ["INDOORS"]
+sector = "INSIDE"
+[rooms.4171.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = 0
+to_room = 4159
+[[rooms.4171.programs]]
+trigger = "room_enter"
+argument = "127 100"
+script = """
+if rand(30)
+	echo 「突然傳出一陣喀喀聲」
+	callout 3 deldoor 4
+	callout 4 echo 「喔喔！看來你是觸動了機關了！」
+	callout 5 echo 你發現你可能要自力救濟自行解除上方的陷阱了。
+endif
+"""
+[[rooms.4171.programs]]
+trigger = "room_mask"
+argument = "untangle up"
+script = """
+if learned($n) >= 133 10
+	if rand(60)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，向上的門打開了......
+		callout 1 makedoor 4 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+else
+	if rand(10)
+		echo 你小心翼翼地找尋室內的機關，發現了一個裝置，並且將它拆除！
+		callout 1 echo 一陣聲響後，向上的門打開了......
+		callout 1 makedoor 4 一座石門緩緩上升 stone 0 0 4155
+	else
+		echo 你小心翼翼地找尋室內的機關，但是什麼也沒有找到，而且還觸發了陷阱！
+		modhmv $n 03.10 15 00000001
+	endif
+endif
+"""
+[[rooms.4171.resets.objects]]
+vnum = 4086
+[[rooms.4171.resets.objects.contains]]
+vnum = 4094

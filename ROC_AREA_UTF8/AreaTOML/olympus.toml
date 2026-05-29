@@ -1,0 +1,4061 @@
+[area]
+name = "奧林帕斯山"
+identity = "olympus"
+builders = "Generic"
+translator = "Pluto"
+modifier = "Amushi"
+vnum_start = 900
+vnum_end = 993
+security = 1
+recall = 3001
+f_toggle = false
+
+[mobiles.901]
+keywords = "zeus-olympus god"
+short_description = "宙斯(Zeus)"
+long_description = "宙斯(Zeus)正坐在祂的王座上.\n"
+description = """
+在你面前所見到的是奧林帕斯山諸神中最偉大的一位. 祂似乎只要用一個念頭就
+足以把你殺死. 祂對你的每一瞥都深深地刺入你的靈魂. 你終於知道什麼是你所
+該畏懼的. 他手上的閃電吱吱作響, 代表了他煩惱著什麼. 你應該嘗試問問.
+(What worries you?)
+"""
+act_flags = ["NPC", "SENTINEL", "ARTIFACT"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 51
+mod_hitplus = 300
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 8000
+sex = "male"
+race = "God"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_cleric"
+[[mobiles.901.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+if is_qmark($n) <= olympus_weapon_quest 100007
+   mpdel_qmark $n olympus_weapon_quest
+   say 任務重新開始.
+endif
+"""
+[[mobiles.901.programs]]
+trigger = "talk_prog"
+argument = "p what worries you?"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) != olympus_weapon_quest
+                mpadd_qmark $i olympus_talking 1 0 0 0 0 1
+                mpadd_qmark $n olympus_weapon_quest -1 1 0 0 0 1
+                say 該死的，走開走開，低賤的凡人沒有資格跟我講話！
+                mpcallout 2 mpechoat $n 你想著，應該有什麼事發生了，說不定你可以問問這城裡最睿智的人呢！(ask about zeus)
+                mpcallout 2 mpdel_qmark $i olympus_talking
+        endif
+endif
+"""
+[[mobiles.901.programs]]
+trigger = "give_prog"
+argument = "932"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100008
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                mpjunk all.corpse
+                mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpechoat $n 你細心的跟宙斯講著原由。
+                mpcallout 2 say 原來是這樣呀～
+                mpcallout 10 mpecho 宙斯沉思了一會兒。
+                mpcallout 12 say 從今以後，天界將會多加小心的，感謝您的幫助，您的名聲將再度提高！
+                mpcallout 12 mpresp $n 1
+                mpcallout 13 say 另外，希拉的事情，過段時日，我將復活她。
+                mpcallout 14 say 這件禮物就給你吧！
+                mpcallout 14 mpoload 934 $n 1 target
+		mpcallout 14 mplog give quest eq vnum 934 to $n.
+                mpcallout 15 rumor 天界危機解除，$n的名聲更加壯大了！
+                mpcallout 15 mpdel_qmark $i olympus_talking
+        else
+                drop corpse
+        endif
+endif
+"""
+[[mobiles.901.programs]]
+trigger = "give_prog"
+argument = "930"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100006
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 喔喔喔喔～～！我夢寐以求的寶劍！
+                mpjunk all
+                mpcallout 1 say 好吧！你說的我都答應啦！
+                mpat prometheus-olympus mppurge prometheus-olympus
+                mpcallout 2 rumor 天界發出特赦令。
+                mpcallout 3 mpechoat $n 普羅米休斯用心電感應對你說：真是太感謝你了！請找阿波羅領賞吧！(Award)
+                mpcallout 3 mpdel_qmark $i olympus_talking
+                mpcallout 3 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+"""
+[[mobiles.901.programs]]
+trigger = "talk_prog"
+argument = "p release prometheus please"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100017
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                say 嗯 ..
+                mpechoat $n 宙斯思考了一下。
+                mpcallout 6 say 好吧！看在你的份上，我就放過他！
+                mpcallout 6 rumor 天界發出特赦令。
+                mpcallout 6 mpat prometheus-olympus mppurge prometheus-olympus
+                mpcallout 7 mpechoat $n 普羅米休斯用心電感應對你說：真是太感謝你了！請找阿波羅領賞吧！(Reward)
+                mpcallout 7 mpdel_qmark $i olympus_talking
+                mpcallout 7 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+"""
+
+[mobiles.902]
+keywords = "prometheus-olympus"
+short_description = "普羅米休斯(Prometheus)"
+long_description = "普羅米休斯(Prometheus)正在這裡玩弄著火柴.\n"
+description = """
+這位凡人冒著違背宙斯神旨的危險, 盜取火種給人類. 他正看著你並對你微笑.
+或許你可以幫助他？(Help!)
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 47
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2500
+sex = "male"
+race = "God"
+spec_flags = ["NO_CHARM"]
+special_function = "spec_breath_fire"
+[[mobiles.902.programs]]
+trigger = "talk_prog"
+argument = "p ask about jail"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100001
+                mpadd_qmark $i olympus_talking 20 0 0 0 0 1
+                say 這可說來話長了呀～
+                mpcallout 2 mpechoat $n 他從他如何成為神祇講起。
+                mpcallout 12 mpechoat $n 講起那紅極一時的「火」事件。
+                mpcallout 32 mpechoat $n 抑或是與宙斯的爭論。
+                mpcallout 52 mpechoat $n 話鋒一轉，又講回與阿波羅成為好朋友的經過。
+                mpcallout 62 mpechoat $n 他的語氣太平淡了，好像比水還淡一般，一下就消散了。
+                mpcallout 62 glare
+                mpcallout 63 say 事情已過多年，現在，也沒有什麼好怨恨的了。
+                mpcallout 65 say 現在我只希望能早點出去這裡，再呼吸呼吸新鮮的空氣罷了。
+                mpcallout 67 sigh
+                mpcallout 68 mpechoat $n 看著他這樣可憐兮兮的樣子，你想出手幫他嗎？(I can help you)
+                mpcallout 68 mpdel_qmark $i olympus_talking
+                mpcallout 68 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+"""
+[[mobiles.902.programs]]
+trigger = "talk_prog"
+argument = "p i can help you"
+script = """
+if is_qmark($n) == olympus_jail_quest 100002
+        mpmod_qmark $n olympus_jail_quest v0 + 1
+        say 真的嗎？
+        mpcallout 1 say 那就麻煩您幫我去找阿波羅說我現在的情況(Prometheus' situation)
+endif
+"""
+[[mobiles.902.programs]]
+trigger = "talk_prog"
+argument = "p help!"
+script = """
+if is_qmark($n) != olympus_jail_quest
+        if is_qmark($n) == olympus_weapon_quest 200009
+        or is_qmark($n) == olympus_weapon_quest 100009
+                mpadd_qmark $n olympus_jail_quest -1 1 0 0 0 1
+                say 原來是最近名聲響遍天際的$N呀。
+                say 你找我又有什麼事呢？
+                mpechoat $n 你可以嘗試問問他為何會被關。(Ask about jail)
+        endif
+endif
+"""
+
+[mobiles.903]
+keywords = "hermes-olympus"
+short_description = "賀密斯(Hermes)"
+long_description = "賀密斯(Hermes)正忙著傳遞神旨.\n"
+description = """
+祂是眾神的使者. 祂穿著有翅膀的帽子以及鞋子, 在一處與另一處之間飛奔著.
+祂非常的忙碌以至於他似乎沒有沒有注意到你的存在.
+"""
+act_flags = ["NPC", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "SNEAK", "FLYING"]
+alignment = 1000
+level = 43
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 3000
+sex = "male"
+race = "God"
+special_function = "spec_thief"
+
+[mobiles.904]
+keywords = "poseidon-olympus"
+short_description = "波賽頓(Poseidon)"
+long_description = "波賽頓(Poseidon)正在這裡用餐.\n"
+description = """
+祂就是宙斯的弟弟, 被指派統御著大海. 祂應該是受邀前來的. 祂對你點頭並打
+了個手勢請你進來坐坐.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 5000
+sex = "male"
+race = "God"
+class = ["MAGE"]
+special_function = "spec_cast_mage"
+
+[mobiles.905]
+keywords = "apollo-olympus"
+short_description = "阿波羅(Apollo)"
+long_description = "阿波羅(Apollo)正在這彈奏著優美的旋律.\n"
+description = """
+這位快樂的神正彈奏著祂的七弦琴, 祂對你微笑並請你加入祂. 你注意到祂身旁
+擺著一把看起來頗危險的弓, '祂所懂得不只有音樂'你這樣想著.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 49
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2500
+sex = "male"
+race = "God"
+class = ["WARRIOR", "MAGE", "SHOT_ARROW"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_adept"
+[[mobiles.905.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+if area($i) != olympus
+        if ischarmed($i)
+                break
+        else
+                say 我該回到奧林帕司山去了....。
+                mpcallout 1 mppurge self
+        endif
+endif
+"""
+[[mobiles.905.programs]]
+trigger = "talk_prog"
+argument = "p ask about zeus"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100004
+                mpadd_qmark $i olympus_talking 10 0 0 0 0 1
+                mpcallout 2 say 這個呀～
+                mpcallout 4 glare
+                mpcallout 6 say 難怪我最近嗅到暴戾之氣在奧林帕斯聚集 ..
+                mpcallout 10 say 我看，是魔劍「切割者」又回來了。
+                mpcallout 14 say 那把魔劍在兩百年前就在奧林帕斯裡掀起腥風血雨。
+                mpcallout 18 say 諸神的黃昏他也有參與，幾個北歐神祇都是最近才藉神力復活的。
+                mpcallout 20 say 真是該死！它可以隱藏自己的魔力。
+                mpcallout 22 say 一般的法術是找不到的，你可以嘗試在各神祇之間搜尋，或許會有些斬獲。
+                mpcallout 24 say 一切！都靠你了！
+                mpcallout 24 mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpcallout 24 mpdel_qmark $i olympus_talking
+        else
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 宙斯？就是奧林帕斯諸神統領呀！
+                mpcallout 2 say 連他都不認識，你也未免太孤陋寡聞了吧！
+                mpdel_qmark $i olympus_talking
+        endif
+endif
+"""
+[[mobiles.905.programs]]
+trigger = "talk_prog"
+argument = "p prometheus' situation"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100003
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 這個嘛，其實我也想幫他很久了，但是 ...
+                mpcallout 2 say 宙斯他呀，喜怒無常的。
+                mpcallout 4 mpechoat $n 阿波羅似乎有什麼難言之隱。(troubles)
+                mpcallout 4 mpmod_qmark $n olympus_jail_quest v0 + 1
+                mpcallout 4 mpdel_qmark $i olympus_talking
+        endif
+endif
+"""
+[[mobiles.905.programs]]
+trigger = "talk_prog"
+argument = "troubles"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100004
+                if is_qmark($n) == olympus_weapon_quest 200009
+                        mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                        say 這個嘛，你可以試試把你鑄造的聖劍給宙斯看看，說不定他會發特赦令。
+                        mpcallout 2 say 不過，克萊弗那邊就要靠你交涉了.(please give me the sword)
+                        mpcallout 2 mpdel_qmark $i olympus_talking
+                        mpcallout 2 mpmod_qmark $n olympus_jail_quest v0 + 1
+                else
+                        mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                        say 你可以試著去找找看聖劍普魯托，把他呈獻給宙斯，說不定他會發特赦令。
+                        mpcallout 2 say 你可以去克萊弗那裡問問，說不定他會有些消息.(ask about sword)
+                        mpcallout 2 mpdel_qmark $i olympus_talking
+                        mpcallout 2 mpmod_qmark $n olympus_jail_quest v0 + 1
+                endif
+        endif
+endif
+"""
+[[mobiles.905.programs]]
+trigger = "talk_prog"
+argument = "award"
+script = """
+if is_qmark($n) == olympus_jail_quest 100007
+        mpmod_qmark $n olympus_jail_quest v0 + 14
+        say 你真的解放他了嗎？
+        say 真是太太太感謝你了！
+        if rand(45)
+                say 這把我愛用的弓就送給你吧！
+                mpoload 938 $n 40 target
+		mplog give quest eq vnum 938 to $n
+        else
+                say 這件袍子就送給你吧！
+                mpoload 935 $n viclv target
+		mplog give quest eq vnum 935 to $n
+        endif
+endif
+"""
+[[mobiles.905.programs]]
+trigger = "talk_prog"
+argument = "reward"
+script = """
+if is_qmark($n) == olympus_jail_quest 100018
+        mpmod_qmark $n olympus_jail_quest v0 + 3
+        say 你真的解放他了嗎？
+        say 真是太太太感謝你了！
+        if rand(45)
+                say 這件我愛用的護腕就送給你吧！
+                mpoload 936 $n 40 target
+		mplog give quest eq vnum 936 to $n
+        else
+                say 這件袍子就送給你吧！
+                mpoload 935 $n viclv target
+		mplog give quest eq vnum 935 to $n
+        endif
+endif
+"""
+[[mobiles.905.programs]]
+trigger = "talk_prog"
+argument = "p ask apollo another way"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100016
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 這樣呀，那就只好想想別的方法了。
+                say 算了，你直接請求宙斯怎樣？依你的名氣，宙斯應該是會答應的。(release Prometheus please)
+                mpcallout 2 mpechoat $n 你想了一想，好吧！
+                mpcallout 3 say 加油！
+                mpcallout 3 mpdel_qmark $i olympus_talking
+                mpcallout 3 mpmod_qmark $n olympus_jail_quest v0 + 1
+        endif
+endif
+"""
+
+[mobiles.906]
+keywords = "ares-olympus"
+short_description = "亞雷司(Ares)"
+long_description = "亞雷司(Ares)正在嘲弄著你.\n"
+description = """
+戰神亞雷司正在這研究著地圖. 當你走進這裡時, 祂皺了皺眉頭並對你說:我很
+忙, 你想要做什麼?'
+"""
+act_flags = ["NPC", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING"]
+alignment = -1000
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 3000
+sex = "male"
+race = "God"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.906.programs]]
+trigger = "talk_prog"
+argument = "ask about zeus"
+script = """
+if is_qmark($n) == olympus_weapon_quest 100003
+        mpmod_qmark $n olympus_weapon_quest v0 + 1
+        say 該死的！去煩阿波羅！
+        say 跟我這武人講有什麼屁用！
+endif
+"""
+
+[mobiles.907]
+keywords = "athena-olympus"
+short_description = "雅典娜(Athena)"
+long_description = "雅典娜(Athena)正在這裡休憩著.\n"
+description = """
+這位宙斯最寵愛的女兒正坐在長沙發上吃著葡萄, 祂對你微笑並邀請你一起吃.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 3000
+sex = "female"
+race = "God"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_adept"
+[[mobiles.907.programs]]
+trigger = "tick_prog"
+argument = "50"
+script = """
+if area($i) != olympus
+        if ischarmed($i)
+                break
+        else
+                say 我該回到奧林帕司山去了....。
+                mpcallout 1 mppurge self
+        endif
+endif
+"""
+[[mobiles.907.programs]]
+trigger = "talk_prog"
+argument = "p ask about zeus"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100001
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                mpcallout 2 mpechoat $n 雅典娜沉思了一下。
+                mpcallout 6 say 最近一堆不明智的神祇，竟為了誰的武器最強而爭論不休。
+                mpcallout 8 say 而我那曾經英明的父親，最近也處心積慮了為了證明自己的是最強，而計畫著種種陰謀。
+                mpcallout 10 say 唉～
+                mpcallout 12 mpechoat $n 你可以嘗試取悅雅典娜看看！(請嘗試各種詭異奇特的動作)
+                mpcallout 12 mpmod_qmark $n olympus_weapon_quest v0 + 1
+                mpcallout 12 mpdel_qmark $i olympus_talking
+        else
+                mpadd_qmark $i olympus_talking 2 0 0 0 0 1
+                say 宙斯？就是奧林帕斯諸神統領呀！
+                mpcallout 2 say 連他都不認識，你也未免太孤陋寡聞了吧！
+                mpcallout 2 mpdel_qmark $i olympus_talking
+        endif
+endif
+"""
+[[mobiles.907.programs]]
+trigger = "act_prog"
+argument = "candle"
+script = """
+mpcall olympus_athena_actprog $n
+"""
+[[mobiles.907.programs]]
+trigger = "act_prog"
+argument = "fondle"
+script = """
+mpcall olympus_athena_actprog $n
+"""
+[[mobiles.907.programs]]
+trigger = "act_prog"
+argument = "sm!"
+script = """
+mpcall olympus_athena_actprog $n
+"""
+[[mobiles.907.programs]]
+trigger = "defun_prog"
+argument = "olympus_athena_actprog"
+script = """
+if sex($n) != 1
+        break
+endif
+if is_qmark($n) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100002
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                mpechoat $n 一陣陣淫穢的思想在你腦中流過！
+                mpcallout 2 say 喔～不要～！
+                mpcallout 5 mpecho $n 當你還沉浸再那無比美麗的幻想時...
+                mpcallout 7 mpecho $n 你被雅典娜喚回現實，雖然你還想繼續..
+                mpcallout 10 say 這事我處理不了，麻煩你去找武斷一點的人吧。(繼續尋找)
+                mpcallout 10 mpdel_qmark $i olympus_talking
+                mpcallout 10 mpmod_qmark $n olympus_weapon_quest v0 + 1
+        else
+                say 該死的人！！！！竟敢作出這種事情！
+                mpkill $n
+        endif
+endif
+"""
+[[mobiles.907.programs]]
+trigger = "act_prog"
+argument = "lick"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100002
+                mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                say 嗯，謝謝你的安慰，我感覺舒服多了。
+                kiss $n
+                mpcallout 2 say 要平息這場爭端，必須找到一把可以統馭這眾多神器的至高神器。
+                mpcallout 4 say 「聖劍　普魯托」
+                mpcallout 6 say 相信你有聽過這個名字，聽說他還存放在奧林帕斯山的某一個角落。
+                mpcallout 8 say 但至今無人尋獲。
+                mpcallout 10 say 你可以去問問看希費斯特斯。
+                mpcallout 12 say 相信你會有些斬獲的。(Ask about holy sword)
+                mpcallout 12 mpdel_qmark $i olympus_talking
+                mpcallout 12 mpmod_qmark $n olympus_weapon_quest v1 + 1
+        endif
+endif
+"""
+
+[mobiles.908]
+keywords = "hephaestus-olympus smith-olympus"
+short_description = "希費斯特斯(Hephaestus)"
+long_description = "希費斯特斯(Hephaestus)正在這打造著一把精良的武器.\n"
+description = """
+這是在眾神中唯一一位在肉體上不完美的神祇. 祂是一個瘸子而且十分的醜陋.
+然而你對祂的友善以及樂於助人卻是印象深刻. 祂由三位金色的處女侍奉著.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 48
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 3000
+sex = "male"
+race = "God"
+spec_flags = ["NO_CHARM"]
+special_function = "spec_breath_lightning"
+[[mobiles.908.programs]]
+trigger = "talk_prog"
+argument = "p ask about holy sword"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200001
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                say 聖劍早已失落，失落於界面縫隙之間。
+                mpcallout 2 say 或許可以找到方法重鑄吧，不過。
+                mpcallout 4 say 太難了，勸你還是找別條路吧。
+                mpcallout 6 say 或許你可以問問阿波羅有沒有方法解決。(Ask about zeus)
+                mpcallout 6 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 6 mpmod_qmark $n olympus_weapon_quest v0 + 2
+                mpcallout 6 mpdel_qmark $i olympus_talking
+        endif
+endif
+"""
+
+[mobiles.909]
+keywords = "handmaid-olympus golden"
+short_description = "金色侍女(golden maiden)"
+long_description = "一位純金的侍女(golden maiden)正在這協助著鐵匠希費斯特斯.\n"
+description = """
+當你凝視著她時, 你發現她是由純金打造的. 當她協助鐵匠時看起來是那麼樣的
+栩栩如生.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 0
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1000
+sex = "female"
+race = "Angel"
+special_function = "spec_guard"
+
+[mobiles.910]
+keywords = "soldier"
+short_description = "士兵(soldier)"
+long_description = "一位士兵(soldier)正在這裡協助著阿雷斯.\n"
+description = """
+這個人伺候著阿雷斯, 雖然他看起來並非十分強壯. 但是你知道阿雷斯從來不用
+任何的懦弱者為他工作.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING"]
+alignment = 0
+level = 40
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 3000
+sex = "male"
+race = "Angel"
+class = ["WARRIOR"]
+
+[mobiles.911]
+keywords = "musician apprentice"
+short_description = "音樂學徒(apprentice musician)"
+long_description = "一位音樂學徒(apprentice musician)正跟隨著阿波羅學習.\n"
+description = """
+這個人已經對於他的第一個職業十分專精了. 他現在正追隨著阿波羅神學習音樂.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "PRACTICE"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING"]
+alignment = 1000
+level = 12
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 2500
+sex = "male"
+
+[mobiles.912]
+keywords = "boy serving servant"
+short_description = "神僕(serving boy)"
+long_description = "一位僕人(serving boy)正在用葡萄餵著雅典娜.\n"
+description = """
+這個男孩真是夠幸運的了, 能夠侍奉雅典娜.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING"]
+alignment = 1000
+level = 27
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "male"
+race = "Angel"
+
+[mobiles.913]
+keywords = "hound dog war"
+short_description = "戰犬(war hound)"
+long_description = "一隻巨大的獵犬(hound)正在這對你咆哮.\n"
+description = """
+這隻巨大的野獸僅能勉強地被稱為一條狗. 牠似乎是被訓練來在戰場上製造恐懼
+的. 而且你對牠能否勝任自己的工作一點也不感到懷疑.
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING"]
+alignment = -600
+level = 13
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Animal"
+
+[mobiles.914]
+keywords = "odin-olympus"
+short_description = "歐丁(Odin)"
+long_description = "歐丁(Odin)正在這休息著.\n"
+description = """
+當你注視著歐丁, 你才了解到自己是多麼的無足輕重. 祂像一座高塔般矗立著.
+祂非常專注於祂的事情, 而且幾乎沒有察覺到你的存在.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 51
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 7
+mod_pp = 0
+gold = 5000
+sex = "male"
+race = "God"
+class = ["MAGE"]
+special_function = "spec_breath_any"
+
+[mobiles.915]
+keywords = "grocer greengrocer julius-olympus"
+short_description = "朱利爾斯(Julius)"
+long_description = "菜販─朱利爾斯(greengrocer Julius)正站在這裡.\n"
+description = """
+這位快樂的人貢獻了他的一生在販賣水果及其他食物給這個城市的居民們. 雖然
+他看起來是那麼樣的瘦弱, 但是最好別小看他. 他溫和地對你微笑並展示著看起
+來十分可口的精選食品.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 39
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 7
+mod_pp = 0
+gold = 1000
+sex = "male"
+race = "Angel"
+[mobiles.915.shop]
+buy_types = ["LIGHT", "TREASURE", "DRINK_CON", "FOOD"]
+profit_buy = 130
+profit_sell = 80
+open_hour = 0
+close_hour = 23
+
+[mobiles.916]
+keywords = "alchemist"
+short_description = "煉金師(alchemist)"
+long_description = "一位高齡而且瘦巴巴的煉金師(alchemist)正站在這裡.\n"
+description = """
+他精通於包括煉金術的各種魔法並隨時準備好提供這裡的居民(不包括你)各式各
+樣神奇的協助.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 42
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1000
+sex = "male"
+race = "Angel"
+special_function = "spec_cast_mage"
+
+[mobiles.917]
+keywords = "clive-olympus"
+short_description = "克萊弗(Clive)"
+long_description = "武器製造者─克萊弗(Clive)正在這裡鍛造著弓和斧頭.\n"
+description = """
+他看起來十分地巨大而強壯, 想必是長年待在軍中的結果, 目前唯一知曉神器製
+作方式的人.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 46
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 3000
+sex = "male"
+race = "Angel"
+class = ["SHOT_ARROW"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.917.programs]]
+trigger = "talk_prog"
+argument = "p please give me the sword"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100005
+                if is_qmark($n) == olympus_weapon_quest 200009
+                        mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                        say 這個嘛，你要跟宙斯交涉？
+                        say 讓我想想 ..
+                        mpcallout 12 say 好吧！反正這把劍留在我這也沒用。
+                        mpcallout 13 say 就給你吧！
+                        mpcallout 13 mpoload 930 $n 42 target
+                        mpcallout 13 mpmod_qmark $n olympus_jail_quest v0 + 1
+                        mpcallout 13 mpdel_qmark $i olympus_talking
+                endif
+        endif
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "talk_prog"
+argument = "p ask about sword"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_jail_quest 100005
+                if is_qmark($n) == olympus_weapon_quest 100009
+                        mpadd_qmark $i olympus_talking 5 0 0 0 0 1
+                        say 這個嘛，你要跟宙斯交涉？
+                        say 讓我想想 ..
+                        mpcallout 12 say 不行！神器一到了宙斯手上會無法無天！
+                        mpcallout 13 say 請你去找別的方法吧！(ask apollo another way)
+                        mpcallout 13 mpmod_qmark $n olympus_jail_quest v0 + 11
+                        mpcallout 13 mpdel_qmark $i olympus_talking
+                endif
+        endif
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "talk_prog"
+argument = "p ask about holy sword"
+script = """
+if is_qmark($n) == olympus_weapon_quest 100008
+        break
+endif
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200002
+                mpadd_qmark $i olympus_talking 10 0 0 0 0 1
+                say 這個嘛，你說聖劍？
+                mpcallout 2 mpecho 克萊弗思考了一下。
+                mpcallout 12 say 這個嘛，雖然我是會製作神器啦。
+                mpcallout 14 say 但是沒有材料和製作方式我也很難下手吧。
+                mpcallout 16 say 嗯.. 你可以去「魔法高塔，創世紀，羅胡城堡」找找看。
+                mpcallout 18 say 我只知道這三個地方有藏書，你應該可以找到不少的資料！
+                mpcallout 20 say 說不定，你可以使聖劍重鑄！回來的時候請告訴我你蒐集的資訊！(Information)
+                mpcallout 22 mpecho 克萊弗繼續他的打鐵工作，不過臉上多了一分希望。
+                mpcallout 22 mpmod_qmark $n olympus_weapon_quest v0 + 4
+                mpcallout 22 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 22 mpdel_qmark $i olympus_talking
+        else
+                say 聖劍普魯托？
+                say 早已失傳啦！
+        endif
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "talk_prog"
+argument = "information"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200007
+        mpmod_qmark $n olympus_weapon_quest v1 + 1
+        say ！！你真的找到了！
+        say  那就請你把材料都交給我吧！
+        say 你可以問我東西齊全了沒(Things)，給完請跟我講完成了(Finish).
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "13077"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300001
+                mpmod_qmark $n olympus_weapon_quest v2 | 1
+                say 我收到橙葉綠樹法杖了.
+                mpjunk all.green
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我橙葉綠樹法杖了。
+                drop green
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop green
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "32166"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300002
+                mpmod_qmark $n olympus_weapon_quest v2 | 2
+                say 我收到神龍之魂了.
+                mpjunk all.soul
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我神龍之魂了。
+                drop soul
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop soul
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "32133"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300002
+                mpmod_qmark $n olympus_weapon_quest v2 | 2
+                say 我收到神龍之魂了.
+                mpjunk all.soul
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我神龍之魂了。
+                drop soul
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop soul
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "663"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300004
+                mpmod_qmark $n olympus_weapon_quest v2 | 4
+                say 我收到金龍珠了.
+                mpjunk all.orb
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我金龍珠了。
+                drop orb
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop orb
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "37040"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300008
+                mpmod_qmark $n olympus_weapon_quest v2 | 8
+                say 我收到佛爾伊斯特的擁抱了.
+                mpjunk all.bosom
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我佛爾伊斯的擁抱了。
+                drop bosom
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop bosom
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "401"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300016
+                mpmod_qmark $n olympus_weapon_quest v2 | 16
+                say 我收到精靈之淚了.
+                mpjunk all.tear
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我精靈之淚了。
+                drop tear
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop tear
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "26516"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300032
+                mpmod_qmark $n olympus_weapon_quest v2 | 32
+                say 我收到加勾以爾之翼了.
+                mpjunk all.wings
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我加勺以爾之翼了。
+                drop wings
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop wings
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "give_prog"
+argument = "32089"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) !& olympus_weapon_quest 300064
+                mpmod_qmark $n olympus_weapon_quest v2 | 64
+                say 我收到紅龍之怒了.
+                mpjunk all.dragon
+                mpcall weaponthing_judge $n
+        else
+                say 你已經給過我紅龍之怒了。
+                drop dragon
+        endif
+else
+        say 幹嘛給我這樣東西呢?
+        drop dragon
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "talk_prog"
+argument = "finish"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 200008
+        if is_qmark($n) == olympus_weapon_quest 300127
+                mpadd_qmark $i olympus_talking 20 0 0 0 0 1
+                say 真是太好了！我馬上就動手打造吧！
+                mpcallout 2 mpechoat $n 你看見紅龍之怒被拿去鎔爐裡打成一把劍的形狀。
+                mpcallout 12 mpechoat $n 當劍正熱時，你看到精靈之淚一滴滴加到劍裡，水蒸氣瀰漫四周。
+                mpcallout 22 mpechoat $n 而一旁發亮的神龍魂自動的飛到神劍上方，一陣耀眼的光芒出現，一把金色的劍成形了。
+                mpcallout 32 mpechoat $n 在鑄造者的神力之下，佛爾伊斯特的懷抱慢慢的縮小成劍柄形狀。
+                mpcallout 42 mpechoat $n 克萊弗將金龍珠鑲嵌到劍柄裡，而劍柄和劍身都緩緩飄起。
+                mpcallout 52 mpechoat $n 加勾以爾之翼瞬間飛起，將劍柄與劍身包覆在一起，一道金光之後。
+                mpcallout 54 say 聖劍 - 普魯托重現於世上啦！哈哈哈哈哈哈！！
+                mpcallout 54 rumor 至高神器重現於世上，世人無不震懾！
+                mpcallout 55 say 現在，神器重現，天界的紛爭也將平息。
+                mpcallout 56 say 不過依你的能力也應該無法駕馭此劍，依我看，不如就暫時寄於我這吧。
+                mpcallout 58 say 但是，你的功勞依然不可抹滅，在此，我將我畢生傑作賜與你做天界對你的感謝！
+                mpcallout 59 mpechoat $n 一把淡橙色的劍慢慢的在你前面成形。
+                mpcallout 59 mpoload 993 $n 36 target
+		mpcallout 59 mplog give quest eq vnum 937 to $n
+                mpcallout 60 say 雖然等級遠遠不及聖劍，但我可以自豪的說，他絕對是第二！
+                mpcallout 62 say 好好珍惜他吧，你的名字，將會在歷史上留下一筆！
+                mpcallout 62 mpresp $n 3
+                mpcallout 62 mpmod_qmark $n olympus_weapon_quest v1 + 1
+                mpcallout 62 mpdel_qmark $i olympus_talking
+        endif
+        endif
+endif
+"""
+[[mobiles.917.programs]]
+trigger = "talk_prog"
+argument = "things"
+script = """
+mpcall weaponthing_judge $n
+"""
+[[mobiles.917.programs]]
+trigger = "defun_prog"
+argument = "weaponthing_judge"
+script = """
+mpechoat $n 你還沒給的東西有：
+if is_qmark($n) !& olympus_weapon_quest 300001
+   mpechoat $n .   橙葉綠樹法杖
+endif
+if is_qmark($n) !& olympus_weapon_quest 300002
+   mpechoat $n .   神龍之魂
+endif
+if is_qmark($n) !& olympus_weapon_quest 300004
+   mpechoat $n .   金龍珠
+endif
+if is_qmark($n) !& olympus_weapon_quest 300008
+   mpechoat $n .   佛爾伊斯特的擁抱
+endif
+if is_qmark($n) !& olympus_weapon_quest 300016
+   mpechoat $n .   精靈之淚
+endif
+if is_qmark($n) !& olympus_weapon_quest 300032
+   mpechoat $n .   加勾以爾之翼
+endif
+if is_qmark($n) !& olympus_weapon_quest 300064
+   mpechoat $n .   紅龍之怒
+endif
+"""
+
+[mobiles.918]
+keywords = "armourer samuel-olympus"
+short_description = "撒姆爾(Samuel)"
+long_description = "胄甲製造者─撒姆爾(armourer Samuel)正怒目注視著你.\n"
+description = """
+正如武器製造商克萊弗一樣, 他看起來也是十分地巨大及強壯. 他並不喜歡你在
+這個城市中所做的一切.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 21
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1000
+sex = "male"
+race = "Angel"
+
+[mobiles.919]
+keywords = "ra sun god"
+short_description = "太陽神(Sun God)"
+long_description = "古埃及的太陽神─雷(Sun God Ra)在這裡散發出耀眼的光芒.\n"
+description = """
+祂看起來十分的亮! 由於直視祂將傷害你的眼睛, 你很難看清楚祂的面貌. 然而
+就你所能瞥見的那一小部份就足以讓你相信祂是不容被小覷的.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 51
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 6000
+sex = "male"
+race = "God"
+class = ["WARRIOR", "MAGE"]
+special_function = "spec_breath_any"
+
+[mobiles.920]
+keywords = "chimera"
+short_description = "噴火獸(chimera)"
+long_description = "一隻噴火獸(chimera)正在牢房旁四處徘徊.\n"
+description = """
+這隻奇特的生物有三個頭─一個是山羊, 一個是獅子, 一個則是龍. 當你進入牢
+房時, 牠對你咆哮然後突然發動攻擊.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING"]
+alignment = -1000
+level = 18
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 1000
+sex = "male"
+race = "Drake"
+special_function = "spec_breath_fire"
+
+[mobiles.921]
+keywords = "hera-olympus"
+short_description = "希拉(Hera)"
+long_description = "希拉(Hera)正站在這.\n"
+description = """
+宙斯的妻子─希拉正在這. 當你走進這裡時, 祂對著你微笑並邀請你坐下休息一
+會兒. 你發現它桌子旁邊放了一把閃著紅色光芒的劍, 其上有個惡魔雕飾！
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 50
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 7
+mod_pp = 0
+gold = 7000
+sex = "female"
+race = "God"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM"]
+special_function = "spec_cast_cleric"
+[[mobiles.921.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100005
+                mpadd_qmark $i olympus_talking 3 0 0 0 0 1
+                mpcallout 2 say 您好，有什麼事嗎？
+                mpcallout 2 mpechoat $n 你發現希拉的表情開始扭曲。
+                mpcallout 4 say 沒事嗎？那就請您出去吧！
+                mpcallout 6 mpcall olympus_hera_mload $n
+        endif
+endif
+"""
+[[mobiles.921.programs]]
+trigger = "defun_prog"
+argument = "olympus_hera_mload"
+script = """
+mpechoat $n 希拉的身體特徵開始變形 ..
+mpechoat $n 希拉整個身體開始變形！成為一隻醜陋的巴洛魔！
+mpmod_qmark $n olympus_weapon_quest v0 = 6
+mpmload 929
+mpgoto 5
+mpdel_qmark $i olympus_talking
+"""
+
+[mobiles.922]
+keywords = "roc"
+short_description = "巨鳥(roc)"
+long_description = "一隻巨鳥(roc)正在這翱翔著.\n"
+description = """
+這是一隻巨大的鳥. 牠疑惑地看著你, 叫了一聲然後揚長而去.
+"""
+act_flags = ["NPC", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 0
+level = 37
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 500
+sex = "neutral"
+race = "Angel"
+special_function = "spec_poison"
+
+[mobiles.923]
+keywords = "citizen resident"
+short_description = "居民(citizen)"
+long_description = "奧林帕斯山的居民(citizen)正在這條街上溜達.\n"
+description = """
+他看起來十分地快樂而且無憂無慮. 他對你微笑並微微舉起他的帽子向你打招呼.
+"""
+act_flags = ["NPC", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 21
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Angel"
+special_function = "spec_thief"
+
+[mobiles.924]
+keywords = "pegasus horse"
+short_description = "帕格薩斯(pegasus)"
+long_description = "一隻長著翅膀的巨大白馬(horse)正在這裡閒晃.\n"
+description = """
+這是一頭雪白而且長有一對大翅膀的馬. 雖然牠看起來並不十分具有威脅性, 但
+是對牠挑釁仍是十分危險的.
+"""
+act_flags = ["NPC", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 0
+level = 31
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "neutral"
+race = "Animal"
+
+[mobiles.925]
+keywords = "cook"
+short_description = "廚師(cook)"
+long_description = "一位廚師(cook)正在這努力地做著他的工作.\n"
+description = """
+這個人看起來就好像已經花了'太多'的時間待在廚房裡.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 1000
+level = 1
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Angel"
+
+[mobiles.926]
+keywords = "jailer"
+short_description = "獄卒(jailer)"
+long_description = "這位獄卒(jailer)正在提防有人劫獄.\n"
+description = """
+他看起來就好像已經花了許多的時間在地底下看守著囚犯.
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "PROTECT", "FLYING"]
+alignment = 0
+level = 32
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Angel"
+class = ["WARRIOR"]
+special_function = "spec_cast_mage"
+
+[mobiles.927]
+keywords = "hades king"
+short_description = "黑帝斯(Hades)"
+long_description = "冥府之王─黑帝斯(Hades)隱藏在一片黑暗之中.\n"
+description = """
+祂來這裡拜訪其他的神祇. 祂並不喜歡你, 你最好跟祂保持距離.
+"""
+act_flags = ["NPC", "SCAVENGER", "AGGRESSIVE", "STAY_AREA", "WIMPY"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "SNEAK", "HIDE", "FLYING"]
+alignment = -300
+level = 51
+mod_hitplus = 1000
+mod_mana = 0
+mod_hitroll = 5
+mod_damroll = 0
+mod_ac = 0
+mod_svs = -5
+dodge = 7
+mod_pp = 0
+gold = 10000
+sex = "male"
+race = "God"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.927.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.927.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if area($i) != olympus
+        mpgoto 955
+endif
+"""
+[[mobiles.927.programs]]
+trigger = "greet_prog"
+argument = "95"
+script = """
+if isnpc($n)
+        break
+else
+        if isimmort($n)
+                say 你好，我同是神族的朋友。
+        else
+                if level($n) <= 35
+                        break
+                else
+                        say 讓我們地獄見吧！
+                        c 3 powerball $n
+                endif
+        endif
+endif
+"""
+[[mobiles.927.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+cast powerball
+"""
+[[mobiles.927.programs]]
+trigger = "fight_prog"
+argument = "15"
+script = """
+cast 'seal magic'
+"""
+[[mobiles.927.programs]]
+trigger = "fight_prog"
+argument = "15"
+script = """
+frenzy
+"""
+[[mobiles.927.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+cast 'full heal'
+"""
+[[mobiles.927.programs]]
+trigger = "fight_prog"
+argument = "80"
+script = """
+if isaffected($i) & 1
+        cast 'cure blindness'
+endif
+if hitprcnt($i) < 60
+        mpat 5 cast heal
+endif
+if rand(30)
+        mpmload 910
+        mpgroup self soldier 1 0
+endif
+"""
+[[mobiles.927.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpmod_all_qmark $n adv_book_1_main v1 | 128
+mplog killed by $n
+"""
+
+[mobiles.928]
+keywords = "soldier"
+short_description = "士兵(soldier)"
+long_description = "一位士兵(soldier)正在這裡協助著黑帝斯.\n"
+description = ""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = ["INVISIBLE", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "FLYING"]
+alignment = 0
+level = 39
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = 300
+sex = "male"
+race = "Angel"
+class = ["WARRIOR"]
+
+[mobiles.929]
+keywords = "Balor Ihsuma"
+short_description = "巴洛魔伊修瑪(Balor Ihsuma)"
+long_description = "巴洛魔伊修瑪(Balor Ihsuma)正看著你猙獰的笑。\n"
+description = """
+一隻低層界的強大生物正看著你猙獰的笑，可是你卻感覺不到牠身上有任何
+的魔力發出，想必是有極為強大的神祇在背後撐腰，他看著你笑，卻不發動
+攻擊，你或許可以問問他。(Ask about Hera and sword)
+"""
+act_flags = ["NPC", "SENTINEL", "CRITICAL", "HARD_DIS", "TACTICS"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_MAGIC", "DETECT_HIDDEN", "SANCTUARY"]
+alignment = -1000
+level = 55
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 50
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 10
+dodge = -200
+mod_pp = 0
+gold = 0
+sex = "male"
+race = "Demon"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_BLIND", "NO_CHARM", "NO_SLEEP", "ALY_DI", "ALY_DH", "EXPERT"]
+special_function = "spec_cast_cleric"
+[[mobiles.929.weaknesses]]
+skill = "mute"
+percent = 2000
+damage = 0
+[[mobiles.929.applies]]
+type = "HIT"
+degree = 10000
+[[mobiles.929.programs]]
+trigger = "talk_prog"
+argument = "p ask about hera and sword"
+script = """
+if is_qmark($i) != olympus_talking
+        if is_qmark($n) == olympus_weapon_quest 100006
+                mpadd_qmark $i olympus_weapon_quest 10 0 0 0 0 1
+                say 唉呀呀～
+                mpcallout 2 say 要在這神聖的領地裡變換模樣還真困難呀～
+                mpcallout 4 mpecho 伊修瑪一陣狂笑！！！
+                mpcallout 6 say 真可惜，差點就成功了，差點就能使兩百年前的天界大戰重現啦。
+                mpcallout 8 mpecho 伊修瑪又是一陣狂笑！！！
+                mpcallout 14 say 不過呢，你想找的希拉可能早就死了，說不定還活著啦。
+                mpcallout 16 say 要是她能撐過在沒魔法下被分屍的情況！
+                mpcallout 17 say 美味的女人。
+                mpcallout 18 mpecho 伊修瑪舔了舔嘴唇。
+		mpcallout 19 mpmod_qmark $n olympus_weapon_quest v0 + 1
+ 　             mpcallout 20 say 竟然被你看到了我的真實面目，那就，一起陪希拉吧:)
+		mpcallout 20 mpdel_qmark $i olympus_talking
+		mpcallout 20 mpkill $n
+        else
+                mpkill $n
+        endif
+endif
+"""
+[[mobiles.929.programs]]
+trigger = "fight_prog"
+argument = "70"
+script = """
+mpecho \u001B[1;31m你看見惡魔吸收著周圍那無盡的靈氣！\u001B[0m
+c 2 'double heal'
+mpnowait
+"""
+[[mobiles.929.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+yell \u001B[0;33m闇．之．舞．曲\u001B[0m
+c 3 whirlwind
+mpnowait
+"""
+[[mobiles.929.programs]]
+trigger = "hitprcnt_prog"
+argument = "50"
+script = """
+if rand(50)
+   c 'full heal'
+   mpnowait
+endif
+"""
+[[mobiles.929.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+yell \u001B[1;31m夜之垂幕第一章～血之盛宴！\u001B[0m
+c 5 'fire ball' $r
+mpnowait
+c 3 'lighting bolt' $r
+mpnowait
+"""
+[[mobiles.929.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+yell \u001B[1;31m夜之垂幕第二章～獻祭的時刻！\u001B[0m
+c 4 'angry fire storm' $r
+mpnowait
+"""
+[[mobiles.929.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+yell \u001B[1;36m夜之垂幕終章～末日之冰息～\u001B[0m
+c 6 'ice breath'
+mpnowait
+"""
+[[mobiles.929.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+if is_qmark($n) == olympus_weapon_quest 100007
+	mpmod_qmark $n olympus_weapon_quest v0 + 1
+	mpecho \u001B[1;37m你看見伊修瑪身上的傷痕開始無法癒合，進而開始崩解。\u001B[0m
+	yell 不！不可能的！一百年之後，我還會再回來的！！
+	mpoload 932 floor
+	if rand(40)
+        	mpoload 933 40 floor
+		mplog give quest eq vnum 933 to $n
+        	mpecho 切割者緩緩凝結在空氣中 ....
+	endif
+	mpecho \u001B[1;37m隨著伊修瑪的消逝，希拉的部分屍駭留了下來。或許你該拿去給宙斯看看。\u001B[0m
+	if rand(3)
+		if rand(50)
+	        	mpoload 992 40 floor
+			mplog give quest eq vnum 992 to $n
+        		mpecho 一道晶瑩的水晶幕漸漸顯現出來。
+        	endif
+	endif
+	mpoload 401 1 floor
+	mpecho 一罐精美的藥水從巴洛魔身上掉出。
+endif
+mpat hera-olympus mppurge hera-olympus
+"""
+
+[objects.900]
+keywords = "aegis plate"
+short_description = "宙斯胸甲(Aegis)"
+long_description = "一副能帶給你力量的胸甲(plate)被留在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "2751275", "0"]
+weight = 40
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.900.applies]]
+type = "STR"
+value = 1
+[[objects.900.applies]]
+type = "AC"
+value = -3
+
+[objects.901]
+keywords = "hammer bolt thunderbolt"
+short_description = "奔雷之鎚(thunder bolt)"
+long_description = "一把巨大的鎚子(hammer)被粗心地丟在這."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2751275", "0", "0", "8"]
+weight = 24
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.901.applies]]
+type = "HITROLL"
+value = 5
+[[objects.901.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.901.hidden_powers]]
+spell = "lightning bolt"
+percent = 50
+level = 35
+event = "HP_WEAPON"
+
+[objects.902]
+keywords = "helmet winged"
+short_description = "翔雲之帽(winged helmet)"
+long_description = "一頂有翅膀的帽子(helmet)躺在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "2751275", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "feather"
+[[objects.902.applies]]
+type = "DEX"
+value = 2
+
+[objects.903]
+keywords = "spear ares"
+short_description = "阿雷斯戰矛(Ares spear)"
+long_description = "一把有點損壞的矛(spear)被放在地上."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["INVIS", "MAGIC", "ANTI_GOOD"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2751275", "0", "0", "2"]
+weight = 18
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.903.applies]]
+type = "HITROLL"
+value = 2
+[[objects.903.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.904]
+keywords = "sandals winged"
+short_description = "翔雲之鞋(winged sandals)"
+long_description = "一雙手工精細的涼鞋(sandals)躺在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "2751275", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "feather"
+[[objects.904.applies]]
+type = "DEX"
+value = 1
+[[objects.904.hidden_powers]]
+spell = "fly"
+percent = 25
+level = 30
+event = "HP_WEAPON"
+
+[objects.905]
+keywords = "staff ivory"
+short_description = "象牙權杖(ivory staff)"
+long_description = "一把象牙質的手杖(staff)."
+action_description = ""
+item_type = "STAFF"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "HOLD"]
+values = ["15", "3", "3", "sanctuary"]
+weight = 8
+cost = 0
+level_limited = 0
+material = "ivory"
+
+[objects.906]
+keywords = "trident poseidon"
+short_description = "海神三叉戟(Poseidon trident)"
+long_description = "一把巨大的三叉戟(trident)躺在這邊."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2751275", "0", "0", "12"]
+weight = 16
+cost = 0
+level_limited = 0
+material = "steel"
+[[objects.906.applies]]
+type = "STR"
+value = 1
+[[objects.906.applies]]
+type = "WIS"
+value = 1
+[[objects.906.applies]]
+type = "HITROLL"
+value = 2
+[[objects.906.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.907]
+keywords = "bow silver"
+short_description = "銀弓(silver bow)"
+long_description = "一把有銀色雕飾的弓(bow)."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["2751275", "0", "0", "14"]
+weight = 15
+cost = 0
+level_limited = 0
+material = "silver"
+[[objects.907.applies]]
+type = "HITROLL"
+value = 2
+[[objects.907.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.908]
+keywords = "gauntlets flaming"
+short_description = "火焰手套(flaming gauntlets)"
+long_description = "一雙火焰手套(flaming gauntlets)被留在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HANDS"]
+values = ["0", "0", "2751275", "0"]
+weight = 6
+cost = 0
+level_limited = 0
+material = "aura"
+[[objects.908.applies]]
+type = "HIT"
+value = 25
+[[objects.908.hidden_powers]]
+spell = "burning hands"
+percent = 25
+level = 30
+event = "HP_WEAPON"
+
+[objects.909]
+keywords = "vail potion ambrosia"
+short_description = "瓊漿玉液(ambrosia)"
+long_description = "一個散發出甜美誘人氣息的容器(vail), 裡面看來呈滿了甜美的液體."
+action_description = ""
+item_type = "POTION"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL", "NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["30", "sanctuary", "cure critical", ""]
+weight = 1
+cost = 20000
+level_limited = 0
+material = "liquid"
+
+[objects.910]
+keywords = "necklace glowing"
+short_description = "光輝項鍊(glowing necklace)"
+long_description = "一串散發著奇異光芒的項鍊(necklace)躺在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "2751275", "0"]
+weight = 2
+cost = 0
+level_limited = 0
+material = "jade"
+[[objects.910.applies]]
+type = "MANA"
+value = 25
+
+[objects.911]
+keywords = "ring sapphire"
+short_description = "藍寶石戒指(sapphire ring)"
+long_description = "一只上面鑲有一顆深藍色寶石的戒指(ring)."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_FINGER"]
+values = ["0", "0", "2751275", "0"]
+weight = 1
+cost = 6000
+level_limited = 0
+material = "sapphire"
+[[objects.911.applies]]
+type = "WIS"
+value = 2
+[[objects.911.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.912]
+keywords = "shield glowing"
+short_description = "靈光盾(glowing shield)"
+long_description = "一面使室內充滿了靈氣的盾(shield)躺在地上."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "2751275", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "aura"
+[[objects.912.applies]]
+type = "INT"
+value = 1
+[[objects.912.applies]]
+type = "WIS"
+value = 1
+
+[objects.913]
+keywords = "axe notched"
+short_description = "刻痕斧頭(notched axe)"
+long_description = "一把有刻痕的斧頭(axe)."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2751275", "0", "0", "1"]
+weight = 12
+cost = 0
+level_limited = 0
+material = "steel"
+
+[objects.914]
+keywords = "grapes"
+short_description = "葡萄(grapes)"
+long_description = "一串葡萄(grapes)."
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["24", "0", "0", "0"]
+weight = 1
+cost = 100
+level_limited = 0
+material = "food"
+
+[objects.915]
+keywords = "fan"
+short_description = "孔雀羽扇(fan)"
+long_description = "一把由孔雀羽毛編成的扇子(fan)."
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "feather"
+
+[objects.916]
+keywords = "lute"
+short_description = "魯特琴(lute)"
+long_description = "一把魯特琴(lute)."
+action_description = ""
+item_type = "TRASH"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "wooden"
+
+[objects.917]
+keywords = "nugget-olympus nugget gold"
+short_description = "金塊(gold nugget)"
+long_description = "一塊金塊(nugget)在這裡發光."
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "gold"
+
+[objects.918]
+keywords = "apple"
+short_description = "蘋果(apple)"
+long_description = "一顆蘋果(apple)."
+action_description = ""
+item_type = "PILL"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["2", "cure light", "", ""]
+weight = 1
+cost = 0
+level_limited = 0
+level = 5
+material = "food"
+
+[objects.919]
+keywords = "pear"
+short_description = "梨子(pear)"
+long_description = "一顆梨子(pear)."
+action_description = ""
+item_type = "PILL"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["2", "cure poison", "", ""]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+
+[objects.920]
+keywords = "orange"
+short_description = "柳丁(orange)"
+long_description = "一顆柳丁(orange)."
+action_description = ""
+item_type = "PILL"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["2", "armor", "", ""]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+
+[objects.921]
+keywords = "kiwi"
+short_description = "奇異果(kiwi)"
+long_description = "一顆奇異果(kiwi)."
+action_description = ""
+item_type = "PILL"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["3", "cure poison", "", ""]
+weight = 1
+cost = 0
+level_limited = 0
+material = "food"
+
+[objects.922]
+keywords = "sun amulet"
+short_description = "太陽神護身符(sun amulet)"
+long_description = "一個太陽形狀的護身符(amulet)躺在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "2751275", "0"]
+weight = 1
+cost = 3000
+level_limited = 0
+material = "gold"
+[[objects.922.applies]]
+type = "MANA"
+value = 40
+
+[objects.923]
+keywords = "sun sword"
+short_description = "太陽神之劍(sun sword)"
+long_description = "一把在劍柄部分刻著旭日東昇圖的美麗長劍(sword)躺在這邊."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2751275", "0", "0", "3"]
+weight = 20
+cost = 0
+level_limited = 0
+material = "gold"
+[[objects.923.applies]]
+type = "HITROLL"
+value = 1
+[[objects.923.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.923.hidden_powers]]
+spell = "sun flash"
+percent = 50
+level = 27
+event = "HP_WEAPON"
+
+[objects.924]
+keywords = "robe blue"
+short_description = "藍色長袍(blue robe)"
+long_description = "一件深藍色的長袍(robe)被丟在地上."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "2751275", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "fiber"
+[[objects.924.applies]]
+type = "HIT"
+value = 15
+
+[objects.925]
+keywords = "hat brimmed"
+short_description = "有邊寬帽(brimmed hat)"
+long_description = "一頂帽子(hat)躺在這邊."
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["INVIS", "MAGIC", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "2751275", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+material = "fiber"
+
+[objects.926]
+keywords = "nectar"
+short_description = "神之酒(nectar)"
+long_description = "一瓶香氣四逸, 聞起來十分誘人的美酒(nectar)."
+action_description = ""
+item_type = "POTION"
+extra_flags = ["NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["12", "sanctuary", "giant strength", ""]
+weight = 2
+cost = 0
+level_limited = 0
+material = "liquid"
+
+[objects.927]
+keywords = "key cell"
+short_description = "牢房鑰匙(cell key)"
+long_description = "一把牢房鑰匙(key)被留在這."
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "iron"
+
+[objects.928]
+keywords = "sword hades"
+short_description = "冥王劍(Hades sword)"
+long_description = "冥王黑帝斯(Hades)所使用的沉重巨劍(sword)."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["DARK", "INVIS", "MAGIC", "NOSAVE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2751275", "0", "67", "3"]
+weight = 51
+cost = 300000
+level_limited = 0
+timer = 100
+material = "black matter"
+[[objects.928.extra_descriptions]]
+keywords = "sword hades"
+description = """
+若有似無中, 你定神一看, 才察覺到它的存在,
+這是一把沉重的黑色巨劍(sword), 你隱隱感到它的強大黑暗力量.
+"""
+[[objects.928.applies]]
+type = "HITROLL"
+value = 15
+[[objects.928.applies]]
+type = "DAMROLL"
+value = 15
+[[objects.928.hidden_powers]]
+spell = "fireball"
+percent = 25
+level = 50
+event = "HP_WEAPON"
+
+[objects.929]
+keywords = "fire abyss"
+short_description = "地獄之火(Abyss fire)"
+long_description = "一把冥界之火(fire)正在這裡神祕地燃燒著."
+action_description = ""
+item_type = "LIGHT"
+extra_flags = ["ANTI_GOOD"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "60", "0"]
+weight = 10
+cost = 20000
+level_limited = 0
+material = "black matter"
+[[objects.929.applies]]
+type = "HIT"
+value = 50
+[[objects.929.applies]]
+type = "DAMROLL"
+value = 2
+
+[objects.930]
+keywords = "holy sword pluto"
+short_description = "聖劍 - 普魯多(Holy Sword - Pluto)"
+long_description = "大神冥王星普魯多(Pluto)曾經使用過的配劍."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "DARK", "EVIL", "MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["-1", "0", "0", "3"]
+weight = 1
+cost = 0
+level_limited = 0
+material = "perfect matter"
+[[objects.930.extra_descriptions]]
+keywords = "sword pluto"
+description = """
+你可以感受到這把劍之中無窮的威力.
+"""
+[[objects.930.applies]]
+type = "STR"
+value = 8
+[[objects.930.applies]]
+type = "DEX"
+value = 8
+[[objects.930.applies]]
+type = "INT"
+value = 8
+[[objects.930.applies]]
+type = "WIS"
+value = 8
+[[objects.930.applies]]
+type = "CON"
+value = 8
+[[objects.930.applies]]
+type = "AC"
+value = -500
+[[objects.930.applies]]
+type = "HITROLL"
+value = 100
+[[objects.930.applies]]
+type = "DAMROLL"
+value = 100
+[[objects.930.hidden_powers]]
+spell = "star fire"
+percent = 50
+level = 99
+event = "HP_WEAPON"
+
+[objects.931]
+keywords = "silver arrow"
+short_description = "銀雕箭(silver arrow)"
+long_description = "一束有銀色雕飾的箭(arrow)."
+action_description = ""
+item_type = "ARROW"
+extra_flags = ["INVIS", "MAGIC"]
+wear_flags = ["TAKE", "ARROW"]
+values = ["300", "0", "0", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+material = "silver"
+
+[objects.932]
+keywords = "Hera's corpse"
+short_description = "赫拉的屍骸(Hera's corpse)"
+long_description = "赫拉殘缺不全的屍骸落在這裡(Hera's corpse)."
+action_description = ""
+item_type = "CORPSE_NPC"
+extra_flags = ["HUM", "NOSAVE"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 100
+cost = 0
+level_limited = 0
+material = "Flesh"
+
+[objects.933]
+keywords = "Cutter GrimDance"
+short_description = "切割者．詭異之舞(Cutter - GrimDance)"
+long_description = "一把漂浮著的劍(Cutter)掉在這閃耀著紅光."
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["HUM", "DARK", "LOCK", "EVIL", "MAGIC", "BLESS", "ANTI_GOOD", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["-1", "0", "0", "3"]
+weight = 30
+cost = 200000
+level_limited = 0
+material = "obsidian"
+[[objects.933.applies]]
+type = "STR"
+value = 2
+[[objects.933.applies]]
+type = "CON"
+value = -3
+[[objects.933.applies]]
+type = "DAMROLL"
+value = 15
+[[objects.933.applies]]
+type = "HITROLL"
+value = 7
+[[objects.933.applies]]
+type = "APPLY_ADAMAGE"
+value = 5
+[[objects.933.hidden_powers]]
+spell = "soulsteal"
+percent = 25
+level = 35
+event = "HP_WEAPON"
+
+[objects.934]
+keywords = "Create Spring Staff"
+short_description = "泉湧之手杖(Create-Spring Staff)"
+long_description = "一把藍水晶製的手杖掉在這裡"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["-1", "0", "0", "7"]
+weight = 5
+cost = 250000
+level_limited = 0
+material = "Crystal"
+[[objects.934.hidden_powers]]
+spell = "create spring"
+percent = 100
+level = 36
+event = "HP_WEAR"
+
+[objects.935]
+keywords = "detect invis robe"
+short_description = "偵測隱形之袍(Detect invis Robe)"
+long_description = "一件透明的袍子(robe)落在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "2000200", "0"]
+weight = 2
+cost = 10000
+level_limited = 0
+material = "wool"
+[[objects.935.hidden_powers]]
+spell = "detect invis"
+percent = 10
+level = 10
+event = "HP_WEAR"
+
+[objects.936]
+keywords = "Wind hunting bracer"
+short_description = "朔之風狩(Wind Hunting)"
+long_description = "一件由淡淡嵐風所組成的護腕(Bracers)掉在這。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "HOLY", "LORE"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "2001200", "0"]
+weight = 1
+cost = 200000
+level_limited = 0
+permit_classes = { type = "DENY", list = ["KNIGHT", "MARTIALMAN"] }
+material = "wind aura"
+[[objects.936.applies]]
+type = "WIS"
+value = 1
+[[objects.936.applies]]
+type = "HITROLL"
+value = 2
+[[objects.936.applies]]
+type = "APPLY_ADAMAGE"
+value = 13
+[[objects.936.hidden_powers]]
+spell = "refresh"
+percent = 10
+level = 10
+event = "HP_WEAR"
+
+[objects.937]
+keywords = "Dancer dream wind"
+short_description = "輕舞者．迴風追夢(Dancer - Dream in wind)"
+long_description = "一把漂浮著的刀(Cutter)，周圍圍繞了霞影。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY", "POISONED", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["-1", "0", "0", "13"]
+weight = 5
+cost = 400000
+level_limited = 0
+material = "perfect matter"
+souvenir = 1
+[[objects.937.applies]]
+type = "DODGE"
+value = -15
+[[objects.937.applies]]
+type = "INT"
+value = 2
+[[objects.937.applies]]
+type = "HITROLL"
+value = 15
+[[objects.937.hidden_powers]]
+spell = "refresh"
+percent = 20
+level = 10
+event = "HP_WEAR"
+[[objects.937.race_combat]]
+race = "Fairy"
+hr_mod_q = 10
+hr_mod_p = 130
+dr_mod_q = 0
+dr_mod_p = 120
+[[objects.937.race_combat]]
+race = "Pixie"
+hr_mod_q = 7
+hr_mod_p = 125
+dr_mod_q = 5
+dr_mod_p = 105
+[[objects.937.race_combat]]
+race = "Beholder"
+hr_mod_q = 8
+hr_mod_p = 115
+dr_mod_q = 15
+dr_mod_p = 105
+[[objects.937.race_combat]]
+race = "Elf"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 110
+[[objects.937.race_combat]]
+race = "Human"
+hr_mod_q = 5
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 90
+[[objects.937.race_combat]]
+race = "Dragon"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 90
+[[objects.937.race_combat]]
+race = "Angel"
+hr_mod_q = 0
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 90
+[[objects.937.race_combat]]
+race = "God"
+hr_mod_q = 5
+hr_mod_p = 120
+dr_mod_q = 0
+dr_mod_p = 90
+[[objects.937.race_combat]]
+race = "Vampire"
+hr_mod_q = 5
+hr_mod_p = 105
+dr_mod_q = 0
+dr_mod_p = 70
+[[objects.937.race_combat]]
+race = "Ghost"
+hr_mod_q = 0
+hr_mod_p = 60
+dr_mod_q = 0
+dr_mod_p = 50
+[[objects.937.race_combat]]
+race = "Ogre"
+hr_mod_q = 0
+hr_mod_p = 100
+dr_mod_q = 0
+dr_mod_p = 60
+[[objects.937.race_combat]]
+race = "Demon"
+hr_mod_q = 0
+hr_mod_p = 80
+dr_mod_q = 0
+dr_mod_p = 65
+[[objects.937.race_combat]]
+race = "Statue"
+hr_mod_q = 0
+hr_mod_p = 100
+dr_mod_q = 0
+dr_mod_p = 30
+
+[objects.938]
+keywords = "Bury Cloud Long sky bow"
+short_description = "湮雲長空(Bury cloud)"
+long_description = "一把用雲織成的弓(bow)，輕輕的飄在這。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "INVIS", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY"]
+wear_flags = ["TAKE", "TWO_HAND"]
+values = ["-1", "0", "0", "14"]
+weight = 50
+cost = 250000
+level_limited = 0
+material = "glass"
+[[objects.938.applies]]
+type = "AC"
+value = -5
+[[objects.938.applies]]
+type = "DEX"
+value = 1
+[[objects.938.applies]]
+type = "WIS"
+value = 1
+[[objects.938.applies]]
+type = "HITROLL"
+value = 5
+[[objects.938.applies]]
+type = "DAMROLL"
+value = 5
+[[objects.938.applies]]
+type = "POWER_POTENTIAL"
+value = 2
+[[objects.938.hidden_powers]]
+spell = "detect invis"
+percent = 10
+level = 10
+event = "HP_WEAR"
+
+[objects.991]
+keywords = "Tears barrier"
+short_description = "\u001B[1;36m淚滴的冰幕\u001B[0m(Tears' barrier)"
+long_description = "一件由天使眼淚織成的雪之帷幕(Tears)～"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "2001200", "0"]
+weight = 5
+cost = 1000000
+level_limited = 0
+material = "sapphire"
+souvenir = 1
+spell_buffs = ["2", "524288", "1048576", "34359738368", "1024"]
+[[objects.991.applies]]
+type = "DODGE"
+value = -12
+[[objects.991.applies]]
+type = "REDUCE_DAMAGE"
+value = 10
+[[objects.991.applies]]
+type = "REDUCE_MAGIC"
+value = 10
+[[objects.991.hidden_powers]]
+spell = "prot. from fire"
+percent = 20
+level = 40
+event = "HP_WEAR"
+[[objects.991.hidden_powers]]
+spell = "chill touch"
+percent = 40
+level = 40
+event = "HP_WEAR"
+
+[objects.992]
+keywords = "Tears barrier"
+short_description = "\u001B[1;36m淚滴的冰幕\u001B[0m(Tears' barrier)"
+long_description = "一件由天使眼淚織成的雪之帷幕(Tears)～"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS", "ANTI_EVIL"]
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "2001200", "0"]
+weight = 5
+cost = 1000000
+level_limited = 0
+material = "sapphire"
+souvenir = 4
+spell_buffs = ["2|1024|524288|1048576|34359738368"]
+[[objects.992.applies]]
+type = "DODGE"
+value = -12
+[[objects.992.applies]]
+type = "REDUCE_DAMAGE"
+value = 5
+[[objects.992.applies]]
+type = "REDUCE_MAGIC"
+value = 15
+[[objects.992.hidden_powers]]
+spell = "prot. from fire"
+percent = 20
+level = 40
+event = "HP_WEAR"
+[[objects.992.hidden_powers]]
+spell = "chill touch"
+percent = 40
+level = 50
+event = "HP_WEAR"
+
+[objects.993]
+keywords = "Dancer dream wind"
+short_description = "輕舞者．迴風追夢(Dancer - Dream in wind)"
+long_description = "一把漂浮著的刀(Cutter)，周圍圍繞了霞影。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS", "ANTI_EVIL", "HOLY", "POISONED", "LORE"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["-1", "30", "36", "13"]
+weight = 5
+cost = 400000
+level_limited = 0
+material = "perfect matter"
+souvenir = 4
+spell_buffs = ["2048|16384"]
+[[objects.993.applies]]
+type = "DODGE"
+value = -15
+[[objects.993.applies]]
+type = "INT"
+value = 2
+[[objects.993.applies]]
+type = "HITROLL"
+value = 15
+[[objects.993.hidden_powers]]
+spell = "refresh"
+percent = 30
+level = 20
+event = "HP_WEAR"
+[[objects.993.race_combat]]
+race = "Elf"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 110
+[[objects.993.race_combat]]
+race = "Fairy"
+hr_mod_q = 10
+hr_mod_p = 130
+dr_mod_q = 10
+dr_mod_p = 120
+[[objects.993.race_combat]]
+race = "Pixie"
+hr_mod_q = 10
+hr_mod_p = 125
+dr_mod_q = 10
+dr_mod_p = 115
+[[objects.993.race_combat]]
+race = "Beholder"
+hr_mod_q = 10
+hr_mod_p = 115
+dr_mod_q = 20
+dr_mod_p = 110
+[[objects.993.race_combat]]
+race = "Human"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "Dragon"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "Wyvern"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "Wyrm"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "Drake"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "Angel"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "God"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "Bachi"
+hr_mod_q = 10
+hr_mod_p = 120
+dr_mod_q = 10
+dr_mod_p = 90
+[[objects.993.race_combat]]
+race = "Vampire"
+hr_mod_q = 5
+hr_mod_p = 105
+dr_mod_q = 0
+dr_mod_p = 70
+[[objects.993.race_combat]]
+race = "Statue"
+hr_mod_q = 0
+hr_mod_p = 100
+dr_mod_q = 0
+dr_mod_p = 30
+[[objects.993.race_combat]]
+race = "Ghost"
+hr_mod_q = 0
+hr_mod_p = 60
+dr_mod_q = 0
+dr_mod_p = 50
+[[objects.993.race_combat]]
+race = "Ogre"
+hr_mod_q = 0
+hr_mod_p = 100
+dr_mod_q = 0
+dr_mod_p = 60
+[[objects.993.race_combat]]
+race = "Demon"
+hr_mod_q = 0
+hr_mod_p = 80
+dr_mod_q = 0
+dr_mod_p = 65
+
+[rooms.901]
+name = "深山裡"
+description = """
+你正登上一座比奧夫卡城還高聳許多的高山. 步道繼續向山裡延伸, 但部分
+的道路已經消失了. 你沒有辦法由陸路繼續前進.
+"""
+flags = []
+sector = "MOUNTAIN"
+[rooms.901.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 324
+[rooms.901.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 902
+
+[rooms.902]
+name = "深山裡"
+description = """
+你一路披荊斬棘, 闢出一條通往山裡的小徑. 攀爬的艱辛使你感到疲倦, 而
+你正準備休息一會兒.
+"""
+flags = []
+sector = "AIR"
+[rooms.902.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 901
+[rooms.902.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 903
+
+[rooms.903]
+name = "深山裡"
+description = """
+你終於到達了山頂. 這裡的空氣十分稀薄, 使你喘息不止. 在北方你看到一
+個似乎是城市的入口.
+"""
+flags = []
+sector = "AIR"
+[rooms.903.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 902
+[rooms.903.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 904
+
+[rooms.904]
+name = "城市入口"
+description = """
+你身處於一座大城市的入口. 當你環顧四週時, 你認為這個城市的居民必定
+是非常的富有. 你從來沒見過有著這麼多美麗建築物的城市.
+"""
+flags = []
+sector = "CITY"
+[rooms.904.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 905
+[rooms.904.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 903
+[[rooms.904.resets.mobiles]]
+vnum = 923
+limit = 10
+
+[rooms.905]
+name = "宙斯之路"
+description = """
+你正走在一條寬廣的道路上. 你注意到這個城市的居民並不多. 你看到一塊
+立於街角的牌子上寫著'宙斯之路'.
+"""
+flags = []
+sector = "CITY"
+[rooms.905.exits.north]
+description = "這條街繼續延伸下去.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 906
+[rooms.905.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 904
+[rooms.905.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 924
+[[rooms.905.resets.mobiles]]
+vnum = 923
+limit = 10
+
+[rooms.906]
+name = "宙斯之路"
+description = """
+你正走在一條似乎是這個城市主要的街道上. 你看到東西兩側排列著許多的
+民房. 這條路向南北延伸.
+"""
+flags = []
+sector = "CITY"
+[rooms.906.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 925
+[rooms.906.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 907
+[rooms.906.exits.south]
+description = "這條街繼續延伸下去.\n"
+keywords = ""
+locks = []
+key = -1
+to_room = 905
+[rooms.906.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 926
+[[rooms.906.resets.mobiles]]
+vnum = 923
+limit = 10
+
+[rooms.907]
+name = "宙斯之路"
+description = """
+你正走在名為 '宙斯之路' 的城市主要街道上.
+"""
+flags = []
+sector = "CITY"
+[rooms.907.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 908
+[rooms.907.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 906
+[rooms.907.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 927
+[[rooms.907.resets.mobiles]]
+vnum = 923
+limit = 10
+
+[rooms.908]
+name = "宙斯之路"
+description = """
+你仍走在這個城市的主要街道上. 在北方你看到一座雄偉的城堡. 在東邊有
+一條較小的街道. 西邊則有幾間不同的商店.
+"""
+flags = []
+sector = "CITY"
+[rooms.908.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 928
+[rooms.908.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 909
+[rooms.908.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 907
+[[rooms.908.resets.mobiles]]
+vnum = 923
+limit = 10
+
+[rooms.909]
+name = "城堡入口通道"
+description = """
+你正身處於一座大城堡的入口. 這裡有巨幅的油畫和美麗的地毯, 看起來十
+分漂亮. 你聽到了一些於愉快的笑聲由北邊傳來. 一條較窄的走廊在此分向東邊
+和西邊.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.909.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 915
+[rooms.909.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 910
+[rooms.909.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 908
+[rooms.909.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 911
+
+[rooms.910]
+name = "王座的房間"
+description = """
+走近這房間的剎那, 你的腳步僵住了. 在你面前的是輝煌燦爛, 端坐在一巨
+大金色王座上(throne)的宙斯. 以前你還以為祂只是一位神話中的人物, 然而祂
+現在卻活生生地在你面前. 你心中暗思這座城堡中還住著什麼樣的人.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[[rooms.910.extra_descriptions]]
+keywords = "throne"
+description = """
+這個巨大的金黃色王座看起來好像已經擺在這裡許多年了. 當你仔細地觀察
+它時, 你注意到它並不是緊密地貼在地面上, 也許你可以移開它?
+"""
+[rooms.910.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 923
+[rooms.910.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 909
+[[rooms.910.programs]]
+trigger = "room_command"
+argument = "move throne"
+script = """
+if is_qmark($n) == olympus_weapon_quest 200009
+or is_qmark($n) == olympus_weapon_quest 100009
+	echoat $n 你使力的移開了王座，發現了底下有個密道！
+	callout 1 makedoor 5 這邊出現了一道樓梯 stair 0 0 918
+else
+	echoat $n 你再怎麼使力也搬不開這樣一個重物。
+endif
+"""
+[[rooms.910.resets.mobiles]]
+vnum = 901
+limit = 1
+[[rooms.910.resets.mobiles.equipment]]
+vnum = 900
+wear_loc = "BODY"
+[[rooms.910.resets.mobiles.equipment]]
+vnum = 901
+wear_loc = "WIELD"
+[[rooms.910.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.910.resets.mobiles.inventory]]
+vnum = 909
+
+[rooms.911]
+name = "城堡西翼"
+description = """
+你正身處於城堡的西翼. 在東邊你可以看到城堡的入口. 這條走廊向西邊延伸.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.911.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 909
+[rooms.911.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 912
+
+[rooms.912]
+name = "城堡西翼"
+description = """
+你正身處於城堡的西翼. 這條走廊向北邊延伸. 在西邊及南邊有些私人的房間.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.912.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 911
+[rooms.912.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 913
+[rooms.912.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 930
+[rooms.912.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 929
+
+[rooms.913]
+name = "城堡西翼"
+description = """
+你正身處於城堡的西翼. 這條走廊向南邊延伸. 你在北邊聽到一些由鍋碗瓢
+盆所發出的嘎嘎聲.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.913.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 914
+[rooms.913.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 912
+
+[rooms.914]
+name = "廚房"
+description = """
+你走進了這座城堡的廚房. 這裡充斥了吵雜的聲響及繁忙的氣息, 僕人們正
+忙碌地準備供神祇們享用的美食.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.914.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 913
+[[rooms.914.resets.mobiles]]
+vnum = 925
+limit = 4
+[[rooms.914.resets.mobiles]]
+vnum = 925
+limit = 4
+
+[rooms.915]
+name = "城堡東翼"
+description = """
+你正身處於城堡的東翼. 這條走廊向東邊延伸, 而入口在反方向的西邊.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.915.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 916
+[rooms.915.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 909
+
+[rooms.916]
+name = "城堡東翼"
+description = """
+你正身處於城堡的東翼. 走廊在這裡轉向北邊. 在東邊及南邊有些私人的房間.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.916.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 931
+[rooms.916.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 917
+[rooms.916.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 932
+[rooms.916.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 915
+
+[rooms.917]
+name = "城堡東翼"
+description = """
+你正身處於城堡的東翼. 你聽到一些動物的叫聲由北邊傳來. 走廊繼續向南
+邊延伸.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.917.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 933
+[rooms.917.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 916
+
+[rooms.918]
+name = "土牢"
+description = """
+你正身處於宙斯的土牢中. 你對於這種能讓權力無上的宙斯神也害怕到要
+將牠禁錮起來的生物感到十分好奇.
+"""
+flags = ["DARK", "INDOORS"]
+sector = "CITY"
+[rooms.918.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 919
+[rooms.918.exits.up]
+description = ""
+keywords = "trapdoor throne"
+locks = ["ISDOOR"]
+key = -1
+to_room = 910
+[[rooms.918.resets.mobiles]]
+vnum = 926
+limit = 1
+[[rooms.918.resets.mobiles.inventory]]
+vnum = 927
+
+[rooms.919]
+name = "土牢"
+description = """
+你正身處於宙斯的土牢中. 在北邊, 西邊以及東邊各有間牢房. 你從東邊及
+西邊的牢房中聽到了沙啞的聲音, 北邊則是什麼也沒有...
+"""
+flags = ["DARK", "INDOORS"]
+sector = "CITY"
+[rooms.919.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 927
+to_room = 922
+[rooms.919.exits.north]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 927
+to_room = 920
+[rooms.919.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 918
+[rooms.919.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 927
+to_room = 921
+
+[rooms.920]
+name = "牢房"
+description = """
+你正身處於狹小, 骯髒的牢房中. 這是個令人感到恐怖的地方.
+"""
+flags = ["DARK", "INDOORS"]
+sector = "CITY"
+[rooms.920.exits.south]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 927
+to_room = 919
+[[rooms.920.resets.mobiles]]
+vnum = 902
+limit = 1
+[[rooms.920.resets.mobiles.equipment]]
+vnum = 908
+wear_loc = "HANDS"
+
+[rooms.921]
+name = "牢房"
+description = """
+你正身處於狹小, 骯髒的牢房中. 這是個令人感到恐怖的地方.
+"""
+flags = ["DARK", "INDOORS"]
+sector = "CITY"
+[rooms.921.exits.east]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 927
+to_room = 919
+[[rooms.921.resets.mobiles]]
+vnum = 920
+limit = 2
+
+[rooms.922]
+name = "牢房"
+description = """
+你正身處於狹小, 骯髒的牢房中. 這是個令人感到恐怖的地方.
+"""
+flags = ["DARK", "INDOORS"]
+sector = "CITY"
+[rooms.922.exits.west]
+description = ""
+keywords = ""
+locks = ["ISDOOR", "CLOSED", "LOCKED", "PICKPROOF"]
+key = 927
+to_room = 919
+[[rooms.922.resets.mobiles]]
+vnum = 920
+limit = 2
+
+[rooms.923]
+name = "樓梯"
+description = """
+你正站在一座盤旋而上的樓梯中. 在南邊你看到了宙斯的王座室.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.923.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 910
+[rooms.923.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 939
+
+[rooms.924]
+name = "麵包店"
+description = """
+你正身處於一間狹小的商店中, 這家商店提供食物給這座城市的居民們. 這
+裡聞起來相當不錯!
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.924.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 905
+[[rooms.924.resets.mobiles]]
+vnum = 915
+limit = 1
+[[rooms.924.resets.mobiles.inventory]]
+vnum = 914
+[[rooms.924.resets.mobiles.inventory]]
+vnum = 918
+[[rooms.924.resets.mobiles.inventory]]
+vnum = 919
+[[rooms.924.resets.mobiles.inventory]]
+vnum = 920
+[[rooms.924.resets.mobiles.inventory]]
+vnum = 921
+
+[rooms.925]
+name = "民房"
+description = """
+你正身處於一位居民的房子裡. 她看起來似乎很面熟, 但是你就是無法記起
+她的名字.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.925.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 906
+[[rooms.925.resets.mobiles]]
+vnum = 907
+limit = 1
+[[rooms.925.resets.mobiles.equipment]]
+vnum = 910
+wear_loc = "NECK_1"
+[[rooms.925.resets.mobiles.equipment]]
+vnum = 905
+wear_loc = "HOLD"
+[[rooms.925.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.925.resets.mobiles.inventory]]
+vnum = 909
+[[rooms.925.resets.mobiles]]
+vnum = 912
+limit = 4
+[[rooms.925.resets.mobiles.equipment]]
+vnum = 915
+wear_loc = "HOLD"
+[[rooms.925.resets.mobiles.inventory]]
+vnum = 914
+[[rooms.925.resets.mobiles]]
+vnum = 912
+limit = 4
+[[rooms.925.resets.mobiles.equipment]]
+vnum = 915
+wear_loc = "HOLD"
+[[rooms.925.resets.mobiles.inventory]]
+vnum = 914
+
+[rooms.926]
+name = "民房"
+description = """
+你正身處於一位居民的房子裡. 他看起來似乎很面熟, 但是你就是無法記起
+他的名字.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.926.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 906
+[[rooms.926.resets.mobiles]]
+vnum = 905
+limit = 1
+[[rooms.926.resets.mobiles.equipment]]
+vnum = 907
+wear_loc = "TWO_HAND"
+[[rooms.926.resets.mobiles.equipment]]
+vnum = 931
+wear_loc = "ARROW"
+[[rooms.926.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.926.resets.mobiles.inventory]]
+vnum = 909
+[[rooms.926.resets.mobiles]]
+vnum = 911
+limit = 4
+[[rooms.926.resets.mobiles.equipment]]
+vnum = 916
+wear_loc = "HOLD"
+[[rooms.926.resets.mobiles.inventory]]
+vnum = 921
+[[rooms.926.resets.mobiles]]
+vnum = 911
+limit = 4
+[[rooms.926.resets.mobiles.equipment]]
+vnum = 916
+wear_loc = "HOLD"
+[[rooms.926.resets.mobiles.inventory]]
+vnum = 921
+
+[rooms.927]
+name = "神秘的商店"
+description = """
+你所身處的這家商店有各種神秘的商品以供這個城市的居民所需.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.927.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 907
+[[rooms.927.resets.mobiles]]
+vnum = 916
+limit = 1
+[[rooms.927.resets.mobiles.inventory]]
+vnum = 905
+[[rooms.927.resets.mobiles.inventory]]
+vnum = 909
+[[rooms.927.resets.mobiles.inventory]]
+vnum = 910
+[[rooms.927.resets.mobiles.inventory]]
+vnum = 926
+
+[rooms.928]
+name = "阿雷斯之路"
+description = """
+你正走在一條由主要道路分支出來的較小街道上. 你由一塊牌子上得知這條
+街的街名─阿雷斯之路.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.928.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 934
+[rooms.928.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 908
+[[rooms.928.resets.mobiles]]
+vnum = 923
+limit = 10
+
+[rooms.929]
+name = "客房"
+description = """
+你走進了一間用來招待城堡客人所用的私人房間. 當你發現在這間房間中做
+客的就是歐丁─塵世守護神─祂本人時, 你幾乎昏倒了. 祂應該是來拜訪宙斯的.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.929.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 912
+[[rooms.929.resets.mobiles]]
+vnum = 914
+limit = 1
+[[rooms.929.resets.mobiles.equipment]]
+vnum = 924
+wear_loc = "ABOUT"
+[[rooms.929.resets.mobiles.equipment]]
+vnum = 925
+wear_loc = "HEAD"
+
+[rooms.930]
+name = "倉庫"
+description = """
+你正在城堡的倉庫裡. 這裡的東西並不多, 只有幾個裝滿舊垃圾的箱子.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.930.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 912
+
+[rooms.931]
+name = "客房"
+description = """
+你走進了一間用來招待城堡客人所用的私人房間. 當你發現房間中的客人就
+是古埃及太陽神─雷─時, 你感到十分吃驚. 祂應該是來拜訪宙斯的.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.931.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 916
+[[rooms.931.resets.mobiles]]
+vnum = 919
+limit = 1
+[[rooms.931.resets.mobiles.equipment]]
+vnum = 922
+wear_loc = "NECK_1"
+[[rooms.931.resets.mobiles.equipment]]
+vnum = 923
+wear_loc = "WIELD"
+
+[rooms.932]
+name = "倉庫"
+description = """
+你正在城堡的倉庫中. 這裡的東西並不多, 只有厚厚的灰塵.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.932.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 916
+
+[rooms.933]
+name = "馬廄"
+description = """
+你正身處於城堡的馬廄中, 然而你發現的並不是預料中的馬匹, 充斥其中的
+反而是各種你認為應只屬於神話中的生物. 明顯地, 你錯了!
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.933.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 917
+[[rooms.933.resets.mobiles]]
+vnum = 922
+limit = 3
+[[rooms.933.resets.mobiles]]
+vnum = 922
+limit = 3
+[[rooms.933.resets.mobiles]]
+vnum = 924
+limit = 3
+[[rooms.933.resets.mobiles]]
+vnum = 924
+limit = 3
+
+[rooms.934]
+name = "阿雷斯之路"
+description = """
+你走到了阿雷斯之路的盡頭. 在南邊你看到一間胄甲店, 東邊則是一間武器
+店. 在北邊你聽到一些打鐵的聲音.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.934.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 936
+[rooms.934.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 937
+[rooms.934.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 935
+[rooms.934.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 928
+[[rooms.934.resets.mobiles]]
+vnum = 923
+limit = 10
+
+[rooms.935]
+name = "胄甲店"
+description = """
+這間小店幾乎是空的, 就好像沒什麼東西一樣. 店老闆並不想和你做生意.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.935.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 934
+[[rooms.935.resets.mobiles]]
+vnum = 918
+limit = 1
+[[rooms.935.resets.mobiles.inventory]]
+vnum = 904
+[[rooms.935.resets.mobiles.inventory]]
+vnum = 908
+[[rooms.935.resets.mobiles.inventory]]
+vnum = 911
+
+[rooms.936]
+name = "武器店"
+description = """
+你走進了一間販賣實用精緻武器的小店. 你覺得這裡的商品並沒有很多的選
+擇, 然而店老闆並不想和你做生意.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.936.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 934
+[[rooms.936.resets.mobiles]]
+vnum = 917
+limit = 1
+[[rooms.936.resets.mobiles.equipment]]
+vnum = 907
+wear_loc = "TWO_HAND"
+[[rooms.936.resets.mobiles.equipment]]
+vnum = 931
+wear_loc = "ARROW"
+[[rooms.936.resets.mobiles.inventory]]
+vnum = 913
+
+[rooms.937]
+name = "打鐵舖"
+description = """
+這間大卻很吵的房間使你幾乎聽不到你在想什麼. 這裡所有的人都努力鍛造
+著高級的武器及胄甲. 雖然你不太能形容, 但你感覺西邊的牆有些異樣.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.937.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 934
+[rooms.937.exits.west]
+description = "你看到了一道密門!\n"
+keywords = "door concealed"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 938
+[[rooms.937.resets.mobiles]]
+vnum = 908
+limit = 1
+[[rooms.937.resets.mobiles.equipment]]
+vnum = 912
+wear_loc = "SHIELD"
+[[rooms.937.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.937.resets.mobiles.inventory]]
+vnum = 909
+[[rooms.937.resets.mobiles]]
+vnum = 909
+limit = 4
+[[rooms.937.resets.mobiles.inventory]]
+vnum = 917
+[[rooms.937.resets.mobiles]]
+vnum = 909
+limit = 4
+[[rooms.937.resets.mobiles.inventory]]
+vnum = 917
+
+[rooms.938]
+name = "戰略研究室"
+description = """
+你進入了一間被一張上面放有大地圖的桌子所佔據的房間. 許多人正圍著桌
+子小心地研究這張大地圖. 你聽到一陣犬吠由北邊傳來.
+"""
+flags = ["DARK", "INDOORS"]
+sector = "CITY"
+[rooms.938.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 937
+[rooms.938.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 954
+[rooms.938.exits.west]
+description = ""
+keywords = "Hell Gate"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 955
+[[rooms.938.resets.mobiles]]
+vnum = 906
+limit = 1
+[[rooms.938.resets.mobiles.equipment]]
+vnum = 903
+wear_loc = "WIELD"
+[[rooms.938.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.938.resets.mobiles.inventory]]
+vnum = 909
+[[rooms.938.resets.mobiles]]
+vnum = 910
+limit = 4
+[[rooms.938.resets.mobiles.equipment]]
+vnum = 913
+wear_loc = "WIELD"
+[[rooms.938.resets.mobiles.inventory]]
+vnum = 919
+[[rooms.938.resets.mobiles]]
+vnum = 910
+limit = 4
+[[rooms.938.resets.mobiles.equipment]]
+vnum = 913
+wear_loc = "WIELD"
+[[rooms.938.resets.mobiles.inventory]]
+vnum = 919
+
+[rooms.939]
+name = "城堡二樓"
+description = """
+你正身處於這座城堡的二樓. 你被你在一樓所發現的東西給嚇呆了, 你也對
+二樓所隱藏的秘密感到疑惑. 這邊四面八方都有出口. 你看到你頭上有一道關著
+的狹小閘門.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.939.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 923
+[rooms.939.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 943
+[rooms.939.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 940
+[rooms.939.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 941
+[rooms.939.exits.up]
+description = "你在小閘門上看到了一面牌子, 上面寫著'私人財產─勿入!'\n"
+keywords = "hatch"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 951
+[rooms.939.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 942
+
+[rooms.940]
+name = "北向的走廊"
+description = """
+你正站在一條向北的走廊. 北邊有一間私人的房間, 南邊則有一座向下的樓梯.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.940.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 947
+[rooms.940.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 939
+
+[rooms.941]
+name = "南向的走廊"
+description = """
+你正站在一條向南的走廊. 南邊有一間私人的房間, 北邊則是一座向下的樓梯.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.941.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 939
+[rooms.941.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 944
+
+[rooms.942]
+name = "西向的走廊"
+description = """
+你正站在一條向西的走廊. 西邊有一間私人的房間, 東邊則是一座向下的樓梯.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.942.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 939
+[rooms.942.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 945
+
+[rooms.943]
+name = "東向的走廊"
+description = """
+你正站在一條向東的走廊. 東邊有一間私人的房間, 西邊則是一座向下的樓梯.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.943.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 946
+[rooms.943.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 939
+
+[rooms.944]
+name = "寢室"
+description = """
+你正身處於神的寢室! 然而這間房間似乎是空的.
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.944.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 941
+
+[rooms.945]
+name = "寢室"
+description = """
+你正身處於神的寢室!
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.945.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 942
+[[rooms.945.resets.mobiles]]
+vnum = 921
+limit = 1
+[[rooms.945.resets.mobiles.equipment]]
+vnum = 911
+wear_loc = "FINGER_L"
+[[rooms.945.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.945.resets.mobiles.inventory]]
+vnum = 909
+
+[rooms.946]
+name = "寢室"
+description = """
+你正身處於神的寢室!
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.946.exits.west]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 943
+[[rooms.946.resets.mobiles]]
+vnum = 904
+limit = 1
+[[rooms.946.resets.mobiles.equipment]]
+vnum = 906
+wear_loc = "WIELD"
+[[rooms.946.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.946.resets.mobiles.inventory]]
+vnum = 909
+
+[rooms.947]
+name = "寢室"
+description = """
+你正身處於神的寢室!
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.947.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 940
+[[rooms.947.resets.mobiles]]
+vnum = 903
+limit = 1
+[[rooms.947.resets.mobiles.equipment]]
+vnum = 904
+wear_loc = "FEET"
+[[rooms.947.resets.mobiles.equipment]]
+vnum = 902
+wear_loc = "HEAD"
+[[rooms.947.resets.mobiles.inventory]]
+vnum = 926
+[[rooms.947.resets.mobiles.inventory]]
+vnum = 909
+
+[rooms.948]
+name = "神之禮堂"
+description = """
+你走進了一個神聖不可侵犯的地方─神之禮堂. 如果你只是一個凡人, 最好
+趕快離開!
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.948.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 951
+
+[rooms.951]
+name = "入口處"
+description = """
+一塊牌子上寫著 '當心意外, 別期望太高.'
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.951.exits.down]
+description = ""
+keywords = "hatch"
+locks = ["ISDOOR", "CLOSED"]
+key = -1
+to_room = 939
+[rooms.951.exits.north]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 948
+
+[rooms.954]
+name = "信徒箴言"
+description = """
+一陣聲音在你耳旁低語 '在時光流逝之前, 把握你的人生.'
+"""
+flags = ["INDOORS"]
+sector = "CITY"
+[rooms.954.exits.south]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 938
+[[rooms.954.resets.mobiles]]
+vnum = 913
+limit = 5
+[[rooms.954.resets.mobiles]]
+vnum = 913
+limit = 5
+[[rooms.954.resets.mobiles]]
+vnum = 913
+limit = 5
+
+[rooms.955]
+name = "地獄之門"
+description = """
+!!!!!四周響起一陣陣哭號聲, 寒氣迎面而來, 你覺得最好趕快回頭為妙!!!!!
+"""
+flags = ["DARK", "NO_RECALL"]
+sector = "AIR"
+[rooms.955.exits.down]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 956
+[rooms.955.exits.east]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 938
+
+[rooms.956]
+name = "地獄"
+description = """
+...........
+
+"""
+flags = ["DARK", "NO_RECALL"]
+sector = "AIR"
+[rooms.956.exits.up]
+description = ""
+keywords = ""
+locks = []
+key = -1
+to_room = 955
+[[rooms.956.resets.mobiles]]
+vnum = 927
+limit = 1
+[[rooms.956.resets.mobiles.equipment]]
+vnum = 928
+wear_loc = "WIELD"
+[[rooms.956.resets.mobiles.equipment]]
+vnum = 929
+wear_loc = "LIGHT"

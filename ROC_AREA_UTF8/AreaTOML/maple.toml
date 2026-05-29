@@ -1,0 +1,3179 @@
+[area]
+name = "楓紅林"
+identity = "maple"
+builders = "Zeel"
+translator = "----"
+modifier = "----"
+vnum_start = 16001
+vnum_end = 16082
+security = 1
+recall = 4580
+death = 401
+f_toggle = true
+
+[mobiles.16001]
+keywords = "anka-maple lord"
+short_description = "安卡(Anka)"
+long_description = "導師 - 安卡(Lord Anka)正坐在這裡。\n"
+description = """
+端坐在你眼前的人正是楓紅村中最為人景仰的導師，雖然他只
+有四十多歲，但是眼中卻散發著睿智的光輝。掛在牆上的長劍
+劍鞘上隱約泛著暗紅色的光澤，感覺上似乎經歷過不少戰役。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "WIMPY", "TRAIN", "PRACTICE", "CRITICAL", "HARD_DIS", "TWO_WEAPON", "ARTIFACT", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 800
+level = 50
+mod_hitplus = 3000
+mod_mana = 0
+mod_hitroll = 30
+mod_damroll = 5
+mod_ac = 350
+mod_svs = -10
+dodge = -50
+mod_pp = 30
+gold = -1
+sex = "male"
+class = ["WARRIOR", "MAGE", "THIEF", "SWORD"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.16001.weaknesses]]
+skill = "flaming slash"
+percent = 400
+damage = 200
+[[mobiles.16001.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.16001.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+wear all
+disarm
+get all
+if rand(30)
+        flaming
+        break
+endif
+if rand(30)
+        earth
+else
+        circular
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+if rand(30)
+        c 2 'chill touch' $n
+endif
+if rand(30)
+        c 2 weaken $n
+endif
+if rand(30)
+        c 2 harm $n
+endif
+if rand(30)
+        c 2 blindness
+        c 'cure blind'
+endif
+if rand(10)
+        c 'full heal'
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+wear all
+disarm
+get all
+if hitprcnt($i) < 30
+        c 'double heal'
+        c heal
+        c curse $n
+        break
+endif
+if hitprcnt($i) < 50
+        c 'double heal'
+        c weaken $n
+        break
+endif
+if hitprcnt($i) < 70
+        c heal
+        c 'chill touch'
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "hitprcnt_prog"
+argument = "40"
+script = """
+if rand(50)
+        c 'double heal'
+else
+        c heal
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+                break
+        endif
+        if is_qmark($n) == maple_enemy
+                yell 打擾了楓紅林和平的人只有死路一條！
+                mpat 5 c gi
+                c 'dispel magic' $n
+                c fae $n
+                c curse $n
+                c bli $n
+                mpkill $n
+                flami $n
+                break
+        endif
+        if is_qmark($n) == maple_swd_trail 100005
+                clap $n
+                say 恭喜你通過了這三場困難的試煉。
+                mpechoaround $n $i 將自己脖子上的項鍊解了下來，遞給 $n 。
+                mpechoat $n $i 將自己脖子上的項鍊解了下來，遞給了你。
+                say 這條項鍊是我的護身符，現在送給你作為通過試煉的證明。
+                mpoload 16004 $n viclv target
+                say 願真理和秩序與你同在。
+                mpmod_qmark $n maple_swd_trail v0 = 6
+                say ......對了，如果你需要學習更精要的劍術，你可以到樓下
+                say 與我設置的幻影學習。
+        endif
+        if rand(50)
+                smile $n
+                break
+        endif
+"""
+[[mobiles.16001.programs]]
+trigger = "talk_prog"
+argument = "seed"
+script = """
+if is_qmark($n) == ocean_annie_seed 100002
+mpmod_qmark $n ocean_annie_seed v0 = 3
+think $n
+mpcallout 1 say 我是曾經有過一顆白楓種子
+mpcallout 2 say 不過很久以前就已經送給黛妮雅了
+mpcallout 3 say 你最好還是回去問問看吧。
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 歡迎來到祥和的楓紅林區(forest)。
+"""
+[[mobiles.16001.programs]]
+trigger = "talk_prog"
+argument = "forest"
+script = """
+nod $n
+        say 住在楓紅林的我們，是從史卡拉貝(skara brae)移民過來的第二代。
+        say 我們原本也是光明之鎮的住民
+        say 後來跟鎮裡的人們在一些事情(something)上意見不合
+        say 所以才會遷徙至此。
+"""
+[[mobiles.16001.programs]]
+trigger = "talk_prog"
+argument = "something"
+script = """
+say 詳細的情形我也不太清楚了，
+        say 好像是跟當年的戰事有關吧。
+        sorry $n
+"""
+[[mobiles.16001.programs]]
+trigger = "talk_prog"
+argument = "trial"
+script = """
+if class($n) == 12
+        if is_qmark($n) != maple_swd_trail
+                break
+        endif
+        if is_qmark($n) == maple_swd_trail 100001
+                if level($n) < 38
+                        shake $n
+                        say 你的等級不夠高，還不能夠接受我的試煉。
+                else
+                        mpmod_qmark $n maple_swd_trail v0 = 2
+                        say 好！果然英雄出少年！
+                        clap $n
+                        say 如果你已經做好了準備，只要跟我說可以(talk anka ok)，就開始進行
+                        tell $n 如果不幸戰敗，跟我說一聲(talk anka grave)就可以取回屍首。
+                        tell $n 同時再跟我說(talk anka ok)任務即可重新開始。
+                endif
+        endif
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "talk_prog"
+argument = "grave"
+script = """
+if class($n) == 12
+        if is_qmark($n) <= maple_swd_trail 100001
+                break
+        else
+                cast grave $n
+                say 請多加油
+        endif
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "talk_prog"
+argument = "ok"
+script = """
+if is_qmark($n) <= maple_swd_trail 100004
+        if class($n) == 12
+                if level($n) >= 38
+                mpechoat $n 一陣奇怪的感覺後，你忽然被傳送到一個奇怪的地方....。
+                mptransfer $n 16050
+                endif
+        endif
+endif
+"""
+[[mobiles.16001.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+
+[mobiles.16002]
+keywords = "cloud-maple cleric"
+short_description = "克勞德牧師(Cleric Cloud)"
+long_description = "秩序之神方提修的牧師(Cleric)正在這裡傳道。\n"
+description = """
+克勞德牧師是迷霧之島的第一代移民。當年安定了跟著安卡的父
+親一起逃難到這片楓林的民眾恐慌心靈的，正是這位信奉秩序之
+神的牧師。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = ["DETECT_EVIL", "DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "PROTECT"]
+alignment = 1000
+level = 50
+mod_hitplus = 0
+mod_mana = 1000
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 30
+mod_svs = 20
+dodge = 10
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["MAGE"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.16002.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.16002.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+wear all
+barehand
+mpnowait
+c angry
+mpnowait
+disarm
+mpnowait
+get all
+if rand(30)
+        c 2 'chill touch' $n
+        mpnowait
+endif
+if rand(30)
+        c 2 weaken $n
+        mpnowait
+endif
+if rand(30)
+        c 2 harm $n
+        mpnowait
+endif
+if rand(30)
+        c 2 blindness
+        mpnowait
+endif
+if rand(10)
+        c 'full heal'
+        mpnowait
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+if hitprcnt($i) < 30
+        c 'double heal'
+        mpnowait
+        c heal
+        mpnowait
+        c curse $n
+        mpnowait
+        break
+endif
+if hitprcnt($i) < 50
+        c 'double heal'
+        mpnowait
+        c weaken $n
+        mpnowait
+        break
+endif
+if hitprcnt($i) < 70
+        c heal
+        mpnowait
+        c 'chill touch'
+        mpnowait
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "hitprcnt_prog"
+argument = "40"
+script = """
+if rand(50)
+        c 'double heal'
+else
+        c heal
+endif
+mpnowait
+"""
+[[mobiles.16002.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+        break
+endif
+if is_qmark($n) == maple_enemy
+        say 受死！
+        c angry $n
+        break
+endif
+if is_inv_obj($n) == 10018
+or is_equ_obj($n) == 10018
+        if is_qmark($n) == crystal_reward
+                if is_qmark($n) == maple_camus_attack
+                or mobcount(16023) >= 1
+                        break
+                endif
+                gasp $n
+                mpechoat $n $I 驚訝的說「這....這是聖王的信物」
+                mpechoat $n $I 驚訝的說「難道你就是拯救了水晶湖的勇士！」
+                mpechoaround $n 正當 $I 等待 $n 的回答時，忽然天空響起了雷聲！
+                mpechoat $n 正當 $I 等待你的回答時，突然天空響起了雷聲！
+                mpechoat $n $I 說著「魔族的妖怪又要作亂！他就是控制住水晶湖的魔族 卡瑪斯(camus)！」
+                mpechoat $n $I 說著「能否請你幫忙除去他呢(destroy)？」
+                mpadd_qmark $n maple_camus_attack -1 0 0 0 0 1
+        endif
+endif
+if is_qmark($n) == wyvern_tower 300002
+        if is_equ_obj($n) == 15112
+        or is_inv_obj($n) == 15112
+                gasp $n
+                say 你身上的那面盾牌，可以借給我看一下嗎？
+                say 我在那上面感覺到一股不太好的力量存在。
+                mpmod_qmark $n wyvern_tower v2 = 3
+        endif
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "destroy"
+script = """
+if is_qmark($n) == maple_camus_attack 100000
+        mpechoat $n 你義不容辭的接下了這個任務....。
+        mpat 16023 mpmload 16023
+        mpat 16023 mpforce camus mpoload 16041
+        mpat 16023 mpforce camus mpoload 16042
+        mpat 16023 mpforce camus mpoload 16010
+        mpat 16023 mpforce camus-maple wear all
+        mpat 16023 mpforce camus-maple mpat $n mpdef_rembch $n
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16023 mpmload 16027
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16023 mpforce camus-maple mpgroup self daemon 1 0
+        mpat 16016 mpmload 16027
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16041 mpmload 16027
+        mpat 16023 mpadd_qmark camus-maple maple_camus_tick 50 0 0 0 0 1
+        mpat 16041 mpforce daemon mpkill lord
+        mpat 16023 mpforce camus-maple yell 破壞闇黑主宰計畫的人類，來到我的跟前試試黑暗的力量吧！
+        mpat 16041 mpforce lord yell 不正的力量！遠離潔淨之地！
+        mpmod_qmark $n maple_camus_attack v0 = 1
+        say 願神保佑你....。
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+bow $n
+say 你好，歡迎來到秩序之神的殿堂。
+say 我是秩序之神的牧師克勞德
+say 你想知道秩序的真諦嗎？(talk cleric yes/no)
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "no"
+script = """
+sigh
+say 我也無法勉強你…
+say 畢竟順應一個人的喜好也是秩序的一種。
+bow
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "yes"
+script = """
+if being($b)
+        break
+else
+        mpecho $I 對你的同意感到十分高興
+        say 在這個混沌幻世中，不同的神有著不同的工作。
+        say 秩序之神主要的任務就是讓這個世界平和的運轉，
+        say 使其不會發生混亂....。
+        mpecho $I 拿起旁邊的杯子喝了口水....。
+        mpadd_qmark self maple_cloud -1 0 0 0 0 1
+        mpdef_rembch $n
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "restart"
+script = """
+if is_qmark($n) <= maple_camus_attack 100001
+        if mobcount(16023) == 0
+                mpechoat $n 遠方傳來一陣聲響「你的任務已經可以重解了！」
+                mpdel_qmark $n maple_camus_attack
+        else
+                mpechoat $n 遠方傳來一陣聲響「目前已經有人接受這項任務！」
+                mpechoat $n 遠方傳來一陣聲響「這項任務暫時無法重解，請稍待。」
+        endif
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "rand_prog"
+argument = "40"
+script = """
+if is_qmark($i) == maple_cloud 100000
+        say 因此秩序的真諦，就是順應各種事物的本性，讓他們能各司其職，各取所需。
+        say 如果能做到這樣，那你就能夠獲得秩序之神的認同(acknowledge)了。
+        mpadd_qmark $b maple_ack -1 1 0 0 0 1
+        smile $b
+        mpdef_rembch null-tar
+        mpdel_qmark self maple_cloud
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "acknowledge"
+script = """
+if is_qmark($n) != maple_ack 100001
+        say 孩子，在神的跟前撒謊是不好的。
+        smile
+else
+        mpechoat $n $I 上上下下注視著你
+        ponder
+        say 你有這份心當然是很好....。
+        mpecho $I 對著秩序之神的神像喃喃自語，似乎是在禱告....。
+        say 神希望你到楓林中取得一樣足以證明的物件(thing)。
+        say 將物件帶回給我，讓我知道你已然領悟了秩序的真諦。
+        smile $n
+        mpmod_qmark $n maple_ack v0 = 2
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "thing"
+script = """
+if is_qmark($n) != maple_ack 100002
+        say 孩子，在神的跟前撒謊是不好的
+        sigh $n
+else
+        say 只要遵循自然的規律
+        say 你就能理解神的意思。
+        mpat 16045 mpmload 16018
+        mpat 16045 mpmload 16019
+        mpat 16045 mpforce wolf-maple mpkill rabbit-maple
+        smile $n
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "abyss"
+script = """
+if is_qmark($n) != maple_camus_attack 100002
+        break
+else
+        soga
+        say 我一直想不通那些邪惡勢力是那裡來的
+        say 真是多虧了你，現在終於知道了
+        say 深淵魔域(abyss)是存在於另一次元的世界
+        say 看來黑暗主宰也是來自那裡了。
+        say 詳細的情形，就得請你去詢問 黛妮雅(dynia) 祭司了。
+        mpmod_qmark $n maple_camus_attack v0 = 3
+        mpexp $n 2000
+        mpgold $n 10000
+        mpresp $n 3
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "assist"
+script = """
+if is_qmark($n) == wyvern_tower 300004
+        bow $n
+        say 其實我的想法很簡單，就是給予它大量的『靈魂』
+        say 之力。如果這盾牌真是黑暗主宰用來收集靈魂的道
+        say 具，那麼它每段時間只能吸取少量的靈魂必定有原
+        say 因，我猜想是一次傳送過大的靈魂力量的話，這個
+        say 傳送的途徑會因此產生錯亂，畢竟只靠一面盾做這
+        say 種靈魂的傳送是很困難的。
+        mpcallout 1 mpcall cloud_talking2 $n
+        mpcallout 1 mpmod_qmark $n wyvern_tower v2 = 5
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "talk_prog"
+argument = "bless"
+script = """
+if is_qmark($n) != maple_cle_stone
+        if is_qmark($n) == ocean_alc_stone 100003
+                mpadd_qmark $n maple_cle_stone -1 1 0 0 0 1
+                say 這也不是很困難的事情
+                say 將阿瑞托沙拿來給我，之後再耐心等待三天即可
+        endif
+else
+        if is_qmark($n) == maple_cle_stone 100001
+                say 我不能瞭解你的意思。
+        endif
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "give_prog"
+argument = "40038"
+script = """
+if is_qmark($n) == maple_cle_stone 100001
+        mpjunk all.arethusa
+        mpadd_qmark $n maple_cle_wait 72 0 0 0 0 0
+        say 請你等待三天，三天後就可以完成祝福儀式。
+        mpmod_qmark $n maple_cle_stone v0 = 2
+        say 到時候跟我說一聲謝謝就好。
+else
+        say 你給我阿瑞托沙幹嘛？
+        drop are
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "act_prog"
+argument = "thank"
+script = """
+if is_qmark($n) == maple_cle_wait
+        - $n
+        say 我還在祝福中，請不要煩我
+        break
+endif
+                if is_qmark($n) == maple_cle_stone 100002
+                        if is_qmark($n) != maple_cle_wait
+                        mpmod_qmark $n maple_cle_stone v0 = 3
+                        mpoload 40039 $n target
+                        say 這就是經過祝福的阿瑞托沙了。
+                        say 願秩序之神保佑你完成你的心願。
+                        endif
+                endif
+"""
+[[mobiles.16002.programs]]
+trigger = "give_prog"
+argument = "16002"
+script = """
+if is_qmark($n) != maple_ack 100003
+        break
+else
+        sigh
+        say 其實這並不是秩序的真諦
+        say 一般人總以為助弱鋤強便是真理，卻不知自然界有她自己的法則
+        say 雖然你並沒有達成我的要求，但知道以後可要加倍努力。
+        mpmod_qmark $n maple_ack v0 = 4
+        mpexp $n 800
+        endif
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "give_prog"
+argument = "16003"
+script = """
+if is_qmark($n) != maple_ack 100003
+        break
+else
+        good $n
+        say 沒錯！自然的法則便是順應事物的本性
+        say 也許你反對坐視惡狼吞吃野兔
+        say 但是自然的運作也是有他的道理的
+        say 請謹記這個道理。
+        mpmod_qmark $n maple_ack v0 = 4
+        mpexp $n 1000
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "give_prog"
+argument = "15112"
+script = """
+if is_qmark($n) == wyvern_tower 300003
+        mpat 5 mpjunk $o
+        mmm
+        say 果然跟我想的一樣，上面有黑暗主宰的力量......
+        say 你可以告訴我有關這面盾的情報嗎？
+        mpechoat $n 你一五一十的將之前羅帕斯跟你講的全都告訴了$I....
+        mpcallout 1 mpcall cloud_talking1 $n
+        mpcallout 1 mpmod_qmark $n wyvern_tower v2 = 4
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "give_prog"
+argument = "all"
+script = """
+if name($o) / soul
+        if is_qmark($n) == wyvern_tower 300014
+                mpmod_qmark $n wyvern_tower v2 = 15
+                say 這物品擁有著極致強大的靈魂之力啊！
+                say 累積到這樣的靈魂之力應該是足夠了，我現在就開
+                say 始進行淨化儀式，請你稍等片刻。
+                mpcallout 1 mpcall cloud_talking3 $n
+                mpcallout 2 mpechoat $n 完全沒注意到你驚愕不已的神情，$I不急不徐的走到祭壇旁，並將手中的水緩緩倒在那些物品上......
+                mpcallout 3 mpechoat $n 你辛苦收集來的那些裝備慢慢的溶解在金黃色的流水之中......嗯.....怎麼鹹鹹的，這就是眼淚的味道嗎......〒ˍ〒
+                mpcallout 4 mpechoat $n 金黃的聖水又逐漸的被吸入了吞噬之盾中....你感覺吞噬之盾似乎也放出了金色光輝。
+                mpcallout 5 mpcall cloud_talking4 $n
+                mpcallout 6 mpcall cloud_talking5 $n
+        else
+                if is_qmark($n) > wyvern_tower 300014
+                or is_qmark($n) < wyvern_tower 300005
+                else
+                        say 這物品擁有著極致強大的靈魂之力啊！
+                        mpmod_qmark $n wyvern_tower v2 + 1
+                endif
+        endif
+endif
+"""
+[[mobiles.16002.programs]]
+trigger = "defun_prog"
+argument = "cloud_talking1"
+script = """
+say 原來是這樣啊，這個推斷的確滿合理的......
+say 我是有個想法，或許可以壓制這面盾的力量，不過
+say 需要你的協助(assist)。
+"""
+[[mobiles.16002.programs]]
+trigger = "defun_prog"
+argument = "cloud_talking2"
+script = """
+mpechoat $n 看你一臉茫然的樣子，$I有些尷尬的咳了兩聲。
+say 啊，真不好意思，說明好像太長了點，簡單說吧，
+say 請你去收集擁有『靈魂』之力的物品給我，只要量
+say 到達一定的程度，我馬上就可以進行壓制這邪惡力
+say 量的儀式。
+smile
+mpechoat $n 你心想：混蛋，吃了五面盾還不夠，現在還要收名字有魂的裝備，這是資源回收任務嗎？
+"""
+[[mobiles.16002.programs]]
+trigger = "defun_prog"
+argument = "cloud_talking3"
+script = """
+mpechoat $n $I將你收集來的物品放在祭壇上，並將吞噬之盾也放了上去。
+mpechoat $n $I從一旁的水池中裝了一杯水，闔上眼默唸了幾個古代文字。
+mpechoat $n $I手中的清水居然發出了金色光芒！你甚至看到了龍的幻影！
+mpechoat $n 我的天啊！這不是傳說中的特級廚師做料理時才會發生的現象嗎！
+"""
+[[mobiles.16002.programs]]
+trigger = "defun_prog"
+argument = "cloud_talking4"
+script = """
+mpechoat $n 等到水全部被吞噬之盾吸盡後，$I拿起了吞噬之盾觀察。
+sigh
+say 結果不盡人意啊，雖然一口氣灌注了這麼大量的靈
+say 魂之力，卻只能稍微壓制住它的力量，這樣的話實
+say 在不能說是成功......
+ponder
+"""
+[[mobiles.16002.programs]]
+trigger = "defun_prog"
+argument = "cloud_talking5"
+script = """
+say 這樣吧，據說在史卡拉貝大陸的一座塔上，有一名
+say 很厲害的牧師，或許他能夠幫你的忙(help)也說不
+say 定。
+say 雖然沒辦法幫你解決問題，但我還是會祈求秩序之
+say 神方提修(Zeel)保佑你。
+mpoload 15112 $n 36 target
+mpechoat $n $I給了你吞噬之盾(devour shield).
+wave $n
+"""
+
+[mobiles.16003]
+keywords = "alodesia-m apprentice"
+short_description = "練習生雅爾蒂希亞(Apprentice Alodesia)"
+long_description = "一位立志成為劍士的妖精少女(Alodesia)正努力的練習著。\n"
+description = """
+雅爾蒂希亞是附近妖精村落的少女，為了擁有足以在旅行
+時保護自身的力量，這幾個月來都在楓紅村中修習劍術的
+精要。
+"""
+act_flags = ["HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "SNEAK"]
+alignment = 420
+level = 27
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 40
+mod_svs = 0
+dodge = 5
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.16003.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == maple_enemy
+        mpecho $I 露出了一臉厭惡的表情
+        say 像 $n 這種人我最討厭了！
+        if insameroom(martin-m)
+                mpgroup matin-m self 1 0
+                c fireball $n
+                mpforce martin-m rescue alodesia
+                mpforce martin-m protect alodesia
+        endif
+endif
+"""
+[[mobiles.16003.programs]]
+trigger = "talk_prog"
+argument = "cloth"
+script = """
+if is_qmark($n) == xmas_maple_alo 100001
+        say 原來你不知道啊。
+        say 我建議你去找防具店的老闆娘問問
+        gig $n
+        mpmod_qmark $n xmas_maple_alo v0 = 2
+else
+        ? $n
+endif
+"""
+[[mobiles.16003.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+smile $n
+        say 想必您是第一次來到我們這個村莊
+        mpecho $I 向四周指了一指
+        say 這裡的人都是安卡導師(Anka)的弟子。
+        say 所有人都以成為混沌幻世第一劍手為目標努力著。
+"""
+[[mobiles.16003.programs]]
+trigger = "talk_prog"
+argument = "anka"
+script = """
+gasp $n
+        say 您居然還沒去看過導師！？
+        tsk $n
+        say 良心建議，您還是去拜會一下導師比較好。
+        smile
+"""
+[[mobiles.16003.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+
+[mobiles.16004]
+keywords = "martin-m apprentice"
+short_description = "練習生馬汀(Apprentice Martin)"
+long_description = "一位立志成為劍士的少年(Martin)正努力的練習著。\n"
+description = """
+馬汀‧麥凱因是星光武具專賣店老闆的么子，自小就希望
+能到海的另一邊遊歷。為了能在旅途中保護自己，他十分
+認真的鍛鍊自己。
+"""
+act_flags = ["HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED", "SNEAK"]
+alignment = 420
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 40
+mod_svs = 0
+dodge = 5
+mod_pp = 0
+gold = -1
+sex = "female"
+[[mobiles.16004.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == maple_enemy
+        mpecho $I 露出了一臉厭惡的表情
+        say 像$n 這種人我最討厭了！
+        if insameroom(alodesia-m)
+                mpgroup self alodesia 1 0
+                protect alodesia
+                mpkill $n
+        endif
+endif
+"""
+[[mobiles.16004.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+smile $n
+        mpecho $I 向四周指了一指
+        say 這裡的人都是安卡導師(Anka)的弟子。
+        say 所有人都以成為混沌幻世第一劍手為目標努力著。
+"""
+[[mobiles.16004.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+
+[mobiles.16005]
+keywords = "grocer-m"
+short_description = "雜貨店老闆(grocer)"
+long_description = "河漢雜貨店的老闆(grocer)和藹的對你笑著。\n"
+description = """
+和藹可親的老闆正忙著詢問其他顧客需要些什麼物品。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER"]
+affected_flags = []
+alignment = 680
+level = 45
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+spec_flags = ["NO_CHARM"]
+[[mobiles.16005.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        say 歡迎光臨，請問需要點什麼？
+        if rand(60)
+                say 我們這的水袋可是一流的商品
+                say 不管你怎樣蹂躪都不會破損的
+                if rand(50)
+                        mpecho 你聽到「嘶」的一聲
+                        mpecho 看起來是某位客人剛買的牛皮水袋在打開袋口時破了。
+                        blush
+                endif
+        endif
+endif
+"""
+[[mobiles.16005.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+
+[mobiles.16006]
+keywords = "boss-m tavern"
+short_description = "杜康酒館老板(tavern boss)"
+long_description = "杜康酒館的老板(tavern boss)正在檢查酒的年份。\n"
+description = """
+你看到一位滿頭紅髮的妙齡女子(tavern boss)正在檢查酒的年份。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 400
+level = 45
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 10
+mod_damroll = 20
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+race = "Half-elf"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.16006.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        smile $n
+        mpecho $I 說：歡迎光臨，今年的麥酒很不錯唷。
+endif
+"""
+[[mobiles.16006.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+
+[mobiles.16007]
+keywords = "cook-m multi"
+short_description = "馬蹄餐館的大廚(multi's cook)"
+long_description = "戴著一頂高帽的大廚(cook)正在分配工作。\n"
+description = """
+大廚看到你走進來之後，立刻放下手邊的工作跑了過來。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA"]
+affected_flags = []
+alignment = 800
+level = 41
+mod_hitplus = 500
+mod_mana = 0
+mod_hitroll = 9
+mod_damroll = 2
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+spec_flags = ["NO_CHARM"]
+[[mobiles.16007.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        mpechoat $n $I 殷勤的說「您好，請先看看菜單，等下就為您服務。」
+endif
+"""
+[[mobiles.16007.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+
+[mobiles.16008]
+keywords = "anna-m boss"
+short_description = "星光武具店的老闆(Boss Anna)"
+long_description = "一位有著亮金色長髮的婦女(boss)在這裡檢視武具。\n"
+description = """
+很少有人相信她就是星光武具專賣店的老闆，但是事實就
+是事實。安娜‧麥凱茵，正是這家店的主人。
+"""
+act_flags = ["NPC", "SENTINEL", "HARD_DIS", "HUNT", "TACTICS", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN"]
+alignment = 500
+level = 60
+mod_hitplus = 1500
+mod_mana = 0
+mod_hitroll = 20
+mod_damroll = 40
+mod_ac = 20
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+class = ["WARRIOR"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.16008.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+        break
+else
+        if is_qmark($n) == maple_enemy
+                say 你是敵人！受死....！
+                c 3 powerball $n
+                break
+        endif
+        say 所有的武器都放在左邊的櫃子中，右邊掛著的都是防具，請自行選購。
+endif
+"""
+[[mobiles.16008.programs]]
+trigger = "rand_prog"
+argument = "40"
+script = """
+if pcnum($) > 0
+        say 真希望我的老公(husband)能夠在這邊陪我。
+        sigh
+endif
+"""
+[[mobiles.16008.programs]]
+trigger = "talk_prog"
+argument = "husband"
+script = """
+say 他原本是楓紅林的第一劍手。
+        say 連導師的試煉(trial)他也通過了。
+        say 後來，在一次的魔物侵擾中，為了我和馬汀而犧牲了。
+        cry $n
+"""
+[[mobiles.16008.programs]]
+trigger = "talk_prog"
+argument = "trial"
+script = """
+? $n
+if is_qmark($n) != maple_swd_trail
+        mpadd_qmark $n maple_swd_trail -1 1 0 0 0 1
+endif
+say 這，您可能得去詢問導師了
+"""
+[[mobiles.16008.programs]]
+trigger = "talk_prog"
+argument = "cloth"
+script = """
+if is_qmark($n) == xmas_maple_alo 100002
+        say 原來$n是來找聖誕傳統服飾的啊…
+        sorry $n
+        mpcallout 1 say 真是不巧…最近材料有點缺貨…所以今年還沒做出來說
+        mpcallout 2 say 如果可能的話，希望你能去替我買些原料
+        mpcallout 3 say 只要能買到棉花(cotton)，我就可以做出來了。
+        mpmod_qmark $n xmas_maple_alo v0 = 3
+else
+        ? $n
+endif
+"""
+[[mobiles.16008.programs]]
+trigger = "talk_prog"
+argument = "cotton"
+script = """
+if is_qmark($n) == xmas_maple_alo 100003
+        nod $n
+        mpcallout 1 say 我聽說海域的安妮嬸嬸最近有種出棉花，勞駕替我跑一趟吧
+        mpmod_qmark $n xmas_maple_alo v0 = 4
+else
+        ? $n
+endif
+"""
+[[mobiles.16008.programs]]
+trigger = "give_prog"
+argument = "16046"
+script = """
+if is_qmark($n) == xmas_maple_alo 100005
+        bow $n
+        mpcallout 1 say 真是太好了，請你明天這個時候來找我領取(finish)吧
+        mpadd_qmark $n xmas_wait 24 0 0 0 0 1
+        mpmod_qmark $n xmas_maple_alo v0 = 6
+else
+        ? $n
+endif
+"""
+[[mobiles.16008.programs]]
+trigger = "talk_prog"
+argument = "finish"
+script = """
+if is_qmark($n) != xmas_wait
+        if is_qmark($n) == xmas_maple_alo 100006
+        mpmod_qmark $n xmas_maple_alo v0 = 7
+        nod $n
+        mpoload 16044 $n viclv target
+        mpoload 16045 $n viclv target
+        say 這裡就是聖誕禮物了
+        smile
+        wave $n
+        rum $n已經領到聖誕禮物了！
+        endif
+endif
+"""
+[[mobiles.16008.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_enemy
+        mpadd_qmark $n maple_enemy 50 0 0 0 1 0
+else
+        mpmod_qmark $n maple_enemy timer + 50
+endif
+"""
+
+[mobiles.16009]
+keywords = "villager-m young"
+short_description = "青年村民(young villager)"
+long_description = "你看到一位年輕人(young villager)正在樹林中散步。\n"
+description = """
+小心！你差點就把這位仁兄給撞倒了。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 800
+level = 20
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+special_function = "spec_janitor"
+[[mobiles.16009.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+bow $n
+        say 楓紅林非常歡迎外來的旅客
+        say 只要不做出破壞安寧的事來，請隨意。
+"""
+
+[mobiles.16010]
+keywords = "thief-m"
+short_description = "隱匿在暗處的盜賊(thief)"
+long_description = "一名鬼祟不安好心的盜賊(thief)窺視著你。\n"
+description = """
+糟糕！你的錢呢？
+"""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "SNEAK", "HIDE"]
+alignment = -150
+level = 22
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["THIEF"]
+special_function = "spec_thief"
+[[mobiles.16010.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+say 居然被你發現了！
+mpecho 盜賊慌慌張張的逃走了....。
+s
+n
+w
+e
+"""
+
+[mobiles.16011]
+keywords = "guard-m village"
+short_description = "民團守衛(village guard)"
+long_description = "一名巡邏中的民團守衛(village guard)\n"
+description = """
+看他一副雄赳赳氣昂昂的樣子，要是作壞事被他逮住，可
+就一點都不好玩了。
+"""
+act_flags = ["NPC", "TWO_WEAPON"]
+affected_flags = []
+alignment = 800
+level = 22
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 3
+mod_damroll = 5
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR"]
+special_function = "spec_guard"
+[[mobiles.16011.programs]]
+trigger = "greet_prog"
+argument = "50"
+script = """
+if isnpc($n)
+        break
+else
+        if isevil($n)
+                mpechoat $n $I 警告你快點離開這裡。
+                mpechoaround $n $I 警告 $n 快點離開。
+                say 這裡不歡迎邪惡的人！
+        else
+                say 很高興認識你
+                smile $n
+        endif
+endif
+"""
+
+[mobiles.16012]
+keywords = "apprentice-m"
+short_description = "劍士練習生(swordsman apprentice)"
+long_description = "一名男性的練習生(apprentice)正在練習劍術\n"
+description = """
+一名十來歲的少年在這勤奮的練習劍術。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = []
+alignment = 0
+level = 17
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR"]
+
+[mobiles.16013]
+keywords = "girl-m apprentice"
+short_description = "劍士練習生(swordman apprentice)"
+long_description = "一位綁著馬尾的少女(apprentice)在這練習劍術。\n"
+description = """
+這位綁著馬尾的少女正在練習老師所教授的劍術要訣。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = []
+alignment = 25
+level = 16
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "female"
+class = ["WARRIOR"]
+
+[mobiles.16014]
+keywords = "man-m"
+short_description = "中年男子(man)"
+long_description = "一位中年男子(man)站在這裡。\n"
+description = """
+他正和其他人討論著公告欄上的公告。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = []
+alignment = 100
+level = 14
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+
+[mobiles.16015]
+keywords = "man-m old"
+short_description = "白髮老人(old man)"
+long_description = "這位滿頭白髮的老人家(old man)正在這裡和朋友泡茶。\n"
+description = """
+他手中的茶看起來還蠻不錯的。
+"""
+act_flags = ["NPC", "WIMPY"]
+affected_flags = []
+alignment = 340
+level = 14
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+[[mobiles.16015.programs]]
+trigger = "rand_prog"
+argument = "20"
+script = """
+if inroom($i) != 16023
+        break
+else
+        if rand(40)
+                say 茶可以喝了，好友請吧。
+                mpoload 16001
+                drink tea
+                mpjunk all.tea
+        endif
+endif
+"""
+
+[mobiles.16016]
+keywords = "fire-m swordsman"
+short_description = "紅袍劍士的幻影(Illusion Swordsman)"
+long_description = "一個持著火紅色長劍的劍客(swordsman)立在此處。\n"
+description = """
+你定睛一看，才注意到這只是幻影而已。
+但是那股從劍上傳出的炎勁卻是這麼的真實。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "WIMPY", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 0
+level = 40
+mod_hitplus = 1000
+mod_mana = 400
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 50
+mod_svs = 20
+dodge = 10
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Phantom"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.16016.weaknesses]]
+skill = "flaming slash"
+percent = 500
+damage = 300
+[[mobiles.16016.weaknesses]]
+skill = "earth slash"
+percent = 500
+damage = 300
+[[mobiles.16016.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.16016.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == maple_swd_trail 100002
+        say 你來了嗎？我等你很久了。
+endif
+"""
+[[mobiles.16016.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != maple_swd_trail 100002
+        break
+else
+        say 我是導師用魔力所塑造的形象
+        say 負責第一關的考驗
+        say 如果確定能夠接受試驗了，請跟我說開始(talk swordsman start)
+endif
+"""
+[[mobiles.16016.programs]]
+trigger = "talk_prog"
+argument = "start"
+script = """
+if is_qmark($n) == maple_swd_trail 100002
+        nod $n
+        mpecho 劍士開口說道：那就開始吧。
+        mpecho 劍士猛然對你發動攻勢！
+        mpkill $n
+endif
+"""
+[[mobiles.16016.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+flameing
+if rand(50)
+        mpecho $I 的身上突然冒出一股火紅的光芒
+        yell 必殺一擊！
+        skilldrv multihit $n
+        flaming
+endif
+"""
+[[mobiles.16016.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpexp $n 1000
+if is_qmark($n) == maple_swd_trail 100002
+        say 你已經通過我這一關了。
+        mpmod_qmark $n maple_swd_trail v0 = 3
+break
+endif
+        if is_qmark($n) == maple_trail_quit 100001
+        mpjunk sword
+        mpjunk bracer
+        endif
+"""
+
+[mobiles.16017]
+keywords = "Illusion-n swordsman"
+short_description = "黃袍劍士的幻影(Illusion Swordsman)"
+long_description = "一位身著黃袍的劍士(swordsman)站在這裡。\n"
+description = """
+你定睛一看，才注意到這只是幻影而已。
+但是那股從人影身上傳出的威嚴感卻是這麼的真實。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "WIMPY", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 0
+level = 40
+mod_hitplus = 1050
+mod_mana = 200
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 60
+mod_svs = 20
+dodge = -10
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Phantom"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.16017.weaknesses]]
+skill = "flaming slash"
+percent = 500
+damage = 300
+[[mobiles.16017.weaknesses]]
+skill = "earth slash"
+percent = 500
+damage = 300
+[[mobiles.16017.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.16017.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == maple_swd_trail 100002
+        say 你通過了第一關，不一定能夠通過第二關。
+endif
+"""
+[[mobiles.16017.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != maple_swd_trail 100003
+        break
+else
+        say 我是導師用魔力所塑造的形象
+        say 負責你第二關的考驗
+        say 如果確定能夠接受試驗了，請跟我說開始(talk swordsman start)
+endif
+"""
+[[mobiles.16017.programs]]
+trigger = "talk_prog"
+argument = "start"
+script = """
+if is_qmark($n) == maple_swd_trail 100003
+        nod $n
+        mpecho 劍士開口說道：那現在就動手吧。
+        mpecho 劍士猛然對你發動攻勢！
+        mpkill $n
+endif
+"""
+[[mobiles.16017.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+flameing
+if rand(30)
+        mpecho $I 的身上突然冒出一股橙黃的光芒
+        yell 石甲護體！
+        c 'stone skin'
+        c shield
+        c protection
+endif
+"""
+[[mobiles.16017.programs]]
+trigger = "fight_prog"
+argument = "10"
+script = """
+yell    ---天    崩    地    裂---
+if hitprcnt($i) > 50
+        circular
+        flaming
+        earth
+else
+        mpat 5 c 'double heal'
+        skilldrv multihit $n
+endif
+"""
+[[mobiles.16017.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpexp $n 2000
+if is_qmark($n) == maple_swd_trail 100003
+        say 你已經通過我這一關了。
+        mpmod_qmark $n maple_swd_trail v0 = 4
+break
+endif
+        if is_qmark($n) == maple_trail_quit 100001
+        mpjunk sword
+        mpjunk bracer
+        endif
+"""
+
+[mobiles.16018]
+keywords = "wolf-maple wolf"
+short_description = "狼(wolf)"
+long_description = "一隻惡狼(wolf)正在獵殺兔子。\n"
+description = ""
+act_flags = ["NPC", "SENTINEL"]
+affected_flags = ["INFRARED"]
+alignment = 0
+level = 20
+mod_hitplus = 250
+mod_mana = 0
+mod_hitroll = -50
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.16018.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self maple_wolf_ack 50 0 0 0 1 0
+"""
+[[mobiles.16018.programs]]
+trigger = "rand_prog"
+argument = "40"
+script = """
+if is_qmark($i) != maple_wolf_ack
+        mppurge self
+endif
+"""
+[[mobiles.16018.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if is_qmark($i) != maple_wolf_ack
+        mppurge self
+endif
+"""
+[[mobiles.16018.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_ack 100002
+        break
+else
+        mpmod_qmark $n maple_ack v0 = 3
+        mpoload 16002 floor
+endif
+if insameroom(rabbit-maple)
+        mppurge rabbit-maple
+endif
+"""
+
+[mobiles.16019]
+keywords = "rabbit-maple"
+short_description = "白兔(rabbit)"
+long_description = "一隻白兔(rabbit)正在被惡狼攻擊。\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = ["INFRARED"]
+alignment = 0
+level = 20
+mod_hitplus = 250
+mod_mana = 0
+mod_hitroll = -50
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.16019.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self maple_rabbit_ack 50 0 0 0 1 0
+"""
+[[mobiles.16019.programs]]
+trigger = "rand_prog"
+argument = "40"
+script = """
+if is_qmark($i) != maple_rabbit_ack
+        mppurge self
+endif
+"""
+[[mobiles.16019.programs]]
+trigger = "fight_prog"
+argument = "50"
+script = """
+if is_qmark($i) != maple_rabbit_ack
+        mppurge self
+endif
+"""
+[[mobiles.16019.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+if is_qmark($n) != maple_ack 100002
+        break
+else
+        mpmod_qmark $n maple_ack v0 = 3
+        mpoload 16003 floor
+endif
+if insameroom(wolf-maple)
+        mppurge wolf-maple
+endif
+"""
+
+[mobiles.16020]
+keywords = "insect-m"
+short_description = "小飛蟲(flying insect)"
+long_description = "一隻一直嗡嗡作響的討厭飛蟲(insect)\n"
+description = ""
+act_flags = ["NPC"]
+affected_flags = []
+alignment = 0
+level = 4
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "insect"
+[[mobiles.16020.programs]]
+trigger = "rand_prog"
+argument = "10"
+script = """
+if mobcount(16020) > 5
+        mppurge self
+endif
+"""
+[[mobiles.16020.programs]]
+trigger = "death_prog"
+argument = "50"
+script = """
+mpechoaround $I發出了嗡嗡的聲音
+"""
+
+[mobiles.16021]
+keywords = "sparrow"
+short_description = "麻雀(sparrow)"
+long_description = "一隻麻雀(sparrow)正在地上吱吱喳喳的跳來跳去。\n"
+description = """
+它看起來很快樂。
+"""
+act_flags = ["NPC", "SCAVENGER"]
+affected_flags = []
+alignment = 1000
+level = 9
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+[[mobiles.16021.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if mobcount(16020) > 5
+        mppurge self
+endif
+"""
+[[mobiles.16021.programs]]
+trigger = "rand_prog"
+argument = "10"
+script = """
+mpecho $I拍拍翅膀飛走了
+"""
+
+[mobiles.16022]
+keywords = "wolf"
+short_description = "惡狼(wolf)"
+long_description = "一隻惡狼(wolf)叮著你看。\n"
+description = """
+危險性高，請勿餵食
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 1000
+level = 11
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Animal"
+special_function = "spec_fido"
+
+[mobiles.16023]
+keywords = "camus-maple"
+short_description = "卡瑪斯(camus)"
+long_description = "卡瑪斯(camus)站在這裡。\n"
+description = """
+看到卡瑪斯的人，都得死！
+"""
+act_flags = ["NPC", "SENTINEL", "AGGRESSIVE", "STAY_AREA", "WIMPY", "CRITICAL", "HARD_DIS", "HUNT", "TWO_WEAPON", "ARTIFACT", "TACTICS", "TRACK", "MOB_AI"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = 0
+level = 55
+mod_hitplus = 1050
+mod_mana = 200
+mod_hitroll = 0
+mod_damroll = 50
+mod_ac = 790
+mod_svs = -5
+dodge = 30
+mod_pp = 0
+gold = -1
+sex = "male"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["EXPERT"]
+[[mobiles.16023.weaknesses]]
+skill = "flaming slash"
+percent = 800
+damage = 400
+[[mobiles.16023.weaknesses]]
+skill = "twin swords"
+percent = 1000
+damage = 500
+[[mobiles.16023.weaknesses]]
+skill = "empslash"
+percent = 700
+damage = 800
+[[mobiles.16023.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.16023.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != maple_camus_tick
+        shout 沒有用的冒險者！讓我在此枯等。
+        shout 我現在已經知道這裡的冒險者是多麼的沒用了！
+        shout 哈！哈！哈！
+        mppurge self
+endif
+mpat 5 c double
+"""
+[[mobiles.16023.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+if isaffected($i) & 16777216
+        mpdis_magic self 'seal magic'
+endif
+wear all
+disarm
+get all
+if rand(30)
+        flaming
+endif
+if rand(30)
+        earth
+endif
+if rand(30)
+        circular
+endif
+if isaffected($i) & 1
+        c 'cure blindness'
+endif
+if isaffected($i) !& 128
+        if hitprcnt($i) < 35
+                c sanctuary
+        endif
+endif
+if isaffected($i) !& 8192
+        if hitprcnt($i) < 40
+                c protection
+        endif
+endif
+if isaffected($i) & 268435456
+        mpat 5 c vivi
+endif
+if hitprcnt($i) < 30
+        if rand(40)
+                c 'double heal'
+        endif
+        break
+endif
+if hitprcnt($i) < 60
+        if rand(40)
+                c heal
+        endif
+endif
+"""
+[[mobiles.16023.programs]]
+trigger = "greet_prog"
+argument = "100"
+script = """
+if isnpc($n)
+        break
+endif
+if is_qmark($n) == maple_camus_attack 100001
+        say 就是你！就是你破壞了我的計畫！
+        yell 我一定要打倒 $n ，挽回主宰對我的信賴！
+        mpkill $n
+endif
+"""
+[[mobiles.16023.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+yell    ---魔    道    狂    焰---
+if rand(30)
+        c 'angry fire storm'
+        break
+endif
+if hitprcnt($i) > 50
+        frenzy
+        mpat 5 c 'double heal'
+        break
+else
+        mpat 5 c 'double heal'
+        c powerball
+endif
+"""
+[[mobiles.16023.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+wear all
+disarm
+get all
+yell    ---萬    魔    笑    止---
+mpat 5 c 'full heal'
+mpat 5 c 'full refresh'
+mpecho $I 所受的創傷似乎全部恢復了！
+"""
+[[mobiles.16023.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpat 5 c inf
+yell 我居然居然被 $n 打回深淵魔域(abyss)了
+yell 該死的 $n ，我們是不會這樣放棄的！主宰萬歲！
+mpmod_all_qmark $n adv_book_2_1 v0 | 32
+if insameroom($b)
+        mpechoat $b 你覺得深淵魔域(abyss)這個名詞似乎有點耳熟，但是又
+        mpechoat $b 想不起來在哪聽過，你想也許可以去問問克勞德牧師。
+        mpmod_qmark $b maple_camus_attack v0 = 2
+else
+        mpjunk all.sword
+        mpjunk all.bracer
+        mpexp $n -1000
+endif
+"""
+
+[mobiles.16024]
+keywords = "squarrel-m"
+short_description = "松鼠(squarrel)"
+long_description = "一隻松鼠(squarrel)好奇地看著你。\n"
+description = """
+一隻松鼠坐在樹根上好奇地看著你。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 9
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+
+[mobiles.16025]
+keywords = "fox"
+short_description = "狐狸(fox)"
+long_description = "一隻狐狸(fox)輕快地跑過你的腳邊。\n"
+description = """
+一隻狐狸(fox)輕快地跑過你的腳邊。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 4
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Animal"
+special_function = "spec_fido"
+
+[mobiles.16026]
+keywords = "bee"
+short_description = "蜜蜂(bee)"
+long_description = "一隻蜜蜂(bee)嗡嗡地飛過你的耳際。\n"
+description = """
+一隻蜜蜂(bee)嗡嗡地飛過你的耳際。
+"""
+act_flags = ["NPC", "STAY_AREA"]
+affected_flags = []
+alignment = 500
+level = 3
+mod_hitplus = 0
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Insect"
+
+[mobiles.16027]
+keywords = "daemon demon"
+short_description = "惡魔(daemon)"
+long_description = "惡魔(daemon)展開翅膀，向你飛來。\n"
+description = """
+最強大的不死怪物之一，而且也是最難纏的怪物之一。
+牠能使用所有的魔法，而且又非常的強壯，你最好自求多福了。
+"""
+act_flags = ["SENTINEL", "SCAVENGER", "AGGRESSIVE"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED", "PROTECT"]
+alignment = -1000
+level = 41
+mod_hitplus = 200
+mod_mana = 0
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "neutral"
+race = "Demon"
+class = ["WARRIOR", "MAGE"]
+spec_flags = ["NO_CHARM"]
+[[mobiles.16027.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.16027.programs]]
+trigger = "rand_prog"
+argument = "50"
+script = """
+if is_qmark($i) != maple_camus_tick
+        mppurge self
+endif
+"""
+
+[mobiles.16028]
+keywords = "Illusion-w swordsman"
+short_description = "白袍劍士的幻影(Illusion Swordsman)"
+long_description = "一位身著白袍的劍士(swordsman)站在這裡。\n"
+description = """
+你定睛一看，才注意到這只是幻影而已。
+但是那股從人影身上傳出的壓迫感幾乎使你無法呼吸了。
+"""
+act_flags = ["NPC", "SENTINEL", "SCAVENGER", "STAY_AREA", "WIMPY", "HARD_DIS"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "INFRARED"]
+alignment = 0
+level = 41
+mod_hitplus = 1100
+mod_mana = 300
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 80
+mod_svs = 20
+dodge = 5
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Phantom"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM", "EXPERT"]
+[[mobiles.16028.weaknesses]]
+skill = "flaming slash"
+percent = 500
+damage = 300
+[[mobiles.16028.weaknesses]]
+skill = "earth slash"
+percent = 500
+damage = 200
+[[mobiles.16028.programs]]
+trigger = "repop_prog"
+argument = "100"
+script = """
+mpadd_qmark self delayed_cast -1 99999 0 0 1 0
+"""
+[[mobiles.16028.programs]]
+trigger = "all_greet_prog"
+argument = "100"
+script = """
+if is_qmark($n) == maple_swd_trail 100002
+        say 最後一關，不會讓你像前面一樣那麼容易通過的。
+endif
+"""
+[[mobiles.16028.programs]]
+trigger = "talk_prog"
+argument = "topic"
+script = """
+if is_qmark($n) != maple_swd_trail 100004
+        break
+else
+        say 我是導師用魔力所塑造的形象
+        say 負責你最後一關的考驗
+        say 如果確定能夠接受試驗了，請跟我說開始(talk swordsman start)
+endif
+"""
+[[mobiles.16028.programs]]
+trigger = "talk_prog"
+argument = "start"
+script = """
+if is_qmark($n) == maple_swd_trail 100004
+        nod $n
+        mpecho 劍士開口說道：那現在就動手吧。
+        mpecho 劍士猛然對你發動攻勢！
+        mpkill $n
+endif
+"""
+[[mobiles.16028.programs]]
+trigger = "fight_prog"
+argument = "40"
+script = """
+flaming
+if rand(30)
+        mpecho $I 的身上突然冒出一股銀白的光芒
+        yell 晨星點點！
+        mpecho $I 的劍暴出點點白芒，讓你睜眼如盲
+        c 2 blindness
+else
+        earth
+endif
+"""
+[[mobiles.16028.programs]]
+trigger = "fight_prog"
+argument = "20"
+script = """
+yell    ---天    道    晴    明---
+if hitprcnt($i) > 50
+        flaming
+        circular
+        earth
+        if rand(50)
+                mpat 5 c 'double heal'
+        endif
+else
+        mpat 5 c 'double heal'
+        flaming
+        c fireball
+endif
+"""
+[[mobiles.16028.programs]]
+trigger = "fight_prog"
+argument = "30"
+script = """
+yell    ---地    道    安    寧---
+flaming
+if rand(20)
+        mpat 5 c 'full heal'
+        mpat 5 c 'full refresh'
+        mpecho $I 所受的創傷似乎全部恢復了！
+endif
+"""
+[[mobiles.16028.programs]]
+trigger = "death_prog"
+argument = "100"
+script = """
+mpdis_magic self blindness
+mpat 5 c inf
+mpat 5 c 'detect invis'
+mpat 5 c 'detect hidden'
+mpexp $n 4000
+if is_qmark($n) == maple_swd_trail 100004
+        say 你已經通過我這一關了。
+        mpmod_qmark $n maple_swd_trail v0 = 5
+        break
+endif
+        if is_qmark($n) == maple_trail_quit 100001
+        mpjunk sword
+        mpjunk bracer
+        endif
+"""
+
+[mobiles.16029]
+keywords = "phantom-maple dancing"
+short_description = "舞劍幻影(dancing phantom)"
+long_description = "一位不停舞劍的幻影劍士(dancing phantom)在這裡舞著劍。\n"
+description = """
+一位清秀的少年，你定睛一看，才知道這是一個幻影。
+"""
+act_flags = ["NPC", "SENTINEL", "STAY_AREA", "PRACTICE"]
+affected_flags = ["DETECT_INVIS", "DETECT_HIDDEN", "SANCTUARY", "INFRARED"]
+alignment = 0
+level = 30
+mod_hitplus = 1100
+mod_mana = 300
+mod_hitroll = 0
+mod_damroll = 0
+mod_ac = 0
+mod_svs = 0
+dodge = 0
+mod_pp = 0
+gold = -1
+sex = "male"
+race = "Phantom"
+class = ["WARRIOR", "SWORD"]
+spec_flags = ["NO_CHARM"]
+practice_skills = "empslash 'storm slash' 'earth slash' 'sprinkle slash' 'flaming slash'"
+
+[objects.16001]
+keywords = "tea"
+short_description = "烏龍茶(tea)"
+long_description = "一杯微燙的烏龍茶(tea)放在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["2", "2", "11", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.16001.extra_descriptions]]
+keywords = "tea"
+description = """
+一杯普通的烏龍茶。
+"""
+
+[objects.16002]
+keywords = "wolf's skin"
+short_description = "狼皮(wolf's skin)"
+long_description = "一小片血淋淋的狼皮(skin)掉在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.16002.extra_descriptions]]
+keywords = "skin"
+description = """
+一張沾滿了鮮血的狼皮。
+"""
+
+[objects.16003]
+keywords = "rabbit's skin"
+short_description = "兔皮(rabbit's skin)"
+long_description = "一塊血淋淋的兔皮(skin)掉在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+[[objects.16003.extra_descriptions]]
+keywords = "skin"
+description = """
+一塊沾著鮮血的兔皮。
+"""
+
+[objects.16004]
+keywords = "maple necklace"
+short_description = "楓醉石項鍊(maple necklace)"
+long_description = "一條以楓紅林獨有的寶石製成的項鍊(necklace)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_NECK"]
+values = ["0", "0", "2501250", "0"]
+weight = 5
+cost = 30000
+level_limited = 0
+material = "maplestone matter"
+[[objects.16004.applies]]
+type = "STR"
+value = 2
+[[objects.16004.applies]]
+type = "INT"
+value = 1
+[[objects.16004.applies]]
+type = "AC"
+value = -3
+[[objects.16004.applies]]
+type = "SAVING_SPELL"
+value = -3
+
+[objects.16005]
+keywords = "flame sword"
+short_description = "火焰劍(flame sword)"
+long_description = "一把泛著火紅色光芒的長劍(sword)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2751275", "0", "0", "3"]
+weight = 4
+cost = 0
+level_limited = 0
+level = 38
+material = "unreal"
+[[objects.16005.extra_descriptions]]
+keywords = "flame sword"
+description = """
+這是用魔法鍛冶出來的長劍，有著火紅的紋路且隱隱冒出火光。
+似乎是安卡以前的佩劍之一。
+"""
+[[objects.16005.applies]]
+type = "HITROLL"
+value = 9
+[[objects.16005.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.16005.hidden_powers]]
+spell = "fireball"
+percent = 30
+level = 30
+event = "HP_WEAPON"
+
+[objects.16006]
+keywords = "earth sword"
+short_description = "大地之劍(earth sword)"
+long_description = "一把泛著淡黃色光芒的長劍(sword)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["3251325", "0", "0", "3"]
+weight = 4
+cost = 0
+level_limited = 0
+level = 38
+material = "unreal"
+[[objects.16006.extra_descriptions]]
+keywords = "earth sword"
+description = """
+這是一把灌輸了大地能量的長劍，似乎是安卡以前的佩劍之一。
+"""
+[[objects.16006.applies]]
+type = "HITROLL"
+value = 3
+[[objects.16006.applies]]
+type = "DAMROLL"
+value = 10
+[[objects.16006.hidden_powers]]
+spell = "earthquake"
+percent = 30
+level = 30
+event = "HP_WEAPON"
+
+[objects.16007]
+keywords = "longsword star"
+short_description = "長劍 - 星辰(Longsword Star)"
+long_description = "一把閃耀著星光的長劍(sword)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2561256", "0", "0", "3"]
+weight = 4
+cost = 0
+level_limited = 0
+level = 38
+material = "unreal"
+[[objects.16007.extra_descriptions]]
+keywords = "star longsword"
+description = """
+這是一把通體閃著銀白色光輝的長劍，裡面寄宿著星辰的神力。
+似乎是安卡以前的佩劍之一。
+"""
+[[objects.16007.applies]]
+type = "HITROLL"
+value = 4
+[[objects.16007.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.16007.hidden_powers]]
+spell = "star fire"
+percent = 15
+level = 35
+event = "HP_WEAPON"
+
+[objects.16008]
+keywords = "flame bracer"
+short_description = "火焰護腕(flame bracer)"
+long_description = "一副閃著火紅光芒的護腕(bracer)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "1751175", "0"]
+weight = 5
+cost = 15000
+level_limited = 0
+[[objects.16008.extra_descriptions]]
+keywords = "flame bracer"
+description = """
+一副閃著火紅光芒的護腕。
+"""
+[[objects.16008.applies]]
+type = "HITROLL"
+value = 2
+[[objects.16008.applies]]
+type = "DAMROLL"
+value = 1
+
+[objects.16009]
+keywords = "earth bracer"
+short_description = "大地護腕(earth bracer)"
+long_description = "一副土黃色色澤的護腕(bracer)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "991099", "0"]
+weight = 10
+cost = 15000
+level_limited = 0
+[[objects.16009.extra_descriptions]]
+keywords = "earth bracer"
+description = """
+這個護腕看起來有點重。
+"""
+[[objects.16009.applies]]
+type = "AC"
+value = 10
+[[objects.16009.applies]]
+type = "CON"
+value = 2
+
+[objects.16010]
+keywords = "star bracer"
+short_description = "星辰護腕(star bracer)"
+long_description = "一副閃耀著銀白色光芒的護腕(bracer)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "501050", "0"]
+weight = 4
+cost = 23152
+level_limited = 0
+level = 38
+[[objects.16010.extra_descriptions]]
+keywords = "star bracer"
+description = """
+蘊含著星辰之力的護腕
+"""
+[[objects.16010.applies]]
+type = "HIT"
+value = 5
+[[objects.16010.applies]]
+type = "HITROLL"
+value = 3
+
+[objects.16011]
+keywords = "maple bracer"
+short_description = "楓紅護腕(maple bracer)"
+long_description = "一副刻著楓葉紋路的護腕(bracer)放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_WRIST"]
+values = ["0", "0", "1901190", "0"]
+weight = 3
+cost = 5000
+level_limited = 0
+level = 38
+material = "maplestone matter"
+[[objects.16011.extra_descriptions]]
+keywords = "maple bracer"
+description = """
+這副護腕紅的十分漂亮，看起來跟最高級的紅寶石一般美麗
+"""
+[[objects.16011.applies]]
+type = "AC"
+value = -5
+
+[objects.16012]
+keywords = "longsword maple"
+short_description = "楓紅長劍(longsword maple)"
+long_description = "安卡慣用的長劍(longsword)掉在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2351235", "0", "0", "3"]
+weight = 4
+cost = 0
+level_limited = 0
+level = 37
+[[objects.16012.extra_descriptions]]
+keywords = "maple longsword"
+description = """
+這是一把通體雪白的長劍，也是安卡的佩劍。
+"""
+[[objects.16012.applies]]
+type = "HITROLL"
+value = 4
+[[objects.16012.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.16012.hidden_powers]]
+spell = "dispel evil"
+percent = 20
+level = 35
+event = "HP_WEAPON"
+
+[objects.16013]
+keywords = "sword"
+short_description = "制式長劍(sword)"
+long_description = "一把制式長劍(sword)靜靜的躺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["2151215", "0", "0", "3"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.16013.extra_descriptions]]
+keywords = "sword"
+description = """
+一把鍛造良好的長劍，上面刻著「楓紅林」三個小字。
+"""
+
+[objects.16014]
+keywords = "vest"
+short_description = "制式護甲(vest)"
+long_description = "一件制式護甲(vest)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1151115", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.16014.extra_descriptions]]
+keywords = "vest"
+description = """
+一件精心打造的護甲，內部刻著「楓紅林」三字。
+"""
+
+[objects.16015]
+keywords = "shield"
+short_description = "制式盾牌(shield)"
+long_description = "一面制式盾牌(shield)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1151115", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.16015.extra_descriptions]]
+keywords = "shield"
+description = """
+一面以精鐵打造的盾牌，內部刻著「楓紅林」三字。
+"""
+
+[objects.16016]
+keywords = "leggings"
+short_description = "制式護腿(leggings)"
+long_description = "制式護腿(leggings)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "1151115", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.16016.extra_descriptions]]
+keywords = "leggings"
+description = """
+一雙用心製作的護腿，內部刻著幾個小字：「楓紅林」
+"""
+
+[objects.16017]
+keywords = "cape"
+short_description = "制式披風(cape)"
+long_description = "一件制式披風(cape)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["0", "0", "1151115", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.16017.extra_descriptions]]
+keywords = "cape"
+description = """
+一件精心製作的披風。
+"""
+
+[objects.16018]
+keywords = "boots"
+short_description = "制式長靴(boots)"
+long_description = "一雙制式長靴(boots)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_FEET"]
+values = ["0", "0", "1151115", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.16018.extra_descriptions]]
+keywords = "boots"
+description = """
+一雙以獸皮製作的靴子。
+"""
+
+[objects.16019]
+keywords = "sword"
+short_description = "練習用木劍(wooden sword)"
+long_description = "一柄練習用的木劍(wooden sword)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "3"]
+weight = 3
+cost = 0
+level_limited = 0
+[[objects.16019.extra_descriptions]]
+keywords = "sword"
+description = """
+用來練習劍術的木劍。
+"""
+
+[objects.16020]
+keywords = "longsword"
+short_description = "長劍(longsword)"
+long_description = "一柄精細打造出的長劍(longsword)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "3"]
+weight = 6
+cost = 0
+level_limited = 0
+level = 25
+[[objects.16020.extra_descriptions]]
+keywords = "longsword"
+description = """
+販售給冒險者使用的一般長劍。
+"""
+
+[objects.16021]
+keywords = "dagger"
+short_description = "匕首(dagger)"
+long_description = "一把削鐵如泥的匕首(dagger)放在這裡。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = []
+wear_flags = ["TAKE", "WIELD"]
+values = ["1001100", "0", "0", "11"]
+weight = 3
+cost = 0
+level_limited = 0
+level = 5
+[[objects.16021.extra_descriptions]]
+keywords = "dagger"
+description = """
+這是販賣給新手使用的匕首。
+"""
+[[objects.16021.applies]]
+type = "HITROLL"
+value = 2
+
+[objects.16022]
+keywords = "shield"
+short_description = "皮製盾牌(shield)"
+long_description = "一面皮製的盾牌放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1001100", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+level = 7
+[[objects.16022.extra_descriptions]]
+keywords = "shield"
+description = """
+一面精細製作的皮製盾牌
+"""
+
+[objects.16023]
+keywords = "iron shield"
+short_description = "鐵製盾牌(iron shield)"
+long_description = "一面鐵製的盾牌放在這裡。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_SHIELD"]
+values = ["0", "0", "1001100", "0"]
+weight = 6
+cost = 0
+level_limited = 0
+level = 20
+[[objects.16023.extra_descriptions]]
+keywords = "iron shield"
+description = """
+一面精細鍛造的盾牌放在這裡。
+"""
+
+[objects.16024]
+keywords = "axe battle"
+short_description = "戰斧(battle axe)"
+long_description = "一把戰斧(small battle axe)靜靜的擺在地上。"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["1351135", "0", "0", "1"]
+weight = 15
+cost = 0
+level_limited = 0
+level = 18
+[[objects.16024.extra_descriptions]]
+keywords = "small battle axe"
+description = """
+單手使用的小型戰斧。
+"""
+[[objects.16024.applies]]
+type = "DAMROLL"
+value = 3
+
+[objects.16025]
+keywords = "backpack"
+short_description = "大型背包(backpack)"
+long_description = "一個大型背包(backpack)靜靜的躺在地上。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["150", "0", "0", "0"]
+weight = 4
+cost = 0
+level_limited = 0
+level = 10
+[[objects.16025.extra_descriptions]]
+keywords = "backpack"
+description = """
+一個大型背包，可以用來裝很多東西。
+"""
+
+[objects.16026]
+keywords = "skin water buffalo"
+short_description = "牛皮水袋(buffalo water skin)"
+long_description = "一個牛皮水袋(buffalo water skin)被放置在這裡。"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["100", "100", "0", "0"]
+weight = 5
+cost = 0
+level_limited = 0
+[[objects.16026.extra_descriptions]]
+keywords = "skin water buffalo"
+description = """
+一個牛皮製成的水袋，可以裝水。
+"""
+
+[objects.16027]
+keywords = "lantern"
+short_description = "銅罩燈籠(lantern)"
+long_description = "銅罩燈籠(lantern)放置在地上。"
+action_description = ""
+item_type = "LIGHT"
+extra_flags = []
+wear_flags = ["TAKE", "HOLD"]
+values = ["0", "0", "100", "0"]
+weight = 4
+cost = 0
+level_limited = 0
+[[objects.16027.extra_descriptions]]
+keywords = "words"
+description = """
+你仔細一看，原來寫的是：「請輸入'hold lantern'來點亮燈籠。」
+"""
+[[objects.16027.extra_descriptions]]
+keywords = "lantern"
+description = """
+一個手提的燈籠，外面加上了銅罩讓燈籠比較不會被吹熄。你無意間注意
+到燈籠的底部刻了一些字(words)。
+"""
+
+[objects.16028]
+keywords = "bottle ale"
+short_description = "瓶裝麥酒(bottle ale)"
+long_description = "一瓶麥酒(bottle ale)"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["8", "8", "3", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+
+[objects.16029]
+keywords = "bottle firebreather"
+short_description = "瓶裝烈酒(bottle firebreather)"
+long_description = "一瓶烈酒(bottle firebreather)"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["8", "8", "7", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+
+[objects.16030]
+keywords = "bottle local"
+short_description = "本地特產名酒(local bottle)"
+long_description = "一瓶本地特產名酒(bottle)"
+action_description = ""
+item_type = "DRINK_CON"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["8", "8", "8", "0"]
+weight = 10
+cost = 0
+level_limited = 0
+
+[objects.16031]
+keywords = "flour cake"
+short_description = "燕麥麵餅(flour cake)"
+long_description = "一塊燕麥麵餅(flour cake)"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["15", "0", "0", "0"]
+weight = 3
+cost = 5000
+level_limited = 0
+
+[objects.16032]
+keywords = "stick bread"
+short_description = "法國麵包(stick bread)"
+long_description = "一條法國麵包(stick bread)"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["25", "0", "0", "0"]
+weight = 3
+cost = 5000
+level_limited = 0
+
+[objects.16033]
+keywords = "sausage"
+short_description = "香腸(sausage)"
+long_description = "一條好吃的香腸(sausage)"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["25", "18", "4", "0"]
+weight = 3
+cost = 5000
+level_limited = 0
+timer = 3
+
+[objects.16034]
+keywords = "roast beef"
+short_description = "烤牛肉(roast beef)"
+long_description = "一塊烤得噴香的牛肉(roast beef)擺在這裡"
+action_description = ""
+item_type = "FOOD"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["25", "19", "5", "0"]
+weight = 3
+cost = 5000
+level_limited = 0
+timer = 3
+
+[objects.16035]
+keywords = "sleeves scale mail"
+short_description = "鱗片護臂(scale mail sleeves)"
+long_description = "一雙鱗片護臂(scale mail sleeves)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = []
+wear_flags = ["TAKE", "WEAR_ARMS"]
+values = ["0", "0", "1001100", "0"]
+weight = 8
+cost = 0
+level_limited = 0
+[[objects.16035.extra_descriptions]]
+keywords = "sleeves"
+description = """
+一雙以鱗片做成的護臂。
+"""
+
+[objects.16036]
+keywords = "leggings chain"
+short_description = "鍊甲護脛(chain leggings)"
+long_description = "一件鍊甲護脛(chain leggings)靜靜的躺在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["MAGIC"]
+wear_flags = ["TAKE", "WEAR_LEGS"]
+values = ["0", "0", "1001100", "0"]
+weight = 12
+cost = 2000
+level_limited = 0
+[[objects.16036.extra_descriptions]]
+keywords = "leggings chain"
+description = """
+鍊甲作成的護脛，有適當防護力。
+"""
+
+[objects.16037]
+keywords = "maple fountain"
+short_description = "楓紅噴泉(fountain)"
+long_description = "一座用大理石做成的噴泉(fountain)在這裡噴著水(water)."
+action_description = ""
+item_type = "FOUNTAIN"
+extra_flags = []
+wear_flags = []
+values = ["0", "0", "0", "0"]
+weight = 500
+cost = 0
+level_limited = 0
+[[objects.16037.extra_descriptions]]
+keywords = "fountain"
+description = """
+一個大理石製的噴泉。
+"""
+
+[objects.16038]
+keywords = "redkey"
+short_description = "紅色鑰匙(redkey)"
+long_description = "一把刻著奇怪文字的紅色鑰匙(redkey)"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["16052", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 10
+
+[objects.16039]
+keywords = "yellowkey"
+short_description = "黃色鑰匙(yellowkey)"
+long_description = "一把刻著奇怪文字的黃色鑰匙(yellowkey)"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["16054", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 10
+
+[objects.16040]
+keywords = "starkey"
+short_description = "星光鑰匙(starkey)"
+long_description = "一把刻著奇怪文字的星光鑰匙(starkey)"
+action_description = ""
+item_type = "KEY"
+extra_flags = []
+wear_flags = ["TAKE"]
+values = ["16057", "0", "0", "0"]
+weight = 1
+cost = 0
+level_limited = 0
+timer = 10
+
+[objects.16041]
+keywords = "sword chunchou"
+short_description = "名劍 - 春秋(ChunChou)"
+long_description = "名劍 - 春秋(ChunChou)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["3501350", "0", "0", "3"]
+weight = 4
+cost = 0
+level_limited = 0
+level = 38
+permit_classes = { type = "ALLOW", list = ["WARRIOR", "NINJA", "KNIGHT", "SWORDSMAN", "WARLORD", "MARTIALMAN"] }
+material = "black"
+[[objects.16041.applies]]
+type = "HITROLL"
+value = 3
+[[objects.16041.applies]]
+type = "DAMROLL"
+value = 4
+[[objects.16041.hidden_powers]]
+spell = "fireball"
+percent = 10
+level = 30
+event = "HP_WEAPON"
+[[objects.16041.hidden_powers]]
+spell = "star fire"
+percent = 20
+level = 34
+event = "HP_WEAPON"
+[[objects.16041.hidden_powers]]
+spell = "flamestrike"
+percent = 10
+level = 30
+event = "HP_WEAPON"
+
+[objects.16042]
+keywords = "sword chango"
+short_description = "名劍 - 戰國(Chango)"
+long_description = "名劍 - 戰國(Chango)"
+action_description = ""
+item_type = "WEAPON"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WIELD"]
+values = ["3451345", "0", "0", "3"]
+weight = 4
+cost = 0
+level_limited = 0
+level = 38
+permit_classes = { type = "ALLOW", list = ["WARRIOR", "NINJA", "KNIGHT", "SWORDSMAN", "WARLORD", "MARTIALMAN"] }
+material = "black"
+[[objects.16042.applies]]
+type = "HITROLL"
+value = 4
+[[objects.16042.applies]]
+type = "DAMROLL"
+value = 3
+[[objects.16042.hidden_powers]]
+spell = "lifesteal"
+percent = 15
+level = 33
+event = "HP_WEAPON"
+[[objects.16042.hidden_powers]]
+spell = "soulsteal"
+percent = 10
+level = 30
+event = "HP_WEAPON"
+
+[objects.16043]
+keywords = "Armor maple"
+short_description = "楓紅林護甲(Armor Maple)"
+long_description = "一件如同秋天楓葉般豔紅的半身鎧甲放在這裡"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["BLESS", "HOLY"]
+wear_flags = ["TAKE", "WEAR_BODY"]
+values = ["0", "0", "1001100", "0"]
+weight = 12
+cost = 250000
+level_limited = 0
+permit_classes = { type = "ALLOW", list = ["SWORDSMAN"] }
+[[objects.16043.applies]]
+type = "HITROLL"
+value = 2
+[[objects.16043.applies]]
+type = "DAMROLL"
+value = 2
+[[objects.16043.applies]]
+type = "SAVING_BREATH"
+value = -5
+
+[objects.16044]
+keywords = "santa claus bag"
+short_description = "聖誕老人的袋子(santa claus bag)"
+long_description = "一個聖誕袋子(bag)靜靜的躺在地上。"
+action_description = ""
+item_type = "CONTAINER"
+extra_flags = ["GLOW", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_ABOUT"]
+values = ["300", "0", "-5", "0"]
+weight = 4
+cost = 0
+level_limited = 0
+material = "unreal matter"
+[[objects.16044.extra_descriptions]]
+keywords = "stanta claus bag"
+description = """
+慶祝2002年的聖誕節，由Zeel所寫，販售到
+2002年十二月三十一日為止。
+"""
+
+[objects.16045]
+keywords = "santa claus hat"
+short_description = "聖誕老人的帽子(santa claus hat)"
+long_description = "一頂紅色的聖誕帽(hat)放在地上。"
+action_description = ""
+item_type = "ARMOR"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE", "WEAR_HEAD"]
+values = ["0", "0", "1501150", "0"]
+weight = 5
+cost = 11000
+level_limited = 0
+material = "unreal matter"
+
+[objects.16046]
+keywords = "cotton"
+short_description = "棉花(cotton)"
+long_description = "一大堆雪白的棉花(cotton)放在這裡。"
+action_description = ""
+item_type = "TREASURE"
+extra_flags = ["GLOW", "HUM", "MAGIC", "BLESS"]
+wear_flags = ["TAKE"]
+values = ["0", "0", "0", "0"]
+weight = 0
+cost = 0
+level_limited = 0
